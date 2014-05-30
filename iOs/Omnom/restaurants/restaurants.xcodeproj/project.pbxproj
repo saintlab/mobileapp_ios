@@ -1,0 +1,1310 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D807A9889AD457E89DD19FC /* libPods-restaurants.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ABCF342568148AF8B65CDE3 /* libPods-restaurants.a */; };
+		87CFE245A6484E7ABA7A7E6B /* libPods-restaurantsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF18A086CE7645CDA8239B3B /* libPods-restaurantsTests.a */; };
+		930554C91934793000E6F4EC /* CLBeacon+GBeaconAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554AF1934793000E6F4EC /* CLBeacon+GBeaconAdditions.m */; };
+		930554CA1934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B11934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m */; };
+		930554CB1934793000E6F4EC /* OMNBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B31934793000E6F4EC /* OMNBeacon.m */; };
+		930554CC1934793000E6F4EC /* OMNBeaconSessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B51934793000E6F4EC /* OMNBeaconSessionInfo.m */; };
+		930554CD1934793000E6F4EC /* OMNBeaconsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B71934793000E6F4EC /* OMNBeaconsManager.m */; };
+		930554CE1934793000E6F4EC /* OMNDevicePositionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B91934793000E6F4EC /* OMNDevicePositionManager.m */; };
+		930554CF1934793000E6F4EC /* OMNFoundBeacons.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554BB1934793000E6F4EC /* OMNFoundBeacons.m */; };
+		930554D01934793000E6F4EC /* GBeaconForegroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554BD1934793000E6F4EC /* GBeaconForegroundManager.m */; };
+		930554D11934793000E6F4EC /* GDefaultClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554BF1934793000E6F4EC /* GDefaultClient.m */; };
+		930554D21934793000E6F4EC /* OMNBeaconBackgroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554C21934793000E6F4EC /* OMNBeaconBackgroundManager.m */; };
+		930554D31934793000E6F4EC /* OMNBeaconRangingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554C41934793000E6F4EC /* OMNBeaconRangingManager.m */; };
+		930554D41934793000E6F4EC /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554C61934793000E6F4EC /* OMNBeaconSearchManager.m */; };
+		930554D51934793000E6F4EC /* OMNBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554C81934793000E6F4EC /* OMNBluetoothManager.m */; };
+		930554DA19347C4900E6F4EC /* OMNSearchTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554D819347C4900E6F4EC /* OMNSearchTableVC.m */; };
+		930554DB19347C4900E6F4EC /* OMNSearchTableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930554D919347C4900E6F4EC /* OMNSearchTableVC.xib */; };
+		930554DD1934914F00E6F4EC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930554DC1934914F00E6F4EC /* CoreTelephony.framework */; };
+		930554E11934978400E6F4EC /* OMNAuthorisation.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E01934978400E6F4EC /* OMNAuthorisation.m */; };
+		930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E31934A1AC00E6F4EC /* OMNUser.m */; };
+		930554FC1935DA7C00E6F4EC /* GProdductSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554EC1935DA7C00E6F4EC /* GProdductSelectionVC.m */; };
+		930554FD1935DA7C00E6F4EC /* GSplitSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554EE1935DA7C00E6F4EC /* GSplitSelectionVC.m */; };
+		930554FE1935DA7C00E6F4EC /* GSplitSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930554EF1935DA7C00E6F4EC /* GSplitSelectionVC.xib */; };
+		930554FF1935DA7C00E6F4EC /* OMNCalculatorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554F11935DA7C00E6F4EC /* OMNCalculatorVC.m */; };
+		930555001935DA7C00E6F4EC /* GPaySavedCardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930554F31935DA7C00E6F4EC /* GPaySavedCardVC.xib */; };
+		930555011935DA7C00E6F4EC /* OMNPayCardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554F51935DA7C00E6F4EC /* OMNPayCardVC.m */; };
+		930555021935DA7C00E6F4EC /* OMNPayCardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930554F61935DA7C00E6F4EC /* OMNPayCardVC.xib */; };
+		930555031935DA7C00E6F4EC /* GPaymentVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554F81935DA7C00E6F4EC /* GPaymentVCDataSource.m */; };
+		930555041935DA7C00E6F4EC /* OMNPaymentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554FA1935DA7C00E6F4EC /* OMNPaymentVC.m */; };
+		930555051935DA7C00E6F4EC /* OMNPaymentVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930554FB1935DA7C00E6F4EC /* OMNPaymentVC.xib */; };
+		9305550D1935DAEA00E6F4EC /* OMNGPBPayVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9305550B1935DAEA00E6F4EC /* OMNGPBPayVC.m */; };
+		9305550E1935DAEA00E6F4EC /* OMNGPBPayVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9305550C1935DAEA00E6F4EC /* OMNGPBPayVC.xib */; };
+		930555111935DB7700E6F4EC /* UINavigationController+omn_replace.m in Sources */ = {isa = PBXBuildFile; fileRef = 930555101935DB7700E6F4EC /* UINavigationController+omn_replace.m */; };
+		9307C5731937022800408519 /* OMNOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307C5721937022800408519 /* OMNOrderCell.m */; };
+		9319FD62192F33B90053F3A4 /* GAmountPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD58192F33B90053F3A4 /* GAmountPercentControl.m */; };
+		9319FD63192F33B90053F3A4 /* GNavSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5A192F33B90053F3A4 /* GNavSelector.m */; };
+		9319FD64192F33B90053F3A4 /* GPaymentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5C192F33B90053F3A4 /* GPaymentFooterView.m */; };
+		9319FD65192F33B90053F3A4 /* GTipSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5E192F33B90053F3A4 /* GTipSelector.m */; };
+		9319FD66192F33B90053F3A4 /* GToPayTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD60192F33B90053F3A4 /* GToPayTextField.m */; };
+		9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD6B192F34250053F3A4 /* OMNEditCell.m */; };
+		9319FD6F192F34510053F3A4 /* OMNCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD6E192F34510053F3A4 /* OMNCardView.m */; };
+		9319FD73192F34710053F3A4 /* GRateAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD72192F34710053F3A4 /* GRateAlertView.m */; };
+		9319FDC7192F362F0053F3A4 /* OMNDemoBlueToothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD99192F362F0053F3A4 /* OMNDemoBlueToothVC.m */; };
+		9319FDC8192F362F0053F3A4 /* OMNDemoBlueToothVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9319FD9A192F362F0053F3A4 /* OMNDemoBlueToothVC.xib */; };
+		9319FDC9192F362F0053F3A4 /* OMNDemoImageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD9C192F362F0053F3A4 /* OMNDemoImageVC.m */; };
+		9319FDCA192F362F0053F3A4 /* OMNDemoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD9E192F362F0053F3A4 /* OMNDemoVC.m */; };
+		9319FDCB192F362F0053F3A4 /* GRestaurantMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDA0192F362F0053F3A4 /* GRestaurantMenuVC.m */; };
+		9319FDCC192F362F0053F3A4 /* GRestaurantsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDA2192F362F0053F3A4 /* GRestaurantsVC.m */; };
+		9319FDCD192F362F0053F3A4 /* OMNBeaconTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDA4192F362F0053F3A4 /* OMNBeaconTableVC.m */; };
+		9319FDD0192F362F0053F3A4 /* OMNLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDA9192F362F0053F3A4 /* OMNLoginVC.m */; };
+		9319FDD1192F362F0053F3A4 /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDAB192F362F0053F3A4 /* OMNOrdersVC.m */; };
+		9319FDD2192F362F0053F3A4 /* OMNPayOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDAE192F362F0053F3A4 /* OMNPayOrderVC.m */; };
+		9319FDD3192F362F0053F3A4 /* OMNPayOrderVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9319FDAF192F362F0053F3A4 /* OMNPayOrderVC.xib */; };
+		9319FDD4192F362F0053F3A4 /* OMNTableOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDB2192F362F0053F3A4 /* OMNTableOrdersVC.m */; };
+		9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE1192F365B0053F3A4 /* NSString+jquery.m */; };
+		9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */; };
+		9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
+		935C283F19066737003B4881 /* fill-form in Sources */ = {isa = PBXBuildFile; fileRef = 935C283C19066737003B4881 /* fill-form */; };
+		935C284119066737003B4881 /* jquery-2.0.3.min in Sources */ = {isa = PBXBuildFile; fileRef = 935C283D19066737003B4881 /* jquery-2.0.3.min */; };
+		935C284219066755003B4881 /* fill-form in Resources */ = {isa = PBXBuildFile; fileRef = 935C283C19066737003B4881 /* fill-form */; };
+		935C284319066755003B4881 /* jquery-2.0.3.min in Resources */ = {isa = PBXBuildFile; fileRef = 935C283D19066737003B4881 /* jquery-2.0.3.min */; };
+		93676DED18D1E4FC00FC55F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DEC18D1E4FC00FC55F1 /* Foundation.framework */; };
+		93676DEF18D1E4FC00FC55F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DEE18D1E4FC00FC55F1 /* CoreGraphics.framework */; };
+		93676DF118D1E4FC00FC55F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DF018D1E4FC00FC55F1 /* UIKit.framework */; };
+		93676DF718D1E4FC00FC55F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93676DF518D1E4FC00FC55F1 /* InfoPlist.strings */; };
+		93676DF918D1E4FC00FC55F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93676DF818D1E4FC00FC55F1 /* main.m */; };
+		93676DFD18D1E4FC00FC55F1 /* GAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93676DFC18D1E4FC00FC55F1 /* GAppDelegate.m */; };
+		93676E0018D1E4FC00FC55F1 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93676DFE18D1E4FC00FC55F1 /* Main_iPhone.storyboard */; };
+		93676E0818D1E4FC00FC55F1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93676E0718D1E4FC00FC55F1 /* Images.xcassets */; };
+		93676E0F18D1E4FC00FC55F1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676E0E18D1E4FC00FC55F1 /* XCTest.framework */; };
+		93676E1018D1E4FC00FC55F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DEC18D1E4FC00FC55F1 /* Foundation.framework */; };
+		93676E1118D1E4FC00FC55F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DF018D1E4FC00FC55F1 /* UIKit.framework */; };
+		93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93676E1718D1E4FC00FC55F1 /* InfoPlist.strings */; };
+		93676E1B18D1E4FC00FC55F1 /* restaurantsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93676E1A18D1E4FC00FC55F1 /* restaurantsTests.m */; };
+		93676E4018D1EAB900FC55F1 /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E3F18D1EAB900FC55F1 /* restaurants.json */; };
+		93676E4118D1EAB900FC55F1 /* restaurants.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E3F18D1EAB900FC55F1 /* restaurants.json */; };
+		93676E4B18D1F10300FC55F1 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E4A18D1F10300FC55F1 /* menu.json */; };
+		93676E4C18D1F10300FC55F1 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E4A18D1F10300FC55F1 /* menu.json */; };
+		937E0B5F18F04EC20058A249 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 937E0B5E18F04EC20058A249 /* OMNConstants.m */; };
+		937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 937E0B5E18F04EC20058A249 /* OMNConstants.m */; };
+		938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B92D71929EF2900476AA0 /* OMNBeaconTests.m */; };
+		938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */; };
+		938E8F50192F3A200088EF38 /* OMNCardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F2B192F3A200088EF38 /* OMNCardInfo.m */; };
+		938E8F52192F3A200088EF38 /* OMNFoundBeaconsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F2F192F3A200088EF38 /* OMNFoundBeaconsHandler.m */; };
+		938E8F53192F3A200088EF38 /* OMNOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F31192F3A200088EF38 /* OMNOperationManager.m */; };
+		938E8F55192F3A200088EF38 /* OMNOrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F36192F3A200088EF38 /* OMNOrderItem.m */; };
+		938E8F56192F3A200088EF38 /* OMNAcquiring.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F3A192F3A200088EF38 /* OMNAcquiring.m */; };
+		938E8F57192F3A200088EF38 /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F3D192F3A200088EF38 /* OMNOrder.m */; };
+		938E8F58192F3A200088EF38 /* GMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F40192F3A200088EF38 /* GMenu.m */; };
+		938E8F59192F3A200088EF38 /* GMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F42192F3A200088EF38 /* GMenuItem.m */; };
+		938E8F5A192F3A200088EF38 /* OMNDecodeBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F44192F3A200088EF38 /* OMNDecodeBeacon.m */; };
+		938E8F5B192F3A200088EF38 /* OMNRestaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F46192F3A200088EF38 /* OMNRestaurant.m */; };
+		938E8F5C192F3A200088EF38 /* OMNTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F48192F3A200088EF38 /* OMNTable.m */; };
+		938E8F5D192F3A200088EF38 /* GCalculationAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F4B192F3A200088EF38 /* GCalculationAmount.m */; };
+		938E8F5E192F3A200088EF38 /* GTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F4D192F3A200088EF38 /* GTip.m */; };
+		938E8F5F192F3A200088EF38 /* GTips.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F4F192F3A200088EF38 /* GTips.m */; };
+		938E8F64192F580F0088EF38 /* OMNCalculatorTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F63192F580F0088EF38 /* OMNCalculatorTransition.m */; };
+		938E8F68192F5C030088EF38 /* ALSRubl.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938E8F67192F5C030088EF38 /* ALSRubl.otf */; };
+		93A59B131933181000AE1A6F /* restaurants.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B121933181000AE1A6F /* restaurants.data */; };
+		93A59B151933193400AE1A6F /* menu.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B141933193400AE1A6F /* menu.data */; };
+		93A59B1719331B5B00AE1A6F /* orders.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B1619331B5B00AE1A6F /* orders.data */; };
+		93B09C3D18F3F5400027B19F /* orders.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B09C3C18F3F5400027B19F /* orders.json */; };
+		93BCFDEF192E5931005CAF39 /* GConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCFDEE192E5931005CAF39 /* GConstants.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		93676E1218D1E4FC00FC55F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93676DE118D1E4FC00FC55F1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 93676DE818D1E4FC00FC55F1;
+			remoteInfo = restaurants;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		08C2B35364724575823788C9 /* Pods-restaurants.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-restaurants.xcconfig"; path = "../Pods/Pods-restaurants.xcconfig"; sourceTree = "<group>"; };
+		2ABCF342568148AF8B65CDE3 /* libPods-restaurants.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-restaurants.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		78CE3220785B43C2A296A3D3 /* Pods-restaurantsTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-restaurantsTests.xcconfig"; path = "../Pods/Pods-restaurantsTests.xcconfig"; sourceTree = "<group>"; };
+		930554AE1934793000E6F4EC /* CLBeacon+GBeaconAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLBeacon+GBeaconAdditions.h"; sourceTree = "<group>"; };
+		930554AF1934793000E6F4EC /* CLBeacon+GBeaconAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLBeacon+GBeaconAdditions.m"; sourceTree = "<group>"; };
+		930554B01934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+OMNIndexAdditions.h"; sourceTree = "<group>"; };
+		930554B11934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+OMNIndexAdditions.m"; sourceTree = "<group>"; };
+		930554B21934793000E6F4EC /* OMNBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeacon.h; sourceTree = "<group>"; };
+		930554B31934793000E6F4EC /* OMNBeacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeacon.m; sourceTree = "<group>"; };
+		930554B41934793000E6F4EC /* OMNBeaconSessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconSessionInfo.h; sourceTree = "<group>"; };
+		930554B51934793000E6F4EC /* OMNBeaconSessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconSessionInfo.m; sourceTree = "<group>"; };
+		930554B61934793000E6F4EC /* OMNBeaconsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconsManager.h; sourceTree = "<group>"; };
+		930554B71934793000E6F4EC /* OMNBeaconsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconsManager.m; sourceTree = "<group>"; };
+		930554B81934793000E6F4EC /* OMNDevicePositionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDevicePositionManager.h; sourceTree = "<group>"; };
+		930554B91934793000E6F4EC /* OMNDevicePositionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDevicePositionManager.m; sourceTree = "<group>"; };
+		930554BA1934793000E6F4EC /* OMNFoundBeacons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFoundBeacons.h; sourceTree = "<group>"; };
+		930554BB1934793000E6F4EC /* OMNFoundBeacons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFoundBeacons.m; sourceTree = "<group>"; };
+		930554BC1934793000E6F4EC /* GBeaconForegroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBeaconForegroundManager.h; sourceTree = "<group>"; };
+		930554BD1934793000E6F4EC /* GBeaconForegroundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBeaconForegroundManager.m; sourceTree = "<group>"; };
+		930554BE1934793000E6F4EC /* GDefaultClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDefaultClient.h; sourceTree = "<group>"; };
+		930554BF1934793000E6F4EC /* GDefaultClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDefaultClient.m; sourceTree = "<group>"; };
+		930554C11934793000E6F4EC /* OMNBeaconBackgroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconBackgroundManager.h; sourceTree = "<group>"; };
+		930554C21934793000E6F4EC /* OMNBeaconBackgroundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconBackgroundManager.m; sourceTree = "<group>"; };
+		930554C31934793000E6F4EC /* OMNBeaconRangingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconRangingManager.h; sourceTree = "<group>"; };
+		930554C41934793000E6F4EC /* OMNBeaconRangingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconRangingManager.m; sourceTree = "<group>"; };
+		930554C51934793000E6F4EC /* OMNBeaconSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconSearchManager.h; sourceTree = "<group>"; };
+		930554C61934793000E6F4EC /* OMNBeaconSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconSearchManager.m; sourceTree = "<group>"; };
+		930554C71934793000E6F4EC /* OMNBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBluetoothManager.h; sourceTree = "<group>"; };
+		930554C81934793000E6F4EC /* OMNBluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBluetoothManager.m; sourceTree = "<group>"; };
+		930554D719347C4900E6F4EC /* OMNSearchTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchTableVC.h; sourceTree = "<group>"; };
+		930554D819347C4900E6F4EC /* OMNSearchTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchTableVC.m; sourceTree = "<group>"; };
+		930554D919347C4900E6F4EC /* OMNSearchTableVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNSearchTableVC.xib; sourceTree = "<group>"; };
+		930554DC1934914F00E6F4EC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		930554DF1934978400E6F4EC /* OMNAuthorisation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorisation.h; sourceTree = "<group>"; };
+		930554E01934978400E6F4EC /* OMNAuthorisation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorisation.m; sourceTree = "<group>"; };
+		930554E21934A1AC00E6F4EC /* OMNUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUser.h; sourceTree = "<group>"; };
+		930554E31934A1AC00E6F4EC /* OMNUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUser.m; sourceTree = "<group>"; };
+		930554EA1935DA7C00E6F4EC /* GCalculatorVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCalculatorVCDelegate.h; sourceTree = "<group>"; };
+		930554EB1935DA7C00E6F4EC /* GProdductSelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GProdductSelectionVC.h; sourceTree = "<group>"; };
+		930554EC1935DA7C00E6F4EC /* GProdductSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GProdductSelectionVC.m; sourceTree = "<group>"; };
+		930554ED1935DA7C00E6F4EC /* GSplitSelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSplitSelectionVC.h; sourceTree = "<group>"; };
+		930554EE1935DA7C00E6F4EC /* GSplitSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSplitSelectionVC.m; sourceTree = "<group>"; };
+		930554EF1935DA7C00E6F4EC /* GSplitSelectionVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GSplitSelectionVC.xib; sourceTree = "<group>"; };
+		930554F01935DA7C00E6F4EC /* OMNCalculatorVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCalculatorVC.h; sourceTree = "<group>"; };
+		930554F11935DA7C00E6F4EC /* OMNCalculatorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCalculatorVC.m; sourceTree = "<group>"; };
+		930554F31935DA7C00E6F4EC /* GPaySavedCardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GPaySavedCardVC.xib; sourceTree = "<group>"; };
+		930554F41935DA7C00E6F4EC /* OMNPayCardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPayCardVC.h; sourceTree = "<group>"; };
+		930554F51935DA7C00E6F4EC /* OMNPayCardVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPayCardVC.m; sourceTree = "<group>"; };
+		930554F61935DA7C00E6F4EC /* OMNPayCardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNPayCardVC.xib; sourceTree = "<group>"; };
+		930554F71935DA7C00E6F4EC /* GPaymentVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPaymentVCDataSource.h; sourceTree = "<group>"; };
+		930554F81935DA7C00E6F4EC /* GPaymentVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPaymentVCDataSource.m; sourceTree = "<group>"; };
+		930554F91935DA7C00E6F4EC /* OMNPaymentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPaymentVC.h; sourceTree = "<group>"; };
+		930554FA1935DA7C00E6F4EC /* OMNPaymentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPaymentVC.m; sourceTree = "<group>"; };
+		930554FB1935DA7C00E6F4EC /* OMNPaymentVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNPaymentVC.xib; sourceTree = "<group>"; };
+		9305550A1935DAEA00E6F4EC /* OMNGPBPayVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNGPBPayVC.h; sourceTree = "<group>"; };
+		9305550B1935DAEA00E6F4EC /* OMNGPBPayVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNGPBPayVC.m; sourceTree = "<group>"; };
+		9305550C1935DAEA00E6F4EC /* OMNGPBPayVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNGPBPayVC.xib; sourceTree = "<group>"; };
+		9305550F1935DB7700E6F4EC /* UINavigationController+omn_replace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+omn_replace.h"; sourceTree = "<group>"; };
+		930555101935DB7700E6F4EC /* UINavigationController+omn_replace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+omn_replace.m"; sourceTree = "<group>"; };
+		9307C5711937022800408519 /* OMNOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderCell.h; sourceTree = "<group>"; };
+		9307C5721937022800408519 /* OMNOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderCell.m; sourceTree = "<group>"; };
+		9319FD57192F33B90053F3A4 /* GAmountPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAmountPercentControl.h; sourceTree = "<group>"; };
+		9319FD58192F33B90053F3A4 /* GAmountPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAmountPercentControl.m; sourceTree = "<group>"; };
+		9319FD59192F33B90053F3A4 /* GNavSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNavSelector.h; sourceTree = "<group>"; };
+		9319FD5A192F33B90053F3A4 /* GNavSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNavSelector.m; sourceTree = "<group>"; };
+		9319FD5B192F33B90053F3A4 /* GPaymentFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPaymentFooterView.h; sourceTree = "<group>"; };
+		9319FD5C192F33B90053F3A4 /* GPaymentFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPaymentFooterView.m; sourceTree = "<group>"; };
+		9319FD5D192F33B90053F3A4 /* GTipSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTipSelector.h; sourceTree = "<group>"; };
+		9319FD5E192F33B90053F3A4 /* GTipSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTipSelector.m; sourceTree = "<group>"; };
+		9319FD5F192F33B90053F3A4 /* GToPayTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GToPayTextField.h; sourceTree = "<group>"; };
+		9319FD60192F33B90053F3A4 /* GToPayTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GToPayTextField.m; sourceTree = "<group>"; };
+		9319FD6A192F34250053F3A4 /* OMNEditCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditCell.h; sourceTree = "<group>"; };
+		9319FD6B192F34250053F3A4 /* OMNEditCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditCell.m; sourceTree = "<group>"; };
+		9319FD6D192F34510053F3A4 /* OMNCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardView.h; sourceTree = "<group>"; };
+		9319FD6E192F34510053F3A4 /* OMNCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardView.m; sourceTree = "<group>"; };
+		9319FD71192F34710053F3A4 /* GRateAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRateAlertView.h; sourceTree = "<group>"; };
+		9319FD72192F34710053F3A4 /* GRateAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRateAlertView.m; sourceTree = "<group>"; };
+		9319FD98192F362F0053F3A4 /* OMNDemoBlueToothVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoBlueToothVC.h; sourceTree = "<group>"; };
+		9319FD99192F362F0053F3A4 /* OMNDemoBlueToothVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoBlueToothVC.m; sourceTree = "<group>"; };
+		9319FD9A192F362F0053F3A4 /* OMNDemoBlueToothVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNDemoBlueToothVC.xib; sourceTree = "<group>"; };
+		9319FD9B192F362F0053F3A4 /* OMNDemoImageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoImageVC.h; sourceTree = "<group>"; };
+		9319FD9C192F362F0053F3A4 /* OMNDemoImageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoImageVC.m; sourceTree = "<group>"; };
+		9319FD9D192F362F0053F3A4 /* OMNDemoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoVC.h; sourceTree = "<group>"; };
+		9319FD9E192F362F0053F3A4 /* OMNDemoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoVC.m; sourceTree = "<group>"; };
+		9319FD9F192F362F0053F3A4 /* GRestaurantMenuVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRestaurantMenuVC.h; sourceTree = "<group>"; };
+		9319FDA0192F362F0053F3A4 /* GRestaurantMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRestaurantMenuVC.m; sourceTree = "<group>"; };
+		9319FDA1192F362F0053F3A4 /* GRestaurantsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRestaurantsVC.h; sourceTree = "<group>"; };
+		9319FDA2192F362F0053F3A4 /* GRestaurantsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRestaurantsVC.m; sourceTree = "<group>"; };
+		9319FDA3192F362F0053F3A4 /* OMNBeaconTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconTableVC.h; sourceTree = "<group>"; };
+		9319FDA4192F362F0053F3A4 /* OMNBeaconTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconTableVC.m; sourceTree = "<group>"; };
+		9319FDA8192F362F0053F3A4 /* OMNLoginVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLoginVC.h; sourceTree = "<group>"; };
+		9319FDA9192F362F0053F3A4 /* OMNLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLoginVC.m; sourceTree = "<group>"; };
+		9319FDAA192F362F0053F3A4 /* OMNOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrdersVC.h; sourceTree = "<group>"; };
+		9319FDAB192F362F0053F3A4 /* OMNOrdersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrdersVC.m; sourceTree = "<group>"; };
+		9319FDAC192F362F0053F3A4 /* OMNOrderVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderVCDelegate.h; sourceTree = "<group>"; };
+		9319FDAD192F362F0053F3A4 /* OMNPayOrderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPayOrderVC.h; sourceTree = "<group>"; };
+		9319FDAE192F362F0053F3A4 /* OMNPayOrderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPayOrderVC.m; sourceTree = "<group>"; };
+		9319FDAF192F362F0053F3A4 /* OMNPayOrderVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNPayOrderVC.xib; sourceTree = "<group>"; };
+		9319FDB1192F362F0053F3A4 /* OMNTableOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTableOrdersVC.h; sourceTree = "<group>"; };
+		9319FDB2192F362F0053F3A4 /* OMNTableOrdersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTableOrdersVC.m; sourceTree = "<group>"; };
+		9319FDE0192F365B0053F3A4 /* NSString+jquery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+jquery.h"; sourceTree = "<group>"; };
+		9319FDE1192F365B0053F3A4 /* NSString+jquery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+jquery.m"; sourceTree = "<group>"; };
+		9319FDE2192F365B0053F3A4 /* NSURL+OMNQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+OMNQuery.h"; sourceTree = "<group>"; };
+		9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+OMNQuery.m"; sourceTree = "<group>"; };
+		9319FDE6192F36910053F3A4 /* UIView+frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frame.h"; sourceTree = "<group>"; };
+		9319FDE7192F36910053F3A4 /* UIView+frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frame.m"; sourceTree = "<group>"; };
+		935C283C19066737003B4881 /* fill-form */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fill-form"; sourceTree = "<group>"; };
+		935C283D19066737003B4881 /* jquery-2.0.3.min */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "jquery-2.0.3.min"; sourceTree = "<group>"; };
+		93676DE918D1E4FC00FC55F1 /* restaurants.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = restaurants.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		93676DEC18D1E4FC00FC55F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		93676DEE18D1E4FC00FC55F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		93676DF018D1E4FC00FC55F1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		93676DF418D1E4FC00FC55F1 /* restaurants-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "restaurants-Info.plist"; sourceTree = "<group>"; };
+		93676DF618D1E4FC00FC55F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		93676DF818D1E4FC00FC55F1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		93676DFA18D1E4FC00FC55F1 /* restaurants-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "restaurants-Prefix.pch"; sourceTree = "<group>"; };
+		93676DFB18D1E4FC00FC55F1 /* GAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAppDelegate.h; sourceTree = "<group>"; };
+		93676DFC18D1E4FC00FC55F1 /* GAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GAppDelegate.m; sourceTree = "<group>"; };
+		93676DFF18D1E4FC00FC55F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		93676E0718D1E4FC00FC55F1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		93676E0D18D1E4FC00FC55F1 /* restaurantsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = restaurantsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		93676E0E18D1E4FC00FC55F1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		93676E1618D1E4FC00FC55F1 /* restaurantsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "restaurantsTests-Info.plist"; sourceTree = "<group>"; };
+		93676E1818D1E4FC00FC55F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		93676E1A18D1E4FC00FC55F1 /* restaurantsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = restaurantsTests.m; sourceTree = "<group>"; };
+		93676E3F18D1EAB900FC55F1 /* restaurants.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
+		93676E4A18D1F10300FC55F1 /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu.json; sourceTree = "<group>"; };
+		937E0B5D18F04EC20058A249 /* OMNConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNConstants.h; sourceTree = "<group>"; };
+		937E0B5E18F04EC20058A249 /* OMNConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNConstants.m; sourceTree = "<group>"; };
+		938B92D71929EF2900476AA0 /* OMNBeaconTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconTests.m; sourceTree = "<group>"; };
+		938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDevicePositionManagerTests.m; sourceTree = "<group>"; };
+		938E8F2A192F3A200088EF38 /* OMNCardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardInfo.h; sourceTree = "<group>"; };
+		938E8F2B192F3A200088EF38 /* OMNCardInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardInfo.m; sourceTree = "<group>"; };
+		938E8F2E192F3A200088EF38 /* OMNFoundBeaconsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFoundBeaconsHandler.h; sourceTree = "<group>"; };
+		938E8F2F192F3A200088EF38 /* OMNFoundBeaconsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFoundBeaconsHandler.m; sourceTree = "<group>"; };
+		938E8F30192F3A200088EF38 /* OMNOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOperationManager.h; sourceTree = "<group>"; };
+		938E8F31192F3A200088EF38 /* OMNOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOperationManager.m; sourceTree = "<group>"; };
+		938E8F35192F3A200088EF38 /* OMNOrderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderItem.h; sourceTree = "<group>"; };
+		938E8F36192F3A200088EF38 /* OMNOrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderItem.m; sourceTree = "<group>"; };
+		938E8F39192F3A200088EF38 /* OMNAcquiring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAcquiring.h; sourceTree = "<group>"; };
+		938E8F3A192F3A200088EF38 /* OMNAcquiring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAcquiring.m; sourceTree = "<group>"; };
+		938E8F3C192F3A200088EF38 /* OMNOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrder.h; sourceTree = "<group>"; };
+		938E8F3D192F3A200088EF38 /* OMNOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrder.m; sourceTree = "<group>"; };
+		938E8F3F192F3A200088EF38 /* GMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMenu.h; sourceTree = "<group>"; };
+		938E8F40192F3A200088EF38 /* GMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMenu.m; sourceTree = "<group>"; };
+		938E8F41192F3A200088EF38 /* GMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMenuItem.h; sourceTree = "<group>"; };
+		938E8F42192F3A200088EF38 /* GMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMenuItem.m; sourceTree = "<group>"; };
+		938E8F43192F3A200088EF38 /* OMNDecodeBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDecodeBeacon.h; sourceTree = "<group>"; };
+		938E8F44192F3A200088EF38 /* OMNDecodeBeacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDecodeBeacon.m; sourceTree = "<group>"; };
+		938E8F45192F3A200088EF38 /* OMNRestaurant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurant.h; sourceTree = "<group>"; };
+		938E8F46192F3A200088EF38 /* OMNRestaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurant.m; sourceTree = "<group>"; };
+		938E8F47192F3A200088EF38 /* OMNTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTable.h; sourceTree = "<group>"; };
+		938E8F48192F3A200088EF38 /* OMNTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTable.m; sourceTree = "<group>"; };
+		938E8F4A192F3A200088EF38 /* GCalculationAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCalculationAmount.h; sourceTree = "<group>"; };
+		938E8F4B192F3A200088EF38 /* GCalculationAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCalculationAmount.m; sourceTree = "<group>"; };
+		938E8F4C192F3A200088EF38 /* GTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTip.h; sourceTree = "<group>"; };
+		938E8F4D192F3A200088EF38 /* GTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTip.m; sourceTree = "<group>"; };
+		938E8F4E192F3A200088EF38 /* GTips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTips.h; sourceTree = "<group>"; };
+		938E8F4F192F3A200088EF38 /* GTips.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTips.m; sourceTree = "<group>"; };
+		938E8F62192F580F0088EF38 /* OMNCalculatorTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCalculatorTransition.h; sourceTree = "<group>"; };
+		938E8F63192F580F0088EF38 /* OMNCalculatorTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCalculatorTransition.m; sourceTree = "<group>"; };
+		938E8F67192F5C030088EF38 /* ALSRubl.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ALSRubl.otf; sourceTree = "<group>"; };
+		93A59B121933181000AE1A6F /* restaurants.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = restaurants.data; sourceTree = "<group>"; };
+		93A59B141933193400AE1A6F /* menu.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = menu.data; sourceTree = "<group>"; };
+		93A59B1619331B5B00AE1A6F /* orders.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = orders.data; sourceTree = "<group>"; };
+		93B09C3C18F3F5400027B19F /* orders.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orders.json; sourceTree = "<group>"; };
+		93BCFDED192E5931005CAF39 /* GConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GConstants.h; path = ../seocialtest/seocialtest/social/GConstants.h; sourceTree = "<group>"; };
+		93BCFDEE192E5931005CAF39 /* GConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GConstants.m; path = ../seocialtest/seocialtest/social/GConstants.m; sourceTree = "<group>"; };
+		FF18A086CE7645CDA8239B3B /* libPods-restaurantsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-restaurantsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		93676DE618D1E4FC00FC55F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				930554DD1934914F00E6F4EC /* CoreTelephony.framework in Frameworks */,
+				93676DEF18D1E4FC00FC55F1 /* CoreGraphics.framework in Frameworks */,
+				93676DF118D1E4FC00FC55F1 /* UIKit.framework in Frameworks */,
+				93676DED18D1E4FC00FC55F1 /* Foundation.framework in Frameworks */,
+				1D807A9889AD457E89DD19FC /* libPods-restaurants.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93676E0A18D1E4FC00FC55F1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93676E0F18D1E4FC00FC55F1 /* XCTest.framework in Frameworks */,
+				93676E1118D1E4FC00FC55F1 /* UIKit.framework in Frameworks */,
+				93676E1018D1E4FC00FC55F1 /* Foundation.framework in Frameworks */,
+				87CFE245A6484E7ABA7A7E6B /* libPods-restaurantsTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		930554AC1934793000E6F4EC /* BeaconModel */ = {
+			isa = PBXGroup;
+			children = (
+				930554AD1934793000E6F4EC /* beacon */,
+				930554BC1934793000E6F4EC /* GBeaconForegroundManager.h */,
+				930554BD1934793000E6F4EC /* GBeaconForegroundManager.m */,
+				930554BE1934793000E6F4EC /* GDefaultClient.h */,
+				930554BF1934793000E6F4EC /* GDefaultClient.m */,
+				930554C01934793000E6F4EC /* ibeacons */,
+				930554C11934793000E6F4EC /* OMNBeaconBackgroundManager.h */,
+				930554C21934793000E6F4EC /* OMNBeaconBackgroundManager.m */,
+				930554C31934793000E6F4EC /* OMNBeaconRangingManager.h */,
+				930554C41934793000E6F4EC /* OMNBeaconRangingManager.m */,
+				930554C51934793000E6F4EC /* OMNBeaconSearchManager.h */,
+				930554C61934793000E6F4EC /* OMNBeaconSearchManager.m */,
+				930554C71934793000E6F4EC /* OMNBluetoothManager.h */,
+				930554C81934793000E6F4EC /* OMNBluetoothManager.m */,
+			);
+			name = BeaconModel;
+			path = ../beacon/beacon/BeaconModel;
+			sourceTree = "<group>";
+		};
+		930554AD1934793000E6F4EC /* beacon */ = {
+			isa = PBXGroup;
+			children = (
+				930554AE1934793000E6F4EC /* CLBeacon+GBeaconAdditions.h */,
+				930554AF1934793000E6F4EC /* CLBeacon+GBeaconAdditions.m */,
+				930554B01934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.h */,
+				930554B11934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m */,
+				930554B21934793000E6F4EC /* OMNBeacon.h */,
+				930554B31934793000E6F4EC /* OMNBeacon.m */,
+				930554B41934793000E6F4EC /* OMNBeaconSessionInfo.h */,
+				930554B51934793000E6F4EC /* OMNBeaconSessionInfo.m */,
+				930554B61934793000E6F4EC /* OMNBeaconsManager.h */,
+				930554B71934793000E6F4EC /* OMNBeaconsManager.m */,
+				930554B81934793000E6F4EC /* OMNDevicePositionManager.h */,
+				930554B91934793000E6F4EC /* OMNDevicePositionManager.m */,
+				930554BA1934793000E6F4EC /* OMNFoundBeacons.h */,
+				930554BB1934793000E6F4EC /* OMNFoundBeacons.m */,
+			);
+			path = beacon;
+			sourceTree = "<group>";
+		};
+		930554C01934793000E6F4EC /* ibeacons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ibeacons;
+			sourceTree = "<group>";
+		};
+		930554D619347BFA00E6F4EC /* SearchTable */ = {
+			isa = PBXGroup;
+			children = (
+				930554D719347C4900E6F4EC /* OMNSearchTableVC.h */,
+				930554D819347C4900E6F4EC /* OMNSearchTableVC.m */,
+				930554D919347C4900E6F4EC /* OMNSearchTableVC.xib */,
+			);
+			name = SearchTable;
+			sourceTree = "<group>";
+		};
+		930554DE1934974900E6F4EC /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				930554DF1934978400E6F4EC /* OMNAuthorisation.h */,
+				930554E01934978400E6F4EC /* OMNAuthorisation.m */,
+				930554E21934A1AC00E6F4EC /* OMNUser.h */,
+				930554E31934A1AC00E6F4EC /* OMNUser.m */,
+			);
+			name = Auth;
+			sourceTree = "<group>";
+		};
+		930554E81935DA7C00E6F4EC /* Pay */ = {
+			isa = PBXGroup;
+			children = (
+				930554F91935DA7C00E6F4EC /* OMNPaymentVC.h */,
+				930554FA1935DA7C00E6F4EC /* OMNPaymentVC.m */,
+				930554FB1935DA7C00E6F4EC /* OMNPaymentVC.xib */,
+				930554F71935DA7C00E6F4EC /* GPaymentVCDataSource.h */,
+				930554F81935DA7C00E6F4EC /* GPaymentVCDataSource.m */,
+				930555061935DAAC00E6F4EC /* GPB */,
+				930554E91935DA7C00E6F4EC /* Calculator */,
+				930554F21935DA7C00E6F4EC /* Card */,
+			);
+			path = Pay;
+			sourceTree = "<group>";
+		};
+		930554E91935DA7C00E6F4EC /* Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				930554F01935DA7C00E6F4EC /* OMNCalculatorVC.h */,
+				930554F11935DA7C00E6F4EC /* OMNCalculatorVC.m */,
+				930554EA1935DA7C00E6F4EC /* GCalculatorVCDelegate.h */,
+				930554EB1935DA7C00E6F4EC /* GProdductSelectionVC.h */,
+				930554EC1935DA7C00E6F4EC /* GProdductSelectionVC.m */,
+				930554ED1935DA7C00E6F4EC /* GSplitSelectionVC.h */,
+				930554EE1935DA7C00E6F4EC /* GSplitSelectionVC.m */,
+				930554EF1935DA7C00E6F4EC /* GSplitSelectionVC.xib */,
+			);
+			path = Calculator;
+			sourceTree = "<group>";
+		};
+		930554F21935DA7C00E6F4EC /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				930554F31935DA7C00E6F4EC /* GPaySavedCardVC.xib */,
+				930554F41935DA7C00E6F4EC /* OMNPayCardVC.h */,
+				930554F51935DA7C00E6F4EC /* OMNPayCardVC.m */,
+				930554F61935DA7C00E6F4EC /* OMNPayCardVC.xib */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
+		930555061935DAAC00E6F4EC /* GPB */ = {
+			isa = PBXGroup;
+			children = (
+				9305550A1935DAEA00E6F4EC /* OMNGPBPayVC.h */,
+				9305550B1935DAEA00E6F4EC /* OMNGPBPayVC.m */,
+				9305550C1935DAEA00E6F4EC /* OMNGPBPayVC.xib */,
+			);
+			path = GPB;
+			sourceTree = "<group>";
+		};
+		9319FD52192F33B90053F3A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9319FD6D192F34510053F3A4 /* OMNCardView.h */,
+				9319FD6E192F34510053F3A4 /* OMNCardView.m */,
+				9319FD70192F34710053F3A4 /* Alert */,
+				9319FD53192F33B90053F3A4 /* Cell */,
+				9319FD56192F33B90053F3A4 /* Payment */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9319FD53192F33B90053F3A4 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9319FD6A192F34250053F3A4 /* OMNEditCell.h */,
+				9319FD6B192F34250053F3A4 /* OMNEditCell.m */,
+				9307C5711937022800408519 /* OMNOrderCell.h */,
+				9307C5721937022800408519 /* OMNOrderCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		9319FD56192F33B90053F3A4 /* Payment */ = {
+			isa = PBXGroup;
+			children = (
+				9319FD57192F33B90053F3A4 /* GAmountPercentControl.h */,
+				9319FD58192F33B90053F3A4 /* GAmountPercentControl.m */,
+				9319FD59192F33B90053F3A4 /* GNavSelector.h */,
+				9319FD5A192F33B90053F3A4 /* GNavSelector.m */,
+				9319FD5B192F33B90053F3A4 /* GPaymentFooterView.h */,
+				9319FD5C192F33B90053F3A4 /* GPaymentFooterView.m */,
+				9319FD5D192F33B90053F3A4 /* GTipSelector.h */,
+				9319FD5E192F33B90053F3A4 /* GTipSelector.m */,
+				9319FD5F192F33B90053F3A4 /* GToPayTextField.h */,
+				9319FD60192F33B90053F3A4 /* GToPayTextField.m */,
+			);
+			path = Payment;
+			sourceTree = "<group>";
+		};
+		9319FD70192F34710053F3A4 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				9319FD71192F34710053F3A4 /* GRateAlertView.h */,
+				9319FD72192F34710053F3A4 /* GRateAlertView.m */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
+		9319FD96192F362F0053F3A4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				930554E81935DA7C00E6F4EC /* Pay */,
+				930554D619347BFA00E6F4EC /* SearchTable */,
+				93A59B1119330F3400AE1A6F /* Other */,
+				9319FD97192F362F0053F3A4 /* Demo */,
+				938E8F60192F3D260088EF38 /* Restaurants */,
+				9319FDB0192F362F0053F3A4 /* Orders */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9319FD97192F362F0053F3A4 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				9319FD98192F362F0053F3A4 /* OMNDemoBlueToothVC.h */,
+				9319FD99192F362F0053F3A4 /* OMNDemoBlueToothVC.m */,
+				9319FD9A192F362F0053F3A4 /* OMNDemoBlueToothVC.xib */,
+				9319FD9B192F362F0053F3A4 /* OMNDemoImageVC.h */,
+				9319FD9C192F362F0053F3A4 /* OMNDemoImageVC.m */,
+				9319FD9D192F362F0053F3A4 /* OMNDemoVC.h */,
+				9319FD9E192F362F0053F3A4 /* OMNDemoVC.m */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
+		9319FDB0192F362F0053F3A4 /* Orders */ = {
+			isa = PBXGroup;
+			children = (
+				9319FDB1192F362F0053F3A4 /* OMNTableOrdersVC.h */,
+				9319FDB2192F362F0053F3A4 /* OMNTableOrdersVC.m */,
+			);
+			path = Orders;
+			sourceTree = "<group>";
+		};
+		9319FDDF192F365B0053F3A4 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				9319FDE0192F365B0053F3A4 /* NSString+jquery.h */,
+				9319FDE1192F365B0053F3A4 /* NSString+jquery.m */,
+				9319FDE2192F365B0053F3A4 /* NSURL+OMNQuery.h */,
+				9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */,
+				9319FDE6192F36910053F3A4 /* UIView+frame.h */,
+				9319FDE7192F36910053F3A4 /* UIView+frame.m */,
+				9305550F1935DB7700E6F4EC /* UINavigationController+omn_replace.h */,
+				930555101935DB7700E6F4EC /* UINavigationController+omn_replace.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		93676DE018D1E4FC00FC55F1 = {
+			isa = PBXGroup;
+			children = (
+				9397DD5218F425A0005E3A8B /* References */,
+				93676DF218D1E4FC00FC55F1 /* restaurants */,
+				93676E1418D1E4FC00FC55F1 /* restaurantsTests */,
+				93676DEB18D1E4FC00FC55F1 /* Frameworks */,
+				93676DEA18D1E4FC00FC55F1 /* Products */,
+				08C2B35364724575823788C9 /* Pods-restaurants.xcconfig */,
+				78CE3220785B43C2A296A3D3 /* Pods-restaurantsTests.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		93676DEA18D1E4FC00FC55F1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				93676DE918D1E4FC00FC55F1 /* restaurants.app */,
+				93676E0D18D1E4FC00FC55F1 /* restaurantsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		93676DEB18D1E4FC00FC55F1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				930554DC1934914F00E6F4EC /* CoreTelephony.framework */,
+				93676DEC18D1E4FC00FC55F1 /* Foundation.framework */,
+				93676DEE18D1E4FC00FC55F1 /* CoreGraphics.framework */,
+				93676DF018D1E4FC00FC55F1 /* UIKit.framework */,
+				93676E0E18D1E4FC00FC55F1 /* XCTest.framework */,
+				2ABCF342568148AF8B65CDE3 /* libPods-restaurants.a */,
+				FF18A086CE7645CDA8239B3B /* libPods-restaurantsTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		93676DF218D1E4FC00FC55F1 /* restaurants */ = {
+			isa = PBXGroup;
+			children = (
+				937E0B5D18F04EC20058A249 /* OMNConstants.h */,
+				937E0B5E18F04EC20058A249 /* OMNConstants.m */,
+				938E8F65192F5C030088EF38 /* Resources */,
+				938E8F28192F3A200088EF38 /* Model */,
+				9319FDDF192F365B0053F3A4 /* Categories */,
+				9319FD96192F362F0053F3A4 /* Controllers */,
+				9319FD52192F33B90053F3A4 /* View */,
+				93676E3E18D1EAA900FC55F1 /* stub */,
+				93676DFB18D1E4FC00FC55F1 /* GAppDelegate.h */,
+				93676DFC18D1E4FC00FC55F1 /* GAppDelegate.m */,
+				93676DFE18D1E4FC00FC55F1 /* Main_iPhone.storyboard */,
+				93676E0718D1E4FC00FC55F1 /* Images.xcassets */,
+				93676DF318D1E4FC00FC55F1 /* Supporting Files */,
+			);
+			path = restaurants;
+			sourceTree = "<group>";
+		};
+		93676DF318D1E4FC00FC55F1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				935C283C19066737003B4881 /* fill-form */,
+				935C283D19066737003B4881 /* jquery-2.0.3.min */,
+				93676DF418D1E4FC00FC55F1 /* restaurants-Info.plist */,
+				93676DF518D1E4FC00FC55F1 /* InfoPlist.strings */,
+				93676DF818D1E4FC00FC55F1 /* main.m */,
+				93676DFA18D1E4FC00FC55F1 /* restaurants-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		93676E1418D1E4FC00FC55F1 /* restaurantsTests */ = {
+			isa = PBXGroup;
+			children = (
+				93676E1A18D1E4FC00FC55F1 /* restaurantsTests.m */,
+				93676E1518D1E4FC00FC55F1 /* Supporting Files */,
+				938B92D71929EF2900476AA0 /* OMNBeaconTests.m */,
+				938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */,
+			);
+			path = restaurantsTests;
+			sourceTree = "<group>";
+		};
+		93676E1518D1E4FC00FC55F1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				93676E1618D1E4FC00FC55F1 /* restaurantsTests-Info.plist */,
+				93676E1718D1E4FC00FC55F1 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		93676E3E18D1EAA900FC55F1 /* stub */ = {
+			isa = PBXGroup;
+			children = (
+				93A59B121933181000AE1A6F /* restaurants.data */,
+				93A59B141933193400AE1A6F /* menu.data */,
+				93A59B1619331B5B00AE1A6F /* orders.data */,
+				93676E3F18D1EAB900FC55F1 /* restaurants.json */,
+				93676E4A18D1F10300FC55F1 /* menu.json */,
+				93B09C3C18F3F5400027B19F /* orders.json */,
+			);
+			path = stub;
+			sourceTree = SOURCE_ROOT;
+		};
+		938E8F28192F3A200088EF38 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				930554DE1934974900E6F4EC /* Auth */,
+				938E8F61192F57E00088EF38 /* Transition */,
+				938E8F29192F3A200088EF38 /* Card */,
+				938E8F2E192F3A200088EF38 /* OMNFoundBeaconsHandler.h */,
+				938E8F2F192F3A200088EF38 /* OMNFoundBeaconsHandler.m */,
+				938E8F30192F3A200088EF38 /* OMNOperationManager.h */,
+				938E8F31192F3A200088EF38 /* OMNOperationManager.m */,
+				938E8F32192F3A200088EF38 /* Order */,
+				938E8F37192F3A200088EF38 /* Restaurants */,
+				938E8F49192F3A200088EF38 /* Tip */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		938E8F29192F3A200088EF38 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F2A192F3A200088EF38 /* OMNCardInfo.h */,
+				938E8F2B192F3A200088EF38 /* OMNCardInfo.m */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
+		938E8F32192F3A200088EF38 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F35192F3A200088EF38 /* OMNOrderItem.h */,
+				938E8F36192F3A200088EF38 /* OMNOrderItem.m */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		938E8F37192F3A200088EF38 /* Restaurants */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F38192F3A200088EF38 /* Acquiring */,
+				938E8F3E192F3A200088EF38 /* Menu */,
+				938E8F43192F3A200088EF38 /* OMNDecodeBeacon.h */,
+				938E8F44192F3A200088EF38 /* OMNDecodeBeacon.m */,
+				938E8F45192F3A200088EF38 /* OMNRestaurant.h */,
+				938E8F46192F3A200088EF38 /* OMNRestaurant.m */,
+				938E8F47192F3A200088EF38 /* OMNTable.h */,
+				938E8F48192F3A200088EF38 /* OMNTable.m */,
+			);
+			path = Restaurants;
+			sourceTree = "<group>";
+		};
+		938E8F38192F3A200088EF38 /* Acquiring */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F39192F3A200088EF38 /* OMNAcquiring.h */,
+				938E8F3A192F3A200088EF38 /* OMNAcquiring.m */,
+				938E8F3B192F3A200088EF38 /* orders */,
+			);
+			path = Acquiring;
+			sourceTree = "<group>";
+		};
+		938E8F3B192F3A200088EF38 /* orders */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F3C192F3A200088EF38 /* OMNOrder.h */,
+				938E8F3D192F3A200088EF38 /* OMNOrder.m */,
+			);
+			path = orders;
+			sourceTree = "<group>";
+		};
+		938E8F3E192F3A200088EF38 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F3F192F3A200088EF38 /* GMenu.h */,
+				938E8F40192F3A200088EF38 /* GMenu.m */,
+				938E8F41192F3A200088EF38 /* GMenuItem.h */,
+				938E8F42192F3A200088EF38 /* GMenuItem.m */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		938E8F49192F3A200088EF38 /* Tip */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F4A192F3A200088EF38 /* GCalculationAmount.h */,
+				938E8F4B192F3A200088EF38 /* GCalculationAmount.m */,
+				938E8F4C192F3A200088EF38 /* GTip.h */,
+				938E8F4D192F3A200088EF38 /* GTip.m */,
+				938E8F4E192F3A200088EF38 /* GTips.h */,
+				938E8F4F192F3A200088EF38 /* GTips.m */,
+			);
+			path = Tip;
+			sourceTree = "<group>";
+		};
+		938E8F60192F3D260088EF38 /* Restaurants */ = {
+			isa = PBXGroup;
+			children = (
+				9319FDA1192F362F0053F3A4 /* GRestaurantsVC.h */,
+				9319FDA2192F362F0053F3A4 /* GRestaurantsVC.m */,
+				9319FD9F192F362F0053F3A4 /* GRestaurantMenuVC.h */,
+				9319FDA0192F362F0053F3A4 /* GRestaurantMenuVC.m */,
+				9319FDAA192F362F0053F3A4 /* OMNOrdersVC.h */,
+				9319FDAB192F362F0053F3A4 /* OMNOrdersVC.m */,
+				9319FDAC192F362F0053F3A4 /* OMNOrderVCDelegate.h */,
+			);
+			name = Restaurants;
+			sourceTree = "<group>";
+		};
+		938E8F61192F57E00088EF38 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F62192F580F0088EF38 /* OMNCalculatorTransition.h */,
+				938E8F63192F580F0088EF38 /* OMNCalculatorTransition.m */,
+			);
+			path = Transition;
+			sourceTree = "<group>";
+		};
+		938E8F65192F5C030088EF38 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F66192F5C030088EF38 /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		938E8F66192F5C030088EF38 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				938E8F67192F5C030088EF38 /* ALSRubl.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		9397DD5218F425A0005E3A8B /* References */ = {
+			isa = PBXGroup;
+			children = (
+				93BCFDED192E5931005CAF39 /* GConstants.h */,
+				93BCFDEE192E5931005CAF39 /* GConstants.m */,
+				930554AC1934793000E6F4EC /* BeaconModel */,
+			);
+			name = References;
+			sourceTree = "<group>";
+		};
+		93A59B1119330F3400AE1A6F /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				9319FDA3192F362F0053F3A4 /* OMNBeaconTableVC.h */,
+				9319FDA4192F362F0053F3A4 /* OMNBeaconTableVC.m */,
+				9319FDA8192F362F0053F3A4 /* OMNLoginVC.h */,
+				9319FDA9192F362F0053F3A4 /* OMNLoginVC.m */,
+				9319FDAD192F362F0053F3A4 /* OMNPayOrderVC.h */,
+				9319FDAE192F362F0053F3A4 /* OMNPayOrderVC.m */,
+				9319FDAF192F362F0053F3A4 /* OMNPayOrderVC.xib */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		93676DE818D1E4FC00FC55F1 /* restaurants */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93676E1E18D1E4FC00FC55F1 /* Build configuration list for PBXNativeTarget "restaurants" */;
+			buildPhases = (
+				471B3C426B7446CBA4EE48D9 /* Check Pods Manifest.lock */,
+				93676DE518D1E4FC00FC55F1 /* Sources */,
+				93676DE618D1E4FC00FC55F1 /* Frameworks */,
+				93676DE718D1E4FC00FC55F1 /* Resources */,
+				4F9249CB50BE4BCAA2D125E0 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = restaurants;
+			productName = restaurants;
+			productReference = 93676DE918D1E4FC00FC55F1 /* restaurants.app */;
+			productType = "com.apple.product-type.application";
+		};
+		93676E0C18D1E4FC00FC55F1 /* restaurantsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93676E2118D1E4FC00FC55F1 /* Build configuration list for PBXNativeTarget "restaurantsTests" */;
+			buildPhases = (
+				4DB493760A1E46C38432D5F3 /* Check Pods Manifest.lock */,
+				93676E0918D1E4FC00FC55F1 /* Sources */,
+				93676E0A18D1E4FC00FC55F1 /* Frameworks */,
+				93676E0B18D1E4FC00FC55F1 /* Resources */,
+				54C5AD8F224D4F079D3EDCB4 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				93676E1318D1E4FC00FC55F1 /* PBXTargetDependency */,
+			);
+			name = restaurantsTests;
+			productName = restaurantsTests;
+			productReference = 93676E0D18D1E4FC00FC55F1 /* restaurantsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		93676DE118D1E4FC00FC55F1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = OMN;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = tea;
+				TargetAttributes = {
+					93676DE818D1E4FC00FC55F1 = {
+						DevelopmentTeam = HJ648XXPWE;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
+					};
+					93676E0C18D1E4FC00FC55F1 = {
+						TestTargetID = 93676DE818D1E4FC00FC55F1;
+					};
+				};
+			};
+			buildConfigurationList = 93676DE418D1E4FC00FC55F1 /* Build configuration list for PBXProject "restaurants" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 93676DE018D1E4FC00FC55F1;
+			productRefGroup = 93676DEA18D1E4FC00FC55F1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				93676DE818D1E4FC00FC55F1 /* restaurants */,
+				93676E0C18D1E4FC00FC55F1 /* restaurantsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		93676DE718D1E4FC00FC55F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93A59B151933193400AE1A6F /* menu.data in Resources */,
+				930555001935DA7C00E6F4EC /* GPaySavedCardVC.xib in Resources */,
+				930555021935DA7C00E6F4EC /* OMNPayCardVC.xib in Resources */,
+				930554DB19347C4900E6F4EC /* OMNSearchTableVC.xib in Resources */,
+				935C284219066755003B4881 /* fill-form in Resources */,
+				9319FDD3192F362F0053F3A4 /* OMNPayOrderVC.xib in Resources */,
+				93A59B131933181000AE1A6F /* restaurants.data in Resources */,
+				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
+				93676E4B18D1F10300FC55F1 /* menu.json in Resources */,
+				9319FDC8192F362F0053F3A4 /* OMNDemoBlueToothVC.xib in Resources */,
+				93B09C3D18F3F5400027B19F /* orders.json in Resources */,
+				9305550E1935DAEA00E6F4EC /* OMNGPBPayVC.xib in Resources */,
+				93676E4018D1EAB900FC55F1 /* restaurants.json in Resources */,
+				938E8F68192F5C030088EF38 /* ALSRubl.otf in Resources */,
+				930555051935DA7C00E6F4EC /* OMNPaymentVC.xib in Resources */,
+				93676E0818D1E4FC00FC55F1 /* Images.xcassets in Resources */,
+				93A59B1719331B5B00AE1A6F /* orders.data in Resources */,
+				93676E0018D1E4FC00FC55F1 /* Main_iPhone.storyboard in Resources */,
+				93676DF718D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
+				930554FE1935DA7C00E6F4EC /* GSplitSelectionVC.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93676E0B18D1E4FC00FC55F1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93676E4C18D1F10300FC55F1 /* menu.json in Resources */,
+				93676E4118D1EAB900FC55F1 /* restaurants.json in Resources */,
+				93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		471B3C426B7446CBA4EE48D9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4DB493760A1E46C38432D5F3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4F9249CB50BE4BCAA2D125E0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Pods-restaurants-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		54C5AD8F224D4F079D3EDCB4 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Pods-restaurantsTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		93676DE518D1E4FC00FC55F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				938E8F64192F580F0088EF38 /* OMNCalculatorTransition.m in Sources */,
+				930554D31934793000E6F4EC /* OMNBeaconRangingManager.m in Sources */,
+				938E8F58192F3A200088EF38 /* GMenu.m in Sources */,
+				9319FDCD192F362F0053F3A4 /* OMNBeaconTableVC.m in Sources */,
+				9319FDD0192F362F0053F3A4 /* OMNLoginVC.m in Sources */,
+				9305550D1935DAEA00E6F4EC /* OMNGPBPayVC.m in Sources */,
+				9319FD62192F33B90053F3A4 /* GAmountPercentControl.m in Sources */,
+				9319FD66192F33B90053F3A4 /* GToPayTextField.m in Sources */,
+				9307C5731937022800408519 /* OMNOrderCell.m in Sources */,
+				930554D51934793000E6F4EC /* OMNBluetoothManager.m in Sources */,
+				9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */,
+				938E8F5E192F3A200088EF38 /* GTip.m in Sources */,
+				930555041935DA7C00E6F4EC /* OMNPaymentVC.m in Sources */,
+				9319FDC9192F362F0053F3A4 /* OMNDemoImageVC.m in Sources */,
+				9319FDCA192F362F0053F3A4 /* OMNDemoVC.m in Sources */,
+				930554D21934793000E6F4EC /* OMNBeaconBackgroundManager.m in Sources */,
+				930554FD1935DA7C00E6F4EC /* GSplitSelectionVC.m in Sources */,
+				938E8F5B192F3A200088EF38 /* OMNRestaurant.m in Sources */,
+				930555011935DA7C00E6F4EC /* OMNPayCardVC.m in Sources */,
+				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
+				930554CE1934793000E6F4EC /* OMNDevicePositionManager.m in Sources */,
+				93BCFDEF192E5931005CAF39 /* GConstants.m in Sources */,
+				9319FD64192F33B90053F3A4 /* GPaymentFooterView.m in Sources */,
+				9319FD63192F33B90053F3A4 /* GNavSelector.m in Sources */,
+				9319FDCB192F362F0053F3A4 /* GRestaurantMenuVC.m in Sources */,
+				938E8F52192F3A200088EF38 /* OMNFoundBeaconsHandler.m in Sources */,
+				938E8F5F192F3A200088EF38 /* GTips.m in Sources */,
+				9319FDC7192F362F0053F3A4 /* OMNDemoBlueToothVC.m in Sources */,
+				930554CC1934793000E6F4EC /* OMNBeaconSessionInfo.m in Sources */,
+				938E8F5D192F3A200088EF38 /* GCalculationAmount.m in Sources */,
+				930554D01934793000E6F4EC /* GBeaconForegroundManager.m in Sources */,
+				930555111935DB7700E6F4EC /* UINavigationController+omn_replace.m in Sources */,
+				930554D41934793000E6F4EC /* OMNBeaconSearchManager.m in Sources */,
+				930554CA1934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m in Sources */,
+				938E8F53192F3A200088EF38 /* OMNOperationManager.m in Sources */,
+				938E8F55192F3A200088EF38 /* OMNOrderItem.m in Sources */,
+				9319FDCC192F362F0053F3A4 /* GRestaurantsVC.m in Sources */,
+				930554FF1935DA7C00E6F4EC /* OMNCalculatorVC.m in Sources */,
+				930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */,
+				930554CF1934793000E6F4EC /* OMNFoundBeacons.m in Sources */,
+				938E8F5C192F3A200088EF38 /* OMNTable.m in Sources */,
+				930554C91934793000E6F4EC /* CLBeacon+GBeaconAdditions.m in Sources */,
+				938E8F50192F3A200088EF38 /* OMNCardInfo.m in Sources */,
+				9319FD65192F33B90053F3A4 /* GTipSelector.m in Sources */,
+				930555031935DA7C00E6F4EC /* GPaymentVCDataSource.m in Sources */,
+				93676DFD18D1E4FC00FC55F1 /* GAppDelegate.m in Sources */,
+				937E0B5F18F04EC20058A249 /* OMNConstants.m in Sources */,
+				930554DA19347C4900E6F4EC /* OMNSearchTableVC.m in Sources */,
+				938E8F56192F3A200088EF38 /* OMNAcquiring.m in Sources */,
+				9319FDD1192F362F0053F3A4 /* OMNOrdersVC.m in Sources */,
+				930554E11934978400E6F4EC /* OMNAuthorisation.m in Sources */,
+				930554CB1934793000E6F4EC /* OMNBeacon.m in Sources */,
+				9319FDD4192F362F0053F3A4 /* OMNTableOrdersVC.m in Sources */,
+				930554D11934793000E6F4EC /* GDefaultClient.m in Sources */,
+				93676DF918D1E4FC00FC55F1 /* main.m in Sources */,
+				9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */,
+				9319FD6F192F34510053F3A4 /* OMNCardView.m in Sources */,
+				938E8F59192F3A200088EF38 /* GMenuItem.m in Sources */,
+				930554CD1934793000E6F4EC /* OMNBeaconsManager.m in Sources */,
+				930554FC1935DA7C00E6F4EC /* GProdductSelectionVC.m in Sources */,
+				9319FDD2192F362F0053F3A4 /* OMNPayOrderVC.m in Sources */,
+				938E8F57192F3A200088EF38 /* OMNOrder.m in Sources */,
+				938E8F5A192F3A200088EF38 /* OMNDecodeBeacon.m in Sources */,
+				9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */,
+				9319FD73192F34710053F3A4 /* GRateAlertView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93676E0918D1E4FC00FC55F1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				935C283F19066737003B4881 /* fill-form in Sources */,
+				935C284119066737003B4881 /* jquery-2.0.3.min in Sources */,
+				93676E1B18D1E4FC00FC55F1 /* restaurantsTests.m in Sources */,
+				937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */,
+				938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */,
+				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		93676E1318D1E4FC00FC55F1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 93676DE818D1E4FC00FC55F1 /* restaurants */;
+			targetProxy = 93676E1218D1E4FC00FC55F1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		93676DF518D1E4FC00FC55F1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				93676DF618D1E4FC00FC55F1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		93676DFE18D1E4FC00FC55F1 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				93676DFF18D1E4FC00FC55F1 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		93676E1718D1E4FC00FC55F1 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				93676E1818D1E4FC00FC55F1 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		93676E1C18D1E4FC00FC55F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		93676E1D18D1E4FC00FC55F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		93676E1F18D1E4FC00FC55F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08C2B35364724575823788C9 /* Pods-restaurants.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "restaurants/restaurants-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/**",
+				);
+				INFOPLIST_FILE = "restaurants/restaurants-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "41ACC6A5-7795-48AB-915F-9B2CE62F8135";
+				REZ_SEARCH_PATHS = "$(inherited)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		93676E2018D1E4FC00FC55F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08C2B35364724575823788C9 /* Pods-restaurants.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "restaurants/restaurants-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/**",
+				);
+				INFOPLIST_FILE = "restaurants/restaurants-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "41ACC6A5-7795-48AB-915F-9B2CE62F8135";
+				REZ_SEARCH_PATHS = "$(inherited)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		93676E2218D1E4FC00FC55F1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78CE3220785B43C2A296A3D3 /* Pods-restaurantsTests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/restaurants.app/restaurants";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "restaurants/restaurants-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "restaurantsTests/restaurantsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		93676E2318D1E4FC00FC55F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 78CE3220785B43C2A296A3D3 /* Pods-restaurantsTests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/restaurants.app/restaurants";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "restaurants/restaurants-Prefix.pch";
+				INFOPLIST_FILE = "restaurantsTests/restaurantsTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		93676DE418D1E4FC00FC55F1 /* Build configuration list for PBXProject "restaurants" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93676E1C18D1E4FC00FC55F1 /* Debug */,
+				93676E1D18D1E4FC00FC55F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		93676E1E18D1E4FC00FC55F1 /* Build configuration list for PBXNativeTarget "restaurants" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93676E1F18D1E4FC00FC55F1 /* Debug */,
+				93676E2018D1E4FC00FC55F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		93676E2118D1E4FC00FC55F1 /* Build configuration list for PBXNativeTarget "restaurantsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93676E2218D1E4FC00FC55F1 /* Debug */,
+				93676E2318D1E4FC00FC55F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 93676DE118D1E4FC00FC55F1 /* Project object */;
+}

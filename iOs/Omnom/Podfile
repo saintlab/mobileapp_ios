@@ -1,0 +1,55 @@
+platform :ios, '7.0'
+
+workspace 'Omnom.xcworkspace'
+
+inhibit_all_warnings!
+
+xcodeproj 'beacon/beacon.xcodeproj'
+xcodeproj 'test/test.xcodeproj'
+xcodeproj 'restaurants/restaurants.xcodeproj'
+xcodeproj 'seocialtest/seocialtest.xcodeproj'
+
+
+def import_pods
+  pod 'EstimoteSDK', '~> 1.3.0'
+  pod 'AFNetworking'
+end
+
+def import_all
+  import_pods
+  pod 'EstimoteSDK', '~> 1.3.0'
+  pod 'AFNetworking'
+  pod 'google-plus-ios-sdk'
+  pod 'VK-ios-sdk'
+  pod 'SSKeychain'
+  pod 'CardIO'
+  pod 'BlocksKit'
+  pod 'TSCurrencyTextField'
+end
+
+target :restaurants do
+  import_all
+  xcodeproj 'restaurants/restaurants.xcodeproj'
+end
+
+target :restaurantsTests do
+  import_pods
+  pod 'OCMock'
+  xcodeproj 'restaurants/restaurants.xcodeproj'
+end
+
+target :beacon do
+  import_pods
+  pod 'UrbanAirship-iOS-SDK'
+  xcodeproj 'beacon/beacon.xcodeproj'
+end
+
+target :beaconTests do
+  import_pods
+  xcodeproj 'beacon/beacon.xcodeproj'
+end
+
+target :seocialtest do
+  import_all
+  xcodeproj 'seocialtest/seocialtest.xcodeproj'
+end
