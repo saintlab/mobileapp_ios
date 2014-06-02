@@ -76,6 +76,7 @@
 //  self.navigationItem.rightBarButtonItems = @[createOrderButton];
 
   UIBarButtonItem *getOrdersButton = [[UIBarButtonItem alloc] initWithTitle:@"Заказы" style:UIBarButtonItemStylePlain target:self	action:@selector(getOrdersTap)];
+  getOrdersButton.accessibilityLabel = @"order_button";
   UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
   UIBarButtonItem *callWaiterButton = [[UIBarButtonItem alloc] initWithTitle:@"Официант" style:UIBarButtonItemStylePlain target:self	action:@selector(callWaiterTap)];
   

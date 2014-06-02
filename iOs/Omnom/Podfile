@@ -35,6 +35,7 @@ end
 target :restaurantsTests do
   import_pods
   pod 'OCMock'
+  pod 'KIF', '~> 3.0.4'
   xcodeproj 'restaurants/restaurants.xcodeproj'
 end
 

@@ -115,8 +115,7 @@
   
   OMNTip *customTip = _tips[3];
   customTip.amount = customTipAmount;
-//  customTip.percent = customTipAmount / _enteredAmount;
-  
+
 }
 
 - (void)configureTipButton:(OMNTipButton *)tipButton {
