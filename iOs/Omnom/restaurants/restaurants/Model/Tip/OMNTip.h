@@ -12,14 +12,14 @@
 
 @property (nonatomic, assign) double amount;
 @property (nonatomic, assign) double percent;
-@property (nonatomic, assign) double calculationValue;
+//@property (nonatomic, assign) double calculationValue;
+@property (nonatomic, assign) BOOL selected;
 
 + (instancetype)tipWithPercent:(double)percent;
 
 - (instancetype)initWithAmount:(double)amount percent:(double)percent;
 
-- (NSString *)title;
-
-- (NSString *)selectedTitle;
+//- (NSString *)title;
+//- (NSString *)selectedTitle;
 
 @end

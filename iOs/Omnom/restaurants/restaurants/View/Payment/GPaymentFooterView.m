@@ -9,7 +9,7 @@
 #import "GPaymentFooterView.h"
 #import <BlocksKit+UIKit.h>
 #import <TSCurrencyTextField.h>
-#import "GTipSelector.h"
+#import "OMNTipSelector.h"
 #import "GAmountPercentControl.h"
 #import "UIView+frame.h"
 #import "GConstants.h"
@@ -23,7 +23,7 @@
   
   __weak IBOutlet UILabel *_tipsLabel;
   __weak IBOutlet UILabel *_payLabel;
-  __weak IBOutlet GTipSelector *_tipsSelector;
+  __weak IBOutlet OMNTipSelector *_tipsSelector;
 
   __weak IBOutlet UIButton *_payButton;
   
@@ -84,7 +84,7 @@
     
   } forControlEvents:UIControlEventValueChanged];
   
-  [_tipsSelector bk_addEventHandler:^(GTipSelector *sender) {
+  [_tipsSelector bk_addEventHandler:^(OMNTipSelector *sender) {
 
     if (3 == sender.selectedIndex) {
       
@@ -111,7 +111,7 @@
 
 
 
-- (void)setCalculationAmount:(GCalculationAmount *)calculationAmount {
+- (void)setCalculationAmount:(OMNCalculationAmount *)calculationAmount {
   
   _calculationAmount = calculationAmount;
   [_tipsSelector setCalculationAmount:calculationAmount];

@@ -8,9 +8,12 @@
 
 #import "OMNTip.h"
 
-@interface GCalculationAmount : NSObject
+@class OMNOrder;
+@class OMNTipButton;
 
-- (instancetype)initWithExpectedValue:(double)expectedValue tips:(NSArray *)tips;
+@interface OMNCalculationAmount : NSObject
+
+- (instancetype)initWithOrder:(OMNOrder *)order;
 
 @property (nonatomic, assign) BOOL tipsMode;
 
@@ -20,14 +23,12 @@
 
 @property (nonatomic, assign, readonly) double totalValue;
 
-@property (nonatomic, assign, readonly) double percentValue;
-
 @property (nonatomic, assign) double enteredAmount;
 
 @property (nonatomic, assign) NSInteger selectedTipIndex;
 
 @property (nonatomic, assign) double customTipAmount;
 
-- (double)percentOfAmount:(double)amount;
+- (void)configureTipButton:(OMNTipButton *)tipButton;
 
 @end

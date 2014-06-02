@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GCalculationAmount.h"
+#import "OMNCalculationAmount.h"
 
-@interface GTipSelector : UIControl
+@interface OMNTipSelector : UIControl
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 
-@property (nonatomic, strong) GCalculationAmount *calculationAmount;
+@property (nonatomic, strong) OMNCalculationAmount *calculationAmount;
 
 - (void)update;
 

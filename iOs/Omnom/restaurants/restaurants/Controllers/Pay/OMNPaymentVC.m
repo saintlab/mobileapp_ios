@@ -65,9 +65,8 @@ UINavigationControllerDelegate>
   
   _tableView.allowsSelection = NO;
   [self setup];
-
   
-  _paymentView.calculationAmount = [[GCalculationAmount alloc] initWithExpectedValue:_order.total tips:tips];
+  _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
   
 }
 

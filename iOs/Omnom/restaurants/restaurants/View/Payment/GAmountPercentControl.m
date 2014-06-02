@@ -226,7 +226,6 @@ UITextFieldDelegate>
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
   
   double percentValue = row;
-  
   _percentTF.amount = @(percentValue);
   [_percentTF sendActionsForControlEvents:UIControlEventEditingChanged];
 

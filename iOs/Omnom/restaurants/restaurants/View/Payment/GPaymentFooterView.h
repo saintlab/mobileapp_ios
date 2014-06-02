@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GCalculationAmount.h"
+#import "OMNCalculationAmount.h"
 
 @protocol GPaymentFooterViewDelegate;
 
 @interface GPaymentFooterView : UIView
 
-@property (nonatomic, strong) GCalculationAmount *calculationAmount;
+@property (nonatomic, strong) OMNCalculationAmount *calculationAmount;
 
 - (void)updateView;
 
