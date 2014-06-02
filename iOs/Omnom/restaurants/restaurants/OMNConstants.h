@@ -11,6 +11,7 @@ extern NSString * const kBaseUrlString;
 extern NSString * const kBeaconUUIDString;
 
 typedef void(^OMNErrorBlock)(NSError *error);
+typedef void(^OMNDataBlock)(id data);
 
 #define kUseStubData 0
 #define kUseStubBeacon 1

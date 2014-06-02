@@ -8,6 +8,7 @@
 
 #import "OMNConstants.h"
 #import "OMNOrderItem.h"
+#import "OMNTip.h"
 
 @class OMNOrder;
 
@@ -30,6 +31,9 @@ typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
 @property (nonatomic, copy) NSString *restarateurOrderId;
 
 @property (nonatomic, strong) NSArray *items;
+
+@property (nonatomic, strong, readonly) NSArray *tips;
+@property (nonatomic, assign, readonly) double tipsThreshold;
 
 @property (nonatomic, assign) double toPayAmount;
 

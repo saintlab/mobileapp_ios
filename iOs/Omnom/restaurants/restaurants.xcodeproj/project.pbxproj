@@ -58,8 +58,6 @@
 		9319FDCD192F362F0053F3A4 /* OMNBeaconTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDA4192F362F0053F3A4 /* OMNBeaconTableVC.m */; };
 		9319FDD0192F362F0053F3A4 /* OMNLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDA9192F362F0053F3A4 /* OMNLoginVC.m */; };
 		9319FDD1192F362F0053F3A4 /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDAB192F362F0053F3A4 /* OMNOrdersVC.m */; };
-		9319FDD2192F362F0053F3A4 /* OMNPayOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDAE192F362F0053F3A4 /* OMNPayOrderVC.m */; };
-		9319FDD3192F362F0053F3A4 /* OMNPayOrderVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9319FDAF192F362F0053F3A4 /* OMNPayOrderVC.xib */; };
 		9319FDD4192F362F0053F3A4 /* OMNTableOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDB2192F362F0053F3A4 /* OMNTableOrdersVC.m */; };
 		9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE1192F365B0053F3A4 /* NSString+jquery.m */; };
 		9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */; };
@@ -101,8 +99,7 @@
 		938E8F5B192F3A200088EF38 /* OMNRestaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F46192F3A200088EF38 /* OMNRestaurant.m */; };
 		938E8F5C192F3A200088EF38 /* OMNTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F48192F3A200088EF38 /* OMNTable.m */; };
 		938E8F5D192F3A200088EF38 /* GCalculationAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F4B192F3A200088EF38 /* GCalculationAmount.m */; };
-		938E8F5E192F3A200088EF38 /* GTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F4D192F3A200088EF38 /* GTip.m */; };
-		938E8F5F192F3A200088EF38 /* GTips.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F4F192F3A200088EF38 /* GTips.m */; };
+		938E8F5E192F3A200088EF38 /* OMNTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F4D192F3A200088EF38 /* OMNTip.m */; };
 		938E8F64192F580F0088EF38 /* OMNCalculatorTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F63192F580F0088EF38 /* OMNCalculatorTransition.m */; };
 		938E8F68192F5C030088EF38 /* ALSRubl.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938E8F67192F5C030088EF38 /* ALSRubl.otf */; };
 		93A59B131933181000AE1A6F /* restaurants.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B121933181000AE1A6F /* restaurants.data */; };
@@ -218,9 +215,6 @@
 		9319FDAA192F362F0053F3A4 /* OMNOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrdersVC.h; sourceTree = "<group>"; };
 		9319FDAB192F362F0053F3A4 /* OMNOrdersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrdersVC.m; sourceTree = "<group>"; };
 		9319FDAC192F362F0053F3A4 /* OMNOrderVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderVCDelegate.h; sourceTree = "<group>"; };
-		9319FDAD192F362F0053F3A4 /* OMNPayOrderVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPayOrderVC.h; sourceTree = "<group>"; };
-		9319FDAE192F362F0053F3A4 /* OMNPayOrderVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPayOrderVC.m; sourceTree = "<group>"; };
-		9319FDAF192F362F0053F3A4 /* OMNPayOrderVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNPayOrderVC.xib; sourceTree = "<group>"; };
 		9319FDB1192F362F0053F3A4 /* OMNTableOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTableOrdersVC.h; sourceTree = "<group>"; };
 		9319FDB2192F362F0053F3A4 /* OMNTableOrdersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTableOrdersVC.m; sourceTree = "<group>"; };
 		9319FDE0192F365B0053F3A4 /* NSString+jquery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+jquery.h"; sourceTree = "<group>"; };
@@ -278,10 +272,8 @@
 		938E8F48192F3A200088EF38 /* OMNTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTable.m; sourceTree = "<group>"; };
 		938E8F4A192F3A200088EF38 /* GCalculationAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCalculationAmount.h; sourceTree = "<group>"; };
 		938E8F4B192F3A200088EF38 /* GCalculationAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCalculationAmount.m; sourceTree = "<group>"; };
-		938E8F4C192F3A200088EF38 /* GTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTip.h; sourceTree = "<group>"; };
-		938E8F4D192F3A200088EF38 /* GTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTip.m; sourceTree = "<group>"; };
-		938E8F4E192F3A200088EF38 /* GTips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTips.h; sourceTree = "<group>"; };
-		938E8F4F192F3A200088EF38 /* GTips.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTips.m; sourceTree = "<group>"; };
+		938E8F4C192F3A200088EF38 /* OMNTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTip.h; sourceTree = "<group>"; };
+		938E8F4D192F3A200088EF38 /* OMNTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTip.m; sourceTree = "<group>"; };
 		938E8F62192F580F0088EF38 /* OMNCalculatorTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCalculatorTransition.h; sourceTree = "<group>"; };
 		938E8F63192F580F0088EF38 /* OMNCalculatorTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCalculatorTransition.m; sourceTree = "<group>"; };
 		938E8F67192F5C030088EF38 /* ALSRubl.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ALSRubl.otf; sourceTree = "<group>"; };
@@ -730,10 +722,8 @@
 			children = (
 				938E8F4A192F3A200088EF38 /* GCalculationAmount.h */,
 				938E8F4B192F3A200088EF38 /* GCalculationAmount.m */,
-				938E8F4C192F3A200088EF38 /* GTip.h */,
-				938E8F4D192F3A200088EF38 /* GTip.m */,
-				938E8F4E192F3A200088EF38 /* GTips.h */,
-				938E8F4F192F3A200088EF38 /* GTips.m */,
+				938E8F4C192F3A200088EF38 /* OMNTip.h */,
+				938E8F4D192F3A200088EF38 /* OMNTip.m */,
 			);
 			path = Tip;
 			sourceTree = "<group>";
@@ -794,9 +784,6 @@
 				9319FDA4192F362F0053F3A4 /* OMNBeaconTableVC.m */,
 				9319FDA8192F362F0053F3A4 /* OMNLoginVC.h */,
 				9319FDA9192F362F0053F3A4 /* OMNLoginVC.m */,
-				9319FDAD192F362F0053F3A4 /* OMNPayOrderVC.h */,
-				9319FDAE192F362F0053F3A4 /* OMNPayOrderVC.m */,
-				9319FDAF192F362F0053F3A4 /* OMNPayOrderVC.xib */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -895,7 +882,6 @@
 				930555021935DA7C00E6F4EC /* OMNPayCardVC.xib in Resources */,
 				930554DB19347C4900E6F4EC /* OMNSearchTableVC.xib in Resources */,
 				935C284219066755003B4881 /* fill-form in Resources */,
-				9319FDD3192F362F0053F3A4 /* OMNPayOrderVC.xib in Resources */,
 				93A59B131933181000AE1A6F /* restaurants.data in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
 				93676E4B18D1F10300FC55F1 /* menu.json in Resources */,
@@ -1004,7 +990,7 @@
 				9307C5731937022800408519 /* OMNOrderCell.m in Sources */,
 				930554D51934793000E6F4EC /* OMNBluetoothManager.m in Sources */,
 				9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */,
-				938E8F5E192F3A200088EF38 /* GTip.m in Sources */,
+				938E8F5E192F3A200088EF38 /* OMNTip.m in Sources */,
 				930555041935DA7C00E6F4EC /* OMNPaymentVC.m in Sources */,
 				9319FDC9192F362F0053F3A4 /* OMNDemoImageVC.m in Sources */,
 				9319FDCA192F362F0053F3A4 /* OMNDemoVC.m in Sources */,
@@ -1019,7 +1005,6 @@
 				9319FD63192F33B90053F3A4 /* GNavSelector.m in Sources */,
 				9319FDCB192F362F0053F3A4 /* GRestaurantMenuVC.m in Sources */,
 				938E8F52192F3A200088EF38 /* OMNFoundBeaconsHandler.m in Sources */,
-				938E8F5F192F3A200088EF38 /* GTips.m in Sources */,
 				9319FDC7192F362F0053F3A4 /* OMNDemoBlueToothVC.m in Sources */,
 				930554CC1934793000E6F4EC /* OMNBeaconSessionInfo.m in Sources */,
 				938E8F5D192F3A200088EF38 /* GCalculationAmount.m in Sources */,
@@ -1053,7 +1038,6 @@
 				938E8F59192F3A200088EF38 /* GMenuItem.m in Sources */,
 				930554CD1934793000E6F4EC /* OMNBeaconsManager.m in Sources */,
 				930554FC1935DA7C00E6F4EC /* GProdductSelectionVC.m in Sources */,
-				9319FDD2192F362F0053F3A4 /* OMNPayOrderVC.m in Sources */,
 				938E8F57192F3A200088EF38 /* OMNOrder.m in Sources */,
 				938E8F5A192F3A200088EF38 /* OMNDecodeBeacon.m in Sources */,
 				9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */,

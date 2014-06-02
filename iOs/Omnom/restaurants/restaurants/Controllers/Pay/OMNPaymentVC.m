@@ -65,12 +65,7 @@ UINavigationControllerDelegate>
   
   _tableView.allowsSelection = NO;
   [self setup];
-  
-  NSArray *tips = @[[GTip tipWithPercent:10],
-                    [GTip tipWithPercent:15],
-                    [GTip tipWithPercent:20],
-                    [GTip tipWithPercent:0],
-                    ];
+
   
   _paymentView.calculationAmount = [[GCalculationAmount alloc] initWithExpectedValue:_order.total tips:tips];
   

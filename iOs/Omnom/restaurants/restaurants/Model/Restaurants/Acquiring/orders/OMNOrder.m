@@ -33,9 +33,15 @@
       [items addObject:[[OMNOrderItem alloc] initWithData:itemData]];
       
     }];
-    
     self.items = items;
     
+    //TODO: remove stub data
+    OMNTip *tip1 = [[OMNTip alloc] initWithAmount:30. percent:10];
+    OMNTip *tip2 = [[OMNTip alloc] initWithAmount:50. percent:15];
+    OMNTip *tip3 = [[OMNTip alloc] initWithAmount:100. percent:20];
+    OMNTip *tip4 = [[OMNTip alloc] initWithAmount:0. percent:0];
+    _tips = @[tip1, tip2, tip3, tip4];
+    _tipsThreshold = 250.;
   }
   return self;
 }

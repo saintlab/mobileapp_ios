@@ -6,19 +6,28 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GTip.h"
+#import "OMNTip.h"
 
-@implementation GTip
+@implementation OMNTip
 
 @synthesize percent = _percent;
 @synthesize amount = _amount;
 
 + (instancetype)tipWithPercent:(double)percent {
   
-  GTip *tip = [[GTip alloc] init];
+  OMNTip *tip = [[OMNTip alloc] init];
   tip.percent = percent;
 
   return tip;
+}
+
+- (instancetype)initWithAmount:(double)amount percent:(double)percent {
+  self = [super init];
+  if (self) {
+    _amount = amount;
+    _percent = percent;
+  }
+  return self;
 }
 
 - (double)percent {
@@ -60,10 +69,10 @@
   
 }
 
-- (NSString *)selectedTitle {
-
+- (NSString *)title {
+  
   if (self.percent > 0) {
-    return [NSString stringWithFormat:@"%.0f%%\n%.0f", self.percent, self.amount];
+    return [NSString stringWithFormat:@"%.0f%%", self.percent];
   }
   else {
     return NSLocalizedString(@"Другой", nil);
@@ -71,10 +80,10 @@
   
 }
 
-- (NSString *)title {
+- (NSString *)selectedTitle {
   
   if (self.percent > 0) {
-    return [NSString stringWithFormat:@"%.0f%%", self.percent];
+    return [NSString stringWithFormat:@"%.0f%%\n%.0f", self.percent, self.amount];
   }
   else {
     return NSLocalizedString(@"Другой", nil);

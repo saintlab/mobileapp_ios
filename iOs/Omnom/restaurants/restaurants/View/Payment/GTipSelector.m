@@ -79,7 +79,7 @@
 
 - (void)update {
   
-  [_calculationAmount.tips enumerateObjectsUsingBlock:^(GTip *tip, NSUInteger idx, BOOL *stop) {
+  [_calculationAmount.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
     
     UIButton *button = _buttons[idx];
     [button setTitle:tip.title forState:UIControlStateNormal];

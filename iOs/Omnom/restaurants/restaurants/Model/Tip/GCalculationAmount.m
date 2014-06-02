@@ -39,12 +39,16 @@
 
 - (void)setEnteredAmount:(double)enteredAmount {
 
+  [self willChangeValueForKey:NSStringFromSelector(@selector(enteredAmount))];
   _enteredAmount = enteredAmount;
-  _percentValue = _enteredAmount / _expectedValue;
   
-  [_tips enumerateObjectsUsingBlock:^(GTip *tip, NSUInteger idx, BOOL *stop) {
+  _percentValue = _enteredAmount / _expectedValue;
+
+  [_tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
     tip.calculationValue = enteredAmount;
   }];
+
+  [self didChangeValueForKey:NSStringFromSelector(@selector(enteredAmount))];
   
 }
 
@@ -60,19 +64,19 @@
   
 }
 
-- (GTip *)selectedTip {
+- (OMNTip *)selectedTip {
   return _tips[self.selectedTipIndex];
 }
 
 - (double)customTipAmount {
   
-  GTip *customTip = _tips[3];
+  OMNTip *customTip = _tips[3];
   return customTip.amount;
   
 }
 
 - (void)setCustomTipAmount:(double)customTipAmount {
-  GTip *customTip = _tips[3];
+  OMNTip *customTip = _tips[3];
   customTip.amount = customTipAmount;
 }
 

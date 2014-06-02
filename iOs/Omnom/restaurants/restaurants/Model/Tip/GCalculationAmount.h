@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GTip.h"
+#import "OMNTip.h"
 
 @interface GCalculationAmount : NSObject
 

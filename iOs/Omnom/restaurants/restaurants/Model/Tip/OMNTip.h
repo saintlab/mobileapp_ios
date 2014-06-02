@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GTip : NSObject
+@interface OMNTip : NSObject
 
 @property (nonatomic, assign) double amount;
 @property (nonatomic, assign) double percent;
@@ -16,7 +16,10 @@
 
 + (instancetype)tipWithPercent:(double)percent;
 
+- (instancetype)initWithAmount:(double)amount percent:(double)percent;
+
 - (NSString *)title;
+
 - (NSString *)selectedTitle;
 
 @end

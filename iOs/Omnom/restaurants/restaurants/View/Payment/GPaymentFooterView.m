@@ -9,7 +9,6 @@
 #import "GPaymentFooterView.h"
 #import <BlocksKit+UIKit.h>
 #import <TSCurrencyTextField.h>
-#import "GTips.h"
 #import "GTipSelector.h"
 #import "GAmountPercentControl.h"
 #import "UIView+frame.h"
