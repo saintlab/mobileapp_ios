@@ -8,7 +8,7 @@
 
 #import "OMNAuthorisation.h"
 #import "OMNOperationManager.h"
-#import "GDefaultClient.h"
+#import "OMNAuthorizationManager.h"
 #import <SSKeychain.h>
 #import "OMNUser.h"
 
@@ -62,8 +62,7 @@
 }
 
 - (void)updateAuthenticationToken {
-  
-  
+
   if (_token) {
     [[OMNOperationManager sharedManager].requestSerializer setValue:_token forHTTPHeaderField:@"x-authentication-token"];
   }
@@ -79,13 +78,9 @@
 }
 
 - (void)retriveToken {
-  
+
   __weak typeof(self)weakSelf = self;
-  
-
-  AFHTTPRequestOperationManager *om = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://192.168.1.34:3007"]];
-
-  [om POST:@"authorization" parameters:@{@"installId" : self.installId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:@{@"installId" : self.installId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if (responseObject[@"token"]) {
       [weakSelf updateToken:responseObject[@"token"]];

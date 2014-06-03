@@ -113,6 +113,8 @@
 		93C99093193DBBE40028F76C /* OMNTablePositionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99090193DBBE40028F76C /* OMNTablePositionVC.m */; };
 		93C99094193DBBE40028F76C /* OMNTablePositionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C99091193DBBE40028F76C /* OMNTablePositionVC.xib */; };
 		93C99095193DBBE40028F76C /* OMNTablePositionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C99091193DBBE40028F76C /* OMNTablePositionVC.xib */; };
+		93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
+		93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -295,6 +297,8 @@
 		93C9908F193DBBE40028F76C /* OMNTablePositionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTablePositionVC.h; sourceTree = "<group>"; };
 		93C99090193DBBE40028F76C /* OMNTablePositionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTablePositionVC.m; sourceTree = "<group>"; };
 		93C99091193DBBE40028F76C /* OMNTablePositionVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNTablePositionVC.xib; sourceTree = "<group>"; };
+		93C99096193DE5990028F76C /* OMNAuthorizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorizationManager.h; sourceTree = "<group>"; };
+		93C99097193DE5990028F76C /* OMNAuthorizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationManager.m; sourceTree = "<group>"; };
 		FF18A086CE7645CDA8239B3B /* libPods-restaurantsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-restaurantsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -673,6 +677,8 @@
 				938E8F2F192F3A200088EF38 /* OMNFoundBeaconsHandler.m */,
 				938E8F30192F3A200088EF38 /* OMNOperationManager.h */,
 				938E8F31192F3A200088EF38 /* OMNOperationManager.m */,
+				93C99096193DE5990028F76C /* OMNAuthorizationManager.h */,
+				93C99097193DE5990028F76C /* OMNAuthorizationManager.m */,
 				938E8F32192F3A200088EF38 /* Order */,
 				938E8F37192F3A200088EF38 /* Restaurants */,
 				938E8F49192F3A200088EF38 /* Tip */,
@@ -1067,6 +1073,7 @@
 				938E8F59192F3A200088EF38 /* GMenuItem.m in Sources */,
 				930554CD1934793000E6F4EC /* OMNBeaconsManager.m in Sources */,
 				930554FC1935DA7C00E6F4EC /* GProdductSelectionVC.m in Sources */,
+				93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				938E8F57192F3A200088EF38 /* OMNOrder.m in Sources */,
 				931456B8193CA84D003E2CD6 /* OMNTipButton.m in Sources */,
 				938E8F5A192F3A200088EF38 /* OMNDecodeBeacon.m in Sources */,
@@ -1079,6 +1086,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				935C283F19066737003B4881 /* fill-form in Sources */,
 				935C284119066737003B4881 /* jquery-2.0.3.min in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* restaurantsTests.m in Sources */,

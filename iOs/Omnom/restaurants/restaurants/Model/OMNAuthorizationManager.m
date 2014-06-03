@@ -1,21 +1,21 @@
 //
-//  OMNOperationManager.m
+//  OMNAuthorizationManager.m
 //  restaurants
 //
-//  Created by tea on 05.04.14.
+//  Created by tea on 03.06.14.
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNOperationManager.h"
+#import "OMNAuthorizationManager.h"
 #import "OMNConstants.h"
 
-@implementation OMNOperationManager
+@implementation OMNAuthorizationManager
 
 + (instancetype)sharedManager {
   static id manager = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:kBaseUrlString]];
+    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:kAuthorizationUrlString]];
   });
   return manager;
 }
