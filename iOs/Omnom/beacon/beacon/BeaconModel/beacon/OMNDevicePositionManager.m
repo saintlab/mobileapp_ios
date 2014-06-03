@@ -11,7 +11,7 @@
 
 
 
-static double const kDesiredDurationOfStillPosition = 2.0;
+static double const kDesiredDurationOfStillPosition = 1.0;
 static double const kAccelerometerUpdateInterval = 0.5;
 
 static double const kDesiredAccelerometerAccuracy = 0.05;
@@ -92,8 +92,13 @@ static double const kDesiredAccelerometerAccuracy = 0.05;
   [self stop];
 
   if (_completitionPositionBlock) {
-    _completitionPositionBlock();
-    _completitionPositionBlock = nil;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+      _completitionPositionBlock();
+      _completitionPositionBlock = nil;
+      
+    });
   }
   
 }

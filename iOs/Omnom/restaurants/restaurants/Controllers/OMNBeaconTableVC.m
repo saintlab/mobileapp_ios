@@ -40,39 +40,12 @@
   
   [[GBeaconForegroundManager manager] startMonitoring];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(beaconsDidChange:) name:OMNBeaconsManagerDidChangeBeaconsNotification object:nil];
   
   UILabel *label = [[UILabel alloc] init];
   label.text = @"searching for beacons...";
   [label sizeToFit];
   label.center = self.view.center;
   [self.view addSubview:label];
-}
-
-- (void)beaconsDidChange:(NSNotification *)n
-{
-  OMNBeaconsManager *beaconManager = n.object;
-  
-  NSArray *beacons = beaconManager.atTheTableBeacons;
-  
-  if (beacons.count)
-  {
-    __weak typeof(self)weakSelf = self;
-    
-    [OMNDecodeBeacon decodeBeacons:beacons success:^(NSArray *decodedBeacons) {
-      
-      [weakSelf updateWithBeacons:decodedBeacons];
-      
-    } failure:^(NSError *error) {
-      
-      NSLog(@"%@", error);
-      
-    }];
-  }
-  else
-  {
-    [self updateWithBeacons:nil];
-  }
 }
 
 - (void)updateWithBeacons:(NSArray *)beacons {

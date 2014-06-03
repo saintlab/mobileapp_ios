@@ -8,9 +8,6 @@
 //
 
 #import "OMNBeaconRangingManager.h"
-#import "OMNConstants.h"
-
-static NSString * const kBeaconRangingIdentifier = @"kBeaconRangingIdentifier";
 
 @interface OMNBeaconRangingManager ()
 <CLLocationManagerDelegate>
@@ -24,7 +21,7 @@ static NSString * const kBeaconRangingIdentifier = @"kBeaconRangingIdentifier";
   
   CLBeaconsBlock _didRangeNearestBeaconsBlock;
   CLAuthorizationStatusBlock _authorizationStatusBlock;
-  dispatch_block_t _didFailRangeBeaconsBlock;
+  OMNErrorBlock _didFailRangeBeaconsBlock;
   
 }
 
@@ -32,15 +29,21 @@ static NSString * const kBeaconRangingIdentifier = @"kBeaconRangingIdentifier";
   
   [self stop];
   
+  _rangingLocationManager.delegate = nil;
+  _rangingLocationManager = nil;
+
 }
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _rangingBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:kBeaconRangingIdentifier];
+
+    NSString *identifier = [NSString stringWithFormat:@"%@.rangingTask", [[NSBundle mainBundle] bundleIdentifier]];
+    _rangingBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:identifier];
     
     _rangingLocationManager = [[CLLocationManager alloc] init];
     _rangingLocationManager.delegate = self;
+    
   }
   return self;
 }
@@ -56,15 +59,15 @@ static NSString * const kBeaconRangingIdentifier = @"kBeaconRangingIdentifier";
   return self;
 }
 
-- (void)rangeNearestBeacons:(CLBeaconsBlock)didRangeNearestBeaconsBlock failure:(dispatch_block_t)failureBlock {
+- (void)rangeNearestBeacons:(CLBeaconsBlock)didRangeNearestBeaconsBlock failure:(OMNErrorBlock)failureBlock {
   
   NSAssert([NSThread isMainThread], @"Should be run on main thread");
   
-  if (![CLLocationManager isRangingAvailable] ||
-      [_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
+  
+  if (![CLLocationManager isRangingAvailable]) {
     
     if (failureBlock) {
-      failureBlock();
+      failureBlock(nil);
     }
     return;
   }
@@ -72,7 +75,9 @@ static NSString * const kBeaconRangingIdentifier = @"kBeaconRangingIdentifier";
   _didRangeNearestBeaconsBlock = didRangeNearestBeaconsBlock;
   _didFailRangeBeaconsBlock = failureBlock;
   
-  [_rangingLocationManager startRangingBeaconsInRegion:_rangingBeaconRegion];
+  if (![_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
+    [_rangingLocationManager startRangingBeaconsInRegion:_rangingBeaconRegion];
+  }
   
 }
 
@@ -81,11 +86,9 @@ static NSString * const kBeaconRangingIdentifier = @"kBeaconRangingIdentifier";
   _didRangeNearestBeaconsBlock = nil;
   _didFailRangeBeaconsBlock = nil;
   
-  _rangingLocationManager.delegate = nil;
   if ([_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
     [_rangingLocationManager stopRangingBeaconsInRegion:_rangingBeaconRegion];
   }
-  _rangingLocationManager = nil;
   
 }
 
@@ -110,7 +113,7 @@ static NSString * const kBeaconRangingIdentifier = @"kBeaconRangingIdentifier";
 - (void)locationManager:(CLLocationManager *)manager rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region withError:(NSError *)error {
   
   if (_didFailRangeBeaconsBlock) {
-    _didFailRangeBeaconsBlock();
+    _didFailRangeBeaconsBlock(error);
   }
   
 }

@@ -18,6 +18,7 @@
   beacon.minor = self.minor;
   beacon.proximity = self.proximity;
   beacon.rssi = self.rssi;
+  beacon.accuracy = self.accuracy;
   
   return beacon;
   

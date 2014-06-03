@@ -18,51 +18,36 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
 
 @interface OMNBeaconsManager ()
 
-/**
- This methos is used to sort and manage beacons coming from
- 
- - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region
- delegate method
- @param newBeacons Array of CLBeacon objects
- */
-- (void)addBeacons:(NSArray *)newBeacons;
-
 @end
 
-@implementation OMNBeaconsManager{
+@implementation OMNBeaconsManager {
   
   dispatch_semaphore_t _addBeaconLock;
 
   BOOL _ragingMonitorEnabled;
-  OMNFoundBeacons *_foundBeacons;
-  OMNBeaconsManagerBlock _beaconsManagerBlock;
-  OMNBeaconRangingManager *_beaconRangingManager;
-}
 
-@dynamic atTheTableBeacons;
+  OMNFoundBeaconsBlock _foundBeaconsBlock;
+  OMNBeaconRangingManager *_beaconRangingManager;
+
+}
 
 - (instancetype)init {
   self = [super init];
   if (self) {
     
     _addBeaconLock = dispatch_semaphore_create(1);
-    _foundBeacons = [[OMNFoundBeacons alloc] init];
     
     __weak typeof(self)weakSelf = self;
     _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithAuthorizationStatus:^(CLAuthorizationStatus status) {
       
       switch (status) {
-        case kCLAuthorizationStatusNotDetermined:
-        case kCLAuthorizationStatusAuthorized: {
-          
-          [weakSelf startRagingMonitoring];
-          
-        } break;
         case kCLAuthorizationStatusDenied:
         case kCLAuthorizationStatusRestricted: {
           
           [weakSelf stopMonitoring];
           
+        } break;
+        default: {
         } break;
       }
       
@@ -72,14 +57,10 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   return self;
 }
 
-- (NSMutableArray *)atTheTableBeacons {
-  return _foundBeacons.atTheTableBeacons;
-}
-
-- (void)startMonitoring:(OMNBeaconsManagerBlock)block {
-  
+- (void)startMonitoring:(OMNFoundBeaconsBlock)block {
+  NSAssert(block != nil, @"please provide block");
   _ragingMonitorEnabled = YES;
-  _beaconsManagerBlock = block;
+  _foundBeaconsBlock = block;
   [self startRagingMonitoring];
   
 }
@@ -94,41 +75,40 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeNearestBeacons:^(NSArray *beacons) {
     
-    [weakSelf addBeacons:beacons];
+    [weakSelf processBeacons:beacons];
     
-  } failure:^{
+  } failure:^(NSError *error) {
+    
+    NSLog(@"error>%@", error);
+    [weakSelf stopMonitoring];
+    
   }];
   
 }
 
 - (void)stopMonitoring {
   
-  _beaconsManagerBlock = nil;
+  _foundBeaconsBlock = nil;
   _ragingMonitorEnabled = NO;
   [_beaconRangingManager stop];
   
 }
 
-- (void)addBeacons:(NSArray *)newBeacons {
+- (void)processBeacons:(NSArray *)newBeacons {
   
   dispatch_semaphore_wait(_addBeaconLock, DISPATCH_TIME_FOREVER);
+  NSLog(@"%@", newBeacons);
+  NSMutableArray *foundBeacons = [NSMutableArray arrayWithCapacity:newBeacons.count];
+  [newBeacons enumerateObjectsUsingBlock:^(CLBeacon *beacon, NSUInteger idx, BOOL *stop) {
+    
+    [foundBeacons addObject:[beacon omn_beacon]];
+    
+  }];
   
-  BOOL hasChanges = [_foundBeacons updateWithFoundBeacons:newBeacons];
-
-  if (_beaconsManagerBlock) {
-    _beaconsManagerBlock(self);
+  if (_foundBeaconsBlock) {
+    _foundBeaconsBlock(foundBeacons);
   }
   
-  if (hasChanges) {
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNBeaconsManagerDidChangeBeaconsNotification object:self];
-      
-    });
-    
-  }
-
   dispatch_semaphore_signal(_addBeaconLock);
   
 }

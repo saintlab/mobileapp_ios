@@ -7,60 +7,35 @@
 //
 
 #import "GAppDelegate.h"
-#import "OMNFoundBeaconsHandler.h"
-#import "OMNTableOrdersVC.h"
-#import "GRestaurantsVC.h"
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CoreTelephony/CTCarrier.h>
 #import "OMNAuthorisation.h"
-#import "OMNConstants.h"
-#import "OMNOperationManager.h"
 #import "OMNSearchTableVC.h"
 #import "GRestaurantMenuVC.h"
 
 @implementation GAppDelegate {
   UIImageView *_splashIV;
-  OMNFoundBeaconsHandler *_foundBeaconsHandler;
-  CTTelephonyNetworkInfo* _info;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  
   [OMNAuthorisation authorisation];
-
-  [[OMNOperationManager sharedManager].requestSerializer setValue:@"1e142e6277b12b7e1110478a24caee8f006a9349e86970c890203d6266209463" forHTTPHeaderField:@"x-authentication-token"];
-
-//  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[GRestaurantsVC alloc] init]];
-//  return YES;
   
   OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
-
+    
     NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
     OMNRestaurant *r = [[OMNRestaurant alloc] initWithData:data];
     GRestaurantMenuVC *restaurantMenuVC = [[GRestaurantMenuVC alloc] initWithRestaurant:r table:nil];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:restaurantMenuVC];
-//    [self.navigationController pushViewController:restaurantMenuVC animated:YES];
     
   }];
   self.window.rootViewController = searchTableVC;
   
-  
-  
-//  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[[GRestaurantsVC alloc] init]];
-  
-//  if (kUseStubData) {
-//    [[[UIAlertView alloc] initWithTitle:@"Using mock data" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-//  }
-//  
-//  if (kUseStubBeacon) {
-//    [[[UIAlertView alloc] initWithTitle:@"Using mock beacon" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-//  }
   
   return YES;
   
 }
 
 - (void)showSplash {
-
+  
   _splashIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Splash"]];
   _splashIV.opaque = YES;
   [self.window addSubview:_splashIV];
@@ -69,7 +44,7 @@
 
 - (void)hideSplash {
   
-  [UIView animateWithDuration:0.2 animations:^{
+  [UIView animateWithDuration:0.5 animations:^{
     
     _splashIV.alpha = 0.0f;
     

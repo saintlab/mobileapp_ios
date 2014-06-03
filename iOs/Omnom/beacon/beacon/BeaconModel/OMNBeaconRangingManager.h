@@ -7,6 +7,7 @@
 //
 
 #import <CoreLocation/CoreLocation.h>
+#import "OMNConstants.h"
 
 typedef void(^CLBeaconsBlock)(NSArray *beacons);
 typedef void(^CLAuthorizationStatusBlock)(CLAuthorizationStatus status);
@@ -20,7 +21,7 @@ typedef void(^CLAuthorizationStatusBlock)(CLAuthorizationStatus status);
  @param didRangeNearestBeaconsBlock completition block, fires anytime when manager find beacons in range. Should be started on main thread
  @param failureBlock failure block, run -(void)stop method when this block fires.
  */
-- (void)rangeNearestBeacons:(CLBeaconsBlock)didRangeNearestBeaconsBlock failure:(dispatch_block_t)failureBlock;
+- (void)rangeNearestBeacons:(CLBeaconsBlock)didRangeNearestBeaconsBlock failure:(OMNErrorBlock)failureBlock;
 
 /**
  Stop ranging

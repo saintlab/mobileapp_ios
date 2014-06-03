@@ -30,9 +30,8 @@
   
 }
 
-- (void)dealloc
-{
-  
+- (void)dealloc {
+
 }
 
 - (void)stop {
@@ -87,8 +86,9 @@
     
     [weakSelf didRangeBeacons:beacons];
     
-  } failure:^{
+  } failure:^(NSError *error) {
     
+    NSLog(@"error>%@", error);
     [weakSelf didFailRangeBeacons];
     
   }];

@@ -27,14 +27,7 @@
 - (BOOL)updateWithFoundBeacons:(NSArray *)foundBeacons {
  
   NSMutableDictionary *existingBeaconsDictionary = _existingBeaconsDictionary;
-  
-  //removed outdated beacons info
-//  [_existingBeaconsDictionary enumerateKeysAndObjectsUsingBlock:^(id key, OMNBeacon *beacon, BOOL *stop) {
-//    
-//    [beacon newIterationBegin];
-//    
-//  }];
-  
+
   [foundBeacons enumerateObjectsUsingBlock:^(CLBeacon *beacon, NSUInteger idx, BOOL *stop) {
     
     if (beacon.major &&

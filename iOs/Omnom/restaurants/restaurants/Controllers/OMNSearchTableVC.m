@@ -9,20 +9,22 @@
 #import "OMNSearchTableVC.h"
 #import "OMNBeaconsManager.h"
 #import "OMNBeacon.h"
+#import "OMNTablePositionVC.h"
 
 @interface OMNSearchTableVC ()
+<OMNTablePositionVCDelegate>
 
 @end
 
 @implementation OMNSearchTableVC {
   OMNBeaconsManager *_beaconManager;
-  OMNSearchTableVCBlock _block;
+  OMNSearchTableVCBlock _didFindTableBlock;
 }
 
 - (instancetype)initWithBlock:(OMNSearchTableVCBlock)block {
   self = [super initWithNibName:@"OMNSearchTableVC" bundle:nil];
   if (self) {
-    _block = block;
+    _didFindTableBlock = block;
   }
   return self;
 }
@@ -40,12 +42,17 @@
   }
   
   _beaconManager = [[OMNBeaconsManager alloc] init];
+  [self startSearchingTables];
+  
+}
+
+- (void)startSearchingTables {
   
   __weak typeof(self)weakSelf = self;
-  [_beaconManager startMonitoring:^(OMNBeaconsManager *beaconsManager) {
+  [_beaconManager startMonitoring:^(NSArray *foundBeacons) {
     
-    if (beaconsManager.atTheTableBeacons.count) {
-      [weakSelf findNearestBeacon:beaconsManager.atTheTableBeacons];
+    if (foundBeacons.count) {
+      [weakSelf findNearestBeacon:foundBeacons];
     }
     
   }];
@@ -56,16 +63,33 @@
   [super viewDidAppear:animated];
   
   if (kUseStubBeacon) {
+    
     OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] init];
     decodeBeacon.restaurantId = @"riba-ris";
     decodeBeacon.tableId = @"1005";
+    _didFindTableBlock(decodeBeacon);
     
-    _block(decodeBeacon);
   }
   
 }
 
 - (void)findNearestBeacon:(NSArray *)beacons {
+  
+  if (beacons.count > 1) {
+    
+#warning TODO
+    //TODO: handle more than one beacon
+    
+  }
+  else {
+    
+    
+    
+  }
+  [_beaconManager stopMonitoring];
+  
+  [self determineDeviceFaceUpPosition];
+  return;
   
   __block OMNBeacon *nearestBeacon = nil;
   [beacons enumerateObjectsUsingBlock:^(OMNBeacon *b, NSUInteger idx, BOOL *stop) {
@@ -83,14 +107,12 @@
     
   }];
   
-  [_beaconManager stopMonitoring];
-  _beaconManager = nil;
   
   [OMNDecodeBeacon decodeBeacons:@[nearestBeacon] success:^(NSArray *decodeBeacons) {
     
     OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
-    if (_block) {
-      _block(decodeBeacon);
+    if (_didFindTableBlock) {
+      _didFindTableBlock(decodeBeacon);
     }
     NSLog(@"decodeBeacons>%@", decodeBeacons);
     
@@ -101,6 +123,31 @@
   }];
   
   NSLog(@"%@", nearestBeacon);
+  
+}
+
+- (void)determineDeviceFaceUpPosition {
+  
+  OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] init];
+  tablePositionVC.delegate = self;
+  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:tablePositionVC] animated:YES completion:nil];
+  
+}
+
+#pragma mark - OMNTablePositionVCDelegate
+
+- (void)tablePositionVCDidPlaceOnTable:(OMNTablePositionVC *)tablePositionVC {
+
+  __weak typeof(self)weakSelf = self;
+  [self dismissViewControllerAnimated:YES completion:^{
+    [weakSelf startSearchingTables];
+  }];
+  
+}
+
+- (void)tablePositionVCDidCancel:(OMNTablePositionVC *)tablePositionVC {
+  
+  _didFindTableBlock(nil);
   
 }
 

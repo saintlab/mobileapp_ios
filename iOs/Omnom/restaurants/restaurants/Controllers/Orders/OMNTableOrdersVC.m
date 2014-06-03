@@ -52,8 +52,9 @@
     
     [weakSelf handleFoundBeacons:beacons];
     
-  } failure:^{
+  } failure:^(NSError *error) {
     
+    NSLog(@"error>%@", error);
     
   }];
 

@@ -21,6 +21,7 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 @property (nonatomic, strong) NSNumber *major;
 @property (nonatomic, strong) NSNumber *minor;
 @property (nonatomic, assign) CLProximity proximity;
+@property (nonatomic, assign) CLLocationAccuracy accuracy;
 @property (nonatomic, assign) NSInteger rssi;
 
 @property (nonatomic, assign) BeaconDistance beaconDistance;

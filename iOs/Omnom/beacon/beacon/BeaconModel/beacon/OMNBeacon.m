@@ -54,7 +54,8 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 2;
   if (_beaconSessionInfo.count > kMaxBeaconCount) {
     [_beaconSessionInfo omn_removeFirstObject];
   }
-
+  
+  self.accuracy = beacon.accuracy;
   self.proximity = beacon.proximity;
   self.rssi = beacon.rssi;
   

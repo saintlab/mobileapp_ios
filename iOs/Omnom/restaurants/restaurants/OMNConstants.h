@@ -14,4 +14,4 @@ typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);
 
 #define kUseStubData 0
-#define kUseStubBeacon 1
+#define kUseStubBeacon 0

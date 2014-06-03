@@ -11,16 +11,12 @@ extern NSString * const OMNBeaconsManagerDidChangeBeaconsNotification;
 @class OMNBeacon;
 @class OMNBeaconsManager;
 
-typedef void(^OMNBeaconsManagerBlock)(OMNBeaconsManager *beaconsManager);
+//typedef void(^OMNBeaconsManagerBlock)(OMNBeaconsManager *beaconsManager);
+typedef void(^OMNFoundBeaconsBlock)(NSArray *foundBeacons);
 
 @interface OMNBeaconsManager : NSObject 
 
-/**
- Array of OMNBeacon objects, contains beacons located immediate to device
- */
-@property (nonatomic, strong, readonly) NSMutableArray *atTheTableBeacons;
-
-- (void)startMonitoring:(OMNBeaconsManagerBlock)block;
+- (void)startMonitoring:(OMNFoundBeaconsBlock)block;
 
 - (void)stopMonitoring;
 
