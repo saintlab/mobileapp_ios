@@ -18,5 +18,4 @@ typedef void(^OMNUserBlock)(OMNUser *user);
 
 - (void)registerUser:(OMNUserBlock)block;
 
-
 @end

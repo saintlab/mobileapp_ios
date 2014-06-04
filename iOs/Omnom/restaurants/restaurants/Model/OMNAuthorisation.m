@@ -109,10 +109,8 @@
     @"password" : @"qwerty",
     @"confirmPassword" : @"qwerty",
     };
-  
-    AFHTTPRequestOperationManager *om = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://192.168.1.34:3007"]];
-//  [OMNOperationManager sharedManager]
-  [om POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+  [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     OMNUser *user = [[OMNUser alloc] initWithData:responseObject];
     NSLog(@"%@", user);

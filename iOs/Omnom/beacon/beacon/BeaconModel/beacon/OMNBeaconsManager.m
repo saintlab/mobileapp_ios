@@ -27,6 +27,7 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   BOOL _ragingMonitorEnabled;
 
   OMNFoundBeaconsBlock _foundBeaconsBlock;
+  OMNFoundBeaconsBlock _foundNearestBeaconsBlock;
   OMNBeaconRangingManager *_beaconRangingManager;
 
 }
@@ -65,6 +66,14 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   
 }
 
+- (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block {
+  
+  _ragingMonitorEnabled = YES;
+  _foundNearestBeaconsBlock = block;
+  [self startRagingMonitoring];
+
+}
+
 - (void)startRagingMonitoring {
   
   if (!_ragingMonitorEnabled) {
@@ -89,6 +98,7 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
 - (void)stopMonitoring {
   
   _foundBeaconsBlock = nil;
+  _foundNearestBeaconsBlock = nil;
   _ragingMonitorEnabled = NO;
   [_beaconRangingManager stop];
   
@@ -106,10 +116,40 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   }];
   
   if (_foundBeaconsBlock) {
+    
     _foundBeaconsBlock(foundBeacons);
+    
   }
   
+  [self findNearestBeacons:foundBeacons];
+  
   dispatch_semaphore_signal(_addBeaconLock);
+  
+}
+
+- (void)findNearestBeacons:(NSArray *)beacons {
+  
+  if (nil == _foundNearestBeaconsBlock) {
+    return;
+  }
+  
+  OMNBeacon *nearestBeacon = [beacons firstObject];
+  
+  if (NO == nearestBeacon.nearTheTable) {
+    return;
+  }
+  
+  NSMutableArray *nearestBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
+  [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
+    
+    if ([beacon closeToBeacon:nearestBeacon]
+        ) {
+      [nearestBeacons addObject:beacon];
+    }
+    
+  }];
+  
+  _foundNearestBeaconsBlock(nearestBeacons);
   
 }
 

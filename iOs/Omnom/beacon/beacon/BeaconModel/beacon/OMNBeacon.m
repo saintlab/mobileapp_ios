@@ -15,8 +15,12 @@ NSTimeInterval const kTimeToDeleteMarkSec = 4 * 60 * 60;
 
 __unused static NSTimeInterval const kGTimeToFindMarkSeconds = 2.0;
 __unused static NSTimeInterval const kGTimeToLoseMarkSeconds = 5.0;
+
 static NSUInteger const kMaxBeaconCount = 7;
 static NSUInteger const kBeaconDesiredTimesAccuracy = 2;
+
+const NSInteger kBoardingRSSI = -68;
+const NSInteger kNearestDeltaRSSI = 10;
 
 @implementation OMNBeacon {
   NSMutableArray *_beaconSessionInfo;
@@ -24,8 +28,6 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 2;
   NSDate *_firstImmediateDate;
 
 }
-
-
 
 - (instancetype)init {
   self = [super init];
@@ -78,6 +80,10 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 2;
   
   return (atTheTableTimes >= kBeaconDesiredTimesAccuracy);
   
+}
+
+- (BOOL)nearTheTable {
+  return (self.rssi > kBoardingRSSI);
 }
 
 - (double)totalRSSI {
@@ -139,6 +145,10 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 2;
   
   return atTheTableTime;
   
+}
+
+- (BOOL)closeToBeacon:(OMNBeacon *)beacon {
+  return (self.rssi > beacon.rssi - kNearestDeltaRSSI);
 }
 
 - (NSString *)description {

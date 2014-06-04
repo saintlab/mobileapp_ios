@@ -50,8 +50,6 @@ static double const kDesiredAccelerometerAccuracy = 0.05;
   _motionManager.accelerometerUpdateInterval = kAccelerometerUpdateInterval;
   
   [_motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
-
-    NSLog(@"%f %f %f", accelerometerData.acceleration.x, accelerometerData.acceleration.y, accelerometerData.acceleration.z);
     
     if (nil == error &&
         accelerometerData.acceleration.z < -(1.0 - kDesiredAccelerometerAccuracy) &&
@@ -66,8 +64,6 @@ static double const kDesiredAccelerometerAccuracy = 0.05;
       numberOfFaceUpStillPositions = 0;
       
     }
-    
-    NSLog(@"numberOfFaceUpStillPositions> %ld", (long)numberOfFaceUpStillPositions);
     
     if (numberOfFaceUpStillPositions > numberOfDesiredStillPositions) {
       

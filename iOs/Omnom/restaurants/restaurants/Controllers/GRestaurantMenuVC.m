@@ -71,16 +71,21 @@
   backgroundIV.center = self.view.center;
   [self.view insertSubview:backgroundIV atIndex:0];
 
-  //do not use create button at this moment
-//  UIBarButtonItem *createOrderButton = [[UIBarButtonItem alloc] initWithTitle:@"Заказать" style:UIBarButtonItemStylePlain target:self	action:@selector(createOrderTap)];
-//  self.navigationItem.rightBarButtonItems = @[createOrderButton];
-
+  UIBarButtonItem *createOrderButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"User", nil) style:UIBarButtonItemStylePlain target:self	action:@selector(userProfileTap)];
+  self.navigationItem.rightBarButtonItems = @[createOrderButton];
+  
   UIBarButtonItem *getOrdersButton = [[UIBarButtonItem alloc] initWithTitle:@"Заказы" style:UIBarButtonItemStylePlain target:self	action:@selector(getOrdersTap)];
   getOrdersButton.accessibilityLabel = @"order_button";
   UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
   UIBarButtonItem *callWaiterButton = [[UIBarButtonItem alloc] initWithTitle:@"Официант" style:UIBarButtonItemStylePlain target:self	action:@selector(callWaiterTap)];
   
   self.toolbarItems = @[getOrdersButton, flex, callWaiterButton];
+  
+}
+
+- (void)userProfileTap {
+  
+  
   
 }
 

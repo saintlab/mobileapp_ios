@@ -19,6 +19,7 @@
 @implementation OMNSearchTableVC {
   OMNBeaconsManager *_beaconManager;
   OMNSearchTableVCBlock _didFindTableBlock;
+  __weak IBOutlet UILabel *_searchLabel;
 }
 
 - (instancetype)initWithBlock:(OMNSearchTableVCBlock)block {
@@ -49,11 +50,9 @@
 - (void)startSearchingTables {
   
   __weak typeof(self)weakSelf = self;
-  [_beaconManager startMonitoring:^(NSArray *foundBeacons) {
-    
-    if (foundBeacons.count) {
-      [weakSelf findNearestBeacon:foundBeacons];
-    }
+  [_beaconManager startMonitoringNearestBeacons:^(NSArray *foundBeacons) {
+
+    [weakSelf checkNearestBeacons:foundBeacons];
     
   }];
   
@@ -73,56 +72,25 @@
   
 }
 
-- (void)findNearestBeacon:(NSArray *)beacons {
+- (void)checkNearestBeacons:(NSArray *)nearestBeacons {
+
+  if (0 == nearestBeacons.count) {
+    return;
+  }
+  NSLog(@"nearestBeacons>%@", nearestBeacons);
   
-  if (beacons.count > 1) {
+  [_beaconManager stopMonitoring];
+  
+  if (nearestBeacons.count > 1) {
     
-#warning TODO
-    //TODO: handle more than one beacon
+    [self determineDeviceFaceUpPosition];
     
   }
   else {
     
-    
+    [self decodeBeacons:nearestBeacons];
     
   }
-  [_beaconManager stopMonitoring];
-  
-  [self determineDeviceFaceUpPosition];
-  return;
-  
-  __block OMNBeacon *nearestBeacon = nil;
-  [beacons enumerateObjectsUsingBlock:^(OMNBeacon *b, NSUInteger idx, BOOL *stop) {
-    
-    if (nil == nearestBeacon) {
-      nearestBeacon = b;
-    }
-    else {
-      
-      if ([b totalRSSI] > [nearestBeacon totalRSSI]) {
-        nearestBeacon = b;
-      }
-      
-    }
-    
-  }];
-  
-  
-  [OMNDecodeBeacon decodeBeacons:@[nearestBeacon] success:^(NSArray *decodeBeacons) {
-    
-    OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
-    if (_didFindTableBlock) {
-      _didFindTableBlock(decodeBeacon);
-    }
-    NSLog(@"decodeBeacons>%@", decodeBeacons);
-    
-  } failure:^(NSError *error) {
-    
-    NSLog(@"error>%@", error);
-    
-  }];
-  
-  NSLog(@"%@", nearestBeacon);
   
 }
 
@@ -133,6 +101,29 @@
   [self presentViewController:[[UINavigationController alloc] initWithRootViewController:tablePositionVC] animated:YES completion:nil];
   
 }
+
+- (void)decodeBeacons:(NSArray *)beaconsToDecode {
+  
+  _searchLabel.text = NSLocalizedString(@"Получаем информацию о столе...", nil);
+  
+  __weak typeof(self)weakSelf = self;
+  [OMNDecodeBeacon decodeBeacons:beaconsToDecode success:^(NSArray *decodeBeacons) {
+    
+    OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
+    if (_didFindTableBlock) {
+      _didFindTableBlock(decodeBeacon);
+    }
+    NSLog(@"decodeBeacons>%@", decodeBeacons);
+    
+  } failure:^(NSError *error) {
+    
+    [weakSelf decodeBeacons:beaconsToDecode];
+    NSLog(@"error>%@", error);
+    
+  }];
+  
+}
+
 
 #pragma mark - OMNTablePositionVCDelegate
 

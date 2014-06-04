@@ -8,6 +8,8 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+extern const NSInteger kBoardingRSSI;
+
 typedef NS_ENUM(NSInteger, BeaconDistance) {
   kBeaconDistanceNear,
   kBeaconDistanceFar,
@@ -28,7 +30,11 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 
 @property (nonatomic, assign, readonly) BOOL atTheTable;
 
+@property (nonatomic, assign, readonly) BOOL nearTheTable;
+
 - (NSTimeInterval)atTheTableTime;
+
+- (BOOL)closeToBeacon:(OMNBeacon *)beacon;
 
 - (void)updateWithBeacon:(OMNBeacon *)beacon;
 

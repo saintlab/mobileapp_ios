@@ -18,6 +18,8 @@ typedef void(^OMNFoundBeaconsBlock)(NSArray *foundBeacons);
 
 - (void)startMonitoring:(OMNFoundBeaconsBlock)block;
 
+- (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block;
+
 - (void)stopMonitoring;
 
 @end
