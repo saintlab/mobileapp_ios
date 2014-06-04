@@ -12,7 +12,7 @@
 
 @interface GProdductSelectionVC : UITableViewController
 
-@property (nonatomic, weak) id<GCalculatorVCDelegate>delegate;
+@property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
 

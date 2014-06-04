@@ -9,8 +9,8 @@
 #import "GAmountPercentControl.h"
 #import <TSCurrencyTextField.h>
 #import <UIControl+BlocksKit.h>
-#import "GConstants.h"
 #import "UIView+frame.h"
+#import "OMNConstants.h"
 
 @interface GAmountPercentControl ()
 <UIPickerViewDataSource,

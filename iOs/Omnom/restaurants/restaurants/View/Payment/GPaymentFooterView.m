@@ -12,7 +12,7 @@
 #import "OMNTipSelector.h"
 #import "GAmountPercentControl.h"
 #import "UIView+frame.h"
-#import "GConstants.h"
+#import "OMNConstants.h"
 
 @interface GPaymentFooterView ()
 <GAmountPercentControlDelegate>

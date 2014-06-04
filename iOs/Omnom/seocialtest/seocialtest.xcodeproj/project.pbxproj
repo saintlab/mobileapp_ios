@@ -29,8 +29,6 @@
 		9369BB9F192E2AE70018C79C /* GUserInfoDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB22192E2AE60018C79C /* GUserInfoDataSource.m */; };
 		9369BBA0192E2AE70018C79C /* GUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB24192E2AE60018C79C /* GUserInfoVC.m */; };
 		9369BBA1192E2AE70018C79C /* GUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB24192E2AE60018C79C /* GUserInfoVC.m */; };
-		9369BBA2192E2AE70018C79C /* GConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB26192E2AE60018C79C /* GConstants.m */; };
-		9369BBA3192E2AE70018C79C /* GConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB26192E2AE60018C79C /* GConstants.m */; };
 		9369BBA4192E2AE70018C79C /* GUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB28192E2AE60018C79C /* GUtils.m */; };
 		9369BBA5192E2AE70018C79C /* GUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB28192E2AE60018C79C /* GUtils.m */; };
 		9369BBA6192E2AE70018C79C /* GControllerMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB2B192E2AE60018C79C /* GControllerMediator.m */; };
@@ -118,8 +116,6 @@
 		9369BB22192E2AE60018C79C /* GUserInfoDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUserInfoDataSource.m; sourceTree = "<group>"; };
 		9369BB23192E2AE60018C79C /* GUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUserInfoVC.h; sourceTree = "<group>"; };
 		9369BB24192E2AE60018C79C /* GUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUserInfoVC.m; sourceTree = "<group>"; };
-		9369BB25192E2AE60018C79C /* GConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GConstants.h; sourceTree = "<group>"; };
-		9369BB26192E2AE60018C79C /* GConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GConstants.m; sourceTree = "<group>"; };
 		9369BB27192E2AE60018C79C /* GUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUtils.h; sourceTree = "<group>"; };
 		9369BB28192E2AE60018C79C /* GUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUtils.m; sourceTree = "<group>"; };
 		9369BB2A192E2AE60018C79C /* GControllerMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GControllerMediator.h; sourceTree = "<group>"; };
@@ -209,8 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				9369BAFD192E2AE60018C79C /* Controllers */,
-				9369BB25192E2AE60018C79C /* GConstants.h */,
-				9369BB26192E2AE60018C79C /* GConstants.m */,
 				9369BB27192E2AE60018C79C /* GUtils.h */,
 				9369BB28192E2AE60018C79C /* GUtils.m */,
 				9369BB29192E2AE60018C79C /* Mediator */,
@@ -647,7 +641,6 @@
 				9369BBB8192E2AE70018C79C /* OKFriends.m in Sources */,
 				9369BBD2192E2AE70018C79C /* GUserInfoTransitionDelegate.m in Sources */,
 				9369BBC6192E2AE70018C79C /* GVKNetwork.m in Sources */,
-				9369BBA2192E2AE70018C79C /* GConstants.m in Sources */,
 				9369BBC2192E2AE70018C79C /* OKTokenCache.m in Sources */,
 				9369BB7E192E2AE70018C79C /* GViewController.m in Sources */,
 				9369BBBA192E2AE70018C79C /* NSString+OKUtils.m in Sources */,
@@ -674,7 +667,6 @@
 				9369BBA7192E2AE70018C79C /* GControllerMediator.m in Sources */,
 				9369BBA1192E2AE70018C79C /* GUserInfoVC.m in Sources */,
 				9369BB9F192E2AE70018C79C /* GUserInfoDataSource.m in Sources */,
-				9369BBA3192E2AE70018C79C /* GConstants.m in Sources */,
 				9369BBC5192E2AE70018C79C /* GTwitterNetwork.m in Sources */,
 				9369BBB3192E2AE70018C79C /* GAuthManager.m in Sources */,
 				9369BBBB192E2AE70018C79C /* NSString+OKUtils.m in Sources */,

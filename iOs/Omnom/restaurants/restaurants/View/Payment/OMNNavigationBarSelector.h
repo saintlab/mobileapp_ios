@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GNavSelector : UIControl
+@interface OMNNavigationBarSelector : UIControl
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 
-- (instancetype)initTitles:(NSArray *)titles;
+- (instancetype)initWithTitles:(NSArray *)titles;
 
 @end

@@ -11,8 +11,15 @@ extern NSString * const kAuthorizationUrlString;
 
 extern NSString * const kBeaconUUIDString;
 
+extern NSString * const CardIOAppToken;
+
 typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);
 
-#define kUseStubData 0
-#define kUseStubBeacon 0
+#define kUseStubData 1
+#define kUseStubBeacon 1
+
+#define kGreenColor ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1])
+
+#define ALSRublFont(__FONTSIZE__) ([UIFont fontWithName:@"ALSRubl" size:__FONTSIZE__])
+#define kPayButtonFont ALSRublFont(20.0f)

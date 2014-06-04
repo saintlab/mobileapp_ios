@@ -7,8 +7,8 @@
 //
 
 #import "OMNTipButton.h"
-#import "GConstants.h"
 #import "OMNTip.h"
+#import "OMNConstants.h"
 
 @implementation OMNTipButton
 

@@ -43,7 +43,7 @@
 		9307C5731937022800408519 /* OMNOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307C5721937022800408519 /* OMNOrderCell.m */; };
 		931456B8193CA84D003E2CD6 /* OMNTipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 931456B7193CA84D003E2CD6 /* OMNTipButton.m */; };
 		9319FD62192F33B90053F3A4 /* GAmountPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD58192F33B90053F3A4 /* GAmountPercentControl.m */; };
-		9319FD63192F33B90053F3A4 /* GNavSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5A192F33B90053F3A4 /* GNavSelector.m */; };
+		9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5A192F33B90053F3A4 /* OMNNavigationBarSelector.m */; };
 		9319FD64192F33B90053F3A4 /* GPaymentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5C192F33B90053F3A4 /* GPaymentFooterView.m */; };
 		9319FD65192F33B90053F3A4 /* OMNTipSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5E192F33B90053F3A4 /* OMNTipSelector.m */; };
 		9319FD66192F33B90053F3A4 /* GToPayTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD60192F33B90053F3A4 /* GToPayTextField.m */; };
@@ -94,7 +94,6 @@
 		938E8F53192F3A200088EF38 /* OMNOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F31192F3A200088EF38 /* OMNOperationManager.m */; };
 		938E8F55192F3A200088EF38 /* OMNOrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F36192F3A200088EF38 /* OMNOrderItem.m */; };
 		938E8F56192F3A200088EF38 /* OMNAcquiring.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F3A192F3A200088EF38 /* OMNAcquiring.m */; };
-		938E8F57192F3A200088EF38 /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F3D192F3A200088EF38 /* OMNOrder.m */; };
 		938E8F58192F3A200088EF38 /* GMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F40192F3A200088EF38 /* GMenu.m */; };
 		938E8F59192F3A200088EF38 /* GMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F42192F3A200088EF38 /* GMenuItem.m */; };
 		938E8F5A192F3A200088EF38 /* OMNDecodeBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F44192F3A200088EF38 /* OMNDecodeBeacon.m */; };
@@ -108,13 +107,23 @@
 		93A59B151933193400AE1A6F /* menu.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B141933193400AE1A6F /* menu.data */; };
 		93A59B1719331B5B00AE1A6F /* orders.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B1619331B5B00AE1A6F /* orders.data */; };
 		93B09C3D18F3F5400027B19F /* orders.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B09C3C18F3F5400027B19F /* orders.json */; };
-		93BCFDEF192E5931005CAF39 /* GConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCFDEE192E5931005CAF39 /* GConstants.m */; };
 		93C99092193DBBE40028F76C /* OMNTablePositionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99090193DBBE40028F76C /* OMNTablePositionVC.m */; };
 		93C99093193DBBE40028F76C /* OMNTablePositionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99090193DBBE40028F76C /* OMNTablePositionVC.m */; };
 		93C99094193DBBE40028F76C /* OMNTablePositionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C99091193DBBE40028F76C /* OMNTablePositionVC.xib */; };
 		93C99095193DBBE40028F76C /* OMNTablePositionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C99091193DBBE40028F76C /* OMNTablePositionVC.xib */; };
 		93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
+		93C99116193EF6F20028F76C /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99115193EF6F20028F76C /* OMNOrder.m */; };
+		93C9913C193F04160028F76C /* FTN45__W.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9913A193F04160028F76C /* FTN45__W.ttf */; };
+		93C9913D193F04160028F76C /* FTN45__W.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9913A193F04160028F76C /* FTN45__W.ttf */; };
+		93C9913E193F04160028F76C /* FTR65__C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9913B193F04160028F76C /* FTR65__C.ttf */; };
+		93C9913F193F04160028F76C /* FTR65__C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9913B193F04160028F76C /* FTR65__C.ttf */; };
+		93C99147193F083F0028F76C /* OMNAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99142193F083F0028F76C /* OMNAssetManager.m */; };
+		93C99148193F083F0028F76C /* OMNAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99142193F083F0028F76C /* OMNAssetManager.m */; };
+		93C99149193F083F0028F76C /* OMNCircleAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99144193F083F0028F76C /* OMNCircleAssetManager.m */; };
+		93C9914A193F083F0028F76C /* OMNCircleAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99144193F083F0028F76C /* OMNCircleAssetManager.m */; };
+		93C9914B193F083F0028F76C /* OMNFuturaAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99146193F083F0028F76C /* OMNFuturaAssetManager.m */; };
+		93C9914C193F083F0028F76C /* OMNFuturaAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99146193F083F0028F76C /* OMNFuturaAssetManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -193,8 +202,8 @@
 		931456B7193CA84D003E2CD6 /* OMNTipButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTipButton.m; sourceTree = "<group>"; };
 		9319FD57192F33B90053F3A4 /* GAmountPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAmountPercentControl.h; sourceTree = "<group>"; };
 		9319FD58192F33B90053F3A4 /* GAmountPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAmountPercentControl.m; sourceTree = "<group>"; };
-		9319FD59192F33B90053F3A4 /* GNavSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNavSelector.h; sourceTree = "<group>"; };
-		9319FD5A192F33B90053F3A4 /* GNavSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNavSelector.m; sourceTree = "<group>"; };
+		9319FD59192F33B90053F3A4 /* OMNNavigationBarSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationBarSelector.h; sourceTree = "<group>"; };
+		9319FD5A192F33B90053F3A4 /* OMNNavigationBarSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationBarSelector.m; sourceTree = "<group>"; };
 		9319FD5B192F33B90053F3A4 /* GPaymentFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPaymentFooterView.h; sourceTree = "<group>"; };
 		9319FD5C192F33B90053F3A4 /* GPaymentFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPaymentFooterView.m; sourceTree = "<group>"; };
 		9319FD5D192F33B90053F3A4 /* OMNTipSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTipSelector.h; sourceTree = "<group>"; };
@@ -269,8 +278,6 @@
 		938E8F36192F3A200088EF38 /* OMNOrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderItem.m; sourceTree = "<group>"; };
 		938E8F39192F3A200088EF38 /* OMNAcquiring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAcquiring.h; sourceTree = "<group>"; };
 		938E8F3A192F3A200088EF38 /* OMNAcquiring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAcquiring.m; sourceTree = "<group>"; };
-		938E8F3C192F3A200088EF38 /* OMNOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrder.h; sourceTree = "<group>"; };
-		938E8F3D192F3A200088EF38 /* OMNOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrder.m; sourceTree = "<group>"; };
 		938E8F3F192F3A200088EF38 /* GMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMenu.h; sourceTree = "<group>"; };
 		938E8F40192F3A200088EF38 /* GMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMenu.m; sourceTree = "<group>"; };
 		938E8F41192F3A200088EF38 /* GMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMenuItem.h; sourceTree = "<group>"; };
@@ -292,13 +299,21 @@
 		93A59B141933193400AE1A6F /* menu.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = menu.data; sourceTree = "<group>"; };
 		93A59B1619331B5B00AE1A6F /* orders.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = orders.data; sourceTree = "<group>"; };
 		93B09C3C18F3F5400027B19F /* orders.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orders.json; sourceTree = "<group>"; };
-		93BCFDED192E5931005CAF39 /* GConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GConstants.h; path = ../seocialtest/seocialtest/social/GConstants.h; sourceTree = "<group>"; };
-		93BCFDEE192E5931005CAF39 /* GConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GConstants.m; path = ../seocialtest/seocialtest/social/GConstants.m; sourceTree = "<group>"; };
 		93C9908F193DBBE40028F76C /* OMNTablePositionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTablePositionVC.h; sourceTree = "<group>"; };
 		93C99090193DBBE40028F76C /* OMNTablePositionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTablePositionVC.m; sourceTree = "<group>"; };
 		93C99091193DBBE40028F76C /* OMNTablePositionVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNTablePositionVC.xib; sourceTree = "<group>"; };
 		93C99096193DE5990028F76C /* OMNAuthorizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorizationManager.h; sourceTree = "<group>"; };
 		93C99097193DE5990028F76C /* OMNAuthorizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationManager.m; sourceTree = "<group>"; };
+		93C99114193EF6F20028F76C /* OMNOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrder.h; sourceTree = "<group>"; };
+		93C99115193EF6F20028F76C /* OMNOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrder.m; sourceTree = "<group>"; };
+		93C9913A193F04160028F76C /* FTN45__W.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FTN45__W.ttf; sourceTree = "<group>"; };
+		93C9913B193F04160028F76C /* FTR65__C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FTR65__C.ttf; sourceTree = "<group>"; };
+		93C99141193F083F0028F76C /* OMNAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAssetManager.h; sourceTree = "<group>"; };
+		93C99142193F083F0028F76C /* OMNAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAssetManager.m; sourceTree = "<group>"; };
+		93C99143193F083F0028F76C /* OMNCircleAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleAssetManager.h; sourceTree = "<group>"; };
+		93C99144193F083F0028F76C /* OMNCircleAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCircleAssetManager.m; sourceTree = "<group>"; };
+		93C99145193F083F0028F76C /* OMNFuturaAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFuturaAssetManager.h; sourceTree = "<group>"; };
+		93C99146193F083F0028F76C /* OMNFuturaAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFuturaAssetManager.m; sourceTree = "<group>"; };
 		FF18A086CE7645CDA8239B3B /* libPods-restaurantsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-restaurantsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -493,8 +508,8 @@
 			children = (
 				9319FD57192F33B90053F3A4 /* GAmountPercentControl.h */,
 				9319FD58192F33B90053F3A4 /* GAmountPercentControl.m */,
-				9319FD59192F33B90053F3A4 /* GNavSelector.h */,
-				9319FD5A192F33B90053F3A4 /* GNavSelector.m */,
+				9319FD59192F33B90053F3A4 /* OMNNavigationBarSelector.h */,
+				9319FD5A192F33B90053F3A4 /* OMNNavigationBarSelector.m */,
 				9319FD5B192F33B90053F3A4 /* GPaymentFooterView.h */,
 				9319FD5C192F33B90053F3A4 /* GPaymentFooterView.m */,
 				931456B5193CA823003E2CD6 /* Tip */,
@@ -670,6 +685,7 @@
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				93C99140193F083F0028F76C /* AssetManager */,
 				930554DE1934974900E6F4EC /* Auth */,
 				938E8F61192F57E00088EF38 /* Transition */,
 				938E8F29192F3A200088EF38 /* Card */,
@@ -698,6 +714,8 @@
 		938E8F32192F3A200088EF38 /* Order */ = {
 			isa = PBXGroup;
 			children = (
+				93C99114193EF6F20028F76C /* OMNOrder.h */,
+				93C99115193EF6F20028F76C /* OMNOrder.m */,
 				938E8F35192F3A200088EF38 /* OMNOrderItem.h */,
 				938E8F36192F3A200088EF38 /* OMNOrderItem.m */,
 			);
@@ -724,18 +742,8 @@
 			children = (
 				938E8F39192F3A200088EF38 /* OMNAcquiring.h */,
 				938E8F3A192F3A200088EF38 /* OMNAcquiring.m */,
-				938E8F3B192F3A200088EF38 /* orders */,
 			);
 			path = Acquiring;
-			sourceTree = "<group>";
-		};
-		938E8F3B192F3A200088EF38 /* orders */ = {
-			isa = PBXGroup;
-			children = (
-				938E8F3C192F3A200088EF38 /* OMNOrder.h */,
-				938E8F3D192F3A200088EF38 /* OMNOrder.m */,
-			);
-			path = orders;
 			sourceTree = "<group>";
 		};
 		938E8F3E192F3A200088EF38 /* Menu */ = {
@@ -795,6 +803,8 @@
 			isa = PBXGroup;
 			children = (
 				938E8F67192F5C030088EF38 /* ALSRubl.otf */,
+				93C9913A193F04160028F76C /* FTN45__W.ttf */,
+				93C9913B193F04160028F76C /* FTR65__C.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -802,8 +812,6 @@
 		9397DD5218F425A0005E3A8B /* References */ = {
 			isa = PBXGroup;
 			children = (
-				93BCFDED192E5931005CAF39 /* GConstants.h */,
-				93BCFDEE192E5931005CAF39 /* GConstants.m */,
 				930554AC1934793000E6F4EC /* BeaconModel */,
 			);
 			name = References;
@@ -818,6 +826,19 @@
 				9319FDA9192F362F0053F3A4 /* OMNLoginVC.m */,
 			);
 			name = Other;
+			sourceTree = "<group>";
+		};
+		93C99140193F083F0028F76C /* AssetManager */ = {
+			isa = PBXGroup;
+			children = (
+				93C99141193F083F0028F76C /* OMNAssetManager.h */,
+				93C99142193F083F0028F76C /* OMNAssetManager.m */,
+				93C99143193F083F0028F76C /* OMNCircleAssetManager.h */,
+				93C99144193F083F0028F76C /* OMNCircleAssetManager.m */,
+				93C99145193F083F0028F76C /* OMNFuturaAssetManager.h */,
+				93C99146193F083F0028F76C /* OMNFuturaAssetManager.m */,
+			);
+			path = AssetManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -911,6 +932,7 @@
 			files = (
 				93A59B151933193400AE1A6F /* menu.data in Resources */,
 				930555001935DA7C00E6F4EC /* GPaySavedCardVC.xib in Resources */,
+				93C9913E193F04160028F76C /* FTR65__C.ttf in Resources */,
 				930555021935DA7C00E6F4EC /* OMNPayCardVC.xib in Resources */,
 				930554DB19347C4900E6F4EC /* OMNSearchTableVC.xib in Resources */,
 				935C284219066755003B4881 /* fill-form in Resources */,
@@ -923,6 +945,7 @@
 				93C99094193DBBE40028F76C /* OMNTablePositionVC.xib in Resources */,
 				93676E4018D1EAB900FC55F1 /* restaurants.json in Resources */,
 				938E8F68192F5C030088EF38 /* ALSRubl.otf in Resources */,
+				93C9913C193F04160028F76C /* FTN45__W.ttf in Resources */,
 				930555051935DA7C00E6F4EC /* OMNPaymentVC.xib in Resources */,
 				93676E0818D1E4FC00FC55F1 /* Images.xcassets in Resources */,
 				93A59B1719331B5B00AE1A6F /* orders.data in Resources */,
@@ -936,6 +959,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93C9913F193F04160028F76C /* FTR65__C.ttf in Resources */,
+				93C9913D193F04160028F76C /* FTN45__W.ttf in Resources */,
 				93676E4C18D1F10300FC55F1 /* menu.json in Resources */,
 				93676E4118D1EAB900FC55F1 /* restaurants.json in Resources */,
 				93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
@@ -1015,6 +1040,7 @@
 			files = (
 				938E8F64192F580F0088EF38 /* OMNCalculatorTransition.m in Sources */,
 				930554D31934793000E6F4EC /* OMNBeaconRangingManager.m in Sources */,
+				93C9914B193F083F0028F76C /* OMNFuturaAssetManager.m in Sources */,
 				938E8F58192F3A200088EF38 /* GMenu.m in Sources */,
 				9319FDCD192F362F0053F3A4 /* OMNBeaconTableVC.m in Sources */,
 				9319FDD0192F362F0053F3A4 /* OMNLoginVC.m in Sources */,
@@ -1035,9 +1061,8 @@
 				930555011935DA7C00E6F4EC /* OMNPayCardVC.m in Sources */,
 				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
 				930554CE1934793000E6F4EC /* OMNDevicePositionManager.m in Sources */,
-				93BCFDEF192E5931005CAF39 /* GConstants.m in Sources */,
 				9319FD64192F33B90053F3A4 /* GPaymentFooterView.m in Sources */,
-				9319FD63192F33B90053F3A4 /* GNavSelector.m in Sources */,
+				9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */,
 				9319FDCB192F362F0053F3A4 /* GRestaurantMenuVC.m in Sources */,
 				938E8F52192F3A200088EF38 /* OMNFoundBeaconsHandler.m in Sources */,
 				9319FDC7192F362F0053F3A4 /* OMNDemoBlueToothVC.m in Sources */,
@@ -1057,13 +1082,16 @@
 				930554C91934793000E6F4EC /* CLBeacon+GBeaconAdditions.m in Sources */,
 				938E8F50192F3A200088EF38 /* OMNCardInfo.m in Sources */,
 				9319FD65192F33B90053F3A4 /* OMNTipSelector.m in Sources */,
+				93C99149193F083F0028F76C /* OMNCircleAssetManager.m in Sources */,
 				930555031935DA7C00E6F4EC /* GPaymentVCDataSource.m in Sources */,
 				93676DFD18D1E4FC00FC55F1 /* GAppDelegate.m in Sources */,
 				937E0B5F18F04EC20058A249 /* OMNConstants.m in Sources */,
 				930554DA19347C4900E6F4EC /* OMNSearchTableVC.m in Sources */,
 				938E8F56192F3A200088EF38 /* OMNAcquiring.m in Sources */,
+				93C99116193EF6F20028F76C /* OMNOrder.m in Sources */,
 				9319FDD1192F362F0053F3A4 /* OMNOrdersVC.m in Sources */,
 				930554E11934978400E6F4EC /* OMNAuthorisation.m in Sources */,
+				93C99147193F083F0028F76C /* OMNAssetManager.m in Sources */,
 				930554CB1934793000E6F4EC /* OMNBeacon.m in Sources */,
 				9319FDD4192F362F0053F3A4 /* OMNTableOrdersVC.m in Sources */,
 				930554D11934793000E6F4EC /* GDefaultClient.m in Sources */,
@@ -1074,7 +1102,6 @@
 				930554CD1934793000E6F4EC /* OMNBeaconsManager.m in Sources */,
 				930554FC1935DA7C00E6F4EC /* GProdductSelectionVC.m in Sources */,
 				93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
-				938E8F57192F3A200088EF38 /* OMNOrder.m in Sources */,
 				931456B8193CA84D003E2CD6 /* OMNTipButton.m in Sources */,
 				938E8F5A192F3A200088EF38 /* OMNDecodeBeacon.m in Sources */,
 				9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */,
@@ -1088,11 +1115,14 @@
 			files = (
 				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				935C283F19066737003B4881 /* fill-form in Sources */,
+				93C9914C193F083F0028F76C /* OMNFuturaAssetManager.m in Sources */,
 				935C284119066737003B4881 /* jquery-2.0.3.min in Sources */,
+				93C99148193F083F0028F76C /* OMNAssetManager.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* restaurantsTests.m in Sources */,
 				937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */,
 				9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */,
 				938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */,
+				93C9914A193F083F0028F76C /* OMNCircleAssetManager.m in Sources */,
 				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,
 				93C99093193DBBE40028F76C /* OMNTablePositionVC.m in Sources */,
 			);

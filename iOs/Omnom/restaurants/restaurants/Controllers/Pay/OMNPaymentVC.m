@@ -21,7 +21,7 @@
 #import "UINavigationController+omn_replace.h"
 
 @interface OMNPaymentVC ()
-<GCalculatorVCDelegate,
+<OMNCalculatorVCDelegate,
 OMNPayCardVCDelegate,
 OMNGPBPayVCDelegate,
 UITableViewDelegate,
@@ -91,8 +91,8 @@ UINavigationControllerDelegate>
   } forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.titleView = rateButton;
   
-//  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap:)];
-//  [_tableView addGestureRecognizer:tapGR];
+  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap:)];
+  [_tableView addGestureRecognizer:tapGR];
   
 }
 
@@ -167,6 +167,7 @@ UINavigationControllerDelegate>
   _tableView.delegate = nil;
   OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithOrder:_order];
   calculatorVC.delegate = self;
+  calculatorVC.navigationItem.title = NSLocalizedString(@"Калькуляция", nil);
   self.navigationController.delegate = self;
   [self.navigationController pushViewController:calculatorVC animated:YES];
 //  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:calculatorVC] animated:YES completion:nil];
@@ -249,7 +250,8 @@ UINavigationControllerDelegate>
 #pragma mark - UITableViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  
+
+  return;
   if (scrollView.contentOffset.y < - 20.0f) {
     scrollView.userInteractionEnabled = NO;
     [self calculatorTap:nil];

@@ -10,7 +10,7 @@
 
 @interface GSplitSelectionVC : UIViewController
 
-@property (nonatomic, weak) id<GCalculatorVCDelegate>delegate;
+@property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
 - (instancetype)initWIthTotal:(double)total;
 

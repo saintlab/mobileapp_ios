@@ -8,7 +8,7 @@
 
 #import "OMNOrderCell.h"
 #import "UIView+frame.h"
-#import "GConstants.h"
+#import "OMNConstants.h"
 
 @implementation OMNOrderCell {
   UILabel *_nameLabel;

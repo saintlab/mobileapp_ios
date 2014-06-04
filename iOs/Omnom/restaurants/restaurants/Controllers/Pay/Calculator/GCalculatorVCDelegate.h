@@ -8,7 +8,7 @@
 
 @class OMNCalculatorVC;
 
-@protocol GCalculatorVCDelegate <NSObject>
+@protocol OMNCalculatorVCDelegate <NSObject>
 
 @optional
 

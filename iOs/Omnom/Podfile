@@ -54,3 +54,8 @@ target :seocialtest do
   import_all
   xcodeproj 'seocialtest/seocialtest.xcodeproj'
 end
+
+target :fontTest do
+  import_all
+  xcodeproj 'fontTest/fontTest.xcodeproj'
+end

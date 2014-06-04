@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GNavSelector.h"
+#import "OMNNavigationBarSelector.h"
 #import "UIView+frame.h"
 
 const CGFloat kButtonWidth = 100.0f;
 
-@implementation GNavSelector {
+@implementation OMNNavigationBarSelector {
   UIView *_buttonsContainerView;
 
   NSArray *_titles;
@@ -19,7 +19,7 @@ const CGFloat kButtonWidth = 100.0f;
   NSMutableArray *_buttons;
 }
 
-- (id)initTitles:(NSArray *)titles {
+- (instancetype)initWithTitles:(NSArray *)titles {
   self = [super initWithFrame:CGRectMake(0, 0, 320.0f, 40.0f)];
   if (self) {
     _titles = titles;
@@ -27,7 +27,6 @@ const CGFloat kButtonWidth = 100.0f;
   }
   return self;
 }
-
 
 - (void)setup {
   

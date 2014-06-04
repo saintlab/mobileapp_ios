@@ -8,7 +8,7 @@
 
 #import "OMNPayCardVC.h"
 #import <CardIO.h>
-#import "GConstants.h"
+#import "OMNConstants.h"
 #import "OMNCardInfo.h"
 
 @interface OMNPayCardVC ()

@@ -11,15 +11,15 @@
 #import "GSplitSelectionVC.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNOrder.h"
-#import "GNavSelector.h"
-#import "GConstants.h"
+#import "OMNNavigationBarSelector.h"
+#import "OMNConstants.h"
 #import "UIView+frame.h"
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
 static const CGFloat kTopOffset = 40.0f;
 
 @interface OMNCalculatorVC ()
-<GCalculatorVCDelegate>
+<OMNCalculatorVCDelegate>
 
 @property (strong, nonatomic) GProdductSelectionVC *firstViewController;
 @property (strong, nonatomic) GSplitSelectionVC *secondViewController;
@@ -47,16 +47,23 @@ static const CGFloat kTopOffset = 40.0f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+  self.view.backgroundColor = [UIColor whiteColor];
   self.automaticallyAdjustsScrollViewInsets = NO;
 
+  if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+  }
+  
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"white_pixel"];
   
-  GNavSelector *_navSelector = [[GNavSelector alloc] initTitles:@[@"По блюдам", @"Поровну"]];
+  OMNNavigationBarSelector *_navSelector = [[OMNNavigationBarSelector alloc] initWithTitles:
+  @[
+    NSLocalizedString(@"По блюдам", nil),
+    NSLocalizedString(@"Поровну", nil)
+    ]];
   [self.view addSubview:_navSelector];
   [_navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
-  
   
   _totalButton = [[UIButton alloc] init];
   _totalButton.titleLabel.font = kPayButtonFont;
@@ -125,7 +132,7 @@ static const CGFloat kTopOffset = 40.0f;
   [super viewWillAppear:animated];
 }
 
-- (void)navSelectorDidChange:(GNavSelector *)navSelector {
+- (void)navSelectorDidChange:(OMNNavigationBarSelector *)navSelector {
   
   [self showViewControllerAtIndex:navSelector.selectedIndex];
   
