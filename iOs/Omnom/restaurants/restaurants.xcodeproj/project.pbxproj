@@ -114,16 +114,20 @@
 		93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93C99116193EF6F20028F76C /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99115193EF6F20028F76C /* OMNOrder.m */; };
-		93C9913C193F04160028F76C /* FTN45__W.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9913A193F04160028F76C /* FTN45__W.ttf */; };
-		93C9913D193F04160028F76C /* FTN45__W.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9913A193F04160028F76C /* FTN45__W.ttf */; };
-		93C9913E193F04160028F76C /* FTR65__C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9913B193F04160028F76C /* FTR65__C.ttf */; };
-		93C9913F193F04160028F76C /* FTR65__C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9913B193F04160028F76C /* FTR65__C.ttf */; };
 		93C99147193F083F0028F76C /* OMNAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99142193F083F0028F76C /* OMNAssetManager.m */; };
 		93C99148193F083F0028F76C /* OMNAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99142193F083F0028F76C /* OMNAssetManager.m */; };
 		93C99149193F083F0028F76C /* OMNCircleAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99144193F083F0028F76C /* OMNCircleAssetManager.m */; };
 		93C9914A193F083F0028F76C /* OMNCircleAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99144193F083F0028F76C /* OMNCircleAssetManager.m */; };
 		93C9914B193F083F0028F76C /* OMNFuturaAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99146193F083F0028F76C /* OMNFuturaAssetManager.m */; };
 		93C9914C193F083F0028F76C /* OMNFuturaAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99146193F083F0028F76C /* OMNFuturaAssetManager.m */; };
+		93C99158193F17480028F76C /* CRC35.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99157193F17480028F76C /* CRC35.ttf */; };
+		93C99159193F17480028F76C /* CRC35.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99157193F17480028F76C /* CRC35.ttf */; };
+		93C9915B193F17530028F76C /* CRC55.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9915A193F17530028F76C /* CRC55.ttf */; };
+		93C9915C193F17530028F76C /* CRC55.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9915A193F17530028F76C /* CRC55.ttf */; };
+		93C9915E193F175E0028F76C /* FTN45.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9915D193F175E0028F76C /* FTN45.ttf */; };
+		93C9915F193F175E0028F76C /* FTN45.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9915D193F175E0028F76C /* FTN45.ttf */; };
+		93C99161193F176B0028F76C /* FTN55.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99160193F176B0028F76C /* FTN55.ttf */; };
+		93C99162193F176B0028F76C /* FTN55.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99160193F176B0028F76C /* FTN55.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -306,14 +310,16 @@
 		93C99097193DE5990028F76C /* OMNAuthorizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationManager.m; sourceTree = "<group>"; };
 		93C99114193EF6F20028F76C /* OMNOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrder.h; sourceTree = "<group>"; };
 		93C99115193EF6F20028F76C /* OMNOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrder.m; sourceTree = "<group>"; };
-		93C9913A193F04160028F76C /* FTN45__W.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FTN45__W.ttf; sourceTree = "<group>"; };
-		93C9913B193F04160028F76C /* FTR65__C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FTR65__C.ttf; sourceTree = "<group>"; };
 		93C99141193F083F0028F76C /* OMNAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAssetManager.h; sourceTree = "<group>"; };
 		93C99142193F083F0028F76C /* OMNAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAssetManager.m; sourceTree = "<group>"; };
 		93C99143193F083F0028F76C /* OMNCircleAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleAssetManager.h; sourceTree = "<group>"; };
 		93C99144193F083F0028F76C /* OMNCircleAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCircleAssetManager.m; sourceTree = "<group>"; };
 		93C99145193F083F0028F76C /* OMNFuturaAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFuturaAssetManager.h; sourceTree = "<group>"; };
 		93C99146193F083F0028F76C /* OMNFuturaAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFuturaAssetManager.m; sourceTree = "<group>"; };
+		93C99157193F17480028F76C /* CRC35.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CRC35.ttf; sourceTree = "<group>"; };
+		93C9915A193F17530028F76C /* CRC55.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = CRC55.ttf; sourceTree = "<group>"; };
+		93C9915D193F175E0028F76C /* FTN45.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FTN45.ttf; sourceTree = "<group>"; };
+		93C99160193F176B0028F76C /* FTN55.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FTN55.ttf; sourceTree = "<group>"; };
 		FF18A086CE7645CDA8239B3B /* libPods-restaurantsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-restaurantsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -803,8 +809,10 @@
 			isa = PBXGroup;
 			children = (
 				938E8F67192F5C030088EF38 /* ALSRubl.otf */,
-				93C9913A193F04160028F76C /* FTN45__W.ttf */,
-				93C9913B193F04160028F76C /* FTR65__C.ttf */,
+				93C99157193F17480028F76C /* CRC35.ttf */,
+				93C9915A193F17530028F76C /* CRC55.ttf */,
+				93C9915D193F175E0028F76C /* FTN45.ttf */,
+				93C99160193F176B0028F76C /* FTN55.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -932,12 +940,14 @@
 			files = (
 				93A59B151933193400AE1A6F /* menu.data in Resources */,
 				930555001935DA7C00E6F4EC /* GPaySavedCardVC.xib in Resources */,
-				93C9913E193F04160028F76C /* FTR65__C.ttf in Resources */,
+				93C99158193F17480028F76C /* CRC35.ttf in Resources */,
 				930555021935DA7C00E6F4EC /* OMNPayCardVC.xib in Resources */,
 				930554DB19347C4900E6F4EC /* OMNSearchTableVC.xib in Resources */,
 				935C284219066755003B4881 /* fill-form in Resources */,
 				93A59B131933181000AE1A6F /* restaurants.data in Resources */,
+				93C99161193F176B0028F76C /* FTN55.ttf in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
+				93C9915E193F175E0028F76C /* FTN45.ttf in Resources */,
 				93676E4B18D1F10300FC55F1 /* menu.json in Resources */,
 				9319FDC8192F362F0053F3A4 /* OMNDemoBlueToothVC.xib in Resources */,
 				93B09C3D18F3F5400027B19F /* orders.json in Resources */,
@@ -945,9 +955,9 @@
 				93C99094193DBBE40028F76C /* OMNTablePositionVC.xib in Resources */,
 				93676E4018D1EAB900FC55F1 /* restaurants.json in Resources */,
 				938E8F68192F5C030088EF38 /* ALSRubl.otf in Resources */,
-				93C9913C193F04160028F76C /* FTN45__W.ttf in Resources */,
 				930555051935DA7C00E6F4EC /* OMNPaymentVC.xib in Resources */,
 				93676E0818D1E4FC00FC55F1 /* Images.xcassets in Resources */,
+				93C9915B193F17530028F76C /* CRC55.ttf in Resources */,
 				93A59B1719331B5B00AE1A6F /* orders.data in Resources */,
 				93676E0018D1E4FC00FC55F1 /* Main_iPhone.storyboard in Resources */,
 				93676DF718D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
@@ -959,12 +969,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93C9913F193F04160028F76C /* FTR65__C.ttf in Resources */,
-				93C9913D193F04160028F76C /* FTN45__W.ttf in Resources */,
 				93676E4C18D1F10300FC55F1 /* menu.json in Resources */,
 				93676E4118D1EAB900FC55F1 /* restaurants.json in Resources */,
 				93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
+				93C99159193F17480028F76C /* CRC35.ttf in Resources */,
 				93C99095193DBBE40028F76C /* OMNTablePositionVC.xib in Resources */,
+				93C9915C193F17530028F76C /* CRC55.ttf in Resources */,
+				93C9915F193F175E0028F76C /* FTN45.ttf in Resources */,
+				93C99162193F176B0028F76C /* FTN55.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

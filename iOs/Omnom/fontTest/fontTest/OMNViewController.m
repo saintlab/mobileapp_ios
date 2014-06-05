@@ -9,6 +9,8 @@
 #import "OMNViewController.h"
 #import "OMNCalculatorVC.h"
 #import "OMNRestaurant.h"
+#import "OMNFuturaAssetManager.h"
+#import "OMNCircleAssetManager.h"
 
 @interface OMNViewController ()
 <OMNCalculatorVCDelegate>
@@ -47,13 +49,23 @@
   // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)showCalculator {
+- (IBAction)showCalculator:(OMNAssetManager *)manager {
+  
+  [OMNAssetManager updateWithManager:manager];
   
   OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithOrder:_order];
   calculatorVC.delegate = self;
   calculatorVC.navigationItem.title = NSLocalizedString(@"Калькуляция", nil);
   [self.navigationController pushViewController:calculatorVC animated:YES];
   
+}
+
+- (IBAction)showFutura {
+  [self showCalculator:[OMNFuturaAssetManager new]];
+}
+
+- (IBAction)showCircle {
+  [self showCalculator:[OMNCircleAssetManager new]];
 }
 
 #pragma mark - GCalculatorVCDelegate

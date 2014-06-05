@@ -8,25 +8,39 @@
 
 #import "OMNAssetManager.h"
 
+static OMNAssetManager *_manager = nil;
+
 @implementation OMNAssetManager
 
-+ (UIFont *)navBarTitleFont {
++ (instancetype)manager {
+  return _manager;
+}
+
++ (void)updateWithManager:(OMNAssetManager *)manager {
+  _manager = manager;
+}
+
+- (UIFont *)navBarTitleFont {
   return nil;
 }
 
-+ (UIFont *)navBarButtonFont {
+- (UIFont *)navBarButtonFont {
   return nil;
 }
 
-+ (UIFont *)navBarSelectorFont {
+- (UIFont *)navBarSelectorDefaultFont {
   return nil;
 }
 
-+ (UIFont *)splitCellFont {
+- (UIFont *)navBarSelectorSelectedFont {
   return nil;
 }
 
-+ (UIFont *)splitTotalFont {
+- (UIFont *)splitCellFont {
+  return nil;
+}
+
+- (UIFont *)splitTotalFont {
   return nil;
 }
 

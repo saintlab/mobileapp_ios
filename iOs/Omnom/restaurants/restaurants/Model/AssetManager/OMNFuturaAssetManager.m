@@ -9,26 +9,32 @@
 #import "OMNFuturaAssetManager.h"
 #import "OMNConstants.h"
 
+CGFloat kFuturaDeltaFontSize = 1.0f;
+
 @implementation OMNFuturaAssetManager
 
-+ (UIFont *)navBarTitleFont {
-  return ALSRublFont(36);
+- (UIFont *)navBarTitleFont {
+  return FuturaMediumFont(18.0f + kFuturaDeltaFontSize);
 }
 
-+ (UIFont *)navBarButtonFont {
-  return ALSRublFont(36);
+- (UIFont *)navBarButtonFont {
+  return FuturaBookFont(18.0f + kFuturaDeltaFontSize);
 }
 
-+ (UIFont *)navBarSelectorFont {
-  return ALSRublFont(32);
+- (UIFont *)navBarSelectorDefaultFont {
+  return FuturaBookFont(16.0f + kFuturaDeltaFontSize);
 }
 
-+ (UIFont *)splitCellFont {
-  return ALSRublFont(32);
+- (UIFont *)navBarSelectorSelectedFont {
+  return FuturaMediumFont(16.0f + kFuturaDeltaFontSize);
 }
 
-+ (UIFont *)splitTotalFont {
-  return ALSRublFont(40);
+- (UIFont *)splitCellFont {
+  return FuturaBookFont(16.0f + kFuturaDeltaFontSize);
+}
+
+- (UIFont *)splitTotalFont {
+  return FuturaBookFont(21.0f + kFuturaDeltaFontSize);
 }
 
 @end

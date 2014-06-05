@@ -17,12 +17,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-  NSLog(@"%@", [UIFont familyNames]);
-  NSLog(@"%d", [UIFont familyNames].count);
-  NSLog(@"%@", [UIFont fontNamesForFamilyName:@"FuturaDemiCTT"]);
-  NSLog(@"%@", [UIFont fontNamesForFamilyName:@""]);
-  NSLog(@"%@", [UIFont fontNamesForFamilyName:@"Futura"]);
-  
   [OMNAuthorisation authorisation];
   
   OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
@@ -34,7 +28,6 @@
     
   }];
   self.window.rootViewController = searchTableVC;
-  
   
   return YES;
   

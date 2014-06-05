@@ -54,8 +54,10 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>ALSRubl.otf</string>
-		<string>FTR65__C.ttf</string>
-		<string>FTN45__W.ttf</string>
+		<string>FTN45.ttf</string>
+		<string>FTN55.ttf</string>
+		<string>CRC35.ttf</string>
+		<string>CRC55.ttf</string>
 	</array>
 </dict>
 </plist>

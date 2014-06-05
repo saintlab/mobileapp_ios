@@ -10,14 +10,20 @@
 
 @interface OMNAssetManager : NSObject
 
-+ (UIFont *)navBarTitleFont;
++ (instancetype)manager;
 
-+ (UIFont *)navBarButtonFont;
++ (void)updateWithManager:(OMNAssetManager *)manager;
 
-+ (UIFont *)navBarSelectorFont;
+- (UIFont *)navBarTitleFont;
 
-+ (UIFont *)splitCellFont;
+- (UIFont *)navBarButtonFont;
 
-+ (UIFont *)splitTotalFont;
+- (UIFont *)navBarSelectorDefaultFont;
+
+- (UIFont *)navBarSelectorSelectedFont;
+
+- (UIFont *)splitCellFont;
+
+- (UIFont *)splitTotalFont;
 
 @end

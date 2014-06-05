@@ -9,6 +9,7 @@
 #import "OMNOrderCell.h"
 #import "UIView+frame.h"
 #import "OMNConstants.h"
+#import "OMNAssetManager.h"
 
 @implementation OMNOrderCell {
   UILabel *_nameLabel;
@@ -37,13 +38,14 @@
   
   _nameLabel = [[UILabel alloc] init];
   _nameLabel.textColor = [UIColor blackColor];
-  _nameLabel.font = ALSRublFont(15.0f);
+  _nameLabel.font = [OMNAssetManager manager].splitCellFont;
+  
   [self.contentView addSubview:_nameLabel];
   
   _priceLabel = [[UILabel alloc] init];
   _priceLabel.textColor = [UIColor colorWithWhite:127 / 255. alpha:1];
   _priceLabel.textAlignment = NSTextAlignmentRight;
-  _priceLabel.font = ALSRublFont(15.0f);
+  _priceLabel.font = [OMNAssetManager manager].splitCellFont;
   [self.contentView addSubview:_priceLabel];
   
   _iconView = [[UIImageView alloc] init];
@@ -58,7 +60,7 @@
   const CGFloat priceLabelWidth = 90.0f;
   
   _iconView.frame = CGRectMake(0, 0, self.height, self.height);
-  _priceLabel.frame = CGRectMake(self.width - priceLabelWidth - 10.0f, 0, priceLabelWidth, self.height);
+  _priceLabel.frame = CGRectMake(self.width - priceLabelWidth - 15.0f, 0, priceLabelWidth, self.height);
   _nameLabel.frame = CGRectMake(_iconView.right, 0, self.width - _iconView.width - _priceLabel.width, self.height);
   
 }
@@ -66,7 +68,7 @@
 - (void)setOrderItem:(OMNOrderItem *)orderItem {
   
   _iconView.image = orderItem.icon;
-  _priceLabel.text = [NSString stringWithFormat:@"%.0fi", orderItem.price];
+  _priceLabel.text = [NSString stringWithFormat:@"%.0fР", orderItem.price];
   _nameLabel.text = orderItem.name;
   
 }

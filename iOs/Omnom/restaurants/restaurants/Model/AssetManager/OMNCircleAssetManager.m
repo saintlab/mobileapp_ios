@@ -9,26 +9,32 @@
 #import "OMNCircleAssetManager.h"
 #import "OMNConstants.h"
 
+CGFloat kDeltaFontSize = 1.0f;
+
 @implementation OMNCircleAssetManager
 
-+ (UIFont *)navBarTitleFont {
-  return ALSRublFont(36);
+- (UIFont *)navBarTitleFont {
+  return CirceRegularFont(17.0f + kDeltaFontSize);
 }
 
-+ (UIFont *)navBarButtonFont {
-  return ALSRublFont(36);
+- (UIFont *)navBarButtonFont {
+  return CirceLightFont(17.0f + kDeltaFontSize);
 }
 
-+ (UIFont *)navBarSelectorFont {
-  return ALSRublFont(32);
+- (UIFont *)navBarSelectorDefaultFont {
+  return CirceLightFont(17.0f + kDeltaFontSize);
 }
 
-+ (UIFont *)splitCellFont {
-  return ALSRublFont(32);
+- (UIFont *)navBarSelectorSelectedFont {
+  return CirceRegularFont(17.0f + kDeltaFontSize);
 }
 
-+ (UIFont *)splitTotalFont {
-  return ALSRublFont(40);
+- (UIFont *)splitCellFont {
+  return CirceRegularFont(15.0f + kDeltaFontSize);
+}
+
+- (UIFont *)splitTotalFont {
+  return CirceRegularFont(20.0f + kDeltaFontSize);
 }
 
 @end

@@ -14,6 +14,7 @@
 #import "OMNNavigationBarSelector.h"
 #import "OMNConstants.h"
 #import "UIView+frame.h"
+#import "OMNAssetManager.h"
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
 static const CGFloat kTopOffset = 40.0f;
@@ -49,25 +50,35 @@ static const CGFloat kTopOffset = 40.0f;
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
   self.automaticallyAdjustsScrollViewInsets = NO;
-
+  
+  self.navigationController.navigationBar.translucent = NO;
+  
   if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
   }
+  
+  [self.navigationController.navigationBar setTitleTextAttributes:
+   @{
+     NSFontAttributeName : [OMNAssetManager manager].navBarTitleFont
+     }];
+  
+  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:@{NSFontAttributeName : [OMNAssetManager manager].navBarButtonFont} forState:UIControlStateNormal];
   
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"white_pixel"];
   
   OMNNavigationBarSelector *_navSelector = [[OMNNavigationBarSelector alloc] initWithTitles:
-  @[
-    NSLocalizedString(@"По блюдам", nil),
-    NSLocalizedString(@"Поровну", nil)
-    ]];
+                                            @[
+                                              NSLocalizedString(@"По блюдам", nil),
+                                              NSLocalizedString(@"Поровну", nil)
+                                              ]];
   [self.view addSubview:_navSelector];
   [_navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
   
   _totalButton = [[UIButton alloc] init];
-  _totalButton.titleLabel.font = kPayButtonFont;
-  _totalButton.titleEdgeInsets = UIEdgeInsetsMake(3.0f, 0, 0, 0);
+  _totalButton.titleLabel.font = [OMNAssetManager manager].splitTotalFont;
+//  _totalButton.titleEdgeInsets = UIEdgeInsetsMake(3.0f, 0, 0, 0);
+  [_totalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_totalButton setBackgroundImage:[UIImage imageNamed:@"button_green"] forState:UIControlStateNormal];
   _totalButton.userInteractionEnabled = NO;
   [_totalButton sizeToFit];
@@ -75,6 +86,7 @@ static const CGFloat kTopOffset = 40.0f;
   
   _containerView = [[UIView alloc] init];
   [self.view addSubview:_containerView];
+  
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
     
@@ -94,13 +106,13 @@ static const CGFloat kTopOffset = 40.0f;
     
   }];
   self.navigationItem.rightBarButtonItem.tintColor = kGreenColor;
-
+  
   self.view.backgroundColor = [UIColor whiteColor];
   
   self.transitionInProgress = NO;
-
+  
   self.currentController = self.firstViewController;
-
+  
   // If this is the very first time we're loading this we need to do
   // an initial load and not a swap.
   [self addChildViewController:self.firstViewController];
@@ -109,14 +121,14 @@ static const CGFloat kTopOffset = 40.0f;
   [self.firstViewController didMoveToParentViewController:self];
   
   [self.view bringSubviewToFront:_totalButton];
-
+  
   [self totalDidChange:0];
   
 }
 
 
 - (void)viewWillLayoutSubviews {
-
+  
   CGRect toFrame = self.view.bounds;
   toFrame.origin.y = kTopOffset;
   toFrame.size.height -= kTopOffset;
@@ -161,7 +173,7 @@ static const CGFloat kTopOffset = 40.0f;
 - (GSplitSelectionVC *)secondViewController {
   
   if (nil == _secondViewController) {
-
+    
     _secondViewController = [[GSplitSelectionVC alloc] initWIthTotal:[_order total]];
     _secondViewController.delegate = self;
   }
@@ -175,7 +187,7 @@ static const CGFloat kTopOffset = 40.0f;
     return;
   }
   
-
+  
   switch (index) {
     case 0: {
       
@@ -188,13 +200,13 @@ static const CGFloat kTopOffset = 40.0f;
       
     } break;
   }
- 
+  
 }
 
 - (void)swapFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController right:(BOOL)right {
   
   self.transitionInProgress = YES;
-
+  
   CGRect fromFrame = fromViewController.view.frame;
   CGRect toFrame = _containerView.bounds;
   
@@ -207,7 +219,7 @@ static const CGFloat kTopOffset = 40.0f;
   
   [self addChildViewController:toViewController];
   [fromViewController willMoveToParentViewController:nil];
-
+  
   [self transitionFromViewController:fromViewController toViewController:toViewController duration:kSlideAnimationDuration options:UIViewAnimationOptionCurveEaseInOut animations:^{
     
     fromViewController.view.frame = fromFrame;
@@ -230,7 +242,7 @@ static const CGFloat kTopOffset = 40.0f;
 - (void)totalDidChange:(double)total {
   
   _total = total;
-  [_totalButton setTitle:[NSString stringWithFormat:@"%.2fi", total] forState:UIControlStateNormal];
+  [_totalButton setTitle:[NSString stringWithFormat:@"%.2fР", total] forState:UIControlStateNormal];
   
 }
 

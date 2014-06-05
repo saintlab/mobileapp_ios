@@ -11,6 +11,7 @@
 #import "OMNOrder.h"
 #import "OMNConstants.h"
 #import "OMNOrderCell.h"
+#import "OMNAssetManager.h"
 
 @implementation GPaymentVCDataSource {
   OMNOrder *_order;
@@ -73,6 +74,8 @@
       UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
       if (nil == cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+        cell.textLabel.font = [OMNAssetManager manager].splitCellFont;
+        cell.detailTextLabel.font = [OMNAssetManager manager].splitCellFont;
       }
       
       cell.textLabel.text = NSLocalizedString(@"Total", nil);
