@@ -12,8 +12,7 @@
 #import "OMNCardView.h"
 
 @interface OMNGPBPayVC ()
-<UIWebViewDelegate,
-UIAlertViewDelegate>
+<UIWebViewDelegate>
 
 @end
 
@@ -21,14 +20,17 @@ UIAlertViewDelegate>
   OMNCardInfo *_cardInfo;
   OMNOrder *_order;
   
+  UIActivityIndicatorView *_spinner;
+  
   __weak IBOutlet OMNCardView *_webView;
   UIBarButtonItem *_submitButton;
   BOOL _formLoaded;
 }
 
 - (void)dealloc {
-  [_webView stopLoading];
+  
   _webView.delegate = nil;
+  [_webView stopLoading];
   _webView.webDelegate = nil;
   
 }
@@ -45,40 +47,85 @@ UIAlertViewDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  _spinner.hidesWhenStopped = YES;
+  
   _webView.webDelegate = self;
   _webView.userInteractionEnabled = NO;
   
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self createAcquiringOrder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  
+  self.navigationItem.prompt = nil;
+  
+}
+
+- (void)createAcquiringOrder {
+  
   __weak typeof(self)weakSelf = self;
+  [_spinner startAnimating];
+  
+  [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:_spinner] animated:YES];
+  self.navigationItem.prompt = NSLocalizedString(@"Создаем платеж...", nil);
   [_order createAcquiringOrder:^(OMNOrder *order) {
     
     [weakSelf getPaymentURL];
     
   } failure:^(NSError *error) {
     
+    [weakSelf processFailCreateAcquiringOrder];
+    
   }];
+  
+}
+
+- (void)processFailCreateAcquiringOrder {
+  
+  self.navigationItem.prompt = NSLocalizedString(@"Ошибка при создании платежа", nil);
+  UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createAcquiringOrder)];
+  [self.navigationItem setRightBarButtonItem:button animated:YES];
   
 }
 
 - (void)getPaymentURL {
   
   __weak typeof(self)weakSelf = self;
+  self.navigationItem.prompt = NSLocalizedString(@"Получаем данные о платеже...", nil);
+  UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
+  [self.navigationItem setRightBarButtonItem:button animated:YES];
+  
   [_order getPaymentURL:^(NSString *urlString) {
     
     [weakSelf processCardPayment:urlString];
     
   } failure:^(NSError *error) {
     
+    [weakSelf processFailGetPaymentURL];
+    
   }];
 
 }
 
+- (void)processFailGetPaymentURL {
+  
+  self.navigationItem.prompt = NSLocalizedString(@"Ошибка получении данныех о платеже", nil);
+  UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(getPaymentURL)];
+  [self.navigationItem setRightBarButtonItem:button animated:YES];
+  
+}
+
 - (void)processCardPayment:(NSString *)requestString {
-  NSURL *url = [NSURL URLWithString:requestString];
-  //  NSDictionary *queryComponents = [url omn_queryComponents];
-  //  NSLog(@"%@", queryComponents);
   
   _webView.scalesPageToFit = YES;
   _formLoaded = NO;
+  NSURL *url = [NSURL URLWithString:requestString];
   [_webView loadRequest:[NSURLRequest requestWithURL:url]];
   
 }
@@ -114,17 +161,17 @@ UIAlertViewDelegate>
   
   if ([request.URL.absoluteString hasPrefix:@"https://test.pps.gazprombank.ru/payment/payment-params.wsm?ws.id"]) {
     
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Счет успешно оплачен", nil) message:nil delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Заершить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(finishPayment)];
+    [self.navigationItem setRightBarButtonItem:button animated:YES];
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    self.navigationItem.prompt = NSLocalizedString(@"Счет успешно оплачен", nil);
     
   }
   
   return YES;
 }
 
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)finishPayment {
   [self.delegate gpbVCDidPay:self];
 }
 

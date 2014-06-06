@@ -23,9 +23,6 @@
     _tips = order.tips;
     _expectedValue = order.total;
     _tipsThreshold = order.tipsThreshold;
-
-    NSAssert(_tips.count == 4, @"wrong tips count");
-    NSAssert(_expectedValue > 0, @"wrong expected value");
     self.enteredAmount = _expectedValue;
     
   }

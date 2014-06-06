@@ -109,7 +109,9 @@
   
 }
 
-
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+}
 
 - (void)setCalculationAmount:(OMNCalculationAmount *)calculationAmount {
   

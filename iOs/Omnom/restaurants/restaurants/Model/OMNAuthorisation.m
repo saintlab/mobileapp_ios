@@ -9,8 +9,10 @@
 #import "OMNAuthorisation.h"
 #import "OMNOperationManager.h"
 #import "OMNAuthorizationManager.h"
-#import <SSKeychain.h>
 #import "OMNUser.h"
+#import <SSKeychain.h>
+
+static NSString * const kAccountName = @"test_account1";
 
 @implementation OMNAuthorisation
 
@@ -27,7 +29,7 @@
   self = [super init];
   if (self) {
     
-    _token = [SSKeychain passwordForService:@"token" account:@"user"];
+    _token = [SSKeychain passwordForService:@"token" account:kAccountName];
     
     if (_token) {
       [self updateAuthenticationToken];
@@ -72,7 +74,7 @@
 - (void)updateToken:(NSString *)newToken {
   
   _token = newToken;
-  [SSKeychain setPassword:newToken forService:@"token" account:@"account"];
+  [SSKeychain setPassword:newToken forService:@"token" account:kAccountName];
   [self updateAuthenticationToken];
   
 }
@@ -105,7 +107,7 @@
     @"lastName" : @"Белоглазов",
     @"nickName" : @"sibgeek",
     @"email" : @"teanet@mail.ru",
-    @"phone" : @"+79833087335",
+    @"phone" : @"79833087335",
     @"password" : @"qwerty",
     @"confirmPassword" : @"qwerty",
     };
@@ -113,6 +115,7 @@
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     OMNUser *user = [[OMNUser alloc] initWithData:responseObject];
+    
     NSLog(@"%@", user);
     NSLog(@"responseObject>%@", responseObject);
     
@@ -124,12 +127,24 @@
   
 }
 
-- (void)confirm:(NSString *)code {
-//  'phone': '+79137420445',
-//  'code': '5407'
-//  [[OMNOperationManager sharedManager] POST:<#(NSString *)#> parameters:<#(id)#> success:<#^(AFHTTPRequestOperation *operation, id responseObject)success#> failure:<#^(AFHTTPRequestOperation *operation, NSError *error)failure#>]
-//  
-//  /confirm/phone
+- (void)confirmPhone:(NSString *)phone code:(NSString *)code {
+  
+  NSDictionary *parameters =
+  @{
+    @"phone" : phone,
+    @"code" : code,
+    };
+  
+  [[OMNAuthorizationManager sharedManager] POST:@"confirm/phone" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"%@", responseObject);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    NSLog(@"%@", error);
+    
+  }];
+  
 }
 
 @end

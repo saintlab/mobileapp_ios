@@ -76,6 +76,11 @@
   _didFailRangeBeaconsBlock = failureBlock;
   
   if (![_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
+#ifdef __IPHONE_8_0
+    if ([_rangingBeaconRegion respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+      [_rangingLocationManager requestAlwaysAuthorization];
+    }
+#endif
     [_rangingLocationManager startRangingBeaconsInRegion:_rangingBeaconRegion];
   }
   

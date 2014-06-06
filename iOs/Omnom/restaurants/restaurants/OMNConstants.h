@@ -12,11 +12,12 @@ extern NSString * const kAuthorizationUrlString;
 extern NSString * const kBeaconUUIDString;
 
 extern NSString * const CardIOAppToken;
+extern NSString * const kTestFlightAppToken;
 
 typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);
 
-#define kUseStubData 1
+#define kUseStubData 0
 #define kUseStubBeacon 1
 
 #define kGreenColor ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1])

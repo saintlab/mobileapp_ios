@@ -48,24 +48,10 @@ static const CGFloat kTopOffset = 40.0f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
   self.view.backgroundColor = [UIColor whiteColor];
   self.automaticallyAdjustsScrollViewInsets = NO;
-  
-  self.navigationController.navigationBar.translucent = NO;
-  
-  if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-//    self.edgesForExtendedLayout = UIRectEdgeNone;
-  }
-  
-  [self.navigationController.navigationBar setTitleTextAttributes:
-   @{
-     NSFontAttributeName : [OMNAssetManager manager].navBarTitleFont
-     }];
-  
-  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:@{NSFontAttributeName : [OMNAssetManager manager].navBarButtonFont} forState:UIControlStateNormal];
-  
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
-  self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"white_pixel"];
+  self.edgesForExtendedLayout = UIRectEdgeNone;
   
   OMNNavigationBarSelector *_navSelector = [[OMNNavigationBarSelector alloc] initWithTitles:
                                             @[
@@ -142,6 +128,12 @@ static const CGFloat kTopOffset = 40.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"white_pixel"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  self.navigationController.navigationBar.shadowImage = nil;
 }
 
 - (void)navSelectorDidChange:(OMNNavigationBarSelector *)navSelector {

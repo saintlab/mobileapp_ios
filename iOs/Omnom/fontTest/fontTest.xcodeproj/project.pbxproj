@@ -49,14 +49,6 @@
 		93C99154193F085D0028F76C /* OMNAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9914F193F085D0028F76C /* OMNAssetManager.m */; };
 		93C99155193F085D0028F76C /* OMNCircleAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99151193F085D0028F76C /* OMNCircleAssetManager.m */; };
 		93C99156193F085D0028F76C /* OMNFuturaAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99153193F085D0028F76C /* OMNFuturaAssetManager.m */; };
-		93C99167193F1FC40028F76C /* CRC35.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99163193F1FC40028F76C /* CRC35.ttf */; };
-		93C99168193F1FC40028F76C /* CRC35.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99163193F1FC40028F76C /* CRC35.ttf */; };
-		93C99169193F1FC40028F76C /* CRC55.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99164193F1FC40028F76C /* CRC55.ttf */; };
-		93C9916A193F1FC40028F76C /* CRC55.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99164193F1FC40028F76C /* CRC55.ttf */; };
-		93C9916B193F1FC40028F76C /* FTN45.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99165193F1FC40028F76C /* FTN45.ttf */; };
-		93C9916C193F1FC40028F76C /* FTN45.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99165193F1FC40028F76C /* FTN45.ttf */; };
-		93C9916D193F1FC40028F76C /* FTN55.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99166193F1FC40028F76C /* FTN55.ttf */; };
-		93C9916E193F1FC40028F76C /* FTN55.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99166193F1FC40028F76C /* FTN55.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,17 +129,12 @@
 		93C99129193EF9030028F76C /* GMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMenuItem.h; sourceTree = "<group>"; };
 		93C9912A193EF9030028F76C /* GMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMenuItem.m; sourceTree = "<group>"; };
 		93C9912D193EF9930028F76C /* orders.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = orders.data; path = ../../restaurants/stub/orders.data; sourceTree = "<group>"; };
-		93C9912F193EFA380028F76C /* ALSRubl.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ALSRubl.otf; path = ../../restaurants/restaurants/Resources/Fonts/ALSRubl.otf; sourceTree = "<group>"; };
 		93C9914E193F085D0028F76C /* OMNAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAssetManager.h; sourceTree = "<group>"; };
 		93C9914F193F085D0028F76C /* OMNAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAssetManager.m; sourceTree = "<group>"; };
 		93C99150193F085D0028F76C /* OMNCircleAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleAssetManager.h; sourceTree = "<group>"; };
 		93C99151193F085D0028F76C /* OMNCircleAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCircleAssetManager.m; sourceTree = "<group>"; };
 		93C99152193F085D0028F76C /* OMNFuturaAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFuturaAssetManager.h; sourceTree = "<group>"; };
 		93C99153193F085D0028F76C /* OMNFuturaAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFuturaAssetManager.m; sourceTree = "<group>"; };
-		93C99163193F1FC40028F76C /* CRC35.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CRC35.ttf; path = ../../restaurants/restaurants/Resources/Fonts/CRC35.ttf; sourceTree = "<group>"; };
-		93C99164193F1FC40028F76C /* CRC55.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CRC55.ttf; path = ../../restaurants/restaurants/Resources/Fonts/CRC55.ttf; sourceTree = "<group>"; };
-		93C99165193F1FC40028F76C /* FTN45.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FTN45.ttf; path = ../../restaurants/restaurants/Resources/Fonts/FTN45.ttf; sourceTree = "<group>"; };
-		93C99166193F1FC40028F76C /* FTN55.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FTN55.ttf; path = ../../restaurants/restaurants/Resources/Fonts/FTN55.ttf; sourceTree = "<group>"; };
 		D1EFF138AE524475822B93A5 /* libPods-fontTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fontTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -268,11 +255,6 @@
 				93C99123193EF8980028F76C /* OMNRestaurant.h */,
 				93C99124193EF8980028F76C /* OMNRestaurant.m */,
 				93C9912D193EF9930028F76C /* orders.data */,
-				93C9912F193EFA380028F76C /* ALSRubl.otf */,
-				93C99163193F1FC40028F76C /* CRC35.ttf */,
-				93C99164193F1FC40028F76C /* CRC55.ttf */,
-				93C99165193F1FC40028F76C /* FTN45.ttf */,
-				93C99166193F1FC40028F76C /* FTN55.ttf */,
 				93C9914D193F085D0028F76C /* AssetManager */,
 				93C99126193EF9030028F76C /* Menu */,
 				93C9910D193EF67F0028F76C /* Order */,
@@ -451,14 +433,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				93C990E7193EF5570028F76C /* GSplitSelectionVC.xib in Resources */,
-				93C9916D193F1FC40028F76C /* FTN55.ttf in Resources */,
 				93C990BF193EF47E0028F76C /* Images.xcassets in Resources */,
 				93C9912E193EF9930028F76C /* orders.data in Resources */,
 				93C990B1193EF47E0028F76C /* InfoPlist.strings in Resources */,
-				93C99169193F1FC40028F76C /* CRC55.ttf in Resources */,
 				93C990BA193EF47E0028F76C /* Main.storyboard in Resources */,
-				93C9916B193F1FC40028F76C /* FTN45.ttf in Resources */,
-				93C99167193F1FC40028F76C /* CRC35.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,10 +445,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				93C990D0193EF47E0028F76C /* InfoPlist.strings in Resources */,
-				93C99168193F1FC40028F76C /* CRC35.ttf in Resources */,
-				93C9916C193F1FC40028F76C /* FTN45.ttf in Resources */,
-				93C9916E193F1FC40028F76C /* FTN55.ttf in Resources */,
-				93C9916A193F1FC40028F76C /* CRC55.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

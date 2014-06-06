@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationUsageDescription</key>
-	<string>Пермишен для использования геопозиции</string>
-	<key>NSMotionUsageDescription</key>
-	<string>Пермишен для использования кор мошена</string>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Пермишен для блютуса</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -30,6 +24,27 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Пермишен для блютуса</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Пермишен для использования геопозиции</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Пермишен для использования кор мошена</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ALSRubl.otf</string>
+		<string>FTN45.ttf</string>
+		<string>FTN55.ttf</string>
+		<string>CRC35.ttf</string>
+		<string>CRC55.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Пермишен мне</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>
@@ -50,14 +65,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>ALSRubl.otf</string>
-		<string>FTN45.ttf</string>
-		<string>FTN55.ttf</string>
-		<string>CRC35.ttf</string>
-		<string>CRC55.ttf</string>
 	</array>
 </dict>
 </plist>

@@ -18,6 +18,10 @@ static OMNAssetManager *_manager = nil;
 
 + (void)updateWithManager:(OMNAssetManager *)manager {
   _manager = manager;
+  
+  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:@{NSFontAttributeName : _manager.navBarButtonFont} forState:UIControlStateNormal];
+  [[UIBarButtonItem appearanceWhenContainedIn:[UIToolbar class], nil] setTitleTextAttributes:@{NSFontAttributeName : _manager.navBarButtonFont} forState:UIControlStateNormal];
+  
 }
 
 - (UIFont *)navBarTitleFont {

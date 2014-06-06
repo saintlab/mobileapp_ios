@@ -10,6 +10,7 @@
 #import "OMNAuthorisation.h"
 #import "OMNSearchTableVC.h"
 #import "GRestaurantMenuVC.h"
+#import "OMNFuturaAssetManager.h"
 
 @implementation GAppDelegate {
   UIImageView *_splashIV;
@@ -17,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
+  [OMNAssetManager updateWithManager:[OMNFuturaAssetManager new]];
   [OMNAuthorisation authorisation];
   
   OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
@@ -28,10 +30,27 @@
     
   }];
   self.window.rootViewController = searchTableVC;
-  
+
   return YES;
   
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken>%@", deviceToken);
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+  
+  NSLog(@"didReceiveLocalNotification>%@", notification);
+  
+}
+
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+  NSLog(@"%@", notificationSettings.categories);
+  NSLog(@"%@", notificationSettings);
+}
+#endif
 
 - (void)showSplash {
   

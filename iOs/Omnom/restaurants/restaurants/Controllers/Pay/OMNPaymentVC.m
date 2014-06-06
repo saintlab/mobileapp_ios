@@ -53,11 +53,6 @@ UINavigationControllerDelegate>
 - (void)viewDidLoad {
   
   [super viewDidLoad];
-
-  self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-  self.navigationController.navigationBar.shadowImage = [UIImage new];
-  self.navigationController.navigationBar.translucent = YES;
-  self.navigationController.view.backgroundColor = [UIColor whiteColor];
   
   _dataSource = [[GPaymentVCDataSource alloc] initWithOrder:_order];
   _tableView.dataSource = _dataSource;
@@ -71,6 +66,10 @@ UINavigationControllerDelegate>
 }
 
 - (void)setup {
+  
+  if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+  }
   
   _backgroundIV.image = [UIImage imageNamed:@"background_blur"];
   _tableView.backgroundColor = [UIColor clearColor];
@@ -89,7 +88,7 @@ UINavigationControllerDelegate>
     }] show];
     
   } forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.titleView = rateButton;
+//  self.navigationItem.titleView = rateButton;
   
   UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap:)];
   [_tableView addGestureRecognizer:tapGR];
@@ -97,8 +96,10 @@ UINavigationControllerDelegate>
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  
   [super viewWillAppear:animated];
   _tableView.delegate = self;
+  
   if (!_tableView.tableHeaderView) {
     CGFloat tableFooterHeight = MAX(0, self.view.height - _tableView.contentSize.height);
     _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, tableFooterHeight)];
@@ -112,7 +113,6 @@ UINavigationControllerDelegate>
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  
   [self handleKeyboardEvents];
 }
 
@@ -138,6 +138,7 @@ UINavigationControllerDelegate>
   _order.toPayAmount = _paymentView.calculationAmount.totalValue * 100;
   OMNGPBPayVC *gpbPayVC = [[OMNGPBPayVC alloc] initWithCard:cardInfo order:_order];
   gpbPayVC.delegate = self;
+  gpbPayVC.navigationItem.title = NSLocalizedString(@"ГПБ", nil);
   [self.navigationController omn_replaceCurrentViewControllerWithController:gpbPayVC animated:YES];
   
 }
@@ -168,9 +169,7 @@ UINavigationControllerDelegate>
   OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithOrder:_order];
   calculatorVC.delegate = self;
   calculatorVC.navigationItem.title = NSLocalizedString(@"Калькуляция", nil);
-  self.navigationController.delegate = self;
   [self.navigationController pushViewController:calculatorVC animated:YES];
-//  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:calculatorVC] animated:YES completion:nil];
 
 }
 
@@ -220,11 +219,10 @@ UINavigationControllerDelegate>
 - (void)setupViewsWithNotification:(NSNotification *)n keyboardShown:(BOOL)keyboardShown {
   
   [self.navigationController setNavigationBarHidden:keyboardShown animated:YES];
-  
   CGRect keyboardFrame = [n.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
   [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:500.0f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
     
-    _paymentView.bottom = keyboardFrame.origin.y;
+    _paymentView.bottom = MIN(keyboardFrame.origin.y, self.view.height);
     _tableView.bottom = _paymentView.top;
     
   } completion:nil];

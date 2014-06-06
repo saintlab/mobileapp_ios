@@ -24,6 +24,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.edgesForExtendedLayout = UIRectEdgeNone;
+  
   OMNRestaurant *restaurant = [[OMNRestaurant alloc] init];
   
   __weak typeof(self)weakSelf = self;
@@ -37,6 +39,15 @@
     [weakSelf.navigationController popToViewController:weakSelf animated:YES];
     
   }];
+  
+}
+
+- (IBAction)settingsTap:(id)sender {
+#ifdef __IPHONE_8_0
+  if (&UIApplicationOpenSettingsURLString) {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+  }
+#endif
   
 }
 

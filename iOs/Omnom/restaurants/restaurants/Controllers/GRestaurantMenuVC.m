@@ -13,6 +13,7 @@
 #import "OMNSearchTableVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNPaymentVC.h"
+#import "OMNAssetManager.h"
 
 @interface GRestaurantMenuVC ()
 <OMNOrdersVCDelegate>
@@ -67,6 +68,13 @@
 
 - (void)setup {
  
+  [self.navigationController.navigationBar setTitleTextAttributes:
+   @{
+     NSFontAttributeName : [OMNAssetManager manager].navBarTitleFont
+     }];
+  
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
+  
   UIImageView *backgroundIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background_blur"]];
   backgroundIV.center = self.view.center;
   [self.view insertSubview:backgroundIV atIndex:0];
@@ -85,7 +93,11 @@
 
 - (void)userProfileTap {
   
-  
+#ifdef __IPHONE_8_0
+  if (&UIApplicationOpenSettingsURLString) {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+  }
+#endif
   
 }
 

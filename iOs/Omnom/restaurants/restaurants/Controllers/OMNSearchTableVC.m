@@ -65,6 +65,7 @@
     
     OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] init];
     decodeBeacon.restaurantId = @"riba-ris";
+//    decodeBeacon.tableId = @"4100";
     decodeBeacon.tableId = @"1005";
     _didFindTableBlock(decodeBeacon);
     
