@@ -9,15 +9,15 @@
 #import "GControllerMediator.h"
 #import "GSocialNetwork.h"
 #import "GUserDetailsVC.h"
-#import "OMNPayCardVC.h"
 #import "GCongratulationsVC.h"
-#import "OMNPaymentVC.h"
-#import "OMNCalculatorVC.h"
 #import <BlocksKit+UIKit.h>
-#import "GOrder.h"
+//#import "OMNPayCardVC.h"
+//#import "OMNPaymentVC.h"
+//#import "OMNCalculatorVC.h"
+//#import "GOrder.h"
 
 @interface GControllerMediator ()
-<OMNPayCardVCDelegate>
+//<OMNPayCardVCDelegate>
 
 @property (nonatomic, weak) UIViewController *currentController;
 
@@ -68,15 +68,16 @@
 
 - (void)showPayInfo {
   
-  OMNPayCardVC *payVC = [[OMNPayCardVC alloc] init];
-  payVC.delegate = self;
-  [self.navigationController pushViewController:payVC animated:YES];
+//  OMNPayCardVC *payVC = [[OMNPayCardVC alloc] init];
+//  payVC.delegate = self;
+//  [self.navigationController pushViewController:payVC animated:YES];
   
 }
 
 
 - (void)showPaymentScreen {
   
+  /*
   NSMutableArray *orders = [NSMutableArray arrayWithCapacity:50];
   for (int i = 0; i < 20; i++) {
     
@@ -103,12 +104,12 @@
   paymentVC.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
   
   [self.navigationController pushViewController:paymentVC animated:YES];
-  
+  */
 }
 
 
 #pragma mark - GPayVCDelegate 
-
+/*
 - (void)payVC:(OMNPayCardVC *)payVC requestPayWithCardInfo:(OMNCardInfo *)cardInfo {
   
   [self.navigationController popToRootViewControllerAnimated:NO];
@@ -126,6 +127,6 @@
   [self.navigationController presentViewController:[[UINavigationController alloc] initWithRootViewController:congratulationsVC] animated:YES completion:nil];
   
 }
-
+*/
 
 @end

@@ -9,7 +9,7 @@
 #import "GUserInfoTransition.h"
 
 static const CGFloat kLeftOffset = 50.0f;
-static const CGFloat kSourceViewScale = 0.9f;
+static const CGFloat kSourceViewScale = 0.98f;
 
 static const NSTimeInterval kTransitionDuration = 0.25f;
 

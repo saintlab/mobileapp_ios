@@ -17,6 +17,8 @@
 @interface GPaymentFooterView ()
 <GAmountPercentControlDelegate>
 
+@property (nonatomic, assign) BOOL tipsMode;
+
 @end
 
 @implementation GPaymentFooterView {
@@ -84,17 +86,19 @@
     
   } forControlEvents:UIControlEventValueChanged];
   
+  __weak typeof(self)weakSelf = self;
   [_tipsSelector bk_addEventHandler:^(OMNTipSelector *sender) {
-
+    
+    __strong __typeof(weakSelf)strongSelf = weakSelf;
     if (3 == sender.selectedIndex) {
       
-      _calculationAmount.tipsMode = YES;
+      strongSelf.tipsMode = YES;
       [_amountPercentControl becomeFirstResponder];
       
     }
     else {
       
-      [self updateToPayButton];
+      [strongSelf updateToPayButton];
       
     }
     
@@ -143,7 +147,7 @@
   
   _payButton.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, 50.0f)) : (CGAffineTransformIdentity);
 
-  if (_calculationAmount.tipsMode) {
+  if (self.tipsMode) {
     
     _payLabel.alpha = (keyboardShown) ? (0.0f) : (1.0f);
     CGFloat deltaY = fabsf(_payLabel.y - _tipsLabel.y);
@@ -161,7 +165,7 @@
   [_amountPercentControl layoutIfNeeded];
   
   if (NO == keyboardShown) {
-    _calculationAmount.tipsMode = NO;
+    self.tipsMode = NO;
   }
 
   [self updateView];
@@ -206,7 +210,7 @@
 
 - (IBAction)doneEdidtingTap:(id)sender {
   
-  if (_calculationAmount.tipsMode) {
+  if (self.tipsMode) {
 
     _calculationAmount.customTipAmount = _amountPercentControl.selectedAmount;
    
@@ -225,7 +229,7 @@
 
 - (double)expectedValueForAmountPercentControl:(GAmountPercentControl *)amountPercentControl {
   
-  if (_calculationAmount.tipsMode) {
+  if (self.tipsMode) {
   
     return _calculationAmount.enteredAmount;
     
@@ -240,7 +244,7 @@
 
 - (double)enteredValueForAmountPercentControl:(GAmountPercentControl *)amountPercentControl {
  
-  if (_calculationAmount.tipsMode) {
+  if (self.tipsMode) {
     
     return _calculationAmount.customTipAmount;
     

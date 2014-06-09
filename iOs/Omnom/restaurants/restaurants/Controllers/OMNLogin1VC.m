@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNLoginVC.h"
+#import "OMNLogin1VC.h"
 #import "OMNEditCell.h"
 #import "GRestaurantsVC.h"
 
-@interface OMNLoginVC ()
+@interface OMNLogin1VC ()
 <UITextFieldDelegate>
 
 @end
 
-@implementation OMNLoginVC {
+@implementation OMNLogin1VC {
   NSString *_login;
   NSString *_password;
 }

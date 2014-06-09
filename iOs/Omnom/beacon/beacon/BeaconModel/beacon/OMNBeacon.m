@@ -155,10 +155,10 @@ const NSInteger kNearestDeltaRSSI = 10;
   NSMutableString *debugString = [NSMutableString string];
   
   [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *sessionInfo, NSUInteger idx, BOOL *stop) {
-    [debugString appendFormat:@"%d,", sessionInfo.proximity];
+    [debugString appendFormat:@"%ld,", sessionInfo.proximity];
   }];
   
-  return [NSString stringWithFormat:@"%@, %d, %d %f, {%@}", self.key, self.rssi, self.atTheTable, self.atTheTableTime, debugString];
+  return [NSString stringWithFormat:@"%@, %ld, %d %f, {%@}", self.key, (long)self.rssi, self.atTheTable, self.atTheTableTime, debugString];
 }
 
 @end

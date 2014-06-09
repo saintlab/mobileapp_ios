@@ -13,7 +13,7 @@
 #import "GUserInfoVC.h"
 #import "GControllerMediator.h"
 #import <BlocksKit+UIKit.h>
-#import "GRateAlertView.h"
+#import "OMNUserInfoVC.h"
 
 @interface GViewController ()
 <GUserInfoVCDelegate>
@@ -42,14 +42,14 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (IBAction)open:(id)sender {
   
-  GUserInfoVC *vc = [[GUserInfoVC alloc] init];
+  OMNUserInfoVC *vc = [[OMNUserInfoVC alloc] init];
   
   UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:vc];
   navVC.transitioningDelegate = _transitionDelegate;
   navVC.modalPresentationStyle = UIModalPresentationCustom;
-  vc.delegate = self;
   [self presentViewController:navVC animated:YES completion:nil];
   
 }
@@ -61,13 +61,9 @@
 }
 
 - (IBAction)paymentTap:(id)sender {
+
   [[GControllerMediator mediator] showPaymentScreen];
-  return;
-  [[[GRateAlertView alloc] initWithBlock:^{
-    
-    [[GControllerMediator mediator] showPaymentScreen];
-    
-  }] show];
+
 }
 
 #pragma mark - GUserInfoVCDelegate

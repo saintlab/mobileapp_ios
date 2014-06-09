@@ -8,14 +8,11 @@
 
 #import "OMNTip.h"
 
-@class OMNOrder;
 @class OMNTipButton;
 
 @interface OMNCalculationAmount : NSObject
 
-- (instancetype)initWithOrder:(OMNOrder *)order;
-
-@property (nonatomic, assign) BOOL tipsMode;
+- (instancetype)initWithTips:(NSArray *)tips tipsThreshold:(double)tipsThreshold total:(double)total;
 
 @property (nonatomic, strong, readonly) NSArray *tips;
 

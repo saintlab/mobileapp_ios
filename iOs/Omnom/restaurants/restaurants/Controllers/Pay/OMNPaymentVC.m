@@ -19,6 +19,7 @@
 #import "OMNPayCardVC.h"
 #import "OMNGPBPayVC.h"
 #import "UINavigationController+omn_replace.h"
+#import "OMNOrder+omn_calculationAmount.h"
 
 @interface OMNPaymentVC ()
 <OMNCalculatorVCDelegate,
@@ -61,7 +62,7 @@ UINavigationControllerDelegate>
   _tableView.allowsSelection = NO;
   [self setup];
   
-  _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
+  _paymentView.calculationAmount = [_order omn_calculationAmount];
   
 }
 

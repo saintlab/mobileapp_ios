@@ -7,7 +7,6 @@
 //
 
 #import "OMNCalculationAmount.h"
-#import "OMNOrder.h"
 #import "OMNTipButton.h"
 
 @implementation OMNCalculationAmount {
@@ -16,14 +15,14 @@
 
 @dynamic selectedTipIndex;
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (instancetype)initWithTips:(NSArray *)tips tipsThreshold:(double)tipsThreshold total:(double)total {
   self = [super init];
   if (self) {
     
-    _tips = order.tips;
-    _expectedValue = order.total;
-    _tipsThreshold = order.tipsThreshold;
-    self.enteredAmount = _expectedValue;
+    _tips = tips;
+    _expectedValue = total;
+    _tipsThreshold = tipsThreshold;
+    self.enteredAmount = total;
     
   }
   return self;

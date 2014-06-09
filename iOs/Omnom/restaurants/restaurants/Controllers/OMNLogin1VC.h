@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMNLoginVC : UITableViewController
+@interface OMNLogin1VC : UITableViewController
 
 
 

@@ -161,7 +161,7 @@
   
   if ([request.URL.absoluteString hasPrefix:@"https://test.pps.gazprombank.ru/payment/payment-params.wsm?ws.id"]) {
     
-    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Заершить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(finishPayment)];
+    UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Завершить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(finishPayment)];
     [self.navigationItem setRightBarButtonItem:button animated:YES];
     [self.navigationItem setHidesBackButton:YES animated:YES];
     self.navigationItem.prompt = NSLocalizedString(@"Счет успешно оплачен", nil);

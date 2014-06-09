@@ -66,7 +66,7 @@ UIPickerViewDelegate>
 - (void)setNumberOfGuests:(NSInteger)numberOfGuests {
   
   _numberOfGuests = MAX(1, numberOfGuests);
-  _numberOfGuestsLabel.text = [NSString stringWithFormat:@"%d", _numberOfGuests];
+  _numberOfGuestsLabel.text = [NSString stringWithFormat:@"%ld", (long)_numberOfGuests];
   [_numberOfGuestsPicker selectRow:_numberOfGuests - 1 inComponent:0 animated:NO];
   
   [self updateTotalValue];

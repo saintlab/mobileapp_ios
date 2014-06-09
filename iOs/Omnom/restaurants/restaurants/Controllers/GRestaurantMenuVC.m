@@ -14,6 +14,7 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNPaymentVC.h"
 #import "OMNAssetManager.h"
+#import "GUserInfoTransitionDelegate.h"
 
 @interface GRestaurantMenuVC ()
 <OMNOrdersVCDelegate>
@@ -27,7 +28,8 @@
   
   NSMutableArray *_products;
   UIRefreshControl *_refreshControl;
-  
+
+  GUserInfoTransitionDelegate *_transitionDelegate;
 }
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant table:(OMNTable *)table {
@@ -92,6 +94,8 @@
 }
 
 - (void)userProfileTap {
+  
+  _transitionDelegate = [[GUserInfoTransitionDelegate alloc] init];
   
 #ifdef __IPHONE_8_0
   if (&UIApplicationOpenSettingsURLString) {

@@ -12,7 +12,7 @@
 #import "OMNUser.h"
 #import <SSKeychain.h>
 
-static NSString * const kAccountName = @"test_account1";
+static NSString * const kAccountName = @"test_account4";
 
 @implementation OMNAuthorisation
 
@@ -45,9 +45,8 @@ static NSString * const kAccountName = @"test_account1";
 - (NSString *)installId {
   
   NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
-  
   //Check if we have UUID already
-  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:@"user"];
+  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAccountName];
   
   if (nil == retrieveuuid) {
     
@@ -57,7 +56,7 @@ static NSString * const kAccountName = @"test_account1";
     CFRelease(newUniqueId);
     
     //Save key to Keychain
-    [SSKeychain setPassword:retrieveuuid forService:appName account:@"user"];
+    [SSKeychain setPassword:retrieveuuid forService:appName account:kAccountName];
   }
   
   return retrieveuuid;
