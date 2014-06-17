@@ -14,8 +14,10 @@ typedef void(^OMNUserBlock)(OMNUser *user);
 
 @property (nonatomic, copy, readonly) NSString *token;
 
+@property (nonatomic, copy, readonly) NSString *installId;
+
 + (instancetype)authorisation;
 
-- (void)registerUser:(OMNUserBlock)block;
+- (void)updateToken:(NSString *)newToken;
 
 @end

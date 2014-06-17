@@ -9,7 +9,7 @@
 #import "GUserInfoTransition.h"
 
 static const CGFloat kLeftOffset = 50.0f;
-static const CGFloat kSourceViewScale = 0.98f;
+static const CGFloat kSourceViewScale = 1;
 
 static const NSTimeInterval kTransitionDuration = 0.25f;
 
@@ -82,6 +82,7 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
   
   [UIView animateWithDuration:animationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
     
+    toView.frame = CGRectMake(kLeftOffset, 0, CGRectGetWidth(containerView.frame) - kLeftOffset, CGRectGetHeight(containerView.frame));
     [self updateViewToFinalPosition:fromView containerView:containerView];
     
   } completion:^(BOOL finished) {

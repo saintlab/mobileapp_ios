@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "OMNConstants.h"
+
+typedef void(^OMNUserTokenBlock)(NSString *token);
 
 @interface OMNUser : NSObject
 
@@ -22,6 +24,16 @@
 @property (nonatomic, assign) BOOL phone_validated;
 @property (nonatomic, assign) BOOL email_validated;
 
++ (instancetype)userWithPhone:(NSString *)phone;
+
 - (instancetype)initWithData:(id)data;
+
+- (void)registerWithComplition:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock;
+
+- (void)confirmPhone:(NSString *)code complition:(OMNUserTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
+
+- (void)confirmPhoneResend:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock;
+
++ (void)loginUsingPhone:(NSString *)phone code:(NSString *)code complition:(OMNUserTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
 
 @end

@@ -25,6 +25,7 @@ def import_all
   pod 'CardIO'
   pod 'BlocksKit'
   pod 'TSCurrencyTextField'
+  pod 'FlurrySDK'
 end
 
 target :restaurants do

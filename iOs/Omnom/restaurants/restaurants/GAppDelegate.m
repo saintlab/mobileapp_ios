@@ -11,6 +11,8 @@
 #import "OMNSearchTableVC.h"
 #import "GRestaurantMenuVC.h"
 #import "OMNFuturaAssetManager.h"
+#import <Flurry.h>
+#import "OMNLoginVC.h"
 
 @implementation GAppDelegate {
   UIImageView *_splashIV;
@@ -19,7 +21,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
   [OMNAssetManager updateWithManager:[OMNFuturaAssetManager new]];
+  
   [OMNAuthorisation authorisation];
+  
+  [Flurry setCrashReportingEnabled:YES];
+  [Flurry startSession:kFlurryApiKey withOptions:launchOptions];
   
   OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
     

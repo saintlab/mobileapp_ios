@@ -8,6 +8,7 @@
 
 #import "OMNUserInfoVC.h"
 #import "OMNLoginVC.h"
+#import "OMNRegisterUserVC.h"
 
 @implementation OMNUserInfoVC {
   
@@ -40,6 +41,10 @@
 }
 
 - (IBAction)registerTap:(id)sender {
+  
+  OMNRegisterUserVC *registerUserVC = [[OMNRegisterUserVC alloc] init];
+  [self.navigationController pushViewController:registerUserVC animated:YES];
+  
 }
 
 - (IBAction)vkTap:(id)sender {

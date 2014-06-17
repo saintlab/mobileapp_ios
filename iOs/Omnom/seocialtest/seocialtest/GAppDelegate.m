@@ -8,6 +8,7 @@
 
 #import "GAppDelegate.h"
 #import "GAuthManager.h"
+#import "OMNAuthorisation.h"
 
 @implementation GAppDelegate
 
@@ -15,7 +16,7 @@
 {
   NSLog(@"%@", [UIFont fontNamesForFamilyName:@"ALS Rubl"]);
   
-  
+  [OMNAuthorisation authorisation];
   
     // Override point for customization after application launch.
     return YES;

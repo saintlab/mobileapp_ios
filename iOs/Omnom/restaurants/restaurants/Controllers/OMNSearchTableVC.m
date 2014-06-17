@@ -118,7 +118,8 @@
     
   } failure:^(NSError *error) {
     
-    [weakSelf decodeBeacons:beaconsToDecode];
+    _searchLabel.text = @"Server error";
+//    [weakSelf decodeBeacons:beaconsToDecode];
     NSLog(@"error>%@", error);
     
   }];

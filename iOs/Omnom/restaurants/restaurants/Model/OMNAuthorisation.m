@@ -35,8 +35,10 @@ static NSString * const kAccountName = @"test_account4";
       [self updateAuthenticationToken];
     }
     else {
-      [self retriveToken];
+      
     }
+    
+    [self retriveToken];
     
   }
   return self;
@@ -80,8 +82,13 @@ static NSString * const kAccountName = @"test_account4";
 
 - (void)retriveToken {
 
+  NSDictionary *parameters =
+  @{
+    @"installId" : self.installId
+    };
+  
   __weak typeof(self)weakSelf = self;
-  [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:@{@"installId" : self.installId} success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if (responseObject[@"token"]) {
       [weakSelf updateToken:responseObject[@"token"]];
@@ -95,35 +102,6 @@ static NSString * const kAccountName = @"test_account4";
     
   }];
 
-}
-
-- (void)registerUser:(OMNUserBlock)block {
-  
-  NSDictionary *parameters =
-  @{
-    @"installId" : self.installId,
-    @"firstName" : @"Александр",
-    @"lastName" : @"Белоглазов",
-    @"nickName" : @"sibgeek",
-    @"email" : @"teanet@mail.ru",
-    @"phone" : @"79833087335",
-    @"password" : @"qwerty",
-    @"confirmPassword" : @"qwerty",
-    };
-
-  [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    OMNUser *user = [[OMNUser alloc] initWithData:responseObject];
-    
-    NSLog(@"%@", user);
-    NSLog(@"responseObject>%@", responseObject);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-    NSLog(@"error>%@", error);
-    
-  }];
-  
 }
 
 - (void)confirmPhone:(NSString *)phone code:(NSString *)code {
