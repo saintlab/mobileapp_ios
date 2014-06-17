@@ -6,9 +6,12 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNConstants.h"
+
 @class OMNUser;
 
 typedef void(^OMNUserBlock)(OMNUser *user);
+typedef void(^OMNTokenBlock)(NSString *token);
 
 @interface OMNAuthorisation : NSObject
 
@@ -19,5 +22,11 @@ typedef void(^OMNUserBlock)(OMNUser *user);
 + (instancetype)authorisation;
 
 - (void)updateToken:(NSString *)newToken;
+
+@end
+
+@interface NSDictionary (omn_tokenResponse)
+
+- (void)decodeToken:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
 
 @end

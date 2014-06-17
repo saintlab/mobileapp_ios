@@ -8,17 +8,10 @@
 
 #import "OMNUser.h"
 #import "OMNAuthorizationManager.h"
-#import "OMNAuthorisation.h"
 
 @interface NSString (omn_validPhone)
 
 - (BOOL)omn_isValidPhone;
-
-@end
-
-@interface NSDictionary (omn_tokenResponse)
-
-- (void)decodeToken:(OMNUserTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
 
 @end
 
@@ -89,7 +82,7 @@
   
 }
 
-- (void)confirmPhone:(NSString *)code complition:(OMNUserTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
+- (void)confirmPhone:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
   
   NSAssert(complition != nil, @"complition block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
@@ -135,7 +128,7 @@
   
 }
 
-+ (void)loginUsingPhone:(NSString *)phone code:(NSString *)code complition:(OMNUserTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
++ (void)loginUsingPhone:(NSString *)phone code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
  
   NSAssert(complition != nil, @"complition block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
@@ -204,24 +197,3 @@
 
 @end
 
-@implementation NSDictionary (omn_tokenResponse)
-
-- (void)decodeToken:(OMNUserTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
-  
-  if ([self[@"status"] isEqualToString:@"success"]) {
-    
-    complition(self[@"token"]);
-    
-  }
-  else {
-    
-    NSString *errors = ([self[@"errors"] description].length) ? ([self[@"errors"] description]) : (@"");
-    NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
-                                         code:0
-                                     userInfo:@{NSLocalizedDescriptionKey : errors}];
-    failureBlock(error);
-  }
-  
-}
-
-@end

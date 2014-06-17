@@ -13,3 +13,4 @@
 + (instancetype)sharedManager;
 
 @end
+

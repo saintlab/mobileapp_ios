@@ -107,7 +107,6 @@
   
   _searchLabel.text = NSLocalizedString(@"Получаем информацию о столе...", nil);
   
-  __weak typeof(self)weakSelf = self;
   [OMNDecodeBeacon decodeBeacons:beaconsToDecode success:^(NSArray *decodeBeacons) {
     
     OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];

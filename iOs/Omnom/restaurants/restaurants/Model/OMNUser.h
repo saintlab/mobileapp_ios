@@ -7,8 +7,7 @@
 //
 
 #import "OMNConstants.h"
-
-typedef void(^OMNUserTokenBlock)(NSString *token);
+#import "OMNAuthorisation.h"
 
 @interface OMNUser : NSObject
 
@@ -30,10 +29,10 @@ typedef void(^OMNUserTokenBlock)(NSString *token);
 
 - (void)registerWithComplition:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock;
 
-- (void)confirmPhone:(NSString *)code complition:(OMNUserTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
+- (void)confirmPhone:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
 
 - (void)confirmPhoneResend:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock;
 
-+ (void)loginUsingPhone:(NSString *)phone code:(NSString *)code complition:(OMNUserTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
++ (void)loginUsingPhone:(NSString *)phone code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
 
 @end

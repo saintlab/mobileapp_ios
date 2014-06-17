@@ -102,6 +102,12 @@ OMNRegisterUserVCDelegate>
   
 }
 
+- (void)tokenDidReceived:(NSString *)token {
+  
+  [[OMNAuthorisation authorisation] updateToken:token];
+  
+}
+
 - (void)resetTap {
   
   self.user = nil;
@@ -121,21 +127,19 @@ OMNRegisterUserVCDelegate>
     
   } failure:^(NSError *error) {
 
-    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
-    
-    _passwordTF.text = @"";
-    _passwordTF.userInteractionEnabled = YES;
-    NSLog(@"error>%@", error);
+    [weakSelf didFailSubmitCodeWithError:error];
     
   }];
   
 }
 
-- (void)tokenDidReceived:(NSString *)token {
+- (void)didFailSubmitCodeWithError:(NSError *)error {
   
-  [[OMNAuthorisation authorisation] updateToken:token];
+  [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
   
-  
+  _passwordTF.text = @"";
+  _passwordTF.userInteractionEnabled = YES;
+  NSLog(@"error>%@", error);
   
 }
 

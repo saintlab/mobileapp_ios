@@ -90,9 +90,13 @@ static NSString * const kAccountName = @"test_account4";
   __weak typeof(self)weakSelf = self;
   [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    if (responseObject[@"token"]) {
-      [weakSelf updateToken:responseObject[@"token"]];
-    }
+    [responseObject decodeToken:^(NSString *token) {
+      
+      [weakSelf updateToken:token];
+      
+    } failure:^(NSError *error) {
+      
+    }];
     
     NSLog(@"responseObject>%@", responseObject);
     
@@ -121,6 +125,28 @@ static NSString * const kAccountName = @"test_account4";
     NSLog(@"%@", error);
     
   }];
+  
+}
+
+@end
+
+@implementation NSDictionary (omn_tokenResponse)
+
+- (void)decodeToken:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
+  
+  if ([self[@"status"] isEqualToString:@"success"]) {
+    
+    complition(self[@"token"]);
+    
+  }
+  else {
+    
+    NSString *errors = ([self[@"errors"] description].length) ? ([self[@"errors"] description]) : (@"");
+    NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
+                                         code:0
+                                     userInfo:@{NSLocalizedDescriptionKey : errors}];
+    failureBlock(error);
+  }
   
 }
 

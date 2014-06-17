@@ -20,6 +20,8 @@
 		93570D4119503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93570D3D19503FF60065E6D2 /* OMNConfirmCodeVC.xib */; };
 		93570D44195040330065E6D2 /* OMNEnterCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93570D43195040330065E6D2 /* OMNEnterCodeView.m */; };
 		93570D45195040330065E6D2 /* OMNEnterCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93570D43195040330065E6D2 /* OMNEnterCodeView.m */; };
+		93570D481950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93570D471950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m */; };
+		93570D491950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93570D471950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m */; };
 		9369BB7A192E2AE70018C79C /* GCongratulationsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB00192E2AE60018C79C /* GCongratulationsVC.m */; };
 		9369BB7B192E2AE70018C79C /* GCongratulationsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB00192E2AE60018C79C /* GCongratulationsVC.m */; };
 		9369BB7C192E2AE70018C79C /* GCongratulationsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9369BB01192E2AE60018C79C /* GCongratulationsVC.xib */; };
@@ -135,6 +137,8 @@
 		93570D3D19503FF60065E6D2 /* OMNConfirmCodeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNConfirmCodeVC.xib; sourceTree = "<group>"; };
 		93570D42195040330065E6D2 /* OMNEnterCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEnterCodeView.h; sourceTree = "<group>"; };
 		93570D43195040330065E6D2 /* OMNEnterCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEnterCodeView.m; sourceTree = "<group>"; };
+		93570D461950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPhoneNumberTextFieldDelegate.h; sourceTree = "<group>"; };
+		93570D471950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPhoneNumberTextFieldDelegate.m; sourceTree = "<group>"; };
 		9369BAFF192E2AE60018C79C /* GCongratulationsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCongratulationsVC.h; sourceTree = "<group>"; };
 		9369BB00192E2AE60018C79C /* GCongratulationsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCongratulationsVC.m; sourceTree = "<group>"; };
 		9369BB01192E2AE60018C79C /* GCongratulationsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GCongratulationsVC.xib; sourceTree = "<group>"; };
@@ -518,6 +522,8 @@
 				93A9949D19484C22005B403C /* OMNLoginVC.h */,
 				93A9949E19484C22005B403C /* OMNLoginVC.m */,
 				93A9949F19484C22005B403C /* OMNLoginVC.xib */,
+				93570D461950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.h */,
+				93570D471950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -778,6 +784,7 @@
 				93E7C16B1918DC1600F22695 /* GAppDelegate.m in Sources */,
 				9369BBA6192E2AE70018C79C /* GControllerMediator.m in Sources */,
 				93A369041947074600DE91D8 /* OMNUser.m in Sources */,
+				93570D481950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				93E7C1671918DC1600F22695 /* main.m in Sources */,
 				93A368FC1946FFA500DE91D8 /* OMNConstants.m in Sources */,
 				9369BBBC192E2AE70018C79C /* Odnoklassniki.m in Sources */,
@@ -812,6 +819,7 @@
 				9369BB9B192E2AE70018C79C /* GUserDetailsVC.m in Sources */,
 				93A369051947074600DE91D8 /* OMNUser.m in Sources */,
 				9369BBB1192E2AE70018C79C /* GGPlusNetwork.m in Sources */,
+				93570D491950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				9369BBB5192E2AE70018C79C /* GSocialNetwork.m in Sources */,
 				93A994A919484C22005B403C /* OMNRegisterUserVC.m in Sources */,
 				9369BB99192E2AE70018C79C /* GLoginDataSource.m in Sources */,

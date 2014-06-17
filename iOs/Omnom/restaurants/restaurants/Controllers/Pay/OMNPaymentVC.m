@@ -64,6 +64,11 @@ UINavigationControllerDelegate>
   
   _paymentView.calculationAmount = [_order omn_calculationAmount];
   
+  _tableView.backgroundView = [[UIView alloc] init];
+  UIButton *b = [UIButton buttonWithType:UIButtonTypeContactAdd];
+  b.center = CGPointMake(100, _tableView.backgroundView.height - 20);
+  [_tableView.backgroundView addSubview:b];
+  
 }
 
 - (void)setup {
