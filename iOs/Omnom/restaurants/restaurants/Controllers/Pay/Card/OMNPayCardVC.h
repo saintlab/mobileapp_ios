@@ -13,8 +13,6 @@
 
 @property (nonatomic, weak) id<OMNPayCardVCDelegate> delegate;
 
-- (instancetype)initWithAmount:(double)amount;
-
 @end
 
 @protocol OMNPayCardVCDelegate <NSObject>

@@ -20,6 +20,7 @@
 #import "OMNGPBPayVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNOrder+omn_calculationAmount.h"
+#import <BlocksKit/UIAlertView+BlocksKit.h>
 
 @interface OMNPaymentVC ()
 <OMNCalculatorVCDelegate,
@@ -131,7 +132,29 @@ UINavigationControllerDelegate>
 
 - (IBAction)payTap:(id)sender {
   
-  OMNPayCardVC *payCardVC = [[OMNPayCardVC alloc] initWithAmount:0.0f];
+  if (_paymentView.calculationAmount.paymentValueIsTooHigh) {
+    
+    __weak typeof(self)weakSelf = self;
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+
+      if (buttonIndex != alertView.cancelButtonIndex) {
+        [weakSelf showCardPaymentVC];
+      }
+      
+    }];
+    
+  }
+  else {
+
+    [self showCardPaymentVC];
+    
+  }
+  
+}
+
+- (void)showCardPaymentVC {
+  
+  OMNPayCardVC *payCardVC = [[OMNPayCardVC alloc] init];
   payCardVC.delegate = self;
   [self.navigationController pushViewController:payCardVC animated:YES];
   

@@ -29,7 +29,7 @@
   
 }
 
-- (instancetype)initWithAmount:(double)amount {
+- (instancetype)init {
   
   NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:@"cardInfo"];
   @try {

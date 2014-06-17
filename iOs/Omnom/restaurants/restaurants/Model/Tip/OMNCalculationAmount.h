@@ -26,6 +26,10 @@
 
 @property (nonatomic, assign) double customTipAmount;
 
+- (BOOL)paymentValueIsTooHigh;
+
 - (void)configureTipButton:(OMNTipButton *)tipButton;
+
+
 
 @end

@@ -140,4 +140,10 @@
   
 }
 
+- (BOOL)paymentValueIsTooHigh {
+  
+  return self.enteredAmount > 1.5 * self.expectedValue;
+  
+}
+
 @end
