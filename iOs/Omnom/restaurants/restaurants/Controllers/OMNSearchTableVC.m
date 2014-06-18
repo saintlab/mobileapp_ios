@@ -36,15 +36,25 @@
 }
 
 - (void)viewDidLoad {
+  
   [super viewDidLoad];
   
-  if (kUseStubBeacon) {
-    return;
-  }
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub table", nil) style:UIBarButtonItemStylePlain target:self action:@selector(useStubBeacon)];
   
   _beaconManager = [[OMNBeaconsManager alloc] init];
   [self startSearchingTables];
   
+}
+
+- (void)useStubBeacon {
+  
+  OMNBeacon *beacon = [[OMNBeacon alloc] init];
+  beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
+  beacon.major = @(1);
+  beacon.minor = @(3);
+  
+  [self decodeBeacons:@[beacon]];
+
 }
 
 - (void)startSearchingTables {
@@ -60,16 +70,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  
-  if (kUseStubBeacon) {
-    
-    OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] init];
-    decodeBeacon.restaurantId = @"riba-ris";
-//    decodeBeacon.tableId = @"4100";
-    decodeBeacon.tableId = @"1005";
-    _didFindTableBlock(decodeBeacon);
-    
-  }
   
 }
 

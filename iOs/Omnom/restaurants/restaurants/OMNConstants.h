@@ -18,8 +18,7 @@ extern NSString * const kFlurryApiKey;
 typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);
 
-#define kUseStubData 1
-#define kUseStubBeacon 1
+#define kUseStubData 0
 #define kUseStubUser 1
 
 #define kGreenColor ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1])

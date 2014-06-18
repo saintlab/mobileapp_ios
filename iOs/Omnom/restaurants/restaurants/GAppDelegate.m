@@ -35,7 +35,7 @@
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:restaurantMenuVC];
     
   }];
-  self.window.rootViewController = searchTableVC;
+  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:searchTableVC];
 
   return YES;
   

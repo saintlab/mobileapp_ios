@@ -224,6 +224,7 @@
   }
   else {
     
+    [self.navigationController popToViewController:self animated:YES];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"На этом столике нет заказов", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     
   }
