@@ -14,6 +14,12 @@
 #import <Flurry.h>
 #import "OMNLoginVC.h"
 
+@interface GAppDelegate ()
+<OMNLoginVCDelegate>
+
+
+@end
+
 @implementation GAppDelegate {
   UIImageView *_splashIV;
 }
@@ -27,17 +33,45 @@
   [Flurry setCrashReportingEnabled:YES];
   [Flurry startSession:kFlurryApiKey withOptions:launchOptions];
   
+  
+  OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
+  loginVC.delegate = self;
+  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:loginVC];
+//  [OMNUser userWithToken:token user:^(OMNUser *user) {
+//    
+//    NSLog(@"%@", user);
+//    
+//  } failure:^(NSError *error) {
+//    
+//    NSLog(@"%@", error);
+//    
+//  }];
+
+  return YES;
+  
+  
+
+  return YES;
+  
+}
+
+#pragma mark - OMNLoginVCDelegate
+
+- (void)loginVC:(OMNLoginVC *)loginVC didReceiveToken:(NSString *)token {
+  
   OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
     
-    NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
-    OMNRestaurant *r = [[OMNRestaurant alloc] initWithData:data];
-    GRestaurantMenuVC *restaurantMenuVC = [[GRestaurantMenuVC alloc] initWithRestaurant:r table:nil];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:restaurantMenuVC];
+    if (decodeBeacon) {
+      
+      NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
+      OMNRestaurant *r = [[OMNRestaurant alloc] initWithData:data];
+      GRestaurantMenuVC *restaurantMenuVC = [[GRestaurantMenuVC alloc] initWithRestaurant:r table:nil];
+      self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:restaurantMenuVC];
+      
+    }
     
   }];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:searchTableVC];
-
-  return YES;
   
 }
 

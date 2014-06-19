@@ -64,12 +64,11 @@
 
     [weakSelf checkNearestBeacons:foundBeacons];
     
+  } status:^(BeaconsManagerStatus status) {
+    
+    [weakSelf processStatus:status];
+    
   }];
-  
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
   
 }
 
@@ -103,33 +102,10 @@
   
 }
 
-- (void)decodeBeacons:(NSArray *)beaconsToDecode {
-  
-  _searchLabel.text = NSLocalizedString(@"Получаем информацию о столе...", nil);
-  
-  [OMNDecodeBeacon decodeBeacons:beaconsToDecode success:^(NSArray *decodeBeacons) {
-    
-    OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
-    if (_didFindTableBlock) {
-      _didFindTableBlock(decodeBeacon);
-    }
-    NSLog(@"decodeBeacons>%@", decodeBeacons);
-    
-  } failure:^(NSError *error) {
-    
-    _searchLabel.text = @"Server error";
-//    [weakSelf decodeBeacons:beaconsToDecode];
-    NSLog(@"error>%@", error);
-    
-  }];
-  
-}
-
-
 #pragma mark - OMNTablePositionVCDelegate
 
 - (void)tablePositionVCDidPlaceOnTable:(OMNTablePositionVC *)tablePositionVC {
-
+  
   __weak typeof(self)weakSelf = self;
   [self dismissViewControllerAnimated:YES completion:^{
     [weakSelf startSearchingTables];
@@ -140,6 +116,56 @@
 - (void)tablePositionVCDidCancel:(OMNTablePositionVC *)tablePositionVC {
   
   _didFindTableBlock(nil);
+  
+}
+
+- (void)processStatus:(BeaconsManagerStatus)status {
+  
+  switch (status) {
+    case kBeaconsManagerStatusDenied:
+    case kBeaconsManagerStatusRestricted: {
+      
+      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+      
+    } break;
+      
+    default:
+      break;
+  }
+  
+}
+
+- (void)decodeBeacons:(NSArray *)beaconsToDecode {
+  
+  _searchLabel.text = NSLocalizedString(@"Получаем информацию о столе...", nil);
+  
+  [OMNDecodeBeacon decodeBeacons:beaconsToDecode success:^(NSArray *decodeBeacons) {
+    
+    OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
+    
+    if (decodeBeacon) {
+
+      if (_didFindTableBlock) {
+        _didFindTableBlock(decodeBeacon);
+      }
+      
+    }
+    else {
+      
+      _searchLabel.text = @"Нет информации о столе";
+      [self startSearchingTables];
+      
+    }
+    
+    NSLog(@"decodeBeacons>%@", decodeBeacons);
+    
+  } failure:^(NSError *error) {
+    
+    _searchLabel.text = @"Server error";
+//    [weakSelf decodeBeacons:beaconsToDecode];
+    NSLog(@"error>%@", error);
+    
+  }];
   
 }
 

@@ -28,8 +28,10 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
 
   OMNFoundBeaconsBlock _foundBeaconsBlock;
   OMNFoundBeaconsBlock _foundNearestBeaconsBlock;
-  OMNBeaconRangingManager *_beaconRangingManager;
+  OMNBeaconsManagerStatusBlock _statusBlock;
 
+  OMNBeaconRangingManager *_beaconRangingManager;
+  
 }
 
 - (instancetype)init {
@@ -37,41 +39,20 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   if (self) {
     
     _addBeaconLock = dispatch_semaphore_create(1);
-    
-    __weak typeof(self)weakSelf = self;
-    _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithAuthorizationStatus:^(CLAuthorizationStatus status) {
-      
-      switch (status) {
-        case kCLAuthorizationStatusDenied:
-        case kCLAuthorizationStatusRestricted: {
-          
-          [weakSelf stopMonitoring];
-          
-        } break;
-        default: {
-        } break;
-      }
-      
-    }];
+    _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
     
   }
   return self;
 }
 
-- (void)startMonitoring:(OMNFoundBeaconsBlock)block {
+- (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block status:(OMNBeaconsManagerStatusBlock)statusBlock {
   NSAssert(block != nil, @"please provide block");
   _ragingMonitorEnabled = YES;
-  _foundBeaconsBlock = block;
-  [self startRagingMonitoring];
-  
-}
-
-- (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block {
-  
-  _ragingMonitorEnabled = YES;
   _foundNearestBeaconsBlock = block;
+  _statusBlock = statusBlock;
+  
   [self startRagingMonitoring];
-
+  
 }
 
 - (void)startRagingMonitoring {
@@ -88,26 +69,20 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
     
   } failure:^(NSError *error) {
     
-    NSLog(@"error>%@", error);
-    [weakSelf stopMonitoring];
+    [weakSelf processError:error];
+    
+  } status:^(CLAuthorizationStatus status) {
+    
+    [weakSelf processStatus:status];
     
   }];
-  
-}
-
-- (void)stopMonitoring {
-  
-  _foundBeaconsBlock = nil;
-  _foundNearestBeaconsBlock = nil;
-  _ragingMonitorEnabled = NO;
-  [_beaconRangingManager stop];
   
 }
 
 - (void)processBeacons:(NSArray *)newBeacons {
   
   dispatch_semaphore_wait(_addBeaconLock, DISPATCH_TIME_FOREVER);
-  NSLog(@"%@", newBeacons);
+
   NSMutableArray *foundBeacons = [NSMutableArray arrayWithCapacity:newBeacons.count];
   [newBeacons enumerateObjectsUsingBlock:^(CLBeacon *beacon, NSUInteger idx, BOOL *stop) {
     
@@ -124,6 +99,44 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   [self findNearestBeacons:foundBeacons];
   
   dispatch_semaphore_signal(_addBeaconLock);
+  
+}
+
+- (void)processError:(NSError *)error {
+  
+  NSLog(@"error>%@", error);
+  
+}
+
+- (void)processStatus:(CLAuthorizationStatus)status {
+  
+  if (nil == _statusBlock) {
+    return;
+  }
+  
+  switch (status) {
+    case kCLAuthorizationStatusRestricted: {
+      _statusBlock(kBeaconsManagerStatusRestricted);
+    } break;
+    case kCLAuthorizationStatusDenied: {
+      _statusBlock(kBeaconsManagerStatusDenied);
+    } break;
+    case kCLAuthorizationStatusNotDetermined: {
+      _statusBlock(kBeaconsManagerStatusNotDetermined);
+    } break;
+    default: {
+      _statusBlock(kBeaconsManagerStatusEnabled);
+    } break;
+  }
+  
+}
+
+- (void)stopMonitoring {
+  
+  _foundBeaconsBlock = nil;
+  _foundNearestBeaconsBlock = nil;
+  _ragingMonitorEnabled = NO;
+  [_beaconRangingManager stop];
   
 }
 

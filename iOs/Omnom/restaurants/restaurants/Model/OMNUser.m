@@ -20,13 +20,11 @@
 - (instancetype)initWithData:(id)data {
   self = [super init];
   if (self) {
-    self.firstName = data[@"firstName"];
-    self.lastName = data[@"lastName"];
-    self.nickName = data[@"nickName"];
+    self.firstName = data[@"first_name"];
+    self.lastName = data[@"last_name"];
+    self.nickName = data[@"nick_name"];
     self.email = data[@"email"];
-    self.phone = data[@"phone"];
-    self.password = data[@"password"];
-    self.password_hash = data[@"password_hash"];
+    self.phone = [data[@"phone"] description];
     self.status = data[@"status"];
     self.phone_validated = [data[@"phone_validated"] boolValue];
     self.email_validated = [data[@"email_validated"] boolValue];
@@ -162,6 +160,35 @@
   
 }
 
++ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(OMNErrorBlock)failureBlock {
+  
+  NSDictionary *parameters =
+  @{
+    @"token" : token,
+    };
+  
+  [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if ([responseObject[@"status"] isEqualToString:@"success"]) {
+      
+      OMNUser *user = [[OMNUser alloc] initWithData:responseObject[@"user"]];
+      userBlock(user);
+      
+    }
+    else {
+
+      failureBlock(nil);
+      
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error);
+    
+  }];
+  
+}
+
 @end
 
 @implementation NSString (omn_validPhone)
@@ -194,6 +221,7 @@
   }
   
 }
+
 
 @end
 

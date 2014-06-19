@@ -9,8 +9,20 @@
 #import "OMNUserInfoVC.h"
 #import "OMNLoginVC.h"
 #import "OMNRegisterUserVC.h"
+#import "OMNAuthorisation.h"
+
+@interface OMNUserInfoVC ()
+
+@property (nonatomic, strong) OMNUser *user;
+
+@end
 
 @implementation OMNUserInfoVC {
+  
+  __weak IBOutlet UILabel *_nameLabel;
+  __weak IBOutlet UILabel *_phoneLabel;
+  __weak IBOutlet UILabel *_emailLabel;
+  __weak IBOutlet UIActivityIndicatorView *_spinner;
   
 }
 
@@ -26,10 +38,37 @@
   [super viewDidLoad];
   
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(settingsTap:)];
+
+  _spinner.hidesWhenStopped = YES;
+  [_spinner startAnimating];
+  
+  __weak typeof(self)weakSelf = self;
+  [OMNUser userWithToken:[OMNAuthorisation authorisation].token user:^(OMNUser *user) {
+  
+    weakSelf.user = user;
+    
+  } failure:^(NSError *error) {
+    
+    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+    
+  }];
+  
+}
+
+- (void)setUser:(OMNUser *)user {
+  
+  _user = user;
+  _nameLabel.text = _user.firstName;
+  _phoneLabel.text = _user.phone;
+  _emailLabel.text = _user.email;
+  [_spinner stopAnimating];
   
 }
 
 - (IBAction)settingsTap:(id)sender {
+  
+  [self.delegate userInfoVCDidFinish:self];
+  
 }
 
 

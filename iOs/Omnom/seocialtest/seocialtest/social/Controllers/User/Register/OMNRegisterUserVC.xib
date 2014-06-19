@@ -6,12 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNRegisterUserVC">
             <connections>
-                <outlet property="_confirmCodeTF" destination="LBL-dm-jmd" id="8xw-1D-Jiw"/>
-                <outlet property="_confirmTF" destination="LBL-dm-jmd" id="4DZ-oy-zkf"/>
                 <outlet property="_emailTF" destination="vch-Nh-y6s" id="0Tp-kI-XMT"/>
                 <outlet property="_nameTF" destination="ihX-0T-hqi" id="0bu-0c-mgR"/>
                 <outlet property="_phoneTF" destination="WDf-ea-aPq" id="YCf-C5-hQj"/>
-                <outlet property="_resendButton" destination="60V-ZX-ff1" id="Rtp-Bv-feU"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -38,22 +35,6 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
                 </textField>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="код" minimumFontSize="17" id="LBL-dm-jmd" userLabel="code TF">
-                    <rect key="frame" x="149" y="189" width="101" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="numberPad"/>
-                </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="60V-ZX-ff1">
-                    <rect key="frame" x="20" y="188" width="121" height="31"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="resend">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="resendTap:" destination="-1" eventType="touchUpInside" id="0ik-Wx-pCp"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

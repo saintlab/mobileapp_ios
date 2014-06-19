@@ -10,10 +10,10 @@
 		5673001009284FEB8D119AD9 /* libPods-seocialtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C20CA6AA3C3E4AD0B4FF6605 /* libPods-seocialtest.a */; };
 		930839AB191B5C0100188EC2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930839AA191B5C0100188EC2 /* Social.framework */; };
 		930839B1191B5CC000188EC2 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930839B0191B5CC000188EC2 /* Accounts.framework */; };
-		9352B42E1945945400AA778C /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9352B42D1945945400AA778C /* OMNUserInfoVC.m */; };
-		9352B42F1945945400AA778C /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9352B42D1945945400AA778C /* OMNUserInfoVC.m */; };
-		9352B431194594AC00AA778C /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9352B430194594AC00AA778C /* OMNUserInfoVC.xib */; };
-		9352B432194594AC00AA778C /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9352B430194594AC00AA778C /* OMNUserInfoVC.xib */; };
+		930CDE051952CC6300A7D3A0 /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930CDE031952CC6300A7D3A0 /* OMNUserInfoVC.m */; };
+		930CDE061952CC6300A7D3A0 /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930CDE031952CC6300A7D3A0 /* OMNUserInfoVC.m */; };
+		930CDE071952CC6300A7D3A0 /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930CDE041952CC6300A7D3A0 /* OMNUserInfoVC.xib */; };
+		930CDE081952CC6300A7D3A0 /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930CDE041952CC6300A7D3A0 /* OMNUserInfoVC.xib */; };
 		93570D3E19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93570D3C19503FF60065E6D2 /* OMNConfirmCodeVC.m */; };
 		93570D3F19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93570D3C19503FF60065E6D2 /* OMNConfirmCodeVC.m */; };
 		93570D4019503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93570D3D19503FF60065E6D2 /* OMNConfirmCodeVC.xib */; };
@@ -129,9 +129,9 @@
 		3857FCD33DF54CFCB3DFC479 /* Pods-seocialtest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-seocialtest.xcconfig"; path = "../Pods/Pods-seocialtest.xcconfig"; sourceTree = "<group>"; };
 		930839AA191B5C0100188EC2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		930839B0191B5CC000188EC2 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		9352B42C1945945400AA778C /* OMNUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoVC.h; sourceTree = "<group>"; };
-		9352B42D1945945400AA778C /* OMNUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoVC.m; sourceTree = "<group>"; };
-		9352B430194594AC00AA778C /* OMNUserInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNUserInfoVC.xib; sourceTree = "<group>"; };
+		930CDE021952CC6300A7D3A0 /* OMNUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoVC.h; sourceTree = "<group>"; };
+		930CDE031952CC6300A7D3A0 /* OMNUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoVC.m; sourceTree = "<group>"; };
+		930CDE041952CC6300A7D3A0 /* OMNUserInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNUserInfoVC.xib; sourceTree = "<group>"; };
 		93570D3B19503FF60065E6D2 /* OMNConfirmCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNConfirmCodeVC.h; sourceTree = "<group>"; };
 		93570D3C19503FF60065E6D2 /* OMNConfirmCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNConfirmCodeVC.m; sourceTree = "<group>"; };
 		93570D3D19503FF60065E6D2 /* OMNConfirmCodeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNConfirmCodeVC.xib; sourceTree = "<group>"; };
@@ -258,12 +258,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		930CDDF21952C60900A7D3A0 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				930CDE021952CC6300A7D3A0 /* OMNUserInfoVC.h */,
+				930CDE031952CC6300A7D3A0 /* OMNUserInfoVC.m */,
+				930CDE041952CC6300A7D3A0 /* OMNUserInfoVC.xib */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
 		9352B4331945971000AA778C /* UserInfo */ = {
 			isa = PBXGroup;
 			children = (
-				9352B42C1945945400AA778C /* OMNUserInfoVC.h */,
-				9352B42D1945945400AA778C /* OMNUserInfoVC.m */,
-				9352B430194594AC00AA778C /* OMNUserInfoVC.xib */,
 			);
 			name = UserInfo;
 			sourceTree = "<group>";
@@ -509,6 +516,7 @@
 		93A9949B19484C22005B403C /* User */ = {
 			isa = PBXGroup;
 			children = (
+				930CDDF21952C60900A7D3A0 /* Info */,
 				93570D3A19503FF60065E6D2 /* ConfirmCode */,
 				93A9949C19484C22005B403C /* Login */,
 				93A994A019484C22005B403C /* Register */,
@@ -694,7 +702,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9352B431194594AC00AA778C /* OMNUserInfoVC.xib in Resources */,
+				930CDE071952CC6300A7D3A0 /* OMNUserInfoVC.xib in Resources */,
 				93E7C1731918DC1600F22695 /* Images.xcassets in Resources */,
 				9369BBCE192E2AE70018C79C /* rouble.otf in Resources */,
 				93570D4019503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */,
@@ -715,12 +723,12 @@
 				9369BBCF192E2AE70018C79C /* rouble.otf in Resources */,
 				93A994A719484C22005B403C /* OMNLoginVC.xib in Resources */,
 				9369BB83192E2AE70018C79C /* GViewController1.xib in Resources */,
-				9352B432194594AC00AA778C /* OMNUserInfoVC.xib in Resources */,
 				9369BB7D192E2AE70018C79C /* GCongratulationsVC.xib in Resources */,
 				93A994AB19484C22005B403C /* OMNRegisterUserVC.xib in Resources */,
 				9369BB9D192E2AE70018C79C /* GUserDetailsVC.xib in Resources */,
 				93E7C1841918DC1600F22695 /* InfoPlist.strings in Resources */,
 				93570D4119503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */,
+				930CDE081952CC6300A7D3A0 /* OMNUserInfoVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,7 +787,6 @@
 				93A3690A194715F100DE91D8 /* OMNAuthorizationManager.m in Sources */,
 				93A994A419484C22005B403C /* OMNLoginVC.m in Sources */,
 				9369BBD8192E2AE70018C79C /* GSocialCell.m in Sources */,
-				9352B42E1945945400AA778C /* OMNUserInfoVC.m in Sources */,
 				9369BBB4192E2AE70018C79C /* GSocialNetwork.m in Sources */,
 				93E7C16B1918DC1600F22695 /* GAppDelegate.m in Sources */,
 				9369BBA6192E2AE70018C79C /* GControllerMediator.m in Sources */,
@@ -788,6 +795,7 @@
 				93E7C1671918DC1600F22695 /* main.m in Sources */,
 				93A368FC1946FFA500DE91D8 /* OMNConstants.m in Sources */,
 				9369BBBC192E2AE70018C79C /* Odnoklassniki.m in Sources */,
+				930CDE051952CC6300A7D3A0 /* OMNUserInfoVC.m in Sources */,
 				9369BB9E192E2AE70018C79C /* GUserInfoDataSource.m in Sources */,
 				9369BBB8192E2AE70018C79C /* OKFriends.m in Sources */,
 				93A3690C194715F100DE91D8 /* OMNOperationManager.m in Sources */,
@@ -826,6 +834,7 @@
 				9369BBA7192E2AE70018C79C /* GControllerMediator.m in Sources */,
 				9369BBA1192E2AE70018C79C /* GUserInfoVC.m in Sources */,
 				93570D3F19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */,
+				930CDE061952CC6300A7D3A0 /* OMNUserInfoVC.m in Sources */,
 				9369BB9F192E2AE70018C79C /* GUserInfoDataSource.m in Sources */,
 				9369BBC5192E2AE70018C79C /* GTwitterNetwork.m in Sources */,
 				9369BBB3192E2AE70018C79C /* GAuthManager.m in Sources */,
@@ -836,7 +845,6 @@
 				9369BB7B192E2AE70018C79C /* GCongratulationsVC.m in Sources */,
 				9369BBBF192E2AE70018C79C /* OKRequest.m in Sources */,
 				9369BBC3192E2AE70018C79C /* OKTokenCache.m in Sources */,
-				9352B42F1945945400AA778C /* OMNUserInfoVC.m in Sources */,
 				9369BBD1192E2AE70018C79C /* GUserInfoTransition.m in Sources */,
 				93A368FD1946FFA500DE91D8 /* OMNConstants.m in Sources */,
 				93E7C1861918DC1600F22695 /* seocialtestTests.m in Sources */,

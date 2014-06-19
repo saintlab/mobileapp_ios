@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol OMNLoginVCDelegate;
+
 @interface OMNLoginVC : UIViewController
+
+@property (nonatomic, weak) id<OMNLoginVCDelegate> delegate;
+
+@end
+
+@protocol OMNLoginVCDelegate <NSObject>
+
+- (void)loginVC:(OMNLoginVC *)loginVC didReceiveToken:(NSString *)token;
 
 @end

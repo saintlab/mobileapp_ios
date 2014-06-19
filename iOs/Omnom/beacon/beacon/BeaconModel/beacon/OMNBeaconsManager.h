@@ -8,17 +8,21 @@
 
 extern NSString * const OMNBeaconsManagerDidChangeBeaconsNotification;
 
-@class OMNBeacon;
-@class OMNBeaconsManager;
+typedef  NS_ENUM(NSInteger, BeaconsManagerStatus) {
+  kBeaconsManagerStatusNotDetermined = 0,
+  kBeaconsManagerStatusEnabled,
+  kBeaconsManagerStatusDenied,
+  kBeaconsManagerStatusRestricted,
+};
 
-//typedef void(^OMNBeaconsManagerBlock)(OMNBeaconsManager *beaconsManager);
 typedef void(^OMNFoundBeaconsBlock)(NSArray *foundBeacons);
+typedef void(^OMNBeaconsManagerStatusBlock)(BeaconsManagerStatus status);
 
 @interface OMNBeaconsManager : NSObject 
 
 - (void)startMonitoring:(OMNFoundBeaconsBlock)block;
 
-- (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block;
+- (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block status:(OMNBeaconsManagerStatusBlock)statusBlock;
 
 - (void)stopMonitoring;
 

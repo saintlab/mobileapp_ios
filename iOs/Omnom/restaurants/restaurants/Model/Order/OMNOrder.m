@@ -48,7 +48,7 @@
 
 - (void)deselectAll {
   
-  [_items enumerateObjectsWithOptions:NSSortConcurrent usingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+  [_items enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
     
     [orderItem deselect];
     

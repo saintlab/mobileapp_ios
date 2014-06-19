@@ -11,19 +11,19 @@
 #import "OMNRegisterUserVC.h"
 #import "OMNAuthorisation.h"
 #import "OMNPhoneNumberTextFieldDelegate.h"
+#import "OMNConfirmCodeVC.h"
 
 @interface OMNLoginVC ()
 <UITextFieldDelegate,
-OMNRegisterUserVCDelegate>
-
-@property (nonatomic, strong) OMNUser *user;
+OMNRegisterUserVCDelegate,
+OMNConfirmCodeVCDelegate>
 
 @end
 
 @implementation OMNLoginVC {
   
   __weak IBOutlet UITextField *_loginTF;
-  __weak IBOutlet UITextField *_passwordTF;
+//  __weak IBOutlet UITextField *_passwordTF;
   
   OMNPhoneNumberTextFieldDelegate *_phoneNumberTextFieldDelegate;
   
@@ -42,18 +42,12 @@ OMNRegisterUserVCDelegate>
   
   [super viewDidLoad];
   
+  _loginTF.text = @"89833087335";
   _loginTF.placeholder = NSLocalizedString(@"Введите телефон", nil);
   _phoneNumberTextFieldDelegate = [[OMNPhoneNumberTextFieldDelegate alloc] init];
   _loginTF.delegate = _phoneNumberTextFieldDelegate;
   
-  _passwordTF.placeholder = NSLocalizedString(@"Введите код", nil);
-  _passwordTF.delegate = self;
-
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Регистрация", nil) style:UIBarButtonItemStylePlain target:self action:@selector(registerTap)];
-  
-  [self updateInterface];
-  _passwordTF.hidden = YES;
-//  _loginTF.text = @"89833087335";
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Войти", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
   
 }
 
@@ -69,25 +63,45 @@ OMNRegisterUserVCDelegate>
   __weak typeof(self)weakSelf = self;
   [OMNUser loginUsingPhone:self.decimalPhoneNumber code:nil complition:^(NSString *token) {
     
-    weakSelf.user = [OMNUser userWithPhone:self.decimalPhoneNumber];
+    [weakSelf requestAuthorizationCode];
     
   } failure:^(NSError *error) {
 
     [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
-    weakSelf.user = nil;
     
   }];
   
 }
 
-- (void)setUser:(OMNUser *)user {
-
-  _user = user;
-  [self updateInterface];
+- (void)requestAuthorizationCode {
+  
+  OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:self.decimalPhoneNumber];
+  confirmCodeVC.delegate = self;
+  [self.navigationController pushViewController:confirmCodeVC animated:YES];
   
 }
 
-- (void)registerTap {
+#pragma mark - OMNConfirmCodeVCDelegate
+
+- (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code {
+  
+  __weak typeof(self)weakSelf = self;
+  
+  [OMNUser loginUsingPhone:[self decimalPhoneNumber] code:code complition:^(NSString *token) {
+    
+    [weakSelf tokenDidReceived:token];
+    
+  } failure:^(NSError *error) {
+    
+    [confirmCodeVC reset];
+    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+    
+  }];
+  
+}
+
+
+- (IBAction)registerTap {
   
   OMNRegisterUserVC *registerUserVC = [[OMNRegisterUserVC alloc] init];
   [self.navigationController pushViewController:registerUserVC animated:YES];
@@ -104,68 +118,16 @@ OMNRegisterUserVCDelegate>
 
 - (void)tokenDidReceived:(NSString *)token {
   
+  NSLog(@"tokenDidReceived>%@", token);
   [[OMNAuthorisation authorisation] updateToken:token];
+  
+  [self.delegate loginVC:self didReceiveToken:token];
   
 }
 
 - (void)resetTap {
   
-  self.user = nil;
   _loginTF.text = @"";
-  
-}
-
-- (void)submitCodeTap {
-  
-  _passwordTF.userInteractionEnabled = NO;
-  
-  __weak typeof(self)weakSelf = self;
-  
-  [OMNUser loginUsingPhone:_loginTF.text code:_passwordTF.text complition:^(NSString *token) {
-    
-    [weakSelf processSuccessLogin];
-    
-  } failure:^(NSError *error) {
-
-    [weakSelf didFailSubmitCodeWithError:error];
-    
-  }];
-  
-}
-
-- (void)didFailSubmitCodeWithError:(NSError *)error {
-  
-  [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
-  
-  _passwordTF.text = @"";
-  _passwordTF.userInteractionEnabled = YES;
-  NSLog(@"error>%@", error);
-  
-}
-
-- (void)processSuccessLogin {
-  
-  NSLog(@"processSuccessLogin");
-  
-}
-
-- (void)updateInterface {
-  
-  if (self.user) {
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Сбросить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resetTap)];
-    _loginTF.enabled = NO;
-    _passwordTF.hidden = NO;
-    [_passwordTF becomeFirstResponder];
-    
-  }
-  else {
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Войти", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
-    _loginTF.enabled = YES;
-    _passwordTF.hidden = YES;
-    
-  }
   
 }
 
@@ -175,27 +137,7 @@ OMNRegisterUserVCDelegate>
   return decimalString;
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-  
-  NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-  
-  if ([textField isEqual:_passwordTF]) {
-    
-    if (4 == newString.length) {
-      textField.text = newString;
-      [self submitCodeTap];
-      return NO;
-    }
-    else {
-      return YES;
-    }
-    
-  }
-  return YES;
-}
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }

@@ -71,15 +71,7 @@
   _devicePositionManager = nil;
   
   __weak typeof(self)weakSelf = self;
-  _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithAuthorizationStatus:^(CLAuthorizationStatus status) {
-    
-    if (kCLAuthorizationStatusDenied == status) {
-      
-      [weakSelf didFailRangeBeacons];
-      
-    }
-    
-  }];
+  _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
   
   
   [_beaconRangingManager rangeNearestBeacons:^(NSArray *beacons) {
@@ -91,7 +83,7 @@
     NSLog(@"error>%@", error);
     [weakSelf didFailRangeBeacons];
     
-  }];
+  } status:nil];
   
 }
 

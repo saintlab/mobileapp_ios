@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMNEnterCodeView : UIView
+@interface OMNEnterCodeView : UIControl
 
 @property (nonatomic, copy) NSString *code;
 

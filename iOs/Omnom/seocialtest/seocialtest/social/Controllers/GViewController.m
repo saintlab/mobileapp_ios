@@ -16,7 +16,7 @@
 #import "OMNUserInfoVC.h"
 
 @interface GViewController ()
-<GUserInfoVCDelegate>
+<OMNUserInfoVCDelegate>
 
 @end
 
@@ -46,11 +46,19 @@
 - (IBAction)open:(id)sender {
   
   OMNUserInfoVC *vc = [[OMNUserInfoVC alloc] init];
-  
+  vc.delegate = self;
   UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:vc];
   navVC.transitioningDelegate = _transitionDelegate;
   navVC.modalPresentationStyle = UIModalPresentationCustom;
   [self presentViewController:navVC animated:YES completion:nil];
+  
+}
+
+#pragma mark - OMNUserInfoVCDelegate
+
+- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
   
 }
 

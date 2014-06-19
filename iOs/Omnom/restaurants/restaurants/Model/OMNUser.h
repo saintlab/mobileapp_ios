@@ -9,6 +9,8 @@
 #import "OMNConstants.h"
 #import "OMNAuthorisation.h"
 
+typedef void(^OMNUserBlock)(OMNUser *user);
+
 @interface OMNUser : NSObject
 
 @property (nonatomic, copy) NSString *firstName;
@@ -16,8 +18,6 @@
 @property (nonatomic, copy) NSString *nickName;
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *phone;
-@property (nonatomic, copy) NSString *password;
-@property (nonatomic, copy) NSString *password_hash;
 @property (nonatomic, copy) NSString *status;
 
 @property (nonatomic, assign) BOOL phone_validated;
@@ -34,5 +34,7 @@
 - (void)confirmPhoneResend:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock;
 
 + (void)loginUsingPhone:(NSString *)phone code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
+
++ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(OMNErrorBlock)failureBlock;
 
 @end

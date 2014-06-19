@@ -80,12 +80,14 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
   
   NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
   
+  toView.frame = CGRectMake(kLeftOffset, 0, CGRectGetWidth(containerView.frame) - kLeftOffset, CGRectGetHeight(containerView.frame));
+  
   [UIView animateWithDuration:animationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
     
-    toView.frame = CGRectMake(kLeftOffset, 0, CGRectGetWidth(containerView.frame) - kLeftOffset, CGRectGetHeight(containerView.frame));
     [self updateViewToFinalPosition:fromView containerView:containerView];
     
   } completion:^(BOOL finished) {
+    
     
     [transitionContext completeTransition:YES];
     
@@ -98,12 +100,12 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
   UIView *toView = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey].view;
   
   UIView *containerView = [transitionContext containerView];
+
+  NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
   [self updateViewToFinalPosition:toView containerView:containerView];
   
-  NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
-  
   [UIView animateWithDuration:animationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseOut  animations:^{
-    
+  
     [self updateViewToInitialPosition:toView containerView:containerView];
     
   } completion:^(BOOL finished) {

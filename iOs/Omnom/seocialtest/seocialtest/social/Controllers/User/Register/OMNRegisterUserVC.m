@@ -8,9 +8,10 @@
 
 #import "OMNRegisterUserVC.h"
 #import "OMNUser.h"
+#import "OMNConfirmCodeVC.h"
 
 @interface OMNRegisterUserVC ()
-<UITextFieldDelegate>
+<OMNConfirmCodeVCDelegate>
 
 @end
 
@@ -20,9 +21,6 @@
   __weak IBOutlet UITextField *_phoneTF;
   __weak IBOutlet UITextField *_emailTF;
   __weak IBOutlet UITextField *_confirmTF;
-  
-  __weak IBOutlet UIButton *_resendButton;
-  __weak IBOutlet UITextField *_confirmCodeTF;
   
   OMNUser *_user;
 }
@@ -43,12 +41,7 @@
     _nameTF.text = @"Женя";
   }
   
-  _resendButton.hidden = YES;
-  _confirmCodeTF.hidden = YES;
-  
-  _confirmCodeTF.delegate = self;
-  
-  UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Подтвердить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(submitTap:)];
+  UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Подтвердить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];
   UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Сбросить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resetTap:)];
   
   self.navigationItem.rightBarButtonItems = @[submitButton, resetButton];
@@ -60,7 +53,6 @@
   [_user confirmPhoneResend:^{
     
     
-    
   } failure:^(NSError *error) {
     
     NSLog(@"%@", error);
@@ -69,30 +61,15 @@
   
 }
 
-
-- (void)submitTap:(UIBarButtonItem *)button {
-  
-  if (_user) {
-    
-    [self confirmUser];
-    
-  }
-  else {
-    
-    [self createUser];
-    
-  }
-  
-}
-
 - (void)resetTap:(UIBarButtonItem *)button {
-  
-  _user = nil;
-  [self updateInterface];
+
+  _emailTF.text = @"";
+  _phoneTF.text = @"";
+  _nameTF.text = @"";
   
 }
 
-- (void)createUser {
+- (void)createUserTap {
   
   _user = [[OMNUser alloc] init];
   _user.email = _emailTF.text;
@@ -102,44 +79,37 @@
   __weak typeof(self)weakSelf = self;
   [_user registerWithComplition:^{
     
-    [weakSelf updateInterface];
+    [weakSelf requestAuthorizationCode];
     
   } failure:^(NSError *error) {
     
-    NSLog(@"error>%@", error);
+    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     
   }];
   
 }
 
-- (void)updateInterface {
+- (void)requestAuthorizationCode {
   
-  BOOL emptyUser = (_user == nil);
-  
-  _nameTF.enabled = emptyUser;
-  _phoneTF.enabled = emptyUser;
-  _emailTF.enabled = emptyUser;
-  
-  _resendButton.hidden = emptyUser;
-  _confirmCodeTF.hidden = emptyUser;
-  
-  if (NO == emptyUser) {
-    [_confirmCodeTF becomeFirstResponder];
-  }
+  OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:_user.phone];
+  confirmCodeVC.delegate = self;
+  [self.navigationController pushViewController:confirmCodeVC animated:YES];
   
 }
 
-- (void)confirmUser {
+#pragma mark - OMNConfirmCodeVCDelegate
+
+- (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code {
   
   __weak typeof(self)weakSelf = self;
-  [_user confirmPhone:_confirmCodeTF.text complition:^(NSString *token) {
+  [_user confirmPhone:code complition:^(NSString *token) {
     
     [weakSelf didRegisterWithToken:token];
     
   } failure:^(NSError *error) {
     
+    [confirmCodeVC reset];
     [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-    NSLog(@"error>%@", error);
     
   }];
   

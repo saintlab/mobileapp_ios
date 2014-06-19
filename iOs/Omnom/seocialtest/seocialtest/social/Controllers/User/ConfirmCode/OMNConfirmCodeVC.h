@@ -6,10 +6,21 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNUser.h"
+@protocol OMNConfirmCodeVCDelegate;
 
 @interface OMNConfirmCodeVC : UIViewController
 
-- (instancetype)initWithUser:(OMNUser *)user;
+@property (nonatomic, weak) id<OMNConfirmCodeVCDelegate> delegate;
+
+- (instancetype)initWithPhone:(NSString *)phone;
+
+- (void)reset;
+
+@end
+
+
+@protocol OMNConfirmCodeVCDelegate <NSObject>
+
+- (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code;
 
 @end

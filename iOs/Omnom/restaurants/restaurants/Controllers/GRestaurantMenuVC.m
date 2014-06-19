@@ -15,9 +15,11 @@
 #import "OMNPaymentVC.h"
 #import "OMNAssetManager.h"
 #import "GUserInfoTransitionDelegate.h"
+#import "OMNUserInfoVC.h"
 
 @interface GRestaurantMenuVC ()
-<OMNOrdersVCDelegate>
+<OMNOrdersVCDelegate,
+OMNUserInfoVCDelegate>
 
 @end
 
@@ -97,11 +99,27 @@
   
   _transitionDelegate = [[GUserInfoTransitionDelegate alloc] init];
   
+  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] init];
+  userInfoVC.delegate = self;
+  UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
+  navVC.transitioningDelegate = _transitionDelegate;
+  navVC.modalPresentationStyle = UIModalPresentationCustom;
+  [self presentViewController:navVC animated:YES completion:nil];
+
+  return;
 #ifdef __IPHONE_8_0
   if (&UIApplicationOpenSettingsURLString) {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
   }
 #endif
+  
+}
+
+#pragma mark - OMNUserInfoVCDelegate
+
+- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
   
 }
 
@@ -193,6 +211,10 @@
   __weak typeof(self)weakSelf = self;
   OMNRestaurant *restaurant = _restaurant;
   [self searchTableWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
+    
+    if (nil == decodeBeacon) {
+      return;
+    }
     
     [restaurant getOrdersForTableID:decodeBeacon.tableId orders:^(NSArray *orders) {
 

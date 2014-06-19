@@ -12,6 +12,7 @@
 <UIViewControllerAnimatedTransitioning>
 
 + (instancetype)forwardTransition;
+
 + (instancetype)backwardTransition;
 
 @end

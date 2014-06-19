@@ -20,8 +20,8 @@
   CLLocationManager *_rangingLocationManager;
   
   CLBeaconsBlock _didRangeNearestBeaconsBlock;
-  CLAuthorizationStatusBlock _authorizationStatusBlock;
   OMNErrorBlock _didFailRangeBeaconsBlock;
+  CLAuthorizationStatusBlock _statusBlock;
   
 }
 
@@ -48,21 +48,9 @@
   return self;
 }
 
-- (instancetype)initWithAuthorizationStatus:(CLAuthorizationStatusBlock)authorizationStatusBlock {
-  
-  self = [self init];
-  if (self) {
-    
-    _authorizationStatusBlock = authorizationStatusBlock;
-    
-  }
-  return self;
-}
-
-- (void)rangeNearestBeacons:(CLBeaconsBlock)didRangeNearestBeaconsBlock failure:(OMNErrorBlock)failureBlock {
+- (void)rangeNearestBeacons:(CLBeaconsBlock)didRangeNearestBeaconsBlock failure:(OMNErrorBlock)failureBlock status:(CLAuthorizationStatusBlock)statusBlock {
   
   NSAssert([NSThread isMainThread], @"Should be run on main thread");
-  
   
   if (![CLLocationManager isRangingAvailable]) {
     
@@ -74,6 +62,11 @@
   
   _didRangeNearestBeaconsBlock = didRangeNearestBeaconsBlock;
   _didFailRangeBeaconsBlock = failureBlock;
+  _statusBlock = statusBlock;
+  
+  if (_ranging) {
+    return;
+  }
   
   if (![_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
 #ifdef __IPHONE_8_0
@@ -84,25 +77,29 @@
     [_rangingLocationManager startRangingBeaconsInRegion:_rangingBeaconRegion];
   }
   
+  _ranging = YES;
+  
 }
 
 - (void)stop {
   
   _didRangeNearestBeaconsBlock = nil;
   _didFailRangeBeaconsBlock = nil;
+  _statusBlock = nil;
   
   if ([_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
     [_rangingLocationManager stopRangingBeaconsInRegion:_rangingBeaconRegion];
   }
-  
+  _ranging = NO;
 }
 
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
   
-  if (_authorizationStatusBlock) {
-    _authorizationStatusBlock(status);
+  NSLog(@"didChangeAuthorizationStatus>%d", status);
+  if (_statusBlock) {
+    _statusBlock(status);
   }
   
 }
