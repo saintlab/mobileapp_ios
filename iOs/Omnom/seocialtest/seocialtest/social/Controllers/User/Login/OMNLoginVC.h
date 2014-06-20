@@ -6,18 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-@protocol OMNLoginVCDelegate;
+#import "OMNAuthorizationDelegate.h"
 
 @interface OMNLoginVC : UIViewController
 
-@property (nonatomic, weak) id<OMNLoginVCDelegate> delegate;
+@property (nonatomic, weak) id<OMNAuthorizationDelegate> delegate;
 
 @end
 
-@protocol OMNLoginVCDelegate <NSObject>
-
-- (void)loginVC:(OMNLoginVC *)loginVC didReceiveToken:(NSString *)token;
-
-@end

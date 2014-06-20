@@ -14,7 +14,6 @@
 		9304B16718FE7D0C00CD380C /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9304B16518FE7D0C00CD380C /* OMNBeaconSearchManager.m */; };
 		9304B1A31901145D00CD380C /* OMNBeaconRangingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9304B1A21901145D00CD380C /* OMNBeaconRangingManager.m */; };
 		9304B1A41901145D00CD380C /* OMNBeaconRangingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9304B1A21901145D00CD380C /* OMNBeaconRangingManager.m */; };
-		930554A519345AB200E6F4EC /* GSearchTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554A419345AB200E6F4EC /* GSearchTableVC.m */; };
 		930554A819345C9C00E6F4EC /* OMNFoundBeacons.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554A719345C9C00E6F4EC /* OMNFoundBeacons.m */; };
 		930554AB19346E8900E6F4EC /* GSelectVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554AA19346E8900E6F4EC /* GSelectVC.m */; };
 		9324D22418F67BF7009D7AC5 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9324D22318F67BF7009D7AC5 /* OMNConstants.m */; };
@@ -82,8 +81,6 @@
 		9304B16518FE7D0C00CD380C /* OMNBeaconSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconSearchManager.m; sourceTree = "<group>"; };
 		9304B1A11901145D00CD380C /* OMNBeaconRangingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconRangingManager.h; sourceTree = "<group>"; };
 		9304B1A21901145D00CD380C /* OMNBeaconRangingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconRangingManager.m; sourceTree = "<group>"; };
-		930554A319345AB200E6F4EC /* GSearchTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSearchTableVC.h; sourceTree = "<group>"; };
-		930554A419345AB200E6F4EC /* GSearchTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSearchTableVC.m; sourceTree = "<group>"; };
 		930554A619345C9C00E6F4EC /* OMNFoundBeacons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFoundBeacons.h; sourceTree = "<group>"; };
 		930554A719345C9C00E6F4EC /* OMNFoundBeacons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFoundBeacons.m; sourceTree = "<group>"; };
 		930554A919346E8900E6F4EC /* GSelectVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSelectVC.h; sourceTree = "<group>"; };
@@ -273,8 +270,6 @@
 				93EEA4BE18C714AF005C729F /* GTableVC.m */,
 				93EEA4C618C73004005C729F /* GMenuVC.h */,
 				93EEA4C718C73004005C729F /* GMenuVC.m */,
-				930554A319345AB200E6F4EC /* GSearchTableVC.h */,
-				930554A419345AB200E6F4EC /* GSearchTableVC.m */,
 				930554A919346E8900E6F4EC /* GSelectVC.h */,
 				930554AA19346E8900E6F4EC /* GSelectVC.m */,
 			);
@@ -500,7 +495,6 @@
 			files = (
 				93F203FC18F7BA19006ED59F /* OMNBeaconBackgroundManager.m in Sources */,
 				930554A819345C9C00E6F4EC /* OMNFoundBeacons.m in Sources */,
-				930554A519345AB200E6F4EC /* GSearchTableVC.m in Sources */,
 				93C93B1318B45F4800AC492B /* GAppDelegate.m in Sources */,
 				93F2040018F7BA19006ED59F /* GDefaultClient.m in Sources */,
 				93E4413118FD416C00F60CB1 /* OMNDevicePositionManager.m in Sources */,

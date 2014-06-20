@@ -6,18 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNUser.h"
-
-@protocol OMNRegisterUserVCDelegate;
+#import "OMNAuthorizationDelegate.h"
 
 @interface OMNRegisterUserVC : UIViewController
 
-@property (nonatomic, weak) id<OMNRegisterUserVCDelegate> delegate;
+@property (nonatomic, weak) id<OMNAuthorizationDelegate> delegate;
 
 @end
 
-@protocol OMNRegisterUserVCDelegate <NSObject>
-
-- (void)registerUserVC:(OMNRegisterUserVC *)registerUserVC didRegisterUserWithToken:(NSString *)token;
-
-@end

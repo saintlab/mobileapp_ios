@@ -82,6 +82,8 @@
 		9369BBD5192E2AE70018C79C /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB67192E2AE70018C79C /* UIView+frame.m */; };
 		9369BBD8192E2AE70018C79C /* GSocialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB6E192E2AE70018C79C /* GSocialCell.m */; };
 		9369BBD9192E2AE70018C79C /* GSocialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB6E192E2AE70018C79C /* GSocialCell.m */; };
+		939DA16919540C6F0063AB23 /* OMNNumberKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA16819540C6F0063AB23 /* OMNNumberKeyboardView.m */; };
+		939DA16A19540C6F0063AB23 /* OMNNumberKeyboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA16819540C6F0063AB23 /* OMNNumberKeyboardView.m */; };
 		93A368FC1946FFA500DE91D8 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A368FB1946FFA500DE91D8 /* OMNConstants.m */; };
 		93A368FD1946FFA500DE91D8 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A368FB1946FFA500DE91D8 /* OMNConstants.m */; };
 		93A369021947074600DE91D8 /* OMNAuthorisation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A368FF1947074600DE91D8 /* OMNAuthorisation.m */; };
@@ -195,6 +197,9 @@
 		9369BB67192E2AE70018C79C /* UIView+frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frame.m"; sourceTree = "<group>"; };
 		9369BB6D192E2AE70018C79C /* GSocialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSocialCell.h; sourceTree = "<group>"; };
 		9369BB6E192E2AE70018C79C /* GSocialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GSocialCell.m; sourceTree = "<group>"; };
+		939DA15D195401D70063AB23 /* OMNAuthorizationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OMNAuthorizationDelegate.h; sourceTree = "<group>"; };
+		939DA16719540C6F0063AB23 /* OMNNumberKeyboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNumberKeyboardView.h; sourceTree = "<group>"; };
+		939DA16819540C6F0063AB23 /* OMNNumberKeyboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNumberKeyboardView.m; sourceTree = "<group>"; };
 		93A368FA1946FFA500DE91D8 /* OMNConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNConstants.h; path = ../../restaurants/restaurants/OMNConstants.h; sourceTree = "<group>"; };
 		93A368FB1946FFA500DE91D8 /* OMNConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNConstants.m; path = ../../restaurants/restaurants/OMNConstants.m; sourceTree = "<group>"; };
 		93A368FE1947074600DE91D8 /* OMNAuthorisation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNAuthorisation.h; path = ../../restaurants/restaurants/Model/OMNAuthorisation.h; sourceTree = "<group>"; };
@@ -268,13 +273,6 @@
 			path = Info;
 			sourceTree = "<group>";
 		};
-		9352B4331945971000AA778C /* UserInfo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = UserInfo;
-			sourceTree = "<group>";
-		};
 		93570D3A19503FF60065E6D2 /* ConfirmCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -313,7 +311,6 @@
 				9369BB06192E2AE60018C79C /* GViewController1.xib */,
 				93A9949B19484C22005B403C /* User */,
 				9369BB1B192E2AE60018C79C /* user info */,
-				9352B4331945971000AA778C /* UserInfo */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -483,6 +480,8 @@
 				9369BB6C192E2AE70018C79C /* Cell */,
 				93570D42195040330065E6D2 /* OMNEnterCodeView.h */,
 				93570D43195040330065E6D2 /* OMNEnterCodeView.m */,
+				939DA16719540C6F0063AB23 /* OMNNumberKeyboardView.h */,
+				939DA16819540C6F0063AB23 /* OMNNumberKeyboardView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -520,6 +519,7 @@
 				93570D3A19503FF60065E6D2 /* ConfirmCode */,
 				93A9949C19484C22005B403C /* Login */,
 				93A994A019484C22005B403C /* Register */,
+				939DA15D195401D70063AB23 /* OMNAuthorizationDelegate.h */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -773,6 +773,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93570D3E19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */,
+				939DA16919540C6F0063AB23 /* OMNNumberKeyboardView.m in Sources */,
 				9369BBB6192E2AE70018C79C /* GOKNetwork.m in Sources */,
 				9369BB98192E2AE70018C79C /* GLoginDataSource.m in Sources */,
 				9369BBA0192E2AE70018C79C /* GUserInfoVC.m in Sources */,
@@ -842,6 +843,7 @@
 				9369BBBD192E2AE70018C79C /* Odnoklassniki.m in Sources */,
 				9369BBA5192E2AE70018C79C /* GUtils.m in Sources */,
 				9369BBB7192E2AE70018C79C /* GOKNetwork.m in Sources */,
+				939DA16A19540C6F0063AB23 /* OMNNumberKeyboardView.m in Sources */,
 				9369BB7B192E2AE70018C79C /* GCongratulationsVC.m in Sources */,
 				9369BBBF192E2AE70018C79C /* OKRequest.m in Sources */,
 				9369BBC3192E2AE70018C79C /* OKTokenCache.m in Sources */,

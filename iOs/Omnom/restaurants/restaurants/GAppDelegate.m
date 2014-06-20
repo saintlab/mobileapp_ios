@@ -8,14 +8,11 @@
 
 #import "GAppDelegate.h"
 #import "OMNAuthorisation.h"
-#import "OMNSearchTableVC.h"
-#import "GRestaurantMenuVC.h"
 #import "OMNFuturaAssetManager.h"
+#import "OMNStartVC.h"
 #import <Flurry.h>
-#import "OMNLoginVC.h"
 
 @interface GAppDelegate ()
-<OMNLoginVCDelegate>
 
 
 @end
@@ -33,45 +30,10 @@
   [Flurry setCrashReportingEnabled:YES];
   [Flurry startSession:kFlurryApiKey withOptions:launchOptions];
   
+  OMNStartVC *startVC = [[OMNStartVC alloc] init];
+  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
   
-  OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
-  loginVC.delegate = self;
-  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:loginVC];
-//  [OMNUser userWithToken:token user:^(OMNUser *user) {
-//    
-//    NSLog(@"%@", user);
-//    
-//  } failure:^(NSError *error) {
-//    
-//    NSLog(@"%@", error);
-//    
-//  }];
-
   return YES;
-  
-  
-
-  return YES;
-  
-}
-
-#pragma mark - OMNLoginVCDelegate
-
-- (void)loginVC:(OMNLoginVC *)loginVC didReceiveToken:(NSString *)token {
-  
-  OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
-    
-    if (decodeBeacon) {
-      
-      NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
-      OMNRestaurant *r = [[OMNRestaurant alloc] initWithData:data];
-      GRestaurantMenuVC *restaurantMenuVC = [[GRestaurantMenuVC alloc] initWithRestaurant:r table:nil];
-      self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:restaurantMenuVC];
-      
-    }
-    
-  }];
-  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:searchTableVC];
   
 }
 

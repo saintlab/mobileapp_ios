@@ -1,15 +1,13 @@
 //
-//  OMNLoginVC.h
+//  OMNStartVC.h
 //  restaurants
 //
-//  Created by tea on 08.04.14.
+//  Created by tea on 20.06.14.
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface OMNLogin1VC : UITableViewController
-
-
+@interface OMNStartVC : UIViewController
 
 @end

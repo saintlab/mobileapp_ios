@@ -8,15 +8,12 @@
 
 #import "OMNLoginVC.h"
 #import "OMNUser.h"
-#import "OMNRegisterUserVC.h"
-#import "OMNAuthorisation.h"
 #import "OMNPhoneNumberTextFieldDelegate.h"
 #import "OMNConfirmCodeVC.h"
+#import <Flurry.h>
 
 @interface OMNLoginVC ()
-<UITextFieldDelegate,
-OMNRegisterUserVCDelegate,
-OMNConfirmCodeVCDelegate>
+<OMNConfirmCodeVCDelegate>
 
 @end
 
@@ -42,12 +39,17 @@ OMNConfirmCodeVCDelegate>
   
   [super viewDidLoad];
   
-  _loginTF.text = @"89833087335";
+  if (kUseStubUser) {
+    _loginTF.text = @"89833087335";
+  }
+  
   _loginTF.placeholder = NSLocalizedString(@"Введите телефон", nil);
   _phoneNumberTextFieldDelegate = [[OMNPhoneNumberTextFieldDelegate alloc] init];
   _loginTF.delegate = _phoneNumberTextFieldDelegate;
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Войти", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
+  self.navigationItem.title = NSLocalizedString(@"Вход", nil);
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
   
 }
 
@@ -73,6 +75,13 @@ OMNConfirmCodeVCDelegate>
   
 }
 
+- (void)closeTap {
+  
+  [self.delegate authorizationVCDidCancel:self];
+  
+}
+
+
 - (void)requestAuthorizationCode {
   
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:self.decimalPhoneNumber];
@@ -89,6 +98,7 @@ OMNConfirmCodeVCDelegate>
   
   [OMNUser loginUsingPhone:[self decimalPhoneNumber] code:code complition:^(NSString *token) {
     
+    [Flurry logEvent:@"user_login_confirm"];
     [weakSelf tokenDidReceived:token];
     
   } failure:^(NSError *error) {
@@ -100,28 +110,9 @@ OMNConfirmCodeVCDelegate>
   
 }
 
-
-- (IBAction)registerTap {
-  
-  OMNRegisterUserVC *registerUserVC = [[OMNRegisterUserVC alloc] init];
-  [self.navigationController pushViewController:registerUserVC animated:YES];
-  
-}
-
-#pragma mark - OMNRegisterUserVCDelegate
-
--(void)registerUserVC:(OMNRegisterUserVC *)registerUserVC didRegisterUserWithToken:(NSString *)token {
-  
-  [self tokenDidReceived:token];
-  
-}
-
 - (void)tokenDidReceived:(NSString *)token {
   
-  NSLog(@"tokenDidReceived>%@", token);
-  [[OMNAuthorisation authorisation] updateToken:token];
-  
-  [self.delegate loginVC:self didReceiveToken:token];
+  [self.delegate authorizationVC:self didReceiveToken:token];
   
 }
 

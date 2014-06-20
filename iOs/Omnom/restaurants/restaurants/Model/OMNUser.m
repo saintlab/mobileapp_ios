@@ -66,10 +66,8 @@
   }
   
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
+
     NSLog(@"responseObject>%@", responseObject);
-    
-    OMNUser *user = [[OMNUser alloc] initWithData:responseObject];
     complition();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

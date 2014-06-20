@@ -9,6 +9,7 @@
 #import "OMNRegisterUserVC.h"
 #import "OMNUser.h"
 #import "OMNConfirmCodeVC.h"
+#import <FlurrySDK/Flurry.h>
 
 @interface OMNRegisterUserVC ()
 <OMNConfirmCodeVCDelegate>
@@ -20,7 +21,7 @@
   __weak IBOutlet UITextField *_nameTF;
   __weak IBOutlet UITextField *_phoneTF;
   __weak IBOutlet UITextField *_emailTF;
-  __weak IBOutlet UITextField *_confirmTF;
+  __weak IBOutlet UITextField *_birthdayTF;
   
   OMNUser *_user;
 }
@@ -41,10 +42,34 @@
     _nameTF.text = @"Женя";
   }
   
-  UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Подтвердить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];
-  UIBarButtonItem *resetButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Сбросить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resetTap:)];
+  UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+  datePicker.datePickerMode = UIDatePickerModeDate;
+  [datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
+  _birthdayTF.inputView = datePicker;
   
-  self.navigationItem.rightBarButtonItems = @[submitButton, resetButton];
+  self.navigationItem.title = NSLocalizedString(@"Создать аккаунт", nil);
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];
+  self.navigationItem.rightBarButtonItems = @[submitButton];
+  
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+}
+
+- (void)datePickerChange:(UIDatePicker *)datePicker {
+  
+  NSDateFormatter *df = [[NSDateFormatter alloc] init];
+  [df setDateFormat:@"dd/MM/yyyy"];
+  _birthdayTF.text = [df stringFromDate:datePicker.date];
+  
+}
+
+- (void)closeTap {
+  
+  [self.delegate authorizationVCDidCancel:self];
   
 }
 
@@ -91,6 +116,8 @@
 
 - (void)requestAuthorizationCode {
   
+  [Flurry logEvent:@"user_request_register"];
+  
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:_user.phone];
   confirmCodeVC.delegate = self;
   [self.navigationController pushViewController:confirmCodeVC animated:YES];
@@ -117,7 +144,8 @@
 
 - (void)didRegisterWithToken:(NSString *)token {
   
-  [self.delegate registerUserVC:self didRegisterUserWithToken:token];
+  [Flurry logEvent:@"user_register_confirm"];
+  [self.delegate authorizationVC:self didReceiveToken:token];
   
 }
 

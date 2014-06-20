@@ -7,9 +7,8 @@
 //
 
 #import "OMNUserInfoVC.h"
-#import "OMNLoginVC.h"
-#import "OMNRegisterUserVC.h"
 #import "OMNAuthorisation.h"
+#import "OMNUser.h"
 
 @interface OMNUserInfoVC ()
 
@@ -68,21 +67,6 @@
 - (IBAction)settingsTap:(id)sender {
   
   [self.delegate userInfoVCDidFinish:self];
-  
-}
-
-
-- (IBAction)loginTap:(id)sender {
-  
-  OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
-  [self.navigationController pushViewController:loginVC animated:YES];
-  
-}
-
-- (IBAction)registerTap:(id)sender {
-  
-  OMNRegisterUserVC *registerUserVC = [[OMNRegisterUserVC alloc] init];
-  [self.navigationController pushViewController:registerUserVC animated:YES];
   
 }
 
