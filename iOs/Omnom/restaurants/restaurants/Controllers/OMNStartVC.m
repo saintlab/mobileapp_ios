@@ -11,6 +11,7 @@
 #import "OMNRegisterUserVC.h"
 #import "OMNSearchTableVC.h"
 #import "GRestaurantMenuVC.h"
+#import "OMNAuthorisation.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationDelegate>
@@ -21,17 +22,25 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    // Custom initialization
+  }
+  return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  __weak typeof(self)weakSelf = self;
+  [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
+
+    if (tokenIsValid) {
+      [weakSelf processWithToken:[OMNAuthorisation authorisation].token];
+    }
+    
+  }];
+  
 }
 
 - (IBAction)loginTap:(id)sender {
@@ -56,6 +65,14 @@
   
   [self dismissViewControllerAnimated:YES completion:nil];
   
+  [[OMNAuthorisation authorisation] updateToken:token];
+  
+  [self processWithToken:token];
+  
+}
+
+- (void)processWithToken:(NSString *)token {
+  
   __weak typeof(self)weakSelf = self;
   OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
     
@@ -66,7 +83,7 @@
     }
     
   }];
-
+  
   [self.navigationController pushViewController:searchTableVC animated:YES];
   
 }
@@ -82,15 +99,15 @@
 }
 
 - (void)authorizationVCDidCancel:(UIViewController *)authorizationVC {
-
+  
   [self dismissViewControllerAnimated:YES completion:nil];
   
 }
 
 - (void)didReceiveMemoryWarning
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  [super didReceiveMemoryWarning];
+  // Dispose of any resources that can be recreated.
 }
 
 @end

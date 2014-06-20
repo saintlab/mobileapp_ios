@@ -12,11 +12,13 @@
 #import "CLBeacon+GBeaconAdditions.h"
 #import "OMNBeaconRangingManager.h"
 #import "OMNFoundBeacons.h"
+#import <CoreBluetooth/CoreBluetooth.h>
 
 NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsManagerDidChangeBeaconsNotification";
 
 
 @interface OMNBeaconsManager ()
+<CBCentralManagerDelegate>
 
 @end
 
@@ -31,6 +33,7 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   OMNBeaconsManagerStatusBlock _statusBlock;
 
   OMNBeaconRangingManager *_beaconRangingManager;
+  CBCentralManager *_bluetoothCentralManager;
   
 }
 
@@ -60,6 +63,12 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   if (!_ragingMonitorEnabled) {
     NSLog(@"Ranging is not avaliable");
     return;
+  }
+  
+  if (nil == _bluetoothCentralManager) {
+    
+    _bluetoothCentralManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue() options:@{CBCentralManagerOptionShowPowerAlertKey : @(YES)}];
+//    [_bluetoothCentralManager scanForPeripheralsWithServices:nil options:nil];
   }
   
   __weak typeof(self)weakSelf = self;
@@ -138,6 +147,9 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   _ragingMonitorEnabled = NO;
   [_beaconRangingManager stop];
   
+  _bluetoothCentralManager.delegate = nil;
+  _bluetoothCentralManager = nil;
+  
 }
 
 - (void)findNearestBeacons:(NSArray *)beacons {
@@ -163,6 +175,41 @@ NSString * const OMNBeaconsManagerDidChangeBeaconsNotification = @"OMNBeaconsMan
   }];
   
   _foundNearestBeaconsBlock(nearestBeacons);
+  
+}
+
+#pragma mark - CBCentralManagerDelegate
+
+- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
+  
+  NSLog(@"%@ %@ %@", RSSI, peripheral.name, peripheral.identifier);
+  
+}
+
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+  
+  if (nil == _statusBlock) {
+    return;
+  }
+  
+  switch (central.state) {
+    case CBCentralManagerStatePoweredOff: {
+      _statusBlock(kBeaconsManagerStatusBluetoothOff);
+    } break;
+    case CBCentralManagerStateUnsupported: {
+      _statusBlock(kBeaconsManagerStatusBluetoothUnsupported);
+    } break;
+    case CBCentralManagerStateUnauthorized: {
+      _statusBlock(kBeaconsManagerStatusBluetoothUnauthorized);
+    } break;
+    case CBCentralManagerStatePoweredOn:
+    case CBCentralManagerStateResetting:
+    case CBCentralManagerStateUnknown: {
+      //do noithing
+    } break;
+  }
+  
+  
   
 }
 

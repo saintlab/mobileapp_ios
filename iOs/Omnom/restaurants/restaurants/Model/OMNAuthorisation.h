@@ -23,6 +23,8 @@ typedef void(^OMNTokenBlock)(NSString *token);
 
 - (void)updateToken:(NSString *)newToken;
 
+- (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block;
+
 @end
 
 @interface NSDictionary (omn_tokenResponse)

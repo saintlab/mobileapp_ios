@@ -80,6 +80,25 @@ static NSString * const kAccountName = @"test_account5";
   
 }
 
+- (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block {
+  
+  if (nil == self.token) {
+    block(NO);
+    return;
+  }
+  
+  [OMNUser userWithToken:self.token user:^(OMNUser *user) {
+    
+    block(YES);
+    
+  } failure:^(NSError *error) {
+    
+    block(NO);
+    
+  }];
+  
+}
+
 - (void)retriveToken {
 
   NSDictionary *parameters =

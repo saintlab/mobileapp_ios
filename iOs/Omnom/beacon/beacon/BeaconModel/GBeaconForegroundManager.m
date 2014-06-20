@@ -56,7 +56,7 @@ NSString * const GBeaconRemoveFromPhoneNotification = @"GBeaconRemoveFromPhoneNo
 
 - (void)startMonitoring {
   
-  [_beaconManager startMonitoring:nil];
+//  [_beaconManager startMonitoring:nil];
   
 }
 

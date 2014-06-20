@@ -128,9 +128,25 @@
       [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
       
     } break;
+    case kBeaconsManagerStatusBluetoothOff: {
       
-    default:
-      break;
+      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Включите блютус", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+      
+    } break;
+    case kBeaconsManagerStatusBluetoothUnsupported: {
+
+      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Данное устройство не поддерживает bluetooth", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+      
+    } break;
+    case kBeaconsManagerStatusBluetoothUnauthorized: {
+      
+      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование bluetooth", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+      
+    } break;
+    case kBeaconsManagerStatusEnabled:
+    case kBeaconsManagerStatusNotDetermined: {
+      //do nothing
+    } break;
   }
   
 }
