@@ -20,9 +20,7 @@
 - (instancetype)initWithData:(id)data {
   self = [super init];
   if (self) {
-    self.firstName = data[@"first_name"];
-    self.lastName = data[@"last_name"];
-    self.nickName = data[@"nick_name"];
+    self.name = data[@"first_name"];
     self.email = data[@"email"];
     self.phone = [data[@"phone"] description];
     self.status = data[@"status"];
@@ -61,8 +59,9 @@
      @"phone" : self.phone,
      } mutableCopy];
   
-  if (self.firstName.length) {
-    parameters[@"firstName"] = self.firstName;
+  if (self.name.length) {
+    parameters[@"firstName"] = self.name;
+    parameters[@"name"] = self.name;
   }
   
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

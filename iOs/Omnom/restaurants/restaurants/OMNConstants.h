@@ -13,7 +13,7 @@ extern NSString * const kBeaconUUIDString;
 
 extern NSString * const CardIOAppToken;
 extern NSString * const kTestFlightAppToken;
-extern NSString * const kFlurryApiKey;
+extern NSString * const kMixpanelToken;
 
 typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);

@@ -9,7 +9,7 @@
 #import "OMNRegisterUserVC.h"
 #import "OMNUser.h"
 #import "OMNConfirmCodeVC.h"
-#import <FlurrySDK/Flurry.h>
+#import "OMNAnalitics.h"
 
 @interface OMNRegisterUserVC ()
 <OMNConfirmCodeVCDelegate>
@@ -99,7 +99,7 @@
   _user = [[OMNUser alloc] init];
   _user.email = _emailTF.text;
   _user.phone = _phoneTF.text;
-  _user.firstName = _nameTF.text;
+  _user.name = _nameTF.text;
   
   __weak typeof(self)weakSelf = self;
   [_user registerWithComplition:^{
@@ -115,8 +115,6 @@
 }
 
 - (void)requestAuthorizationCode {
-  
-  [Flurry logEvent:@"user_request_register"];
   
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:_user.phone];
   confirmCodeVC.delegate = self;
@@ -144,7 +142,16 @@
 
 - (void)didRegisterWithToken:(NSString *)token {
   
-  [Flurry logEvent:@"user_register_confirm"];
+  [OMNUser userWithToken:token user:^(OMNUser *user) {
+    
+    [[OMNAnalitics analitics] logRegisterUser:user];
+    
+  } failure:^(NSError *error) {
+    
+    NSLog(@"%@", error);
+    
+  }];
+  
   [self.delegate authorizationVC:self didReceiveToken:token];
   
 }

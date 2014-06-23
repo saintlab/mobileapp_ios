@@ -57,7 +57,7 @@
 - (void)setUser:(OMNUser *)user {
   
   _user = user;
-  _nameLabel.text = _user.firstName;
+  _nameLabel.text = _user.name;
   _phoneLabel.text = _user.phone;
   _emailLabel.text = _user.email;
   [_spinner stopAnimating];

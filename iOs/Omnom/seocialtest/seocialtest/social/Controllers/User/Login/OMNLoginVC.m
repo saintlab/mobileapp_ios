@@ -10,7 +10,7 @@
 #import "OMNUser.h"
 #import "OMNPhoneNumberTextFieldDelegate.h"
 #import "OMNConfirmCodeVC.h"
-#import <Flurry.h>
+#import "OMNAnalitics.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate>
@@ -97,8 +97,7 @@
   __weak typeof(self)weakSelf = self;
   
   [OMNUser loginUsingPhone:[self decimalPhoneNumber] code:code complition:^(NSString *token) {
-    
-    [Flurry logEvent:@"user_login_confirm"];
+
     [weakSelf tokenDidReceived:token];
     
   } failure:^(NSError *error) {
@@ -111,6 +110,16 @@
 }
 
 - (void)tokenDidReceived:(NSString *)token {
+  
+  [OMNUser userWithToken:token user:^(OMNUser *user) {
+    
+    [[OMNAnalitics analitics] logLoginUser:user];
+    
+  } failure:^(NSError *error) {
+    
+    NSLog(@"%@", error);
+    
+  }];
   
   [self.delegate authorizationVC:self didReceiveToken:token];
   

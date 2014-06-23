@@ -10,7 +10,6 @@
 #import "OMNAuthorisation.h"
 #import "OMNFuturaAssetManager.h"
 #import "OMNStartVC.h"
-#import <Flurry.h>
 
 @interface GAppDelegate ()
 
@@ -26,9 +25,6 @@
   [OMNAssetManager updateWithManager:[OMNFuturaAssetManager new]];
   
   [OMNAuthorisation authorisation];
-  
-  [Flurry setCrashReportingEnabled:YES];
-  [Flurry startSession:kFlurryApiKey withOptions:launchOptions];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
