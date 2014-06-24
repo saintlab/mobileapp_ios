@@ -9,7 +9,7 @@
 #import "OMNRestaurant.h"
 #import "OMNTable.h"
 
-@interface GRestaurantMenuVC : UIViewController
+@interface OMNRestaurantMenuVC : UIViewController
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant table:(OMNTable *)table;
 

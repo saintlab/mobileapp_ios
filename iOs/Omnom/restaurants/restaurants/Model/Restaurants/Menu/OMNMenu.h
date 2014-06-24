@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GMenuItem.h"
+#import "OMNMenuItem.h"
 
-@interface GMenu : NSObject
+@interface OMNMenu : NSObject
 
 @property (nonatomic, strong) NSArray *items;
 

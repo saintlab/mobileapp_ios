@@ -7,7 +7,6 @@
 //
 
 #import "OMNOrder.h"
-#import "GDefaultClient.h"
 #import "OMNOperationManager.h"
 
 @implementation OMNOrder
@@ -81,36 +80,6 @@
   }];
   
   return total;
-  
-}
-
-+ (void)ordersWithBlock:(OMNOrdersBlock)ordersBlock {
-  
-  [[GDefaultClient sharedClient] setSessionDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession *session, NSURLAuthenticationChallenge *challenge, NSURLCredential *__autoreleasing *credential) {
-    
-    *credential = [NSURLCredential credentialWithUser:@"gazprombank" password:@"testGazPromd3dsj!54" persistence:NSURLCredentialPersistencePermanent];
-    
-    return NSURLSessionAuthChallengeUseCredential;
-  }];
-  
-  [[GDefaultClient sharedClient] GET:@"acquiring/api/orders" parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-    
-    NSMutableArray *orders = [NSMutableArray arrayWithCapacity:[responseObject count]];
-    
-    for (id data in responseObject)
-    {
-      OMNOrder *order = [[OMNOrder alloc] initWithData:data];
-      [orders addObject:order];
-    }
-    
-    ordersBlock([orders copy]);
-    
-    NSLog(@"%@",responseObject);
-  } failure:^(NSURLSessionDataTask *task, NSError *error) {
-    NSLog(@"%@",error);
-    ordersBlock(nil);
-    
-  }];
   
 }
 

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GRestaurantsVC : UITableViewController
+@interface OMNRestaurantsVC : UITableViewController
 
 @end

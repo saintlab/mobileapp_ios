@@ -10,7 +10,7 @@
 
 @protocol GPaymentFooterViewDelegate;
 
-@interface GPaymentFooterView : UIView
+@interface OMNPaymentFooterView : UIView
 
 @property (nonatomic, strong) OMNCalculationAmount *calculationAmount;
 

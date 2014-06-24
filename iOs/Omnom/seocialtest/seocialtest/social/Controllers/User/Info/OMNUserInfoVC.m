@@ -9,6 +9,7 @@
 #import "OMNUserInfoVC.h"
 #import "OMNAuthorisation.h"
 #import "OMNUser.h"
+#import "OMNBeaconBackgroundManager.h"
 
 @interface OMNUserInfoVC ()
 
@@ -61,6 +62,11 @@
   _phoneLabel.text = _user.phone;
   _emailLabel.text = _user.email;
   [_spinner stopAnimating];
+  
+}
+- (IBAction)forgetTablesTap:(id)sender {
+  
+  [[OMNBeaconBackgroundManager manager] forgetFoundBeacons];
   
 }
 

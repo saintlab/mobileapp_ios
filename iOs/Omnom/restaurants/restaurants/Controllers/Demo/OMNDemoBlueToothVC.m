@@ -7,7 +7,7 @@
 //
 
 #import "OMNDemoBlueToothVC.h"
-#import "GRestaurantsVC.h"
+#import "OMNRestaurantsVC.h"
 #import "OMNBeaconTableVC.h"
 
 @interface OMNDemoBlueToothVC ()
@@ -44,7 +44,7 @@
   }
   else {
     
-    GRestaurantsVC *restaurantsVC = [[GRestaurantsVC alloc] init];
+    OMNRestaurantsVC *restaurantsVC = [[OMNRestaurantsVC alloc] init];
     restaurantsVC.title = @"Рестораны";
     [self.navigationController setViewControllers:@[restaurantsVC] animated:YES];
     

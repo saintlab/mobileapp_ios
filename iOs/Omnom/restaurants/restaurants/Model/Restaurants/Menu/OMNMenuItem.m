@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GMenuItem.h"
+#import "OMNMenuItem.h"
 
-@implementation GMenuItem
+@implementation OMNMenuItem
 
 - (instancetype)initWithData:(id)data {
   self = [super init];

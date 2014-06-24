@@ -7,7 +7,6 @@
 //
 
 #import "OMNBeacon.h"
-#import "GDefaultClient.h"
 #import "NSMutableArray+OMNIndexAdditions.h"
 #import "OMNBeaconSessionInfo.h"
 

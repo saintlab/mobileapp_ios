@@ -9,13 +9,12 @@
 #import "OMNRestaurant.h"
 #import <AFNetworking/AFNetworking.h>
 #import "OMNOperationManager.h"
-#import "GDefaultClient.h"
 
 @interface NSData (omn_restaurants)
 
 - (NSArray *)decodeRestaurantsWithError:(NSError **)error;
 
-- (GMenu *)decodeMenuWithError:(NSError **)error;
+- (OMNMenu *)decodeMenuWithError:(NSError **)error;
 
 @end
 
@@ -85,25 +84,20 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"menu.data" ofType:nil];
     NSData *data = [NSData dataWithContentsOfFile:path];
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    GMenu *menu = [[GMenu alloc] initWithData:responseObject];
+    OMNMenu *menu = [[OMNMenu alloc] initWithData:responseObject];
     menuBlock(menu);
     return;
   }
   
   NSString *path = [NSString stringWithFormat:@"restaurants/%@/menu", self.ID];
-  [[GDefaultClient sharedClient] GET:path parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+  [[OMNOperationManager manager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    GMenu *menu = [[GMenu alloc] initWithData:responseObject];
+    OMNMenu *menu = [[OMNMenu alloc] initWithData:responseObject];
     menuBlock(menu);
     
-  } failure:^(NSURLSessionDataTask *task, NSError *error) {
-
-    if (errorBlock) {
-      errorBlock(error);
-    }
-    else {
-      NSLog(@"%@", error);
-    }
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    errorBlock(error);
     
   }];
   
@@ -168,7 +162,7 @@
   
   NSMutableArray *items = [NSMutableArray arrayWithCapacity:products.count];
   
-  [products enumerateObjectsUsingBlock:^(GMenuItem *menuItem, NSUInteger idx, BOOL *stop) {
+  [products enumerateObjectsUsingBlock:^(OMNMenuItem *menuItem, NSUInteger idx, BOOL *stop) {
     
     NSDictionary *item =
     @{
@@ -193,15 +187,6 @@
   NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
 //TODO: create order
   return;
-//  [[GDefaultClient sharedClient] POST:@"restaurateur/orders" parameters:nil body:jsonData success:^(NSURLSessionDataTask *task, id responseObject) {
-//    
-//    block(nil);
-//    
-//  } failure:^(NSURLSessionDataTask *task, NSError *error) {
-//    
-//    errorBlock(error);
-//    
-//  }];
   
 }
 
@@ -239,7 +224,7 @@
   
 }
 
-- (GMenu *)decodeMenuWithError:(NSError **)error {
+- (OMNMenu *)decodeMenuWithError:(NSError **)error {
   
   id response = [NSJSONSerialization JSONObjectWithData:self options:0 error:error];
   
@@ -248,7 +233,7 @@
   }
   else {
     
-    GMenu *menu = [[GMenu alloc] initWithData:response];
+    OMNMenu *menu = [[OMNMenu alloc] initWithData:response];
     return menu;
     
   }

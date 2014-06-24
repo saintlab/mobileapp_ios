@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GMenuItem : NSObject
+@interface OMNMenuItem : NSObject
 
 @property (nonatomic, copy) NSString *internalId;
 @property (nonatomic, copy) NSString *title;

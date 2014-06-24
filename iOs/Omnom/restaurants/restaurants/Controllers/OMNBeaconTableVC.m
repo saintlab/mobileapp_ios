@@ -9,7 +9,7 @@
 #import "OMNBeaconTableVC.h"
 #import "GBeaconForegroundManager.h"
 #import "OMNDecodeBeacon.h"
-#import "GRestaurantMenuVC.h"
+#import "OMNRestaurantMenuVC.h"
 
 @interface OMNBeaconTableVC ()
 

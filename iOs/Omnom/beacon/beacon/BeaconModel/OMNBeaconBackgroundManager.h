@@ -18,6 +18,8 @@
 
 + (instancetype)manager;
 
+- (void)forgetFoundBeacons;
+
 - (void)handlePush:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
 @end

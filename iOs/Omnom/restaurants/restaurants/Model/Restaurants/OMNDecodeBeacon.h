@@ -13,15 +13,19 @@
 
 typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
 
-@interface OMNDecodeBeacon : OMNBeacon
+@interface OMNDecodeBeacon : NSObject
 
+@property (nonatomic, copy) NSString *uuid;
 @property (nonatomic, copy) NSString *tableId;
 @property (nonatomic, copy) NSString *restaurantId;
+@property (nonatomic, strong) NSDate *foundDate;
 
 //@property (nonatomic, strong) OMNTable *table;
 //@property (nonatomic, strong) OMNRestaurant *restaurant;
 
 - (instancetype)initWithData:(id)data;
+
+- (BOOL)readyForPush;
 
 /**
  Decode list of OMNBeacon objects and get related restaurant and table info

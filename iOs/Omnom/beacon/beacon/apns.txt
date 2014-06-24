@@ -1,4 +1,4 @@
 curl -X POST -u "MVhjdIAfTOO12YrjKVFBdg:EfAmduYZQUG0f7Bo96qczg" \
    -H "Content-Type: application/json" \
-   --data '{"device_tokens": ["93D10661C1716B0889F668D4E307F9FEE6D6F8A301D309D798A792650F086BA2"], "aps": {"content-available":1,"alert":""},"omn":1}' \
+   --data '{"device_tokens": ["A22C5738CEA0FF357C5F1F7BA75B04DA59A77E673B8493BB0467F255029688D5"], "aps": {"content-available":1,"alert":""},"omn":1}' \
    https://go.urbanairship.com/api/push/

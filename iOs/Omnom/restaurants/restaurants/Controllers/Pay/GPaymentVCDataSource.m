@@ -7,7 +7,7 @@
 //
 
 #import "GPaymentVCDataSource.h"
-#import "GPaymentFooterView.h"
+#import "OMNPaymentFooterView.h"
 #import "OMNOrder.h"
 #import "OMNConstants.h"
 #import "OMNOrderCell.h"

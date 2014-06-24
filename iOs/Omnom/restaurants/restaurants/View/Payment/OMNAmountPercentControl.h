@@ -8,7 +8,7 @@
 
 @protocol GAmountPercentControlDelegate;
 
-@interface GAmountPercentControl : UIControl
+@interface OMNAmountPercentControl : UIControl
 
 @property (nonatomic, weak) id<GAmountPercentControlDelegate> delegate;
 
@@ -24,9 +24,9 @@
 
 @protocol GAmountPercentControlDelegate <NSObject>
 
-- (double)expectedValueForAmountPercentControl:(GAmountPercentControl *)amountPercentControl;
+- (double)expectedValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl;
 
-- (double)enteredValueForAmountPercentControl:(GAmountPercentControl *)amountPercentControl;
+- (double)enteredValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl;
 
 @end
 

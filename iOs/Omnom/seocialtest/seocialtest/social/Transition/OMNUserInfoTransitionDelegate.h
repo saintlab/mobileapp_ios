@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GUserInfoTransitionDelegate : NSObject
+@interface OMNUserInfoTransitionDelegate : NSObject
 <UIViewControllerTransitioningDelegate>
 
 @end

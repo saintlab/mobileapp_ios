@@ -59,8 +59,6 @@
 		93F203FD18F7BA19006ED59F /* OMNBeaconBackgroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F203E818F7BA19006ED59F /* OMNBeaconBackgroundManager.m */; };
 		93F203FE18F7BA19006ED59F /* GBeaconForegroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F203EA18F7BA19006ED59F /* GBeaconForegroundManager.m */; };
 		93F203FF18F7BA19006ED59F /* GBeaconForegroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F203EA18F7BA19006ED59F /* GBeaconForegroundManager.m */; };
-		93F2040018F7BA19006ED59F /* GDefaultClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F203EC18F7BA19006ED59F /* GDefaultClient.m */; };
-		93F2040118F7BA19006ED59F /* GDefaultClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F203EC18F7BA19006ED59F /* GDefaultClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,8 +130,6 @@
 		93F203E818F7BA19006ED59F /* OMNBeaconBackgroundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconBackgroundManager.m; sourceTree = "<group>"; };
 		93F203E918F7BA19006ED59F /* GBeaconForegroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBeaconForegroundManager.h; sourceTree = "<group>"; };
 		93F203EA18F7BA19006ED59F /* GBeaconForegroundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBeaconForegroundManager.m; sourceTree = "<group>"; };
-		93F203EB18F7BA19006ED59F /* GDefaultClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDefaultClient.h; sourceTree = "<group>"; };
-		93F203EC18F7BA19006ED59F /* GDefaultClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDefaultClient.m; sourceTree = "<group>"; };
 		A073B509405F4A07962B8C73 /* libPods-beacon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-beacon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA8D614FDC5A4C518C480DF8 /* Pods-beacon.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-beacon.xcconfig"; path = "../Pods/Pods-beacon.xcconfig"; sourceTree = "<group>"; };
 		C0F2513E2A2C4E97BE3D9C38 /* Pods-beaconTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-beaconTests.xcconfig"; path = "../Pods/Pods-beaconTests.xcconfig"; sourceTree = "<group>"; };
@@ -284,8 +280,6 @@
 				93F203E818F7BA19006ED59F /* OMNBeaconBackgroundManager.m */,
 				93F203E918F7BA19006ED59F /* GBeaconForegroundManager.h */,
 				93F203EA18F7BA19006ED59F /* GBeaconForegroundManager.m */,
-				93F203EB18F7BA19006ED59F /* GDefaultClient.h */,
-				93F203EC18F7BA19006ED59F /* GDefaultClient.m */,
 				9304B16418FE7D0C00CD380C /* OMNBeaconSearchManager.h */,
 				9304B16518FE7D0C00CD380C /* OMNBeaconSearchManager.m */,
 				9304B1A11901145D00CD380C /* OMNBeaconRangingManager.h */,
@@ -496,7 +490,6 @@
 				93F203FC18F7BA19006ED59F /* OMNBeaconBackgroundManager.m in Sources */,
 				930554A819345C9C00E6F4EC /* OMNFoundBeacons.m in Sources */,
 				93C93B1318B45F4800AC492B /* GAppDelegate.m in Sources */,
-				93F2040018F7BA19006ED59F /* GDefaultClient.m in Sources */,
 				93E4413118FD416C00F60CB1 /* OMNDevicePositionManager.m in Sources */,
 				93C93B0F18B45F4800AC492B /* main.m in Sources */,
 				93EEA4C818C73004005C729F /* GMenuVC.m in Sources */,
@@ -533,7 +526,6 @@
 				93EEA4C918C73004005C729F /* GMenuVC.m in Sources */,
 				93C5B39F1908EF0700FEAB6D /* OMNBluetoothManager.m in Sources */,
 				93F203FB18F7BA19006ED59F /* OMNBeaconsManager.m in Sources */,
-				93F2040118F7BA19006ED59F /* GDefaultClient.m in Sources */,
 				93F203FF18F7BA19006ED59F /* GBeaconForegroundManager.m in Sources */,
 				93F203F718F7BA19006ED59F /* NSMutableArray+OMNIndexAdditions.m in Sources */,
 			);

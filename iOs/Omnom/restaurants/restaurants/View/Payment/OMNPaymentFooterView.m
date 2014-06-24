@@ -6,22 +6,22 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GPaymentFooterView.h"
+#import "OMNPaymentFooterView.h"
 #import <BlocksKit+UIKit.h>
 #import <TSCurrencyTextField.h>
 #import "OMNTipSelector.h"
-#import "GAmountPercentControl.h"
+#import "OMNAmountPercentControl.h"
 #import "UIView+frame.h"
 #import "OMNConstants.h"
 
-@interface GPaymentFooterView ()
+@interface OMNPaymentFooterView ()
 <GAmountPercentControlDelegate>
 
 @property (nonatomic, assign) BOOL tipsMode;
 
 @end
 
-@implementation GPaymentFooterView {
+@implementation OMNPaymentFooterView {
   
   __weak IBOutlet UILabel *_tipsLabel;
   __weak IBOutlet UILabel *_payLabel;
@@ -32,7 +32,7 @@
   __weak IBOutlet UIButton *_cancelEditingButton;
   __weak IBOutlet UIButton *_doneEditingButton;
 
-  __weak IBOutlet GAmountPercentControl *_amountPercentControl;
+  __weak IBOutlet OMNAmountPercentControl *_amountPercentControl;
   
   BOOL _keyboardShown;
 }
@@ -227,7 +227,7 @@
 
 #pragma mark - GAmountPercentControlDelegate
 
-- (double)expectedValueForAmountPercentControl:(GAmountPercentControl *)amountPercentControl {
+- (double)expectedValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
   
   if (self.tipsMode) {
   
@@ -242,7 +242,7 @@
 
 }
 
-- (double)enteredValueForAmountPercentControl:(GAmountPercentControl *)amountPercentControl {
+- (double)enteredValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
  
   if (self.tipsMode) {
     

@@ -6,20 +6,20 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GUserInfoTransitionDelegate.h"
-#import "GUserInfoTransition.h"
+#import "OMNUserInfoTransitionDelegate.h"
+#import "OMNUserInfoTransition.h"
 
-@implementation GUserInfoTransitionDelegate
+@implementation OMNUserInfoTransitionDelegate
 
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
                                                                    presentingController:(UIViewController *)presenting
                                                                        sourceController:(UIViewController *)source {
-  return [GUserInfoTransition forwardTransition];
+  return [OMNUserInfoTransition forwardTransition];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
   
-  return [GUserInfoTransition backwardTransition];
+  return [OMNUserInfoTransition backwardTransition];
   
 }
 

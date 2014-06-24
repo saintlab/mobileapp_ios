@@ -35,14 +35,6 @@
   [label sizeToFit];
   label.center = self.view.center;
   [self.view addSubview:label];
-
-  
-//  __weak GMenuVC *weakSelf = self;
-//  [GOrder ordersWithBlock:^(NSArray *orders, NSError *error) {
-//    
-//    [weakSelf ordersDidFinishLoading:orders];
-//    
-//  }];
   
 }
 

@@ -74,10 +74,10 @@
 		9369BBC7192E2AE70018C79C /* GVKNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB56192E2AE60018C79C /* GVKNetwork.m */; };
 		9369BBCE192E2AE70018C79C /* rouble.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9369BB60192E2AE70018C79C /* rouble.otf */; };
 		9369BBCF192E2AE70018C79C /* rouble.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9369BB60192E2AE70018C79C /* rouble.otf */; };
-		9369BBD0192E2AE70018C79C /* GUserInfoTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB63192E2AE70018C79C /* GUserInfoTransition.m */; };
-		9369BBD1192E2AE70018C79C /* GUserInfoTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB63192E2AE70018C79C /* GUserInfoTransition.m */; };
-		9369BBD2192E2AE70018C79C /* GUserInfoTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB65192E2AE70018C79C /* GUserInfoTransitionDelegate.m */; };
-		9369BBD3192E2AE70018C79C /* GUserInfoTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB65192E2AE70018C79C /* GUserInfoTransitionDelegate.m */; };
+		9369BBD0192E2AE70018C79C /* OMNUserInfoTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB63192E2AE70018C79C /* OMNUserInfoTransition.m */; };
+		9369BBD1192E2AE70018C79C /* OMNUserInfoTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB63192E2AE70018C79C /* OMNUserInfoTransition.m */; };
+		9369BBD2192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB65192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m */; };
+		9369BBD3192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB65192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m */; };
 		9369BBD4192E2AE70018C79C /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB67192E2AE70018C79C /* UIView+frame.m */; };
 		9369BBD5192E2AE70018C79C /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB67192E2AE70018C79C /* UIView+frame.m */; };
 		9369BBD8192E2AE70018C79C /* GSocialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB6E192E2AE70018C79C /* GSocialCell.m */; };
@@ -189,10 +189,10 @@
 		9369BB55192E2AE60018C79C /* GVKNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GVKNetwork.h; sourceTree = "<group>"; };
 		9369BB56192E2AE60018C79C /* GVKNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GVKNetwork.m; sourceTree = "<group>"; };
 		9369BB60192E2AE70018C79C /* rouble.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = rouble.otf; sourceTree = "<group>"; };
-		9369BB62192E2AE70018C79C /* GUserInfoTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUserInfoTransition.h; sourceTree = "<group>"; };
-		9369BB63192E2AE70018C79C /* GUserInfoTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUserInfoTransition.m; sourceTree = "<group>"; };
-		9369BB64192E2AE70018C79C /* GUserInfoTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUserInfoTransitionDelegate.h; sourceTree = "<group>"; };
-		9369BB65192E2AE70018C79C /* GUserInfoTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUserInfoTransitionDelegate.m; sourceTree = "<group>"; };
+		9369BB62192E2AE70018C79C /* OMNUserInfoTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoTransition.h; sourceTree = "<group>"; };
+		9369BB63192E2AE70018C79C /* OMNUserInfoTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoTransition.m; sourceTree = "<group>"; };
+		9369BB64192E2AE70018C79C /* OMNUserInfoTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoTransitionDelegate.h; sourceTree = "<group>"; };
+		9369BB65192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoTransitionDelegate.m; sourceTree = "<group>"; };
 		9369BB66192E2AE70018C79C /* UIView+frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frame.h"; sourceTree = "<group>"; };
 		9369BB67192E2AE70018C79C /* UIView+frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frame.m"; sourceTree = "<group>"; };
 		9369BB6D192E2AE70018C79C /* GSocialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GSocialCell.h; sourceTree = "<group>"; };
@@ -466,10 +466,10 @@
 		9369BB61192E2AE70018C79C /* Transition */ = {
 			isa = PBXGroup;
 			children = (
-				9369BB62192E2AE70018C79C /* GUserInfoTransition.h */,
-				9369BB63192E2AE70018C79C /* GUserInfoTransition.m */,
-				9369BB64192E2AE70018C79C /* GUserInfoTransitionDelegate.h */,
-				9369BB65192E2AE70018C79C /* GUserInfoTransitionDelegate.m */,
+				9369BB62192E2AE70018C79C /* OMNUserInfoTransition.h */,
+				9369BB63192E2AE70018C79C /* OMNUserInfoTransition.m */,
+				9369BB64192E2AE70018C79C /* OMNUserInfoTransitionDelegate.h */,
+				9369BB65192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m */,
 			);
 			path = Transition;
 			sourceTree = "<group>";
@@ -777,7 +777,7 @@
 				9369BBB6192E2AE70018C79C /* GOKNetwork.m in Sources */,
 				9369BB98192E2AE70018C79C /* GLoginDataSource.m in Sources */,
 				9369BBA0192E2AE70018C79C /* GUserInfoVC.m in Sources */,
-				9369BBD0192E2AE70018C79C /* GUserInfoTransition.m in Sources */,
+				9369BBD0192E2AE70018C79C /* OMNUserInfoTransition.m in Sources */,
 				9369BBB0192E2AE70018C79C /* GGPlusNetwork.m in Sources */,
 				9369BBC4192E2AE70018C79C /* GTwitterNetwork.m in Sources */,
 				9369BBD4192E2AE70018C79C /* UIView+frame.m in Sources */,
@@ -800,7 +800,7 @@
 				9369BB9E192E2AE70018C79C /* GUserInfoDataSource.m in Sources */,
 				9369BBB8192E2AE70018C79C /* OKFriends.m in Sources */,
 				93A3690C194715F100DE91D8 /* OMNOperationManager.m in Sources */,
-				9369BBD2192E2AE70018C79C /* GUserInfoTransitionDelegate.m in Sources */,
+				9369BBD2192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m in Sources */,
 				9369BBC6192E2AE70018C79C /* GVKNetwork.m in Sources */,
 				9369BBC2192E2AE70018C79C /* OKTokenCache.m in Sources */,
 				9369BB7E192E2AE70018C79C /* GViewController.m in Sources */,
@@ -821,7 +821,7 @@
 			files = (
 				9369BBC1192E2AE70018C79C /* OKSession.m in Sources */,
 				93A369031947074600DE91D8 /* OMNAuthorisation.m in Sources */,
-				9369BBD3192E2AE70018C79C /* GUserInfoTransitionDelegate.m in Sources */,
+				9369BBD3192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m in Sources */,
 				9369BB81192E2AE70018C79C /* GViewController1.m in Sources */,
 				9369BBC7192E2AE70018C79C /* GVKNetwork.m in Sources */,
 				93570D45195040330065E6D2 /* OMNEnterCodeView.m in Sources */,
@@ -847,7 +847,7 @@
 				9369BB7B192E2AE70018C79C /* GCongratulationsVC.m in Sources */,
 				9369BBBF192E2AE70018C79C /* OKRequest.m in Sources */,
 				9369BBC3192E2AE70018C79C /* OKTokenCache.m in Sources */,
-				9369BBD1192E2AE70018C79C /* GUserInfoTransition.m in Sources */,
+				9369BBD1192E2AE70018C79C /* OMNUserInfoTransition.m in Sources */,
 				93A368FD1946FFA500DE91D8 /* OMNConstants.m in Sources */,
 				93E7C1861918DC1600F22695 /* seocialtestTests.m in Sources */,
 				93A3690B194715F100DE91D8 /* OMNAuthorizationManager.m in Sources */,

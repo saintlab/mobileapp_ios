@@ -87,12 +87,14 @@ static double const kDesiredAccelerometerAccuracy = 0.05;
   
   [self stop];
 
-  if (_completitionPositionBlock) {
+  dispatch_block_t completitionPositionBlock = _completitionPositionBlock;
+  _completitionPositionBlock = nil;
+  
+  if (completitionPositionBlock) {
     
     dispatch_async(dispatch_get_main_queue(), ^{
 
-      _completitionPositionBlock();
-      _completitionPositionBlock = nil;
+      completitionPositionBlock();
       
     });
   }

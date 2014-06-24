@@ -6,20 +6,20 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GAmountPercentControl.h"
+#import "OMNAmountPercentControl.h"
 #import <TSCurrencyTextField.h>
 #import <UIControl+BlocksKit.h>
 #import "UIView+frame.h"
 #import "OMNConstants.h"
 
-@interface GAmountPercentControl ()
+@interface OMNAmountPercentControl ()
 <UIPickerViewDataSource,
 UIPickerViewDelegate,
 UITextFieldDelegate>
 
 @end
 
-@implementation GAmountPercentControl {
+@implementation OMNAmountPercentControl {
   TSCurrencyTextField *_amountTF;
   TSCurrencyTextField *_percentTF;
   UIImageView *_chequeBottomBg;

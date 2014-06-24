@@ -45,8 +45,6 @@ typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
 
 - (double)selectedItemsTotal;
 
-+ (void)ordersWithBlock:(OMNOrdersBlock)ordersBlock;
-
 - (void)getPaymentURL:(OMNOrderPayURLBlock)completion failure:(OMNErrorBlock)failureBlock;
 /**
  https://github.com/saintlab/backend/tree/master/applications/omnom#create-restaurateur-order

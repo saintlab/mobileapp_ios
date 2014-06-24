@@ -27,9 +27,9 @@
 		93C990E7193EF5570028F76C /* GSplitSelectionVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93C990E2193EF5570028F76C /* GSplitSelectionVC.xib */; };
 		93C990E8193EF5570028F76C /* OMNCalculatorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990E4193EF5570028F76C /* OMNCalculatorVC.m */; };
 		93C990EB193EF5790028F76C /* GPaymentVCDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990EA193EF5790028F76C /* GPaymentVCDataSource.m */; };
-		93C990F9193EF5920028F76C /* GAmountPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990EE193EF5920028F76C /* GAmountPercentControl.m */; };
-		93C990FA193EF5920028F76C /* GPaymentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990F0193EF5920028F76C /* GPaymentFooterView.m */; };
-		93C990FB193EF5920028F76C /* GToPayTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990F2193EF5920028F76C /* GToPayTextField.m */; };
+		93C990F9193EF5920028F76C /* OMNAmountPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990EE193EF5920028F76C /* OMNAmountPercentControl.m */; };
+		93C990FA193EF5920028F76C /* OMNPaymentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990F0193EF5920028F76C /* OMNPaymentFooterView.m */; };
+		93C990FB193EF5920028F76C /* OMNToPayTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990F2193EF5920028F76C /* OMNToPayTextField.m */; };
 		93C990FC193EF5920028F76C /* OMNNavigationBarSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990F4193EF5920028F76C /* OMNNavigationBarSelector.m */; };
 		93C990FD193EF5920028F76C /* OMNTipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990F6193EF5920028F76C /* OMNTipButton.m */; };
 		93C990FE193EF5920028F76C /* OMNTipSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C990F8193EF5920028F76C /* OMNTipSelector.m */; };
@@ -39,12 +39,11 @@
 		93C99112193EF67F0028F76C /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9910F193EF67F0028F76C /* OMNOrder.m */; };
 		93C99113193EF67F0028F76C /* OMNOrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99111193EF67F0028F76C /* OMNOrderItem.m */; };
 		93C99119193EF7180028F76C /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99118193EF7180028F76C /* UIView+frame.m */; };
-		93C9911C193EF74A0028F76C /* GDefaultClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9911B193EF74A0028F76C /* GDefaultClient.m */; };
 		93C9911F193EF7620028F76C /* OMNOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9911E193EF7620028F76C /* OMNOrderCell.m */; };
 		93C99122193EF7720028F76C /* OMNOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99121193EF7720028F76C /* OMNOperationManager.m */; };
 		93C99125193EF8980028F76C /* OMNRestaurant.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99124193EF8980028F76C /* OMNRestaurant.m */; };
-		93C9912B193EF9030028F76C /* GMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99128193EF9030028F76C /* GMenu.m */; };
-		93C9912C193EF9030028F76C /* GMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9912A193EF9030028F76C /* GMenuItem.m */; };
+		93C9912B193EF9030028F76C /* OMNMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99128193EF9030028F76C /* OMNMenu.m */; };
+		93C9912C193EF9030028F76C /* OMNMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9912A193EF9030028F76C /* OMNMenuItem.m */; };
 		93C9912E193EF9930028F76C /* orders.data in Resources */ = {isa = PBXBuildFile; fileRef = 93C9912D193EF9930028F76C /* orders.data */; };
 		93C99154193F085D0028F76C /* OMNAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9914F193F085D0028F76C /* OMNAssetManager.m */; };
 		93C99155193F085D0028F76C /* OMNCircleAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99151193F085D0028F76C /* OMNCircleAssetManager.m */; };
@@ -92,12 +91,12 @@
 		93C990E4193EF5570028F76C /* OMNCalculatorVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCalculatorVC.m; sourceTree = "<group>"; };
 		93C990E9193EF5790028F76C /* GPaymentVCDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GPaymentVCDataSource.h; path = ../../restaurants/restaurants/Controllers/Pay/GPaymentVCDataSource.h; sourceTree = "<group>"; };
 		93C990EA193EF5790028F76C /* GPaymentVCDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GPaymentVCDataSource.m; path = ../../restaurants/restaurants/Controllers/Pay/GPaymentVCDataSource.m; sourceTree = "<group>"; };
-		93C990ED193EF5920028F76C /* GAmountPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAmountPercentControl.h; sourceTree = "<group>"; };
-		93C990EE193EF5920028F76C /* GAmountPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAmountPercentControl.m; sourceTree = "<group>"; };
-		93C990EF193EF5920028F76C /* GPaymentFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPaymentFooterView.h; sourceTree = "<group>"; };
-		93C990F0193EF5920028F76C /* GPaymentFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPaymentFooterView.m; sourceTree = "<group>"; };
-		93C990F1193EF5920028F76C /* GToPayTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GToPayTextField.h; sourceTree = "<group>"; };
-		93C990F2193EF5920028F76C /* GToPayTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GToPayTextField.m; sourceTree = "<group>"; };
+		93C990ED193EF5920028F76C /* OMNAmountPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAmountPercentControl.h; sourceTree = "<group>"; };
+		93C990EE193EF5920028F76C /* OMNAmountPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAmountPercentControl.m; sourceTree = "<group>"; };
+		93C990EF193EF5920028F76C /* OMNPaymentFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPaymentFooterView.h; sourceTree = "<group>"; };
+		93C990F0193EF5920028F76C /* OMNPaymentFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPaymentFooterView.m; sourceTree = "<group>"; };
+		93C990F1193EF5920028F76C /* OMNToPayTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNToPayTextField.h; sourceTree = "<group>"; };
+		93C990F2193EF5920028F76C /* OMNToPayTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNToPayTextField.m; sourceTree = "<group>"; };
 		93C990F3193EF5920028F76C /* OMNNavigationBarSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationBarSelector.h; sourceTree = "<group>"; };
 		93C990F4193EF5920028F76C /* OMNNavigationBarSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationBarSelector.m; sourceTree = "<group>"; };
 		93C990F5193EF5920028F76C /* OMNTipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTipButton.h; sourceTree = "<group>"; };
@@ -116,18 +115,16 @@
 		93C99111193EF67F0028F76C /* OMNOrderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderItem.m; sourceTree = "<group>"; };
 		93C99117193EF7180028F76C /* UIView+frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+frame.h"; path = "../../restaurants/restaurants/Categories/UIView+frame.h"; sourceTree = "<group>"; };
 		93C99118193EF7180028F76C /* UIView+frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+frame.m"; path = "../../restaurants/restaurants/Categories/UIView+frame.m"; sourceTree = "<group>"; };
-		93C9911A193EF74A0028F76C /* GDefaultClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDefaultClient.h; path = ../../beacon/beacon/BeaconModel/GDefaultClient.h; sourceTree = "<group>"; };
-		93C9911B193EF74A0028F76C /* GDefaultClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDefaultClient.m; path = ../../beacon/beacon/BeaconModel/GDefaultClient.m; sourceTree = "<group>"; };
 		93C9911D193EF7620028F76C /* OMNOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNOrderCell.h; path = ../../restaurants/restaurants/View/Cell/OMNOrderCell.h; sourceTree = "<group>"; };
 		93C9911E193EF7620028F76C /* OMNOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNOrderCell.m; path = ../../restaurants/restaurants/View/Cell/OMNOrderCell.m; sourceTree = "<group>"; };
 		93C99120193EF7720028F76C /* OMNOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNOperationManager.h; path = ../../restaurants/restaurants/Model/OMNOperationManager.h; sourceTree = "<group>"; };
 		93C99121193EF7720028F76C /* OMNOperationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNOperationManager.m; path = ../../restaurants/restaurants/Model/OMNOperationManager.m; sourceTree = "<group>"; };
 		93C99123193EF8980028F76C /* OMNRestaurant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNRestaurant.h; path = ../../restaurants/restaurants/Model/Restaurants/OMNRestaurant.h; sourceTree = "<group>"; };
 		93C99124193EF8980028F76C /* OMNRestaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNRestaurant.m; path = ../../restaurants/restaurants/Model/Restaurants/OMNRestaurant.m; sourceTree = "<group>"; };
-		93C99127193EF9030028F76C /* GMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMenu.h; sourceTree = "<group>"; };
-		93C99128193EF9030028F76C /* GMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMenu.m; sourceTree = "<group>"; };
-		93C99129193EF9030028F76C /* GMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GMenuItem.h; sourceTree = "<group>"; };
-		93C9912A193EF9030028F76C /* GMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GMenuItem.m; sourceTree = "<group>"; };
+		93C99127193EF9030028F76C /* OMNMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenu.h; sourceTree = "<group>"; };
+		93C99128193EF9030028F76C /* OMNMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenu.m; sourceTree = "<group>"; };
+		93C99129193EF9030028F76C /* OMNMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuItem.h; sourceTree = "<group>"; };
+		93C9912A193EF9030028F76C /* OMNMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuItem.m; sourceTree = "<group>"; };
 		93C9912D193EF9930028F76C /* orders.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = orders.data; path = ../../restaurants/stub/orders.data; sourceTree = "<group>"; };
 		93C9914E193F085D0028F76C /* OMNAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAssetManager.h; sourceTree = "<group>"; };
 		93C9914F193F085D0028F76C /* OMNAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAssetManager.m; sourceTree = "<group>"; };
@@ -246,8 +243,6 @@
 				93C99107193EF6430028F76C /* OMNConstants.m */,
 				93C99117193EF7180028F76C /* UIView+frame.h */,
 				93C99118193EF7180028F76C /* UIView+frame.m */,
-				93C9911A193EF74A0028F76C /* GDefaultClient.h */,
-				93C9911B193EF74A0028F76C /* GDefaultClient.m */,
 				93C9911D193EF7620028F76C /* OMNOrderCell.h */,
 				93C9911E193EF7620028F76C /* OMNOrderCell.m */,
 				93C99120193EF7720028F76C /* OMNOperationManager.h */,
@@ -286,12 +281,12 @@
 		93C990EC193EF5920028F76C /* Payment */ = {
 			isa = PBXGroup;
 			children = (
-				93C990ED193EF5920028F76C /* GAmountPercentControl.h */,
-				93C990EE193EF5920028F76C /* GAmountPercentControl.m */,
-				93C990EF193EF5920028F76C /* GPaymentFooterView.h */,
-				93C990F0193EF5920028F76C /* GPaymentFooterView.m */,
-				93C990F1193EF5920028F76C /* GToPayTextField.h */,
-				93C990F2193EF5920028F76C /* GToPayTextField.m */,
+				93C990ED193EF5920028F76C /* OMNAmountPercentControl.h */,
+				93C990EE193EF5920028F76C /* OMNAmountPercentControl.m */,
+				93C990EF193EF5920028F76C /* OMNPaymentFooterView.h */,
+				93C990F0193EF5920028F76C /* OMNPaymentFooterView.m */,
+				93C990F1193EF5920028F76C /* OMNToPayTextField.h */,
+				93C990F2193EF5920028F76C /* OMNToPayTextField.m */,
 				93C990F3193EF5920028F76C /* OMNNavigationBarSelector.h */,
 				93C990F4193EF5920028F76C /* OMNNavigationBarSelector.m */,
 				93C990F5193EF5920028F76C /* OMNTipButton.h */,
@@ -330,10 +325,10 @@
 		93C99126193EF9030028F76C /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				93C99127193EF9030028F76C /* GMenu.h */,
-				93C99128193EF9030028F76C /* GMenu.m */,
-				93C99129193EF9030028F76C /* GMenuItem.h */,
-				93C9912A193EF9030028F76C /* GMenuItem.m */,
+				93C99127193EF9030028F76C /* OMNMenu.h */,
+				93C99128193EF9030028F76C /* OMNMenu.m */,
+				93C99129193EF9030028F76C /* OMNMenuItem.h */,
+				93C9912A193EF9030028F76C /* OMNMenuItem.m */,
 			);
 			name = Menu;
 			path = ../../restaurants/restaurants/Model/Restaurants/Menu;
@@ -489,15 +484,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				93C99108193EF6430028F76C /* OMNConstants.m in Sources */,
-				93C9912C193EF9030028F76C /* GMenuItem.m in Sources */,
+				93C9912C193EF9030028F76C /* OMNMenuItem.m in Sources */,
 				93C990FD193EF5920028F76C /* OMNTipButton.m in Sources */,
-				93C9911C193EF74A0028F76C /* GDefaultClient.m in Sources */,
 				93C99112193EF67F0028F76C /* OMNOrder.m in Sources */,
 				93C99155193F085D0028F76C /* OMNCircleAssetManager.m in Sources */,
 				93C990E5193EF5570028F76C /* GProdductSelectionVC.m in Sources */,
 				93C990FE193EF5920028F76C /* OMNTipSelector.m in Sources */,
-				93C9912B193EF9030028F76C /* GMenu.m in Sources */,
-				93C990FB193EF5920028F76C /* GToPayTextField.m in Sources */,
+				93C9912B193EF9030028F76C /* OMNMenu.m in Sources */,
+				93C990FB193EF5920028F76C /* OMNToPayTextField.m in Sources */,
 				93C99154193F085D0028F76C /* OMNAssetManager.m in Sources */,
 				93C990BD193EF47E0028F76C /* OMNViewController.m in Sources */,
 				93C990B3193EF47E0028F76C /* main.m in Sources */,
@@ -507,7 +501,7 @@
 				93C99119193EF7180028F76C /* UIView+frame.m in Sources */,
 				93C9911F193EF7620028F76C /* OMNOrderCell.m in Sources */,
 				93C99113193EF67F0028F76C /* OMNOrderItem.m in Sources */,
-				93C990FA193EF5920028F76C /* GPaymentFooterView.m in Sources */,
+				93C990FA193EF5920028F76C /* OMNPaymentFooterView.m in Sources */,
 				93C99104193EF6330028F76C /* OMNCalculationAmount.m in Sources */,
 				93C990B7193EF47E0028F76C /* OMNAppDelegate.m in Sources */,
 				93C990FC193EF5920028F76C /* OMNNavigationBarSelector.m in Sources */,
@@ -515,7 +509,7 @@
 				93C99125193EF8980028F76C /* OMNRestaurant.m in Sources */,
 				93C990E8193EF5570028F76C /* OMNCalculatorVC.m in Sources */,
 				93C99122193EF7720028F76C /* OMNOperationManager.m in Sources */,
-				93C990F9193EF5920028F76C /* GAmountPercentControl.m in Sources */,
+				93C990F9193EF5920028F76C /* OMNAmountPercentControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,24 +6,24 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GUserInfoTransition.h"
+#import "OMNUserInfoTransition.h"
 
 static const CGFloat kLeftOffset = 50.0f;
 static const CGFloat kSourceViewScale = 1;
 
 static const NSTimeInterval kTransitionDuration = 0.25f;
 
-@interface GUserInfoTransition ()
+@interface OMNUserInfoTransition ()
 
 @property (nonatomic, assign) BOOL presenting;
 
 @end
 
-@implementation GUserInfoTransition {
+@implementation OMNUserInfoTransition {
 }
 
 + (instancetype)forwardTransition {
-  GUserInfoTransition *transition = [[[self class] alloc] init];
+  OMNUserInfoTransition *transition = [[[self class] alloc] init];
   transition.presenting = YES;
   return transition;
 }
@@ -53,6 +53,7 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
 - (void)updateViewToInitialPosition:(UIView *)view containerView:(UIView *)containerView {
   
   [view setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
+  view.userInteractionEnabled = YES;
   view.transform = CGAffineTransformIdentity;
   view.center = CGPointMake(CGRectGetMidX(containerView.bounds),
                             CGRectGetMidY(containerView.bounds));
@@ -62,6 +63,7 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
 - (void)updateViewToFinalPosition:(UIView *)view containerView:(UIView *)containerView {
   
   [view setTintAdjustmentMode:UIViewTintAdjustmentModeDimmed];
+  view.userInteractionEnabled = NO;
   view.transform = CGAffineTransformMakeScale(kSourceViewScale, kSourceViewScale);
   view.center = CGPointMake(kLeftOffset - CGRectGetWidth(containerView.bounds) / 2,
                             CGRectGetMidY(containerView.bounds));

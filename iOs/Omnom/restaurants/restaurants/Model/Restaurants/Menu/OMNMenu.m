@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GMenu.h"
+#import "OMNMenu.h"
 
-@implementation GMenu
+@implementation OMNMenu
 
 - (instancetype)initWithData:(id)data {
   self = [super init];
@@ -19,7 +19,7 @@
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:menuItems.count];
     
     for (id menuItemObject in menuItems) {
-      GMenuItem *menuItem = [[GMenuItem alloc] initWithData:menuItemObject];
+      OMNMenuItem *menuItem = [[OMNMenuItem alloc] initWithData:menuItemObject];
       [items addObject:menuItem];
     }
     

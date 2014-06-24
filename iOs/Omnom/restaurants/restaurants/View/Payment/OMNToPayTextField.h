@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GToPayTextField : UITextField
+@interface OMNToPayTextField : UITextField
 
 @end

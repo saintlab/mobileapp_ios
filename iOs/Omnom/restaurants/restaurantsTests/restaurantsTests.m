@@ -39,7 +39,7 @@
     GMenuBlock menuBlock;
     [invocation getArgument:&menuBlock atIndex:2];
     
-    GMenu *menu = [[GMenu alloc] initWithData:nil];
+    OMNMenu *menu = [[OMNMenu alloc] initWithData:nil];
     menuBlock(menu);
     
     void(^errorBlock)(NSError *error) = nil;
@@ -49,7 +49,7 @@
     
   }] getMenu:[OCMArg any] error:[OCMArg any]];
   
-  [mockResaurant getMenu:^(GMenu *menu) {
+  [mockResaurant getMenu:^(OMNMenu *menu) {
     
     XCTAssertNotNil(menu, @"menu shold be nil");
     NSLog(@"%@", menu);

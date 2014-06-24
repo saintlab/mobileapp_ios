@@ -26,6 +26,7 @@ def import_all
   pod 'BlocksKit'
   pod 'TSCurrencyTextField'
   pod 'Mixpanel'
+  pod 'UrbanAirship-iOS-SDK'
 end
 
 target :restaurants do
@@ -42,7 +43,6 @@ end
 
 target :beacon do
   import_pods
-  pod 'UrbanAirship-iOS-SDK'
   xcodeproj 'beacon/beacon.xcodeproj'
 end
 

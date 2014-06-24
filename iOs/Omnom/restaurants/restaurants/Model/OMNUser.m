@@ -20,10 +20,10 @@
 - (instancetype)initWithData:(id)data {
   self = [super init];
   if (self) {
-    self.name = data[@"first_name"];
-    self.email = data[@"email"];
+    self.name = [data[@"first_name"] description];
+    self.email = [data[@"email"] description];
     self.phone = [data[@"phone"] description];
-    self.status = data[@"status"];
+    self.status = [data[@"status"] description];
     self.phone_validated = [data[@"phone_validated"] boolValue];
     self.email_validated = [data[@"email_validated"] boolValue];
   }

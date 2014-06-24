@@ -7,30 +7,27 @@
 //
 
 #import "OMNBeaconBackgroundManager.h"
-#import <ESTBeaconManager.h>
 #import <CoreLocation/CoreLocation.h>
 #import "OMNBeacon.h"
 #import "OMNConstants.h"
 #import "OMNBeaconSearchManager.h"
-
+#import "OMNDecodeBeacon.h"
 
 static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentifier";
 
 @interface OMNBeaconBackgroundManager()
-<ESTBeaconDelegate,
-ESTBeaconManagerDelegate,
-CLLocationManagerDelegate> {
+<CLLocationManagerDelegate> {
 
   CLLocationManager *_locationManager;
   OMNBeaconSearchManager *_beaconSearchManager;
   
   UIBackgroundTaskIdentifier _searchBeaconTask;
-  
+
 }
 
 @property (nonatomic, strong) CLBeaconRegion *backgroundBeaconRegion;
 @property (nonatomic, strong) OMNBeacon *nearestBackgroundBeacon;
-@property (nonatomic, strong) NSMutableDictionary *foundBackgroundBeacons;
+@property (nonatomic, strong) NSMutableDictionary *decodedBeacons;
 
 @end
 
@@ -49,8 +46,6 @@ CLLocationManagerDelegate> {
   self = [super init];
   if (self) {
     
-    self.foundBackgroundBeacons = [[NSMutableDictionary alloc] init];
-
     NSString *id = [[NSUserDefaults standardUserDefaults] objectForKey:@"device_id"];
     if (nil == id) {
       
@@ -69,59 +64,102 @@ CLLocationManagerDelegate> {
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
     
+    
+    if (kCLAuthorizationStatusAuthorized == [CLLocationManager authorizationStatus]) {
+      [self startBeaconRegionMonitoring];
+    }
+    
   }
   return self;
 }
 
-- (void)handleDidEnterShopBeaconRegion {
+- (NSString *)savedPath {
+  NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+  NSString *storedBeaconsPath = [documentsDirectory stringByAppendingPathComponent:@"storedBeacons.dat"];
+  return storedBeaconsPath;
+}
 
-  if (_beaconSearchManager) {
-    return;
+- (void)saveDecodedBeacons {
+  [NSKeyedArchiver archiveRootObject:self.decodedBeacons toFile:[self savedPath]];
+}
+
+- (NSMutableDictionary *)decodedBeacons {
+  
+  if (nil == _decodedBeacons) {
+    
+    @try {
+      _decodedBeacons = [NSKeyedUnarchiver unarchiveObjectWithFile:[self savedPath]];
+    }
+    @catch (NSException *exception) {
+    }
+
+    if (nil == _decodedBeacons) {
+      _decodedBeacons = [NSMutableDictionary dictionary];
+    }
+    
   }
   
-  __weak typeof(self)weakSelf = self;
-  _searchBeaconTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-    
-    [weakSelf stopBeaconSearchManagerTask];
-    
-  }];
-  
-  _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
-  [_beaconSearchManager findNearestBeacon:^(OMNBeacon *beacon) {
-    
-    [weakSelf beaconDidFind:beacon];
-    
-  } failure:^{
-    
-    [weakSelf beaconDidFind:nil];
-    
-  }];
-  
-  //TODO: send information to the server according device did enter to restaurant
-  NSLog(@"===send information to the server according device did enter to restaurant");
+  return _decodedBeacons;
   
 }
 
-- (void)stopBeaconSearchManagerTask {
-  
-  [_beaconSearchManager stop];
-  _beaconSearchManager = nil;
-  
-  if (UIBackgroundTaskInvalid != _searchBeaconTask) {
-    
-    [[UIApplication sharedApplication] endBackgroundTask:_searchBeaconTask];
-    _searchBeaconTask = UIBackgroundTaskInvalid;
-    
-  }
-  
+- (void)forgetFoundBeacons {
+  [self.decodedBeacons removeAllObjects];
+  [self saveDecodedBeacons];
 }
 
 - (void)beaconDidFind:(OMNBeacon *)beacon {
   
-  [self stopBeaconSearchManagerTask];
+  if (nil == beacon) {
+    return;
+  }
+  
+  [_beaconSearchManager stop];
+  _beaconSearchManager = nil;
+  
+  __weak typeof(self)weakSelf = self;
+  [OMNDecodeBeacon decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
+    
+    OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
+    
+    if (decodeBeacon) {
+      [weakSelf showLocalPushWithBeacon:decodeBeacon];
+    }
+    
+  } failure:^(NSError *error) {
+  }];
   
   NSLog(@"beaconDidFind>%@", beacon);
   
+}
+
+- (BOOL)readyForPush:(OMNDecodeBeacon *)decodeBeacon {
+  
+  BOOL readyForPush = NO;
+  OMNDecodeBeacon *savedBeacon = self.decodedBeacons[decodeBeacon.uuid];
+  if (nil == savedBeacon ||
+      savedBeacon.readyForPush) {
+    readyForPush = YES;
+    self.decodedBeacons[decodeBeacon.uuid] = decodeBeacon;
+    [self saveDecodedBeacons];
+  }
+  
+  return readyForPush;
+  
+}
+
+- (void)showLocalPushWithBeacon:(OMNDecodeBeacon *)decodeBeacon {
+  
+  if ([self readyForPush:decodeBeacon]) {
+
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = decodeBeacon.restaurantId;
+    localNotification.alertAction = NSLocalizedString(@"Запустить", nil);
+    localNotification.soundName = @"Alert.caf";
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    
+  }
+  [self stopBeaconSearchManagerTask];
 }
 
 - (void)handleDidExitShopBeaconRegion {
@@ -150,13 +188,13 @@ CLLocationManagerDelegate> {
   }
   
   [_locationManager startMonitoringForRegion:self.backgroundBeaconRegion];
-  
-  [_locationManager requestStateForRegion:self.backgroundBeaconRegion];
+//  [_locationManager requestStateForRegion:self.backgroundBeaconRegion];
   
 }
 
 - (void)handlePush:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 
+  
 //  if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
 //    return;
 //  }
@@ -166,7 +204,6 @@ CLLocationManagerDelegate> {
     return;
   }
 
-  [self handleDidEnterShopBeaconRegion];
   
 }
 
@@ -177,9 +214,7 @@ CLLocationManagerDelegate> {
   switch (status) {
     case kCLAuthorizationStatusAuthorized:
     case kCLAuthorizationStatusNotDetermined: {
-      
-      [self startBeaconRegionMonitoring];
-      
+      //do nothig
     } break;
     default: {
       
@@ -231,6 +266,49 @@ CLLocationManagerDelegate> {
     case CLRegionStateUnknown: {
     } break;
       
+  }
+  
+}
+
+- (void)handleDidEnterShopBeaconRegion {
+  
+  if (_beaconSearchManager) {
+    return;
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  _searchBeaconTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+    
+    [weakSelf stopBeaconSearchManagerTask];
+    
+  }];
+  
+  _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
+  [_beaconSearchManager findNearestBeacon:^(OMNBeacon *beacon) {
+    
+    [weakSelf beaconDidFind:beacon];
+    
+  } failure:^{
+    
+    [weakSelf beaconDidFind:nil];
+    
+  }];
+  
+  //TODO: send information to the server according device did enter to restaurant
+  NSLog(@"===send information to the server according device did enter to restaurant");
+  
+}
+
+- (void)stopBeaconSearchManagerTask {
+  
+  [_beaconSearchManager stop];
+  _beaconSearchManager = nil;
+  
+  if (UIBackgroundTaskInvalid != _searchBeaconTask) {
+    
+    [[UIApplication sharedApplication] endBackgroundTask:_searchBeaconTask];
+    _searchBeaconTask = UIBackgroundTaskInvalid;
+    
   }
   
 }

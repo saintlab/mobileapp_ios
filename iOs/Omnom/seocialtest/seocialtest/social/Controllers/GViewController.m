@@ -8,7 +8,7 @@
 
 #import "GViewController.h"
 #import "GAuthManager.h"
-#import "GUserInfoTransitionDelegate.h"
+#import "OMNUserInfoTransitionDelegate.h"
 #import "GViewController1.h"
 #import "GUserInfoVC.h"
 #import "GControllerMediator.h"
@@ -21,7 +21,7 @@
 @end
 
 @implementation GViewController {
-  GUserInfoTransitionDelegate *_transitionDelegate;
+  OMNUserInfoTransitionDelegate *_transitionDelegate;
 
 }
 
@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
 
-  _transitionDelegate = [[GUserInfoTransitionDelegate alloc] init];
+  _transitionDelegate = [[OMNUserInfoTransitionDelegate alloc] init];
   
   [[GControllerMediator mediator] setRootViewController:self];
 //  GLoginDataSource *

@@ -12,14 +12,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-/**
- Show Splash image
- */
 - (void)showSplash;
 
-/**
- Remove Splash image
- */
 - (void)hideSplash;
 
 @end

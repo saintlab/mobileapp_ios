@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GMenu.h"
+#import "OMNMenu.h"
 #import "OMNOrder.h"
 
 typedef void(^GRestaurantsBlock)(NSArray *restaurants);
-typedef void(^GMenuBlock)(GMenu *menu);
+typedef void(^GMenuBlock)(OMNMenu *menu);
 
 @interface OMNRestaurant : NSObject
 

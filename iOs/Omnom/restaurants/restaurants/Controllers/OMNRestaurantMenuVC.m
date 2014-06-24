@@ -6,32 +6,32 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GRestaurantMenuVC.h"
-#import "GMenu.h"
+#import "OMNRestaurantMenuVC.h"
+#import "OMNMenu.h"
 #import "OMNOrdersVC.h"
 #import "OMNOrderVCDelegate.h"
 #import "OMNSearchTableVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNPaymentVC.h"
 #import "OMNAssetManager.h"
-#import "GUserInfoTransitionDelegate.h"
+#import "OMNUserInfoTransitionDelegate.h"
 #import "OMNUserInfoVC.h"
 
-@interface GRestaurantMenuVC ()
+@interface OMNRestaurantMenuVC ()
 <OMNOrdersVCDelegate,
 OMNUserInfoVCDelegate>
 
 @end
 
-@implementation GRestaurantMenuVC {
+@implementation OMNRestaurantMenuVC {
   OMNRestaurant *_restaurant;
   OMNTable *_table;
-  GMenu *_menu;
+  OMNMenu *_menu;
   
   NSMutableArray *_products;
   UIRefreshControl *_refreshControl;
 
-  GUserInfoTransitionDelegate *_transitionDelegate;
+  OMNUserInfoTransitionDelegate *_transitionDelegate;
 }
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant table:(OMNTable *)table {
@@ -97,7 +97,7 @@ OMNUserInfoVCDelegate>
 
 - (void)userProfileTap {
   
-  _transitionDelegate = [[GUserInfoTransitionDelegate alloc] init];
+  _transitionDelegate = [[OMNUserInfoTransitionDelegate alloc] init];
   
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] init];
   userInfoVC.delegate = self;
@@ -125,12 +125,14 @@ OMNUserInfoVCDelegate>
 
 - (void)refreshOrders {
   
+  return;
+  
   if (!_refreshControl.refreshing) {
     [_refreshControl beginRefreshing];
   }
   
-  __weak GRestaurantMenuVC *weakSelf = self;
-  [_restaurant getMenu:^(GMenu *menu) {
+  __weak OMNRestaurantMenuVC *weakSelf = self;
+  [_restaurant getMenu:^(OMNMenu *menu) {
     
     [_refreshControl endRefreshing];
     [weakSelf finishLoadingMenu:menu];
@@ -199,7 +201,7 @@ OMNUserInfoVCDelegate>
 }
 
 - (void)resetOrders {
-  [_products enumerateObjectsUsingBlock:^(GMenuItem *menuItem, NSUInteger idx, BOOL *stop) {
+  [_products enumerateObjectsUsingBlock:^(OMNMenuItem *menuItem, NSUInteger idx, BOOL *stop) {
     menuItem.quantity = 0;
   }];
   [_products removeAllObjects];
@@ -278,7 +280,7 @@ OMNUserInfoVCDelegate>
   
 }
 
-- (void)finishLoadingMenu:(GMenu *)menu {
+- (void)finishLoadingMenu:(OMNMenu *)menu {
   
   _menu = menu;
 //  [self.tableView reloadData];
@@ -287,7 +289,7 @@ OMNUserInfoVCDelegate>
 
 - (void)stepperValueChanged:(UIStepper *)stepper {
   
-  GMenuItem *menuItem = _menu.items[stepper.tag];
+  OMNMenuItem *menuItem = _menu.items[stepper.tag];
   menuItem.quantity = stepper.value;
   
   if (![_products containsObject:menuItem]) {
@@ -324,7 +326,7 @@ OMNUserInfoVCDelegate>
   UIStepper *stepper = (UIStepper *)cell.accessoryView;
   stepper.tag = indexPath.row;
   
-  GMenuItem *menuItem = _menu.items[indexPath.row];
+  OMNMenuItem *menuItem = _menu.items[indexPath.row];
   stepper.value = menuItem.quantity;
 
   cell.textLabel.text = menuItem.title;

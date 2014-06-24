@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GToPayTextField.h"
+#import "OMNToPayTextField.h"
 
-@implementation GToPayTextField
+@implementation OMNToPayTextField
 
 - (id)initWithFrame:(CGRect)frame
 {

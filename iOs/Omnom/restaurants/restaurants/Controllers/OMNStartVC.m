@@ -10,7 +10,7 @@
 #import "OMNLoginVC.h"
 #import "OMNRegisterUserVC.h"
 #import "OMNSearchTableVC.h"
-#import "GRestaurantMenuVC.h"
+#import "OMNRestaurantMenuVC.h"
 #import "OMNAuthorisation.h"
 
 @interface OMNStartVC ()
@@ -93,7 +93,7 @@
   //TODO: get actual restaurant
   NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
   OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:data];
-  GRestaurantMenuVC *restaurantMenuVC = [[GRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
+  OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
   [self.navigationController setViewControllers:@[restaurantMenuVC] animated:YES];
   
 }

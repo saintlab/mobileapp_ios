@@ -22,7 +22,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
-                <view contentMode="scaleToFill" id="U7Q-Au-hTx" customClass="GPaymentFooterView">
+                <view contentMode="scaleToFill" id="U7Q-Au-hTx" customClass="OMNPaymentFooterView">
                     <rect key="frame" x="0.0" y="353" width="320" height="215"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <subviews>
@@ -69,7 +69,7 @@
                                 <action selector="doneEdidtingTap:" destination="U7Q-Au-hTx" eventType="touchUpInside" id="sCW-A7-V5g"/>
                             </connections>
                         </button>
-                        <view contentMode="scaleToFill" id="Tb5-dQ-gtn" customClass="GAmountPercentControl">
+                        <view contentMode="scaleToFill" id="Tb5-dQ-gtn" customClass="OMNAmountPercentControl">
                             <rect key="frame" x="0.0" y="23" width="320" height="47"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

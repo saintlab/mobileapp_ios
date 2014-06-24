@@ -26,6 +26,8 @@
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Пермишен для блютуса</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Пермишен мне</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Пермишен для использования геопозиции</string>
 	<key>NSMotionUsageDescription</key>
@@ -40,11 +42,10 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>bluetooth-central</string>
 		<string>location</string>
 		<string>remote-notification</string>
 	</array>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Пермишен мне</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main_iPhone</string>
 	<key>UIMainStoryboardFile~ipad</key>

@@ -8,12 +8,12 @@
 
 #import "OMNPaymentVC.h"
 #import "GPaymentVCDataSource.h"
-#import "GPaymentFooterView.h"
+#import "OMNPaymentFooterView.h"
 #import <BlocksKit+UIKit.h>
 #import "GRateAlertView.h"
 #import "OMNCalculatorVC.h"
 #import "OMNOrder.h"
-#import "GAmountPercentControl.h"
+#import "OMNAmountPercentControl.h"
 #import "UIView+frame.h"
 #import "OMNCalculatorTransition.h"
 #import "OMNPayCardVC.h"
@@ -34,7 +34,7 @@ UINavigationControllerDelegate>
 @implementation OMNPaymentVC {
   GPaymentVCDataSource *_dataSource;
 
-  __weak IBOutlet GPaymentFooterView *_paymentView;
+  __weak IBOutlet OMNPaymentFooterView *_paymentView;
   __weak IBOutlet UIButton *_toPayButton;
   __weak IBOutlet UIImageView *_backgroundIV;
   

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GUserInfoTransition : NSObject
+@interface OMNUserInfoTransition : NSObject
 <UIViewControllerAnimatedTransitioning>
 
 + (instancetype)forwardTransition;

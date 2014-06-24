@@ -6,18 +6,18 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GRestaurantsVC.h"
+#import "OMNRestaurantsVC.h"
 #import "OMNRestaurant.h"
-#import "GMenu.h"
-#import "GRestaurantMenuVC.h"
+#import "OMNMenu.h"
+#import "OMNRestaurantMenuVC.h"
 
-@interface GRestaurantsVC ()
+@interface OMNRestaurantsVC ()
 
 @property (nonatomic, strong) NSArray *restaurants;
 
 @end
 
-@implementation GRestaurantsVC {
+@implementation OMNRestaurantsVC {
   UIRefreshControl *_refreshControl;
 }
 
@@ -98,7 +98,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNRestaurant *restaurant = self.restaurants[indexPath.row];
-  GRestaurantMenuVC *restaurantMenuVC = [[GRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
+  OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
   restaurantMenuVC.navigationItem.title = restaurant.title;
   [self.navigationController pushViewController:restaurantMenuVC animated:YES];
   
