@@ -19,7 +19,7 @@ CGFloat kFuturaDeltaFontSize = 1.0f;
 
 - (UIFont *)navBarButtonFont {
   return FuturaBookFont(18.0f + kFuturaDeltaFontSize);
-} 
+}
 
 - (UIFont *)navBarSelectorDefaultFont {
   return FuturaBookFont(16.0f + kFuturaDeltaFontSize);

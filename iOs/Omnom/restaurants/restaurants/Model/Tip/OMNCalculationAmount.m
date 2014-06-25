@@ -64,7 +64,24 @@
 
 - (double)totalValue {
   
-  return (_enteredAmount + self.selectedTipAmount);
+  return (_enteredAmount + self.tipAmount);
+  
+}
+
+- (double)tipAmount {
+  
+  double tipAmount = 0.;
+  OMNTip *selectedTip = self.selectedTip;
+  
+  if (_enteredAmount > _tipsThreshold &&
+      selectedTip.percent > 0) {
+    tipAmount = _enteredAmount * selectedTip.percent * 0.01;
+  }
+  else {
+    tipAmount = selectedTip.amount;
+  }
+  
+  return tipAmount;
   
 }
 
@@ -82,22 +99,6 @@
   
   return selectedTip;
   
-}
-
-- (double)selectedTipAmount {
-  
-  double selectedTipAmount = 0.;
-  OMNTip *selectedTip = self.selectedTip;
-  
-  if (_enteredAmount > _tipsThreshold &&
-      selectedTip.percent > 0) {
-    selectedTipAmount = _enteredAmount * selectedTip.percent * 0.01;
-  }
-  else {
-    selectedTipAmount = selectedTip.amount;
-  }
-  
-  return selectedTipAmount;
 }
 
 - (double)customTipAmount {

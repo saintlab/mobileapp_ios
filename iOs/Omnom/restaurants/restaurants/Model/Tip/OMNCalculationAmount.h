@@ -20,6 +20,8 @@
 
 @property (nonatomic, assign, readonly) double totalValue;
 
+@property (nonatomic, assign, readonly) double tipAmount;
+
 @property (nonatomic, assign) double enteredAmount;
 
 @property (nonatomic, assign) NSInteger selectedTipIndex;

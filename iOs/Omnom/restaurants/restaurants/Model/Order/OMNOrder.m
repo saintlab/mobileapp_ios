@@ -83,56 +83,41 @@
   
 }
 
-- (void)getPaymentURL:(OMNOrderPayURLBlock)completion failure:(OMNErrorBlock)failureBlock {
+- (void)createAcquiringOrder:(OMNOrderPayURLBlock)completion failure:(OMNErrorBlock)failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"acquiring/link/%@/%.0f", self.restarateurOrderId, self.toPayAmount];
+  NSDictionary *order =
+  @{
+    @"description": @"Кебаб",
+    @"amount": @(99999),
+    @"restaurant_id" : self.restaurant_id,
+    @"table_id" : self.tableId,
+    };
+
+  NSDictionary *transaction =
+  @{
+    @"amount" : @(self.toPayAmount),
+    @"tip" : @(self.tipAmount),
+    };
   
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  NSDictionary *parameters =
+  @{
+    @"order" : order,
+    @"transaction" : transaction,
+    };
+  
+  [[OMNOperationManager sharedManager] POST:@"/acquiring/orders" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSString *url = responseObject[@"link"];
     if (url.length) {
       completion(url);
     }
     else {
-      NSLog(@"%@", responseObject);
-    }
-
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    NSLog(@"%@", error);
-    
-  }];
-  
-}
-
-- (void)createAcquiringOrder:(OMNOrderBlock)completion failure:(OMNErrorBlock)failureBlock {
-  
-  NSDictionary *parameters =
-  @{
-    @"description" : @"description",
-    @"notes" : @"notes",
-    @"amount" : @(self.toPayAmount),
-    @"restaurant_id" : self.restaurant_id,
-    @"table_id" : self.tableId,
-    };
-
-  __weak typeof(self)weakSelf = self;
-  [[OMNOperationManager sharedManager] POST:@"/acquiring/orders" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    weakSelf.restarateurOrderId = responseObject[@"id"];
-    if (completion) {
-      completion(weakSelf);
+      failureBlock(nil);
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    if (failureBlock) {
-      failureBlock(error);
-    }
-    else {
-      NSLog(@"error>%@", error);
-    }
+    failureBlock(error);
     
   }];
   

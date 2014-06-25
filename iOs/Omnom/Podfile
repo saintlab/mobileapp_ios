@@ -31,6 +31,7 @@ end
 
 target :restaurants do
   import_all
+  pod 'EAIntroView'
   xcodeproj 'restaurants/restaurants.xcodeproj'
 end
 

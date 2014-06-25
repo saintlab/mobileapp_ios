@@ -55,8 +55,8 @@
   
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   [self createAcquiringOrder];
 }
 
@@ -69,54 +69,28 @@
 
 - (void)createAcquiringOrder {
   
-  __weak typeof(self)weakSelf = self;
   [_spinner startAnimating];
   
   [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:_spinner] animated:YES];
   self.navigationItem.prompt = NSLocalizedString(@"Создаем платеж...", nil);
-  [_order createAcquiringOrder:^(OMNOrder *order) {
+
+  __weak typeof(self)weakSelf = self;
+  [_order createAcquiringOrder:^(NSString *urlString) {
     
-    [weakSelf getPaymentURL];
+    [weakSelf processCardPayment:urlString];
     
   } failure:^(NSError *error) {
     
     [weakSelf processFailCreateAcquiringOrder];
     
   }];
-  
+
 }
 
 - (void)processFailCreateAcquiringOrder {
   
   self.navigationItem.prompt = NSLocalizedString(@"Ошибка при создании платежа", nil);
   UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createAcquiringOrder)];
-  [self.navigationItem setRightBarButtonItem:button animated:YES];
-  
-}
-
-- (void)getPaymentURL {
-  
-  __weak typeof(self)weakSelf = self;
-  self.navigationItem.prompt = NSLocalizedString(@"Получаем данные о платеже...", nil);
-  UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
-  [self.navigationItem setRightBarButtonItem:button animated:YES];
-  
-  [_order getPaymentURL:^(NSString *urlString) {
-    
-    [weakSelf processCardPayment:urlString];
-    
-  } failure:^(NSError *error) {
-    
-    [weakSelf processFailGetPaymentURL];
-    
-  }];
-
-}
-
-- (void)processFailGetPaymentURL {
-  
-  self.navigationItem.prompt = NSLocalizedString(@"Ошибка получении данныех о платеже", nil);
-  UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(getPaymentURL)];
   [self.navigationItem setRightBarButtonItem:button animated:YES];
   
 }

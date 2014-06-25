@@ -164,7 +164,9 @@ UINavigationControllerDelegate>
 
 - (void)payCardVC:(OMNPayCardVC *)payVC requestPayWithCardInfo:(OMNCardInfo *)cardInfo {
   
-  _order.toPayAmount = _paymentView.calculationAmount.totalValue * 100;
+  _order.toPayAmount = _paymentView.calculationAmount.enteredAmount * 100;
+  _order.tipAmount = _paymentView.calculationAmount.tipAmount * 100;
+  
   OMNGPBPayVC *gpbPayVC = [[OMNGPBPayVC alloc] initWithCard:cardInfo order:_order];
   gpbPayVC.delegate = self;
   gpbPayVC.navigationItem.title = NSLocalizedString(@"ГПБ", nil);

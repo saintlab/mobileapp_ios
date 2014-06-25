@@ -36,6 +36,7 @@ typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
 @property (nonatomic, assign, readonly) double tipsThreshold;
 
 @property (nonatomic, assign) double toPayAmount;
+@property (nonatomic, assign) double tipAmount;
 
 - (instancetype)initWithData:(id)data;
 
@@ -45,10 +46,9 @@ typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
 
 - (double)selectedItemsTotal;
 
-- (void)getPaymentURL:(OMNOrderPayURLBlock)completion failure:(OMNErrorBlock)failureBlock;
 /**
  https://github.com/saintlab/backend/tree/master/applications/omnom#create-restaurateur-order
  */
-- (void)createAcquiringOrder:(OMNOrderBlock)completion failure:(OMNErrorBlock)failureBlock;
+- (void)createAcquiringOrder:(OMNOrderPayURLBlock)completion failure:(OMNErrorBlock)failureBlock;
 
 @end

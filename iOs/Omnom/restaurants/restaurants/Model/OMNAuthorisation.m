@@ -93,6 +93,7 @@ static NSString * const kAccountName = @"test_account5";
     
   } failure:^(NSError *error) {
     
+    NSLog(@"%@", error);
     block(NO);
     
   }];

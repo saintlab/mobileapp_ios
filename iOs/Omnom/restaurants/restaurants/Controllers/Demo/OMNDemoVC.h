@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMNDemoVC : UIPageViewController
+@interface OMNDemoVC : UIViewController
 
 @end

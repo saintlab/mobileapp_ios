@@ -13,7 +13,7 @@
 #import "OMNBeaconBackgroundManager.h"
 #import <UAirship.h>
 #import <UAConfig.h>
-#import <UAPush.h>
+#import "OMNDemoVC.h"
 
 @interface GAppDelegate ()
 
@@ -36,6 +36,8 @@
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
+  
+//  self.window.rootViewController = [[OMNDemoVC alloc] init];
   
   return YES;
   
