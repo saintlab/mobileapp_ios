@@ -8,7 +8,7 @@
 
 @protocol OMNUserInfoVCDelegate;
 
-@interface OMNUserInfoVC : UIViewController
+@interface OMNUserInfoVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNUserInfoVCDelegate> delegate;
 

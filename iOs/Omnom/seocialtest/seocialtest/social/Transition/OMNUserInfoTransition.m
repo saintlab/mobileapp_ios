@@ -11,7 +11,7 @@
 static const CGFloat kLeftOffset = 50.0f;
 static const CGFloat kSourceViewScale = 1;
 
-static const NSTimeInterval kTransitionDuration = 0.25f;
+static const NSTimeInterval kTransitionDuration = 0.2f;
 
 @interface OMNUserInfoTransition ()
 
@@ -52,21 +52,17 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
 
 - (void)updateViewToInitialPosition:(UIView *)view containerView:(UIView *)containerView {
   
-  [view setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
+//  [view setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
   view.userInteractionEnabled = YES;
   view.transform = CGAffineTransformIdentity;
-  view.center = CGPointMake(CGRectGetMidX(containerView.bounds),
-                            CGRectGetMidY(containerView.bounds));
   
 }
 
 - (void)updateViewToFinalPosition:(UIView *)view containerView:(UIView *)containerView {
   
-  [view setTintAdjustmentMode:UIViewTintAdjustmentModeDimmed];
+//  [view setTintAdjustmentMode:UIViewTintAdjustmentModeDimmed];
   view.userInteractionEnabled = NO;
-  view.transform = CGAffineTransformMakeScale(kSourceViewScale, kSourceViewScale);
-  view.center = CGPointMake(kLeftOffset - CGRectGetWidth(containerView.bounds) / 2,
-                            CGRectGetMidY(containerView.bounds));
+  view.transform = CGAffineTransformMakeTranslation(kLeftOffset - CGRectGetWidth(containerView.bounds), 0);
   
 }
 
@@ -77,8 +73,12 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
   UIView *toView = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey].view;
   UIView *fromView = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey].view;
   
-  [containerView addSubview:toView];
-  [containerView addSubview:fromView];
+  UIView *fromSnapshot = [fromView snapshotViewAfterScreenUpdates:NO];
+  fromSnapshot.frame = fromView.frame;
+  [containerView insertSubview:fromSnapshot aboveSubview:fromView];
+  [fromView removeFromSuperview];
+  
+  [containerView insertSubview:toView belowSubview:fromSnapshot];
   
   NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
   
@@ -86,10 +86,9 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
   
   [UIView animateWithDuration:animationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
     
-    [self updateViewToFinalPosition:fromView containerView:containerView];
+    [self updateViewToFinalPosition:fromSnapshot containerView:containerView];
     
   } completion:^(BOOL finished) {
-    
     
     [transitionContext completeTransition:YES];
     
@@ -100,18 +99,22 @@ static const NSTimeInterval kTransitionDuration = 0.25f;
 - (void)animateDismissalTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
 
   UIView *toView = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey].view;
-  
+  UIView *fromView = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey].view;
+  UIView *fromSnapshot = [fromView snapshotViewAfterScreenUpdates:YES];
+  fromSnapshot.frame = fromView.frame;
   UIView *containerView = [transitionContext containerView];
-
-  NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
+  [containerView addSubview:toView];
+  [containerView insertSubview:fromSnapshot belowSubview:toView];
+  [fromView removeFromSuperview];
   [self updateViewToFinalPosition:toView containerView:containerView];
+
   
+  NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
   [UIView animateWithDuration:animationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseOut  animations:^{
   
     [self updateViewToInitialPosition:toView containerView:containerView];
     
   } completion:^(BOOL finished) {
-    
     [transitionContext completeTransition:YES];
     
   }];

@@ -146,7 +146,9 @@
 }
 
 - (void)finishPayment {
-  [self.delegate gpbVCDidPay:self];
+  
+  [self.delegate gpbVCDidPay:self withOrder:_order];
+  
 }
 
 @end

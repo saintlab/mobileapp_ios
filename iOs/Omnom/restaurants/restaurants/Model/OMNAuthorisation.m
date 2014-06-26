@@ -12,7 +12,7 @@
 #import "OMNUser.h"
 #import <SSKeychain.h>
 
-static NSString * const kAccountName = @"test_account5";
+static NSString * const kAccountName = @"test_account6";
 
 @implementation OMNAuthorisation
 

@@ -86,7 +86,7 @@ static const CGFloat kTopOffset = 40.0f;
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
     
     if ([self.delegate respondsToSelector:@selector(calculatorVC:didFinishWithTotal:)]) {
-      [self.delegate calculatorVC:self didFinishWithTotal:[self total]];
+      [self.delegate calculatorVC:self didFinishWithTotal:_total];
     }
     
     
@@ -139,12 +139,6 @@ static const CGFloat kTopOffset = 40.0f;
 - (void)navSelectorDidChange:(OMNNavigationBarSelector *)navSelector {
   
   [self showViewControllerAtIndex:navSelector.selectedIndex];
-  
-}
-
-- (double)total {
-  
-  return _total;
   
 }
 

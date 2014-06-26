@@ -19,6 +19,8 @@ typedef void(^OMNTokenBlock)(NSString *token);
 
 @property (nonatomic, copy, readonly) NSString *installId;
 
+@property (nonatomic, strong) dispatch_block_t logoutCallback;
+
 + (instancetype)authorisation;
 
 - (void)updateToken:(NSString *)newToken;

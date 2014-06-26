@@ -14,6 +14,8 @@
 #import <UAirship.h>
 #import <UAConfig.h>
 #import "OMNDemoVC.h"
+#import "OMNWizardVC.h"
+#import "OMNWizardPageVC.h"
 
 @interface GAppDelegate ()
 
@@ -36,8 +38,7 @@
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
-  
-//  self.window.rootViewController = [[OMNDemoVC alloc] init];
+
   
   return YES;
   

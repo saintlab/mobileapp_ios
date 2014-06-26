@@ -22,7 +22,7 @@
 
 @protocol OMNGPBPayVCDelegate <NSObject>
 
-- (void)gpbVCDidPay:(OMNGPBPayVC *)gpbVC;
+- (void)gpbVCDidPay:(OMNGPBPayVC *)gpbVC withOrder:(OMNOrder *)order;
 
 - (void)gpbVCDidCancel:(OMNGPBPayVC *)gpbVC;
 

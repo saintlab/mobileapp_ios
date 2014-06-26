@@ -21,6 +21,7 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNOrder+omn_calculationAmount.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
+#import "OMNAnalitics.h"
 
 @interface OMNPaymentVC ()
 <OMNCalculatorVCDelegate,
@@ -176,7 +177,10 @@ UINavigationControllerDelegate>
 
 #pragma mark - OMNGPBPayVCDelegate
 
-- (void)gpbVCDidPay:(OMNGPBPayVC *)gpbVC {
+- (void)gpbVCDidPay:(OMNGPBPayVC *)gpbVC withOrder:(OMNOrder *)order {
+  
+  
+  [[OMNAnalitics analitics] logPayment:nil];
   
   [self.navigationController popToViewController:self animated:YES];
   

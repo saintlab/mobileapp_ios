@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "OMNWizardVC.h"
 
-@interface OMNStartVC : UIViewController
+@interface OMNStartVC : OMNWizardVC
 
 @end

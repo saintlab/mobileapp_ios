@@ -16,6 +16,8 @@
 #import "OMNAssetManager.h"
 #import "OMNUserInfoTransitionDelegate.h"
 #import "OMNUserInfoVC.h"
+#import "OMNBeaconBackgroundManager.h"
+#import "OMNAuthorisation.h"
 
 @interface OMNRestaurantMenuVC ()
 <OMNOrdersVCDelegate,
@@ -29,7 +31,6 @@ OMNUserInfoVCDelegate>
   OMNMenu *_menu;
   
   NSMutableArray *_products;
-  UIRefreshControl *_refreshControl;
 
   OMNUserInfoTransitionDelegate *_transitionDelegate;
 }
@@ -48,20 +49,13 @@ OMNUserInfoVCDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-//  self.tableView.allowsMultipleSelection = YES;
-  
   [self setup];
-
-  _refreshControl = [[UIRefreshControl alloc] init];
-  [_refreshControl addTarget:self action:@selector(refreshOrders) forControlEvents:UIControlEventValueChanged];
-//  self.refreshControl = _refreshControl;
-  [self refreshOrders];
-  
   
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
   [self.navigationController setToolbarHidden:NO animated:animated];
 }
 
@@ -76,6 +70,10 @@ OMNUserInfoVCDelegate>
    @{
      NSFontAttributeName : [OMNAssetManager manager].navBarTitleFont
      }];
+  
+  [self.navigationItem setHidesBackButton:YES];
+  
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Reset tables", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resetTablesTap)];
   
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
   
@@ -92,6 +90,13 @@ OMNUserInfoVCDelegate>
   UIBarButtonItem *callWaiterButton = [[UIBarButtonItem alloc] initWithTitle:@"Официант" style:UIBarButtonItemStylePlain target:self	action:@selector(callWaiterTap)];
   
   self.toolbarItems = @[getOrdersButton, flex, callWaiterButton];
+  
+  [[OMNAuthorisation authorisation] setLogoutCallback:^{
+    
+    [self dismissViewControllerAnimated:NO completion:nil];
+    [self.delegate restaurantMenuVCDidFinish:self];
+    
+  }];
   
 }
 
@@ -115,6 +120,12 @@ OMNUserInfoVCDelegate>
   
 }
 
+- (void)resetTablesTap {
+  
+  [[OMNBeaconBackgroundManager manager] forgetFoundBeacons];
+  
+}
+
 #pragma mark - OMNUserInfoVCDelegate
 
 - (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
@@ -126,20 +137,15 @@ OMNUserInfoVCDelegate>
 - (void)refreshOrders {
   
   return;
-  
-  if (!_refreshControl.refreshing) {
-    [_refreshControl beginRefreshing];
-  }
+
   
   __weak OMNRestaurantMenuVC *weakSelf = self;
   [_restaurant getMenu:^(OMNMenu *menu) {
     
-    [_refreshControl endRefreshing];
     [weakSelf finishLoadingMenu:menu];
     
   } error:^(NSError *error) {
     
-    [_refreshControl endRefreshing];
     [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     
   }];

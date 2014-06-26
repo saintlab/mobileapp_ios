@@ -10,10 +10,10 @@
 		5673001009284FEB8D119AD9 /* libPods-seocialtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C20CA6AA3C3E4AD0B4FF6605 /* libPods-seocialtest.a */; };
 		930839AB191B5C0100188EC2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930839AA191B5C0100188EC2 /* Social.framework */; };
 		930839B1191B5CC000188EC2 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930839B0191B5CC000188EC2 /* Accounts.framework */; };
-		930CDE051952CC6300A7D3A0 /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930CDE031952CC6300A7D3A0 /* OMNUserInfoVC.m */; };
-		930CDE061952CC6300A7D3A0 /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930CDE031952CC6300A7D3A0 /* OMNUserInfoVC.m */; };
-		930CDE071952CC6300A7D3A0 /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930CDE041952CC6300A7D3A0 /* OMNUserInfoVC.xib */; };
-		930CDE081952CC6300A7D3A0 /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930CDE041952CC6300A7D3A0 /* OMNUserInfoVC.xib */; };
+		932FB2DE195ABC2F00960F03 /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */; };
+		932FB2DF195ABC2F00960F03 /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */; };
+		932FB2E0195ABC2F00960F03 /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 932FB2DD195ABC2F00960F03 /* OMNUserInfoVC.xib */; };
+		932FB2E1195ABC2F00960F03 /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 932FB2DD195ABC2F00960F03 /* OMNUserInfoVC.xib */; };
 		93570D3E19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93570D3C19503FF60065E6D2 /* OMNConfirmCodeVC.m */; };
 		93570D3F19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93570D3C19503FF60065E6D2 /* OMNConfirmCodeVC.m */; };
 		93570D4019503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93570D3D19503FF60065E6D2 /* OMNConfirmCodeVC.xib */; };
@@ -102,6 +102,12 @@
 		93A994A919484C22005B403C /* OMNRegisterUserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A994A219484C22005B403C /* OMNRegisterUserVC.m */; };
 		93A994AA19484C22005B403C /* OMNRegisterUserVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A994A319484C22005B403C /* OMNRegisterUserVC.xib */; };
 		93A994AB19484C22005B403C /* OMNRegisterUserVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A994A319484C22005B403C /* OMNRegisterUserVC.xib */; };
+		93C5A67C195A9FFF005C68EC /* OMNUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A67B195A9FFF005C68EC /* OMNUserInfoModel.m */; };
+		93C5A67D195AA000005C68EC /* OMNUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A67B195A9FFF005C68EC /* OMNUserInfoModel.m */; };
+		93C5A680195AA067005C68EC /* OMNUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A67F195AA067005C68EC /* OMNUserInfoItem.m */; };
+		93C5A681195AA067005C68EC /* OMNUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A67F195AA067005C68EC /* OMNUserInfoItem.m */; };
+		93C5A684195AB1BA005C68EC /* OMNAnalitics.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A683195AB1BA005C68EC /* OMNAnalitics.m */; };
+		93C5A685195AB1BA005C68EC /* OMNAnalitics.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A683195AB1BA005C68EC /* OMNAnalitics.m */; };
 		93E7C15B1918DC1600F22695 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E7C15A1918DC1600F22695 /* Foundation.framework */; };
 		93E7C15D1918DC1600F22695 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E7C15C1918DC1600F22695 /* CoreGraphics.framework */; };
 		93E7C15F1918DC1600F22695 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93E7C15E1918DC1600F22695 /* UIKit.framework */; };
@@ -131,9 +137,9 @@
 		3857FCD33DF54CFCB3DFC479 /* Pods-seocialtest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-seocialtest.xcconfig"; path = "../Pods/Pods-seocialtest.xcconfig"; sourceTree = "<group>"; };
 		930839AA191B5C0100188EC2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		930839B0191B5CC000188EC2 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		930CDE021952CC6300A7D3A0 /* OMNUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoVC.h; sourceTree = "<group>"; };
-		930CDE031952CC6300A7D3A0 /* OMNUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoVC.m; sourceTree = "<group>"; };
-		930CDE041952CC6300A7D3A0 /* OMNUserInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNUserInfoVC.xib; sourceTree = "<group>"; };
+		932FB2DB195ABC2F00960F03 /* OMNUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoVC.h; sourceTree = "<group>"; };
+		932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoVC.m; sourceTree = "<group>"; };
+		932FB2DD195ABC2F00960F03 /* OMNUserInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNUserInfoVC.xib; sourceTree = "<group>"; };
 		93570D3B19503FF60065E6D2 /* OMNConfirmCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNConfirmCodeVC.h; sourceTree = "<group>"; };
 		93570D3C19503FF60065E6D2 /* OMNConfirmCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNConfirmCodeVC.m; sourceTree = "<group>"; };
 		93570D3D19503FF60065E6D2 /* OMNConfirmCodeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNConfirmCodeVC.xib; sourceTree = "<group>"; };
@@ -216,6 +222,12 @@
 		93A994A119484C22005B403C /* OMNRegisterUserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRegisterUserVC.h; sourceTree = "<group>"; };
 		93A994A219484C22005B403C /* OMNRegisterUserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRegisterUserVC.m; sourceTree = "<group>"; };
 		93A994A319484C22005B403C /* OMNRegisterUserVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNRegisterUserVC.xib; sourceTree = "<group>"; };
+		93C5A67A195A9FFF005C68EC /* OMNUserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoModel.h; sourceTree = "<group>"; };
+		93C5A67B195A9FFF005C68EC /* OMNUserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoModel.m; sourceTree = "<group>"; };
+		93C5A67E195AA067005C68EC /* OMNUserInfoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoItem.h; sourceTree = "<group>"; };
+		93C5A67F195AA067005C68EC /* OMNUserInfoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoItem.m; sourceTree = "<group>"; };
+		93C5A682195AB1BA005C68EC /* OMNAnalitics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNAnalitics.h; path = ../../restaurants/restaurants/Model/Analitics/OMNAnalitics.h; sourceTree = "<group>"; };
+		93C5A683195AB1BA005C68EC /* OMNAnalitics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNAnalitics.m; path = ../../restaurants/restaurants/Model/Analitics/OMNAnalitics.m; sourceTree = "<group>"; };
 		93E7C1571918DC1600F22695 /* seocialtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = seocialtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93E7C15A1918DC1600F22695 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93E7C15C1918DC1600F22695 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -263,12 +275,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		930CDDF21952C60900A7D3A0 /* Info */ = {
+		932FB2DA195ABC2400960F03 /* Info */ = {
 			isa = PBXGroup;
 			children = (
-				930CDE021952CC6300A7D3A0 /* OMNUserInfoVC.h */,
-				930CDE031952CC6300A7D3A0 /* OMNUserInfoVC.m */,
-				930CDE041952CC6300A7D3A0 /* OMNUserInfoVC.xib */,
+				932FB2DB195ABC2F00960F03 /* OMNUserInfoVC.h */,
+				932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */,
+				932FB2DD195ABC2F00960F03 /* OMNUserInfoVC.xib */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -353,6 +365,7 @@
 		9369BB2C192E2AE60018C79C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				93C5A679195A9FE5005C68EC /* User */,
 				9369BB35192E2AE60018C79C /* Social */,
 			);
 			path = Model;
@@ -508,6 +521,8 @@
 				93A36907194715F100DE91D8 /* OMNAuthorizationManager.m */,
 				93A36908194715F100DE91D8 /* OMNOperationManager.h */,
 				93A36909194715F100DE91D8 /* OMNOperationManager.m */,
+				93C5A682195AB1BA005C68EC /* OMNAnalitics.h */,
+				93C5A683195AB1BA005C68EC /* OMNAnalitics.m */,
 			);
 			name = References;
 			sourceTree = "<group>";
@@ -515,7 +530,7 @@
 		93A9949B19484C22005B403C /* User */ = {
 			isa = PBXGroup;
 			children = (
-				930CDDF21952C60900A7D3A0 /* Info */,
+				932FB2DA195ABC2400960F03 /* Info */,
 				93570D3A19503FF60065E6D2 /* ConfirmCode */,
 				93A9949C19484C22005B403C /* Login */,
 				93A994A019484C22005B403C /* Register */,
@@ -544,6 +559,17 @@
 				93A994A319484C22005B403C /* OMNRegisterUserVC.xib */,
 			);
 			path = Register;
+			sourceTree = "<group>";
+		};
+		93C5A679195A9FE5005C68EC /* User */ = {
+			isa = PBXGroup;
+			children = (
+				93C5A67E195AA067005C68EC /* OMNUserInfoItem.h */,
+				93C5A67F195AA067005C68EC /* OMNUserInfoItem.m */,
+				93C5A67A195A9FFF005C68EC /* OMNUserInfoModel.h */,
+				93C5A67B195A9FFF005C68EC /* OMNUserInfoModel.m */,
+			);
+			name = User;
 			sourceTree = "<group>";
 		};
 		93E7C14E1918DC1600F22695 = {
@@ -702,7 +728,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				930CDE071952CC6300A7D3A0 /* OMNUserInfoVC.xib in Resources */,
+				932FB2E0195ABC2F00960F03 /* OMNUserInfoVC.xib in Resources */,
 				93E7C1731918DC1600F22695 /* Images.xcassets in Resources */,
 				9369BBCE192E2AE70018C79C /* rouble.otf in Resources */,
 				93570D4019503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */,
@@ -728,7 +754,7 @@
 				9369BB9D192E2AE70018C79C /* GUserDetailsVC.xib in Resources */,
 				93E7C1841918DC1600F22695 /* InfoPlist.strings in Resources */,
 				93570D4119503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */,
-				930CDE081952CC6300A7D3A0 /* OMNUserInfoVC.xib in Resources */,
+				932FB2E1195ABC2F00960F03 /* OMNUserInfoVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,6 +800,7 @@
 			files = (
 				93570D3E19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */,
 				939DA16919540C6F0063AB23 /* OMNNumberKeyboardView.m in Sources */,
+				93C5A67C195A9FFF005C68EC /* OMNUserInfoModel.m in Sources */,
 				9369BBB6192E2AE70018C79C /* GOKNetwork.m in Sources */,
 				9369BB98192E2AE70018C79C /* GLoginDataSource.m in Sources */,
 				9369BBA0192E2AE70018C79C /* GUserInfoVC.m in Sources */,
@@ -784,7 +811,9 @@
 				9369BBAE192E2AE70018C79C /* GFBNetwork.m in Sources */,
 				9369BBA4192E2AE70018C79C /* GUtils.m in Sources */,
 				93A994A819484C22005B403C /* OMNRegisterUserVC.m in Sources */,
+				93C5A684195AB1BA005C68EC /* OMNAnalitics.m in Sources */,
 				9369BBC0192E2AE70018C79C /* OKSession.m in Sources */,
+				932FB2DE195ABC2F00960F03 /* OMNUserInfoVC.m in Sources */,
 				93A3690A194715F100DE91D8 /* OMNAuthorizationManager.m in Sources */,
 				93A994A419484C22005B403C /* OMNLoginVC.m in Sources */,
 				9369BBD8192E2AE70018C79C /* GSocialCell.m in Sources */,
@@ -796,7 +825,6 @@
 				93E7C1671918DC1600F22695 /* main.m in Sources */,
 				93A368FC1946FFA500DE91D8 /* OMNConstants.m in Sources */,
 				9369BBBC192E2AE70018C79C /* Odnoklassniki.m in Sources */,
-				930CDE051952CC6300A7D3A0 /* OMNUserInfoVC.m in Sources */,
 				9369BB9E192E2AE70018C79C /* GUserInfoDataSource.m in Sources */,
 				9369BBB8192E2AE70018C79C /* OKFriends.m in Sources */,
 				93A3690C194715F100DE91D8 /* OMNOperationManager.m in Sources */,
@@ -809,6 +837,7 @@
 				93A369021947074600DE91D8 /* OMNAuthorisation.m in Sources */,
 				9369BBB2192E2AE70018C79C /* GAuthManager.m in Sources */,
 				9369BB9A192E2AE70018C79C /* GUserDetailsVC.m in Sources */,
+				93C5A680195AA067005C68EC /* OMNUserInfoItem.m in Sources */,
 				9369BB80192E2AE70018C79C /* GViewController1.m in Sources */,
 				9369BBBE192E2AE70018C79C /* OKRequest.m in Sources */,
 				93570D44195040330065E6D2 /* OMNEnterCodeView.m in Sources */,
@@ -835,10 +864,11 @@
 				9369BBA7192E2AE70018C79C /* GControllerMediator.m in Sources */,
 				9369BBA1192E2AE70018C79C /* GUserInfoVC.m in Sources */,
 				93570D3F19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */,
-				930CDE061952CC6300A7D3A0 /* OMNUserInfoVC.m in Sources */,
+				93C5A681195AA067005C68EC /* OMNUserInfoItem.m in Sources */,
 				9369BB9F192E2AE70018C79C /* GUserInfoDataSource.m in Sources */,
 				9369BBC5192E2AE70018C79C /* GTwitterNetwork.m in Sources */,
 				9369BBB3192E2AE70018C79C /* GAuthManager.m in Sources */,
+				932FB2DF195ABC2F00960F03 /* OMNUserInfoVC.m in Sources */,
 				9369BBBB192E2AE70018C79C /* NSString+OKUtils.m in Sources */,
 				9369BBBD192E2AE70018C79C /* Odnoklassniki.m in Sources */,
 				9369BBA5192E2AE70018C79C /* GUtils.m in Sources */,
@@ -854,6 +884,8 @@
 				9369BB7F192E2AE70018C79C /* GViewController.m in Sources */,
 				9369BBD9192E2AE70018C79C /* GSocialCell.m in Sources */,
 				93A994A519484C22005B403C /* OMNLoginVC.m in Sources */,
+				93C5A67D195AA000005C68EC /* OMNUserInfoModel.m in Sources */,
+				93C5A685195AB1BA005C68EC /* OMNAnalitics.m in Sources */,
 				9369BBD5192E2AE70018C79C /* UIView+frame.m in Sources */,
 				9369BBAF192E2AE70018C79C /* GFBNetwork.m in Sources */,
 				93A3690D194715F100DE91D8 /* OMNOperationManager.m in Sources */,

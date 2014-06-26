@@ -9,81 +9,73 @@
 #import "OMNUserInfoVC.h"
 #import "OMNAuthorisation.h"
 #import "OMNUser.h"
-#import "OMNBeaconBackgroundManager.h"
+#import "OMNUserInfoModel.h"
 
 @interface OMNUserInfoVC ()
-
-@property (nonatomic, strong) OMNUser *user;
 
 @end
 
 @implementation OMNUserInfoVC {
+  OMNUserInfoModel *_userInfoModel;
   
-  __weak IBOutlet UILabel *_nameLabel;
-  __weak IBOutlet UILabel *_phoneLabel;
-  __weak IBOutlet UILabel *_emailLabel;
-  __weak IBOutlet UIActivityIndicatorView *_spinner;
+  __weak IBOutlet UILabel *_userNameLabel;
+  __weak IBOutlet UIImageView *_iconView;
+  
+}
+
+- (void)dealloc {
+  
+  @try {
+    [_userInfoModel removeObserver:self forKeyPath:NSStringFromSelector(@selector(user))];
+  }
+  @catch (NSException *exception) {
+  }
   
 }
 
 - (instancetype)init {
   self = [super initWithNibName:@"OMNUserInfoVC" bundle:nil];
   if (self) {
-    
+    _userInfoModel = [[OMNUserInfoModel alloc] init];
+    [_userInfoModel addObserver:self forKeyPath:NSStringFromSelector(@selector(user)) options:NSKeyValueObservingOptionNew context:NULL];
   }
   return self;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  
+  if ([keyPath isEqualToString:NSStringFromSelector(@selector(user))]) {
+    
+    _userNameLabel.text = _userInfoModel.user.phone;
+    [self.tableView reloadData];
+    
+  }
+  
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(settingsTap:)];
-
-  _spinner.hidesWhenStopped = YES;
-  [_spinner startAnimating];
+  _iconView.image = [UIImage imageNamed:@"placeholder_icon"];
   
-  __weak typeof(self)weakSelf = self;
-  [OMNUser userWithToken:[OMNAuthorisation authorisation].token user:^(OMNUser *user) {
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(closeUserInfo)];
   
-    weakSelf.user = user;
-    
-  } failure:^(NSError *error) {
-    
-    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
-    
-  }];
+  self.tableView.dataSource = _userInfoModel;
   
 }
 
-- (void)setUser:(OMNUser *)user {
-  
-  _user = user;
-  _nameLabel.text = _user.name;
-  _phoneLabel.text = _user.phone;
-  _emailLabel.text = _user.email;
-  [_spinner stopAnimating];
-  
-}
-- (IBAction)forgetTablesTap:(id)sender {
-  
-  [[OMNBeaconBackgroundManager manager] forgetFoundBeacons];
-  
-}
-
-- (IBAction)settingsTap:(id)sender {
+- (void)closeUserInfo {
   
   [self.delegate userInfoVCDidFinish:self];
   
 }
 
-- (IBAction)vkTap:(id)sender {
-}
+#pragma mark - UITableViewDelegate
 
-- (IBAction)twitterTap:(id)sender {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  [_userInfoModel controller:self tableView:tableView didSelectRowAtIndexPath:indexPath];
+  
 }
-
-- (IBAction)facebookTap:(id)sender {
-}
-
 
 @end
