@@ -31,8 +31,16 @@ typedef void(^OMNUserBlock)(OMNUser *user);
 
 - (void)confirmPhoneResend:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock;
 
-+ (void)loginUsingPhone:(NSString *)phone code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
++ (void)loginUsingData:(NSString *)data code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
 
 + (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(OMNErrorBlock)failureBlock;
 
 @end
+
+@interface NSString (omn_validPhone)
+
+- (BOOL)omn_isValidPhone;
+- (BOOL)omn_isValidEmail;
+
+@end
+

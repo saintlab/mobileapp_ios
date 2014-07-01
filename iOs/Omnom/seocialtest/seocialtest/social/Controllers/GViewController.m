@@ -10,7 +10,6 @@
 #import "GAuthManager.h"
 #import "OMNUserInfoTransitionDelegate.h"
 #import "GViewController1.h"
-#import "GUserInfoVC.h"
 #import "GControllerMediator.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNUserInfoVC.h"
@@ -73,8 +72,6 @@
   [[GControllerMediator mediator] showPaymentScreen];
 
 }
-
-#pragma mark - GUserInfoVCDelegate
 
 - (void)viewController1DidFinish:(GViewController1 *)vc {
   

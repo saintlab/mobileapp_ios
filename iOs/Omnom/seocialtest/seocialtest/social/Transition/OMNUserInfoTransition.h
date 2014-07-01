@@ -11,7 +11,7 @@
 @interface OMNUserInfoTransition : NSObject
 <UIViewControllerAnimatedTransitioning>
 
-+ (instancetype)forwardTransition;
++ (instancetype)forwardTransitionWithComplition:(dispatch_block_t)complitionBlock;
 
 + (instancetype)backwardTransition;
 

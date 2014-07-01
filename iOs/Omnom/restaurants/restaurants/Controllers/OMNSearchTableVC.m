@@ -140,7 +140,10 @@
     } break;
     case kBeaconsManagerStatusBluetoothUnsupported: {
 
+#if TARGET_IPHONE_SIMULATOR
+#else
       [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Данное устройство не поддерживает bluetooth", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+#endif
       
     } break;
     case kBeaconsManagerStatusBluetoothUnauthorized: {

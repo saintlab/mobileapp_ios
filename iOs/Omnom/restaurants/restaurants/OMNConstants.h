@@ -20,6 +20,7 @@ typedef void(^OMNDataBlock)(id data);
 
 #define kUseStubData 0
 #define kUseStubUser 0
+#define kUseStubLogin 1
 
 #define kGreenColor ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1])
 

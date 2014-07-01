@@ -10,6 +10,18 @@
 		5673001009284FEB8D119AD9 /* libPods-seocialtest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C20CA6AA3C3E4AD0B4FF6605 /* libPods-seocialtest.a */; };
 		930839AB191B5C0100188EC2 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930839AA191B5C0100188EC2 /* Social.framework */; };
 		930839B1191B5CC000188EC2 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930839B0191B5CC000188EC2 /* Accounts.framework */; };
+		932117E1196299C300183729 /* OMNBankCardsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932117DF196299C300183729 /* OMNBankCardsVC.m */; };
+		932117E2196299C300183729 /* OMNBankCardsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932117DF196299C300183729 /* OMNBankCardsVC.m */; };
+		932117E3196299C300183729 /* OMNBankCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 932117E0196299C300183729 /* OMNBankCardsVC.xib */; };
+		932117E4196299C300183729 /* OMNBankCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 932117E0196299C300183729 /* OMNBankCardsVC.xib */; };
+		932117EE19629A9500183729 /* OMNBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932117ED19629A9500183729 /* OMNBankCardsModel.m */; };
+		932117EF19629A9500183729 /* OMNBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932117ED19629A9500183729 /* OMNBankCardsModel.m */; };
+		932117F219629F7900183729 /* OMNBankCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 932117F119629F7900183729 /* OMNBankCard.m */; };
+		932117F319629F7900183729 /* OMNBankCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 932117F119629F7900183729 /* OMNBankCard.m */; };
+		932118001962A2E800183729 /* OMNAddBankCardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932117FE1962A2E800183729 /* OMNAddBankCardVC.m */; };
+		932118011962A2E800183729 /* OMNAddBankCardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932117FE1962A2E800183729 /* OMNAddBankCardVC.m */; };
+		932118021962A2E800183729 /* OMNAddBankCardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 932117FF1962A2E800183729 /* OMNAddBankCardVC.xib */; };
+		932118031962A2E800183729 /* OMNAddBankCardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 932117FF1962A2E800183729 /* OMNAddBankCardVC.xib */; };
 		932FB2DE195ABC2F00960F03 /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */; };
 		932FB2DF195ABC2F00960F03 /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */; };
 		932FB2E0195ABC2F00960F03 /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 932FB2DD195ABC2F00960F03 /* OMNUserInfoVC.xib */; };
@@ -32,16 +44,6 @@
 		9369BB81192E2AE70018C79C /* GViewController1.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB05192E2AE60018C79C /* GViewController1.m */; };
 		9369BB82192E2AE70018C79C /* GViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9369BB06192E2AE60018C79C /* GViewController1.xib */; };
 		9369BB83192E2AE70018C79C /* GViewController1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9369BB06192E2AE60018C79C /* GViewController1.xib */; };
-		9369BB98192E2AE70018C79C /* GLoginDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB1D192E2AE60018C79C /* GLoginDataSource.m */; };
-		9369BB99192E2AE70018C79C /* GLoginDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB1D192E2AE60018C79C /* GLoginDataSource.m */; };
-		9369BB9A192E2AE70018C79C /* GUserDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB1F192E2AE60018C79C /* GUserDetailsVC.m */; };
-		9369BB9B192E2AE70018C79C /* GUserDetailsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB1F192E2AE60018C79C /* GUserDetailsVC.m */; };
-		9369BB9C192E2AE70018C79C /* GUserDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9369BB20192E2AE60018C79C /* GUserDetailsVC.xib */; };
-		9369BB9D192E2AE70018C79C /* GUserDetailsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9369BB20192E2AE60018C79C /* GUserDetailsVC.xib */; };
-		9369BB9E192E2AE70018C79C /* GUserInfoDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB22192E2AE60018C79C /* GUserInfoDataSource.m */; };
-		9369BB9F192E2AE70018C79C /* GUserInfoDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB22192E2AE60018C79C /* GUserInfoDataSource.m */; };
-		9369BBA0192E2AE70018C79C /* GUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB24192E2AE60018C79C /* GUserInfoVC.m */; };
-		9369BBA1192E2AE70018C79C /* GUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB24192E2AE60018C79C /* GUserInfoVC.m */; };
 		9369BBA4192E2AE70018C79C /* GUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB28192E2AE60018C79C /* GUtils.m */; };
 		9369BBA5192E2AE70018C79C /* GUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB28192E2AE60018C79C /* GUtils.m */; };
 		9369BBA6192E2AE70018C79C /* GControllerMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369BB2B192E2AE60018C79C /* GControllerMediator.m */; };
@@ -137,6 +139,16 @@
 		3857FCD33DF54CFCB3DFC479 /* Pods-seocialtest.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-seocialtest.xcconfig"; path = "../Pods/Pods-seocialtest.xcconfig"; sourceTree = "<group>"; };
 		930839AA191B5C0100188EC2 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		930839B0191B5CC000188EC2 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		932117DE196299C300183729 /* OMNBankCardsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCardsVC.h; sourceTree = "<group>"; };
+		932117DF196299C300183729 /* OMNBankCardsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBankCardsVC.m; sourceTree = "<group>"; };
+		932117E0196299C300183729 /* OMNBankCardsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNBankCardsVC.xib; sourceTree = "<group>"; };
+		932117EC19629A9500183729 /* OMNBankCardsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCardsModel.h; sourceTree = "<group>"; };
+		932117ED19629A9500183729 /* OMNBankCardsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBankCardsModel.m; sourceTree = "<group>"; };
+		932117F019629F7900183729 /* OMNBankCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCard.h; sourceTree = "<group>"; };
+		932117F119629F7900183729 /* OMNBankCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBankCard.m; sourceTree = "<group>"; };
+		932117FD1962A2E800183729 /* OMNAddBankCardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAddBankCardVC.h; sourceTree = "<group>"; };
+		932117FE1962A2E800183729 /* OMNAddBankCardVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAddBankCardVC.m; sourceTree = "<group>"; };
+		932117FF1962A2E800183729 /* OMNAddBankCardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNAddBankCardVC.xib; sourceTree = "<group>"; };
 		932FB2DB195ABC2F00960F03 /* OMNUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoVC.h; sourceTree = "<group>"; };
 		932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoVC.m; sourceTree = "<group>"; };
 		932FB2DD195ABC2F00960F03 /* OMNUserInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNUserInfoVC.xib; sourceTree = "<group>"; };
@@ -155,15 +167,6 @@
 		9369BB04192E2AE60018C79C /* GViewController1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GViewController1.h; sourceTree = "<group>"; };
 		9369BB05192E2AE60018C79C /* GViewController1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GViewController1.m; sourceTree = "<group>"; };
 		9369BB06192E2AE60018C79C /* GViewController1.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GViewController1.xib; sourceTree = "<group>"; };
-		9369BB1C192E2AE60018C79C /* GLoginDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLoginDataSource.h; sourceTree = "<group>"; };
-		9369BB1D192E2AE60018C79C /* GLoginDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLoginDataSource.m; sourceTree = "<group>"; };
-		9369BB1E192E2AE60018C79C /* GUserDetailsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUserDetailsVC.h; sourceTree = "<group>"; };
-		9369BB1F192E2AE60018C79C /* GUserDetailsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUserDetailsVC.m; sourceTree = "<group>"; };
-		9369BB20192E2AE60018C79C /* GUserDetailsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GUserDetailsVC.xib; sourceTree = "<group>"; };
-		9369BB21192E2AE60018C79C /* GUserInfoDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUserInfoDataSource.h; sourceTree = "<group>"; };
-		9369BB22192E2AE60018C79C /* GUserInfoDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUserInfoDataSource.m; sourceTree = "<group>"; };
-		9369BB23192E2AE60018C79C /* GUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUserInfoVC.h; sourceTree = "<group>"; };
-		9369BB24192E2AE60018C79C /* GUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUserInfoVC.m; sourceTree = "<group>"; };
 		9369BB27192E2AE60018C79C /* GUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUtils.h; sourceTree = "<group>"; };
 		9369BB28192E2AE60018C79C /* GUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GUtils.m; sourceTree = "<group>"; };
 		9369BB2A192E2AE60018C79C /* GControllerMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GControllerMediator.h; sourceTree = "<group>"; };
@@ -275,9 +278,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		932117DD1962999900183729 /* Cards */ = {
+			isa = PBXGroup;
+			children = (
+				932117FC1962A2C700183729 /* AddCard */,
+				932117DE196299C300183729 /* OMNBankCardsVC.h */,
+				932117DF196299C300183729 /* OMNBankCardsVC.m */,
+				932117E0196299C300183729 /* OMNBankCardsVC.xib */,
+			);
+			path = Cards;
+			sourceTree = "<group>";
+		};
+		932117EB19629A7600183729 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				932117EC19629A9500183729 /* OMNBankCardsModel.h */,
+				932117ED19629A9500183729 /* OMNBankCardsModel.m */,
+				932117F019629F7900183729 /* OMNBankCard.h */,
+				932117F119629F7900183729 /* OMNBankCard.m */,
+			);
+			path = Card;
+			sourceTree = "<group>";
+		};
+		932117FC1962A2C700183729 /* AddCard */ = {
+			isa = PBXGroup;
+			children = (
+				932117FD1962A2E800183729 /* OMNAddBankCardVC.h */,
+				932117FE1962A2E800183729 /* OMNAddBankCardVC.m */,
+				932117FF1962A2E800183729 /* OMNAddBankCardVC.xib */,
+			);
+			path = AddCard;
+			sourceTree = "<group>";
+		};
 		932FB2DA195ABC2400960F03 /* Info */ = {
 			isa = PBXGroup;
 			children = (
+				932117DD1962999900183729 /* Cards */,
 				932FB2DB195ABC2F00960F03 /* OMNUserInfoVC.h */,
 				932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */,
 				932FB2DD195ABC2F00960F03 /* OMNUserInfoVC.xib */,
@@ -322,7 +358,6 @@
 				9369BB05192E2AE60018C79C /* GViewController1.m */,
 				9369BB06192E2AE60018C79C /* GViewController1.xib */,
 				93A9949B19484C22005B403C /* User */,
-				9369BB1B192E2AE60018C79C /* user info */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -337,22 +372,6 @@
 			path = Congratulations;
 			sourceTree = "<group>";
 		};
-		9369BB1B192E2AE60018C79C /* user info */ = {
-			isa = PBXGroup;
-			children = (
-				9369BB1C192E2AE60018C79C /* GLoginDataSource.h */,
-				9369BB1D192E2AE60018C79C /* GLoginDataSource.m */,
-				9369BB1E192E2AE60018C79C /* GUserDetailsVC.h */,
-				9369BB1F192E2AE60018C79C /* GUserDetailsVC.m */,
-				9369BB20192E2AE60018C79C /* GUserDetailsVC.xib */,
-				9369BB21192E2AE60018C79C /* GUserInfoDataSource.h */,
-				9369BB22192E2AE60018C79C /* GUserInfoDataSource.m */,
-				9369BB23192E2AE60018C79C /* GUserInfoVC.h */,
-				9369BB24192E2AE60018C79C /* GUserInfoVC.m */,
-			);
-			path = "user info";
-			sourceTree = "<group>";
-		};
 		9369BB29192E2AE60018C79C /* Mediator */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +384,7 @@
 		9369BB2C192E2AE60018C79C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				932117EB19629A7600183729 /* Card */,
 				93C5A679195A9FE5005C68EC /* User */,
 				9369BB35192E2AE60018C79C /* Social */,
 			);
@@ -731,12 +751,13 @@
 				932FB2E0195ABC2F00960F03 /* OMNUserInfoVC.xib in Resources */,
 				93E7C1731918DC1600F22695 /* Images.xcassets in Resources */,
 				9369BBCE192E2AE70018C79C /* rouble.otf in Resources */,
+				932118021962A2E800183729 /* OMNAddBankCardVC.xib in Resources */,
 				93570D4019503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */,
-				9369BB9C192E2AE70018C79C /* GUserDetailsVC.xib in Resources */,
 				93E7C1651918DC1600F22695 /* InfoPlist.strings in Resources */,
 				93A994AA19484C22005B403C /* OMNRegisterUserVC.xib in Resources */,
 				9369BB82192E2AE70018C79C /* GViewController1.xib in Resources */,
 				9369BB7C192E2AE70018C79C /* GCongratulationsVC.xib in Resources */,
+				932117E3196299C300183729 /* OMNBankCardsVC.xib in Resources */,
 				93E7C16E1918DC1600F22695 /* Main.storyboard in Resources */,
 				93A994A619484C22005B403C /* OMNLoginVC.xib in Resources */,
 			);
@@ -749,9 +770,10 @@
 				9369BBCF192E2AE70018C79C /* rouble.otf in Resources */,
 				93A994A719484C22005B403C /* OMNLoginVC.xib in Resources */,
 				9369BB83192E2AE70018C79C /* GViewController1.xib in Resources */,
+				932118031962A2E800183729 /* OMNAddBankCardVC.xib in Resources */,
 				9369BB7D192E2AE70018C79C /* GCongratulationsVC.xib in Resources */,
+				932117E4196299C300183729 /* OMNBankCardsVC.xib in Resources */,
 				93A994AB19484C22005B403C /* OMNRegisterUserVC.xib in Resources */,
-				9369BB9D192E2AE70018C79C /* GUserDetailsVC.xib in Resources */,
 				93E7C1841918DC1600F22695 /* InfoPlist.strings in Resources */,
 				93570D4119503FF60065E6D2 /* OMNConfirmCodeVC.xib in Resources */,
 				932FB2E1195ABC2F00960F03 /* OMNUserInfoVC.xib in Resources */,
@@ -800,32 +822,33 @@
 			files = (
 				93570D3E19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */,
 				939DA16919540C6F0063AB23 /* OMNNumberKeyboardView.m in Sources */,
+				932117EE19629A9500183729 /* OMNBankCardsModel.m in Sources */,
 				93C5A67C195A9FFF005C68EC /* OMNUserInfoModel.m in Sources */,
 				9369BBB6192E2AE70018C79C /* GOKNetwork.m in Sources */,
-				9369BB98192E2AE70018C79C /* GLoginDataSource.m in Sources */,
-				9369BBA0192E2AE70018C79C /* GUserInfoVC.m in Sources */,
 				9369BBD0192E2AE70018C79C /* OMNUserInfoTransition.m in Sources */,
 				9369BBB0192E2AE70018C79C /* GGPlusNetwork.m in Sources */,
 				9369BBC4192E2AE70018C79C /* GTwitterNetwork.m in Sources */,
 				9369BBD4192E2AE70018C79C /* UIView+frame.m in Sources */,
 				9369BBAE192E2AE70018C79C /* GFBNetwork.m in Sources */,
+				932117F219629F7900183729 /* OMNBankCard.m in Sources */,
 				9369BBA4192E2AE70018C79C /* GUtils.m in Sources */,
 				93A994A819484C22005B403C /* OMNRegisterUserVC.m in Sources */,
 				93C5A684195AB1BA005C68EC /* OMNAnalitics.m in Sources */,
 				9369BBC0192E2AE70018C79C /* OKSession.m in Sources */,
 				932FB2DE195ABC2F00960F03 /* OMNUserInfoVC.m in Sources */,
 				93A3690A194715F100DE91D8 /* OMNAuthorizationManager.m in Sources */,
+				932117E1196299C300183729 /* OMNBankCardsVC.m in Sources */,
 				93A994A419484C22005B403C /* OMNLoginVC.m in Sources */,
 				9369BBD8192E2AE70018C79C /* GSocialCell.m in Sources */,
 				9369BBB4192E2AE70018C79C /* GSocialNetwork.m in Sources */,
 				93E7C16B1918DC1600F22695 /* GAppDelegate.m in Sources */,
 				9369BBA6192E2AE70018C79C /* GControllerMediator.m in Sources */,
+				932118001962A2E800183729 /* OMNAddBankCardVC.m in Sources */,
 				93A369041947074600DE91D8 /* OMNUser.m in Sources */,
 				93570D481950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				93E7C1671918DC1600F22695 /* main.m in Sources */,
 				93A368FC1946FFA500DE91D8 /* OMNConstants.m in Sources */,
 				9369BBBC192E2AE70018C79C /* Odnoklassniki.m in Sources */,
-				9369BB9E192E2AE70018C79C /* GUserInfoDataSource.m in Sources */,
 				9369BBB8192E2AE70018C79C /* OKFriends.m in Sources */,
 				93A3690C194715F100DE91D8 /* OMNOperationManager.m in Sources */,
 				9369BBD2192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m in Sources */,
@@ -836,7 +859,6 @@
 				9369BB7A192E2AE70018C79C /* GCongratulationsVC.m in Sources */,
 				93A369021947074600DE91D8 /* OMNAuthorisation.m in Sources */,
 				9369BBB2192E2AE70018C79C /* GAuthManager.m in Sources */,
-				9369BB9A192E2AE70018C79C /* GUserDetailsVC.m in Sources */,
 				93C5A680195AA067005C68EC /* OMNUserInfoItem.m in Sources */,
 				9369BB80192E2AE70018C79C /* GViewController1.m in Sources */,
 				9369BBBE192E2AE70018C79C /* OKRequest.m in Sources */,
@@ -849,27 +871,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				9369BBC1192E2AE70018C79C /* OKSession.m in Sources */,
+				932117F319629F7900183729 /* OMNBankCard.m in Sources */,
 				93A369031947074600DE91D8 /* OMNAuthorisation.m in Sources */,
 				9369BBD3192E2AE70018C79C /* OMNUserInfoTransitionDelegate.m in Sources */,
 				9369BB81192E2AE70018C79C /* GViewController1.m in Sources */,
 				9369BBC7192E2AE70018C79C /* GVKNetwork.m in Sources */,
 				93570D45195040330065E6D2 /* OMNEnterCodeView.m in Sources */,
-				9369BB9B192E2AE70018C79C /* GUserDetailsVC.m in Sources */,
 				93A369051947074600DE91D8 /* OMNUser.m in Sources */,
 				9369BBB1192E2AE70018C79C /* GGPlusNetwork.m in Sources */,
 				93570D491950A52C0065E6D2 /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				9369BBB5192E2AE70018C79C /* GSocialNetwork.m in Sources */,
 				93A994A919484C22005B403C /* OMNRegisterUserVC.m in Sources */,
-				9369BB99192E2AE70018C79C /* GLoginDataSource.m in Sources */,
 				9369BBA7192E2AE70018C79C /* GControllerMediator.m in Sources */,
-				9369BBA1192E2AE70018C79C /* GUserInfoVC.m in Sources */,
 				93570D3F19503FF60065E6D2 /* OMNConfirmCodeVC.m in Sources */,
 				93C5A681195AA067005C68EC /* OMNUserInfoItem.m in Sources */,
-				9369BB9F192E2AE70018C79C /* GUserInfoDataSource.m in Sources */,
 				9369BBC5192E2AE70018C79C /* GTwitterNetwork.m in Sources */,
 				9369BBB3192E2AE70018C79C /* GAuthManager.m in Sources */,
 				932FB2DF195ABC2F00960F03 /* OMNUserInfoVC.m in Sources */,
 				9369BBBB192E2AE70018C79C /* NSString+OKUtils.m in Sources */,
+				932118011962A2E800183729 /* OMNAddBankCardVC.m in Sources */,
+				932117E2196299C300183729 /* OMNBankCardsVC.m in Sources */,
 				9369BBBD192E2AE70018C79C /* Odnoklassniki.m in Sources */,
 				9369BBA5192E2AE70018C79C /* GUtils.m in Sources */,
 				9369BBB7192E2AE70018C79C /* GOKNetwork.m in Sources */,
@@ -877,6 +898,7 @@
 				9369BB7B192E2AE70018C79C /* GCongratulationsVC.m in Sources */,
 				9369BBBF192E2AE70018C79C /* OKRequest.m in Sources */,
 				9369BBC3192E2AE70018C79C /* OKTokenCache.m in Sources */,
+				932117EF19629A9500183729 /* OMNBankCardsModel.m in Sources */,
 				9369BBD1192E2AE70018C79C /* OMNUserInfoTransition.m in Sources */,
 				93A368FD1946FFA500DE91D8 /* OMNConstants.m in Sources */,
 				93E7C1861918DC1600F22695 /* seocialtestTests.m in Sources */,

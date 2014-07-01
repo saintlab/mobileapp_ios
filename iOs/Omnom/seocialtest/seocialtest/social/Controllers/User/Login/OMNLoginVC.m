@@ -13,7 +13,12 @@
 #import "OMNAnalitics.h"
 
 @interface OMNLoginVC ()
-<OMNConfirmCodeVCDelegate>
+<OMNConfirmCodeVCDelegate> {
+  __weak IBOutlet UIButton *_vkButton;
+  __weak IBOutlet UIButton *_fbButton;
+  __weak IBOutlet UIButton *_twitterButton;
+  
+}
 
 @end
 
@@ -39,19 +44,50 @@
   
   [super viewDidLoad];
   
-  if (kUseStubUser) {
-    _loginTF.text = @"89833087335";
-  }
+  [self setup];
   
-  _loginTF.placeholder = NSLocalizedString(@"Введите телефон", nil);
   _phoneNumberTextFieldDelegate = [[OMNPhoneNumberTextFieldDelegate alloc] init];
-  _loginTF.delegate = _phoneNumberTextFieldDelegate;
+//  _loginTF.delegate = _phoneNumberTextFieldDelegate;
   
   self.navigationItem.title = NSLocalizedString(@"Вход", nil);
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
   
 }
+
+- (void)setup {
+  
+  if (kUseStubUser) {
+    _loginTF.text = @"89833087335";
+  }
+  
+  _loginTF.placeholder = NSLocalizedString(@"Почта или номер телефона", nil);
+  _loginTF.keyboardType = UIKeyboardTypeDefault;
+//  UIToolbar *inputAccessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 44.0f)];
+//  inputAccessoryView.items =
+//  @[
+//    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+//    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"<#text#>", <#comment#>) style:<#(UIBarButtonItemStyle)#> target:<#(id)#> action:<#(SEL)#>],
+//    ];
+//  _loginTF.inputAccessoryView =
+  
+  
+  [_vkButton setBackgroundImage:[UIImage imageNamed:@"vk_login_icon"] forState:UIControlStateNormal];
+  [_fbButton setBackgroundImage:[UIImage imageNamed:@"fb_login_icon"] forState:UIControlStateNormal];
+  [_twitterButton setBackgroundImage:[UIImage imageNamed:@"twitter_login_icon"] forState:UIControlStateNormal];
+  
+}
+
+- (IBAction)vkLoginTap:(id)sender {
+  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"тут должен быть логин через VK", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+}
+- (IBAction)twitterLoginTap:(id)sender {
+  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"тут должен быть логин через twitter", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+}
+- (IBAction)fbLoginTap:(id)sender {
+  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"тут должен быть логин через facebook", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+}
+
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
@@ -63,12 +99,12 @@
 - (void)loginTap {
   
   __weak typeof(self)weakSelf = self;
-  [OMNUser loginUsingPhone:self.decimalPhoneNumber code:nil complition:^(NSString *token) {
+  [OMNUser loginUsingData:_loginTF.text code:nil complition:^(NSString *token) {
     
     [weakSelf requestAuthorizationCode];
     
   } failure:^(NSError *error) {
-
+    
     [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
     
   }];
@@ -80,7 +116,6 @@
   [self.delegate authorizationVCDidCancel:self];
   
 }
-
 
 - (void)requestAuthorizationCode {
   
@@ -96,7 +131,7 @@
   
   __weak typeof(self)weakSelf = self;
   
-  [OMNUser loginUsingPhone:[self decimalPhoneNumber] code:code complition:^(NSString *token) {
+  [OMNUser loginUsingData:_loginTF.text code:code complition:^(NSString *token) {
 
     [weakSelf tokenDidReceived:token];
     
@@ -139,7 +174,6 @@
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 @end

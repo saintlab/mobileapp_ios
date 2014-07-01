@@ -10,12 +10,16 @@
 #import "OMNTable.h"
 
 @protocol OMNRestaurantMenuVCDelegate;
+@class OMNStubProductCell;
+@class OMNProduct;
 
 @interface OMNRestaurantMenuVC : UIViewController
 
 @property (nonatomic, weak) id<OMNRestaurantMenuVCDelegate> delegate;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant table:(OMNTable *)table;
+
+- (OMNStubProductCell *)collectionViewCellForProduct:(OMNProduct *)product;
 
 @end
 

@@ -9,12 +9,6 @@
 #import "OMNUser.h"
 #import "OMNAuthorizationManager.h"
 
-@interface NSString (omn_validPhone)
-
-- (BOOL)omn_isValidPhone;
-
-@end
-
 @implementation OMNUser
 
 - (instancetype)initWithData:(id)data {
@@ -123,27 +117,36 @@
   
 }
 
-+ (void)loginUsingPhone:(NSString *)phone code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
- 
++ (void)loginUsingData:(NSString *)data code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
+  
   NSAssert(complition != nil, @"complition block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
   
-  if (NO == phone.omn_isValidPhone) {
-    
-    failureBlock([NSError errorWithDomain:NSStringFromClass(self.class)
-                                     code:0
-                                 userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Неправильный телефон", nil)}]);
-    return;
-  }
-  
-  NSMutableDictionary *parameters =
-  [@{
-     @"phone" : phone,
-     } mutableCopy];
-  
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
   if (code.length) {
     parameters[@"code"] = code;
   }
+  
+  if ([data omn_isValidPhone]) {
+    parameters[@"phone"] = data;
+  }
+  else if ([data omn_isValidEmail]) {
+    parameters[@"email"] = data;
+  }
+  else {
+    
+    failureBlock([NSError errorWithDomain:NSStringFromClass(self.class)
+                                     code:0
+                                 userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Неправильная почта или телефон", nil)}]);
+    return;
+    
+  }
+  
+  [self loginWithParameters:parameters complition:complition failure:failureBlock];
+  
+}
+
++ (void)loginWithParameters:(NSDictionary *)parameters complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
   
   [[OMNAuthorizationManager sharedManager] POST:@"/authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
@@ -218,6 +221,23 @@
   }
   
 }
+
+- (BOOL) omn_isValidEmail {
+  
+  NSString *emailRegex =
+  @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
+  @"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"
+  @"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"
+  @"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"
+  @"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"
+  @"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"
+  @"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])";
+  NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES[c] %@", emailRegex];
+  
+  return [emailTest evaluateWithObject:self];
+}
+
+
 
 
 @end

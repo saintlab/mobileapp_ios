@@ -8,22 +8,29 @@
 
 #import "OMNUserInfoTransition.h"
 
+@interface OMNTapView : UIButton
+
+@property (nonatomic, copy) dispatch_block_t didTapBlock;
+
+@end
+
 static const CGFloat kLeftOffset = 50.0f;
-static const CGFloat kSourceViewScale = 1;
 
 static const NSTimeInterval kTransitionDuration = 0.2f;
 
 @interface OMNUserInfoTransition ()
 
 @property (nonatomic, assign) BOOL presenting;
+@property (nonatomic, copy) dispatch_block_t complitionBlock;
 
 @end
 
 @implementation OMNUserInfoTransition {
 }
 
-+ (instancetype)forwardTransition {
++ (instancetype)forwardTransitionWithComplition:(dispatch_block_t)complitionBlock {
   OMNUserInfoTransition *transition = [[[self class] alloc] init];
+  transition.complitionBlock = complitionBlock;
   transition.presenting = YES;
   return transition;
 }
@@ -52,16 +59,12 @@ static const NSTimeInterval kTransitionDuration = 0.2f;
 
 - (void)updateViewToInitialPosition:(UIView *)view containerView:(UIView *)containerView {
   
-//  [view setTintAdjustmentMode:UIViewTintAdjustmentModeNormal];
-  view.userInteractionEnabled = YES;
   view.transform = CGAffineTransformIdentity;
   
 }
 
 - (void)updateViewToFinalPosition:(UIView *)view containerView:(UIView *)containerView {
   
-//  [view setTintAdjustmentMode:UIViewTintAdjustmentModeDimmed];
-  view.userInteractionEnabled = NO;
   view.transform = CGAffineTransformMakeTranslation(kLeftOffset - CGRectGetWidth(containerView.bounds), 0);
   
 }
@@ -83,6 +86,10 @@ static const NSTimeInterval kTransitionDuration = 0.2f;
   NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
   
   toView.frame = CGRectMake(kLeftOffset, 0, CGRectGetWidth(containerView.frame) - kLeftOffset, CGRectGetHeight(containerView.frame));
+  
+  OMNTapView *tapView = [[OMNTapView alloc] initWithFrame:CGRectMake(0, 0, kLeftOffset, CGRectGetHeight(containerView.frame))];
+  tapView.didTapBlock = self.complitionBlock;
+  [containerView addSubview:tapView];
   
   [UIView animateWithDuration:animationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
     
@@ -107,7 +114,6 @@ static const NSTimeInterval kTransitionDuration = 0.2f;
   [containerView insertSubview:fromSnapshot belowSubview:toView];
   [fromView removeFromSuperview];
   [self updateViewToFinalPosition:toView containerView:containerView];
-
   
   NSTimeInterval animationDuration = [self transitionDuration:transitionContext];
   [UIView animateWithDuration:animationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseOut  animations:^{
@@ -115,10 +121,32 @@ static const NSTimeInterval kTransitionDuration = 0.2f;
     [self updateViewToInitialPosition:toView containerView:containerView];
     
   } completion:^(BOOL finished) {
+    
     [transitionContext completeTransition:YES];
     
   }];
   
 }
+
+@end
+
+
+
+@implementation OMNTapView
+
+- (id)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    [self addTarget:self action:@selector(tap) forControlEvents:UIControlEventTouchDown];
+  }
+  return self;
+}
+
+- (void)tap {
+  if (self.didTapBlock) {
+    self.didTapBlock();
+  }
+}
+
 
 @end

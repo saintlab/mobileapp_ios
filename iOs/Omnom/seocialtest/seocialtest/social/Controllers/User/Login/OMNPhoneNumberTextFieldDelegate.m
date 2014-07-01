@@ -13,25 +13,13 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
   NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-
-  char leadingCharacter = '8';
-  
-  if (0 == textField.text.length &&
-      string.length &&
-      [string characterAtIndex:0] != leadingCharacter) {
-    
-    return NO;
-    
-  }
   
   NSArray *components = [newString componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
   NSString *decimalString = [components componentsJoinedByString:@""];
   
   NSUInteger length = decimalString.length;
   
-  BOOL hasLeadingOne = length > 0 && [decimalString characterAtIndex:0] == leadingCharacter;
-  
-  if (length == 0 || (length > 10 && !hasLeadingOne)) {
+  if (length <= 1) {
     textField.text = decimalString;
     return NO;
   }
@@ -39,14 +27,14 @@
   if (length > 11) {
     return NO;
   }
+
+  char leadingCharacter = [newString characterAtIndex:0];
   
   NSUInteger index = 0;
   NSMutableString *formattedString = [NSMutableString string];
   
-  if (hasLeadingOne) {
-    [formattedString appendFormat:@"%c ", leadingCharacter];
-    index += 1;
-  }
+  [formattedString appendFormat:@"%c ", leadingCharacter];
+  index += 1;
   
   if (length - index > 3) {
     NSString *areaCode = [decimalString substringWithRange:NSMakeRange(index, 3)];

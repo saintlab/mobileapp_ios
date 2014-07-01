@@ -20,7 +20,6 @@
   
   __weak IBOutlet UILabel *_userNameLabel;
   __weak IBOutlet UIImageView *_iconView;
-  
 }
 
 - (void)dealloc {
@@ -57,20 +56,32 @@
   [super viewDidLoad];
   
   _iconView.image = [UIImage imageNamed:@"placeholder_icon"];
+  _iconView.userInteractionEnabled = YES;
+  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(iconTap)];
+  [_iconView addGestureRecognizer:tapGR];
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(closeUserInfo)];
+  self.tableView.tableFooterView = [[UIView alloc] init];
+  
   
   self.tableView.dataSource = _userInfoModel;
   
 }
 
-- (void)closeUserInfo {
+- (void)iconTap {
   
-  [self.delegate userInfoVCDidFinish:self];
+  UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Отмена", nil) destructiveButtonTitle:nil otherButtonTitles:
+                          NSLocalizedString(@"Сделать снимок", nil),
+                          NSLocalizedString(@"Выбрать из библиотеки", nil),
+                          nil];
+  [sheet showInView:self.view.window];
   
 }
 
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  return 10.0f;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   

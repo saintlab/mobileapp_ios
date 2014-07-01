@@ -74,6 +74,10 @@ static NSString * const kAccountName = @"test_account6";
 
 - (void)updateToken:(NSString *)newToken {
   
+  if (nil == _token) {
+    return;
+  }
+  
   _token = newToken;
   [SSKeychain setPassword:newToken forService:@"token" account:kAccountName];
   [self updateAuthenticationToken];

@@ -8,6 +8,8 @@
 
 #import "OMNUserInfoModel.h"
 #import "OMNUserInfoItem.h"
+#import "OMNBankCardsVC.h"
+#import <BlocksKit+UIKit.h>
 
 @implementation OMNUserInfoModel {
   NSArray *_sectionItems;
@@ -43,6 +45,9 @@
 - (NSArray *)moneyItems {
   
   OMNUserInfoItem *cardItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Привязать карты", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
+    
+    OMNBankCardsVC *bankCardsVC = [[OMNBankCardsVC alloc] init];
+    [vc.navigationController pushViewController:bankCardsVC animated:YES];
     
   }];
   cardItem.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -80,7 +85,19 @@
   
   OMNUserInfoItem *logoutItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Выход", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
     
-    [OMNAuthorisation authorisation].logoutCallback();
+    UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+    [logoutSheet bk_setDestructiveButtonWithTitle:NSLocalizedString(@"Выйти", nil) handler:^{
+    
+      [OMNAuthorisation authorisation].logoutCallback();
+      
+    }];
+    
+    [logoutSheet bk_setCancelButtonWithTitle:NSLocalizedString(@"Отмена", nil) handler:^{
+      
+      [tv deselectRowAtIndexPath:indexPath animated:YES];
+      
+    }];
+    [logoutSheet showInView:vc.view.window];
     
   }];
   return @[logoutItem];

@@ -14,7 +14,7 @@
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
                                                                    presentingController:(UIViewController *)presenting
                                                                        sourceController:(UIViewController *)source {
-  return [OMNUserInfoTransition forwardTransition];
+  return [OMNUserInfoTransition forwardTransitionWithComplition:self.didFinishBlock];
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
