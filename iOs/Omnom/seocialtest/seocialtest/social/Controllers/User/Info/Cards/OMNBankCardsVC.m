@@ -45,7 +45,8 @@
   
   [_addCardButton setTitle:NSLocalizedString(@"Добавить карту", nil) forState:UIControlStateNormal];
   [_addCardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-  _addCardButton.titleLabel.font = FuturaMediumFont(20);
+  _addCardButton.titleLabel.font = FuturaBookFont(20);
+  
 }
 
 - (IBAction)addCardTap:(id)sender {

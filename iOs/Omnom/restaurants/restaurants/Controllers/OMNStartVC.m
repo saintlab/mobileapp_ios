@@ -118,6 +118,10 @@ OMNRestaurantMenuVCDelegate>
       
     }
     
+  } cancelBlock:^{
+    
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    
   }];
   
   [self.navigationController pushViewController:searchTableVC animated:YES];

@@ -18,25 +18,30 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-  
-    __weak typeof(self)weakSelf = self;
-    [OMNUser userWithToken:[OMNAuthorisation authorisation].token user:^(OMNUser *user) {
-      
-      weakSelf.user = user;
-      
-    } failure:^(NSError *error) {
-      
-      NSLog(@"%@", error);
-//      [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
-      
-    }];
     
     _sectionItems =
-  @[
-    self.moneyItems,
-    self.otherItems,
-    self.logoutItems,
-    ];
+    @[
+      self.moneyItems,
+      self.otherItems,
+      self.logoutItems,
+      ];
+   
+    NSString *token = [OMNAuthorisation authorisation].token;
+    
+    if (token.length) {
+      __weak typeof(self)weakSelf = self;
+      [OMNUser userWithToken:token user:^(OMNUser *user) {
+        
+        weakSelf.user = user;
+        
+      } failure:^(NSError *error) {
+        
+        NSLog(@"%@", error);
+        //      [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+        
+      }];
+
+    }
     
   }
   return self;
@@ -87,7 +92,7 @@
     
     UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
     [logoutSheet bk_setDestructiveButtonWithTitle:NSLocalizedString(@"Выйти", nil) handler:^{
-    
+      
       [OMNAuthorisation authorisation].logoutCallback();
       
     }];
@@ -136,7 +141,7 @@
 }
 
 - (void)controller:(UIViewController *)vc tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-
+  
   OMNUserInfoItem *userInfoItem = [self itemAtIndexPath:indexPath];
   
   if (userInfoItem.actionBlock) {

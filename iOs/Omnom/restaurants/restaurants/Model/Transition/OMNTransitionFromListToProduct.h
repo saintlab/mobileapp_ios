@@ -11,6 +11,4 @@
 @interface OMNTransitionFromListToProduct : NSObject
 <UIViewControllerAnimatedTransitioning>
 
-- (instancetype)initWithCell:(OMNStubProductCell *)cell;
-
 @end

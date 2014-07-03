@@ -63,7 +63,6 @@ static const CGFloat kTopOffset = 40.0f;
   
   _totalButton = [[UIButton alloc] init];
   _totalButton.titleLabel.font = [OMNAssetManager manager].splitTotalFont;
-//  _totalButton.titleEdgeInsets = UIEdgeInsetsMake(3.0f, 0, 0, 0);
   [_totalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_totalButton setBackgroundImage:[UIImage imageNamed:@"button_green"] forState:UIControlStateNormal];
   _totalButton.userInteractionEnabled = NO;
@@ -128,6 +127,7 @@ static const CGFloat kTopOffset = 40.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"white_pixel"];
 }
 

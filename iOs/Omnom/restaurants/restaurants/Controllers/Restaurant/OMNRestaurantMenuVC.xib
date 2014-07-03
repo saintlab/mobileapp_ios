@@ -9,7 +9,10 @@
                 <outlet property="_backgroundIV" destination="at9-ZU-QGq" id="HaK-FF-oux"/>
                 <outlet property="_billButton" destination="w7I-ze-cT6" id="wyT-ZW-hnv"/>
                 <outlet property="_productsView" destination="yYh-3L-PZ2" id="gh6-N0-K0a"/>
+                <outlet property="_recomendLabel" destination="ZCv-Fn-tGh" id="Ou4-ji-T4g"/>
                 <outlet property="_waiterButton" destination="p43-99-XWN" id="AfK-Tc-Bp4"/>
+                <outlet property="_waiterIsCalledView" destination="zUo-6J-brD" id="5Fa-Nb-lbV"/>
+                <outlet property="productsView" destination="yYh-3L-PZ2" id="9Z1-i5-t3Z"/>
                 <outlet property="view" destination="iN0-l3-epB" id="00o-je-lrd"/>
             </connections>
         </placeholder>
@@ -65,30 +68,51 @@
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Dt-hN-AVY">
-                    <rect key="frame" x="110" y="76" width="100" height="100"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zUo-6J-brD">
+                    <rect key="frame" x="0.0" y="518" width="320" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="waiter_is_called" translatesAutoresizingMaskIntoConstraints="NO" id="G9s-LP-QGW">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KKP-RE-aMy">
+                            <rect key="frame" x="223" y="0.0" width="92" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Закрыть">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="waiterIsCalledTap:" destination="-1" eventType="touchUpInside" id="87O-Qm-zYB"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="100" id="JXW-dg-M0u"/>
-                        <constraint firstAttribute="width" constant="100" id="PMj-A4-Hs3"/>
+                        <constraint firstAttribute="height" constant="50" id="PPM-NY-4tF"/>
                     </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="restaurant_info_bg" translatesAutoresizingMaskIntoConstraints="NO" id="uJj-hB-of0">
+                    <rect key="frame" x="0.0" y="65" width="320" height="200"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="8Dt-hN-AVY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="76" id="1ai-O6-QJt"/>
                 <constraint firstItem="yYh-3L-PZ2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="56Y-V4-Agl"/>
                 <constraint firstAttribute="bottom" secondItem="yYh-3L-PZ2" secondAttribute="bottom" constant="87" id="Acq-sa-J39"/>
                 <constraint firstAttribute="bottom" secondItem="at9-ZU-QGq" secondAttribute="bottom" id="Chn-kj-oLf"/>
                 <constraint firstItem="w7I-ze-cT6" firstAttribute="width" secondItem="p43-99-XWN" secondAttribute="width" id="OQh-VF-e5M"/>
                 <constraint firstItem="at9-ZU-QGq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OSH-aF-1Uw"/>
                 <constraint firstItem="p43-99-XWN" firstAttribute="leading" secondItem="w7I-ze-cT6" secondAttribute="trailing" constant="4" id="VNV-xb-OYZ"/>
+                <constraint firstAttribute="bottom" secondItem="zUo-6J-brD" secondAttribute="bottom" id="Zsc-kU-IJx"/>
                 <constraint firstAttribute="trailing" secondItem="yYh-3L-PZ2" secondAttribute="trailing" id="Zxj-kN-VPW"/>
+                <constraint firstAttribute="trailing" secondItem="zUo-6J-brD" secondAttribute="trailing" id="axd-aM-hzf"/>
                 <constraint firstAttribute="centerX" secondItem="ZCv-Fn-tGh" secondAttribute="centerX" constant="-0.5" id="cYj-fJ-UNc"/>
                 <constraint firstItem="w7I-ze-cT6" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="eWL-Ld-sf5"/>
                 <constraint firstItem="w7I-ze-cT6" firstAttribute="height" secondItem="p43-99-XWN" secondAttribute="height" id="evn-Oa-DEj"/>
-                <constraint firstAttribute="centerX" secondItem="8Dt-hN-AVY" secondAttribute="centerX" id="grd-f8-bTZ"/>
                 <constraint firstItem="at9-ZU-QGq" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="h6b-Bp-Twh"/>
+                <constraint firstItem="zUo-6J-brD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="nU5-1V-DAP"/>
                 <constraint firstAttribute="bottom" secondItem="p43-99-XWN" secondAttribute="bottom" id="qw6-Fk-2wj"/>
                 <constraint firstAttribute="trailing" secondItem="at9-ZU-QGq" secondAttribute="trailing" id="uoT-kk-d0N"/>
                 <constraint firstItem="yYh-3L-PZ2" firstAttribute="top" secondItem="ZCv-Fn-tGh" secondAttribute="bottom" constant="9" id="xR4-ct-Zc4"/>
@@ -100,4 +124,8 @@
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <resources>
+        <image name="restaurant_info_bg" width="320" height="200"/>
+        <image name="waiter_is_called" width="320" height="50"/>
+    </resources>
 </document>

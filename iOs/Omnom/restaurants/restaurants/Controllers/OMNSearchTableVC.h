@@ -12,6 +12,8 @@ typedef void(^OMNSearchTableVCBlock)(OMNDecodeBeacon *decodeBeacon);
 
 @interface OMNSearchTableVC : UIViewController
 
-- (instancetype)initWithBlock:(OMNSearchTableVCBlock)block;
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+
+- (instancetype)initWithBlock:(OMNSearchTableVCBlock)block cancelBlock:(dispatch_block_t)cancelBlock;
 
 @end

@@ -17,7 +17,17 @@
 {
   self = [super init];
   if (self) {
-    _cards = [NSMutableArray array];
+    
+    @try {
+      _cards = [NSKeyedUnarchiver unarchiveObjectWithFile:[self path]];
+    }
+    @catch (NSException *exception) {
+    }
+
+    if (nil == _cards) {
+      _cards = [NSMutableArray array];
+    }
+    
   }
   return self;
 }
@@ -35,7 +45,7 @@
 - (void)addBankCard:(OMNBankCard *)bankCard {
   
   [_cards addObject:bankCard];
-  
+  [self save];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -45,19 +55,19 @@
   
   if (nil == cell) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     cell.textLabel.font = FuturaMediumFont(20);
     cell.textLabel.textColor = [UIColor whiteColor];
 
     cell.detailTextLabel.font = FuturaMediumFont(15);
-    cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+    cell.detailTextLabel.textColor = [UIColor darkGrayColor];
 
   }
   
   OMNBankCard *card = _cards[indexPath.row];
-  cell.textLabel.text = card.name;
+  cell.textLabel.text = card.cardNumber;
   cell.detailTextLabel.text = @"visa";
   return cell;
   
@@ -70,8 +80,19 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   
   [_cards removeObjectAtIndex:indexPath.row];
+  [self save];
   [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
   
+}
+
+- (NSString *)path {
+  NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+  NSString *storedBeaconsPath = [documentsDirectory stringByAppendingPathComponent:@"cards.dat"];
+  return storedBeaconsPath;
+}
+
+- (void)save {
+  [NSKeyedArchiver archiveRootObject:_cards toFile:self.path];
 }
 
 #pragma mark - Table view delegate

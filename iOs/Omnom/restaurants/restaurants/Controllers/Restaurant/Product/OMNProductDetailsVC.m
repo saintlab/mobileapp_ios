@@ -18,6 +18,9 @@
 @implementation OMNProductDetailsVC {
 
   UIPercentDrivenInteractiveTransition *_interactivePopTransition;
+  __weak IBOutlet UILabel *_textLabel;
+  __weak IBOutlet UIImageView *_bgIV;
+  
 }
 
 - (instancetype)initWithProduct:(OMNProduct *)product {
@@ -33,13 +36,29 @@
   
   self.imageView.image = [UIImage imageNamed:_product.imageName];
   
+  _bgIV.image = [UIImage imageNamed:@"background_blur"];
+  _textLabel.textColor = [UIColor whiteColor];
+  _textLabel.font = FuturaMediumFont(15);
+  _textLabel.text = _product.text;
+  
   UIScreenEdgePanGestureRecognizer *popRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePopRecognizer:)];
   popRecognizer.edges = UIRectEdgeLeft;
   [self.view addGestureRecognizer:popRecognizer];
   
 }
 
+- (IBAction)closeTap:(id)sender {
+  
+  [self.delegate productDetailsVCDidFinish:self];
+  
+}
+
 #pragma mark UIViewController methods
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];

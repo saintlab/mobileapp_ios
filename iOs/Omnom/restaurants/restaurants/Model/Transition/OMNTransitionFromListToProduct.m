@@ -12,19 +12,12 @@
 #import "OMNStubProductCell.h"
 
 @implementation OMNTransitionFromListToProduct {
-  OMNStubProductCell *_cell;
-}
 
-- (instancetype)initWithCell:(OMNStubProductCell *)cell {
-  self = [super init];
-  if (self) {
-    _cell = cell;
-  }
-  return self;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
 
+  OMNRestaurantMenuVC *fromViewController = (OMNRestaurantMenuVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNProductDetailsVC *toViewController = (OMNProductDetailsVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
@@ -32,9 +25,11 @@
   
   // Get a snapshot of the thing cell we're transitioning from
   
-  UIView *cellImageSnapshot = [_cell.iconView snapshotViewAfterScreenUpdates:NO];
-  cellImageSnapshot.frame = [containerView convertRect:_cell.iconView.frame fromView:_cell.iconView.superview];
-  _cell.iconView.hidden = YES;
+  OMNStubProductCell *cell = (OMNStubProductCell *)[fromViewController.productsView cellForItemAtIndexPath:[fromViewController.productsView indexPathsForSelectedItems].firstObject];
+  
+  UIView *cellImageSnapshot = [cell.iconView snapshotViewAfterScreenUpdates:NO];
+  cellImageSnapshot.frame = [containerView convertRect:cell.iconView.frame fromView:cell.iconView.superview];
+  cell.iconView.hidden = YES;
   
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
@@ -54,7 +49,7 @@
   } completion:^(BOOL finished) {
     // Clean up
     toViewController.imageView.hidden = NO;
-    _cell.iconView.hidden = NO;
+    cell.iconView.hidden = NO;
     [cellImageSnapshot removeFromSuperview];
     
     // Declare that we've finished

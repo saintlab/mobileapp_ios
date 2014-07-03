@@ -7,8 +7,11 @@
 //
 
 #import "OMNAddBankCardVC.h"
+#import <CardIO.h>
+#import "OMNConstants.h"
 
 @interface OMNAddBankCardVC ()
+<CardIOPaymentViewControllerDelegate>
 
 @end
 
@@ -16,14 +19,6 @@
   
   __weak IBOutlet UITextField *_cardTF;
   __weak IBOutlet UIButton *_addCardButton;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-  }
-  return self;
 }
 
 - (void)viewDidLoad {
@@ -39,9 +34,47 @@
 - (IBAction)addCardTap:(id)sender {
   
   OMNBankCard *bankCard = [[OMNBankCard alloc] init];
-  bankCard.name = _cardTF.text;
+  bankCard.cardNumber = _cardTF.text;
   [self.delegate addBankCardVC:self didAddCard:bankCard];
   
+}
+
+- (IBAction)scanCardTap:(id)sender {
+  
+  CardIOPaymentViewController *scanViewController = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
+  scanViewController.collectCVV = YES;
+  scanViewController.collectExpiry = YES;
+  scanViewController.appToken = CardIOAppToken;
+
+  [self.presentingViewController presentViewController:scanViewController animated:YES completion:nil];
+  
+}
+
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+}
+
+#pragma mark - CardIOPaymentViewControllerDelegate
+
+- (void)userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)info inPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
+  
+  NSLog(@"Scan succeeded with info: %@", info);
+  // Do whatever needs to be done to deliver the purchased items.
+  [self dismissViewControllerAnimated:YES completion:nil];
+  
+  OMNBankCard *cardInfo = [[OMNBankCard alloc] init];
+  cardInfo.cardNumber = info.cardNumber;
+  cardInfo.expiryMonth = info.expiryMonth;
+  cardInfo.expiryYear = info.expiryYear;
+  cardInfo.cvv = info.cvv;
+  
+  [self.delegate addBankCardVC:self didAddCard:cardInfo];
+  
+}
+
+- (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
+  NSLog(@"User cancelled scan");
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)cancelTap {
@@ -50,10 +83,5 @@
   
 }
 
-- (void)didReceiveMemoryWarning
-{
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
 
 @end

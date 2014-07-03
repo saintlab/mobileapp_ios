@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="23g-fc-hdx">
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="23g-fc-hdx">
                     <rect key="frame" x="20" y="78" width="246" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
@@ -38,13 +38,25 @@
                         <action selector="addCardTap:" destination="-1" eventType="touchUpInside" id="Qgg-R1-DrQ"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdS-WY-mg3">
+                    <rect key="frame" x="286" y="82" width="22" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="scanCardTap:" destination="-1" eventType="touchUpInside" id="J10-er-ahZ"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="qdS-WY-mg3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="82" id="5PG-3F-Yer"/>
                 <constraint firstAttribute="bottom" secondItem="V0H-BS-7uz" secondAttribute="bottom" constant="254" id="Gdi-hD-4iw"/>
                 <constraint firstItem="23g-fc-hdx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="HPZ-gZ-3Mr"/>
-                <constraint firstAttribute="trailing" secondItem="23g-fc-hdx" secondAttribute="trailing" constant="54" id="McP-vb-UKg"/>
                 <constraint firstAttribute="centerX" secondItem="V0H-BS-7uz" secondAttribute="centerX" constant="-0.5" id="UVT-7U-Tf2"/>
+                <constraint firstItem="qdS-WY-mg3" firstAttribute="leading" secondItem="23g-fc-hdx" secondAttribute="trailing" constant="20" id="YXP-6U-uFt"/>
+                <constraint firstAttribute="trailing" secondItem="qdS-WY-mg3" secondAttribute="trailing" constant="12" id="efv-P4-xdN"/>
                 <constraint firstItem="23g-fc-hdx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="78" id="klU-ae-qLy"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

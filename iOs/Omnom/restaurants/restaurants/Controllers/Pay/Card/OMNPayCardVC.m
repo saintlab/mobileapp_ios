@@ -9,7 +9,7 @@
 #import "OMNPayCardVC.h"
 #import <CardIO.h>
 #import "OMNConstants.h"
-#import "OMNCardInfo.h"
+#import "OMNBankCard.h"
 
 @interface OMNPayCardVC ()
 <CardIOPaymentViewControllerDelegate> {
@@ -25,7 +25,7 @@
   __weak IBOutlet UITextField *_cvvTF;
   __weak IBOutlet UITextField *_phoneTF;
   
-  OMNCardInfo *_cardInfo;
+  OMNBankCard *_cardInfo;
   
 }
 
@@ -57,7 +57,7 @@
   [super viewDidLoad];
   
   if (_cardInfo == nil) {
-    _cardInfo = [[OMNCardInfo alloc] init];
+    _cardInfo = [[OMNBankCard alloc] init];
   }
   
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Оплатить картой", nil) style:UIBarButtonItemStyleDone target:self action:@selector(payTap)];
@@ -94,7 +94,7 @@
   scanViewController.modalPresentationStyle = UIModalPresentationFormSheet;
   scanViewController.collectCVV = YES;
   scanViewController.collectExpiry = YES;
-  scanViewController.appToken = CardIOAppToken; // see Constants.h
+  scanViewController.appToken = CardIOAppToken;
   [self presentViewController:scanViewController animated:YES completion:nil];
 
 }
@@ -126,7 +126,7 @@
   // Do whatever needs to be done to deliver the purchased items.
   [self dismissViewControllerAnimated:YES completion:nil];
   
-  OMNCardInfo *cardInfo = [[OMNCardInfo alloc] init];
+  OMNBankCard *cardInfo = [[OMNBankCard alloc] init];
   cardInfo.cardNumber = info.cardNumber;
   cardInfo.expiryMonth = info.expiryMonth;
   cardInfo.expiryYear = info.expiryYear;

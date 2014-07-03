@@ -8,11 +8,20 @@
 
 #import "OMNProduct.h"
 
+@protocol OMNProductDetailsVCDelegate;
+
 @interface OMNProductDetailsVC : UIViewController
 
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong, readonly) OMNProduct *product;;
+@property (nonatomic, weak) id<OMNProductDetailsVCDelegate> delegate;
 
 - (instancetype)initWithProduct:(OMNProduct *)product;
+
+@end
+
+@protocol OMNProductDetailsVCDelegate <NSObject>
+
+- (void)productDetailsVCDidFinish:(OMNProductDetailsVC *)productDetailsVC;
 
 @end

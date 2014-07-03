@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNPayOrderVC">
+            <connections>
+                <outlet property="_backgroundIV" destination="h2o-on-5VF" id="d7J-ia-RBX"/>
+                <outlet property="_paymentView" destination="U7Q-Au-hTx" id="Oxc-eE-mjp"/>
+                <outlet property="_toPayButton" destination="ULB-uT-bQT" id="vCF-wA-cWC"/>
+                <outlet property="tableView" destination="uts-JE-lbX" id="KTw-fm-WcX"/>
+                <outlet property="view" destination="mFc-S6-dbH" id="iRX-Af-Al2"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="mFc-S6-dbH">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="h2o-on-5VF">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
+                <view contentMode="scaleToFill" id="U7Q-Au-hTx" customClass="OMNPaymentFooterView">
+                    <rect key="frame" x="0.0" y="353" width="320" height="215"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Я оплачу" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X8K-Z6-5qo">
+                            <rect key="frame" x="124" y="5" width="72" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="чаевые" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jfw-6Z-OH0">
+                            <rect key="frame" x="20" y="81" width="280" height="21"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ULB-uT-bQT">
+                            <rect key="frame" x="63" y="164" width="195" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Pay">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="payTap:" destination="-1" eventType="touchUpInside" id="bZl-sO-fiw"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WRv-Fa-1go" userLabel="cancel button">
+                            <rect key="frame" x="17" y="15" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="cancelEditingTap:" destination="U7Q-Au-hTx" eventType="touchUpInside" id="S97-Q5-vMR"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="sKG-WE-pbo" userLabel="done button">
+                            <rect key="frame" x="263" y="15" width="40" height="40"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="doneEdidtingTap:" destination="U7Q-Au-hTx" eventType="touchUpInside" id="sCW-A7-V5g"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" id="Tb5-dQ-gtn" customClass="OMNAmountPercentControl">
+                            <rect key="frame" x="0.0" y="23" width="320" height="47"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="Dks-C5-mZD" customClass="OMNTipSelector">
+                            <rect key="frame" x="0.0" y="103" width="320" height="55"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" red="0.74741078564704577" green="0.8061943389575128" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <connections>
+                        <outlet property="_amountPercentControl" destination="Tb5-dQ-gtn" id="okL-2r-jan"/>
+                        <outlet property="_cancelEditingButton" destination="WRv-Fa-1go" id="uBz-ij-Nkc"/>
+                        <outlet property="_doneEditingButton" destination="sKG-WE-pbo" id="rA1-hv-Sn7"/>
+                        <outlet property="_payButton" destination="ULB-uT-bQT" id="7YN-Ld-cBN"/>
+                        <outlet property="_payLabel" destination="X8K-Z6-5qo" id="E9I-9k-2qu"/>
+                        <outlet property="_tipsLabel" destination="jfw-6Z-OH0" id="NLB-kM-LzS"/>
+                        <outlet property="_tipsSelector" destination="Dks-C5-mZD" id="5XH-fb-Gcu"/>
+                    </connections>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uts-JE-lbX">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="353"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

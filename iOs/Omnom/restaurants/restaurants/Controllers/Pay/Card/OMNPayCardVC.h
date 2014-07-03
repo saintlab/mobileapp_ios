@@ -7,7 +7,7 @@
 //
 
 @protocol OMNPayCardVCDelegate;
-@class OMNCardInfo;
+@class OMNBankCard;
 
 @interface OMNPayCardVC : UIViewController
 
@@ -17,7 +17,7 @@
 
 @protocol OMNPayCardVCDelegate <NSObject>
 
-- (void)payCardVC:(OMNPayCardVC *)payVC requestPayWithCardInfo:(OMNCardInfo *)cardInfo;
+- (void)payCardVC:(OMNPayCardVC *)payVC requestPayWithCardInfo:(OMNBankCard *)cardInfo;
 
 - (void)payCardVCDidPayCash:(OMNPayCardVC *)payVC;
 

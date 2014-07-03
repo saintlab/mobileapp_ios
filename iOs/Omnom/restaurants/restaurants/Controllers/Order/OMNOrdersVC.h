@@ -12,7 +12,7 @@
 @class OMNRestaurant;
 @protocol OMNOrdersVCDelegate;
 
-@interface OMNOrdersVC : UITableViewController
+@interface OMNOrdersVC : UICollectionViewController
 
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
 
@@ -23,5 +23,7 @@
 @protocol OMNOrdersVCDelegate <NSObject>
 
 - (void)ordersVC:(OMNOrdersVC *)ordersVC didSelectOrder:(OMNOrder *)order;
+
+- (void)ordersVCDidCancel:(OMNOrdersVC *)ordersVC;
 
 @end

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMNCalculatorTransition : NSObject<UIViewControllerAnimatedTransitioning>
+@interface OMNTransitionFromOrderToCalculator : NSObject
+<UIViewControllerAnimatedTransitioning>
 
 @end

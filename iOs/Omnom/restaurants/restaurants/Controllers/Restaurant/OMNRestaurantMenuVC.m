@@ -12,7 +12,7 @@
 #import "OMNOrderVCDelegate.h"
 #import "OMNSearchTableVC.h"
 #import "UINavigationController+omn_replace.h"
-#import "OMNPaymentVC.h"
+#import "OMNPayOrderVC.h"
 #import "OMNAssetManager.h"
 #import "OMNUserInfoTransitionDelegate.h"
 #import "OMNUserInfoVC.h"
@@ -21,15 +21,20 @@
 #import "OMNProductsModel.h"
 #import "OMNProductDetailsVC.h"
 #import "OMNTransitionFromListToProduct.h"
+#import "OMNTransitionFromOrdersToOrder.h"
+#import "OMNNavigationControllerDelegate.h"
 
 @interface OMNRestaurantMenuVC ()
 <OMNOrdersVCDelegate,
-UINavigationControllerDelegate> {
+OMNProductDetailsVCDelegate> {
   
   __weak IBOutlet UIButton *_waiterButton;
   __weak IBOutlet UIButton *_billButton;
   __weak IBOutlet UIImageView *_backgroundIV;
-  __weak IBOutlet UICollectionView *_productsView;
+  __weak IBOutlet UILabel *_recomendLabel;
+  __weak IBOutlet UIView *_waiterIsCalledView;
+ 
+  OMNNavigationControllerDelegate *_navigationControllerDelegate;
 }
 
 
@@ -56,12 +61,23 @@ UINavigationControllerDelegate> {
     _productsModel.productSelectionBlock = ^(OMNProduct *product) {
       
       OMNProductDetailsVC *productDetailsVC = [[OMNProductDetailsVC alloc] initWithProduct:product];
+      productDetailsVC.delegate = weakSelf;
       [weakSelf.navigationController pushViewController:productDetailsVC animated:YES];
       
     };
     
+    _navigationControllerDelegate = [[OMNNavigationControllerDelegate alloc] init];
+    
   }
   return self;
+}
+
+#pragma mark - OMNProductDetailsVCDelegate
+
+- (void)productDetailsVCDidFinish:(OMNProductDetailsVC *)productDetailsVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
 }
 
 - (void)viewDidLoad {
@@ -73,23 +89,12 @@ UINavigationControllerDelegate> {
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:NO animated:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-
-  // Set outself as the navigation controller's delegate so we're asked for a transitioning object
-  self.navigationController.delegate = self;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
   
-  // Stop being the navigation controller's delegate
-  if (self.navigationController.delegate == self) {
-    self.navigationController.delegate = nil;
-  }
+  self.navigationController.delegate = _navigationControllerDelegate;
+  
+  self.navigationController.navigationBar.shadowImage = [UIImage new];
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)setup {
@@ -98,20 +103,28 @@ UINavigationControllerDelegate> {
   _productsView.dataSource = _productsModel;
   _productsView.backgroundColor = [UIColor clearColor];
   
+  _recomendLabel.font = FuturaBookFont(20);
+  _recomendLabel.text = NSLocalizedString(@"Рекомендуем попробовать", nil);
+  _recomendLabel.textColor = [UIColor whiteColor];
+  
   [self.navigationController.navigationBar setTitleTextAttributes:
    @{
      NSFontAttributeName : [OMNAssetManager manager].navBarTitleFont
      }];
   
   [self.navigationItem setHidesBackButton:YES];
-  self.navigationController.navigationBar.shadowImage = [UIImage new];
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+  
+  if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
+    self.automaticallyAdjustsScrollViewInsets = NO;
+  }
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Reset tables", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resetTablesTap)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
   
   _backgroundIV.image = [UIImage imageNamed:@"background_blur"];
 
+  _waiterIsCalledView.alpha = 0.0f;
+  
   UIBarButtonItem *userButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"User", nil) style:UIBarButtonItemStylePlain target:self	action:@selector(userProfileTap)];
   userButton.tintColor = [UIColor whiteColor];
   self.navigationItem.rightBarButtonItems = @[userButton];
@@ -184,7 +197,7 @@ UINavigationControllerDelegate> {
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Официант успешно позван", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        [weakSelf waiterIsCalled];
         
       });
       
@@ -200,9 +213,31 @@ UINavigationControllerDelegate> {
   
 }
 
+- (void)waiterIsCalled {
+
+  [UIView animateWithDuration:0.3 animations:^{
+    _waiterIsCalledView.alpha = 1.0f;
+  }];
+  
+}
+
+- (IBAction)waiterIsCalledTap:(id)sender {
+  
+  [UIView animateWithDuration:0.5 animations:^{
+    _waiterIsCalledView.alpha = 0.0f;
+  }];
+  
+}
+
+
 - (void)searchTableWithBlock:(OMNSearchTableVCBlock)block {
 
-  OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:block];
+  __weak typeof(self)weakSelf = self;
+  OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:block cancelBlock:^{
+    
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    
+  }];
   [self.navigationController pushViewController:searchTableVC animated:YES];
   
 }
@@ -246,7 +281,7 @@ UINavigationControllerDelegate> {
     
   }
   else {
-    
+#warning 123
     [self.navigationController popToViewController:self animated:YES];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"На этом столике нет заказов", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     
@@ -258,8 +293,11 @@ UINavigationControllerDelegate> {
   
   OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithOrders:orders];
   ordersVC.delegate = self;
-  ordersVC.title = @"Заказы";
-  [self.navigationController omn_replaceCurrentViewControllerWithController:ordersVC animated:YES];
+  
+  OMNOrder *order = [orders firstObject];
+  ordersVC.navigationItem.title = order.tableId;
+  
+  [self.navigationController pushViewController:ordersVC animated:YES];
   
 }
 
@@ -271,11 +309,18 @@ UINavigationControllerDelegate> {
   
 }
 
+- (void)ordersVCDidCancel:(OMNOrdersVC *)ordersVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
 - (void)showOrder:(OMNOrder *)order {
   
-  OMNPaymentVC *paymentVC = [[OMNPaymentVC alloc] initWithOrder:order];
+  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithOrder:order];
   paymentVC.title = order.created;
-  [self.navigationController omn_replaceCurrentViewControllerWithController:paymentVC animated:YES];
+  [self.navigationController popToViewController:self animated:NO];
+  [self.navigationController pushViewController:paymentVC animated:YES];
   
 }
 
@@ -283,22 +328,6 @@ UINavigationControllerDelegate> {
   
   _menu = menu;
   
-}
-
-#pragma mark UINavigationControllerDelegate methods
-
-- (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-                                  animationControllerForOperation:(UINavigationControllerOperation)operation
-                                               fromViewController:(UIViewController *)fromVC
-                                                 toViewController:(UIViewController *)toVC {
-  // Check if we're transitioning from this view controller to a DSLSecondViewController
-  if (fromVC == self && [toVC isKindOfClass:[OMNProductDetailsVC class]]) {
-    OMNStubProductCell *selectedCell = (OMNStubProductCell *)[_productsView cellForItemAtIndexPath:[_productsView indexPathsForSelectedItems].firstObject];
-    return [[OMNTransitionFromListToProduct alloc] initWithCell:selectedCell];
-  }
-  else {
-    return nil;
-  }
 }
 
 #pragma mark

@@ -7,9 +7,9 @@
 //
 
 #import "OMNGPBPayVC.h"
-#import "OMNCardInfo.h"
 #import "OMNOrder.h"
 #import "OMNCardView.h"
+#import "OMNBankCard.h"
 
 @interface OMNGPBPayVC ()
 <UIWebViewDelegate>
@@ -17,7 +17,7 @@
 @end
 
 @implementation OMNGPBPayVC {
-  OMNCardInfo *_cardInfo;
+  OMNBankCard *_cardInfo;
   OMNOrder *_order;
   
   UIActivityIndicatorView *_spinner;
@@ -35,7 +35,7 @@
   
 }
 
-- (instancetype)initWithCard:(OMNCardInfo *)cardInfo order:(OMNOrder *)order; {
+- (instancetype)initWithCard:(OMNBankCard *)cardInfo order:(OMNOrder *)order {
   self = [super initWithNibName:@"OMNGPBPayVC" bundle:nil];
   if (self) {
     _cardInfo = cardInfo;

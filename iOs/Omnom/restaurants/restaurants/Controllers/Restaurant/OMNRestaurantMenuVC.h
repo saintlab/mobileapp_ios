@@ -16,6 +16,7 @@
 @interface OMNRestaurantMenuVC : UIViewController
 
 @property (nonatomic, weak) id<OMNRestaurantMenuVCDelegate> delegate;
+@property (weak, nonatomic) IBOutlet UICollectionView *productsView;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant table:(OMNTable *)table;
 

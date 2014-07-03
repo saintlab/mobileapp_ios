@@ -115,7 +115,19 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   
   CGFloat offset = scrollView.contentOffset.x;
-  NSInteger page = floorf(offset/scrollView.frame.size.width + 0.5);
+  CGFloat pageFloat = offset/scrollView.frame.size.width;
+  NSInteger page = floorf(pageFloat + 0.5f);
+  
+  [_viewControllers enumerateObjectsUsingBlock:^(UIViewController *vc, NSUInteger idx, BOOL *stop) {
+    
+    if (pageFloat > idx) {
+      vc.view.alpha = MAX(0, 1.0f - pageFloat + idx);
+    }
+    else {
+      vc.view.alpha = MAX(0, 1.0f + pageFloat - idx);
+    }
+    
+  }];
   
   if (page == _pageControl.currentPage) {
     return;

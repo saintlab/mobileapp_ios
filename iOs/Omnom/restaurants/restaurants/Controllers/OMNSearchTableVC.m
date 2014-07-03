@@ -19,12 +19,15 @@
 @implementation OMNSearchTableVC {
   OMNBeaconsManager *_beaconManager;
   OMNSearchTableVCBlock _didFindTableBlock;
+  dispatch_block_t _cancelBlock;
+  
   __weak IBOutlet UILabel *_searchLabel;
 }
 
-- (instancetype)initWithBlock:(OMNSearchTableVCBlock)block {
+- (instancetype)initWithBlock:(OMNSearchTableVCBlock)block cancelBlock:(dispatch_block_t)cancelBlock {
   self = [super initWithNibName:@"OMNSearchTableVC" bundle:nil];
   if (self) {
+    _cancelBlock = cancelBlock;
     _didFindTableBlock = block;
   }
   return self;
@@ -39,6 +42,8 @@
   
   [super viewDidLoad];
   
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+  
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub table", nil) style:UIBarButtonItemStylePlain target:self action:@selector(useStubBeacon)];
   
   _beaconManager = [[OMNBeaconsManager alloc] init];
@@ -48,7 +53,18 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  
+  self.navigationController.navigationBar.shadowImage = nil;
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
   [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)cancelTap {
+  
+  if (_cancelBlock) {
+    _cancelBlock();
+  }
+  
 }
 
 - (void)useStubBeacon {
@@ -120,7 +136,7 @@
 
 - (void)tablePositionVCDidCancel:(OMNTablePositionVC *)tablePositionVC {
   
-  _didFindTableBlock(nil);
+  _cancelBlock();
   
 }
 
@@ -162,6 +178,15 @@
 - (void)decodeBeacons:(NSArray *)beaconsToDecode {
   
   _searchLabel.text = NSLocalizedString(@"Получаем информацию о столе...", nil);
+  
+  if (kUseStubData) {
+    OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] init];
+    decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+3";
+    decodeBeacon.tableId = @"3";
+    decodeBeacon.restaurantId = @"riba-ris";
+    _didFindTableBlock(decodeBeacon);
+    return;
+  }
   
   [OMNDecodeBeacon decodeBeacons:beaconsToDecode success:^(NSArray *decodeBeacons) {
     

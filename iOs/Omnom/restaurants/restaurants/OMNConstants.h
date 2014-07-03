@@ -18,7 +18,7 @@ extern NSString * const kMixpanelToken;
 typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);
 
-#define kUseStubData 0
+#define kUseStubData 1
 #define kUseStubUser 0
 #define kUseStubLogin 1
 

@@ -11,5 +11,7 @@
 @interface OMNProduct : NSObject
 
 @property (nonatomic, strong) NSString *imageName;
+@property (nonatomic, assign) BOOL rated;
+@property (nonatomic, copy) NSString *text;
 
 @end
