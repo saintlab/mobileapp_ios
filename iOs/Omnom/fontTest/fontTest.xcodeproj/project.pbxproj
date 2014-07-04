@@ -46,7 +46,6 @@
 		93C9912C193EF9030028F76C /* OMNMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9912A193EF9030028F76C /* OMNMenuItem.m */; };
 		93C9912E193EF9930028F76C /* orders.data in Resources */ = {isa = PBXBuildFile; fileRef = 93C9912D193EF9930028F76C /* orders.data */; };
 		93C99154193F085D0028F76C /* OMNAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C9914F193F085D0028F76C /* OMNAssetManager.m */; };
-		93C99155193F085D0028F76C /* OMNCircleAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99151193F085D0028F76C /* OMNCircleAssetManager.m */; };
 		93C99156193F085D0028F76C /* OMNFuturaAssetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99153193F085D0028F76C /* OMNFuturaAssetManager.m */; };
 /* End PBXBuildFile section */
 
@@ -128,8 +127,6 @@
 		93C9912D193EF9930028F76C /* orders.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = orders.data; path = ../../restaurants/stub/orders.data; sourceTree = "<group>"; };
 		93C9914E193F085D0028F76C /* OMNAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAssetManager.h; sourceTree = "<group>"; };
 		93C9914F193F085D0028F76C /* OMNAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAssetManager.m; sourceTree = "<group>"; };
-		93C99150193F085D0028F76C /* OMNCircleAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleAssetManager.h; sourceTree = "<group>"; };
-		93C99151193F085D0028F76C /* OMNCircleAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCircleAssetManager.m; sourceTree = "<group>"; };
 		93C99152193F085D0028F76C /* OMNFuturaAssetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFuturaAssetManager.h; sourceTree = "<group>"; };
 		93C99153193F085D0028F76C /* OMNFuturaAssetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFuturaAssetManager.m; sourceTree = "<group>"; };
 		D1EFF138AE524475822B93A5 /* libPods-fontTest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-fontTest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,8 +336,6 @@
 			children = (
 				93C9914E193F085D0028F76C /* OMNAssetManager.h */,
 				93C9914F193F085D0028F76C /* OMNAssetManager.m */,
-				93C99150193F085D0028F76C /* OMNCircleAssetManager.h */,
-				93C99151193F085D0028F76C /* OMNCircleAssetManager.m */,
 				93C99152193F085D0028F76C /* OMNFuturaAssetManager.h */,
 				93C99153193F085D0028F76C /* OMNFuturaAssetManager.m */,
 			);
@@ -487,7 +482,6 @@
 				93C9912C193EF9030028F76C /* OMNMenuItem.m in Sources */,
 				93C990FD193EF5920028F76C /* OMNTipButton.m in Sources */,
 				93C99112193EF67F0028F76C /* OMNOrder.m in Sources */,
-				93C99155193F085D0028F76C /* OMNCircleAssetManager.m in Sources */,
 				93C990E5193EF5570028F76C /* GProdductSelectionVC.m in Sources */,
 				93C990FE193EF5920028F76C /* OMNTipSelector.m in Sources */,
 				93C9912B193EF9030028F76C /* OMNMenu.m in Sources */,

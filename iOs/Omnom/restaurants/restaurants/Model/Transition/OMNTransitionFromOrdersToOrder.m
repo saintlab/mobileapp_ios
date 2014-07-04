@@ -12,6 +12,10 @@
 
 @implementation OMNTransitionFromOrdersToOrder
 
++ (NSString *)key {
+  return [self keyFromClass:[OMNOrdersVC class] toClass:[OMNPayOrderVC class]];
+}
+
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNOrdersVC *fromViewController = (OMNOrdersVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];

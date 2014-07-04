@@ -11,7 +11,13 @@
 #import "OMNOrdersVC.h"
 #import "OMNOrderItemCell.h"
 
+
+
 @implementation OMNTransitionFromLoadingToBills
+
++ (NSString *)key {
+  return [self keyFromClass:[OMNSearchTableVC class] toClass:[OMNOrdersVC class]];
+}
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
@@ -26,30 +32,38 @@
   imageSnapshot.frame = [containerView convertRect:fromViewController.imageView.frame fromView:fromViewController.imageView.superview];
   fromViewController.imageView.hidden = YES;
   
-  [toViewController.collectionView reloadData];
+  NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
   
+  [toViewController.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+
   // Get the cell we'll animate to
-  OMNOrderItemCell *cell = (OMNOrderItemCell *)[toViewController.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-  cell.hidden = YES;
-  
-  NSLog(@"%@", toViewController.collectionView);
+  OMNOrderItemCell *cell = (OMNOrderItemCell *)[toViewController.collectionView cellForItemAtIndexPath:indexPath];
   
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
   [containerView addSubview:imageSnapshot];
   
+  CGRect cellFrame = cell.frame;
+  cellFrame.origin.y += 31.0f;
+  
+  cell.frame = [containerView convertRect:imageSnapshot.frame fromView:imageSnapshot.superview];
+  cell.alpha = 0.0f;
+  
   [UIView animateWithDuration:duration animations:^{
     // Fade out the source view controller
     fromViewController.view.alpha = 0.0;
+    imageSnapshot.alpha = 0.0f;
+    cell.alpha = 1.0f;
+
+    imageSnapshot.frame = [containerView convertRect:cellFrame fromView:cell.superview];
+    cell.frame = cellFrame;
     
-    // Move the image view
-    imageSnapshot.frame = [containerView convertRect:cell.frame fromView:cell.superview];
   } completion:^(BOOL finished) {
     // Clean up
     [imageSnapshot removeFromSuperview];
     fromViewController.imageView.hidden = NO;
-    cell.hidden = NO;
+
     fromViewController.view.alpha = 1.0;
     // Declare that we've finished
     [transitionContext completeTransition:!transitionContext.transitionWasCancelled];

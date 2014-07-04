@@ -104,6 +104,10 @@
 		93A994A919484C22005B403C /* OMNRegisterUserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A994A219484C22005B403C /* OMNRegisterUserVC.m */; };
 		93A994AA19484C22005B403C /* OMNRegisterUserVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A994A319484C22005B403C /* OMNRegisterUserVC.xib */; };
 		93A994AB19484C22005B403C /* OMNRegisterUserVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93A994A319484C22005B403C /* OMNRegisterUserVC.xib */; };
+		93B9049E1965704C007D21C4 /* OMNEditTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9049C1965704C007D21C4 /* OMNEditTableVC.m */; };
+		93B9049F1965704C007D21C4 /* OMNEditTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9049C1965704C007D21C4 /* OMNEditTableVC.m */; };
+		93B904A01965704C007D21C4 /* OMNEditTableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B9049D1965704C007D21C4 /* OMNEditTableVC.xib */; };
+		93B904A11965704C007D21C4 /* OMNEditTableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B9049D1965704C007D21C4 /* OMNEditTableVC.xib */; };
 		93C5A67C195A9FFF005C68EC /* OMNUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A67B195A9FFF005C68EC /* OMNUserInfoModel.m */; };
 		93C5A67D195AA000005C68EC /* OMNUserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A67B195A9FFF005C68EC /* OMNUserInfoModel.m */; };
 		93C5A680195AA067005C68EC /* OMNUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C5A67F195AA067005C68EC /* OMNUserInfoItem.m */; };
@@ -225,6 +229,9 @@
 		93A994A119484C22005B403C /* OMNRegisterUserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRegisterUserVC.h; sourceTree = "<group>"; };
 		93A994A219484C22005B403C /* OMNRegisterUserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRegisterUserVC.m; sourceTree = "<group>"; };
 		93A994A319484C22005B403C /* OMNRegisterUserVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNRegisterUserVC.xib; sourceTree = "<group>"; };
+		93B9049B1965704C007D21C4 /* OMNEditTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditTableVC.h; sourceTree = "<group>"; };
+		93B9049C1965704C007D21C4 /* OMNEditTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditTableVC.m; sourceTree = "<group>"; };
+		93B9049D1965704C007D21C4 /* OMNEditTableVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNEditTableVC.xib; sourceTree = "<group>"; };
 		93C5A67A195A9FFF005C68EC /* OMNUserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoModel.h; sourceTree = "<group>"; };
 		93C5A67B195A9FFF005C68EC /* OMNUserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoModel.m; sourceTree = "<group>"; };
 		93C5A67E195AA067005C68EC /* OMNUserInfoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoItem.h; sourceTree = "<group>"; };
@@ -313,6 +320,7 @@
 		932FB2DA195ABC2400960F03 /* Info */ = {
 			isa = PBXGroup;
 			children = (
+				93B9049A1965702E007D21C4 /* EditTable */,
 				932117DD1962999900183729 /* Cards */,
 				932FB2DB195ABC2F00960F03 /* OMNUserInfoVC.h */,
 				932FB2DC195ABC2F00960F03 /* OMNUserInfoVC.m */,
@@ -581,6 +589,16 @@
 			path = Register;
 			sourceTree = "<group>";
 		};
+		93B9049A1965702E007D21C4 /* EditTable */ = {
+			isa = PBXGroup;
+			children = (
+				93B9049B1965704C007D21C4 /* OMNEditTableVC.h */,
+				93B9049C1965704C007D21C4 /* OMNEditTableVC.m */,
+				93B9049D1965704C007D21C4 /* OMNEditTableVC.xib */,
+			);
+			path = EditTable;
+			sourceTree = "<group>";
+		};
 		93C5A679195A9FE5005C68EC /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -758,6 +776,7 @@
 				9369BB82192E2AE70018C79C /* GViewController1.xib in Resources */,
 				9369BB7C192E2AE70018C79C /* GCongratulationsVC.xib in Resources */,
 				932117E3196299C300183729 /* OMNBankCardsVC.xib in Resources */,
+				93B904A01965704C007D21C4 /* OMNEditTableVC.xib in Resources */,
 				93E7C16E1918DC1600F22695 /* Main.storyboard in Resources */,
 				93A994A619484C22005B403C /* OMNLoginVC.xib in Resources */,
 			);
@@ -769,6 +788,7 @@
 			files = (
 				9369BBCF192E2AE70018C79C /* rouble.otf in Resources */,
 				93A994A719484C22005B403C /* OMNLoginVC.xib in Resources */,
+				93B904A11965704C007D21C4 /* OMNEditTableVC.xib in Resources */,
 				9369BB83192E2AE70018C79C /* GViewController1.xib in Resources */,
 				932118031962A2E800183729 /* OMNAddBankCardVC.xib in Resources */,
 				9369BB7D192E2AE70018C79C /* GCongratulationsVC.xib in Resources */,
@@ -860,6 +880,7 @@
 				93A369021947074600DE91D8 /* OMNAuthorisation.m in Sources */,
 				9369BBB2192E2AE70018C79C /* GAuthManager.m in Sources */,
 				93C5A680195AA067005C68EC /* OMNUserInfoItem.m in Sources */,
+				93B9049E1965704C007D21C4 /* OMNEditTableVC.m in Sources */,
 				9369BB80192E2AE70018C79C /* GViewController1.m in Sources */,
 				9369BBBE192E2AE70018C79C /* OKRequest.m in Sources */,
 				93570D44195040330065E6D2 /* OMNEnterCodeView.m in Sources */,
@@ -905,6 +926,7 @@
 				93A3690B194715F100DE91D8 /* OMNAuthorizationManager.m in Sources */,
 				9369BB7F192E2AE70018C79C /* GViewController.m in Sources */,
 				9369BBD9192E2AE70018C79C /* GSocialCell.m in Sources */,
+				93B9049F1965704C007D21C4 /* OMNEditTableVC.m in Sources */,
 				93A994A519484C22005B403C /* OMNLoginVC.m in Sources */,
 				93C5A67D195AA000005C68EC /* OMNUserInfoModel.m in Sources */,
 				93C5A685195AB1BA005C68EC /* OMNAnalitics.m in Sources */,

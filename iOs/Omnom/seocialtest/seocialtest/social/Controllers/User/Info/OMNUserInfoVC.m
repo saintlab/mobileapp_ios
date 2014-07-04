@@ -10,8 +10,10 @@
 #import "OMNAuthorisation.h"
 #import "OMNUser.h"
 #import "OMNUserInfoModel.h"
+#import "OMNEditTableVC.h"
 
 @interface OMNUserInfoVC ()
+<OMNEditTableVCDelegate>
 
 @end
 
@@ -61,9 +63,35 @@
   [_iconView addGestureRecognizer:tapGR];
   
   self.tableView.tableFooterView = [[UIView alloc] init];
-  
-  
   self.tableView.dataSource = _userInfoModel;
+  self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background_blur"]];
+
+  self.navigationController.navigationBar.shadowImage = [UIImage new];
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+  
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Стол", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editTableTap)];
+  self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+  
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
+  self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+  
+}
+
+- (void)editTableTap {
+  
+  OMNEditTableVC *editTableVC = [[OMNEditTableVC alloc] init];
+  editTableVC.delegate = self;
+  [self.navigationController pushViewController:editTableVC animated:YES];
+  
+}
+
+#pragma mark - OMNEditTableVCDelegate
+
+- (void)editTableVCDidFinish:(OMNEditTableVC *)editTableVC {
+  [self.navigationController popToViewController:self animated:YES];
+}
+
+- (void)editUserTap {
   
 }
 
@@ -78,6 +106,12 @@
 }
 
 #pragma mark - UITableViewDelegate
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  UIView *view = [[UIView alloc] init];
+  view.backgroundColor = [UIColor clearColor];
+  return view;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   return 10.0f;

@@ -8,7 +8,7 @@
 
 #import "OMNNavigationBarSelector.h"
 #import "UIView+frame.h"
-#import "OMNAssetManager.h"
+#import <OMNStyler.h>
 
 const CGFloat kButtonWidth = 100.0f;
 
@@ -74,10 +74,15 @@ const CGFloat kButtonWidth = 100.0f;
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex {
+
+  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
   
   [_buttons enumerateObjectsUsingBlock:^(UIButton *b, NSUInteger idx, BOOL *stop) {
     b.selected = NO;
-    b.titleLabel.font = [OMNAssetManager manager].navBarSelectorDefaultFont;
+    b.titleLabel.font = [style fontForKey:@"buttonFont"];
+    
+    [b setTitleColor:[style colorForKey:@"buttonColor"] forState:UIControlStateNormal];
+    [b setTitleColor:[style colorForKey:@"buttonSelectedColor"] forState:UIControlStateSelected];
   }];
   
   _selectedIndex = selectedIndex;
@@ -85,8 +90,7 @@ const CGFloat kButtonWidth = 100.0f;
   UIButton *button = _buttons[_selectedIndex];
   button.selected = YES;
   [UIView animateWithDuration:0.2 animations:^{
-
-    button.titleLabel.font = [OMNAssetManager manager].navBarSelectorSelectedFont;
+    button.titleLabel.font = [style fontForKey:@"buttonSelectedFont"];
     _buttonsContainerView.transform = CGAffineTransformMakeTranslation(self.width * 0.5 - button.x, 0);
     
   }];

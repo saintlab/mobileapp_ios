@@ -13,6 +13,10 @@
 
 @implementation OMNTransitionFromProductToList
 
++ (NSString *)key {
+  return [self keyFromClass:[OMNProductDetailsVC class] toClass:[OMNRestaurantMenuVC class]];
+}
+
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNProductDetailsVC *fromViewController = (OMNProductDetailsVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];

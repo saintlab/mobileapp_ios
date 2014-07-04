@@ -15,6 +15,10 @@
 
 }
 
++ (NSString *)key {
+  return [self keyFromClass:[OMNRestaurantMenuVC class] toClass:[OMNProductDetailsVC class]];
+}
+
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
 
   OMNRestaurantMenuVC *fromViewController = (OMNRestaurantMenuVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];

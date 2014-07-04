@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "OMNCustomTransition.h"
 
-@interface OMNTransitionFromOrdersToOrder : NSObject
-<UIViewControllerAnimatedTransitioning>
+@interface OMNTransitionFromOrdersToOrder : OMNCustomTransition
+
 
 @end

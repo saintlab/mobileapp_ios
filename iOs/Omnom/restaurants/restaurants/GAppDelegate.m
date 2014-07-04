@@ -8,7 +8,6 @@
 
 #import "GAppDelegate.h"
 #import "OMNAuthorisation.h"
-#import "OMNFuturaAssetManager.h"
 #import "OMNStartVC.h"
 #import "OMNBeaconBackgroundManager.h"
 #import <UAirship.h>
@@ -29,8 +28,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
   [self setupUrbanAirship];
-  
-  [OMNAssetManager updateWithManager:[OMNFuturaAssetManager new]];
   
   [OMNAuthorisation authorisation];
   

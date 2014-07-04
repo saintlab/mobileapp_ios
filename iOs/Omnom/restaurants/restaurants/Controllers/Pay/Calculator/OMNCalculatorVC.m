@@ -14,7 +14,6 @@
 #import "OMNNavigationBarSelector.h"
 #import "OMNConstants.h"
 #import "UIView+frame.h"
-#import "OMNAssetManager.h"
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
 static const CGFloat kTopOffset = 40.0f;
@@ -62,7 +61,6 @@ static const CGFloat kTopOffset = 40.0f;
   [_navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
   
   _totalButton = [[UIButton alloc] init];
-  _totalButton.titleLabel.font = [OMNAssetManager manager].splitTotalFont;
   [_totalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_totalButton setBackgroundImage:[UIImage imageNamed:@"button_green"] forState:UIControlStateNormal];
   _totalButton.userInteractionEnabled = NO;

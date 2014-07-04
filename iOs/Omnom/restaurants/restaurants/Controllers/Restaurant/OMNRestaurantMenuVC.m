@@ -7,26 +7,18 @@
 //
 
 #import "OMNRestaurantMenuVC.h"
-#import "OMNMenu.h"
-#import "OMNOrdersVC.h"
-#import "OMNOrderVCDelegate.h"
 #import "OMNSearchTableVC.h"
-#import "UINavigationController+omn_replace.h"
-#import "OMNPayOrderVC.h"
-#import "OMNAssetManager.h"
-#import "OMNUserInfoTransitionDelegate.h"
-#import "OMNUserInfoVC.h"
+
 #import "OMNBeaconBackgroundManager.h"
 #import "OMNAuthorisation.h"
 #import "OMNProductsModel.h"
-#import "OMNProductDetailsVC.h"
-#import "OMNTransitionFromListToProduct.h"
-#import "OMNTransitionFromOrdersToOrder.h"
 #import "OMNNavigationControllerDelegate.h"
 
-@interface OMNRestaurantMenuVC ()
-<OMNOrdersVCDelegate,
-OMNProductDetailsVCDelegate> {
+#import "OMNRestaurantMenuMediator.h"
+
+#import <OMNStyler.h>
+
+@interface OMNRestaurantMenuVC () {
   
   __weak IBOutlet UIButton *_waiterButton;
   __weak IBOutlet UIButton *_billButton;
@@ -35,49 +27,40 @@ OMNProductDetailsVCDelegate> {
   __weak IBOutlet UIView *_waiterIsCalledView;
  
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
+  OMNRestaurant *_restaurant;
+  OMNTable *_table;
+  
+  OMNProductsModel *_productsModel;
+
 }
 
-
+@property (nonatomic, strong) OMNRestaurantMenuMediator *restaurantMenuMediator;
 
 @end
 
-@implementation OMNRestaurantMenuVC {
-  OMNRestaurant *_restaurant;
-  OMNTable *_table;
-  OMNMenu *_menu;
-  
-  IBOutlet OMNProductsModel *_productsModel;
-  OMNUserInfoTransitionDelegate *_transitionDelegate;
-}
+@implementation OMNRestaurantMenuVC
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant table:(OMNTable *)table {
   self = [super initWithNibName:@"OMNRestaurantMenuVC" bundle:nil];
   if (self) {
     _restaurant = restaurant;
     _table = table;
+    
     _productsModel = [[OMNProductsModel alloc] init];
+    
+    _restaurantMenuMediator = [[OMNRestaurantMenuMediator alloc] initWithRootViewController:self];
+    
+    _navigationControllerDelegate = [[OMNNavigationControllerDelegate alloc] init];
     
     __weak typeof(self)weakSelf = self;
     _productsModel.productSelectionBlock = ^(OMNProduct *product) {
       
-      OMNProductDetailsVC *productDetailsVC = [[OMNProductDetailsVC alloc] initWithProduct:product];
-      productDetailsVC.delegate = weakSelf;
-      [weakSelf.navigationController pushViewController:productDetailsVC animated:YES];
+      [weakSelf.restaurantMenuMediator showProductDetails:product];
       
     };
-    
-    _navigationControllerDelegate = [[OMNNavigationControllerDelegate alloc] init];
-    
+
   }
   return self;
-}
-
-#pragma mark - OMNProductDetailsVCDelegate
-
-- (void)productDetailsVCDidFinish:(OMNProductDetailsVC *)productDetailsVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
 }
 
 - (void)viewDidLoad {
@@ -95,6 +78,7 @@ OMNProductDetailsVCDelegate> {
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   [self.navigationController setNavigationBarHidden:NO animated:animated];
+  
 }
 
 - (void)setup {
@@ -106,17 +90,17 @@ OMNProductDetailsVCDelegate> {
   _recomendLabel.font = FuturaBookFont(20);
   _recomendLabel.text = NSLocalizedString(@"Рекомендуем попробовать", nil);
   _recomendLabel.textColor = [UIColor whiteColor];
-  
+
+  OMNStyle *style = [[OMNStyler styler] styleForClass:[UINavigationBar class]];
   [self.navigationController.navigationBar setTitleTextAttributes:
    @{
-     NSFontAttributeName : [OMNAssetManager manager].navBarTitleFont
+     NSFontAttributeName : [style fontForKey:@"titleFont"],
+     NSForegroundColorAttributeName : [style colorForKey:@"titleColor"]
      }];
   
   [self.navigationItem setHidesBackButton:YES];
   
-  if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
-    self.automaticallyAdjustsScrollViewInsets = NO;
-  }
+  self.automaticallyAdjustsScrollViewInsets = NO;
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Reset tables", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resetTablesTap)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
@@ -140,51 +124,13 @@ OMNProductDetailsVCDelegate> {
 
 - (void)userProfileTap {
 
-  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] init];
-
-  _transitionDelegate = [[OMNUserInfoTransitionDelegate alloc] init];
-  __weak typeof(self)weakSelf = self;
-  _transitionDelegate.didFinishBlock = ^{
-    
-    [weakSelf dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  
-  UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
-  navVC.transitioningDelegate = _transitionDelegate;
-  navVC.modalPresentationStyle = UIModalPresentationCustom;
-  [self presentViewController:navVC animated:YES completion:nil];
-
-  return;
-#ifdef __IPHONE_8_0
-  if (&UIApplicationOpenSettingsURLString) {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-  }
-#endif
+  [_restaurantMenuMediator showUserProfile];
   
 }
 
 - (void)resetTablesTap {
   
   [[OMNBeaconBackgroundManager manager] forgetFoundBeacons];
-  
-}
-
-- (void)refreshOrders {
-  
-  return;
-
-  
-  __weak OMNRestaurantMenuVC *weakSelf = self;
-  [_restaurant getMenu:^(OMNMenu *menu) {
-    
-    [weakSelf finishLoadingMenu:menu];
-    
-  } error:^(NSError *error) {
-    
-    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-    
-  }];
   
 }
 
@@ -229,7 +175,6 @@ OMNProductDetailsVCDelegate> {
   
 }
 
-
 - (void)searchTableWithBlock:(OMNSearchTableVCBlock)block {
 
   __weak typeof(self)weakSelf = self;
@@ -265,70 +210,14 @@ OMNProductDetailsVCDelegate> {
     
   }];
   
-  
 }
 
 - (void)processOrders:(NSArray *)orders {
   
-  if (orders.count > 1) {
-
-    [self selectOrderFromOrders:orders];
-    
-  }
-  else if (1 == orders.count){
-
-    [self showOrder:[orders firstObject]];
-    
-  }
-  else {
-#warning 123
-    [self.navigationController popToViewController:self animated:YES];
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"На этом столике нет заказов", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-    
-  }
+  [_restaurantMenuMediator processOrders:orders];
   
 }
 
-- (void)selectOrderFromOrders:(NSArray *)orders {
-  
-  OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithOrders:orders];
-  ordersVC.delegate = self;
-  
-  OMNOrder *order = [orders firstObject];
-  ordersVC.navigationItem.title = order.tableId;
-  
-  [self.navigationController pushViewController:ordersVC animated:YES];
-  
-}
-
-#pragma mark - OMNOrdersVCDelegate
-
-- (void)ordersVC:(OMNOrdersVC *)ordersVC didSelectOrder:(OMNOrder *)order {
-  
-  [self showOrder:order];
-  
-}
-
-- (void)ordersVCDidCancel:(OMNOrdersVC *)ordersVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
-}
-
-- (void)showOrder:(OMNOrder *)order {
-  
-  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithOrder:order];
-  paymentVC.title = order.created;
-  [self.navigationController popToViewController:self animated:NO];
-  [self.navigationController pushViewController:paymentVC animated:YES];
-  
-}
-
-- (void)finishLoadingMenu:(OMNMenu *)menu {
-  
-  _menu = menu;
-  
-}
 
 #pragma mark
 

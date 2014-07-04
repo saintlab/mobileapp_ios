@@ -35,10 +35,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>ALSRubl.otf</string>
-		<string>FTN45.ttf</string>
-		<string>FTN55.ttf</string>
-		<string>CRC35.ttf</string>
-		<string>CRC55.ttf</string>
+		<string>FuturaPT-Medium.ttf</string>
+		<string>FuturaPT-Book.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

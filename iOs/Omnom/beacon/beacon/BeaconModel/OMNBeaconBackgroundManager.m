@@ -59,7 +59,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     self.backgroundBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:id];
     self.backgroundBeaconRegion.notifyOnEntry = YES;
     self.backgroundBeaconRegion.notifyOnExit = YES;
-    self.backgroundBeaconRegion.notifyEntryStateOnDisplay = YES;
     
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;

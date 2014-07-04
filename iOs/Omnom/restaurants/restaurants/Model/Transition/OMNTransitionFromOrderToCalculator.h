@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "OMNCustomTransition.h"
 
-@interface OMNTransitionFromOrderToCalculator : NSObject
-<UIViewControllerAnimatedTransitioning>
+@interface OMNTransitionFromOrderToCalculator : OMNCustomTransition
 
 @end

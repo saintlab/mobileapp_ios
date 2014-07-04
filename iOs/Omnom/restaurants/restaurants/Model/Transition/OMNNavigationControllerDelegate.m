@@ -7,12 +7,6 @@
 //
 
 #import "OMNNavigationControllerDelegate.h"
-#import "OMNSearchTableVC.h"
-#import "OMNOrdersVC.h"
-#import "OMNRestaurantMenuVC.h"
-#import "OMNProductDetailsVC.h"
-#import "OMNPayOrderVC.h"
-#import "OMNCalculatorVC.h"
 
 #import "OMNTransitionFromListToProduct.h"
 #import "OMNTransitionFromLoadingToBills.h"
@@ -20,37 +14,52 @@
 #import "OMNTransitionFromOrderToOrders.h"
 #import "OMNTransitionFromOrderToCalculator.h"
 
-@implementation OMNNavigationControllerDelegate
+
+
+@implementation OMNNavigationControllerDelegate {
+  NSMutableDictionary *_transitions;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    
+    _transitions = [NSMutableDictionary dictionary];
+    
+    [self addTansitionForClass:[OMNTransitionFromLoadingToBills class]];
+    [self addTansitionForClass:[OMNTransitionFromListToProduct class]];
+    [self addTansitionForClass:[OMNTransitionFromOrdersToOrder class]];
+    [self addTansitionForClass:[OMNTransitionFromOrderToCalculator class]];
+    [self addTansitionForClass:[OMNTransitionFromOrderToOrders class]];
+    
+  }
+  return self;
+}
+
+- (void)addTansitionForClass:(Class)class {
+  
+  if (NO == [class isSubclassOfClass:[OMNCustomTransition class]]) {
+    return;
+  }
+  
+  _transitions[[class key]] = NSStringFromClass(class);
+  
+}
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
                                   animationControllerForOperation:(UINavigationControllerOperation)operation
                                                fromViewController:(UIViewController *)fromVC
                                                  toViewController:(UIViewController *)toVC {
   
-  if ([fromVC isKindOfClass:[OMNSearchTableVC class]] &&
-      [toVC isKindOfClass:[OMNOrdersVC class]]) {
-    return [[OMNTransitionFromLoadingToBills alloc] init];
-  }
-  else if ([fromVC isKindOfClass:[OMNRestaurantMenuVC class]] &&
-      [toVC isKindOfClass:[OMNProductDetailsVC class]]) {
-    return [[OMNTransitionFromListToProduct alloc] init];
-  }
-  else if ([fromVC isKindOfClass:[OMNOrdersVC class]] &&
-           [toVC isKindOfClass:[OMNPayOrderVC class]]) {
-    return [[OMNTransitionFromOrdersToOrder alloc] init];
-  }
-  else if ([fromVC isKindOfClass:[OMNPayOrderVC class]] &&
-           [toVC isKindOfClass:[OMNCalculatorVC class]]) {
-    return [[OMNTransitionFromOrderToCalculator alloc] init];
-  }
-  else if ([fromVC isKindOfClass:[OMNPayOrderVC class]] &&
-           [toVC isKindOfClass:[OMNOrdersVC class]]) {
-    return [[OMNTransitionFromOrderToOrders alloc] init];
+  NSString *key = [OMNCustomTransition keyFromClass:[fromVC class] toClass:[toVC class]];
+  NSString *transition = _transitions[key];
+  
+  if (transition) {
+    return [[NSClassFromString(transition) alloc] init];
   }
   else {
     return nil;
   }
-
   
 }
 

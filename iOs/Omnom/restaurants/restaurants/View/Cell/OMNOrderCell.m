@@ -9,7 +9,7 @@
 #import "OMNOrderCell.h"
 #import "UIView+frame.h"
 #import "OMNConstants.h"
-#import "OMNAssetManager.h"
+#import <OMNStyler.h>
 
 @implementation OMNOrderCell {
   UILabel *_nameLabel;
@@ -32,20 +32,22 @@
 
 - (void)setup {
   
+  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
+  
   self.selectionStyle = UITableViewCellSelectionStyleBlue;
   self.selectedBackgroundView = [[UIView alloc] init];
   self.selectedBackgroundView.backgroundColor = kGreenColor;
   
   _nameLabel = [[UILabel alloc] init];
-  _nameLabel.textColor = [UIColor blackColor];
-  _nameLabel.font = [OMNAssetManager manager].splitCellFont;
+  _nameLabel.textColor = [style colorForKey:@"nameLabelColor"];
+  _nameLabel.font = [style fontForKey:@"nameLabelFont"];
   
   [self.contentView addSubview:_nameLabel];
   
   _priceLabel = [[UILabel alloc] init];
-  _priceLabel.textColor = [UIColor colorWithWhite:127 / 255. alpha:1];
+  _priceLabel.textColor = [style colorForKey:@"priceLabelColor"];
+  _priceLabel.font = [style fontForKey:@"priceLabelFont"];
   _priceLabel.textAlignment = NSTextAlignmentRight;
-  _priceLabel.font = [OMNAssetManager manager].splitCellFont;
   [self.contentView addSubview:_priceLabel];
   
   _iconView = [[UIImageView alloc] init];

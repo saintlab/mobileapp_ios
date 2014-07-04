@@ -1,0 +1,10 @@
+target 'OMNStyler', :exclusive => true do
+  pod "OMNStyler", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "OMNStyler", :path => "../"
+
+  pod 'Specta', '~> 0.2.1'
+  pod 'Expecta'
+end

@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNStubProductCell.h"
+#import "OMNCustomTransition.h"
 
-@interface OMNTransitionFromListToProduct : NSObject
-<UIViewControllerAnimatedTransitioning>
+@interface OMNTransitionFromListToProduct : OMNCustomTransition
 
 @end

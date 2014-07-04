@@ -29,5 +29,3 @@ typedef void(^OMNDataBlock)(id data);
 
 #define FuturaMediumFont(__FONTSIZE__) ([UIFont fontWithName:@"FuturaPT-Medium" size:__FONTSIZE__])
 #define FuturaBookFont(__FONTSIZE__) ([UIFont fontWithName:@"FuturaPT-Book" size:__FONTSIZE__])
-#define CirceLightFont(__FONTSIZE__) ([UIFont fontWithName:@"Circe-Light" size:__FONTSIZE__])
-#define CirceRegularFont(__FONTSIZE__) ([UIFont fontWithName:@"Circe-Regular" size:__FONTSIZE__])

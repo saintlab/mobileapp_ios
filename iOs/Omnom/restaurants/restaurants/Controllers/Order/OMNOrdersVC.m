@@ -33,6 +33,11 @@
   UIImageView *bgIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background_blur"]];
   self.collectionView.backgroundView = bgIV;
   
+  UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
+  flowLayout.sectionInset = UIEdgeInsetsMake(0.0f, 18.0f, 0.0f, 18.0f);
+  flowLayout.itemSize = CGSizeMake(273.0f, 415.0f);
+  flowLayout.minimumInteritemSpacing = 10.0f;
+  
   [self.collectionView registerClass:[OMNOrderItemCell class] forCellWithReuseIdentifier:@"OMNOrderItemCell"];
   
 }
@@ -71,22 +76,13 @@
   OMNOrderItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OMNOrderItemCell" forIndexPath:indexPath];
   OMNOrder *order = _orders[indexPath.item];
   cell.order = order;
-  
   return cell;
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-//  <UICollectionViewDelegateFlowLayout>
-  return CGSizeMake(273.0f, 415.0f);
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-  return 10.0f;
-}
-
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-  return UIEdgeInsetsMake(0.0f, 18.0f, 0.0f, 18.0f);
-}
+//- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+////  <UICollectionViewDelegateFlowLayout>
+//  return CGSizeMake(273.0f, 415.0f);
+//}
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
