@@ -218,7 +218,6 @@
   
 }
 
-
 #pragma mark
 
 - (OMNStubProductCell *)collectionViewCellForProduct:(OMNProduct *)product {

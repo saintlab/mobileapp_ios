@@ -137,8 +137,8 @@
     
   } failure:^(NSError *error) {
     
-    [confirmCodeVC reset];
-    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+    [confirmCodeVC resetAnimated:YES];
+    NSLog(@"%@", error);
     
   }];
   

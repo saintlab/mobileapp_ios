@@ -47,9 +47,28 @@
 
 }
 
-- (void)reset {
+- (void)resetAnimated:(BOOL)animated {
   
   [_code setString:@""];
+  
+  
+  
+  if (animated) {
+    
+    const CGFloat offset = 5.0f;
+    _codeView.transform = CGAffineTransformMakeTranslation(-offset, 0.0f);
+    [UIView animateWithDuration:0.1 delay:0. options:UIViewAnimationOptionAutoreverse | UIViewAnimationOptionRepeat animations:^{
+      [UIView setAnimationRepeatCount:2];
+      
+      _codeView.transform = CGAffineTransformMakeTranslation(offset, 0.0f);
+      
+    } completion:^(BOOL finished) {
+      
+      _codeView.transform = CGAffineTransformIdentity;
+      
+    }];
+  }
+  
   _codeView.code = @"";
   
 }

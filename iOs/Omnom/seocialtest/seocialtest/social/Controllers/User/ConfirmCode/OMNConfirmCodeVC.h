@@ -14,7 +14,7 @@
 
 - (instancetype)initWithPhone:(NSString *)phone;
 
-- (void)reset;
+- (void)resetAnimated:(BOOL)animated;
 
 @end
 

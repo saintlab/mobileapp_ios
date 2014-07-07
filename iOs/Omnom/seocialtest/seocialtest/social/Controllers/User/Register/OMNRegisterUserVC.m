@@ -133,7 +133,7 @@
     
   } failure:^(NSError *error) {
     
-    [confirmCodeVC reset];
+    [confirmCodeVC resetAnimated:YES];
     [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     
   }];
