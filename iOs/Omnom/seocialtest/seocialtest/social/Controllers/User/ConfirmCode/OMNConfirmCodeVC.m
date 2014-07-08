@@ -51,8 +51,6 @@
   
   [_code setString:@""];
   
-  
-  
   if (animated) {
     
     const CGFloat offset = 5.0f;

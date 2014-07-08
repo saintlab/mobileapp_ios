@@ -92,7 +92,6 @@ OMNProductDetailsVCDelegate>
   }
   else if (1 == orders.count){
     
-    [self popToRootViewControllerAnimated:NO];
     [self showOrder:[orders firstObject]];
     
   }
@@ -134,6 +133,7 @@ OMNProductDetailsVCDelegate>
 
 - (void)showOrder:(OMNOrder *)order {
   
+  [self popToRootViewControllerAnimated:NO];
   OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithOrder:order];
   paymentVC.title = order.created;
   [_rootViewController.navigationController pushViewController:paymentVC animated:YES];
