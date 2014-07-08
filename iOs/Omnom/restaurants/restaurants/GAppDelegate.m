@@ -9,7 +9,6 @@
 #import "GAppDelegate.h"
 #import "OMNAuthorisation.h"
 #import "OMNStartVC.h"
-#import "OMNBeaconBackgroundManager.h"
 #import <UAirship.h>
 #import <UAConfig.h>
 #import "OMNDemoVC.h"
@@ -31,11 +30,8 @@
   
   [OMNAuthorisation authorisation];
   
-  [OMNBeaconBackgroundManager manager];
-  
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
-
   
   return YES;
   

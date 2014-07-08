@@ -108,7 +108,7 @@ OMNRestaurantMenuVCDelegate>
 }
 
 - (void)processAuthorisation {
-  
+
   __weak typeof(self)weakSelf = self;
   OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
     

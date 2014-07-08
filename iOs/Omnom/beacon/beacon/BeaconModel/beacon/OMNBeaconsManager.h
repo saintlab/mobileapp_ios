@@ -13,16 +13,15 @@ typedef  NS_ENUM(NSInteger, BeaconsManagerStatus) {
   kBeaconsManagerStatusEnabled,
   kBeaconsManagerStatusDenied,
   kBeaconsManagerStatusRestricted,
-  
-  kBeaconsManagerStatusBluetoothOff,
-  kBeaconsManagerStatusBluetoothUnsupported,
-  kBeaconsManagerStatusBluetoothUnauthorized,
+
 };
 
 typedef void(^OMNFoundBeaconsBlock)(NSArray *foundBeacons);
 typedef void(^OMNBeaconsManagerStatusBlock)(BeaconsManagerStatus status);
 
 @interface OMNBeaconsManager : NSObject 
+
+@property (nonatomic, assign, readonly) BOOL ragingMonitorEnabled;
 
 - (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block status:(OMNBeaconsManagerStatusBlock)statusBlock;
 

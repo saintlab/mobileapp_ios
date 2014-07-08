@@ -10,9 +10,15 @@
 #import "OMNBeaconsManager.h"
 #import "OMNBeacon.h"
 #import "OMNTablePositionVC.h"
+#import "OMNAskNavigationPermissionsVC.h"
+#import "OMNBluetoothManager.h"
+#import "OMNScanQRCodeVC.h"
+#import "OMNTurnOnBluetoothVC.h"
 
 @interface OMNSearchTableVC ()
-<OMNTablePositionVCDelegate>
+<OMNTablePositionVCDelegate,
+OMNAskNavigationPermissionsVCDelegate,
+OMNScanQRCodeVCDelegate>
 
 @end
 
@@ -46,9 +52,6 @@
   
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub table", nil) style:UIBarButtonItemStylePlain target:self action:@selector(useStubBeacon)];
   
-  _beaconManager = [[OMNBeaconsManager alloc] init];
-  [self startSearchingTables];
-  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -57,6 +60,111 @@
   self.navigationController.navigationBar.shadowImage = nil;
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
   [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+#if TARGET_IPHONE_SIMULATOR
+  
+  [self checkBluetoothState];
+  
+#else
+
+  if (kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
+    [self processNotDeterminedLocationManagerSituation];
+  }
+  else {
+    [self checkBluetoothState];
+  }
+
+#endif
+  
+  
+}
+
+- (void)processNotDeterminedLocationManagerSituation {
+  
+  OMNAskNavigationPermissionsVC *askNavigationPermissionsVC = [[OMNAskNavigationPermissionsVC alloc] init];
+  askNavigationPermissionsVC.delegate = self;
+  [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
+  
+}
+
+- (void)checkBluetoothState {
+  
+  __weak typeof(self)weakSelf = self;
+
+  [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
+    
+    switch (state) {
+      case CBCentralManagerStatePoweredOn: {
+        
+        [weakSelf startSearchingTables];
+        [[OMNBluetoothManager manager] stop];
+        
+      } break;
+      case CBCentralManagerStateUnsupported: {
+        
+        [weakSelf processBLEUnsupportedSituation];
+        [[OMNBluetoothManager manager] stop];
+        
+      } break;
+      case CBCentralManagerStatePoweredOff: {
+        
+        [weakSelf processBLEOffSituation];
+        
+      } break;
+      case CBCentralManagerStateUnauthorized: {
+        
+        [weakSelf processBLEUnauthorizedSituation];
+        
+      } break;
+      case CBCentralManagerStateResetting:
+      case CBCentralManagerStateUnknown: {
+        //do noithing
+      } break;
+    }
+    
+  }];
+  
+}
+
+- (void)processBLEUnsupportedSituation {
+  
+  OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
+  scanQRCodeVC.delegate = self;
+  [self.navigationController pushViewController:scanQRCodeVC animated:YES];
+  
+}
+
+#pragma mark - OMNScanQRCodeVCDelegate
+
+- (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
+  
+  [self.navigationController popToViewController:self animated:NO];
+
+#warning replace to real qr
+  //TODO:replace to real qr
+  [self useStubBeacon];
+  
+}
+
+- (void)scanQRCodeVCDidCancel:(OMNScanQRCodeVC *)scanQRCodeVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+- (void)processBLEOffSituation {
+  
+  OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] init];
+  [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
+  
+}
+
+- (void)processBLEUnauthorizedSituation {
+  //do nothing at this moment
 }
 
 - (void)cancelTap {
@@ -79,6 +187,16 @@
 }
 
 - (void)startSearchingTables {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
+  if (nil == _beaconManager) {
+    _beaconManager = [[OMNBeaconsManager alloc] init];
+  }
+  
+  if (_beaconManager.ragingMonitorEnabled) {
+    return;
+  }
   
   __weak typeof(self)weakSelf = self;
   [_beaconManager startMonitoringNearestBeacons:^(NSArray *foundBeacons) {
@@ -149,29 +267,21 @@
       [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
       
     } break;
-    case kBeaconsManagerStatusBluetoothOff: {
-      
-      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Включите блютус", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    case kBeaconsManagerStatusEnabled: {
       
     } break;
-    case kBeaconsManagerStatusBluetoothUnsupported: {
-
-#if TARGET_IPHONE_SIMULATOR
-#else
-      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Данное устройство не поддерживает bluetooth", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-#endif
-      
-    } break;
-    case kBeaconsManagerStatusBluetoothUnauthorized: {
-      
-      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование bluetooth", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-      
-    } break;
-    case kBeaconsManagerStatusEnabled:
     case kBeaconsManagerStatusNotDetermined: {
       //do nothing
     } break;
   }
+  
+}
+
+#pragma mark - OMNAskNavigationPermissionsVCDelegate
+
+- (void)askNavigationPermissionsVCDidGrantPermission:(OMNAskNavigationPermissionsVC *)askNavigationPermissionsVC {
+  [self.navigationController popToViewController:self animated:YES];
+  [self startSearchingTables];
   
 }
 
@@ -218,8 +328,7 @@
   
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

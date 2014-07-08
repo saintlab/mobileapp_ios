@@ -46,17 +46,17 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   self = [super init];
   if (self) {
     
-    NSString *id = [[NSUserDefaults standardUserDefaults] objectForKey:@"device_id"];
-    if (nil == id) {
+    NSString *device_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"device_id"];
+    if (nil == device_id) {
       
       CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
-      id = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
+      device_id = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
       CFRelease(newUniqueId);
-      [[NSUserDefaults standardUserDefaults] setObject:id forKey:@"device_id"];
+      [[NSUserDefaults standardUserDefaults] setObject:device_id forKey:@"device_id"];
       [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    self.backgroundBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:id];
+    self.backgroundBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:device_id];
     self.backgroundBeaconRegion.notifyOnEntry = YES;
     self.backgroundBeaconRegion.notifyOnExit = YES;
     

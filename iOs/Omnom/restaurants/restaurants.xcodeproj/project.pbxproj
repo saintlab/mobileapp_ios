@@ -130,6 +130,14 @@
 		93676E4B18D1F10300FC55F1 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E4A18D1F10300FC55F1 /* menu.json */; };
 		93676E4C18D1F10300FC55F1 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E4A18D1F10300FC55F1 /* menu.json */; };
 		9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9367CE8C193CC67600116AC2 /* homeScreenTest.m */; };
+		93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */; };
+		93750B22196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */; };
+		93750B23196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */; };
+		93750B24196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */; };
+		93750B28196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
+		93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
+		93750B2A196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */; };
+		93750B2B196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */; };
 		937822881963E21A00CE6661 /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937822861963E21A00CE6661 /* OMNOrdersVC.m */; };
 		937822891963E21A00CE6661 /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937822861963E21A00CE6661 /* OMNOrdersVC.m */; };
 		9378228D1963E29900CE6661 /* OMNPayOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9378228B1963E29900CE6661 /* OMNPayOrderVC.m */; };
@@ -169,6 +177,10 @@
 		9390D2651966E945007E13AB /* UINavigationBar.json in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2631966E945007E13AB /* UINavigationBar.json */; };
 		9390D2671966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2661966EAF7007E13AB /* OMNNavigationBarSelector.json */; };
 		9390D2681966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2661966EAF7007E13AB /* OMNNavigationBarSelector.json */; };
+		9390D2D1196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9390D2CF196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m */; };
+		9390D2D2196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9390D2CF196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m */; };
+		9390D2D3196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2D0196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib */; };
+		9390D2D4196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2D0196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib */; };
 		939689B2195BD76E00AAAF9C /* OMNWizardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939689B1195BD76E00AAAF9C /* OMNWizardVC.m */; };
 		939689B3195BD76E00AAAF9C /* OMNWizardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939689B1195BD76E00AAAF9C /* OMNWizardVC.m */; };
 		939689B6195BDD3400AAAF9C /* OMNViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 939689B5195BDD3400AAAF9C /* OMNViewControllerTest.m */; };
@@ -408,6 +420,12 @@
 		93676E3F18D1EAB900FC55F1 /* restaurants.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
 		93676E4A18D1F10300FC55F1 /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu.json; sourceTree = "<group>"; };
 		9367CE8C193CC67600116AC2 /* homeScreenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = homeScreenTest.m; sourceTree = "<group>"; };
+		93750B1E196BF40F0031AD31 /* OMNScanQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScanQRCodeVC.h; sourceTree = "<group>"; };
+		93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNScanQRCodeVC.m; sourceTree = "<group>"; };
+		93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNScanQRCodeVC.xib; sourceTree = "<group>"; };
+		93750B25196C14100031AD31 /* OMNTurnOnBluetoothVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTurnOnBluetoothVC.h; sourceTree = "<group>"; };
+		93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTurnOnBluetoothVC.m; sourceTree = "<group>"; };
+		93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNTurnOnBluetoothVC.xib; sourceTree = "<group>"; };
 		937822851963E21A00CE6661 /* OMNOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrdersVC.h; sourceTree = "<group>"; };
 		937822861963E21A00CE6661 /* OMNOrdersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrdersVC.m; sourceTree = "<group>"; };
 		937822871963E21A00CE6661 /* OMNOrderVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderVCDelegate.h; sourceTree = "<group>"; };
@@ -454,6 +472,9 @@
 		9390D2601966E559007E13AB /* OMNOrderCell.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNOrderCell.json; sourceTree = "<group>"; };
 		9390D2631966E945007E13AB /* UINavigationBar.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = UINavigationBar.json; sourceTree = "<group>"; };
 		9390D2661966EAF7007E13AB /* OMNNavigationBarSelector.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNNavigationBarSelector.json; sourceTree = "<group>"; };
+		9390D2CE196BD70E007E13AB /* OMNAskNavigationPermissionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAskNavigationPermissionsVC.h; sourceTree = "<group>"; };
+		9390D2CF196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAskNavigationPermissionsVC.m; sourceTree = "<group>"; };
+		9390D2D0196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNAskNavigationPermissionsVC.xib; sourceTree = "<group>"; };
 		939689B0195BD76E00AAAF9C /* OMNWizardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWizardVC.h; sourceTree = "<group>"; };
 		939689B1195BD76E00AAAF9C /* OMNWizardVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWizardVC.m; sourceTree = "<group>"; };
 		939689B4195BDD3400AAAF9C /* OMNViewControllerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNViewControllerTest.h; sourceTree = "<group>"; };
@@ -598,6 +619,15 @@
 				93C9908F193DBBE40028F76C /* OMNTablePositionVC.h */,
 				93C99090193DBBE40028F76C /* OMNTablePositionVC.m */,
 				93C99091193DBBE40028F76C /* OMNTablePositionVC.xib */,
+				9390D2CE196BD70E007E13AB /* OMNAskNavigationPermissionsVC.h */,
+				9390D2CF196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m */,
+				9390D2D0196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib */,
+				93750B1E196BF40F0031AD31 /* OMNScanQRCodeVC.h */,
+				93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */,
+				93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */,
+				93750B25196C14100031AD31 /* OMNTurnOnBluetoothVC.h */,
+				93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */,
+				93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */,
 			);
 			name = SearchTable;
 			sourceTree = "<group>";
@@ -1366,6 +1396,7 @@
 				930555021935DA7C00E6F4EC /* OMNPayCardVC.xib in Resources */,
 				930554DB19347C4900E6F4EC /* OMNSearchTableVC.xib in Resources */,
 				935C284219066755003B4881 /* fill-form in Resources */,
+				9390D2D3196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib in Resources */,
 				93A59B131933181000AE1A6F /* restaurants.data in Resources */,
 				93C99161193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
@@ -1385,6 +1416,8 @@
 				93B9048719654B43007D21C4 /* OMNPaymentVC.xib in Resources */,
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				93F02EB0195968D100829E4D /* AirshipConfig.plist in Resources */,
+				93750B23196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
+				93750B2A196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */,
 				9321180A1962A2F300183729 /* OMNAddBankCardVC.xib in Resources */,
 				93676E0818D1E4FC00FC55F1 /* Images.xcassets in Resources */,
 				9321182E1962E16100183729 /* OMNProductDetailsVC.xib in Resources */,
@@ -1419,6 +1452,7 @@
 				9390D2651966E945007E13AB /* UINavigationBar.json in Resources */,
 				9321180B1962A2F300183729 /* OMNAddBankCardVC.xib in Resources */,
 				9390D25919668A3A007E13AB /* OMNEditTableVC.json in Resources */,
+				9390D2D4196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib in Resources */,
 				93B9049019654DE1007D21C4 /* OMNRatingVC.xib in Resources */,
 				93C8C532195839DD00714998 /* Alert.caf in Resources */,
 				93C99095193DBBE40028F76C /* OMNTablePositionVC.xib in Resources */,
@@ -1426,6 +1460,8 @@
 				939689C1195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
 				93A994BC19484C2D005B403C /* OMNRegisterUserVC.xib in Resources */,
 				93C9915F193F175E0028F76C /* FuturaPT-Book.ttf in Resources */,
+				93750B2B196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */,
+				93750B24196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
 				932FB2E4195AC07300960F03 /* OMNUserInfoVC.xib in Resources */,
 				9321182F1962E16100183729 /* OMNProductDetailsVC.xib in Resources */,
 				93B9048819654B43007D21C4 /* OMNPaymentVC.xib in Resources */,
@@ -1512,6 +1548,7 @@
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
 				930554D31934793000E6F4EC /* OMNBeaconRangingManager.m in Sources */,
 				932117E9196299DB00183729 /* OMNBankCardsVC.m in Sources */,
+				93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
 				938E8F58192F3A200088EF38 /* OMNMenu.m in Sources */,
 				9319FDCD192F362F0053F3A4 /* OMNBeaconTableVC.m in Sources */,
 				9305550D1935DAEA00E6F4EC /* OMNGPBPayVC.m in Sources */,
@@ -1563,6 +1600,7 @@
 				938E8F53192F3A200088EF38 /* OMNOperationManager.m in Sources */,
 				932117FA1962A1F000183729 /* OMNBankCardsModel.m in Sources */,
 				930D8BAB1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
+				9390D2D1196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m in Sources */,
 				9321181A1962DF7C00183729 /* OMNProduct.m in Sources */,
 				93B9048519654B43007D21C4 /* OMNPaymentVC.m in Sources */,
 				937822A41963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,
@@ -1587,6 +1625,7 @@
 				930554DA19347C4900E6F4EC /* OMNSearchTableVC.m in Sources */,
 				939689BE195C010900AAAF9C /* OMNWizardPageVC.m in Sources */,
 				938E8F56192F3A200088EF38 /* OMNAcquiring.m in Sources */,
+				93750B28196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */,
 				93C99116193EF6F20028F76C /* OMNOrder.m in Sources */,
 				939689B6195BDD3400AAAF9C /* OMNViewControllerTest.m in Sources */,
 				932117F81962A1F000183729 /* OMNBankCard.m in Sources */,
@@ -1615,10 +1654,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9390D2D2196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m in Sources */,
 				93B9047D19652BBF007D21C4 /* OMNTransitionFromLoadingToBills.m in Sources */,
 				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				935C283F19066737003B4881 /* fill-form in Sources */,
 				932118091962A2F300183729 /* OMNAddBankCardVC.m in Sources */,
+				93750B22196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
 				93A994B619484C2D005B403C /* OMNLoginVC.m in Sources */,
 				9363700819458EAB000700D2 /* OMNUserInfoTransition.m in Sources */,
 				932FB2D6195ABA7B00960F03 /* OMNUserInfoModel.m in Sources */,
@@ -1643,6 +1684,7 @@
 				937822891963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
 				93B9049919655168007D21C4 /* OMNRatingProductCell.m in Sources */,
 				9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */,
+				93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */,
 				938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */,
 				932118131962D8A700183729 /* OMNProductsModel.m in Sources */,
 				9321182D1962E16100183729 /* OMNProductDetailsVC.m in Sources */,
@@ -1796,7 +1838,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "998D3ADB-94D5-48C3-9107-440CC644EA1F";
+				PROVISIONING_PROFILE = "E62FA480-4C0C-41D9-BEC5-A426AB161DB6";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1820,7 +1862,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "998D3ADB-94D5-48C3-9107-440CC644EA1F";
+				PROVISIONING_PROFILE = "E62FA480-4C0C-41D9-BEC5-A426AB161DB6";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
