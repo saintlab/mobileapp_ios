@@ -198,7 +198,7 @@ UITableViewDelegate>
 
 - (void)ratingVCDidFinish:(OMNRatingVC *)ratingVC {
   
-  [self.navigationController popToViewController:self animated:YES];
+  [self.delegate payOrderVCDidFinish:self];
   
 }
 

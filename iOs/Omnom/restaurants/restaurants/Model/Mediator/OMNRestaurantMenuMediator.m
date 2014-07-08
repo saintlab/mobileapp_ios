@@ -16,7 +16,8 @@
 
 @interface OMNRestaurantMenuMediator ()
 <OMNOrdersVCDelegate,
-OMNProductDetailsVCDelegate>
+OMNProductDetailsVCDelegate,
+OMNPayOrderVCDelegate>
 
 @property (nonatomic, strong) UIViewController *rootViewController;
 
@@ -96,7 +97,8 @@ OMNProductDetailsVCDelegate>
     
   }
   else {
-#warning 123
+#warning replace to real order
+    //TODO: replce to no order situation
     [self popToRootViewControllerAnimated:YES];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"На этом столике нет заказов", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     
@@ -135,8 +137,17 @@ OMNProductDetailsVCDelegate>
   
   [self popToRootViewControllerAnimated:NO];
   OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithOrder:order];
+  paymentVC.delegate = self;
   paymentVC.title = order.created;
   [_rootViewController.navigationController pushViewController:paymentVC animated:YES];
+  
+}
+
+#pragma mark - OMNPayOrderVCDelegate
+
+- (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
+  
+  [self popToRootViewControllerAnimated:YES];
   
 }
 

@@ -7,11 +7,19 @@
 //
 
 @class OMNOrder;
+@protocol OMNPayOrderVCDelegate;
 
 @interface OMNPayOrderVC : UIViewController
 
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
+
+@end
+
+@protocol OMNPayOrderVCDelegate <NSObject>
+
+- (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC;
 
 @end

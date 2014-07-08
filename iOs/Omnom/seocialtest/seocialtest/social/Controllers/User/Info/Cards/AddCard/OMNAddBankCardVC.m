@@ -67,7 +67,7 @@ OMNCardEnterControlDelegate>
   scanViewController.collectExpiry = YES;
   scanViewController.appToken = CardIOAppToken;
 
-  [self.presentingViewController presentViewController:scanViewController animated:YES completion:nil];
+  [self presentViewController:scanViewController animated:YES completion:nil];
   
 }
 
