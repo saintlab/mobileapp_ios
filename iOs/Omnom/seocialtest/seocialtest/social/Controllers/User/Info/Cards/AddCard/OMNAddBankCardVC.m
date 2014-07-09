@@ -63,10 +63,10 @@ OMNCardEnterControlDelegate>
 - (IBAction)scanCardTap:(id)sender {
   
   CardIOPaymentViewController *scanViewController = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
-  scanViewController.collectCVV = YES;
-  scanViewController.collectExpiry = YES;
+  scanViewController.collectCVV = NO;
+  scanViewController.collectExpiry = NO;
+  scanViewController.collectPostalCode = NO;
   scanViewController.appToken = CardIOAppToken;
-
   [self presentViewController:scanViewController animated:YES completion:nil];
   
 }
@@ -83,13 +83,7 @@ OMNCardEnterControlDelegate>
   // Do whatever needs to be done to deliver the purchased items.
   [self dismissViewControllerAnimated:YES completion:nil];
   
-  _cardInfo = [[OMNBankCard alloc] init];
-  _cardInfo.cardNumber = info.cardNumber;
-  _cardInfo.expiryMonth = info.expiryMonth;
-  _cardInfo.expiryYear = info.expiryYear;
-  _cardInfo.cvv = info.cvv;
-
-  
+  _cardEnterControl.pan = info.cardNumber;
   
 }
 

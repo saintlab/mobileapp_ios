@@ -7,7 +7,6 @@
 //
 
 #import "OMNBeaconsManager.h"
-#import <CoreLocation/CoreLocation.h>
 #import "OMNBeacon.h"
 #import "CLBeacon+GBeaconAdditions.h"
 #import "OMNBeaconRangingManager.h"
@@ -104,23 +103,8 @@
 
 - (void)processStatus:(CLAuthorizationStatus)status {
   
-  if (nil == _statusBlock) {
-    return;
-  }
-  
-  switch (status) {
-    case kCLAuthorizationStatusRestricted: {
-      _statusBlock(kBeaconsManagerStatusRestricted);
-    } break;
-    case kCLAuthorizationStatusDenied: {
-      _statusBlock(kBeaconsManagerStatusDenied);
-    } break;
-    case kCLAuthorizationStatusNotDetermined: {
-      _statusBlock(kBeaconsManagerStatusNotDetermined);
-    } break;
-    default: {
-      _statusBlock(kBeaconsManagerStatusEnabled);
-    } break;
+  if (_statusBlock) {
+    _statusBlock(status);
   }
   
 }

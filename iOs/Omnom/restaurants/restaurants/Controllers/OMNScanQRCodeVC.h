@@ -15,6 +15,8 @@
 
 @property (nonatomic, weak) id<OMNScanQRCodeVCDelegate> delegate;
 
+- (void)stopScanning;
+
 @end
 
 @protocol OMNScanQRCodeVCDelegate <NSObject>

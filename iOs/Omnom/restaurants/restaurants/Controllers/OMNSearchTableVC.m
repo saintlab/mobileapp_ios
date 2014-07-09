@@ -28,6 +28,7 @@ OMNScanQRCodeVCDelegate>
   dispatch_block_t _cancelBlock;
   
   __weak IBOutlet UILabel *_searchLabel;
+  
 }
 
 - (instancetype)initWithBlock:(OMNSearchTableVCBlock)block cancelBlock:(dispatch_block_t)cancelBlock {
@@ -50,7 +51,9 @@ OMNScanQRCodeVCDelegate>
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub table", nil) style:UIBarButtonItemStylePlain target:self action:@selector(useStubBeacon)];
+  UIBarButtonItem *stubBeaconButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub table", nil) style:UIBarButtonItemStylePlain target:self action:@selector(useStubBeacon)];
+  UIBarButtonItem *qrcodeButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"QR code", nil) style:UIBarButtonItemStylePlain target:self action:@selector(useQRCode)];
+  self.navigationItem.rightBarButtonItems = @[stubBeaconButton, qrcodeButton];
   
 }
 
@@ -80,7 +83,6 @@ OMNScanQRCodeVCDelegate>
 
 #endif
   
-  
 }
 
 - (void)processNotDeterminedLocationManagerSituation {
@@ -106,7 +108,7 @@ OMNScanQRCodeVCDelegate>
       } break;
       case CBCentralManagerStateUnsupported: {
         
-        [weakSelf processBLEUnsupportedSituation];
+        [weakSelf useQRCode];
         [[OMNBluetoothManager manager] stop];
         
       } break;
@@ -130,7 +132,7 @@ OMNScanQRCodeVCDelegate>
   
 }
 
-- (void)processBLEUnsupportedSituation {
+- (void)useQRCode {
   
   OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
   scanQRCodeVC.delegate = self;
@@ -142,16 +144,14 @@ OMNScanQRCodeVCDelegate>
 
 - (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
   
-  [self.navigationController popToViewController:self animated:NO];
-
-#warning replace to real qr
-  //TODO:replace to real qr
+  [scanQRCodeVC stopScanning];
   [self useStubBeacon];
   
 }
 
 - (void)scanQRCodeVCDidCancel:(OMNScanQRCodeVC *)scanQRCodeVC {
   
+  [scanQRCodeVC stopScanning];
   [self.navigationController popToViewController:self animated:YES];
   
 }
@@ -203,7 +203,7 @@ OMNScanQRCodeVCDelegate>
 
     [weakSelf checkNearestBeacons:foundBeacons];
     
-  } status:^(BeaconsManagerStatus status) {
+  } status:^(CLAuthorizationStatus status) {
     
     [weakSelf processStatus:status];
     
@@ -258,21 +258,26 @@ OMNScanQRCodeVCDelegate>
   
 }
 
-- (void)processStatus:(BeaconsManagerStatus)status {
+- (void)processStatus:(CLAuthorizationStatus)status {
   
   switch (status) {
-    case kBeaconsManagerStatusDenied:
-    case kBeaconsManagerStatusRestricted: {
-      
-      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    case kCLAuthorizationStatusAuthorized: {
       
     } break;
-    case kBeaconsManagerStatusEnabled: {
+    case kCLAuthorizationStatusDenied: {
+      
+      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:@"kCLAuthorizationStatusDenied" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
       
     } break;
-    case kBeaconsManagerStatusNotDetermined: {
-      //do nothing
+    case kCLAuthorizationStatusNotDetermined: {
+      
     } break;
+    case kCLAuthorizationStatusRestricted: {
+
+      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:@"kCLAuthorizationStatusRestricted" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+      
+    } break;
+    
   }
   
 }

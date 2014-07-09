@@ -79,6 +79,14 @@
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Reset tables", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resetTablesTap)];
+  self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+  
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"User", nil) style:UIBarButtonItemStylePlain target:self	action:@selector(userProfileTap)];
+  self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+  
+  [self.navigationItem setHidesBackButton:YES];
+  
 }
 
 - (void)setup {
@@ -98,20 +106,13 @@
      NSForegroundColorAttributeName : [style colorForKey:@"titleColor"]
      }];
   
-  [self.navigationItem setHidesBackButton:YES];
+  
   
   self.automaticallyAdjustsScrollViewInsets = NO;
-  
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Reset tables", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resetTablesTap)];
-  self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
   
   _backgroundIV.image = [UIImage imageNamed:@"background_blur"];
 
   _waiterIsCalledView.alpha = 0.0f;
-  
-  UIBarButtonItem *userButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"User", nil) style:UIBarButtonItemStylePlain target:self	action:@selector(userProfileTap)];
-  userButton.tintColor = [UIColor whiteColor];
-  self.navigationItem.rightBarButtonItems = @[userButton];
   
   [[OMNAuthorisation authorisation] setLogoutCallback:^{
     

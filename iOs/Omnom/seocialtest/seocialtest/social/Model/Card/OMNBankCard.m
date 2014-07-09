@@ -27,8 +27,15 @@
   [aCoder encodeObject:@(self.expiryYear) forKey:@"expiryYear"];
 }
 
-- (NSString *)redactedCardNumber{
-  return self.cardNumber;
+- (NSString *)redactedCardNumber {
+  
+  if (self.cardNumber.length == 16) {
+    return [self.cardNumber stringByReplacingCharactersInRange:NSMakeRange(2, self.cardNumber.length - 6) withString:@"** **** **** "];
+  }
+  else {
+    return self.cardNumber;
+  }
+
 }
 
 - (NSString *)fillFormScript {

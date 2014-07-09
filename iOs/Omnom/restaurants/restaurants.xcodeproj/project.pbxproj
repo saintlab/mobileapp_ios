@@ -138,6 +138,7 @@
 		93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
 		93750B2A196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */; };
 		93750B2B196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */; };
+		93750B2D196D51020031AD31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93750B2C196D51020031AD31 /* AVFoundation.framework */; };
 		937822881963E21A00CE6661 /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937822861963E21A00CE6661 /* OMNOrdersVC.m */; };
 		937822891963E21A00CE6661 /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937822861963E21A00CE6661 /* OMNOrdersVC.m */; };
 		9378228D1963E29900CE6661 /* OMNPayOrderVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9378228B1963E29900CE6661 /* OMNPayOrderVC.m */; };
@@ -426,6 +427,7 @@
 		93750B25196C14100031AD31 /* OMNTurnOnBluetoothVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTurnOnBluetoothVC.h; sourceTree = "<group>"; };
 		93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTurnOnBluetoothVC.m; sourceTree = "<group>"; };
 		93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNTurnOnBluetoothVC.xib; sourceTree = "<group>"; };
+		93750B2C196D51020031AD31 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		937822851963E21A00CE6661 /* OMNOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrdersVC.h; sourceTree = "<group>"; };
 		937822861963E21A00CE6661 /* OMNOrdersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrdersVC.m; sourceTree = "<group>"; };
 		937822871963E21A00CE6661 /* OMNOrderVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderVCDelegate.h; sourceTree = "<group>"; };
@@ -540,6 +542,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93750B2D196D51020031AD31 /* AVFoundation.framework in Frameworks */,
 				930554DD1934914F00E6F4EC /* CoreTelephony.framework in Frameworks */,
 				93676DEF18D1E4FC00FC55F1 /* CoreGraphics.framework in Frameworks */,
 				93676DF118D1E4FC00FC55F1 /* UIKit.framework in Frameworks */,
@@ -937,6 +940,7 @@
 		93676DEB18D1E4FC00FC55F1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93750B2C196D51020031AD31 /* AVFoundation.framework */,
 				930554DC1934914F00E6F4EC /* CoreTelephony.framework */,
 				93676DEC18D1E4FC00FC55F1 /* Foundation.framework */,
 				93676DEE18D1E4FC00FC55F1 /* CoreGraphics.framework */,
@@ -1838,7 +1842,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E62FA480-4C0C-41D9-BEC5-A426AB161DB6";
+				PROVISIONING_PROFILE = "78C0325F-65BA-4160-82C3-A458581A6B5B";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1862,7 +1866,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E62FA480-4C0C-41D9-BEC5-A426AB161DB6";
+				PROVISIONING_PROFILE = "78C0325F-65BA-4160-82C3-A458581A6B5B";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

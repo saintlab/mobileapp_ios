@@ -34,6 +34,7 @@ end
 target :restaurants do
   import_all
   pod 'EAIntroView'
+  pod 'ZBarSDK'
   xcodeproj 'restaurants/restaurants.xcodeproj'
 end
 
@@ -57,9 +58,4 @@ end
 target :seocialtest do
   import_all
   xcodeproj 'seocialtest/seocialtest.xcodeproj'
-end
-
-target :fontTest do
-  import_all
-  xcodeproj 'fontTest/fontTest.xcodeproj'
 end

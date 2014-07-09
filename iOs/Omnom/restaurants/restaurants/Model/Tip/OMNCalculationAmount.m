@@ -121,7 +121,12 @@
   
   if (tip.percent < 0.01) {
 
-    NSString *title = (tip.amount > 0) ? ([NSString stringWithFormat:@"%.0fi", tip.amount]) : (NSLocalizedString(@"Другой", nil));
+    NSString *title = NSLocalizedString(@"Другой", nil);
+    if (tip.amount > 0 &&
+        _expectedValue > 0) {
+      double percent = 100*tip.amount/_expectedValue;
+      title = [NSString stringWithFormat:@"%.0f%%\n%.0fi", percent, tip.amount];
+    }
     [tipButton setTitle:title forState:UIControlStateNormal];
     [tipButton setTitle:title forState:UIControlStateSelected];
     

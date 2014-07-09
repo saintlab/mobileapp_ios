@@ -25,6 +25,7 @@
 #import "OMNOrdersVC.h"
 #import "OMNPaymentVC.h"
 #import "OMNRatingVC.h"
+#import <BlocksKit+UIKit.h>
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -76,6 +77,8 @@ UITableViewDelegate>
   b.center = CGPointMake(100, _tableView.backgroundView.height - 20);
   [_tableView.backgroundView addSubview:b];
   
+  [self checkPushNotifications];
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -119,6 +122,26 @@ UITableViewDelegate>
   
   UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap:)];
   [_tableView addGestureRecognizer:tapGR];
+  
+}
+
+- (void)checkPushNotifications {
+  
+  NSLog(@"%d", [[UIApplication sharedApplication] enabledRemoteNotificationTypes]);
+  
+  if (UIRemoteNotificationTypeNone == [[UIApplication sharedApplication] enabledRemoteNotificationTypes]) {
+
+    [UIAlertView bk_showAlertViewWithTitle:nil message:NSLocalizedString(@"Разрешить Omnom использовать Push сообщения для отображения информации о текущем столе?", nil) cancelButtonTitle:NSLocalizedString(@"Запретить", nil) otherButtonTitles:@[NSLocalizedString(@"Разрешить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+
+      if (buttonIndex != alertView.cancelButtonIndex) {
+
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+        
+      }
+      
+    }];
+    
+  }
   
 }
 

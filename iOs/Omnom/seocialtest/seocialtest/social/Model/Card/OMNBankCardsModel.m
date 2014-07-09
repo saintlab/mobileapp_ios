@@ -67,7 +67,7 @@
   }
   
   OMNBankCard *card = _cards[indexPath.row];
-  cell.textLabel.text = card.cardNumber;
+  cell.textLabel.text = card.redactedCardNumber;
   cell.detailTextLabel.text = @"visa";
   return cell;
   

@@ -13,12 +13,15 @@
 @implementation OMNTipButton
 
 - (void)dealloc {
-  
-  [_tip removeObserver:self forKeyPath:NSStringFromSelector(@selector(selected))];
+  @try {
+    [_tip removeObserver:self forKeyPath:NSStringFromSelector(@selector(selected))];
+  }
+  @catch (NSException *exception) {
+  }
   
 }
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self setup];
