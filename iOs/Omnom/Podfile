@@ -29,6 +29,8 @@ def import_all
   pod 'UrbanAirship-iOS-SDK'
   pod "OMNStyler", :path => "../OMNStyler/"
   pod "OMNCardEnterControl", :path => "../OMNCardEnterControl/"
+  pod "OMNBeacon", :path => "../OMNBeacon/"
+  
 end
 
 target :restaurants do
@@ -42,16 +44,6 @@ target :restaurantsTests do
   pod 'OCMock'
   pod 'KIF', '~> 3.0.4'
   xcodeproj 'restaurants/restaurants.xcodeproj'
-end
-
-target :beacon do
-  import_pods
-  xcodeproj 'beacon/beacon.xcodeproj'
-end
-
-target :beaconTests do
-  import_pods
-  xcodeproj 'beacon/beacon.xcodeproj'
 end
 
 target :seocialtest do

@@ -1,0 +1,9 @@
+target 'OMNBeacon', :exclusive => true do
+  pod "OMNBeacon", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "OMNBeacon", :path => "../"
+
+  pod 'Kiwi'
+end

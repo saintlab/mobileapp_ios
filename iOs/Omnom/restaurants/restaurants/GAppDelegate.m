@@ -12,6 +12,7 @@
 #import <UAirship.h>
 #import <UAConfig.h>
 #import "OMNBeaconBackgroundManager.h"
+#import "OMNDecodeBeaconManager.h"
 
 @interface GAppDelegate ()
 
@@ -26,7 +27,11 @@
   
   [self setupUrbanAirship];
   
-  [OMNBeaconBackgroundManager manager];
+  [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comlitionBlock) {
+    
+    [[OMNDecodeBeaconManager manager] handleBackgroundBeacon:beacon complition:comlitionBlock];
+    
+  }];
   
   [OMNAuthorisation authorisation];
   

@@ -9,18 +9,6 @@
 /* Begin PBXBuildFile section */
 		1D807A9889AD457E89DD19FC /* libPods-restaurants.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2ABCF342568148AF8B65CDE3 /* libPods-restaurants.a */; };
 		87CFE245A6484E7ABA7A7E6B /* libPods-restaurantsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FF18A086CE7645CDA8239B3B /* libPods-restaurantsTests.a */; };
-		930554C91934793000E6F4EC /* CLBeacon+GBeaconAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554AF1934793000E6F4EC /* CLBeacon+GBeaconAdditions.m */; };
-		930554CA1934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B11934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m */; };
-		930554CB1934793000E6F4EC /* OMNBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B31934793000E6F4EC /* OMNBeacon.m */; };
-		930554CC1934793000E6F4EC /* OMNBeaconSessionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B51934793000E6F4EC /* OMNBeaconSessionInfo.m */; };
-		930554CD1934793000E6F4EC /* OMNBeaconsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B71934793000E6F4EC /* OMNBeaconsManager.m */; };
-		930554CE1934793000E6F4EC /* OMNDevicePositionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554B91934793000E6F4EC /* OMNDevicePositionManager.m */; };
-		930554CF1934793000E6F4EC /* OMNFoundBeacons.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554BB1934793000E6F4EC /* OMNFoundBeacons.m */; };
-		930554D01934793000E6F4EC /* GBeaconForegroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554BD1934793000E6F4EC /* GBeaconForegroundManager.m */; };
-		930554D21934793000E6F4EC /* OMNBeaconBackgroundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554C21934793000E6F4EC /* OMNBeaconBackgroundManager.m */; };
-		930554D31934793000E6F4EC /* OMNBeaconRangingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554C41934793000E6F4EC /* OMNBeaconRangingManager.m */; };
-		930554D41934793000E6F4EC /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554C61934793000E6F4EC /* OMNBeaconSearchManager.m */; };
-		930554D51934793000E6F4EC /* OMNBluetoothManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554C81934793000E6F4EC /* OMNBluetoothManager.m */; };
 		930554DA19347C4900E6F4EC /* OMNSearchTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554D819347C4900E6F4EC /* OMNSearchTableVC.m */; };
 		930554DB19347C4900E6F4EC /* OMNSearchTableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930554D919347C4900E6F4EC /* OMNSearchTableVC.xib */; };
 		930554DD1934914F00E6F4EC /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 930554DC1934914F00E6F4EC /* CoreTelephony.framework */; };
@@ -132,6 +120,8 @@
 		93676E4B18D1F10300FC55F1 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E4A18D1F10300FC55F1 /* menu.json */; };
 		93676E4C18D1F10300FC55F1 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E4A18D1F10300FC55F1 /* menu.json */; };
 		9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9367CE8C193CC67600116AC2 /* homeScreenTest.m */; };
+		9371891119702D6A00F8794B /* OMNBeaconUUID.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9371891019702D6A00F8794B /* OMNBeaconUUID.plist */; };
+		9371891219702D6A00F8794B /* OMNBeaconUUID.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9371891019702D6A00F8794B /* OMNBeaconUUID.plist */; };
 		93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */; };
 		93750B22196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */; };
 		93750B23196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */; };
@@ -267,30 +257,6 @@
 		08C2B35364724575823788C9 /* Pods-restaurants.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-restaurants.xcconfig"; path = "../Pods/Pods-restaurants.xcconfig"; sourceTree = "<group>"; };
 		2ABCF342568148AF8B65CDE3 /* libPods-restaurants.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-restaurants.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78CE3220785B43C2A296A3D3 /* Pods-restaurantsTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-restaurantsTests.xcconfig"; path = "../Pods/Pods-restaurantsTests.xcconfig"; sourceTree = "<group>"; };
-		930554AE1934793000E6F4EC /* CLBeacon+GBeaconAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLBeacon+GBeaconAdditions.h"; sourceTree = "<group>"; };
-		930554AF1934793000E6F4EC /* CLBeacon+GBeaconAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLBeacon+GBeaconAdditions.m"; sourceTree = "<group>"; };
-		930554B01934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+OMNIndexAdditions.h"; sourceTree = "<group>"; };
-		930554B11934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+OMNIndexAdditions.m"; sourceTree = "<group>"; };
-		930554B21934793000E6F4EC /* OMNBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeacon.h; sourceTree = "<group>"; };
-		930554B31934793000E6F4EC /* OMNBeacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeacon.m; sourceTree = "<group>"; };
-		930554B41934793000E6F4EC /* OMNBeaconSessionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconSessionInfo.h; sourceTree = "<group>"; };
-		930554B51934793000E6F4EC /* OMNBeaconSessionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconSessionInfo.m; sourceTree = "<group>"; };
-		930554B61934793000E6F4EC /* OMNBeaconsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconsManager.h; sourceTree = "<group>"; };
-		930554B71934793000E6F4EC /* OMNBeaconsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconsManager.m; sourceTree = "<group>"; };
-		930554B81934793000E6F4EC /* OMNDevicePositionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDevicePositionManager.h; sourceTree = "<group>"; };
-		930554B91934793000E6F4EC /* OMNDevicePositionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDevicePositionManager.m; sourceTree = "<group>"; };
-		930554BA1934793000E6F4EC /* OMNFoundBeacons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFoundBeacons.h; sourceTree = "<group>"; };
-		930554BB1934793000E6F4EC /* OMNFoundBeacons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFoundBeacons.m; sourceTree = "<group>"; };
-		930554BC1934793000E6F4EC /* GBeaconForegroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GBeaconForegroundManager.h; sourceTree = "<group>"; };
-		930554BD1934793000E6F4EC /* GBeaconForegroundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GBeaconForegroundManager.m; sourceTree = "<group>"; };
-		930554C11934793000E6F4EC /* OMNBeaconBackgroundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconBackgroundManager.h; sourceTree = "<group>"; };
-		930554C21934793000E6F4EC /* OMNBeaconBackgroundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconBackgroundManager.m; sourceTree = "<group>"; };
-		930554C31934793000E6F4EC /* OMNBeaconRangingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconRangingManager.h; sourceTree = "<group>"; };
-		930554C41934793000E6F4EC /* OMNBeaconRangingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconRangingManager.m; sourceTree = "<group>"; };
-		930554C51934793000E6F4EC /* OMNBeaconSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconSearchManager.h; sourceTree = "<group>"; };
-		930554C61934793000E6F4EC /* OMNBeaconSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconSearchManager.m; sourceTree = "<group>"; };
-		930554C71934793000E6F4EC /* OMNBluetoothManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBluetoothManager.h; sourceTree = "<group>"; };
-		930554C81934793000E6F4EC /* OMNBluetoothManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBluetoothManager.m; sourceTree = "<group>"; };
 		930554D719347C4900E6F4EC /* OMNSearchTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchTableVC.h; sourceTree = "<group>"; };
 		930554D819347C4900E6F4EC /* OMNSearchTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchTableVC.m; sourceTree = "<group>"; };
 		930554D919347C4900E6F4EC /* OMNSearchTableVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNSearchTableVC.xib; sourceTree = "<group>"; };
@@ -426,6 +392,7 @@
 		93676E3F18D1EAB900FC55F1 /* restaurants.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
 		93676E4A18D1F10300FC55F1 /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu.json; sourceTree = "<group>"; };
 		9367CE8C193CC67600116AC2 /* homeScreenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = homeScreenTest.m; sourceTree = "<group>"; };
+		9371891019702D6A00F8794B /* OMNBeaconUUID.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OMNBeaconUUID.plist; sourceTree = "<group>"; };
 		93750B1E196BF40F0031AD31 /* OMNScanQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScanQRCodeVC.h; sourceTree = "<group>"; };
 		93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNScanQRCodeVC.m; sourceTree = "<group>"; };
 		93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNScanQRCodeVC.xib; sourceTree = "<group>"; };
@@ -569,54 +536,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		930554AC1934793000E6F4EC /* BeaconModel */ = {
-			isa = PBXGroup;
-			children = (
-				930554AD1934793000E6F4EC /* beacon */,
-				930554BC1934793000E6F4EC /* GBeaconForegroundManager.h */,
-				930554BD1934793000E6F4EC /* GBeaconForegroundManager.m */,
-				930554C01934793000E6F4EC /* ibeacons */,
-				930554C11934793000E6F4EC /* OMNBeaconBackgroundManager.h */,
-				930554C21934793000E6F4EC /* OMNBeaconBackgroundManager.m */,
-				930554C31934793000E6F4EC /* OMNBeaconRangingManager.h */,
-				930554C41934793000E6F4EC /* OMNBeaconRangingManager.m */,
-				930554C51934793000E6F4EC /* OMNBeaconSearchManager.h */,
-				930554C61934793000E6F4EC /* OMNBeaconSearchManager.m */,
-				930554C71934793000E6F4EC /* OMNBluetoothManager.h */,
-				930554C81934793000E6F4EC /* OMNBluetoothManager.m */,
-			);
-			name = BeaconModel;
-			path = ../beacon/beacon/BeaconModel;
-			sourceTree = "<group>";
-		};
-		930554AD1934793000E6F4EC /* beacon */ = {
-			isa = PBXGroup;
-			children = (
-				930554AE1934793000E6F4EC /* CLBeacon+GBeaconAdditions.h */,
-				930554AF1934793000E6F4EC /* CLBeacon+GBeaconAdditions.m */,
-				930554B01934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.h */,
-				930554B11934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m */,
-				930554B21934793000E6F4EC /* OMNBeacon.h */,
-				930554B31934793000E6F4EC /* OMNBeacon.m */,
-				930554B41934793000E6F4EC /* OMNBeaconSessionInfo.h */,
-				930554B51934793000E6F4EC /* OMNBeaconSessionInfo.m */,
-				930554B61934793000E6F4EC /* OMNBeaconsManager.h */,
-				930554B71934793000E6F4EC /* OMNBeaconsManager.m */,
-				930554B81934793000E6F4EC /* OMNDevicePositionManager.h */,
-				930554B91934793000E6F4EC /* OMNDevicePositionManager.m */,
-				930554BA1934793000E6F4EC /* OMNFoundBeacons.h */,
-				930554BB1934793000E6F4EC /* OMNFoundBeacons.m */,
-			);
-			path = beacon;
-			sourceTree = "<group>";
-		};
-		930554C01934793000E6F4EC /* ibeacons */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ibeacons;
-			sourceTree = "<group>";
-		};
 		930554D619347BFA00E6F4EC /* SearchTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -1135,6 +1054,7 @@
 		938E8F65192F5C030088EF38 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9371891019702D6A00F8794B /* OMNBeaconUUID.plist */,
 				938E8F66192F5C030088EF38 /* Fonts */,
 			);
 			path = Resources;
@@ -1193,7 +1113,6 @@
 				930CDDED1952BEF400A7D3A0 /* View */,
 				93A994AC19484C2D005B403C /* User */,
 				9363700219458EAB000700D2 /* Transition */,
-				930554AC1934793000E6F4EC /* BeaconModel */,
 			);
 			name = References;
 			sourceTree = "<group>";
@@ -1408,6 +1327,7 @@
 				9390D2D3196BD70E007E13AB /* OMNAskNavigationPermissionsVC.xib in Resources */,
 				93750B2F196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
 				93A59B131933181000AE1A6F /* restaurants.data in Resources */,
+				9371891119702D6A00F8794B /* OMNBeaconUUID.plist in Resources */,
 				93C99161193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
 				93C9915E193F175E0028F76C /* FuturaPT-Book.ttf in Resources */,
@@ -1479,6 +1399,7 @@
 				932118251962E12700183729 /* OMNRestaurantMenuVC.xib in Resources */,
 				93B904A91965707A007D21C4 /* OMNEditTableVC.xib in Resources */,
 				93A994B819484C2D005B403C /* OMNLoginVC.xib in Resources */,
+				9371891219702D6A00F8794B /* OMNBeaconUUID.plist in Resources */,
 				937822901963E29900CE6661 /* OMNPayOrderVC.xib in Resources */,
 				9378229D1963E52700CE6661 /* OMNOrdersVC.xib in Resources */,
 				93750B30196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
@@ -1557,7 +1478,6 @@
 			files = (
 				938E8F64192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
-				930554D31934793000E6F4EC /* OMNBeaconRangingManager.m in Sources */,
 				932117E9196299DB00183729 /* OMNBankCardsVC.m in Sources */,
 				93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
 				938E8F58192F3A200088EF38 /* OMNMenu.m in Sources */,
@@ -1573,7 +1493,6 @@
 				932118161962DA2800183729 /* OMNStubProductCell.m in Sources */,
 				9307C5731937022800408519 /* OMNOrderCell.m in Sources */,
 				93B9048D19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
-				930554D51934793000E6F4EC /* OMNBluetoothManager.m in Sources */,
 				93E88E951941C31D001707CD /* OMNOrder+omn_calculationAmount.m in Sources */,
 				9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */,
 				9363700919458EAB000700D2 /* OMNUserInfoTransitionDelegate.m in Sources */,
@@ -1582,7 +1501,6 @@
 				9319FDC9192F362F0053F3A4 /* OMNDemoImageVC.m in Sources */,
 				932118221962E12700183729 /* OMNRestaurantMenuVC.m in Sources */,
 				9319FDCA192F362F0053F3A4 /* OMNDemoVC.m in Sources */,
-				930554D21934793000E6F4EC /* OMNBeaconBackgroundManager.m in Sources */,
 				930CDDFE1952C64200A7D3A0 /* OMNUserInfoVC.m in Sources */,
 				9378228D1963E29900CE6661 /* OMNPayOrderVC.m in Sources */,
 				930554FD1935DA7C00E6F4EC /* GSplitSelectionVC.m in Sources */,
@@ -1590,23 +1508,18 @@
 				930555011935DA7C00E6F4EC /* OMNPayCardVC.m in Sources */,
 				9390D25E1966DA68007E13AB /* OMNRestaurantMenuMediator.m in Sources */,
 				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
-				930554CE1934793000E6F4EC /* OMNDevicePositionManager.m in Sources */,
 				9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */,
 				9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */,
 				93B904A61965707A007D21C4 /* OMNEditTableVC.m in Sources */,
 				93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */,
 				9319FDC7192F362F0053F3A4 /* OMNDemoBlueToothVC.m in Sources */,
-				930554CC1934793000E6F4EC /* OMNBeaconSessionInfo.m in Sources */,
 				93570D3619503F070065E6D2 /* OMNConfirmCodeVC.m in Sources */,
 				93B90494196550F4007D21C4 /* OMNRatingModel.m in Sources */,
 				938E8F5D192F3A200088EF38 /* OMNCalculationAmount.m in Sources */,
 				932118261962E12700183729 /* OMNRestaurantsVC.m in Sources */,
 				932118321962E35C00183729 /* OMNTransitionFromListToProduct.m in Sources */,
 				932FB2D5195ABA7B00960F03 /* OMNUserInfoModel.m in Sources */,
-				930554D01934793000E6F4EC /* GBeaconForegroundManager.m in Sources */,
 				930555111935DB7700E6F4EC /* UINavigationController+omn_replace.m in Sources */,
-				930554D41934793000E6F4EC /* OMNBeaconSearchManager.m in Sources */,
-				930554CA1934793000E6F4EC /* NSMutableArray+OMNIndexAdditions.m in Sources */,
 				938E8F53192F3A200088EF38 /* OMNOperationManager.m in Sources */,
 				932117FA1962A1F000183729 /* OMNBankCardsModel.m in Sources */,
 				930D8BAB1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
@@ -1621,9 +1534,7 @@
 				93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */,
 				93B9047C19652BBF007D21C4 /* OMNTransitionFromLoadingToBills.m in Sources */,
 				930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */,
-				930554CF1934793000E6F4EC /* OMNFoundBeacons.m in Sources */,
 				938E8F5C192F3A200088EF38 /* OMNTable.m in Sources */,
-				930554C91934793000E6F4EC /* CLBeacon+GBeaconAdditions.m in Sources */,
 				9319FD65192F33B90053F3A4 /* OMNTipSelector.m in Sources */,
 				9363700719458EAB000700D2 /* OMNUserInfoTransition.m in Sources */,
 				9321182C1962E16100183729 /* OMNProductDetailsVC.m in Sources */,
@@ -1640,7 +1551,6 @@
 				939689B6195BDD3400AAAF9C /* OMNViewControllerTest.m in Sources */,
 				932117F81962A1F000183729 /* OMNBankCard.m in Sources */,
 				930554E11934978400E6F4EC /* OMNAuthorisation.m in Sources */,
-				930554CB1934793000E6F4EC /* OMNBeacon.m in Sources */,
 				9308FE7B196E815600B482AA /* OMNDecodeBeaconManager.m in Sources */,
 				939DA16D19540C8D0063AB23 /* OMNNumberKeyboardView.m in Sources */,
 				93676DF918D1E4FC00FC55F1 /* main.m in Sources */,
@@ -1649,7 +1559,6 @@
 				9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */,
 				9319FD6F192F34510053F3A4 /* OMNCardView.m in Sources */,
 				938E8F59192F3A200088EF38 /* OMNMenuItem.m in Sources */,
-				930554CD1934793000E6F4EC /* OMNBeaconsManager.m in Sources */,
 				930554FC1935DA7C00E6F4EC /* GProdductSelectionVC.m in Sources */,
 				939689B2195BD76E00AAAF9C /* OMNWizardVC.m in Sources */,
 				93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,

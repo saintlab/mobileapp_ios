@@ -7,7 +7,6 @@
 //
 
 #import "OMNBeaconTableVC.h"
-#import "GBeaconForegroundManager.h"
 #import "OMNDecodeBeacon.h"
 #import "OMNRestaurantMenuVC.h"
 
@@ -21,7 +20,6 @@
 
 - (void)dealloc
 {
-  [[GBeaconForegroundManager manager] stopMonitoring];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -38,7 +36,6 @@
 {
   [super viewDidLoad];
   
-  [[GBeaconForegroundManager manager] startMonitoring];
   
   
   UILabel *label = [[UILabel alloc] init];

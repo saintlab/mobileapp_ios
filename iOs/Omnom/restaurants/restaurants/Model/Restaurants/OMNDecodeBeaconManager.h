@@ -19,4 +19,6 @@
  */
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(OMNErrorBlock)failure;
 
+- (void)handleBackgroundBeacon:(OMNBeacon *)beacon complition:(dispatch_block_t)complition;
+
 @end

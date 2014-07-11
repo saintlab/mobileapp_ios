@@ -66,7 +66,7 @@
 }
 
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(OMNErrorBlock)failure {
-#warning bd
+#warning cache
 //  OMNBeacon *beacon = [beacons firstObject];
 //  
 //  if (beacon.key) {
@@ -127,6 +127,61 @@
   
 }
 
+- (void)handleBackgroundBeacon:(OMNBeacon *)beacon complition:(dispatch_block_t)complition {
+  
+  if (nil == beacon) {
+    complition();
+    return;
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  [self decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
+    
+    OMNDecodeBeacon *decodeBeacon = decodeBeacons.firstObject;
+    
+    if (decodeBeacon) {
+      [weakSelf showLocalPushWithBeacon:decodeBeacon];
+    }
+    complition();
+    
+  } failure:^(NSError *error) {
+    
+    complition();
+    
+  }];
+  
+}
+
+- (BOOL)readyForPush:(OMNDecodeBeacon *)decodeBeacon {
+#warning push
+  return YES;
+  BOOL readyForPush = NO;
+  OMNDecodeBeacon *savedBeacon = _decodedBeacons[decodeBeacon.uuid];
+  if (nil == savedBeacon ||
+      savedBeacon.readyForPush) {
+    readyForPush = YES;
+    _decodedBeacons[decodeBeacon.uuid] = decodeBeacon;
+    [self save];
+  }
+  
+  return readyForPush;
+  
+}
+
+- (void)showLocalPushWithBeacon:(OMNDecodeBeacon *)decodeBeacon {
+  
+  
+  if ([self readyForPush:decodeBeacon]) {
+    
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = decodeBeacon.restaurantId;
+    localNotification.alertAction = NSLocalizedString(@"Запустить", nil);
+    localNotification.soundName = @"Alert.caf";
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+    
+  }
+
+}
 
 
 @end
