@@ -7,7 +7,7 @@
 //
 
 #import "OMNViewController.h"
-#import <OMNStyler.h>
+
 @interface OMNViewController ()
 
 @end
