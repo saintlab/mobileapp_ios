@@ -7,10 +7,8 @@
 //
 
 #import "OMNDecodeBeacon.h"
-#import "OMNOperationManager.h"
 
 @implementation OMNDecodeBeacon
-
 
 - (instancetype)initWithData:(id)data {
   self = [super init];
@@ -46,43 +44,6 @@
 - (BOOL)readyForPush {
   
   return ([[NSDate date] timeIntervalSinceDate:self.foundDate] > 4*60*60);
-  
-}
-
-+ (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(OMNErrorBlock)failure {
-  
-  NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
-  [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
-    
-    [jsonBeacons addObject:[beacon JSONObject]];
-    
-  }];
-  
-  if (![NSJSONSerialization isValidJSONObject:jsonBeacons]) {
-    failure(nil);
-    return;
-  }
-  
-  [[OMNOperationManager sharedManager] PUT:@"ibeacons/decode" parameters:jsonBeacons success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    NSLog(@"decodeBeaconsresponse>%@", responseObject);
-    
-    NSArray *beacons = responseObject;
-    NSMutableArray *decodeBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
-    [beacons enumerateObjectsUsingBlock:^(id beaconData, NSUInteger idx, BOOL *stop) {
-      
-      OMNDecodeBeacon *beacon = [[OMNDecodeBeacon alloc] initWithData:beaconData];
-      [decodeBeacons addObject:beacon];
-      
-    }];
-    
-    success([decodeBeacons copy]);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-  
-    failure(error);
-    
-  }];
   
 }
 

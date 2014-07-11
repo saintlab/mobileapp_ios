@@ -14,6 +14,7 @@
 #import "OMNBluetoothManager.h"
 #import "OMNScanQRCodeVC.h"
 #import "OMNTurnOnBluetoothVC.h"
+#import "OMNDecodeBeaconManager.h"
 
 @interface OMNSearchTableVC ()
 <OMNTablePositionVCDelegate,
@@ -103,7 +104,6 @@ OMNScanQRCodeVCDelegate>
       case CBCentralManagerStatePoweredOn: {
         
         [weakSelf startSearchingTables];
-        [[OMNBluetoothManager manager] stop];
         
       } break;
       case CBCentralManagerStateUnsupported: {
@@ -157,6 +157,8 @@ OMNScanQRCodeVCDelegate>
 }
 
 - (void)processBLEOffSituation {
+  
+  [_beaconManager stopMonitoring];
   
   OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] init];
   [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
@@ -303,7 +305,7 @@ OMNScanQRCodeVCDelegate>
     return;
   }
   
-  [OMNDecodeBeacon decodeBeacons:beaconsToDecode success:^(NSArray *decodeBeacons) {
+  [[OMNDecodeBeaconManager manager] decodeBeacons:beaconsToDecode success:^(NSArray *decodeBeacons) {
     
     OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
     

@@ -1,0 +1,14 @@
+{
+  "waiterButtonFont": "FuturaPT-Book:17",
+  "waiterButtonColor": "#FFFFFF",
+  "waiterButtonText": "Официант",
+  
+  "billButtonFont": "FuturaPT-Book:17",
+  "billButtonColor": "#FFFFFF",
+  "billButtonText": "Счет",
+  
+  "recommendLabelFont": "FuturaPT-Book:20",
+  "recommendLabelColor": "#FFFFFF",
+  "recommendLabelText": "Рекомендуем попробовать"
+  
+}

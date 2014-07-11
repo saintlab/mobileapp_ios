@@ -11,9 +11,7 @@
 #import "OMNStartVC.h"
 #import <UAirship.h>
 #import <UAConfig.h>
-#import "OMNDemoVC.h"
-#import "OMNWizardVC.h"
-#import "OMNWizardPageVC.h"
+#import "OMNBeaconBackgroundManager.h"
 
 @interface GAppDelegate ()
 
@@ -27,6 +25,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
   [self setupUrbanAirship];
+  
+  [OMNBeaconBackgroundManager manager];
   
   [OMNAuthorisation authorisation];
   

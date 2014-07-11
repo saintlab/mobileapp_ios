@@ -27,12 +27,4 @@ typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
 
 - (BOOL)readyForPush;
 
-/**
- Decode list of OMNBeacon objects and get related restaurant and table info
- @param beacons list of OMNDecodeBeacon objects
- @param success success callback, contains list of OMNDecodeBeacon objects
- @param failure error callback, contains NSError object
- */
-+ (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(OMNErrorBlock)failure;
-
 @end

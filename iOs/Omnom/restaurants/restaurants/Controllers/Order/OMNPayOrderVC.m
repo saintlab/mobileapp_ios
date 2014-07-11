@@ -15,7 +15,6 @@
 #import "OMNOrder.h"
 #import "OMNAmountPercentControl.h"
 #import "UIView+frame.h"
-#import "OMNPayCardVC.h"
 #import "OMNGPBPayVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNOrder+omn_calculationAmount.h"
@@ -26,10 +25,10 @@
 #import "OMNPaymentVC.h"
 #import "OMNRatingVC.h"
 #import <BlocksKit+UIKit.h>
+#import "OMNGPBPayVC.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
-OMNPayCardVCDelegate,
 OMNGPBPayVCDelegate,
 OMNBankCardsVCDelegate,
 OMNPaymentVCDelegate,
@@ -195,9 +194,21 @@ UITableViewDelegate>
 
 - (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didSelectCard:(OMNBankCard *)bankCard {
   
+  _order.toPayAmount = _paymentView.calculationAmount.enteredAmount * 100;
+  _order.tipAmount = _paymentView.calculationAmount.tipAmount * 100;
+  
+#if kUseGPBAcquiring
+  
+  OMNGPBPayVC *paymentVC = [[OMNGPBPayVC alloc] initWithCard:bankCard order:_order];
+  paymentVC.navigationItem.title = NSLocalizedString(@"ГПБ", nil);
+  paymentVC.delegate = self;
+  [self.navigationController pushViewController:paymentVC animated:YES];
+  
+#else
   OMNPaymentVC *paymentVC = [[OMNPaymentVC alloc] initWithCard:bankCard order:_order];
   paymentVC.delegate = self;
   [self.navigationController pushViewController:paymentVC animated:YES];
+#endif
   
 }
 
@@ -210,6 +221,12 @@ UITableViewDelegate>
 #pragma mark - OMNPaymentVCDelegate
 
 - (void)paymentVCDidFinish:(OMNPaymentVC *)paymentVC {
+  
+  [self showRating];
+  
+}
+
+- (void)showRating {
   
   OMNRatingVC *ratingVC = [[OMNRatingVC alloc] init];
   ratingVC.delegate = self;
@@ -225,37 +242,16 @@ UITableViewDelegate>
   
 }
 
-#pragma mark - OMNPayCardVCDelegate
-
-- (void)payCardVC:(OMNPayCardVC *)payVC requestPayWithCardInfo:(OMNBankCard *)cardInfo {
-  
-  _order.toPayAmount = _paymentView.calculationAmount.enteredAmount * 100;
-  _order.tipAmount = _paymentView.calculationAmount.tipAmount * 100;
-  
-  OMNGPBPayVC *gpbPayVC = [[OMNGPBPayVC alloc] initWithCard:cardInfo order:_order];
-  gpbPayVC.delegate = self;
-  gpbPayVC.navigationItem.title = NSLocalizedString(@"ГПБ", nil);
-  [self.navigationController omn_replaceCurrentViewControllerWithController:gpbPayVC animated:YES];
-  
-}
-
 #pragma mark - OMNGPBPayVCDelegate
 
 - (void)gpbVCDidPay:(OMNGPBPayVC *)gpbVC withOrder:(OMNOrder *)order {
   
   [[OMNAnalitics analitics] logPayment:nil];
-  
-  [self.navigationController popToViewController:self animated:YES];
+  [self showRating];
   
 }
 
 - (void)gpbVCDidCancel:(OMNGPBPayVC *)gpbVC {
-  
-}
-
-- (void)payCardVCDidPayCash:(OMNPayCardVC *)payVC {
-  
-  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Официант скоро подойдет", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
   
   [self.navigationController popToViewController:self animated:YES];
   

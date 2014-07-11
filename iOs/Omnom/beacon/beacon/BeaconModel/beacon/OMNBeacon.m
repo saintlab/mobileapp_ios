@@ -10,7 +10,8 @@
 #import "NSMutableArray+OMNIndexAdditions.h"
 #import "OMNBeaconSessionInfo.h"
 
-NSTimeInterval const kTimeToDeleteMarkSec = 4 * 60 * 60;
+//NSTimeInterval const kTimeToDeleteMarkSec = 4 * 60 * 60;
+NSTimeInterval const kTimeToDeleteMarkSec = 1 * 60;
 
 __unused static NSTimeInterval const kGTimeToFindMarkSeconds = 2.0;
 __unused static NSTimeInterval const kGTimeToLoseMarkSeconds = 5.0;

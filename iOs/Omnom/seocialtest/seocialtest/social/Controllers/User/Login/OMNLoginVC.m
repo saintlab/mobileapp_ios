@@ -62,7 +62,7 @@
   }
   
   _loginTF.placeholder = NSLocalizedString(@"Почта или номер телефона", nil);
-  _loginTF.keyboardType = UIKeyboardTypeDefault;
+  _loginTF.keyboardType = UIKeyboardTypeNumberPad;
 //  UIToolbar *inputAccessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 44.0f)];
 //  inputAccessoryView.items =
 //  @[

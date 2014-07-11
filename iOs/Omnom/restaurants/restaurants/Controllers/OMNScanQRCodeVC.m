@@ -30,6 +30,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.navigationItem.title = NSLocalizedString(@"QRCode reader", nil);
+  
+#if TARGET_IPHONE_SIMULATOR
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub scan", nil) style:UIBarButtonItemStylePlain target:self action:@selector(stubScan)];
+#endif
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -40,6 +45,18 @@
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [self stopScanning];
+}
+
+- (void)stubScan {
+  
+  [self didScanCode:@"123"];
+  
+}
+
+- (void)didScanCode:(NSString *)code {
+  
+  [self.delegate scanQRCodeVC:self didScanCode:code];
+  
 }
 
 - (void)startScanning {
@@ -92,8 +109,7 @@
 
   if (metadataObject) {
 
-    NSLog(@"%@", metadataObject.stringValue);
-    [self.delegate scanQRCodeVC:self didScanCode:metadataObject.stringValue];
+    [self didScanCode:metadataObject.stringValue];
     
   }
   

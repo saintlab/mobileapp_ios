@@ -8,8 +8,11 @@
 
 #import "OMNEditTableVC.h"
 #import <OMNStyler.h>
+#import "OMNBluetoothManager.h"
+#import "OMNScanQRCodeVC.h"
 
 @interface OMNEditTableVC ()
+<OMNScanQRCodeVCDelegate>
 
 @end
 
@@ -21,6 +24,8 @@
   __weak IBOutlet UIImageView *_bgIV;
   __weak IBOutlet UITextField *_tableNumberTF;
 
+  UIButton *_qrScanButton;
+  
   OMNStyle *_style;
 
 }
@@ -51,22 +56,72 @@
   _tableNumberLabel.font = [_style fontForKey:@"tableNumberLabelFont"];
   _tableNumberLabel.text = [_style stringForKey:@"tableNumberLabelText"];
   _tableNumberLabel.textColor = [_style colorForKey:@"tableNumberLabelColor"];
+  _tableNumberLabel.textAlignment = NSTextAlignmentCenter;
   
+  _tableNumberTF.textAlignment = NSTextAlignmentCenter;
   _tableNumberTF.font = [_style fontForKey:@"tableNumberFieldFont"];
   _tableNumberTF.textColor = [_style colorForKey:@"tableNumberFieldColor"];
+  _tableNumberTF.rightViewMode = UITextFieldViewModeAlways;
   
   _switchLabel.font = [_style fontForKey:@"switchLabelFont"];
   _switchLabel.text = [_style stringForKey:@"switchLabelText"];
   _switchLabel.textColor = [_style colorForKey:@"switchLabelColor"];
   
-  [self updateTableNumberField];
+  _qrScanButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+  [_qrScanButton addTarget:self action:@selector(scanQRCode) forControlEvents:UIControlEventTouchUpInside];
   
+  _switch.hidden = YES;
+  _switchLabel.hidden = YES;
+  
+  [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
+
+    switch (state) {
+      case CBCentralManagerStatePoweredOn: {
+        
+        _switch.hidden = NO;
+        _switchLabel.hidden = NO;
+
+      } break;
+      default: {
+  
+        _tableNumberTF.rightView = _qrScanButton;
+        
+      } break;
+    }
+
+    [self updateTableNumberField];
+    
+  }];
+  
+}
+
+- (void)scanQRCode {
+  
+  OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
+  scanQRCodeVC.delegate = self;
+  [self.navigationController pushViewController:scanQRCodeVC animated:YES];
+  
+}
+
+#pragma mark - OMNScanQRCodeVCDelegate
+
+- (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
+
+  _tableNumberTF.text = code;
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+- (void)scanQRCodeVCDidCancel:(OMNScanQRCodeVC *)scanQRCodeVC {
+  [self.navigationController popToViewController:self animated:YES];
 }
 
 - (void)updateTableNumberField {
   
-  _tableNumberTF.enabled = !_switch.on;
-  if (NO == _switch.on) {
+  BOOL enterTableNumberEnabled = (NO == _switch.on || _switch.hidden);
+  
+  _tableNumberTF.enabled = enterTableNumberEnabled;
+  if (enterTableNumberEnabled) {
     [_tableNumberTF becomeFirstResponder];
   }
 }
@@ -86,11 +141,8 @@
 }
 
 
-- (void)didReceiveMemoryWarning
-{
-  
+- (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 @end

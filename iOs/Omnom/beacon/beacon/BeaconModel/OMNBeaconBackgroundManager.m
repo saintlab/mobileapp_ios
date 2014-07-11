@@ -12,6 +12,7 @@
 #import "OMNConstants.h"
 #import "OMNBeaconSearchManager.h"
 #import "OMNDecodeBeacon.h"
+#import "OMNDecodeBeaconManager.h"
 
 static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentifier";
 
@@ -23,6 +24,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
   UIBackgroundTaskIdentifier _searchBeaconTask;
 
+  BOOL _monitoring;
 }
 
 @property (nonatomic, strong) CLBeaconRegion *backgroundBeaconRegion;
@@ -62,7 +64,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     
     _locationManager = [[CLLocationManager alloc] init];
     _locationManager.delegate = self;
-    
     
     if (kCLAuthorizationStatusAuthorized == [CLLocationManager authorizationStatus]) {
       [self startBeaconRegionMonitoring];
@@ -117,7 +118,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   _beaconSearchManager = nil;
   
   __weak typeof(self)weakSelf = self;
-  [OMNDecodeBeacon decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
+  [[OMNDecodeBeaconManager manager] decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
     
     OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
     
@@ -149,7 +150,9 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 
 - (void)showLocalPushWithBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
-  if ([self readyForPush:decodeBeacon]) {
+#warning push
+  if (YES ||
+      [self readyForPush:decodeBeacon]) {
 
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.alertBody = decodeBeacon.restaurantId;
@@ -170,39 +173,28 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
 }
 
-- (void)addBeacon:(CLBeacon *)beacon {
+- (void)startBeaconRegionMonitoring {
   
-  if (beacon.major == nil ||
-      beacon.minor == nil) {
+  if (_monitoring) {
     return;
   }
-  
-}
-
-- (void)startBeaconRegionMonitoring {
   
   if (NO == [CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
     NSLog(@"This device does not support monitoring beacon regions");
     return;
   }
   
+  _monitoring = YES;
   [_locationManager startMonitoringForRegion:self.backgroundBeaconRegion];
-//  [_locationManager requestStateForRegion:self.backgroundBeaconRegion];
   
 }
 
 - (void)handlePush:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
 
-  
-//  if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
-//    return;
-//  }
-//  
   if (_lookingForNearestBeacon) {
     completionHandler(UIBackgroundFetchResultNoData);
     return;
   }
-
   
 }
 
@@ -213,6 +205,9 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   switch (status) {
     case kCLAuthorizationStatusAuthorized:
     case kCLAuthorizationStatusNotDetermined: {
+      
+      [self startBeaconRegionMonitoring];
+      
       //do nothig
     } break;
     default: {
@@ -227,7 +222,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 - (void)stopBeaconRegionMonitoring {
   
   if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
-    
+    _monitoring = NO;
     [_locationManager stopMonitoringForRegion:self.backgroundBeaconRegion];
     
   }
