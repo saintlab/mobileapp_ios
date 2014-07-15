@@ -25,7 +25,9 @@ typedef void(^GMenuBlock)(OMNMenu *menu);
 
 - (void)getMenu:(GMenuBlock)menuBlock error:(void(^)(NSError *error))errorBlock;
 
-- (void)callWaiterForTableID:(NSString *)tableID success:(dispatch_block_t)success error:(void(^)(NSError *error))errorBlock;
+- (void)waiterCallForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock;
+
+- (void)newGuestForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock;
 
 - (void)getOrdersForTableID:(NSString *)tableID orders:(OMNOrdersBlock)orders error:(void(^)(NSError *error))errorBlock;
 

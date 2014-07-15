@@ -134,6 +134,17 @@ OMNRestaurantMenuVCDelegate>
   NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
   OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:data];
   OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
+  
+  [restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
+    
+    NSLog(@"newGuestForTableID");
+    
+  } failure:^(NSError *error) {
+    
+    NSLog(@"newGuestForTableID>%@", error);
+    
+  }];
+  
   restaurantMenuVC.delegate = self;
   [self.navigationController pushViewController:restaurantMenuVC animated:YES];
   

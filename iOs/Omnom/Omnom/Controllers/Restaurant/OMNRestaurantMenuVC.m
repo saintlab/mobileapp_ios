@@ -154,7 +154,7 @@
   __weak typeof(self)weakSelf = self;
   [self searchTableWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
     
-    [_restaurant callWaiterForTableID:decodeBeacon.tableId success:^{
+    [_restaurant waiterCallForTableID:decodeBeacon.tableId complition:^{
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -162,7 +162,7 @@
         
       });
       
-    } error:^(NSError *error) {
+    } failure:^(NSError *error) {
       
       NSLog(@"error>%@", error);
       

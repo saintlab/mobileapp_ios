@@ -103,30 +103,37 @@
   
 }
 
-- (void)callWaiterForTableID:(NSString *)tableID success:(dispatch_block_t)success error:(void(^)(NSError *error))errorBlock {
+- (void)waiterCallForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.ID, tableID];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiterCall", self.ID, tableID];
   
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
-    if (success) {
-      success();
-    }
+    complitionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-    if (errorBlock) {
-      errorBlock(error);
-    }
-    else {
-      NSLog(@"error>%@", error);
-    }
+    failureBlock(error);
     
   }];
 
 }
 
-
+- (void)newGuestForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/newGuest", self.ID, tableID];
+  
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+    
+    complitionBlock();
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error);
+    
+  }];
+  
+}
 
 - (void)getOrdersForTableID:(NSString *)tableID orders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
   
