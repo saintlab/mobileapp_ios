@@ -61,3 +61,8 @@ target :OMNBeacon do
   pod "OMNBeacon", :path => "OMNBeacon/"
   xcodeproj 'OMNBeacon/Example/OMNBeacon.xcodeproj'
 end
+
+target :OMNMailRuAcquiring do
+  pod "OMNMailRuAcquiring", :path => "OMNMailRuAcquiring/"
+  xcodeproj 'OMNMailRuAcquiring/Example/OMNMailRuAcquiring'
+end

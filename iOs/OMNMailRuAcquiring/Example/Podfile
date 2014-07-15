@@ -1,0 +1,9 @@
+target 'OMNMailRuAcquiring', :exclusive => true do
+  pod "OMNMailRuAcquiring", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "OMNMailRuAcquiring", :path => "../"
+  
+  pod 'Kiwi/XCTest'
+end
