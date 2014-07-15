@@ -1,0 +1,10 @@
+target 'OMNSocial', :exclusive => true do
+  pod "OMNSocial", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "OMNSocial", :path => "../"
+
+  pod 'Kiwi'
+  pod 'FBSnapshotTestCase'
+end

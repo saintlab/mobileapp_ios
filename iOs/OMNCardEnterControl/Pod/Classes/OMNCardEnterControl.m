@@ -19,7 +19,6 @@ NSInteger kPanGroupLength = 4;
 NSInteger kCVVLength = 3;
 CGFloat kTextFieldsOffset = 20.0f;
 NSString * const kMM_YYSeporator = @"/";
-NSString * const kMMYY_CVVSeporator = @" ";
 
 @interface OMNDeletedTextField : UITextField
 
@@ -32,7 +31,8 @@ NSString * const kMMYY_CVVSeporator = @" ";
 
 @implementation OMNCardEnterControl {
   UITextField *_panTF;
-  UITextField *_expireCVVTF;
+  UITextField *_expireTF;
+  UITextField *_cvvTF;
   
   CGSize _panSize;
   CGFloat _expireWidth;
@@ -50,14 +50,14 @@ NSString * const kMMYY_CVVSeporator = @" ";
   if (self) {
     self.backgroundColor = [UIColor lightGrayColor];
     
-    _expireWidth = [@"99 / 99 CVV   " sizeWithAttributes:@{NSFontAttributeName : font}].width;
+    _expireWidth = [@"99 / 99" sizeWithAttributes:@{NSFontAttributeName : font}].width;
     
-    _expireCVVTF = [[OMNDeletedTextField alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _expireWidth, CGRectGetHeight(self.frame))];
-    _expireCVVTF.keyboardType = UIKeyboardTypeNumberPad;
-    _expireCVVTF.font = font;
-    _expireCVVTF.delegate = self;
-    _expireCVVTF.placeholder = [NSString stringWithFormat:@"MM%@YY CVV", kMM_YYSeporator];
-    [self addSubview:_expireCVVTF];
+    _expireTF = [[OMNDeletedTextField alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _expireWidth, CGRectGetHeight(self.frame))];
+    _expireTF.keyboardType = UIKeyboardTypeNumberPad;
+    _expireTF.font = font;
+    _expireTF.delegate = self;
+    _expireTF.placeholder = [NSString stringWithFormat:@"MM%@YY", kMM_YYSeporator];
+    [self addSubview:_expireTF];
     
     _panTF = [[UITextField alloc] initWithFrame:(CGRect){CGPointZero, _panSize}];
     _panTF.backgroundColor = [UIColor lightGrayColor];
@@ -66,6 +66,14 @@ NSString * const kMMYY_CVVSeporator = @" ";
     _panTF.font = font;
     _panTF.delegate = self;
     [self addSubview:_panTF];
+    
+    _cvvTF = [[OMNDeletedTextField alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxX(_expireTF.frame), 100.0f, CGRectGetHeight(self.frame))];
+    _cvvTF.keyboardType = UIKeyboardTypeNumberPad;
+    _cvvTF.font = font;
+    _cvvTF.delegate = self;
+    _cvvTF.placeholder = @"CVV";
+    [self addSubview:_cvvTF];
+
     
     UIButton *topView = [[UIButton alloc] initWithFrame:self.bounds];
     [topView addTarget:self action:@selector(becomeEditingTap) forControlEvents:UIControlEventTouchUpInside];
@@ -98,11 +106,11 @@ NSString * const kMMYY_CVVSeporator = @" ";
   CGFloat panOffset = -[displaceString sizeWithAttributes:@{NSFontAttributeName : _panTF.font}].width;
   
   NSString *lastDightsString = [_panTF.text substringFromIndex:_panTF.text.length - kPanGroupLength];
-  CGRect frame = _expireCVVTF.frame;
+  CGRect frame = _expireTF.frame;
   frame.origin.x = [lastDightsString sizeWithAttributes:@{NSFontAttributeName : _panTF.font}].width + kTextFieldsOffset;
-  _expireCVVTF.frame = frame;
+  _expireTF.frame = frame;
 
-  [_expireCVVTF becomeFirstResponder];
+  [_expireTF becomeFirstResponder];
   [UIView animateWithDuration:kSlideAnimationDuratiom animations:^{
 
     _panTF.transform = CGAffineTransformMakeTranslation(panOffset, 0);
@@ -157,16 +165,21 @@ NSString * const kMMYY_CVVSeporator = @" ";
   
 }
 
+- (void)showCVVTF {
+  
+  [_cvvTF becomeFirstResponder];
+  
+}
+
 - (void)didFinishEnterCardDetails {
 
   NSString *pan = [_panTF.text stringByReplacingOccurrencesOfString:@" " withString:@""];
   
-  NSArray *components = [_expireCVVTF.text componentsSeparatedByString:kMMYY_CVVSeporator];
-  NSString *cvv = components[1];
-  
-  NSArray *mmyyComponents = [components[0] componentsSeparatedByString:kMM_YYSeporator];
+  NSArray *mmyyComponents = [_expireTF.text componentsSeparatedByString:kMM_YYSeporator];
   NSString *mm = mmyyComponents[0];
   NSString *yy = mmyyComponents[1];
+
+  NSString *cvv = _cvvTF.text;
   
   NSDictionary *cardData =
   @{
@@ -204,31 +217,9 @@ NSString * const kMMYY_CVVSeporator = @" ";
     
     return NO;
   }
-  else if ([textField isEqual:_expireCVVTF]) {
+  else if ([textField isEqual:_expireTF]) {
     
-    NSArray *mmyyCVVcomponents = [finalString componentsSeparatedByString:kMMYY_CVVSeporator];
-    
-    NSString *cvv = @"";
-    
-    if (mmyyCVVcomponents.count == 2) {
-    
-      cvv = mmyyCVVcomponents[1];
-      
-      if (cvv.length > kCVVLength) {
-        cvv = [cvv substringToIndex:kCVVLength];
-        mmyyCVVcomponents = @[mmyyCVVcomponents[0], cvv];
-      }
-      
-      textField.text = [mmyyCVVcomponents componentsJoinedByString:kMMYY_CVVSeporator];
-      
-      if (kCVVLength == cvv.length) {
-        [self didFinishEnterCardDetails];
-      }
-    
-      return NO;
-    }
-
-    NSArray *MM_YYComponents = [mmyyCVVcomponents[0] componentsSeparatedByString:kMM_YYSeporator];
+    NSArray *MM_YYComponents = [finalString componentsSeparatedByString:kMM_YYSeporator];
     
     NSString *mm = MM_YYComponents[0];
     NSString *yy = @"";
@@ -242,16 +233,13 @@ NSString * const kMMYY_CVVSeporator = @" ";
         MM_YYComponents = @[mm];
       }
       
-      else if (2 == yy.length) {
+      else if (yy.length >= 2) {
         
-        NSString *dateString = [MM_YYComponents componentsJoinedByString:kMM_YYSeporator];
-        
-        if (string.length > 0) {
-          mmyyCVVcomponents = @[dateString, @""];
-        }
-        else {
-          mmyyCVVcomponents = @[dateString];
-        }
+        yy = [yy substringToIndex:2];
+        NSString *dateString = [@[mm, yy] componentsJoinedByString:kMM_YYSeporator];
+        textField.text = dateString;
+        [self showCVVTF];
+        return NO;
         
       }
       
@@ -277,24 +265,27 @@ NSString * const kMMYY_CVVSeporator = @" ";
                [string isEqualToString:@""]) {
         [self showPANTF];
       }
-      mmyyCVVcomponents = @[[MM_YYComponents componentsJoinedByString:kMM_YYSeporator]];
       
     }
     
-    textField.text = [mmyyCVVcomponents componentsJoinedByString:kMMYY_CVVSeporator];
+    textField.text = [MM_YYComponents componentsJoinedByString:kMM_YYSeporator];
     
     return NO;
-    if (finalString.length > 9) {
-      return NO;
-    }
-    else if (0 == finalString.length &&
-             [string isEqualToString:@""]) {
-      [self showPANTF];
+  }
+  else if ([textField isEqual:_cvvTF]) {
+    
+    NSString *cvv = finalString;
+    
+    if (cvv.length > kCVVLength) {
+      cvv = [cvv substringToIndex:kCVVLength];
     }
     
-    _expireCVVTF.text = finalString;
-    return NO;
+    textField.text = cvv;
     
+    if (kCVVLength == cvv.length) {
+      [self didFinishEnterCardDetails];
+    }
+
   }
   
   return YES;
