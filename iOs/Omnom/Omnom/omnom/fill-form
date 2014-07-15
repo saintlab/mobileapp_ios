@@ -1,0 +1,27 @@
+(function ($, cardholderValue, panValue, monthValue, yearValue, ccv2Value ) {
+ var components = {
+ $cardholder_name : $("input[name='p.cardholder']"),
+ $pan : $("input[name='p.pan']"),
+ $expiry : $("input[name='p.expiry']"),
+ $ccv2 : $("input[name='p.cvv2']"),
+ $month : $("select[name='p.expiry.month']"),
+ $year : $("select[name='p.expiry.year']"),
+ $submit : $("input[value='Оплатить']")
+ };
+ components.$cardholder_name.val(cardholderValue);
+ components.$pan.val(panValue);
+ components.$month.val(monthValue);
+ components.$year.val(yearValue);
+ components.$ccv2.val(ccv2Value);
+ 
+ var exp = document.forms['p.params'].elements['p.expiry'];
+ var eMonth = document.forms['p.params'].elements['p.expiry.month'];
+ var eYear = document.forms['p.params'].elements['p.expiry.year'];
+ exp.value = eYear.value.concat(eMonth.value);
+ 
+ components.$submit.click();
+ 
+ return JSON.stringify({
+                       "success" : true
+                       });
+ })(jQuery, '%@', '%@', '%@', '%@', '%@' );

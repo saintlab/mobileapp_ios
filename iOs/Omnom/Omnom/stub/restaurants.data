@@ -1,0 +1,16 @@
+{
+  "limit" : null,
+  "total" : 1,
+  "offset" : null,
+  "items" : [
+    {
+      "_id" : "riba-ris",
+      "description" : "Доставка суши, в Новосибирск, на дом, бесплатно",
+      "title" : "Рыба.Рис",
+      "modified" : "2014-05-26T06:34:05.390Z",
+      "id" : "riba-ris",
+      "system" : "rkeeper",
+      "systemAPI" : "http:\/\/37.192.126.210:7777\/"
+    }
+  ]
+}
