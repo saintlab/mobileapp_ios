@@ -4,7 +4,7 @@ workspace 'Omnom.xcworkspace'
 
 inhibit_all_warnings!
 
-xcodeproj 'restaurants/omnom.xcodeproj'
+xcodeproj 'Omnom/omnom.xcodeproj'
 xcodeproj '../OMNSocial/Example/OMNSocial.xcodeproj'
 xcodeproj '../OMNStyler/Example/OMNStyler.xcodeproj'
 xcodeproj '../OMNCardEnterControl/Example/OMNCardEnterControl.xcodeproj'
@@ -33,14 +33,14 @@ end
 target :omnom do
   import_all
   pod 'EAIntroView'
-  xcodeproj 'restaurants/omnom.xcodeproj'
+  xcodeproj 'Omnom/omnom.xcodeproj'
 end
 
 target :omnomTests do
   import_pods
   pod 'OCMock'
   pod 'KIF', '~> 3.0.4'
-  xcodeproj 'restaurants/omnom.xcodeproj'
+  xcodeproj 'Omnom/omnom.xcodeproj'
 end
 
 target :OMNSocial do
