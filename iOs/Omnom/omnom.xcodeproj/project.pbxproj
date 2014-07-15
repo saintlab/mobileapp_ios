@@ -770,8 +770,8 @@
 		93676DE018D1E4FC00FC55F1 = {
 			isa = PBXGroup;
 			children = (
-				93676DF218D1E4FC00FC55F1 /* omnom */,
-				93676E1418D1E4FC00FC55F1 /* omnomTests */,
+				93676DF218D1E4FC00FC55F1 /* Omnom */,
+				93676E1418D1E4FC00FC55F1 /* OmnomTests */,
 				93676DEB18D1E4FC00FC55F1 /* Frameworks */,
 				93676DEA18D1E4FC00FC55F1 /* Products */,
 				698DEBA8EA22478F8304C88F /* Pods-omnom.xcconfig */,
@@ -803,7 +803,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		93676DF218D1E4FC00FC55F1 /* omnom */ = {
+		93676DF218D1E4FC00FC55F1 /* Omnom */ = {
 			isa = PBXGroup;
 			children = (
 				937E0B5D18F04EC20058A249 /* OMNConstants.h */,
@@ -820,7 +820,7 @@
 				93676E0718D1E4FC00FC55F1 /* Images.xcassets */,
 				93676DF318D1E4FC00FC55F1 /* Supporting Files */,
 			);
-			path = omnom;
+			path = Omnom;
 			sourceTree = "<group>";
 		};
 		93676DF318D1E4FC00FC55F1 /* Supporting Files */ = {
@@ -838,7 +838,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		93676E1418D1E4FC00FC55F1 /* omnomTests */ = {
+		93676E1418D1E4FC00FC55F1 /* OmnomTests */ = {
 			isa = PBXGroup;
 			children = (
 				93676E1A18D1E4FC00FC55F1 /* mockTests.m */,
@@ -848,7 +848,7 @@
 				9367CE8C193CC67600116AC2 /* homeScreenTest.m */,
 				931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */,
 			);
-			path = omnomTests;
+			path = OmnomTests;
 			sourceTree = "<group>";
 		};
 		93676E1518D1E4FC00FC55F1 /* Supporting Files */ = {
