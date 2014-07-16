@@ -15,6 +15,7 @@
 #import "OMNScanQRCodeVC.h"
 #import "OMNTurnOnBluetoothVC.h"
 #import "OMNDecodeBeaconManager.h"
+#import "OMNOperationManager.h"
 
 @interface OMNSearchTableVC ()
 <OMNTablePositionVCDelegate,
@@ -69,20 +70,41 @@ OMNScanQRCodeVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-#if TARGET_IPHONE_SIMULATOR
+  [self checkNetworkState];
   
-  [self checkBluetoothState];
-  
-#else
+}
 
-  if (kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
-    [self processNotDeterminedLocationManagerSituation];
+- (void)checkNetworkState {
+  
+  if ([OMNOperationManager sharedManager].isReachable) {
+    
+#if TARGET_IPHONE_SIMULATOR
+    
+    [self checkBluetoothState];
+    
+#else
+    
+    if (kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
+      [self processNotDeterminedLocationManagerSituation];
+    }
+    else {
+      [self checkBluetoothState];
+    }
+    
+#endif
+    
   }
   else {
-    [self checkBluetoothState];
+    
+    [self processServerUnavaliableState];
+    
   }
+  
+}
 
-#endif
+- (void)processServerUnavaliableState {
+  
+  [[[UIAlertView alloc] initWithTitle:@"экран с ошибкой соединения" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
   
 }
 

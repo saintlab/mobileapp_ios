@@ -16,6 +16,7 @@ typedef void(^OMNUserBlock)(OMNUser *user);
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *phone;
+@property (nonatomic, copy) NSDate *birthDate;
 @property (nonatomic, copy) NSString *status;
 
 @property (nonatomic, assign) BOOL phone_validated;

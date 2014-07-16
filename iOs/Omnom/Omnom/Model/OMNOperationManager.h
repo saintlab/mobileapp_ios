@@ -12,4 +12,6 @@
 
 + (instancetype)sharedManager;
 
+- (BOOL)isReachable;
+
 @end

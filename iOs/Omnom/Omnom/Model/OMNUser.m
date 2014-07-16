@@ -18,6 +18,8 @@
     self.email = [data[@"email"] description];
     self.phone = [data[@"phone"] description];
     self.status = [data[@"status"] description];
+//    self.birthDate = data[@"birth_date"];
+
     self.phone_validated = [data[@"phone_validated"] boolValue];
     self.email_validated = [data[@"email_validated"] boolValue];
   }
@@ -56,6 +58,12 @@
   if (self.name.length) {
     parameters[@"firstName"] = self.name;
     parameters[@"name"] = self.name;
+  }
+  
+  if (self.birthDate) {
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    parameters[@"birth_date"] = [df stringFromDate:self.birthDate];
   }
   
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

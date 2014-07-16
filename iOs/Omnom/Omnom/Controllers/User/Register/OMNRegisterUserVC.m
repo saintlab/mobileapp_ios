@@ -23,6 +23,9 @@
   __weak IBOutlet UITextField *_emailTF;
   __weak IBOutlet UITextField *_birthdayTF;
   
+  
+  UIDatePicker *_datePicker;
+  
   OMNUser *_user;
 }
 
@@ -42,10 +45,10 @@
     _nameTF.text = @"Женя";
   }
   
-  UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-  datePicker.datePickerMode = UIDatePickerModeDate;
-  [datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
-  _birthdayTF.inputView = datePicker;
+  _datePicker = [[UIDatePicker alloc] init];
+  _datePicker.datePickerMode = UIDatePickerModeDate;
+  [_datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
+  _birthdayTF.inputView = _datePicker;
   
   self.navigationItem.title = NSLocalizedString(@"Создать аккаунт", nil);
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
@@ -56,14 +59,22 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  [_nameTF becomeFirstResponder];
+  [self updateBirthDate];
   
 }
 
 - (void)datePickerChange:(UIDatePicker *)datePicker {
   
+  [self updateBirthDate];
+  
+}
+
+- (void)updateBirthDate {
+
   NSDateFormatter *df = [[NSDateFormatter alloc] init];
   [df setDateFormat:@"dd/MM/yyyy"];
-  _birthdayTF.text = [df stringFromDate:datePicker.date];
+  _birthdayTF.text = [df stringFromDate:_datePicker.date];
   
 }
 
@@ -100,6 +111,7 @@
   _user.email = _emailTF.text;
   _user.phone = _phoneTF.text;
   _user.name = _nameTF.text;
+  _user.birthDate = _datePicker.date;
   
   __weak typeof(self)weakSelf = self;
   [_user registerWithComplition:^{
