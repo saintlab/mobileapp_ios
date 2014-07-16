@@ -102,7 +102,7 @@ OMNRestaurantMenuVCDelegate>
   
   [self dismissViewControllerAnimated:YES completion:nil];
   
-  [[OMNAuthorisation authorisation] updateToken:token];
+  [[OMNAuthorisation authorisation] updateAuthenticationToken:token];
   [self processAuthorisation];
   
 }
@@ -137,7 +137,7 @@ OMNRestaurantMenuVCDelegate>
   
   [restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
     
-    NSLog(@"newGuestForTableID");
+    NSLog(@"newGuestForTableID>done");
     
   } failure:^(NSError *error) {
     

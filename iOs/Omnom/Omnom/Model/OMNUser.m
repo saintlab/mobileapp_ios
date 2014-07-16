@@ -148,7 +148,7 @@
 
 + (void)loginWithParameters:(NSDictionary *)parameters complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
   
-  [[OMNAuthorizationManager sharedManager] POST:@"/authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     [responseObject decodeToken:complition failure:failureBlock];
     

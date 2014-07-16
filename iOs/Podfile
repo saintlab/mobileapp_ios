@@ -26,7 +26,7 @@ def import_all
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"
-  pod "OMNSocial", :path => "OMNSocial/"
+  #  pod "OMNSocial", :path => "OMNSocial/"
 end
 
 target :omnom do

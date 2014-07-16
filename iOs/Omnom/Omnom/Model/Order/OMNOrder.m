@@ -88,7 +88,7 @@
   NSDictionary *order =
   @{
     @"description": @"Кебаб",
-    @"amount": @(99999),
+    @"amount": @(self.toPayAmount),
     @"restaurant_id" : self.restaurant_id,
     @"table_id" : self.tableId,
     };

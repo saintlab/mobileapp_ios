@@ -29,17 +29,9 @@ static NSString * const kAccountName = @"test_account6";
   self = [super init];
   if (self) {
     
-    _token = [SSKeychain passwordForService:@"token" account:kAccountName];
-    
-    if (_token) {
-      [self updateAuthenticationToken];
-    }
-    else {
-      
-    }
-    
-    [self retriveToken];
-    
+    NSString *token = [SSKeychain passwordForService:@"token" account:kAccountName];
+    [self updateAuthenticationToken:token];
+
   }
   return self;
 }
@@ -64,24 +56,14 @@ static NSString * const kAccountName = @"test_account6";
   return retrieveuuid;
 }
 
-- (void)updateAuthenticationToken {
+- (void)updateAuthenticationToken:(NSString *)token {
 
-  if (_token) {
-    [[OMNOperationManager sharedManager].requestSerializer setValue:_token forHTTPHeaderField:@"x-authentication-token"];
+  if (token) {
+    _token = token;
+    [SSKeychain setPassword:token forService:@"token" account:kAccountName];
+    [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
   }
 
-}
-
-- (void)updateToken:(NSString *)newToken {
-  
-  if (nil == _token) {
-    return;
-  }
-  
-  _token = newToken;
-  [SSKeychain setPassword:newToken forService:@"token" account:kAccountName];
-  [self updateAuthenticationToken];
-  
 }
 
 - (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block {
@@ -102,34 +84,6 @@ static NSString * const kAccountName = @"test_account6";
     
   }];
   
-}
-
-- (void)retriveToken {
-
-  NSDictionary *parameters =
-  @{
-    @"installId" : self.installId
-    };
-  
-  __weak typeof(self)weakSelf = self;
-  [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    [responseObject decodeToken:^(NSString *token) {
-      
-      [weakSelf updateToken:token];
-      
-    } failure:^(NSError *error) {
-      
-    }];
-    
-    NSLog(@"responseObject>%@", responseObject);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    NSLog(@"error>%@", error);
-    
-  }];
-
 }
 
 - (void)confirmPhone:(NSString *)phone code:(NSString *)code {
@@ -156,7 +110,7 @@ static NSString * const kAccountName = @"test_account6";
 
 @implementation NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
+- (void)decodeToken:(OMNTokenBlock)complition failure:(void(^)(NSError *))failureBlock {
   
   if ([self[@"status"] isEqualToString:@"success"]) {
     
