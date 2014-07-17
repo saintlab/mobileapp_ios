@@ -8,6 +8,8 @@
 
 #import "OMNDecodeBeacon.h"
 
+extern NSString * const OMNDecodeBeaconManagerNotificationLaunchKey;
+
 @interface OMNDecodeBeaconManager : NSObject
 
 + (instancetype)manager;

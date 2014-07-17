@@ -9,6 +9,8 @@
 #import "OMNDecodeBeaconManager.h"
 #import "OMNOperationManager.h"
 
+NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeaconManagerNotificationLaunchKey";
+
 @implementation OMNDecodeBeaconManager {
   NSMutableDictionary *_decodedBeacons;
 }
@@ -66,19 +68,19 @@
 }
 
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(OMNErrorBlock)failure {
-#warning cache
-//  OMNBeacon *beacon = [beacons firstObject];
-//  
-//  if (beacon.key) {
-//    
-//    OMNDecodeBeacon *decodeBeacon = _decodedBeacons[beacon.key];
-//    
-//    if (decodeBeacon) {
-//      success(@[decodeBeacon]);
-//      return;
-//    }
-//    
-//  }
+
+  OMNBeacon *beacon = [beacons firstObject];
+  
+  if (beacon.key) {
+    
+    OMNDecodeBeacon *decodeBeacon = _decodedBeacons[beacon.key];
+    
+    if (decodeBeacon) {
+      success(@[decodeBeacon]);
+      return;
+    }
+    
+  }
   
   NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
   [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
@@ -177,6 +179,7 @@
     localNotification.alertBody = decodeBeacon.restaurantId;
     localNotification.alertAction = NSLocalizedString(@"Запустить", nil);
     localNotification.soundName = kPushSoundName;
+    localNotification.userInfo = @{OMNDecodeBeaconManagerNotificationLaunchKey : @(YES)};
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     
   }

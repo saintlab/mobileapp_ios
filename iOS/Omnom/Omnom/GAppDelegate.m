@@ -21,11 +21,12 @@
 
 @implementation GAppDelegate {
   UIImageView *_splashIV;
+  BOOL _applicationStartedForeground;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-  [self setupUrbanAirship];
+  NSLog(@"launchOptions>%@", launchOptions);
   
   [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comlitionBlock) {
     
@@ -33,13 +34,27 @@
     
   }];
   
+  if (nil == launchOptions[UIApplicationLaunchOptionsLocationKey]) {
+    [self startApplication];
+  }
   
+  return YES;
+  
+}
+
+- (void)startApplication {
+
+  if (_applicationStartedForeground) {
+    return;
+  }
+  
+  _applicationStartedForeground = YES;
+  
+  [self setupUrbanAirship];
   [OMNAuthorisation authorisation];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
-  
-  return YES;
   
 }
 
@@ -56,6 +71,10 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
   
   NSLog(@"didReceiveLocalNotification>%@", notification);
+  if (notification.userInfo[OMNDecodeBeaconManagerNotificationLaunchKey]) {
+    [self startApplication];
+  }
+  
   
 }
 
@@ -86,6 +105,13 @@
     _splashIV = nil;
     
   }];
+  
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+  
+  NSLog(@"applicationWillEnterForeground");
+  [self startApplication];
   
 }
 

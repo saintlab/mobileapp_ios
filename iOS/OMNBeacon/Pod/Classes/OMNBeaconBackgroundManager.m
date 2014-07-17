@@ -11,9 +11,6 @@
 #import "OMNBeacon.h"
 #import "OMNBeaconSearchManager.h"
 
-//#import "OMNDecodeBeacon.h"
-//#import "OMNDecodeBeaconManager.h"
-
 static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentifier";
 
 @interface OMNBeaconBackgroundManager()
@@ -62,12 +59,26 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     self.backgroundBeaconRegion.notifyOnEntry = YES;
     self.backgroundBeaconRegion.notifyOnExit = YES;
     
-    if (kCLAuthorizationStatusAuthorized == [CLLocationManager authorizationStatus]) {
-      [self startBeaconRegionMonitoring];
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
     
   }
   return self;
+}
+
+- (void)applicationDidEnterBackground {
+
+  if (kCLAuthorizationStatusAuthorized == [CLLocationManager authorizationStatus]) {
+    [self startBeaconRegionMonitoring];
+  }
+
+}
+
+- (void)applicationWillEnterForeground {
+  
+  [self stopBeaconRegionMonitoring];
+  
 }
 
 - (void)beaconDidFind:(OMNBeacon *)beacon {
