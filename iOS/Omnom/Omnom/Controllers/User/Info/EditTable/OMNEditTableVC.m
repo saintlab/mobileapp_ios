@@ -69,6 +69,7 @@
   
   _qrScanButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
   [_qrScanButton addTarget:self action:@selector(scanQRCode) forControlEvents:UIControlEventTouchUpInside];
+  _tableNumberTF.rightView = _qrScanButton;
   
   _switch.hidden = YES;
   _switchLabel.hidden = YES;

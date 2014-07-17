@@ -16,6 +16,7 @@
 #import "OMNTurnOnBluetoothVC.h"
 #import "OMNDecodeBeaconManager.h"
 #import "OMNOperationManager.h"
+#import <OMNBeaconBackgroundManager.h>
 
 @interface OMNSearchTableVC ()
 <OMNTablePositionVCDelegate,
@@ -310,6 +311,7 @@ OMNScanQRCodeVCDelegate>
 
 - (void)askNavigationPermissionsVCDidGrantPermission:(OMNAskNavigationPermissionsVC *)askNavigationPermissionsVC {
   [self.navigationController popToViewController:self animated:YES];
+  [[OMNBeaconBackgroundManager manager] startBeaconRegionMonitoring];
   [self startSearchingTables];
   
 }

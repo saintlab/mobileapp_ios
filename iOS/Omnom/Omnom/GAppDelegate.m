@@ -33,6 +33,7 @@
     
   }];
   
+  
   [OMNAuthorisation authorisation];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];

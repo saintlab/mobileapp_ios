@@ -128,8 +128,15 @@ UITableViewDelegate>
   
   NSLog(@"%lu", (unsigned long)[[UIApplication sharedApplication] enabledRemoteNotificationTypes]);
   
-  if (UIRemoteNotificationTypeNone == [[UIApplication sharedApplication] enabledRemoteNotificationTypes]) {
+  BOOL notificationPermissionRequested = [[NSUserDefaults standardUserDefaults] boolForKey:@"notificationPermissionRequested"];
+  
+  
+  if (NO == notificationPermissionRequested &&
+      UIRemoteNotificationTypeNone == [[UIApplication sharedApplication] enabledRemoteNotificationTypes]) {
 
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"notificationPermissionRequested"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [UIAlertView bk_showAlertViewWithTitle:nil message:NSLocalizedString(@"Разрешить Omnom использовать Push сообщения для отображения информации о текущем столе?", nil) cancelButtonTitle:NSLocalizedString(@"Запретить", nil) otherButtonTitles:@[NSLocalizedString(@"Разрешить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
 
       if (buttonIndex != alertView.cancelButtonIndex) {

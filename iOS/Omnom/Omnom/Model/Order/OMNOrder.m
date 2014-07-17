@@ -90,6 +90,7 @@
     @"description": @"Кебаб",
     @"amount": @(self.toPayAmount),
     @"restaurant_id" : self.restaurant_id,
+    @"restaurateur_order_id" : self.ID,
     @"table_id" : self.tableId,
     };
 

@@ -62,17 +62,28 @@
   
   if (self.birthDate) {
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy-MM-dd"];
-    parameters[@"birth_date"] = [df stringFromDate:self.birthDate];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [df setLocale:locale];
+    [df setDateFormat:@"dd-MM-yyyy"];
+    parameters[@"birthDate"] = [df stringFromDate:self.birthDate];
   }
   
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-    NSLog(@"responseObject>%@", responseObject);
-    complition();
+    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    
+    NSLog(@"registerWithComplition>%@", responseObject);
+    if ([responseObject[@"status"] isEqualToString:@"registered"]) {
+      complition();
+    }
+    else {
+      failureBlock([NSError errorWithDomain:NSStringFromClass(self.class) code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
+    }
+    
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    NSLog(@"registerWithComplition>%@", error);
     failureBlock(error);
     
   }];
@@ -176,6 +187,8 @@
     };
   
   [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"user>>%@", responseObject);
     
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
       

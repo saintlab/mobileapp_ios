@@ -62,9 +62,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     self.backgroundBeaconRegion.notifyOnEntry = YES;
     self.backgroundBeaconRegion.notifyOnExit = YES;
     
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    
     if (kCLAuthorizationStatusAuthorized == [CLLocationManager authorizationStatus]) {
       [self startBeaconRegionMonitoring];
     }
@@ -109,6 +106,11 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 }
 
 - (void)startBeaconRegionMonitoring {
+  
+  if (nil == _locationManager) {
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+  }
   
   if (_monitoring) {
     return;
@@ -177,7 +179,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   //doesn't handle foreground region monitoring
   if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
     NSLog(@"doesn't handle foreground region monitoring");
-//    return;
+    return;
   }
   
   switch (state) {

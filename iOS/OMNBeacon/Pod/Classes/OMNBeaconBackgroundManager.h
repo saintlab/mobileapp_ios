@@ -22,6 +22,8 @@ typedef void(^OMNBeaconBackgroundManagerDidFindBlock)(OMNBeacon *foundBeacon, di
 
 + (instancetype)manager;
 
+- (void)startBeaconRegionMonitoring;
+
 - (void)forgetFoundBeacons;
 
 - (void)handlePush:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;

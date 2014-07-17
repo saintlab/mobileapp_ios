@@ -69,7 +69,7 @@
   
   switch (status) {
     case kCLAuthorizationStatusDenied: {
-      [[[UIAlertView alloc] initWithTitle:@"kCLAuthorizationStatusDenied" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+      [[[UIAlertView alloc] initWithTitle:@"kCLAuthorizationStatusDenied" message:@"показать экран чтобы получить пермишен для использования геолокации" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 
     } break;
     case kCLAuthorizationStatusRestricted: {
