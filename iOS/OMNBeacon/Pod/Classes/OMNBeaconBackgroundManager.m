@@ -9,7 +9,7 @@
 #import "OMNBeaconBackgroundManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "OMNBeacon.h"
-#import "OMNBeaconSearchManager.h"
+#import "OMNNearestBeaconSearchManager.h"
 
 static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentifier";
 
@@ -17,7 +17,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 <CLLocationManagerDelegate> {
 
   CLLocationManager *_locationManager;
-  OMNBeaconSearchManager *_beaconSearchManager;
+  OMNNearestBeaconSearchManager *_beaconSearchManager;
   
   UIBackgroundTaskIdentifier _searchBeaconTask;
 
@@ -225,7 +225,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     
   }];
   
-  _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
+  _beaconSearchManager = [[OMNNearestBeaconSearchManager alloc] init];
   [_beaconSearchManager findNearestBeacon:^(OMNBeacon *beacon) {
     
     [weakSelf beaconDidFind:beacon];

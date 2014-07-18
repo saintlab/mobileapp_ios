@@ -13,6 +13,7 @@
 #import <UAConfig.h>
 #import "OMNBeaconBackgroundManager.h"
 #import "OMNDecodeBeaconManager.h"
+#import "OMNOperationManager.h"
 
 @interface GAppDelegate ()
 
@@ -51,6 +52,7 @@
   _applicationStartedForeground = YES;
   
   [self setupUrbanAirship];
+  [OMNOperationManager manager];
   [OMNAuthorisation authorisation];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];

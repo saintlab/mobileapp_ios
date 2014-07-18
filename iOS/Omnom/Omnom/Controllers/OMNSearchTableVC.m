@@ -7,28 +7,29 @@
 //
 
 #import "OMNSearchTableVC.h"
-#import "OMNBeaconsManager.h"
 #import "OMNBeacon.h"
 #import "OMNTablePositionVC.h"
 #import "OMNAskNavigationPermissionsVC.h"
-#import "OMNBluetoothManager.h"
 #import "OMNScanQRCodeVC.h"
 #import "OMNTurnOnBluetoothVC.h"
 #import "OMNDecodeBeaconManager.h"
-#import "OMNOperationManager.h"
-#import <OMNBeaconBackgroundManager.h>
+
+#import "OMNBeaconSearchManager.h"
 
 @interface OMNSearchTableVC ()
 <OMNTablePositionVCDelegate,
 OMNAskNavigationPermissionsVCDelegate,
-OMNScanQRCodeVCDelegate>
+OMNScanQRCodeVCDelegate,
+OMNBeaconSearchManagerDelegate>
 
 @end
 
 @implementation OMNSearchTableVC {
-  OMNBeaconsManager *_beaconManager;
+
   OMNSearchTableVCBlock _didFindTableBlock;
   dispatch_block_t _cancelBlock;
+  
+  OMNBeaconSearchManager *_beaconSearchManager;
   
   __weak IBOutlet UILabel *_searchLabel;
   
@@ -37,15 +38,17 @@ OMNScanQRCodeVCDelegate>
 - (instancetype)initWithBlock:(OMNSearchTableVCBlock)block cancelBlock:(dispatch_block_t)cancelBlock {
   self = [super initWithNibName:@"OMNSearchTableVC" bundle:nil];
   if (self) {
-    _cancelBlock = cancelBlock;
+    NSAssert(block != nil, @"provide did find block");
+    NSAssert(cancelBlock != nil, @"provide cancel block");
     _didFindTableBlock = block;
+    _cancelBlock = cancelBlock;
   }
   return self;
 }
 
 - (void)dealloc {
-  [_beaconManager stopMonitoring];
-  _beaconManager = nil;
+  [_beaconSearchManager stop];
+  _beaconSearchManager = nil;
 }
 
 - (void)viewDidLoad {
@@ -55,8 +58,11 @@ OMNScanQRCodeVCDelegate>
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
   UIBarButtonItem *stubBeaconButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub table", nil) style:UIBarButtonItemStylePlain target:self action:@selector(useStubBeacon)];
-  UIBarButtonItem *qrcodeButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"QR code", nil) style:UIBarButtonItemStylePlain target:self action:@selector(useQRCode)];
+  UIBarButtonItem *qrcodeButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"QR code", nil) style:UIBarButtonItemStylePlain target:self action:@selector(requestQRCode)];
   self.navigationItem.rightBarButtonItems = @[stubBeaconButton, qrcodeButton];
+  
+  _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
+  _beaconSearchManager.delegate = self;
   
 }
 
@@ -71,91 +77,15 @@ OMNScanQRCodeVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [self checkNetworkState];
+  [self startSearchingBeacon];
   
 }
 
-- (void)checkNetworkState {
-  
-  if ([OMNOperationManager sharedManager].isReachable) {
-    
-#if TARGET_IPHONE_SIMULATOR
-    
-    [self checkBluetoothState];
-    
-#else
-    
-    if (kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
-      [self processNotDeterminedLocationManagerSituation];
-    }
-    else {
-      [self checkBluetoothState];
-    }
-    
-#endif
-    
-  }
-  else {
-    
-    [self processServerUnavaliableState];
-    
-  }
-  
+- (void)startSearchingBeacon {
+  [_beaconSearchManager startSearchingBeacon];
 }
 
-- (void)processServerUnavaliableState {
-  
-  [[[UIAlertView alloc] initWithTitle:@"экран с ошибкой соединения" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-  
-}
-
-- (void)processNotDeterminedLocationManagerSituation {
-  
-  OMNAskNavigationPermissionsVC *askNavigationPermissionsVC = [[OMNAskNavigationPermissionsVC alloc] init];
-  askNavigationPermissionsVC.delegate = self;
-  [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
-  
-}
-
-- (void)checkBluetoothState {
-  
-  __weak typeof(self)weakSelf = self;
-
-  [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
-    
-    switch (state) {
-      case CBCentralManagerStatePoweredOn: {
-        
-        [weakSelf startSearchingTables];
-        
-      } break;
-      case CBCentralManagerStateUnsupported: {
-        
-        [weakSelf useQRCode];
-        [[OMNBluetoothManager manager] stop];
-        
-      } break;
-      case CBCentralManagerStatePoweredOff: {
-        
-        [weakSelf processBLEOffSituation];
-        
-      } break;
-      case CBCentralManagerStateUnauthorized: {
-        
-        [weakSelf processBLEUnauthorizedSituation];
-        
-      } break;
-      case CBCentralManagerStateResetting:
-      case CBCentralManagerStateUnknown: {
-        //do noithing
-      } break;
-    }
-    
-  }];
-  
-}
-
-- (void)useQRCode {
+- (void)requestQRCode {
   
   OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
   scanQRCodeVC.delegate = self;
@@ -168,6 +98,7 @@ OMNScanQRCodeVCDelegate>
 - (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
   
   [scanQRCodeVC stopScanning];
+#warning scanQRCodeVC logic
   [self useStubBeacon];
   
 }
@@ -179,17 +110,83 @@ OMNScanQRCodeVCDelegate>
   
 }
 
-- (void)processBLEOffSituation {
+#pragma mark - OMNBeaconSearchManagerDelegate
+
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon {
   
-  [_beaconManager stopMonitoring];
-  
-  OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] init];
-  [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
+  [self decodeBeacon:beacon];
   
 }
 
-- (void)processBLEUnauthorizedSituation {
-  //do nothing at this moment
+- (void)beaconSearchManagerServerUnavaliableState:(OMNBeaconSearchManager *)beaconSearchManager {
+  [[[UIAlertView alloc] initWithTitle:@"экран с ошибкой соединения" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+}
+
+- (void)beaconSearchManagerDidRequestLocationManagerPermission:(OMNBeaconSearchManager *)beaconSearchManager {
+  
+  OMNAskNavigationPermissionsVC *askNavigationPermissionsVC = [[OMNAskNavigationPermissionsVC alloc] init];
+  askNavigationPermissionsVC.delegate = self;
+  [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
+  
+}
+
+#pragma mark - OMNAskNavigationPermissionsVCDelegate
+
+- (void)askNavigationPermissionsVCDidGrantPermission:(OMNAskNavigationPermissionsVC *)askNavigationPermissionsVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  [self startSearchingBeacon];
+  
+}
+
+- (void)beaconSearchManagerBLEUnsupported:(OMNBeaconSearchManager *)beaconSearchManager {
+ 
+  [self requestQRCode];
+  
+}
+
+- (void)beaconSearchManagerDidRequestTurnBLEOn:(OMNBeaconSearchManager *)beaconSearchManager {
+
+  OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] init];
+  [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
+
+}
+
+- (void)beaconSearchManagerDidRequestDeviceFaceUpPosition:(OMNBeaconSearchManager *)beaconSearchManager {
+
+  OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] init];
+  tablePositionVC.delegate = self;
+  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:tablePositionVC] animated:YES completion:nil];
+  
+}
+
+#pragma mark - OMNTablePositionVCDelegate
+
+- (void)tablePositionVCDidPlaceOnTable:(OMNTablePositionVC *)tablePositionVC {
+  
+  __weak typeof(self)weakSelf = self;
+  [self dismissViewControllerAnimated:YES completion:^{
+    [weakSelf startSearchingBeacon];
+  }];
+  
+}
+
+- (void)tablePositionVCDidCancel:(OMNTablePositionVC *)tablePositionVC {
+  
+  [self cancelTap];
+  
+}
+
+- (void)beaconSearchManagerDidRequestCoreLocationDeniedPermission:(OMNBeaconSearchManager *)beaconSearchManager {
+  
+  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:@"kCLAuthorizationStatusDenied" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+  
+}
+
+- (void)beaconSearchManagerDidRequestCoreLocationRestrictedPermission:(OMNBeaconSearchManager *)beaconSearchManager {
+  
+  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:@"kCLAuthorizationStatusRestricted" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+  
 }
 
 - (void)cancelTap {
@@ -207,116 +204,16 @@ OMNScanQRCodeVCDelegate>
   beacon.major = @(1);
   beacon.minor = @(2);
   
-  [self decodeBeacons:@[beacon]];
+  [self decodeBeacon:beacon];
 
 }
 
-- (void)startSearchingTables {
+- (void)decodeBeacon:(OMNBeacon *)beaconToDecode {
   
-  [self.navigationController popToViewController:self animated:YES];
-  
-  if (nil == _beaconManager) {
-    _beaconManager = [[OMNBeaconsManager alloc] init];
-  }
-  
-  if (_beaconManager.ragingMonitorEnabled) {
+  if (nil == beaconToDecode) {
+    [self startSearchingBeacon];
     return;
   }
-  
-  __weak typeof(self)weakSelf = self;
-  [_beaconManager startMonitoringNearestBeacons:^(NSArray *foundBeacons) {
-
-    [weakSelf checkNearestBeacons:foundBeacons];
-    
-  } status:^(CLAuthorizationStatus status) {
-    
-    [weakSelf processStatus:status];
-    
-  }];
-  
-}
-
-- (void)checkNearestBeacons:(NSArray *)nearestBeacons {
-
-  if (0 == nearestBeacons.count) {
-    return;
-  }
-  NSLog(@"nearestBeacons>%@", nearestBeacons);
-  
-  [_beaconManager stopMonitoring];
-  
-  if (nearestBeacons.count > 1) {
-    
-    [self determineDeviceFaceUpPosition];
-    
-  }
-  else {
-    
-    [self decodeBeacons:nearestBeacons];
-    
-  }
-  
-}
-
-- (void)determineDeviceFaceUpPosition {
-  
-  OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] init];
-  tablePositionVC.delegate = self;
-  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:tablePositionVC] animated:YES completion:nil];
-  
-}
-
-#pragma mark - OMNTablePositionVCDelegate
-
-- (void)tablePositionVCDidPlaceOnTable:(OMNTablePositionVC *)tablePositionVC {
-  
-  __weak typeof(self)weakSelf = self;
-  [self dismissViewControllerAnimated:YES completion:^{
-    [weakSelf startSearchingTables];
-  }];
-  
-}
-
-- (void)tablePositionVCDidCancel:(OMNTablePositionVC *)tablePositionVC {
-  
-  _cancelBlock();
-  
-}
-
-- (void)processStatus:(CLAuthorizationStatus)status {
-  
-  switch (status) {
-    case kCLAuthorizationStatusAuthorized: {
-      
-    } break;
-    case kCLAuthorizationStatusDenied: {
-      
-      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:@"kCLAuthorizationStatusDenied" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-      
-    } break;
-    case kCLAuthorizationStatusNotDetermined: {
-      
-    } break;
-    case kCLAuthorizationStatusRestricted: {
-
-      [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Нет прав на использование геопозиции", nil) message:@"kCLAuthorizationStatusRestricted" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-      
-    } break;
-    
-  }
-  
-}
-
-#pragma mark - OMNAskNavigationPermissionsVCDelegate
-
-- (void)askNavigationPermissionsVCDidGrantPermission:(OMNAskNavigationPermissionsVC *)askNavigationPermissionsVC {
-  [self.navigationController popToViewController:self animated:YES];
-  [[OMNBeaconBackgroundManager manager] startBeaconRegionMonitoring];
-  [self startSearchingTables];
-  
-}
-
-- (void)decodeBeacons:(NSArray *)beaconsToDecode {
   
   _searchLabel.text = NSLocalizedString(@"Получаем информацию о столе...", nil);
   
@@ -329,21 +226,20 @@ OMNScanQRCodeVCDelegate>
     return;
   }
   
-  [[OMNDecodeBeaconManager manager] decodeBeacons:beaconsToDecode success:^(NSArray *decodeBeacons) {
+  __weak typeof(self)weakSelf = self;
+  [[OMNDecodeBeaconManager manager] decodeBeacons:@[beaconToDecode] success:^(NSArray *decodeBeacons) {
     
     OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
     
     if (decodeBeacon) {
 
-      if (_didFindTableBlock) {
-        _didFindTableBlock(decodeBeacon);
-      }
+      _didFindTableBlock(decodeBeacon);
       
     }
     else {
       
       _searchLabel.text = @"Нет информации о столе";
-      [self startSearchingTables];
+      [weakSelf startSearchingBeacon];
       
     }
     

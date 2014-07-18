@@ -239,6 +239,8 @@
 		93C99161193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99160193F176B0028F76C /* FuturaPT-Medium.ttf */; };
 		93C99162193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99160193F176B0028F76C /* FuturaPT-Medium.ttf */; };
 		93E88E951941C31D001707CD /* OMNOrder+omn_calculationAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E88E941941C31D001707CD /* OMNOrder+omn_calculationAmount.m */; };
+		93F4DBDE1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */; };
+		93F4DBDF1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */; };
 		C6C76590351C4176B35ECE19 /* libPods-omnomTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C1CE5E4E1243D5AFFD1065 /* libPods-omnomTests.a */; };
 /* End PBXBuildFile section */
 
@@ -505,6 +507,8 @@
 		93C99160193F176B0028F76C /* FuturaPT-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FuturaPT-Medium.ttf"; sourceTree = "<group>"; };
 		93E88E931941C31D001707CD /* OMNOrder+omn_calculationAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+omn_calculationAmount.h"; sourceTree = "<group>"; };
 		93E88E941941C31D001707CD /* OMNOrder+omn_calculationAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+omn_calculationAmount.m"; sourceTree = "<group>"; };
+		93F4DBDC1978F0EA00D06E32 /* OMNBeaconSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconSearchManager.h; sourceTree = "<group>"; };
+		93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconSearchManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -890,6 +894,7 @@
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				93F4DBDB1978F0CF00D06E32 /* SearchTable */,
 				939F9944197544730051822E /* User */,
 				939F993A19752D680051822E /* Card */,
 				9390D25B1966DA41007E13AB /* Mediator */,
@@ -1217,6 +1222,16 @@
 			path = Rating;
 			sourceTree = "<group>";
 		};
+		93F4DBDB1978F0CF00D06E32 /* SearchTable */ = {
+			isa = PBXGroup;
+			children = (
+				93F4DBDC1978F0EA00D06E32 /* OMNBeaconSearchManager.h */,
+				93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */,
+			);
+			name = SearchTable;
+			path = ../../../../iOS/Omnom/Omnom/Model/SearchTable;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1498,6 +1513,7 @@
 				939F992419752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				9390D25E1966DA68007E13AB /* OMNRestaurantMenuMediator.m in Sources */,
 				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
+				93F4DBDE1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */,
 				9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */,
 				9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */,
 				93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */,
@@ -1567,6 +1583,7 @@
 				9390D2D2196BD70E007E13AB /* OMNAskNavigationPermissionsVC.m in Sources */,
 				939F992F19752CFC0051822E /* OMNEnterCodeView.m in Sources */,
 				93B9047D19652BBF007D21C4 /* OMNTransitionFromLoadingToBills.m in Sources */,
+				93F4DBDF1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */,
 				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				9308FE7C196E815600B482AA /* OMNDecodeBeaconManager.m in Sources */,
 				93750B22196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,

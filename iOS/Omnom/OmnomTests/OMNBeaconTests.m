@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 
-#import "OMNBeaconSearchManager.h"
+#import "OMNNearestBeaconSearchManager.h"
 
 @interface OMNBeaconTests : XCTestCase
 

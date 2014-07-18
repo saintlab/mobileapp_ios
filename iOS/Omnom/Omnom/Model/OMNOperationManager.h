@@ -12,6 +12,6 @@
 
 + (instancetype)sharedManager;
 
-- (BOOL)isReachable;
+- (void)getReachableState:(void(^)(BOOL isReachable))isReachableBlock;
 
 @end

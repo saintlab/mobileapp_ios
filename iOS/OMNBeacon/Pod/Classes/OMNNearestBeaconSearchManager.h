@@ -10,7 +10,7 @@
 
 typedef void(^OMNBeaconBlock)(OMNBeacon *beacon);
 
-@interface OMNBeaconSearchManager : NSObject
+@interface OMNNearestBeaconSearchManager : NSObject
 
 - (void)findNearestBeacon:(OMNBeaconBlock)didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock;
 

@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNBeaconSearchManager.h"
+#import "OMNNearestBeaconSearchManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "CLBeacon+GBeaconAdditions.h"
 #import "OMNDevicePositionManager.h"
 #import "OMNBeaconRangingManager.h"
 
-@interface OMNBeaconSearchManager ()
+@interface OMNNearestBeaconSearchManager ()
 
 
 @property (nonatomic, strong) CLBeaconRegion *rangingBeaconRegion;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation OMNBeaconSearchManager {
+@implementation OMNNearestBeaconSearchManager {
   
   OMNBeaconRangingManager *_beaconRangingManager;
   OMNDevicePositionManager *_devicePositionManager;
