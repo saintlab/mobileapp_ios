@@ -54,8 +54,8 @@
   return 0.3;
 }
 
-+ (NSString *)key {
-  return [self keyFromClass:[OMNPayOrderVC class] toClass:[OMNCalculatorVC class]];
++ (NSArray *)keys {
+  return @[[self keyFromClass:[OMNPayOrderVC class] toClass:[OMNCalculatorVC class]]];
 }
 
 @end

@@ -9,11 +9,14 @@
 #import "OMNOrder.h"
 #import "OMNOperationManager.h"
 
-@implementation OMNOrder
+@implementation OMNOrder {
+  id _data;
+}
 
 - (instancetype)initWithData:(id)data {
   self = [super init];
   if (self) {
+    _data = data;
     self.ID = data[@"id"];
     self.amount = [data[@"amount"] integerValue];
     self.created = data[@"created"];
@@ -85,9 +88,20 @@
 
 - (void)createAcquiringOrder:(OMNOrderPayURLBlock)completion failure:(OMNErrorBlock)failureBlock {
   
+  NSString *description = @"";
+  
+  NSError *error = nil;
+  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_data options:0 error:&error];
+  
+  if (jsonData &&
+      nil == error) {
+    description = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    description = [description stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+  }
+  
   NSDictionary *order =
   @{
-    @"description": @"Кебаб",
+    @"description" : description,
     @"amount": @(self.toPayAmount),
     @"restaurant_id" : self.restaurant_id,
     @"restaurateur_order_id" : self.ID,

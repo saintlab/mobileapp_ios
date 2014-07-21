@@ -15,8 +15,10 @@
 
 @implementation OMNTransitionFromLoadingToBills
 
-+ (NSString *)key {
-  return [self keyFromClass:[OMNSearchTableVC class] toClass:[OMNOrdersVC class]];
++ (NSArray *)keys {
+  return @[
+           [self keyFromClass:[OMNSearchTableVC class] toClass:[OMNOrdersVC class]]
+           ];
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {

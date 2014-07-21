@@ -10,8 +10,8 @@
 #import "OMNConstants.h"
 
 @implementation OMNOperationManager {
-  AFNetworkReachabilityManager *_reachabilityManager;
-
+  AFNetworkReachabilityManager *_omnomReachabilityManager;
+  AFNetworkReachabilityManager *_internetReachabilityManager;
 }
 
 + (instancetype)sharedManager {
@@ -27,9 +27,13 @@
   self = [super initWithBaseURL:url];
   if (self) {
     
-    _reachabilityManager = [AFNetworkReachabilityManager managerForDomain:url.host];
-    [_reachabilityManager startMonitoring];
-    __unused BOOL isReachable = _reachabilityManager.isReachable;
+    _omnomReachabilityManager = [AFNetworkReachabilityManager managerForDomain:url.host];
+    [_omnomReachabilityManager startMonitoring];
+    __unused BOOL or = _omnomReachabilityManager.isReachable;
+    
+    _internetReachabilityManager = [AFNetworkReachabilityManager sharedManager];
+    [_internetReachabilityManager startMonitoring];
+    __unused BOOL ir = _internetReachabilityManager.isReachable;
     
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -37,27 +41,71 @@
   return self;
 }
 
-- (void)getReachableState:(void(^)(BOOL isReachable))isReachableBlock {
+- (void)getReachableState:(void(^)(OMNReachableState reachableState))isReachableBlock {
 
-  if (AFNetworkReachabilityStatusUnknown == _reachabilityManager.networkReachabilityStatus) {
+  if (AFNetworkReachabilityStatusUnknown == _omnomReachabilityManager.networkReachabilityStatus) {
     
-    __weak typeof(_reachabilityManager)weakManager = _reachabilityManager;
-    [_reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+    __weak typeof(_omnomReachabilityManager)weakManager = _omnomReachabilityManager;
+    __weak typeof(self)weakSelf = self;
+    [_omnomReachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
       
-      isReachableBlock(weakManager.isReachable);
+      [weakManager setReachabilityStatusChangeBlock:nil];
+      
+      if (weakManager.isReachable) {
+        isReachableBlock(kOMNReachableStateIsReachable);
+      }
+      else {
+        [weakSelf getInternetReachableState:isReachableBlock];
+      }
+      
+    }];
+    
+  }
+  else if (_omnomReachabilityManager.isReachable) {
+    
+    isReachableBlock(kOMNReachableStateIsReachable);
+    
+  }
+  else {
+    
+    [self getInternetReachableState:isReachableBlock];
+    
+  }
+  
+}
+
+- (void)getInternetReachableState:(void(^)(OMNReachableState reachableState))isReachableBlock {
+
+  if(AFNetworkReachabilityStatusUnknown == _internetReachabilityManager.networkReachabilityStatus) {
+    
+    __weak typeof(_internetReachabilityManager)weakManager = _internetReachabilityManager;
+    __weak typeof(self)weakSelf = self;
+    [_internetReachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+      
+      [weakManager setReachabilityStatusChangeBlock:nil];
+      [weakSelf updateInternetReachableState:isReachableBlock];
       
     }];
     
   }
   else {
-    isReachableBlock(_reachabilityManager.isReachable);
+    
+    [self updateInternetReachableState:isReachableBlock];
+    
   }
   
 }
 
-- (BOOL)isReachable {
-  NSLog(@"%d", _reachabilityManager.networkReachabilityStatus);
-  return _reachabilityManager.isReachable;
+- (void)updateInternetReachableState:(void(^)(OMNReachableState reachableState))isReachableBlock {
+  
+  if (_internetReachabilityManager.isReachable &&
+      !_omnomReachabilityManager.isReachable) {
+    isReachableBlock(kOMNReachableStateNoOmnom);
+  }
+  else {
+    isReachableBlock(kOMNReachableStateNoInternet);
+  }
+  
 }
 
 @end

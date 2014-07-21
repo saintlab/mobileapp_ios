@@ -9,19 +9,15 @@
 #import "OMNAskNavigationPermissionsVC.h"
 #import <CoreLocation/CoreLocation.h>
 #import "OMNConstants.h"
+#import "OMNDenyCLPermissionVC.h"
+#import "OMNNavigationPermissionsHelpVC.h"
 
 @interface OMNAskNavigationPermissionsVC ()
-<CLLocationManagerDelegate>
+<OMNDenyCLPermissionVCDelegate>
 
 @end
 
 @implementation OMNAskNavigationPermissionsVC {
-  CLLocationManager *_locationManager;
-}
-
-- (void)dealloc {
-  _locationManager.delegate = nil;
-  _locationManager = nil;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -35,12 +31,12 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  
-  _locationManager = [[CLLocationManager alloc] init];
-  _locationManager.delegate = self;
-#ifdef __IPHONE_8_0
-  [_locationManager requestAlwaysAuthorization];
-#endif
+//  
+//  _locationManager = [[CLLocationManager alloc] init];
+//  _locationManager.delegate = self;
+//#ifdef __IPHONE_8_0
+//  [_locationManager requestAlwaysAuthorization];
+//#endif
   
 }
 
@@ -52,38 +48,30 @@
 
 - (IBAction)askPermissionTap:(id)sender {
   
-  CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
-  [_locationManager requestStateForRegion:beaconRegion];
+#warning 123
+//  CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
+//  [_locationManager requestStateForRegion:beaconRegion];
   
 }
 
-- (void)permissionGranted {
+- (IBAction)denyPermissionTap:(id)sender {
   
-  [self.delegate askNavigationPermissionsVCDidGrantPermission:self];
+  OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] init];
+  denyCLPermissionVC.delegate = self;
+  [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
   
 }
 
-#pragma mark - CLLocationManagerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+- (void)showDenyPermissonOffHelp {
   
-  switch (status) {
-    case kCLAuthorizationStatusDenied: {
-      [[[UIAlertView alloc] initWithTitle:@"kCLAuthorizationStatusDenied" message:@"показать экран чтобы получить пермишен для использования геолокации" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-
-    } break;
-    case kCLAuthorizationStatusRestricted: {
-      [[[UIAlertView alloc] initWithTitle:@"kCLAuthorizationStatusRestricted" message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-    } break;
-    case kCLAuthorizationStatusNotDetermined: {
-    } break;
-    default: {
-      
-      [self permissionGranted];
-      
-    } break;
-  }
+  OMNNavigationPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNNavigationPermissionsHelpVC alloc] init];
+  [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
   
+}
+#pragma mark - OMNDenyCLPermissionVCDelegate
+
+- (void)denyCLPermissionVCDidAskPermission:(OMNDenyCLPermissionVC *)denyCLPermissionVC {
+  [self.navigationController popToViewController:self animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -132,6 +132,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
 
   [self POST:@"card/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
+    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
     NSLog(@"%@", responseObject);
     
     if (responseObject[@"url"]) {
@@ -248,6 +249,10 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
+    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"%@", responseObject);
+
+    
     if (responseObject[@"url"]) {
       
       [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -261,8 +266,6 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
       }];
       
     }
-    
-    NSLog(@"%@", responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -310,7 +313,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   [sortedValues addObject:kOMNMailRu_secret_key];
   
   NSString *baseSignatureString = [sortedValues componentsJoinedByString:@""];
-  
+  NSLog(@"baseSignatureString>%@", baseSignatureString);
   NSString *signature = [baseSignatureString omn_sha1];
   
   return signature;

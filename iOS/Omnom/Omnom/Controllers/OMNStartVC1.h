@@ -8,6 +8,6 @@
 
 #import "OMNWizardVC.h"
 
-@interface OMNStartVC : OMNWizardVC
+@interface OMNStartVC1 : OMNWizardVC
 
 @end

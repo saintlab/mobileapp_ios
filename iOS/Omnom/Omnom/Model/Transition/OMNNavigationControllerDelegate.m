@@ -13,7 +13,7 @@
 #import "OMNTransitionFromOrdersToOrder.h"
 #import "OMNTransitionFromOrderToOrders.h"
 #import "OMNTransitionFromOrderToCalculator.h"
-
+#import "OMNFadeTransition.h"
 
 
 @implementation OMNNavigationControllerDelegate {
@@ -31,7 +31,7 @@
     [self addTansitionForClass:[OMNTransitionFromOrdersToOrder class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToCalculator class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToOrders class]];
-    
+    [self addTansitionForClass:[OMNFadeTransition class]];
   }
   return self;
 }
@@ -42,7 +42,9 @@
     return;
   }
   
-  _transitions[[class key]] = NSStringFromClass(class);
+  [[class keys] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
+    _transitions[key] = NSStringFromClass(class);
+  }];
   
 }
 

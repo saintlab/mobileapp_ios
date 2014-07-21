@@ -14,14 +14,14 @@ typedef void(^CLAuthorizationStatusBlock)(CLAuthorizationStatus status);
 @interface OMNBeaconRangingManager : NSObject
 
 @property (nonatomic, assign, readonly) BOOL ranging;
-
+@property (nonatomic, copy) CLAuthorizationStatusBlock statusBlock;
 
 /**
  Start searching nearest beacons
  @param didRangeNearestBeaconsBlock completition block, fires anytime when manager find beacons in range. Should be started on main thread
  @param failureBlock failure block, run -(void)stop method when this block fires.
  */
-- (void)rangeNearestBeacons:(CLBeaconsBlock)didRangeNearestBeaconsBlock failure:(void (^)(NSError *error))failureBlock status:(CLAuthorizationStatusBlock)statusBlock;
+- (void)rangeBeacons:(CLBeaconsBlock)didRangeBeaconsBlock failure:(void (^)(NSError *error))failureBlock;
 
 /**
  Stop ranging

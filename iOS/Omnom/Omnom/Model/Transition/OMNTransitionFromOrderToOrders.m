@@ -12,8 +12,8 @@
 #import "OMNOrderItemCell.h"
 @implementation OMNTransitionFromOrderToOrders
 
-+ (NSString *)key {
-  return [self keyFromClass:[OMNPayOrderVC class] toClass:[OMNOrdersVC class]];
++ (NSArray *)keys {
+  return @[[self keyFromClass:[OMNPayOrderVC class] toClass:[OMNOrdersVC class]]];
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {

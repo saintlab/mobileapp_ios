@@ -15,8 +15,8 @@
 
 }
 
-+ (NSString *)key {
-  return [self keyFromClass:[OMNRestaurantMenuVC class] toClass:[OMNProductDetailsVC class]];
++ (NSArray *)keys {
+  return @[[self keyFromClass:[OMNRestaurantMenuVC class] toClass:[OMNProductDetailsVC class]]];
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {

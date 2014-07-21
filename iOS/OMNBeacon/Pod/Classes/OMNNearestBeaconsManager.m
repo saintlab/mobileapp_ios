@@ -6,32 +6,36 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNBeaconsManager.h"
+#import "OMNNearestBeaconsManager.h"
 #import "OMNBeacon.h"
 #import "CLBeacon+GBeaconAdditions.h"
 #import "OMNBeaconRangingManager.h"
 #import "OMNFoundBeacons.h"
 
-@interface OMNBeaconsManager ()
+@interface OMNNearestBeaconsManager ()
 
 @end
 
-@implementation OMNBeaconsManager {
+@implementation OMNNearestBeaconsManager {
   
   dispatch_semaphore_t _addBeaconLock;
 
-  OMNFoundBeaconsBlock _foundBeaconsBlock;
   OMNFoundBeaconsBlock _foundNearestBeaconsBlock;
-  OMNBeaconsManagerStatusBlock _statusBlock;
 
   OMNBeaconRangingManager *_beaconRangingManager;
-  
+  OMNBeaconsManagerStatusBlock _statusBlock;
 }
 
-- (instancetype)init {
+- (void)dealloc {
+  _statusBlock = nil;
+  [self stop];
+  _beaconRangingManager = nil;
+}
+
+- (instancetype)initWithStatusBlock:(OMNBeaconsManagerStatusBlock)statusBlock {
   self = [super init];
   if (self) {
-    
+    _statusBlock = statusBlock;
     _addBeaconLock = dispatch_semaphore_create(1);
     _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
     
@@ -39,24 +43,18 @@
   return self;
 }
 
-- (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block status:(OMNBeaconsManagerStatusBlock)statusBlock {
+- (void)rangeNearestBeacons:(OMNFoundBeaconsBlock)block {
   
-  _ragingMonitorEnabled = YES;
+  NSAssert(block != nil, @"rangeNearestBeacons block shouldn't be nil");
+  
+  [self stop];
+  _isRanging = YES;
   _foundNearestBeaconsBlock = block;
-  _statusBlock = statusBlock;
-  [self startRagingMonitoring];
   
-}
-
-- (void)startRagingMonitoring {
-  
-  if (!_ragingMonitorEnabled) {
-    NSLog(@"Ranging is not avaliable");
-    return;
-  }
+  _beaconRangingManager.statusBlock = _statusBlock;
   
   __weak typeof(self)weakSelf = self;
-  [_beaconRangingManager rangeNearestBeacons:^(NSArray *beacons) {
+  [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
     [weakSelf processBeacons:beacons];
     
@@ -64,11 +62,16 @@
     
     [weakSelf processError:error];
     
-  } status:^(CLAuthorizationStatus status) {
-    
-    [weakSelf processStatus:status];
-    
   }];
+  
+}
+
+
+- (void)stop {
+  
+  _foundNearestBeaconsBlock = nil;
+  _isRanging = NO;
+  [_beaconRangingManager stop];
   
 }
 
@@ -83,12 +86,6 @@
     
   }];
   
-  if (_foundBeaconsBlock) {
-    
-    _foundBeaconsBlock(foundBeacons);
-    
-  }
-  
   [self findNearestBeacons:foundBeacons];
   
   dispatch_semaphore_signal(_addBeaconLock);
@@ -98,23 +95,6 @@
 - (void)processError:(NSError *)error {
   
   NSLog(@"error>%@", error);
-  
-}
-
-- (void)processStatus:(CLAuthorizationStatus)status {
-  
-  if (_statusBlock) {
-    _statusBlock(status);
-  }
-  
-}
-
-- (void)stopMonitoring {
-  
-  _foundBeaconsBlock = nil;
-  _foundNearestBeaconsBlock = nil;
-  _ragingMonitorEnabled = NO;
-  [_beaconRangingManager stop];
   
 }
 

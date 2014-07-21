@@ -8,10 +8,16 @@
 
 #import <AFNetworking/AFNetworking.h>
 
+typedef NS_ENUM(NSInteger, OMNReachableState) {
+  kOMNReachableStateNoInternet = 0,
+  kOMNReachableStateNoOmnom,
+  kOMNReachableStateIsReachable,
+};
+
 @interface OMNOperationManager : AFHTTPRequestOperationManager
 
 + (instancetype)sharedManager;
 
-- (void)getReachableState:(void(^)(BOOL isReachable))isReachableBlock;
+- (void)getReachableState:(void(^)(OMNReachableState reachableState))isReachableBlock;
 
 @end

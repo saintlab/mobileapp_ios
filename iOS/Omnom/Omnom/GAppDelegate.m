@@ -9,8 +9,6 @@
 #import "GAppDelegate.h"
 #import "OMNAuthorisation.h"
 #import "OMNStartVC.h"
-#import <UAirship.h>
-#import <UAConfig.h>
 #import "OMNBeaconBackgroundManager.h"
 #import "OMNDecodeBeaconManager.h"
 #import "OMNOperationManager.h"
@@ -26,8 +24,6 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  
-  NSLog(@"launchOptions>%@", launchOptions);
   
   [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comlitionBlock) {
     
@@ -51,19 +47,17 @@
   
   _applicationStartedForeground = YES;
   
-  [self setupUrbanAirship];
   [OMNOperationManager manager];
   [OMNAuthorisation authorisation];
+  
+  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
   
-}
-
-- (void)setupUrbanAirship {
-  
-  UAConfig *config = [UAConfig defaultConfig];
-  [UAirship takeOff:config];
+  [self.window makeKeyAndVisible];
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

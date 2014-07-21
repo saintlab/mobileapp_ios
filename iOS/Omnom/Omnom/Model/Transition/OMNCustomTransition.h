@@ -11,7 +11,7 @@
 @interface OMNCustomTransition : NSObject
 <UIViewControllerAnimatedTransitioning>
 
-+ (NSString *)key;
++ (NSArray *)keys;
 + (NSString *)keyFromClass:(Class)fromClass toClass:(Class)toClass;
 
 @end

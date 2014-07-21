@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNStartVC.h"
+#import "OMNStartVC1.h"
 #import "OMNLoginVC.h"
 #import "OMNRegisterUserVC.h"
 #import "OMNSearchTableVC.h"
@@ -14,13 +14,13 @@
 #import "OMNAuthorisation.h"
 #import "OMNWizardPageVC.h"
 
-@interface OMNStartVC ()
+@interface OMNStartVC1 ()
 <OMNAuthorizationDelegate,
 OMNRestaurantMenuVCDelegate>
 
 @end
 
-@implementation OMNStartVC
+@implementation OMNStartVC1
 
 - (instancetype)init {
   

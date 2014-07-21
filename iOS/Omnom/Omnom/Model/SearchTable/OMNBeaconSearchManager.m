@@ -10,10 +10,10 @@
 #import "OMNOperationManager.h"
 #import "OMNBluetoothManager.h"
 #import "OMNDecodeBeaconManager.h"
-#import "OMNBeaconsManager.h"
+#import "OMNNearestBeaconsManager.h"
 
 @implementation OMNBeaconSearchManager {
-  OMNBeaconsManager *_beaconManager;
+  OMNNearestBeaconsManager *_nearestBeaconsManager;
 
 }
 
@@ -31,12 +31,12 @@
 
 - (void)stop {
 
-  [_beaconManager stopMonitoring];
-  _beaconManager = nil;
+  [_nearestBeaconsManager stop];
+  _nearestBeaconsManager = nil;
   
 }
 
-- (void)startSearchingBeacon {
+- (void)startSearching {
   
   [self checkNetworkState];
   
@@ -45,31 +45,39 @@
 - (void)checkNetworkState {
   
   __weak typeof(self)weakSelf = self;
-  [[OMNOperationManager sharedManager] getReachableState:^(BOOL isReachable) {
+  [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
     
-    
-    if (isReachable) {
+    switch (reachableState) {
+      case kOMNReachableStateIsReachable: {
 
-      [weakSelf checkBluetoothState];
+        [weakSelf checkBluetoothState];
+        
+      } break;
+      case kOMNReachableStateNoOmnom: {
+        
+        [weakSelf omnomUnavaliableState];
+        
+      } break;
+      case kOMNReachableStateNoInternet: {
       
-    }
-    else {
-      [weakSelf serverUnavaliableState];
+        [weakSelf internetUnavaliableState];
+        
+      } break;
     }
     
   }];
   
 }
 
-- (void)serverUnavaliableState {
+- (void)omnomUnavaliableState {
   
-  [self.delegate beaconSearchManagerServerUnavaliableState:self];
+  [self.delegate beaconSearchManagerOmnomUnavaliableState:self];
   
 }
 
-- (void)requestLocationManagerPermission {
-
-  [self.delegate beaconSearchManagerDidRequestLocationManagerPermission:self];
+- (void)internetUnavaliableState {
+  
+  [self.delegate beaconSearchManagerInternetUnavaliableState:self];
   
 }
 
@@ -82,7 +90,8 @@
     switch (state) {
       case CBCentralManagerStatePoweredOn: {
         
-        [weakSelf startSearchingBeacons];
+        [weakSelf.delegate beaconSearchManagerBLEDidOn:weakSelf];
+        [weakSelf startRangeNearestBeacons];
         
       } break;
       case CBCentralManagerStateUnsupported: {
@@ -119,7 +128,7 @@
 
 - (void)processBLEOffSituation {
   
-  [_beaconManager stopMonitoring];
+  [_nearestBeaconsManager stop];
   [self.delegate beaconSearchManagerDidRequestTurnBLEOn:self];
   
 }
@@ -129,32 +138,36 @@
   NSLog(@"processBLEUnauthorizedSituation");
 }
 
-- (void)startSearchingBeacons {
+- (void)startRangeNearestBeacons {
   
   if (TARGET_OS_IPHONE &&
       kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
-    [self requestLocationManagerPermission];
+    
+    [self.delegate beaconSearchManagerDidRequestLocationManagerPermission:self];
+    
     return;
   }
   
-  if (nil == _beaconManager) {
-    _beaconManager = [[OMNBeaconsManager alloc] init];
+  
+  if (nil == _nearestBeaconsManager) {
+    __weak typeof(self)weakSelf = self;
+    _nearestBeaconsManager = [[OMNNearestBeaconsManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
+      [weakSelf processCoreLocationAuthorizationStatus:status];
+    }];
   }
   
-  if (_beaconManager.ragingMonitorEnabled) {
+  if (_nearestBeaconsManager.isRanging) {
     return;
   }
   
   __weak typeof(self)weakSelf = self;
-  [_beaconManager startMonitoringNearestBeacons:^(NSArray *foundBeacons) {
+  [_nearestBeaconsManager rangeNearestBeacons:^(NSArray *foundBeacons) {
     
     [weakSelf checkNearestBeacons:foundBeacons];
     
-  } status:^(CLAuthorizationStatus status) {
-    
-    [weakSelf processCoreLocationAuthorizationStatus:status];
-    
   }];
+  
+  [self.delegate beaconSearchManagerDidStartSearching:self];
   
 }
 
@@ -165,7 +178,7 @@
   }
   NSLog(@"nearestBeacons>%@", nearestBeacons);
   
-  [_beaconManager stopMonitoring];
+  [_nearestBeaconsManager stop];
   
   if (nearestBeacons.count > 1) {
     
@@ -192,9 +205,12 @@
   switch (status) {
     case kCLAuthorizationStatusAuthorized: {
       
+      [self startRangeNearestBeacons];
+      
     } break;
     case kCLAuthorizationStatusDenied: {
       
+      [_nearestBeaconsManager stop];
       [self.delegate beaconSearchManagerDidRequestCoreLocationDeniedPermission:self];
       
     } break;
@@ -203,6 +219,7 @@
     } break;
     case kCLAuthorizationStatusRestricted: {
       
+      [_nearestBeaconsManager stop];
       [self.delegate beaconSearchManagerDidRequestCoreLocationRestrictedPermission:self];
       
     } break;

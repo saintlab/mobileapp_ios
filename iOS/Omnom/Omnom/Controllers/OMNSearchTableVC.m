@@ -18,7 +18,6 @@
 
 @interface OMNSearchTableVC ()
 <OMNTablePositionVCDelegate,
-OMNAskNavigationPermissionsVCDelegate,
 OMNScanQRCodeVCDelegate,
 OMNBeaconSearchManagerDelegate>
 
@@ -82,7 +81,7 @@ OMNBeaconSearchManagerDelegate>
 }
 
 - (void)startSearchingBeacon {
-  [_beaconSearchManager startSearchingBeacon];
+  [_beaconSearchManager startSearching];
 }
 
 - (void)requestQRCode {
@@ -125,17 +124,7 @@ OMNBeaconSearchManagerDelegate>
 - (void)beaconSearchManagerDidRequestLocationManagerPermission:(OMNBeaconSearchManager *)beaconSearchManager {
   
   OMNAskNavigationPermissionsVC *askNavigationPermissionsVC = [[OMNAskNavigationPermissionsVC alloc] init];
-  askNavigationPermissionsVC.delegate = self;
   [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
-  
-}
-
-#pragma mark - OMNAskNavigationPermissionsVCDelegate
-
-- (void)askNavigationPermissionsVCDidGrantPermission:(OMNAskNavigationPermissionsVC *)askNavigationPermissionsVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  [self startSearchingBeacon];
   
 }
 
@@ -202,7 +191,7 @@ OMNBeaconSearchManagerDelegate>
   OMNBeacon *beacon = [[OMNBeacon alloc] init];
   beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
   beacon.major = @(1);
-  beacon.minor = @(2);
+  beacon.minor = @(1);
   
   [self decodeBeacon:beacon];
 

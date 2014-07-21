@@ -1,6 +1,6 @@
 [
   {
-    "_id" : "5382e1dafc6a23b75be3f24f",
+    "id" : "5382e1dafc6a23b75be3f24f",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.196Z",
@@ -13,7 +13,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f24d",
+        "id" : "5382e1dafc6a23b75be3f24d",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -21,7 +21,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f24e",
+        "id" : "5382e1dafc6a23b75be3f24e",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -29,7 +29,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f252",
+    "id" : "5382e1dafc6a23b75be3f252",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.196Z",
@@ -42,7 +42,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f250",
+        "id" : "5382e1dafc6a23b75be3f250",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -50,7 +50,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f251",
+        "id" : "5382e1dafc6a23b75be3f251",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -58,7 +58,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f255",
+    "id" : "5382e1dafc6a23b75be3f255",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.197Z",
@@ -71,7 +71,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f253",
+        "id" : "5382e1dafc6a23b75be3f253",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -79,7 +79,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f254",
+        "id" : "5382e1dafc6a23b75be3f254",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -87,7 +87,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f258",
+    "id" : "5382e1dafc6a23b75be3f258",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.197Z",
@@ -100,7 +100,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f256",
+        "id" : "5382e1dafc6a23b75be3f256",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -108,7 +108,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f257",
+        "id" : "5382e1dafc6a23b75be3f257",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -116,7 +116,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f25b",
+    "id" : "5382e1dafc6a23b75be3f25b",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.198Z",
@@ -129,7 +129,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f259",
+        "id" : "5382e1dafc6a23b75be3f259",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -137,7 +137,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f25a",
+        "id" : "5382e1dafc6a23b75be3f25a",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -145,7 +145,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f25e",
+    "id" : "5382e1dafc6a23b75be3f25e",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.198Z",
@@ -158,7 +158,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f25c",
+        "id" : "5382e1dafc6a23b75be3f25c",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -166,7 +166,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f25d",
+        "id" : "5382e1dafc6a23b75be3f25d",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -174,7 +174,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f261",
+    "id" : "5382e1dafc6a23b75be3f261",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.198Z",
@@ -187,7 +187,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f25f",
+        "id" : "5382e1dafc6a23b75be3f25f",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -195,7 +195,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f260",
+        "id" : "5382e1dafc6a23b75be3f260",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -203,7 +203,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f264",
+    "id" : "5382e1dafc6a23b75be3f264",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.199Z",
@@ -216,7 +216,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f262",
+        "id" : "5382e1dafc6a23b75be3f262",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -224,7 +224,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f263",
+        "id" : "5382e1dafc6a23b75be3f263",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -232,7 +232,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f267",
+    "id" : "5382e1dafc6a23b75be3f267",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.199Z",
@@ -245,7 +245,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f265",
+        "id" : "5382e1dafc6a23b75be3f265",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -253,7 +253,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f266",
+        "id" : "5382e1dafc6a23b75be3f266",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -261,7 +261,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f26a",
+    "id" : "5382e1dafc6a23b75be3f26a",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.199Z",
@@ -274,7 +274,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f268",
+        "id" : "5382e1dafc6a23b75be3f268",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -282,7 +282,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f269",
+        "id" : "5382e1dafc6a23b75be3f269",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -290,7 +290,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f26d",
+    "id" : "5382e1dafc6a23b75be3f26d",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.199Z",
@@ -303,7 +303,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f26b",
+        "id" : "5382e1dafc6a23b75be3f26b",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -311,7 +311,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f26c",
+        "id" : "5382e1dafc6a23b75be3f26c",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -319,7 +319,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f270",
+    "id" : "5382e1dafc6a23b75be3f270",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.200Z",
@@ -332,7 +332,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f26e",
+        "id" : "5382e1dafc6a23b75be3f26e",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -340,7 +340,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f26f",
+        "id" : "5382e1dafc6a23b75be3f26f",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -348,7 +348,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f273",
+    "id" : "5382e1dafc6a23b75be3f273",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.200Z",
@@ -361,7 +361,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f271",
+        "id" : "5382e1dafc6a23b75be3f271",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -369,7 +369,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f272",
+        "id" : "5382e1dafc6a23b75be3f272",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -377,7 +377,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f276",
+    "id" : "5382e1dafc6a23b75be3f276",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.200Z",
@@ -390,7 +390,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f274",
+        "id" : "5382e1dafc6a23b75be3f274",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -398,7 +398,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f275",
+        "id" : "5382e1dafc6a23b75be3f275",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -406,7 +406,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f279",
+    "id" : "5382e1dafc6a23b75be3f279",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.200Z",
@@ -419,7 +419,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f277",
+        "id" : "5382e1dafc6a23b75be3f277",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -427,7 +427,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f278",
+        "id" : "5382e1dafc6a23b75be3f278",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -435,7 +435,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f27c",
+    "id" : "5382e1dafc6a23b75be3f27c",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.201Z",
@@ -448,7 +448,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f27a",
+        "id" : "5382e1dafc6a23b75be3f27a",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -456,7 +456,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f27b",
+        "id" : "5382e1dafc6a23b75be3f27b",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -464,7 +464,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f27f",
+    "id" : "5382e1dafc6a23b75be3f27f",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.201Z",
@@ -477,7 +477,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f27d",
+        "id" : "5382e1dafc6a23b75be3f27d",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -485,7 +485,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f27e",
+        "id" : "5382e1dafc6a23b75be3f27e",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -493,7 +493,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f282",
+    "id" : "5382e1dafc6a23b75be3f282",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.201Z",
@@ -506,7 +506,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f280",
+        "id" : "5382e1dafc6a23b75be3f280",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -514,7 +514,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f281",
+        "id" : "5382e1dafc6a23b75be3f281",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -522,7 +522,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f285",
+    "id" : "5382e1dafc6a23b75be3f285",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.202Z",
@@ -535,7 +535,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f283",
+        "id" : "5382e1dafc6a23b75be3f283",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -543,7 +543,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f284",
+        "id" : "5382e1dafc6a23b75be3f284",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -551,7 +551,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f288",
+    "id" : "5382e1dafc6a23b75be3f288",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.202Z",
@@ -564,7 +564,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f286",
+        "id" : "5382e1dafc6a23b75be3f286",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -572,7 +572,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f287",
+        "id" : "5382e1dafc6a23b75be3f287",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -580,7 +580,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f28b",
+    "id" : "5382e1dafc6a23b75be3f28b",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.202Z",
@@ -593,7 +593,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f289",
+        "id" : "5382e1dafc6a23b75be3f289",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -601,7 +601,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f28a",
+        "id" : "5382e1dafc6a23b75be3f28a",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -609,7 +609,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f28e",
+    "id" : "5382e1dafc6a23b75be3f28e",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.202Z",
@@ -622,7 +622,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f28c",
+        "id" : "5382e1dafc6a23b75be3f28c",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -630,7 +630,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f28d",
+        "id" : "5382e1dafc6a23b75be3f28d",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -638,7 +638,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f291",
+    "id" : "5382e1dafc6a23b75be3f291",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.203Z",
@@ -651,7 +651,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f28f",
+        "id" : "5382e1dafc6a23b75be3f28f",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -659,7 +659,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f290",
+        "id" : "5382e1dafc6a23b75be3f290",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -667,7 +667,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f294",
+    "id" : "5382e1dafc6a23b75be3f294",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.203Z",
@@ -680,7 +680,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f292",
+        "id" : "5382e1dafc6a23b75be3f292",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -688,7 +688,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f293",
+        "id" : "5382e1dafc6a23b75be3f293",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -696,7 +696,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f297",
+    "id" : "5382e1dafc6a23b75be3f297",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.203Z",
@@ -709,7 +709,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f295",
+        "id" : "5382e1dafc6a23b75be3f295",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -717,7 +717,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f296",
+        "id" : "5382e1dafc6a23b75be3f296",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -725,7 +725,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f29a",
+    "id" : "5382e1dafc6a23b75be3f29a",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.203Z",
@@ -738,7 +738,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f298",
+        "id" : "5382e1dafc6a23b75be3f298",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -746,7 +746,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f299",
+        "id" : "5382e1dafc6a23b75be3f299",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -754,7 +754,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f29d",
+    "id" : "5382e1dafc6a23b75be3f29d",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.204Z",
@@ -767,7 +767,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f29b",
+        "id" : "5382e1dafc6a23b75be3f29b",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -775,7 +775,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f29c",
+        "id" : "5382e1dafc6a23b75be3f29c",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -783,7 +783,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2a0",
+    "id" : "5382e1dafc6a23b75be3f2a0",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.204Z",
@@ -796,7 +796,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f29e",
+        "id" : "5382e1dafc6a23b75be3f29e",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -804,7 +804,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f29f",
+        "id" : "5382e1dafc6a23b75be3f29f",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -812,7 +812,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2a3",
+    "id" : "5382e1dafc6a23b75be3f2a3",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.204Z",
@@ -825,7 +825,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2a1",
+        "id" : "5382e1dafc6a23b75be3f2a1",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -833,7 +833,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2a2",
+        "id" : "5382e1dafc6a23b75be3f2a2",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -841,7 +841,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2a6",
+    "id" : "5382e1dafc6a23b75be3f2a6",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.204Z",
@@ -854,7 +854,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2a4",
+        "id" : "5382e1dafc6a23b75be3f2a4",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -862,7 +862,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2a5",
+        "id" : "5382e1dafc6a23b75be3f2a5",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -870,7 +870,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2a9",
+    "id" : "5382e1dafc6a23b75be3f2a9",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.205Z",
@@ -883,7 +883,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2a7",
+        "id" : "5382e1dafc6a23b75be3f2a7",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -891,7 +891,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2a8",
+        "id" : "5382e1dafc6a23b75be3f2a8",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -899,7 +899,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2ac",
+    "id" : "5382e1dafc6a23b75be3f2ac",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.205Z",
@@ -912,7 +912,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2aa",
+        "id" : "5382e1dafc6a23b75be3f2aa",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -920,7 +920,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2ab",
+        "id" : "5382e1dafc6a23b75be3f2ab",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -928,7 +928,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2af",
+    "id" : "5382e1dafc6a23b75be3f2af",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.205Z",
@@ -941,7 +941,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2ad",
+        "id" : "5382e1dafc6a23b75be3f2ad",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -949,7 +949,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2ae",
+        "id" : "5382e1dafc6a23b75be3f2ae",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -957,7 +957,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2b2",
+    "id" : "5382e1dafc6a23b75be3f2b2",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.206Z",
@@ -970,7 +970,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2b0",
+        "id" : "5382e1dafc6a23b75be3f2b0",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -978,7 +978,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2b1",
+        "id" : "5382e1dafc6a23b75be3f2b1",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -986,7 +986,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2b5",
+    "id" : "5382e1dafc6a23b75be3f2b5",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.206Z",
@@ -999,7 +999,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2b3",
+        "id" : "5382e1dafc6a23b75be3f2b3",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1007,7 +1007,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2b4",
+        "id" : "5382e1dafc6a23b75be3f2b4",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1015,7 +1015,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2b8",
+    "id" : "5382e1dafc6a23b75be3f2b8",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.209Z",
@@ -1028,7 +1028,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2b6",
+        "id" : "5382e1dafc6a23b75be3f2b6",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1036,7 +1036,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2b7",
+        "id" : "5382e1dafc6a23b75be3f2b7",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1044,7 +1044,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2bb",
+    "id" : "5382e1dafc6a23b75be3f2bb",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.209Z",
@@ -1057,7 +1057,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2b9",
+        "id" : "5382e1dafc6a23b75be3f2b9",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1065,7 +1065,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2ba",
+        "id" : "5382e1dafc6a23b75be3f2ba",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1073,7 +1073,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2be",
+    "id" : "5382e1dafc6a23b75be3f2be",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.210Z",
@@ -1086,7 +1086,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2bc",
+        "id" : "5382e1dafc6a23b75be3f2bc",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1094,7 +1094,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2bd",
+        "id" : "5382e1dafc6a23b75be3f2bd",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1102,7 +1102,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2c1",
+    "id" : "5382e1dafc6a23b75be3f2c1",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.210Z",
@@ -1115,7 +1115,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2bf",
+        "id" : "5382e1dafc6a23b75be3f2bf",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1123,7 +1123,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2c0",
+        "id" : "5382e1dafc6a23b75be3f2c0",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1131,7 +1131,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2c4",
+    "id" : "5382e1dafc6a23b75be3f2c4",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.210Z",
@@ -1144,7 +1144,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2c2",
+        "id" : "5382e1dafc6a23b75be3f2c2",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1152,7 +1152,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2c3",
+        "id" : "5382e1dafc6a23b75be3f2c3",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1160,7 +1160,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2c7",
+    "id" : "5382e1dafc6a23b75be3f2c7",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.211Z",
@@ -1173,7 +1173,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2c5",
+        "id" : "5382e1dafc6a23b75be3f2c5",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1181,7 +1181,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2c6",
+        "id" : "5382e1dafc6a23b75be3f2c6",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1189,7 +1189,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2ca",
+    "id" : "5382e1dafc6a23b75be3f2ca",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.211Z",
@@ -1202,7 +1202,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2c8",
+        "id" : "5382e1dafc6a23b75be3f2c8",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1210,7 +1210,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2c9",
+        "id" : "5382e1dafc6a23b75be3f2c9",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1218,7 +1218,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2cd",
+    "id" : "5382e1dafc6a23b75be3f2cd",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.211Z",
@@ -1231,7 +1231,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2cb",
+        "id" : "5382e1dafc6a23b75be3f2cb",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1239,7 +1239,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2cc",
+        "id" : "5382e1dafc6a23b75be3f2cc",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1247,7 +1247,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2d0",
+    "id" : "5382e1dafc6a23b75be3f2d0",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.212Z",
@@ -1260,7 +1260,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2ce",
+        "id" : "5382e1dafc6a23b75be3f2ce",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1268,7 +1268,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2cf",
+        "id" : "5382e1dafc6a23b75be3f2cf",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1276,7 +1276,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2d3",
+    "id" : "5382e1dafc6a23b75be3f2d3",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.212Z",
@@ -1289,7 +1289,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2d1",
+        "id" : "5382e1dafc6a23b75be3f2d1",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1297,7 +1297,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2d2",
+        "id" : "5382e1dafc6a23b75be3f2d2",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1305,7 +1305,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2d6",
+    "id" : "5382e1dafc6a23b75be3f2d6",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.213Z",
@@ -1318,7 +1318,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2d4",
+        "id" : "5382e1dafc6a23b75be3f2d4",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1326,7 +1326,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2d5",
+        "id" : "5382e1dafc6a23b75be3f2d5",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1334,7 +1334,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2d9",
+    "id" : "5382e1dafc6a23b75be3f2d9",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.213Z",
@@ -1347,7 +1347,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2d7",
+        "id" : "5382e1dafc6a23b75be3f2d7",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1355,7 +1355,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2d8",
+        "id" : "5382e1dafc6a23b75be3f2d8",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1363,7 +1363,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2dc",
+    "id" : "5382e1dafc6a23b75be3f2dc",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.213Z",
@@ -1376,7 +1376,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2da",
+        "id" : "5382e1dafc6a23b75be3f2da",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1384,7 +1384,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2db",
+        "id" : "5382e1dafc6a23b75be3f2db",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1392,7 +1392,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2df",
+    "id" : "5382e1dafc6a23b75be3f2df",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.214Z",
@@ -1405,7 +1405,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2dd",
+        "id" : "5382e1dafc6a23b75be3f2dd",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1413,7 +1413,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2de",
+        "id" : "5382e1dafc6a23b75be3f2de",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1421,7 +1421,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2e2",
+    "id" : "5382e1dafc6a23b75be3f2e2",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.214Z",
@@ -1434,7 +1434,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2e0",
+        "id" : "5382e1dafc6a23b75be3f2e0",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1442,7 +1442,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2e1",
+        "id" : "5382e1dafc6a23b75be3f2e1",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1450,7 +1450,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2e5",
+    "id" : "5382e1dafc6a23b75be3f2e5",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.214Z",
@@ -1463,7 +1463,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2e3",
+        "id" : "5382e1dafc6a23b75be3f2e3",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -1471,7 +1471,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2e4",
+        "id" : "5382e1dafc6a23b75be3f2e4",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1479,7 +1479,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2e6",
+    "id" : "5382e1dafc6a23b75be3f2e6",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.214Z",
@@ -1493,7 +1493,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2e9",
+    "id" : "5382e1dafc6a23b75be3f2e9",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.214Z",
@@ -1506,7 +1506,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2e7",
+        "id" : "5382e1dafc6a23b75be3f2e7",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1514,7 +1514,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2e8",
+        "id" : "5382e1dafc6a23b75be3f2e8",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1522,7 +1522,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2ec",
+    "id" : "5382e1dafc6a23b75be3f2ec",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.215Z",
@@ -1535,7 +1535,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2ea",
+        "id" : "5382e1dafc6a23b75be3f2ea",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1543,7 +1543,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2eb",
+        "id" : "5382e1dafc6a23b75be3f2eb",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1551,7 +1551,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2ef",
+    "id" : "5382e1dafc6a23b75be3f2ef",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.215Z",
@@ -1564,7 +1564,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2ed",
+        "id" : "5382e1dafc6a23b75be3f2ed",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1572,7 +1572,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2ee",
+        "id" : "5382e1dafc6a23b75be3f2ee",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1580,7 +1580,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2f0",
+    "id" : "5382e1dafc6a23b75be3f2f0",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.215Z",
@@ -1594,7 +1594,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2f3",
+    "id" : "5382e1dafc6a23b75be3f2f3",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.215Z",
@@ -1607,7 +1607,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2f1",
+        "id" : "5382e1dafc6a23b75be3f2f1",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1615,7 +1615,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2f2",
+        "id" : "5382e1dafc6a23b75be3f2f2",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1623,7 +1623,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2f6",
+    "id" : "5382e1dafc6a23b75be3f2f6",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.216Z",
@@ -1636,7 +1636,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2f4",
+        "id" : "5382e1dafc6a23b75be3f2f4",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1644,7 +1644,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2f5",
+        "id" : "5382e1dafc6a23b75be3f2f5",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1652,7 +1652,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2f9",
+    "id" : "5382e1dafc6a23b75be3f2f9",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.216Z",
@@ -1665,7 +1665,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2f7",
+        "id" : "5382e1dafc6a23b75be3f2f7",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1673,7 +1673,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2f8",
+        "id" : "5382e1dafc6a23b75be3f2f8",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1681,7 +1681,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2fc",
+    "id" : "5382e1dafc6a23b75be3f2fc",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.216Z",
@@ -1694,7 +1694,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2fa",
+        "id" : "5382e1dafc6a23b75be3f2fa",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1702,7 +1702,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2fb",
+        "id" : "5382e1dafc6a23b75be3f2fb",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1710,7 +1710,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f2ff",
+    "id" : "5382e1dafc6a23b75be3f2ff",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.216Z",
@@ -1723,7 +1723,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f2fd",
+        "id" : "5382e1dafc6a23b75be3f2fd",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1731,7 +1731,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f2fe",
+        "id" : "5382e1dafc6a23b75be3f2fe",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1739,7 +1739,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f302",
+    "id" : "5382e1dafc6a23b75be3f302",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.218Z",
@@ -1752,7 +1752,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f300",
+        "id" : "5382e1dafc6a23b75be3f300",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1760,7 +1760,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f301",
+        "id" : "5382e1dafc6a23b75be3f301",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1768,7 +1768,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f305",
+    "id" : "5382e1dafc6a23b75be3f305",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.218Z",
@@ -1781,7 +1781,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f303",
+        "id" : "5382e1dafc6a23b75be3f303",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1789,7 +1789,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f304",
+        "id" : "5382e1dafc6a23b75be3f304",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1797,7 +1797,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f308",
+    "id" : "5382e1dafc6a23b75be3f308",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.218Z",
@@ -1810,7 +1810,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f306",
+        "id" : "5382e1dafc6a23b75be3f306",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1818,7 +1818,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f307",
+        "id" : "5382e1dafc6a23b75be3f307",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1826,7 +1826,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f30b",
+    "id" : "5382e1dafc6a23b75be3f30b",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.218Z",
@@ -1839,7 +1839,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f309",
+        "id" : "5382e1dafc6a23b75be3f309",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1847,7 +1847,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f30a",
+        "id" : "5382e1dafc6a23b75be3f30a",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1855,7 +1855,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f30e",
+    "id" : "5382e1dafc6a23b75be3f30e",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.219Z",
@@ -1868,7 +1868,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f30c",
+        "id" : "5382e1dafc6a23b75be3f30c",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1876,7 +1876,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f30d",
+        "id" : "5382e1dafc6a23b75be3f30d",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1884,7 +1884,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f311",
+    "id" : "5382e1dafc6a23b75be3f311",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.219Z",
@@ -1897,7 +1897,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f30f",
+        "id" : "5382e1dafc6a23b75be3f30f",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1905,7 +1905,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f310",
+        "id" : "5382e1dafc6a23b75be3f310",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1913,7 +1913,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f314",
+    "id" : "5382e1dafc6a23b75be3f314",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.219Z",
@@ -1926,7 +1926,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f312",
+        "id" : "5382e1dafc6a23b75be3f312",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1934,7 +1934,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f313",
+        "id" : "5382e1dafc6a23b75be3f313",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1942,7 +1942,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f317",
+    "id" : "5382e1dafc6a23b75be3f317",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.220Z",
@@ -1955,7 +1955,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f315",
+        "id" : "5382e1dafc6a23b75be3f315",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1963,7 +1963,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f316",
+        "id" : "5382e1dafc6a23b75be3f316",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -1971,7 +1971,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f31a",
+    "id" : "5382e1dafc6a23b75be3f31a",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.220Z",
@@ -1984,7 +1984,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f318",
+        "id" : "5382e1dafc6a23b75be3f318",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -1992,7 +1992,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f319",
+        "id" : "5382e1dafc6a23b75be3f319",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2000,7 +2000,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f31d",
+    "id" : "5382e1dafc6a23b75be3f31d",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.220Z",
@@ -2013,7 +2013,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f31b",
+        "id" : "5382e1dafc6a23b75be3f31b",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -2021,7 +2021,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f31c",
+        "id" : "5382e1dafc6a23b75be3f31c",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2029,7 +2029,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f320",
+    "id" : "5382e1dafc6a23b75be3f320",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.220Z",
@@ -2042,7 +2042,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f31e",
+        "id" : "5382e1dafc6a23b75be3f31e",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -2050,7 +2050,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f31f",
+        "id" : "5382e1dafc6a23b75be3f31f",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2058,7 +2058,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f323",
+    "id" : "5382e1dafc6a23b75be3f323",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.223Z",
@@ -2071,7 +2071,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f321",
+        "id" : "5382e1dafc6a23b75be3f321",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -2079,7 +2079,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f322",
+        "id" : "5382e1dafc6a23b75be3f322",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2087,7 +2087,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f326",
+    "id" : "5382e1dafc6a23b75be3f326",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.223Z",
@@ -2100,7 +2100,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f324",
+        "id" : "5382e1dafc6a23b75be3f324",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -2108,7 +2108,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f325",
+        "id" : "5382e1dafc6a23b75be3f325",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2116,7 +2116,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f329",
+    "id" : "5382e1dafc6a23b75be3f329",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.223Z",
@@ -2129,7 +2129,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f327",
+        "id" : "5382e1dafc6a23b75be3f327",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -2137,7 +2137,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f328",
+        "id" : "5382e1dafc6a23b75be3f328",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2145,7 +2145,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f32c",
+    "id" : "5382e1dafc6a23b75be3f32c",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.224Z",
@@ -2158,7 +2158,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f32a",
+        "id" : "5382e1dafc6a23b75be3f32a",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -2166,7 +2166,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f32b",
+        "id" : "5382e1dafc6a23b75be3f32b",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2174,7 +2174,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f32f",
+    "id" : "5382e1dafc6a23b75be3f32f",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.224Z",
@@ -2187,7 +2187,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f32d",
+        "id" : "5382e1dafc6a23b75be3f32d",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -2195,7 +2195,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f32e",
+        "id" : "5382e1dafc6a23b75be3f32e",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2203,7 +2203,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f332",
+    "id" : "5382e1dafc6a23b75be3f332",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.224Z",
@@ -2216,7 +2216,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f330",
+        "id" : "5382e1dafc6a23b75be3f330",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -2224,7 +2224,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f331",
+        "id" : "5382e1dafc6a23b75be3f331",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2232,7 +2232,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f338",
+    "id" : "5382e1dafc6a23b75be3f338",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.225Z",
@@ -2245,7 +2245,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f333",
+        "id" : "5382e1dafc6a23b75be3f333",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -2253,7 +2253,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f334",
+        "id" : "5382e1dafc6a23b75be3f334",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2261,7 +2261,7 @@
       {
         "title" : "Унаги фурай маки",
         "internalId" : "2407",
-        "_id" : "5382e1dafc6a23b75be3f335",
+        "id" : "5382e1dafc6a23b75be3f335",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2269,7 +2269,7 @@
       {
         "title" : "Яки нагано маки",
         "internalId" : "2411",
-        "_id" : "5382e1dafc6a23b75be3f336",
+        "id" : "5382e1dafc6a23b75be3f336",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2277,7 +2277,7 @@
       {
         "title" : "Фуджияма маки",
         "internalId" : "2413",
-        "_id" : "5382e1dafc6a23b75be3f337",
+        "id" : "5382e1dafc6a23b75be3f337",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2285,7 +2285,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f33b",
+    "id" : "5382e1dafc6a23b75be3f33b",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.225Z",
@@ -2298,7 +2298,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f339",
+        "id" : "5382e1dafc6a23b75be3f339",
         "pricePerItem" : 175,
         "priceTotal" : 525,
         "quantity" : 3
@@ -2306,7 +2306,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f33a",
+        "id" : "5382e1dafc6a23b75be3f33a",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2314,7 +2314,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f33e",
+    "id" : "5382e1dafc6a23b75be3f33e",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.225Z",
@@ -2327,7 +2327,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f33c",
+        "id" : "5382e1dafc6a23b75be3f33c",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -2335,7 +2335,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f33d",
+        "id" : "5382e1dafc6a23b75be3f33d",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2343,7 +2343,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f341",
+    "id" : "5382e1dafc6a23b75be3f341",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.225Z",
@@ -2356,7 +2356,7 @@
       {
         "title" : "Старопрамен 500мл",
         "internalId" : "2280",
-        "_id" : "5382e1dafc6a23b75be3f33f",
+        "id" : "5382e1dafc6a23b75be3f33f",
         "pricePerItem" : 175,
         "priceTotal" : 350,
         "quantity" : 2
@@ -2364,7 +2364,7 @@
       {
         "title" : "Сяке гурме фурай маки",
         "internalId" : "2408",
-        "_id" : "5382e1dafc6a23b75be3f340",
+        "id" : "5382e1dafc6a23b75be3f340",
         "pricePerItem" : 100,
         "priceTotal" : 100,
         "quantity" : 1
@@ -2372,7 +2372,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f345",
+    "id" : "5382e1dafc6a23b75be3f345",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.226Z",
@@ -2385,7 +2385,7 @@
       {
         "title" : "Тунец гриль СГ",
         "internalId" : "2120",
-        "_id" : "5382e1dafc6a23b75be3f342",
+        "id" : "5382e1dafc6a23b75be3f342",
         "pricePerItem" : 85,
         "priceTotal" : 85,
         "quantity" : 1
@@ -2393,7 +2393,7 @@
       {
         "title" : "Лосось гриль СГ",
         "internalId" : "2121",
-        "_id" : "5382e1dafc6a23b75be3f343",
+        "id" : "5382e1dafc6a23b75be3f343",
         "pricePerItem" : 20,
         "priceTotal" : 20,
         "quantity" : 1
@@ -2401,7 +2401,7 @@
       {
         "title" : "Лосось СО",
         "internalId" : "2122",
-        "_id" : "5382e1dafc6a23b75be3f344",
+        "id" : "5382e1dafc6a23b75be3f344",
         "pricePerItem" : 70,
         "priceTotal" : 70,
         "quantity" : 1
@@ -2409,7 +2409,7 @@
     ]
   },
   {
-    "_id" : "5382e1dafc6a23b75be3f349",
+    "id" : "5382e1dafc6a23b75be3f349",
     "restaurantId" : "riba-ris",
     "isClosed" : false,
     "created" : "2014-05-26T06:40:26.226Z",
@@ -2422,7 +2422,7 @@
       {
         "title" : "Тунец гриль СГ",
         "internalId" : "2120",
-        "_id" : "5382e1dafc6a23b75be3f346",
+        "id" : "5382e1dafc6a23b75be3f346",
         "pricePerItem" : 85,
         "priceTotal" : 85,
         "quantity" : 1
@@ -2430,7 +2430,7 @@
       {
         "title" : "Лосось гриль СГ",
         "internalId" : "2121",
-        "_id" : "5382e1dafc6a23b75be3f347",
+        "id" : "5382e1dafc6a23b75be3f347",
         "pricePerItem" : 20,
         "priceTotal" : 20,
         "quantity" : 1
@@ -2438,7 +2438,7 @@
       {
         "title" : "Лосось СО",
         "internalId" : "2122",
-        "_id" : "5382e1dafc6a23b75be3f348",
+        "id" : "5382e1dafc6a23b75be3f348",
         "pricePerItem" : 70,
         "priceTotal" : 70,
         "quantity" : 1

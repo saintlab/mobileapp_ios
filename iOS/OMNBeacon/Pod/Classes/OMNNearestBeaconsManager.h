@@ -11,12 +11,14 @@
 typedef void(^OMNFoundBeaconsBlock)(NSArray *foundBeacons);
 typedef void(^OMNBeaconsManagerStatusBlock)(CLAuthorizationStatus status);
 
-@interface OMNBeaconsManager : NSObject 
+@interface OMNNearestBeaconsManager : NSObject 
 
-@property (nonatomic, assign, readonly) BOOL ragingMonitorEnabled;
+@property (nonatomic, assign, readonly) BOOL isRanging;
 
-- (void)startMonitoringNearestBeacons:(OMNFoundBeaconsBlock)block status:(OMNBeaconsManagerStatusBlock)statusBlock;
+- (instancetype)initWithStatusBlock:(OMNBeaconsManagerStatusBlock)statusBlock;
 
-- (void)stopMonitoring;
+- (void)rangeNearestBeacons:(OMNFoundBeaconsBlock)block;
+
+- (void)stop;
 
 @end

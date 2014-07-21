@@ -17,8 +17,8 @@
   return 0.0;
 }
 
-+ (NSString *)key {
-  return @"";
++ (NSArray *)keys {
+  return @[];
 }
 
 + (NSString *)keyFromClass:(Class)fromClass toClass:(Class)toClass {

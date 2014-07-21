@@ -74,7 +74,7 @@
   _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
   
   
-  [_beaconRangingManager rangeNearestBeacons:^(NSArray *beacons) {
+  [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
     [weakSelf didRangeBeacons:beacons];
     
@@ -83,7 +83,7 @@
     NSLog(@"error>%@", error);
     [weakSelf didFailRangeBeacons];
     
-  } status:nil];
+  }];
   
 }
 

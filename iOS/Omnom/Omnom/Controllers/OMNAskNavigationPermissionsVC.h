@@ -8,16 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol OMNAskNavigationPermissionsVCDelegate;
-
 @interface OMNAskNavigationPermissionsVC : UIViewController
 
-@property (nonatomic, weak) id<OMNAskNavigationPermissionsVCDelegate> delegate;
-
 @end
 
-@protocol OMNAskNavigationPermissionsVCDelegate <NSObject>
-
-- (void)askNavigationPermissionsVCDidGrantPermission:(OMNAskNavigationPermissionsVC *)askNavigationPermissionsVC;
-
-@end

@@ -14,7 +14,7 @@
 
 @property (nonatomic, weak) id<OMNBeaconSearchManagerDelegate> delegate;
 
-- (void)startSearchingBeacon;
+- (void)startSearching;
 - (void)stop;
 
 @end
@@ -23,15 +23,19 @@
 
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon;
 
-- (void)beaconSearchManagerServerUnavaliableState:(OMNBeaconSearchManager *)beaconSearchManager;
-- (void)beaconSearchManagerDidRequestLocationManagerPermission:(OMNBeaconSearchManager *)beaconSearchManager;
+- (void)beaconSearchManagerOmnomUnavaliableState:(OMNBeaconSearchManager *)beaconSearchManager;
+- (void)beaconSearchManagerInternetUnavaliableState:(OMNBeaconSearchManager *)beaconSearchManager;
 
+- (void)beaconSearchManagerDidStartSearching:(OMNBeaconSearchManager *)beaconSearchManager;
+- (void)beaconSearchManagerDidRequestLocationManagerPermission:(OMNBeaconSearchManager *)beaconSearchManager;
+- (void)beaconSearchManagerDidRequestCoreLocationDeniedPermission:(OMNBeaconSearchManager *)beaconSearchManager;
+- (void)beaconSearchManagerDidRequestCoreLocationRestrictedPermission:(OMNBeaconSearchManager *)beaconSearchManager;
+
+- (void)beaconSearchManagerBLEDidOn:(OMNBeaconSearchManager *)beaconSearchManager;
 - (void)beaconSearchManagerBLEUnsupported:(OMNBeaconSearchManager *)beaconSearchManager;
 - (void)beaconSearchManagerDidRequestTurnBLEOn:(OMNBeaconSearchManager *)beaconSearchManager;
 
 - (void)beaconSearchManagerDidRequestDeviceFaceUpPosition:(OMNBeaconSearchManager *)beaconSearchManager;
 
-- (void)beaconSearchManagerDidRequestCoreLocationDeniedPermission:(OMNBeaconSearchManager *)beaconSearchManager;
-- (void)beaconSearchManagerDidRequestCoreLocationRestrictedPermission:(OMNBeaconSearchManager *)beaconSearchManager;
 
 @end

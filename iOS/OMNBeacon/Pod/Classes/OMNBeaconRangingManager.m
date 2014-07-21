@@ -19,8 +19,7 @@
   CLBeaconRegion *_rangingBeaconRegion;
   CLLocationManager *_rangingLocationManager;
   
-  CLBeaconsBlock _didRangeNearestBeaconsBlock;
-  CLAuthorizationStatusBlock _statusBlock;
+  CLBeaconsBlock _didRangeBeaconsBlock;
   
   void(^_didFailRangeBeaconsBlock)(NSError *);
 }
@@ -28,7 +27,7 @@
 - (void)dealloc {
   
   [self stop];
-  
+  _statusBlock = nil;
   _rangingLocationManager.delegate = nil;
   _rangingLocationManager = nil;
 
@@ -49,7 +48,7 @@
   return self;
 }
 
-- (void)rangeNearestBeacons:(CLBeaconsBlock)didRangeNearestBeaconsBlock failure:(void (^)(NSError *error))failureBlock status:(CLAuthorizationStatusBlock)statusBlock {
+- (void)rangeBeacons:(CLBeaconsBlock)didRangeBeaconsBlock failure:(void (^)(NSError *error))failureBlock {
   
   NSAssert([NSThread isMainThread], @"Should be run on main thread");
   
@@ -61,9 +60,8 @@
     return;
   }
   
-  _didRangeNearestBeaconsBlock = didRangeNearestBeaconsBlock;
+  _didRangeBeaconsBlock = didRangeBeaconsBlock;
   _didFailRangeBeaconsBlock = failureBlock;
-  _statusBlock = statusBlock;
   
   if (_ranging) {
     return;
@@ -84,9 +82,8 @@
 
 - (void)stop {
   
-  _didRangeNearestBeaconsBlock = nil;
+  _didRangeBeaconsBlock = nil;
   _didFailRangeBeaconsBlock = nil;
-  _statusBlock = nil;
   
   if ([_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
     [_rangingLocationManager stopRangingBeaconsInRegion:_rangingBeaconRegion];
@@ -107,8 +104,8 @@
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
   
-  if (_didRangeNearestBeaconsBlock) {
-    _didRangeNearestBeaconsBlock(beacons);
+  if (_didRangeBeaconsBlock) {
+    _didRangeBeaconsBlock(beacons);
   }
     
 }

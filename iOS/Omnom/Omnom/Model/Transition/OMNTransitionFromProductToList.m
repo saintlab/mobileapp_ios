@@ -13,8 +13,8 @@
 
 @implementation OMNTransitionFromProductToList
 
-+ (NSString *)key {
-  return [self keyFromClass:[OMNProductDetailsVC class] toClass:[OMNRestaurantMenuVC class]];
++ (NSArray *)keys {
+  return @[[self keyFromClass:[OMNProductDetailsVC class] toClass:[OMNRestaurantMenuVC class]]];
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
