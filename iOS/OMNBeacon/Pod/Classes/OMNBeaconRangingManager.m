@@ -33,10 +33,12 @@
 
 }
 
-- (instancetype)init {
+- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock {
   self = [super init];
   if (self) {
 
+    _statusBlock = statusBlock;
+    
     NSString *identifier = [NSString stringWithFormat:@"%@.rangingTask", [[NSBundle mainBundle] bundleIdentifier]];
     NSDictionary *beaconInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"OMNBeaconUUID" ofType:@"plist"]];
     _rangingBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:beaconInfo[@"uuid"]] identifier:identifier];

@@ -15,6 +15,7 @@
 @implementation OMNSearchBeaconRootVC {
   UIImage *_image;
   NSString *_title;
+  NSArray *_buttons;
 }
 
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title buttons:(NSArray *)buttons {
@@ -22,6 +23,7 @@
   if (self) {
     _image = image;
     _title = title;
+    _buttons = buttons;
   }
   return self;
 }
@@ -29,10 +31,25 @@
 - (void)viewDidLoad {
   
   [super viewDidLoad];
-  self.button.hidden = YES;
+
+  if (_buttons.count) {
+    self.button.hidden = NO;
+    [self.button setTitle:[_buttons firstObject] forState:UIControlStateNormal];
+  }
+  else {
+    self.button.hidden = YES;
+  }
+  
+  [self.button addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
   self.label.text = _title;
   [self.circleButton setImage:_image forState:UIControlStateNormal];
   
+}
+
+- (void)buttonTap {
+  if (self.actionBlock) {
+    self.actionBlock();
+  }
 }
 
 - (void)didReceiveMemoryWarning {

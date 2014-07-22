@@ -6,16 +6,15 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <CoreLocation/CoreLocation.h>
+#import "OMNBeaconRangingManager.h"
 
 typedef void(^OMNFoundBeaconsBlock)(NSArray *foundBeacons);
-typedef void(^OMNBeaconsManagerStatusBlock)(CLAuthorizationStatus status);
 
 @interface OMNNearestBeaconsManager : NSObject 
 
 @property (nonatomic, assign, readonly) BOOL isRanging;
 
-- (instancetype)initWithStatusBlock:(OMNBeaconsManagerStatusBlock)statusBlock;
+- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock;
 
 - (void)rangeNearestBeacons:(OMNFoundBeaconsBlock)block;
 

@@ -18,6 +18,7 @@
 @end
 
 @implementation OMNAskNavigationPermissionsVC {
+  CLLocationManager *_permissionLocationManager;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -31,12 +32,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-//  
-//  _locationManager = [[CLLocationManager alloc] init];
-//  _locationManager.delegate = self;
-//#ifdef __IPHONE_8_0
-//  [_locationManager requestAlwaysAuthorization];
-//#endif
+  
+  _permissionLocationManager = [[CLLocationManager alloc] init];
+#ifdef __IPHONE_8_0
+  [_permissionLocationManager requestAlwaysAuthorization];
+#endif
   
 }
 
@@ -48,9 +48,8 @@
 
 - (IBAction)askPermissionTap:(id)sender {
   
-#warning 123
-//  CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
-//  [_locationManager requestStateForRegion:beaconRegion];
+  CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
+  [_permissionLocationManager requestStateForRegion:beaconRegion];
   
 }
 
@@ -74,9 +73,5 @@
   [self.navigationController popToViewController:self animated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
-}
 
 @end

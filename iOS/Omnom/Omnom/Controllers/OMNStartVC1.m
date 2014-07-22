@@ -9,14 +9,12 @@
 #import "OMNStartVC1.h"
 #import "OMNLoginVC.h"
 #import "OMNRegisterUserVC.h"
-#import "OMNSearchTableVC.h"
-#import "OMNRestaurantMenuVC.h"
 #import "OMNAuthorisation.h"
 #import "OMNWizardPageVC.h"
+#import "OMNConstants.h"
 
 @interface OMNStartVC1 ()
-<OMNAuthorizationDelegate,
-OMNRestaurantMenuVCDelegate>
+<OMNAuthorizationDelegate>
 
 @end
 
@@ -109,51 +107,8 @@ OMNRestaurantMenuVCDelegate>
 
 - (void)processAuthorisation {
 
-  __weak typeof(self)weakSelf = self;
-  OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
-    
-    if (decodeBeacon) {
-      
-      [weakSelf didFindBeacon:decodeBeacon];
-      
-    }
-    
-  } cancelBlock:^{
-    
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
-    
-  }];
+  [self.delegate startVCDidReceiveToken:self];
   
-  [self.navigationController pushViewController:searchTableVC animated:YES];
-  
-}
-
-- (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
-  
-  //TODO: get actual restaurant
-  NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
-  OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:data];
-  OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
-  
-  [restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
-    
-    NSLog(@"newGuestForTableID>done");
-    
-  } failure:^(NSError *error) {
-    
-    NSLog(@"newGuestForTableID>%@", error);
-    
-  }];
-  
-  restaurantMenuVC.delegate = self;
-  [self.navigationController pushViewController:restaurantMenuVC animated:YES];
-  
-}
-
-#pragma mark - OMNRestaurantMenuVCDelegate
-
-- (void)restaurantMenuVCDidFinish:(OMNRestaurantMenuVC *)restaurantMenuVC {
-  [self.navigationController popToViewController:self animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

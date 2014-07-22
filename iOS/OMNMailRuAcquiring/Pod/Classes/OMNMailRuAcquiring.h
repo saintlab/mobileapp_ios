@@ -14,6 +14,8 @@
 
 - (void)registerCard:(NSString *)pan expDate:(NSString *)expDate cvv:(NSString *)cvv;
 
-- (void)pay;
+- (void)cardVerify:(double)amount card_id:(NSString *)card_id;
+
+- (void)payWithCardInfo:(NSDictionary *)cardInfo addCard:(BOOL)addCard;
 
 @end

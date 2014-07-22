@@ -9,6 +9,7 @@
 #import "OMNFadeTransition.h"
 #import "OMNSearchBeaconVC.h"
 #import "OMNSearchBeaconRootVC.h"
+#import "OMNTablePositionVC.h"
 
 @implementation OMNFadeTransition
 
@@ -55,7 +56,9 @@
 + (NSArray *)keys {
   return @[
            [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNSearchBeaconRootVC class]],
-           [self keyFromClass:[OMNSearchBeaconRootVC class] toClass:[OMNSearchBeaconVC class]]
+           [self keyFromClass:[OMNSearchBeaconRootVC class] toClass:[OMNSearchBeaconVC class]],
+           [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNTablePositionVC class]],
+           [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchBeaconVC class]],
            ];
 }
 

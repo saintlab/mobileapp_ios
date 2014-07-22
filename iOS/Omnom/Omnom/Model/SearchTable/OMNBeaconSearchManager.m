@@ -12,9 +12,11 @@
 #import "OMNDecodeBeaconManager.h"
 #import "OMNNearestBeaconsManager.h"
 
+NSTimeInterval kBeaconSearchTimeout = 2.0;
+
 @implementation OMNBeaconSearchManager {
   OMNNearestBeaconsManager *_nearestBeaconsManager;
-
+  NSTimer *_nearestBeaconsRangingTimer;
 }
 
 - (void)dealloc {
@@ -29,9 +31,26 @@
   return self;
 }
 
+- (void)stopRangingTimer {
+  [_nearestBeaconsRangingTimer invalidate];
+  _nearestBeaconsRangingTimer = nil;
+}
+
+- (void)stopRangingNearestBeacons {
+  [self stopRangingTimer];
+  [_nearestBeaconsManager stop];
+}
+
+- (void)beaconSearchTimeout {
+  
+  [self stopRangingNearestBeacons];
+  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerNotFoundBeacons];
+  
+}
+
 - (void)stop {
 
-  [_nearestBeaconsManager stop];
+  [self stopRangingNearestBeacons];
   _nearestBeaconsManager = nil;
   
 }
@@ -71,13 +90,13 @@
 
 - (void)omnomUnavaliableState {
   
-  [self.delegate beaconSearchManagerOmnomUnavaliableState:self];
+  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerOmnomServerUnavaliable];
   
 }
 
 - (void)internetUnavaliableState {
   
-  [self.delegate beaconSearchManagerInternetUnavaliableState:self];
+  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerInternetUnavaliable];
   
 }
 
@@ -90,13 +109,14 @@
     switch (state) {
       case CBCentralManagerStatePoweredOn: {
         
-        [weakSelf.delegate beaconSearchManagerBLEDidOn:weakSelf];
+        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerBLEDidOn];
         [weakSelf startRangeNearestBeacons];
         
       } break;
       case CBCentralManagerStateUnsupported: {
         
-        [weakSelf BLEUnsupported];
+        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerBLEUnsupported];
+        //no need monitoring anymore
         [[OMNBluetoothManager manager] stop];
         
       } break;
@@ -120,16 +140,10 @@
   
 }
 
-- (void)BLEUnsupported {
-  
-  [self.delegate beaconSearchManagerBLEUnsupported:self];
-  
-}
-
 - (void)processBLEOffSituation {
   
-  [_nearestBeaconsManager stop];
-  [self.delegate beaconSearchManagerDidRequestTurnBLEOn:self];
+  [self stopRangingNearestBeacons];
+  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestTurnBLEOn];
   
 }
 
@@ -140,15 +154,6 @@
 
 - (void)startRangeNearestBeacons {
   
-  if (TARGET_OS_IPHONE &&
-      kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
-    
-    [self.delegate beaconSearchManagerDidRequestLocationManagerPermission:self];
-    
-    return;
-  }
-  
-  
   if (nil == _nearestBeaconsManager) {
     __weak typeof(self)weakSelf = self;
     _nearestBeaconsManager = [[OMNNearestBeaconsManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
@@ -156,9 +161,21 @@
     }];
   }
   
+  if (TARGET_OS_IPHONE &&
+      kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
+    
+    [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestLocationManagerPermission];
+    
+    return;
+  }
+  
   if (_nearestBeaconsManager.isRanging) {
     return;
   }
+
+  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerStartSearchingBeacons];
+
+  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconSearchTimeout) userInfo:nil repeats:NO];
   
   __weak typeof(self)weakSelf = self;
   [_nearestBeaconsManager rangeNearestBeacons:^(NSArray *foundBeacons) {
@@ -167,8 +184,6 @@
     
   }];
   
-  [self.delegate beaconSearchManagerDidStartSearching:self];
-  
 }
 
 - (void)checkNearestBeacons:(NSArray *)nearestBeacons {
@@ -176,13 +191,11 @@
   if (0 == nearestBeacons.count) {
     return;
   }
-  NSLog(@"nearestBeacons>%@", nearestBeacons);
-  
-  [_nearestBeaconsManager stop];
+  [self stopRangingNearestBeacons];
   
   if (nearestBeacons.count > 1) {
     
-    [self determineDeviceFaceUpPosition];
+    [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestDeviceFaceUpPosition];
     
   }
   else {
@@ -191,12 +204,6 @@
     [self.delegate beaconSearchManager:self didFindBeacon:beacon];
     
   }
-  
-}
-
-- (void)determineDeviceFaceUpPosition {
-  
-  [self.delegate beaconSearchManagerDidRequestDeviceFaceUpPosition:self];
   
 }
 
@@ -210,8 +217,8 @@
     } break;
     case kCLAuthorizationStatusDenied: {
       
-      [_nearestBeaconsManager stop];
-      [self.delegate beaconSearchManagerDidRequestCoreLocationDeniedPermission:self];
+      [self stopRangingNearestBeacons];
+      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestCoreLocationDeniedPermission];
       
     } break;
     case kCLAuthorizationStatusNotDetermined: {
@@ -219,13 +226,14 @@
     } break;
     case kCLAuthorizationStatusRestricted: {
       
-      [_nearestBeaconsManager stop];
-      [self.delegate beaconSearchManagerDidRequestCoreLocationRestrictedPermission:self];
+      [self stopRangingNearestBeacons];
+      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestCoreLocationRestrictedPermission];
       
     } break;
       
   }
   
 }
+
 
 @end

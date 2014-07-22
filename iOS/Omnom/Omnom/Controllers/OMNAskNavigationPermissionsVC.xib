@@ -50,11 +50,11 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="2DK-lM-d8t" firstAttribute="top" secondItem="Zef-gT-GdB" secondAttribute="bottom" constant="-46" id="2dv-rL-Zdg"/>
-                <constraint firstItem="Zef-gT-GdB" firstAttribute="centerX" secondItem="tz7-9U-gFP" secondAttribute="centerX" id="Rzw-Ml-Wvh"/>
-                <constraint firstAttribute="centerY" secondItem="Zef-gT-GdB" secondAttribute="centerY" constant="0.5" id="ZPG-jP-f3w"/>
-                <constraint firstItem="Zef-gT-GdB" firstAttribute="centerX" secondItem="2DK-lM-d8t" secondAttribute="centerX" id="fv3-6b-kgJ"/>
-                <constraint firstAttribute="centerX" secondItem="Zef-gT-GdB" secondAttribute="centerX" id="soT-ke-kAI"/>
+                <constraint firstAttribute="centerX" secondItem="2DK-lM-d8t" secondAttribute="centerX" id="I2J-zx-g6D"/>
+                <constraint firstAttribute="centerY" secondItem="Zef-gT-GdB" secondAttribute="centerY" constant="0.5" id="S1O-49-9fJ"/>
+                <constraint firstAttribute="centerX" secondItem="Zef-gT-GdB" secondAttribute="centerX" id="d1C-TG-s35"/>
                 <constraint firstItem="tz7-9U-gFP" firstAttribute="top" secondItem="Zef-gT-GdB" secondAttribute="bottom" constant="-88" id="srd-J4-6Ti"/>
+                <constraint firstAttribute="centerX" secondItem="tz7-9U-gFP" secondAttribute="centerX" id="szU-4i-Yyh"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

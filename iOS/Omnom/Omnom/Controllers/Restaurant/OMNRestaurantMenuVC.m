@@ -15,7 +15,7 @@
 #import "OMNNavigationControllerDelegate.h"
 
 #import "OMNRestaurantMenuMediator.h"
-
+#import "OMNSearchBeaconVC.h"
 #import <OMNStyler.h>
 
 @interface OMNRestaurantMenuVC () {
@@ -26,7 +26,6 @@
   __weak IBOutlet UILabel *_recommendLabel;
   __weak IBOutlet UIView *_waiterIsCalledView;
  
-  OMNNavigationControllerDelegate *_navigationControllerDelegate;
   OMNRestaurant *_restaurant;
   OMNTable *_table;
   
@@ -50,7 +49,6 @@
     
     _restaurantMenuMediator = [[OMNRestaurantMenuMediator alloc] initWithRootViewController:self];
     
-    _navigationControllerDelegate = [[OMNNavigationControllerDelegate alloc] init];
     
     __weak typeof(self)weakSelf = self;
     _productsModel.productSelectionBlock = ^(OMNProduct *product) {
@@ -72,8 +70,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  
-  self.navigationController.delegate = _navigationControllerDelegate;
   
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -190,15 +186,14 @@
   
 }
 
-- (void)searchTableWithBlock:(OMNSearchTableVCBlock)block {
+- (void)searchTableWithBlock:(OMNSearchBeaconVCBlock)block {
 
   __weak typeof(self)weakSelf = self;
-  OMNSearchTableVC *searchTableVC = [[OMNSearchTableVC alloc] initWithBlock:block cancelBlock:^{
-    
+  
+  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:block cancelBlock:^{
     [weakSelf.navigationController popToViewController:weakSelf animated:YES];
-    
   }];
-  [self.navigationController pushViewController:searchTableVC animated:YES];
+  [self.navigationController pushViewController:searchBeaconVC animated:YES];
   
 }
 

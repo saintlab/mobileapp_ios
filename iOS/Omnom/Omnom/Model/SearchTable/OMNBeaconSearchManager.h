@@ -9,6 +9,22 @@
 @protocol OMNBeaconSearchManagerDelegate;
 @class OMNBeacon;
 
+typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
+  kSearchManagerOmnomServerUnavaliable = 0,
+  kSearchManagerInternetUnavaliable,
+  kSearchManagerStartSearchingBeacons,
+  kSearchManagerNotFoundBeacons,
+  
+  kSearchManagerRequestLocationManagerPermission,
+  kSearchManagerRequestCoreLocationDeniedPermission,
+  kSearchManagerRequestCoreLocationRestrictedPermission,
+  
+  kSearchManagerBLEDidOn,
+  kSearchManagerBLEUnsupported,
+  kSearchManagerRequestTurnBLEOn,
+  kSearchManagerRequestDeviceFaceUpPosition,
+  
+};
 
 @interface OMNBeaconSearchManager : NSObject
 
@@ -23,19 +39,7 @@
 
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon;
 
-- (void)beaconSearchManagerOmnomUnavaliableState:(OMNBeaconSearchManager *)beaconSearchManager;
-- (void)beaconSearchManagerInternetUnavaliableState:(OMNBeaconSearchManager *)beaconSearchManager;
-
-- (void)beaconSearchManagerDidStartSearching:(OMNBeaconSearchManager *)beaconSearchManager;
-- (void)beaconSearchManagerDidRequestLocationManagerPermission:(OMNBeaconSearchManager *)beaconSearchManager;
-- (void)beaconSearchManagerDidRequestCoreLocationDeniedPermission:(OMNBeaconSearchManager *)beaconSearchManager;
-- (void)beaconSearchManagerDidRequestCoreLocationRestrictedPermission:(OMNBeaconSearchManager *)beaconSearchManager;
-
-- (void)beaconSearchManagerBLEDidOn:(OMNBeaconSearchManager *)beaconSearchManager;
-- (void)beaconSearchManagerBLEUnsupported:(OMNBeaconSearchManager *)beaconSearchManager;
-- (void)beaconSearchManagerDidRequestTurnBLEOn:(OMNBeaconSearchManager *)beaconSearchManager;
-
-- (void)beaconSearchManagerDidRequestDeviceFaceUpPosition:(OMNBeaconSearchManager *)beaconSearchManager;
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state;
 
 
 @end

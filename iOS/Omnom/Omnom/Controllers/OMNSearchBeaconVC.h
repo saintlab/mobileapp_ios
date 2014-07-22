@@ -9,14 +9,10 @@
 #import "OMNDecodeBeacon.h"
 #import "OMNSearchBeaconRootVC.h"
 
+typedef void(^OMNSearchBeaconVCBlock)(OMNDecodeBeacon *decodeBeacon);
+
 @interface OMNSearchBeaconVC : OMNSearchBeaconRootVC
 
-@end
-
-@protocol OMNSearchBeaconVCDelegate <NSObject>
-
-- (void)searchBeaconVC:(OMNSearchBeaconVC *)searchBeaconVC didFindBeacon:(OMNDecodeBeacon *)decodeBeacon;
-
-- (void)searchBeaconVCDidCancel:(OMNSearchBeaconVC *)searchBeaconVC;
+- (instancetype)initWithBlock:(OMNSearchBeaconVCBlock)block cancelBlock:(dispatch_block_t)cancelBlock;
 
 @end

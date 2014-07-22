@@ -8,6 +8,16 @@
 
 #import "OMNWizardVC.h"
 
+@protocol OMNStartVC1Delegate;
+
 @interface OMNStartVC1 : OMNWizardVC
+
+@property (nonatomic, weak) id<OMNStartVC1Delegate> delegate;
+
+@end
+
+@protocol OMNStartVC1Delegate <NSObject>
+
+- (void)startVCDidReceiveToken:(OMNStartVC1 *)startVC;
 
 @end

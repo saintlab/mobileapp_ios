@@ -111,6 +111,10 @@ OMNBeaconSearchManagerDelegate>
 
 #pragma mark - OMNBeaconSearchManagerDelegate
 
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state {
+  
+}
+
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon {
   
   [self decodeBeacon:beacon];
@@ -144,7 +148,7 @@ OMNBeaconSearchManagerDelegate>
 - (void)beaconSearchManagerDidRequestDeviceFaceUpPosition:(OMNBeaconSearchManager *)beaconSearchManager {
 
   OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] init];
-  tablePositionVC.delegate = self;
+  tablePositionVC.tablePositionDelegate = self;
   [self presentViewController:[[UINavigationController alloc] initWithRootViewController:tablePositionVC] animated:YES completion:nil];
   
 }

@@ -69,18 +69,18 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(OMNErrorBlock)failure {
 
-  OMNBeacon *beacon = [beacons firstObject];
-  
-  if (beacon.key) {
-    
-    OMNDecodeBeacon *decodeBeacon = _decodedBeacons[beacon.key];
-    
-    if (decodeBeacon) {
-      success(@[decodeBeacon]);
-      return;
-    }
-    
-  }
+#warning chache
+//  OMNBeacon *beacon = [beacons firstObject];
+//  if (beacon.key) {
+//
+//    OMNDecodeBeacon *decodeBeacon = _decodedBeacons[beacon.key];
+//    
+//    if (decodeBeacon) {
+//      success(@[decodeBeacon]);
+//      return;
+//    }
+//    
+//  }
   
   NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
   [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {

@@ -14,7 +14,9 @@ typedef void(^CLAuthorizationStatusBlock)(CLAuthorizationStatus status);
 @interface OMNBeaconRangingManager : NSObject
 
 @property (nonatomic, assign, readonly) BOOL ranging;
-@property (nonatomic, copy) CLAuthorizationStatusBlock statusBlock;
+@property (nonatomic, copy, readonly) CLAuthorizationStatusBlock statusBlock;
+
+- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock;
 
 /**
  Start searching nearest beacons

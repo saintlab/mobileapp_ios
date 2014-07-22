@@ -14,7 +14,7 @@ static NSString * const kOMNMailRu_vterm_id = @"DGISMobile";
 static NSString * const kOMNMailRu_cardholder = @"Omnom";
 static NSString * const kOMNMailRu_secret_key = @"ohMDLYVUy0y8FKenvcVuPCYTtbeB7MI6qNOBxOCwSAmOoqwpXj";
 
-static NSString * const kOMNMailRu_user_login = @"1";
+static NSString * const kOMNMailRu_user_login = @"6";
 
 static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.mail.ru/api/";
 
@@ -200,7 +200,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
 }
 
-- (void)pay {
+- (void)payWithCardInfo:(NSDictionary *)cardInfo addCard:(BOOL)addCard {
   
   NSDictionary *extra =
   @{
@@ -216,9 +216,6 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   NSString *order_id = @"1234";
   NSString *user_phone = @"89833087336";
-  NSString *pan = @"4111111111111111";
-  NSString *expDate = @"12.2015";
-  NSString *cvv = @"123";
   NSString *order_amount = @"526.07";
   NSString *order_message = @"message1";
   
@@ -240,18 +237,20 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
   
   parameters[@"signature"] = signature;
-  parameters[@"pan"] = pan;
+//  parameters[@"card_id"] = @"30002847034833862453";
+  
+  [parameters addEntriesFromDictionary:cardInfo];
+
   parameters[@"cardholder"] = kOMNMailRu_cardholder;
-  parameters[@"exp_date"] = expDate;
-  parameters[@"cvv"] = cvv;
-  parameters[@"add_card"] = @(1);
+  if (addCard) {
+    parameters[@"add_card"] = @(1);
+  }
   parameters[@"user_phone"] = user_phone;
   
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
     NSLog(@"%@", responseObject);
-
     
     if (responseObject[@"url"]) {
       

@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNSearchBeaconRootVC.h"
+
 @protocol OMNTablePositionVCDelegate;
 
-@interface OMNTablePositionVC : UIViewController
+@interface OMNTablePositionVC : OMNSearchBeaconRootVC
 
-@property (nonatomic, weak) id<OMNTablePositionVCDelegate> delegate;
+@property (nonatomic, weak) id<OMNTablePositionVCDelegate> tablePositionDelegate;
 
 @end
 

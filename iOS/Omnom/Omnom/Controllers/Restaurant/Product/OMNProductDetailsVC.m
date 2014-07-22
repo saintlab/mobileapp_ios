@@ -60,22 +60,6 @@
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  
-  // Set outself as the navigation controller's delegate so we're asked for a transitioning object
-  self.navigationController.delegate = self;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  
-  // Stop being the navigation controller's delegate
-  if (self.navigationController.delegate == self) {
-    self.navigationController.delegate = nil;
-  }
-}
-
 - (void)didReceiveMemoryWarning
 {
   [super didReceiveMemoryWarning];

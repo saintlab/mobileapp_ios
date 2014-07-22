@@ -9,7 +9,6 @@
 #import "OMNNearestBeaconsManager.h"
 #import "OMNBeacon.h"
 #import "CLBeacon+GBeaconAdditions.h"
-#import "OMNBeaconRangingManager.h"
 #import "OMNFoundBeacons.h"
 
 @interface OMNNearestBeaconsManager ()
@@ -23,7 +22,7 @@
   OMNFoundBeaconsBlock _foundNearestBeaconsBlock;
 
   OMNBeaconRangingManager *_beaconRangingManager;
-  OMNBeaconsManagerStatusBlock _statusBlock;
+  CLAuthorizationStatusBlock _statusBlock;
 }
 
 - (void)dealloc {
@@ -32,12 +31,12 @@
   _beaconRangingManager = nil;
 }
 
-- (instancetype)initWithStatusBlock:(OMNBeaconsManagerStatusBlock)statusBlock {
+- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock {
   self = [super init];
   if (self) {
     _statusBlock = statusBlock;
     _addBeaconLock = dispatch_semaphore_create(1);
-    _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
+    _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:_statusBlock];
     
   }
   return self;
@@ -50,8 +49,6 @@
   [self stop];
   _isRanging = YES;
   _foundNearestBeaconsBlock = block;
-  
-  _beaconRangingManager.statusBlock = _statusBlock;
   
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
