@@ -14,7 +14,7 @@ static NSString * const kOMNMailRu_vterm_id = @"DGISMobile";
 static NSString * const kOMNMailRu_cardholder = @"Omnom";
 static NSString * const kOMNMailRu_secret_key = @"ohMDLYVUy0y8FKenvcVuPCYTtbeB7MI6qNOBxOCwSAmOoqwpXj";
 
-static NSString * const kOMNMailRu_user_login = @"6";
+static NSString * const kOMNMailRu_user_login = @"2";
 
 static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.mail.ru/api/";
 

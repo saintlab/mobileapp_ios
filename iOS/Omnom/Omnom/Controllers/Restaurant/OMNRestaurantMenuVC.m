@@ -164,7 +164,7 @@
       
     }];
     
-    [weakSelf.navigationController popToViewController:self animated:YES];
+    [weakSelf dismissViewControllerAnimated:YES completion:nil];
     
   }];
   
@@ -191,9 +191,14 @@
   __weak typeof(self)weakSelf = self;
   
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:block cancelBlock:^{
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+
+    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+
   }];
-  [self.navigationController pushViewController:searchBeaconVC animated:YES];
+  
+  UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:searchBeaconVC];
+  navVC.delegate = self.navigationController.delegate;
+  [self presentViewController:navVC animated:YES completion:nil];
   
 }
 
@@ -203,10 +208,6 @@
   OMNRestaurant *restaurant = _restaurant;
   [self searchTableWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
     
-    if (nil == decodeBeacon) {
-      return;
-    }
-    
     [restaurant getOrdersForTableID:decodeBeacon.tableId orders:^(NSArray *orders) {
 
       [weakSelf processOrders:orders];
@@ -214,7 +215,7 @@
     } error:^(NSError *error) {
       
       [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-      [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+      [weakSelf dismissViewControllerAnimated:YES completion:nil];
       
     }];
     
@@ -224,6 +225,7 @@
 
 - (void)processOrders:(NSArray *)orders {
   
+  [self dismissViewControllerAnimated:YES completion:nil];
   [_restaurantMenuMediator processOrders:orders];
   
 }

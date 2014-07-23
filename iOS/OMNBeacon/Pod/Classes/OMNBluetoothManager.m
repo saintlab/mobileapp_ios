@@ -8,6 +8,8 @@
 
 #import "OMNBluetoothManager.h"
 
+NSString * const OMNBluetoothManagerUnspported = @"OMNBluetoothManagerUnspported";
+
 @interface OMNBluetoothManager ()
 <CBCentralManagerDelegate>
 
@@ -16,6 +18,7 @@
 @implementation OMNBluetoothManager {
   CBCentralManagerStateBlock _centralManagerStateBlock;
   CBCentralManager *_centralManager;
+  BOOL _unsupported;
 }
 
 + (instancetype)manager {
@@ -27,7 +30,20 @@
   return manager;
 }
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _unsupported = [[NSUserDefaults standardUserDefaults] boolForKey:OMNBluetoothManagerUnspported];
+  }
+  return self;
+}
+
 - (void)getBluetoothState:(CBCentralManagerStateBlock)block {
+  
+  if (_unsupported) {
+    block(CBCentralManagerStateUnsupported);
+    return;
+  }
   
   _centralManagerStateBlock = block;
   if (nil == _centralManager) {
@@ -55,6 +71,13 @@
   
   if (_centralManagerStateBlock) {
     _centralManagerStateBlock(central.state);
+  }
+
+  if (CBCentralManagerStateUnsupported == central.state) {
+    _unsupported = YES;
+    [self stop];
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:OMNBluetoothManagerUnspported];
+    [[NSUserDefaults standardUserDefaults] synchronize];
   }
   
 }

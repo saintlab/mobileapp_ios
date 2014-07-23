@@ -1,0 +1,9 @@
+target 'OMNSocketIO', :exclusive => true do
+  pod "OMNSocketIO", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "OMNSocketIO", :path => "../"
+
+  pod 'Kiwi'
+end

@@ -8,6 +8,7 @@
 
 #import "OMNScanQRCodeVC.h"
 #import <AVFoundation/AVFoundation.h>
+#import "OMNConstants.h"
 
 @interface OMNScanQRCodeVC ()
 <AVCaptureMetadataOutputObjectsDelegate>
@@ -31,10 +32,17 @@
   [super viewDidLoad];
   self.navigationItem.title = NSLocalizedString(@"QRCode reader", nil);
   
-#if TARGET_IPHONE_SIMULATOR
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub scan", nil) style:UIBarButtonItemStylePlain target:self action:@selector(stubScan)];
-#endif
+  if (TARGET_IPHONE_SIMULATOR ||
+      kUseStubBeacon) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub scan", nil) style:UIBarButtonItemStylePlain target:self action:@selector(stubScan)];
+
+  }
   
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -97,9 +105,6 @@
   // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video
   // as the media type parameter.
   AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-  
-  NSLog(@"%@", [AVCaptureDevice devices]);
-  NSLog(@"%d", [NSThread isMainThread]);
   
   AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
   

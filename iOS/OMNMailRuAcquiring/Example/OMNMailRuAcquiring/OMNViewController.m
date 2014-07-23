@@ -9,6 +9,7 @@
 #import "OMNViewController.h"
 #import <OMNMailRuAcquiring.h>
 
+static NSString * const kOMNMailRu_cvv = @"123";
 
 @interface OMNViewController ()
 
@@ -30,21 +31,21 @@
 //  @{
 //    @"pan" : @"4111111111111111",
 //    @"exp_date" : @"12.2015",
-//    @"cvv" : @"123",
+//    @"cvv" : kOMNMailRu_cvv,
 //    };
 
   NSDictionary *cardInfo =
   @{
     @"pan" : @"6011000000000004",
     @"exp_date" : @"12.2015",
-    @"cvv" : @"123",
+    @"cvv" : kOMNMailRu_cvv,
     };
 
 //  NSDictionary *cardInfo =
 //  @{
 //    @"pan" : @"639002000000000003",
 //    @"exp_date" : @"12.2015",
-//    @"cvv" : @"123",
+//    @"cvv" : kOMNMailRu_cvv,
 //    };
   
   [[OMNMailRuAcquiring acquiring] payWithCardInfo:cardInfo addCard:YES];
@@ -62,6 +63,7 @@
   NSDictionary *cardInfo =
   @{
     @"card_id" : _cardId,
+    @"cvv" : kOMNMailRu_cvv,
     };
   
   [[OMNMailRuAcquiring acquiring] payWithCardInfo:cardInfo addCard:NO];

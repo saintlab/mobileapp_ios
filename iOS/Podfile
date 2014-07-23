@@ -9,6 +9,7 @@ xcodeproj 'OMNSocial/Example/OMNSocial.xcodeproj'
 xcodeproj 'OMNStyler/Example/OMNStyler.xcodeproj'
 xcodeproj 'OMNCardEnterControl/Example/OMNCardEnterControl.xcodeproj'
 xcodeproj 'OMNBeacon/Example/OMNBeacon.xcodeproj'
+xcodeproj 'OMNSocketIO/Example/OMNSocketIO.xcodeproj'
 
 
 def import_pods
@@ -26,13 +27,14 @@ def import_all
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"
+  pod "OMNSocketIO", :path => "OMNSocketIO/"
+  
   #  pod "OMNSocial", :path => "OMNSocial/"
 end
 
 target :omnom do
   import_all
   pod 'EAIntroView'
-  pod 'SocketIO'
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
 
@@ -65,5 +67,10 @@ end
 
 target :OMNMailRuAcquiring do
   pod "OMNMailRuAcquiring", :path => "OMNMailRuAcquiring/"
-  xcodeproj 'OMNMailRuAcquiring/Example/OMNMailRuAcquiring'
+  xcodeproj 'OMNMailRuAcquiring/Example/OMNMailRuAcquiring.xcodeproj'
+end
+
+target :OMNSocketIO do
+  pod "OMNSocketIO", :path => "OMNSocketIO/"
+  xcodeproj 'OMNSocketIO/Example/OMNSocketIO.xcodeproj'
 end

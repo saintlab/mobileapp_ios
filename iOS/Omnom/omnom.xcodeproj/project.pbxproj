@@ -257,6 +257,8 @@
 		93E299A8197D0C9700051B04 /* OMNSearchBeaconRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E299A5197D0C9700051B04 /* OMNSearchBeaconRootVC.m */; };
 		93E299A9197D0C9700051B04 /* OMNSearchBeaconRootVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93E299A6197D0C9700051B04 /* OMNSearchBeaconRootVC.xib */; };
 		93E299AA197D0C9700051B04 /* OMNSearchBeaconRootVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93E299A6197D0C9700051B04 /* OMNSearchBeaconRootVC.xib */; };
+		93E299FC198002EC00051B04 /* OMNSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93E299FB198002EC00051B04 /* OMNSettings.plist */; };
+		93E299FD198002EC00051B04 /* OMNSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93E299FB198002EC00051B04 /* OMNSettings.plist */; };
 		93E88E951941C31D001707CD /* OMNOrder+omn_calculationAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E88E941941C31D001707CD /* OMNOrder+omn_calculationAmount.m */; };
 		93F4DBDE1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */; };
 		93F4DBDF1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */; };
@@ -540,6 +542,7 @@
 		93E299A4197D0C9700051B04 /* OMNSearchBeaconRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchBeaconRootVC.h; sourceTree = "<group>"; };
 		93E299A5197D0C9700051B04 /* OMNSearchBeaconRootVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchBeaconRootVC.m; sourceTree = "<group>"; };
 		93E299A6197D0C9700051B04 /* OMNSearchBeaconRootVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNSearchBeaconRootVC.xib; sourceTree = "<group>"; };
+		93E299FB198002EC00051B04 /* OMNSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OMNSettings.plist; sourceTree = "<group>"; };
 		93E88E931941C31D001707CD /* OMNOrder+omn_calculationAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+omn_calculationAmount.h"; sourceTree = "<group>"; };
 		93E88E941941C31D001707CD /* OMNOrder+omn_calculationAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+omn_calculationAmount.m"; sourceTree = "<group>"; };
 		93F4DBDC1978F0EA00D06E32 /* OMNBeaconSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconSearchManager.h; sourceTree = "<group>"; };
@@ -1022,6 +1025,7 @@
 				939F98E9197526C70051822E /* AirshipConfig.plist */,
 				9371891019702D6A00F8794B /* OMNBeaconUUID.plist */,
 				938E8F66192F5C030088EF38 /* Fonts */,
+				93E299FB198002EC00051B04 /* OMNSettings.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1432,6 +1436,7 @@
 				930F13361974FF4300E92EED /* omnom.caf in Resources */,
 				93750B2F196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
 				93A59B131933181000AE1A6F /* restaurants.data in Resources */,
+				93E299FC198002EC00051B04 /* OMNSettings.plist in Resources */,
 				9371891119702D6A00F8794B /* OMNBeaconUUID.plist in Resources */,
 				939F992819752BE90051822E /* OMNRegisterUserVC.xib in Resources */,
 				93C99161193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
@@ -1498,6 +1503,7 @@
 				93E2999A197CEC5C00051B04 /* OMNNavigationPermissionsHelpVC.xib in Resources */,
 				9321182F1962E16100183729 /* OMNProductDetailsVC.xib in Resources */,
 				93B9048819654B43007D21C4 /* OMNPaymentVC.xib in Resources */,
+				93E299FD198002EC00051B04 /* OMNSettings.plist in Resources */,
 				93C99162193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
 				932118251962E12700183729 /* OMNRestaurantMenuVC.xib in Resources */,
 				9371891219702D6A00F8794B /* OMNBeaconUUID.plist in Resources */,

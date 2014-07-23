@@ -20,8 +20,9 @@ extern NSString * const kPushSoundName;
 typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);
 
-#define kUseStubData 1
+#define kUseStubData 0
 #define kUseStubUser 0
+#define kUseStubBeacon 1
 #define kUseStubLogin 0
 #define kUseGPBAcquiring 1
 

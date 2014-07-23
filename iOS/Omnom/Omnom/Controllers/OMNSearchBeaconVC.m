@@ -14,10 +14,12 @@
 #import "OMNNavigationPermissionsHelpVC.h"
 #import "OMNSearchBeaconRootVC.h"
 #import "OMNDecodeBeaconManager.h"
+#import "OMNScanQRCodeVC.h"
 
 @interface OMNSearchBeaconVC ()
 <OMNBeaconSearchManagerDelegate,
-OMNTablePositionVCDelegate>
+OMNTablePositionVCDelegate,
+OMNScanQRCodeVCDelegate>
 
 @end
 
@@ -38,8 +40,6 @@ OMNTablePositionVCDelegate>
     _didFindBlock = block;
     _cancelBlock = cancelBlock;
     
-    _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
-    _beaconSearchManager.delegate = self;
   }
   return self;
 }
@@ -56,9 +56,74 @@ OMNTablePositionVCDelegate>
   _progress.center = CGPointMake(CGRectGetMidX(self.view.frame), 50.0f);
   [self.view addSubview:_progress];
   
+  UIButton *add = [[UIButton alloc] init];
+  [add setTitle:NSLocalizedString(@"qr code", nil) forState:UIControlStateNormal];
+  [add sizeToFit];
+  add.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+  add.center = CGPointMake(80, 30);
+  [add setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+  [add addTarget:self action:@selector(requestQRCode) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:add];
   
-  [self startSearchingBeacon];
+  UIButton *add1 = [[UIButton alloc] init];
+  [add1 setTitle:NSLocalizedString(@"stub beacon", nil) forState:UIControlStateNormal];
+  [add1 sizeToFit];
+  add1.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
+  [add1 setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+  add1.center = CGPointMake(80, 60);
+  [add1 addTarget:self action:@selector(useStubBeacon) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:add1];
+  
 }
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:(nil == _cancelBlock) animated:animated];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  if (nil == _beaconSearchManager) {
+    _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
+    _beaconSearchManager.delegate = self;
+    [self startSearchingBeacon];
+  }
+  
+}
+
+- (void)useStubBeacon {
+  
+  OMNBeacon *beacon = [[OMNBeacon alloc] init];
+  beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
+  beacon.major = @(1);
+  beacon.minor = @(3);
+  
+  [self decodeBeacon:beacon];
+  
+}
+
+- (void)decodeBeacon:(OMNBeacon *)beacon {
+  __weak typeof(self)weakSelf = self;
+  [[OMNDecodeBeaconManager manager] decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
+    
+    [weakSelf didFindBeacon:[decodeBeacons firstObject]];
+    
+  } failure:^(NSError *error) {
+    
+    [weakSelf didFailOmnom];
+    
+  }];
+}
+
+- (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
+  
+  [self stopBeaconManager];
+  [_progress setProgress:0.75f];
+  _didFindBlock(decodeBeacon);
+}
+
 
 - (void)cancelTap {
   _cancelBlock();
@@ -81,7 +146,35 @@ OMNTablePositionVCDelegate>
 }
 
 - (void)requestQRCode {
-  NSLog(@"requestQRCode");
+
+  OMNSearchBeaconRootVC *scanQRCodeInfoVC = [[OMNSearchBeaconRootVC alloc] initWithImage:[UIImage imageNamed:@"scan_qr_icon"] title:NSLocalizedString(@"Отсканируйте QR-код", nil) buttons:@[NSLocalizedString(@"Сканировать", nil)]];
+  scanQRCodeInfoVC.actionBlock = ^{
+    
+    OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
+    scanQRCodeVC.delegate = self;
+    [self.navigationController pushViewController:scanQRCodeVC animated:YES];
+    
+  };
+  
+  [self.navigationController pushViewController:scanQRCodeInfoVC animated:YES];
+  
+}
+
+#pragma mark - OMNScanQRCodeVCDelegate
+
+- (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
+  
+#warning scanQRCodeVC logic
+  [scanQRCodeVC stopScanning];
+  [self useStubBeacon];
+  
+}
+
+- (void)scanQRCodeVCDidCancel:(OMNScanQRCodeVC *)scanQRCodeVC {
+  
+  [scanQRCodeVC stopScanning];
+  [self.navigationController popToViewController:self animated:YES];
+  
 }
 
 - (void)didFailOmnom {
@@ -101,25 +194,8 @@ OMNTablePositionVCDelegate>
   
   NSLog(@"didFindBeacon>>%@", beacon);
   [_progress setProgress:0.5f animated:YES];
+  [self decodeBeacon:beacon];
   
-  __weak typeof(self)weakSelf = self;
-  [[OMNDecodeBeaconManager manager] decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
-    
-    [weakSelf didFindBeacon:[decodeBeacons firstObject]];
-    
-  } failure:^(NSError *error) {
-    
-    [weakSelf didFailOmnom];
-    
-  }];
-  
-}
-
-- (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
-
-  [self stopBeaconManager];
-  [_progress setProgress:0.75f];
-  _didFindBlock(decodeBeacon);
 }
 
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state {

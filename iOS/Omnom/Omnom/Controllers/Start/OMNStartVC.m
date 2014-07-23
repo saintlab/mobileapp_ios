@@ -71,7 +71,9 @@ OMNStartVC1Delegate>
     [weakSelf didFindBeacon:decodeBeacon];
     
   } cancelBlock:nil];
-  [self.navigationController pushViewController:searchBeaconVC animated:YES];
+  UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:searchBeaconVC];
+  navVC.delegate = _navigationControllerDelegate;
+  [self presentViewController:navVC animated:YES completion:nil];
 
 }
 
@@ -84,13 +86,14 @@ OMNStartVC1Delegate>
 #pragma mark - OMNStartVC1Delegate
 
 - (void)startVCDidReceiveToken:(OMNStartVC1 *)startVC {
-  
+  [self.navigationController popToViewController:self animated:NO];
   [self startSearchingBeacons];
   
 }
 
 - (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
+  [self dismissViewControllerAnimated:YES completion:nil];
   //TODO: get actual restaurant
   NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
   OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:data];

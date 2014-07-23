@@ -116,8 +116,6 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
       case CBCentralManagerStateUnsupported: {
         
         [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerBLEUnsupported];
-        //no need monitoring anymore
-        [[OMNBluetoothManager manager] stop];
         
       } break;
       case CBCentralManagerStatePoweredOff: {
