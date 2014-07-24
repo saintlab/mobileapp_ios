@@ -13,20 +13,30 @@
 #import "OMNNavigationPermissionsHelpVC.h"
 
 @interface OMNAskNavigationPermissionsVC ()
-<OMNDenyCLPermissionVCDelegate>
+<OMNDenyCLPermissionVCDelegate,
+CLLocationManagerDelegate>
 
 @end
 
 @implementation OMNAskNavigationPermissionsVC {
   CLLocationManager *_permissionLocationManager;
+  CLBeaconRegion *_beaconRegion;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    // Custom initialization
+    _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
   }
   return self;
+}
+
+- (void)dealloc {
+  
+  [_permissionLocationManager stopMonitoringForRegion:_beaconRegion];
+  _permissionLocationManager.delegate = nil;
+  _permissionLocationManager = nil;
+  
 }
 
 - (void)viewDidLoad {
@@ -48,8 +58,8 @@
 
 - (IBAction)askPermissionTap:(id)sender {
   
-  CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
-  [_permissionLocationManager requestStateForRegion:beaconRegion];
+  [_permissionLocationManager startRangingBeaconsInRegion:_beaconRegion];
+  _permissionLocationManager.delegate = self;
   
 }
 
@@ -73,5 +83,10 @@
   [self.navigationController popToViewController:self animated:YES];
 }
 
+#pragma mark - UINavigationControllerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
+  [manager stopMonitoringForRegion:_beaconRegion];
+}
 
 @end

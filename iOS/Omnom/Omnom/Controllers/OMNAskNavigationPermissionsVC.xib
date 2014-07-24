@@ -21,11 +21,12 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tz7-9U-gFP">
                     <rect key="frame" x="20" y="386" width="280" height="46"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.42560057817153396" green="0.57580227803305151" blue="0.72807299999999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="280" id="M29-gd-fNt"/>
                         <constraint firstAttribute="height" constant="46" id="bkq-Uy-uSv"/>
                     </constraints>
-                    <state key="normal">
+                    <state key="normal" title="разрешить">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -35,11 +36,12 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DK-lM-d8t">
                     <rect key="frame" x="20" y="428" width="280" height="46"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.42560057817153396" green="0.57580227803305151" blue="0.72807299999999997" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="280" id="1sR-DT-lFl"/>
                         <constraint firstAttribute="height" constant="46" id="v8L-yS-ZEb"/>
                     </constraints>
-                    <state key="normal">
+                    <state key="normal" title="запретить">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>

@@ -98,10 +98,10 @@
 
 - (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token {
   
-  [self dismissViewControllerAnimated:YES completion:nil];
-  
   [[OMNAuthorisation authorisation] updateAuthenticationToken:token];
-  [self processAuthorisation];
+  [self dismissViewControllerAnimated:NO completion:^{
+    [self processAuthorisation];
+  }];
   
 }
 
