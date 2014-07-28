@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNAskNavigationPermissionsVC">
             <connections>
+                <outlet property="backgroundView" destination="3Xr-B6-r5T" id="Dnq-oj-XLQ"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,6 +15,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3Xr-B6-r5T">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </imageView>
                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="core_location_permisson_bg" translatesAutoresizingMaskIntoConstraints="NO" id="Zef-gT-GdB">
                     <rect key="frame" x="25" y="93" width="270" height="381"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -51,11 +57,15 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="2DK-lM-d8t" firstAttribute="top" secondItem="Zef-gT-GdB" secondAttribute="bottom" constant="-46" id="2dv-rL-Zdg"/>
+                <constraint firstItem="3Xr-B6-r5T" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="C0N-nJ-cur"/>
+                <constraint firstAttribute="bottom" secondItem="3Xr-B6-r5T" secondAttribute="bottom" id="GPk-6q-DTR"/>
+                <constraint firstItem="tz7-9U-gFP" firstAttribute="top" secondItem="Zef-gT-GdB" secondAttribute="bottom" constant="-88" id="H51-my-siX"/>
+                <constraint firstItem="2DK-lM-d8t" firstAttribute="top" secondItem="tz7-9U-gFP" secondAttribute="bottom" constant="-4" id="HJn-UQ-sfZ"/>
                 <constraint firstAttribute="centerX" secondItem="2DK-lM-d8t" secondAttribute="centerX" id="I2J-zx-g6D"/>
+                <constraint firstAttribute="trailing" secondItem="3Xr-B6-r5T" secondAttribute="trailing" id="KaY-Jt-6I7"/>
                 <constraint firstAttribute="centerY" secondItem="Zef-gT-GdB" secondAttribute="centerY" constant="0.5" id="S1O-49-9fJ"/>
+                <constraint firstItem="3Xr-B6-r5T" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ag2-PZ-bwI"/>
                 <constraint firstAttribute="centerX" secondItem="Zef-gT-GdB" secondAttribute="centerX" id="d1C-TG-s35"/>
-                <constraint firstItem="tz7-9U-gFP" firstAttribute="top" secondItem="Zef-gT-GdB" secondAttribute="bottom" constant="-88" id="srd-J4-6Ti"/>
                 <constraint firstAttribute="centerX" secondItem="tz7-9U-gFP" secondAttribute="centerX" id="szU-4i-Yyh"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>

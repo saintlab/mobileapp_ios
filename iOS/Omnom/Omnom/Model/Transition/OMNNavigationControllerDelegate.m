@@ -14,7 +14,12 @@
 #import "OMNTransitionFromOrderToOrders.h"
 #import "OMNTransitionFromOrderToCalculator.h"
 #import "OMNFadeTransition.h"
-
+#import "OMNSearchRestaurantToSearchBeaconTransition.h"
+#import "OMNSearchingToStopTransition.h"
+#import "OMNStopToSearchingTransition.h"
+#import "OMNSearchToRestaurantTransition.h"
+#import "OMNRestaurantToSearchBeaconTransition.h"
+#import "OMNSearchBeaconToPayOrderTransition.h"
 
 @implementation OMNNavigationControllerDelegate {
   NSMutableDictionary *_transitions;
@@ -32,6 +37,12 @@
     [self addTansitionForClass:[OMNTransitionFromOrderToCalculator class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToOrders class]];
     [self addTansitionForClass:[OMNFadeTransition class]];
+    [self addTansitionForClass:[OMNSearchRestaurantToSearchBeaconTransition class]];
+    [self addTansitionForClass:[OMNSearchingToStopTransition class]];
+    [self addTansitionForClass:[OMNStopToSearchingTransition class]];
+    [self addTansitionForClass:[OMNSearchToRestaurantTransition class]];
+    [self addTansitionForClass:[OMNRestaurantToSearchBeaconTransition class]];
+    [self addTansitionForClass:[OMNSearchBeaconToPayOrderTransition class]];
   }
   return self;
 }
@@ -62,6 +73,10 @@
   else {
     return nil;
   }
+  
+}
+
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
   
 }
 

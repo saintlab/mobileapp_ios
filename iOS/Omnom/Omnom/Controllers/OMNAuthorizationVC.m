@@ -6,19 +6,19 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNStartVC1.h"
+#import "OMNAuthorizationVC.h"
 #import "OMNLoginVC.h"
 #import "OMNRegisterUserVC.h"
 #import "OMNAuthorisation.h"
 #import "OMNWizardPageVC.h"
 #import "OMNConstants.h"
 
-@interface OMNStartVC1 ()
+@interface OMNAuthorizationVC ()
 <OMNAuthorizationDelegate>
 
 @end
 
-@implementation OMNStartVC1
+@implementation OMNAuthorizationVC
 
 - (instancetype)init {
   
@@ -50,15 +50,6 @@
 
   [self.loginButton addTarget:self action:@selector(loginTap:) forControlEvents:UIControlEventTouchUpInside];
   [self.registerButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];
-  
-  __weak typeof(self)weakSelf = self;
-  [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
-
-    if (tokenIsValid) {
-      [weakSelf processAuthorisation];
-    }
-    
-  }];
   
 }
 

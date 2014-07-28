@@ -61,7 +61,8 @@ UITableViewDelegate>
 - (void)viewDidLoad {
   
   [super viewDidLoad];
-  
+  _paymentView.hidden = YES;
+
   _dataSource = [[GPaymentVCDataSource alloc] initWithOrder:_order];
   _tableView.dataSource = _dataSource;
   [_tableView reloadData];
@@ -76,13 +77,16 @@ UITableViewDelegate>
   b.center = CGPointMake(100, _tableView.backgroundView.height - 20);
   [_tableView.backgroundView addSubview:b];
   
-  [self checkPushNotifications];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didFinish)];
   
+  [self checkPushNotifications];
+  [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [self handleKeyboardEvents];
+//  [self.navigationController setNavigationBarHidden:NO animated:YES];
 
 }
 
@@ -94,13 +98,19 @@ UITableViewDelegate>
 
 }
 
+- (void)didFinish {
+  [self.delegate payOrderVCDidFinish:self];
+}
+
 - (void)setup {
   
   if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
   }
   
-  _backgroundIV.image = [UIImage imageNamed:@"background_blur"];
+//  _backgroundIV.image = [UIImage imageNamed:@"background_blur"];
+  self.view.backgroundColor = [UIColor clearColor];
+  _backgroundIV.backgroundColor = [UIColor blackColor];
   _tableView.backgroundColor = [UIColor clearColor];
   _tableView.separatorColor = [UIColor clearColor];
   _tableView.tableFooterView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cheque_bottom_bg"]];
@@ -154,6 +164,7 @@ UITableViewDelegate>
 - (void)viewWillAppear:(BOOL)animated {
   
   [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
   _tableView.delegate = self;
   
   if (!_tableView.tableHeaderView) {
@@ -245,7 +256,7 @@ UITableViewDelegate>
 
 - (void)ratingVCDidFinish:(OMNRatingVC *)ratingVC {
   
-  [self.delegate payOrderVCDidFinish:self];
+  [self didFinish];
   
 }
 
@@ -291,11 +302,6 @@ UITableViewDelegate>
   
 //  [self dismissViewControllerAnimated:YES completion:nil];
   [self.navigationController popToViewController:self animated:YES];
-  
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
   
 }
 

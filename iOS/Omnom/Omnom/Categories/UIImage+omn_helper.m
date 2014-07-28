@@ -23,4 +23,28 @@
   
 }
 
+- (UIImage *)omn_ovalImageInRect:(CGRect)frame {
+  
+  CGRect drawFrame = frame;
+  drawFrame.origin = CGPointZero;
+  
+  UIGraphicsBeginImageContextWithOptions(drawFrame.size, NO, 0.0);
+  [[UIBezierPath bezierPathWithOvalInRect:drawFrame] addClip];
+  [self drawAtPoint:CGPointMake(-frame.origin.x, -frame.origin.y)];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+}
+
+- (UIImage *)omn_tintWithColor:(UIColor *)tintColor {
+  UIGraphicsBeginImageContextWithOptions(self.size, NO, 0);
+  CGRect drawRect = CGRectMake(0, 0, self.size.width, self.size.height);
+  [self drawInRect:drawRect];
+  [tintColor set];
+  UIRectFillUsingBlendMode(drawRect, kCGBlendModeSourceAtop);
+  UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return tintedImage;
+}
+
 @end

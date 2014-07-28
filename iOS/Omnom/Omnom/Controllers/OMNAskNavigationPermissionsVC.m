@@ -23,8 +23,8 @@ CLLocationManagerDelegate>
   CLBeaconRegion *_beaconRegion;
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (instancetype)init {
+  self = [super initWithNibName:@"OMNAskNavigationPermissionsVC" bundle:nil];
   if (self) {
     _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
   }
@@ -41,8 +41,7 @@ CLLocationManagerDelegate>
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
-  
+
   _permissionLocationManager = [[CLLocationManager alloc] init];
 #ifdef __IPHONE_8_0
   [_permissionLocationManager requestAlwaysAuthorization];

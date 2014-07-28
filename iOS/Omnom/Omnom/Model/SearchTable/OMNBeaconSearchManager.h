@@ -10,9 +10,11 @@
 @class OMNBeacon;
 
 typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
-  kSearchManagerOmnomServerUnavaliable = 0,
+  kSearchManagerInternetFound = 0,
+  kSearchManagerOmnomServerUnavaliable,
   kSearchManagerInternetUnavaliable,
   kSearchManagerStartSearchingBeacons,
+  
   kSearchManagerNotFoundBeacons,
   
   kSearchManagerRequestLocationManagerPermission,
@@ -31,13 +33,15 @@ typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
 @property (nonatomic, weak) id<OMNBeaconSearchManagerDelegate> delegate;
 
 - (void)startSearching;
-- (void)stop;
+- (void)stop:(BOOL)didFind;
 
 @end
 
 @protocol OMNBeaconSearchManagerDelegate <NSObject>
 
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon;
+
+- (void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager found:(BOOL)foundBeacon;
 
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state;
 

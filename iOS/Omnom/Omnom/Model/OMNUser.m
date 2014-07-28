@@ -188,8 +188,7 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"user>>%@", responseObject);
-    
+//    NSLog(@"user>>%@", responseObject);
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
       
       OMNUser *user = [[OMNUser alloc] initWithData:responseObject[@"user"]];

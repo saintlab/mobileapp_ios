@@ -20,7 +20,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 }
 
 - (void)dealloc {
-  [self stop];
+  [self stop:NO];
 }
 
 - (instancetype)init {
@@ -36,21 +36,27 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   _nearestBeaconsRangingTimer = nil;
 }
 
-- (void)stopRangingNearestBeacons {
+- (void)stopRangingNearestBeacons:(BOOL)beaconFound {
+  
   [self stopRangingTimer];
-  [_nearestBeaconsManager stop];
+  
+  if (_nearestBeaconsManager) {
+    [self.delegate beaconSearchManagerDidStop:self found:beaconFound];
+    [_nearestBeaconsManager stop];
+  }
+  
 }
 
 - (void)beaconSearchTimeout {
   
-  [self stopRangingNearestBeacons];
+  [self stopRangingNearestBeacons:NO];
   [self.delegate beaconSearchManager:self didChangeState:kSearchManagerNotFoundBeacons];
   
 }
 
-- (void)stop {
+- (void)stop:(BOOL)didFind {
 
-  [self stopRangingNearestBeacons];
+  [self stopRangingNearestBeacons:didFind];
   _nearestBeaconsManager = nil;
   
 }
@@ -69,34 +75,27 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
     switch (reachableState) {
       case kOMNReachableStateIsReachable: {
 
+        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerInternetFound];
         [weakSelf checkBluetoothState];
         
       } break;
       case kOMNReachableStateNoOmnom: {
         
-        [weakSelf omnomUnavaliableState];
+        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerOmnomServerUnavaliable];
         
       } break;
       case kOMNReachableStateNoInternet: {
       
-        [weakSelf internetUnavaliableState];
+        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerInternetUnavaliable];
         
       } break;
     }
     
+    if (reachableState != kOMNReachableStateIsReachable) {
+      [weakSelf.delegate beaconSearchManagerDidStop:weakSelf found:NO];
+    }
+    
   }];
-  
-}
-
-- (void)omnomUnavaliableState {
-  
-  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerOmnomServerUnavaliable];
-  
-}
-
-- (void)internetUnavaliableState {
-  
-  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerInternetUnavaliable];
   
 }
 
@@ -134,13 +133,17 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
       } break;
     }
     
+    if (state != CBCentralManagerStatePoweredOn) {
+      [weakSelf.delegate beaconSearchManagerDidStop:weakSelf found:NO];
+    }
+    
   }];
   
 }
 
 - (void)processBLEOffSituation {
   
-  [self stopRangingNearestBeacons];
+  [self stopRangingNearestBeacons:NO];
   [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestTurnBLEOn];
   
 }
@@ -162,6 +165,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   if (TARGET_OS_IPHONE &&
       kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
     
+    [self.delegate beaconSearchManagerDidStop:self found:NO];
     [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestLocationManagerPermission];
     
     return;
@@ -189,15 +193,17 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   if (0 == nearestBeacons.count) {
     return;
   }
-  [self stopRangingNearestBeacons];
+  
   
   if (nearestBeacons.count > 1) {
-    
+  
+    [self stopRangingNearestBeacons:NO];
     [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestDeviceFaceUpPosition];
     
   }
   else {
     
+    [self stopRangingNearestBeacons:YES];
     OMNBeacon *beacon = [nearestBeacons firstObject];
     [self.delegate beaconSearchManager:self didFindBeacon:beacon];
     
@@ -215,7 +221,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
     } break;
     case kCLAuthorizationStatusDenied: {
       
-      [self stopRangingNearestBeacons];
+      [self stopRangingNearestBeacons:NO];
       [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestCoreLocationDeniedPermission];
       
     } break;
@@ -224,7 +230,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
     } break;
     case kCLAuthorizationStatusRestricted: {
       
-      [self stopRangingNearestBeacons];
+      [self stopRangingNearestBeacons:NO];
       [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestCoreLocationRestrictedPermission];
       
     } break;

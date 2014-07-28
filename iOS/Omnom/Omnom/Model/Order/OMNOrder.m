@@ -98,6 +98,7 @@
     description = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     description = [description stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
   }
+  description = @"на тебе кебаб";
   
   NSDictionary *order =
   @{

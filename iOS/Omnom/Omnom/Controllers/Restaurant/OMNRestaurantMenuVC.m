@@ -12,7 +12,6 @@
 #import "OMNBeaconBackgroundManager.h"
 #import "OMNAuthorisation.h"
 #import "OMNProductsModel.h"
-#import "OMNNavigationControllerDelegate.h"
 
 #import "OMNRestaurantMenuMediator.h"
 #import "OMNSearchBeaconVC.h"
@@ -48,8 +47,7 @@
     _productsModel = [[OMNProductsModel alloc] init];
     
     _restaurantMenuMediator = [[OMNRestaurantMenuMediator alloc] initWithRootViewController:self];
-    
-    
+
     __weak typeof(self)weakSelf = self;
     _productsModel.productSelectionBlock = ^(OMNProduct *product) {
       

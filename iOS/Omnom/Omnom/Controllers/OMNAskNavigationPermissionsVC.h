@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "OMNBackgroundVC.h"
 
-@interface OMNAskNavigationPermissionsVC : UIViewController
+@interface OMNAskNavigationPermissionsVC : OMNBackgroundVC
 
 @end
 

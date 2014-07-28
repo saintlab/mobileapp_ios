@@ -46,7 +46,7 @@ OMNBeaconSearchManagerDelegate>
 }
 
 - (void)dealloc {
-  [_beaconSearchManager stop];
+  [_beaconSearchManager stop:NO];
   _beaconSearchManager = nil;
 }
 
@@ -112,6 +112,10 @@ OMNBeaconSearchManagerDelegate>
 #pragma mark - OMNBeaconSearchManagerDelegate
 
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state {
+  
+}
+
+-(void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager{
   
 }
 

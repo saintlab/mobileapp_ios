@@ -63,13 +63,13 @@ static const CGFloat kTopOffset = 40.0f;
   _totalButton = [[UIButton alloc] init];
   [_totalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_totalButton setBackgroundImage:[UIImage imageNamed:@"button_green"] forState:UIControlStateNormal];
-  _totalButton.userInteractionEnabled = NO;
+  [_totalButton addTarget:self action:@selector(totalTap) forControlEvents:UIControlEventTouchUpInside];
   [_totalButton sizeToFit];
+  
   [self.view addSubview:_totalButton];
   
   _containerView = [[UIView alloc] init];
   [self.view addSubview:_containerView];
-  
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
     
@@ -80,12 +80,10 @@ static const CGFloat kTopOffset = 40.0f;
   }];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
   
+  __weak typeof(self)weakSelf = self;
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
     
-    if ([self.delegate respondsToSelector:@selector(calculatorVC:didFinishWithTotal:)]) {
-      [self.delegate calculatorVC:self didFinishWithTotal:_total];
-    }
-    
+    [weakSelf totalTap];
     
   }];
   self.navigationItem.rightBarButtonItem.tintColor = kGreenColor;
@@ -109,6 +107,12 @@ static const CGFloat kTopOffset = 40.0f;
   
 }
 
+- (void)totalTap {
+  if ([self.delegate respondsToSelector:@selector(calculatorVC:didFinishWithTotal:)]) {
+    [self.delegate calculatorVC:self didFinishWithTotal:_total];
+  }
+
+}
 
 - (void)viewWillLayoutSubviews {
   

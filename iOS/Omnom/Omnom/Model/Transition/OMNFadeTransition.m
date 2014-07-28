@@ -10,6 +10,8 @@
 #import "OMNSearchBeaconVC.h"
 #import "OMNSearchBeaconRootVC.h"
 #import "OMNTablePositionVC.h"
+#import "OMNR1VC.h"
+#import "OMNStartVC.h"
 
 @implementation OMNFadeTransition
 
@@ -26,16 +28,14 @@
   fromImageSnapshot.frame = [transitionContext finalFrameForViewController:toViewController];
   
   fromViewController.view.hidden = YES;
-  toViewController.view.alpha = 0.0f;
-  
+
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
-  [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
+  [containerView addSubview:toViewController.view];
   [containerView addSubview:fromImageSnapshot];
   
   [UIView animateWithDuration:duration animations:^{
     fromImageSnapshot.alpha = 0.0f;
-    toViewController.view.alpha = 1.0f;
     
   } completion:^(BOOL finished) {
     
@@ -50,15 +50,12 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.3;
+  return 2;
 }
 
 + (NSArray *)keys {
   return @[
-           [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNSearchBeaconRootVC class]],
-           [self keyFromClass:[OMNSearchBeaconRootVC class] toClass:[OMNSearchBeaconVC class]],
-           [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNTablePositionVC class]],
-           [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchBeaconVC class]],
+           [self keyFromClass:[OMNStartVC class] toClass:[OMNR1VC class]],
            ];
 }
 

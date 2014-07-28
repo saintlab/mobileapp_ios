@@ -12,4 +12,8 @@
 
 + (UIImage *)omn_imageNamed:(NSString *)name;
 
+- (UIImage *)omn_ovalImageInRect:(CGRect)frame;
+
+- (UIImage *)omn_tintWithColor:(UIColor *)tintColor;
+
 @end
