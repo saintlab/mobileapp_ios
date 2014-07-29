@@ -97,7 +97,6 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   __weak typeof(self)weakSelf = self;
   [[OMNOperationManager sharedManager] PUT:@"ibeacons/decode" parameters:jsonBeacons success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"decodeBeaconsresponse>%@", responseObject);
     if ([responseObject isKindOfClass:[NSDictionary class]] &&
         responseObject[@"errors"]) {
       

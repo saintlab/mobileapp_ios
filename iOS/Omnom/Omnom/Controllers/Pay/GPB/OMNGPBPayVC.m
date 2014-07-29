@@ -19,6 +19,7 @@
 @implementation OMNGPBPayVC {
   OMNBankCard *_cardInfo;
   OMNOrder *_order;
+  OMNBill *_bill;
   
   UIActivityIndicatorView *_spinner;
   
@@ -74,17 +75,43 @@
   [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:_spinner] animated:YES];
   self.navigationItem.prompt = NSLocalizedString(@"Создаем платеж...", nil);
 
+  if (_bill) {
+
+    [self getLinkForBill:_bill];
+    
+  }
+  else {
+    
+    __weak typeof(self)weakSelf = self;
+    [_order createBill:^(OMNBill *bill) {
+      
+      [weakSelf getLinkForBill:bill];
+      
+    } failure:^(NSError *error) {
+      
+      [weakSelf processFailCreateAcquiringOrder];
+      
+    }];
+    
+  }
+  
+}
+
+- (void)getLinkForBill:(OMNBill *)bill {
+
+  _bill = bill;
   __weak typeof(self)weakSelf = self;
-  [_order createAcquiringOrder:^(NSString *urlString) {
-    
-    [weakSelf processCardPayment:urlString];
-    
-  } failure:^(NSError *error) {
-    
-    [weakSelf processFailCreateAcquiringOrder];
+  [bill linkForAmount:_order.toPayAmount tip:_order.tipAmount completion:^(NSString *url) {
+
+    if (url.length) {
+      [weakSelf processCardPayment:url];
+    }
+    else {
+      [weakSelf processFailCreateAcquiringOrder];
+    }
     
   }];
-
+  
 }
 
 - (void)processFailCreateAcquiringOrder {

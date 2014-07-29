@@ -17,47 +17,53 @@ static NSString * const kOMNMailRu_cvv = @"123";
 
 @implementation OMNViewController {
   NSString *_cardId;
+  NSDictionary *_cardInfo;
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  _cardId = @"30002847034833862453";
-}
-
-- (IBAction)payAndRegisterTap:(id)sender {
   
-//  NSDictionary *cardInfo =
-//  @{
-//    @"pan" : @"4111111111111111",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : kOMNMailRu_cvv,
-//    };
-
-  NSDictionary *cardInfo =
+  _cardInfo =
   @{
-    @"pan" : @"6011000000000004",
+    @"pan" : @"4111111111111111",
     @"exp_date" : @"12.2015",
     @"cvv" : kOMNMailRu_cvv,
     };
-
-//  NSDictionary *cardInfo =
+  
+//  _cardInfo =
+//  @{
+//    @"pan" : @"6011000000000004",
+//    @"exp_date" : @"12.2015",
+//    @"cvv" : kOMNMailRu_cvv,
+//    };
+//  _cardInfo =
 //  @{
 //    @"pan" : @"639002000000000003",
 //    @"exp_date" : @"12.2015",
 //    @"cvv" : kOMNMailRu_cvv,
 //    };
   
-  [[OMNMailRuAcquiring acquiring] payWithCardInfo:cardInfo addCard:YES];
+  _cardId = @"30002847034833862453";
+}
+
+- (IBAction)payAndRegisterTap:(id)sender {
+  
+  [[OMNMailRuAcquiring acquiring] payWithCardInfo:_cardInfo addCard:YES];
   
 }
+
 - (IBAction)registerTap:(id)sender {
-  [[OMNMailRuAcquiring acquiring] registerCard:nil expDate:nil cvv:nil];
+  [[OMNMailRuAcquiring acquiring] registerCard:_cardInfo];
 }
+
 - (IBAction)verifyTap:(id)sender {
   [[OMNMailRuAcquiring acquiring] cardVerify:1.04 card_id:_cardId];
 }
 
+- (IBAction)deleteCard:(id)sender {
+  [[OMNMailRuAcquiring acquiring] cardDelete:_cardId];
+}
 - (IBAction)payWithCardID:(id)sender {
   
   NSDictionary *cardInfo =

@@ -127,7 +127,6 @@ const NSInteger kNearestDeltaRSSI = 10;
   NSString *uid = [NSString stringWithFormat:@"%@+%@+%@", self.UUIDString, self.major, self.minor];
   return @{
            @"uuid" : uid,
-//           @"distance" : (self.atTheTable) ? (@"near") : (@"far"),
            };
   
 }

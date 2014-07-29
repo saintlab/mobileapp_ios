@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchBeaconRootVC.h"
+#import "OMNCircleRootVC.h"
 #import "OMNRestaurant.h"
 
-@interface OMNR1VC : OMNSearchBeaconRootVC
+@interface OMNR1VC : OMNCircleRootVC
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
 

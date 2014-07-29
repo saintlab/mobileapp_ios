@@ -8,7 +8,7 @@
 
 #import "OMNBackgroundVC.h"
 
-@interface OMNSearchBeaconRootVC : OMNBackgroundVC
+@interface OMNCircleRootVC : OMNBackgroundVC
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIButton *circleButton;

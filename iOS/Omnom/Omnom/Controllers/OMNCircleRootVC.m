@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchBeaconRootVC.h"
+#import "OMNCircleRootVC.h"
 
-@interface OMNSearchBeaconRootVC ()
+@interface OMNCircleRootVC ()
 
 @end
 
-@implementation OMNSearchBeaconRootVC {
+@implementation OMNCircleRootVC {
   NSString *_title;
   NSArray *_buttons;
   
@@ -20,7 +20,7 @@
 }
 
 - (instancetype)initWithTitle:(NSString *)title buttons:(NSArray *)buttons {
-  self = [super initWithNibName:@"OMNSearchBeaconRootVC" bundle:nil];
+  self = [super initWithNibName:@"OMNCircleRootVC" bundle:nil];
   if (self) {
     _title = title;
     _buttons = buttons;
@@ -57,7 +57,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
   _actionButtonSpace.constant = -CGRectGetHeight(self.button.frame);
 }
 
@@ -80,7 +80,6 @@
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 @end

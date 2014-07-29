@@ -8,20 +8,21 @@
 
 #import "OMNSearchRestaurantVC.h"
 #import "UIImage+omn_helper.h"
+#import <AFHTTPRequestOperation.h>
 
 @interface OMNSearchRestaurantVC ()
 
 @end
 
 @implementation OMNSearchRestaurantVC {
-  OMNSearchBeaconVCBlock _searchBeaconVCBlock;
+  OMNSearchRestaurantBlock _searchRestaurantBlock;
   OMNSearchBeaconVC *_searchBeaconVC;
 }
 
-- (instancetype)initWithBlock:(OMNSearchBeaconVCBlock)block {
+- (instancetype)initWithBlock:(OMNSearchRestaurantBlock)block {
   self = [super initWithNibName:@"OMNSearchRestaurantVC" bundle:nil];
   if (self) {
-    _searchBeaconVCBlock = block;
+    _searchRestaurantBlock = block;
   }
   return self;
 }
@@ -53,17 +54,13 @@
   [super viewDidAppear:animated];
   
   
-  _searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
-   
-    [_searchBeaconVC setLogo:[UIImage imageNamed:@"ginza_logo"] withColor:[UIColor blackColor] completion:^{
-
-      _searchBeaconVCBlock(decodeBeacon);
-      
-    }];
+  __weak typeof(self)weakSelf = self;
+  _searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+  
+    [weakSelf didFindBeacon:decodeBeacon];
     
   } cancelBlock:nil];
   
-  UIImage *backgroundImage =
   _searchBeaconVC.circleIcon = [UIImage imageNamed:@"loading_icon"];
   _searchBeaconVC.backgroundImage = [UIImage imageNamed:@"bg_table"];
 
@@ -72,6 +69,48 @@
     [self.navigationController pushViewController:_searchBeaconVC animated:YES];
 
   });
+  
+}
+
+- (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
+  //TODO: get actual restaurant
+  NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
+  
+  OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:data];
+  
+  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:kRestaurantLogoUrl]];
+  
+  AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+  requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+  __weak typeof(self)weakSelf = self;
+  __weak typeof(_searchBeaconVC)weakBeaconSearch = _searchBeaconVC;
+  [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [weakSelf didLoadLogo:responseObject forRestaurant:restaurant];
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    [weakBeaconSearch didFailOmnom];
+    
+  }];
+  [requestOperation start];
+
+}
+
+- (void)didLoadLogo:(UIImage *)logo forRestaurant:(OMNRestaurant *)restaurant {
+  
+  __weak typeof(_searchBeaconVC)weakBeaconSearch = _searchBeaconVC;
+  OMNSearchRestaurantBlock searchRestaurantBlock = _searchRestaurantBlock;
+  
+  [_searchBeaconVC setLogo:logo withColor:kRestaurantColor completion:^{
+    
+    [weakBeaconSearch finishLoading:^{
+      
+      searchRestaurantBlock(restaurant);
+      
+    }];
+    
+  }];
   
 }
 

@@ -24,3 +24,10 @@ NSString * const kPushSoundName = @"omnom.caf";
 #define kRedBearBeaconUUIDString @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0"
 
 NSString * const kBeaconUUIDString = kRedBearBeaconUUIDString;
+
+NSString * const kRestaurantLogoUrl = @"https://www.dropbox.com/s/sbuz97f61w4ocks/ginza_logo%402x.png?dl=1";
+NSString * const kRestaurantBGUrl = @"https://www.dropbox.com/s/9lt4ljhcvqajxjs/bg_pic%402x.png?dl=1";
+
+const NSTimeInterval kCircleFadeAnimationDuration = 0.3;
+const NSTimeInterval kCircleAnimationDuration = 0.3;
+const NSTimeInterval kOrderSlideAnimationDuration = 0.5;

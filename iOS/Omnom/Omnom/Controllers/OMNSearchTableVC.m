@@ -186,6 +186,10 @@ OMNBeaconSearchManagerDelegate>
   
 }
 
+- (void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager found:(BOOL)foundBeacon {
+  
+}
+
 - (void)cancelTap {
   
   if (_cancelBlock) {
@@ -196,12 +200,11 @@ OMNBeaconSearchManagerDelegate>
 
 - (void)useStubBeacon {
   
-  OMNBeacon *beacon = [[OMNBeacon alloc] init];
-  beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
-  beacon.major = @(1);
-  beacon.minor = @(1);
-  
-  [self decodeBeacon:beacon];
+  OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] init];
+  decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+1";
+  decodeBeacon.tableId = @"table-1-at-riba-ris";
+  decodeBeacon.restaurantId = @"riba-ris";
+  _didFindTableBlock(decodeBeacon);
 
 }
 
@@ -215,11 +218,7 @@ OMNBeaconSearchManagerDelegate>
   _searchLabel.text = NSLocalizedString(@"Получаем информацию о столе...", nil);
   
   if (kUseStubData) {
-    OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] init];
-    decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+1";
-    decodeBeacon.tableId = @"table-1-at-riba-ris";
-    decodeBeacon.restaurantId = @"riba-ris";
-    _didFindTableBlock(decodeBeacon);
+    [self useStubBeacon];
     return;
   }
   

@@ -62,8 +62,19 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 }
 
 - (void)startSearching {
-  
+
+#if TARGET_IPHONE_SIMULATOR
+#warning useStubBeacon2
+  OMNBeacon *beacon = [[OMNBeacon alloc] init];
+  beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
+  beacon.major = @(1);
+  beacon.minor = @(1);
+  [self didFindBeacon:beacon];
+
+#else
   [self checkNetworkState];
+#endif
+  
   
 }
 
@@ -203,11 +214,16 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   }
   else {
     
-    [self stopRangingNearestBeacons:YES];
-    OMNBeacon *beacon = [nearestBeacons firstObject];
-    [self.delegate beaconSearchManager:self didFindBeacon:beacon];
+    [self didFindBeacon:[nearestBeacons firstObject]];
     
   }
+  
+}
+
+- (void)didFindBeacon:(OMNBeacon *)beacon {
+  
+  [self stopRangingNearestBeacons:YES];
+  [self.delegate beaconSearchManager:self didFindBeacon:beacon];
   
 }
 

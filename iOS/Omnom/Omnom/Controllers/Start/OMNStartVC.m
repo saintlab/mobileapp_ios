@@ -66,12 +66,10 @@ OMNAuthorizationVCDelegate>
 - (void)startSearchingBeacons {
 
   __weak typeof(self)weakSelf = self;
-  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
-    
-    [weakSelf didFindBeacon:decodeBeacon];
-    
+  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithBlock:^(OMNRestaurant *restaurant) {
+    [weakSelf didFindRestaurant:restaurant];
   }];
-  
+
   _navVC = [[UINavigationController alloc] initWithRootViewController:searchRestaurantVC];
   _navVC.delegate = _navigationControllerDelegate;
   [self presentViewController:_navVC animated:NO completion:nil];
@@ -93,16 +91,12 @@ OMNAuthorizationVCDelegate>
   
 }
 
-- (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
-
-  //TODO: get actual restaurant
-  NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
-  OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:data];
+- (void)didFindRestaurant:(OMNRestaurant *)restaurant {
   
   OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithRestaurant:restaurant];
   restaurantMenuVC.circleIcon = [UIImage imageNamed:@"ginza_logo"];
-#warning [UIImage imageNamed:@"black_circle"]
-  restaurantMenuVC.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:[UIColor blackColor]];
+
+  restaurantMenuVC.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:kRestaurantColor];
   [self.navigationController pushViewController:restaurantMenuVC animated:NO];
   [_navVC pushViewController:restaurantMenuVC animated:YES];
   
@@ -111,22 +105,22 @@ OMNAuthorizationVCDelegate>
     
     OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] init];
     [self.navigationController pushViewController:restaurantMenuVC animated:NO];
-#warning OMNRestaurantMenuVC
 //    OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
 //    restaurantMenuVC.delegate = self;
 //    [self.navigationController pushViewController:restaurantMenuVC animated:YES];
     
   }];
-  
-  [restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
-    
-    NSLog(@"newGuestForTableID>done");
-    
-  } failure:^(NSError *error) {
-    
-    NSLog(@"newGuestForTableID>%@", error);
-    
-  }];
+
+#warning newGuestForTableID:decodeBeacon.tableId
+//  [restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
+//    
+//    NSLog(@"newGuestForTableID>done");
+//    
+//  } failure:^(NSError *error) {
+//    
+//    NSLog(@"newGuestForTableID>%@", error);
+//    
+//  }];
   
 }
 #pragma mark - OMNRestaurantMenuVCDelegate

@@ -146,7 +146,7 @@
 - (IBAction)callWaiterTap {
   
   __weak typeof(self)weakSelf = self;
-  [self searchTableWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
+  [self searchTableWithBlock:^(OMNSearchBeaconVC *searchBeaconVC,OMNDecodeBeacon *decodeBeacon) {
     
     [_restaurant waiterCallForTableID:decodeBeacon.tableId complition:^{
       
@@ -204,7 +204,7 @@
   
   __weak typeof(self)weakSelf = self;
   OMNRestaurant *restaurant = _restaurant;
-  [self searchTableWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
+  [self searchTableWithBlock:^(OMNSearchBeaconVC *searchBeaconVC,OMNDecodeBeacon *decodeBeacon) {
     
     [restaurant getOrdersForTableID:decodeBeacon.tableId orders:^(NSArray *orders) {
 

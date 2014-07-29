@@ -12,6 +12,7 @@
   CAShapeLayer *_loaderLayer;
   NSDate *_startAnimationDate;
   NSTimeInterval _totalDuration;
+  dispatch_block_t _complitionBlock;
 }
 
 - (instancetype)initWithInnerFrame:(CGRect)frame {
@@ -54,14 +55,29 @@
 
 - (void)setProgress:(CGFloat)progress {
   
-  NSLog(@"setProgress>%f", progress);
-  
   CALayer *currentLayer = (CALayer *)[_loaderLayer presentationLayer];
   CGFloat currentProgress = [(NSNumber *)[currentLayer valueForKeyPath:@"strokeEnd"] floatValue];
   if (progress > currentProgress) {
     CGFloat decreaseTime = (progress - currentProgress)*_totalDuration;
     [self decreaseAnimationDuration:decreaseTime start:NO];
   }
+}
+
+- (void)completeAnimation:(dispatch_block_t)complitionBlock {
+  _complitionBlock = complitionBlock;
+  
+  CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+  
+  pathAnimation.duration = 0.3;
+  pathAnimation.delegate = self;
+  pathAnimation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:.53 :1.25 :.61 :.89];
+  
+  CALayer *currentLayer = (CALayer *)[_loaderLayer presentationLayer];
+  float currentAngle = [(NSNumber *)[currentLayer valueForKeyPath:@"strokeEnd"] floatValue];
+  pathAnimation.fromValue = @(currentAngle);
+  pathAnimation.toValue = @(1.0f);
+  _loaderLayer.strokeEnd = 1.0f;
+  [_loaderLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
 }
 
 - (void)stop {
@@ -75,13 +91,11 @@
 
 - (void)decreaseAnimationDuration:(NSTimeInterval)decreaseDuration start:(BOOL)start {
   
-  
   CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
   
   NSTimeInterval elapsedTime = [[NSDate date] timeIntervalSinceDate:_startAnimationDate];
-  NSTimeInterval duration = _totalDuration - elapsedTime - decreaseDuration;
+  NSTimeInterval duration = MAX(0.1, _totalDuration - elapsedTime - decreaseDuration);
   pathAnimation.duration = duration;
-  pathAnimation.delegate = self;
   pathAnimation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:.53 :1.25 :.61 :.89];
   
   if (start) {
@@ -92,8 +106,8 @@
     float currentAngle = [(NSNumber *)[currentLayer valueForKeyPath:@"strokeEnd"] floatValue];
     pathAnimation.fromValue = @(currentAngle);
   }
-  pathAnimation.toValue = @(1);
-
+  pathAnimation.toValue = @(0.97);
+  _loaderLayer.strokeEnd = 0.97;
   [_loaderLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
   
 }
@@ -101,6 +115,9 @@
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
   if (flag) {
     _loaderLayer.hidden = YES;
+    if (_complitionBlock) {
+      _complitionBlock();
+    }
   }
 }
 

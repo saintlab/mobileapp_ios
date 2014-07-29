@@ -8,7 +8,7 @@
 
 #import "OMNFadeTransition.h"
 #import "OMNSearchBeaconVC.h"
-#import "OMNSearchBeaconRootVC.h"
+#import "OMNCircleRootVC.h"
 #import "OMNTablePositionVC.h"
 #import "OMNR1VC.h"
 #import "OMNStartVC.h"
@@ -18,7 +18,7 @@
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNSearchBeaconVC *fromViewController = (OMNSearchBeaconVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-  OMNSearchBeaconRootVC *toViewController = (OMNSearchBeaconRootVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  OMNCircleRootVC *toViewController = (OMNCircleRootVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];

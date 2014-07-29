@@ -13,6 +13,7 @@
 - (instancetype)initWithInnerFrame:(CGRect)frame;
 
 - (void)startAnimating:(NSTimeInterval)duration;
+- (void)completeAnimation:(dispatch_block_t)complitionBlock;
 - (void)setProgress:(CGFloat)progress;
 - (void)stop;
 

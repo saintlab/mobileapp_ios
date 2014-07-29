@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchBeaconRootVC.h"
+#import "OMNCircleRootVC.h"
 
 @protocol OMNTablePositionVCDelegate;
 
-@interface OMNTablePositionVC : OMNSearchBeaconRootVC
+@interface OMNTablePositionVC : OMNCircleRootVC
 
 @property (nonatomic, weak) id<OMNTablePositionVCDelegate> tablePositionDelegate;
 

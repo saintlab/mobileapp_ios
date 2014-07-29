@@ -30,8 +30,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  UIImageView *bgIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background_blur"]];
-  self.collectionView.backgroundView = bgIV;
+  self.collectionView.backgroundColor = kRestaurantColor;
   
   UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
   flowLayout.sectionInset = UIEdgeInsetsMake(0.0f, 18.0f, 0.0f, 18.0f);
@@ -45,11 +44,13 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-  self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
   
-  self.navigationController.navigationBar.shadowImage = [UIImage new];
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+  self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
+  
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = nil;
   
 }
 

@@ -15,10 +15,9 @@
   if (self) {
     
     _uuid = [data[@"uuid"] description];
-    _tableId = [data[@"tableId"] description];
-    _restaurantId = [data[@"restaurantId"] description];
+    _tableId = [data[@"table_id"] description];
+    _restaurantId = [data[@"restaurant_id"] description];
     _foundDate = [NSDate date];
-    
   }
   return self;
 }

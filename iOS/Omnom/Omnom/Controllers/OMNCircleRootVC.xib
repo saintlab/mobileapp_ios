@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNSearchBeaconRootVC">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNCircleRootVC">
             <connections>
                 <outlet property="_actionButtonSpace" destination="49N-BM-B5k" id="Ykg-1X-TYF"/>
                 <outlet property="button" destination="Osq-rl-D5P" id="U2o-ZK-mxe"/>

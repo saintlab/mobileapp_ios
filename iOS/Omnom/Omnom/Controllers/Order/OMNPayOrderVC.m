@@ -43,7 +43,7 @@ UITableViewDelegate>
   __weak IBOutlet OMNPaymentFooterView *_paymentView;
   __weak IBOutlet UIButton *_toPayButton;
   __weak IBOutlet UIImageView *_backgroundIV;
-  
+  BOOL _beginSplitAnimation;
   OMNOrder *_order;
   
 }
@@ -61,7 +61,8 @@ UITableViewDelegate>
 - (void)viewDidLoad {
   
   [super viewDidLoad];
-  _paymentView.hidden = YES;
+  NSLog(@"viewDidLoad");
+//  _paymentView.hidden = YES;
 
   _dataSource = [[GPaymentVCDataSource alloc] initWithOrder:_order];
   _tableView.dataSource = _dataSource;
@@ -72,21 +73,46 @@ UITableViewDelegate>
   
   _paymentView.calculationAmount = [_order omn_calculationAmount];
   
-  _tableView.backgroundView = [[UIView alloc] init];
-  UIButton *b = [UIButton buttonWithType:UIButtonTypeContactAdd];
-  b.center = CGPointMake(100, _tableView.backgroundView.height - 20);
-  [_tableView.backgroundView addSubview:b];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didFinish)];
+  self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
+  
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = nil;
   
   [self checkPushNotifications];
-  [self.navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
+  
+  _tableView.delegate = self;
+  
+  self.automaticallyAdjustsScrollViewInsets = YES;
+  self.edgesForExtendedLayout = UIRectEdgeAll;
+  
+
+  
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  
+  CGFloat realContentSize = _tableView.contentSize.height - _tableView.tableHeaderView.height;
+  CGFloat bottomInset = MAX(0.0f, _tableView.height - realContentSize - _paymentView.height) + _paymentView.height;
+  CGFloat visibleTablePart = _tableView.height - bottomInset;
+  CGFloat topInset = MIN(0.0f, visibleTablePart - _tableView.contentSize.height);
+  _tableView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
+  _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+
   [super viewDidAppear:animated];
+  _beginSplitAnimation = NO;
   [self handleKeyboardEvents];
-//  [self.navigationController setNavigationBarHidden:NO animated:YES];
 
 }
 
@@ -108,13 +134,33 @@ UITableViewDelegate>
 //    self.edgesForExtendedLayout = UIRectEdgeNone;
   }
   
-//  _backgroundIV.image = [UIImage imageNamed:@"background_blur"];
   self.view.backgroundColor = [UIColor clearColor];
-  _backgroundIV.backgroundColor = [UIColor blackColor];
+  _backgroundIV.backgroundColor = kRestaurantColor;
   _tableView.backgroundColor = [UIColor clearColor];
   _tableView.separatorColor = [UIColor clearColor];
+  _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _tableView.width, self.view.height)];
+  _tableView.tableHeaderView.backgroundColor = [UIColor whiteColor];
+  
   _tableView.tableFooterView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cheque_bottom_bg"]];
   _tableView.clipsToBounds = NO;
+  NSDictionary *views =
+  @{
+    @"table" : _tableView,
+    @"payment" : _paymentView,
+    };
+  _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+  
+  NSDictionary *metrics =
+  @{
+    @"paymentH" : @(_paymentView.height)
+    };
+  
+  NSArray *constraintsTable_H = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[table]|" options:0 metrics:nil views:views];
+  [self.view addConstraints:constraintsTable_H];
+  
+  NSArray *constraintsTable_V = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[table]|" options:0 metrics:metrics views:views];
+  [self.view addConstraints:constraintsTable_V];
+  
   
   UIButton *rateButton = [[UIButton alloc] init];
   [rateButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -157,23 +203,6 @@ UITableViewDelegate>
       
     }];
     
-  }
-  
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  
-  [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:NO animated:animated];
-  _tableView.delegate = self;
-  
-  if (!_tableView.tableHeaderView) {
-    CGFloat tableFooterHeight = MAX(0, self.view.height - _tableView.contentSize.height);
-    _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, tableFooterHeight)];
-    _tableView.tableHeaderView.backgroundColor = [UIColor whiteColor];
-    
-    _tableView.height = _tableView.contentSize.height;
-    _tableView.bottom = _paymentView.top;
   }
   
 }
@@ -292,15 +321,12 @@ UITableViewDelegate>
   
   _paymentView.calculationAmount.enteredAmount = total;
   [_paymentView updateView];
-  
-//  [self dismissViewControllerAnimated:YES completion:nil];
   [self.navigationController popToViewController:self animated:YES];
   
 }
 
 - (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {
   
-//  [self dismissViewControllerAnimated:YES completion:nil];
   [self.navigationController popToViewController:self animated:YES];
   
 }
@@ -338,13 +364,20 @@ UITableViewDelegate>
 
 #pragma mark - UITableViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+  [self.view bringSubviewToFront:scrollView];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+  [self.view insertSubview:scrollView belowSubview:_paymentView];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
-  return;
-  if (scrollView.contentOffset.y < - 20.0f) {
-    scrollView.userInteractionEnabled = NO;
+  if (NO == _beginSplitAnimation &&
+      (scrollView.contentOffset.y + scrollView.contentInset.top) < - 30.0f) {
+    _beginSplitAnimation = YES;
     [self calculatorTap:nil];
-    scrollView.userInteractionEnabled = YES;
   }
   
 }

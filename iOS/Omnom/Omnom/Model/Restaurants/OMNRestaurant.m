@@ -257,7 +257,7 @@
   NSMutableArray *orders = [NSMutableArray arrayWithCapacity:[self count]];
   for (id orderData in self) {
     
-    OMNOrder *order = [[OMNOrder alloc] initWithData:orderData];
+    OMNOrder *order = [[OMNOrder alloc] initWithJsonData:orderData];
     [orders addObject:order];
     
   }

@@ -13,22 +13,22 @@
   id _data;
 }
 
-- (instancetype)initWithData:(id)data {
+- (instancetype)initWithJsonData:(id)jsonData {
   self = [super init];
   if (self) {
-    _data = data;
-    self.ID = data[@"id"];
-    self.amount = [data[@"amount"] integerValue];
-    self.created = data[@"created"];
-    self.Description = data[@"description"];
-    self.notes = data[@"notes"];
-    self.status = data[@"status"];
-    self.openTime = data[@"openTime"];
-    self.modifiedTime = data[@"modifiedTime"];
-    self.restaurant_id = data[@"restaurantId"];
-    self.tableId = data[@"tableId"];
+    _data = jsonData;
+    self.ID = jsonData[@"id"];
+    self.amount = [jsonData[@"amount"] longLongValue];
+    self.created = jsonData[@"created"];
+    self.Description = jsonData[@"description"];
+    self.notes = jsonData[@"notes"];
+    self.status = jsonData[@"status"];
+    self.openTime = jsonData[@"openTime"];
+    self.modifiedTime = jsonData[@"modifiedTime"];
+    self.restaurant_id = jsonData[@"restaurantId"];
+    self.tableId = jsonData[@"tableId"];
     
-    NSArray *itemsData = data[@"items"];
+    NSArray *itemsData = jsonData[@"items"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsData.count];
     [itemsData enumerateObjectsUsingBlock:^(id itemData, NSUInteger idx, BOOL *stop) {
       
@@ -86,7 +86,7 @@
   
 }
 
-- (void)createAcquiringOrder:(OMNOrderPayURLBlock)completion failure:(OMNErrorBlock)failureBlock {
+- (void)createBill:(OMNBillBlock)completion failure:(OMNErrorBlock)failureBlock {
   
   NSString *description = @"";
   
@@ -100,7 +100,7 @@
   }
   description = @"на тебе кебаб";
   
-  NSDictionary *order =
+  NSDictionary *parameters =
   @{
     @"description" : description,
     @"amount": @(self.toPayAmount),
@@ -108,24 +108,12 @@
     @"restaurateur_order_id" : self.ID,
     @"table_id" : self.tableId,
     };
-
-  NSDictionary *transaction =
-  @{
-    @"amount" : @(self.toPayAmount),
-    @"tip" : @(self.tipAmount),
-    };
   
-  NSDictionary *parameters =
-  @{
-    @"order" : order,
-    @"transaction" : transaction,
-    };
-  
-  [[OMNOperationManager sharedManager] POST:@"/acquiring/orders" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNOperationManager sharedManager] POST:@"/bill" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSString *url = responseObject[@"link"];
-    if (url.length) {
-      completion(url);
+    if (responseObject[@"status"]) {
+      OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
+      completion(bill);
     }
     else {
       failureBlock(nil);

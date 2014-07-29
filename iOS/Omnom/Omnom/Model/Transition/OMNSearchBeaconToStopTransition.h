@@ -1,5 +1,5 @@
 //
-//  OMNStopToLaderTransition.h
+//  OMNCustomFadeTransition.h
 //  omnom
 //
 //  Created by tea on 25.07.14.
@@ -8,6 +8,6 @@
 
 #import "OMNCustomTransition.h"
 
-@interface OMNStopToSearchingTransition : OMNCustomTransition
+@interface OMNSearchBeaconToStopTransition : OMNCustomTransition
 
 @end

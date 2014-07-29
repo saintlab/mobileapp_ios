@@ -9,17 +9,19 @@
 #import "OMNConstants.h"
 #import "OMNOrderItem.h"
 #import "OMNTip.h"
+#import "OMNBill.h"
 
 @class OMNOrder;
 
 typedef void(^OMNOrdersBlock)(NSArray *orders);
 typedef void(^OMNOrderBlock)(OMNOrder *order);
-typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
+typedef void(^OMNBillBlock)(OMNBill *bill);
+//typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
 
 @interface OMNOrder : NSObject
 
 @property (nonatomic, copy) NSString *ID;
-@property (nonatomic, assign) NSInteger amount;
+@property (nonatomic, assign) long long amount;
 @property (nonatomic, copy) NSString *created;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, copy) NSString *notes;
@@ -35,10 +37,10 @@ typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
 @property (nonatomic, strong, readonly) NSArray *tips;
 @property (nonatomic, assign, readonly) double tipsThreshold;
 
-@property (nonatomic, assign) double toPayAmount;
-@property (nonatomic, assign) double tipAmount;
+@property (nonatomic, assign) long long toPayAmount;
+@property (nonatomic, assign) long long tipAmount;
 
-- (instancetype)initWithData:(id)data;
+- (instancetype)initWithJsonData:(id)jsonData;
 
 - (double)total;
 
@@ -49,6 +51,6 @@ typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
 /**
  https://github.com/saintlab/backend/tree/master/applications/omnom#create-restaurateur-order
  */
-- (void)createAcquiringOrder:(OMNOrderPayURLBlock)completion failure:(OMNErrorBlock)failureBlock;
+- (void)createBill:(OMNBillBlock)completion failure:(OMNErrorBlock)failureBlock;
 
 @end

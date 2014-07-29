@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchingToStopTransition.h"
+#import "OMNSearchBeaconToStopTransition.h"
 #import "OMNBackgroundVC.h"
 #import "OMNSearchBeaconVC.h"
 #import "OMNAskNavigationPermissionsVC.h"
-#import "OMNSearchBeaconRootVC.h"
+#import "OMNCircleRootVC.h"
 #import "OMNR1VC.h"
 #import "OMNTablePositionVC.h"
 
-@implementation OMNSearchingToStopTransition
+@implementation OMNSearchBeaconToStopTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
@@ -61,7 +61,7 @@
   @[
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNBackgroundVC class]],
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNAskNavigationPermissionsVC class]],
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNSearchBeaconRootVC class]],
+    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNTablePositionVC class]],
     
     ];

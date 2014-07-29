@@ -90,12 +90,8 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
  
  cardholder имя держателя карты
  */
-- (void)registerCard:(NSString *)pan expDate:(NSString *)expDate cvv:(NSString *)cvv {
-  
-  pan = @"4111111111111111";
-  expDate = @"12.2015";
-  cvv = @"123";
-  
+- (void)registerCard:(NSDictionary *)cardInfo {
+
   NSString *userPhone = @"89833087335";
   
   NSDictionary *extra =
@@ -123,13 +119,11 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
   
   parameters[@"signature"] = [reqiredSignatureParams omn_signature];
-  parameters[@"pan"] = pan;
   parameters[@"cardholder"] = kOMNMailRu_cardholder;
-  parameters[@"exp_date"] = expDate;
-  parameters[@"cvv"] = cvv;
   parameters[@"user_phone"] = userPhone;
   parameters[@"user_login"] = kOMNMailRu_user_login;
-
+  [parameters addEntriesFromDictionary:cardInfo];
+  
   [self POST:@"card/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
@@ -237,8 +231,6 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
   
   parameters[@"signature"] = signature;
-//  parameters[@"card_id"] = @"30002847034833862453";
-  
   [parameters addEntriesFromDictionary:cardInfo];
 
   parameters[@"cardholder"] = kOMNMailRu_cardholder;
@@ -273,6 +265,45 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   }];
   
   
+  
+}
+
+- (void)cardDelete:(NSString *)card_id {
+  
+  NSDictionary *reqiredSignatureParams =
+  @{
+    @"merch_id" : kOMNMailRu_merch_id,
+    @"vterm_id" : kOMNMailRu_vterm_id,
+    @"user_login" : kOMNMailRu_user_login,
+    @"card_id" : card_id,
+    };
+  
+  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
+  parameters[@"signature"] = [reqiredSignatureParams omn_signature];
+  
+  [self POST:@"card/delete" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"%@", responseObject);
+    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    if (responseObject[@"url"]) {
+      
+      [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"%@", error);
+        
+      }];
+      
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    NSLog(@"%@", error);
+    
+  }];
   
 }
 

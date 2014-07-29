@@ -7,6 +7,9 @@
 //
 
 #import "OMNSearchBeaconVC.h"
+#import "OMNRestaurant.h"
+
+typedef void(^OMNSearchRestaurantBlock)(OMNRestaurant *restaurant);
 
 @interface OMNSearchRestaurantVC : UIViewController
 
@@ -15,6 +18,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bgIV;
 @property (weak, nonatomic) IBOutlet UIView *fgView;
 
-- (instancetype)initWithBlock:(OMNSearchBeaconVCBlock)block;
+- (instancetype)initWithBlock:(OMNSearchRestaurantBlock)block;
 
 @end
