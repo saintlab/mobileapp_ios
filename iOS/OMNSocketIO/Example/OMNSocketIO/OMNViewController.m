@@ -46,12 +46,13 @@
 - (void)connect:(NSString *)url token:(NSString *)token {
   
   _io = [[OMNSocketIO alloc] init];
-  
+  NSString *url = @"http://echo.laaaab.com";
+  NSString *token = @"c97b82073c997234223573e5623f7c89317272b8ba8a61a25f38c71b6ac5ec09";
+
   __weak typeof(self)weakSelf = self;
   [_io once:@"ready" listener:^{
     
     NSString *query = [NSString stringWithFormat:@"token=%@", token];
-    
     _socket = [_io of:url and:@{@"query" : query}];
     
     [_socket emit:@"handshake", nil];
@@ -101,7 +102,6 @@
   NSString *url = @"http://echo.laaaab.com";
   NSString *token = @"c97b82073c997234223573e5623f7c89317272b8ba8a61a25f38c71b6ac5ec09";
   [self connect:url token:token];
-
 }
 
 - (IBAction)joinTap:(id)sender {

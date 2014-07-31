@@ -64,6 +64,13 @@
   NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken>%@", deviceToken);
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+  NSLog(@"url recieved: %@", url);
+  NSLog(@"sourceApplication: %@", sourceApplication);
+  NSLog(@"annotation: %@", annotation);
+  return YES;
+}
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
   
   NSLog(@"didReceiveLocalNotification>%@", notification);

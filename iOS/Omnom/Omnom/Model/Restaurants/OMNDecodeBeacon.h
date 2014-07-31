@@ -21,7 +21,7 @@ typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
 @property (nonatomic, strong) NSDate *foundDate;
 
 //@property (nonatomic, strong) OMNTable *table;
-//@property (nonatomic, strong) OMNRestaurant *restaurant;
+@property (nonatomic, strong) OMNRestaurant *restaurant;
 
 - (instancetype)initWithData:(id)data;
 

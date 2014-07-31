@@ -69,9 +69,8 @@
 + (NSArray *)keys {
   return
   @[
-#warning transition
-//    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNPayOrderVC class]],
-//    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNOrdersVC class]],
+    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNPayOrderVC class]],
+    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNOrdersVC class]],
     ];
 }
 

@@ -17,7 +17,7 @@
   self = [super init];
   if (self) {
     _data = jsonData;
-    self.ID = jsonData[@"id"];
+    self.id = jsonData[@"id"];
     self.amount = [jsonData[@"amount"] longLongValue];
     self.created = jsonData[@"created"];
     self.Description = jsonData[@"description"];
@@ -37,13 +37,24 @@
     }];
     self.items = items;
     
+    NSDictionary *tipsData = jsonData[@"tips"];
+#warning поменять на копейки
+    _tipsThreshold = [tipsData[@"threshold"] doubleValue] / 100.;
+    NSMutableArray *tips = [NSMutableArray arrayWithCapacity:4];
     //TODO: remove stub data
-    OMNTip *tip1 = [[OMNTip alloc] initWithAmount:30. percent:10];
-    OMNTip *tip2 = [[OMNTip alloc] initWithAmount:50. percent:15];
-    OMNTip *tip3 = [[OMNTip alloc] initWithAmount:100. percent:20];
-    OMNTip *tip4 = [[OMNTip alloc] initWithAmount:0. percent:0];
-    _tips = @[tip1, tip2, tip3, tip4];
-    _tipsThreshold = 250.;
+    for (id tipData in tipsData[@"values"]) {
+      double amount = [tipData[@"amount"] doubleValue] / 100.;
+      double percent = [tipData[@"percent"] doubleValue];
+      OMNTip *tip = [[OMNTip alloc] initWithAmount:amount percent:percent];
+      [tips addObject:tip];
+    }
+    _tips = [tips copy];
+//    OMNTip *tip1 = [[OMNTip alloc] initWithAmount:30. percent:10];
+//    OMNTip *tip2 = [[OMNTip alloc] initWithAmount:50. percent:15];
+//    OMNTip *tip3 = [[OMNTip alloc] initWithAmount:100. percent:20];
+//    OMNTip *tip4 = [[OMNTip alloc] initWithAmount:0. percent:0];
+//    _tips = @[tip1, tip2, tip3, tip4];
+    
   }
   return self;
 }
@@ -105,7 +116,7 @@
     @"description" : description,
     @"amount": @(self.toPayAmount),
     @"restaurant_id" : self.restaurant_id,
-    @"restaurateur_order_id" : self.ID,
+    @"restaurateur_order_id" : self.id,
     @"table_id" : self.tableId,
     };
   

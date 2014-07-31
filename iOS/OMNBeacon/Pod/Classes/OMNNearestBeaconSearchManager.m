@@ -48,25 +48,21 @@
   
   _didFindNearestBeaconBlock = didFindNearestBeaconBlock;
   _failureBlock = failureBlock;
-  
+
   _devicePositionManager = [[OMNDevicePositionManager alloc] init];
   
   __weak typeof(self)weakSelf = self;
   [_devicePositionManager handleDeviceFaceUpPosition:^{
     
     NSLog(@"device is face up");
-    dispatch_async(dispatch_get_main_queue(), ^{
-    
-      [weakSelf startRangingBeacons];
-      
-    });
+    [weakSelf startRangingBeacons];
     
   }];
   
 }
 
 - (void)startRangingBeacons {
-  
+  NSLog(@"startRangingBeacons");
   [_devicePositionManager stop];
   _devicePositionManager = nil;
   
@@ -89,6 +85,8 @@
 
 - (void)didRangeBeacons:(NSArray *)beacons {
   
+  NSLog(@"did found beacons>%@", beacons);
+  
   if (0 == beacons.count) {
     return;
   }
@@ -96,7 +94,7 @@
   [_beaconRangingManager stop];
   _beaconRangingManager = nil;
   
-  NSLog(@"did found beacons");
+  
   [beacons enumerateObjectsUsingBlock:^(CLBeacon *foundBeacon, NSUInteger idx, BOOL *stop) {
     NSLog(@"%@  %@  %@", foundBeacon.proximityUUID.UUIDString, foundBeacon.major, foundBeacon.minor);
   }];

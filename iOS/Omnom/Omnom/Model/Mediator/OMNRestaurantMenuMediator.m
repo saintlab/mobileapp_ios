@@ -108,14 +108,14 @@ OMNPayOrderVCDelegate>
 
 - (void)selectOrderFromOrders:(NSArray *)orders {
   
-  OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithOrders:orders];
-  ordersVC.delegate = self;
-  
-  OMNOrder *order = [orders firstObject];
-  ordersVC.navigationItem.title = order.tableId;
-  
-  [self popToRootViewControllerAnimated:NO];
-  [_rootViewController.navigationController pushViewController:ordersVC animated:YES];
+//  OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithRestaurant:re orders:<#(NSArray *)#>];
+//  ordersVC.delegate = self;
+//  
+//  OMNOrder *order = [orders firstObject];
+//  ordersVC.navigationItem.title = order.tableId;
+//  
+//  [self popToRootViewControllerAnimated:NO];
+//  [_rootViewController.navigationController pushViewController:ordersVC animated:YES];
   
 }
 
@@ -136,10 +136,10 @@ OMNPayOrderVCDelegate>
 - (void)showOrder:(OMNOrder *)order {
   
   [self popToRootViewControllerAnimated:NO];
-  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithOrder:order];
-  paymentVC.delegate = self;
-  paymentVC.title = order.created;
-  [_rootViewController.navigationController pushViewController:paymentVC animated:YES];
+//  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithRestaurant:_ order:<#(OMNOrder *)#>];
+//  paymentVC.delegate = self;
+//  paymentVC.title = order.created;
+//  [_rootViewController.navigationController pushViewController:paymentVC animated:YES];
   
 }
 

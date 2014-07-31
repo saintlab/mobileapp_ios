@@ -11,6 +11,7 @@
 #import "OMNBluetoothManager.h"
 #import "OMNDecodeBeaconManager.h"
 #import "OMNNearestBeaconsManager.h"
+#import <OMNBeaconBackgroundManager.h>
 
 NSTimeInterval kBeaconSearchTimeout = 2.0;
 
@@ -74,7 +75,6 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 #else
   [self checkNetworkState];
 #endif
-  
   
 }
 
@@ -232,6 +232,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   switch (status) {
     case kCLAuthorizationStatusAuthorized: {
       
+      [[OMNBeaconBackgroundManager manager] startBeaconRegionMonitoring];
       [self startRangeNearestBeacons];
       
     } break;

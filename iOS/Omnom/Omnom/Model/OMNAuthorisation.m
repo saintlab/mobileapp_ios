@@ -36,6 +36,10 @@ static NSString * const kAccountName = @"test_account6";
   return self;
 }
 
+- (void)logout {
+  [self updateAuthenticationToken:nil];
+}
+
 - (NSString *)installId {
   
   NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
@@ -58,11 +62,16 @@ static NSString * const kAccountName = @"test_account6";
 
 - (void)updateAuthenticationToken:(NSString *)token {
 
+  _token = token;
   if (token) {
-    _token = token;
     [SSKeychain setPassword:token forService:@"token" account:kAccountName];
-    [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
   }
+  else {
+    [SSKeychain deletePasswordForService:@"token" account:kAccountName];
+  }
+  
+  [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
+
 
 }
 

@@ -105,7 +105,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
-  
+  NSLog(@"didRangeBeacons>%@", beacons);
   if (_didRangeBeaconsBlock) {
     _didRangeBeaconsBlock(beacons);
   }
@@ -113,7 +113,7 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region withError:(NSError *)error {
-  
+  NSLog(@"rangingBeaconsDidFailForRegion>%@", error);
   if (_didFailRangeBeaconsBlock) {
     _didFailRangeBeaconsBlock(error);
   }

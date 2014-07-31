@@ -26,16 +26,20 @@ typedef void(^OMNDataBlock)(id data);
 extern const NSTimeInterval kCircleFadeAnimationDuration;
 extern const NSTimeInterval kCircleAnimationDuration;
 extern const NSTimeInterval kOrderSlideAnimationDuration;
+extern const NSTimeInterval kRestaurantToSearchBeaconTransitionDuration;
+extern const NSTimeInterval kSearchBeaconToPayOrderTransitionDuration;
+extern const NSTimeInterval kSearchRestaurantToSearchBeaconTransitionDuration;
+extern const NSTimeInterval kSearchBeaconToStopTransitionDuration;
+extern const NSTimeInterval kStopToSearchBeaconTransitionDuration;
+extern const NSTimeInterval kSearchBeaconToRestaurantTransitionDuration;
 
-#define kUseStubData 1
+#define kUseStubData 0
 #define kUseStubUser 0
 #define kUseStubBeacon 1
 #define kUseStubLogin 0
 #define kUseGPBAcquiring 1
 
 #define kGreenColor ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1])
-
-#define kRestaurantColor ([UIColor colorWithRed:255 / 255. green:50 / 255. blue:50 / 255. alpha:1])
 
 #define ALSRublFont(__FONTSIZE__) ([UIFont fontWithName:@"ALSRubl" size:__FONTSIZE__])
 #define kPayButtonFont ALSRublFont(20.0f)

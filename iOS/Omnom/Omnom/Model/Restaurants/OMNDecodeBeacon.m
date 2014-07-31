@@ -18,6 +18,7 @@
     _tableId = [data[@"table_id"] description];
     _restaurantId = [data[@"restaurant_id"] description];
     _foundDate = [NSDate date];
+    _restaurant = [[OMNRestaurant alloc] initWithData:data[@"restaurant"]];
   }
   return self;
 }

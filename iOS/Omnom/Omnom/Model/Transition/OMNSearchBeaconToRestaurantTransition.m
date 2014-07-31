@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchToRestaurantTransition.h"
+#import "OMNSearchBeaconToRestaurantTransition.h"
 #import "OMNSearchBeaconVC.h"
 #import "OMNR1VC.h"
 
-@implementation OMNSearchToRestaurantTransition
+@implementation OMNSearchBeaconToRestaurantTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
@@ -20,9 +20,6 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
 
-//  [toViewController.circleButton setImage:[fromViewController.circleButton imageForState:UIControlStateNormal] forState:UIControlStateNormal];
-//  [toViewController.circleButton setBackgroundImage:[fromViewController.circleButton backgroundImageForState:UIControlStateNormal] forState:UIControlStateNormal];
-  
   // Get a snapshot of the image view
   UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:NO];
   fromImageSnapshot.frame = [transitionContext finalFrameForViewController:toViewController];
@@ -39,8 +36,7 @@
     
   } completion:^(BOOL finished) {
     
-    // Clean up
-    //    [fromImageSnapshot removeFromSuperview];
+    [fromImageSnapshot removeFromSuperview];
     fromViewController.view.hidden = NO;
     
     // Declare that we've finished
@@ -50,7 +46,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.5;
+  return kSearchBeaconToRestaurantTransitionDuration;
 }
 
 + (NSArray *)keys {

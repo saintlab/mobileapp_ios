@@ -10,6 +10,7 @@
 #import "OMNPayOrderVC.h"
 #import "OMNOrderItemCell.h"
 #import "OMNPayOrderVC.h"
+#import "OMNRestaurant.h"
 
 @interface OMNOrdersVC ()
 
@@ -17,12 +18,14 @@
 
 @implementation OMNOrdersVC {
   NSArray *_orders;
+  OMNRestaurant *_restaurant;
 }
 
-- (instancetype)initWithOrders:(NSArray *)orders {
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant orders:(NSArray *)orders {
   self = [super initWithNibName:@"OMNOrdersVC" bundle:nil];
   if (self) {
     _orders = orders;
+    _restaurant = restaurant;
   }
   return self;
 }
@@ -30,7 +33,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.collectionView.backgroundColor = kRestaurantColor;
+  self.collectionView.backgroundColor = _restaurant.background_color;
   
   UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
   flowLayout.sectionInset = UIEdgeInsetsMake(0.0f, 18.0f, 0.0f, 18.0f);

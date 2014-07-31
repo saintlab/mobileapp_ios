@@ -20,7 +20,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   OMNNearestBeaconSearchManager *_beaconSearchManager;
   
   UIBackgroundTaskIdentifier _searchBeaconTask;
-
+  
   BOOL _monitoring;
 }
 
@@ -59,26 +59,14 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     self.backgroundBeaconRegion.notifyOnEntry = YES;
     self.backgroundBeaconRegion.notifyOnExit = YES;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
     
-    
-  }
-  return self;
-}
-
-- (void)applicationDidEnterBackground {
-
-  if (kCLAuthorizationStatusAuthorized == [CLLocationManager authorizationStatus]) {
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
     [self startBeaconRegionMonitoring];
   }
-
-}
-
-- (void)applicationWillEnterForeground {
-  
-  [self stopBeaconRegionMonitoring];
-  
+  return self;
 }
 
 - (void)beaconDidFind:(OMNBeacon *)beacon {
@@ -106,29 +94,27 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
 }
 
-
 - (void)handleDidExitShopBeaconRegion {
   
-  [self stopBeaconSearchManagerTask];
-  
+
   //TODO: send information to the server according device did exit from restaurant, stop notification
   NSLog(@"send information to the server according device did exit from restaurant");
+  [self stopBeaconSearchManagerTask];
   
 }
 
 - (void)startBeaconRegionMonitoring {
   
-  if (nil == _locationManager) {
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-  }
-  
-  if (_monitoring) {
+  if (kCLAuthorizationStatusAuthorized != [CLLocationManager authorizationStatus]) {
     return;
   }
   
   if (NO == [CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
     NSLog(@"This device does not support monitoring beacon regions");
+    return;
+  }
+
+  if (_monitoring) {
     return;
   }
   
@@ -190,9 +176,10 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   //doesn't handle foreground region monitoring
   if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
     NSLog(@"doesn't handle foreground region monitoring");
-    return;
+//    [self stopBeaconSearchManagerTask];
+//    return;
   }
-  
+
   switch (state) {
       
     case CLRegionStateInside: {
@@ -206,6 +193,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
       
     } break;
     case CLRegionStateUnknown: {
+      
     } break;
       
   }
@@ -224,6 +212,8 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     [weakSelf stopBeaconSearchManagerTask];
     
   }];
+  
+  NSLog(@"handleDidEnterShopBeaconRegion");
   
   _beaconSearchManager = [[OMNNearestBeaconSearchManager alloc] init];
   [_beaconSearchManager findNearestBeacon:^(OMNBeacon *beacon) {

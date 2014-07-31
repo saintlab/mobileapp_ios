@@ -17,7 +17,7 @@
 #import "OMNSearchRestaurantToSearchBeaconTransition.h"
 #import "OMNSearchBeaconToStopTransition.h"
 #import "OMNStopToSearchBeaconTransition.h"
-#import "OMNSearchToRestaurantTransition.h"
+#import "OMNSearchBeaconToRestaurantTransition.h"
 #import "OMNRestaurantToSearchBeaconTransition.h"
 #import "OMNSearchBeaconToPayOrderTransition.h"
 #import "OMNOrderToRestaurantTransition.h"
@@ -41,7 +41,7 @@
     [self addTansitionForClass:[OMNSearchRestaurantToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNSearchBeaconToStopTransition class]];
     [self addTansitionForClass:[OMNStopToSearchBeaconTransition class]];
-    [self addTansitionForClass:[OMNSearchToRestaurantTransition class]];
+    [self addTansitionForClass:[OMNSearchBeaconToRestaurantTransition class]];
     [self addTansitionForClass:[OMNRestaurantToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNSearchBeaconToPayOrderTransition class]];
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
@@ -81,6 +81,10 @@
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
   
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
+  return nil;
 }
 
 @end

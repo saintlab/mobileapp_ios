@@ -16,8 +16,6 @@
 #import "OMNAmountPercentControl.h"
 #import "UIView+frame.h"
 #import "OMNGPBPayVC.h"
-#import "UINavigationController+omn_replace.h"
-#import "OMNOrder+omn_calculationAmount.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "OMNAnalitics.h"
 #import "OMNBankCardsVC.h"
@@ -26,6 +24,8 @@
 #import "OMNRatingVC.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNGPBPayVC.h"
+#import "OMNSocketManager.h"
+#import "OMNRestaurant.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -45,15 +45,18 @@ UITableViewDelegate>
   __weak IBOutlet UIImageView *_backgroundIV;
   BOOL _beginSplitAnimation;
   OMNOrder *_order;
-  
+  OMNRestaurant *_restaurant;
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (void)dealloc {
+  [[OMNSocketManager manager] leave:_order.id];
+}
+
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant order:(OMNOrder *)order {
   self = [super init];
   if (self) {
-   
     _order = order;
-    
+    _restaurant = restaurant;
   }
   return self;
 }
@@ -62,8 +65,8 @@ UITableViewDelegate>
   
   [super viewDidLoad];
   NSLog(@"viewDidLoad");
-//  _paymentView.hidden = YES;
-
+  [[OMNSocketManager manager] join:_order.id];
+  
   _dataSource = [[GPaymentVCDataSource alloc] initWithOrder:_order];
   _tableView.dataSource = _dataSource;
   [_tableView reloadData];
@@ -71,8 +74,7 @@ UITableViewDelegate>
   _tableView.allowsSelection = NO;
   [self setup];
   
-  _paymentView.calculationAmount = [_order omn_calculationAmount];
-  
+  _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initOrder:_order];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didFinish)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
@@ -91,9 +93,6 @@ UITableViewDelegate>
   
   self.automaticallyAdjustsScrollViewInsets = YES;
   self.edgesForExtendedLayout = UIRectEdgeAll;
-  
-
-  
 }
 
 - (void)viewDidLayoutSubviews {
@@ -135,7 +134,7 @@ UITableViewDelegate>
   }
   
   self.view.backgroundColor = [UIColor clearColor];
-  _backgroundIV.backgroundColor = kRestaurantColor;
+  _backgroundIV.backgroundColor = _restaurant.background_color;
   _tableView.backgroundColor = [UIColor clearColor];
   _tableView.separatorColor = [UIColor clearColor];
   _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _tableView.width, self.view.height)];
@@ -160,7 +159,6 @@ UITableViewDelegate>
   
   NSArray *constraintsTable_V = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[table]|" options:0 metrics:metrics views:views];
   [self.view addConstraints:constraintsTable_V];
-  
   
   UIButton *rateButton = [[UIButton alloc] init];
   [rateButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -366,6 +364,7 @@ UITableViewDelegate>
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
   [self.view bringSubviewToFront:scrollView];
+  [self.view bringSubviewToFront:_toPayButton];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -375,7 +374,7 @@ UITableViewDelegate>
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
   if (NO == _beginSplitAnimation &&
-      (scrollView.contentOffset.y + scrollView.contentInset.top) < - 30.0f) {
+      (scrollView.contentOffset.y + scrollView.contentInset.top) < - 100.0f) {
     _beginSplitAnimation = YES;
     [self calculatorTap:nil];
   }

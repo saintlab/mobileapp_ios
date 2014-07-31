@@ -64,17 +64,26 @@
   
   self.tableView.tableFooterView = [[UIView alloc] init];
   self.tableView.dataSource = _userInfoModel;
-  self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background_blur"]];
 
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Стол", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editTableTap)];
-  self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+  self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
   
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
-  self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+  self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
   
+  UIButton *closeButton = [[UIButton alloc] init];
+  [closeButton setImage:[UIImage imageNamed:@"cross_icon_black"] forState:UIControlStateNormal];
+  [closeButton sizeToFit];
+  [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.titleView = closeButton;
+  
+}
+
+- (void)closeTap {
+  [self.delegate userInfoVCDidFinish:self];
 }
 
 - (void)editTableTap {

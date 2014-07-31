@@ -9,6 +9,7 @@
 #import "OMNRestaurant.h"
 #import <AFNetworking/AFNetworking.h>
 #import "OMNOperationManager.h"
+#import "NSString+omn_color.h"
 
 @interface NSData (omn_restaurants)
 
@@ -27,12 +28,29 @@
 @implementation OMNRestaurant
 
 - (instancetype)initWithData:(id)data {
+  
+  if ([data isKindOfClass:[NSNull class]]) {
+    return nil;
+  }
+  
   self = [super init];
   if (self) {
-    self.ID = data[@"id"];
+    self.id = data[@"id"];
     self.title = data[@"title"];
     self.image = data[@"image"];
     self.Description = data[@"description"];
+    
+    id decoration = data[@"decoration"];
+    self.logoUrl = decoration[@"logo"];
+    self.background_imageUrl = decoration[@"background_image"];
+    
+    if ([decoration[@"background_color"] isKindOfClass:[NSString class]]) {
+      self.background_color = [decoration[@"background_color"] omn_colorFormHex];
+    }
+    else {
+      self.background_color = [UIColor blackColor];
+    }
+
   }
   return self;
 }
@@ -89,7 +107,7 @@
     return;
   }
   
-  NSString *path = [NSString stringWithFormat:@"restaurants/%@/menu", self.ID];
+  NSString *path = [NSString stringWithFormat:@"restaurants/%@/menu", self.id];
   [[OMNOperationManager manager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     OMNMenu *menu = [[OMNMenu alloc] initWithData:responseObject];
@@ -105,9 +123,8 @@
 
 - (void)waiterCallForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiterCall", self.ID, tableID];
-  
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.id, tableID];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
     complitionBlock();
     
@@ -121,9 +138,9 @@
 
 - (void)newGuestForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/newGuest", self.ID, tableID];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/new/guest", self.id, tableID];
   
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
     complitionBlock();
     
@@ -146,7 +163,7 @@
     return;
   }
 
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.ID, tableID];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.id, tableID];
   
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
@@ -182,7 +199,7 @@
   
   NSDictionary *info =
   @{
-    @"restaurantId" : self.ID,
+    @"restaurantId" : self.id,
     @"tableId" : tableID,
     @"items" : items,
     };
@@ -198,7 +215,29 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"%@, %@", _title, _ID];
+  return [NSString stringWithFormat:@"%@, %@", _title, _id];
+}
+
+- (void)loadLogo:(OMNImageBlock)imageBlock {
+  
+  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.logoUrl]];
+  
+  AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+  requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
+  
+  __weak typeof(self)weakSelf = self;
+  [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    weakSelf.logo = responseObject;
+    imageBlock(responseObject);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    imageBlock(nil);
+    
+  }];
+  [requestOperation start];
+  
 }
 
 @end

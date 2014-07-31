@@ -47,8 +47,7 @@
   return self;
 }
 
-- (Socket *) of:(NSString *)url and:(NSDictionary *)options
-{
+- (Socket *) of:(NSString *)url and:(NSDictionary *)options {
   JSValue *socket = [_io callWithArguments:@[url, options]];
   return [[Socket alloc] initWithSocket:socket];
 }

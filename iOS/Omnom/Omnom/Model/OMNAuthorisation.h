@@ -21,6 +21,8 @@ typedef void(^OMNTokenBlock)(NSString *token);
 
 + (instancetype)authorisation;
 
+- (void)logout;
+
 - (void)updateAuthenticationToken:(NSString *)token;
 
 - (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block;

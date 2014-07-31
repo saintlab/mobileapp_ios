@@ -20,12 +20,25 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>menu.omnom.appt12</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>omnom</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
-	<string>95</string>
+	<string>237</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Пермишен для блютуса</string>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Пермишен мне</string>
 	<key>NSLocationUsageDescription</key>
@@ -37,6 +50,7 @@
 		<string>ALSRubl.otf</string>
 		<string>FuturaPT-Medium.ttf</string>
 		<string>FuturaPT-Book.ttf</string>
+		<string>Futura-LSF-Omnom-Regular.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -63,7 +77,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 </dict>
 </plist>

@@ -8,6 +8,6 @@
 
 #import "OMNCustomTransition.h"
 
-@interface OMNSearchToRestaurantTransition : OMNCustomTransition
+@interface OMNSearchBeaconToRestaurantTransition : OMNCustomTransition
 
 @end

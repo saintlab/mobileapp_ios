@@ -7,6 +7,7 @@
 //
 
 @class OMNOrder;
+@class OMNRestaurant;
 @protocol OMNPayOrderVCDelegate;
 
 @interface OMNPayOrderVC : UIViewController
@@ -14,7 +15,7 @@
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
 
-- (instancetype)initWithOrder:(OMNOrder *)order;
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant order:(OMNOrder *)order;
 
 @end
 

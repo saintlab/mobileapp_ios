@@ -10,7 +10,16 @@
 #import "OMNCalculatorVC.h"
 #import "OMNPayOrderVC.h"
 
-@implementation OMNTransitionFromOrderToCalculator
+@implementation OMNTransitionFromOrderToCalculator {
+  UIPercentDrivenInteractiveTransition *_interactivePopTransition;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+  }
+  return self;
+}
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
@@ -22,6 +31,12 @@
   
   // Get a snapshot of the image view
   UIView *imageSnapshot = [fromViewController.tableView snapshotViewAfterScreenUpdates:NO];
+  
+  UIGraphicsBeginImageContext(fromViewController.tableView.frame.size);
+  [fromViewController.tableView drawViewHierarchyInRect:fromViewController.tableView.bounds afterScreenUpdates:YES];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  
   imageSnapshot.frame = [containerView convertRect:fromViewController.tableView.frame fromView:fromViewController.tableView.superview];
   fromViewController.tableView.hidden = YES;
   
@@ -51,7 +66,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.3;
+  return 1;
 }
 
 + (NSArray *)keys {

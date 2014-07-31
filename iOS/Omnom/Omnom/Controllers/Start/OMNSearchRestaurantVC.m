@@ -74,35 +74,40 @@
 
 - (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
   //TODO: get actual restaurant
-  NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
+//  NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
+//  OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:];
   
-  OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:data];
-  
-  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:kRestaurantLogoUrl]];
-  
-  AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-  requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
-  __weak typeof(self)weakSelf = self;
-  __weak typeof(_searchBeaconVC)weakBeaconSearch = _searchBeaconVC;
-  [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
     
-    [weakSelf didLoadLogo:responseObject forRestaurant:restaurant];
+    NSLog(@"newGuestForTableID>done");
     
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+  } failure:^(NSError *error) {
     
-    [weakBeaconSearch didFailOmnom];
+    NSLog(@"newGuestForTableID>%@", error);
     
   }];
-  [requestOperation start];
+  
+  __weak typeof(self)weakSelf = self;
+  __weak typeof(_searchBeaconVC)weakBeaconSearch = _searchBeaconVC;
+  [decodeBeacon.restaurant loadLogo:^(UIImage *image) {
+    
+    if (image) {
+      [weakSelf didLoadLogoForRestaurant:decodeBeacon.restaurant];
+    }
+    else {
+      [weakBeaconSearch didFailOmnom];
+    }
+    
+  }];
 
 }
 
-- (void)didLoadLogo:(UIImage *)logo forRestaurant:(OMNRestaurant *)restaurant {
+- (void)didLoadLogoForRestaurant:(OMNRestaurant *)restaurant {
   
   __weak typeof(_searchBeaconVC)weakBeaconSearch = _searchBeaconVC;
   OMNSearchRestaurantBlock searchRestaurantBlock = _searchRestaurantBlock;
   
-  [_searchBeaconVC setLogo:logo withColor:kRestaurantColor completion:^{
+  [_searchBeaconVC setLogo:restaurant.logo withColor:restaurant.background_color completion:^{
     
     [weakBeaconSearch finishLoading:^{
       

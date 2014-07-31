@@ -10,16 +10,19 @@
 #import "OMNSearchBeaconVC.h"
 #import "OMNPayOrderVC.h"
 #import "OMNOrdersVC.h"
-
-
-
 #import "OMNOperationManager.h"
+#import "OMNAuthorisation.h"
+#import "OMNUserInfoVC.h"
+#import <BlocksKit+UIKit.h>
+#import "OMNSocketManager.h"
+#import "UIImage+omn_helper.h"
 
 const CGFloat kWaiterButtonsHeight = 50.0f;
 
 @interface OMNR1VC ()
 <OMNPayOrderVCDelegate,
-OMNOrdersVCDelegate>
+OMNOrdersVCDelegate,
+OMNUserInfoVCDelegate>
 
 @end
 
@@ -29,38 +32,63 @@ OMNOrdersVCDelegate>
   OMNRestaurant *_restaurant;
   UIView *_waiterButtonsBg;
   NSLayoutConstraint *_slideViewConstraint;
+  
 }
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
   self = [super initWithTitle:nil buttons:@[]];
   if (self) {
     _restaurant = restaurant;
-    
+    self.circleIcon = restaurant.logo;
     //    _productsModel = [[OMNProductsModel alloc] init];
     //    _restaurantMenuMediator = [[OMNRestaurantMenuMediator alloc] initWithRootViewController:self];
-    
-  }
-  return self;
-}
-
-- (instancetype)init {
-  
-  if (self) {
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
+  self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
   
-  [[OMNOperationManager sharedManager] GET:@"restaurants" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-  }];
-  
+  self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:_restaurant.background_color];
+  [self.circleButton setBackgroundImage:self.circleBackground forState:UIControlStateNormal];
+
   self.backgroundView.image = [UIImage imageNamed:@"bg_pic"];
   [self addActionsBoard];
+  
+  [self socketConnect];
+  
+}
+
+- (void)userProfileTap {
+  
+  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] init];
+  userInfoVC.delegate = self;
+  UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
+  [self presentViewController:navVC animated:YES completion:nil];
+  
+}
+
+- (void)socketConnect {
+  
+  [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token];
+  
+}
+
+- (UIButton *)actionButtonWithAction:(SEL)action imageName:(NSString *)imageName {
+  UIButton *actionButton = [[UIButton alloc] init];
+  actionButton.tintColor = [UIColor blackColor];
+
+  [actionButton setImage:[[UIImage imageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+  actionButton.translatesAutoresizingMaskIntoConstraints = NO;
+  actionButton.titleLabel.numberOfLines = 0;
+  actionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+  [actionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [actionButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+  [actionButton addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+  return actionButton;
 }
 
 - (void)addActionsBoard {
@@ -70,29 +98,17 @@ OMNOrdersVCDelegate>
   _waiterButtonsBg.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
   [self.view addSubview:_waiterButtonsBg];
   
-  _callWaiterButton = [[UIButton alloc] init];
-  _callWaiterButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_callWaiterButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
+  _callWaiterButton = [self actionButtonWithAction:@selector(callWaiterTap) imageName:@"call_waiter_icon_small"];
   [_callWaiterButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
   [_callWaiterButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected];
-  _callWaiterButton.titleLabel.numberOfLines = 0;
-  _callWaiterButton.titleLabel.textAlignment = NSTextAlignmentCenter;
   _callWaiterButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
   _callWaiterButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f);
-  
-  [_callWaiterButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [_callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
   [_waiterButtonsBg addSubview:_callWaiterButton];
   
-  _callOrderButton = [[UIButton alloc] init];
-  _callOrderButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_callOrderButton setImage:[UIImage imageNamed:@"call_bill_icon_small"] forState:UIControlStateNormal];
-  [_callOrderButton addTarget:self action:@selector(callBillTap) forControlEvents:UIControlEventTouchUpInside];
+  _callOrderButton = [self actionButtonWithAction:@selector(callBillTap) imageName:@"call_bill_icon_small"];
   _callOrderButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-  [_callOrderButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_callOrderButton setTitle:NSLocalizedString(@"Счет", nil) forState:UIControlStateNormal];
   _callOrderButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 10.0f);
-  
   [_waiterButtonsBg addSubview:_callOrderButton];
   
   NSDictionary *views =
@@ -158,26 +174,42 @@ OMNOrdersVCDelegate>
 
 - (void)callWaiterTap {
   
+  UIImage *logo = _restaurant.logo;
+  
   if (_callWaiterButton.selected) {
-    [self.circleButton setImage:[UIImage imageNamed:@"ginza_logo"] forState:UIControlStateNormal];
+    [self.circleButton setImage:logo forState:UIControlStateNormal];
     _callWaiterButton.selected = NO;
     return;
   }
   
   OMNSearchBeaconVC *sbVC = [[OMNSearchBeaconVC alloc] initWithBlock:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     
-    [searchBeaconVC finishLoading:^{
+    [_restaurant waiterCallForTableID:decodeBeacon.tableId complition:^{
       
-      _callWaiterButton.selected = YES;
-      [self.circleButton setImage:[UIImage imageNamed:@"call_waiter_icon"] forState:UIControlStateNormal];
-      [self.navigationController popToViewController:self animated:YES];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [searchBeaconVC finishLoading:^{
+          
+          _callWaiterButton.selected = YES;
+          [self.circleButton setImage:[UIImage imageNamed:@"call_waiter_icon"] forState:UIControlStateNormal];
+          [self.navigationController popToViewController:self animated:YES];
+          
+        }];
+        
+      });
+      
+    } failure:^(NSError *error) {
+      
+      NSLog(@"error>%@", error);
       
     }];
+    
+    
     
   } cancelBlock:^{
     
     _callWaiterButton.selected = NO;
-    [self.circleButton setImage:[UIImage imageNamed:@"ginza_logo"] forState:UIControlStateNormal];
+    [self.circleButton setImage:logo forState:UIControlStateNormal];
     [self.navigationController popToViewController:self animated:YES];
     
   }];
@@ -188,8 +220,37 @@ OMNOrdersVCDelegate>
   
 }
 
+- (void)checkPushNotifications {
+  
+  NSLog(@"%lu", (unsigned long)[[UIApplication sharedApplication] enabledRemoteNotificationTypes]);
+  
+  BOOL notificationPermissionRequested = [[NSUserDefaults standardUserDefaults] boolForKey:@"notificationPermissionRequested"];
+  
+  
+  if (UIRemoteNotificationTypeNone == [[UIApplication sharedApplication] enabledRemoteNotificationTypes]) {
+    
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"notificationPermissionRequested"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [UIAlertView bk_showAlertViewWithTitle:nil message:NSLocalizedString(@"Разрешить Omnom использовать Push сообщения для отображения информации о текущем столе?", nil) cancelButtonTitle:NSLocalizedString(@"Запретить", nil) otherButtonTitles:@[NSLocalizedString(@"Разрешить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+      
+      if (buttonIndex != alertView.cancelButtonIndex) {
+        
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+        
+      }
+      
+    }];
+    
+  }
+  
+}
+
+
 - (void)callBillTap {
   
+//  [self checkPushNotifications];
+//  return;
   OMNRestaurant *restaurant = _restaurant;
   __weak typeof(self)weakSelf = self;
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
@@ -243,7 +304,7 @@ OMNOrdersVCDelegate>
 
 - (void)showOrder:(OMNOrder *)order {
   
-  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithOrder:order];
+  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithRestaurant:_restaurant order:order];
   paymentVC.delegate = self;
   paymentVC.title = order.created;
   [self.navigationController pushViewController:paymentVC animated:YES];
@@ -253,7 +314,7 @@ OMNOrdersVCDelegate>
 
 - (void)selectOrderFromOrders:(NSArray *)orders {
   
-  OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithOrders:orders];
+  OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithRestaurant:_restaurant orders:orders];
   ordersVC.delegate = self;
   
   OMNOrder *order = [orders firstObject];
@@ -280,6 +341,12 @@ OMNOrdersVCDelegate>
 
 - (void)ordersVCDidCancel:(OMNOrdersVC *)ordersVC {
   [self.navigationController popToViewController:self animated:YES];
+}
+
+#pragma mark - OMNUserInfoVCDelegate
+
+- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
+  [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

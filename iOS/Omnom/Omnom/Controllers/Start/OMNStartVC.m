@@ -8,7 +8,6 @@
 
 #import "OMNStartVC.h"
 #import "UIImage+omn_helper.h"
-
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNAuthorisation.h"
 #import "OMNAuthorizationVC.h"
@@ -57,14 +56,21 @@ OMNAuthorizationVCDelegate>
     
   }];
   
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
+  [OMNAuthorisation authorisation].logoutCallback = ^{
+    
+    [[OMNAuthorisation authorisation] logout];
+    
+    [weakSelf dismissViewControllerAnimated:YES completion:^{
+      
+      [weakSelf showWizzard];
+      
+    }];
+  };
+  
 }
 
 - (void)startSearchingBeacons {
-
+  
   __weak typeof(self)weakSelf = self;
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithBlock:^(OMNRestaurant *restaurant) {
     [weakSelf didFindRestaurant:restaurant];
@@ -94,11 +100,10 @@ OMNAuthorizationVCDelegate>
 - (void)didFindRestaurant:(OMNRestaurant *)restaurant {
   
   OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithRestaurant:restaurant];
-  restaurantMenuVC.circleIcon = [UIImage imageNamed:@"ginza_logo"];
-
-  restaurantMenuVC.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:kRestaurantColor];
   [self.navigationController pushViewController:restaurantMenuVC animated:NO];
   [_navVC pushViewController:restaurantMenuVC animated:YES];
+  
+  
   
   return;
   [self dismissViewControllerAnimated:NO completion:^{
@@ -110,17 +115,6 @@ OMNAuthorizationVCDelegate>
 //    [self.navigationController pushViewController:restaurantMenuVC animated:YES];
     
   }];
-
-#warning newGuestForTableID:decodeBeacon.tableId
-//  [restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
-//    
-//    NSLog(@"newGuestForTableID>done");
-//    
-//  } failure:^(NSError *error) {
-//    
-//    NSLog(@"newGuestForTableID>%@", error);
-//    
-//  }];
   
 }
 #pragma mark - OMNRestaurantMenuVCDelegate

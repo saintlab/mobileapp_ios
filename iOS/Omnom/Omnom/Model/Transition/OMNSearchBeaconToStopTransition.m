@@ -53,7 +53,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.3;
+  return kSearchBeaconToStopTransitionDuration;
 }
 
 + (NSArray *)keys {

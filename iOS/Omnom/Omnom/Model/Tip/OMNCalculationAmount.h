@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNTip.h"
+#import "OMNOrder.h"
 
 @class OMNTipButton;
 
 @interface OMNCalculationAmount : NSObject
 
-- (instancetype)initWithTips:(NSArray *)tips tipsThreshold:(double)tipsThreshold total:(double)total;
+- (instancetype)initOrder:(OMNOrder *)order;
 
 @property (nonatomic, strong, readonly) NSArray *tips;
 
@@ -31,7 +31,5 @@
 - (BOOL)paymentValueIsTooHigh;
 
 - (void)configureTipButton:(OMNTipButton *)tipButton;
-
-
 
 @end

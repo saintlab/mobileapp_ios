@@ -15,15 +15,15 @@
 
 @dynamic selectedTipIndex;
 
-- (instancetype)initWithTips:(NSArray *)tips tipsThreshold:(double)tipsThreshold total:(double)total {
+- (instancetype)initOrder:(OMNOrder *)order {
   self = [super init];
   if (self) {
     
-    _tips = tips;
-    _expectedValue = total;
-    _tipsThreshold = tipsThreshold;
-    self.enteredAmount = total;
-    
+    _tips = order.tips;
+    _expectedValue = order.total;
+    _tipsThreshold = order.tipsThreshold;
+    _enteredAmount = order.tipsThreshold;
+
   }
   return self;
 }

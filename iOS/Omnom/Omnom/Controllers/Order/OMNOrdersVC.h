@@ -16,7 +16,7 @@
 
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
 
-- (instancetype)initWithOrders:(NSArray *)orders;
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant orders:(NSArray *)orders;
 
 @end
 
