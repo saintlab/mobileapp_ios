@@ -93,10 +93,6 @@
   
 }
 
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return kSearchRestaurantToSearchBeaconTransitionDuration;
-}
-
 + (NSArray *)keys {
   return @[
            [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNSearchBeaconVC class]]

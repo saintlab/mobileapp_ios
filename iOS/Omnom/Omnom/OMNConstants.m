@@ -27,15 +27,3 @@ NSString * const kBeaconUUIDString = kRedBearBeaconUUIDString;
 
 NSString * const kRestaurantLogoUrl = @"https://www.dropbox.com/s/85hs2o8u6dnonv2/loader-icon%402x.png?dl=1";
 NSString * const kRestaurantBGUrl = @"https://www.dropbox.com/s/9lt4ljhcvqajxjs/bg_pic%402x.png?dl=1";
-
-const NSTimeInterval kCircleFadeAnimationDuration = 0.3;
-const NSTimeInterval kCircleAnimationDuration = 0.3;
-const NSTimeInterval kOrderSlideAnimationDuration = 0.5;
-const NSTimeInterval kRestaurantToSearchBeaconTransitionDuration = 0.3;
-const NSTimeInterval kSearchBeaconToPayOrderTransitionDuration = 0.3;
-const NSTimeInterval kSearchRestaurantToSearchBeaconTransitionDuration = 0.5;
-const NSTimeInterval kSearchBeaconToStopTransitionDuration = 0.3;
-const NSTimeInterval kStopToSearchBeaconTransitionDuration = 0.5;
-const NSTimeInterval kSearchBeaconToRestaurantTransitionDuration = 0.5;
-
-

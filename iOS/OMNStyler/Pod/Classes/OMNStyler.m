@@ -53,6 +53,30 @@
   
 }
 
+- (NSTimeInterval)animationDurationForKey:(NSString *)key {
+  
+  NSTimeInterval animationDuration = 0.3;
+  
+  NSDictionary *timings = [_stylesCache objectForKey:@"timings"];
+  if (nil == timings) {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"timings" ofType:@"json"];
+    NSAssert([[NSFileManager defaultManager] fileExistsAtPath:path], @"You need timings.json file to use styler");
+    
+    NSData *jsonData = [[NSData alloc] initWithContentsOfFile:path];
+    NSError *error = nil;
+    timings = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+    [_stylesCache setObject:timings forKey:@"timings"];
+  }
+
+  if (timings[key]) {
+    animationDuration = [timings[key] doubleValue];
+  }
+
+  return animationDuration;
+  
+}
+
 /*
  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:@{NSFontAttributeName : _manager.navBarButtonFont} forState:UIControlStateNormal];
  [[UIBarButtonItem appearanceWhenContainedIn:[UIToolbar class], nil] setTitleTextAttributes:@{NSFontAttributeName : _manager.navBarButtonFont} forState:UIControlStateNormal];

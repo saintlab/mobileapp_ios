@@ -12,12 +12,14 @@
 @interface OMNBeaconRangingManager ()
 <CLLocationManagerDelegate>
 
+@property (nonatomic, strong) CLLocationManager *rangingLocationManager;
+
 @end
 
 @implementation OMNBeaconRangingManager {
   
   CLBeaconRegion *_rangingBeaconRegion;
-  CLLocationManager *_rangingLocationManager;
+  
   
   CLBeaconsBlock _didRangeBeaconsBlock;
   
@@ -33,21 +35,38 @@
 
 }
 
-- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock {
+- (instancetype)init {
   self = [super init];
   if (self) {
-
-    _statusBlock = statusBlock;
-    
     NSString *identifier = [NSString stringWithFormat:@"%@.rangingTask", [[NSBundle mainBundle] bundleIdentifier]];
     NSDictionary *beaconInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"OMNBeaconUUID" ofType:@"plist"]];
     _rangingBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:beaconInfo[@"uuid"]] identifier:identifier];
     
-    _rangingLocationManager = [[CLLocationManager alloc] init];
-    _rangingLocationManager.delegate = self;
+  }
+  return self;
+}
+
+- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock {
+  self = [self init];
+  if (self) {
+
+    _statusBlock = statusBlock;
     
   }
   return self;
+}
+
+- (CLLocationManager *)rangingLocationManager {
+  if (nil == _rangingLocationManager) {
+    _rangingLocationManager = [[CLLocationManager alloc] init];
+    _rangingLocationManager.delegate = self;
+    
+    if ([_rangingLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+      [_rangingLocationManager performSelector:@selector(requestAlwaysAuthorization) withObject:nil];
+    }
+    
+  }
+  return _rangingLocationManager;
 }
 
 - (void)rangeBeacons:(CLBeaconsBlock)didRangeBeaconsBlock failure:(void (^)(NSError *error))failureBlock {
@@ -69,13 +88,8 @@
     return;
   }
   
-  if (![_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
-#ifdef __IPHONE_8_0
-    if ([_rangingBeaconRegion respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-      [_rangingLocationManager requestAlwaysAuthorization];
-    }
-#endif
-    [_rangingLocationManager startRangingBeaconsInRegion:_rangingBeaconRegion];
+  if (![self.rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
+    [self.rangingLocationManager startRangingBeaconsInRegion:_rangingBeaconRegion];
   }
   
   _ranging = YES;
@@ -87,8 +101,8 @@
   _didRangeBeaconsBlock = nil;
   _didFailRangeBeaconsBlock = nil;
   
-  if ([_rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
-    [_rangingLocationManager stopRangingBeaconsInRegion:_rangingBeaconRegion];
+  if ([self.rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
+    [self.rangingLocationManager stopRangingBeaconsInRegion:_rangingBeaconRegion];
   }
   _ranging = NO;
 }
@@ -97,17 +111,22 @@
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
   
-  NSLog(@"didChangeAuthorizationStatus>%d", status);
   if (_statusBlock) {
     _statusBlock(status);
+  }
+  else {
+    NSLog(@"didChangeAuthorizationStatus>%d", status);
   }
   
 }
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
-  NSLog(@"didRangeBeacons>%@", beacons);
+  
   if (_didRangeBeaconsBlock) {
     _didRangeBeaconsBlock(beacons);
+  }
+  else {
+    NSLog(@"didRangeBeacons>%@", beacons);
   }
     
 }
@@ -117,7 +136,9 @@
   if (_didFailRangeBeaconsBlock) {
     _didFailRangeBeaconsBlock(error);
   }
-  
+  else {
+    NSLog(@"rangingBeaconsDidFailForRegion>%@", error);
+  }
 }
 
 @end

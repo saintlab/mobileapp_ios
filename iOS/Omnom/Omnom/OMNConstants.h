@@ -23,16 +23,6 @@ extern NSString * const kRestaurantBGUrl;
 typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);
 
-extern const NSTimeInterval kCircleFadeAnimationDuration;
-extern const NSTimeInterval kCircleAnimationDuration;
-extern const NSTimeInterval kOrderSlideAnimationDuration;
-extern const NSTimeInterval kRestaurantToSearchBeaconTransitionDuration;
-extern const NSTimeInterval kSearchBeaconToPayOrderTransitionDuration;
-extern const NSTimeInterval kSearchRestaurantToSearchBeaconTransitionDuration;
-extern const NSTimeInterval kSearchBeaconToStopTransitionDuration;
-extern const NSTimeInterval kStopToSearchBeaconTransitionDuration;
-extern const NSTimeInterval kSearchBeaconToRestaurantTransitionDuration;
-
 #define kUseStubData 0
 #define kUseStubUser 0
 #define kUseStubBeacon 1

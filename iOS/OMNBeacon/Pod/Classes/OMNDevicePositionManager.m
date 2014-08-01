@@ -13,7 +13,6 @@
 
 static double const kDesiredDurationOfStillPosition = 1.0;
 static double const kAccelerometerUpdateInterval = 0.5;
-
 static double const kDesiredAccelerometerAccuracy = 0.05;
 
 @implementation OMNDevicePositionManager {
@@ -89,7 +88,7 @@ static double const kDesiredAccelerometerAccuracy = 0.05;
 
   dispatch_block_t completitionPositionBlock = _completitionPositionBlock;
   _completitionPositionBlock = nil;
-  
+  NSLog(@"device is face up");
   if (completitionPositionBlock) {
     
     dispatch_async(dispatch_get_main_queue(), ^{

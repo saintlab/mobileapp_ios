@@ -10,6 +10,7 @@
 #import "OMNSearchBeaconVC.h"
 #import "OMNPayOrderVC.h"
 #import "OMNOrdersVC.h"
+#import <OMNStyler.h>
 
 @implementation OMNSearchBeaconToPayOrderTransition
 
@@ -37,16 +38,19 @@
   [containerView addSubview:toViewController.view];
   toViewController.view.transform = CGAffineTransformMakeTranslation(0.0f, -2*CGRectGetHeight(toViewController.view.frame));
   
+  NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
+  NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
+  
   CGFloat scale = 4.0f;
   
-  [UIView animateWithDuration:kCircleAnimationDuration animations:^{
+  [UIView animateWithDuration:CircleAnimationDuration animations:^{
     
     bigCircleIV.transform = CGAffineTransformMakeScale(scale, scale);
     
   } completion:^(BOOL finished) {
     
     [fromImageSnapshot removeFromSuperview];
-    [UIView animateWithDuration:kOrderSlideAnimationDuration animations:^{
+    [UIView animateWithDuration:OrderSlideAnimationDuration animations:^{
       
       toViewController.view.transform = CGAffineTransformIdentity;
       
@@ -63,7 +67,9 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return kCircleAnimationDuration + kOrderSlideAnimationDuration;
+  NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
+  NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
+  return OrderSlideAnimationDuration + CircleAnimationDuration;
 }
 
 + (NSArray *)keys {

@@ -13,7 +13,6 @@
 #import "OMNTransitionFromOrdersToOrder.h"
 #import "OMNTransitionFromOrderToOrders.h"
 #import "OMNTransitionFromOrderToCalculator.h"
-#import "OMNFadeTransition.h"
 #import "OMNSearchRestaurantToSearchBeaconTransition.h"
 #import "OMNSearchBeaconToStopTransition.h"
 #import "OMNStopToSearchBeaconTransition.h"
@@ -37,7 +36,6 @@
     [self addTansitionForClass:[OMNTransitionFromOrdersToOrder class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToCalculator class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToOrders class]];
-    [self addTansitionForClass:[OMNFadeTransition class]];
     [self addTansitionForClass:[OMNSearchRestaurantToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNSearchBeaconToStopTransition class]];
     [self addTansitionForClass:[OMNStopToSearchBeaconTransition class]];

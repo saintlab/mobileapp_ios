@@ -55,7 +55,6 @@
 
 + (NSArray *)keys {
   return @[
-           [self keyFromClass:[OMNStartVC class] toClass:[OMNR1VC class]],
            ];
 }
 

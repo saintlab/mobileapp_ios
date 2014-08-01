@@ -7,6 +7,7 @@
 //
 
 #import "OMNCustomTransition.h"
+#import <OMNStyler.h>
 
 @implementation OMNCustomTransition
 
@@ -14,7 +15,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.0;
+  return [[OMNStyler styler] animationDurationForKey:NSStringFromClass(self.class)];
 }
 
 + (NSArray *)keys {

@@ -10,6 +10,7 @@
 #import "OMNR1VC.h"
 #import "OMNOrdersVC.h"
 #import "OMNPayOrderVC.h"
+#import <OMNStyler.h>
 
 @implementation OMNOrderToRestaurantTransition
 
@@ -39,20 +40,24 @@
   CGFloat scale = 4.0f;
   bigCircleIV.transform = CGAffineTransformMakeScale(scale, scale);
   
-  [UIView animateWithDuration:kOrderSlideAnimationDuration animations:^{
+  NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
+  NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
+  NSTimeInterval CircleFadeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleFadeAnimationDuration"];
+  
+  [UIView animateWithDuration:OrderSlideAnimationDuration animations:^{
     
     fromImageSnapshot.transform = CGAffineTransformMakeTranslation(0.0f, -2*CGRectGetHeight(fromImageSnapshot.frame));
     
   } completion:^(BOOL finished) {
 
     [fromImageSnapshot removeFromSuperview];
-    [UIView animateWithDuration:kCircleAnimationDuration animations:^{
+    [UIView animateWithDuration:CircleAnimationDuration animations:^{
       
       bigCircleIV.transform = CGAffineTransformIdentity;
       
     } completion:^(BOOL finished) {
       
-      [UIView animateWithDuration:kCircleFadeAnimationDuration animations:^{
+      [UIView animateWithDuration:CircleFadeAnimationDuration animations:^{
         
         bigCircleIV.alpha = 0.0f;
         
@@ -72,7 +77,10 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return kCircleAnimationDuration + kOrderSlideAnimationDuration;
+  NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
+  NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
+  NSTimeInterval CircleFadeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleFadeAnimationDuration"];
+  return OrderSlideAnimationDuration + CircleAnimationDuration + CircleFadeAnimationDuration;
 }
 
 + (NSArray *)keys {

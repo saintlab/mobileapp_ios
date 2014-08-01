@@ -45,10 +45,6 @@
   
 }
 
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return kSearchBeaconToRestaurantTransitionDuration;
-}
-
 + (NSArray *)keys {
   return
   @[

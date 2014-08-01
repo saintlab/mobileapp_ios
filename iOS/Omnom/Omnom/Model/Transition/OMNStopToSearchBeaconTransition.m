@@ -47,10 +47,6 @@
   
 }
 
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return kStopToSearchBeaconTransitionDuration;
-}
-
 + (NSArray *)keys {
   return
   @[

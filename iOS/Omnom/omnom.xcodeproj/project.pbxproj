@@ -153,6 +153,8 @@
 		938E8F5E192F3A200088EF38 /* OMNTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F4D192F3A200088EF38 /* OMNTip.m */; };
 		938E8F64192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F63192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m */; };
 		938E8F68192F5C030088EF38 /* ALSRubl.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938E8F67192F5C030088EF38 /* ALSRubl.otf */; };
+		938F3A43198B859100AB288E /* timings.json in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A42198B859100AB288E /* timings.json */; };
+		938F3A44198B859100AB288E /* timings.json in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A42198B859100AB288E /* timings.json */; };
 		9390D25819668A3A007E13AB /* OMNEditTableVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 9390D25719668A3A007E13AB /* OMNEditTableVC.json */; };
 		9390D25919668A3A007E13AB /* OMNEditTableVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 9390D25719668A3A007E13AB /* OMNEditTableVC.json */; };
 		9390D25E1966DA68007E13AB /* OMNRestaurantMenuMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9390D25D1966DA68007E13AB /* OMNRestaurantMenuMediator.m */; };
@@ -489,6 +491,7 @@
 		938E8F62192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTransitionFromOrderToCalculator.h; sourceTree = "<group>"; };
 		938E8F63192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTransitionFromOrderToCalculator.m; sourceTree = "<group>"; };
 		938E8F67192F5C030088EF38 /* ALSRubl.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ALSRubl.otf; sourceTree = "<group>"; };
+		938F3A42198B859100AB288E /* timings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timings.json; sourceTree = "<group>"; };
 		9390D25719668A3A007E13AB /* OMNEditTableVC.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNEditTableVC.json; sourceTree = "<group>"; };
 		9390D25C1966DA68007E13AB /* OMNRestaurantMenuMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantMenuMediator.h; sourceTree = "<group>"; };
 		9390D25D1966DA68007E13AB /* OMNRestaurantMenuMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantMenuMediator.m; sourceTree = "<group>"; };
@@ -1133,6 +1136,7 @@
 		9390D2561966844C007E13AB /* Styles */ = {
 			isa = PBXGroup;
 			children = (
+				938F3A42198B859100AB288E /* timings.json */,
 				9390D25719668A3A007E13AB /* OMNEditTableVC.json */,
 				9390D2601966E559007E13AB /* OMNOrderCell.json */,
 				9390D2631966E945007E13AB /* UINavigationBar.json */,
@@ -1546,6 +1550,7 @@
 				93C99161193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
 				93C9915E193F175E0028F76C /* FuturaPT-Book.ttf in Resources */,
+				938F3A43198B859100AB288E /* timings.json in Resources */,
 				93676E4B18D1F10300FC55F1 /* menu.json in Resources */,
 				9319FDC8192F362F0053F3A4 /* OMNDemoBlueToothVC.xib in Resources */,
 				93B09C3D18F3F5400027B19F /* orders.json in Resources */,
@@ -1611,6 +1616,7 @@
 				93B9048819654B43007D21C4 /* OMNPaymentVC.xib in Resources */,
 				93E299FD198002EC00051B04 /* OMNSettings.plist in Resources */,
 				93C99162193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
+				938F3A44198B859100AB288E /* timings.json in Resources */,
 				932118251962E12700183729 /* OMNRestaurantMenuVC.xib in Resources */,
 				9371891219702D6A00F8794B /* OMNBeaconUUID.plist in Resources */,
 				937822901963E29900CE6661 /* OMNPayOrderVC.xib in Resources */,

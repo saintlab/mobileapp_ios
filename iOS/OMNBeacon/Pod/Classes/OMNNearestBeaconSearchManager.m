@@ -54,7 +54,6 @@
   __weak typeof(self)weakSelf = self;
   [_devicePositionManager handleDeviceFaceUpPosition:^{
     
-    NSLog(@"device is face up");
     [weakSelf startRangingBeacons];
     
   }];
@@ -62,13 +61,12 @@
 }
 
 - (void)startRangingBeacons {
-  NSLog(@"startRangingBeacons");
+
   [_devicePositionManager stop];
   _devicePositionManager = nil;
   
   __weak typeof(self)weakSelf = self;
-  _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
-  
+  _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:nil];
   
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     

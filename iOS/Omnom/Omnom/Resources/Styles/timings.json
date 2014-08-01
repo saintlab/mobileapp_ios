@@ -1,0 +1,13 @@
+{
+  
+  "OMNRestaurantToSearchBeaconTransition": 0.3,
+  "OMNSearchRestaurantToSearchBeaconTransition": 0.5,
+  "OMNSearchBeaconToStopTransition": 0.3,
+  "OMNStopToSearchBeaconTransition": 0.5,
+  "OMNSearchBeaconToRestaurantTransition": 0.5,
+  
+  "OrderSlideAnimationDuration": 0.5,
+  "CircleAnimationDuration": 0.3,
+  "CircleFadeAnimationDuration": 0.3
+  
+}
