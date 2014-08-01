@@ -306,11 +306,8 @@ OMNScanQRCodeVCDelegate>
     } break;
     case kSearchManagerStartSearchingBeacons: {
       
-      [_loaderView setProgress:0.6];
       NSLog(@"Определение вашего столика");
-      
-      //in case there ask permission state
-      [self.navigationController popToViewController:self animated:YES];
+      [_loaderView setProgress:0.6];
       
     } break;
     case kSearchManagerNotFoundBeacons: {
@@ -364,13 +361,13 @@ OMNScanQRCodeVCDelegate>
     } break;
     case kSearchManagerRequestDeviceFaceUpPosition: {
       
-      NSLog(@"determineFaceUpPOsition");
-      [self determineFaceUpPOsition];
+      NSLog(@"determineFaceUpPosition");
+      [self determineFaceUpPosition];
       
     } break;
     case kSearchManagerRequestLocationManagerPermission: {
       
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         OMNAskNavigationPermissionsVC *askNavigationPermissionsVC = [[OMNAskNavigationPermissionsVC alloc] init];
         [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
         
@@ -386,6 +383,12 @@ OMNScanQRCodeVCDelegate>
     case kSearchManagerOmnomServerUnavaliable: {
       
       [self showNoInternetErrorWithText:NSLocalizedString(@"нет доступа к серверам omnom.", nil)];
+      
+    } break;
+    case kSearchManagerRequestReload: {
+      
+      [self.navigationController popToViewController:self animated:YES];
+      [self startSearchingBeacon];
       
     } break;
   }
@@ -414,7 +417,7 @@ OMNScanQRCodeVCDelegate>
   
 }
 
-- (void)determineFaceUpPOsition {
+- (void)determineFaceUpPosition {
   
   OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] initWithTitle:NSLocalizedString(@"Положите телефон в центр стола", nil) buttons:@[]];
   tablePositionVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];

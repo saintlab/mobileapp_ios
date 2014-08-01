@@ -36,3 +36,5 @@ typedef void(^OMNDataBlock)(id data);
 
 #define FuturaMediumFont(__FONTSIZE__) ([UIFont fontWithName:@"FuturaPT-Medium" size:__FONTSIZE__])
 #define FuturaBookFont(__FONTSIZE__) ([UIFont fontWithName:@"FuturaPT-Book" size:__FONTSIZE__])
+//Futura-OSF-Omnom-Regular
+//Futura-OSF-Omnom-Medium

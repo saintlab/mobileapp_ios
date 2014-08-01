@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UIView *foregroundView;
 @property (nonatomic, copy) dispatch_block_t actionBlock;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *circleCenterLayout;
 
 @property (nonatomic, strong) UIImage *circleIcon;
 @property (nonatomic, strong) UIImage *circleBackground;

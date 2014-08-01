@@ -23,20 +23,23 @@ static NSString * const kOMNMailRu_cvv = @"123";
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+//  _cardId = @"30002847034833862453";
+//  _cardInfo =
+//  @{
+//    @"pan" : @"4111111111111111",
+//    @"exp_date" : @"12.2015",
+//    @"cvv" : kOMNMailRu_cvv,
+//    };
   
+  _cardId = @"30004501610923294711";
   _cardInfo =
   @{
-    @"pan" : @"4111111111111111",
+    @"pan" : @"6011000000000004",
     @"exp_date" : @"12.2015",
     @"cvv" : kOMNMailRu_cvv,
     };
   
-//  _cardInfo =
-//  @{
-//    @"pan" : @"6011000000000004",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : kOMNMailRu_cvv,
-//    };
+//  _cardId = @"30001197651493912571";
 //  _cardInfo =
 //  @{
 //    @"pan" : @"639002000000000003",
@@ -44,7 +47,6 @@ static NSString * const kOMNMailRu_cvv = @"123";
 //    @"cvv" : kOMNMailRu_cvv,
 //    };
   
-  _cardId = @"30002847034833862453";
 }
 
 - (IBAction)payAndRegisterTap:(id)sender {
@@ -78,8 +80,7 @@ static NSString * const kOMNMailRu_cvv = @"123";
 
 - (IBAction)payWithNewCard:(id)sender {
   
-  
-  
+  [[OMNMailRuAcquiring acquiring] payWithCardInfo:_cardInfo addCard:NO];
   
 }
 

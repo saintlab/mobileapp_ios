@@ -28,9 +28,10 @@ static NSString * const kAccountName = @"test_account6";
 - (instancetype)init {
   self = [super init];
   if (self) {
-    
-    NSString *token = [SSKeychain passwordForService:@"token" account:kAccountName];
-    [self updateAuthenticationToken:token];
+
+#warning updateAuthenticationToken:token
+//    NSString *token = [SSKeychain passwordForService:@"token" account:kAccountName];
+//    [self updateAuthenticationToken:token];
 
   }
   return self;

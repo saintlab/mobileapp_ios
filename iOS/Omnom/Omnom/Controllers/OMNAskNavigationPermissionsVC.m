@@ -43,9 +43,12 @@ CLLocationManagerDelegate>
   [super viewDidLoad];
 
   _permissionLocationManager = [[CLLocationManager alloc] init];
-#ifdef __IPHONE_8_0
-  [_permissionLocationManager requestAlwaysAuthorization];
-#endif
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+  if ([_permissionLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+    [_permissionLocationManager performSelector:@selector(requestAlwaysAuthorization) withObject:nil];
+  }
+#pragma clang diagnostic pop
   
 }
 

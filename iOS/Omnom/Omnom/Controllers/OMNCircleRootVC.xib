@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNCircleRootVC">
@@ -9,6 +10,7 @@
                 <outlet property="_actionButtonSpace" destination="49N-BM-B5k" id="Ykg-1X-TYF"/>
                 <outlet property="button" destination="Osq-rl-D5P" id="U2o-ZK-mxe"/>
                 <outlet property="circleButton" destination="dkP-fe-wik" id="WPO-Ls-ejn"/>
+                <outlet property="circleCenterLayout" destination="0te-cl-2Fp" id="Bku-cz-1Rq"/>
                 <outlet property="foregroundView" destination="z1w-k1-jr8" id="zjv-od-CPj"/>
                 <outlet property="label" destination="2YX-13-NuN" id="InR-Y6-Phd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -28,7 +30,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="2YX-13-NuN">
-                            <rect key="frame" x="20" y="335" width="280" height="175"/>
+                            <rect key="frame" x="20" y="308" width="280" height="175"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="175" id="f8g-5y-OK0"/>
@@ -46,8 +48,8 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkP-fe-wik">
-                            <rect key="frame" x="60" y="127" width="200" height="200"/>
+                        <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkP-fe-wik">
+                            <rect key="frame" x="60" y="100" width="200" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="200" id="3L5-jl-Whu"/>
@@ -60,7 +62,7 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="dkP-fe-wik" firstAttribute="top" secondItem="z1w-k1-jr8" secondAttribute="top" constant="127" id="0te-cl-2Fp"/>
+                        <constraint firstItem="dkP-fe-wik" firstAttribute="centerY" secondItem="z1w-k1-jr8" secondAttribute="top" constant="200" id="0te-cl-2Fp"/>
                         <constraint firstAttribute="centerX" secondItem="dkP-fe-wik" secondAttribute="centerX" id="2VV-7O-L6v"/>
                         <constraint firstAttribute="bottom" secondItem="Osq-rl-D5P" secondAttribute="bottom" id="9aR-Fm-HGY"/>
                         <constraint firstItem="2YX-13-NuN" firstAttribute="leading" secondItem="z1w-k1-jr8" secondAttribute="leading" constant="20" id="V8T-CJ-c4Z"/>

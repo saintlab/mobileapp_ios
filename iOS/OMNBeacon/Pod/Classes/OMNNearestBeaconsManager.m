@@ -31,13 +31,20 @@
   _beaconRangingManager = nil;
 }
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    NSAssert(YES, @"call initWithStatusBlock: instead");
+  }
+  return self;
+}
+
 - (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock {
   self = [super init];
   if (self) {
     _statusBlock = statusBlock;
     _addBeaconLock = dispatch_semaphore_create(1);
     _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:_statusBlock];
-    
   }
   return self;
 }

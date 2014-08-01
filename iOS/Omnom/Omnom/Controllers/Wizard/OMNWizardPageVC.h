@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) UIColor *bgColor;
 @property (nonatomic, strong) NSString *bgImageName;
+@property (nonatomic, strong) NSString *iconName;
 @property (nonatomic, strong) NSString *text;
 
 @end

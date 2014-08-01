@@ -7,7 +7,7 @@
 //
 
 #import "OMNWizardVC.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 
 @interface OMNWizardVC ()
 <UIScrollViewDelegate>
@@ -43,20 +43,22 @@
   
   [self loadControllerAtIndex:0];
   [self loadControllerAtIndex:1];
+
   
-  UIColor *buttonBGColor = [UIColor colorWithWhite:1 alpha:0.3];
-  UIColor *buttonTextColor = [UIColor whiteColor];
-  UIFont *buttonFont = FuturaMediumFont(20);
-  
-  _loginButton.backgroundColor = buttonBGColor;
+  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
+  UIColor *buttonsBGColor = [style colorForKey:@"buttonsBGColor"];
+  UIColor *buttonTextColor = [style colorForKey:@"buttonsTextColor"];
+  UIFont *buttonsFont = [style fontForKey:@"buttonsFont"];
+
+  _loginButton.backgroundColor = buttonsBGColor;
   [_loginButton setTitleColor:buttonTextColor forState:UIControlStateNormal];
   [_loginButton setTitle:NSLocalizedString(@"Вход", nil) forState:UIControlStateNormal];
-  _loginButton.titleLabel.font = buttonFont;
+  _loginButton.titleLabel.font = buttonsFont;
   
-  _registerButton.backgroundColor = buttonBGColor;
+  _registerButton.backgroundColor = buttonsBGColor;
   [_registerButton setTitleColor:buttonTextColor forState:UIControlStateNormal];
   [_registerButton setTitle:NSLocalizedString(@"Регистрация", nil) forState:UIControlStateNormal];
-  _registerButton.titleLabel.font = buttonFont;
+  _registerButton.titleLabel.font = buttonsFont;
 }
 
 - (void)viewWillLayoutSubviews {

@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
   kSearchManagerStartSearchingBeacons,
   
   kSearchManagerNotFoundBeacons,
+  kSearchManagerRequestReload,
   
   kSearchManagerRequestLocationManagerPermission,
   kSearchManagerRequestCoreLocationDeniedPermission,

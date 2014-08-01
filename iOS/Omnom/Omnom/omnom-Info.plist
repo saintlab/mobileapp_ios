@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>menu.omnom.appt12</string>
+	<string>menu.omnom.appt15</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -24,7 +24,7 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>menu.omnom.appt12</string>
+			<string>menu.omnom.appt14</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>omnom</string>
@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>247</string>
+	<string>270</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
@@ -51,6 +51,8 @@
 		<string>FuturaPT-Medium.ttf</string>
 		<string>FuturaPT-Book.ttf</string>
 		<string>Futura-LSF-Omnom-Regular.otf</string>
+		<string>Futura-OSF-Omnom-Regular.otf</string>
+		<string>Futura-OSF-Omnom-Medium.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

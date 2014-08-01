@@ -18,6 +18,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 @implementation OMNBeaconSearchManager {
   OMNNearestBeaconsManager *_nearestBeaconsManager;
   NSTimer *_nearestBeaconsRangingTimer;
+  BOOL _coreLocationDenied;
 }
 
 - (void)dealloc {
@@ -227,18 +228,31 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   
 }
 
+- (void)processCoreLocationDenySituation {
+  _coreLocationDenied = YES;
+  [self stopRangingNearestBeacons:NO];
+}
+
 - (void)processCoreLocationAuthorizationStatus:(CLAuthorizationStatus)status {
   
   switch (status) {
     case kCLAuthorizationStatusAuthorized: {
       
-      [[OMNBeaconBackgroundManager manager] startBeaconRegionMonitoring];
-      [self startRangeNearestBeacons];
+      if (_coreLocationDenied) {
+        _coreLocationDenied = NO;
+        [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestReload];
+      }
+      else {
+
+        [[OMNBeaconBackgroundManager manager] startBeaconRegionMonitoring];
+        [self startRangeNearestBeacons];
+        
+      }
       
     } break;
     case kCLAuthorizationStatusDenied: {
       
-      [self stopRangingNearestBeacons:NO];
+      [self processCoreLocationDenySituation];
       [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestCoreLocationDeniedPermission];
       
     } break;
@@ -247,7 +261,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
     } break;
     case kCLAuthorizationStatusRestricted: {
       
-      [self stopRangingNearestBeacons:NO];
+      [self processCoreLocationDenySituation];
       [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestCoreLocationRestrictedPermission];
       
     } break;

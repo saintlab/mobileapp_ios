@@ -7,7 +7,8 @@
 //
 
 #import "OMNWizardPageVC.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
+
 @interface OMNWizardPageVC ()
 
 @end
@@ -16,13 +17,12 @@
   
   __weak IBOutlet UIImageView *_iv;
   __weak IBOutlet UILabel *_textLabel;
+  __weak IBOutlet UIButton *_circleButton;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    // Custom initialization
   }
   return self;
 }
@@ -30,14 +30,25 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _iv.contentMode = UIViewContentModeTop;
-  _iv.image = [UIImage imageNamed:self.bgImageName];
+  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
   
-  self.view.backgroundColor = self.bgColor;
+  if (self.bgImageName) {
+    _iv.contentMode = UIViewContentModeTop;
+    _iv.image = [UIImage imageNamed:self.bgImageName];
+  }
+  
+  if (self.iconName) {
+    [_circleButton setImage:[UIImage imageNamed:self.iconName] forState:UIControlStateNormal];
+  }
+  
+  if (self.bgColor) {
+    self.view.backgroundColor = self.bgColor;
+  }
   
   _textLabel.text = self.text;
-  _textLabel.textColor = [UIColor whiteColor];
-  _textLabel.font = FuturaBookFont(20);
+  _textLabel.numberOfLines = 0;
+  _textLabel.textColor = [style colorForKey:@"labelTextColor"];
+  _textLabel.font = [style fontForKey:@"labelFont"];
 }
 
 - (void)didReceiveMemoryWarning
