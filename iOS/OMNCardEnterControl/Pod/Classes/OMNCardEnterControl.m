@@ -33,67 +33,143 @@ NSString * const kMM_YYSeporator = @"/";
   UITextField *_panTF;
   UITextField *_expireTF;
   UITextField *_cvvTF;
+  UIButton *_saveButton;
   
   CGSize _panSize;
   CGFloat _expireWidth;
+  
+  NSDictionary *_views;
+  NSDictionary *_metrics;
+  
+  NSMutableArray *_dynamycConstraints;
+  
+  BOOL _expireCCVTFHidden;
 }
 
 - (instancetype)init {
   
-  UIFont *font = [UIFont systemFontOfSize:17];
-  
-  NSString *panPlaceHolder = @"0000 0000 0000 0000";
-  
-  _panSize = [panPlaceHolder sizeWithAttributes:@{NSFontAttributeName : font}];
-  
   self = [super initWithFrame:(CGRect){CGPointZero, _panSize}];
   if (self) {
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    
     self.backgroundColor = [UIColor lightGrayColor];
+    self.backgroundColor = [UIColor blackColor];
     
-    _expireWidth = [@"99 / 99" sizeWithAttributes:@{NSFontAttributeName : font}].width;
+    _dynamycConstraints = [NSMutableArray array];
     
-    _expireTF = [[OMNDeletedTextField alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _expireWidth, CGRectGetHeight(self.frame))];
+    _panTF = [[UITextField alloc] init];
+    
+    _panTF.translatesAutoresizingMaskIntoConstraints = NO;
+    _panTF.backgroundColor = [UIColor lightGrayColor];
+    _panTF.placeholder = NSLocalizedString(@"Номер банковской карты", nil);
+    _panTF.keyboardType = UIKeyboardTypeNumberPad;
+    _panTF.delegate = self;
+    [self addSubview:_panTF];
+
+    _expireTF = [[OMNDeletedTextField alloc] init];
+    _expireTF.textAlignment = NSTextAlignmentLeft;
+    _expireTF.backgroundColor = [UIColor lightGrayColor];
+    _expireTF.translatesAutoresizingMaskIntoConstraints = NO;
     _expireTF.keyboardType = UIKeyboardTypeNumberPad;
-    _expireTF.font = font;
     _expireTF.delegate = self;
     _expireTF.placeholder = [NSString stringWithFormat:@"MM%@YY", kMM_YYSeporator];
     [self addSubview:_expireTF];
     
-    _panTF = [[UITextField alloc] initWithFrame:(CGRect){CGPointZero, _panSize}];
-    _panTF.backgroundColor = [UIColor lightGrayColor];
-    _panTF.placeholder = panPlaceHolder;
-    _panTF.keyboardType = UIKeyboardTypeNumberPad;
-    _panTF.font = font;
-    _panTF.delegate = self;
-    [self addSubview:_panTF];
-    
-    _cvvTF = [[OMNDeletedTextField alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxX(_expireTF.frame), 100.0f, CGRectGetHeight(self.frame))];
+    _cvvTF = [[OMNDeletedTextField alloc] init];
+    _cvvTF.textAlignment = NSTextAlignmentLeft;
+    _cvvTF.backgroundColor = [UIColor lightGrayColor];
+    _cvvTF.translatesAutoresizingMaskIntoConstraints = NO;
     _cvvTF.keyboardType = UIKeyboardTypeNumberPad;
-    _cvvTF.font = font;
     _cvvTF.delegate = self;
     _cvvTF.placeholder = @"CVV";
     [self addSubview:_cvvTF];
-
     
-    UIButton *topView = [[UIButton alloc] initWithFrame:self.bounds];
-    [topView addTarget:self action:@selector(becomeEditingTap) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:topView];
+    _saveButton = [[UIButton alloc] init];
+    _saveButton.translatesAutoresizingMaskIntoConstraints = NO;
+    _saveButton.titleLabel.numberOfLines = 0;
+    _saveButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+    _saveButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _saveButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _saveButton.titleLabel.minimumScaleFactor = 0.1f;
+    [_saveButton setTitle:NSLocalizedString(@"Сохранить данные для следующих платежей", nil) forState:UIControlStateNormal];
+    [self addSubview:_saveButton];
     
     self.clipsToBounds = YES;
+    
+    _views =
+    @{
+      @"panTF" : _panTF,
+      @"cvvTF" : _cvvTF,
+      @"expireTF" : _expireTF,
+      @"saveButton" : _saveButton,
+      };
+    
+    _metrics =
+    @{
+      @"height" : @(50.0f),
+      };
+    
+    NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panTF]|" options:0 metrics:nil views:_views];
+    [self addConstraints:panH];
+    
+    panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[saveButton]|" options:0 metrics:nil views:_views];
+    [self addConstraints:panH];
+    
+    panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[expireTF]-[cvvTF]" options:0 metrics:nil views:_views];
+    [self addConstraints:panH];
+    
+    NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]" options:0 metrics:_metrics views:_views];
+    [self addConstraints:panV];
+      NSLayoutConstraint *centerYConstraint = [NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
+    [self addConstraint:centerYConstraint];
+    
+    NSArray *equalVConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[cvvTF(==expireTF)]"
+                                                                    options:0
+                                                                    metrics:nil
+                                                                      views:_views];
+    [self addConstraints:equalVConstraints];
+    [self setExpireCCVTFHidden:YES animated:NO completion:nil];
     
   }
   return self;
 }
 
-- (void)becomeEditingTap {
-  
-  if (_panTF.text.length < kDesiredPanLength) {
-    [self showPANTF];
+- (void)setExpireCCVTFHidden:(BOOL)hidden animated:(BOOL)animated completion:(dispatch_block_t)completion {
+
+  NSMutableArray *dynamycConstraints = [NSMutableArray array];
+  if (hidden) {
+    NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(0)]-[saveButton]|" options:0 metrics:_metrics views:_views];
+    [dynamycConstraints addObjectsFromArray:constraintsV];
   }
   else {
-    [self showExpireTF];
+    NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(50)]-[saveButton]|" options:0 metrics:_metrics views:_views];
+    [dynamycConstraints addObjectsFromArray:constraintsV];
   }
   
+  [self removeConstraints:_dynamycConstraints];
+  _dynamycConstraints = dynamycConstraints;
+  [self addConstraints:_dynamycConstraints];
+
+  if (animated) {
+
+    [UIView animateWithDuration:0.3f animations:^{
+      [self layoutIfNeeded];
+    } completion:^(BOOL finished) {
+      
+      if (completion) {
+        completion();
+      }
+      
+    }];
+    
+  }
+  else {
+    [self layoutIfNeeded];
+    if (completion) {
+      completion();
+    }
+  }
+  _expireCCVTFHidden = hidden;
 }
 
 - (void)showExpireTF {
@@ -102,22 +178,18 @@ NSString * const kMM_YYSeporator = @"/";
     return;
   }
   
-  NSString *displaceString = [_panTF.text substringToIndex:_panTF.text.length - kPanGroupLength];
-  CGFloat panOffset = -[displaceString sizeWithAttributes:@{NSFontAttributeName : _panTF.font}].width;
-  
-  NSString *lastDightsString = [_panTF.text substringFromIndex:_panTF.text.length - kPanGroupLength];
-  CGRect frame = _expireTF.frame;
-  frame.origin.x = [lastDightsString sizeWithAttributes:@{NSFontAttributeName : _panTF.font}].width + kTextFieldsOffset;
-  _expireTF.frame = frame;
+  if (_expireCCVTFHidden) {
 
-  [_expireTF becomeFirstResponder];
-  [UIView animateWithDuration:kSlideAnimationDuratiom animations:^{
-
-    _panTF.transform = CGAffineTransformMakeTranslation(panOffset, 0);
-
-  } completion:^(BOOL finished) {
-  
-  }];
+    [self setExpireCCVTFHidden:NO animated:YES completion:^{
+      
+      [_expireTF becomeFirstResponder];
+      
+    }];
+    
+  }
+  else {
+    [_expireTF becomeFirstResponder];
+  }
   
 }
 
@@ -154,14 +226,17 @@ NSString * const kMM_YYSeporator = @"/";
 
 - (void)showPANTF {
   
-  [_panTF becomeFirstResponder];
-  [UIView animateWithDuration:kSlideAnimationDuratiom animations:^{
+  if (0 == _cvvTF.text.length &&
+      0 == _expireTF.text.length) {
     
-    _panTF.transform = CGAffineTransformIdentity;
-    
-  } completion:^(BOOL finished) {
-    
-  }];
+    [self setExpireCCVTFHidden:YES animated:YES completion:^{
+      [_panTF becomeFirstResponder];
+    }];
+  }
+  else {
+    [_panTF becomeFirstResponder];
+  }
+  
   
 }
 
@@ -194,6 +269,15 @@ NSString * const kMM_YYSeporator = @"/";
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)isValidDate {
+  
+  BOOL isValidDate = YES;
+  
+  
+  
+  
+}
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
 
@@ -236,10 +320,6 @@ NSString * const kMM_YYSeporator = @"/";
       else if (yy.length >= 2) {
         
         yy = [yy substringToIndex:2];
-        NSString *dateString = [@[mm, yy] componentsJoinedByString:kMM_YYSeporator];
-        textField.text = dateString;
-        [self showCVVTF];
-        return NO;
         
       }
       
@@ -261,14 +341,32 @@ NSString * const kMM_YYSeporator = @"/";
         }
         
       }
-      else if (0 == mm.length &&
-               [string isEqualToString:@""]) {
-        [self showPANTF];
-      }
-      
     }
     
-    textField.text = [MM_YYComponents componentsJoinedByString:kMM_YYSeporator];
+    NSString *MMYYString = [MM_YYComponents componentsJoinedByString:kMM_YYSeporator];
+    NSMutableAttributedString *attributedMMYYString = [[NSMutableAttributedString alloc] initWithString:MMYYString];
+    
+    if (2 == mm.length &&
+        [mm integerValue] > 12) {
+      [attributedMMYYString setAttributes:@{NSForegroundColorAttributeName : [UIColor redColor]} range:NSMakeRange(0, MMYYString.length)];
+    }
+    else if (2 == yy.length &&
+        [yy integerValue] < 14) {
+      [attributedMMYYString setAttributes:@{NSForegroundColorAttributeName : [UIColor redColor]} range:NSMakeRange(0, MMYYString.length)];
+    }
+    else {
+      [attributedMMYYString setAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]} range:NSMakeRange(0, MMYYString.length)];
+    }
+    textField.attributedText = attributedMMYYString;
+
+    if (0 == mm.length &&
+        [string isEqualToString:@""]) {
+      [self showPANTF];
+    }
+    else if (2 == mm.length &&
+             2 == yy.length) {
+      [self showCVVTF];
+    }
     
     return NO;
   }
@@ -285,7 +383,10 @@ NSString * const kMM_YYSeporator = @"/";
     if (kCVVLength == cvv.length) {
       [self didFinishEnterCardDetails];
     }
-
+    else if (0 == cvv.length) {
+      [self showExpireTF];
+    }
+    return NO;
   }
   
   return YES;

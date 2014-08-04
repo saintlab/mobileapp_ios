@@ -36,7 +36,6 @@
   
   self.imageView.image = [UIImage imageNamed:_product.imageName];
   
-  _bgIV.image = [UIImage imageNamed:@"background_blur"];
   _textLabel.textColor = [UIColor whiteColor];
   _textLabel.font = FuturaMediumFont(15);
   _textLabel.text = _product.text;

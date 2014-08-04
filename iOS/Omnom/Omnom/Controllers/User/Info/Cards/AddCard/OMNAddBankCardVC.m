@@ -29,9 +29,20 @@ OMNCardEnterControlDelegate>
   [super viewDidLoad];
 
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
-  _cardEnterControl.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 100.0f);
+  _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
   _cardEnterControl.delegate = self;
   [self.view addSubview:_cardEnterControl];
+
+  NSDictionary *views =
+  @{
+    @"cardEnterControl" : _cardEnterControl,
+    };
+  
+  NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardEnterControl]-|" options:0 metrics:nil views:views];
+  [self.view addConstraints:panH];
+  
+  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardEnterControl]" options:0 metrics:nil views:views];
+  [self.view addConstraints:panV];
   
   [_addCardButton setTitle:NSLocalizedString(@"Готово", nil) forState:UIControlStateNormal];
   

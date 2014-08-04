@@ -17,11 +17,10 @@
 @implementation OMNWizardVC {
   NSArray *_viewControllers;
 
-  __weak IBOutlet UIPageControl *_pageControl;
   __weak IBOutlet UIScrollView *_scroll;
   
-  __weak IBOutlet UIButton *_registerButton;
-  __weak IBOutlet UIButton *_loginButton;
+//  __weak IBOutlet UIButton *_registerButton;
+//  __weak IBOutlet UIButton *_loginButton;
   
 }
 
@@ -45,20 +44,17 @@
   [self loadControllerAtIndex:1];
 
   
-  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
-  UIColor *buttonsBGColor = [style colorForKey:@"buttonsBGColor"];
-  UIColor *buttonTextColor = [style colorForKey:@"buttonsTextColor"];
-  UIFont *buttonsFont = [style fontForKey:@"buttonsFont"];
-
-  _loginButton.backgroundColor = buttonsBGColor;
-  [_loginButton setTitleColor:buttonTextColor forState:UIControlStateNormal];
-  [_loginButton setTitle:NSLocalizedString(@"Вход", nil) forState:UIControlStateNormal];
-  _loginButton.titleLabel.font = buttonsFont;
-  
-  _registerButton.backgroundColor = buttonsBGColor;
-  [_registerButton setTitleColor:buttonTextColor forState:UIControlStateNormal];
-  [_registerButton setTitle:NSLocalizedString(@"Регистрация", nil) forState:UIControlStateNormal];
-  _registerButton.titleLabel.font = buttonsFont;
+//  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
+//  UIColor *buttonsBGColor = [style colorForKey:@"buttonsBGColor"];
+//  UIColor *buttonTextColor = [style colorForKey:@"buttonsTextColor"];
+//  UIFont *buttonsFont = [style fontForKey:@"buttonsFont"];
+//  _loginButton.backgroundColor = buttonsBGColor;
+//  [_loginButton setTitleColor:buttonTextColor forState:UIControlStateNormal];
+//  _loginButton.titleLabel.font = buttonsFont;
+//  
+//  _registerButton.backgroundColor = buttonsBGColor;
+//  [_registerButton setTitleColor:buttonTextColor forState:UIControlStateNormal];
+//  _registerButton.titleLabel.font = buttonsFont;
 }
 
 - (void)viewWillLayoutSubviews {

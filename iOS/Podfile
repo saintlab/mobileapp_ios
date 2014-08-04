@@ -28,6 +28,7 @@ def import_all
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"
   pod "OMNSocketIO", :path => "OMNSocketIO/"
+  pod "OMNMailRuAcquiring", :path => "OMNMailRuAcquiring/"
   
   #  pod "OMNSocial", :path => "OMNSocial/"
 end

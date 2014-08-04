@@ -25,6 +25,7 @@ typedef void(^OMNImageBlock)(UIImage *image);
 @property (nonatomic, strong) NSString *logoUrl;
 
 @property (nonatomic, strong) UIImage *logo;
+@property (nonatomic, strong) UIImage *background;
 
 - (instancetype)initWithData:(id)data;
 
@@ -41,5 +42,6 @@ typedef void(^OMNImageBlock)(UIImage *image);
 - (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block error:(void(^)(NSError *error))errorBlock;
 
 - (void)loadLogo:(OMNImageBlock)imageBlock;
+- (void)loadBackground:(OMNImageBlock)imageBlock;
 
 @end

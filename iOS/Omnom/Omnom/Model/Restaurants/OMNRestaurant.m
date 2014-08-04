@@ -25,7 +25,9 @@
 
 @end
 
-@implementation OMNRestaurant
+@implementation OMNRestaurant {
+  NSOperationQueue *_imageRequestsQueue;
+}
 
 - (instancetype)initWithData:(id)data {
   
@@ -50,7 +52,9 @@
     else {
       self.background_color = [UIColor blackColor];
     }
-
+    
+    _imageRequestsQueue = [[NSOperationQueue alloc] init];
+    _imageRequestsQueue.maxConcurrentOperationCount = 1;
   }
   return self;
 }
@@ -218,17 +222,15 @@
   return [NSString stringWithFormat:@"%@, %@", _title, _id];
 }
 
-- (void)loadLogo:(OMNImageBlock)imageBlock {
+- (void)loadImageWithUrlString:(NSString *)urlString imageBlock:(OMNImageBlock)imageBlock {
   
-  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.logoUrl]];
+  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
   
   AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
   requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
   
-  __weak typeof(self)weakSelf = self;
   [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    weakSelf.logo = responseObject;
     imageBlock(responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -236,7 +238,31 @@
     imageBlock(nil);
     
   }];
-  [requestOperation start];
+  [_imageRequestsQueue addOperation:requestOperation];
+  
+}
+
+- (void)loadLogo:(OMNImageBlock)imageBlock {
+  
+  __weak typeof(self)weakSelf = self;
+  [self loadImageWithUrlString:self.logoUrl imageBlock:^(UIImage *image) {
+    
+    weakSelf.logo = image;
+    imageBlock(image);
+    
+  }];
+  
+}
+
+- (void)loadBackground:(OMNImageBlock)imageBlock {
+  
+  __weak typeof(self)weakSelf = self;
+  [self loadImageWithUrlString:self.background_imageUrl imageBlock:^(UIImage *image) {
+    
+    weakSelf.background = image;
+    imageBlock(image);
+    
+  }];
   
 }
 

@@ -9,10 +9,11 @@
 #import "OMNSearchBeaconToStopTransition.h"
 #import "OMNBackgroundVC.h"
 #import "OMNSearchBeaconVC.h"
-#import "OMNAskNavigationPermissionsVC.h"
+#import "OMNAskCLPermissionsVC.h"
 #import "OMNCircleRootVC.h"
 #import "OMNR1VC.h"
 #import "OMNTablePositionVC.h"
+#import "OMNPushPermissionVC.h"
 
 @implementation OMNSearchBeaconToStopTransition
 
@@ -25,11 +26,11 @@
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
   // Get a snapshot of the image view
-  UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:NO];
+  UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:YES];
   fromImageSnapshot.frame = [transitionContext finalFrameForViewController:toViewController];
 
   UIView *fadeView = [[UIView alloc] initWithFrame:fromImageSnapshot.bounds];
-  fadeView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+  fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
   [fromImageSnapshot addSubview:fadeView];
   
   [toViewController.backgroundView addSubview:fromImageSnapshot];
@@ -56,10 +57,10 @@
   return
   @[
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNBackgroundVC class]],
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNAskNavigationPermissionsVC class]],
+    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNAskCLPermissionsVC class]],
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNTablePositionVC class]],
-    
+    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNPushPermissionVC class]],
     ];
 }
 

@@ -18,6 +18,6 @@
 
 @protocol OMNAuthorizationVCDelegate <NSObject>
 
-- (void)startVCDidReceiveToken:(OMNAuthorizationVC *)startVC;
+- (void)authorizationVCDidReceiveToken:(OMNAuthorizationVC *)startVC;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "OMNStopToSearchBeaconTransition.h"
-#import "OMNAskNavigationPermissionsVC.h"
+#import "OMNAskCLPermissionsVC.h"
 #import "OMNSearchBeaconVC.h"
 #import "OMNTablePositionVC.h"
 
@@ -50,7 +50,7 @@
 + (NSArray *)keys {
   return
   @[
-    [self keyFromClass:[OMNAskNavigationPermissionsVC class] toClass:[OMNSearchBeaconVC class]],
+    [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNSearchBeaconVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchBeaconVC class]],
     [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchBeaconVC class]],
     ];

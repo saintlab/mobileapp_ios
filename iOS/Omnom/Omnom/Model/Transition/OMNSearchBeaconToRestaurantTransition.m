@@ -25,6 +25,8 @@
   fromImageSnapshot.frame = [transitionContext finalFrameForViewController:toViewController];
   fromViewController.view.hidden = YES;
   
+  toViewController.backgroundView.image = fromViewController.backgroundView.image;
+  
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView addSubview:toViewController.view];

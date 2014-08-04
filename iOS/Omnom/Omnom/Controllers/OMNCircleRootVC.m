@@ -35,9 +35,10 @@
   if (self.circleIcon) {
     [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
   }
-  
-  [self.circleButton setBackgroundImage:self.circleBackground forState:UIControlStateNormal];
 
+  self.circleBackground = _circleBackground;
+  self.label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:25.0f];
+  
   if (_buttons.count) {
     self.button.hidden = NO;
     [self.button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -51,8 +52,13 @@
   [self.button addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
   self.label.text = _title;
   self.label.alpha = 0.0f;
-  self.label.textColor = [UIColor whiteColor];
+  self.label.textColor = [UIColor blackColor];
   
+}
+
+- (void)setCircleBackground:(UIImage *)circleBackground {
+  _circleBackground = circleBackground;
+  [self.circleButton setBackgroundImage:self.circleBackground forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

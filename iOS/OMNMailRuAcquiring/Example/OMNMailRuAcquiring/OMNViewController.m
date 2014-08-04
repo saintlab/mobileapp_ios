@@ -56,7 +56,7 @@ static NSString * const kOMNMailRu_cvv = @"123";
 }
 
 - (IBAction)registerTap:(id)sender {
-  [[OMNMailRuAcquiring acquiring] registerCard:_cardInfo];
+  [[OMNMailRuAcquiring acquiring] registerCard:_cardInfo completion:nil];
 }
 
 - (IBAction)verifyTap:(id)sender {

@@ -12,7 +12,7 @@
 
 + (instancetype)acquiring;
 
-- (void)registerCard:(NSDictionary *)cardInfo;
+- (void)registerCard:(NSDictionary *)cardInfo completion:(void(^)(id response))completion;
 
 - (void)cardVerify:(double)amount card_id:(NSString *)card_id;
 

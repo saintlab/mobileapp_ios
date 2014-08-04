@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNWizardVC">
             <connections>
-                <outlet property="_loginButton" destination="JbI-lW-eVX" id="3wJ-JA-Ay4"/>
-                <outlet property="_pageControl" destination="N2U-Ps-xOZ" id="gcz-la-Ogd"/>
-                <outlet property="_registerButton" destination="Bhl-c4-QRB" id="dda-wr-9eo"/>
                 <outlet property="_scroll" destination="vuD-BQ-OK3" id="YFT-4j-e8u"/>
-                <outlet property="loginButton" destination="JbI-lW-eVX" id="d1v-md-l2Z"/>
-                <outlet property="registerButton" destination="Bhl-c4-QRB" id="hJv-87-ixZ"/>
+                <outlet property="pageControl" destination="N2U-Ps-xOZ" id="xGi-wY-a5D"/>
                 <outlet property="view" destination="iN0-l3-epB" id="1GJ-bi-wqJ"/>
             </connections>
         </placeholder>
@@ -27,28 +23,20 @@
                         <outlet property="delegate" destination="-1" id="Py1-b3-Avw"/>
                     </connections>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Bhl-c4-QRB">
-                    <rect key="frame" x="0.0" y="518" width="160" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <state key="normal" title="register">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" id="N2U-Ps-xOZ">
-                    <rect key="frame" x="141" y="473" width="39" height="37"/>
+                    <rect key="frame" x="141" y="511" width="39" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </pageControl>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JbI-lW-eVX">
-                    <rect key="frame" x="160" y="518" width="160" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                    <state key="normal" title="login">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
     </objects>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4">
+            <size key="portraitSize" width="320" height="568"/>
+            <size key="landscapeSize" width="568" height="320"/>
+        </simulatedScreenMetrics>
+    </simulatedMetricsContainer>
 </document>

@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "OMNBackgroundVC.h"
 
-@interface OMNWizardVC : UIViewController
+@interface OMNWizardVC : OMNBackgroundVC
 
-@property (weak, nonatomic) IBOutlet UIButton *registerButton;
-@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers;
 

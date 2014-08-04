@@ -60,12 +60,12 @@
   if (nil == _rangingLocationManager) {
     _rangingLocationManager = [[CLLocationManager alloc] init];
     _rangingLocationManager.delegate = self;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-    if ([_rangingLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-      [_rangingLocationManager performSelector:@selector(requestAlwaysAuthorization) withObject:nil];
-    }
-#pragma clang diagnostic pop
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wundeclared-selector"
+//    if ([_rangingLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+//      [_rangingLocationManager performSelector:@selector(requestAlwaysAuthorization) withObject:nil];
+//    }
+//#pragma clang diagnostic pop
     
   }
   return _rangingLocationManager;

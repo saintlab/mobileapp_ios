@@ -53,7 +53,6 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  
   __weak typeof(self)weakSelf = self;
   _searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
   
@@ -73,9 +72,6 @@
 }
 
 - (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
-  //TODO: get actual restaurant
-//  NSDictionary *data = @{@"id" : decodeBeacon.restaurantId};
-//  OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:];
   
   [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
     
@@ -109,10 +105,14 @@
   
   [_searchBeaconVC setLogo:restaurant.logo withColor:restaurant.background_color completion:^{
     
-    [weakBeaconSearch finishLoading:^{
+    [restaurant loadBackground:^(UIImage *image) {
       
-      searchRestaurantBlock(restaurant);
-      
+      [weakBeaconSearch finishLoading:^{
+        
+        searchRestaurantBlock(restaurant);
+        
+      }];
+
     }];
     
   }];

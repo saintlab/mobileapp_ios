@@ -52,9 +52,7 @@
   return [[Socket alloc] initWithSocket:socket];
 }
 
-- (void) onReady
-{
-  NSLog(@"ready");
+- (void)onReady {
   self.io = self.context[@"io"];
   [self emit:@"ready"];
 }

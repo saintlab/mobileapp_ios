@@ -45,15 +45,41 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  [self addActionsBoard];
+}
 
-  [self.loginButton addTarget:self action:@selector(loginTap:) forControlEvents:UIControlEventTouchUpInside];
-  [self.registerButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];
+- (void)addActionsBoard {
+  [self addBottomButtons];
+  
+  [self.leftBottomButton setImage:[UIImage imageNamed:@"registration_icon_small"] forState:UIControlStateNormal];
+  [self.leftBottomButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];
+  [self.leftBottomButton setTitle:NSLocalizedString(@"Регистрация", nil) forState:UIControlStateNormal];
+  
+  [self.rightBottomButton setImage:[UIImage imageNamed:@"login_icon_small"] forState:UIControlStateNormal];
+  [self.rightBottomButton addTarget:self action:@selector(loginTap:) forControlEvents:UIControlEventTouchUpInside];
+  [self.rightBottomButton setTitle:NSLocalizedString(@"Вход", nil) forState:UIControlStateNormal];
+
+  self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
+  NSLayoutConstraint *offsetConstraint = [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.buttonsBackground attribute:NSLayoutAttributeTop multiplier:1 constant:0.0f];
+  [self.view addConstraint:offsetConstraint];
+  NSLayoutConstraint *centerConstraint = [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.buttonsBackground attribute:NSLayoutAttributeCenterX multiplier:1 constant:0.0f];
+  [self.view addConstraint:centerConstraint];
   
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  self.bottomViewConstraint.constant = 0.0f;
+  [UIView animateWithDuration:0.3 animations:^{
+    [self.view layoutIfNeeded];
+  }];
+  
 }
 
 - (IBAction)loginTap:(id)sender {
@@ -96,7 +122,7 @@
 
 - (void)processAuthorisation {
 
-  [self.delegate startVCDidReceiveToken:self];
+  [self.delegate authorizationVCDidReceiveToken:self];
   
 }
 

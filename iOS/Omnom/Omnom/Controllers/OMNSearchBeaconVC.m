@@ -9,9 +9,9 @@
 #import "OMNSearchBeaconVC.h"
 #import "OMNOperationManager.h"
 #import "OMNBeaconSearchManager.h"
-#import "OMNAskNavigationPermissionsVC.h"
+#import "OMNAskCLPermissionsVC.h"
 #import "OMNTablePositionVC.h"
-#import "OMNNavigationPermissionsHelpVC.h"
+#import "OMNCLPermissionsHelpVC.h"
 #import "OMNCircleRootVC.h"
 #import "OMNDecodeBeaconManager.h"
 #import "OMNScanQRCodeVC.h"
@@ -28,7 +28,7 @@ OMNScanQRCodeVCDelegate>
   OMNBeaconSearchManager *_beaconSearchManager;
   OMNSearchBeaconVCBlock _didFindBlock;
   dispatch_block_t _cancelBlock;
-
+  UIButton *_cancelButton;
 }
 
 - (void)dealloc {
@@ -55,13 +55,12 @@ OMNScanQRCodeVCDelegate>
   [self.navigationItem setHidesBackButton:YES animated:NO];
   if (_cancelBlock) {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-    UIButton *button = [[UIButton alloc] init];
-    [button setImage:[UIImage imageNamed:@"cross_icon_white"] forState:UIControlStateNormal];
-    [button sizeToFit];
-    [button addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
-    button.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 50.0f);
-    [self.view addSubview:button];
-
+    _cancelButton = [[UIButton alloc] init];
+    [_cancelButton setImage:[UIImage imageNamed:@"cross_icon_white"] forState:UIControlStateNormal];
+    [_cancelButton sizeToFit];
+    [_cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
+    _cancelButton.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 50.0f);
+    [self.view addSubview:_cancelButton];
   }
   
   _loaderView = [[OMNLoaderView alloc] initWithInnerFrame:self.circleButton.frame];
@@ -69,48 +68,15 @@ OMNScanQRCodeVCDelegate>
   
 }
 
-- (void)showHelperButtons {
-  UIButton *add = [[UIButton alloc] init];
-  [add setTitle:NSLocalizedString(@"qr code", nil) forState:UIControlStateNormal];
-  [add sizeToFit];
-  add.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-  add.center = CGPointMake(50, 30);
-  [add setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-  [add addTarget:self action:@selector(requestQRCode) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:add];
-  
-  UIButton *add1 = [[UIButton alloc] init];
-  [add1 setTitle:NSLocalizedString(@"stub beacon", nil) forState:UIControlStateNormal];
-  [add1 sizeToFit];
-  add1.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-  [add1 setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-  add1.center = CGPointMake(50, 60);
-  [add1 addTarget:self action:@selector(useStubBeacon) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:add1];
-  
-  add1 = [[UIButton alloc] init];
-  [add1 setTitle:NSLocalizedString(@"startSearchingBeacon", nil) forState:UIControlStateNormal];
-  [add1 sizeToFit];
-  add1.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-  [add1 setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-  add1.center = CGPointMake(50, 90);
-  [add1 addTarget:self action:@selector(startSearchingBeacon) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:add1];
-  
-  add1 = [[UIButton alloc] init];
-  [add1 setTitle:NSLocalizedString(@"didFailOmnom", nil) forState:UIControlStateNormal];
-  [add1 sizeToFit];
-  add1.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.5];
-  [add1 setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-  add1.center = CGPointMake(50, 120);
-  [add1 addTarget:self action:@selector(didFailOmnom) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:add1];
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
+  _cancelButton.hidden = NO;
+}
 
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  _cancelButton.hidden = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -167,7 +133,7 @@ OMNScanQRCodeVCDelegate>
       
     } completion:^(BOOL finished) {
       
-      [self.circleButton setBackgroundImage:coloredCircleImage forState:UIControlStateNormal];
+      self.circleBackground = coloredCircleImage;
       [circleIV removeFromSuperview];
       [nextLogoIV removeFromSuperview];
       if (completionBlock) {
@@ -307,7 +273,7 @@ OMNScanQRCodeVCDelegate>
     case kSearchManagerStartSearchingBeacons: {
       
       NSLog(@"Определение вашего столика");
-      [_loaderView setProgress:0.6];
+      [_loaderView setProgress:0.5f];
       
     } break;
     case kSearchManagerNotFoundBeacons: {
@@ -348,14 +314,14 @@ OMNScanQRCodeVCDelegate>
     case kSearchManagerRequestCoreLocationRestrictedPermission: {
       
       NSLog(@"kSearchManagerRequestCoreLocationRestrictedPermission");
-      OMNNavigationPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNNavigationPermissionsHelpVC alloc] init];
+      OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
       [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
       
     } break;
     case kSearchManagerRequestCoreLocationDeniedPermission: {
       
       NSLog(@"kSearchManagerRequestCoreLocationDeniedPermission");
-      OMNNavigationPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNNavigationPermissionsHelpVC alloc] init];
+      OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
       [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
       
     } break;
@@ -368,7 +334,8 @@ OMNScanQRCodeVCDelegate>
     case kSearchManagerRequestLocationManagerPermission: {
       
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        OMNAskNavigationPermissionsVC *askNavigationPermissionsVC = [[OMNAskNavigationPermissionsVC alloc] init];
+        OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] init];
+        askNavigationPermissionsVC.circleBackground = self.circleBackground;
         [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
         
       });
@@ -400,7 +367,7 @@ OMNScanQRCodeVCDelegate>
   OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithTitle:text buttons:@[NSLocalizedString(@"Проверить еще", nil)]];
   __weak typeof(self)weakSelf = self;
   noInternetVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];
-  noInternetVC.circleIcon = [UIImage imageNamed:@"no_internet_icon"];
+  noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
   noInternetVC.actionBlock = ^{
     
     [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {

@@ -25,7 +25,7 @@
   NSTimeInterval duration = [self transitionDuration:transitionContext];
 
   UIImage *toCircleBackground = [fromViewController.bgIV.image omn_ovalImageInRect:toViewController.circleButton.frame];
-  [toViewController.circleButton setBackgroundImage:toCircleBackground forState:UIControlStateNormal];
+  toViewController.circleBackground = toCircleBackground;
   
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView addSubview:toViewController.view];

@@ -22,9 +22,22 @@
 {
     [super viewDidLoad];
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
-  _cardEnterControl.center = self.view.center;
+  _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
   _cardEnterControl.delegate = self;
   [self.view addSubview:_cardEnterControl];
+  
+  
+  NSDictionary *views =
+  @{
+    @"cardEnterControl" : _cardEnterControl,
+    };
+  
+  NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardEnterControl]-|" options:0 metrics:nil views:views];
+  [self.view addConstraints:panH];
+  
+  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardEnterControl]" options:0 metrics:nil views:views];
+  [self.view addConstraints:panV];
+  
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

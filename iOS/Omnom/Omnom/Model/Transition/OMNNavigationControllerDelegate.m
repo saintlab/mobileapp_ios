@@ -9,7 +9,6 @@
 #import "OMNNavigationControllerDelegate.h"
 
 #import "OMNTransitionFromListToProduct.h"
-#import "OMNTransitionFromLoadingToBills.h"
 #import "OMNTransitionFromOrdersToOrder.h"
 #import "OMNTransitionFromOrderToOrders.h"
 #import "OMNTransitionFromOrderToCalculator.h"
@@ -20,6 +19,7 @@
 #import "OMNRestaurantToSearchBeaconTransition.h"
 #import "OMNSearchBeaconToPayOrderTransition.h"
 #import "OMNOrderToRestaurantTransition.h"
+#import "OMNQuestionToHelpTransition.h"
 
 @implementation OMNNavigationControllerDelegate {
   NSMutableDictionary *_transitions;
@@ -31,7 +31,6 @@
     
     _transitions = [NSMutableDictionary dictionary];
     
-    [self addTansitionForClass:[OMNTransitionFromLoadingToBills class]];
     [self addTansitionForClass:[OMNTransitionFromListToProduct class]];
     [self addTansitionForClass:[OMNTransitionFromOrdersToOrder class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToCalculator class]];
@@ -43,6 +42,7 @@
     [self addTansitionForClass:[OMNRestaurantToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNSearchBeaconToPayOrderTransition class]];
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
+    [self addTansitionForClass:[OMNQuestionToHelpTransition class]];
     
   }
   return self;

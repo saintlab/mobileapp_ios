@@ -90,7 +90,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
  
  cardholder имя держателя карты
  */
-- (void)registerCard:(NSDictionary *)cardInfo {
+- (void)registerCard:(NSDictionary *)cardInfo completion:(void(^)(id response))completion {
 
   NSString *userPhone = @"89833087335";
   
@@ -130,7 +130,9 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     NSLog(@"%@", responseObject);
     
     if (responseObject[@"url"]) {
-      
+      if (completion) {
+        completion(responseObject);
+      }
       return;
       [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -143,10 +145,18 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
       }];
       
     }
+    else {
+      if (completion) {
+        completion(nil);
+      }
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"%@", error);
+    if (completion) {
+      completion(nil);
+    }
     
   }];
   
@@ -201,6 +211,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   NSDictionary *extra =
   @{
     @"tip" : @(12332),
+    @"restaurant_id" : @"some restaurant id",
     };
   
   NSError *error = nil;
@@ -315,18 +326,20 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
 
 - (NSString *)omn_sha1 {
   
-  NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
+  NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+  
   uint8_t digest[CC_SHA1_DIGEST_LENGTH];
   
   CC_SHA1(data.bytes, data.length, digest);
   
-  NSMutableString *output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+  NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
   
-  for (int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
+  for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
     [output appendFormat:@"%02x", digest[i]];
   }
   
-  return output;
+  return [output copy];
+  
 }
 
 @end

@@ -26,14 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
-  UIImageView *iv = [[UIImageView alloc] initWithFrame:self.view.bounds];
-  
-  UIGraphicsBeginImageContext(self.view.frame.size);
-  [[UIImage imageNamed:@"background_blur"] drawAtPoint:CGPointZero];
-  iv.image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-
-  [self.view addSubview:iv];
   
   self.view.backgroundColor = [UIColor colorWithRed:(arc4random()%255)/255. green:(arc4random()%255)/255. blue:(arc4random()%255)/255. alpha:1];
 }

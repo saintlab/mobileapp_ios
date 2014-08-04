@@ -11,20 +11,18 @@
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNAuthorisation.h"
 #import "OMNAuthorizationVC.h"
-#import "OMNRestaurantMenuVC.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNR1VC.h"
 
 @interface OMNStartVC ()
-<OMNRestaurantMenuVCDelegate,
-OMNAuthorizationVCDelegate>
+<OMNAuthorizationVCDelegate>
 
 @end
 
 @implementation OMNStartVC {
-  UIImageView *_bgView;
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
   UINavigationController *_navVC;
+  BOOL _tokenIsChecked;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -41,9 +39,33 @@ OMNAuthorizationVCDelegate>
   self.navigationController.delegate = _navigationControllerDelegate;
   [self.navigationController setNavigationBarHidden:YES animated:NO];
   
-  _bgView = [[UIImageView alloc] initWithImage:[UIImage omn_imageNamed:@"LaunchImage-700"]];
-  [self.view addSubview:_bgView];
+  self.backgroundView.image = [UIImage omn_imageNamed:@"LaunchImage-700"];
   
+  __weak typeof(self)weakSelf = self;
+  [OMNAuthorisation authorisation].logoutCallback = ^{
+    
+    [[OMNAuthorisation authorisation] logout];
+    
+    [weakSelf dismissViewControllerAnimated:YES completion:^{
+      
+      [weakSelf requestAuthorization];
+      
+    }];
+  };
+
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  if (NO == _tokenIsChecked) {
+    [self checkToken];
+  }
+  
+}
+
+- (void)checkToken {
+  _tokenIsChecked = YES;
   __weak typeof(self)weakSelf = self;
   [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
     
@@ -51,22 +73,10 @@ OMNAuthorizationVCDelegate>
       [weakSelf startSearchingBeacons];
     }
     else {
-      [weakSelf showWizzard];
+      [weakSelf requestAuthorization];
     }
     
   }];
-  
-  [OMNAuthorisation authorisation].logoutCallback = ^{
-    
-    [[OMNAuthorisation authorisation] logout];
-    
-    [weakSelf dismissViewControllerAnimated:YES completion:^{
-      
-      [weakSelf showWizzard];
-      
-    }];
-  };
-  
 }
 
 - (void)startSearchingBeacons {
@@ -82,55 +92,30 @@ OMNAuthorizationVCDelegate>
 
 }
 
-- (void)showWizzard {
-  OMNAuthorizationVC *searchBeaconVC = [[OMNAuthorizationVC alloc] init];
-  searchBeaconVC.delegate = self;
-  [self.navigationController pushViewController:searchBeaconVC animated:YES];
+- (void)requestAuthorization {
+  OMNAuthorizationVC *authorizationVC = [[OMNAuthorizationVC alloc] init];
+  authorizationVC.delegate = self;
+  [self.navigationController pushViewController:authorizationVC animated:YES];
 }
 
 #pragma mark - OMNStartVC1Delegate
 
-- (void)startVCDidReceiveToken:(OMNAuthorizationVC *)startVC {
+- (void)authorizationVCDidReceiveToken:(OMNAuthorizationVC *)startVC {
   
   [self.navigationController popToViewController:self animated:NO];
-  [self startSearchingBeacons];
+  __weak typeof(self)weakSelf = self;
+  dispatch_async(dispatch_get_main_queue(), ^{
+    [weakSelf startSearchingBeacons];
+  });
   
 }
 
 - (void)didFindRestaurant:(OMNRestaurant *)restaurant {
-  
   OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithRestaurant:restaurant];
-  [self.navigationController pushViewController:restaurantMenuVC animated:NO];
   [_navVC pushViewController:restaurantMenuVC animated:YES];
-  
-  
-  
-  return;
-  [self dismissViewControllerAnimated:NO completion:^{
-    
-    OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] init];
-    [self.navigationController pushViewController:restaurantMenuVC animated:NO];
-//    OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
-//    restaurantMenuVC.delegate = self;
-//    [self.navigationController pushViewController:restaurantMenuVC animated:YES];
-    
-  }];
-  
-}
-#pragma mark - OMNRestaurantMenuVCDelegate
-
-- (void)restaurantMenuVCDidFinish:(OMNRestaurantMenuVC *)restaurantMenuVC {
-  [self.navigationController popToViewController:self animated:YES];
-}
-
-- (void)searchBeaconVCDidCancel:(OMNSearchBeaconVC *)searchBeaconVC {
-
-  [self.navigationController popToViewController:self animated:YES];
-  
 }
 
 - (void)didReceiveMemoryWarning {
-  _bgView.image = nil;
   [super didReceiveMemoryWarning];
 }
 

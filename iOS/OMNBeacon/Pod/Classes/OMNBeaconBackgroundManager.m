@@ -16,7 +16,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 @interface OMNBeaconBackgroundManager()
 <CLLocationManagerDelegate> {
   
-  CLLocationManager *_locationManager;
   OMNNearestBeaconSearchManager *_beaconSearchManager;
   
   UIBackgroundTaskIdentifier _searchBeaconTask;
@@ -25,6 +24,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 }
 
 @property (nonatomic, strong) CLBeaconRegion *backgroundBeaconRegion;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
@@ -59,9 +59,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     self.backgroundBeaconRegion.notifyOnEntry = YES;
     self.backgroundBeaconRegion.notifyOnExit = YES;
     
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
-    
     [self startBeaconRegionMonitoring];
   }
   return self;
@@ -92,6 +89,17 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
 }
 
+- (CLLocationManager *)locationManager {
+  
+  if (nil == _locationManager) {
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+  }
+  
+  return _locationManager;
+  
+}
+
 
 - (void)handleDidExitShopBeaconRegion {
   
@@ -118,7 +126,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   }
   
   _monitoring = YES;
-  [_locationManager startMonitoringForRegion:self.backgroundBeaconRegion];
+  [self.locationManager startMonitoringForRegion:self.backgroundBeaconRegion];
   
 }
 
@@ -156,7 +164,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
   if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
     _monitoring = NO;
-    [_locationManager stopMonitoringForRegion:self.backgroundBeaconRegion];
+    [self.locationManager stopMonitoringForRegion:self.backgroundBeaconRegion];
     
   }
   

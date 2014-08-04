@@ -48,8 +48,6 @@
   
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
   
-  _bgIV.image = [UIImage imageNamed:@"background_blur"];
-  
   _switch.tintColor = [UIColor redColor];
   _switch.onTintColor = [UIColor redColor];
   

@@ -20,7 +20,7 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
-  [toViewController.circleButton setBackgroundImage:[fromViewController.circleButton backgroundImageForState:UIControlStateNormal] forState:UIControlStateNormal];
+  toViewController.circleBackground = fromViewController.circleBackground;
   
   // Get a snapshot of the image view
   UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:NO];

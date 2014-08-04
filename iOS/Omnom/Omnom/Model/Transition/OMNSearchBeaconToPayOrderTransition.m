@@ -11,12 +11,13 @@
 #import "OMNPayOrderVC.h"
 #import "OMNOrdersVC.h"
 #import <OMNStyler.h>
+#import "OMNPushPermissionVC.h"
 
 @implementation OMNSearchBeaconToPayOrderTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  OMNSearchBeaconVC *fromViewController = (OMNSearchBeaconVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  OMNCircleRootVC *fromViewController = (OMNCircleRootVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
@@ -77,6 +78,8 @@
   @[
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNPayOrderVC class]],
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNOrdersVC class]],
+    [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNPayOrderVC class]],
+    [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNOrdersVC class]],
     ];
 }
 

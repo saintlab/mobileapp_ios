@@ -228,32 +228,19 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   
 }
 
-- (void)processCoreLocationDenySituation {
+- (void)processCoreLocationDenySituation:(OMNSearchManagerState)state {
   _coreLocationDenied = YES;
   [self stopRangingNearestBeacons:NO];
+  [self.delegate beaconSearchManager:self didChangeState:state];
 }
 
 - (void)processCoreLocationAuthorizationStatus:(CLAuthorizationStatus)status {
   
   switch (status) {
-    case kCLAuthorizationStatusAuthorized: {
-      
-      if (_coreLocationDenied) {
-        _coreLocationDenied = NO;
-        [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestReload];
-      }
-      else {
 
-        [[OMNBeaconBackgroundManager manager] startBeaconRegionMonitoring];
-        [self startRangeNearestBeacons];
-        
-      }
-      
-    } break;
     case kCLAuthorizationStatusDenied: {
       
-      [self processCoreLocationDenySituation];
-      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestCoreLocationDeniedPermission];
+      [self processCoreLocationDenySituation:kSearchManagerRequestCoreLocationDeniedPermission];
       
     } break;
     case kCLAuthorizationStatusNotDetermined: {
@@ -261,11 +248,23 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
     } break;
     case kCLAuthorizationStatusRestricted: {
       
-      [self processCoreLocationDenySituation];
-      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestCoreLocationRestrictedPermission];
+      [self processCoreLocationDenySituation:kSearchManagerRequestCoreLocationRestrictedPermission];
+
+    } break;
+    default: {
+      
+      if (_coreLocationDenied) {
+        _coreLocationDenied = NO;
+        [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestReload];
+      }
+      else {
+        
+        [[OMNBeaconBackgroundManager manager] startBeaconRegionMonitoring];
+        [self startRangeNearestBeacons];
+        
+      }
       
     } break;
-      
   }
   
 }

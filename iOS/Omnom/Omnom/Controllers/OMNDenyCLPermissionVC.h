@@ -6,9 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNCircleRootVC.h"
+
 @protocol OMNDenyCLPermissionVCDelegate;
 
-@interface OMNDenyCLPermissionVC : UIViewController
+@interface OMNDenyCLPermissionVC : OMNCircleRootVC
 
 @property (nonatomic, weak) id<OMNDenyCLPermissionVCDelegate> delegate;
 

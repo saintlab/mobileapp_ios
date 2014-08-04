@@ -27,6 +27,12 @@ typedef void(^OMNTokenBlock)(NSString *token);
 
 - (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block;
 
+- (BOOL)pushNotificationsRequested;
+- (void)requestPushNotifications:(void(^)(BOOL))completion;
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
+
 @end
 
 @interface NSDictionary (omn_tokenResponse)

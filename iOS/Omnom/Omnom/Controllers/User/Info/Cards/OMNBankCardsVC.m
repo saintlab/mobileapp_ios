@@ -41,10 +41,8 @@
 
 - (void)setupInterface {
   
-  self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background_blur"]];
-  
   [_addCardButton setTitle:NSLocalizedString(@"Добавить карту", nil) forState:UIControlStateNormal];
-  [_addCardButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [_addCardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _addCardButton.titleLabel.font = FuturaBookFont(20);
   
 }
@@ -53,7 +51,6 @@
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
   addBankCardVC.delegate = self;
-  
   [self.navigationController pushViewController:addBankCardVC animated:YES];
   
 }
@@ -64,7 +61,6 @@
   
   [_bankCardsModel addBankCard:card];
   [self.tableView reloadData];
-  
   [self.navigationController popToViewController:self animated:YES];
   
 }

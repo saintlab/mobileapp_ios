@@ -7,7 +7,6 @@
 //
 
 #import "OMNRestaurantMenuVC.h"
-#import "OMNSearchTableVC.h"
 
 #import "OMNBeaconBackgroundManager.h"
 #import "OMNAuthorisation.h"
@@ -117,8 +116,6 @@
   _billButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10.0f, 0, 0);
   
   self.automaticallyAdjustsScrollViewInsets = NO;
-  
-  _backgroundIV.image = [UIImage imageNamed:@"background_blur"];
 
   _waiterIsCalledView.alpha = 0.0f;
   

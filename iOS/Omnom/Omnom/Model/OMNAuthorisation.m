@@ -14,7 +14,9 @@
 
 static NSString * const kAccountName = @"test_account6";
 
-@implementation OMNAuthorisation
+@implementation OMNAuthorisation {
+  void(^_notificationRegisterCompletionBlock)(BOOL completion);
+}
 
 + (instancetype)authorisation {
   static id manager = nil;
@@ -30,11 +32,41 @@ static NSString * const kAccountName = @"test_account6";
   if (self) {
 
 #warning updateAuthenticationToken:token
-//    NSString *token = [SSKeychain passwordForService:@"token" account:kAccountName];
-//    [self updateAuthenticationToken:token];
+    NSString *token = [SSKeychain passwordForService:@"token" account:kAccountName];
+    [self updateAuthenticationToken:token];
 
   }
   return self;
+}
+
+- (BOOL)pushNotificationsRequested {
+#warning pushNotificationsRequested
+  return NO;
+  BOOL pushNotificationsRequested = [[SSKeychain passwordForService:@"pushNotificationsRequested" account:kAccountName] boolValue];
+  return pushNotificationsRequested;
+}
+
+- (void)requestPushNotifications:(void(^)(BOOL))completion {
+  
+  if (NO == self.pushNotificationsRequested) {
+    [SSKeychain setPassword:@"YES" forService:@"pushNotificationsRequested" account:kAccountName];
+    _notificationRegisterCompletionBlock = [completion copy];
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+  }
+  else {
+    completion(NO);
+  }
+  
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  _notificationRegisterCompletionBlock(YES);
+  _notificationRegisterCompletionBlock = nil;
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  _notificationRegisterCompletionBlock(NO);
+  _notificationRegisterCompletionBlock = nil;
 }
 
 - (void)logout {

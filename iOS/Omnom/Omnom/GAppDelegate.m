@@ -25,9 +25,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-//  NSLog(@"%@", [UIFont familyNames]);
-//  NSLog(@"%@", [UIFont fontNamesForFamilyName:@"Futura-OSF-Omnom"]);
-  
   [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comlitionBlock) {
     
     [[OMNDecodeBeaconManager manager] handleBackgroundBeacon:beacon complition:comlitionBlock];
@@ -67,6 +64,10 @@
   NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken>%@", deviceToken);
 }
 
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+  
+}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   NSLog(@"url recieved: %@", url);
   NSLog(@"sourceApplication: %@", sourceApplication);
@@ -90,29 +91,6 @@
   NSLog(@"%@", notificationSettings);
 }
 #endif
-
-- (void)showSplash {
-  
-  _splashIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Splash"]];
-  _splashIV.opaque = YES;
-  [self.window addSubview:_splashIV];
-  
-}
-
-- (void)hideSplash {
-  
-  [UIView animateWithDuration:0.5 animations:^{
-    
-    _splashIV.alpha = 0.0f;
-    
-  } completion:^(BOOL finished) {
-    
-    [_splashIV removeFromSuperview];
-    _splashIV = nil;
-    
-  }];
-  
-}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   
