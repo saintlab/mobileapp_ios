@@ -24,6 +24,8 @@
 		930555111935DB7700E6F4EC /* UINavigationController+omn_replace.m in Sources */ = {isa = PBXBuildFile; fileRef = 930555101935DB7700E6F4EC /* UINavigationController+omn_replace.m */; };
 		93056D22198F9FEF006FBF48 /* OMNQuestionToHelpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93056D21198F9FEF006FBF48 /* OMNQuestionToHelpTransition.m */; };
 		93056D23198F9FEF006FBF48 /* OMNQuestionToHelpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93056D21198F9FEF006FBF48 /* OMNQuestionToHelpTransition.m */; };
+		93056D251990BD4A006FBF48 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93056D241990BD4A006FBF48 /* Main.storyboard */; };
+		93056D261990BD4A006FBF48 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93056D241990BD4A006FBF48 /* Main.storyboard */; };
 		9307C5731937022800408519 /* OMNOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307C5721937022800408519 /* OMNOrderCell.m */; };
 		9308FE7B196E815600B482AA /* OMNDecodeBeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9308FE7A196E815600B482AA /* OMNDecodeBeaconManager.m */; };
 		9308FE7C196E815600B482AA /* OMNDecodeBeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9308FE7A196E815600B482AA /* OMNDecodeBeaconManager.m */; };
@@ -107,8 +109,6 @@
 		93750B24196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */; };
 		93750B28196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
 		93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
-		93750B2A196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */; };
-		93750B2B196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */; };
 		93750B2D196D51020031AD31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93750B2C196D51020031AD31 /* AVFoundation.framework */; };
 		93750B2F196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 93750B2E196E4F220031AD31 /* OMNRestaurantMenuVC.json */; };
 		93750B30196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 93750B2E196E4F220031AD31 /* OMNRestaurantMenuVC.json */; };
@@ -126,8 +126,8 @@
 		937822A51963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 937822A31963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m */; };
 		937A37331980F68200EF5C31 /* OMNLoaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37321980F68200EF5C31 /* OMNLoaderView.m */; };
 		937A37341980F68200EF5C31 /* OMNLoaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37321980F68200EF5C31 /* OMNLoaderView.m */; };
-		937A37371980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37361980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.m */; };
-		937A37381980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37361980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.m */; };
+		937A37371980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37361980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m */; };
+		937A37381980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37361980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m */; };
 		937A37821981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37801981152300EF5C31 /* OMNSearchRestaurantVC.m */; };
 		937A37831981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37801981152300EF5C31 /* OMNSearchRestaurantVC.m */; };
 		937A37841981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 937A37811981152300EF5C31 /* OMNSearchRestaurantVC.xib */; };
@@ -345,6 +345,7 @@
 		930555101935DB7700E6F4EC /* UINavigationController+omn_replace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+omn_replace.m"; sourceTree = "<group>"; };
 		93056D20198F9FEF006FBF48 /* OMNQuestionToHelpTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNQuestionToHelpTransition.h; sourceTree = "<group>"; };
 		93056D21198F9FEF006FBF48 /* OMNQuestionToHelpTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNQuestionToHelpTransition.m; sourceTree = "<group>"; };
+		93056D241990BD4A006FBF48 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		9307C5711937022800408519 /* OMNOrderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderCell.h; sourceTree = "<group>"; };
 		9307C5721937022800408519 /* OMNOrderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderCell.m; sourceTree = "<group>"; };
 		9308FE79196E815600B482AA /* OMNDecodeBeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDecodeBeaconManager.h; sourceTree = "<group>"; };
@@ -440,7 +441,6 @@
 		93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNScanQRCodeVC.xib; sourceTree = "<group>"; };
 		93750B25196C14100031AD31 /* OMNTurnOnBluetoothVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTurnOnBluetoothVC.h; sourceTree = "<group>"; };
 		93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTurnOnBluetoothVC.m; sourceTree = "<group>"; };
-		93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNTurnOnBluetoothVC.xib; sourceTree = "<group>"; };
 		93750B2C196D51020031AD31 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		93750B2E196E4F220031AD31 /* OMNRestaurantMenuVC.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNRestaurantMenuVC.json; sourceTree = "<group>"; };
 		937822851963E21A00CE6661 /* OMNOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrdersVC.h; sourceTree = "<group>"; };
@@ -456,8 +456,8 @@
 		937822A31963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTransitionFromOrdersToOrder.m; sourceTree = "<group>"; };
 		937A37311980F68200EF5C31 /* OMNLoaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLoaderView.h; sourceTree = "<group>"; };
 		937A37321980F68200EF5C31 /* OMNLoaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLoaderView.m; sourceTree = "<group>"; };
-		937A37351980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchRestaurantToSearchBeaconTransition.h; sourceTree = "<group>"; };
-		937A37361980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchRestaurantToSearchBeaconTransition.m; sourceTree = "<group>"; };
+		937A37351980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSplashToSearchBeaconTransition.h; sourceTree = "<group>"; };
+		937A37361980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSplashToSearchBeaconTransition.m; sourceTree = "<group>"; };
 		937A377F1981152300EF5C31 /* OMNSearchRestaurantVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchRestaurantVC.h; sourceTree = "<group>"; };
 		937A37801981152300EF5C31 /* OMNSearchRestaurantVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchRestaurantVC.m; sourceTree = "<group>"; };
 		937A37811981152300EF5C31 /* OMNSearchRestaurantVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNSearchRestaurantVC.xib; sourceTree = "<group>"; };
@@ -941,6 +941,7 @@
 				93676DFC18D1E4FC00FC55F1 /* GAppDelegate.m */,
 				93676E0718D1E4FC00FC55F1 /* Images.xcassets */,
 				93676DF318D1E4FC00FC55F1 /* Supporting Files */,
+				93056D241990BD4A006FBF48 /* Main.storyboard */,
 			);
 			path = Omnom;
 			sourceTree = "<group>";
@@ -1410,8 +1411,8 @@
 			children = (
 				93E299A0197D0B7500051B04 /* OMNFadeTransition.h */,
 				93E299A1197D0B7500051B04 /* OMNFadeTransition.m */,
-				937A37351980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.h */,
-				937A37361980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.m */,
+				937A37351980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.h */,
+				937A37361980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m */,
 				93535EF81982465A0084C3E7 /* OMNSearchBeaconToStopTransition.h */,
 				93535EF91982465A0084C3E7 /* OMNSearchBeaconToStopTransition.m */,
 				93535F03198250430084C3E7 /* OMNStopToSearchBeaconTransition.h */,
@@ -1429,7 +1430,6 @@
 			children = (
 				93750B25196C14100031AD31 /* OMNTurnOnBluetoothVC.h */,
 				93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */,
-				93750B27196C14100031AD31 /* OMNTurnOnBluetoothVC.xib */,
 			);
 			name = deprecated;
 			sourceTree = "<group>";
@@ -1580,12 +1580,12 @@
 				939F991E19752BE90051822E /* OMNUserInfoVC.xib in Resources */,
 				93E29999197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */,
 				938F3A4F198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
+				93056D251990BD4A006FBF48 /* Main.storyboard in Resources */,
 				93E2997C197CD24F00051B04 /* OMNStartVC.xib in Resources */,
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				93750B23196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
 				939F991619752BE90051822E /* OMNBankCardsVC.xib in Resources */,
 				939F990E19752BE90051822E /* OMNConfirmCodeVC.xib in Resources */,
-				93750B2A196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */,
 				93676E0818D1E4FC00FC55F1 /* Images.xcassets in Resources */,
 				9321182E1962E16100183729 /* OMNProductDetailsVC.xib in Resources */,
 				93EE3086198F57150024EAF4 /* OMNMailRUCardConfirmVC.xib in Resources */,
@@ -1613,6 +1613,7 @@
 				93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
 				939689BA195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				9390D2621966E559007E13AB /* OMNOrderCell.json in Resources */,
+				93056D261990BD4A006FBF48 /* Main.storyboard in Resources */,
 				930F13371974FF4300E92EED /* omnom.caf in Resources */,
 				9390D2651966E945007E13AB /* UINavigationBar.json in Resources */,
 				938F3A53198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
@@ -1626,7 +1627,6 @@
 				938F3A50198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
 				93C9915F193F175E0028F76C /* FuturaPT-Book.ttf in Resources */,
 				938F3A48198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */,
-				93750B2B196C14100031AD31 /* OMNTurnOnBluetoothVC.xib in Resources */,
 				937A37851981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
 				939F991B19752BE90051822E /* OMNEditTableVC.xib in Resources */,
 				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
@@ -1826,7 +1826,7 @@
 				93EE3084198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				938E8F56192F3A200088EF38 /* OMNAcquiring.m in Sources */,
 				93750B28196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */,
-				937A37371980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.m in Sources */,
+				937A37371980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				93C99116193EF6F20028F76C /* OMNOrder.m in Sources */,
 				939689B6195BDD3400AAAF9C /* OMNViewControllerTest.m in Sources */,
 				930554E11934978400E6F4EC /* OMNAuthorisation.m in Sources */,
@@ -1884,7 +1884,7 @@
 				93E299A3197D0B7500051B04 /* OMNFadeTransition.m in Sources */,
 				939F991119752BE90051822E /* OMNAddBankCardVC.m in Sources */,
 				939F993719752D400051822E /* OMNUserInfoTransition.m in Sources */,
-				937A37381980FCC600EF5C31 /* OMNSearchRestaurantToSearchBeaconTransition.m in Sources */,
+				937A37381980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				93E29998197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
 				937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */,
 				937822891963E21A00CE6661 /* OMNOrdersVC.m in Sources */,

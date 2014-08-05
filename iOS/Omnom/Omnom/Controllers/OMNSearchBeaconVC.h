@@ -18,9 +18,8 @@ typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNDeco
 
 @property (nonatomic, strong, readonly) OMNLoaderView *loaderView;
 @property (nonatomic, assign) NSTimeInterval estimateSearchDuration;
-@property (nonatomic, strong) UIImage *backgroundImage;
 
-- (instancetype)initWithBlock:(OMNSearchBeaconVCBlock)block cancelBlock:(dispatch_block_t)cancelBlock;
+- (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
 
 - (void)setLogo:(UIImage *)logo withColor:(UIColor *)color completion:(dispatch_block_t)completionBlock;
 - (void)finishLoading:(dispatch_block_t)complitionBlock;

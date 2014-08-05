@@ -16,9 +16,12 @@
 
 @implementation OMNPushPermissionVC
 
-- (instancetype)init {
-  self = [super initWithTitle:NSLocalizedString(@"Разрешить Omnom получить push-уведомления", nil) buttons:@[]];
+- (instancetype)initWithParent:(OMNCircleRootVC *)parent {
+  self = [super initWithParent:parent];
   if (self) {
+    self.circleIcon = [UIImage imageNamed:@"allow_push_icon_big"];
+    self.faded = YES;
+    self.text = NSLocalizedString(@"Разрешить Omnom получить push-уведомления", nil);
   }
   return self;
 }

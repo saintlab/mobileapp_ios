@@ -54,12 +54,11 @@
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  _searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
-  
+  _searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+    
     [weakSelf didFindBeacon:decodeBeacon];
     
   } cancelBlock:nil];
-  
   _searchBeaconVC.circleIcon = [UIImage imageNamed:@"loading_icon"];
   _searchBeaconVC.backgroundImage = [UIImage imageNamed:@"bg_table"];
 

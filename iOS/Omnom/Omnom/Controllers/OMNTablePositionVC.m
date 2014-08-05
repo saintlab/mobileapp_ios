@@ -23,6 +23,14 @@
   [_devicePositionManager stop];
 }
 
+- (instancetype)initWithParent:(OMNCircleRootVC *)parent {
+  self = [super initWithParent:parent];
+  if (self) {
+    self.faded = YES;
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   _devicePositionManager = [[OMNDevicePositionManager alloc] init];

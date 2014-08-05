@@ -6,12 +6,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "turn_bluetooth_on_bg.png"
+      "filename" : "allow_push_icon_big.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "turn_bluetooth_on_bg@2x.png"
+      "filename" : "allow_push_icon_big@2x.png"
     }
   ],
   "info" : {

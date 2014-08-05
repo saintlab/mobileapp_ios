@@ -52,7 +52,7 @@
   
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
   
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];

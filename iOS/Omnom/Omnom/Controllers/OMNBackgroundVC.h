@@ -9,6 +9,7 @@
 @interface OMNBackgroundVC : UIViewController
 
 @property (strong, nonatomic, readonly) UIImageView *backgroundView;
+@property (nonatomic, strong) UIImage *backgroundImage;
 
 @property (strong, nonatomic, readonly) UIView *buttonsBackground;
 @property (strong, nonatomic, readonly) UIButton *leftBottomButton;

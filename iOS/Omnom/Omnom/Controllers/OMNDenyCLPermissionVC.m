@@ -12,13 +12,18 @@
 
 @end
 
-@implementation OMNDenyCLPermissionVC {
-  UIButton *_allowButton;
-}
+@implementation OMNDenyCLPermissionVC
 
-- (instancetype)init {
-  self = [super initWithTitle:NSLocalizedString(@"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем определить столик.", nil) buttons:@[]];
+- (instancetype)initWithParent:(OMNCircleRootVC *)parent {
+  self = [super initWithParent:parent];
   if (self) {
+    self.faded = YES;
+    self.text = NSLocalizedString(@"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем определить столик.", nil);
+    self.buttonInfo =
+    @{
+      @"title" : NSLocalizedString(@"Повторить", nil),
+      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
+      };
   }
   return self;
 }
@@ -27,38 +32,12 @@
   [super viewDidLoad];
   
   self.circleBackground = nil;
-
-  _allowButton = [[UIButton alloc] init];
-  _allowButton.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
-  _allowButton.translatesAutoresizingMaskIntoConstraints = NO;
-  _allowButton.tintColor = [UIColor blackColor];
-  [_allowButton addTarget:self action:@selector(grantPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
-  [_allowButton setImage:[UIImage imageNamed:@"repeat_icon_small"] forState:UIControlStateNormal];
-  [_allowButton setTitle:NSLocalizedString(@"Повторить", nil) forState:UIControlStateNormal];
-  [_allowButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  _allowButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f);
-  
-  [self.view addSubview:_allowButton];
-  NSDictionary *views =
-  @{
-    @"allowButton" : _allowButton,
-    };
-  
-  NSArray *constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[allowButton]|" options:0 metrics:nil views:views];
-  [self.view addConstraints:constraints];
-  constraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[allowButton(50)]|" options:0 metrics:nil views:views];
-  [self.view addConstraints:constraints];
+  self.circleIcon = [[UIImage imageNamed:@"allow_geolocation_icon_white_big"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.circleButton.tintColor = [UIColor blackColor];
   
 }
 
-- (IBAction)grantPermissionTap:(id)sender {
-  
-  [self.delegate denyCLPermissionVCDidAskPermission:self];
-  
-}
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
   // Dispose of any resources that can be recreated.
 }

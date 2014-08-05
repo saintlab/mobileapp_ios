@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "OMNCircleRootVC.h"
 
-@interface OMNTurnOnBluetoothVC : UIViewController
+@interface OMNTurnOnBluetoothVC : OMNCircleRootVC
 
 @end

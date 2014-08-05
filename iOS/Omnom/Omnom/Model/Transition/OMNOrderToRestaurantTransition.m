@@ -37,7 +37,7 @@
   
   [containerView addSubview:fromImageSnapshot];
   
-  CGFloat scale = 4.0f;
+  CGFloat scale = 5.0f;
   bigCircleIV.transform = CGAffineTransformMakeScale(scale, scale);
   
   NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];

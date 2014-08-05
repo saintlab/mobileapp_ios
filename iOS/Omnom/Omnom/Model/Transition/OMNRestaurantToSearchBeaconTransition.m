@@ -20,8 +20,6 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
-  toViewController.circleBackground = fromViewController.circleBackground;
-  
   // Get a snapshot of the image view
   UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:NO];
   fromImageSnapshot.frame = [transitionContext finalFrameForViewController:toViewController];
@@ -40,7 +38,7 @@
   } completion:^(BOOL finished) {
     
     // Clean up
-    //    [fromImageSnapshot removeFromSuperview];
+    [fromImageSnapshot removeFromSuperview];
     fromViewController.view.hidden = NO;
     
     // Declare that we've finished

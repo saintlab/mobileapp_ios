@@ -30,7 +30,7 @@ OMNUserInfoVCDelegate>
 }
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
-  self = [super initWithTitle:nil buttons:@[]];
+  self = [super initWithParent:nil];
   if (self) {
     _restaurant = restaurant;
     self.circleIcon = restaurant.logo;
@@ -46,7 +46,7 @@ OMNUserInfoVCDelegate>
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
   self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
   
-  self.backgroundView.image = _restaurant.background;
+  self.backgroundImage = _restaurant.background;
   self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:_restaurant.background_color];
 
   [self addActionsBoard];
@@ -69,7 +69,6 @@ OMNUserInfoVCDelegate>
   [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token];
   
 }
-
 
 - (void)addActionsBoard {
   [self addBottomButtons];
@@ -113,7 +112,7 @@ OMNUserInfoVCDelegate>
     return;
   }
   
-  OMNSearchBeaconVC *sbVC = [[OMNSearchBeaconVC alloc] initWithBlock:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+  OMNSearchBeaconVC *sbVC = [[OMNSearchBeaconVC alloc] initWithParent:self completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     
     [_restaurant waiterCallForTableID:decodeBeacon.tableId complition:^{
       
@@ -122,7 +121,7 @@ OMNUserInfoVCDelegate>
         [searchBeaconVC finishLoading:^{
           
           self.leftBottomButton.selected = YES;
-          [self.circleButton setImage:[UIImage imageNamed:@"call_waiter_icon"] forState:UIControlStateNormal];
+          [self.circleButton setImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"] forState:UIControlStateNormal];
           [self.navigationController popToViewController:self animated:YES];
           
         }];
@@ -135,8 +134,6 @@ OMNUserInfoVCDelegate>
       
     }];
     
-    
-    
   } cancelBlock:^{
     
     self.leftBottomButton.selected = NO;
@@ -145,8 +142,7 @@ OMNUserInfoVCDelegate>
     
   }];
   sbVC.estimateSearchDuration = 2.0;
-  sbVC.circleIcon = [UIImage imageNamed:@"call_waiter_icon"];
-  sbVC.backgroundImage = self.backgroundView.image;
+  sbVC.circleIcon = [UIImage imageNamed:@"bell_ringing_icon_white_big"];
   [self.navigationController pushViewController:sbVC animated:YES];
   
 }
@@ -155,7 +151,7 @@ OMNUserInfoVCDelegate>
 
   OMNRestaurant *restaurant = _restaurant;
   __weak typeof(self)weakSelf = self;
-  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     
     [restaurant getOrdersForTableID:decodeBeacon.tableId orders:^(NSArray *orders) {
       
@@ -166,18 +162,17 @@ OMNUserInfoVCDelegate>
     } error:^(NSError *error) {
       
       [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-      [self.navigationController popToViewController:self animated:YES];
+      [weakSelf.navigationController popToViewController:weakSelf animated:YES];
       
     }];
     
   } cancelBlock:^{
     
-    [self.navigationController popToViewController:self animated:YES];
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
     
   }];
   searchBeaconVC.estimateSearchDuration = 2.0;
-  searchBeaconVC.circleIcon = [UIImage imageNamed:@"call_bill_icon"];
-  searchBeaconVC.backgroundImage = self.backgroundView.image;
+  searchBeaconVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
   [self.navigationController pushViewController:searchBeaconVC animated:YES];
   
 }
@@ -191,13 +186,11 @@ OMNUserInfoVCDelegate>
   }
   else {
 
-    OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] init];
+    OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self];
     __weak typeof(self)weakSelf = self;
     pushPermissionVC.completionBlock = ^{
       [weakSelf processOrders:orders];
     };
-    pushPermissionVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];
-    pushPermissionVC.circleIcon = [UIImage imageNamed:@"call_bill_icon"];
     [self.navigationController pushViewController:pushPermissionVC animated:YES];
     
   }
@@ -217,7 +210,7 @@ OMNUserInfoVCDelegate>
     
   }
   else {
-#warning replace to real order
+
     //TODO: replce to no order situation
     [self.navigationController popToViewController:self animated:YES];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"На этом столике нет заказов", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];

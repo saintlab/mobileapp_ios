@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchRestaurantToSearchBeaconTransition.h"
+#import "OMNSplashToSearchBeaconTransition.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNSearchBeaconVC.h"
 #import "UIImage+omn_helper.h"
 
-@implementation OMNSearchRestaurantToSearchBeaconTransition {
+@implementation OMNSplashToSearchBeaconTransition {
   CAShapeLayer *_layer;
   CGRect _circleFrame;
 }

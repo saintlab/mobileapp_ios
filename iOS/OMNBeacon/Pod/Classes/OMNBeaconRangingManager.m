@@ -51,7 +51,7 @@
   if (self) {
 
     _statusBlock = statusBlock;
-    
+    [self rangingLocationManager];
   }
   return self;
 }

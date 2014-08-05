@@ -42,7 +42,7 @@
   NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
   NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
   
-  CGFloat scale = 4.0f;
+  CGFloat scale = 5.0f;
   
   [UIView animateWithDuration:CircleAnimationDuration animations:^{
     

@@ -16,6 +16,7 @@
 #import "OMNDecodeBeaconManager.h"
 #import "OMNScanQRCodeVC.h"
 #import "UIImage+omn_helper.h"
+#import "OMNTurnOnBluetoothVC.h"
 
 @interface OMNSearchBeaconVC ()
 <OMNBeaconSearchManagerDelegate,
@@ -35,12 +36,12 @@ OMNScanQRCodeVCDelegate>
   [self stopBeaconManager:NO];
 }
 
-- (instancetype)initWithBlock:(OMNSearchBeaconVCBlock)block cancelBlock:(dispatch_block_t)cancelBlock {
-  self = [super initWithTitle:nil buttons:nil];
+- (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
+  self = [super initWithParent:parent];
   if (self) {
     
     _estimateSearchDuration = 10.0;
-    _didFindBlock = block;
+    _didFindBlock = completionBlock;
     _cancelBlock = cancelBlock;
     
   }
@@ -50,8 +51,6 @@ OMNScanQRCodeVCDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.backgroundView.image = _backgroundImage;
-
   [self.navigationItem setHidesBackButton:YES animated:NO];
   if (_cancelBlock) {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
@@ -118,7 +117,7 @@ OMNScanQRCodeVCDelegate>
   NSTimeInterval duration = 0.5;
   
   [UIView animateWithDuration:duration animations:^{
-
+    
     currentLogoIV.alpha = 0.0f;
     nextLogoIV.alpha = 1.0f;
     
@@ -150,7 +149,7 @@ OMNScanQRCodeVCDelegate>
 }
 
 - (void)useStubBeacon {
-#warning useStubBeacon
+  
   OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] init];
   decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+1";
   decodeBeacon.tableId = @"table-1-at-riba-ris";
@@ -185,6 +184,7 @@ OMNScanQRCodeVCDelegate>
 
 - (void)startSearchingBeacon {
   
+  [self.navigationController popToViewController:self animated:YES];
   [_loaderView startAnimating:_estimateSearchDuration];
   self.label.text = @"";
   [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
@@ -199,11 +199,13 @@ OMNScanQRCodeVCDelegate>
 }
 
 - (void)requestQRCode {
-
-  OMNCircleRootVC *scanQRCodeInfoVC = [[OMNCircleRootVC alloc] initWithTitle:NSLocalizedString(@"Отсканируйте QR-код", nil) buttons:@[NSLocalizedString(@"Сканировать", nil)]];
-  scanQRCodeInfoVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];
+  
+  OMNCircleRootVC *scanQRCodeInfoVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  scanQRCodeInfoVC.faded = YES;
+  scanQRCodeInfoVC.text = NSLocalizedString(@"Отсканируйте QR-код", nil);
   scanQRCodeInfoVC.circleIcon = [UIImage imageNamed:@"scan_qr_icon"];
   
+  //  NSLocalizedString(@"Сканировать", nil)
   scanQRCodeInfoVC.actionBlock = ^{
     
     OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
@@ -219,7 +221,6 @@ OMNScanQRCodeVCDelegate>
 
 - (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
   
-#warning scanQRCodeVC logic
   [scanQRCodeVC stopScanning];
   [self useStubBeacon];
   
@@ -234,15 +235,17 @@ OMNScanQRCodeVCDelegate>
 
 - (void)didFailOmnom {
   
-  OMNCircleRootVC *turnOnBluetoothVC = [[OMNCircleRootVC alloc] initWithTitle:NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil) buttons:@[NSLocalizedString(@"Проверить еще", nil)]];
-  turnOnBluetoothVC.circleIcon = [UIImage imageNamed:@"no_omnom_connection_icon"];
-  turnOnBluetoothVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];
-  turnOnBluetoothVC.actionBlock = ^{
-
+  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  didFailOmnomVC.faded = YES;
+  didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
+  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"no_omnom_connection_icon"];
+  //  NSLocalizedString(@"Проверить еще", nil)
+  didFailOmnomVC.actionBlock = ^{
+    
     [self startSearchingBeacon];
     
   };
-  [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
+  [self.navigationController pushViewController:didFailOmnomVC animated:YES];
   
 }
 
@@ -263,7 +266,7 @@ OMNScanQRCodeVCDelegate>
 }
 
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state {
- 
+  
   switch (state) {
     case kSearchManagerInternetFound: {
       
@@ -278,23 +281,25 @@ OMNScanQRCodeVCDelegate>
     } break;
     case kSearchManagerNotFoundBeacons: {
       
-      OMNCircleRootVC *turnOnBluetoothVC = [[OMNCircleRootVC alloc] initWithTitle:NSLocalizedString(@"Omnom не видит не одного стола", nil) buttons:@[NSLocalizedString(@"Проверить еще", nil)]];
-      turnOnBluetoothVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];
-      turnOnBluetoothVC.circleIcon = [UIImage imageNamed:@"not_found_beacon_icon"];
-      turnOnBluetoothVC.actionBlock = ^{
-        [self.navigationController popToViewController:self animated:YES];
+      OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
+      notFoundBeaconVC.faded = YES;
+      notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Возможно, вы вне заведения", nil);
+      notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"sad_table_icon_big "];
+      notFoundBeaconVC.buttonInfo =
+      @{
+        @"title" : NSLocalizedString(@"Повторить", nil),
+        @"image" : [UIImage imageNamed:@"repeat_icon_small"],
+        };
+      notFoundBeaconVC.actionBlock = ^{
         [self startSearchingBeacon];
       };
-      [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
+      [self.navigationController pushViewController:notFoundBeaconVC animated:YES];
       
     } break;
       
     case kSearchManagerRequestTurnBLEOn: {
       
-      NSLog(@"Включите BLE");
-      OMNCircleRootVC *turnOnBluetoothVC = [[OMNCircleRootVC alloc] initWithTitle:NSLocalizedString(@"Включите BLE", nil) buttons:@[]];
-      turnOnBluetoothVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];
-      turnOnBluetoothVC.circleIcon = [UIImage imageNamed:@"bluetooth_icon"];
+      OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] initWithParent:self];
       [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
       
     } break;
@@ -334,8 +339,7 @@ OMNScanQRCodeVCDelegate>
     case kSearchManagerRequestLocationManagerPermission: {
       
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] init];
-        askNavigationPermissionsVC.circleBackground = self.circleBackground;
+        OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:self];
         [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
         
       });
@@ -354,7 +358,6 @@ OMNScanQRCodeVCDelegate>
     } break;
     case kSearchManagerRequestReload: {
       
-      [self.navigationController popToViewController:self animated:YES];
       [self startSearchingBeacon];
       
     } break;
@@ -364,21 +367,24 @@ OMNScanQRCodeVCDelegate>
 
 - (void)showNoInternetErrorWithText:(NSString *)text {
   
-  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithTitle:text buttons:@[NSLocalizedString(@"Проверить еще", nil)]];
-  __weak typeof(self)weakSelf = self;
-  noInternetVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];
+  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  noInternetVC.text = text;
+  noInternetVC.faded = YES;
   noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  //  NSLocalizedString(@"Проверить еще", nil)
+  __weak typeof(self)weakSelf = self;
   noInternetVC.actionBlock = ^{
     
     [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
       
       if (kOMNReachableStateIsReachable == reachableState) {
-        [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+        
         [weakSelf startSearchingBeacon];
+        
       }
       
     }];
-
+    
   };
   [self.navigationController pushViewController:noInternetVC animated:YES];
   
@@ -386,9 +392,9 @@ OMNScanQRCodeVCDelegate>
 
 - (void)determineFaceUpPosition {
   
-  OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] initWithTitle:NSLocalizedString(@"Положите телефон в центр стола", nil) buttons:@[]];
-  tablePositionVC.circleBackground = [self.circleButton backgroundImageForState:UIControlStateNormal];
-  tablePositionVC.circleIcon = [UIImage imageNamed:@"place_device_on_table_icon"];
+  OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] initWithParent:self];
+  tablePositionVC.text = NSLocalizedString(@"Слабый сигнал. Положите телефон в центр стола, пожалуйста.", nil);
+  tablePositionVC.circleIcon = [UIImage imageNamed:@"weak_signal_table_icon_big"];
   tablePositionVC.tablePositionDelegate = self;
   [self.navigationController pushViewController:tablePositionVC animated:YES];
   
@@ -398,14 +404,12 @@ OMNScanQRCodeVCDelegate>
 
 - (void)tablePositionVCDidPlaceOnTable:(OMNTablePositionVC *)tablePositionVC {
   
-  [self.navigationController popToViewController:self animated:YES];
   [self startSearchingBeacon];
   
 }
 
 - (void)tablePositionVCDidCancel:(OMNTablePositionVC *)tablePositionVC {
   
-  [self.navigationController popToViewController:self animated:YES];
   [self startSearchingBeacon];
   
 }

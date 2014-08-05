@@ -17,9 +17,12 @@
 @property (nonatomic, copy) dispatch_block_t actionBlock;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *circleCenterLayout;
 
+@property (nonatomic, assign) BOOL faded;
+@property (nonatomic, strong) NSDictionary *buttonInfo;
+@property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) UIImage *circleIcon;
 @property (nonatomic, strong) UIImage *circleBackground;
 
-- (instancetype)initWithTitle:(NSString *)title buttons:(NSArray *)buttons;
+- (instancetype)initWithParent:(OMNCircleRootVC *)parent;
 
 @end

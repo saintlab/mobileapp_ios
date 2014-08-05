@@ -13,8 +13,7 @@
 #import "OMNCLPermissionsHelpVC.h"
 
 @interface OMNAskCLPermissionsVC ()
-<OMNDenyCLPermissionVCDelegate,
-CLLocationManagerDelegate>
+<CLLocationManagerDelegate>
 
 @end
 
@@ -23,9 +22,11 @@ CLLocationManagerDelegate>
   CLBeaconRegion *_beaconRegion;
 }
 
-- (instancetype)init {
-  self = [super initWithTitle:NSLocalizedString(@"Неооходимо разрешение на использование службы геолокации", nil) buttons:@[]];
+- (instancetype)initWithParent:(OMNCircleRootVC *)parent {
+  self = [super initWithParent:parent];
   if (self) {
+    self.faded = YES;
+    self.text = NSLocalizedString(@"Неооходимо разрешение на использование службы геолокации", nil);
     _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
   }
   return self;
@@ -96,8 +97,11 @@ CLLocationManagerDelegate>
 
 - (IBAction)denyPermissionTap:(id)sender {
   
-  OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] init];
-  denyCLPermissionVC.delegate = self;
+  OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
+  __weak typeof(self)weakSelf = self;
+  denyCLPermissionVC.actionBlock = ^{
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+  };
   [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
   
 }
@@ -107,11 +111,6 @@ CLLocationManagerDelegate>
   OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
   [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
   
-}
-#pragma mark - OMNDenyCLPermissionVCDelegate
-
-- (void)denyCLPermissionVCDidAskPermission:(OMNDenyCLPermissionVC *)denyCLPermissionVC {
-  [self.navigationController popToViewController:self animated:YES];
 }
 
 #pragma mark - UINavigationControllerDelegate

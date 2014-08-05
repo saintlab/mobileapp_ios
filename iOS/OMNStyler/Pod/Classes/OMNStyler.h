@@ -8,6 +8,8 @@
 
 #import "OMNStyle.h"
 
+#define kUseRemoteTimings 1
+
 @interface OMNStyler : NSObject
 
 + (instancetype)styler;

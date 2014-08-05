@@ -260,7 +260,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
       else {
         
         [[OMNBeaconBackgroundManager manager] startBeaconRegionMonitoring];
-        [self startRangeNearestBeacons];
+        [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestReload];
         
       }
       

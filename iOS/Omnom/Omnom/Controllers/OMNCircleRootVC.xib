@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNCircleRootVC">
@@ -10,7 +10,6 @@
                 <outlet property="_actionButtonSpace" destination="49N-BM-B5k" id="Ykg-1X-TYF"/>
                 <outlet property="button" destination="Osq-rl-D5P" id="U2o-ZK-mxe"/>
                 <outlet property="circleButton" destination="dkP-fe-wik" id="WPO-Ls-ejn"/>
-                <outlet property="circleCenterLayout" destination="0te-cl-2Fp" id="Bku-cz-1Rq"/>
                 <outlet property="foregroundView" destination="z1w-k1-jr8" id="zjv-od-CPj"/>
                 <outlet property="label" destination="2YX-13-NuN" id="InR-Y6-Phd"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -21,36 +20,28 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rpv-ZE-is7">
+                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rpv-ZE-is7">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1w-k1-jr8">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="2YX-13-NuN">
-                            <rect key="frame" x="20" y="308" width="280" height="175"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="175" id="f8g-5y-OK0"/>
-                            </constraints>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="2YX-13-NuN">
+                            <rect key="frame" x="20" y="279" width="280" height="232"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Osq-rl-D5P">
                             <rect key="frame" x="0.0" y="518" width="320" height="50"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="qU4-GN-y12"/>
                             </constraints>
-                            <state key="normal" title="Button">
+                            <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
                         <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkP-fe-wik">
-                            <rect key="frame" x="60" y="100" width="200" height="200"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <rect key="frame" x="60" y="71" width="200" height="200"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="200" id="3L5-jl-Whu"/>
                                 <constraint firstAttribute="height" constant="200" id="Nbh-Xt-5dd"/>
@@ -62,13 +53,14 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="dkP-fe-wik" firstAttribute="centerY" secondItem="z1w-k1-jr8" secondAttribute="top" constant="200" id="0te-cl-2Fp"/>
                         <constraint firstAttribute="centerX" secondItem="dkP-fe-wik" secondAttribute="centerX" id="2VV-7O-L6v"/>
                         <constraint firstAttribute="bottom" secondItem="Osq-rl-D5P" secondAttribute="bottom" id="9aR-Fm-HGY"/>
+                        <constraint firstItem="2YX-13-NuN" firstAttribute="top" relation="lessThanOrEqual" secondItem="dkP-fe-wik" secondAttribute="bottom" priority="750" constant="8" id="DX3-4A-CXp"/>
+                        <constraint firstAttribute="bottom" secondItem="2YX-13-NuN" secondAttribute="bottom" constant="58" id="Oib-vf-vxO"/>
+                        <constraint firstItem="dkP-fe-wik" firstAttribute="centerY" secondItem="z1w-k1-jr8" secondAttribute="bottom" multiplier="0.3" id="Sfg-Zb-Aum"/>
                         <constraint firstItem="2YX-13-NuN" firstAttribute="leading" secondItem="z1w-k1-jr8" secondAttribute="leading" constant="20" id="V8T-CJ-c4Z"/>
                         <constraint firstItem="Osq-rl-D5P" firstAttribute="leading" secondItem="z1w-k1-jr8" secondAttribute="leading" id="WwD-8y-T9J"/>
                         <constraint firstAttribute="trailing" secondItem="2YX-13-NuN" secondAttribute="trailing" constant="20" id="eON-cW-Ean"/>
-                        <constraint firstItem="2YX-13-NuN" firstAttribute="top" secondItem="dkP-fe-wik" secondAttribute="bottom" constant="8" id="h71-wS-sDb"/>
                         <constraint firstAttribute="trailing" secondItem="Osq-rl-D5P" secondAttribute="trailing" id="wUA-9g-0lg"/>
                     </constraints>
                 </view>
@@ -76,15 +68,30 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="z1w-k1-jr8" secondAttribute="bottom" id="49N-BM-B5k"/>
+                <constraint firstItem="Rpv-ZE-is7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7gV-QS-dHh"/>
+                <constraint firstAttribute="trailing" secondItem="Rpv-ZE-is7" secondAttribute="trailing" id="AJo-OG-bzP"/>
                 <constraint firstItem="z1w-k1-jr8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="GpR-Rf-Pt2"/>
+                <constraint firstItem="Rpv-ZE-is7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="HRR-WG-0FS"/>
                 <constraint firstAttribute="trailing" secondItem="z1w-k1-jr8" secondAttribute="trailing" id="bwG-jW-OdB"/>
+                <constraint firstAttribute="bottom" secondItem="Rpv-ZE-is7" secondAttribute="bottom" id="dF7-wU-H2D"/>
                 <constraint firstItem="z1w-k1-jr8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="u4y-Bg-MSb"/>
             </constraints>
-            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4">
+                <size key="portraitSize" width="320" height="568"/>
+                <size key="landscapeSize" width="568" height="320"/>
+            </simulatedScreenMetrics>
+            <point key="canvasLocation" x="206" y="154"/>
         </view>
     </objects>
     <resources>
         <image name="black_circle" width="200" height="200"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination">
+            <size key="portraitSize" width="320" height="480"/>
+            <size key="landscapeSize" width="480" height="320"/>
+        </simulatedScreenMetrics>
+    </simulatedMetricsContainer>
 </document>

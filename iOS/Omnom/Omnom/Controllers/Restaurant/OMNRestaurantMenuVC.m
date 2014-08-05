@@ -184,12 +184,9 @@
 - (void)searchTableWithBlock:(OMNSearchBeaconVCBlock)block {
 
   __weak typeof(self)weakSelf = self;
-  
-  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithBlock:block cancelBlock:^{
-
+  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     [weakSelf dismissViewControllerAnimated:YES completion:nil];
-
-  }];
+  } cancelBlock:nil];
   
   UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:searchBeaconVC];
   navVC.delegate = self.navigationController.delegate;

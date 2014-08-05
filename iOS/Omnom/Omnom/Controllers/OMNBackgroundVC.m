@@ -20,6 +20,15 @@
   _backgroundView = [[UIImageView alloc] initWithFrame:self.view.bounds];
   [self.view insertSubview:_backgroundView atIndex:0];
   
+  if (self.backgroundImage) {
+    _backgroundView.image = self.backgroundImage;
+  }
+  
+}
+
+- (void)setBackgroundImage:(UIImage *)backgroundImage {
+  _backgroundImage = backgroundImage;
+  _backgroundView.image = self.backgroundImage;
 }
 
 - (UIButton *)bottomButton {

@@ -14,6 +14,8 @@
 #import "OMNR1VC.h"
 #import "OMNTablePositionVC.h"
 #import "OMNPushPermissionVC.h"
+#import "OMNDenyCLPermissionVC.h"
+#import "OMNTurnOnBluetoothVC.h"
 
 @implementation OMNSearchBeaconToStopTransition
 
@@ -24,16 +26,6 @@
   
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
-  
-  // Get a snapshot of the image view
-  UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:YES];
-  fromImageSnapshot.frame = [transitionContext finalFrameForViewController:toViewController];
-
-  UIView *fadeView = [[UIView alloc] initWithFrame:fromImageSnapshot.bounds];
-  fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
-  [fromImageSnapshot addSubview:fadeView];
-  
-  [toViewController.backgroundView addSubview:fromImageSnapshot];
   
   toViewController.view.alpha = 0.0f;
   
@@ -61,6 +53,10 @@
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNTablePositionVC class]],
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNPushPermissionVC class]],
+    [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNDenyCLPermissionVC class]],
+    [self keyFromClass:[OMNDenyCLPermissionVC class] toClass:[OMNAskCLPermissionsVC class]],
+    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNTurnOnBluetoothVC class]],
+    [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchBeaconVC class]],
     ];
 }
 

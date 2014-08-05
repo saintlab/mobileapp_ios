@@ -60,10 +60,15 @@
   NSDictionary *timings = [_stylesCache objectForKey:@"timings"];
   if (nil == timings) {
     
+#if kUseRemoteTimings
+    NSData *jsonData = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"https://www.dropbox.com/s/jse4dnze4v4mqgs/timings.json?dl=1"]];
+#else
     NSString *path = [[NSBundle mainBundle] pathForResource:@"timings" ofType:@"json"];
     NSAssert([[NSFileManager defaultManager] fileExistsAtPath:path], @"You need timings.json file to use styler");
-    
     NSData *jsonData = [[NSData alloc] initWithContentsOfFile:path];
+#endif
+    
+    
     NSError *error = nil;
     timings = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
     [_stylesCache setObject:timings forKey:@"timings"];
