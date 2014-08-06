@@ -12,11 +12,11 @@
 
 @property (nonatomic, weak) id<GAmountPercentControlDelegate> delegate;
 
-@property (nonatomic, assign) double currentAmount;
+@property (nonatomic, assign) long long currentAmount;
 
-@property (nonatomic, assign, readonly) double selectedAmount;
+@property (nonatomic, assign, readonly) long long selectedAmount;
 
-@property (nonatomic, assign, readonly) double selectedPercent;
+@property (nonatomic, assign, readonly) long long selectedPercent;
 
 - (void)reset;
 
@@ -24,9 +24,9 @@
 
 @protocol GAmountPercentControlDelegate <NSObject>
 
-- (double)expectedValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl;
+- (long long)expectedValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl;
 
-- (double)enteredValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl;
+- (long long)enteredValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl;
 
 @end
 

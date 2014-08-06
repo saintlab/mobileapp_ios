@@ -13,13 +13,10 @@
 #import "OMNTransitionFromOrderToOrders.h"
 #import "OMNTransitionFromOrderToCalculator.h"
 #import "OMNSplashToSearchBeaconTransition.h"
-#import "OMNSearchBeaconToStopTransition.h"
-#import "OMNStopToSearchBeaconTransition.h"
-#import "OMNSearchBeaconToRestaurantTransition.h"
 #import "OMNRestaurantToSearchBeaconTransition.h"
 #import "OMNSearchBeaconToPayOrderTransition.h"
 #import "OMNOrderToRestaurantTransition.h"
-#import "OMNQuestionToHelpTransition.h"
+#import "OMNCircleFadeTransition.h"
 
 @implementation OMNNavigationControllerDelegate {
   NSMutableDictionary *_transitions;
@@ -31,18 +28,15 @@
     
     _transitions = [NSMutableDictionary dictionary];
     
+    [self addTansitionForClass:[OMNCircleFadeTransition class]];
     [self addTansitionForClass:[OMNTransitionFromListToProduct class]];
     [self addTansitionForClass:[OMNTransitionFromOrdersToOrder class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToCalculator class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToOrders class]];
     [self addTansitionForClass:[OMNSplashToSearchBeaconTransition class]];
-    [self addTansitionForClass:[OMNSearchBeaconToStopTransition class]];
-    [self addTansitionForClass:[OMNStopToSearchBeaconTransition class]];
-    [self addTansitionForClass:[OMNSearchBeaconToRestaurantTransition class]];
     [self addTansitionForClass:[OMNRestaurantToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNSearchBeaconToPayOrderTransition class]];
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
-    [self addTansitionForClass:[OMNQuestionToHelpTransition class]];
     
   }
   return self;

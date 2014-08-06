@@ -76,6 +76,7 @@ OMNUserInfoVCDelegate>
   [self.leftBottomButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
   [self.leftBottomButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
   [self.leftBottomButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected];
+  [self.leftBottomButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected|UIControlStateHighlighted];
   [self.leftBottomButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
   
   [self.rightBottomButton setImage:[UIImage imageNamed:@"call_bill_icon_small"] forState:UIControlStateNormal];
@@ -107,8 +108,17 @@ OMNUserInfoVCDelegate>
   UIImage *logo = _restaurant.logo;
   
   if (self.leftBottomButton.selected) {
-    [self.circleButton setImage:logo forState:UIControlStateNormal];
-    self.leftBottomButton.selected = NO;
+    
+    [_restaurant waiterCallStopComplition:^{
+      
+      [self.circleButton setImage:logo forState:UIControlStateNormal];
+      self.leftBottomButton.selected = NO;
+
+    } failure:^(NSError *error) {
+
+      NSLog(@"waiterCallStopError>%@", error);
+      
+    }];
     return;
   }
   

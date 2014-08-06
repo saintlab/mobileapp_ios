@@ -9,6 +9,8 @@
 #import "OMNSocketManager.h"
 #import <OMNSocketIO.h>
 
+NSString * const OMNSocketIODidReceiveCardIdNotification = @"OMNSocketIODidReceiveCardIdNotification";
+
 NSString * const kSocketUrl = @"http://omnom.laaaab.com";
 
 @implementation OMNSocketManager {
@@ -50,6 +52,7 @@ NSString * const kSocketUrl = @"http://omnom.laaaab.com";
   
   [_socket on:@"card_register" listener:^(id data) {
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidReceiveCardIdNotification object:data];
     NSLog(@"card_register response %@, %@", data, [data class]);
     
   }];

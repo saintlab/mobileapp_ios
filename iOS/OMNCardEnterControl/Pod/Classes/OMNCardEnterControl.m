@@ -20,10 +20,6 @@ NSInteger kCVVLength = 3;
 CGFloat kTextFieldsOffset = 20.0f;
 NSString * const kMM_YYSeporator = @"/";
 
-@interface OMNDeletedTextField : UITextField
-
-@end
-
 @interface OMNCardEnterControl ()
 <UITextFieldDelegate>
 
@@ -52,23 +48,28 @@ NSString * const kMM_YYSeporator = @"/";
   if (self) {
     self.translatesAutoresizingMaskIntoConstraints = NO;
     
-    self.backgroundColor = [UIColor lightGrayColor];
-    self.backgroundColor = [UIColor blackColor];
-    
+    self.backgroundColor = [UIColor clearColor];
+
     _dynamycConstraints = [NSMutableArray array];
     
-    _panTF = [[UITextField alloc] init];
+    UIButton *cameraButton = [[UIButton alloc] init];
+    [cameraButton setImage:[UIImage imageNamed:@"camera_icon"] forState:UIControlStateNormal];
+    [cameraButton addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    [cameraButton sizeToFit];
     
+    _panTF = [[OMNDeletedTextField alloc] init];
+    _panTF.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+    _panTF.rightViewMode = UITextFieldViewModeAlways;
+    _panTF.rightView = cameraButton;
     _panTF.translatesAutoresizingMaskIntoConstraints = NO;
-    _panTF.backgroundColor = [UIColor lightGrayColor];
     _panTF.placeholder = NSLocalizedString(@"Номер банковской карты", nil);
     _panTF.keyboardType = UIKeyboardTypeNumberPad;
     _panTF.delegate = self;
     [self addSubview:_panTF];
 
     _expireTF = [[OMNDeletedTextField alloc] init];
+    _expireTF.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
     _expireTF.textAlignment = NSTextAlignmentLeft;
-    _expireTF.backgroundColor = [UIColor lightGrayColor];
     _expireTF.translatesAutoresizingMaskIntoConstraints = NO;
     _expireTF.keyboardType = UIKeyboardTypeNumberPad;
     _expireTF.delegate = self;
@@ -76,8 +77,8 @@ NSString * const kMM_YYSeporator = @"/";
     [self addSubview:_expireTF];
     
     _cvvTF = [[OMNDeletedTextField alloc] init];
+    _cvvTF.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
     _cvvTF.textAlignment = NSTextAlignmentLeft;
-    _cvvTF.backgroundColor = [UIColor lightGrayColor];
     _cvvTF.translatesAutoresizingMaskIntoConstraints = NO;
     _cvvTF.keyboardType = UIKeyboardTypeNumberPad;
     _cvvTF.delegate = self;
@@ -85,11 +86,19 @@ NSString * const kMM_YYSeporator = @"/";
     [self addSubview:_cvvTF];
     
     _saveButton = [[UIButton alloc] init];
+    [_saveButton addTarget:self action:@selector(saveTap) forControlEvents:UIControlEventTouchUpInside];
     _saveButton.translatesAutoresizingMaskIntoConstraints = NO;
+    _saveButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f);
     _saveButton.titleLabel.numberOfLines = 0;
+    _saveButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:15.0f];
     _saveButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     _saveButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _saveButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _saveButton.tintColor = [UIColor blackColor];
+    [_saveButton setImage:[UIImage imageNamed:@"not_selected_check_box_icon"] forState:UIControlStateNormal];
+    [_saveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_saveButton setImage:[UIImage imageNamed:@"selected_check_box_icon"] forState:UIControlStateSelected];
+    [_saveButton setImage:[UIImage imageNamed:@"selected_check_box_icon"] forState:UIControlStateSelected|UIControlStateHighlighted];
     _saveButton.titleLabel.minimumScaleFactor = 0.1f;
     [_saveButton setTitle:NSLocalizedString(@"Сохранить данные для следующих платежей", nil) forState:UIControlStateNormal];
     [self addSubview:_saveButton];
@@ -106,6 +115,7 @@ NSString * const kMM_YYSeporator = @"/";
     
     _metrics =
     @{
+      @"saveButtonHeight" : @(50.0f),
       @"height" : @(50.0f),
       };
     
@@ -134,15 +144,27 @@ NSString * const kMM_YYSeporator = @"/";
   return self;
 }
 
+- (void)cameraButtonTap {
+  [self.delegate cardEnterControlDidRequestScan:self];
+}
+
+- (void)saveTap {
+  _saveButton.selected = !_saveButton.selected;
+}
+
+- (BOOL)saveButtonSelected {
+  return _saveButton.selected;
+}
+
 - (void)setExpireCCVTFHidden:(BOOL)hidden animated:(BOOL)animated completion:(dispatch_block_t)completion {
 
   NSMutableArray *dynamycConstraints = [NSMutableArray array];
   if (hidden) {
-    NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(0)]-[saveButton]|" options:0 metrics:_metrics views:_views];
+    NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(0)]-[saveButton(saveButtonHeight)]|" options:0 metrics:_metrics views:_views];
     [dynamycConstraints addObjectsFromArray:constraintsV];
   }
   else {
-    NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(50)]-[saveButton]|" options:0 metrics:_metrics views:_views];
+    NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(50)]-[saveButton(saveButtonHeight)]|" options:0 metrics:_metrics views:_views];
     [dynamycConstraints addObjectsFromArray:constraintsV];
   }
   
@@ -392,6 +414,14 @@ NSString * const kMM_YYSeporator = @"/";
   return YES;
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+  [textField setNeedsDisplay];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+  [textField setNeedsDisplay];
+}
+
 @end
 
 @implementation OMNDeletedTextField
@@ -400,6 +430,14 @@ NSString * const kMM_YYSeporator = @"/";
   if (0 == self.text.length) {
     [self.delegate textField:self shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
   }
+}
+
+- (void)drawRect:(CGRect)rect {
+  [super drawRect:rect];
+
+  UIImage *image = [UIImage imageNamed:(self.editing) ? (@"input_card_number_field_active") : (@"input_card_number_field_no_active")];
+  [image drawInRect:CGRectMake(0.0f, CGRectGetHeight(self.frame) - image.size.height, CGRectGetWidth(self.frame), image.size.height)];
+  
 }
 
 @end

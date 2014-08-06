@@ -108,4 +108,26 @@
   
 }
 
+- (void)cardsWithComplition:(void(^)(NSArray *cards))complitionBlock failure:(void(^)(NSError *error))failureBlock {
+  
+  NSAssert(complitionBlock != nil, @"complitionBlock is nil");
+  NSAssert(failureBlock != nil, @"complitionBlock is nil");
+  
+  NSString *path = [NSString stringWithFormat:@"/cards"];
+  [self GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    if (response[@"cards"]) {
+      complitionBlock(response[@"cards"]);
+    }
+    else {
+      failureBlock(nil);
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error);
+    
+  }];
+}
+
 @end

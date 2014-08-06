@@ -35,6 +35,8 @@ typedef void(^OMNImageBlock)(UIImage *image);
 
 - (void)waiterCallForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock;
 
+- (void)waiterCallStopComplition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock;
+
 - (void)newGuestForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock;
 
 - (void)getOrdersForTableID:(NSString *)tableID orders:(OMNOrdersBlock)orders error:(void(^)(NSError *error))errorBlock;

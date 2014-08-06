@@ -17,6 +17,7 @@
 #import "OMNScanQRCodeVC.h"
 #import "UIImage+omn_helper.h"
 #import "OMNTurnOnBluetoothVC.h"
+#import <OMNStyler.h>
 
 @interface OMNSearchBeaconVC ()
 <OMNBeaconSearchManagerDelegate,
@@ -114,9 +115,10 @@ OMNScanQRCodeVCDelegate>
   nextLogoIV.alpha = 0.0f;
   [self.circleButton addSubview:nextLogoIV];
   
-  NSTimeInterval duration = 0.5;
+  NSTimeInterval circleChangeLogoAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleChangeLogoAnimationDuration"];;
+  NSTimeInterval circleChangeColorAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleChangeColorAnimationDuration"];
   
-  [UIView animateWithDuration:duration animations:^{
+  [UIView animateWithDuration:circleChangeLogoAnimationDuration animations:^{
     
     currentLogoIV.alpha = 0.0f;
     nextLogoIV.alpha = 1.0f;
@@ -126,7 +128,7 @@ OMNScanQRCodeVCDelegate>
     [self.circleButton setImage:logo forState:UIControlStateNormal];
     [currentLogoIV removeFromSuperview];
     
-    [UIView animateWithDuration:duration animations:^{
+    [UIView animateWithDuration:circleChangeColorAnimationDuration animations:^{
       
       circleIV.alpha = 1.0f;
       

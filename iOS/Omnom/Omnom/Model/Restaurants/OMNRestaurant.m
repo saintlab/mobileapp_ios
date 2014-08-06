@@ -27,6 +27,7 @@
 
 @implementation OMNRestaurant {
   NSOperationQueue *_imageRequestsQueue;
+  NSString *_waiterCallTableID;
 }
 
 - (instancetype)initWithData:(id)data {
@@ -126,7 +127,7 @@
 }
 
 - (void)waiterCallForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
-  
+  _waiterCallTableID = tableID;
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.id, tableID];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
@@ -138,6 +139,27 @@
     
   }];
 
+}
+
+- (void)waiterCallStopComplition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
+  
+  if (nil == _waiterCallTableID) {
+    complitionBlock();
+    return;
+  }
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.id, _waiterCallTableID];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+    
+    _waiterCallTableID = nil;
+    complitionBlock();
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error);
+    
+  }];
+  
 }
 
 - (void)newGuestForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
@@ -168,7 +190,6 @@
   }
 
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.id, tableID];
-  
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
     ordersBlock([ordersData decodeOrdersWithError:nil]);

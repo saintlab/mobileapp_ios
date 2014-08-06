@@ -46,6 +46,7 @@
   
   [_cards addObject:bankCard];
   [self save];
+  
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -59,7 +60,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     cell.textLabel.font = FuturaMediumFont(20);
-    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.textColor = [UIColor blackColor];
 
     cell.detailTextLabel.font = FuturaMediumFont(15);
     cell.detailTextLabel.textColor = [UIColor darkGrayColor];

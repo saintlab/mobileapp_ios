@@ -8,6 +8,7 @@
 
 #import <AFNetworking/AFNetworking.h>
 
+
 typedef NS_ENUM(NSInteger, OMNReachableState) {
   kOMNReachableStateNoInternet = 0,
   kOMNReachableStateNoOmnom,
@@ -19,5 +20,8 @@ typedef NS_ENUM(NSInteger, OMNReachableState) {
 + (instancetype)sharedManager;
 
 - (void)getReachableState:(void(^)(OMNReachableState reachableState))isReachableBlock;
+
+- (void)cardsWithComplition:(void(^)(NSArray *cards))complitionBlock failure:(void(^)(NSError *error))failureBlock;
+
 
 @end

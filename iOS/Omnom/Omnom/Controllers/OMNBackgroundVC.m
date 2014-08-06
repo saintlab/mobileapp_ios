@@ -39,6 +39,7 @@
   actionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
   [actionButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [actionButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+  [actionButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateSelected|UIControlStateHighlighted];
   return actionButton;
 }
 

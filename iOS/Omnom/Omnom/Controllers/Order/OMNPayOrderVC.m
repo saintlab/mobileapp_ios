@@ -74,7 +74,7 @@ UITableViewDelegate>
   _tableView.allowsSelection = NO;
   [self setup];
   
-  _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initOrder:_order];
+//  _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didFinish)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
@@ -207,8 +207,8 @@ UITableViewDelegate>
 
 - (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didSelectCard:(OMNBankCard *)bankCard {
   
-  _order.toPayAmount = _paymentView.calculationAmount.enteredAmount * 100;
-  _order.tipAmount = _paymentView.calculationAmount.tipAmount * 100;
+  _order.toPayAmount = _paymentView.calculationAmount.enteredAmount;
+  _order.tipAmount = _paymentView.calculationAmount.tipAmount;
   
 #if kUseGPBAcquiring
   
@@ -285,7 +285,7 @@ UITableViewDelegate>
 
 - (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(double)total {
   
-  _paymentView.calculationAmount.enteredAmount = total;
+  _paymentView.calculationAmount.enteredAmount = ceilf(total / 100.0F);
   [_paymentView updateView];
   [self.navigationController popToViewController:self animated:YES];
   
@@ -322,7 +322,7 @@ UITableViewDelegate>
   [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:500.0f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
     
     _paymentView.bottom = MIN(keyboardFrame.origin.y, self.view.height);
-    _tableView.bottom = _paymentView.top;
+//    _tableView.bottom = _paymentView.top;
     
   } completion:nil];
   

@@ -68,7 +68,7 @@
     NSData *jsonData = [[NSData alloc] initWithContentsOfFile:path];
 #endif
     
-    
+
     NSError *error = nil;
     timings = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
     [_stylesCache setObject:timings forKey:@"timings"];
@@ -82,34 +82,9 @@
   
 }
 
-/*
- [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:@{NSFontAttributeName : _manager.navBarButtonFont} forState:UIControlStateNormal];
- [[UIBarButtonItem appearanceWhenContainedIn:[UIToolbar class], nil] setTitleTextAttributes:@{NSFontAttributeName : _manager.navBarButtonFont} forState:UIControlStateNormal];
- 
- - (UIFont *)navBarTitleFont {
- return FuturaMediumFont(18.0f + kFuturaDeltaFontSize);
- }
- 
- - (UIFont *)navBarButtonFont {
- return FuturaBookFont(18.0f + kFuturaDeltaFontSize);
- }
- 
- - (UIFont *)navBarSelectorDefaultFont {
- return FuturaBookFont(16.0f + kFuturaDeltaFontSize);
- }
- 
- - (UIFont *)navBarSelectorSelectedFont {
- return FuturaMediumFont(16.0f + kFuturaDeltaFontSize);
- }
- 
- - (UIFont *)splitCellFont {
- return FuturaBookFont(16.0f + kFuturaDeltaFontSize);
- }
- 
- - (UIFont *)splitTotalFont {
- return FuturaBookFont(21.0f + kFuturaDeltaFontSize);
- }
- */
+- (void)reset {
+  [_stylesCache removeAllObjects];
+}
 
 
 @end

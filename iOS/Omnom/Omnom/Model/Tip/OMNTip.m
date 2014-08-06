@@ -21,7 +21,7 @@
   return tip;
 }
 
-- (instancetype)initWithAmount:(double)amount percent:(double)percent {
+- (instancetype)initWithAmount:(long long)amount percent:(double)percent {
   self = [super init];
   if (self) {
     _amount = amount;

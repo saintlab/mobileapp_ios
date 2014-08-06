@@ -39,21 +39,16 @@
     
     NSDictionary *tipsData = jsonData[@"tips"];
 #warning поменять на копейки
-    _tipsThreshold = [tipsData[@"threshold"] doubleValue] / 100.;
+    _tipsThreshold = [tipsData[@"threshold"] longLongValue];
     NSMutableArray *tips = [NSMutableArray arrayWithCapacity:4];
     //TODO: remove stub data
     for (id tipData in tipsData[@"values"]) {
-      double amount = [tipData[@"amount"] doubleValue] / 100.;
+      long long amount = [tipData[@"amount"] longLongValue];
       double percent = [tipData[@"percent"] doubleValue];
       OMNTip *tip = [[OMNTip alloc] initWithAmount:amount percent:percent];
       [tips addObject:tip];
     }
     _tips = [tips copy];
-//    OMNTip *tip1 = [[OMNTip alloc] initWithAmount:30. percent:10];
-//    OMNTip *tip2 = [[OMNTip alloc] initWithAmount:50. percent:15];
-//    OMNTip *tip3 = [[OMNTip alloc] initWithAmount:100. percent:20];
-//    OMNTip *tip4 = [[OMNTip alloc] initWithAmount:0. percent:0];
-//    _tips = @[tip1, tip2, tip3, tip4];
     
   }
   return self;
@@ -69,26 +64,26 @@
   
 }
 
-- (double)total {
+- (long long)total {
   
   return [self totalForAllItems:YES];
   
 }
 
-- (double)selectedItemsTotal {
+- (long long)selectedItemsTotal {
   
   return [self totalForAllItems:NO];
   
 }
 
-- (double)totalForAllItems:(BOOL)allItems {
+- (long long)totalForAllItems:(BOOL)allItems {
   
-  __block double total = 0.;
+  __block long long total = 0.;
   [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
     
     if (allItems ||
         orderItem.selected) {
-      total += orderItem.price;
+      total += orderItem.price * 100;
     }
     
   }];

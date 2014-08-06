@@ -7,7 +7,7 @@
   "OMNSearchBeaconToRestaurantTransition": 0.5,
   
   "OrderSlideAnimationDuration": 0.5,
-  "CircleAnimationDuration": 0.3,
-  "CircleFadeAnimationDuration": 0.3
+  "OrderCircleChangeSizeAnimationDuration": 0.3,
+  "OrderCircleFadeAnimationDuration": 0.3
   
 }

@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const OMNSocketIODidReceiveCardIdNotification;
+//extern NSString * const OMNSocketIODidReceiveCardIdNotification;
+
+
 @interface OMNSocketManager : NSObject
 
 + (instancetype)manager;

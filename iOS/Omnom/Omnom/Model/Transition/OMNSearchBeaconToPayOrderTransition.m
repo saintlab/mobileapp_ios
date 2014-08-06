@@ -31,7 +31,7 @@
 
   [containerView addSubview:fromImageSnapshot];
   
-  UIImage *circleBackground = [fromViewController.circleButton backgroundImageForState:UIControlStateNormal];
+  UIImage *circleBackground = fromViewController.circleBackground;
   UIImageView *bigCircleIV = [[UIImageView alloc] initWithFrame:fromViewController.circleButton.frame];
   bigCircleIV.image = circleBackground;
   [containerView addSubview:bigCircleIV];
@@ -40,11 +40,11 @@
   toViewController.view.transform = CGAffineTransformMakeTranslation(0.0f, -2*CGRectGetHeight(toViewController.view.frame));
   
   NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
-  NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
+  NSTimeInterval OrderCircleChangeSizeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderCircleChangeSizeAnimationDuration"];
   
   CGFloat scale = 5.0f;
   
-  [UIView animateWithDuration:CircleAnimationDuration animations:^{
+  [UIView animateWithDuration:OrderCircleChangeSizeAnimationDuration animations:^{
     
     bigCircleIV.transform = CGAffineTransformMakeScale(scale, scale);
     
@@ -69,8 +69,8 @@
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
   NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
-  NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
-  return OrderSlideAnimationDuration + CircleAnimationDuration;
+  NSTimeInterval OrderCircleChangeSizeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderCircleChangeSizeAnimationDuration"];
+  return OrderSlideAnimationDuration + OrderCircleChangeSizeAnimationDuration;
 }
 
 + (NSArray *)keys {

@@ -35,18 +35,18 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 @property (nonatomic, strong) NSArray *items;
 
 @property (nonatomic, strong, readonly) NSArray *tips;
-@property (nonatomic, assign, readonly) double tipsThreshold;
+@property (nonatomic, assign, readonly) long long tipsThreshold;
 
 @property (nonatomic, assign) long long toPayAmount;
 @property (nonatomic, assign) long long tipAmount;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
-- (double)total;
+- (long long)total;
 
 - (void)deselectAll;
 
-- (double)selectedItemsTotal;
+- (long long)selectedItemsTotal;
 
 /**
  https://github.com/saintlab/backend/tree/master/applications/omnom#create-restaurateur-order

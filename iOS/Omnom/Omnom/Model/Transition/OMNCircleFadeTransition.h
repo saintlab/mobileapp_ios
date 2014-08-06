@@ -8,6 +8,6 @@
 
 #import "OMNCustomTransition.h"
 
-@interface OMNFadeTransition : OMNCustomTransition
+@interface OMNCircleFadeTransition : OMNCustomTransition
 
 @end

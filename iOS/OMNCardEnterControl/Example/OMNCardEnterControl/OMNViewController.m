@@ -25,17 +25,17 @@
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
   _cardEnterControl.delegate = self;
   [self.view addSubview:_cardEnterControl];
-  
-  
+  self.view.backgroundColor = [UIColor whiteColor];
   NSDictionary *views =
   @{
     @"cardEnterControl" : _cardEnterControl,
+    @"topLayoutGuide" : self.topLayoutGuide,
     };
   
   NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardEnterControl]-|" options:0 metrics:nil views:views];
   [self.view addConstraints:panH];
-  
-  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardEnterControl]" options:0 metrics:nil views:views];
+
+  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]" options:0 metrics:nil views:views];
   [self.view addConstraints:panV];
   
 	// Do any additional setup after loading the view, typically from a nib.
@@ -46,6 +46,10 @@
 - (void)cardEnterControl:(OMNCardEnterControl *)control didEnterCardData:(NSDictionary *)cardData {
   [control endEditing:YES];
   NSLog(@"%@", cardData);
+}
+
+- (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {
+  
 }
 
 - (void)didReceiveMemoryWarning

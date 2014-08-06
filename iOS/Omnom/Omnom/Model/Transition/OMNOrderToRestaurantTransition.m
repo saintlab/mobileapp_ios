@@ -41,8 +41,8 @@
   bigCircleIV.transform = CGAffineTransformMakeScale(scale, scale);
   
   NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
-  NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
-  NSTimeInterval CircleFadeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleFadeAnimationDuration"];
+  NSTimeInterval OrderCircleChangeSizeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderCircleChangeSizeAnimationDuration"];
+  NSTimeInterval OrderCircleFadeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderCircleFadeAnimationDuration"];
   
   [UIView animateWithDuration:OrderSlideAnimationDuration animations:^{
     
@@ -51,13 +51,13 @@
   } completion:^(BOOL finished) {
 
     [fromImageSnapshot removeFromSuperview];
-    [UIView animateWithDuration:CircleAnimationDuration animations:^{
+    [UIView animateWithDuration:OrderCircleChangeSizeAnimationDuration animations:^{
       
       bigCircleIV.transform = CGAffineTransformIdentity;
       
     } completion:^(BOOL finished) {
       
-      [UIView animateWithDuration:CircleFadeAnimationDuration animations:^{
+      [UIView animateWithDuration:OrderCircleFadeAnimationDuration animations:^{
         
         bigCircleIV.alpha = 0.0f;
         
@@ -78,9 +78,9 @@
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
   NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
-  NSTimeInterval CircleAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleAnimationDuration"];
-  NSTimeInterval CircleFadeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleFadeAnimationDuration"];
-  return OrderSlideAnimationDuration + CircleAnimationDuration + CircleFadeAnimationDuration;
+  NSTimeInterval OrderCircleChangeSizeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderCircleChangeSizeAnimationDuration"];
+  NSTimeInterval OrderCircleFadeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderCircleFadeAnimationDuration"];
+  return OrderSlideAnimationDuration + OrderCircleChangeSizeAnimationDuration + OrderCircleFadeAnimationDuration;
 }
 
 + (NSArray *)keys {

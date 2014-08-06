@@ -211,7 +211,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   NSDictionary *extra =
   @{
     @"tip" : @(12332),
-    @"restaurant_id" : @"some restaurant id",
+    @"restaurant_id" : @"1",
     };
   
   NSError *error = nil;

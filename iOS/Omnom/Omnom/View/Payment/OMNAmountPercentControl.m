@@ -143,35 +143,35 @@ UITextFieldDelegate>
 }
 
 - (void)reset {
-  
-  _amountTF.amount = @([self.delegate enteredValueForAmountPercentControl:self]);
+  long long amount = [self.delegate enteredValueForAmountPercentControl:self];
+  _amountTF.amount = @(amount/100);
   [self updatePercentValue];
   
 }
 
 - (void)updateAmountValue {
   
-  _amountTF.amount = @(self.expectedAmount * _percentTF.amount.doubleValue / 100.);
+  _amountTF.amount = @(self.expectedAmount * _percentTF.amount.doubleValue / 100. / 100.);
   
 }
 
-- (void)setCurrentAmount:(double)currentAmount {
+- (void)setCurrentAmount:(long long)currentAmount {
   _currentAmount = currentAmount;
   
-  _amountTF.amount = @(_currentAmount);
+  _amountTF.amount = @(_currentAmount/100);
   [self updatePercentValue];
   
 }
 
-- (double)selectedAmount {
+- (long long)selectedAmount {
   
-  return [_amountTF.amount doubleValue];
+  return [_amountTF.amount longLongValue]*100;
   
 }
 
-- (double)selectedPercent {
+- (long long)selectedPercent {
   
-  return [_percentTF.amount doubleValue];
+  return [_percentTF.amount longLongValue]*100;
   
 }
 

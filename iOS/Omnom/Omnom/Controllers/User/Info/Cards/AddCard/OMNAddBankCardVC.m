@@ -10,6 +10,8 @@
 #import <CardIO.h>
 #import "OMNConstants.h"
 #import <OMNCardEnterControl.h>
+#import <OMNMailRuAcquiring.h>
+#import "OMNSocketManager.h"
 
 @interface OMNAddBankCardVC ()
 <CardIOPaymentViewControllerDelegate,
@@ -25,9 +27,15 @@ OMNCardEnterControlDelegate>
   __weak IBOutlet UIButton *_addCardButton;
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveCardId:) name:OMNSocketIODidReceiveCardIdNotification object:nil];
+  
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
   _cardEnterControl.delegate = self;
@@ -36,18 +44,23 @@ OMNCardEnterControlDelegate>
   NSDictionary *views =
   @{
     @"cardEnterControl" : _cardEnterControl,
+    @"topLayoutGuide" : self.topLayoutGuide,
     };
   
   NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardEnterControl]-|" options:0 metrics:nil views:views];
   [self.view addConstraints:panH];
   
-  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardEnterControl]" options:0 metrics:nil views:views];
+  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]" options:0 metrics:nil views:views];
   [self.view addConstraints:panV];
   
   [_addCardButton setTitle:NSLocalizedString(@"Готово", nil) forState:UIControlStateNormal];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
+}
+
+- (void)didReceiveCardId:(NSNotification *)n {
+  NSLog(@"%@", n);
 }
 
 #pragma mark - OMNCardEnterControlDelegate
@@ -63,15 +76,7 @@ OMNCardEnterControlDelegate>
   [control endEditing:YES];
 }
 
-- (IBAction)addCardTap:(id)sender {
-  
-  if (_cardInfo) {
-    [self.delegate addBankCardVC:self didAddCard:_cardInfo];
-  }
-  
-}
-
-- (IBAction)scanCardTap:(id)sender {
+- (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {
   
   CardIOPaymentViewController *scanViewController = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
   scanViewController.collectCVV = NO;
@@ -79,6 +84,39 @@ OMNCardEnterControlDelegate>
   scanViewController.collectPostalCode = NO;
   scanViewController.appToken = CardIOAppToken;
   [self presentViewController:scanViewController animated:YES completion:nil];
+  
+}
+
+- (IBAction)addCardTap:(id)sender {
+
+  [self registerCard];
+  
+}
+
+- (void)registerCard {
+  NSDictionary *cardInfo =
+  @{
+    @"pan" : @"6011000000000004",
+    @"exp_date" : @"12.2015",
+    @"cvv" : @"123",
+    };
+  
+  __weak typeof(self)weakSelf = self;
+  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo completion:^(id response) {
+    
+    [weakSelf didFinishPostCardInfo:response];
+    
+  }];
+}
+
+- (void)didFinishPostCardInfo:(id)response {
+  NSLog(@"registerCard>%@", response);
+  if (response) {
+    
+  }
+  else {
+    
+  }
   
 }
 

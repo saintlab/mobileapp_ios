@@ -12,21 +12,21 @@
 
 @interface OMNCalculationAmount : NSObject
 
-- (instancetype)initOrder:(OMNOrder *)order;
+- (instancetype)initWithOrder:(OMNOrder *)order;
 
 @property (nonatomic, strong, readonly) NSArray *tips;
 
-@property (nonatomic, assign, readonly) double expectedValue;
+@property (nonatomic, assign, readonly) long long expectedValue;
 
-@property (nonatomic, assign, readonly) double totalValue;
+@property (nonatomic, assign, readonly) long long totalValue;
 
-@property (nonatomic, assign, readonly) double tipAmount;
+@property (nonatomic, assign, readonly) long long tipAmount;
 
-@property (nonatomic, assign) double enteredAmount;
+@property (nonatomic, assign) long long enteredAmount;
 
 @property (nonatomic, assign) NSInteger selectedTipIndex;
 
-@property (nonatomic, assign) double customTipAmount;
+@property (nonatomic, assign) long long customTipAmount;
 
 - (BOOL)paymentValueIsTooHigh;
 

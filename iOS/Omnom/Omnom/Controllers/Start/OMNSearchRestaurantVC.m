@@ -60,7 +60,7 @@
     
   } cancelBlock:nil];
   _searchBeaconVC.circleIcon = [UIImage imageNamed:@"loading_icon"];
-  _searchBeaconVC.backgroundImage = [UIImage imageNamed:@"bg_table"];
+  _searchBeaconVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
 
   dispatch_async(dispatch_get_main_queue(), ^{
     

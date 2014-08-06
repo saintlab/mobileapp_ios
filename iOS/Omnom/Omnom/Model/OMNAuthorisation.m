@@ -31,19 +31,22 @@ static NSString * const kAccountName = @"test_account6";
   self = [super init];
   if (self) {
 
-#warning updateAuthenticationToken:token
+#if kForgetLoginInfo
+#else
     NSString *token = [SSKeychain passwordForService:@"token" account:kAccountName];
     [self updateAuthenticationToken:token];
-
+#endif
   }
   return self;
 }
 
 - (BOOL)pushNotificationsRequested {
-#warning pushNotificationsRequested
+#if kForgetRequestPushNotification
   return NO;
+#else
   BOOL pushNotificationsRequested = [[SSKeychain passwordForService:@"pushNotificationsRequested" account:kAccountName] boolValue];
   return pushNotificationsRequested;
+#endif
 }
 
 - (void)requestPushNotifications:(void(^)(BOOL))completion {

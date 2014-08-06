@@ -11,12 +11,14 @@
 #import "OMNPhoneNumberTextFieldDelegate.h"
 #import "OMNConfirmCodeVC.h"
 #import "OMNAnalitics.h"
+#import "OMNNavigationBarProgressView.h"
+#import "OMNErrorTextField.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate> {
-  __weak IBOutlet UIButton *_vkButton;
-  __weak IBOutlet UIButton *_fbButton;
-  __weak IBOutlet UIButton *_twitterButton;
+//  __weak IBOutlet UIButton *_vkButton;
+//  __weak IBOutlet UIButton *_fbButton;
+//  __weak IBOutlet UIButton *_twitterButton;
   
 }
 
@@ -24,9 +26,7 @@
 
 @implementation OMNLoginVC {
   
-  __weak IBOutlet UITextField *_loginTF;
-//  __weak IBOutlet UITextField *_passwordTF;
-  
+  OMNErrorTextField *_loginTF;
   OMNPhoneNumberTextFieldDelegate *_phoneNumberTextFieldDelegate;
   
 }
@@ -43,38 +43,50 @@
 - (void)viewDidLoad {
   
   [super viewDidLoad];
+  self.view.backgroundColor = [UIColor whiteColor];
   
   [self setup];
   
-  _phoneNumberTextFieldDelegate = [[OMNPhoneNumberTextFieldDelegate alloc] init];
+//  _phoneNumberTextFieldDelegate = [[OMNPhoneNumberTextFieldDelegate alloc] init];
 //  _loginTF.delegate = _phoneNumberTextFieldDelegate;
   
-  self.navigationItem.title = NSLocalizedString(@"Вход", nil);
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"Вход", nil) count:2];
+  [navigationBarProgressView setPage:0];
+  self.navigationItem.titleView = navigationBarProgressView;
+  [self.navigationController.navigationBar setNeedsLayout];
+  NSLog(@"%@", navigationBarProgressView);
+  
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
   
 }
 
 - (void)setup {
   
-  if (kUseStubUser) {
-    _loginTF.text = @"89833087335";
-  }
+  _loginTF = [[OMNErrorTextField alloc] init];
+  [self.view addSubview:_loginTF];
   
-  _loginTF.placeholder = NSLocalizedString(@"Почта или номер телефона", nil);
-  _loginTF.keyboardType = UIKeyboardTypeNumberPad;
-//  UIToolbar *inputAccessoryView = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 44.0f)];
-//  inputAccessoryView.items =
-//  @[
-//    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-//    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"<#text#>", <#comment#>) style:<#(UIBarButtonItemStyle)#> target:<#(id)#> action:<#(SEL)#>],
-//    ];
-//  _loginTF.inputAccessoryView =
+  NSDictionary *views =
+  @{
+    @"loginTF" : _loginTF,
+    @"topLayoutGuide" : self.topLayoutGuide,
+    };
   
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[loginTF]-|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]" options:0 metrics:nil views:views]];
   
-  [_vkButton setBackgroundImage:[UIImage imageNamed:@"vk_login_icon"] forState:UIControlStateNormal];
-  [_fbButton setBackgroundImage:[UIImage imageNamed:@"fb_login_icon"] forState:UIControlStateNormal];
-  [_twitterButton setBackgroundImage:[UIImage imageNamed:@"twitter_login_icon"] forState:UIControlStateNormal];
+  _loginTF.textField.placeholder = NSLocalizedString(@"Почта или номер телефона", nil);
+  _loginTF.textField.keyboardType = UIKeyboardTypeNumberPad;
+
+//  [_vkButton setBackgroundImage:[UIImage imageNamed:@"vk_login_icon"] forState:UIControlStateNormal];
+//  [_fbButton setBackgroundImage:[UIImage imageNamed:@"fb_login_icon"] forState:UIControlStateNormal];
+//  [_twitterButton setBackgroundImage:[UIImage imageNamed:@"twitter_login_icon"] forState:UIControlStateNormal];
+  
+}
+
+- (void)closeTap {
+  
+  [self.delegate authorizationVCDidCancel:self];
   
 }
 
@@ -97,23 +109,24 @@
 }
 
 - (void)loginTap {
-  
+
   __weak typeof(self)weakSelf = self;
-  [OMNUser loginUsingData:_loginTF.text code:nil complition:^(NSString *token) {
+  [OMNUser loginUsingData:_loginTF.textField.text code:nil complition:^(NSString *token) {
     
     [weakSelf requestAuthorizationCode];
     
   } failure:^(NSError *error) {
     
-    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+    [weakSelf processLoginError:error];
     
   }];
   
 }
 
-- (void)closeTap {
+
+- (void)processLoginError:(NSError *)error {
   
-  [self.delegate authorizationVCDidCancel:self];
+  [_loginTF setError:error.localizedDescription animated:NO];
   
 }
 
@@ -131,7 +144,7 @@
   
   __weak typeof(self)weakSelf = self;
   
-  [OMNUser loginUsingData:_loginTF.text code:code complition:^(NSString *token) {
+  [OMNUser loginUsingData:_loginTF.textField.text code:code complition:^(NSString *token) {
 
     [weakSelf tokenDidReceived:token];
     
@@ -142,6 +155,12 @@
     
   }];
   
+}
+
+- (NSString *)decimalPhoneNumber {
+  NSArray *components = [_loginTF.textField.text componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
+  NSString *decimalString = [components componentsJoinedByString:@""];
+  return decimalString;
 }
 
 - (void)tokenDidReceived:(NSString *)token {
@@ -158,18 +177,6 @@
   
   [self.delegate authorizationVC:self didReceiveToken:token];
   
-}
-
-- (void)resetTap {
-  
-  _loginTF.text = @"";
-  
-}
-
-- (NSString *)decimalPhoneNumber {
-  NSArray *components = [_loginTF.text componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
-  NSString *decimalString = [components componentsJoinedByString:@""];
-  return decimalString;
 }
 
 - (void)didReceiveMemoryWarning {

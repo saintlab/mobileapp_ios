@@ -12,6 +12,8 @@
 #import "OMNBeaconBackgroundManager.h"
 #import "OMNDecodeBeaconManager.h"
 #import "OMNOperationManager.h"
+#import "OMNViewController.h"
+#import "OMNShakeWindow.h"
 
 @interface GAppDelegate ()
 
@@ -40,10 +42,24 @@
 }
 
 - (void)startApplication {
-
+  
   if (_applicationStartedForeground) {
     return;
   }
+  
+  [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
+  UIFont *font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
+   @{
+     NSForegroundColorAttributeName : [UIColor blackColor],
+     NSFontAttributeName : font
+     } forState:UIControlStateNormal];
+  
+  [[UINavigationBar appearance] setTitleTextAttributes:
+   @{
+     NSForegroundColorAttributeName : [UIColor blackColor],
+     NSFontAttributeName : font,
+     }];
   
   _applicationStartedForeground = YES;
   
@@ -51,13 +67,14 @@
   [OMNAuthorisation authorisation];
   
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-  
-//  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window = [[OMNShakeWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.tintColor = [UIColor blackColor];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
+  //  OMNViewController *startVC = [[OMNViewController alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
-  
   [self.window makeKeyAndVisible];
+  
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

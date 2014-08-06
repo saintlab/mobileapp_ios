@@ -28,13 +28,17 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-    _navigationControllerDelegate = [[OMNNavigationControllerDelegate alloc] init];
+    
   }
   return self;
 }
 
+
+
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _navigationControllerDelegate = [[OMNNavigationControllerDelegate alloc] init];
   
   self.navigationController.delegate = _navigationControllerDelegate;
   [self.navigationController setNavigationBarHidden:YES animated:NO];
