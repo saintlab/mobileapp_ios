@@ -70,7 +70,7 @@
   _cancelEditingButton.tintColor = [UIColor whiteColor];
   
   _payButton.titleLabel.font = kPayButtonFont;
-  _payButton.titleEdgeInsets = UIEdgeInsetsMake(3.0f, 0, 0, 0);
+  _payButton.titleEdgeInsets = UIEdgeInsetsMake(3.0f, 0.0f, 0.0f, 0.0f);
   [_payButton setBackgroundImage:[UIImage imageNamed:@"button_red"] forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
@@ -175,8 +175,8 @@
 - (void)updateView {
 
   [_tipsSelector update];
-  [_amountPercentControl reset];
   [self updateToPayButton];
+  [_amountPercentControl reset];
   
 }
 
@@ -227,7 +227,7 @@
 
 #pragma mark - GAmountPercentControlDelegate
 
-- (double)expectedValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
+- (long long)expectedValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
   
   if (self.tipsMode) {
   
@@ -242,7 +242,7 @@
 
 }
 
-- (double)enteredValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
+- (long long)enteredValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
  
   if (self.tipsMode) {
     

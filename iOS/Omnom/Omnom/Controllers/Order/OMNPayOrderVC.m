@@ -74,7 +74,7 @@ UITableViewDelegate>
   _tableView.allowsSelection = NO;
   [self setup];
   
-//  _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
+  _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didFinish)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
@@ -154,19 +154,6 @@ UITableViewDelegate>
   
   NSArray *constraintsTable_V = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[table]|" options:0 metrics:metrics views:views];
   [self.view addConstraints:constraintsTable_V];
-  
-  UIButton *rateButton = [[UIButton alloc] init];
-  [rateButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-  [rateButton setTitle:NSLocalizedString(@"", nil) forState:UIControlStateNormal];
-  [rateButton bk_addEventHandler:^(id sender) {
-    
-    [[[GRateAlertView alloc] initWithBlock:^{
-      
-      
-    }] show];
-    
-  } forControlEvents:UIControlEventTouchUpInside];
-//  self.navigationItem.titleView = rateButton;
   
   UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap:)];
   [_tableView addGestureRecognizer:tapGR];

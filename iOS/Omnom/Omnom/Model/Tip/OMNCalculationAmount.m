@@ -69,7 +69,7 @@
 
 - (long long)tipAmount {
   
-  double tipAmount = 0.;
+  long long tipAmount = 0.;
   OMNTip *selectedTip = self.selectedTip;
   
   if (_enteredAmount > _order.tipsThreshold &&
@@ -124,7 +124,7 @@
     if (tip.amount > 0 &&
         _expectedValue > 0) {
       double percent = 100*tip.amount/_expectedValue;
-      title = [NSString stringWithFormat:@"%.0f%%\n%.0lldi", percent, tip.amount];
+      title = [NSString stringWithFormat:@"%.0f%%\n%.0fi", percent, tip.amount*0.01];
     }
     [tipButton setTitle:title forState:UIControlStateNormal];
     [tipButton setTitle:title forState:UIControlStateSelected];
@@ -133,13 +133,13 @@
   else if (_enteredAmount > _order.tipsThreshold) {
     
     [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%", tip.percent] forState:UIControlStateNormal];
-    [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%\n%.0fi", tip.percent, tip.percent * 0.01 * _enteredAmount] forState:UIControlStateSelected];
+    [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%\n%.0fi", tip.percent, 0.01*(tip.percent*0.01)*_enteredAmount] forState:UIControlStateSelected];
     
   }
   else {
     
-    [tipButton setTitle:[NSString stringWithFormat:@"%.0lldi", tip.amount] forState:UIControlStateNormal];
-    [tipButton setTitle:[NSString stringWithFormat:@"%.0lldi", tip.amount] forState:UIControlStateSelected];
+    [tipButton setTitle:[NSString stringWithFormat:@"%.0fi", tip.amount*0.01] forState:UIControlStateNormal];
+    [tipButton setTitle:[NSString stringWithFormat:@"%.0fi", tip.amount*0.01] forState:UIControlStateSelected];
     
   }
   

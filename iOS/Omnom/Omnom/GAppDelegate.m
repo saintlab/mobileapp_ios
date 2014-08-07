@@ -21,7 +21,6 @@
 @end
 
 @implementation GAppDelegate {
-  UIImageView *_splashIV;
   BOOL _applicationStartedForeground;
 }
 
