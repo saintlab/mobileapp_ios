@@ -12,11 +12,11 @@
 
 @optional
 
-- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(double)total;
+- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(long long)total;
 
 - (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC;
 
 
-- (void)totalDidChange:(double)total;
+- (void)totalDidChange:(long long)total;
 
 @end

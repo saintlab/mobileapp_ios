@@ -34,20 +34,15 @@
   
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
   
-  self.bgIV.image = [UIImage imageNamed:@"splash_bg"];
-  
-  CGRect frame = self.logoIconsIV.frame;
-  frame.origin.y = floorf(self.view.frame.size.height*0.36f) - .5f;
-  frame.origin.x += 6.0f;
-  self.logoIconsIV.frame = frame;
-  
-  CGFloat scale = 1/2.6f;
-  self.logoIV.center = CGPointMake(159.0f, self.logoIconsIV.center.y + 2.0f);
-  self.logoIV.transform = CGAffineTransformMakeScale(scale, scale);
-  
+  self.logoIconsIV.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 287.0f);
+
+  _logoIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cross-small-new"]];
+  _logoIV.center = CGPointMake(165.0f, self.logoIconsIV.center.y);
+  [self.view addSubview:_logoIV];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -59,7 +54,7 @@
     [weakSelf didFindBeacon:decodeBeacon];
     
   } cancelBlock:nil];
-  _searchBeaconVC.circleIcon = [UIImage imageNamed:@"loading_icon"];
+  _searchBeaconVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
   _searchBeaconVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
 
   dispatch_async(dispatch_get_main_queue(), ^{
@@ -72,7 +67,7 @@
 
 - (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
-  [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.tableId complition:^{
+  [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.tableId completion:^{
     
     NSLog(@"newGuestForTableID>done");
     
@@ -86,11 +81,12 @@
   __weak typeof(_searchBeaconVC)weakBeaconSearch = _searchBeaconVC;
   [decodeBeacon.restaurant loadLogo:^(UIImage *image) {
     
+    [weakSelf didLoadLogoForRestaurant:decodeBeacon.restaurant];
     if (image) {
-      [weakSelf didLoadLogoForRestaurant:decodeBeacon.restaurant];
+      
     }
     else {
-      [weakBeaconSearch didFailOmnom];
+//      [weakBeaconSearch didFailOmnom];
     }
     
   }];

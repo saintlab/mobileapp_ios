@@ -22,7 +22,7 @@ typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNDeco
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
 
 - (void)setLogo:(UIImage *)logo withColor:(UIColor *)color completion:(dispatch_block_t)completionBlock;
-- (void)finishLoading:(dispatch_block_t)complitionBlock;
+- (void)finishLoading:(dispatch_block_t)completionBlock;
 - (void)didFailOmnom;
 
 @end

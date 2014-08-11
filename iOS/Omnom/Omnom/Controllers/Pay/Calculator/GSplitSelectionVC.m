@@ -22,14 +22,14 @@ UIPickerViewDelegate>
   
   NSInteger _numberOfGuests;
   
-  double _total;
+  long long _total;
 }
 
 - (void)dealloc {
   
 }
 
-- (instancetype)initWIthTotal:(double)total {
+- (instancetype)initWIthTotal:(long long)total {
   self = [super init];
   if (self) {
     _total = total;
@@ -58,7 +58,7 @@ UIPickerViewDelegate>
 
 - (void)updateTotalValue {
   
-  [self.delegate totalDidChange:ceil(_total / _numberOfGuests)];
+  [self.delegate totalDidChange:ceil((double)_total / _numberOfGuests)];
   
 }
 

@@ -7,12 +7,14 @@
 //
 
 #import "OMNConstants.h"
-#import "OMNAuthorisation.h"
+
+@class OMNUser;
 
 typedef void(^OMNUserBlock)(OMNUser *user);
 
 @interface OMNUser : NSObject
 
+@property (nonatomic, copy) NSString *id;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *email;
 @property (nonatomic, copy) NSString *phone;
@@ -26,15 +28,15 @@ typedef void(^OMNUserBlock)(OMNUser *user);
 
 - (instancetype)initWithData:(id)data;
 
-- (void)registerWithComplition:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock;
+- (void)registerWithCompletion:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock;
 
-- (void)confirmPhone:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
+- (void)confirmPhone:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock;
 
-- (void)confirmPhoneResend:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock;
+- (void)confirmPhoneResend:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock;
 
-+ (void)loginUsingData:(NSString *)data code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock;
++ (void)loginUsingData:(NSString *)data code:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock;
 
-+ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(OMNErrorBlock)failureBlock;
++ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(void (^)(NSError *error))failureBlock;
 
 @end
 

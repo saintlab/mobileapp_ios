@@ -64,14 +64,20 @@ OMNScanQRCodeVCDelegate>
   }
   
   _loaderView = [[OMNLoaderView alloc] initWithInnerFrame:self.circleButton.frame];
-  [self.view addSubview:_loaderView];
-  
+  _loaderView.center = CGPointMake(CGRectGetWidth(self.circleButton.frame)/2.0f, CGRectGetHeight(self.circleButton.frame)/2.0f);
+  [self.circleButton addSubview:_loaderView];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  NSLog(@"%@", self.circleButton);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
   _cancelButton.hidden = NO;
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -146,8 +152,8 @@ OMNScanQRCodeVCDelegate>
   
 }
 
-- (void)finishLoading:(dispatch_block_t)complitionBlock {
-  [_loaderView completeAnimation:complitionBlock];
+- (void)finishLoading:(dispatch_block_t)completionBlock {
+  [_loaderView completeAnimation:completionBlock];
 }
 
 - (void)useStubBeacon {
@@ -240,8 +246,13 @@ OMNScanQRCodeVCDelegate>
   OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
   didFailOmnomVC.faded = YES;
   didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
-  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"no_omnom_connection_icon"];
-  //  NSLocalizedString(@"Проверить еще", nil)
+  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  didFailOmnomVC.buttonInfo =
+  @{
+    @"title" : NSLocalizedString(@"Проверить еще", nil),
+    @"image" : [UIImage imageNamed:@"repeat_icon_small"],
+    };
+
   didFailOmnomVC.actionBlock = ^{
     
     [self startSearchingBeacon];
@@ -286,7 +297,7 @@ OMNScanQRCodeVCDelegate>
       OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
       notFoundBeaconVC.faded = YES;
       notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Возможно, вы вне заведения", nil);
-      notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"sad_table_icon_big "];
+      notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"sad_table_icon_big"];
       notFoundBeaconVC.buttonInfo =
       @{
         @"title" : NSLocalizedString(@"Повторить", nil),

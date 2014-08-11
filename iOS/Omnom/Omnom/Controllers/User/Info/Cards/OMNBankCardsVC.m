@@ -59,6 +59,7 @@
 
 - (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCard *)card {
   
+  card = [[OMNBankCard alloc] init];
   [_bankCardsModel addBankCard:card];
   [self.tableView reloadData];
   [self.navigationController popToViewController:self animated:YES];

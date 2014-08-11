@@ -13,6 +13,7 @@
 #import <SSKeychain.h>
 
 static NSString * const kAccountName = @"test_account6";
+NSString * const kTokenServiceName = @"token";
 
 @implementation OMNAuthorisation {
   void(^_notificationRegisterCompletionBlock)(BOOL completion);
@@ -33,7 +34,7 @@ static NSString * const kAccountName = @"test_account6";
 
 #if kForgetLoginInfo
 #else
-    NSString *token = [SSKeychain passwordForService:@"token" account:kAccountName];
+    NSString *token = [SSKeychain passwordForService:kTokenServiceName account:kAccountName];
     [self updateAuthenticationToken:token];
 #endif
   }
@@ -76,38 +77,20 @@ static NSString * const kAccountName = @"test_account6";
   [self updateAuthenticationToken:nil];
 }
 
-- (NSString *)installId {
-  
-  NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
-  //Check if we have UUID already
-  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAccountName];
-  
-  if (nil == retrieveuuid) {
-    
-    //Create new key for this app/device
-    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
-    retrieveuuid = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
-    CFRelease(newUniqueId);
-    
-    //Save key to Keychain
-    [SSKeychain setPassword:retrieveuuid forService:appName account:kAccountName];
-  }
-  
-  return retrieveuuid;
-}
-
 - (void)updateAuthenticationToken:(NSString *)token {
 
   _token = token;
   if (token) {
-    [SSKeychain setPassword:token forService:@"token" account:kAccountName];
+    [SSKeychain setPassword:token forService:kTokenServiceName account:kAccountName];
   }
   else {
-    [SSKeychain deletePasswordForService:@"token" account:kAccountName];
+    [SSKeychain deletePasswordForService:kTokenServiceName account:kAccountName];
   }
   
   [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
 
+  [self checkTokenWithBlock:^(BOOL tokenIsValid) {
+  }];
 
 }
 
@@ -120,6 +103,7 @@ static NSString * const kAccountName = @"test_account6";
   
   [OMNUser userWithToken:self.token user:^(OMNUser *user) {
     
+    _user = user;
     block(YES);
     
   } failure:^(NSError *error) {
@@ -151,15 +135,35 @@ static NSString * const kAccountName = @"test_account6";
   
 }
 
+- (NSString *)installId {
+  
+  NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+  //Check if we have UUID already
+  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAccountName];
+  
+  if (nil == retrieveuuid) {
+    
+    //Create new key for this app/device
+    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
+    retrieveuuid = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
+    CFRelease(newUniqueId);
+    
+    //Save key to Keychain
+    [SSKeychain setPassword:retrieveuuid forService:appName account:kAccountName];
+  }
+  
+  return retrieveuuid;
+}
+
 @end
 
 @implementation NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(OMNTokenBlock)complition failure:(void(^)(NSError *))failureBlock {
+- (void)decodeToken:(OMNTokenBlock)completion failure:(void(^)(NSError *))failureBlock {
   
   if ([self[@"status"] isEqualToString:@"success"]) {
     
-    complition(self[@"token"]);
+    completion(self[@"token"]);
     
   }
   else {

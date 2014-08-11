@@ -270,9 +270,9 @@ UITableViewDelegate>
 
 #pragma mark - GCalculatorVCDelegate
 
-- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(double)total {
+- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(long long)total {
   
-  _paymentView.calculationAmount.enteredAmount = ceilf(total / 100.0F);
+  _paymentView.calculationAmount.enteredAmount = total;
   [_paymentView updateView];
   [self.navigationController popToViewController:self animated:YES];
   

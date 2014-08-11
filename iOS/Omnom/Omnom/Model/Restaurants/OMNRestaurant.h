@@ -33,11 +33,11 @@ typedef void(^OMNImageBlock)(UIImage *image);
 
 - (void)getMenu:(GMenuBlock)menuBlock error:(void(^)(NSError *error))errorBlock;
 
-- (void)waiterCallForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock;
+- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
-- (void)waiterCallStopComplition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock;
+- (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
-- (void)newGuestForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock;
+- (void)newGuestForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
 - (void)getOrdersForTableID:(NSString *)tableID orders:(OMNOrdersBlock)orders error:(void(^)(NSError *error))errorBlock;
 

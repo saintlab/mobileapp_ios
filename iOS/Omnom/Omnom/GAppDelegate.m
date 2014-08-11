@@ -26,9 +26,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-  [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comlitionBlock) {
+  [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
     
-    [[OMNDecodeBeaconManager manager] handleBackgroundBeacon:beacon complition:comlitionBlock];
+    [[OMNDecodeBeaconManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
     
   }];
   

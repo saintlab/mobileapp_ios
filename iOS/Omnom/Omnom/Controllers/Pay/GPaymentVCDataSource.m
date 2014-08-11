@@ -25,7 +25,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 2;
+  return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -35,6 +35,9 @@
       numberOfRows = _order.items.count;
     } break;
     case 1: {
+      numberOfRows = 1;
+    } break;
+    case 2: {
       numberOfRows = 1;
     } break;
   }
@@ -76,7 +79,21 @@
       }
       
       cell.textLabel.text = NSLocalizedString(@"Total", nil);
-      cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", _order.total];
+      cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", _order.total/100.];
+      cell.imageView.image = nil;
+      cell.selectionStyle = UITableViewCellSelectionStyleNone;
+      returnCell = cell;
+    } break;
+    case 2: {
+      
+      static NSString * const cellIdentifier = @"cellIdentifier1";
+      UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+      if (nil == cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
+      }
+      
+      cell.textLabel.text = NSLocalizedString(@"Заплачено", nil);
+      cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", _order.sum/100.];
       cell.imageView.image = nil;
       cell.selectionStyle = UITableViewCellSelectionStyleNone;
       returnCell = cell;

@@ -10,6 +10,7 @@
 #import "OMNUserInfoItem.h"
 #import "OMNBankCardsVC.h"
 #import <BlocksKit+UIKit.h>
+#import "OMNAuthorisation.h"
 
 @implementation OMNUserInfoModel {
   NSArray *_sectionItems;

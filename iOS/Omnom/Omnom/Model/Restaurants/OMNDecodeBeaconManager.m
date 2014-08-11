@@ -67,7 +67,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
 }
 
-- (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(OMNErrorBlock)failure {
+- (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(void (^)(NSError *error))failure {
 
 #warning chache
 //  OMNBeacon *beacon = [beacons firstObject];
@@ -128,10 +128,10 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
 }
 
-- (void)handleBackgroundBeacon:(OMNBeacon *)beacon complition:(dispatch_block_t)complition {
+- (void)handleBackgroundBeacon:(OMNBeacon *)beacon completion:(dispatch_block_t)completion {
   
   if (nil == beacon) {
-    complition();
+    completion();
     return;
   }
   
@@ -143,11 +143,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     if (decodeBeacon) {
       [weakSelf showLocalPushWithBeacon:decodeBeacon];
     }
-    complition();
+    completion();
     
   } failure:^(NSError *error) {
     
-    complition();
+    completion();
     
   }];
   

@@ -49,13 +49,13 @@
     };
   
   [_spinner startAnimating];
-  
-  __weak typeof(self)weakSelf = self;
-  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo completion:^(id response) {
-    
-    [weakSelf didFinishPostCardInfo:response];
-    
-  }];
+#warning registerCard
+//  __weak typeof(self)weakSelf = self;
+//  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo completion:^(id response) {
+//    
+//    [weakSelf didFinishPostCardInfo:response];
+//    
+//  }];
 }
 
 - (void)didFinishPostCardInfo:(id)response {

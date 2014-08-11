@@ -20,7 +20,6 @@ extern NSString * const kPushSoundName;
 extern NSString * const kRestaurantLogoUrl;
 extern NSString * const kRestaurantBGUrl;
 
-typedef void(^OMNErrorBlock)(NSError *error);
 typedef void(^OMNDataBlock)(id data);
 
 #define kUseStubData 0

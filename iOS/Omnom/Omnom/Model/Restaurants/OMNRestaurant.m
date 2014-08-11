@@ -126,12 +126,12 @@
   
 }
 
-- (void)waiterCallForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
+- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
   _waiterCallTableID = tableID;
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.id, tableID];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
-    complitionBlock();
+    completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -141,10 +141,10 @@
 
 }
 
-- (void)waiterCallStopComplition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
+- (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
   
   if (nil == _waiterCallTableID) {
-    complitionBlock();
+    completionBlock();
     return;
   }
   
@@ -152,7 +152,7 @@
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
     _waiterCallTableID = nil;
-    complitionBlock();
+    completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -162,13 +162,13 @@
   
 }
 
-- (void)newGuestForTableID:(NSString *)tableID complition:(dispatch_block_t)complitionBlock failure:(void(^)(NSError *error))failureBlock {
+- (void)newGuestForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/new/guest", self.id, tableID];
   
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
-    complitionBlock();
+    completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     

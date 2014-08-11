@@ -21,16 +21,16 @@ static const NSTimeInterval kTransitionDuration = 0.2f;
 @interface OMNUserInfoTransition ()
 
 @property (nonatomic, assign) BOOL presenting;
-@property (nonatomic, copy) dispatch_block_t complitionBlock;
+@property (nonatomic, copy) dispatch_block_t completionBlock;
 
 @end
 
 @implementation OMNUserInfoTransition {
 }
 
-+ (instancetype)forwardTransitionWithComplition:(dispatch_block_t)complitionBlock {
++ (instancetype)forwardTransitionWithCompletion:(dispatch_block_t)completionBlock {
   OMNUserInfoTransition *transition = [[[self class] alloc] init];
-  transition.complitionBlock = complitionBlock;
+  transition.completionBlock = completionBlock;
   transition.presenting = YES;
   return transition;
 }
@@ -88,7 +88,7 @@ static const NSTimeInterval kTransitionDuration = 0.2f;
   toView.frame = CGRectMake(kLeftOffset, 0, CGRectGetWidth(containerView.frame) - kLeftOffset, CGRectGetHeight(containerView.frame));
   
   OMNTapView *tapView = [[OMNTapView alloc] initWithFrame:CGRectMake(0, 0, kLeftOffset, CGRectGetHeight(containerView.frame))];
-  tapView.didTapBlock = self.complitionBlock;
+  tapView.didTapBlock = self.completionBlock;
   [containerView addSubview:tapView];
   
   [UIView animateWithDuration:animationDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{

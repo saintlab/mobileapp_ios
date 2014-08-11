@@ -111,7 +111,7 @@
 - (void)loginTap {
 
   __weak typeof(self)weakSelf = self;
-  [OMNUser loginUsingData:_loginTF.textField.text code:nil complition:^(NSString *token) {
+  [OMNUser loginUsingData:_loginTF.textField.text code:nil completion:^(NSString *token) {
     
     [weakSelf requestAuthorizationCode];
     
@@ -144,7 +144,7 @@
   
   __weak typeof(self)weakSelf = self;
   
-  [OMNUser loginUsingData:_loginTF.textField.text code:code complition:^(NSString *token) {
+  [OMNUser loginUsingData:_loginTF.textField.text code:code completion:^(NSString *token) {
 
     [weakSelf tokenDidReceived:token];
     

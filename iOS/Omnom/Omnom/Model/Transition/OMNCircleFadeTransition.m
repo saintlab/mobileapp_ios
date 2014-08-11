@@ -72,6 +72,7 @@
     [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchBeaconVC class]],
     
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNR1VC class]],
+    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNR1VC class]],
     
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNDenyCLPermissionVC class]],
     [self keyFromClass:[OMNDenyCLPermissionVC class] toClass:[OMNAskCLPermissionsVC class]],

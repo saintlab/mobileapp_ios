@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, OMNReachableState) {
 
 - (void)getReachableState:(void(^)(OMNReachableState reachableState))isReachableBlock;
 
-- (void)cardsWithComplition:(void(^)(NSArray *cards))complitionBlock failure:(void(^)(NSError *error))failureBlock;
+- (void)cardsWithCompletion:(void(^)(NSArray *cards))completionBlock failure:(void(^)(NSError *error))failureBlock;
 
 
 @end

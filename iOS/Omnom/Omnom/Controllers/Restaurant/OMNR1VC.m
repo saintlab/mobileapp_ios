@@ -44,7 +44,7 @@ OMNUserInfoVCDelegate>
   [super viewDidLoad];
 
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
-  self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+  self.navigationItem.rightBarButtonItem.tintColor = [UIColor greenColor];
   
   self.backgroundImage = _restaurant.background;
   self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:_restaurant.background_color];
@@ -109,7 +109,7 @@ OMNUserInfoVCDelegate>
   
   if (self.leftBottomButton.selected) {
     
-    [_restaurant waiterCallStopComplition:^{
+    [_restaurant waiterCallStopCompletion:^{
       
       [self.circleButton setImage:logo forState:UIControlStateNormal];
       self.leftBottomButton.selected = NO;
@@ -124,7 +124,7 @@ OMNUserInfoVCDelegate>
   
   OMNSearchBeaconVC *sbVC = [[OMNSearchBeaconVC alloc] initWithParent:self completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     
-    [_restaurant waiterCallForTableID:decodeBeacon.tableId complition:^{
+    [_restaurant waiterCallForTableID:decodeBeacon.tableId completion:^{
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -196,12 +196,18 @@ OMNUserInfoVCDelegate>
   }
   else {
 
-    OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self];
-    __weak typeof(self)weakSelf = self;
-    pushPermissionVC.completionBlock = ^{
-      [weakSelf processOrders:orders];
-    };
-    [self.navigationController pushViewController:pushPermissionVC animated:YES];
+    if (orders.count) {
+      OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self];
+      __weak typeof(self)weakSelf = self;
+      pushPermissionVC.completionBlock = ^{
+        [weakSelf processOrders:orders];
+      };
+      [self.navigationController pushViewController:pushPermissionVC animated:YES];
+      
+    }
+    else {
+      [self processOrders:orders];
+    }
     
   }
   
@@ -221,11 +227,30 @@ OMNUserInfoVCDelegate>
   }
   else {
 
-    //TODO: replce to no order situation
-    [self.navigationController popToViewController:self animated:YES];
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"На этом столике нет заказов", nil) message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    [self showNoOrder];
     
   }
+  
+}
+
+- (void)showNoOrder {
+  
+  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  didFailOmnomVC.faded = YES;
+  didFailOmnomVC.text = NSLocalizedString(@"На этом столике нет заказов", nil);
+  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
+  
+  didFailOmnomVC.buttonInfo =
+  @{
+    @"title" : NSLocalizedString(@"Ок", nil),
+    };
+  __weak typeof(self)weakSelf = self;
+  didFailOmnomVC.actionBlock = ^{
+    
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    
+  };
+  [self.navigationController pushViewController:didFailOmnomVC animated:YES];
   
 }
 

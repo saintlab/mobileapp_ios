@@ -90,9 +90,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
  
  cardholder имя держателя карты
  */
-- (void)registerCard:(NSDictionary *)cardInfo completion:(void(^)(id response))completion {
-
-  NSString *userPhone = @"89833087335";
+- (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response))completion {
   
   NSDictionary *extra =
   @{
@@ -112,7 +110,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   @{
     @"merch_id" : kOMNMailRu_merch_id,
     @"vterm_id" : kOMNMailRu_vterm_id,
-    @"user_login" : kOMNMailRu_user_login,
+    @"user_login" : user_login,
     @"extra" : extratext,
     };
   
@@ -120,8 +118,8 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   parameters[@"signature"] = [reqiredSignatureParams omn_signature];
   parameters[@"cardholder"] = kOMNMailRu_cardholder;
-  parameters[@"user_phone"] = userPhone;
-  parameters[@"user_login"] = kOMNMailRu_user_login;
+  parameters[@"user_phone"] = user_phone;
+
   [parameters addEntriesFromDictionary:cardInfo];
   
   [self POST:@"card/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -133,7 +131,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
       if (completion) {
         completion(responseObject);
       }
-      return;
+
       [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSLog(@"%@", responseObject);

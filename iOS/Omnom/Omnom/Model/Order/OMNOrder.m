@@ -27,6 +27,7 @@
     self.modifiedTime = jsonData[@"modifiedTime"];
     self.restaurant_id = jsonData[@"restaurantId"];
     self.tableId = jsonData[@"tableId"];
+    self.sum = [jsonData[@"sum"] longLongValue];
     
     NSArray *itemsData = jsonData[@"items"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsData.count];
@@ -38,7 +39,7 @@
     self.items = items;
     
     NSDictionary *tipsData = jsonData[@"tips"];
-#warning поменять на копейки
+
     _tipsThreshold = [tipsData[@"threshold"] longLongValue];
     NSMutableArray *tips = [NSMutableArray arrayWithCapacity:4];
     //TODO: remove stub data
@@ -78,12 +79,13 @@
 
 - (long long)totalForAllItems:(BOOL)allItems {
   
+  const long long kKopsInRuble = 100;
   __block long long total = 0.;
   [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
     
     if (allItems ||
         orderItem.selected) {
-      total += orderItem.price * 100;
+      total += orderItem.price * kKopsInRuble;
     }
     
   }];
@@ -92,7 +94,7 @@
   
 }
 
-- (void)createBill:(OMNBillBlock)completion failure:(OMNErrorBlock)failureBlock {
+- (void)createBill:(OMNBillBlock)completion failure:(void (^)(NSError *error))failureBlock {
   
   NSString *description = @"";
   

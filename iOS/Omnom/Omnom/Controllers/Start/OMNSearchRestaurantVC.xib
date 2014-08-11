@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNSearchRestaurantVC">
             <connections>
                 <outlet property="bgIV" destination="xgI-4N-bSZ" id="uaD-qh-88g"/>
                 <outlet property="fgView" destination="WO5-HD-rWK" id="C3k-1e-gEt"/>
-                <outlet property="logoIV" destination="JTd-4P-Lkb" id="DS8-0K-oGe"/>
-                <outlet property="logoIconsIV" destination="qsu-n0-ra6" id="Alh-wh-Rcf"/>
+                <outlet property="logoIconsIV" destination="Hzs-Wd-Oys" id="RbL-n6-46w"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -18,21 +17,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_bg" id="xgI-4N-bSZ">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="red_color_wood_bg" id="xgI-4N-bSZ">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 </imageView>
                 <view contentMode="scaleToFill" id="WO5-HD-rWK">
-                    <rect key="frame" x="0.0" y="0.0" width="325" height="568"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
-                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="splash_icon" id="qsu-n0-ra6">
-                    <rect key="frame" x="50" y="127" width="221" height="154"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                </imageView>
-                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="loading_icon" id="JTd-4P-Lkb">
-                    <rect key="frame" x="119" y="163" width="83" height="81"/>
+                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="splash_icons" id="Hzs-Wd-Oys">
+                    <rect key="frame" x="0.0" y="193" width="320" height="200"/>
                     <autoresizingMask key="autoresizingMask"/>
                 </imageView>
             </subviews>
@@ -40,16 +35,7 @@
         </view>
     </objects>
     <resources>
-        <image name="loading_icon" width="83" height="81"/>
-        <image name="splash_bg" width="320" height="568"/>
-        <image name="splash_icon" width="221" height="154"/>
+        <image name="red_color_wood_bg" width="320" height="568"/>
+        <image name="splash_icons" width="320" height="200"/>
     </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4">
-            <size key="portraitSize" width="320" height="568"/>
-            <size key="landscapeSize" width="568" height="320"/>
-        </simulatedScreenMetrics>
-    </simulatedMetricsContainer>
 </document>

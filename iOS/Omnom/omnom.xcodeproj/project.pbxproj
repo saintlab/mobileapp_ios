@@ -100,6 +100,14 @@
 		936E71F619923DE2008FF864 /* OMNShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F419923DE2008FF864 /* OMNShakeWindow.m */; };
 		936E71F919925563008FF864 /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
 		936E71FA19925563008FF864 /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
+		936E71FF19936ACD008FF864 /* mydomain1.cer in Resources */ = {isa = PBXBuildFile; fileRef = 936E71FB19936ACD008FF864 /* mydomain1.cer */; };
+		936E720019936ACD008FF864 /* mydomain1.cer in Resources */ = {isa = PBXBuildFile; fileRef = 936E71FB19936ACD008FF864 /* mydomain1.cer */; };
+		936E720119936ACD008FF864 /* mydomain2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 936E71FC19936ACD008FF864 /* mydomain2.cer */; };
+		936E720219936ACD008FF864 /* mydomain2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 936E71FC19936ACD008FF864 /* mydomain2.cer */; };
+		936E720319936ACD008FF864 /* mydomain3.cer in Resources */ = {isa = PBXBuildFile; fileRef = 936E71FD19936ACD008FF864 /* mydomain3.cer */; };
+		936E720419936ACD008FF864 /* mydomain3.cer in Resources */ = {isa = PBXBuildFile; fileRef = 936E71FD19936ACD008FF864 /* mydomain3.cer */; };
+		936E720519936ACD008FF864 /* mydomain4.cer in Resources */ = {isa = PBXBuildFile; fileRef = 936E71FE19936ACD008FF864 /* mydomain4.cer */; };
+		936E720619936ACD008FF864 /* mydomain4.cer in Resources */ = {isa = PBXBuildFile; fileRef = 936E71FE19936ACD008FF864 /* mydomain4.cer */; };
 		9371891119702D6A00F8794B /* OMNBeaconUUID.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9371891019702D6A00F8794B /* OMNBeaconUUID.plist */; };
 		9371891219702D6A00F8794B /* OMNBeaconUUID.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9371891019702D6A00F8794B /* OMNBeaconUUID.plist */; };
 		93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */; };
@@ -197,8 +205,6 @@
 		939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98EF19752BE90051822E /* OMNConfirmCodeVC.m */; };
 		939F991019752BE90051822E /* OMNAddBankCardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98F519752BE90051822E /* OMNAddBankCardVC.m */; };
 		939F991119752BE90051822E /* OMNAddBankCardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98F519752BE90051822E /* OMNAddBankCardVC.m */; };
-		939F991219752BE90051822E /* OMNAddBankCardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939F98F619752BE90051822E /* OMNAddBankCardVC.xib */; };
-		939F991319752BE90051822E /* OMNAddBankCardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939F98F619752BE90051822E /* OMNAddBankCardVC.xib */; };
 		939F991419752BE90051822E /* OMNBankCardsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98F819752BE90051822E /* OMNBankCardsVC.m */; };
 		939F991519752BE90051822E /* OMNBankCardsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98F819752BE90051822E /* OMNBankCardsVC.m */; };
 		939F991619752BE90051822E /* OMNBankCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939F98F919752BE90051822E /* OMNBankCardsVC.xib */; };
@@ -426,6 +432,10 @@
 		936E71F419923DE2008FF864 /* OMNShakeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNShakeWindow.m; sourceTree = "<group>"; };
 		936E71F719925563008FF864 /* OMNNavigationBarProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationBarProgressView.h; sourceTree = "<group>"; };
 		936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationBarProgressView.m; sourceTree = "<group>"; };
+		936E71FB19936ACD008FF864 /* mydomain1.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = mydomain1.cer; path = ../../OMNMailRuAcquiring/Example/OMNMailRuAcquiring/mydomain1.cer; sourceTree = "<group>"; };
+		936E71FC19936ACD008FF864 /* mydomain2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = mydomain2.cer; path = ../../OMNMailRuAcquiring/Example/OMNMailRuAcquiring/mydomain2.cer; sourceTree = "<group>"; };
+		936E71FD19936ACD008FF864 /* mydomain3.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = mydomain3.cer; path = ../../OMNMailRuAcquiring/Example/OMNMailRuAcquiring/mydomain3.cer; sourceTree = "<group>"; };
+		936E71FE19936ACD008FF864 /* mydomain4.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = mydomain4.cer; path = ../../OMNMailRuAcquiring/Example/OMNMailRuAcquiring/mydomain4.cer; sourceTree = "<group>"; };
 		9371891019702D6A00F8794B /* OMNBeaconUUID.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = OMNBeaconUUID.plist; sourceTree = "<group>"; };
 		93750B1E196BF40F0031AD31 /* OMNScanQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScanQRCodeVC.h; sourceTree = "<group>"; };
 		93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNScanQRCodeVC.m; sourceTree = "<group>"; };
@@ -517,7 +527,6 @@
 		939F98EF19752BE90051822E /* OMNConfirmCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNConfirmCodeVC.m; sourceTree = "<group>"; };
 		939F98F419752BE90051822E /* OMNAddBankCardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAddBankCardVC.h; sourceTree = "<group>"; };
 		939F98F519752BE90051822E /* OMNAddBankCardVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAddBankCardVC.m; sourceTree = "<group>"; };
-		939F98F619752BE90051822E /* OMNAddBankCardVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNAddBankCardVC.xib; sourceTree = "<group>"; };
 		939F98F719752BE90051822E /* OMNBankCardsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCardsVC.h; sourceTree = "<group>"; };
 		939F98F819752BE90051822E /* OMNBankCardsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBankCardsVC.m; sourceTree = "<group>"; };
 		939F98F919752BE90051822E /* OMNBankCardsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNBankCardsVC.xib; sourceTree = "<group>"; };
@@ -922,6 +931,10 @@
 				937E0B5E18F04EC20058A249 /* OMNConstants.m */,
 				936E71D81991FEFF008FF864 /* OMNViewController.h */,
 				936E71D91991FEFF008FF864 /* OMNViewController.m */,
+				936E71FB19936ACD008FF864 /* mydomain1.cer */,
+				936E71FC19936ACD008FF864 /* mydomain2.cer */,
+				936E71FD19936ACD008FF864 /* mydomain3.cer */,
+				936E71FE19936ACD008FF864 /* mydomain4.cer */,
 				938E8F65192F5C030088EF38 /* Resources */,
 				938E8F28192F3A200088EF38 /* Model */,
 				9319FDDF192F365B0053F3A4 /* Categories */,
@@ -1249,7 +1262,6 @@
 			children = (
 				939F98F419752BE90051822E /* OMNAddBankCardVC.h */,
 				939F98F519752BE90051822E /* OMNAddBankCardVC.m */,
-				939F98F619752BE90051822E /* OMNAddBankCardVC.xib */,
 			);
 			path = AddCard;
 			sourceTree = "<group>";
@@ -1536,6 +1548,8 @@
 			files = (
 				93A59B151933193400AE1A6F /* menu.data in Resources */,
 				938F3A47198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */,
+				936E720319936ACD008FF864 /* mydomain3.cer in Resources */,
+				936E720119936ACD008FF864 /* mydomain2.cer in Resources */,
 				937A37841981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
 				930555001935DA7C00E6F4EC /* GPaySavedCardVC.xib in Resources */,
 				9378228F1963E29900CE6661 /* OMNPayOrderVC.xib in Resources */,
@@ -1543,7 +1557,6 @@
 				930555021935DA7C00E6F4EC /* OMNPayCardVC.xib in Resources */,
 				938F3A55198BF25300AB288E /* OMNAuthorizationVC.json in Resources */,
 				935C284219066755003B4881 /* fill-form in Resources */,
-				939F991219752BE90051822E /* OMNAddBankCardVC.xib in Resources */,
 				930F13361974FF4300E92EED /* omnom.caf in Resources */,
 				93750B2F196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
 				938F3A4C198BECD100AB288E /* OMNWizardVC.json in Resources */,
@@ -1567,8 +1580,10 @@
 				93B9048719654B43007D21C4 /* OMNPaymentVC.xib in Resources */,
 				939F991E19752BE90051822E /* OMNUserInfoVC.xib in Resources */,
 				93E29999197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */,
+				936E71FF19936ACD008FF864 /* mydomain1.cer in Resources */,
 				938F3A4F198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
 				93056D251990BD4A006FBF48 /* Main.storyboard in Resources */,
+				936E720519936ACD008FF864 /* mydomain4.cer in Resources */,
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				93750B23196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
 				939F991619752BE90051822E /* OMNBankCardsVC.xib in Resources */,
@@ -1606,6 +1621,7 @@
 				938F3A4A198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf in Resources */,
 				9390D25919668A3A007E13AB /* OMNEditTableVC.json in Resources */,
 				93EE3087198F57150024EAF4 /* OMNMailRUCardConfirmVC.xib in Resources */,
+				936E720219936ACD008FF864 /* mydomain2.cer in Resources */,
 				93B9049019654DE1007D21C4 /* OMNRatingVC.xib in Resources */,
 				9390D2681966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
 				939689C1195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
@@ -1621,6 +1637,7 @@
 				93B9048819654B43007D21C4 /* OMNPaymentVC.xib in Resources */,
 				93E299FD198002EC00051B04 /* OMNSettings.plist in Resources */,
 				93C99162193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
+				936E720019936ACD008FF864 /* mydomain1.cer in Resources */,
 				938F3A44198B859100AB288E /* timings.json in Resources */,
 				932118251962E12700183729 /* OMNRestaurantMenuVC.xib in Resources */,
 				9371891219702D6A00F8794B /* OMNBeaconUUID.plist in Resources */,
@@ -1628,8 +1645,9 @@
 				939FD0621989F493008F3B62 /* Futura-LSF-Omnom-Regular.otf in Resources */,
 				9378229D1963E52700CE6661 /* OMNOrdersVC.xib in Resources */,
 				939F991F19752BE90051822E /* OMNUserInfoVC.xib in Resources */,
-				939F991319752BE90051822E /* OMNAddBankCardVC.xib in Resources */,
+				936E720619936ACD008FF864 /* mydomain4.cer in Resources */,
 				93750B30196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
+				936E720419936ACD008FF864 /* mydomain3.cer in Resources */,
 				938F3A4D198BECD100AB288E /* OMNWizardVC.json in Resources */,
 				939F991719752BE90051822E /* OMNBankCardsVC.xib in Resources */,
 				93E299AA197D0C9700051B04 /* OMNCircleRootVC.xib in Resources */,

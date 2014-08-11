@@ -12,20 +12,22 @@
   CAShapeLayer *_loaderLayer;
   NSDate *_startAnimationDate;
   NSTimeInterval _totalDuration;
-  dispatch_block_t _complitionBlock;
+  dispatch_block_t _completionBlock;
 }
 
 - (instancetype)initWithInnerFrame:(CGRect)frame {
   
   CGFloat loaderWidth = 10.0f;
   CGRect layerFrame = CGRectInset(frame, -loaderWidth/2.0f, -loaderWidth/2.0f);
+  layerFrame.origin = CGPointZero;
   self = [super initWithFrame:layerFrame];
-  
   if (self) {
+    
     CGFloat loaderRadius = layerFrame.size.width/2.0f;
     UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:loaderRadius];
     
     _loaderLayer = [CAShapeLayer layer];
+    _loaderLayer.frame = self.bounds;
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     _loaderLayer.path = path.CGPath;
@@ -36,7 +38,8 @@
     _loaderLayer.hidden = YES;
     [CATransaction commit];
     _loaderLayer.lineWidth = loaderWidth;
-    _loaderLayer.lineJoin = kCALineJoinBevel;
+
+    _loaderLayer.lineJoin = kCALineJoinRound;
     [CATransaction commit];
     [self.layer addSublayer:_loaderLayer];
   }
@@ -44,7 +47,6 @@
 }
 
 - (void)startAnimating:(NSTimeInterval)duration {
-  
   _loaderLayer.hidden = NO;
   
   _startAnimationDate = [NSDate date];
@@ -63,8 +65,8 @@
   }
 }
 
-- (void)completeAnimation:(dispatch_block_t)complitionBlock {
-  _complitionBlock = complitionBlock;
+- (void)completeAnimation:(dispatch_block_t)completionBlock {
+  _completionBlock = completionBlock;
   
   CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
   
@@ -106,8 +108,8 @@
     float currentAngle = [(NSNumber *)[currentLayer valueForKeyPath:@"strokeEnd"] floatValue];
     pathAnimation.fromValue = @(currentAngle);
   }
-  pathAnimation.toValue = @(0.97);
-  _loaderLayer.strokeEnd = 0.97;
+  pathAnimation.toValue = @(0.99);
+  _loaderLayer.strokeEnd = 0.99;
   [_loaderLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
   
 }
@@ -115,8 +117,8 @@
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
   if (flag) {
     _loaderLayer.hidden = YES;
-    if (_complitionBlock) {
-      _complitionBlock();
+    if (_completionBlock) {
+      _completionBlock();
     }
   }
 }

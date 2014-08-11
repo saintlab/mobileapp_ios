@@ -41,6 +41,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.view.backgroundColor = [UIColor whiteColor];
+  
   _datePicker = [[UIDatePicker alloc] init];
   _datePicker.datePickerMode = UIDatePickerModeDate;
   [_datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
@@ -135,6 +137,7 @@
   [contentView addConstraints:h];
   v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-45-[tf4]-[hintLabel]-|" options:0 metrics:nil views:views];
   [contentView addConstraints:v];
+
 
 
   NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:contentView
@@ -244,7 +247,7 @@
   _user.birthDate = _datePicker.date;
   
   __weak typeof(self)weakSelf = self;
-  [_user registerWithComplition:^{
+  [_user registerWithCompletion:^{
     
     [weakSelf requestAuthorizationCode];
     
@@ -269,7 +272,7 @@
 - (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code {
   
   __weak typeof(self)weakSelf = self;
-  [_user confirmPhone:code complition:^(NSString *token) {
+  [_user confirmPhone:code completion:^(NSString *token) {
     
     [weakSelf didRegisterWithToken:token];
     

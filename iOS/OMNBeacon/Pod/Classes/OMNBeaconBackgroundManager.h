@@ -12,7 +12,7 @@
  This class is responible to handle background beacon finding, 
  */
 
-typedef void(^OMNBeaconBackgroundManagerDidFindBlock)(OMNBeacon *foundBeacon, dispatch_block_t comlitionBlock);
+typedef void(^OMNBeaconBackgroundManagerDidFindBlock)(OMNBeacon *foundBeacon, dispatch_block_t comletionBlock);
 
 @interface OMNBeaconBackgroundManager : NSObject
 

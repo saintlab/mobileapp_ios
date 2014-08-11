@@ -39,6 +39,7 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 
 @property (nonatomic, assign) long long toPayAmount;
 @property (nonatomic, assign) long long tipAmount;
+@property (nonatomic, assign) long long sum;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
@@ -51,6 +52,6 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 /**
  https://github.com/saintlab/backend/tree/master/applications/omnom#create-restaurateur-order
  */
-- (void)createBill:(OMNBillBlock)completion failure:(OMNErrorBlock)failureBlock;
+- (void)createBill:(OMNBillBlock)completion failure:(void (^)(NSError *error))failureBlock;
 
 @end

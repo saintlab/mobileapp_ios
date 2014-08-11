@@ -145,7 +145,7 @@
   __weak typeof(self)weakSelf = self;
   [self searchTableWithBlock:^(OMNSearchBeaconVC *searchBeaconVC,OMNDecodeBeacon *decodeBeacon) {
     
-    [_restaurant waiterCallForTableID:decodeBeacon.tableId complition:^{
+    [_restaurant waiterCallForTableID:decodeBeacon.tableId completion:^{
       
       dispatch_async(dispatch_get_main_queue(), ^{
         

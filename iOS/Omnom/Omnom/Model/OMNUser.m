@@ -8,13 +8,15 @@
 
 #import "OMNUser.h"
 #import "OMNAuthorizationManager.h"
+#import "OMNAuthorisation.h"
 
 @implementation OMNUser
 
 - (instancetype)initWithData:(id)data {
   self = [super init];
   if (self) {
-    self.name = [data[@"first_name"] description];
+    self.id = [data[@"id"] description];
+    self.name = [data[@"name"] description];
     self.email = [data[@"email"] description];
     self.phone = [data[@"phone"] description];
     self.status = [data[@"status"] description];
@@ -34,9 +36,9 @@
   
 }
 
-- (void)registerWithComplition:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock {
+- (void)registerWithCompletion:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock {
   
-  NSAssert(complition != nil, @"complition block is nil");
+  NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
   
   if (0 == self.email.length ||
@@ -72,9 +74,9 @@
 
     NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
     
-    NSLog(@"registerWithComplition>%@", responseObject);
+    NSLog(@"registerWithCompletion>%@", responseObject);
     if ([responseObject[@"status"] isEqualToString:@"registered"]) {
-      complition();
+      completion();
     }
     else {
       failureBlock([NSError errorWithDomain:NSStringFromClass(self.class) code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
@@ -90,9 +92,9 @@
   
 }
 
-- (void)confirmPhone:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
+- (void)confirmPhone:(NSString *)code completion:(OMNTokenBlock)completion failure:(void (^)(NSError *error))failureBlock {
   
-  NSAssert(complition != nil, @"complition block is nil");
+  NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
   
   NSDictionary *parameters =
@@ -103,7 +105,7 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"/confirm/phone" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    [responseObject decodeToken:complition failure:failureBlock];
+    [responseObject decodeToken:completion failure:failureBlock];
 
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -113,9 +115,9 @@
   
 }
 
-- (void)confirmPhoneResend:(dispatch_block_t)complition failure:(OMNErrorBlock)failureBlock {
+- (void)confirmPhoneResend:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock {
   
-  NSAssert(complition != nil, @"complition block is nil");
+  NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
 
   NSDictionary *parameters =
@@ -126,7 +128,7 @@
   [[OMNAuthorizationManager sharedManager] POST:@"/confirm/phone/resend" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"responseObject%@", responseObject);
-    complition();
+    completion();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -136,9 +138,9 @@
   
 }
 
-+ (void)loginUsingData:(NSString *)data code:(NSString *)code complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
++ (void)loginUsingData:(NSString *)data code:(NSString *)code completion:(OMNTokenBlock)completion failure:(void (^)(NSError *error))failureBlock {
   
-  NSAssert(complition != nil, @"complition block is nil");
+  NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
@@ -161,15 +163,15 @@
     
   }
   
-  [self loginWithParameters:parameters complition:complition failure:failureBlock];
+  [self loginWithParameters:parameters completion:completion failure:failureBlock];
   
 }
 
-+ (void)loginWithParameters:(NSDictionary *)parameters complition:(OMNTokenBlock)complition failure:(OMNErrorBlock)failureBlock {
++ (void)loginWithParameters:(NSDictionary *)parameters completion:(OMNTokenBlock)completion failure:(void (^)(NSError *error))failureBlock {
   
   [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    [responseObject decodeToken:complition failure:failureBlock];
+    [responseObject decodeToken:completion failure:failureBlock];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -179,7 +181,7 @@
   
 }
 
-+ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(OMNErrorBlock)failureBlock {
++ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(void (^)(NSError *error))failureBlock {
   
   NSDictionary *parameters =
   @{
@@ -188,7 +190,7 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-//    NSLog(@"user>>%@", responseObject);
+    NSLog(@"user>>%@", responseObject);
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
       
       OMNUser *user = [[OMNUser alloc] initWithData:responseObject[@"user"]];

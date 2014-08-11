@@ -31,7 +31,8 @@ static NSString * const kOMNMailRu_cvv = @"123";
 //    @"cvv" : kOMNMailRu_cvv,
 //    };
   
-  _cardId = @"30004501610923294711";
+  _cardId = @"30001197651493912571";
+
   _cardInfo =
   @{
     @"pan" : @"6011000000000004",
@@ -56,7 +57,11 @@ static NSString * const kOMNMailRu_cvv = @"123";
 }
 
 - (IBAction)registerTap:(id)sender {
-  [[OMNMailRuAcquiring acquiring] registerCard:_cardInfo completion:nil];
+  
+  [[OMNMailRuAcquiring acquiring] registerCard:_cardInfo user_login:@"1" user_phone:@"89833087335" completion:^(id response) {
+    NSLog(@"registerCard>%@", response);
+  }];
+
 }
 
 - (IBAction)verifyTap:(id)sender {

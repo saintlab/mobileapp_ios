@@ -34,7 +34,7 @@ static const CGFloat kTopOffset = 40.0f;
   OMNOrder *_order;
   UIButton *_totalButton;
   UIView *_containerView;
-  double _total;
+  long long _total;
 }
 
 - (instancetype)initWithOrder:(OMNOrder *)order {
@@ -161,7 +161,8 @@ static const CGFloat kTopOffset = 40.0f;
   
   if (nil == _secondViewController) {
     
-    _secondViewController = [[GSplitSelectionVC alloc] initWIthTotal:[_order total]];
+    long long total = [_order total];
+    _secondViewController = [[GSplitSelectionVC alloc] initWIthTotal:total];
     _secondViewController.delegate = self;
   }
   return _secondViewController;
@@ -226,10 +227,10 @@ static const CGFloat kTopOffset = 40.0f;
 
 #pragma mark - GCalculatorVCDelegate
 
-- (void)totalDidChange:(double)total {
+- (void)totalDidChange:(long long)total {
   
   _total = total;
-  [_totalButton setTitle:[NSString stringWithFormat:@"%.2fР", total] forState:UIControlStateNormal];
+  [_totalButton setTitle:[NSString stringWithFormat:@"%.2fР", total/100.] forState:UIControlStateNormal];
   
 }
 

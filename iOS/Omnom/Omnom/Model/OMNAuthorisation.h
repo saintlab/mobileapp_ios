@@ -6,15 +6,14 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-@class OMNUser;
+#import "OMNUser.h"
 
-typedef void(^OMNUserBlock)(OMNUser *user);
 typedef void(^OMNTokenBlock)(NSString *token);
 
 @interface OMNAuthorisation : NSObject
 
 @property (nonatomic, copy, readonly) NSString *token;
-
+@property (nonatomic, strong, readonly) OMNUser *user;
 @property (nonatomic, copy, readonly) NSString *installId;
 
 @property (nonatomic, strong) dispatch_block_t logoutCallback;
@@ -37,6 +36,6 @@ typedef void(^OMNTokenBlock)(NSString *token);
 
 @interface NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(OMNTokenBlock)complition failure:(void(^)(NSError *))failureBlock;
+- (void)decodeToken:(OMNTokenBlock)completion failure:(void(^)(NSError *))failureBlock;
 
 @end

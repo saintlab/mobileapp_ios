@@ -12,7 +12,7 @@
 
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
-- (instancetype)initWIthTotal:(double)total;
+- (instancetype)initWIthTotal:(long long)total;
 
 @end
 

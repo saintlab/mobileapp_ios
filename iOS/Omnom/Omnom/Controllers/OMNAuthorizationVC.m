@@ -114,6 +114,8 @@
 - (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token {
   
   [[OMNAuthorisation authorisation] updateAuthenticationToken:token];
+  
+  
   [self dismissViewControllerAnimated:NO completion:^{
     [self processAuthorisation];
   }];

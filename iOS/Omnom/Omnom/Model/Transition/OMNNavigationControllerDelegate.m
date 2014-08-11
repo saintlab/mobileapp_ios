@@ -37,6 +37,7 @@
     [self addTansitionForClass:[OMNRestaurantToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNSearchBeaconToPayOrderTransition class]];
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
+    [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
     
   }
   return self;

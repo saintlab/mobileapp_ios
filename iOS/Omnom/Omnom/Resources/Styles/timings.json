@@ -1,13 +1,13 @@
 {
   
   "OMNRestaurantToSearchBeaconTransition": 0.3,
-  "OMNSearchRestaurantToSearchBeaconTransition": 0.5,
-  "OMNSearchBeaconToStopTransition": 0.3,
-  "OMNStopToSearchBeaconTransition": 0.5,
-  "OMNSearchBeaconToRestaurantTransition": 0.5,
+  "OMNSplashToSearchBeaconTransition": 0.5,
+  "OMNCircleFadeTransition": 0.5,
   
+  "CircleChangeColorAnimationDuration": 0.3,
+  "CircleChangeLogoAnimationDuration": 0.6,
   "OrderSlideAnimationDuration": 0.5,
-  "OrderCircleChangeSizeAnimationDuration": 0.3,
+  "OrderCircleChangeSizeAnimationDuration": 0.5,
   "OrderCircleFadeAnimationDuration": 0.3
   
 }

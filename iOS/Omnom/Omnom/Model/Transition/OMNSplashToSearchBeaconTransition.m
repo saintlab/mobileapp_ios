@@ -20,7 +20,8 @@
   
   OMNSearchRestaurantVC *fromViewController = (OMNSearchRestaurantVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNSearchBeaconVC *toViewController = (OMNSearchBeaconVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-
+  [toViewController.view layoutIfNeeded];
+  
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
 
@@ -49,15 +50,22 @@
   iconsIV.transform = fromViewController.logoIconsIV.transform;
   [fromViewSnapshot addSubview:iconsIV];
   
-  UIImageView *logoIV = [[UIImageView alloc] initWithImage:fromViewController.logoIV.image];
-  logoIV.center = fromViewController.logoIV.center;
-  logoIV.transform = fromViewController.logoIV.transform;
-  [fromViewSnapshot addSubview:logoIV];
+  CGFloat scale = 72.0f/162.0f;
+  
+  UIImageView *oldLogoIV = [[UIImageView alloc] initWithImage:fromViewController.logoIV.image];
+  oldLogoIV.center = fromViewController.logoIV.center;
+  [fromViewSnapshot addSubview:oldLogoIV];
+  
+  UIImageView *newLogoIV = [[UIImageView alloc] initWithImage:toViewController.circleIcon];
+  newLogoIV.transform =  CGAffineTransformMakeScale(scale, scale);
+  newLogoIV.alpha = 0.0f;
+  newLogoIV.center = fromViewController.logoIV.center;
+  [fromViewSnapshot addSubview:newLogoIV];
   
   [containerView addSubview:fromViewSnapshot];
   fromViewController.view.hidden = YES;
   
-  _circleFrame = [containerView.layer convertRect:toViewController.circleButton.frame toLayer:_layer];
+  _circleFrame = [toViewController.view.layer convertRect:toViewController.circleButton.frame toLayer:_layer];
   UIBezierPath *fromPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-xOffset, -yOffset, diametr, diametr)];
   UIBezierPath *toPath = [UIBezierPath bezierPathWithOvalInRect:_circleFrame];
   
@@ -74,14 +82,19 @@
 
   [UIView animateWithDuration:duration/2. delay:delay options:0 animations:^{
     iconsIV.alpha = 0.0f;
+    oldLogoIV.alpha = 0.0f;
   } completion:^(BOOL finished) {
     [iconsIV removeFromSuperview];
   }];
   
   [UIView animateWithDuration:duration delay:delay options:0 animations:^{
 
-    logoIV.center = circleCenter;
-    logoIV.transform = CGAffineTransformIdentity;
+    newLogoIV.center = circleCenter;
+    newLogoIV.transform = CGAffineTransformIdentity;
+    newLogoIV.alpha = 1.0f;
+    
+    oldLogoIV.center = circleCenter;
+    oldLogoIV.transform = CGAffineTransformMakeScale(1.0f/scale, 1.0f/scale);;
     
   } completion:^(BOOL finished) {
     fromViewSnapshot.alpha = 0.0f;

@@ -1,9 +1,6 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
       "filename" : "red_color_wood_bg.png"
@@ -11,7 +8,11 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "red_color_wood_bg@2x.png"
+      "filename" : "Splash_red-box-v0.1.png"
+    },
+    {
+      "idiom" : "universal",
+      "unassigned" : true
     }
   ],
   "info" : {
