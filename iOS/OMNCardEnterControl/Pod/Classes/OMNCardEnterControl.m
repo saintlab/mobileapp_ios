@@ -54,7 +54,7 @@ NSString * const kMM_YYSeporator = @"/";
     _dynamycConstraints = [NSMutableArray array];
     
     UIButton *cameraButton = [[UIButton alloc] init];
-    [cameraButton setImage:[UIImage imageNamed:@"camera_icon"] forState:UIControlStateNormal];
+    [cameraButton setImage:[UIImage imageNamed:@"add_new_card_icon"] forState:UIControlStateNormal];
     [cameraButton addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
     [cameraButton sizeToFit];
     

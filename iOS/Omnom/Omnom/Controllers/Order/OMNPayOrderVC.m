@@ -27,6 +27,7 @@
 #import "OMNRestaurant.h"
 #import "OMNMailRUPayVC.h"
 #import "OMNAddBankCardVC.h"
+#import "OMNPaymentNotificationControl.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -51,6 +52,7 @@ OMNMailRUPayVCDelegate>
 }
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[OMNSocketManager manager] leave:_order.id];
 }
 
@@ -77,6 +79,8 @@ OMNMailRUPayVCDelegate>
   [self setup];
   
   _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPay:) name:OMNSocketIODidPayNotification object:nil];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didFinish)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
@@ -120,12 +124,19 @@ OMNMailRUPayVCDelegate>
   [super viewWillDisappear:animated];
   
   _tableView.delegate = self;
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
 }
 
 - (void)didFinish {
   [self.delegate payOrderVCDidFinish:self];
+}
+
+- (void)didPay:(NSNotification *)n {
+  
+  [OMNPaymentNotificationControl showWithInfo:n.userInfo];
+
 }
 
 - (void)setup {
@@ -298,7 +309,6 @@ OMNMailRUPayVCDelegate>
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-  
 }
 
 - (void)keyboardWillShow:(NSNotification *)n {

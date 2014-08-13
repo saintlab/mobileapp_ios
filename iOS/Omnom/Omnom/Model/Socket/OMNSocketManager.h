@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString * const OMNSocketIODidReceiveCardIdNotification;
-//extern NSString * const OMNSocketIODidReceiveCardIdNotification;
-
+extern NSString * const OMNSocketIODidPayNotification;
 
 @interface OMNSocketManager : NSObject
 

@@ -77,6 +77,8 @@ OMNScanQRCodeVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
+  [self.navigationController setToolbarHidden:YES animated:animated];
+  
   if (nil == _beaconSearchManager) {
     
     _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];

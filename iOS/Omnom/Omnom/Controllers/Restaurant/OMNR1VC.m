@@ -128,9 +128,11 @@ OMNRestaurantInfoVCDelegate>
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+  [UIView animateWithDuration:0.1 animations:^{
+    [self.navigationController setToolbarHidden:NO animated:animated];
+  }];
   [super viewDidAppear:animated];
   
-  [self.navigationController setToolbarHidden:NO animated:animated];
 
 //  self.bottomViewConstraint.constant = 0.0f;
 //  [UIView animateWithDuration:0.3 animations:^{

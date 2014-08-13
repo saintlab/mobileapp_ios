@@ -10,6 +10,7 @@
 #import <OMNSocketIO.h>
 
 NSString * const OMNSocketIODidReceiveCardIdNotification = @"OMNSocketIODidReceiveCardIdNotification";
+NSString * const OMNSocketIODidPayNotification = @"OMNSocketIODidPayNotification";
 
 NSString * const kSocketUrl = @"http://omnom.laaaab.com";
 
@@ -43,8 +44,7 @@ NSString * const kSocketUrl = @"http://omnom.laaaab.com";
   [_socket on:@"payment" listener:^(id data) {
     
     dispatch_async(dispatch_get_main_queue(), ^{
-      UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[data[@"amount"] description] message:nil delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-      [alert show];
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidPayNotification object:nil userInfo:data];
     });
     NSLog(@"payment response %@, %@", data, [data class]);
     

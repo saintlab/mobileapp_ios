@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "camera_icon.png"
+      "filename" : "add_new_card_icon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "camera_icon@2x.png"
+      "filename" : "add_new_card_icon@2x.png"
     }
   ],
   "info" : {
