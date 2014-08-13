@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "allow_geolocation_icon_white_big.png"
+      "filename" : "wifi_icon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "allow_geolocation_icon_white_big@2x.png"
+      "filename" : "wifi_icon@2x.png"
     }
   ],
   "info" : {

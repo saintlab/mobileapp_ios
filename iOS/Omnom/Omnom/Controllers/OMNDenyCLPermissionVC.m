@@ -32,7 +32,7 @@
   [super viewDidLoad];
   
   self.circleBackground = nil;
-  self.circleIcon = [[UIImage imageNamed:@"allow_geolocation_icon_white_big"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  self.circleIcon = [[UIImage imageNamed:@"allow_geolocation_icon_big"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.circleButton.tintColor = [UIColor blackColor];
   
 }

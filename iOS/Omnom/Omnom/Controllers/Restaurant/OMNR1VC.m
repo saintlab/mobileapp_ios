@@ -73,17 +73,39 @@ OMNRestaurantInfoVCDelegate>
 }
 
 - (void)addActionsBoard {
-  [self addBottomButtons];
   
-  [self.leftBottomButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
-  [self.leftBottomButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
-  [self.leftBottomButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected];
-  [self.leftBottomButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected|UIControlStateHighlighted];
-  [self.leftBottomButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
+  UIButton *callWaiterButton = [[UIButton alloc] init];
+  [callWaiterButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
+  [callWaiterButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
+  [callWaiterButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected];
+  [callWaiterButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected|UIControlStateHighlighted];
+  [callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
+  [callWaiterButton sizeToFit];
   
-  [self.rightBottomButton setImage:[UIImage imageNamed:@"call_bill_icon_small"] forState:UIControlStateNormal];
-  [self.rightBottomButton setTitle:NSLocalizedString(@"Счет", nil) forState:UIControlStateNormal];
-  [self.rightBottomButton addTarget:self action:@selector(callBillTap) forControlEvents:UIControlEventTouchUpInside];
+  UIButton *callBillButton = [[UIButton alloc] init];
+  [callBillButton setImage:[UIImage imageNamed:@"call_bill_icon_small"] forState:UIControlStateNormal];
+  [callBillButton setTitle:NSLocalizedString(@"Счет", nil) forState:UIControlStateNormal];
+  [callBillButton addTarget:self action:@selector(callBillTap) forControlEvents:UIControlEventTouchUpInside];
+  [callBillButton sizeToFit];
+  
+  self.toolbarItems =
+  @[
+    [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+    ];
+  
+//  [self addBottomButtons];
+//  
+//  [self.leftBottomButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
+//  [self.leftBottomButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
+//  [self.leftBottomButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected];
+//  [self.leftBottomButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected|UIControlStateHighlighted];
+//  [self.leftBottomButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
+//  
+//  [self.rightBottomButton setImage:[UIImage imageNamed:@"call_bill_icon_small"] forState:UIControlStateNormal];
+//  [self.rightBottomButton setTitle:NSLocalizedString(@"Счет", nil) forState:UIControlStateNormal];
+//  [self.rightBottomButton addTarget:self action:@selector(callBillTap) forControlEvents:UIControlEventTouchUpInside];
   
   UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
   [actionButton addTarget:self action:@selector(showInfoTap) forControlEvents:UIControlEventTouchUpInside];
@@ -101,15 +123,19 @@ OMNRestaurantInfoVCDelegate>
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage new];
+  
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  self.bottomViewConstraint.constant = 0.0f;
-  [UIView animateWithDuration:0.3 animations:^{
-    [self.view layoutIfNeeded];
-  }];
+  [self.navigationController setToolbarHidden:NO animated:animated];
+
+//  self.bottomViewConstraint.constant = 0.0f;
+//  [UIView animateWithDuration:0.3 animations:^{
+//    [self.view layoutIfNeeded];
+//  }];
   
 }
 

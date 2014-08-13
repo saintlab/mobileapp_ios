@@ -7,10 +7,11 @@
 //
 
 #import "OMNRestaurantInfoCell.h"
+#import "OMNRestaurantInfoItem.h"
 
 @implementation OMNRestaurantInfoCell {
   BOOL _constraintsUpdated;
-  NSDictionary *_item;
+  OMNRestaurantInfoItem *_restaurantInfoItem;
   UIImageView *_iconView;
   UILabel *_label;
 }
@@ -21,12 +22,12 @@
     
     _iconView = [[UIImageView alloc] init];
     _iconView.contentMode = UIViewContentModeCenter;
-    _iconView.image = [UIImage imageNamed:@"demo_mode_icon_small"];
     _iconView.translatesAutoresizingMaskIntoConstraints = NO;
     [_iconView sizeToFit];
     [self.contentView addSubview:_iconView];
     
     _label = [[UILabel alloc] init];
+    _label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
     _label.numberOfLines = 0;
     _label.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_label];
@@ -35,9 +36,10 @@
   return self;
 }
 
-- (void)setItem:(NSDictionary *)item {
-  _item = item;
-  _label.text = item[@"title"];
+- (void)setItem:(OMNRestaurantInfoItem *)item {
+  _restaurantInfoItem = item;
+  _iconView.image = [item icon];
+  _label.text = item.title;
 }
 
 - (void)updateConstraints {

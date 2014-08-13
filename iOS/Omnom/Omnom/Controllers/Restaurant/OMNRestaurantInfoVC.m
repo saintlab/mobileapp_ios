@@ -9,14 +9,18 @@
 #import "OMNRestaurantInfoVC.h"
 #import "OMNRestaurantInfoCell.h"
 #import <AFNetworking.h>
+#import "OMNRestaurantInfo.h"
+#import "OMNRestaurantFeedItemCell.h"
 
 @implementation OMNRestaurantInfoVC {
-  BOOL _selected;
-  NSArray *_info;
+  OMNRestaurantInfo *_restaurantInfo;
+  UIImageView *_arrowView;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"show_button_icon"]];
   
   UIButton *closeButton = [[UIButton alloc] init];
   [closeButton setImage:[UIImage imageNamed:@"back_button_icon"] forState:UIControlStateNormal];
@@ -27,10 +31,12 @@
   [self.navigationItem setHidesBackButton:YES animated:NO];
   
   
-  [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"cell"];
-  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"defaultCell"];
+  [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"InfoCell"];
+  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"DefaultCell"];
+  [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
   
-  _info = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"restaurantInfo" ofType:@"json"]] options:0 error:nil];
+  id info = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"restaurantInfo" ofType:@"json"]] options:0 error:nil];
+  _restaurantInfo = [[OMNRestaurantInfo alloc] initWithJsonData:info];
   
 }
 
@@ -38,10 +44,15 @@
   [self.delegate restaurantInfoVCDidFinish:self];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  [self.navigationController setToolbarHidden:NO animated:animated];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return _info.count;
+  return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -49,70 +60,92 @@
   
   switch (section) {
     case 0: {
-      NSArray *items = _info[0][@"items"];
-      numberOfRows = (_selected) ? (items.count + 1) : (1);
+      numberOfRows = 1;
+    } break;
+    case 1: {
+      numberOfRows = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems.count) : (_restaurantInfo.shortItems.count);
+    } break;
+    case 2: {
+      numberOfRows = _restaurantInfo.feedItems.count;
     } break;
   }
   
   return numberOfRows;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView
-         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  CGFloat heightForRow = 44.0f;
+  switch (indexPath.section) {
+    case 0: {
+      heightForRow = 50.0f;
+    } break;
+    case 1: {
+      heightForRow = 40.0f;
+    } break;
+    case 2: {
+      heightForRow = 301.0f;
+    } break;
+  }
+  return heightForRow;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   UITableViewCell *cell = nil;
-  if (0 == indexPath.row) {
-    cell = [tableView dequeueReusableCellWithIdentifier:@"defaultCell" forIndexPath:indexPath];
+  
+  switch (indexPath.section) {
+    case 0: {
+      
+      UITableViewCell *defaultCell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell" forIndexPath:indexPath];
+      defaultCell.selectionStyle = UITableViewCellSelectionStyleNone;
+      defaultCell.textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:30.0f];
+      defaultCell.textLabel.text = _restaurantInfo.title;
+      defaultCell.accessoryView = _arrowView;
+      cell = defaultCell;
+      
+    } break;
+    case 1: {
+      
+      OMNRestaurantInfoCell *restaurantInfoCell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell" forIndexPath:indexPath];
+      NSArray *items = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems) : (_restaurantInfo.shortItems);
+      OMNRestaurantInfoItem *item = items[indexPath.row];
+      [restaurantInfoCell setItem:item];
+      cell = restaurantInfoCell;
+      
+    } break;
+    case 2: {
+      
+      OMNRestaurantFeedItemCell *restaurantFeedInfoCell = [tableView dequeueReusableCellWithIdentifier:@"FeedItemCell" forIndexPath:indexPath];
+      id feedItem = _restaurantInfo.feedItems[indexPath.row];
+      [restaurantFeedInfoCell setFeedItem:feedItem];
+      cell = restaurantFeedInfoCell;
+      
+    } break;
   }
-  else {
-    cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-  }
-  [self configureCell:cell forRowAtIndexPath:indexPath];
   
   return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  NSDictionary *info = _info[indexPath.section];
-  
-  if (indexPath.row == 0) {
-    
-    cell.textLabel.text = info[@"title"];
-    
-  }
-  else {
-    NSArray *items = info[@"items"];
-    NSDictionary *item = items[indexPath.row - 1];
-    OMNRestaurantInfoCell *restaurantInfoCell = (OMNRestaurantInfoCell *)cell;
-    [restaurantInfoCell setItem:item];
-    
-  }
-  
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  if (0 == indexPath.row &&
-      0 == indexPath.section) {
-    _selected = !_selected;
-    
-    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:5];
-    
-    NSArray *items = _info[0][@"items"];
-    for (NSInteger row = 1; row <= items.count; row++) {
-      [indexPaths addObject:[NSIndexPath indexPathForRow:row inSection:0]];
-    }
-    
-    if (_selected) {
-      [tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    }
-    else {
-      [tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-    }
-    
+  switch (indexPath.section) {
+    case 0: {
+      _restaurantInfo.selected = !_restaurantInfo.selected;
+      [UIView animateWithDuration:0.3 animations:^{
+        _arrowView.transform = CGAffineTransformMakeRotation((_restaurantInfo.selected) ? (M_PI) : (0));
+      }];
+      [tableView beginUpdates];
+      [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+      [tableView endUpdates];
+    } break;
+    case 1: {
+      
+    } break;
+    case 2: {
+      
+    } break;
   }
-  
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
 }
 
 @end

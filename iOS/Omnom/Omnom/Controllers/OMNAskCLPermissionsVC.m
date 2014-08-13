@@ -42,7 +42,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  [self.circleButton setImage:[UIImage imageNamed:@"allow_geolocation_icon_white_big"] forState:UIControlStateNormal];
+  [self.circleButton setImage:[UIImage imageNamed:@"allow_geolocation_icon_big"] forState:UIControlStateNormal];
   
   _permissionLocationManager = [[CLLocationManager alloc] init];
   [self addActionsBoard];

@@ -41,7 +41,7 @@
 }
 
 - (void)startApplication:(NSDictionary *)info {
-  
+
   if (_applicationStartedForeground) {
     return;
   }

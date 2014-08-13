@@ -83,6 +83,10 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
+  if (NO == self.navigationController.toolbarHidden) {
+    [self.navigationController setToolbarHidden:YES animated:animated];
+  }
+  
   _actionButtonSpace.constant = 0;
   [UIView animateWithDuration:0.3 animations:^{
     self.label.alpha = 1.0f;

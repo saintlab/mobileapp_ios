@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class OMNRestaurantInfoItem;
+
 @interface OMNRestaurantInfoCell : UITableViewCell
 
-- (void)setItem:(NSDictionary *)item;
+- (void)setItem:(OMNRestaurantInfoItem *)item;
 
 @end
