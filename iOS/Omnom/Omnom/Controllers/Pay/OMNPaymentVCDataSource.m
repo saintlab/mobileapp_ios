@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GPaymentVCDataSource.h"
+#import "OMNPaymentVCDataSource.h"
 #import "OMNPaymentFooterView.h"
 #import "OMNOrder.h"
 #import "OMNConstants.h"
 #import "OMNOrderCell.h"
 
-@implementation GPaymentVCDataSource {
+@implementation OMNPaymentVCDataSource {
   OMNOrder *_order;
 }
 
@@ -93,7 +93,7 @@
       }
       
       cell.textLabel.text = NSLocalizedString(@"Заплачено", nil);
-      cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", _order.sum/100.];
+      cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f", _order.paid_amount/100.];
       cell.imageView.image = nil;
       cell.selectionStyle = UITableViewCellSelectionStyleNone;
       returnCell = cell;

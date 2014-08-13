@@ -6,12 +6,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "input_card_number_field_no_active.png"
+      "filename" : "back_button_icon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "input_card_number_field_no_active@2x.png"
+      "filename" : "back_button_icon@2x.png"
     }
   ],
   "info" : {

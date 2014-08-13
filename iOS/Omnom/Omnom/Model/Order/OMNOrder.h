@@ -16,7 +16,6 @@
 typedef void(^OMNOrdersBlock)(NSArray *orders);
 typedef void(^OMNOrderBlock)(OMNOrder *order);
 typedef void(^OMNBillBlock)(OMNBill *bill);
-//typedef void(^OMNOrderPayURLBlock)(NSString *urlString);
 
 @interface OMNOrder : NSObject
 
@@ -39,7 +38,7 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 
 @property (nonatomic, assign) long long toPayAmount;
 @property (nonatomic, assign) long long tipAmount;
-@property (nonatomic, assign) long long sum;
+@property (nonatomic, assign) long long paid_amount;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 

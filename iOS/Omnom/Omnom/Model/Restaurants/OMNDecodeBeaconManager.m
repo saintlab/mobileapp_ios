@@ -33,11 +33,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     }
     @catch (NSException *exception) {
     }
-
+    
     if (nil == _decodedBeacons) {
       _decodedBeacons = [NSMutableDictionary dictionary];
     }
-
+    
   }
   return self;
 }
@@ -68,20 +68,30 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 }
 
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(void (^)(NSError *error))failure {
-
-#warning chache
-//  OMNBeacon *beacon = [beacons firstObject];
-//  if (beacon.key) {
-//
-//    OMNDecodeBeacon *decodeBeacon = _decodedBeacons[beacon.key];
-//    
-//    if (decodeBeacon) {
-//      success(@[decodeBeacon]);
-//      return;
-//    }
-//    
-//  }
   
+  if (kUseStubBeaconDecodeData) {
+    OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] initWithData:nil];
+    decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+1";
+    decodeBeacon.tableId = @"table-1-at-riba-ris";
+    decodeBeacon.restaurantId = @"riba-ris";
+    success(@[decodeBeacon]);
+    return;
+  }
+  
+#warning chache
+  /*
+  OMNBeacon *beacon = [beacons firstObject];
+  if (beacon.key) {
+  
+    OMNDecodeBeacon *decodeBeacon = _decodedBeacons[beacon.key];
+  
+    if (decodeBeacon) {
+      success(@[decodeBeacon]);
+      return;
+    }
+  
+  }
+  */
   NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
   [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
     
@@ -104,7 +114,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
       
     }
     else {
-
+      
       NSArray *beacons = responseObject;
       NSMutableArray *decodedBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
       [beacons enumerateObjectsUsingBlock:^(id beaconData, NSUInteger idx, BOOL *stop) {
@@ -171,18 +181,23 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 
 - (void)showLocalPushWithBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
-  
   if ([self readyForPush:decodeBeacon]) {
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
     localNotification.alertBody = decodeBeacon.restaurantId;
     localNotification.alertAction = NSLocalizedString(@"Запустить", nil);
     localNotification.soundName = kPushSoundName;
-    localNotification.userInfo = @{OMNDecodeBeaconManagerNotificationLaunchKey : @(YES)};
+    if ([localNotification respondsToSelector:@selector(category)]) {
+      [localNotification performSelector:@selector(setCategory:) withObject:@"incomingCall"];
+    }
+    localNotification.userInfo =
+    @{
+      OMNDecodeBeaconManagerNotificationLaunchKey : [NSKeyedArchiver archivedDataWithRootObject:decodeBeacon],
+      };
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     
   }
-
+  
 }
 
 

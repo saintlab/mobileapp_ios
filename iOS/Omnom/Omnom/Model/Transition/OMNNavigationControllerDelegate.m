@@ -17,6 +17,7 @@
 #import "OMNSearchBeaconToPayOrderTransition.h"
 #import "OMNOrderToRestaurantTransition.h"
 #import "OMNCircleFadeTransition.h"
+#import "UINavigationController+omn_replace.h"
 
 @implementation OMNNavigationControllerDelegate {
   NSMutableDictionary *_transitions;
@@ -73,6 +74,10 @@
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+  
+  if ([navigationController respondsToSelector:@selector(omn_didShowViewController:)]) {
+    [navigationController omn_didShowViewController:viewController];
+  }
   
 }
 

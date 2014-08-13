@@ -108,7 +108,8 @@
 
 + (NSArray *)keys {
   return @[
-           [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNSearchBeaconVC class]]
+           [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNSearchBeaconVC class]],
+           [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNLoadingCircleVC class]]
            ];
 }
 

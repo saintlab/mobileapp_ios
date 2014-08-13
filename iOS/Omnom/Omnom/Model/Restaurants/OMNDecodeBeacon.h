@@ -14,6 +14,7 @@
 typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
 
 @interface OMNDecodeBeacon : NSObject
+<NSCoding>
 
 @property (nonatomic, copy) NSString *uuid;
 @property (nonatomic, copy) NSString *tableId;

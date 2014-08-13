@@ -50,12 +50,47 @@ NSString * const kTokenServiceName = @"token";
 #endif
 }
 
+#ifdef __IPHONE_8_0
+- (UIUserNotificationSettings *)notificationSettings {
+  UIMutableUserNotificationAction *declineAction = [[UIMutableUserNotificationAction alloc] init];
+  declineAction.identifier = @"declineAction";
+  declineAction.activationMode = UIUserNotificationActivationModeBackground;
+  declineAction.title = NSLocalizedString(@"Отменить", nil);
+  declineAction.destructive = YES;
+  
+  UIMutableUserNotificationAction *answerAction = [[UIMutableUserNotificationAction alloc] init];
+  answerAction.identifier = @"answerAction";
+  answerAction.activationMode = UIUserNotificationActivationModeBackground;
+  answerAction.title = @"Ответить";
+  
+  UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+  category.identifier = @"incomingCall"; //category name to send in the payload
+  [category setActions:@[answerAction,declineAction] forContext:UIUserNotificationActionContextDefault];
+  [category setActions:@[answerAction,declineAction] forContext:UIUserNotificationActionContextMinimal];
+  
+  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:[NSSet setWithObjects:category,nil]];
+  return settings;
+}
+#endif
+
 - (void)requestPushNotifications:(void(^)(BOOL))completion {
   
   if (NO == self.pushNotificationsRequested) {
     [SSKeychain setPassword:@"YES" forService:@"pushNotificationsRequested" account:kAccountName];
     _notificationRegisterCompletionBlock = [completion copy];
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    
+    UIApplication *application = [UIApplication sharedApplication];
+
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+      [application performSelector:@selector(registerForRemoteNotifications) withObject:nil];
+#ifdef __IPHONE_8_0
+      [[UIApplication sharedApplication] registerUserNotificationSettings:[self notificationSettings]];
+#endif
+    }
+    else {
+      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    }
+    
   }
   else {
     completion(NO);
@@ -75,6 +110,9 @@ NSString * const kTokenServiceName = @"token";
 
 - (void)logout {
   [self updateAuthenticationToken:nil];
+  if (self.logoutCallback) {
+    self.logoutCallback();
+  }
 }
 
 - (void)updateAuthenticationToken:(NSString *)token {

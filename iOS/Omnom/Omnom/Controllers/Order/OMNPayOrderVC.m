@@ -7,7 +7,7 @@
 //
 
 #import "OMNPayOrderVC.h"
-#import "GPaymentVCDataSource.h"
+#import "OMNPaymentVCDataSource.h"
 #import "OMNPaymentFooterView.h"
 #import <BlocksKit+UIKit.h>
 #import "GRateAlertView.h"
@@ -20,25 +20,27 @@
 #import "OMNAnalitics.h"
 #import "OMNBankCardsVC.h"
 #import "OMNOrdersVC.h"
-#import "OMNPaymentVC.h"
 #import "OMNRatingVC.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNGPBPayVC.h"
 #import "OMNSocketManager.h"
 #import "OMNRestaurant.h"
+#import "OMNMailRUPayVC.h"
+#import "OMNAddBankCardVC.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
 OMNGPBPayVCDelegate,
 OMNBankCardsVCDelegate,
-OMNPaymentVCDelegate,
 OMNRatingVCDelegate,
-UITableViewDelegate>
+UITableViewDelegate,
+OMNAddBankCardVCDelegate,
+OMNMailRUPayVCDelegate>
 
 @end
 
 @implementation OMNPayOrderVC {
-  GPaymentVCDataSource *_dataSource;
+  OMNPaymentVCDataSource *_dataSource;
 
   __weak IBOutlet OMNPaymentFooterView *_paymentView;
   __weak IBOutlet UIButton *_toPayButton;
@@ -67,7 +69,7 @@ UITableViewDelegate>
   NSLog(@"viewDidLoad");
   [[OMNSocketManager manager] join:_order.id];
   
-  _dataSource = [[GPaymentVCDataSource alloc] initWithOrder:_order];
+  _dataSource = [[OMNPaymentVCDataSource alloc] initWithOrder:_order];
   _tableView.dataSource = _dataSource;
   [_tableView reloadData];
   
@@ -160,69 +162,11 @@ UITableViewDelegate>
   
 }
 
-- (IBAction)payTap:(id)sender {
+- (void)showMailRuWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
   
-  if (_paymentView.calculationAmount.paymentValueIsTooHigh) {
-    
-    __weak typeof(self)weakSelf = self;
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-
-      if (buttonIndex != alertView.cancelButtonIndex) {
-        [weakSelf showCardPaymentVC];
-      }
-      
-    }];
-    
-  }
-  else {
-
-    [self showCardPaymentVC];
-    
-  }
-  
-}
-
-- (void)showCardPaymentVC {
-  
-  OMNBankCardsVC *bankCardsVC = [[OMNBankCardsVC alloc] init];
-  bankCardsVC.delegate = self;
-  [self.navigationController pushViewController:bankCardsVC animated:YES];
-  
-}
-
-#pragma mark - OMNBankCardsVCDelegate
-
-- (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didSelectCard:(OMNBankCard *)bankCard {
-  
-  _order.toPayAmount = _paymentView.calculationAmount.enteredAmount;
-  _order.tipAmount = _paymentView.calculationAmount.tipAmount;
-  
-#if kUseGPBAcquiring
-  
-  OMNGPBPayVC *paymentVC = [[OMNGPBPayVC alloc] initWithCard:bankCard order:_order];
-  paymentVC.navigationItem.title = NSLocalizedString(@"ГПБ", nil);
-  paymentVC.delegate = self;
-  [self.navigationController pushViewController:paymentVC animated:YES];
-  
-#else
-  OMNPaymentVC *paymentVC = [[OMNPaymentVC alloc] initWithCard:bankCard order:_order];
-  paymentVC.delegate = self;
-  [self.navigationController pushViewController:paymentVC animated:YES];
-#endif
-  
-}
-
-- (void)bankCardsVCDidCancel:(OMNBankCardsVC *)bankCardsVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
-}
-
-#pragma mark - OMNPaymentVCDelegate
-
-- (void)paymentVCDidFinish:(OMNPaymentVC *)paymentVC {
-  
-  [self showRating];
+  OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order bankCardInfo:bankCardInfo];
+  mailRUPayVC.delegate = self;
+  [self.navigationController pushViewController:mailRUPayVC animated:YES];
   
 }
 
@@ -231,6 +175,73 @@ UITableViewDelegate>
   OMNRatingVC *ratingVC = [[OMNRatingVC alloc] init];
   ratingVC.delegate = self;
   [self.navigationController pushViewController:ratingVC animated:YES];
+  
+}
+
+- (IBAction)payTap:(id)sender {
+  
+  if (_paymentView.calculationAmount.paymentValueIsTooHigh) {
+    
+    __weak typeof(self)weakSelf = self;
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+
+      if (buttonIndex != alertView.cancelButtonIndex) {
+        [weakSelf processCardPaymentVC];
+      }
+      
+    }];
+    
+  }
+  else {
+
+    [self processCardPaymentVC];
+    
+  }
+  
+}
+
+- (void)processCardPaymentVC {
+
+  _order.toPayAmount = _paymentView.calculationAmount.totalValue;
+  _order.tipAmount = _paymentView.calculationAmount.tipAmount;
+
+#if kUseGPBAcquiring
+  
+  OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
+  addBankCardVC.delegate = self;
+  [self.navigationController pushViewController:addBankCardVC animated:YES];
+
+#else
+  
+  OMNBankCardsVC *bankCardsVC = [[OMNBankCardsVC alloc] init];
+  bankCardsVC.allowSaveCard = YES;
+  bankCardsVC.delegate = self;
+  [self.navigationController pushViewController:bankCardsVC animated:YES];
+
+#endif
+  
+  
+}
+
+#pragma mark - OMNBankCardsVCDelegate
+
+- (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didSelectCard:(OMNBankCard *)bankCard {
+  
+  OMNBankCardInfo *bankCardInfo = [[OMNBankCardInfo alloc] init];
+  bankCardInfo.card_id = bankCard.external_card_id;
+  [self showMailRuWithCardInfo:bankCardInfo];
+  
+}
+
+- (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didCreateCard:(OMNBankCardInfo *)bankCardInfo {
+
+  [self showMailRuWithCardInfo:bankCardInfo];
+  
+}
+
+- (void)bankCardsVCDidCancel:(OMNBankCardsVC *)bankCardsVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
   
 }
 
@@ -267,7 +278,6 @@ UITableViewDelegate>
 
 }
 
-
 #pragma mark - GCalculatorVCDelegate
 
 - (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(long long)total {
@@ -293,11 +303,14 @@ UITableViewDelegate>
 
 - (void)keyboardWillShow:(NSNotification *)n {
   
+  [_paymentView setKeyboardShown:YES];
   [self setupViewsWithNotification:n keyboardShown:YES];
+  
 }
 
 - (void)keyboardWillHide:(NSNotification *)n {
 
+  [_paymentView setKeyboardShown:NO];
   [self setupViewsWithNotification:n keyboardShown:NO];
   
 }
@@ -306,10 +319,9 @@ UITableViewDelegate>
   
   [self.navigationController setNavigationBarHidden:keyboardShown animated:YES];
   CGRect keyboardFrame = [n.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-  [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:500.0f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
+  [UIView animateWithDuration:0.5 delay:0.0f usingSpringWithDamping:500.0f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
     
     _paymentView.bottom = MIN(keyboardFrame.origin.y, self.view.height);
-//    _tableView.bottom = _paymentView.top;
     
   } completion:nil];
   
@@ -333,6 +345,37 @@ UITableViewDelegate>
     _beginSplitAnimation = YES;
     [self calculatorTap:nil];
   }
+  
+}
+
+#pragma mark - OMNAddBankCardVCDelegate
+
+- (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCardInfo *)bankCardInfo {
+  
+  OMNGPBPayVC *gpbVC = [[OMNGPBPayVC alloc] initWithCard:bankCardInfo order:_order];
+  gpbVC.navigationItem.title = NSLocalizedString(@"ГПБ", nil);
+  gpbVC.delegate = self;
+  [self.navigationController pushViewController:gpbVC animated:YES];
+  
+}
+
+- (void)addBankCardVCDidCancel:(OMNAddBankCardVC *)addBankCardVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+#pragma mark - OMNMailRUPayVCDelegate
+
+- (void)mailRUPayVCDidFinish:(OMNMailRUPayVC *)mailRUPayVC {
+  
+  [self showRating];
+  
+}
+
+- (void)mailRUPayVCDidCancel:(OMNMailRUPayVC *)mailRUPayVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
   
 }
 

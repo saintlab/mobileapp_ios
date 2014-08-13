@@ -17,11 +17,13 @@
 #import "OMNSocketManager.h"
 #import "UIImage+omn_helper.h"
 #import "OMNPushPermissionVC.h"
+#import "OMNRestaurantInfoVC.h"
 
 @interface OMNR1VC ()
 <OMNPayOrderVCDelegate,
 OMNOrdersVCDelegate,
-OMNUserInfoVCDelegate>
+OMNUserInfoVCDelegate,
+OMNRestaurantInfoVCDelegate>
 
 @end
 
@@ -83,6 +85,14 @@ OMNUserInfoVCDelegate>
   [self.rightBottomButton setTitle:NSLocalizedString(@"Счет", nil) forState:UIControlStateNormal];
   [self.rightBottomButton addTarget:self action:@selector(callBillTap) forControlEvents:UIControlEventTouchUpInside];
   
+  UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+  [actionButton addTarget:self action:@selector(showInfoTap) forControlEvents:UIControlEventTouchUpInside];
+  actionButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:actionButton];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:50.0f]];
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -101,6 +111,12 @@ OMNUserInfoVCDelegate>
     [self.view layoutIfNeeded];
   }];
   
+}
+
+- (void)showInfoTap {
+  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] init];
+  restaurantInfoVC.delegate = self;
+  [self.navigationController pushViewController:restaurantInfoVC animated:YES];
 }
 
 - (void)callWaiterTap {
@@ -151,7 +167,7 @@ OMNUserInfoVCDelegate>
     [self.navigationController popToViewController:self animated:YES];
     
   }];
-  sbVC.estimateSearchDuration = 2.0;
+  sbVC.estimateAnimationDuration = 2.0;
   sbVC.circleIcon = [UIImage imageNamed:@"bell_ringing_icon_white_big"];
   [self.navigationController pushViewController:sbVC animated:YES];
   
@@ -181,7 +197,7 @@ OMNUserInfoVCDelegate>
     [weakSelf.navigationController popToViewController:weakSelf animated:YES];
     
   }];
-  searchBeaconVC.estimateSearchDuration = 2.0;
+  searchBeaconVC.estimateAnimationDuration = 2.0;
   searchBeaconVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
   [self.navigationController pushViewController:searchBeaconVC animated:YES];
   
@@ -196,7 +212,8 @@ OMNUserInfoVCDelegate>
   }
   else {
 
-    if (orders.count) {
+    if (orders.count &&
+        !TARGET_IPHONE_SIMULATOR) {
       OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self];
       __weak typeof(self)weakSelf = self;
       pushPermissionVC.completionBlock = ^{
@@ -299,6 +316,12 @@ OMNUserInfoVCDelegate>
 
 - (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
   [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - OMNRestaurantInfoVCDelegate
+
+- (void)restaurantInfoVCDidFinish:(OMNRestaurantInfoVC *)restaurantInfoVC {
+  [self.navigationController popToViewController:self animated:YES];
 }
 
 @end

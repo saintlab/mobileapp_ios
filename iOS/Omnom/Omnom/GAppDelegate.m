@@ -33,14 +33,14 @@
   }];
   
   if (nil == launchOptions[UIApplicationLaunchOptionsLocationKey]) {
-    [self startApplication];
+    [self startApplication:nil];
   }
   
   return YES;
   
 }
 
-- (void)startApplication {
+- (void)startApplication:(NSDictionary *)info {
   
   if (_applicationStartedForeground) {
     return;
@@ -70,6 +70,7 @@
   self.window.tintColor = [UIColor blackColor];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
+  startVC.info = info;
   //  OMNViewController *startVC = [[OMNViewController alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
   [self.window makeKeyAndVisible];
@@ -91,11 +92,22 @@
   return YES;
 }
 
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
+  NSLog(@"handleActionWithIdentifier>%@ forLocalNotification>%@", identifier, notification);
+  completionHandler();
+
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
+  NSLog(@"handleActionWithIdentifier>%@ forRemoteNotification>%@", identifier, userInfo);
+  completionHandler();
+}
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
   
   NSLog(@"didReceiveLocalNotification>%@", notification);
   if (notification.userInfo[OMNDecodeBeaconManagerNotificationLaunchKey]) {
-    [self startApplication];
+    [self startApplication:notification.userInfo];
   }
   
   
@@ -111,7 +123,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   
   NSLog(@"applicationWillEnterForeground");
-  [self startApplication];
+  [self startApplication:nil];
   
 }
 

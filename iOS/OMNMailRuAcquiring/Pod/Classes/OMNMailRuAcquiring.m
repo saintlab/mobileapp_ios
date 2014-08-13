@@ -14,8 +14,6 @@ static NSString * const kOMNMailRu_vterm_id = @"DGISMobile";
 static NSString * const kOMNMailRu_cardholder = @"Omnom";
 static NSString * const kOMNMailRu_secret_key = @"ohMDLYVUy0y8FKenvcVuPCYTtbeB7MI6qNOBxOCwSAmOoqwpXj";
 
-static NSString * const kOMNMailRu_user_login = @"2";
-
 static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.mail.ru/api/";
 
 @interface NSString (omn_mailRu)
@@ -47,7 +45,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFHTTPRequestSerializer serializer];
     
-    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"mydomain4" ofType:@"cer"];
+    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"mail.ru" ofType:@"cer"];
     NSData *certData = [NSData dataWithContentsOfFile:cerPath];
     AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
     [securityPolicy setAllowInvalidCertificates:NO];
@@ -160,15 +158,13 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
 }
 
-- (void)cardVerify:(double)amount card_id:(NSString *)card_id {
-  
-  amount = 1.04;
+- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id {
   
   NSDictionary *reqiredSignatureParams =
   @{
     @"merch_id" : kOMNMailRu_merch_id,
     @"vterm_id" : kOMNMailRu_vterm_id,
-    @"user_login" : kOMNMailRu_user_login,
+    @"user_login" : user_login,
     @"card_id" : card_id,
     };
 
@@ -204,36 +200,27 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
 }
 
-- (void)payWithCardInfo:(NSDictionary *)cardInfo addCard:(BOOL)addCard {
+- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock {
+
+//  NSString *order_id = @"1234";
+//  NSString *user_phone = @"89833087336";
+//  NSString *order_amount = @"526.07";
+//  NSString *order_message = @"message1";
   
-  NSDictionary *extra =
-  @{
-    @"tip" : @(12332),
-    @"restaurant_id" : @"1",
-    };
-  
-  NSError *error = nil;
-  NSData *extraJSONData = [NSJSONSerialization dataWithJSONObject:extra options:0 error:&error];
-  if (error) {
-    NSLog(@"%@", error);
+  NSString *extratext = paymentInfo.extra.extra_text;
+  if (0 == extratext.length) {
+    completionBlock(nil);
     return;
   }
-  
-  NSString *order_id = @"1234";
-  NSString *user_phone = @"89833087336";
-  NSString *order_amount = @"526.07";
-  NSString *order_message = @"message1";
-  
-  NSString *extratext = [[NSString alloc] initWithData:extraJSONData encoding:NSUTF8StringEncoding];
   
   NSDictionary *reqiredSignatureParams =
   @{
     @"merch_id" : kOMNMailRu_merch_id,
     @"vterm_id" : kOMNMailRu_vterm_id,
-    @"user_login" : kOMNMailRu_user_login,
-    @"order_id" : order_id,
-    @"order_amount" : order_amount,
-    @"order_message" : order_message,
+    @"user_login" : paymentInfo.user_login,
+    @"order_id" : paymentInfo.order_id,
+    @"order_amount" : paymentInfo.order_amount,
+    @"order_message" : paymentInfo.order_message,
     @"extra" : extratext,
     };
   
@@ -242,36 +229,26 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
   
   parameters[@"signature"] = signature;
-  [parameters addEntriesFromDictionary:cardInfo];
+  NSDictionary *card_info = [paymentInfo.cardInfo card_info];
+  [parameters addEntriesFromDictionary:card_info];
 
   parameters[@"cardholder"] = kOMNMailRu_cardholder;
-  if (addCard) {
+  if (paymentInfo.cardInfo.add_card) {
     parameters[@"add_card"] = @(1);
   }
-  parameters[@"user_phone"] = user_phone;
+  parameters[@"user_phone"] = paymentInfo.user_phone;
   
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"%@", responseObject);
+    NSLog(@"order/pay>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"order/pay>%@", responseObject);
     
-    if (responseObject[@"url"]) {
-      
-      [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"%@", responseObject);
-        
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        NSLog(@"%@", error);
-        
-      }];
-      
-    }
+    completionBlock(responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"%@", error);
+    NSLog(@"order/pay>%@", error);
+    completionBlock(nil);
     
   }];
   
@@ -279,13 +256,13 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
 }
 
-- (void)cardDelete:(NSString *)card_id {
+- (void)cardDelete:(NSString *)card_id user_login:(NSString *)user_login completion:(void(^)(id response))completionBlock {
   
   NSDictionary *reqiredSignatureParams =
   @{
     @"merch_id" : kOMNMailRu_merch_id,
     @"vterm_id" : kOMNMailRu_vterm_id,
-    @"user_login" : kOMNMailRu_user_login,
+    @"user_login" : user_login,
     @"card_id" : card_id,
     };
   
@@ -296,23 +273,12 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     
     NSLog(@"%@", responseObject);
     NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    if (responseObject[@"url"]) {
-      
-      [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"%@", responseObject);
-        
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        NSLog(@"%@", error);
-        
-      }];
-      
-    }
+    completionBlock(responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"%@", error);
+    NSLog(@"card/delete>%@", error);
+    completionBlock(nil);
     
   }];
   
@@ -358,6 +324,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   NSString *baseSignatureString = [sortedValues componentsJoinedByString:@""];
   NSLog(@"baseSignatureString>%@", baseSignatureString);
   NSString *signature = [baseSignatureString omn_sha1];
+
   
   return signature;
 }

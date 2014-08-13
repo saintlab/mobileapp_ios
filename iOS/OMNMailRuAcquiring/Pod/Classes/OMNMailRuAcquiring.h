@@ -7,6 +7,7 @@
 //
 
 #import <AFNetworking.h>
+#import "OMNMailRuPaymentInfo.h"
 
 @interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
 
@@ -14,10 +15,10 @@
 
 - (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response))completion;
 
-- (void)cardVerify:(double)amount card_id:(NSString *)card_id;
+- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id;
 
-- (void)payWithCardInfo:(NSDictionary *)cardInfo addCard:(BOOL)addCard;
+- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock;
 
-- (void)cardDelete:(NSString *)card_id;
+- (void)cardDelete:(NSString *)card_id user_login:(NSString *)user_login completion:(void(^)(id response))completionBlock;
 
 @end

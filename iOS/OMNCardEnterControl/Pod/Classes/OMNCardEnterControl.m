@@ -7,6 +7,7 @@
 //
 
 #import "OMNCardEnterControl.h"
+#import "OMNDeletedTextField.h"
 
 NSString * const OMNCardEnterControlPanString = @"OMNCardEnterControlPanString";
 NSString * const OMNCardEnterControlMonthString = @"OMNCardEnterControlMonthString";
@@ -35,7 +36,7 @@ NSString * const kMM_YYSeporator = @"/";
   CGFloat _expireWidth;
   
   NSDictionary *_views;
-  NSDictionary *_metrics;
+  NSMutableDictionary *_metrics;
   
   NSMutableArray *_dynamycConstraints;
   
@@ -58,7 +59,6 @@ NSString * const kMM_YYSeporator = @"/";
     [cameraButton sizeToFit];
     
     _panTF = [[OMNDeletedTextField alloc] init];
-    _panTF.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
     _panTF.rightViewMode = UITextFieldViewModeAlways;
     _panTF.rightView = cameraButton;
     _panTF.translatesAutoresizingMaskIntoConstraints = NO;
@@ -68,7 +68,6 @@ NSString * const kMM_YYSeporator = @"/";
     [self addSubview:_panTF];
 
     _expireTF = [[OMNDeletedTextField alloc] init];
-    _expireTF.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
     _expireTF.textAlignment = NSTextAlignmentLeft;
     _expireTF.translatesAutoresizingMaskIntoConstraints = NO;
     _expireTF.keyboardType = UIKeyboardTypeNumberPad;
@@ -77,7 +76,6 @@ NSString * const kMM_YYSeporator = @"/";
     [self addSubview:_expireTF];
     
     _cvvTF = [[OMNDeletedTextField alloc] init];
-    _cvvTF.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
     _cvvTF.textAlignment = NSTextAlignmentLeft;
     _cvvTF.translatesAutoresizingMaskIntoConstraints = NO;
     _cvvTF.keyboardType = UIKeyboardTypeNumberPad;
@@ -114,10 +112,10 @@ NSString * const kMM_YYSeporator = @"/";
       };
     
     _metrics =
-    @{
+    [@{
       @"saveButtonHeight" : @(50.0f),
       @"height" : @(50.0f),
-      };
+      } mutableCopy];
     
     NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panTF]|" options:0 metrics:nil views:_views];
     [self addConstraints:panH];
@@ -156,24 +154,29 @@ NSString * const kMM_YYSeporator = @"/";
   return _saveButton.selected;
 }
 
-- (void)setExpireCCVTFHidden:(BOOL)hidden animated:(BOOL)animated completion:(dispatch_block_t)completion {
+- (void)setSaveButtonHidden:(BOOL)hidden {
+  _metrics[@"saveButtonHeight"] = (hidden) ? (@(0.0f)) : (@(50.0f));
+  _saveButton.hidden = hidden;
+  [self updateConstraintsAnimated:NO completion:nil];
+}
 
+- (void)setExpireCCVTFHidden:(BOOL)hidden animated:(BOOL)animated completion:(dispatch_block_t)completion {
+  _metrics[@"expireTFHeight"] = (hidden) ? (@(0.0f)) : (@(50.0f));
+  [self updateConstraintsAnimated:animated completion:completion];
+  _expireCCVTFHidden = hidden;
+}
+
+- (void)updateConstraintsAnimated:(BOOL)animated completion:(dispatch_block_t)completion {
   NSMutableArray *dynamycConstraints = [NSMutableArray array];
-  if (hidden) {
-    NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(0)]-[saveButton(saveButtonHeight)]|" options:0 metrics:_metrics views:_views];
-    [dynamycConstraints addObjectsFromArray:constraintsV];
-  }
-  else {
-    NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(50)]-[saveButton(saveButtonHeight)]|" options:0 metrics:_metrics views:_views];
-    [dynamycConstraints addObjectsFromArray:constraintsV];
-  }
+  NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(expireTFHeight)]-[saveButton(saveButtonHeight)]|" options:0 metrics:_metrics views:_views];
+  [dynamycConstraints addObjectsFromArray:constraintsV];
   
   [self removeConstraints:_dynamycConstraints];
   _dynamycConstraints = dynamycConstraints;
   [self addConstraints:_dynamycConstraints];
-
+  
   if (animated) {
-
+    
     [UIView animateWithDuration:0.3f animations:^{
       [self layoutIfNeeded];
     } completion:^(BOOL finished) {
@@ -191,7 +194,6 @@ NSString * const kMM_YYSeporator = @"/";
       completion();
     }
   }
-  _expireCCVTFHidden = hidden;
 }
 
 - (void)showExpireTF {
@@ -295,9 +297,6 @@ NSString * const kMM_YYSeporator = @"/";
 - (BOOL)isValidDate {
   
   BOOL isValidDate = YES;
-  
-  
-  
   
 }
 
@@ -420,24 +419,6 @@ NSString * const kMM_YYSeporator = @"/";
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
   [textField setNeedsDisplay];
-}
-
-@end
-
-@implementation OMNDeletedTextField
-
-- (void)deleteBackward {
-  if (0 == self.text.length) {
-    [self.delegate textField:self shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
-  }
-}
-
-- (void)drawRect:(CGRect)rect {
-  [super drawRect:rect];
-
-  UIImage *image = [UIImage imageNamed:(self.editing) ? (@"input_card_number_field_active") : (@"input_card_number_field_no_active")];
-  [image drawInRect:CGRectMake(0.0f, CGRectGetHeight(self.frame) - image.size.height, CGRectGetWidth(self.frame), image.size.height)];
-  
 }
 
 @end

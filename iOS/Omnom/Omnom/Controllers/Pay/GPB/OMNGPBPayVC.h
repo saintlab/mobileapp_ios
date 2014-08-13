@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class OMNBankCard;
+@class OMNBankCardInfo;
 @class OMNOrder;
 @protocol OMNGPBPayVCDelegate;
 
@@ -16,7 +16,7 @@
 
 @property (nonatomic, weak) id<OMNGPBPayVCDelegate>delegate;
 
-- (instancetype)initWithCard:(OMNBankCard *)cardInfo order:(OMNOrder *)order;
+- (instancetype)initWithCard:(OMNBankCardInfo *)bankCardInfo order:(OMNOrder *)order;
 
 @end
 

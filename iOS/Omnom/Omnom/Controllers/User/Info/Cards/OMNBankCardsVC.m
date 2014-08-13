@@ -39,6 +39,18 @@
   
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  __weak typeof(self)weakSelf = self;
+  [_bankCardsModel loadCardsWithCompletion:^{
+    
+    [weakSelf.tableView reloadData];
+    
+  }];
+  
+}
+
 - (void)setupInterface {
   
   [_addCardButton setTitle:NSLocalizedString(@"Добавить карту", nil) forState:UIControlStateNormal];
@@ -50,6 +62,7 @@
 - (IBAction)addCardTap:(id)sender {
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
+  addBankCardVC.allowSaveCard = self.allowSaveCard;
   addBankCardVC.delegate = self;
   [self.navigationController pushViewController:addBankCardVC animated:YES];
   
@@ -57,12 +70,9 @@
 
 #pragma mark - OMNAddBankCardVCDelegate
 
-- (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCard *)card {
-  
-  card = [[OMNBankCard alloc] init];
-  [_bankCardsModel addBankCard:card];
-  [self.tableView reloadData];
-  [self.navigationController popToViewController:self animated:YES];
+- (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCardInfo *)bankCardInfo {
+
+  [self.delegate bankCardsVC:self didCreateCard:bankCardInfo];
   
 }
 

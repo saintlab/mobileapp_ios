@@ -27,7 +27,7 @@
     self.modifiedTime = jsonData[@"modifiedTime"];
     self.restaurant_id = jsonData[@"restaurantId"];
     self.tableId = jsonData[@"tableId"];
-    self.sum = [jsonData[@"sum"] longLongValue];
+    self.paid_amount = [jsonData[@"paid_amount"] longLongValue];
     
     NSArray *itemsData = jsonData[@"items"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsData.count];
@@ -124,7 +124,7 @@
       completion(bill);
     }
     else {
-      failureBlock(nil);
+      failureBlock([NSError errorWithDomain:@"" code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

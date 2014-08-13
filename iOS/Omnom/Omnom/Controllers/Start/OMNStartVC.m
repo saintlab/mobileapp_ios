@@ -13,6 +13,7 @@
 #import "OMNAuthorizationVC.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNR1VC.h"
+#import "OMNDecodeBeaconManager.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate>
@@ -24,16 +25,6 @@
   UINavigationController *_navVC;
   BOOL _tokenIsChecked;
 }
-
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    
-  }
-  return self;
-}
-
-
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -47,8 +38,6 @@
   
   __weak typeof(self)weakSelf = self;
   [OMNAuthorisation authorisation].logoutCallback = ^{
-    
-    [[OMNAuthorisation authorisation] logout];
     
     [weakSelf dismissViewControllerAnimated:YES completion:^{
       
@@ -89,6 +78,12 @@
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithBlock:^(OMNRestaurant *restaurant) {
     [weakSelf didFindRestaurant:restaurant];
   }];
+  
+  NSData *decodeBeaconData = self.info[OMNDecodeBeaconManagerNotificationLaunchKey];
+  if (decodeBeaconData) {
+    OMNDecodeBeacon *decodeBeacon = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
+    searchRestaurantVC.decodeBeacon = decodeBeacon;
+  }
 
   _navVC = [[UINavigationController alloc] initWithRootViewController:searchRestaurantVC];
   _navVC.delegate = _navigationControllerDelegate;

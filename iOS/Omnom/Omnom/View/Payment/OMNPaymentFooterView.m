@@ -104,9 +104,6 @@
     
   } forControlEvents:UIControlEventValueChanged];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-  
   [self setKeyboardShown:NO];
   
   [self updateToPayButton];
@@ -177,28 +174,6 @@
   [_tipsSelector update];
   [self updateToPayButton];
   [_amountPercentControl reset];
-  
-}
-
-- (void)keyboardWillShow:(NSNotification *)n {
-  
-  NSTimeInterval duration = [n.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-  [UIView animateWithDuration:3 * duration animations:^{
-    
-    [self setKeyboardShown:YES];
-    
-  }];
-  
-}
-
-- (void)keyboardWillHide:(NSNotification *)n {
-  
-  NSTimeInterval duration = [n.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-  [UIView animateWithDuration:3 * duration animations:^{
-    
-    [self setKeyboardShown:NO];
-    
-  }];
   
 }
 

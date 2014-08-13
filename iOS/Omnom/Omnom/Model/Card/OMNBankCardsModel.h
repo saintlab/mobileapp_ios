@@ -16,6 +16,7 @@ UITableViewDelegate>
 
 @property (nonatomic, copy) OMNSelectCardBlock didSelectCardBlock;
 
-- (void)addBankCard:(OMNBankCard *)bankCard;
+- (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;
+//- (void)addBankCard:(OMNBankCard *)bankCard;
 
 @end

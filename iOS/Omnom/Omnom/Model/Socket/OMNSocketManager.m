@@ -52,7 +52,7 @@ NSString * const kSocketUrl = @"http://omnom.laaaab.com";
   
   [_socket on:@"card_register" listener:^(id data) {
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidReceiveCardIdNotification object:data];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidReceiveCardIdNotification object:nil userInfo:data];
     NSLog(@"card_register response %@, %@", data, [data class]);
     
   }];

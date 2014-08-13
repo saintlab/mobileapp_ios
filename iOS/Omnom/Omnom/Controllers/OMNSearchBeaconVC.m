@@ -15,9 +15,8 @@
 #import "OMNCircleRootVC.h"
 #import "OMNDecodeBeaconManager.h"
 #import "OMNScanQRCodeVC.h"
-#import "UIImage+omn_helper.h"
 #import "OMNTurnOnBluetoothVC.h"
-#import <OMNStyler.h>
+#import "UINavigationController+omn_replace.h"
 
 @interface OMNSearchBeaconVC ()
 <OMNBeaconSearchManagerDelegate,
@@ -41,7 +40,6 @@ OMNScanQRCodeVCDelegate>
   self = [super initWithParent:parent];
   if (self) {
     
-    _estimateSearchDuration = 10.0;
     _didFindBlock = completionBlock;
     _cancelBlock = cancelBlock;
     
@@ -63,21 +61,12 @@ OMNScanQRCodeVCDelegate>
     [self.view addSubview:_cancelButton];
   }
   
-  _loaderView = [[OMNLoaderView alloc] initWithInnerFrame:self.circleButton.frame];
-  _loaderView.center = CGPointMake(CGRectGetWidth(self.circleButton.frame)/2.0f, CGRectGetHeight(self.circleButton.frame)/2.0f);
-  [self.circleButton addSubview:_loaderView];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  NSLog(@"%@", self.circleButton);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
   _cancelButton.hidden = NO;
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -92,73 +81,18 @@ OMNScanQRCodeVCDelegate>
     
     _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
     _beaconSearchManager.delegate = self;
+    __weak typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-      [self startSearchingBeacon];
+      [weakSelf startSearchingBeacon];
     });
     
   }
   
 }
 
-- (void)setLogo:(UIImage *)logo withColor:(UIColor *)color completion:(dispatch_block_t)completionBlock {
-  
-  UIImage *coloredCircleImage = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:color];
-  UIImageView *circleIV = [[UIImageView alloc] initWithFrame:self.circleButton.bounds];
-  circleIV.contentMode = UIViewContentModeCenter;
-  circleIV.alpha = 0.0f;
-  circleIV.image = coloredCircleImage;
-  [self.circleButton addSubview:circleIV];
-  
-  UIImageView *currentLogoIV = [[UIImageView alloc] initWithFrame:self.circleButton.bounds];
-  currentLogoIV.contentMode = UIViewContentModeCenter;
-  currentLogoIV.image = [self.circleButton imageForState:UIControlStateNormal];
-  [self.circleButton addSubview:currentLogoIV];
-  [self.circleButton setImage:nil forState:UIControlStateNormal];
-  
-  UIImageView *nextLogoIV = [[UIImageView alloc] initWithFrame:self.circleButton.bounds];
-  nextLogoIV.contentMode = UIViewContentModeCenter;
-  nextLogoIV.image = logo;
-  nextLogoIV.alpha = 0.0f;
-  [self.circleButton addSubview:nextLogoIV];
-  
-  NSTimeInterval circleChangeLogoAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleChangeLogoAnimationDuration"];;
-  NSTimeInterval circleChangeColorAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleChangeColorAnimationDuration"];
-  
-  [UIView animateWithDuration:circleChangeLogoAnimationDuration animations:^{
-    
-    currentLogoIV.alpha = 0.0f;
-    nextLogoIV.alpha = 1.0f;
-    
-  } completion:^(BOOL finished) {
-    
-    [self.circleButton setImage:logo forState:UIControlStateNormal];
-    [currentLogoIV removeFromSuperview];
-    
-    [UIView animateWithDuration:circleChangeColorAnimationDuration animations:^{
-      
-      circleIV.alpha = 1.0f;
-      
-    } completion:^(BOOL finished) {
-      
-      self.circleBackground = coloredCircleImage;
-      [circleIV removeFromSuperview];
-      [nextLogoIV removeFromSuperview];
-      if (completionBlock) {
-        completionBlock();
-      }
-    }];
-    
-  }];
-  
-}
-
-- (void)finishLoading:(dispatch_block_t)completionBlock {
-  [_loaderView completeAnimation:completionBlock];
-}
-
 - (void)useStubBeacon {
   
-  OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] init];
+  OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] initWithData:nil];
   decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+1";
   decodeBeacon.tableId = @"table-1-at-riba-ris";
   decodeBeacon.restaurantId = @"riba-ris";
@@ -192,12 +126,15 @@ OMNScanQRCodeVCDelegate>
 
 - (void)startSearchingBeacon {
   
-  [self.navigationController popToViewController:self animated:YES];
-  [_loaderView startAnimating:_estimateSearchDuration];
-  self.label.text = @"";
-  [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
-  _beaconSearchManager.delegate = self;
-  [_beaconSearchManager startSearching];
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
+    
+    [self.loaderView startAnimating:self.estimateAnimationDuration];
+    self.label.text = @"";
+    [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
+    _beaconSearchManager.delegate = self;
+    [_beaconSearchManager startSearching];
+
+  }];
   
 }
 
@@ -253,9 +190,10 @@ OMNScanQRCodeVCDelegate>
     @"image" : [UIImage imageNamed:@"repeat_icon_small"],
     };
 
+  __weak typeof(self)weakSelf = self;
   didFailOmnomVC.actionBlock = ^{
     
-    [self startSearchingBeacon];
+    [weakSelf startSearchingBeacon];
     
   };
   [self.navigationController pushViewController:didFailOmnomVC animated:YES];
@@ -273,7 +211,7 @@ OMNScanQRCodeVCDelegate>
 - (void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager found:(BOOL)foundBeacon {
   
   if (NO == foundBeacon) {
-    [_loaderView stop];
+    [self.loaderView stop];
   }
   
 }
@@ -283,13 +221,13 @@ OMNScanQRCodeVCDelegate>
   switch (state) {
     case kSearchManagerInternetFound: {
       
-      [_loaderView setProgress:0.2];
+      [self.loaderView setProgress:0.2];
       
     } break;
     case kSearchManagerStartSearchingBeacons: {
       
       NSLog(@"Определение вашего столика");
-      [_loaderView setProgress:0.5f];
+      [self.loaderView setProgress:0.5f];
       
     } break;
     case kSearchManagerNotFoundBeacons: {
@@ -303,8 +241,9 @@ OMNScanQRCodeVCDelegate>
         @"title" : NSLocalizedString(@"Повторить", nil),
         @"image" : [UIImage imageNamed:@"repeat_icon_small"],
         };
+      __weak typeof(self)weakSelf = self;
       notFoundBeaconVC.actionBlock = ^{
-        [self startSearchingBeacon];
+        [weakSelf startSearchingBeacon];
       };
       [self.navigationController pushViewController:notFoundBeaconVC animated:YES];
       
@@ -323,7 +262,7 @@ OMNScanQRCodeVCDelegate>
     } break;
     case kSearchManagerBLEDidOn: {
       
-      [_loaderView setProgress:0.2];
+      [self.loaderView setProgress:0.2];
       //dismiss turn BLE on controller
       [self.navigationController popToViewController:self animated:YES];
       

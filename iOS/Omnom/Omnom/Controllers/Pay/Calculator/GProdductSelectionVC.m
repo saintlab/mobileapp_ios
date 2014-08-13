@@ -7,7 +7,7 @@
 //
 
 #import "GProdductSelectionVC.h"
-#import "GPaymentVCDataSource.h"
+#import "OMNPaymentVCDataSource.h"
 #import "OMNOrder.h"
 
 @interface GProdductSelectionVC ()
@@ -16,7 +16,7 @@
 
 @implementation GProdductSelectionVC {
   OMNOrder *_order;
-  GPaymentVCDataSource *_dataSource;
+  OMNPaymentVCDataSource *_dataSource;
 }
 
 
@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _dataSource = [[GPaymentVCDataSource alloc] initWithOrder:_order];
+  _dataSource = [[OMNPaymentVCDataSource alloc] initWithOrder:_order];
   
   self.tableView.allowsMultipleSelection = YES;
   self.tableView.tableFooterView = [[UIView alloc] init];

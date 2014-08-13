@@ -7,10 +7,19 @@
 //
 
 
-@class OMNBankCard;
+@class OMNBankCardInfo;
+@protocol OMNMailRUCardConfirmVCDelegate;
 
 @interface OMNMailRUCardConfirmVC : UIViewController
 
-- (instancetype)initWithCard:(OMNBankCard *)cardInfo;
+@property (nonatomic, weak) id<OMNMailRUCardConfirmVCDelegate> delegate;
+
+- (instancetype)initWithCardInfo:(OMNBankCardInfo *)cardInfo;
+
+@end
+
+@protocol OMNMailRUCardConfirmVCDelegate <NSObject>
+
+- (void)mailRUCardConfirmVCDidFinish:(OMNMailRUCardConfirmVC *)mailRUCardConfirmVC;
 
 @end

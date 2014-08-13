@@ -11,9 +11,11 @@
 
 typedef void(^OMNSearchRestaurantBlock)(OMNRestaurant *restaurant);
 
+
 @interface OMNSearchRestaurantVC : UIViewController
 
-@property (strong, nonatomic) UIImageView *logoIV;
+@property (nonatomic, strong) OMNDecodeBeacon *decodeBeacon;
+@property (nonatomic, strong) UIImageView *logoIV;
 @property (weak, nonatomic) IBOutlet UIImageView *logoIconsIV;
 @property (weak, nonatomic) IBOutlet UIImageView *bgIV;
 @property (weak, nonatomic) IBOutlet UIView *fgView;

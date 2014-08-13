@@ -23,20 +23,6 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
-		9390D2BC196BB83B007E13AB /* File1 in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2B9196BB83B007E13AB /* File1 */; };
-		9390D2BD196BB83B007E13AB /* File1 in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2B9196BB83B007E13AB /* File1 */; };
-		9390D2BE196BB83B007E13AB /* File2 in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2BA196BB83B007E13AB /* File2 */; };
-		9390D2BF196BB83B007E13AB /* File2 in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2BA196BB83B007E13AB /* File2 */; };
-		9390D2C0196BB83B007E13AB /* File3 in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2BB196BB83B007E13AB /* File3 */; };
-		9390D2C1196BB83B007E13AB /* File3 in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2BB196BB83B007E13AB /* File3 */; };
-		9390D2C5196BB89B007E13AB /* mydomain1.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2C2196BB89B007E13AB /* mydomain1.cer */; };
-		9390D2C6196BB89B007E13AB /* mydomain1.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2C2196BB89B007E13AB /* mydomain1.cer */; };
-		9390D2C7196BB89B007E13AB /* mydomain2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2C3196BB89B007E13AB /* mydomain2.cer */; };
-		9390D2C8196BB89B007E13AB /* mydomain2.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2C3196BB89B007E13AB /* mydomain2.cer */; };
-		9390D2C9196BB89B007E13AB /* mydomain3.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2C4196BB89B007E13AB /* mydomain3.cer */; };
-		9390D2CA196BB89B007E13AB /* mydomain3.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2C4196BB89B007E13AB /* mydomain3.cer */; };
-		9390D2CC196BBA1C007E13AB /* mydomain4.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2CB196BBA1C007E13AB /* mydomain4.cer */; };
-		9390D2CD196BBA1C007E13AB /* mydomain4.cer in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2CB196BBA1C007E13AB /* mydomain4.cer */; };
 		DC15996B32D749F499A36CBF /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64EB91F0F57149D4AC955B6C /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -79,13 +65,6 @@
 		6C018A07141142DD8BCC6EAD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		826AB07DEEEA4AC9801F9714 /* OMNMailRuAcquiring.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = OMNMailRuAcquiring.podspec; path = ../OMNMailRuAcquiring.podspec; sourceTree = "<group>"; };
 		8E5621FCE28F40CD93839407 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
-		9390D2B9196BB83B007E13AB /* File1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = File1; sourceTree = "<group>"; };
-		9390D2BA196BB83B007E13AB /* File2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = File2; sourceTree = "<group>"; };
-		9390D2BB196BB83B007E13AB /* File3 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = File3; sourceTree = "<group>"; };
-		9390D2C2196BB89B007E13AB /* mydomain1.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = mydomain1.cer; sourceTree = "<group>"; };
-		9390D2C3196BB89B007E13AB /* mydomain2.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = mydomain2.cer; sourceTree = "<group>"; };
-		9390D2C4196BB89B007E13AB /* mydomain3.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = mydomain3.cer; sourceTree = "<group>"; };
-		9390D2CB196BBA1C007E13AB /* mydomain4.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = mydomain4.cer; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,19 +131,12 @@
 		6003F593195388D20070C39A /* OMNMailRuAcquiring */ = {
 			isa = PBXGroup;
 			children = (
-				9390D2C2196BB89B007E13AB /* mydomain1.cer */,
-				9390D2C3196BB89B007E13AB /* mydomain2.cer */,
-				9390D2C4196BB89B007E13AB /* mydomain3.cer */,
-				9390D2CB196BBA1C007E13AB /* mydomain4.cer */,
 				6003F59C195388D20070C39A /* OMNAppDelegate.h */,
 				6003F59D195388D20070C39A /* OMNAppDelegate.m */,
 				6003F59F195388D20070C39A /* Main_iPhone.storyboard */,
 				6003F5A2195388D20070C39A /* Main_iPad.storyboard */,
 				6003F5A5195388D20070C39A /* OMNViewController.h */,
 				6003F5A6195388D20070C39A /* OMNViewController.m */,
-				9390D2B9196BB83B007E13AB /* File1 */,
-				9390D2BA196BB83B007E13AB /* File2 */,
-				9390D2BB196BB83B007E13AB /* File3 */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
 			);
@@ -296,13 +268,6 @@
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F5A1195388D20070C39A /* Main_iPhone.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
-				9390D2CC196BBA1C007E13AB /* mydomain4.cer in Resources */,
-				9390D2C9196BB89B007E13AB /* mydomain3.cer in Resources */,
-				9390D2C5196BB89B007E13AB /* mydomain1.cer in Resources */,
-				9390D2C0196BB83B007E13AB /* File3 in Resources */,
-				9390D2BE196BB83B007E13AB /* File2 in Resources */,
-				9390D2BC196BB83B007E13AB /* File1 in Resources */,
-				9390D2C7196BB89B007E13AB /* mydomain2.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,14 +275,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9390D2C1196BB83B007E13AB /* File3 in Resources */,
-				9390D2BD196BB83B007E13AB /* File1 in Resources */,
 				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
-				9390D2CA196BB89B007E13AB /* mydomain3.cer in Resources */,
-				9390D2C6196BB89B007E13AB /* mydomain1.cer in Resources */,
-				9390D2BF196BB83B007E13AB /* File2 in Resources */,
-				9390D2C8196BB89B007E13AB /* mydomain2.cer in Resources */,
-				9390D2CD196BBA1C007E13AB /* mydomain4.cer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

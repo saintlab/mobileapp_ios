@@ -9,7 +9,7 @@
 #import "OMNGPBPayVC.h"
 #import "OMNOrder.h"
 #import "OMNCardView.h"
-#import "OMNBankCard.h"
+#import "OMNBankCardInfo.h"
 
 @interface OMNGPBPayVC ()
 <UIWebViewDelegate>
@@ -17,7 +17,7 @@
 @end
 
 @implementation OMNGPBPayVC {
-  OMNBankCard *_cardInfo;
+  OMNBankCardInfo *_bankCardInfo;
   OMNOrder *_order;
   OMNBill *_bill;
   
@@ -36,10 +36,10 @@
   
 }
 
-- (instancetype)initWithCard:(OMNBankCard *)cardInfo order:(OMNOrder *)order {
+- (instancetype)initWithCard:(OMNBankCardInfo *)bankCardInfo order:(OMNOrder *)order; {
   self = [super initWithNibName:@"OMNGPBPayVC" bundle:nil];
   if (self) {
-    _cardInfo = cardInfo;
+    _bankCardInfo = bankCardInfo;
     _order = order;
   }
   return self;
@@ -137,10 +137,22 @@
 
 - (void)fillForm {
 
-  NSString *script = [_cardInfo fillFormScript];
+  NSString *script = [self fillFormScript];
   NSString *scriptResult = [_webView stringByEvaluatingJavaScriptFromString:script];
   NSLog(@"scriptResult>%@", scriptResult);
   
+}
+
+- (NSString *)fillFormScript {
+  
+  NSString *path = [[NSBundle mainBundle] pathForResource:@"fill-form" ofType:nil];
+  NSString *qFormat = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+  NSString *cardNumber = @"9000000000000000001";
+  NSString *month = @"01";
+  NSString *year = @"15";
+  NSString *cvv = @"123";
+  
+  return [NSString stringWithFormat:qFormat, @"Test", cardNumber, month, year, cvv];
 }
 
 

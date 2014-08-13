@@ -108,26 +108,4 @@
   
 }
 
-- (void)cardsWithCompletion:(void(^)(NSArray *cards))completionBlock failure:(void(^)(NSError *error))failureBlock {
-  
-  NSAssert(completionBlock != nil, @"completionBlock is nil");
-  NSAssert(failureBlock != nil, @"complitionBlock is nil");
-  
-  NSString *path = [NSString stringWithFormat:@"/cards"];
-  [self GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
-    
-    if (response[@"cards"]) {
-      completionBlock(response[@"cards"]);
-    }
-    else {
-      failureBlock(nil);
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock(error);
-    
-  }];
-}
-
 @end

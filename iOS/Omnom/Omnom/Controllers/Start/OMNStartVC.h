@@ -7,7 +7,10 @@
 //
 
 #import "OMNBackgroundVC.h"
+#import "OMNDecodeBeacon.h"
 
 @interface OMNStartVC : OMNBackgroundVC
+
+@property (nonatomic, strong) NSDictionary *info;
 
 @end

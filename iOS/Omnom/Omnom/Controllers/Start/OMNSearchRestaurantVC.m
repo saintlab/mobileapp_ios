@@ -9,6 +9,7 @@
 #import "OMNSearchRestaurantVC.h"
 #import "UIImage+omn_helper.h"
 #import <AFHTTPRequestOperation.h>
+#import "UINavigationController+omn_replace.h"
 
 @interface OMNSearchRestaurantVC ()
 
@@ -16,7 +17,7 @@
 
 @implementation OMNSearchRestaurantVC {
   OMNSearchRestaurantBlock _searchRestaurantBlock;
-  OMNSearchBeaconVC *_searchBeaconVC;
+  OMNLoadingCircleVC *_loadingCircleVC;
 }
 
 - (instancetype)initWithBlock:(OMNSearchRestaurantBlock)block {
@@ -49,17 +50,32 @@
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  _searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+  if (self.decodeBeacon) {
     
-    [weakSelf didFindBeacon:decodeBeacon];
+    _loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
     
-  } cancelBlock:nil];
-  _searchBeaconVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
-  _searchBeaconVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
+  }
+  else {
+    
+    _loadingCircleVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+      
+      [weakSelf didFindBeacon:decodeBeacon];
+      
+    } cancelBlock:nil];
+
+  }
+  _loadingCircleVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
+  _loadingCircleVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
 
   dispatch_async(dispatch_get_main_queue(), ^{
     
-    [self.navigationController pushViewController:_searchBeaconVC animated:YES];
+    [self.navigationController omn_pushViewController:_loadingCircleVC animated:YES completion:^{
+    
+      if (weakSelf.decodeBeacon) {
+        [weakSelf didFindBeacon:weakSelf.decodeBeacon];
+      }
+      
+    }];
 
   });
   
@@ -78,16 +94,9 @@
   }];
   
   __weak typeof(self)weakSelf = self;
-  __weak typeof(_searchBeaconVC)weakBeaconSearch = _searchBeaconVC;
   [decodeBeacon.restaurant loadLogo:^(UIImage *image) {
-    
+    //TODO: handle error loading image
     [weakSelf didLoadLogoForRestaurant:decodeBeacon.restaurant];
-    if (image) {
-      
-    }
-    else {
-//      [weakBeaconSearch didFailOmnom];
-    }
     
   }];
 
@@ -95,10 +104,10 @@
 
 - (void)didLoadLogoForRestaurant:(OMNRestaurant *)restaurant {
   
-  __weak typeof(_searchBeaconVC)weakBeaconSearch = _searchBeaconVC;
+  __weak typeof(_loadingCircleVC)weakBeaconSearch = _loadingCircleVC;
   OMNSearchRestaurantBlock searchRestaurantBlock = _searchRestaurantBlock;
   
-  [_searchBeaconVC setLogo:restaurant.logo withColor:restaurant.background_color completion:^{
+  [_loadingCircleVC setLogo:restaurant.logo withColor:restaurant.background_color completion:^{
     
     [restaurant loadBackground:^(UIImage *image) {
       

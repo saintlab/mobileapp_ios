@@ -17,19 +17,30 @@
 {
   self = [super init];
   if (self) {
-    
-    @try {
-      _cards = [NSKeyedUnarchiver unarchiveObjectWithFile:[self path]];
-    }
-    @catch (NSException *exception) {
-    }
-
-    if (nil == _cards) {
-      _cards = [NSMutableArray array];
-    }
-    
   }
   return self;
+}
+
+- (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock {
+  
+  __weak typeof(self)weakSelf = self;
+  [OMNBankCard getCardsWithCompletion:^(NSArray *cards) {
+    
+    [weakSelf didLoadCards:cards];
+    completionBlock();
+    
+  } failure:^(NSError *error) {
+    
+    completionBlock();
+    
+  }];
+  
+}
+
+- (void)didLoadCards:(NSArray *)cards {
+  
+  _cards = [cards mutableCopy];
+  
 }
 
 #pragma mark - Table view data source
@@ -44,8 +55,8 @@
 
 - (void)addBankCard:(OMNBankCard *)bankCard {
   
-  [_cards addObject:bankCard];
-  [self save];
+//  [_cards addObject:bankCard];
+//  [self save];
   
 }
 
@@ -68,32 +79,46 @@
   }
   
   OMNBankCard *card = _cards[indexPath.row];
-  cell.textLabel.text = card.redactedCardNumber;
-  cell.detailTextLabel.text = @"visa";
+  cell.textLabel.text = card.masked_pan;
+  cell.detailTextLabel.text = card.association;
   return cell;
   
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-  return YES;
+  OMNBankCard *card = _cards[indexPath.row];
+  return (NO == card.deleting);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  [_cards removeObjectAtIndex:indexPath.row];
-  [self save];
-  [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+  OMNBankCard *card = _cards[indexPath.row];
+  NSMutableArray *cards = _cards;
+  [card deleteWithCompletion:^{
+    
+    [cards removeObject:card];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    });
+
+  } failure:^(NSError *error) {
+  
+    NSLog(@"%@", error);
+    
+  }];
   
 }
 
 - (NSString *)path {
+  
   NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
   NSString *storedBeaconsPath = [documentsDirectory stringByAppendingPathComponent:@"cards.dat"];
   return storedBeaconsPath;
+  
 }
 
 - (void)save {
-  [NSKeyedArchiver archiveRootObject:_cards toFile:self.path];
+//  [NSKeyedArchiver archiveRootObject:_cards toFile:self.path];
 }
 
 #pragma mark - Table view delegate
@@ -106,6 +131,7 @@
     self.didSelectCardBlock(card);
     
   }
+  
 }
 
 @end

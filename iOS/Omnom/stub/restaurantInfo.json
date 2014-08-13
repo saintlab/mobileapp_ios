@@ -1,0 +1,33 @@
+[
+  {
+    "title" : "Ресторан Mexico",
+    "items" : [
+      {
+        "type" : "time",
+        "title" : "С 9:00 до 12:00 – завтрак",
+        "value" : "9:00 to 12:00"
+      },
+      {
+        "type" : "wifi",
+        "title" : "Mixico320 - GiordanoBruno567",
+        "value" : "GiordanoBruno567"
+      },
+      {
+        "type" : "address",
+        "title" : "Большая Ордынка, 87\/2",
+        "value" : "Большая Ордынка, 87\/2"
+      },
+      {
+        "type" : "schedule",
+        "title" : "Расписание концертов",
+        "value" : "Расписание концертов"
+      },
+      {
+        "value" : "https:\/\/www.dropbox.com\/s\/2h5toeodwblm45s\/promo_pic%402x.png",
+        "title" : "Салат капрезе",
+        "type" : "image",
+        "subtitle" : "350р"
+      }
+    ]
+  }
+]

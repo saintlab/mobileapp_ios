@@ -15,15 +15,13 @@ extern NSString * const OMNCardEnterControlMonthString;
 extern NSString * const OMNCardEnterControlYearString;
 extern NSString * const OMNCardEnterControlCVVString;
 
-@interface OMNDeletedTextField : UITextField
-
-@end
-
 @interface OMNCardEnterControl : UIView
 
 @property (nonatomic, weak) id<OMNCardEnterControlDelegate> delegate;
 @property (nonatomic, strong) NSString *pan;
 @property (nonatomic, assign, readonly) BOOL saveButtonSelected;
+
+- (void)setSaveButtonHidden:(BOOL)hidden;
 
 @end
 

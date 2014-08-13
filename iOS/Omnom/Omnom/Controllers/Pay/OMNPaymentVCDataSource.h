@@ -8,7 +8,7 @@
 
 @class OMNOrder;
 
-@interface GPaymentVCDataSource : NSObject
+@interface OMNPaymentVCDataSource : NSObject
 <UITableViewDataSource,
 UITableViewDelegate>
 

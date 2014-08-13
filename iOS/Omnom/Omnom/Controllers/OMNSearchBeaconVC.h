@@ -7,22 +7,17 @@
 //
 
 #import "OMNDecodeBeacon.h"
-#import "OMNCircleRootVC.h"
+#import "OMNLoadingCircleVC.h"
 #import "OMNLoaderView.h"
 
 @class OMNSearchBeaconVC;
 
 typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon);
 
-@interface OMNSearchBeaconVC : OMNCircleRootVC
-
-@property (nonatomic, strong, readonly) OMNLoaderView *loaderView;
-@property (nonatomic, assign) NSTimeInterval estimateSearchDuration;
+@interface OMNSearchBeaconVC : OMNLoadingCircleVC
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
 
-- (void)setLogo:(UIImage *)logo withColor:(UIColor *)color completion:(dispatch_block_t)completionBlock;
-- (void)finishLoading:(dispatch_block_t)completionBlock;
 - (void)didFailOmnom;
 
 @end

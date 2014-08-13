@@ -10,8 +10,6 @@
 #import <CardIO.h>
 #import "OMNConstants.h"
 #import <OMNCardEnterControl.h>
-#import <OMNMailRuAcquiring.h>
-#import "OMNSocketManager.h"
 #import "OMNAuthorisation.h"
 
 @interface OMNAddBankCardVC ()
@@ -22,7 +20,7 @@ OMNCardEnterControlDelegate>
 
 @implementation OMNAddBankCardVC {
   
-  OMNBankCard *_cardInfo;
+  OMNBankCardInfo *_cardInfo;
   
   OMNCardEnterControl *_cardEnterControl;
   UIButton *_addCardButton;
@@ -35,15 +33,15 @@ OMNCardEnterControlDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  self.view.backgroundColor = [UIColor whiteColor];
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveCardId:) name:OMNSocketIODidReceiveCardIdNotification object:nil];
+  self.view.backgroundColor = [UIColor whiteColor];  
   [self setup];
 }
 
 - (void)setup {
+  
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
+  [_cardEnterControl setSaveButtonHidden:!self.allowSaveCard];
   _cardEnterControl.delegate = self;
   [self.view addSubview:_cardEnterControl];
   
@@ -74,21 +72,17 @@ OMNCardEnterControlDelegate>
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
 }
 
-- (void)didReceiveCardId:(NSNotification *)n {
-  NSLog(@"%@", n);
-}
-
 #pragma mark - OMNCardEnterControlDelegate
 
 - (void)cardEnterControl:(OMNCardEnterControl *)control didEnterCardData:(NSDictionary *)cardData {
   
-  _cardInfo = [[OMNBankCard alloc] init];
-  _cardInfo.cardNumber = cardData[OMNCardEnterControlPanString];
+  _cardInfo = [[OMNBankCardInfo alloc] init];
+  _cardInfo.pan = cardData[OMNCardEnterControlPanString];
   _cardInfo.expiryMonth = [cardData[OMNCardEnterControlMonthString] integerValue];
   _cardInfo.expiryYear = [cardData[OMNCardEnterControlYearString] integerValue];
   _cardInfo.cvv = cardData[OMNCardEnterControlCVVString];
-  
   [control endEditing:YES];
+  
 }
 
 - (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {
@@ -104,52 +98,9 @@ OMNCardEnterControlDelegate>
 
 - (IBAction)addCardTap:(id)sender {
 
-//  [self.delegate addBankCardVC:self didAddCard:_cardInfo];
   if (_cardInfo) {
-    
-  }
-
-  [self registerCard];
-  
-}
-
-- (void)registerCard {
-  NSDictionary *cardInfo =
-  @{
-    @"pan" : @"4111111111111111",
-    @"exp_date" : @"12.2015",
-    @"cvv" : @"123",
-    };
-  
-//    @"pan" : @"4111111111111111",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : @"123",
-
-//    @"pan" : @"6011000000000004",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : @"123",
-  
-//    @"pan" : @"639002000000000003",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : @"123",
-  
-  __weak typeof(self)weakSelf = self;
-  OMNUser *user = [OMNAuthorisation authorisation].user;
-  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(id response) {
-    
-    [weakSelf didFinishPostCardInfo:response];
-    
-  }];
-
-}
-
-- (void)didFinishPostCardInfo:(id)response {
-  NSLog(@"registerCard>%@", response);
-  if (response) {
-    
-  }
-  else {
-    
+    _cardInfo.saveCard = _cardEnterControl.saveButtonSelected;
+    [self.delegate addBankCardVC:self didAddCard:_cardInfo];
   }
   
 }

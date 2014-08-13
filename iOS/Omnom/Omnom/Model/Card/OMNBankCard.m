@@ -7,8 +7,33 @@
 //
 
 #import "OMNBankCard.h"
+#import "OMNOperationManager.h"
+#import <OMNMailRuAcquiring.h>
+
+@interface OMNBankCard ()
+
+@property(nonatomic, assign) BOOL deleting;
+
+@end
 
 @implementation OMNBankCard
+
+- (instancetype)initWithJsonData:(id)jsonData {
+  self = [super init];
+  if (self) {
+    self.association = jsonData[@"association"];
+    self.confirmed_by = jsonData[@"confirmed_by"];
+    self.created_at = jsonData[@"created_at"];
+    self.external_card_id = jsonData[@"external_card_id"];
+    self.id = jsonData[@"id"];
+    self.masked_pan = jsonData[@"masked_pan"];
+    self.status = jsonData[@"status"];
+    self.updated_at = jsonData[@"updated_at"];
+    self.user_id = jsonData[@"user_id"];
+    
+  }
+  return self;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   self = [super init];
@@ -51,6 +76,86 @@
   NSString *cvv = @"123";
   
   return [NSString stringWithFormat:qFormat, @"Test", cardNumber, month, year, cvv];
+}
+
++ (void)getCardsWithCompletion:(void(^)(NSArray *cards))completionBlock failure:(void(^)(NSError *error))failureBlock {
+  
+  NSAssert(completionBlock != nil, @"completionBlock is nil");
+  NSAssert(failureBlock != nil, @"complitionBlock is nil");
+  
+  NSString *path = [NSString stringWithFormat:@"/cards"];
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    [response decodeCardData:completionBlock failure:failureBlock];
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error);
+    
+  }];
+}
+
+- (void)deleteWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
+  
+  NSAssert(completionBlock != nil, @"completionBlock is nil");
+  NSAssert(failureBlock != nil, @"complitionBlock is nil");
+  
+  _deleting = YES;
+  __weak typeof(self)weakSelf = self;
+  [[OMNMailRuAcquiring acquiring] cardDelete:self.external_card_id user_login:self.user_id completion:^(id response) {
+    
+    if (response) {
+      
+      NSString *path = [NSString stringWithFormat:@"/cards/%@", self.id];
+      [[OMNOperationManager sharedManager] DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"%@", responseObject);
+        completionBlock();
+        
+      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        weakSelf.deleting = NO;
+        failureBlock(error);
+      }];
+      
+    }
+    else {
+      weakSelf.deleting = NO;
+      failureBlock(nil);
+    }
+    
+  }];
+  
+}
+
+@end
+
+@implementation NSDictionary (omn_decodeCardData)
+
+- (void)decodeCardData:(void(^)(NSArray *))completionBlock failure:(void(^)(NSError *))failureBlock {
+  
+  if ([self isKindOfClass:[NSDictionary class]]) {
+
+    NSArray *rawCards = self[@"cards"];
+    if (rawCards) {
+      NSMutableArray *cards = [NSMutableArray arrayWithCapacity:rawCards.count];
+      [rawCards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        
+        OMNBankCard *card = [[OMNBankCard alloc] initWithJsonData:obj];
+        [cards addObject:card];
+        
+      }];
+      completionBlock([cards copy]);
+    }
+    else {
+      failureBlock(nil);
+    }
+    
+  }
+  else {
+    failureBlock(nil);
+  }
+  
 }
 
 @end

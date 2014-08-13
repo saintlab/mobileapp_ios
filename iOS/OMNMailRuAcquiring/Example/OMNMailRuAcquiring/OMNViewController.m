@@ -18,11 +18,13 @@ static NSString * const kOMNMailRu_cvv = @"123";
 @implementation OMNViewController {
   NSString *_cardId;
   NSDictionary *_cardInfo;
+  NSString *_user_login;
 }
 
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  _user_login = @"5";
 //  _cardId = @"30002847034833862453";
 //  _cardInfo =
 //  @{
@@ -52,7 +54,7 @@ static NSString * const kOMNMailRu_cvv = @"123";
 
 - (IBAction)payAndRegisterTap:(id)sender {
   
-  [[OMNMailRuAcquiring acquiring] payWithCardInfo:_cardInfo addCard:YES];
+  [[OMNMailRuAcquiring acquiring] payWithCardInfo:_cardInfo user_login:_user_login addCard:YES];
   
 }
 
@@ -65,11 +67,11 @@ static NSString * const kOMNMailRu_cvv = @"123";
 }
 
 - (IBAction)verifyTap:(id)sender {
-  [[OMNMailRuAcquiring acquiring] cardVerify:1.04 card_id:_cardId];
+  [[OMNMailRuAcquiring acquiring] cardVerify:1.4  user_login:_user_login card_id:_cardId];
 }
 
 - (IBAction)deleteCard:(id)sender {
-  [[OMNMailRuAcquiring acquiring] cardDelete:_cardId];
+  [[OMNMailRuAcquiring acquiring] cardDelete:_cardId user_login:_user_login];
 }
 - (IBAction)payWithCardID:(id)sender {
   
@@ -79,13 +81,13 @@ static NSString * const kOMNMailRu_cvv = @"123";
     @"cvv" : kOMNMailRu_cvv,
     };
   
-  [[OMNMailRuAcquiring acquiring] payWithCardInfo:cardInfo addCard:NO];
+  [[OMNMailRuAcquiring acquiring] payWithCardInfo:cardInfo  user_login:_user_login addCard:NO];
   
 }
 
 - (IBAction)payWithNewCard:(id)sender {
   
-  [[OMNMailRuAcquiring acquiring] payWithCardInfo:_cardInfo addCard:NO];
+  [[OMNMailRuAcquiring acquiring] payWithCardInfo:_cardInfo user_login:_user_login addCard:NO];
   
 }
 

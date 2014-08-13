@@ -15,5 +15,6 @@
 @property (nonatomic, strong) OMNCalculationAmount *calculationAmount;
 
 - (void)updateView;
+- (void)setKeyboardShown:(BOOL)keyboardShown;
 
 @end
