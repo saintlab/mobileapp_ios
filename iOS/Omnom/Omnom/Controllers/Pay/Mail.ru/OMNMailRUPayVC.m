@@ -50,6 +50,8 @@
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
   
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+  
   [self setup];
   
   _cvvTF.hidden = (nil == _bankCardInfo.card_id);
@@ -119,11 +121,25 @@
   paymentInfo.order_amount = @(_order.toPayAmount/100.);
   paymentInfo.order_message = @"";
   
+  __weak typeof(self)weakSelf = self;
   [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
     
     NSLog(@"payWithCardInfo>%@", response);
+    [weakSelf didPayWithResponse:response];
     
   }];
+  
+}
+
+- (void)didPayWithResponse:(id)response {
+  
+  [self.delegate mailRUPayVCDidFinish:self];
+  
+}
+
+- (void)cancelTap {
+  
+  [self.delegate mailRUPayVCDidCancel:self];
   
 }
 

@@ -11,6 +11,7 @@
 #import "OMNConstants.h"
 #import "OMNDenyCLPermissionVC.h"
 #import "OMNCLPermissionsHelpVC.h"
+#import "OMNToolbarButton.h"
 
 @interface OMNAskCLPermissionsVC ()
 <CLLocationManagerDelegate>
@@ -58,14 +59,25 @@
 - (void)addActionsBoard {
   [self addBottomButtons];
   
-  [self.leftBottomButton setImage:[UIImage imageNamed:@"cancel_later_icon_small"] forState:UIControlStateNormal];
-  [self.leftBottomButton addTarget:self action:@selector(denyPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
-  [self.leftBottomButton setTitle:NSLocalizedString(@"Запретить", nil) forState:UIControlStateNormal];
+  UIButton *leftButton = [[OMNToolbarButton alloc] init];
+  [leftButton setImage:[UIImage imageNamed:@"cancel_later_icon_small"] forState:UIControlStateNormal];
+  [leftButton addTarget:self action:@selector(denyPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
+  [leftButton setTitle:NSLocalizedString(@"Запретить", nil) forState:UIControlStateNormal];
+  [leftButton sizeToFit];
   
-  [self.rightBottomButton setImage:[UIImage imageNamed:@"allow_icon_small"] forState:UIControlStateNormal];
-  [self.rightBottomButton addTarget:self action:@selector(askPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
-  [self.rightBottomButton setTitle:NSLocalizedString(@"Разрешить", nil) forState:UIControlStateNormal];
+  UIButton *rightButton = [[OMNToolbarButton alloc] init];
+  [rightButton setImage:[UIImage imageNamed:@"allow_icon_small"] forState:UIControlStateNormal];
+  [rightButton addTarget:self action:@selector(askPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
+  [rightButton setTitle:NSLocalizedString(@"Разрешить", nil) forState:UIControlStateNormal];
+  [rightButton sizeToFit];
   
+  self.bottomToolbar.items =
+  @[
+    [[UIBarButtonItem alloc] initWithCustomView:leftButton],
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [[UIBarButtonItem alloc] initWithCustomView:rightButton],
+    ];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {

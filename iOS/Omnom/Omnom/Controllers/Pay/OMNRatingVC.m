@@ -8,6 +8,8 @@
 
 #import "OMNRatingVC.h"
 #import "OMNRatingModel.h"
+#import "OMNOrder.h"
+#import "OMNSocketManager.h"
 
 @interface OMNRatingVC ()
 
@@ -17,11 +19,15 @@
   
   OMNRatingModel *_ratingModel;
   __weak IBOutlet UICollectionView *_productsView;
+  __weak IBOutlet UIButton *_chequeButton;
   
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     _ratingModel = [[OMNRatingModel alloc] init];
@@ -32,6 +38,12 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(billCallDone:) name:OMNSocketIOBillCallDoneNotification object:nil];
+  
+  [_chequeButton setTitle:NSLocalizedString(@"Чек пожалуйста", nil) forState:UIControlStateNormal];
+  [_chequeButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateSelected];
+  [_chequeButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateSelected|UIControlStateHighlighted];
+  
   if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
     self.automaticallyAdjustsScrollViewInsets = NO;
   }
@@ -41,7 +53,36 @@
   _productsView.backgroundColor = [UIColor clearColor];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
-  // Do any additional setup after loading the view from its nib.
+
+}
+
+- (void)billCallDone:(NSNotification *)n {
+  _chequeButton.selected = NO;
+}
+
+- (IBAction)chequeTap:(id)sender {
+  
+  if (_chequeButton.selected) {
+    [_order billCallStop:^{
+      
+      _chequeButton.selected = NO;
+      
+    } failure:^(NSError *error) {
+      
+    }];
+  }
+  else {
+    
+    [_order billCall:^{
+      
+      _chequeButton.selected = YES;
+      
+    } failure:^(NSError *error) {
+      
+    }];
+    
+  }
+  
 }
 
 - (void)closeTap {

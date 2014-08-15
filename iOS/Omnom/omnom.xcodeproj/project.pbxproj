@@ -81,6 +81,8 @@
 		9345AFCE199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFCC199B81D700328F73 /* OMNRestaurantFeedItemCell.m */; };
 		9345AFD1199BB3C700328F73 /* OMNPaymentNotificationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD0199BB3C700328F73 /* OMNPaymentNotificationControl.m */; };
 		9345AFD2199BB3C700328F73 /* OMNPaymentNotificationControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD0199BB3C700328F73 /* OMNPaymentNotificationControl.m */; };
+		9345AFD5199C6F8B00328F73 /* OMNToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */; };
+		9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */; };
 		93535EFF198246F50084C3E7 /* OMNBackgroundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535EFD198246F50084C3E7 /* OMNBackgroundVC.m */; };
 		93535F00198246F50084C3E7 /* OMNBackgroundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535EFD198246F50084C3E7 /* OMNBackgroundVC.m */; };
 		93535F0E19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535F0D19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m */; };
@@ -413,6 +415,8 @@
 		9345AFCC199B81D700328F73 /* OMNRestaurantFeedItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantFeedItemCell.m; sourceTree = "<group>"; };
 		9345AFCF199BB3C700328F73 /* OMNPaymentNotificationControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPaymentNotificationControl.h; sourceTree = "<group>"; };
 		9345AFD0199BB3C700328F73 /* OMNPaymentNotificationControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPaymentNotificationControl.m; sourceTree = "<group>"; };
+		9345AFD3199C6F8B00328F73 /* OMNToolbarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNToolbarButton.h; sourceTree = "<group>"; };
+		9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNToolbarButton.m; sourceTree = "<group>"; };
 		93535EFC198246F50084C3E7 /* OMNBackgroundVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBackgroundVC.h; sourceTree = "<group>"; };
 		93535EFD198246F50084C3E7 /* OMNBackgroundVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBackgroundVC.m; sourceTree = "<group>"; };
 		93535F0C19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantToSearchBeaconTransition.h; sourceTree = "<group>"; };
@@ -754,6 +758,8 @@
 				936E71F419923DE2008FF864 /* OMNShakeWindow.m */,
 				9345AFCF199BB3C700328F73 /* OMNPaymentNotificationControl.h */,
 				9345AFD0199BB3C700328F73 /* OMNPaymentNotificationControl.m */,
+				9345AFD3199C6F8B00328F73 /* OMNToolbarButton.h */,
+				9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1801,6 +1807,7 @@
 				939F992E19752CFC0051822E /* OMNEnterCodeView.m in Sources */,
 				93E29997197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
 				93958B5D198747E1009BB2ED /* OMNBill.m in Sources */,
+				9345AFD5199C6F8B00328F73 /* OMNToolbarButton.m in Sources */,
 				9321181A1962DF7C00183729 /* OMNProduct.m in Sources */,
 				939F991819752BE90051822E /* OMNEditTableVC.m in Sources */,
 				939F991419752BE90051822E /* OMNBankCardsVC.m in Sources */,
@@ -1934,6 +1941,7 @@
 				939F994019752D680051822E /* OMNBankCard.m in Sources */,
 				93E29970197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
 				939F992119752BE90051822E /* OMNLoginVC.m in Sources */,
+				9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */,
 				939F994A197544820051822E /* OMNUserInfoItem.m in Sources */,
 				939FD05F1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
 				93E435B41998CA6400EDC488 /* OMNRestaurantInfoVC.m in Sources */,

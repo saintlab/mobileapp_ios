@@ -10,6 +10,7 @@
 #import <AFNetworking/AFNetworking.h>
 #import "OMNOperationManager.h"
 #import "NSString+omn_color.h"
+#import "OMNSocketManager.h"
 
 @interface NSData (omn_restaurants)
 
@@ -27,7 +28,12 @@
 
 @implementation OMNRestaurant {
   NSOperationQueue *_imageRequestsQueue;
-  NSString *_waiterCallTableID;
+  dispatch_block_t _waiterCallStopBlock;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [self stopWaiterCall];
 }
 
 - (instancetype)initWithData:(id)data {
@@ -54,10 +60,16 @@
       self.background_color = [UIColor blackColor];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:nil];
+    
     _imageRequestsQueue = [[NSOperationQueue alloc] init];
     _imageRequestsQueue.maxConcurrentOperationCount = 1;
   }
   return self;
+}
+
+- (void)waiterCallDone:(NSNotification *)n {
+  [self stopWaiterCall];
 }
 
 + (void)getRestaurantList:(GRestaurantsBlock)restaurantsBlock error:(void(^)(NSError *error))errorBlock {
@@ -126,10 +138,15 @@
   
 }
 
-- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
+- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock stop:(dispatch_block_t)stopBlock {
+  
   _waiterCallTableID = tableID;
+  _waiterCallStopBlock = stopBlock;
+  
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.id, tableID];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+    
+    [[OMNSocketManager manager] join:tableID];
     
     completionBlock();
     
@@ -141,6 +158,22 @@
 
 }
 
+- (void)stopWaiterCall {
+  
+  if (_waiterCallTableID) {
+
+    [[OMNSocketManager manager] leave:_waiterCallTableID];
+    _waiterCallTableID = nil;
+
+    if (_waiterCallStopBlock) {
+      _waiterCallStopBlock();
+      _waiterCallStopBlock = nil;
+    }
+
+  }
+  
+}
+
 - (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
   
   if (nil == _waiterCallTableID) {
@@ -149,9 +182,10 @@
   }
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.id, _waiterCallTableID];
+  __weak typeof(self)weakSelf = self;
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
-    _waiterCallTableID = nil;
+    [weakSelf stopWaiterCall];
     completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

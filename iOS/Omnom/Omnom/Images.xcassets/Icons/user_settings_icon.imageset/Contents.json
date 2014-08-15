@@ -1,17 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "user_settings_icon.png"
+      "filename" : "profile_icon_white.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "user_settings_icon@2x.png"
+      "filename" : "profile_icon_white@2x.png"
+    },
+    {
+      "idiom" : "universal",
+      "unassigned" : true
     }
   ],
   "info" : {

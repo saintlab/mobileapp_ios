@@ -83,15 +83,13 @@
 
 - (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
-  [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.tableId completion:^{
-    
-    NSLog(@"newGuestForTableID>done");
-    
-  } failure:^(NSError *error) {
-    
-    NSLog(@"newGuestForTableID>%@", error);
-    
-  }];
+  if (nil == self.decodeBeacon) {
+    [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.table_id completion:^{
+      NSLog(@"newGuestForTableID>done");
+    } failure:^(NSError *error) {
+      NSLog(@"newGuestForTableID>%@", error);
+    }];
+  }
   
   __weak typeof(self)weakSelf = self;
   [decodeBeacon.restaurant loadLogo:^(UIImage *image) {

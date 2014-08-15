@@ -184,6 +184,7 @@ OMNMailRUPayVCDelegate>
 - (void)showRating {
   
   OMNRatingVC *ratingVC = [[OMNRatingVC alloc] init];
+  ratingVC.order = _order;
   ratingVC.delegate = self;
   [self.navigationController pushViewController:ratingVC animated:YES];
   

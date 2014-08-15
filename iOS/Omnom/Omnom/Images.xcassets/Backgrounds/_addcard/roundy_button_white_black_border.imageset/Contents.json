@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "product_2.png"
+      "filename" : "roundy_button_white_black_border.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "product_2@2x.png"
+      "filename" : "roundy_button_white_black_border@2x.png"
     }
   ],
   "info" : {

@@ -7,10 +7,12 @@
 //
 
 @protocol OMNRatingVCDelegate;
+@class OMNOrder;
 
 @interface OMNRatingVC : UIViewController
 
 @property (nonatomic, weak) id<OMNRatingVCDelegate> delegate;
+@property (nonatomic, strong) OMNOrder *order;
 
 @end
 

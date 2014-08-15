@@ -17,7 +17,7 @@ typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
 <NSCoding>
 
 @property (nonatomic, copy) NSString *uuid;
-@property (nonatomic, copy) NSString *tableId;
+@property (nonatomic, copy) NSString *table_id;
 @property (nonatomic, copy) NSString *restaurantId;
 @property (nonatomic, strong) NSDate *foundDate;
 

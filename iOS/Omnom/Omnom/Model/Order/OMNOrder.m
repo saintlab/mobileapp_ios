@@ -8,9 +8,15 @@
 
 #import "OMNOrder.h"
 #import "OMNOperationManager.h"
+#import "OMNSocketManager.h"
 
 @implementation OMNOrder {
   id _data;
+  NSString *_callBillOrderId;
+}
+
+- (void)dealloc {
+  [[OMNSocketManager manager] leave:self.id];
 }
 
 - (instancetype)initWithJsonData:(id)jsonData {
@@ -134,5 +140,48 @@
   }];
   
 }
+
+- (void)billCall:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders/%@/bill/call", self.restaurant_id, self.tableId, self.id];
+
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if (responseObject[@"status"]) {
+      
+      [[OMNSocketManager manager] join:self.id];
+      
+      completionBlock();
+    }
+    else {
+      failureBlock([NSError errorWithDomain:@"" code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error);
+    
+  }];
+}
+
+- (void)billCallStop:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders/%@/bill/call/stop", self.restaurant_id, self.tableId, self.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if (responseObject[@"status"]) {
+      [[OMNSocketManager manager] leave:self.id];
+      completionBlock();
+    }
+    else {
+      failureBlock([NSError errorWithDomain:@"" code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error);
+    
+  }];
+}
+
 
 @end

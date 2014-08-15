@@ -12,6 +12,7 @@
 #import "OMNAuthorisation.h"
 #import "OMNWizardPageVC.h"
 #import "OMNConstants.h"
+#import "OMNToolbarButton.h"
 
 @interface OMNAuthorizationVC ()
 <OMNAuthorizationDelegate>
@@ -51,19 +52,32 @@
 - (void)addActionsBoard {
   [self addBottomButtons];
   
-  [self.leftBottomButton setImage:[UIImage imageNamed:@"registration_icon_small"] forState:UIControlStateNormal];
-  [self.leftBottomButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];
-  [self.leftBottomButton setTitle:NSLocalizedString(@"Регистрация", nil) forState:UIControlStateNormal];
+  UIButton *leftButton = [[OMNToolbarButton alloc] init];
+  [leftButton setImage:[UIImage imageNamed:@"registration_icon_small"] forState:UIControlStateNormal];
+  [leftButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];
+  [leftButton setTitle:NSLocalizedString(@"Регистрация", nil) forState:UIControlStateNormal];
+  [leftButton sizeToFit];
   
-  [self.rightBottomButton setImage:[UIImage imageNamed:@"login_icon_small"] forState:UIControlStateNormal];
-  [self.rightBottomButton addTarget:self action:@selector(loginTap:) forControlEvents:UIControlEventTouchUpInside];
-  [self.rightBottomButton setTitle:NSLocalizedString(@"Вход", nil) forState:UIControlStateNormal];
+  UIButton *rightButton = [[OMNToolbarButton alloc] init];
+  [rightButton setImage:[UIImage imageNamed:@"login_icon_small"] forState:UIControlStateNormal];
+  [rightButton addTarget:self action:@selector(loginTap:) forControlEvents:UIControlEventTouchUpInside];
+  [rightButton setTitle:NSLocalizedString(@"Вход", nil) forState:UIControlStateNormal];
+  [rightButton sizeToFit];
+  
+  self.bottomToolbar.items =
+  @[
+    [[UIBarButtonItem alloc] initWithCustomView:leftButton],
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [[UIBarButtonItem alloc] initWithCustomView:rightButton],
+    ];
+  
+  
 
   self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
-  NSLayoutConstraint *offsetConstraint = [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.buttonsBackground attribute:NSLayoutAttributeTop multiplier:1 constant:0.0f];
-  [self.view addConstraint:offsetConstraint];
-  NSLayoutConstraint *centerConstraint = [NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.buttonsBackground attribute:NSLayoutAttributeCenterX multiplier:1 constant:0.0f];
-  [self.view addConstraint:centerConstraint];
+
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomToolbar attribute:NSLayoutAttributeTop multiplier:1 constant:0.0f]];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.bottomToolbar attribute:NSLayoutAttributeCenterX multiplier:1 constant:0.0f]];
   
 }
 

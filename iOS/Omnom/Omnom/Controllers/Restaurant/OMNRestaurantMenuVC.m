@@ -145,7 +145,7 @@
   __weak typeof(self)weakSelf = self;
   [self searchTableWithBlock:^(OMNSearchBeaconVC *searchBeaconVC,OMNDecodeBeacon *decodeBeacon) {
     
-    [_restaurant waiterCallForTableID:decodeBeacon.tableId completion:^{
+    [_restaurant waiterCallForTableID:decodeBeacon.table_id completion:^{
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -156,6 +156,10 @@
     } failure:^(NSError *error) {
       
       NSLog(@"error>%@", error);
+      
+    } stop:^{
+      
+      
       
     }];
     
@@ -200,7 +204,7 @@
   OMNRestaurant *restaurant = _restaurant;
   [self searchTableWithBlock:^(OMNSearchBeaconVC *searchBeaconVC,OMNDecodeBeacon *decodeBeacon) {
     
-    [restaurant getOrdersForTableID:decodeBeacon.tableId orders:^(NSArray *orders) {
+    [restaurant getOrdersForTableID:decodeBeacon.table_id orders:^(NSArray *orders) {
 
       [weakSelf processOrders:orders];
       

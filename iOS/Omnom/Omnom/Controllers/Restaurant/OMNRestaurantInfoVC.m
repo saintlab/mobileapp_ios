@@ -28,6 +28,8 @@
   [closeButton sizeToFit];
   self.navigationItem.titleView = closeButton;
   
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
+
   [self.navigationItem setHidesBackButton:YES animated:NO];
   
   
@@ -40,13 +42,16 @@
   
 }
 
+- (void)userProfileTap {
+  
+}
+
 - (void)closeTap {
   [self.delegate restaurantInfoVCDidFinish:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  [self.navigationController setToolbarHidden:NO animated:animated];
 }
 
 #pragma mark - UITableViewDataSource

@@ -11,9 +11,7 @@
 @property (strong, nonatomic, readonly) UIImageView *backgroundView;
 @property (nonatomic, strong) UIImage *backgroundImage;
 
-@property (strong, nonatomic, readonly) UIView *buttonsBackground;
-@property (strong, nonatomic, readonly) UIButton *leftBottomButton;
-@property (strong, nonatomic, readonly) UIButton *rightBottomButton;
+@property (strong, nonatomic, readonly) UIToolbar *bottomToolbar;
 @property (strong, nonatomic, readonly) NSLayoutConstraint *bottomViewConstraint;
 
 - (void)addBottomButtons;

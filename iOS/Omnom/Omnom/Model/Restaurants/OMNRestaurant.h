@@ -27,15 +27,18 @@ typedef void(^OMNImageBlock)(UIImage *image);
 @property (nonatomic, strong) UIImage *logo;
 @property (nonatomic, strong) UIImage *background;
 
+@property (nonatomic, copy, readonly) NSString *waiterCallTableID;
+
 - (instancetype)initWithData:(id)data;
 
 + (void)getRestaurantList:(GRestaurantsBlock)restaurantsBlock error:(void(^)(NSError *error))errorBlock;
 
 - (void)getMenu:(GMenuBlock)menuBlock error:(void(^)(NSError *error))errorBlock;
 
-- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
+- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock stop:(dispatch_block_t)stopBlock;
 
 - (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
+- (void)stopWaiterCall;
 
 - (void)newGuestForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 

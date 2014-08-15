@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "waiter_is_called.png"
+      "filename" : "roundy_button_white_light_grey_border.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "waiter_is_called@2x.png"
+      "filename" : "roundy_button_white_light_grey_border@2x.png"
     }
   ],
   "info" : {

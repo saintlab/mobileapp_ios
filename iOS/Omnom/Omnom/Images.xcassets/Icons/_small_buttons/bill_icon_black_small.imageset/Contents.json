@@ -1,17 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "bill_icon_black_small.png"
+      "filename" : "bill_icon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "bill_icon_black_small@2x.png"
+      "filename" : "bill_icon@2x.png"
+    },
+    {
+      "idiom" : "universal",
+      "unassigned" : true
     }
   ],
   "info" : {

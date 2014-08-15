@@ -53,4 +53,7 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
  */
 - (void)createBill:(OMNBillBlock)completion failure:(void (^)(NSError *error))failureBlock;
 
+- (void)billCall:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock;
+- (void)billCallStop:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock;
+
 @end

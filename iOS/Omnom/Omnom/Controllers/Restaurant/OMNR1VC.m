@@ -18,6 +18,8 @@
 #import "UIImage+omn_helper.h"
 #import "OMNPushPermissionVC.h"
 #import "OMNRestaurantInfoVC.h"
+#import "OMNToolbarButton.h"
+#import "OMNSocketManager.h"
 
 @interface OMNR1VC ()
 <OMNPayOrderVCDelegate,
@@ -29,6 +31,7 @@ OMNRestaurantInfoVCDelegate>
 
 @implementation OMNR1VC {
   OMNRestaurant *_restaurant;
+  UIButton *_callWaiterButton;
 }
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
@@ -44,9 +47,8 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
+  
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
-  self.navigationItem.rightBarButtonItem.tintColor = [UIColor greenColor];
   
   self.backgroundImage = _restaurant.background;
   self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:_restaurant.background_color];
@@ -74,38 +76,37 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)addActionsBoard {
   
-  UIButton *callWaiterButton = [[UIButton alloc] init];
-  [callWaiterButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
-  [callWaiterButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
-  [callWaiterButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected];
-  [callWaiterButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected|UIControlStateHighlighted];
-  [callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
-  [callWaiterButton sizeToFit];
+  [self addBottomButtons];
   
-  UIButton *callBillButton = [[UIButton alloc] init];
+  _callWaiterButton = [[OMNToolbarButton alloc] init];
+  [_callWaiterButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
+  [_callWaiterButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
+  
+  NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Отменить\nвызов", nil)];
+  NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+  style.lineSpacing = 0.0f;
+  style.maximumLineHeight = 20.0f;
+  [attrString addAttribute:NSParagraphStyleAttributeName
+                     value:style
+                     range:NSMakeRange(0, attrString.length)];
+  [_callWaiterButton setAttributedTitle:attrString forState:UIControlStateSelected];
+  [_callWaiterButton setAttributedTitle:attrString forState:UIControlStateSelected|UIControlStateHighlighted];
+  
+  [_callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
+  [_callWaiterButton sizeToFit];
+  
+  UIButton *callBillButton = [[OMNToolbarButton alloc] init];
   [callBillButton setImage:[UIImage imageNamed:@"call_bill_icon_small"] forState:UIControlStateNormal];
   [callBillButton setTitle:NSLocalizedString(@"Счет", nil) forState:UIControlStateNormal];
   [callBillButton addTarget:self action:@selector(callBillTap) forControlEvents:UIControlEventTouchUpInside];
   [callBillButton sizeToFit];
-  
-  self.toolbarItems =
+
+  self.bottomToolbar.items =
   @[
-    [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
+    [[UIBarButtonItem alloc] initWithCustomView:_callWaiterButton],
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
     [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
     ];
-  
-//  [self addBottomButtons];
-//  
-//  [self.leftBottomButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
-//  [self.leftBottomButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
-//  [self.leftBottomButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected];
-//  [self.leftBottomButton setTitle:NSLocalizedString(@"Отменить вызов", nil) forState:UIControlStateSelected|UIControlStateHighlighted];
-//  [self.leftBottomButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
-//  
-//  [self.rightBottomButton setImage:[UIImage imageNamed:@"call_bill_icon_small"] forState:UIControlStateNormal];
-//  [self.rightBottomButton setTitle:NSLocalizedString(@"Счет", nil) forState:UIControlStateNormal];
-//  [self.rightBottomButton addTarget:self action:@selector(callBillTap) forControlEvents:UIControlEventTouchUpInside];
   
   UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
   [actionButton addTarget:self action:@selector(showInfoTap) forControlEvents:UIControlEventTouchUpInside];
@@ -119,25 +120,20 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  
   [self.navigationItem setHidesBackButton:YES animated:animated];
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   
-  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-  [UIView animateWithDuration:0.1 animations:^{
-    [self.navigationController setToolbarHidden:NO animated:animated];
-  }];
   [super viewDidAppear:animated];
-  
-
-//  self.bottomViewConstraint.constant = 0.0f;
-//  [UIView animateWithDuration:0.3 animations:^{
-//    [self.view layoutIfNeeded];
-//  }];
+  self.bottomViewConstraint.constant = 0.0f;
+  [UIView animateWithDuration:0.3 animations:^{
+    [self.view layoutIfNeeded];
+  }];
   
 }
 
@@ -147,36 +143,58 @@ OMNRestaurantInfoVCDelegate>
   [self.navigationController pushViewController:restaurantInfoVC animated:YES];
 }
 
+- (void)callWaiterStop {
+  
+  __weak typeof(self)weakSelf = self;
+  [_restaurant waiterCallStopCompletion:^{
+    
+    [weakSelf callWaiterDidStop];
+    
+  } failure:^(NSError *error) {
+    
+    NSLog(@"waiterCallStopError>%@", error);
+    
+  }];
+  
+}
+
+- (void)callWaiterDone {
+  
+  _callWaiterButton.selected = YES;
+  [_callWaiterButton sizeToFit];
+  [self.circleButton setImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"] forState:UIControlStateNormal];
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+- (void)callWaiterDidStop {
+  
+  [self.circleButton setImage:_restaurant.logo forState:UIControlStateNormal];
+  _callWaiterButton.selected = NO;
+  [_callWaiterButton sizeToFit];
+
+}
+
 - (void)callWaiterTap {
   
-  UIImage *logo = _restaurant.logo;
-  
-  if (self.leftBottomButton.selected) {
+  if (_restaurant.waiterCallTableID) {
     
-    [_restaurant waiterCallStopCompletion:^{
-      
-      [self.circleButton setImage:logo forState:UIControlStateNormal];
-      self.leftBottomButton.selected = NO;
-
-    } failure:^(NSError *error) {
-
-      NSLog(@"waiterCallStopError>%@", error);
-      
-    }];
+    [self callWaiterStop];
     return;
+
   }
   
+  UIImage *logo = _restaurant.logo;
+  __weak typeof(self)weakSelf = self;
   OMNSearchBeaconVC *sbVC = [[OMNSearchBeaconVC alloc] initWithParent:self completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     
-    [_restaurant waiterCallForTableID:decodeBeacon.tableId completion:^{
+    [_restaurant waiterCallForTableID:decodeBeacon.table_id completion:^{
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
         [searchBeaconVC finishLoading:^{
           
-          self.leftBottomButton.selected = YES;
-          [self.circleButton setImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"] forState:UIControlStateNormal];
-          [self.navigationController popToViewController:self animated:YES];
+          [weakSelf callWaiterDone];
           
         }];
         
@@ -186,11 +204,15 @@ OMNRestaurantInfoVCDelegate>
       
       NSLog(@"error>%@", error);
       
+    } stop:^{
+      
+      [weakSelf callWaiterDidStop];
+      
     }];
     
   } cancelBlock:^{
     
-    self.leftBottomButton.selected = NO;
+    _callWaiterButton.selected = NO;
     [self.circleButton setImage:logo forState:UIControlStateNormal];
     [self.navigationController popToViewController:self animated:YES];
     
@@ -207,7 +229,7 @@ OMNRestaurantInfoVCDelegate>
   __weak typeof(self)weakSelf = self;
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     
-    [restaurant getOrdersForTableID:decodeBeacon.tableId orders:^(NSArray *orders) {
+    [restaurant getOrdersForTableID:decodeBeacon.table_id orders:^(NSArray *orders) {
       
       [searchBeaconVC finishLoading:^{
         [weakSelf checkPushNotificationForOrders:orders];

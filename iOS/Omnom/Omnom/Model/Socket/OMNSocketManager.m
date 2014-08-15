@@ -11,6 +11,8 @@
 
 NSString * const OMNSocketIODidReceiveCardIdNotification = @"OMNSocketIODidReceiveCardIdNotification";
 NSString * const OMNSocketIODidPayNotification = @"OMNSocketIODidPayNotification";
+NSString * const OMNSocketIOWaiterCallDoneNotification = @"OMNSocketIOWaiterCallDoneNotification";
+NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDoneNotification";
 
 NSString * const kSocketUrl = @"http://omnom.laaaab.com";
 
@@ -47,6 +49,24 @@ NSString * const kSocketUrl = @"http://omnom.laaaab.com";
       [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidPayNotification object:nil userInfo:data];
     });
     NSLog(@"payment response %@, %@", data, [data class]);
+    
+  }];
+  
+  [_socket on:@"waiter_call_done" listener:^(id data) {
+    
+    NSLog(@"waiter_call_done response %@, %@", data, [data class]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOWaiterCallDoneNotification object:nil userInfo:data];
+    });
+    
+  }];
+  
+  [_socket on:@"bill_call_done" listener:^(id data) {
+    
+    NSLog(@"bill_call_done response %@, %@", data, [data class]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOBillCallDoneNotification object:nil userInfo:data];
+    });
     
   }];
   

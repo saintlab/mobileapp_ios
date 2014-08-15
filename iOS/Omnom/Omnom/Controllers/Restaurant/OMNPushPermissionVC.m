@@ -9,6 +9,7 @@
 #import "OMNPushPermissionVC.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNAuthorisation.h"
+#import "OMNToolbarButton.h"
 
 @interface OMNPushPermissionVC ()
 
@@ -34,11 +35,24 @@
 }
 
 - (void)configureBottomButtons {
-  [self.leftBottomButton setTitle:NSLocalizedString(@"Позже", nil) forState:UIControlStateNormal];
-  [self.leftBottomButton addTarget:self action:@selector(didFinish) forControlEvents:UIControlEventTouchUpInside];
-
-  [self.rightBottomButton setTitle:NSLocalizedString(@"Разрешить", nil) forState:UIControlStateNormal];
-  [self.rightBottomButton addTarget:self action:@selector(requestPermissionTap) forControlEvents:UIControlEventTouchUpInside];
+  
+  UIButton *leftButton = [[OMNToolbarButton alloc] init];
+  [leftButton setTitle:NSLocalizedString(@"Позже", nil) forState:UIControlStateNormal];
+  [leftButton addTarget:self action:@selector(didFinish) forControlEvents:UIControlEventTouchUpInside];
+  [leftButton sizeToFit];
+  
+  UIButton *rightButton = [[OMNToolbarButton alloc] init];
+  [rightButton setTitle:NSLocalizedString(@"Разрешить", nil) forState:UIControlStateNormal];
+  [rightButton addTarget:self action:@selector(requestPermissionTap) forControlEvents:UIControlEventTouchUpInside];
+  [rightButton sizeToFit];
+  
+  self.bottomToolbar.items =
+  @[
+    [[UIBarButtonItem alloc] initWithCustomView:leftButton],
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [[UIBarButtonItem alloc] initWithCustomView:rightButton],
+    ];
+  
 }
 
 - (void)didFinish {

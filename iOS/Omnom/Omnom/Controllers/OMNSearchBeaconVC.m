@@ -77,8 +77,6 @@ OMNScanQRCodeVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [self.navigationController setToolbarHidden:YES animated:animated];
-  
   if (nil == _beaconSearchManager) {
     
     _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
@@ -96,7 +94,7 @@ OMNScanQRCodeVCDelegate>
   
   OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] initWithData:nil];
   decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+1";
-  decodeBeacon.tableId = @"table-1-at-riba-ris";
+  decodeBeacon.table_id = @"table-1-at-riba-ris";
   decodeBeacon.restaurantId = @"riba-ris";
   _didFindBlock(self, decodeBeacon);
   

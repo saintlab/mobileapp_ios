@@ -16,7 +16,7 @@
   self = [super init];
   if (self) {
     _uuid = [data[@"uuid"] description];
-    _tableId = [data[@"table_id"] description];
+    _table_id = [data[@"table_id"] description];
     _restaurantId = [data[@"restaurant_id"] description];
     _foundDate = [NSDate date];
     _restaurantData = data[@"restaurant"];
@@ -29,7 +29,7 @@
   self = [super init];
   if (self) {
     self.uuid = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(uuid))];
-    self.tableId = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(tableId))];
+    self.table_id = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(tableId))];
     self.restaurantId = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(restaurantId))];
     self.foundDate = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(foundDate))];
     _restaurantData = [aDecoder decodeObjectForKey:@"restaurantData"];
@@ -40,7 +40,7 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.uuid forKey:NSStringFromSelector(@selector(uuid))];
-  [aCoder encodeObject:self.tableId forKey:NSStringFromSelector(@selector(tableId))];
+  [aCoder encodeObject:self.table_id forKey:NSStringFromSelector(@selector(tableId))];
   [aCoder encodeObject:self.restaurantId forKey:NSStringFromSelector(@selector(restaurantId))];
   [aCoder encodeObject:self.foundDate forKey:NSStringFromSelector(@selector(foundDate))];
   [aCoder encodeObject:_restaurantData forKey:@"restaurantData"];
@@ -53,7 +53,7 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"table = %@\nrestaurant = %@", _tableId, _restaurantId];
+  return [NSString stringWithFormat:@"table = %@\nrestaurant = %@", _table_id, _restaurantId];
 }
 
 @end
