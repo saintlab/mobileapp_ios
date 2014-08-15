@@ -138,9 +138,11 @@ OMNRestaurantInfoVCDelegate>
 }
 
 - (void)showInfoTap {
-  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] init];
+  
+  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithRestaurant:_restaurant];
   restaurantInfoVC.delegate = self;
   [self.navigationController pushViewController:restaurantInfoVC animated:YES];
+  
 }
 
 - (void)callWaiterStop {

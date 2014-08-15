@@ -27,6 +27,7 @@
   [self setupInterface];
   
   _bankCardsModel = [[OMNBankCardsModel alloc] init];
+  _bankCardsModel.canDeleteCard = YES;
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     

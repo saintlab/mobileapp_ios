@@ -10,11 +10,11 @@
 @class OMNOrder;
 @protocol OMNMailRUPayVCDelegate;
 
-@interface OMNMailRUPayVC : UIViewController
+@interface OMNMailRUPayVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNMailRUPayVCDelegate> delegate;
 
-- (instancetype)initWithOrder:(OMNOrder *)order bankCardInfo:(OMNBankCardInfo *)bankCardInfo;
+- (instancetype)initWithOrder:(OMNOrder *)order;
 
 @end
 

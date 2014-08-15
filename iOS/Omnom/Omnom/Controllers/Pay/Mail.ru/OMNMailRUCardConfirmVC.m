@@ -133,7 +133,9 @@
 - (void)validateTap {
   
   OMNUser *user = [OMNAuthorisation authorisation].user;
-  [[OMNMailRuAcquiring acquiring] cardVerify:1.4 user_login:user.id card_id:_card_id];
+  [[OMNMailRuAcquiring acquiring] cardVerify:1.4 user_login:user.id card_id:_card_id completion:^(id response) {
+    
+  }];
 
 }
 
@@ -143,25 +145,19 @@
   if (_card_id) {
     _validateButton.enabled = YES;
   }
-  NSLog(@"%@", n);
+
 }
 
 - (void)registerCard {
+  [_spinner startAnimating];
   NSDictionary *cardInfo =
   @{
-    @"pan" : @"4111111111111111",
+//    @"pan" : @"4111111111111112",
+    @"pan" : @"6011000000000004",
+//    @"pan" : @"639002000000000003",
     @"exp_date" : @"12.2015",
     @"cvv" : @"123",
-    
-//    @"pan" : @"6011000000000004",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : @"123",
-    
-//    @"pan" : @"639002000000000003",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : @"123",
     };
-  
   
   __weak typeof(self)weakSelf = self;
   OMNUser *user = [OMNAuthorisation authorisation].user;
@@ -177,7 +173,8 @@
   NSLog(@"registerCard>%@", response);
   [_spinner stopAnimating];
   
-  if (response) {
+  NSString *card_id = response[@"card_id"];
+  if (card_id) {
     
   }
   else {

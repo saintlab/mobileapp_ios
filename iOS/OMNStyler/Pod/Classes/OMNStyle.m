@@ -9,8 +9,6 @@
 #import "OMNStyle.h"
 
 static BOOL stringIsEmpty(NSString *s);
-static UIColor *colorWithHexString(NSString *hexString);
-
 
 @implementation OMNStyle {
   NSDictionary *_jsonObject;
@@ -111,7 +109,7 @@ static BOOL stringIsEmpty(NSString *s) {
 	return s == nil || [s length] == 0;
 }
 
-static UIColor *colorWithHexString(NSString *hexString) {
+UIColor *colorWithHexString(NSString *hexString) {
   
 	/*Picky. Crashes by design.*/
 	

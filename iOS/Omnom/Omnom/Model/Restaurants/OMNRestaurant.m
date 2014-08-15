@@ -321,6 +321,21 @@
   
 }
 
+- (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/advertisement", self.id];
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    OMNRestaurantInfo *restaurantInfo = [[OMNRestaurantInfo alloc] initWithJsonData:response];
+    completionBlock(restaurantInfo);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    errorBlock(error);
+    
+  }];
+}
+
 @end
 
 @implementation NSData (omn_restaurants)

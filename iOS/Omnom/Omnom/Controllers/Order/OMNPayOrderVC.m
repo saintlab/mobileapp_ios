@@ -18,7 +18,6 @@
 #import "OMNGPBPayVC.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "OMNAnalitics.h"
-#import "OMNBankCardsVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNRatingVC.h"
 #import <BlocksKit+UIKit.h>
@@ -32,7 +31,6 @@
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
 OMNGPBPayVCDelegate,
-OMNBankCardsVCDelegate,
 OMNRatingVCDelegate,
 UITableViewDelegate,
 OMNAddBankCardVCDelegate,
@@ -173,14 +171,6 @@ OMNMailRUPayVCDelegate>
   
 }
 
-- (void)showMailRuWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
-  
-  OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order bankCardInfo:bankCardInfo];
-  mailRUPayVC.delegate = self;
-  [self.navigationController pushViewController:mailRUPayVC animated:YES];
-  
-}
-
 - (void)showRating {
   
   OMNRatingVC *ratingVC = [[OMNRatingVC alloc] init];
@@ -225,35 +215,12 @@ OMNMailRUPayVCDelegate>
 
 #else
   
-  OMNBankCardsVC *bankCardsVC = [[OMNBankCardsVC alloc] init];
-  bankCardsVC.allowSaveCard = YES;
-  bankCardsVC.delegate = self;
-  [self.navigationController pushViewController:bankCardsVC animated:YES];
+  OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
+  mailRUPayVC.delegate = self;
+  [self.navigationController pushViewController:mailRUPayVC animated:YES];
 
 #endif
   
-  
-}
-
-#pragma mark - OMNBankCardsVCDelegate
-
-- (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didSelectCard:(OMNBankCard *)bankCard {
-  
-  OMNBankCardInfo *bankCardInfo = [[OMNBankCardInfo alloc] init];
-  bankCardInfo.card_id = bankCard.external_card_id;
-  [self showMailRuWithCardInfo:bankCardInfo];
-  
-}
-
-- (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didCreateCard:(OMNBankCardInfo *)bankCardInfo {
-
-  [self showMailRuWithCardInfo:bankCardInfo];
-  
-}
-
-- (void)bankCardsVCDidCancel:(OMNBankCardsVC *)bankCardsVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 

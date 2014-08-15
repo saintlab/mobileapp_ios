@@ -7,6 +7,8 @@
 //
 
 #import "OMNBankCard.h"
+#import "OMNBankCardInfo.h"
+#import <OMNMailRuPaymentInfo.h>
 
 typedef void(^OMNSelectCardBlock)(OMNBankCard *bankCard);
 
@@ -15,8 +17,11 @@ typedef void(^OMNSelectCardBlock)(OMNBankCard *bankCard);
 UITableViewDelegate>
 
 @property (nonatomic, copy) OMNSelectCardBlock didSelectCardBlock;
+@property (nonatomic, assign) BOOL canDeleteCard;
+@property (nonatomic, strong) OMNBankCardInfo *customCard;
+@property (nonatomic, strong, readonly) id selectedCard;
+@property (nonatomic, strong, readonly) OMNMailRuPaymentInfo *selectedCardPaymentInfo;
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;
-//- (void)addBankCard:(OMNBankCard *)bankCard;
 
 @end

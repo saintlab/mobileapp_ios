@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+UIColor *colorWithHexString(NSString *hexString);
+
 @interface OMNStyle : NSObject
 
 - (instancetype)initWithJsonData:(NSData *)data;

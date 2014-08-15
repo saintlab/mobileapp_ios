@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNRestaurant.h"
 
 @protocol OMNRestaurantInfoVCDelegate;
 
 @interface OMNRestaurantInfoVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNRestaurantInfoVCDelegate> delegate;
+
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
 
 @end
 

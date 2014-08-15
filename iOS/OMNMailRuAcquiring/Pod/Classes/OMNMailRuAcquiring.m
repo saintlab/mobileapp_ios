@@ -158,7 +158,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
 }
 
-- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id {
+- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(void(^)(id response))completion {
   
   NSDictionary *reqiredSignatureParams =
   @{
@@ -175,37 +175,21 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   [self POST:@"card/verify" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"%@", responseObject);
+    NSLog(@"card/verify>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"card/verify>%@", responseObject);
     
-    if (responseObject[@"url"]) {
-      
-      [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"%@", responseObject);
-        
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        NSLog(@"%@", error);
-        
-      }];
-      
-    }
+    completion(responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"%@", error);
+    NSLog(@"card/verify>%@", error);
+    completion(nil);
     
   }];
   
 }
 
 - (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock {
-
-//  NSString *order_id = @"1234";
-//  NSString *user_phone = @"89833087336";
-//  NSString *order_amount = @"526.07";
-//  NSString *order_message = @"message1";
   
   NSString *extratext = paymentInfo.extra.extra_text;
   if (0 == extratext.length) {
@@ -233,15 +217,19 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   [parameters addEntriesFromDictionary:card_info];
 
   parameters[@"cardholder"] = kOMNMailRu_cardholder;
-  if (paymentInfo.cardInfo.add_card) {
-    parameters[@"add_card"] = @(1);
-  }
   parameters[@"user_phone"] = paymentInfo.user_phone;
+  parameters[@"add_card"] = @(1);
   
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"order/pay>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"order/pay>%@", responseObject);
+    NSLog(@"order/payHTTPBody>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"order/payresponse>%@", responseObject);
+    
+    [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      NSLog(@"%@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      NSLog(@"%@", operation.responseString);
+    }];
     
     completionBlock(responseObject);
     

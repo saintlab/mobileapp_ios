@@ -8,8 +8,10 @@
 
 #import "OMNMenu.h"
 #import "OMNOrder.h"
+#import "OMNRestaurantInfo.h"
 
 typedef void(^GRestaurantsBlock)(NSArray *restaurants);
+typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 typedef void(^GMenuBlock)(OMNMenu *menu);
 typedef void(^OMNImageBlock)(UIImage *image);
 
@@ -45,6 +47,8 @@ typedef void(^OMNImageBlock)(UIImage *image);
 - (void)getOrdersForTableID:(NSString *)tableID orders:(OMNOrdersBlock)orders error:(void(^)(NSError *error))errorBlock;
 
 - (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block error:(void(^)(NSError *error))errorBlock;
+
+- (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock;
 
 - (void)loadLogo:(OMNImageBlock)imageBlock;
 - (void)loadBackground:(OMNImageBlock)imageBlock;

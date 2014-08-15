@@ -25,7 +25,7 @@
     self.confirmed_by = jsonData[@"confirmed_by"];
     self.created_at = jsonData[@"created_at"];
     self.external_card_id = jsonData[@"external_card_id"];
-    self.id = jsonData[@"id"];
+    self.id = [jsonData[@"id"] description];
     self.masked_pan = jsonData[@"masked_pan"];
     self.status = jsonData[@"status"];
     self.updated_at = jsonData[@"updated_at"];

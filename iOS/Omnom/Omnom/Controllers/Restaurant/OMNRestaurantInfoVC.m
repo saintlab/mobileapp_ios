@@ -14,11 +14,31 @@
 
 @implementation OMNRestaurantInfoVC {
   OMNRestaurantInfo *_restaurantInfo;
+  OMNRestaurant *_restaurant;
   UIImageView *_arrowView;
+}
+
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
+  self = [super init];
+  if (self) {
+    _restaurant = restaurant;
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  __weak typeof(self)weakSelf = self;
+  [_restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
+    
+    [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
+    
+  } error:^(NSError *error) {
+    
+    
+    
+  }];
   
   _arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"show_button_icon"]];
   
@@ -31,15 +51,15 @@
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
 
   [self.navigationItem setHidesBackButton:YES animated:NO];
-  
-  
   [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"InfoCell"];
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"DefaultCell"];
   [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
   
-  id info = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"restaurantInfo" ofType:@"json"]] options:0 error:nil];
-  _restaurantInfo = [[OMNRestaurantInfo alloc] initWithJsonData:info];
-  
+}
+
+- (void)didFinishLoadingRestaurantInfo:(OMNRestaurantInfo *)restaurantInfo {
+  _restaurantInfo = restaurantInfo;
+  [self.tableView reloadData];
 }
 
 - (void)userProfileTap {
