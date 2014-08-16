@@ -18,8 +18,7 @@ UITableViewDelegate>
 
 @property (nonatomic, copy) OMNSelectCardBlock didSelectCardBlock;
 @property (nonatomic, assign) BOOL canDeleteCard;
-@property (nonatomic, strong) OMNBankCardInfo *customCard;
-@property (nonatomic, strong, readonly) id selectedCard;
+//@property (nonatomic, strong, readonly) OMNBankCard *selectedCard;
 @property (nonatomic, strong, readonly) OMNMailRuPaymentInfo *selectedCardPaymentInfo;
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;

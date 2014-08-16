@@ -52,7 +52,6 @@
 - (NSArray *)moneyItems {
   
   OMNUserInfoItem *cardItem = [[OMNBankCardUserInfoItem alloc] init];
-  
   OMNUserInfoItem *promoItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Промо-коды", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
     
   }];

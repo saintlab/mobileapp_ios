@@ -59,6 +59,7 @@
 - (CLLocationManager *)rangingLocationManager {
   if (nil == _rangingLocationManager) {
     _rangingLocationManager = [[CLLocationManager alloc] init];
+    _rangingLocationManager.pausesLocationUpdatesAutomatically = NO;
     _rangingLocationManager.delegate = self;
 //#pragma clang diagnostic push
 //#pragma clang diagnostic ignored "-Wundeclared-selector"

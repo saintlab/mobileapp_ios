@@ -153,11 +153,15 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     if (decodeBeacon) {
       
       [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.table_id completion:^{
+        completion();
       } failure:^(NSError *error) {
+        completion();
       }];
       [weakSelf showLocalPushWithBeacon:decodeBeacon];
     }
-    completion();
+    else {
+      completion();
+    }
     
   } failure:^(NSError *error) {
     
@@ -191,9 +195,14 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     localNotification.alertBody = decodeBeacon.restaurantId;
     localNotification.alertAction = NSLocalizedString(@"Запустить", nil);
     localNotification.soundName = kPushSoundName;
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     if ([localNotification respondsToSelector:@selector(category)]) {
       [localNotification performSelector:@selector(setCategory:) withObject:@"incomingCall"];
     }
+#pragma clang diagnostic pop
+
     localNotification.userInfo =
     @{
       OMNDecodeBeaconManagerNotificationLaunchKey : [NSKeyedArchiver archivedDataWithRootObject:decodeBeacon],

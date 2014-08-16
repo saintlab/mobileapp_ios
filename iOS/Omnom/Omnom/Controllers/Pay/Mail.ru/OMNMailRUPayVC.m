@@ -15,14 +15,16 @@
 #import "OMNCardBrandView.h"
 #import "OMNAddBankCardVC.h"
 #import <OMNStyler.h>
+#import "OMNMailRUCardConfirmVC.h"
 
 @interface OMNMailRUPayVC()
-<OMNAddBankCardVCDelegate>
+<OMNAddBankCardVCDelegate,
+OMNMailRUCardConfirmVCDelegate>
 
 @end
 
 @implementation OMNMailRUPayVC {
-  UIView *_bankCardDescriptionView;
+
   UILabel *_errorLabel;
   
   UILabel *_offerLabel;
@@ -62,13 +64,14 @@
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
   
-  _errorLabel.text = @"dsa\n\n\n\nasd";
-  _offerLabel.text = NSLocalizedString(@"Оплата счета и чаевых будет произведена двумя транзакциями, по причине ...", nil);
+  _errorLabel.text = nil;
+  _offerLabel.text = nil;
   _offerLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   
-  [_offer1Button setTitle:NSLocalizedString(@"Ссылка N1 на оферту", nil) forState:UIControlStateNormal];
+  [_offer1Button setTitle:NSLocalizedString(@"Оферта на оплату счета", nil) forState:UIControlStateNormal];
   _offer1Button.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   [_offer1Button setTitleColor:colorWithHexString(@"4A90E2") forState:UIControlStateNormal];
+  [_offer1Button setTitleColor:[colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
   [_offer1Button sizeToFit];
   
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
@@ -173,8 +176,8 @@
   _contentView.translatesAutoresizingMaskIntoConstraints = NO;
   [tableFooterView addSubview:_contentView];
   
-  _bankCardDescriptionView = [[OMNCardBrandView alloc] init];
-  [_contentView addSubview:_bankCardDescriptionView];
+  UIView *bankCardDescriptionView = [[OMNCardBrandView alloc] init];
+  [_contentView addSubview:bankCardDescriptionView];
   
   _errorLabel = [[UILabel alloc] init];
   _errorLabel.numberOfLines = 0;
@@ -206,7 +209,7 @@
   @{
     @"tableFooterView" : tableFooterView,
     @"contentView" : _contentView,
-    @"bankCardDescriptionView" : _bankCardDescriptionView,
+    @"bankCardDescriptionView" : bankCardDescriptionView,
     @"errorLabel" : _errorLabel,
     @"offerLabel" : _offerLabel,
     @"offer1Button" : _offer1Button,
@@ -238,9 +241,9 @@
 
 - (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCardInfo *)bankCardInfo {
   
-  _bankCardsModel.customCard = bankCardInfo;
-  [self.tableView reloadData];
-  [self.navigationController popToViewController:self animated:YES];
+  OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
+  mailRUCardConfirmVC.delegate = self;
+  [self.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
   
 }
 
@@ -249,5 +252,14 @@
   [self.navigationController popToViewController:self animated:YES];
   
 }
+
+#pragma mark - OMNMailRUCardConfirmVCDelegate
+
+- (void)mailRUCardConfirmVCDidFinish:(OMNMailRUCardConfirmVC *)mailRUCardConfirmVC {
+
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
 
 @end

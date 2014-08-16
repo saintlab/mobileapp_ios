@@ -10,9 +10,11 @@
 #import "OMNBankCardsModel.h"
 #import "OMNAddBankCardVC.h"
 #import "OMNConstants.h"
+#import "OMNMailRUCardConfirmVC.h"
 
 @interface OMNBankCardsVC ()
-<OMNAddBankCardVCDelegate>
+<OMNAddBankCardVCDelegate,
+OMNMailRUCardConfirmVCDelegate>
 
 @end
 
@@ -73,7 +75,9 @@
 
 - (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCardInfo *)bankCardInfo {
 
-  [self.delegate bankCardsVC:self didCreateCard:bankCardInfo];
+  OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
+  mailRUCardConfirmVC.delegate = self;
+  [self.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
   
 }
 
@@ -83,10 +87,12 @@
   
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
+#pragma mark - OMNMailRUCardConfirmVCDelegate
+
+- (void)mailRUCardConfirmVCDidFinish:(OMNMailRUCardConfirmVC *)mailRUCardConfirmVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
 }
-
-
 
 @end

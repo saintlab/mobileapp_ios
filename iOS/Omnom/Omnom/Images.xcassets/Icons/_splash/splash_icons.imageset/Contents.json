@@ -1,16 +1,21 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "cross-small-new.png"
+      "filename" : "without-cross-small.png"
+    },
+    {
+      "idiom" : "universal",
+      "unassigned" : true
+    },
+    {
+      "idiom" : "universal",
+      "unassigned" : true
     }
   ],
   "info" : {

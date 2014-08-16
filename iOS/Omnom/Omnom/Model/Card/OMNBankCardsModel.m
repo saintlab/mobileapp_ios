@@ -10,6 +10,7 @@
 #import "OMNConstants.h"
 #import <SSKeychain.h>
 #import <OMNAuthorisation.h>
+#import <OMNStyler.h>
 
 @interface OMNBankCardsModel ()
 
@@ -20,7 +21,7 @@
 @implementation OMNBankCardsModel {
   NSMutableArray *_cards;
   NSIndexPath *_selectedIndexPath;
-  
+  OMNBankCard *_selectedCard;
 }
 
 @dynamic card_id;
@@ -40,30 +41,19 @@
   [SSKeychain setPassword:card_id forService:@"card_id" account:@"mail.ru"];
 }
 
-- (void)setCustomCard:(OMNBankCardInfo *)customCard {
-  _customCard = customCard;
-  _selectedCard = customCard;
-}
-
 - (OMNMailRuPaymentInfo *)selectedCardPaymentInfo {
   OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
   
-  if ([self.selectedCard isEqual:self.customCard]) {
+  paymentInfo.cardInfo.card_id = _selectedCard.external_card_id;
 #warning paymentInfo.cardInfo.pan = @"6011000000000004"
+//  if ([self.selectedCard isEqual:self.customCard]) {
 //    paymentInfo.cardInfo.pan = @"4111111111111112";
 //    paymentInfo.cardInfo.pan = @"6011000000000004";
-    paymentInfo.cardInfo.pan = @"639002000000000003",
-    paymentInfo.cardInfo.exp_date = @"12.2015";
-    paymentInfo.cardInfo.cvv = @"123";
-    
-  }
-  else {
+//    paymentInfo.cardInfo.pan = @"639002000000000003",
+//    paymentInfo.cardInfo.exp_date = @"12.2015";
+//    paymentInfo.cardInfo.cvv = @"123";
+//  }
 
-    OMNBankCard *bankCard = self.selectedCard;
-    paymentInfo.cardInfo.card_id = bankCard.external_card_id;
-    
-  }
-  
   paymentInfo.user_phone = [OMNAuthorisation authorisation].user.phone;
   paymentInfo.user_login = [OMNAuthorisation authorisation].user.id;
   paymentInfo.order_message = @"message";
@@ -92,17 +82,14 @@
   
   _cards = [cards mutableCopy];
   
-  if ([_selectedCard isEqual:self.customCard]) {
-    //do nothing
-  }
-  else if (nil == self.card_id) {
+  if (nil == self.card_id) {
     
     [self setNewSelectedCard];
     
   }
   else {
 
-    __block id selectedCard = nil;
+    __block OMNBankCard *selectedCard = nil;
     [_cards enumerateObjectsUsingBlock:^(OMNBankCard *bankCard, NSUInteger idx, BOOL *stop) {
       if ([bankCard.id isEqualToString:self.card_id]) {
         selectedCard = bankCard;
@@ -135,7 +122,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 2;
+  return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -144,9 +131,6 @@
   switch (section) {
     case 0: {
       numberOfRows = _cards.count;
-    } break;
-    case 1: {
-      numberOfRows = (_customCard != nil) ? (1) : (0);
     } break;
   }
   
@@ -159,48 +143,38 @@
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   
   if (nil == cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellIdentifier];
-    cell.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 
     cell.textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
     cell.textLabel.textColor = [UIColor blackColor];
 
-    cell.detailTextLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];;
-    cell.detailTextLabel.textColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
   }
 
-  switch (indexPath.section) {
-    case 0: {
-      
-      OMNBankCard *card = _cards[indexPath.row];
-      cell.textLabel.text = card.masked_pan;
-      cell.detailTextLabel.text = card.association;
-      
-      if ([card isEqual:_selectedCard]) {
-        _selectedIndexPath = indexPath;
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-      }
-      else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-      }
+  
+  OMNBankCard *card = _cards[indexPath.row];
+  
+  
 
-    } break;
-    case 1: {
-      
-      if ([_customCard isEqual:_selectedCard]) {
-        _selectedIndexPath = indexPath;
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-      }
-      else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-      }
-      
-      cell.textLabel.text = _customCard.pan;
-      cell.detailTextLabel.text = @"";
+  UIColor *masked_panColor = nil;
+  UIColor *associationColor = nil;
 
-    } break;
+  if ([card isEqual:_selectedCard]) {
+    _selectedIndexPath = indexPath;
+    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_card_icon_blue"]];
+    masked_panColor = colorWithHexString(@"4A90E2");
+    associationColor = [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f];
+  }
+  else {
+    masked_panColor = [UIColor blackColor];
+    associationColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+    cell.accessoryView = nil;
   }
   
+  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", card.masked_pan, card.association]];
+  [attributedString setAttributes:@{NSForegroundColorAttributeName : masked_panColor} range:[attributedString.string rangeOfString:card.masked_pan]];
+  [attributedString setAttributes:@{NSForegroundColorAttributeName : associationColor} range:[attributedString.string rangeOfString:card.association]];
+  cell.textLabel.attributedText = attributedString;
+
   return cell;
   
 }
@@ -227,7 +201,7 @@
 
   } failure:^(NSError *error) {
   
-    NSLog(@"%@", error);
+    NSLog(@"deleteWithCompletion>%@", error);
     
   }];
   
@@ -244,14 +218,8 @@
     [indexPaths addObject:_selectedIndexPath];
   }
 
-  if (0 == indexPath.section) {
-    OMNBankCard *bankCard = _cards[indexPath.row];
-    _selectedCard = bankCard;
-    self.card_id = bankCard.id;
-  }
-  else if(1 == indexPath.section) {
-    _selectedCard = _customCard;
-  }
+  _selectedCard = _cards[indexPath.row];
+  self.card_id = _selectedCard.id;
   
   [tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
   _selectedIndexPath = indexPath;

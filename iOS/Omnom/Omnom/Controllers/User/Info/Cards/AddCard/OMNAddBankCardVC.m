@@ -11,6 +11,7 @@
 #import "OMNConstants.h"
 #import <OMNCardEnterControl.h>
 #import "OMNAuthorisation.h"
+#import "OMNCardBrandView.h"
 
 @interface OMNAddBankCardVC ()
 <CardIOPaymentViewControllerDelegate,
@@ -33,6 +34,8 @@ OMNCardEnterControlDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+  
   self.view.backgroundColor = [UIColor whiteColor];  
   [self setup];
 }
@@ -44,6 +47,9 @@ OMNCardEnterControlDelegate>
   [_cardEnterControl setSaveButtonHidden:!self.allowSaveCard];
   _cardEnterControl.delegate = self;
   [self.view addSubview:_cardEnterControl];
+  
+  UIView *bankCardDescriptionView = [[OMNCardBrandView alloc] init];
+  [self.view addSubview:bankCardDescriptionView];
   
   _addCardButton = [[UIButton alloc] init];
   _addCardButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -59,17 +65,17 @@ OMNCardEnterControlDelegate>
     @"cardEnterControl" : _cardEnterControl,
     @"topLayoutGuide" : self.topLayoutGuide,
     @"addCardButton" : _addCardButton,
+    @"bankCardDescriptionView" : bankCardDescriptionView,
     };
   
-  NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardEnterControl]-|" options:0 metrics:nil views:views];
-  [self.view addConstraints:panH];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardEnterControl]-|" options:0 metrics:nil views:views]];
   
-  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-[addCardButton]" options:0 metrics:nil views:views];
-  [self.view addConstraints:panV];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[bankCardDescriptionView]" options:0 metrics:nil views:views]];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-[bankCardDescriptionView]-[addCardButton]" options:0 metrics:nil views:views]];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[addCardButton]|" options:0 metrics:0 views:views]];
-  
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+
 }
 
 #pragma mark - OMNCardEnterControlDelegate

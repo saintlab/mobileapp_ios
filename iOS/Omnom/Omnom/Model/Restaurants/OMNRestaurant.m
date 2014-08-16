@@ -201,11 +201,13 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/new/guest", self.id, tableID];
   
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
-    
+
+    NSLog(@"newGuestForTableID>done");
     completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    NSLog(@"newGuestForTableID>%@", error);
     failureBlock(error);
     
   }];

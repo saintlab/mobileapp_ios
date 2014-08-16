@@ -93,6 +93,8 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
   if (nil == _locationManager) {
     _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.activityType = CLActivityTypeOther;
+    _locationManager.pausesLocationUpdatesAutomatically = NO;
     _locationManager.delegate = self;
   }
   
@@ -161,6 +163,8 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 }
 
 - (void)stopBeaconRegionMonitoring {
+  
+  NSLog(@"stopBeaconRegionMonitoring");
   
   if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
     _monitoring = NO;

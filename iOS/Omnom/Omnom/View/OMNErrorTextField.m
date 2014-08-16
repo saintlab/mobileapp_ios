@@ -61,17 +61,13 @@
     @"errorLabel" : _errorLabel,
     };
   
-  NSArray *h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|" options:0 metrics:nil views:views];
-  [self addConstraints:h];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|" options:0 metrics:nil views:views]];
   
-  h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorView]|" options:0 metrics:nil views:views];
-  [self addConstraints:h];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorView]|" options:0 metrics:nil views:views]];
   
-  h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[errorLabel]|" options:0 metrics:nil views:views];
-  [self addConstraints:h];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[errorLabel]|" options:0 metrics:nil views:views]];
   
-  NSArray *v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(45)][colorView(1)]-[errorLabel]|" options:0 metrics:nil views:views];
-  [self addConstraints:v];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(45)][colorView(1)]-[errorLabel]|" options:0 metrics:nil views:views]];
   
   [self updateColorView];
   
@@ -117,14 +113,5 @@
   }
   
 }
-
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect
- {
- // Drawing code
- }
- */
 
 @end

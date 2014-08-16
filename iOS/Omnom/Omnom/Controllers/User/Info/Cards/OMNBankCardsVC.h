@@ -21,9 +21,6 @@
 @protocol OMNBankCardsVCDelegate <NSObject>
 
 - (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didSelectCard:(OMNBankCard *)bankCard;
-
-- (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didCreateCard:(OMNBankCardInfo *)bankCardInfo;
-
 - (void)bankCardsVCDidCancel:(OMNBankCardsVC *)bankCardsVC;
 
 @end

@@ -8,11 +8,9 @@
 
 #import "OMNBankCardUserInfoItem.h"
 #import "OMNBankCardsVC.h"
-#import "OMNMailRUCardConfirmVC.h"
 
 @interface OMNBankCardUserInfoItem ()
-<OMNBankCardsVCDelegate,
-OMNMailRUCardConfirmVCDelegate>
+<OMNBankCardsVCDelegate>
 
 @property (nonatomic, weak) UIViewController *rootViewController;
 
@@ -41,27 +39,11 @@ OMNMailRUCardConfirmVCDelegate>
 
 #pragma mark - OMNBankCardsVCDelegate
 
-- (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didCreateCard:(OMNBankCardInfo *)bankCardInfo {
-  
-  OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
-  mailRUCardConfirmVC.delegate = self;
-  [bankCardsVC.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
-  
-}
-
 - (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didSelectCard:(OMNBankCard *)bankCard {
   
 }
 
 - (void)bankCardsVCDidCancel:(OMNBankCardsVC *)bankCardsVC {
-  
-  [self.rootViewController.navigationController popToViewController:self.rootViewController animated:YES];
-  
-}
-
-#pragma mark - OMNMailRUCardConfirmVCDelegate
-
-- (void)mailRUCardConfirmVCDidFinish:(OMNMailRUCardConfirmVC *)mailRUCardConfirmVC {
   
   [self.rootViewController.navigationController popToViewController:self.rootViewController animated:YES];
   

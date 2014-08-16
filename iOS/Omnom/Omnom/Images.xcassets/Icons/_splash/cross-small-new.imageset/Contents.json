@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "cancel_editing_button.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "cancel_editing_button@2x.png"
+      "filename" : "cross-small-new.png"
+    },
+    {
+      "idiom" : "universal",
+      "unassigned" : true
     }
   ],
   "info" : {

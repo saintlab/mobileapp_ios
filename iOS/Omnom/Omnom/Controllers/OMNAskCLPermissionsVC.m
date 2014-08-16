@@ -46,6 +46,7 @@
   [self.circleButton setImage:[UIImage imageNamed:@"allow_geolocation_icon_big"] forState:UIControlStateNormal];
   
   _permissionLocationManager = [[CLLocationManager alloc] init];
+  _permissionLocationManager.pausesLocationUpdatesAutomatically = NO;
   [self addActionsBoard];
   
 }

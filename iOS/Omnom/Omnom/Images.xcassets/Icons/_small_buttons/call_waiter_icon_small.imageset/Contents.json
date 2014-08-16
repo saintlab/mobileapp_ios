@@ -1,17 +1,18 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "cross_icon_white.png"
+      "filename" : "call_waiter_icon_small.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "cross_icon_white@2x.png"
+      "filename" : "call_waiter_icon_small@2x.png"
+    },
+    {
+      "idiom" : "universal",
+      "unassigned" : true
     }
   ],
   "info" : {

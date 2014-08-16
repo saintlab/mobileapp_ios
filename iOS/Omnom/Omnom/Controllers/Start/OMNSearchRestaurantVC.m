@@ -85,9 +85,7 @@
   
   if (nil == self.decodeBeacon) {
     [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.table_id completion:^{
-      NSLog(@"newGuestForTableID>done");
     } failure:^(NSError *error) {
-      NSLog(@"newGuestForTableID>%@", error);
     }];
   }
   
