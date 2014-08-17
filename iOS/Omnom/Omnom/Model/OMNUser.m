@@ -167,6 +167,26 @@
   
 }
 
++ (void)recoverUsingData:(NSString *)data completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
+  
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
+  if ([data omn_isValidPhone]) {
+    parameters[@"phone"] = data;
+  }
+  
+  [[OMNAuthorizationManager sharedManager] POST:@"recover" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"%@", responseObject);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    NSLog(@"%@", operation.responseString);
+    failureBlock(error);
+    
+  }];
+  
+}
+
 + (void)loginWithParameters:(NSDictionary *)parameters completion:(OMNTokenBlock)completion failure:(void (^)(NSError *error))failureBlock {
   
   [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

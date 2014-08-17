@@ -285,6 +285,16 @@
   
 }
 
+- (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC {
+  
+  [_user registerWithCompletion:^{
+    
+  } failure:^(NSError *error) {
+    
+  }];
+  
+}
+
 - (void)didRegisterWithToken:(NSString *)token {
   
   [OMNUser userWithToken:token user:^(OMNUser *user) {

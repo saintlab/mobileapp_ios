@@ -90,26 +90,11 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
  */
 - (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response))completion {
   
-  NSDictionary *extra =
-  @{
-    @"tip" : @(12332),
-    };
-  
-  NSError *error = nil;
-  NSData *extraJSONData = [NSJSONSerialization dataWithJSONObject:extra options:0 error:&error];
-  if (error) {
-    NSLog(@"%@", error);
-    return;
-  }
-  
-  NSString *extratext = [[NSString alloc] initWithData:extraJSONData encoding:NSUTF8StringEncoding];
-  
   NSDictionary *reqiredSignatureParams =
   @{
     @"merch_id" : kOMNMailRu_merch_id,
     @"vterm_id" : kOMNMailRu_vterm_id,
     @"user_login" : user_login,
-    @"extra" : extratext,
     };
   
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
@@ -129,16 +114,6 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
       if (completion) {
         completion(responseObject);
       }
-
-      [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"%@", responseObject);
-        
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        NSLog(@"%@", error);
-        
-      }];
       
     }
     else {

@@ -111,18 +111,27 @@
 - (void)loginTap {
 
   __weak typeof(self)weakSelf = self;
+  [self requestAuthorisationCodeCompletion:^{
+    [weakSelf requestAuthorizationCode];
+  }];
+  
+}
+
+- (void)requestAuthorisationCodeCompletion:(dispatch_block_t)completionBlock {
+  
+  __weak typeof(self)weakSelf = self;
   [OMNUser loginUsingData:_loginTF.textField.text code:nil completion:^(NSString *token) {
     
-    [weakSelf requestAuthorizationCode];
+    if (completionBlock) {
+      completionBlock();
+    }
     
   } failure:^(NSError *error) {
     
     [weakSelf processLoginError:error];
     
   }];
-  
 }
-
 
 - (void)processLoginError:(NSError *)error {
   
@@ -133,6 +142,7 @@
 - (void)requestAuthorizationCode {
   
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:self.decimalPhoneNumber];
+  confirmCodeVC.allowChangePhoneNumber = YES;
   confirmCodeVC.delegate = self;
   [self.navigationController pushViewController:confirmCodeVC animated:YES];
   
@@ -154,6 +164,12 @@
     NSLog(@"%@", error);
     
   }];
+  
+}
+
+- (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC {
+  
+  [self requestAuthorisationCodeCompletion:nil];
   
 }
 

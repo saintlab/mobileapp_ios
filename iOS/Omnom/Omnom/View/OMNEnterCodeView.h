@@ -11,5 +11,6 @@
 @interface OMNEnterCodeView : UIControl
 
 @property (nonatomic, copy) NSString *code;
+@property (nonatomic, strong, readonly) UITextField *textField;
 
 @end

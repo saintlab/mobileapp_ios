@@ -11,6 +11,7 @@
 @interface OMNConfirmCodeVC : UIViewController
 
 @property (nonatomic, weak) id<OMNConfirmCodeVCDelegate> delegate;
+@property (nonatomic, assign) BOOL allowChangePhoneNumber;
 
 - (instancetype)initWithPhone:(NSString *)phone;
 
@@ -22,5 +23,6 @@
 @protocol OMNConfirmCodeVCDelegate <NSObject>
 
 - (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code;
+- (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC;
 
 @end

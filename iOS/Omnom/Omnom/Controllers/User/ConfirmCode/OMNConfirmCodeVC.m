@@ -52,6 +52,19 @@
   _codeView = [[OMNEnterCodeView alloc] init];
   [_codeView addTarget:self action:@selector(didEnterCode) forControlEvents:UIControlEventEditingDidEnd];
   [self.view addSubview:_codeView];
+
+  UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), 44.0f)];
+  toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  
+  NSMutableArray *items = [NSMutableArray arrayWithObject:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить код", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resentTap)]];
+  if (self.allowChangePhoneNumber) {
+    [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+    [items addObject:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить номер", nil) style:UIBarButtonItemStylePlain target:self action:@selector(changeNumberTap)]];
+  }
+  
+  toolBar.items = items;
+  _codeView.textField.inputAccessoryView = toolBar;
+
   
   NSDictionary *views =
   @{
@@ -71,8 +84,26 @@
   [_codeView becomeFirstResponder];
 }
 
+- (void)resentTap {
+  
+  [self.delegate confirmCodeVCRequestResendCode:self];
+  
+}
+
+- (void)changeNumberTap {
+  
+  [OMNUser recoverUsingData:_phone completion:^(NSString *token) {
+    
+  } failure:^(NSError *error) {
+    
+  }];
+  
+}
+
 - (void)didEnterCode {
+  
   [self.delegate confirmCodeVC:self didEnterCode:[_codeView.code copy]];
+  
 }
 
 - (void)resetAnimated:(BOOL)animated {

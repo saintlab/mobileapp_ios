@@ -19,7 +19,6 @@
 
 @implementation OMNEnterCodeView {
   NSArray *_labels;
-  UITextField *_textField;
 }
 
 - (instancetype)init {
