@@ -13,10 +13,12 @@
 
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) double price;
+@property (nonatomic, assign) long long price_total;
+@property (nonatomic, assign) NSInteger quantity;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, strong) UIImage *icon;
 
-- (instancetype)initWithData:(id)data;
+- (instancetype)initWithJsonData:(id)data;
 
 - (void)changeSelection;
 

@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-NSString * const kBaseUrlString = @"http://omnom.laaaab.com";
+NSString * const kBaseUrlString = @"http://omnom.stand.saintlab.com";
+//NSString * const kBaseUrlString = @"http://omnom.laaaab.com";
+
 NSString * const kAuthorizationUrlString = @"http://wicket.laaaab.com";
 
 NSString * const CardIOAppToken = @"9a0e0afb32e642a09e1fd55093d317f5";

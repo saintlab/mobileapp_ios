@@ -39,7 +39,7 @@
     GMenuBlock menuBlock;
     [invocation getArgument:&menuBlock atIndex:2];
     
-    OMNMenu *menu = [[OMNMenu alloc] initWithData:nil];
+    OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:nil];
     menuBlock(menu);
     
     void(^errorBlock)(NSError *error) = nil;

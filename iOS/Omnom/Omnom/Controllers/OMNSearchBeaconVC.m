@@ -90,19 +90,9 @@ OMNScanQRCodeVCDelegate>
   
 }
 
-- (void)useStubBeacon {
-  
-  OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] initWithData:nil];
-  decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+1";
-  decodeBeacon.table_id = @"table-1-at-riba-ris";
-  decodeBeacon.restaurantId = @"riba-ris";
-  _didFindBlock(self, decodeBeacon);
-  
-}
-
-- (void)decodeBeacon:(OMNBeacon *)beacon {
+- (void)decodeUUID:(NSString *)uuid {
   __weak typeof(self)weakSelf = self;
-  [[OMNDecodeBeaconManager manager] decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
+  [[OMNDecodeBeaconManager manager] decodeBeacons:@[@{@"uuid" : uuid}] success:^(NSArray *decodeBeacons) {
     
     [weakSelf didFindBeacon:[decodeBeacons firstObject]];
     
@@ -166,8 +156,9 @@ OMNScanQRCodeVCDelegate>
 
 - (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
   
+#warning scanQRCodeVC
   [scanQRCodeVC stopScanning];
-  [self useStubBeacon];
+  [self.navigationController popToViewController:self animated:YES];
   
 }
 
@@ -202,9 +193,9 @@ OMNScanQRCodeVCDelegate>
 
 #pragma mark - OMNBeaconSearchManagerDelegate
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon {
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindUUID:(NSString *)uuid {
   
-  [self decodeBeacon:beacon];
+  [self decodeUUID:uuid];
   
 }
 

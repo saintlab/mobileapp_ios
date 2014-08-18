@@ -10,7 +10,7 @@
 
 @implementation OMNMenuItem
 
-- (instancetype)initWithData:(id)data {
+- (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
     self.internalId = data[@"internalId"];

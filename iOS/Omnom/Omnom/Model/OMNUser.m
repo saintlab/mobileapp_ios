@@ -12,7 +12,7 @@
 
 @implementation OMNUser
 
-- (instancetype)initWithData:(id)data {
+- (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
     self.id = [data[@"id"] description];
@@ -213,7 +213,7 @@
     NSLog(@"user>>%@", responseObject);
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
       
-      OMNUser *user = [[OMNUser alloc] initWithData:responseObject[@"user"]];
+      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
       userBlock(user);
       
     }

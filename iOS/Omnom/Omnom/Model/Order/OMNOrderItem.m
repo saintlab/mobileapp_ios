@@ -10,11 +10,13 @@
 
 @implementation OMNOrderItem
 
-- (instancetype)initWithData:(id)data {
+- (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
     self.name = data[@"title"];
-    self.price = [data[@"pricePerItem"] doubleValue];
+    self.price = [data[@"price_per_item"] doubleValue];
+    self.price_total = [data[@"price_per_item"] longLongValue];
+    self.quantity = [data[@"quantity"] integerValue];
   }
   return self;
 }
@@ -26,7 +28,8 @@
   orderItem.price = self.price;
   orderItem.selected = self.selected;
   orderItem.icon = self.icon;
-  
+  orderItem.quantity = self.quantity;
+  orderItem.price_total = self.price_total;
   return orderItem;
 }
 

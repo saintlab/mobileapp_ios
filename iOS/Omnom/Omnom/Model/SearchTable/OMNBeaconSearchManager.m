@@ -66,12 +66,9 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 - (void)startSearching {
 
 #if TARGET_IPHONE_SIMULATOR
-#warning useStubBeacon2
-  OMNBeacon *beacon = [[OMNBeacon alloc] init];
-  beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
-  beacon.major = @(1);
-  beacon.minor = @(1);
-  [self didFindBeacon:beacon];
+#warning A cafe beacon
+  NSString *aCafeUUID = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+A+1";
+  [self didFindUUID:aCafeUUID];
 
 #else
   [self checkNetworkState];
@@ -215,16 +212,17 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   }
   else {
     
-    [self didFindBeacon:[nearestBeacons firstObject]];
+    OMNBeacon *beacon = [nearestBeacons firstObject];
+    [self didFindUUID:beacon.uuid];
     
   }
   
 }
 
-- (void)didFindBeacon:(OMNBeacon *)beacon {
+- (void)didFindUUID:(NSString *)uuid {
   
   [self stopRangingNearestBeacons:YES];
-  [self.delegate beaconSearchManager:self didFindBeacon:beacon];
+  [self.delegate beaconSearchManager:self didFindUUID:uuid];
   
 }
 

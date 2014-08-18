@@ -31,7 +31,7 @@ typedef void(^OMNImageBlock)(UIImage *image);
 
 @property (nonatomic, copy, readonly) NSString *waiterCallTableID;
 
-- (instancetype)initWithData:(id)data;
+- (instancetype)initWithJsonData:(id)jsonData;
 
 + (void)getRestaurantList:(GRestaurantsBlock)restaurantsBlock error:(void(^)(NSError *error))errorBlock;
 

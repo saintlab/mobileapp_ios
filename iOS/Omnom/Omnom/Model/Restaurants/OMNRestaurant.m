@@ -36,20 +36,20 @@
   [self stopWaiterCall];
 }
 
-- (instancetype)initWithData:(id)data {
+- (instancetype)initWithJsonData:(id)jsonData {
   
-  if ([data isKindOfClass:[NSNull class]]) {
+  if ([jsonData isKindOfClass:[NSNull class]]) {
     return nil;
   }
   
   self = [super init];
   if (self) {
-    self.id = data[@"id"];
-    self.title = data[@"title"];
-    self.image = data[@"image"];
-    self.Description = data[@"description"];
+    self.id = jsonData[@"id"];
+    self.title = jsonData[@"title"];
+    self.image = jsonData[@"image"];
+    self.Description = jsonData[@"description"];
     
-    id decoration = data[@"decoration"];
+    id decoration = jsonData[@"decoration"];
     self.logoUrl = decoration[@"logo"];
     self.background_imageUrl = decoration[@"background_image"];
     
@@ -103,7 +103,7 @@
   
   for (id restaurantsObject in restaurantsObjects) {
     
-    OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:restaurantsObject];
+    OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:restaurantsObject];
     [restaurants addObject:restaurant];
     
   }
@@ -119,7 +119,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"menu.data" ofType:nil];
     NSData *data = [NSData dataWithContentsOfFile:path];
     id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    OMNMenu *menu = [[OMNMenu alloc] initWithData:responseObject];
+    OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject];
     menuBlock(menu);
     return;
   }
@@ -127,7 +127,7 @@
   NSString *path = [NSString stringWithFormat:@"restaurants/%@/menu", self.id];
   [[OMNOperationManager manager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    OMNMenu *menu = [[OMNMenu alloc] initWithData:responseObject];
+    OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject];
     menuBlock(menu);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -357,7 +357,7 @@
     
     for (id restaurantsObject in restaurantsObjects) {
       
-      OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithData:restaurantsObject];
+      OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:restaurantsObject];
       [restaurants addObject:restaurant];
       
     }
@@ -377,7 +377,7 @@
   }
   else {
     
-    OMNMenu *menu = [[OMNMenu alloc] initWithData:response];
+    OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:response];
     return menu;
     
   }

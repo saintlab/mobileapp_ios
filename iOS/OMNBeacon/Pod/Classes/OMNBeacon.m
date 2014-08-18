@@ -118,17 +118,9 @@ const NSInteger kNearestDeltaRSSI = 10;
 
 }
 
-- (NSString *)key {
-  return [NSString stringWithFormat:@"%@+%@+%@",self.UUIDString,self.major,self.minor];
-}
-
-- (NSDictionary *)JSONObject {
-  
-  NSString *uid = [NSString stringWithFormat:@"%@+%@+%@", self.UUIDString, self.major, self.minor];
-  return @{
-           @"uuid" : uid,
-           };
-  
+- (NSString *)uuid {
+  NSString *uuid = [NSString stringWithFormat:@"%@+%@+%@", self.UUIDString, self.major, self.minor];
+  return uuid;
 }
 
 - (NSTimeInterval)atTheTableTime {
@@ -157,7 +149,7 @@ const NSInteger kNearestDeltaRSSI = 10;
     [debugString appendFormat:@"%ld,", (long)sessionInfo.proximity];
   }];
   
-  return [NSString stringWithFormat:@"%@, %ld, %d %f, {%@}", self.key, (long)self.rssi, self.atTheTable, self.atTheTableTime, debugString];
+  return [NSString stringWithFormat:@"%@, %ld, %d %f, {%@}", self.uuid, (long)self.rssi, self.atTheTable, self.atTheTableTime, debugString];
 }
 
 @end

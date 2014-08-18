@@ -32,11 +32,6 @@
   // Get a snapshot of the image view
   UIView *imageSnapshot = [fromViewController.tableView snapshotViewAfterScreenUpdates:NO];
   
-  UIGraphicsBeginImageContext(fromViewController.tableView.frame.size);
-  [fromViewController.tableView drawViewHierarchyInRect:fromViewController.tableView.bounds afterScreenUpdates:YES];
-  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
-  
   imageSnapshot.frame = [containerView convertRect:fromViewController.tableView.frame fromView:fromViewController.tableView.superview];
   fromViewController.tableView.hidden = YES;
   

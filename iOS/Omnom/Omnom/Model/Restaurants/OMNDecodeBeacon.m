@@ -12,7 +12,7 @@
   id _restaurantData;
 }
 
-- (instancetype)initWithData:(id)data {
+- (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
     _uuid = [data[@"uuid"] description];
@@ -20,7 +20,7 @@
     _restaurantId = [data[@"restaurant_id"] description];
     _foundDate = [NSDate date];
     _restaurantData = data[@"restaurant"];
-    _restaurant = [[OMNRestaurant alloc] initWithData:_restaurantData];
+    _restaurant = [[OMNRestaurant alloc] initWithJsonData:_restaurantData];
   }
   return self;
 }
@@ -33,7 +33,7 @@
     self.restaurantId = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(restaurantId))];
     self.foundDate = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(foundDate))];
     _restaurantData = [aDecoder decodeObjectForKey:@"restaurantData"];
-    self.restaurant = [[OMNRestaurant alloc] initWithData:_restaurantData];
+    self.restaurant = [[OMNRestaurant alloc] initWithJsonData:_restaurantData];
   }
   return self;
 }

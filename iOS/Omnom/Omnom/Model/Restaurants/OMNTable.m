@@ -10,7 +10,7 @@
 
 @implementation OMNTable
 
-- (instancetype)initWithData:(id)data {
+- (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
     self.restaurantId = data[@"restaurantId"];

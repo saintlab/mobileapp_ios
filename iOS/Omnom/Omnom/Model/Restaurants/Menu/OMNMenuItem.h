@@ -17,6 +17,6 @@
 @property (nonatomic, copy) NSString *parent;
 @property (nonatomic, copy) NSString *image;
 
-- (instancetype)initWithData:(id)data;
+- (instancetype)initWithJsonData:(id)data;
 
 @end

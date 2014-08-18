@@ -29,17 +29,17 @@
     self.Description = jsonData[@"description"];
     self.notes = jsonData[@"notes"];
     self.status = jsonData[@"status"];
-    self.openTime = jsonData[@"openTime"];
-    self.modifiedTime = jsonData[@"modifiedTime"];
-    self.restaurant_id = jsonData[@"restaurantId"];
-    self.tableId = jsonData[@"tableId"];
+    self.openTime = jsonData[@"open_time"];
+    self.modifiedTime = jsonData[@"modified_time"];
+    self.restaurant_id = jsonData[@"restaurant_id"];
+    self.tableId = jsonData[@"table_id"];
     self.paid_amount = [jsonData[@"paid_amount"] longLongValue];
     
     NSArray *itemsData = jsonData[@"items"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsData.count];
     [itemsData enumerateObjectsUsingBlock:^(id itemData, NSUInteger idx, BOOL *stop) {
       
-      [items addObject:[[OMNOrderItem alloc] initWithData:itemData]];
+      [items addObject:[[OMNOrderItem alloc] initWithJsonData:itemData]];
       
     }];
     self.items = items;

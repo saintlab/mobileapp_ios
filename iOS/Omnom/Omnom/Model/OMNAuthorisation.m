@@ -81,11 +81,16 @@ NSString * const kTokenServiceName = @"token";
     
     UIApplication *application = [UIApplication sharedApplication];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
       [application performSelector:@selector(registerForRemoteNotifications) withObject:nil];
 #ifdef __IPHONE_8_0
       [[UIApplication sharedApplication] registerUserNotificationSettings:[self notificationSettings]];
 #endif
+      
+#pragma clang diagnostic pop
     }
     else {
       [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];

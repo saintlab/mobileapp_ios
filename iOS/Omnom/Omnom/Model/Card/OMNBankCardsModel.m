@@ -45,6 +45,7 @@
   OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
   
   paymentInfo.cardInfo.card_id = _selectedCard.external_card_id;
+  paymentInfo.cardInfo.cvv = @"123";
 #warning paymentInfo.cardInfo.pan = @"6011000000000004"
 //  if ([self.selectedCard isEqual:self.customCard]) {
 //    paymentInfo.cardInfo.pan = @"4111111111111112";

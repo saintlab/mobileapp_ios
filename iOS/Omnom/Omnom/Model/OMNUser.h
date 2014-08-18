@@ -26,7 +26,7 @@ typedef void(^OMNUserBlock)(OMNUser *user);
 
 + (instancetype)userWithPhone:(NSString *)phone;
 
-- (instancetype)initWithData:(id)data;
+- (instancetype)initWithJsonData:(id)data;
 
 - (void)registerWithCompletion:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock;
 

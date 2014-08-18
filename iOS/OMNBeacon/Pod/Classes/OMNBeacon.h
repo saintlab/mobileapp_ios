@@ -47,9 +47,7 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
  */
 - (void)newIterationBegin;
 
-- (NSString *)key;
-
-- (NSDictionary *)JSONObject;
+- (NSString *)uuid;
 
 @end
 

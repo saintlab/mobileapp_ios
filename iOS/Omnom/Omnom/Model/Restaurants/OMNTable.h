@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSString *restaurantId;
 @property (nonatomic, strong) NSString *tableId;
 
-- (instancetype)initWithData:(id)data;
+- (instancetype)initWithJsonData:(id)data;
 
 @end

@@ -24,7 +24,7 @@ typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
 //@property (nonatomic, strong) OMNTable *table;
 @property (nonatomic, strong) OMNRestaurant *restaurant;
 
-- (instancetype)initWithData:(id)data;
+- (instancetype)initWithJsonData:(id)data;
 
 - (BOOL)readyForPush;
 

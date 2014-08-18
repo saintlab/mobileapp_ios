@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong) NSArray *items;
 
-- (instancetype)initWithData:(id)data;
+- (instancetype)initWithJsonData:(id)data;
 
 @end

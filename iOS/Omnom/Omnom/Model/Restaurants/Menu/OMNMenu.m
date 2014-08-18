@@ -10,7 +10,7 @@
 
 @implementation OMNMenu
 
-- (instancetype)initWithData:(id)data {
+- (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
     
@@ -19,7 +19,7 @@
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:menuItems.count];
     
     for (id menuItemObject in menuItems) {
-      OMNMenuItem *menuItem = [[OMNMenuItem alloc] initWithData:menuItemObject];
+      OMNMenuItem *menuItem = [[OMNMenuItem alloc] initWithJsonData:menuItemObject];
       [items addObject:menuItem];
     }
     

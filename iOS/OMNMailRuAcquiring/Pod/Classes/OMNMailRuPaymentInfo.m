@@ -86,7 +86,10 @@
     card_info[@"pan"] = self.pan;
     card_info[@"exp_date"] = self.exp_date;
   }
-  card_info[@"cvv"] = self.cvv;
+  
+  if (self.cvv.length) {
+    card_info[@"cvv"] = self.cvv;
+  }
   
   return card_info;
 }
