@@ -50,7 +50,7 @@
 
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|" options:0 metrics:nil views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[topLayoutGuide]-[imageView]-[label]" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[imageView]-[label]" options:0 metrics:nil views:views]];
   
 }
 

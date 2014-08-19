@@ -45,7 +45,6 @@
   [navigationBarProgressView setPage:0];
   self.navigationItem.titleView = navigationBarProgressView;
   [self.navigationController.navigationBar setNeedsLayout];
-  NSLog(@"%@", navigationBarProgressView);
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
@@ -118,11 +117,8 @@
     }
     
   } failure:^(NSError *error) {
-#warning костыль
-//    [weakSelf processLoginError:error];
-    if (completionBlock) {
-      completionBlock();
-    }
+
+    [weakSelf processLoginError:error];
     
   }];
 }
@@ -155,7 +151,6 @@
   } failure:^(NSError *error) {
     
     [confirmCodeVC resetAnimated:YES];
-    NSLog(@"%@", error);
     
   }];
   
@@ -186,9 +181,8 @@
     [[OMNAnalitics analitics] logLoginUser:user];
     
   } failure:^(NSError *error) {
-    
-    NSLog(@"%@", error);
-    
+
+    //TODO: handle 
   }];
   
   [self.delegate authorizationVC:self didReceiveToken:token];

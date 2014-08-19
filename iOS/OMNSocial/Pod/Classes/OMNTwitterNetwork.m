@@ -24,8 +24,6 @@
     _accountStore = [[ACAccountStore alloc] init];
     _twitterAccountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     
-//    NSLog(@"%@", [_accountStore accountsWithAccountType:_twitterAccountType]);
-    
     [[_accountStore accountsWithAccountType:_twitterAccountType] enumerateObjectsUsingBlock:^(ACAccount *account, NSUInteger idx, BOOL *stop) {
       
       NSLog(@"%@", account.username);

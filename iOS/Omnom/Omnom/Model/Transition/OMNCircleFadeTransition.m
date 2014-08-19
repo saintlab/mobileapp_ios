@@ -75,9 +75,11 @@
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNR1VC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNR1VC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNR1VC class]],
+    [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNSearchBeaconVC class]],
+    [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNCircleRootVC class]],
+
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNDemoRestaurantVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNDemoRestaurantVC class]],
-    
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNDenyCLPermissionVC class]],
     [self keyFromClass:[OMNDenyCLPermissionVC class] toClass:[OMNAskCLPermissionsVC class]],
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNCLPermissionsHelpVC class]],

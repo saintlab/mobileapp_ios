@@ -53,8 +53,8 @@
 
 - (void)updateCardSelection {
   
-  if (_cards.count) {
-    OMNBankCard *card = [_cards firstObject];
+  if (self.cards.count) {
+    OMNBankCard *card = [self.cards firstObject];
     self.card_id = card.id;
     _selectedCard = card;
   }
@@ -72,7 +72,7 @@
   
   switch (section) {
     case 0: {
-      numberOfRows = _cards.count;
+      numberOfRows = self.cards.count;
     } break;
   }
   
@@ -93,12 +93,12 @@
   }
 
   
-  OMNBankCard *card = _cards[indexPath.row];
+  OMNBankCard *card = self.cards[indexPath.row];
 
   UIColor *masked_panColor = nil;
   UIColor *associationColor = nil;
 
-  if ([card isEqual:_selectedCard]) {
+  if ([card isEqual:self.selectedCard]) {
     _selectedIndexPath = indexPath;
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_card_icon_blue"]];
     masked_panColor = colorWithHexString(@"4A90E2");
@@ -122,7 +122,7 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
   BOOL canEdit = NO;
   if (self.canDeleteCard) {
-    OMNBankCard *card = _cards[indexPath.row];
+    OMNBankCard *card = self.cards[indexPath.row];
     canEdit = (NO == card.deleting);
   }
   return canEdit;
@@ -130,8 +130,8 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  OMNBankCard *card = _cards[indexPath.row];
-  NSMutableArray *cards = _cards;
+  OMNBankCard *card = self.cards[indexPath.row];
+  NSMutableArray *cards = self.cards;
   [card deleteWithCompletion:^{
     
     [cards removeObject:card];
@@ -158,7 +158,7 @@
     [indexPaths addObject:_selectedIndexPath];
   }
 
-  _selectedCard = _cards[indexPath.row];
+  _selectedCard = self.cards[indexPath.row];
   self.card_id = _selectedCard.id;
   
   [tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
@@ -166,7 +166,7 @@
   
   if (self.didSelectCardBlock) {
     
-    OMNBankCard *card = _cards[indexPath.row];
+    OMNBankCard *card = self.cards[indexPath.row];
     self.didSelectCardBlock(card);
     
   }

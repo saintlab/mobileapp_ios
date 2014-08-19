@@ -70,6 +70,55 @@ OMNRestaurantInfoVCDelegate>
   
 }
 
+- (void)beginCircleAnimation {
+  
+  UIImageView *iv1 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  iv1.center = self.circleButton.center;
+  [self.backgroundView addSubview:iv1];
+
+  UIImageView *iv2 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  iv2.alpha = 0.5f;
+  iv2.center = self.circleButton.center;
+  [self.backgroundView addSubview:iv2];
+
+  UIImageView *iv3 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  iv3.alpha = 0.25f;
+  iv3.center = self.circleButton.center;
+  [self.backgroundView addSubview:iv3];
+  
+  NSTimeInterval duration = 2.5;
+  NSTimeInterval delay = 0.5;
+  float repeatCount = 3.0f;
+  
+  [UIView animateWithDuration:duration/2. delay:delay options:UIViewAnimationOptionRepeat|UIViewAnimationOptionAutoreverse animations:^{
+    
+    [UIView setAnimationRepeatCount:3];
+    iv1.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
+    
+  } completion:^(BOOL finished) {
+    
+    [iv1 removeFromSuperview];
+    
+  }];
+  
+  [UIView animateWithDuration:duration delay:delay options:UIViewAnimationOptionRepeat animations:^{
+    [UIView setAnimationRepeatCount:repeatCount];
+    
+    iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
+    iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
+
+    iv2.alpha = 0.0f;
+    iv3.alpha = 0.0f;
+    
+  } completion:^(BOOL finished) {
+    
+    [iv2 removeFromSuperview];
+    [iv3 removeFromSuperview];
+    
+  }];
+  
+}
+
 - (void)cancelTap {
   
   [self.delegate r1VCDidFinish:self];
@@ -130,7 +179,7 @@ OMNRestaurantInfoVCDelegate>
   [actionButton addTarget:self action:@selector(showInfoTap) forControlEvents:UIControlEventTouchUpInside];
   UIImage *backgroundImage = [[UIImage imageNamed:@"circle_bg_small"] omn_tintWithColor:_restaurant.background_color];
   [actionButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
-  [actionButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+  [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
   [self.view addSubview:actionButton];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
@@ -139,8 +188,7 @@ OMNRestaurantInfoVCDelegate>
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  
+//  [super viewWillAppear:animated];
   [self.navigationItem setHidesBackButton:YES animated:animated];
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -181,6 +229,8 @@ OMNRestaurantInfoVCDelegate>
 }
 
 - (void)callWaiterDone {
+  
+  [self beginCircleAnimation];
   
   _callWaiterButton.selected = YES;
   [_callWaiterButton sizeToFit];

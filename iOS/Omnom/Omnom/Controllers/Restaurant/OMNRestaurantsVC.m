@@ -55,7 +55,6 @@
   } error:^(NSError *error) {
     
     [_refreshControl endRefreshing];
-    NSLog(@"%@", error);
     
   }];
   

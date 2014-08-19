@@ -15,7 +15,8 @@
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
-    _demo = YES;
+#warning _demo
+//    _demo = YES;
     _decodeBeaconData = data;
     _uuid = [data[@"uuid"] description];
     _table_id = [data[@"table_id"] description];

@@ -85,6 +85,7 @@
   else {
     card_info[@"pan"] = self.pan;
     card_info[@"exp_date"] = self.exp_date;
+    card_info[@"add_card"] = @(1);
   }
   
   if (self.cvv.length) {

@@ -75,8 +75,9 @@
   else {
     
     __block OMNBankCard *selectedCard = nil;
+    NSString *card_id = self.card_id;
     [_cards enumerateObjectsUsingBlock:^(OMNBankCard *bankCard, NSUInteger idx, BOOL *stop) {
-      if ([bankCard.id isEqualToString:self.card_id]) {
+      if ([bankCard.id isEqualToString:card_id]) {
         selectedCard = bankCard;
         *stop = YES;
       }

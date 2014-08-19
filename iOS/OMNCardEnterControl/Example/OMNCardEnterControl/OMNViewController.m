@@ -45,7 +45,6 @@
 
 - (void)cardEnterControl:(OMNCardEnterControl *)control didEnterCardData:(NSDictionary *)cardData {
   [control endEditing:YES];
-  NSLog(@"%@", cardData);
 }
 
 - (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {

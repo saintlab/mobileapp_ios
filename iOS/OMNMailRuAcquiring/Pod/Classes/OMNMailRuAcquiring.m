@@ -193,7 +193,6 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
 
   parameters[@"cardholder"] = kOMNMailRu_cardholder;
   parameters[@"user_phone"] = paymentInfo.user_phone;
-  parameters[@"add_card"] = @(1);
   
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
@@ -234,8 +233,8 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   [self POST:@"card/delete" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", responseObject);
-    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"card/delete%@", responseObject);
+    NSLog(@"card/delete%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
     completionBlock(responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

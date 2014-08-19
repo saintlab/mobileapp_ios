@@ -53,7 +53,7 @@ NSString *kCommaString = @".";
   _spinner.hidesWhenStopped = YES;
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveCardId:) name:OMNSocketIODidReceiveCardIdNotification object:nil];
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveCardId:) name:OMNSocketIODidReceiveCardIdNotification object:nil];
   [self setupView];
   [self registerCard];
   
@@ -240,6 +240,7 @@ NSString *kCommaString = @".";
   [_spinner stopAnimating];
   
   NSString *card_id = response[@"card_id"];
+  self.card_id = card_id;
   if (card_id) {
     
   }

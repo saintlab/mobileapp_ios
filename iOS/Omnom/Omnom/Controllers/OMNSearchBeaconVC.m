@@ -116,7 +116,12 @@ OMNDemoRestaurantVCDelegate>
 - (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
   [self stopBeaconManager:YES];
-  _didFindBlock(self, decodeBeacon);
+  if (decodeBeacon) {
+    _didFindBlock(self, decodeBeacon);
+  }
+  else {
+    [self notFoundBeacons];
+  }
   
 }
 
@@ -133,6 +138,8 @@ OMNDemoRestaurantVCDelegate>
 }
 
 - (void)startSearchingBeacon {
+  
+  [self.loaderView stop];
   
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
@@ -245,29 +252,7 @@ OMNDemoRestaurantVCDelegate>
     } break;
     case kSearchManagerNotFoundBeacons: {
       
-      OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
-      notFoundBeaconVC.faded = YES;
-      notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Возможно, вы вне заведения", nil);
-      notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"sad_table_icon_big"];
-      __weak typeof(self)weakSelf = self;
-      notFoundBeaconVC.buttonInfo =
-      @[
-        @{
-          @"title" : NSLocalizedString(@"Повторить", nil),
-          @"image" : [UIImage imageNamed:@"repeat_icon_small"],
-          @"block" : ^{
-            [weakSelf startSearchingBeacon];
-          },
-          },
-        @{
-          @"title" : NSLocalizedString(@"Демо-режим", nil),
-          @"image" : [UIImage imageNamed:@"demo_mode_icon_small"],
-          @"block" : ^{
-            [weakSelf demoModeTap];
-          },
-          }
-        ];
-      [self.navigationController pushViewController:notFoundBeaconVC animated:YES];
+      [self notFoundBeacons];
       
     } break;
       
@@ -371,6 +356,34 @@ OMNDemoRestaurantVCDelegate>
   
 }
 
+- (void)notFoundBeacons {
+  
+  OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  notFoundBeaconVC.faded = YES;
+  notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Возможно, вы вне заведения", nil);
+  notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"sad_table_icon_big"];
+  __weak typeof(self)weakSelf = self;
+  notFoundBeaconVC.buttonInfo =
+  @[
+    @{
+      @"title" : NSLocalizedString(@"Повторить", nil),
+      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
+      @"block" : ^{
+        [weakSelf startSearchingBeacon];
+      },
+      },
+    @{
+      @"title" : NSLocalizedString(@"Демо-режим", nil),
+      @"image" : [UIImage imageNamed:@"demo_mode_icon_small"],
+      @"block" : ^{
+        [weakSelf demoModeTap];
+      },
+      }
+    ];
+  [self.navigationController pushViewController:notFoundBeaconVC animated:YES];
+  
+}
+
 - (void)determineFaceUpPosition {
   
   OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] initWithParent:self];
@@ -398,12 +411,8 @@ OMNDemoRestaurantVCDelegate>
 #pragma mark - OMNDemoRestaurantVCDelegate
 
 - (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC {
-  __weak typeof(self)weakSelf = self;
-  [self.navigationController omn_popToViewController:self animated:YES completion:^{
-    
-    [weakSelf didFailOmnom];
-    
-  }];
+  
+  [self didFailOmnom];
   
 }
 

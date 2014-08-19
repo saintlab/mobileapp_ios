@@ -258,18 +258,13 @@
     
   }];
   
-  NSDictionary *info =
+  __unused NSDictionary *info =
   @{
     @"restaurantId" : self.id,
     @"tableId" : tableID,
     @"items" : items,
     };
   
-  
-  
-  NSError *error = nil;
-  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:info options:0 error:&error];
-  NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
 //TODO: create order
   return;
   

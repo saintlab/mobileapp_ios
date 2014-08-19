@@ -198,8 +198,6 @@
     
   } failure:^(NSError *error) {
     
-    NSLog(@"%@", error);
-    
   }];
   
 }
@@ -302,9 +300,7 @@
     [[OMNAnalitics analitics] logRegisterUser:user];
     
   } failure:^(NSError *error) {
-    
-    NSLog(@"%@", error);
-    
+    //TODO: handle
   }];
   
   [self.delegate authorizationVC:self didReceiveToken:token];

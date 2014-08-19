@@ -72,8 +72,6 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    
     NSLog(@"registerWithCompletion>%@", responseObject);
     if ([responseObject[@"status"] isEqualToString:@"registered"]) {
       completion();
@@ -127,11 +125,12 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"/confirm/phone/resend" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"responseObject%@", responseObject);
+    NSLog(@"/confirm/phone/resend>%@", responseObject);
     completion();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    NSLog(@"/confirm/phone/resend>%@", error);
     failureBlock(error);
     
   }];
@@ -197,11 +196,11 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", responseObject[@"error"]);
+    NSLog(@"loginWithParameters>%@", responseObject);
     [responseObject decodeToken:completion failure:failureBlock];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    NSLog(@"%@", operation.responseString);
+    NSLog(@"loginWithParameters>%@", operation.responseString);
     failureBlock(error);
     
   }];
@@ -217,13 +216,10 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"user>>%@", responseObject);
-#warning костыль
-    
-    if (responseObject[@"id"]) {
-//      if ([responseObject[@"status"] isEqualToString:@"success"]) {
-//      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject];
+    NSLog(@"userWithToken>>%@", responseObject);
+    if ([responseObject[@"status"] isEqualToString:@"success"]) {
+
+      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
       userBlock(user);
       
     }

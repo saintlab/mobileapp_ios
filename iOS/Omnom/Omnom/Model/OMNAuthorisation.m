@@ -122,6 +122,10 @@ NSString * const kTokenServiceName = @"token";
 
 - (void)updateAuthenticationToken:(NSString *)token {
 
+  if ([_token isEqualToString:token]) {
+    return;
+  }
+  
   _token = token;
   if (token) {
     [SSKeychain setPassword:token forService:kTokenServiceName account:kAccountName];
@@ -151,7 +155,6 @@ NSString * const kTokenServiceName = @"token";
     
   } failure:^(NSError *error) {
     
-    NSLog(@"%@", error);
     block(NO);
     
   }];
@@ -168,11 +171,11 @@ NSString * const kTokenServiceName = @"token";
   
   [[OMNAuthorizationManager sharedManager] POST:@"confirm/phone" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", responseObject);
+    NSLog(@"confirmPhone>%@", responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"%@", error);
+    NSLog(@"confirmPhone>%@", error);
     
   }];
   
@@ -211,10 +214,10 @@ NSString * const kTokenServiceName = @"token";
   }
   else {
     
-    NSString *errors = ([self[@"error"] description].length) ? (self[@"error"]) : (@"");
+    NSString *errorString = ([self[@"error"] description].length) ? (self[@"error"]) : (@"");
     NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
                                          code:0
-                                     userInfo:@{NSLocalizedDescriptionKey : errors}];
+                                     userInfo:@{NSLocalizedDescriptionKey : errorString}];
     failureBlock(error);
     
   }

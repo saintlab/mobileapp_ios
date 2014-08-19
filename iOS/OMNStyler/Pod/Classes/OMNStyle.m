@@ -24,7 +24,7 @@ static BOOL stringIsEmpty(NSString *s);
     _fontCache = [[NSCache alloc] init];
     _colorCache = [[NSCache alloc] init];
     if (error) {
-      NSLog(@"%@", error);
+      NSLog(@"OMNStyle>%@", error);
     }
     
   }

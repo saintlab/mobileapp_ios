@@ -16,6 +16,7 @@
 @end
 
 @implementation OMNDemoRestaurantVC {
+  BOOL _decodeBeaconsStarted;
 }
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
@@ -29,14 +30,25 @@
   return self;
 }
 
-- (void)viewDidLoad {
-  [super viewDidLoad];
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   
+  if (_decodeBeaconsStarted) {
+    return;
+  }
+  
+  [self.loaderView startAnimating:10.0];
+  _decodeBeaconsStarted = YES;
   __weak typeof(self)weakSelf = self;
   [[OMNDecodeBeaconManager manager] decodeBeacons:@[@{@"uuid" : @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+A+1"}] success:^(NSArray *decodeBeacons) {
     
     OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
-    [weakSelf didDecodeUUID:decodeBeacon];
+    if (decodeBeacon) {
+      [weakSelf didDecodeUUID:decodeBeacon];
+    }
+    else {
+      [weakSelf didFailOmnom];
+    }
     
   } failure:^(NSError *error) {
     
@@ -44,11 +56,6 @@
     
   }];
   
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  [self.loaderView startAnimating:10.0];
 }
 
 - (void)didFailOmnom {
@@ -59,12 +66,14 @@
 
 - (void)didDecodeUUID:(OMNDecodeBeacon *)decodeBeacon {
   _decodeBeacon = decodeBeacon;
+  
   __weak typeof(self)weakSelf = self;
   [_decodeBeacon.restaurant loadLogo:^(UIImage *image) {
     //TODO: handle error loading image
     [weakSelf didLoadLogo];
     
   }];
+  
 }
 
 - (void)didLoadLogo {

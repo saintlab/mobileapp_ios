@@ -170,7 +170,6 @@
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-  NSLog(@"%@", request.URL);
   
   if ([request.URL.absoluteString hasPrefix:@"https://test.pps.gazprombank.ru/payment/payment-params.wsm?ws.id"]) {
     

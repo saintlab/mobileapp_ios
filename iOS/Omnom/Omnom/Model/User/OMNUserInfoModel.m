@@ -38,8 +38,7 @@
         
       } failure:^(NSError *error) {
         
-        NSLog(@"%@", error);
-        //      [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
+//TODO: handle
         
       }];
 

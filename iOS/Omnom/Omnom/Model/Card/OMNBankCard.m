@@ -109,11 +109,12 @@
       NSString *path = [NSString stringWithFormat:@"/cards/%@", self.id];
       [[OMNOperationManager sharedManager] DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSLog(@"%@", responseObject);
+        NSLog(@"delete/cards/>%@", responseObject);
         completionBlock();
         
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
+        NSLog(@"delete/cards/>%@", error);
         weakSelf.deleting = NO;
         failureBlock(error);
       }];
