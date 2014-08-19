@@ -20,6 +20,7 @@
 #import "OMNRestaurantInfoVC.h"
 #import "OMNToolbarButton.h"
 #import "OMNSocketManager.h"
+#import "OMNDecodeBeacon.h"
 
 @interface OMNR1VC ()
 <OMNPayOrderVCDelegate,
@@ -31,14 +32,16 @@ OMNRestaurantInfoVCDelegate>
 
 @implementation OMNR1VC {
   OMNRestaurant *_restaurant;
+  OMNDecodeBeacon *_decodeBeacon;
   UIButton *_callWaiterButton;
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
   self = [super initWithParent:nil];
   if (self) {
-    _restaurant = restaurant;
-    self.circleIcon = restaurant.logo;
+    _decodeBeacon = decodeBeacon;
+    _restaurant = decodeBeacon.restaurant;
+    self.circleIcon = _restaurant.logo;
     //    _productsModel = [[OMNProductsModel alloc] init];
     //    _restaurantMenuMediator = [[OMNRestaurantMenuMediator alloc] initWithRootViewController:self];
   }
@@ -49,6 +52,14 @@ OMNRestaurantInfoVCDelegate>
   [super viewDidLoad];
   
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
+  self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+  
+  if (_decodeBeacon.demo) {
+
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    
+  }
   
   self.backgroundImage = _restaurant.background;
   self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:_restaurant.background_color];
@@ -56,6 +67,12 @@ OMNRestaurantInfoVCDelegate>
   [self addActionsBoard];
   
   [self socketConnect];
+  
+}
+
+- (void)cancelTap {
+  
+  [self.delegate r1VCDidFinish:self];
   
 }
 
@@ -108,9 +125,12 @@ OMNRestaurantInfoVCDelegate>
     [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
     ];
   
-  UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-  [actionButton addTarget:self action:@selector(showInfoTap) forControlEvents:UIControlEventTouchUpInside];
+  UIButton *actionButton = [[UIButton alloc] init];
   actionButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [actionButton addTarget:self action:@selector(showInfoTap) forControlEvents:UIControlEventTouchUpInside];
+  UIImage *backgroundImage = [[UIImage imageNamed:@"circle_bg_small"] omn_tintWithColor:_restaurant.background_color];
+  [actionButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+  [actionButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
   [self.view addSubview:actionButton];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
@@ -187,10 +207,11 @@ OMNRestaurantInfoVCDelegate>
   }
   
   UIImage *logo = _restaurant.logo;
+  OMNRestaurant *restaurant = _restaurant;
   __weak typeof(self)weakSelf = self;
-  OMNSearchBeaconVC *sbVC = [[OMNSearchBeaconVC alloc] initWithParent:self completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+  [self searchBeaconWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     
-    [_restaurant waiterCallForTableID:decodeBeacon.table_id completion:^{
+    [restaurant waiterCallForTableID:decodeBeacon.table_id completion:^{
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -204,7 +225,7 @@ OMNRestaurantInfoVCDelegate>
       
     } failure:^(NSError *error) {
       
-      NSLog(@"error>%@", error);
+      NSLog(@"callWaiterTap>%@", error);
       
     } stop:^{
       
@@ -219,9 +240,6 @@ OMNRestaurantInfoVCDelegate>
     [self.navigationController popToViewController:self animated:YES];
     
   }];
-  sbVC.estimateAnimationDuration = 2.0;
-  sbVC.circleIcon = [UIImage imageNamed:@"bell_ringing_icon_white_big"];
-  [self.navigationController pushViewController:sbVC animated:YES];
   
 }
 
@@ -229,7 +247,7 @@ OMNRestaurantInfoVCDelegate>
 
   OMNRestaurant *restaurant = _restaurant;
   __weak typeof(self)weakSelf = self;
-  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+  [self searchBeaconWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
     
     [restaurant getOrdersForTableID:decodeBeacon.table_id orders:^(NSArray *orders) {
       
@@ -249,8 +267,17 @@ OMNRestaurantInfoVCDelegate>
     [weakSelf.navigationController popToViewController:weakSelf animated:YES];
     
   }];
+  
+}
+
+- (void)searchBeaconWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
+  
+  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self completion:completionBlock cancelBlock:cancelBlock];
   searchBeaconVC.estimateAnimationDuration = 2.0;
-  searchBeaconVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
+  searchBeaconVC.circleIcon = icon;
+  if (_decodeBeacon.demo) {
+    searchBeaconVC.uuid = _decodeBeacon.uuid;
+  }
   [self.navigationController pushViewController:searchBeaconVC animated:YES];
   
 }
@@ -264,7 +291,8 @@ OMNRestaurantInfoVCDelegate>
   }
   else {
 
-    if (orders.count &&
+    if (!_decodeBeacon.demo &&
+        orders.count &&
         !TARGET_IPHONE_SIMULATOR) {
       OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self];
       __weak typeof(self)weakSelf = self;
@@ -309,29 +337,31 @@ OMNRestaurantInfoVCDelegate>
   didFailOmnomVC.text = NSLocalizedString(@"На этом столике нет заказов", nil);
   didFailOmnomVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
   
-  didFailOmnomVC.buttonInfo =
-  @{
-    @"title" : NSLocalizedString(@"Ок", nil),
-    };
   __weak typeof(self)weakSelf = self;
-  didFailOmnomVC.actionBlock = ^{
-    
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
-    
-  };
+  didFailOmnomVC.buttonInfo =
+  @[
+    @{
+      @"title" : NSLocalizedString(@"Ок", nil),
+      @"block" : ^{
+        
+        [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+        
+      },
+      }
+    ];
+
   [self.navigationController pushViewController:didFailOmnomVC animated:YES];
   
 }
 
 - (void)showOrder:(OMNOrder *)order {
   
-  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithRestaurant:_restaurant order:order];
+  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithDecodeBeacon:_decodeBeacon order:order];
   paymentVC.delegate = self;
   paymentVC.title = order.created;
   [self.navigationController pushViewController:paymentVC animated:YES];
   
 }
-
 
 - (void)selectOrderFromOrders:(NSArray *)orders {
   
@@ -344,14 +374,25 @@ OMNRestaurantInfoVCDelegate>
   
 }
 
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
+}
+
 #pragma mark - OMNPayOrderVCDelegate
 
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
-  [self.navigationController popToViewController:self animated:YES];
+  
+  if (_decodeBeacon.demo) {
+    [self.delegate r1VCDidFinish:self];
+  }
+  else {
+    [self.navigationController popToViewController:self animated:YES];
+  }
+  
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
+- (void)payOrderVCDidCancel:(OMNPayOrderVC *)payOrderVC {
+  [self.navigationController popToViewController:self animated:YES];
 }
 
 #pragma mark - OMNOrdersVCDelegate

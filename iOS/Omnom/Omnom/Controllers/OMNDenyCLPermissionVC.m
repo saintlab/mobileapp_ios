@@ -19,11 +19,6 @@
   if (self) {
     self.faded = YES;
     self.text = NSLocalizedString(@"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем определить столик.", nil);
-    self.buttonInfo =
-    @{
-      @"title" : NSLocalizedString(@"Повторить", nil),
-      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
-      };
   }
   return self;
 }

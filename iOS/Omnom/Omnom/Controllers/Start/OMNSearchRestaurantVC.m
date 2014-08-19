@@ -16,14 +16,16 @@
 @end
 
 @implementation OMNSearchRestaurantVC {
-  OMNSearchRestaurantBlock _searchRestaurantBlock;
+
+  OMNDecodeBeaconBlock _decodeBeaconBlock;
   OMNLoadingCircleVC *_loadingCircleVC;
+  
 }
 
-- (instancetype)initWithBlock:(OMNSearchRestaurantBlock)block {
+- (instancetype)initWithBlock:(OMNDecodeBeaconBlock)block {
   self = [super initWithNibName:@"OMNSearchRestaurantVC" bundle:nil];
   if (self) {
-    _searchRestaurantBlock = block;
+    _decodeBeaconBlock = block;
   }
   return self;
 }
@@ -92,24 +94,26 @@
   __weak typeof(self)weakSelf = self;
   [decodeBeacon.restaurant loadLogo:^(UIImage *image) {
     //TODO: handle error loading image
-    [weakSelf didLoadLogoForRestaurant:decodeBeacon.restaurant];
+    [weakSelf didLoadLogoForRestaurant:decodeBeacon];
     
   }];
 
 }
 
-- (void)didLoadLogoForRestaurant:(OMNRestaurant *)restaurant {
+- (void)didLoadLogoForRestaurant:(OMNDecodeBeacon *)decodeBeacon {
   
   __weak typeof(_loadingCircleVC)weakBeaconSearch = _loadingCircleVC;
-  OMNSearchRestaurantBlock searchRestaurantBlock = _searchRestaurantBlock;
+  OMNDecodeBeaconBlock decodeBeaconBlock = _decodeBeaconBlock;
   
-  [_loadingCircleVC setLogo:restaurant.logo withColor:restaurant.background_color completion:^{
+  UIImage *logo = decodeBeacon.restaurant.logo;
+  UIColor *restaurantBackgroundColor = decodeBeacon.restaurant.background_color;
+  [_loadingCircleVC setLogo:logo withColor:restaurantBackgroundColor completion:^{
     
-    [restaurant loadBackground:^(UIImage *image) {
+    [decodeBeacon.restaurant loadBackground:^(UIImage *image) {
       
       [weakBeaconSearch finishLoading:^{
         
-        searchRestaurantBlock(restaurant);
+        decodeBeaconBlock(decodeBeacon);
         
       }];
 

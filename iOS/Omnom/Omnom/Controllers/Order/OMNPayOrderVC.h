@@ -7,7 +7,7 @@
 //
 
 @class OMNOrder;
-@class OMNRestaurant;
+@class OMNDecodeBeacon;
 @protocol OMNPayOrderVCDelegate;
 
 @interface OMNPayOrderVC : UIViewController
@@ -15,12 +15,14 @@
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant order:(OMNOrder *)order;
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon order:(OMNOrder *)order;
 
 @end
 
 @protocol OMNPayOrderVCDelegate <NSObject>
 
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC;
+
+- (void)payOrderVCDidCancel:(OMNPayOrderVC *)payOrderVC;
 
 @end

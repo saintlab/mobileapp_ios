@@ -75,6 +75,7 @@
     
     tipButton.tip = calculationAmount.tips[idx];
     [calculationAmount configureTipButton:tipButton];
+    tipButton.selected = (idx == calculationAmount.selectedTipIndex);
     
   }];
   
@@ -82,7 +83,7 @@
 
 - (void)setCalculationAmount:(OMNCalculationAmount *)calculationAmount {
   _calculationAmount = calculationAmount;
-  
+  self.selectedIndex = 1;
   [self update];
   
 }

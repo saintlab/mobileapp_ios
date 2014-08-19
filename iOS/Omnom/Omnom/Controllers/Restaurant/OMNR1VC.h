@@ -7,10 +7,20 @@
 //
 
 #import "OMNCircleRootVC.h"
-#import "OMNRestaurant.h"
+
+@class OMNDecodeBeacon;
+@protocol OMNR1VCDelegate;
 
 @interface OMNR1VC : OMNCircleRootVC
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
+@property (nonatomic, weak) id<OMNR1VCDelegate> delegate;
+
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
+
+@end
+
+@protocol OMNR1VCDelegate <NSObject>
+
+- (void)r1VCDidFinish:(OMNR1VC *)r1VC;
 
 @end

@@ -55,12 +55,12 @@ static const char kNavigationControllerPopToControllerKey;
 
 - (void)omn_didShowViewController:(UIViewController *)viewController {
   
-  UIViewController *pushViewController = objc_getAssociatedObject(self, &kNavigationControllerPushBlockKey);
+  UIViewController *pushViewController = objc_getAssociatedObject(self, &kNavigationControllerPushControllerKey);
   if ([viewController isEqual:pushViewController]) {
     
-    objc_setAssociatedObject(self, &kNavigationControllerPushBlockKey, nil, OBJC_ASSOCIATION_ASSIGN);
+    objc_setAssociatedObject(self, &kNavigationControllerPushControllerKey, nil, OBJC_ASSOCIATION_ASSIGN);
     
-    dispatch_block_t completionBlock = objc_getAssociatedObject(self, &kNavigationControllerPushControllerKey);
+    dispatch_block_t completionBlock = objc_getAssociatedObject(self, &kNavigationControllerPushBlockKey);
     if (completionBlock) {
       completionBlock();
       objc_setAssociatedObject(self, &kNavigationControllerPushBlockKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

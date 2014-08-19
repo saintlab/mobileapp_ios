@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "wizard_menu_image.png"
+      "filename" : "start_circle_icon_small_white.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "wizard_menu_image@2x.png"
+      "filename" : "start_circle_icon_small_white@2x.png"
     }
   ],
   "info" : {

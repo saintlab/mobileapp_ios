@@ -7,6 +7,8 @@
 //
 
 #import "OMNCircleRootVC.h"
+#import "OMNToolbarButton.h"
+#import <BlocksKit+UIKit.h>
 
 @interface OMNCircleRootVC ()
 
@@ -14,7 +16,6 @@
 
 @implementation OMNCircleRootVC {
   UIView *_fadeView;
-  __weak IBOutlet NSLayoutConstraint *_actionButtonSpace;
 }
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
@@ -29,11 +30,11 @@
 - (void)viewDidLoad {
   
   [super viewDidLoad];
-
+  
   if (self.circleIcon) {
     [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
   }
-
+  
   _fadeView = [[UIView alloc] initWithFrame:self.backgroundView.bounds];
   _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
   _fadeView.hidden = !self.faded;
@@ -42,25 +43,55 @@
   self.circleBackground = _circleBackground;
   self.label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:25.0f];
   
-  if (self.buttonInfo) {
-    self.button.hidden = NO;
-    [self.button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.button.tintColor = [UIColor blackColor];
-    self.button.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
-    self.button.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f);
-    [self.button addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.button setTitle:self.buttonInfo[@"title"] forState:UIControlStateNormal];
-    [self.button setImage:self.buttonInfo[@"image"] forState:UIControlStateNormal];
-
-  }
-  else {
-    self.button.hidden = YES;
-  }
   
   self.label.text = self.text;
   self.label.alpha = 0.0f;
   self.label.textColor = [UIColor blackColor];
+  
+  [self showActionBoard];
+}
+
+- (UIBarButtonItem *)buttonWithInfo:(NSDictionary *)info {
+  UIButton *button = [[OMNToolbarButton alloc] init];
+  [button setImage:[UIImage imageNamed:@"cancel_later_icon_small"] forState:UIControlStateNormal];
+  [button bk_addEventHandler:^(id sender) {
+    dispatch_block_t block = info[@"block"];
+    if (block) {
+      block();
+    }
+  } forControlEvents:UIControlEventTouchUpInside];
+  [button setTitle:info[@"title"] forState:UIControlStateNormal];
+  [button setImage:info[@"image"] forState:UIControlStateNormal];
+  [button sizeToFit];
+  return [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
+- (void)showActionBoard {
+  [self addBottomButtons];
+  
+  NSArray *items = nil;
+  
+  UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+  
+  if (self.buttonInfo.count == 1) {
+    items =
+    @[
+      flex,
+      [self buttonWithInfo:self.buttonInfo[0]],
+      flex,
+      ];
+  }
+  
+  if (self.buttonInfo.count == 2) {
+    items =
+    @[
+      [self buttonWithInfo:self.buttonInfo[0]],
+      flex,
+      [self buttonWithInfo:self.buttonInfo[1]],
+      ];
+  }
+  
+  self.bottomToolbar.items = items;
   
 }
 
@@ -77,29 +108,25 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+
+  if (self.buttonInfo.count) {
+    self.bottomViewConstraint.constant = 0.0f;
+  }
   
-  _actionButtonSpace.constant = 0;
   [UIView animateWithDuration:0.3 animations:^{
     self.label.alpha = 1.0f;
-    [self.button layoutIfNeeded];
     [self.label layoutIfNeeded];
+    [self.view layoutIfNeeded];
   }];
 }
 
 - (void)setFaded:(BOOL)faded {
   _faded = faded;
   _fadeView.hidden = !self.faded;
-}
-
-- (void)buttonTap {
-  if (self.actionBlock) {
-    self.actionBlock();
-  }
 }
 
 - (void)didReceiveMemoryWarning {

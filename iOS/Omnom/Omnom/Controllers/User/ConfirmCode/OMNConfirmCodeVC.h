@@ -25,4 +25,7 @@
 - (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code;
 - (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC;
 
+@optional
+- (void)confirmCodeVCDidResetPhone:(OMNConfirmCodeVC *)confirmCodeVC;
+
 @end

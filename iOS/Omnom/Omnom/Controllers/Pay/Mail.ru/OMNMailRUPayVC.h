@@ -13,6 +13,7 @@
 @interface OMNMailRUPayVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNMailRUPayVCDelegate> delegate;
+@property (nonatomic, assign) BOOL demo;
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
 

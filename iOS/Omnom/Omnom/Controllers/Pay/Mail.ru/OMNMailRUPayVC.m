@@ -11,7 +11,7 @@
 #import <OMNMailRuAcquiring.h>
 #import <OMNDeletedTextField.h>
 #import "OMNOrder.h"
-#import "OMNBankCardsModel.h"
+#import "OMNMailRuBankCardsModel.h"
 #import "OMNCardBrandView.h"
 #import "OMNAddBankCardVC.h"
 #import <OMNStyler.h>
@@ -53,7 +53,13 @@ OMNMailRUCardConfirmVCDelegate>
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
   [self setup];
   
-  _bankCardsModel = [[OMNBankCardsModel alloc] init];
+  if (self.demo) {
+    _bankCardsModel = [[OMNBankCardsModel alloc] init];
+  }
+  else {
+    _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
+  }
+  
 //  __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
@@ -110,6 +116,17 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)payTap {
   
+  if (self.demo) {
+    [self demoPay];
+  }
+  else {
+    [self checkBillAndCreateIfNeeded];
+  }
+  
+}
+
+- (void)checkBillAndCreateIfNeeded {
+  
   if (_bill) {
     [self billDidCreated:_bill];
     return;
@@ -149,6 +166,12 @@ OMNMailRUCardConfirmVCDelegate>
 }
 
 - (void)didPayWithResponse:(id)response {
+  
+  [self.delegate mailRUPayVCDidFinish:self];
+  
+}
+
+- (void)demoPay {
   
   [self.delegate mailRUPayVCDidFinish:self];
   

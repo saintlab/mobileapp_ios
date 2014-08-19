@@ -31,15 +31,6 @@
   
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-    // Custom initialization
-  }
-  return self;
-}
-
 - (void)viewDidLoad {
   
   [super viewDidLoad];
@@ -127,8 +118,11 @@
     }
     
   } failure:^(NSError *error) {
-    
-    [weakSelf processLoginError:error];
+#warning костыль
+//    [weakSelf processLoginError:error];
+    if (completionBlock) {
+      completionBlock();
+    }
     
   }];
 }
@@ -170,6 +164,12 @@
 - (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC {
   
   [self requestAuthorisationCodeCompletion:nil];
+  
+}
+
+- (void)confirmCodeVCDidResetPhone:(OMNConfirmCodeVC *)confirmCodeVC {
+  
+  [self.delegate authorizationVCDidCancel:self];
   
 }
 

@@ -111,9 +111,18 @@
   
   OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
   __weak typeof(self)weakSelf = self;
-  denyCLPermissionVC.actionBlock = ^{
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
-  };
+  denyCLPermissionVC.buttonInfo =
+  @[
+    @{
+      @"title" : NSLocalizedString(@"Повторить", nil),
+      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
+      @"block" : ^{
+        
+        [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+        
+      },
+      }
+    ];
   [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
   
 }

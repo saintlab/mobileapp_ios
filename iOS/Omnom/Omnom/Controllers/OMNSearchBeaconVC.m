@@ -17,11 +17,13 @@
 #import "OMNScanQRCodeVC.h"
 #import "OMNTurnOnBluetoothVC.h"
 #import "UINavigationController+omn_replace.h"
+#import "OMNDemoRestaurantVC.h"
 
 @interface OMNSearchBeaconVC ()
 <OMNBeaconSearchManagerDelegate,
 OMNTablePositionVCDelegate,
-OMNScanQRCodeVCDelegate>
+OMNScanQRCodeVCDelegate,
+OMNDemoRestaurantVCDelegate>
 
 @end
 
@@ -77,11 +79,19 @@ OMNScanQRCodeVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  if (nil == _beaconSearchManager) {
+  __weak typeof(self)weakSelf = self;
+  if (self.uuid) {
+    
+    [self.loaderView startAnimating:self.estimateAnimationDuration];
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [weakSelf decodeUUID:weakSelf.uuid];
+    });
+    
+  }
+  else if (nil == _beaconSearchManager) {
     
     _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
     _beaconSearchManager.delegate = self;
-    __weak typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
       [weakSelf startSearchingBeacon];
     });
@@ -114,6 +124,14 @@ OMNScanQRCodeVCDelegate>
   _cancelBlock();
 }
 
+- (void)demoModeTap {
+  
+  OMNDemoRestaurantVC *demoRestaurantVC = [[OMNDemoRestaurantVC alloc] initWithParent:self];
+  demoRestaurantVC.delegate = self;
+  [self.navigationController pushViewController:demoRestaurantVC animated:YES];
+  
+}
+
 - (void)startSearchingBeacon {
   
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
@@ -139,15 +157,18 @@ OMNScanQRCodeVCDelegate>
   scanQRCodeInfoVC.faded = YES;
   scanQRCodeInfoVC.text = NSLocalizedString(@"Отсканируйте QR-код", nil);
   scanQRCodeInfoVC.circleIcon = [UIImage imageNamed:@"scan_qr_icon"];
-  
-  //  NSLocalizedString(@"Сканировать", nil)
-  scanQRCodeInfoVC.actionBlock = ^{
-    
-    OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
-    scanQRCodeVC.delegate = self;
-    [self.navigationController pushViewController:scanQRCodeVC animated:YES];
-    
-  };
+  scanQRCodeInfoVC.buttonInfo =
+  @[
+    @{
+      @"title" : NSLocalizedString(@"Сканировать", nil),
+      @"block" : ^{
+        OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
+        scanQRCodeVC.delegate = self;
+        [self.navigationController pushViewController:scanQRCodeVC animated:YES];
+      },
+      }
+    ];
+
   [self.navigationController pushViewController:scanQRCodeInfoVC animated:YES];
   
 }
@@ -175,18 +196,19 @@ OMNScanQRCodeVCDelegate>
   didFailOmnomVC.faded = YES;
   didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
   didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
-  didFailOmnomVC.buttonInfo =
-  @{
-    @"title" : NSLocalizedString(@"Проверить еще", nil),
-    @"image" : [UIImage imageNamed:@"repeat_icon_small"],
-    };
-
+  
   __weak typeof(self)weakSelf = self;
-  didFailOmnomVC.actionBlock = ^{
-    
-    [weakSelf startSearchingBeacon];
-    
-  };
+  didFailOmnomVC.buttonInfo =
+  @[
+    @{
+      @"title" : NSLocalizedString(@"Проверить еще", nil),
+      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
+      @"block" : ^{
+        [weakSelf startSearchingBeacon];
+      },
+      }
+    ];
+
   [self.navigationController pushViewController:didFailOmnomVC animated:YES];
   
 }
@@ -227,15 +249,24 @@ OMNScanQRCodeVCDelegate>
       notFoundBeaconVC.faded = YES;
       notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Возможно, вы вне заведения", nil);
       notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"sad_table_icon_big"];
-      notFoundBeaconVC.buttonInfo =
-      @{
-        @"title" : NSLocalizedString(@"Повторить", nil),
-        @"image" : [UIImage imageNamed:@"repeat_icon_small"],
-        };
       __weak typeof(self)weakSelf = self;
-      notFoundBeaconVC.actionBlock = ^{
-        [weakSelf startSearchingBeacon];
-      };
+      notFoundBeaconVC.buttonInfo =
+      @[
+        @{
+          @"title" : NSLocalizedString(@"Повторить", nil),
+          @"image" : [UIImage imageNamed:@"repeat_icon_small"],
+          @"block" : ^{
+            [weakSelf startSearchingBeacon];
+          },
+          },
+        @{
+          @"title" : NSLocalizedString(@"Демо-режим", nil),
+          @"image" : [UIImage imageNamed:@"demo_mode_icon_small"],
+          @"block" : ^{
+            [weakSelf demoModeTap];
+          },
+          }
+        ];
       [self.navigationController pushViewController:notFoundBeaconVC animated:YES];
       
     } break;
@@ -314,21 +345,28 @@ OMNScanQRCodeVCDelegate>
   noInternetVC.text = text;
   noInternetVC.faded = YES;
   noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
-  //  NSLocalizedString(@"Проверить еще", nil)
   __weak typeof(self)weakSelf = self;
-  noInternetVC.actionBlock = ^{
-    
-    [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
-      
-      if (kOMNReachableStateIsReachable == reachableState) {
+  noInternetVC.buttonInfo =
+  @[
+    @{
+      @"title" : NSLocalizedString(@"Проверить еще", nil),
+      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
+      @"block" : ^{
         
-        [weakSelf startSearchingBeacon];
+        [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
+          
+          if (kOMNReachableStateIsReachable == reachableState) {
+            
+            [weakSelf startSearchingBeacon];
+            
+          }
+          
+        }];
         
+      },
       }
-      
-    }];
-    
-  };
+    ];
+
   [self.navigationController pushViewController:noInternetVC animated:YES];
   
 }
@@ -355,6 +393,27 @@ OMNScanQRCodeVCDelegate>
   
   [self startSearchingBeacon];
   
+}
+
+#pragma mark - OMNDemoRestaurantVCDelegate
+
+- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC {
+  __weak typeof(self)weakSelf = self;
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
+    
+    [weakSelf didFailOmnom];
+    
+  }];
+  
+}
+
+- (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC {
+  __weak typeof(self)weakSelf = self;
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
+    
+    [weakSelf startSearchingBeacon];
+    
+  }];
 }
 
 - (void)didReceiveMemoryWarning {

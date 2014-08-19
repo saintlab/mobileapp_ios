@@ -10,6 +10,7 @@
 #import "OMNEnterCodeView.h"
 #import "OMNUser.h"
 #import "OMNNavigationBarProgressView.h"
+#import "OMNResetPasswordVC.h"
 
 @interface OMNConfirmCodeVC ()
 
@@ -91,12 +92,36 @@
 }
 
 - (void)changeNumberTap {
-  
-  [OMNUser recoverUsingData:_phone completion:^(NSString *token) {
+
+  __weak typeof(self)weakSelf = self;
+  [OMNUser recoverUsingData:_phone completion:^{
+    
+    [weakSelf didRecoveCode];
     
   } failure:^(NSError *error) {
     
+    
+    
   }];
+  
+}
+
+- (void)didRecoveCode {
+  
+  OMNResetPasswordVC *resetPasswordVC = [[OMNResetPasswordVC alloc] init];
+  __weak typeof(self)weakSelf = self;
+  resetPasswordVC.completionBlock = ^{
+    [weakSelf didFinishReset];
+  };
+  [self.navigationController pushViewController:resetPasswordVC animated:YES];
+  
+}
+
+- (void)didFinishReset {
+
+  if ([self.delegate respondsToSelector:@selector(confirmCodeVCDidResetPhone:)]) {
+    [self.delegate confirmCodeVCDidResetPhone:self];
+  }
   
 }
 

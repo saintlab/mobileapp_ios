@@ -13,6 +13,7 @@
 #import "OMNWizardPageVC.h"
 #import "OMNConstants.h"
 #import "OMNToolbarButton.h"
+#import "UIImage+omn_helper.h"
 
 @interface OMNAuthorizationVC ()
 <OMNAuthorizationDelegate>
@@ -53,7 +54,7 @@
   [self addBottomButtons];
   
   UIButton *leftButton = [[OMNToolbarButton alloc] init];
-  [leftButton setImage:[UIImage imageNamed:@"registration_icon_small"] forState:UIControlStateNormal];
+  [leftButton setImage:[[UIImage imageNamed:@"user_settings_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
   [leftButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];
   [leftButton setTitle:NSLocalizedString(@"Регистрация", nil) forState:UIControlStateNormal];
   [leftButton sizeToFit];

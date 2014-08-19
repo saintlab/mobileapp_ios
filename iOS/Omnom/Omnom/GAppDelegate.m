@@ -62,7 +62,7 @@
   
   _applicationStartedForeground = YES;
   
-  [OMNOperationManager manager];
+  [OMNOperationManager sharedManager];
   [OMNAuthorisation authorisation];
   
   [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];

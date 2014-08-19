@@ -211,11 +211,12 @@ NSString * const kTokenServiceName = @"token";
   }
   else {
     
-    NSString *errors = ([self[@"errors"] description].length) ? ([self[@"errors"] description]) : (@"");
+    NSString *errors = ([self[@"error"] description].length) ? (self[@"error"]) : (@"");
     NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
                                          code:0
                                      userInfo:@{NSLocalizedDescriptionKey : errors}];
     failureBlock(error);
+    
   }
   
 }

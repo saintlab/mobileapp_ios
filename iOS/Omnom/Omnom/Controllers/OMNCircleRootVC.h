@@ -12,13 +12,12 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIButton *circleButton;
-@property (weak, nonatomic) IBOutlet UIButton *button;
 @property (weak, nonatomic) IBOutlet UIView *foregroundView;
-@property (nonatomic, copy) dispatch_block_t actionBlock;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *circleCenterLayout;
 
 @property (nonatomic, assign) BOOL faded;
-@property (nonatomic, strong) NSDictionary *buttonInfo;
+@property (nonatomic, strong) NSArray *buttonInfo;
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) UIImage *circleIcon;
 @property (nonatomic, strong) UIImage *circleBackground;

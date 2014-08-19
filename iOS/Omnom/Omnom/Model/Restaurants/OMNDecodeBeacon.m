@@ -9,41 +9,31 @@
 #import "OMNDecodeBeacon.h"
 
 @implementation OMNDecodeBeacon {
-  id _restaurantData;
+  id _decodeBeaconData;
 }
 
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
+    _demo = YES;
+    _decodeBeaconData = data;
     _uuid = [data[@"uuid"] description];
     _table_id = [data[@"table_id"] description];
     _restaurantId = [data[@"restaurant_id"] description];
     _foundDate = [NSDate date];
-    _restaurantData = data[@"restaurant"];
-    _restaurant = [[OMNRestaurant alloc] initWithJsonData:_restaurantData];
+    _restaurant = [[OMNRestaurant alloc] initWithJsonData:data[@"restaurant"]];
   }
   return self;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super init];
-  if (self) {
-    self.uuid = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(uuid))];
-    self.table_id = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(tableId))];
-    self.restaurantId = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(restaurantId))];
-    self.foundDate = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(foundDate))];
-    _restaurantData = [aDecoder decodeObjectForKey:@"restaurantData"];
-    self.restaurant = [[OMNRestaurant alloc] initWithJsonData:_restaurantData];
-  }
+  _decodeBeaconData = [aDecoder decodeObjectForKey:@"decodeBeaconData"];
+  self = [self initWithJsonData:_decodeBeaconData];
   return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.uuid forKey:NSStringFromSelector(@selector(uuid))];
-  [aCoder encodeObject:self.table_id forKey:NSStringFromSelector(@selector(tableId))];
-  [aCoder encodeObject:self.restaurantId forKey:NSStringFromSelector(@selector(restaurantId))];
-  [aCoder encodeObject:self.foundDate forKey:NSStringFromSelector(@selector(foundDate))];
-  [aCoder encodeObject:_restaurantData forKey:@"restaurantData"];
+  [aCoder encodeObject:_decodeBeaconData forKey:@"decodeBeaconData"];
 }
 
 - (BOOL)readyForPush {

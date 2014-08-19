@@ -20,6 +20,7 @@ typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
 @property (nonatomic, copy) NSString *table_id;
 @property (nonatomic, copy) NSString *restaurantId;
 @property (nonatomic, strong) NSDate *foundDate;
+@property (nonatomic, assign, readonly) BOOL demo;
 
 //@property (nonatomic, strong) OMNTable *table;
 @property (nonatomic, strong) OMNRestaurant *restaurant;

@@ -75,8 +75,10 @@
 - (void)startSearchingBeacons {
   
   __weak typeof(self)weakSelf = self;
-  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithBlock:^(OMNRestaurant *restaurant) {
-    [weakSelf didFindRestaurant:restaurant];
+  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
+    
+    [weakSelf didFindRestaurant:decodeBeacon];
+    
   }];
   
   NSData *decodeBeaconData = self.info[OMNDecodeBeaconManagerNotificationLaunchKey];
@@ -109,9 +111,11 @@
   
 }
 
-- (void)didFindRestaurant:(OMNRestaurant *)restaurant {
-  OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithRestaurant:restaurant];
+- (void)didFindRestaurant:(OMNDecodeBeacon *)decodeBeacon {
+  
+  OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithDecodeBeacon:decodeBeacon];
   [_navVC pushViewController:restaurantMenuVC animated:YES];
+  
 }
 
 - (void)didReceiveMemoryWarning {

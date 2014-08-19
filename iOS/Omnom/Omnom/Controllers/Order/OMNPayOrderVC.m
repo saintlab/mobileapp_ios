@@ -23,7 +23,7 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNGPBPayVC.h"
 #import "OMNSocketManager.h"
-#import "OMNRestaurant.h"
+#import "OMNDecodeBeacon.h"
 #import "OMNMailRUPayVC.h"
 #import "OMNAddBankCardVC.h"
 #import "OMNPaymentNotificationControl.h"
@@ -46,7 +46,7 @@ OMNMailRUPayVCDelegate>
   __weak IBOutlet UIImageView *_backgroundIV;
   BOOL _beginSplitAnimation;
   OMNOrder *_order;
-  OMNRestaurant *_restaurant;
+  OMNDecodeBeacon *_decodeBeacon;
 }
 
 - (void)dealloc {
@@ -54,11 +54,11 @@ OMNMailRUPayVCDelegate>
   [[OMNSocketManager manager] leave:_order.id];
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant order:(OMNOrder *)order {
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon order:(OMNOrder *)order {
   self = [super init];
   if (self) {
     _order = order;
-    _restaurant = restaurant;
+    _decodeBeacon = decodeBeacon;
   }
   return self;
 }
@@ -66,7 +66,7 @@ OMNMailRUPayVCDelegate>
 - (void)viewDidLoad {
   
   [super viewDidLoad];
-  NSLog(@"viewDidLoad");
+
   [[OMNSocketManager manager] join:_order.id];
   
   _dataSource = [[OMNPaymentVCDataSource alloc] initWithOrder:_order];
@@ -77,10 +77,10 @@ OMNMailRUPayVCDelegate>
   [self setup];
   
   _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPay:) name:OMNSocketIODidPayNotification object:nil];
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didFinish)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
   
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
@@ -90,12 +90,14 @@ OMNMailRUPayVCDelegate>
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   
   _tableView.delegate = self;
   
   self.automaticallyAdjustsScrollViewInsets = YES;
   self.edgesForExtendedLayout = UIRectEdgeAll;
+  
 }
 
 - (void)viewDidLayoutSubviews {
@@ -127,8 +129,8 @@ OMNMailRUPayVCDelegate>
 
 }
 
-- (void)didFinish {
-  [self.delegate payOrderVCDidFinish:self];
+- (void)cancelTap {
+  [self.delegate payOrderVCDidCancel:self];
 }
 
 - (void)didPay:(NSNotification *)n {
@@ -140,7 +142,7 @@ OMNMailRUPayVCDelegate>
 - (void)setup {
   
   self.view.backgroundColor = [UIColor clearColor];
-  _backgroundIV.backgroundColor = _restaurant.background_color;
+  _backgroundIV.backgroundColor = _decodeBeacon.restaurant.background_color;
   _tableView.backgroundColor = [UIColor clearColor];
   _tableView.separatorColor = [UIColor clearColor];
   _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _tableView.width, self.view.height)];
@@ -216,6 +218,7 @@ OMNMailRUPayVCDelegate>
 #else
   
   OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
+  mailRUPayVC.demo = _decodeBeacon.demo;
   mailRUPayVC.delegate = self;
   [self.navigationController pushViewController:mailRUPayVC animated:YES];
 
@@ -228,7 +231,7 @@ OMNMailRUPayVCDelegate>
 
 - (void)ratingVCDidFinish:(OMNRatingVC *)ratingVC {
   
-  [self didFinish];
+  [self.delegate payOrderVCDidFinish:self];
   
 }
 

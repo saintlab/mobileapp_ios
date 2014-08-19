@@ -26,7 +26,7 @@
 - (instancetype)initWithBaseURL:(NSURL *)url {
   self = [super initWithBaseURL:url];
   if (self) {
-    
+
     _omnomReachabilityManager = [AFNetworkReachabilityManager managerForDomain:url.host];
     [_omnomReachabilityManager startMonitoring];
     __unused BOOL or = _omnomReachabilityManager.isReachable;

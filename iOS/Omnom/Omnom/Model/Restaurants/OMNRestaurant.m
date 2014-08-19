@@ -125,7 +125,7 @@
   }
   
   NSString *path = [NSString stringWithFormat:@"restaurants/%@/menu", self.id];
-  [[OMNOperationManager manager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject];
     menuBlock(menu);

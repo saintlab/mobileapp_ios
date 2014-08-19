@@ -36,7 +36,6 @@
 		9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD6B192F34250053F3A4 /* OMNEditCell.m */; };
 		9319FD6F192F34510053F3A4 /* OMNCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD6E192F34510053F3A4 /* OMNCardView.m */; };
 		9319FD73192F34710053F3A4 /* GRateAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD72192F34710053F3A4 /* GRateAlertView.m */; };
-		9319FDCD192F362F0053F3A4 /* OMNBeaconTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDA4192F362F0053F3A4 /* OMNBeaconTableVC.m */; };
 		9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE1192F365B0053F3A4 /* NSString+jquery.m */; };
 		9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */; };
 		9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
@@ -254,6 +253,12 @@
 		93A59B151933193400AE1A6F /* menu.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B141933193400AE1A6F /* menu.data */; };
 		93A59B1719331B5B00AE1A6F /* orders.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B1619331B5B00AE1A6F /* orders.data */; };
 		93B09C3D18F3F5400027B19F /* orders.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B09C3C18F3F5400027B19F /* orders.json */; };
+		93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */; };
+		93B3688F19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */; };
+		93B3689219A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3689119A3233A00B6E6CB /* OMNMailRuBankCardsModel.m */; };
+		93B3689319A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3689119A3233A00B6E6CB /* OMNMailRuBankCardsModel.m */; };
+		93B3689619A3376100B6E6CB /* OMNResetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3689519A3376100B6E6CB /* OMNResetPasswordVC.m */; };
+		93B3689719A3376100B6E6CB /* OMNResetPasswordVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3689519A3376100B6E6CB /* OMNResetPasswordVC.m */; };
 		93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
 		93B9047819652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
 		93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */; };
@@ -369,8 +374,6 @@
 		9319FD6E192F34510053F3A4 /* OMNCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardView.m; sourceTree = "<group>"; };
 		9319FD71192F34710053F3A4 /* GRateAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRateAlertView.h; sourceTree = "<group>"; };
 		9319FD72192F34710053F3A4 /* GRateAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRateAlertView.m; sourceTree = "<group>"; };
-		9319FDA3192F362F0053F3A4 /* OMNBeaconTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconTableVC.h; sourceTree = "<group>"; };
-		9319FDA4192F362F0053F3A4 /* OMNBeaconTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconTableVC.m; sourceTree = "<group>"; };
 		9319FDE0192F365B0053F3A4 /* NSString+jquery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+jquery.h"; sourceTree = "<group>"; };
 		9319FDE1192F365B0053F3A4 /* NSString+jquery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+jquery.m"; sourceTree = "<group>"; };
 		9319FDE2192F365B0053F3A4 /* NSURL+OMNQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+OMNQuery.h"; sourceTree = "<group>"; };
@@ -582,6 +585,12 @@
 		93A59B141933193400AE1A6F /* menu.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = menu.data; sourceTree = "<group>"; };
 		93A59B1619331B5B00AE1A6F /* orders.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = orders.data; sourceTree = "<group>"; };
 		93B09C3C18F3F5400027B19F /* orders.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orders.json; sourceTree = "<group>"; };
+		93B3688C19A22BB300B6E6CB /* OMNDemoRestaurantVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoRestaurantVC.h; sourceTree = "<group>"; };
+		93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoRestaurantVC.m; sourceTree = "<group>"; };
+		93B3689019A3233A00B6E6CB /* OMNMailRuBankCardsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMailRuBankCardsModel.h; sourceTree = "<group>"; };
+		93B3689119A3233A00B6E6CB /* OMNMailRuBankCardsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMailRuBankCardsModel.m; sourceTree = "<group>"; };
+		93B3689419A3376100B6E6CB /* OMNResetPasswordVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNResetPasswordVC.h; sourceTree = "<group>"; };
+		93B3689519A3376100B6E6CB /* OMNResetPasswordVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNResetPasswordVC.m; sourceTree = "<group>"; };
 		93B9047519652B93007D21C4 /* OMNNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationControllerDelegate.h; sourceTree = "<group>"; };
 		93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		93B9047E19653393007D21C4 /* OMNTransitionFromOrderToOrders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTransitionFromOrderToOrders.h; sourceTree = "<group>"; };
@@ -818,7 +827,6 @@
 				939DA166195405710063AB23 /* Start */,
 				930554E81935DA7C00E6F4EC /* Pay */,
 				930554D619347BFA00E6F4EC /* SearchBeacon */,
-				93A59B1119330F3400AE1A6F /* Other */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1310,6 +1318,8 @@
 				939F990319752BE90051822E /* OMNLoginVC.m */,
 				939F990519752BE90051822E /* OMNPhoneNumberTextFieldDelegate.h */,
 				939F990619752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m */,
+				93B3689419A3376100B6E6CB /* OMNResetPasswordVC.h */,
+				93B3689519A3376100B6E6CB /* OMNResetPasswordVC.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1328,10 +1338,12 @@
 			children = (
 				939F993B19752D680051822E /* OMNBankCard.h */,
 				939F993C19752D680051822E /* OMNBankCard.m */,
-				939F993D19752D680051822E /* OMNBankCardsModel.h */,
-				939F993E19752D680051822E /* OMNBankCardsModel.m */,
 				9345AFAD199A253F00328F73 /* OMNBankCardInfo.h */,
 				9345AFAE199A253F00328F73 /* OMNBankCardInfo.m */,
+				939F993D19752D680051822E /* OMNBankCardsModel.h */,
+				939F993E19752D680051822E /* OMNBankCardsModel.m */,
+				93B3689019A3233A00B6E6CB /* OMNMailRuBankCardsModel.h */,
+				93B3689119A3233A00B6E6CB /* OMNMailRuBankCardsModel.m */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -1347,15 +1359,6 @@
 				9345AFB2199A291C00328F73 /* OMNBankCardUserInfoItem.m */,
 			);
 			path = User;
-			sourceTree = "<group>";
-		};
-		93A59B1119330F3400AE1A6F /* Other */ = {
-			isa = PBXGroup;
-			children = (
-				9319FDA3192F362F0053F3A4 /* OMNBeaconTableVC.h */,
-				9319FDA4192F362F0053F3A4 /* OMNBeaconTableVC.m */,
-			);
-			name = Other;
 			sourceTree = "<group>";
 		};
 		93B9047919652B9B007D21C4 /* Transitions */ = {
@@ -1407,6 +1410,8 @@
 				937A377F1981152300EF5C31 /* OMNSearchRestaurantVC.h */,
 				937A37801981152300EF5C31 /* OMNSearchRestaurantVC.m */,
 				937A37811981152300EF5C31 /* OMNSearchRestaurantVC.xib */,
+				93B3688C19A22BB300B6E6CB /* OMNDemoRestaurantVC.h */,
+				93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -1759,7 +1764,6 @@
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
 				93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
 				938E8F58192F3A200088EF38 /* OMNMenu.m in Sources */,
-				9319FDCD192F362F0053F3A4 /* OMNBeaconTableVC.m in Sources */,
 				9305550D1935DAEA00E6F4EC /* OMNGPBPayVC.m in Sources */,
 				932118361962E88000183729 /* OMNTransitionFromProductToList.m in Sources */,
 				939DA1761958226B0063AB23 /* OMNAnalitics.m in Sources */,
@@ -1800,6 +1804,7 @@
 				939F993F19752D680051822E /* OMNBankCard.m in Sources */,
 				93B90494196550F4007D21C4 /* OMNRatingModel.m in Sources */,
 				938E8F5D192F3A200088EF38 /* OMNCalculationAmount.m in Sources */,
+				93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */,
 				9345AFD1199BB3C700328F73 /* OMNPaymentNotificationControl.m in Sources */,
 				932118261962E12700183729 /* OMNRestaurantsVC.m in Sources */,
 				932118321962E35C00183729 /* OMNTransitionFromListToProduct.m in Sources */,
@@ -1861,11 +1866,13 @@
 				9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */,
 				939F994119752D680051822E /* OMNBankCardsModel.m in Sources */,
 				9319FD6F192F34510053F3A4 /* OMNCardView.m in Sources */,
+				93B3689219A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */,
 				936E71F919925563008FF864 /* OMNNavigationBarProgressView.m in Sources */,
 				938E8F59192F3A200088EF38 /* OMNMenuItem.m in Sources */,
 				930554FC1935DA7C00E6F4EC /* GProdductSelectionVC.m in Sources */,
 				939689B2195BD76E00AAAF9C /* OMNWizardVC.m in Sources */,
 				9345AFB3199A291C00328F73 /* OMNBankCardUserInfoItem.m in Sources */,
+				93B3689619A3376100B6E6CB /* OMNResetPasswordVC.m in Sources */,
 				939F993819752D400051822E /* OMNUserInfoTransitionDelegate.m in Sources */,
 				93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				9328F3981988C6360065DC58 /* OMNSocketManager.m in Sources */,
@@ -1881,6 +1888,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93B3688F19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */,
 				939F994219752D680051822E /* OMNBankCardsModel.m in Sources */,
 				9390D2D2196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
 				939F992F19752CFC0051822E /* OMNEnterCodeView.m in Sources */,
@@ -1898,6 +1906,8 @@
 				936E71DB1991FEFF008FF864 /* OMNViewController.m in Sources */,
 				9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */,
 				9345AFB4199A291C00328F73 /* OMNBankCardUserInfoItem.m in Sources */,
+				93B3689319A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */,
+				93B3689719A3376100B6E6CB /* OMNResetPasswordVC.m in Sources */,
 				93B9048E19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
 				93535F0F19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				937822A11963E65F00CE6661 /* OMNOrderItemCell.m in Sources */,

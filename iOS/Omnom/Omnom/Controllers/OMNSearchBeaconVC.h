@@ -16,6 +16,8 @@ typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNDeco
 
 @interface OMNSearchBeaconVC : OMNLoadingCircleVC
 
+@property (nonatomic, copy) NSString *uuid;
+
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
 
 - (void)didFailOmnom;

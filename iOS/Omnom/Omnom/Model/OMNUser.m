@@ -167,7 +167,7 @@
   
 }
 
-+ (void)recoverUsingData:(NSString *)data completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
++ (void)recoverUsingData:(NSString *)data completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
   if ([data omn_isValidPhone]) {
@@ -176,11 +176,17 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"recover" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", responseObject);
+    NSLog(@"recoverUsingData>%@", responseObject);
+    if ([responseObject[@"status"] isEqualToString:@"success"]) {
+      completionBlock();
+    }
+    else {
+      failureBlock(nil);
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"%@", operation.responseString);
+    NSLog(@"recoverUsingData>%@", operation.responseString);
     failureBlock(error);
     
   }];
@@ -191,10 +197,11 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
+    NSLog(@"%@", responseObject[@"error"]);
     [responseObject decodeToken:completion failure:failureBlock];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
+    NSLog(@"%@", operation.responseString);
     failureBlock(error);
     
   }];
@@ -211,9 +218,12 @@
   [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"user>>%@", responseObject);
-    if ([responseObject[@"status"] isEqualToString:@"success"]) {
-      
-      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+#warning костыль
+    
+    if (responseObject[@"id"]) {
+//      if ([responseObject[@"status"] isEqualToString:@"success"]) {
+//      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject];
       userBlock(user);
       
     }
@@ -225,6 +235,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    NSLog(@"userWithToken>%@", operation.responseString);
     failureBlock(error);
     
   }];

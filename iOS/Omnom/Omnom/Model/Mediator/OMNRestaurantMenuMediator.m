@@ -151,4 +151,8 @@ OMNPayOrderVCDelegate>
   
 }
 
+-(void)payOrderVCDidCancel:(OMNPayOrderVC *)payOrderVC {
+  [self popToRootViewControllerAnimated:YES];
+}
+
 @end
