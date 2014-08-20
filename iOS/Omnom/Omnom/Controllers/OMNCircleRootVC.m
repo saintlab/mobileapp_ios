@@ -7,8 +7,6 @@
 //
 
 #import "OMNCircleRootVC.h"
-#import "OMNToolbarButton.h"
-#import <BlocksKit+UIKit.h>
 
 @interface OMNCircleRootVC ()
 
@@ -48,52 +46,8 @@
   self.label.alpha = 0.0f;
   self.label.textColor = [UIColor blackColor];
   
-  [self showActionBoard];
 }
 
-- (UIBarButtonItem *)buttonWithInfo:(NSDictionary *)info {
-  UIButton *button = [[OMNToolbarButton alloc] init];
-  [button setImage:[UIImage imageNamed:@"cancel_later_icon_small"] forState:UIControlStateNormal];
-  [button bk_addEventHandler:^(id sender) {
-    dispatch_block_t block = info[@"block"];
-    if (block) {
-      block();
-    }
-  } forControlEvents:UIControlEventTouchUpInside];
-  [button setTitle:info[@"title"] forState:UIControlStateNormal];
-  [button setImage:info[@"image"] forState:UIControlStateNormal];
-  [button sizeToFit];
-  return [[UIBarButtonItem alloc] initWithCustomView:button];
-}
-
-- (void)showActionBoard {
-  [self addBottomButtons];
-  
-  NSArray *items = nil;
-  
-  UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-  
-  if (self.buttonInfo.count == 1) {
-    items =
-    @[
-      flex,
-      [self buttonWithInfo:self.buttonInfo[0]],
-      flex,
-      ];
-  }
-  
-  if (self.buttonInfo.count == 2) {
-    items =
-    @[
-      [self buttonWithInfo:self.buttonInfo[0]],
-      flex,
-      [self buttonWithInfo:self.buttonInfo[1]],
-      ];
-  }
-  
-  self.bottomToolbar.items = items;
-  
-}
 
 - (void)setCircleBackground:(UIImage *)circleBackground {
   _circleBackground = circleBackground;
@@ -113,10 +67,6 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
-  if (self.buttonInfo.count) {
-    self.bottomViewConstraint.constant = 0.0f;
-  }
-  
   [UIView animateWithDuration:0.3 animations:^{
     self.label.alpha = 1.0f;
     [self.label layoutIfNeeded];

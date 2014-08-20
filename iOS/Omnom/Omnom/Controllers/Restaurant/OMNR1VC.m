@@ -34,6 +34,10 @@ OMNRestaurantInfoVCDelegate>
   OMNRestaurant *_restaurant;
   OMNDecodeBeacon *_decodeBeacon;
   UIButton *_callWaiterButton;
+  
+  UIImageView *_iv1;
+  UIImageView *_iv2;
+  UIImageView *_iv3;
 }
 
 - (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
@@ -72,48 +76,65 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)beginCircleAnimation {
   
-  UIImageView *iv1 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  iv1.center = self.circleButton.center;
-  [self.backgroundView addSubview:iv1];
+  _iv1 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  _iv1.center = self.circleButton.center;
+  [self.backgroundView addSubview:_iv1];
 
-  UIImageView *iv2 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  iv2.alpha = 0.5f;
-  iv2.center = self.circleButton.center;
-  [self.backgroundView addSubview:iv2];
+  _iv2 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  _iv2.alpha = 0.5f;
+  _iv2.center = self.circleButton.center;
+  [self.backgroundView addSubview:_iv2];
 
-  UIImageView *iv3 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  iv3.alpha = 0.25f;
-  iv3.center = self.circleButton.center;
-  [self.backgroundView addSubview:iv3];
+  _iv3 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  _iv3.alpha = 0.25f;
+  _iv3.center = self.circleButton.center;
+  [self.backgroundView addSubview:_iv3];
   
   NSTimeInterval duration = 2.5;
   NSTimeInterval delay = 0.5;
   float repeatCount = 3.0f;
   
-  [UIView animateWithDuration:duration/2. delay:delay options:UIViewAnimationOptionRepeat|UIViewAnimationOptionAutoreverse animations:^{
-    
-    [UIView setAnimationRepeatCount:3];
-    iv1.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
-    
-  } completion:^(BOOL finished) {
-    
-    [iv1 removeFromSuperview];
-    
-  }];
-  
   [UIView animateWithDuration:duration delay:delay options:UIViewAnimationOptionRepeat animations:^{
     [UIView setAnimationRepeatCount:repeatCount];
     
-    iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
-    iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
+    _iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
+    _iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
 
-    iv2.alpha = 0.0f;
-    iv3.alpha = 0.0f;
+    _iv2.alpha = 0.0f;
+    _iv3.alpha = 0.0f;
     
   } completion:^(BOOL finished) {
+
+    [self finishCircleAnimation];
     
-    [iv2 removeFromSuperview];
-    [iv3 removeFromSuperview];
+  }];
+  
+  [UIView animateWithDuration:duration/2. delay:delay options:UIViewAnimationOptionRepeat|UIViewAnimationOptionAutoreverse animations:^{
+    
+    _iv1.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
+    
+  } completion:^(BOOL finished) {
+  }];
+  
+  
+}
+
+- (void)finishCircleAnimation {
+  
+  [UIView animateWithDuration:0.50 delay:0.0 options:0 animations:^{
+    
+    _iv1.alpha = 0.0f;
+    _iv2.alpha = 0.0f;
+    _iv3.alpha = 0.0f;
+    _iv1.transform = CGAffineTransformIdentity;
+    _iv2.transform = CGAffineTransformIdentity;
+    _iv3.transform = CGAffineTransformIdentity;
+    
+  } completion:^(BOOL finished) {
+
+    [_iv1 removeFromSuperview];
+    [_iv2 removeFromSuperview];
+    [_iv3 removeFromSuperview];
     
   }];
   
@@ -215,10 +236,7 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)callWaiterStop {
   
-  __weak typeof(self)weakSelf = self;
   [_restaurant waiterCallStopCompletion:^{
-    
-    [weakSelf callWaiterDidStop];
     
   } failure:^(NSError *error) {
     
@@ -241,6 +259,7 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)callWaiterDidStop {
   
+  [self finishCircleAnimation];
   [self.circleButton setImage:_restaurant.logo forState:UIControlStateNormal];
   _callWaiterButton.selected = NO;
   [_callWaiterButton sizeToFit];

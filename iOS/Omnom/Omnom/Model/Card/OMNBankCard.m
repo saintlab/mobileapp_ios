@@ -86,10 +86,12 @@
   NSString *path = [NSString stringWithFormat:@"/cards"];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
+    NSLog(@"/cards>%@", response);
     [response decodeCardData:completionBlock failure:failureBlock];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    NSLog(@"/cards>%@", error);
     failureBlock(error);
     
   }];

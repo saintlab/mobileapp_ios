@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "OMNBackgroundVC.h"
 
-@interface OMNCLPermissionsHelpVC : UIViewController
+@interface OMNCLPermissionsHelpVC : OMNBackgroundVC
 
 @end

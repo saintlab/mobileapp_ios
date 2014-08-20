@@ -48,6 +48,7 @@
   [self addSubview:_colorView];
   
   _errorLabel = [[UILabel alloc] init];
+  _errorLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   _errorLabel.textColor = [UIColor redColor];
   _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _errorLabel.numberOfLines = 0;

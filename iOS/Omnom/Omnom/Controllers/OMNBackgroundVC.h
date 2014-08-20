@@ -14,6 +14,8 @@
 @property (strong, nonatomic, readonly) UIToolbar *bottomToolbar;
 @property (strong, nonatomic, readonly) NSLayoutConstraint *bottomViewConstraint;
 
+@property (nonatomic, strong) NSArray *buttonInfo;
+
 - (void)addBottomButtons;
 
 @end

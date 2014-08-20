@@ -18,6 +18,7 @@
 #import "OMNTurnOnBluetoothVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNDemoRestaurantVC.h"
+#import "OMNDenyCLPermissionVC.h"
 
 @interface OMNSearchBeaconVC ()
 <OMNBeaconSearchManagerDelegate,
@@ -120,7 +121,7 @@ OMNDemoRestaurantVCDelegate>
     _didFindBlock(self, decodeBeacon);
   }
   else {
-    [self notFoundBeacons];
+    [self beaconsNotFound];
   }
   
 }
@@ -252,7 +253,7 @@ OMNDemoRestaurantVCDelegate>
     } break;
     case kSearchManagerNotFoundBeacons: {
       
-      [self notFoundBeacons];
+      [self beaconsNotFound];
       
     } break;
       
@@ -285,8 +286,14 @@ OMNDemoRestaurantVCDelegate>
     case kSearchManagerRequestCoreLocationDeniedPermission: {
       
       NSLog(@"kSearchManagerRequestCoreLocationDeniedPermission");
-      OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
-      [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
+      __weak typeof(self)weakSelf = self;
+      [self showDenyLocationPermissionDescriptionWithBlock:^{
+
+        OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
+        navigationPermissionsHelpVC.backgroundImage = weakSelf.backgroundImage;
+        [weakSelf.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
+        
+      }];
       
     } break;
     case kSearchManagerRequestDeviceFaceUpPosition: {
@@ -324,6 +331,20 @@ OMNDemoRestaurantVCDelegate>
   
 }
 
+- (void)showDenyLocationPermissionDescriptionWithBlock:(dispatch_block_t)block {
+  
+  OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
+  denyCLPermissionVC.buttonInfo =
+  @[
+    @{
+      @"title" : NSLocalizedString(@"Включить", nil),
+      @"block" : block,
+      }
+    ];
+  [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
+  
+}
+
 - (void)showNoInternetErrorWithText:(NSString *)text {
   
   OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:self];
@@ -356,7 +377,7 @@ OMNDemoRestaurantVCDelegate>
   
 }
 
-- (void)notFoundBeacons {
+- (void)beaconsNotFound {
   
   OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
   notFoundBeaconVC.faded = YES;

@@ -55,11 +55,17 @@ NSString *kCommaString = @".";
   
 //  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveCardId:) name:OMNSocketIODidReceiveCardIdNotification object:nil];
   [self setupView];
-  [self registerCard];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
   
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  [self registerCard];
+
 }
 
 - (void)setupView {
@@ -67,8 +73,9 @@ NSString *kCommaString = @".";
   _validateButton = [[UIButton alloc] init];
   [_validateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _validateButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_validateButton setBackgroundImage:[UIImage imageNamed:@"roundy_button_white_black_border"] forState:UIControlStateNormal];
-  [_validateButton setBackgroundImage:[UIImage imageNamed:@"roundy_button_white_light_grey_border"] forState:UIControlStateDisabled];
+  [_validateButton setBackgroundImage:[[UIImage imageNamed:@"roundy_button_white_black_border"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 30.0f, 0.0f, 30.0f)] forState:UIControlStateNormal];
+  [_validateButton setBackgroundImage:[[UIImage imageNamed:@"roundy_button_white_light_grey_border"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 30.0f, 0.0f, 30.0f)] forState:UIControlStateDisabled];
+  _validateButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:20.0f];
   [_validateButton setTitle:NSLocalizedString(@"Привязать", nil) forState:UIControlStateNormal];
   _validateButton.enabled = NO;
   [_validateButton addTarget:self action:@selector(validateTap) forControlEvents:UIControlEventTouchUpInside];
@@ -215,12 +222,14 @@ NSString *kCommaString = @".";
 }
 
 - (void)registerCard {
+  
   [_spinner startAnimating];
+#warning register card stub
   NSDictionary *cardInfo =
   @{
 //    @"pan" : @"4111111111111112",
-    @"pan" : @"6011000000000004",
-//    @"pan" : @"639002000000000003",
+//    @"pan" : @"6011000000000004",
+    @"pan" : @"639002000000000003",
     @"exp_date" : @"12.2015",
     @"cvv" : @"123",
     };

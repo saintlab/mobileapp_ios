@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6185.11" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6190.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNCLPermissionsHelpVC">
             <connections>
+                <outlet property="_label" destination="nZu-9J-fJl" id="YiM-1y-O47"/>
+                <outlet property="_pageControl" destination="j2a-6M-xSX" id="sWh-4K-zhe"/>
+                <outlet property="_scrollView" destination="Gc5-5i-U4a" id="w0m-co-25a"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,26 +17,39 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="cl_permission_help_bg_7" translatesAutoresizingMaskIntoConstraints="NO" id="ZcB-Dd-Vo2">
-                    <rect key="frame" x="35" y="140" width="250" height="287"/>
-                </imageView>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gc5-5i-U4a">
+                    <rect key="frame" x="35" y="158" width="250" height="275"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="275" id="OKa-gG-e3z"/>
+                        <constraint firstAttribute="width" constant="250" id="ryb-ji-rrz"/>
+                    </constraints>
+                </scrollView>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="nZu-9J-fJl">
+                    <rect key="frame" x="20" y="20" width="280" height="130"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="130" id="NDW-QA-Wbj"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="j2a-6M-xSX">
+                    <rect key="frame" x="141" y="441" width="39" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </pageControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="ZcB-Dd-Vo2" secondAttribute="centerY" constant="0.5" id="qZK-ob-1kR"/>
-                <constraint firstAttribute="centerX" secondItem="ZcB-Dd-Vo2" secondAttribute="centerX" id="qav-5t-krY"/>
+                <constraint firstAttribute="centerX" secondItem="j2a-6M-xSX" secondAttribute="centerX" constant="-0.5" id="GLU-be-nrg"/>
+                <constraint firstItem="Gc5-5i-U4a" firstAttribute="top" secondItem="nZu-9J-fJl" secondAttribute="bottom" constant="8" id="NTa-dq-PPT"/>
+                <constraint firstItem="nZu-9J-fJl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="PJG-wf-pfg"/>
+                <constraint firstItem="nZu-9J-fJl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="cbH-wZ-Vh7"/>
+                <constraint firstAttribute="centerX" secondItem="Gc5-5i-U4a" secondAttribute="centerX" id="nED-g6-D7V"/>
+                <constraint firstItem="j2a-6M-xSX" firstAttribute="top" secondItem="Gc5-5i-U4a" secondAttribute="bottom" constant="8" id="s91-xD-Lf9"/>
+                <constraint firstAttribute="trailing" secondItem="nZu-9J-fJl" secondAttribute="trailing" constant="20" id="vUV-mW-N6D"/>
             </constraints>
         </view>
     </objects>
-    <resources>
-        <image name="cl_permission_help_bg_7" width="250" height="287"/>
-    </resources>
-    <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar"/>
-        <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4">
-            <size key="portraitSize" width="320" height="568"/>
-            <size key="landscapeSize" width="568" height="320"/>
-        </simulatedScreenMetrics>
-    </simulatedMetricsContainer>
 </document>

@@ -164,6 +164,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 }
 
 - (BOOL)readyForPush:(OMNDecodeBeacon *)decodeBeacon {
+  
+  if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+    return NO;
+  }
+  
 #warning readyForPush
   return YES;
   BOOL readyForPush = NO;
