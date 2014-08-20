@@ -18,6 +18,9 @@
 #import "OMNOrderToRestaurantTransition.h"
 #import "OMNCircleFadeTransition.h"
 #import "UINavigationController+omn_replace.h"
+#import "OMNSlideUpTransition.h"
+#import "OMNSlideDownTransition.h"
+#import "OMNTransitionFromProductToList.h"
 
 @implementation OMNNavigationControllerDelegate {
   NSMutableDictionary *_transitions;
@@ -29,6 +32,7 @@
     
     _transitions = [NSMutableDictionary dictionary];
     
+    [self addTansitionForClass:[OMNTransitionFromProductToList class]];
     [self addTansitionForClass:[OMNCircleFadeTransition class]];
     [self addTansitionForClass:[OMNTransitionFromListToProduct class]];
     [self addTansitionForClass:[OMNTransitionFromOrdersToOrder class]];
@@ -39,6 +43,8 @@
     [self addTansitionForClass:[OMNSearchBeaconToPayOrderTransition class]];
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
+    [self addTansitionForClass:[OMNSlideUpTransition class]];
+    [self addTansitionForClass:[OMNSlideDownTransition class]];
     
   }
   return self;

@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-NSString * const kBaseUrlString = @"http://omnom.stand.saintlab.com";
-//NSString * const kBaseUrlString = @"http://omnom.laaaab.com";
+//NSString * const kBaseUrlString = @"http://omnom.stand.saintlab.com";
+NSString * const kBaseUrlString = @"http://omnom.laaaab.com";
 
 NSString * const kAuthorizationUrlString = @"http://wicket.laaaab.com";
 

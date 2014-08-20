@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+@class OMNFeedItem;
 
 @interface OMNRestaurantFeedItemCell : UITableViewCell
 
-- (void)setFeedItem:(NSDictionary *)feedItem;
+@property (nonatomic, strong) UIImageView *iconView;
+
+- (void)setFeedItem:(OMNFeedItem *)feedItem;
 
 @end

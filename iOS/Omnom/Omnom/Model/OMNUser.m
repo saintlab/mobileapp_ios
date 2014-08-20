@@ -73,6 +73,7 @@
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
     NSLog(@"registerWithCompletion>%@", responseObject);
+    NSLog(@"registerWithCompletion>%@", responseObject[@"error"][@"message"]);
     if ([responseObject[@"status"] isEqualToString:@"registered"]) {
       completion();
     }

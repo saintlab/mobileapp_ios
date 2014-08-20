@@ -7,21 +7,21 @@
 //
 
 #import "OMNTransitionFromListToProduct.h"
-#import "OMNRestaurantMenuVC.h"
+#import "OMNRestaurantInfoVC.h"
 #import "OMNProductDetailsVC.h"
-#import "OMNStubProductCell.h"
+#import "OMNRestaurantFeedItemCell.h"
 
 @implementation OMNTransitionFromListToProduct {
 
 }
 
 + (NSArray *)keys {
-  return @[[self keyFromClass:[OMNRestaurantMenuVC class] toClass:[OMNProductDetailsVC class]]];
+  return @[[self keyFromClass:[OMNRestaurantInfoVC class] toClass:[OMNProductDetailsVC class]]];
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
 
-  OMNRestaurantMenuVC *fromViewController = (OMNRestaurantMenuVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  OMNRestaurantInfoVC *fromViewController = (OMNRestaurantInfoVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNProductDetailsVC *toViewController = (OMNProductDetailsVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
@@ -29,7 +29,8 @@
   
   // Get a snapshot of the thing cell we're transitioning from
   
-  OMNStubProductCell *cell = (OMNStubProductCell *)[fromViewController.productsView cellForItemAtIndexPath:[fromViewController.productsView indexPathsForSelectedItems].firstObject];
+  
+  OMNRestaurantFeedItemCell *cell = (OMNRestaurantFeedItemCell *)[fromViewController.tableView cellForRowAtIndexPath:[fromViewController.tableView indexPathForSelectedRow]];
   
   UIView *cellImageSnapshot = [cell.iconView snapshotViewAfterScreenUpdates:NO];
   cellImageSnapshot.frame = [containerView convertRect:cell.iconView.frame fromView:cell.iconView.superview];
@@ -38,18 +39,22 @@
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   toViewController.view.alpha = 0;
-  toViewController.imageView.hidden = YES;
   
+  toViewController.imageView.hidden = YES;
+
   [containerView addSubview:toViewController.view];
   [containerView addSubview:cellImageSnapshot];
+
+  [toViewController.view layoutIfNeeded];
   
   [UIView animateWithDuration:duration animations:^{
     // Fade in the second view controller's view
     toViewController.view.alpha = 1.0;
     
     // Move the cell snapshot so it's over the second view controller's image view
-    CGRect frame = [containerView convertRect:toViewController.imageView.frame fromView:toViewController.view];
+    CGRect frame = [containerView convertRect:toViewController.imageView.frame fromView:toViewController.imageView];
     cellImageSnapshot.frame = frame;
+    
   } completion:^(BOOL finished) {
     // Clean up
     toViewController.imageView.hidden = NO;
@@ -62,7 +67,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.3;
+  return 0.5;
 }
 
 @end

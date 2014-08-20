@@ -226,9 +226,15 @@
   }
 
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.id, tableID];
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
-    ordersBlock([ordersData decodeOrdersWithError:nil]);
+    if ([response isKindOfClass:[NSArray class]]) {
+      NSArray *ordersData = response;
+      ordersBlock([ordersData decodeOrdersWithError:nil]);
+    }
+    else {
+      errorBlock(nil);
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     

@@ -11,6 +11,7 @@
 #import "OMNAddBankCardVC.h"
 #import "OMNConstants.h"
 #import "OMNMailRUCardConfirmVC.h"
+#import "OMNMailRuBankCardsModel.h"
 
 @interface OMNBankCardsVC ()
 <OMNAddBankCardVCDelegate,
@@ -28,7 +29,7 @@ OMNMailRUCardConfirmVCDelegate>
   
   [self setupInterface];
   
-  _bankCardsModel = [[OMNBankCardsModel alloc] init];
+  _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
   _bankCardsModel.canDeleteCard = YES;
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {

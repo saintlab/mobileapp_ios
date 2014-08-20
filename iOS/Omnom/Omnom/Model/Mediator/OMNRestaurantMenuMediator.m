@@ -70,9 +70,9 @@ OMNPayOrderVCDelegate>
 
 - (void)showProductDetails:(OMNProduct *)product {
   
-  OMNProductDetailsVC *productDetailsVC = [[OMNProductDetailsVC alloc] initWithProduct:product];
-  productDetailsVC.delegate = self;
-  [_rootViewController.navigationController pushViewController:productDetailsVC animated:YES];
+//  OMNProductDetailsVC *productDetailsVC = [[OMNProductDetailsVC alloc] initWithProduct:product];
+//  productDetailsVC.delegate = self;
+//  [_rootViewController.navigationController pushViewController:productDetailsVC animated:YES];
   
 }
 

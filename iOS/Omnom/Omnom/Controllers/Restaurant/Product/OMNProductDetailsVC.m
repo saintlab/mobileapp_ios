@@ -9,6 +9,7 @@
 #import "OMNProductDetailsVC.h"
 #import "OMNTransitionFromProductToList.h"
 #import "OMNRestaurantMenuVC.h"
+#import "OMNFeedItem.h"
 
 @interface OMNProductDetailsVC ()
 <UINavigationControllerDelegate>
@@ -18,31 +19,95 @@
 @implementation OMNProductDetailsVC {
 
   UIPercentDrivenInteractiveTransition *_interactivePopTransition;
-  __weak IBOutlet UILabel *_textLabel;
-  __weak IBOutlet UIImageView *_bgIV;
-  
+  UILabel *_textLabel;
+  UIScrollView *_scroll;
 }
 
-- (instancetype)initWithProduct:(OMNProduct *)product {
-  self = [super initWithNibName:@"OMNProductDetailsVC" bundle:nil];
+- (instancetype)initFeedItem:(OMNFeedItem *)feedItem {
+  self = [super init];
   if (self) {
-    _product = product;
+    _feedItem = feedItem;
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  [self setup];
   
-  self.imageView.image = [UIImage imageNamed:_product.imageName];
+  self.view.backgroundColor = [UIColor whiteColor];
   
-  _textLabel.textColor = [UIColor whiteColor];
-  _textLabel.font = FuturaMediumFont(15);
-  _textLabel.text = _product.text;
+  _imageView.image = _feedItem.image;
+  _imageView.contentMode = UIViewContentModeScaleAspectFill;
   
+  _textLabel.textColor = [UIColor blackColor];
+  _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _textLabel.text = _feedItem.Description;
+
   UIScreenEdgePanGestureRecognizer *popRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePopRecognizer:)];
   popRecognizer.edges = UIRectEdgeLeft;
   [self.view addGestureRecognizer:popRecognizer];
+  
+}
+
+- (void)setup {
+  
+  _scroll = [[UIScrollView alloc] init];
+  _scroll.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_scroll];
+  
+  UIView *contentView = [[UIView alloc] init];
+  contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  [_scroll addSubview:contentView];
+  
+  _imageView = [[UIImageView alloc] init];
+  _imageView.translatesAutoresizingMaskIntoConstraints = NO;
+  [contentView addSubview:_imageView];
+  
+  _textLabel = [[UILabel alloc] init];
+  _textLabel.numberOfLines = 0;
+  _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  [contentView addSubview:_textLabel];
+  
+  NSDictionary *views =
+  @{
+    @"imageView" : _imageView,
+    @"textLabel" : _textLabel,
+    @"contentView" : contentView,
+//    @"topLayoutGuide" : self.topLayoutGuide,
+    @"scroll" : _scroll,
+    };
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views]];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scroll]|" options:0 metrics:nil views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:0 metrics:nil views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textLabel]-|" options:0 metrics:nil views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(250)]-[textLabel]-|" options:0 metrics:nil views:views]];
+  
+  NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:contentView
+                                                                    attribute:NSLayoutAttributeLeading
+                                                                    relatedBy:0
+                                                                       toItem:self.view
+                                                                    attribute:NSLayoutAttributeLeft
+                                                                   multiplier:1.0
+                                                                     constant:0];
+  [self.view addConstraint:leftConstraint];
+  
+  NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:contentView
+                                                                     attribute:NSLayoutAttributeTrailing
+                                                                     relatedBy:0
+                                                                        toItem:self.view
+                                                                     attribute:NSLayoutAttributeRight
+                                                                    multiplier:1.0
+                                                                      constant:0];
+  [self.view addConstraint:rightConstraint];
+  
+  [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
   
 }
 
@@ -54,15 +119,8 @@
 
 #pragma mark UIViewController methods
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 #pragma mark UINavigationControllerDelegate methods

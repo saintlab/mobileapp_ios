@@ -8,11 +8,11 @@
 
 #import "OMNRestaurantFeedItemCell.h"
 #import <UIImageView+AFNetworking.h>
+#import "OMNFeedItem.h"
 
 @implementation OMNRestaurantFeedItemCell {
-  NSDictionary *_feedItem;
+  OMNFeedItem *_feedItem;
   BOOL _constraintsUpdated;
-  UIImageView *_imageView;
   UILabel *_textLabel;
   UILabel *_priceLabel;
 }
@@ -21,11 +21,10 @@
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     
-    _imageView = [[UIImageView alloc] init];
-    _imageView.contentMode = UIViewContentModeScaleAspectFill;
-    _imageView.translatesAutoresizingMaskIntoConstraints = NO;
-    [_imageView sizeToFit];
-    [self.contentView addSubview:_imageView];
+    _iconView = [[UIImageView alloc] init];
+    _iconView.contentMode = UIViewContentModeScaleAspectFill;
+    _iconView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:_iconView];
     
     _textLabel = [[UILabel alloc] init];
     _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
@@ -41,11 +40,12 @@
   return self;
 }
 
-- (void)setFeedItem:(NSDictionary *)feedItem {
+- (void)setFeedItem:(OMNFeedItem *)feedItem {
   _feedItem = feedItem;
-  _textLabel.text = feedItem[@"title"];
-  _priceLabel.text = feedItem[@"price"];
-  [_imageView setImageWithURL:[NSURL URLWithString:feedItem[@"image"]]];
+  _textLabel.text = feedItem.title;
+  _priceLabel.text = feedItem.price;
+  _iconView.image = feedItem.image;
+//  [_iconView setImageWithURL:[NSURL URLWithString:feedItem.imageURL]];
   
 }
 
@@ -63,7 +63,7 @@
     @"contentView" : self.contentView,
     @"textLabel" : _textLabel,
     @"priceLabel" : _priceLabel,
-    @"imageView" : _imageView,
+    @"imageView" : _iconView,
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:0 metrics:0 views:views]];

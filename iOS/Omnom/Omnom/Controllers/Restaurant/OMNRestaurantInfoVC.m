@@ -11,6 +11,12 @@
 #import <AFNetworking.h>
 #import "OMNRestaurantInfo.h"
 #import "OMNRestaurantFeedItemCell.h"
+#import "OMNProductDetailsVC.h"
+
+@interface OMNRestaurantInfoVC ()
+<OMNProductDetailsVCDelegate>
+
+@end
 
 @implementation OMNRestaurantInfoVC {
   OMNRestaurantInfo *_restaurantInfo;
@@ -72,6 +78,15 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+}
+
+- (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem {
+  UITableViewCell *cell = nil;
+  NSUInteger index = [_restaurantInfo.feedItems indexOfObject:feedItem];
+  if (index != NSNotFound) {
+    cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:2]];
+  }
+  return cell;
 }
 
 #pragma mark - UITableViewDataSource
@@ -154,6 +169,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   switch (indexPath.section) {
     case 0: {
+      [tableView deselectRowAtIndexPath:indexPath animated:YES];
       _restaurantInfo.selected = !_restaurantInfo.selected;
       [UIView animateWithDuration:0.3 animations:^{
         _arrowView.transform = CGAffineTransformMakeRotation((_restaurantInfo.selected) ? (M_PI) : (0));
@@ -163,14 +179,26 @@
       [tableView endUpdates];
     } break;
     case 1: {
-      
+      [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } break;
     case 2: {
       
+      OMNFeedItem *feedItem = _restaurantInfo.feedItems[indexPath.row];
+      OMNProductDetailsVC *productDetailsVC = [[OMNProductDetailsVC alloc] initFeedItem:feedItem];
+      productDetailsVC.delegate = self;
+      [self.navigationController pushViewController:productDetailsVC animated:YES];
+      
     } break;
   }
-  [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
+}
+
+#pragma mark - OMNProductDetailsVCDelegate
+
+- (void)productDetailsVCDidFinish:(OMNProductDetailsVC *)productDetailsVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "OMNRestaurantInfo.h"
+#import "OMNFeedItem.h"
 
 @implementation OMNRestaurantInfo
 
@@ -14,8 +15,14 @@
   self = [super init];
   if (self) {
     self.title = jsonData[@"title"];
-    self.feedItems = jsonData[@"feedItems"];
+    NSArray *rawFeedItems = jsonData[@"feedItems"];
+    NSMutableArray *feedItems = [NSMutableArray arrayWithCapacity:rawFeedItems.count];
+    [rawFeedItems enumerateObjectsUsingBlock:^(id feedItemData, NSUInteger idx, BOOL *stop) {
+      OMNFeedItem *feedItem = [[OMNFeedItem alloc] initWithJsonData:feedItemData];
+      [feedItems addObject:feedItem];
+    }];
     
+    self.feedItems = [feedItems copy];
     self.shortItems = [self infoItemsFromData:jsonData[@"shortItems"]];
     self.fullItems = [self infoItemsFromData:jsonData[@"fullItems"]];
     

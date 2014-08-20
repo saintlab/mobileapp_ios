@@ -14,6 +14,7 @@
   
   OMNUserInfoItem *item = [[[self class] alloc] init];
   item.title = title;
+  item.titleColor = [UIColor blackColor];
   item.actionBlock = actionBlock;
   return item;
   
@@ -23,6 +24,7 @@
   
   cell.textLabel.text = self.title;
   cell.accessoryType = self.cellAccessoryType;
+  cell.textLabel.textColor = self.titleColor;
   
 }
 

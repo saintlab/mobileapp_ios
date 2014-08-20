@@ -36,6 +36,7 @@ end
 target :omnom do
   import_all
   pod 'EAIntroView'
+  pod 'SDWebImage'
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
 

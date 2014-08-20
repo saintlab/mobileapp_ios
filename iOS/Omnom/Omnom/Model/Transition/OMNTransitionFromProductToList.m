@@ -7,20 +7,20 @@
 //
 
 #import "OMNTransitionFromProductToList.h"
-#import "OMNRestaurantMenuVC.h"
+#import "OMNRestaurantInfoVC.h"
 #import "OMNProductDetailsVC.h"
-#import "OMNStubProductCell.h"
+#import "OMNRestaurantFeedItemCell.h"
 
 @implementation OMNTransitionFromProductToList
 
 + (NSArray *)keys {
-  return @[[self keyFromClass:[OMNProductDetailsVC class] toClass:[OMNRestaurantMenuVC class]]];
+  return @[[self keyFromClass:[OMNProductDetailsVC class] toClass:[OMNRestaurantInfoVC class]]];
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNProductDetailsVC *fromViewController = (OMNProductDetailsVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-  OMNRestaurantMenuVC *toViewController = (OMNRestaurantMenuVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  OMNRestaurantInfoVC *toViewController = (OMNRestaurantInfoVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
@@ -31,7 +31,7 @@
   fromViewController.imageView.hidden = YES;
   
   // Get the cell we'll animate to
-  OMNStubProductCell *cell = [toViewController collectionViewCellForProduct:fromViewController.product];
+  OMNRestaurantFeedItemCell *cell = (OMNRestaurantFeedItemCell *)[toViewController cellForFeedItem:fromViewController.feedItem];
   cell.iconView.hidden = YES;
 
   // Setup the initial view states
@@ -44,7 +44,8 @@
     fromViewController.view.alpha = 0.0;
     
     // Move the image view
-    imageSnapshot.frame = [containerView convertRect:cell.iconView.frame fromView:cell.iconView.superview];
+    imageSnapshot.frame = [containerView convertRect:cell.iconView.frame fromView:cell.iconView];
+    
   } completion:^(BOOL finished) {
     // Clean up
     [imageSnapshot removeFromSuperview];
@@ -57,7 +58,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.3;
+  return 0.5;
 }
 
 @end

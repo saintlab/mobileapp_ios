@@ -14,6 +14,7 @@
 #import "OMNOperationManager.h"
 #import "OMNViewController.h"
 #import "OMNShakeWindow.h"
+#import <SDWebImageManager.h>
 
 @interface GAppDelegate ()
 
@@ -40,11 +41,21 @@
   
 }
 
+- (void)initCache {
+  
+  [SDWebImageManager sharedManager].imageCache.maxCacheAge = 30 * 24 * 60 * 60;
+  [SDWebImageManager sharedManager].imageCache.maxCacheSize = 1024 * 1024 * 10;
+  [SDWebImageManager sharedManager].imageDownloader.executionOrder = SDWebImageDownloaderLIFOExecutionOrder;
+  
+}
+
 - (void)startApplication:(NSDictionary *)info {
 
   if (_applicationStartedForeground) {
     return;
   }
+  
+  [self initCache];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
   UIFont *font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];

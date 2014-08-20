@@ -106,7 +106,7 @@
   __weak typeof(self)weakSelf = self;
   [[OMNMailRuAcquiring acquiring] cardDelete:self.external_card_id user_login:self.user_id completion:^(id response) {
     
-    if (response) {
+    if ([response[@"status"] isEqualToString:@"OK"]) {
       
       NSString *path = [NSString stringWithFormat:@"/cards/%@", self.id];
       [[OMNOperationManager sharedManager] DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -117,6 +117,7 @@
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"delete/cards/>%@", error);
+        NSLog(@"delete/cards/>%@", operation.responseString);
         weakSelf.deleting = NO;
         failureBlock(error);
       }];

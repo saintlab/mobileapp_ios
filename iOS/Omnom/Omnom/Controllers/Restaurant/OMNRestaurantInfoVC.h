@@ -10,12 +10,15 @@
 #import "OMNRestaurant.h"
 
 @protocol OMNRestaurantInfoVCDelegate;
+@class OMNFeedItem;
 
 @interface OMNRestaurantInfoVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNRestaurantInfoVCDelegate> delegate;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
+
+- (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem;
 
 @end
 

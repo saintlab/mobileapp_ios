@@ -24,7 +24,7 @@
     _sectionItems =
     @[
       self.moneyItems,
-      self.otherItems,
+//      self.otherItems,
       self.logoutItems,
       ];
    
@@ -51,11 +51,12 @@
 - (NSArray *)moneyItems {
   
   OMNUserInfoItem *cardItem = [[OMNBankCardUserInfoItem alloc] init];
+  return @[cardItem];
+  
   OMNUserInfoItem *promoItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Промо-коды", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
     
   }];
   promoItem.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-  
   return @[cardItem, promoItem];
   
 }
@@ -99,6 +100,7 @@
     [logoutSheet showInView:vc.view.window];
     
   }];
+  logoutItem.titleColor = [UIColor redColor];
   return @[logoutItem];
   
 }

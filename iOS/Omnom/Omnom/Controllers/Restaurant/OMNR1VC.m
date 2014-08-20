@@ -332,8 +332,7 @@ OMNRestaurantInfoVCDelegate>
       
     } error:^(NSError *error) {
       
-      [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-      [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+      [weakSelf processOrders:nil];
       
     }];
     
