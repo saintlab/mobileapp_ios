@@ -16,13 +16,13 @@
 #import "OMNDecodeBeaconManager.h"
 
 @interface OMNStartVC ()
-<OMNAuthorizationVCDelegate>
+<OMNAuthorizationVCDelegate,
+OMNSearchRestaurantVCDelegate>
 
 @end
 
 @implementation OMNStartVC {
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
-  UINavigationController *_navVC;
   BOOL _tokenIsChecked;
 }
 
@@ -74,12 +74,9 @@
 
 - (void)startSearchingBeacons {
   
-  __weak typeof(self)weakSelf = self;
-  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithBlock:^(OMNDecodeBeacon *decodeBeacon) {
-    
-    [weakSelf didFindRestaurant:decodeBeacon];
-    
-  }];
+
+  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
+  searchRestaurantVC.delegate = self;
   
   NSData *decodeBeaconData = self.info[OMNDecodeBeaconManagerNotificationLaunchKey];
   if (decodeBeaconData) {
@@ -87,9 +84,9 @@
     searchRestaurantVC.decodeBeacon = decodeBeacon;
   }
 
-  _navVC = [[UINavigationController alloc] initWithRootViewController:searchRestaurantVC];
-  _navVC.delegate = _navigationControllerDelegate;
-  [self presentViewController:_navVC animated:NO completion:nil];
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:searchRestaurantVC];
+  navigationController.delegate = _navigationControllerDelegate;
+  [self presentViewController:navigationController animated:NO completion:nil];
 
 }
 
@@ -111,10 +108,12 @@
   
 }
 
-- (void)didFindRestaurant:(OMNDecodeBeacon *)decodeBeacon {
+#pragma mark - OMNSearchRestaurantVCDelegate
+
+- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
   OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithDecodeBeacon:decodeBeacon];
-  [_navVC pushViewController:restaurantMenuVC animated:YES];
+  [searchBeaconVC.navigationController pushViewController:restaurantMenuVC animated:YES];
   
 }
 

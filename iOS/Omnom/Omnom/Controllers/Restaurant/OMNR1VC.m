@@ -40,6 +40,10 @@ OMNRestaurantInfoVCDelegate>
   UIImageView *_iv3;
 }
 
+- (void)dealloc {
+  [[OMNSocketManager manager] disconnect];
+}
+
 - (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
   self = [super initWithParent:nil];
   if (self) {
@@ -157,7 +161,9 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)socketConnect {
   
-  [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token];
+  if (NO == _decodeBeacon.demo) {
+    [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token];
+  }
   
 }
 

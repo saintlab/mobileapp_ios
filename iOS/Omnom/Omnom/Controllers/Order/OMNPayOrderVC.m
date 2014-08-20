@@ -51,7 +51,11 @@ OMNMailRUPayVCDelegate>
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [[OMNSocketManager manager] leave:_order.id];
+  
+  if (NO == _decodeBeacon.demo) {
+    [[OMNSocketManager manager] leave:_order.id];
+  }
+  
 }
 
 - (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon order:(OMNOrder *)order {
@@ -67,7 +71,9 @@ OMNMailRUPayVCDelegate>
   
   [super viewDidLoad];
 
-  [[OMNSocketManager manager] join:_order.id];
+  if (NO == _decodeBeacon.demo) {
+    [[OMNSocketManager manager] join:_order.id];
+  }
   
   _dataSource = [[OMNPaymentVCDataSource alloc] initWithOrder:_order];
   _tableView.dataSource = _dataSource;
@@ -103,8 +109,9 @@ OMNMailRUPayVCDelegate>
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   
-  CGFloat realContentSize = _tableView.contentSize.height - _tableView.tableHeaderView.height;
-  CGFloat bottomInset = MAX(0.0f, _tableView.height - realContentSize - _paymentView.height) + _paymentView.height;
+//  CGFloat realContentSize = _tableView.contentSize.height - _tableView.tableHeaderView.height;
+//  CGFloat bottomInset = MAX(0.0f, _tableView.height - realContentSize - _paymentView.height) + _paymentView.height;
+  CGFloat bottomInset = _paymentView.height;
   CGFloat visibleTablePart = _tableView.height - bottomInset;
   CGFloat topInset = MIN(0.0f, visibleTablePart - _tableView.contentSize.height);
   _tableView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
@@ -145,7 +152,10 @@ OMNMailRUPayVCDelegate>
   _backgroundIV.backgroundColor = _decodeBeacon.restaurant.background_color;
   _tableView.backgroundColor = [UIColor clearColor];
   _tableView.separatorColor = [UIColor clearColor];
-  _tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _tableView.width, self.view.height)];
+  UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _tableView.width, self.view.height)];
+  logoView.contentMode = UIViewContentModeBottom;
+  logoView.image = [UIImage imageNamed:@"bill_placeholder_icon"];
+  _tableView.tableHeaderView = logoView;
   _tableView.tableHeaderView.backgroundColor = [UIColor whiteColor];
   
   _tableView.tableFooterView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cheque_bottom_bg"]];
@@ -157,16 +167,9 @@ OMNMailRUPayVCDelegate>
     };
   _tableView.translatesAutoresizingMaskIntoConstraints = NO;
   
-  NSDictionary *metrics =
-  @{
-    @"paymentH" : @(_paymentView.height)
-    };
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[table]|" options:0 metrics:nil views:views]];
   
-  NSArray *constraintsTable_H = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[table]|" options:0 metrics:nil views:views];
-  [self.view addConstraints:constraintsTable_H];
-  
-  NSArray *constraintsTable_V = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[table]|" options:0 metrics:metrics views:views];
-  [self.view addConstraints:constraintsTable_V];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[table]|" options:0 metrics:nil views:views]];
   
   UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap:)];
   [_tableView addGestureRecognizer:tapGR];

@@ -18,6 +18,7 @@ extern NSString * const OMNSocketIOBillCallDoneNotification;
 + (instancetype)manager;
 
 - (void)connectWithToken:(NSString *)token;
+- (void)disconnect;
 - (void)leave:(NSString *)roomId;
 - (void)join:(NSString *)roomId;
 

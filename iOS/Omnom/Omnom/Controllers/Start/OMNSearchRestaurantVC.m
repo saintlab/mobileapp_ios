@@ -17,15 +17,13 @@
 
 @implementation OMNSearchRestaurantVC {
 
-  OMNDecodeBeaconBlock _decodeBeaconBlock;
   OMNLoadingCircleVC *_loadingCircleVC;
   
 }
 
-- (instancetype)initWithBlock:(OMNDecodeBeaconBlock)block {
+- (instancetype)init {
   self = [super initWithNibName:@"OMNSearchRestaurantVC" bundle:nil];
   if (self) {
-    _decodeBeaconBlock = block;
   }
   return self;
 }
@@ -103,23 +101,28 @@
 - (void)didLoadLogoForRestaurant:(OMNDecodeBeacon *)decodeBeacon {
   
   __weak typeof(_loadingCircleVC)weakBeaconSearch = _loadingCircleVC;
-  OMNDecodeBeaconBlock decodeBeaconBlock = _decodeBeaconBlock;
-  
   UIImage *logo = decodeBeacon.restaurant.logo;
   UIColor *restaurantBackgroundColor = decodeBeacon.restaurant.background_color;
+  __weak typeof(self)weakSelf = self;
   [_loadingCircleVC setLogo:logo withColor:restaurantBackgroundColor completion:^{
     
     [decodeBeacon.restaurant loadBackground:^(UIImage *image) {
       
       [weakBeaconSearch finishLoading:^{
         
-        decodeBeaconBlock(decodeBeacon);
+        [weakSelf didLoadBackgroundForRestaurant:decodeBeacon];
         
       }];
 
     }];
     
   }];
+  
+}
+
+- (void)didLoadBackgroundForRestaurant:(OMNDecodeBeacon *)decodeBeacon {
+  
+  [self.delegate searchRestaurantVC:self didFindBeacon:decodeBeacon];
   
 }
 

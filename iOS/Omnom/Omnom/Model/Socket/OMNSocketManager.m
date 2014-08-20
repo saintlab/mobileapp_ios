@@ -102,4 +102,10 @@ NSString * const kSocketUrl = @"http://omnom.laaaab.com";
   
 }
 
+- (void)disconnect {
+  
+  _socket = nil;
+  
+}
+
 @end
