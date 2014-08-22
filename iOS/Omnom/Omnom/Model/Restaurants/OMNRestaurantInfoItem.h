@@ -26,4 +26,6 @@ typedef NS_ENUM(NSInteger, RestaurantInfoItemType) {
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
+- (void)open;
+
 @end

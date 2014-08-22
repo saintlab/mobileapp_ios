@@ -198,6 +198,10 @@ UIScrollViewDelegate>
       [tableView endUpdates];
     } break;
     case 1: {
+      
+      NSArray *items = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems) : (_restaurantInfo.shortItems);
+      OMNRestaurantInfoItem *item = items[indexPath.row];
+      [item open];
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
     } break;
     case 2: {

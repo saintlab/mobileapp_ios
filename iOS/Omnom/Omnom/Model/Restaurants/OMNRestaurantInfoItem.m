@@ -66,4 +66,20 @@ RestaurantInfoItemType typeFromString(NSString *s) {
   return icon;
 }
 
+- (void)open {
+  
+  switch (self.type) {
+    case kRestaurantInfoItemTypeAddress: {
+      NSString *query = [[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.value] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:query]];
+    } break;
+    case kRestaurantInfoItemTypePhone: {
+      
+    } break;
+    default:
+      break;
+  }
+  
+}
+
 @end

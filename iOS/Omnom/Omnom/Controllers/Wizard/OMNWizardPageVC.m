@@ -14,7 +14,7 @@
 @end
 
 @implementation OMNWizardPageVC {
-  
+   
   __weak IBOutlet UIImageView *_iv;
   __weak IBOutlet UILabel *_textLabel;
   __weak IBOutlet UIButton *_circleButton;
