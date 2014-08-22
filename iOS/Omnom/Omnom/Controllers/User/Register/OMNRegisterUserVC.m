@@ -31,13 +31,6 @@
   OMNUser *_user;
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-  }
-  return self;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   
@@ -100,10 +93,13 @@
   
   _emailTF = [[OMNErrorTextField alloc] init];
   _emailTF.textField.keyboardType = UIKeyboardTypeEmailAddress;
+  _emailTF.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+  _emailTF.textField.autocorrectionType = UITextAutocorrectionTypeNo;
   _emailTF.textField.placeholder = NSLocalizedString(@"Почта", nil);
   [contentView addSubview:_emailTF];
   
   _birthdayTF = [[OMNErrorTextField alloc] init];
+  _birthdayTF.textField.inputView = _datePicker;
   [contentView addSubview:_birthdayTF];
   
   NSDictionary *views =
@@ -118,56 +114,29 @@
     @"scroll" : _scroll,
     };
   
-  NSArray *h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views];
-  [self.view addConstraints:h];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views]];
   
-  NSArray *v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:nil views:views];
-  [self.view addConstraints:v];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:nil views:views]];
 
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf1]-|" options:0 metrics:nil views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf2]-|" options:0 metrics:nil views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf3]-|" options:0 metrics:nil views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf4]-|" options:0 metrics:nil views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[hintLabel]-|" options:0 metrics:nil views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-45-[tf4]-[hintLabel]-|" options:0 metrics:nil views:views]];
+
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   
-  h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf1]-|" options:0 metrics:nil views:views];
-  [contentView addConstraints:h];
-  h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf2]-|" options:0 metrics:nil views:views];
-  [contentView addConstraints:h];
-  h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf3]-|" options:0 metrics:nil views:views];
-  [contentView addConstraints:h];
-  h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf4]-|" options:0 metrics:nil views:views];
-  [contentView addConstraints:h];
-  h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[hintLabel]-|" options:0 metrics:nil views:views];
-  [contentView addConstraints:h];
-  v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-45-[tf4]-[hintLabel]-|" options:0 metrics:nil views:views];
-  [contentView addConstraints:v];
-
-
-
-  NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:contentView
-                                                                    attribute:NSLayoutAttributeLeading
-                                                                    relatedBy:0
-                                                                       toItem:self.view
-                                                                    attribute:NSLayoutAttributeLeft
-                                                                   multiplier:1.0
-                                                                     constant:0];
-  [self.view addConstraint:leftConstraint];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTrailing relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
   
-  NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:contentView
-                                                                     attribute:NSLayoutAttributeTrailing
-                                                                     relatedBy:0
-                                                                        toItem:self.view
-                                                                     attribute:NSLayoutAttributeRight
-                                                                    multiplier:1.0
-                                                                      constant:0];
-  [self.view addConstraint:rightConstraint];
-  
-  v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views];
-  [_scroll addConstraints:v];
+  [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
   
   [self updateBirthDate];
-
-  
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
   
 }
 
@@ -195,7 +164,6 @@
   
   [_user confirmPhoneResend:^{
     
-    
   } failure:^(NSError *error) {
     
   }];
@@ -220,17 +188,17 @@
   BOOL hasErrors = NO;
   
   if (0 == _emailTF.textField.text.length) {
-    [_emailTF setError:NSLocalizedString(@"Непривильный емаил", nil) animated:NO];
+    [_emailTF setError:NSLocalizedString(@"Неправильный емайл", nil) animated:NO];
     hasErrors = YES;
   }
   
   if (0 == _phoneTF.textField.text.length) {
-    [_phoneTF setError:NSLocalizedString(@"Непривильный телефон", nil) animated:NO];
+    [_phoneTF setError:NSLocalizedString(@"Неправильный телефон", nil) animated:NO];
     hasErrors = YES;
   }
   
   if (0 == _nameTF.textField.text.length) {
-    [_nameTF setError:NSLocalizedString(@"Непривильное имя", nil) animated:NO];
+    [_nameTF setError:NSLocalizedString(@"Неправильное имя", nil) animated:NO];
     hasErrors = YES;
   }
   
