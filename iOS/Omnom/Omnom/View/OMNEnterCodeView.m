@@ -72,8 +72,8 @@
 
   NSDictionary *metrics =
   @{
-    @"offset" : @(10.0f),
-    @"width" : @(25.0f),
+    @"offset" : @(6.0f),
+    @"width" : @(23.0f),
     @"height" : @(40.0f),
     };
 
