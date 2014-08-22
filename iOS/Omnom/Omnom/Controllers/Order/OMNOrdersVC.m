@@ -7,10 +7,8 @@
 //
 
 #import "OMNOrdersVC.h"
-#import "OMNPayOrderVC.h"
 #import "OMNOrderItemCell.h"
-#import "OMNPayOrderVC.h"
-#import "OMNRestaurant.h"
+#import "OMNDecodeBeacon.h"
 
 @interface OMNOrdersVC ()
 
@@ -18,14 +16,13 @@
 
 @implementation OMNOrdersVC {
   NSArray *_orders;
-  OMNRestaurant *_restaurant;
+  OMNDecodeBeacon *_decodeBeacon;
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant orders:(NSArray *)orders {
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
   self = [super initWithNibName:@"OMNOrdersVC" bundle:nil];
   if (self) {
-    _orders = orders;
-    _restaurant = restaurant;
+    _orders = decodeBeacon.orders;
   }
   return self;
 }
@@ -33,8 +30,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.collectionView.backgroundColor = _restaurant.background_color;
-  
+  self.collectionView.backgroundColor = _decodeBeacon.restaurant.background_color;
   UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
   flowLayout.sectionInset = UIEdgeInsetsMake(0.0f, 18.0f, 0.0f, 18.0f);
   flowLayout.itemSize = CGSizeMake(273.0f, 415.0f);
@@ -91,6 +87,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
   OMNOrder *order = _orders[indexPath.item];
+  _decodeBeacon.selectedOrder = order;
   [self.delegate ordersVC:self didSelectOrder:order];
   
 }

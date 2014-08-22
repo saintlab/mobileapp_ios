@@ -14,8 +14,12 @@
 @interface OMNR1VC : OMNCircleRootVC
 
 @property (nonatomic, weak) id<OMNR1VCDelegate> delegate;
+@property (nonatomic, strong, readonly) OMNDecodeBeacon *decodeBeacon;
 
 - (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
+
+- (void)callWaiterDidStart;
+- (void)callWaiterDidStop;
 
 @end
 

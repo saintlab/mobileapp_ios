@@ -15,7 +15,7 @@
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon order:(OMNOrder *)order;
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
 
 @end
 

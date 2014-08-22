@@ -9,7 +9,6 @@
 #import "OMNRestaurantsVC.h"
 #import "OMNRestaurant.h"
 #import "OMNMenu.h"
-#import "OMNRestaurantMenuVC.h"
 
 @interface OMNRestaurantsVC ()
 
@@ -96,10 +95,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  OMNRestaurant *restaurant = self.restaurants[indexPath.row];
-  OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
-  restaurantMenuVC.navigationItem.title = restaurant.title;
-  [self.navigationController pushViewController:restaurantMenuVC animated:YES];
+//  OMNRestaurant *restaurant = self.restaurants[indexPath.row];
+//  OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
+//  restaurantMenuVC.navigationItem.title = restaurant.title;
+//  [self.navigationController pushViewController:restaurantMenuVC animated:YES];
   
 }
 

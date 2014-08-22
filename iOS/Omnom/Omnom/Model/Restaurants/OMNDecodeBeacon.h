@@ -8,7 +8,6 @@
 
 #import "OMNBeacon.h"
 #import "OMNRestaurant.h"
-#import "OMNTable.h"
 #import "OMNConstants.h"
 
 typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
@@ -17,16 +16,20 @@ typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
 <NSCoding>
 
 @property (nonatomic, copy) NSString *uuid;
-@property (nonatomic, copy) NSString *table_id;
+@property (nonatomic, copy) NSString *tableId;
 @property (nonatomic, copy) NSString *restaurantId;
 @property (nonatomic, strong) NSDate *foundDate;
 @property (nonatomic, assign, readonly) BOOL demo;
 
-//@property (nonatomic, strong) OMNTable *table;
 @property (nonatomic, strong) OMNRestaurant *restaurant;
+@property (nonatomic, strong) NSArray *orders;
+@property (nonatomic, weak) OMNOrder *selectedOrder;
 
 - (instancetype)initWithJsonData:(id)data;
 
 - (BOOL)readyForPush;
+
+- (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
+- (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
 @end

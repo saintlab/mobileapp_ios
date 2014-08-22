@@ -58,10 +58,10 @@ OMNMailRUPayVCDelegate>
   
 }
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon order:(OMNOrder *)order {
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
   self = [super init];
   if (self) {
-    _order = order;
+    _order = decodeBeacon.selectedOrder;
     _decodeBeacon = decodeBeacon;
   }
   return self;

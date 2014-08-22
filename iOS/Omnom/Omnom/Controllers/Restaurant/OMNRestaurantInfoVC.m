@@ -12,6 +12,7 @@
 #import "OMNRestaurantInfo.h"
 #import "OMNRestaurantFeedItemCell.h"
 #import "OMNProductDetailsVC.h"
+#import "OMNDecodeBeacon.h"
 
 @interface OMNRestaurantInfoVC ()
 <OMNProductDetailsVCDelegate,
@@ -21,16 +22,16 @@ UIScrollViewDelegate>
 
 @implementation OMNRestaurantInfoVC {
   OMNRestaurantInfo *_restaurantInfo;
-  OMNRestaurant *_restaurant;
+  OMNDecodeBeacon *_decodeBeacon;
   UIImageView *_arrowView;
   
   BOOL _disableNavigationBarAnimation;
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
   self = [super init];
   if (self) {
-    _restaurant = restaurant;
+    _decodeBeacon = decodeBeacon;
   }
   return self;
 }
@@ -39,7 +40,7 @@ UIScrollViewDelegate>
   [super viewDidLoad];
   
   __weak typeof(self)weakSelf = self;
-  [_restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
+  [_decodeBeacon.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
     
     [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
     
@@ -57,7 +58,10 @@ UIScrollViewDelegate>
   [closeButton sizeToFit];
   self.navigationItem.titleView = closeButton;
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
+  if (NO == _decodeBeacon.demo) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
+  }
 
   [self.navigationItem setHidesBackButton:YES animated:NO];
   [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"InfoCell"];
@@ -72,7 +76,7 @@ UIScrollViewDelegate>
 }
 
 - (void)userProfileTap {
-  
+  [self.delegate restaurantInfoVCShowUserInfo:self];
 }
 
 - (void)closeTap {

@@ -84,7 +84,7 @@
 - (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
   if (nil == self.decodeBeacon) {
-    [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.table_id completion:^{
+    [decodeBeacon newGuestWithCompletion:^{
     } failure:^(NSError *error) {
     }];
   }

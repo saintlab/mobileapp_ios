@@ -11,6 +11,7 @@
 #import "OMNOperationManager.h"
 #import "NSString+omn_color.h"
 #import "OMNSocketManager.h"
+#import "UIImage+omn_helper.h"
 
 @interface NSData (omn_restaurants)
 
@@ -20,11 +21,7 @@
 
 @end
 
-@interface NSArray (omn_restaurants)
 
-- (NSArray *)decodeOrdersWithError:(NSError **)error;
-
-@end
 
 @implementation OMNRestaurant {
   NSOperationQueue *_imageRequestsQueue;
@@ -112,32 +109,6 @@
   
 }
 
-- (void)getMenu:(GMenuBlock)menuBlock error:(void(^)(NSError *error))errorBlock {
-  
-  if (kUseStubData) {
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"menu.data" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject];
-    menuBlock(menu);
-    return;
-  }
-  
-  NSString *path = [NSString stringWithFormat:@"restaurants/%@/menu", self.id];
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject];
-    menuBlock(menu);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    errorBlock(error);
-    
-  }];
-  
-}
-
 - (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock stop:(dispatch_block_t)stopBlock {
   
   _waiterCallTableID = tableID;
@@ -174,6 +145,10 @@
   
 }
 
+- (UIImage *)circleBackground {
+  return [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:self.background_color];
+}
+
 - (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
   
   if (nil == _waiterCallTableID) {
@@ -191,54 +166,6 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     failureBlock(error);
-    
-  }];
-  
-}
-
-- (void)newGuestForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
-  
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/new/guest", self.id, tableID];
-  
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
-
-    NSLog(@"newGuestForTableID>done");
-    completionBlock();
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    NSLog(@"newGuestForTableID>%@", error);
-    failureBlock(error);
-    
-  }];
-  
-}
-
-- (void)getOrdersForTableID:(NSString *)tableID orders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
-  
-  if (kUseStubData) {
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"orders.data" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    NSArray *ordersData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    ordersBlock([ordersData decodeOrdersWithError:nil]);
-    return;
-  }
-
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.id, tableID];
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
-    
-    if ([response isKindOfClass:[NSArray class]]) {
-      NSArray *ordersData = response;
-      ordersBlock([ordersData decodeOrdersWithError:nil]);
-    }
-    else {
-      errorBlock(nil);
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    errorBlock(error);
     
   }];
   
@@ -388,20 +315,4 @@
 @end
 
 
-@implementation NSArray (omn_restaurants)
 
-- (NSArray *)decodeOrdersWithError:(NSError **)error {
-  
-  NSMutableArray *orders = [NSMutableArray arrayWithCapacity:[self count]];
-  for (id orderData in self) {
-    
-    OMNOrder *order = [[OMNOrder alloc] initWithJsonData:orderData];
-    [orders addObject:order];
-    
-  }
-  
-  return [orders copy];
-  
-}
-
-@end

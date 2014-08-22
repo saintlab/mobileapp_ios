@@ -7,6 +7,13 @@
 //
 
 #import "OMNDecodeBeacon.h"
+#import "OMNOperationManager.h"
+
+@interface NSArray (omn_restaurants)
+
+- (NSArray *)decodeOrdersWithError:(NSError **)error;
+
+@end
 
 @implementation OMNDecodeBeacon {
   id _decodeBeaconData;
@@ -19,7 +26,7 @@
     _demo = [data[@"is_demo"] boolValue];
     _decodeBeaconData = data;
     _uuid = [data[@"uuid"] description];
-    _table_id = [data[@"table_id"] description];
+    _tableId = [data[@"table_id"] description];
     _restaurantId = [data[@"restaurant_id"] description];
     _foundDate = [NSDate date];
     _restaurant = [[OMNRestaurant alloc] initWithJsonData:data[@"restaurant"]];
@@ -44,7 +51,75 @@
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"table = %@\nrestaurant = %@", _table_id, _restaurantId];
+  return [NSString stringWithFormat:@"table = %@\nrestaurant = %@", _tableId, _restaurantId];
+}
+
+- (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
+  
+  if (kUseStubData) {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"orders.data" ofType:nil];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSArray *ordersData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    ordersBlock([ordersData decodeOrdersWithError:nil]);
+    return;
+  }
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurantId, self.tableId];
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    if ([response isKindOfClass:[NSArray class]]) {
+      NSArray *ordersData = response;
+      ordersBlock([ordersData decodeOrdersWithError:nil]);
+    }
+    else {
+      errorBlock(nil);
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    errorBlock(error);
+    
+  }];
+  
+}
+
+
+- (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/new/guest", self.restaurantId, self.tableId];
+  
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+    
+    NSLog(@"newGuestForTableID>done");
+    completionBlock();
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    NSLog(@"newGuestForTableID>%@", error);
+    failureBlock(error);
+    
+  }];
+  
+}
+
+@end
+
+
+@implementation NSArray (omn_restaurants)
+
+- (NSArray *)decodeOrdersWithError:(NSError **)error {
+  
+  NSMutableArray *orders = [NSMutableArray arrayWithCapacity:[self count]];
+  for (id orderData in self) {
+    
+    OMNOrder *order = [[OMNOrder alloc] initWithJsonData:orderData];
+    [orders addObject:order];
+    
+  }
+  
+  return [orders copy];
+  
 }
 
 @end

@@ -8,7 +8,6 @@
 
 #import "OMNProductDetailsVC.h"
 #import "OMNTransitionFromProductToList.h"
-#import "OMNRestaurantMenuVC.h"
 #import "OMNFeedItem.h"
 
 @interface OMNProductDetailsVC ()
@@ -130,12 +129,12 @@
                                                fromViewController:(UIViewController *)fromVC
                                                  toViewController:(UIViewController *)toVC {
   // Check if we're transitioning from this view controller to a DSLFirstViewController
-  if (fromVC == self && [toVC isKindOfClass:[OMNRestaurantMenuVC class]]) {
-    return [[OMNTransitionFromProductToList alloc] init];
-  }
-  else {
+//  if (fromVC == self && [toVC isKindOfClass:[OMNRestaurantMenuVC class]]) {
+//    return [[OMNTransitionFromProductToList alloc] init];
+//  }
+//  else {
     return nil;
-  }
+//  }
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController

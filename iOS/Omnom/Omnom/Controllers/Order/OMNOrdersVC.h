@@ -9,14 +9,15 @@
 #import "OMNOrderVCDelegate.h"
 #import "OMNOrder.h"
 
-@class OMNRestaurant;
+@class OMNDecodeBeacon;
 @protocol OMNOrdersVCDelegate;
 
 @interface OMNOrdersVC : UICollectionViewController
 
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
+@property (nonatomic, strong, readonly) OMNDecodeBeacon *decodeBeacon;
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant orders:(NSArray *)orders;
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
 
 @end
 

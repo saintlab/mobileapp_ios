@@ -72,7 +72,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   if (kUseStubBeaconDecodeData) {
     OMNDecodeBeacon *decodeBeacon = [[OMNDecodeBeacon alloc] initWithJsonData:nil];
     decodeBeacon.uuid = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+1+1";
-    decodeBeacon.table_id = @"table-1-at-riba-ris";
+    decodeBeacon.tableId = @"table-1-at-riba-ris";
     decodeBeacon.restaurantId = @"riba-ris";
     success(@[decodeBeacon]);
     return;
@@ -141,11 +141,10 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   NSDictionary *uuid = @{@"uuid" : [beacon uuid]};
   [self decodeBeacons:@[uuid] success:^(NSArray *decodeBeacons) {
     
-    OMNDecodeBeacon *decodeBeacon = decodeBeacons.firstObject;
+    OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
     
     if (decodeBeacon) {
-      
-      [decodeBeacon.restaurant newGuestForTableID:decodeBeacon.table_id completion:^{
+      [decodeBeacon newGuestWithCompletion:^{
         completion();
       } failure:^(NSError *error) {
         completion();

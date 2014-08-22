@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OMNRestaurant.h"
 
 @protocol OMNRestaurantInfoVCDelegate;
 @class OMNFeedItem;
+@class OMNDecodeBeacon;
 
 @interface OMNRestaurantInfoVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNRestaurantInfoVCDelegate> delegate;
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
+- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
 
 - (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem;
 
@@ -25,5 +25,6 @@
 @protocol OMNRestaurantInfoVCDelegate <NSObject>
 
 - (void)restaurantInfoVCDidFinish:(OMNRestaurantInfoVC *)restaurantInfoVC;
+- (void)restaurantInfoVCShowUserInfo:(OMNRestaurantInfoVC *)restaurantInfoVC;
 
 @end
