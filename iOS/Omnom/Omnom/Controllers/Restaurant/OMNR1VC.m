@@ -38,6 +38,7 @@ OMNRestaurantInfoVCDelegate>
   UIImageView *_iv1;
   UIImageView *_iv2;
   UIImageView *_iv3;
+  NSTimer *_circleAnimationTimer;
 }
 
 - (void)dealloc {
@@ -81,6 +82,10 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)beginCircleAnimation {
   
+  if (NO == _callWaiterButton.selected) {
+    return;
+  }
+  
   _iv1 = [[UIImageView alloc] initWithImage:self.circleBackground];
   _iv1.center = self.circleButton.center;
   [self.backgroundView addSubview:_iv1];
@@ -95,35 +100,56 @@ OMNRestaurantInfoVCDelegate>
   _iv3.center = self.circleButton.center;
   [self.backgroundView addSubview:_iv3];
   
+  [_circleAnimationTimer invalidate];
+  
+  CGFloat animationRepeatCount = 3.0f;
+
   NSTimeInterval duration = 2.5;
-  NSTimeInterval delay = 0.5;
-  
-  [UIView animateWithDuration:duration delay:delay options:UIViewAnimationOptionRepeat animations:^{
+  NSTimeInterval delay = 0.0f;
+  NSTimeInterval animationPause = 3.0;
+  NSTimeInterval totalAnimationCicleDuration = duration*animationRepeatCount + animationPause;
+  _circleAnimationTimer = [NSTimer bk_scheduledTimerWithTimeInterval:totalAnimationCicleDuration block:^(NSTimer *timer) {
     
-    _iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
-    _iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
+    [UIView transitionWithView:_iv1 duration:duration/2. options:UIViewAnimationOptionAutoreverse animations:^{
+      
+      [UIView setAnimationRepeatCount:animationRepeatCount - 0.5f];
+      _iv1.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
 
-    _iv2.alpha = 0.0f;
-    _iv3.alpha = 0.0f;
-    
-  } completion:^(BOOL finished) {
+    } completion:^(BOOL finished) {
+      
+      [UIView animateWithDuration:duration/2. animations:^{
+        _iv1.transform = CGAffineTransformIdentity;
+      }];
 
-    [self finishCircleAnimation];
+    }];
     
-  }];
-  
-  [UIView animateWithDuration:duration/2. delay:delay options:UIViewAnimationOptionRepeat|UIViewAnimationOptionAutoreverse animations:^{
+    [UIView animateWithDuration:duration delay:delay options:0 animations:^{
+      [UIView setAnimationRepeatCount:animationRepeatCount];
+
+      _iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
+      _iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
+      
+      _iv2.alpha = 0.0f;
+      _iv3.alpha = 0.0f;
+      
+    } completion:^(BOOL finished) {
+      _iv2.transform = CGAffineTransformIdentity;
+      _iv3.transform = CGAffineTransformIdentity;
+      
+      _iv2.alpha = 0.5f;
+      _iv3.alpha = 0.25f;
+    }];
     
-    _iv1.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
-    
-  } completion:^(BOOL finished) {
-  }];
-  
+  } repeats:YES];
+  [_circleAnimationTimer fire];
 }
 
 - (void)finishCircleAnimation {
   
-  [UIView animateWithDuration:0.50 delay:0.0 options:0 animations:^{
+  [_circleAnimationTimer invalidate];
+  _circleAnimationTimer = nil;
+  
+  [UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
     
     _iv1.alpha = 0.0f;
     _iv2.alpha = 0.0f;
@@ -221,13 +247,18 @@ OMNRestaurantInfoVCDelegate>
   
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [self finishCircleAnimation];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   self.bottomViewConstraint.constant = 0.0f;
   [UIView animateWithDuration:0.3 animations:^{
     [self.view layoutIfNeeded];
   }];
-  
+  [self beginCircleAnimation];
 }
 
 - (void)showInfoTap {
@@ -264,7 +295,19 @@ OMNRestaurantInfoVCDelegate>
 - (void)callWaiterDidStop {
   
   [self finishCircleAnimation];
+
+  UIButton *placeholderCircleButton = [[UIButton alloc] initWithFrame:self.circleButton.frame];
+  [placeholderCircleButton setImage:[self.circleButton imageForState:UIControlStateNormal] forState:UIControlStateNormal];
+  [placeholderCircleButton setBackgroundImage:[self.circleButton backgroundImageForState:UIControlStateNormal] forState:UIControlStateNormal];
+  [self.circleButton.superview addSubview:placeholderCircleButton];
   [self.circleButton setImage:_restaurant.logo forState:UIControlStateNormal];
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    placeholderCircleButton.alpha = 0.0f;
+  } completion:^(BOOL finished) {
+    [placeholderCircleButton removeFromSuperview];
+  }];
+  
   _callWaiterButton.selected = NO;
   [_callWaiterButton sizeToFit];
 
