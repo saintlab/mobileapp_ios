@@ -54,6 +54,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
+  
   if (_decodeBeacon.demo) {
 
     UIButton *cancelButton = [[UIButton alloc] init];
@@ -78,7 +80,6 @@
   self.backgroundImage = _restaurant.background;
   self.circleBackground = _restaurant.circleBackground;
 
-  _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
   
   [self addActionsBoard];
   [self socketConnect];

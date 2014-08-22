@@ -27,6 +27,8 @@
 #import "OMNMailRUPayVC.h"
 #import "OMNAddBankCardVC.h"
 #import "OMNPaymentNotificationControl.h"
+#import "OMNNavigationController.h"
+#import "OMNMailRuBankCardsModel.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -227,7 +229,10 @@ OMNMailRUPayVCDelegate>
   OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
   mailRUPayVC.demo = _decodeBeacon.demo;
   mailRUPayVC.delegate = self;
-  [self.navigationController pushViewController:mailRUPayVC animated:YES];
+  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:mailRUPayVC];
+  [self.navigationController presentViewController:navigationController animated:YES completion:^{
+    
+  }];
 
 #endif
   
@@ -358,12 +363,13 @@ OMNMailRUPayVCDelegate>
 - (void)mailRUPayVCDidFinish:(OMNMailRUPayVC *)mailRUPayVC {
   
   [self showRating];
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
   
 }
 
 - (void)mailRUPayVCDidCancel:(OMNMailRUPayVC *)mailRUPayVC {
   
-  [self.navigationController popToViewController:self animated:YES];
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
   
 }
 

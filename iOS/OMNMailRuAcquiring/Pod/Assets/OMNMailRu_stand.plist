@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>OMNMailRu_merch_id</key>
+	<string>DGIS</string>
+	<key>OMNMailRu_vterm_id</key>
+	<string>DGISMobileDemo</string>
+	<key>OMNMailRu_cardholder</key>
+	<string>Omnom</string>
+	<key>OMNMailRu_secret_key</key>
+	<string>ohMDLYVUy0y8FKenvcVuPCYTtbeB7MI6qNOBxOCwSAmOoqwpXj</string>
+	<key>OMNMailRuAcquiringBaseURL</key>
+	<string>https://test-cpg.money.mail.ru/api/</string>
+</dict>
+</plist>

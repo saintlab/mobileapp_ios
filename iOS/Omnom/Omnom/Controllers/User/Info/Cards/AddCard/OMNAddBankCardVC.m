@@ -97,6 +97,7 @@ OMNCardEnterControlDelegate>
   scanViewController.collectCVV = NO;
   scanViewController.collectExpiry = NO;
   scanViewController.collectPostalCode = NO;
+  scanViewController.disableManualEntryButtons = YES;
   scanViewController.appToken = CardIOAppToken;
   [self presentViewController:scanViewController animated:YES completion:nil];
   

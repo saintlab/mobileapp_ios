@@ -10,8 +10,8 @@
 #import <CommonCrypto/CommonDigest.h>
 
 static NSString * const kOMNMailRu_merch_id = @"DGIS";
-//static NSString * const kOMNMailRu_vterm_id = @"DGISMobile";
-static NSString * const kOMNMailRu_vterm_id = @"DGISMobileDemo";
+static NSString * const kOMNMailRu_vterm_id = @"DGISMobile";
+//static NSString * const kOMNMailRu_vterm_id = @"DGISMobileDemo";
 static NSString * const kOMNMailRu_cardholder = @"Omnom";
 static NSString * const kOMNMailRu_secret_key = @"ohMDLYVUy0y8FKenvcVuPCYTtbeB7MI6qNOBxOCwSAmOoqwpXj";
 
@@ -108,8 +108,8 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   [self POST:@"card/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"%@", responseObject);
+    NSLog(@"card/register>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"card/register>%@", responseObject);
     
     if (responseObject[@"url"]) {
       if (completion) {
@@ -125,7 +125,8 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"%@", error);
+    NSLog(@"card/register>%@", error);
+    NSLog(@"card/register>%@", operation.responseString);
     if (completion) {
       completion(nil);
     }
@@ -159,6 +160,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"card/verify>%@", error);
+    NSLog(@"card/verify>%@", operation.responseString);
     completion(nil);
     
   }];
@@ -211,6 +213,8 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"order/pay>%@", error);
+    NSLog(@"order/pay>%@", operation.responseString);
+
     completionBlock(nil);
     
   }];
@@ -234,13 +238,15 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   [self POST:@"card/delete" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"card/delete%@", responseObject);
-    NSLog(@"card/delete%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"card/delete>%@", responseObject);
+    NSLog(@"card/delete>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"card/delete>%@", operation.responseString);
     completionBlock(responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"card/delete>%@", error);
+    NSLog(@"card/delete>%@", operation.responseString);
     completionBlock(nil);
     
   }];
