@@ -75,6 +75,21 @@
   return self;
 }
 
++ (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id cvv:(NSString *)cvv {
+  OMNMailRuCardInfo *cardInfo = [[OMNMailRuCardInfo alloc] init];
+  cardInfo.card_id = card_id;
+  cardInfo.cvv = cvv;
+  return cardInfo;
+}
+
++ (OMNMailRuCardInfo *)cardInfoWithCardPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv {
+  OMNMailRuCardInfo *cardInfo = [[OMNMailRuCardInfo alloc] init];
+  cardInfo.pan = pan;
+  cardInfo.exp_date = exp_date;
+  cardInfo.cvv = cvv;
+  return cardInfo;
+}
+
 - (NSDictionary *)card_info {
   
   NSMutableDictionary *card_info = [NSMutableDictionary dictionary];

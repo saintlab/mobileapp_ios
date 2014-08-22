@@ -106,7 +106,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     else {
       
       NSArray *beacons = responseObject;
-      NSLog(@"ibeacons/decode>%d", beacons.count);
+      NSLog(@"ibeacons/decode>%lu", (unsigned long)beacons.count);
       NSMutableArray *decodedBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
       [beacons enumerateObjectsUsingBlock:^(id beaconData, NSUInteger idx, BOOL *stop) {
         

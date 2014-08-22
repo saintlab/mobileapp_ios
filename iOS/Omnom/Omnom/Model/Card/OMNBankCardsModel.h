@@ -18,7 +18,6 @@ UITableViewDelegate>
 
 @property (nonatomic, copy) OMNSelectCardBlock didSelectCardBlock;
 @property (nonatomic, assign) BOOL canDeleteCard;
-@property (nonatomic, strong, readonly) OMNMailRuPaymentInfo *selectedCardPaymentInfo;
 @property (nonatomic, strong, readonly) OMNBankCard *selectedCard;
 @property (nonatomic, strong, readonly) NSMutableArray *cards;
 

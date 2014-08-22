@@ -14,7 +14,8 @@
 #import "OMNProductDetailsVC.h"
 
 @interface OMNRestaurantInfoVC ()
-<OMNProductDetailsVCDelegate>
+<OMNProductDetailsVCDelegate,
+UIScrollViewDelegate>
 
 @end
 
@@ -22,6 +23,8 @@
   OMNRestaurantInfo *_restaurantInfo;
   OMNRestaurant *_restaurant;
   UIImageView *_arrowView;
+  
+  BOOL _disableNavigationBarAnimation;
 }
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
@@ -74,6 +77,22 @@
 
 - (void)closeTap {
   [self.delegate restaurantInfoVCDidFinish:self];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  _disableNavigationBarAnimation = NO;
+  [self updateNavigationBarLayer];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  _disableNavigationBarAnimation = YES;
+  CALayer *navigationBarLayer = self.navigationController.navigationBar.layer;
+  [UIView animateWithDuration:0.3 animations:^{
+    navigationBarLayer.transform = CATransform3DIdentity;
+    navigationBarLayer.opacity = 1.0f;
+  }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -199,6 +218,29 @@
   
   [self.navigationController popToViewController:self animated:YES];
   
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
+  [self updateNavigationBarLayer];
+}
+
+- (void)updateNavigationBarLayer {
+  
+  if (_disableNavigationBarAnimation) {
+    return;
+  }
+  CALayer *navigationBarLayer = self.navigationController.navigationBar.layer;
+  CGFloat deltaOffset = self.tableView.contentOffset.y + self.tableView.contentInset.top;
+  
+  if (deltaOffset > 0.0f) {
+    navigationBarLayer.transform = CATransform3DMakeTranslation(0.0f, -deltaOffset, 0.0f);
+  }
+  else {
+    navigationBarLayer.transform = CATransform3DIdentity;
+  }
+
 }
 
 @end

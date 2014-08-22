@@ -48,6 +48,7 @@ NSString *kCommaString = @".";
   [super viewDidLoad];
   
   self.navigationItem.title = NSLocalizedString(@"Привязка карты", nil);
+  self.view.backgroundColor = [UIColor whiteColor];
   
   _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   _spinner.hidesWhenStopped = YES;

@@ -10,7 +10,8 @@
 #import <CommonCrypto/CommonDigest.h>
 
 static NSString * const kOMNMailRu_merch_id = @"DGIS";
-static NSString * const kOMNMailRu_vterm_id = @"DGISMobile";
+//static NSString * const kOMNMailRu_vterm_id = @"DGISMobile";
+static NSString * const kOMNMailRu_vterm_id = @"DGISMobileDemo";
 static NSString * const kOMNMailRu_cardholder = @"Omnom";
 static NSString * const kOMNMailRu_secret_key = @"ohMDLYVUy0y8FKenvcVuPCYTtbeB7MI6qNOBxOCwSAmOoqwpXj";
 

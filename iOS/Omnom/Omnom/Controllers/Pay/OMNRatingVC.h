@@ -6,10 +6,12 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNBackgroundVC.h"
+
 @protocol OMNRatingVCDelegate;
 @class OMNOrder;
 
-@interface OMNRatingVC : UIViewController
+@interface OMNRatingVC : OMNBackgroundVC
 
 @property (nonatomic, weak) id<OMNRatingVCDelegate> delegate;
 @property (nonatomic, strong) OMNOrder *order;

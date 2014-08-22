@@ -9,7 +9,7 @@
 #import "OMNBankCardsModel.h"
 #import "OMNConstants.h"
 #import <SSKeychain.h>
-#import <OMNAuthorisation.h>
+#import "OMNAuthorisation.h"
 #import <OMNStyler.h>
 
 @interface OMNBankCardsModel ()

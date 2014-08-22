@@ -19,9 +19,6 @@
 
   __weak IBOutlet UIScrollView *_scroll;
   
-//  __weak IBOutlet UIButton *_registerButton;
-//  __weak IBOutlet UIButton *_loginButton;
-  
 }
 
 - (instancetype)initWithViewControllers:(NSArray *)viewControllers {
@@ -42,19 +39,6 @@
   
   [self loadControllerAtIndex:0];
   [self loadControllerAtIndex:1];
-
-  
-//  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
-//  UIColor *buttonsBGColor = [style colorForKey:@"buttonsBGColor"];
-//  UIColor *buttonTextColor = [style colorForKey:@"buttonsTextColor"];
-//  UIFont *buttonsFont = [style fontForKey:@"buttonsFont"];
-//  _loginButton.backgroundColor = buttonsBGColor;
-//  [_loginButton setTitleColor:buttonTextColor forState:UIControlStateNormal];
-//  _loginButton.titleLabel.font = buttonsFont;
-//  
-//  _registerButton.backgroundColor = buttonsBGColor;
-//  [_registerButton setTitleColor:buttonTextColor forState:UIControlStateNormal];
-//  _registerButton.titleLabel.font = buttonsFont;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -105,7 +89,6 @@
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -115,17 +98,6 @@
   CGFloat offset = scrollView.contentOffset.x;
   CGFloat pageFloat = offset/scrollView.frame.size.width;
   NSInteger page = floorf(pageFloat + 0.5f);
-  
-  [_viewControllers enumerateObjectsUsingBlock:^(UIViewController *vc, NSUInteger idx, BOOL *stop) {
-    
-    if (pageFloat > idx) {
-      vc.view.alpha = MAX(0, 1.0f - pageFloat + idx);
-    }
-    else {
-      vc.view.alpha = MAX(0, 1.0f + pageFloat - idx);
-    }
-    
-  }];
   
   if (page == _pageControl.currentPage) {
     return;

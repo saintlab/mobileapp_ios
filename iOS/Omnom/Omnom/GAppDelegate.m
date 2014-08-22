@@ -27,8 +27,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
+#if OMN_TEST
+  return YES;
+#endif
   [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
     
+    [OMNAuthorisation authorisation];
     [[OMNDecodeBeaconManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
     
   }];

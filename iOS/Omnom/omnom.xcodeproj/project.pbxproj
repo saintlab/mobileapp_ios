@@ -263,14 +263,18 @@
 		93B368A119A4CF1100B6E6CB /* OMNSlideDownTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3689F19A4CF1100B6E6CB /* OMNSlideDownTransition.m */; };
 		93B368A419A4D24300B6E6CB /* OMNFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368A319A4D24300B6E6CB /* OMNFeedItem.m */; };
 		93B368A519A4D24300B6E6CB /* OMNFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368A319A4D24300B6E6CB /* OMNFeedItem.m */; };
+		93B368A719A5BB0E00B6E6CB /* OMNDemoStandTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368A619A5BB0E00B6E6CB /* OMNDemoStandTests.m */; };
+		93B368AD19A605B100B6E6CB /* Hello.wav in Resources */ = {isa = PBXBuildFile; fileRef = 93B368AC19A605B100B6E6CB /* Hello.wav */; };
+		93B368AE19A605B100B6E6CB /* Hello.wav in Resources */ = {isa = PBXBuildFile; fileRef = 93B368AC19A605B100B6E6CB /* Hello.wav */; };
+		93B368B219A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */; };
+		93B368B319A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */; };
+		93B368B519A708C600B6E6CB /* OMNDemoStandWaiterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368B419A708C600B6E6CB /* OMNDemoStandWaiterTests.m */; };
 		93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
 		93B9047819652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
 		93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */; };
 		93B9048119653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */; };
 		93B9048D19654DE1007D21C4 /* OMNRatingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9048B19654DE1007D21C4 /* OMNRatingVC.m */; };
 		93B9048E19654DE1007D21C4 /* OMNRatingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9048B19654DE1007D21C4 /* OMNRatingVC.m */; };
-		93B9048F19654DE1007D21C4 /* OMNRatingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B9048C19654DE1007D21C4 /* OMNRatingVC.xib */; };
-		93B9049019654DE1007D21C4 /* OMNRatingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B9048C19654DE1007D21C4 /* OMNRatingVC.xib */; };
 		93B90494196550F4007D21C4 /* OMNRatingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B90493196550F4007D21C4 /* OMNRatingModel.m */; };
 		93B90495196550F4007D21C4 /* OMNRatingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B90493196550F4007D21C4 /* OMNRatingModel.m */; };
 		93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9049719655168007D21C4 /* OMNRatingProductCell.m */; };
@@ -600,13 +604,17 @@
 		93B3689F19A4CF1100B6E6CB /* OMNSlideDownTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSlideDownTransition.m; sourceTree = "<group>"; };
 		93B368A219A4D24300B6E6CB /* OMNFeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFeedItem.h; sourceTree = "<group>"; };
 		93B368A319A4D24300B6E6CB /* OMNFeedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFeedItem.m; sourceTree = "<group>"; };
+		93B368A619A5BB0E00B6E6CB /* OMNDemoStandTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoStandTests.m; sourceTree = "<group>"; };
+		93B368AC19A605B100B6E6CB /* Hello.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Hello.wav; sourceTree = "<group>"; };
+		93B368B019A7030900B6E6CB /* OMNOrder+omn_mailru.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+omn_mailru.h"; sourceTree = "<group>"; };
+		93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+omn_mailru.m"; sourceTree = "<group>"; };
+		93B368B419A708C600B6E6CB /* OMNDemoStandWaiterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoStandWaiterTests.m; sourceTree = "<group>"; };
 		93B9047519652B93007D21C4 /* OMNNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationControllerDelegate.h; sourceTree = "<group>"; };
 		93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		93B9047E19653393007D21C4 /* OMNTransitionFromOrderToOrders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTransitionFromOrderToOrders.h; sourceTree = "<group>"; };
 		93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTransitionFromOrderToOrders.m; sourceTree = "<group>"; };
 		93B9048A19654DE1007D21C4 /* OMNRatingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRatingVC.h; sourceTree = "<group>"; };
 		93B9048B19654DE1007D21C4 /* OMNRatingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRatingVC.m; sourceTree = "<group>"; };
-		93B9048C19654DE1007D21C4 /* OMNRatingVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNRatingVC.xib; sourceTree = "<group>"; };
 		93B90492196550F4007D21C4 /* OMNRatingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRatingModel.h; sourceTree = "<group>"; };
 		93B90493196550F4007D21C4 /* OMNRatingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRatingModel.m; sourceTree = "<group>"; };
 		93B9049619655168007D21C4 /* OMNRatingProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRatingProductCell.h; sourceTree = "<group>"; };
@@ -716,7 +724,6 @@
 				93B9048919654D86007D21C4 /* Payment */,
 				93B9048A19654DE1007D21C4 /* OMNRatingVC.h */,
 				93B9048B19654DE1007D21C4 /* OMNRatingVC.m */,
-				93B9048C19654DE1007D21C4 /* OMNRatingVC.xib */,
 			);
 			path = Pay;
 			sourceTree = "<group>";
@@ -969,6 +976,7 @@
 		93676DF218D1E4FC00FC55F1 /* Omnom */ = {
 			isa = PBXGroup;
 			children = (
+				93B368AC19A605B100B6E6CB /* Hello.wav */,
 				937E0B5D18F04EC20058A249 /* OMNConstants.h */,
 				937E0B5E18F04EC20058A249 /* OMNConstants.m */,
 				936E71D81991FEFF008FF864 /* OMNViewController.h */,
@@ -1012,6 +1020,8 @@
 				938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */,
 				9367CE8C193CC67600116AC2 /* homeScreenTest.m */,
 				931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */,
+				93B368A619A5BB0E00B6E6CB /* OMNDemoStandTests.m */,
+				93B368B419A708C600B6E6CB /* OMNDemoStandWaiterTests.m */,
 			);
 			path = OmnomTests;
 			sourceTree = "<group>";
@@ -1098,6 +1108,8 @@
 				93958B5C198747E1009BB2ED /* OMNBill.m */,
 				93B368A219A4D24300B6E6CB /* OMNFeedItem.h */,
 				93B368A319A4D24300B6E6CB /* OMNFeedItem.m */,
+				93B368B019A7030900B6E6CB /* OMNOrder+omn_mailru.h */,
+				93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1611,6 +1623,7 @@
 				93C99161193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
 				93C9915E193F175E0028F76C /* FuturaPT-Book.ttf in Resources */,
+				93B368AD19A605B100B6E6CB /* Hello.wav in Resources */,
 				938F3A43198B859100AB288E /* timings.json in Resources */,
 				93676E4B18D1F10300FC55F1 /* menu.json in Resources */,
 				93B09C3D18F3F5400027B19F /* orders.json in Resources */,
@@ -1632,7 +1645,6 @@
 				9345AFAB199A0A1400328F73 /* restaurantInfo.json in Resources */,
 				938F3A52198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
 				93A59B1719331B5B00AE1A6F /* orders.data in Resources */,
-				93B9048F19654DE1007D21C4 /* OMNRatingVC.xib in Resources */,
 				93676DF718D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
 				930554FE1935DA7C00E6F4EC /* GSplitSelectionVC.xib in Resources */,
 				932118241962E12700183729 /* OMNRestaurantMenuVC.xib in Resources */,
@@ -1660,7 +1672,6 @@
 				938F3A53198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
 				938F3A4A198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf in Resources */,
 				9390D25919668A3A007E13AB /* OMNEditTableVC.json in Resources */,
-				93B9049019654DE1007D21C4 /* OMNRatingVC.xib in Resources */,
 				9390D2681966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
 				939689C1195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
 				938F3A50198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
@@ -1671,6 +1682,7 @@
 				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
 				93750B24196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
 				93E2999A197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */,
+				93B368AE19A605B100B6E6CB /* Hello.wav in Resources */,
 				93E299FD198002EC00051B04 /* OMNSettings.plist in Resources */,
 				9345AFAC199A0A1400328F73 /* restaurantInfo.json in Resources */,
 				93C99162193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
@@ -1811,6 +1823,7 @@
 				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
 				93F4DBDE1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */,
 				9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */,
+				93B368B219A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
 				9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */,
 				93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */,
 				939F993F19752D680051822E /* OMNBankCard.m in Sources */,
@@ -1926,6 +1939,7 @@
 				93B9048E19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
 				93535F0F19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				937822A11963E65F00CE6661 /* OMNOrderItemCell.m in Sources */,
+				93B368A719A5BB0E00B6E6CB /* OMNDemoStandTests.m in Sources */,
 				93958B5E198747E1009BB2ED /* OMNBill.m in Sources */,
 				9345AFC6199B7DCC00328F73 /* OMNRestaurantInfo.m in Sources */,
 				939689B7195BDD3400AAAF9C /* OMNViewControllerTest.m in Sources */,
@@ -1934,6 +1948,7 @@
 				930D8BAC1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
 				9345AFCE199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
 				93B3689D19A4CD2D00B6E6CB /* OMNSlideUpTransition.m in Sources */,
+				93B368B519A708C600B6E6CB /* OMNDemoStandWaiterTests.m in Sources */,
 				93E435B81998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */,
 				939F993919752D400051822E /* OMNUserInfoTransitionDelegate.m in Sources */,
 				939F992719752BE90051822E /* OMNRegisterUserVC.m in Sources */,
@@ -1962,6 +1977,7 @@
 				931BD3881941C04100F77AA7 /* OMNCalcaulcationTests.m in Sources */,
 				93B368A119A4CF1100B6E6CB /* OMNSlideDownTransition.m in Sources */,
 				937A37831981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
+				93B368B319A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
 				937822A51963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,
 				9345AFCA199B7E1A00328F73 /* OMNRestaurantInfoItem.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
@@ -2194,6 +2210,99 @@
 			};
 			name = Release;
 		};
+		93B368A819A5C00400B6E6CB /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "23BAD38B-74FE-4C55-8297-2E7FD79F21F8";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Test;
+		};
+		93B368A919A5C00400B6E6CB /* Test */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 698DEBA8EA22478F8304C88F /* Pods-omnom.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"OMN_TEST=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/**",
+				);
+				INFOPLIST_FILE = "omnom/omnom-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = omnom;
+				PROVISIONING_PROFILE = "63A7F445-3A5D-4FF0-9488-CBC13D65CF7C";
+				REZ_SEARCH_PATHS = "$(inherited)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Test;
+		};
+		93B368AA19A5C00400B6E6CB /* Test */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DE9EF230F754C178C5DEFEA /* Pods-omnomTests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/omnom.app/omnom";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "omnomTests/omnomTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				PRODUCT_NAME = omnomTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Test;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2201,6 +2310,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				93676E1C18D1E4FC00FC55F1 /* Debug */,
+				93B368A819A5C00400B6E6CB /* Test */,
 				93676E1D18D1E4FC00FC55F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2210,6 +2320,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				93676E1F18D1E4FC00FC55F1 /* Debug */,
+				93B368A919A5C00400B6E6CB /* Test */,
 				93676E2018D1E4FC00FC55F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2219,6 +2330,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				93676E2218D1E4FC00FC55F1 /* Debug */,
+				93B368AA19A5C00400B6E6CB /* Test */,
 				93676E2318D1E4FC00FC55F1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;

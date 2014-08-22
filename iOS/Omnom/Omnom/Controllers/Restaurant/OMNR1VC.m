@@ -58,15 +58,16 @@ OMNRestaurantInfoVCDelegate>
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
-  self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
-  
+
   if (_decodeBeacon.demo) {
 
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
+  }
+  else {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
+    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
   }
   
   self.backgroundImage = _restaurant.background;
@@ -96,10 +97,8 @@ OMNRestaurantInfoVCDelegate>
   
   NSTimeInterval duration = 2.5;
   NSTimeInterval delay = 0.5;
-  float repeatCount = 3.0f;
   
   [UIView animateWithDuration:duration delay:delay options:UIViewAnimationOptionRepeat animations:^{
-    [UIView setAnimationRepeatCount:repeatCount];
     
     _iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
     _iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
@@ -119,7 +118,6 @@ OMNRestaurantInfoVCDelegate>
     
   } completion:^(BOOL finished) {
   }];
-  
   
 }
 
@@ -215,9 +213,9 @@ OMNRestaurantInfoVCDelegate>
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//  [super viewWillAppear:animated];
+  [super viewWillAppear:animated];
   [self.navigationItem setHidesBackButton:YES animated:animated];
-  [self.navigationController setNavigationBarHidden:NO animated:animated];
+  [self.navigationController setNavigationBarHidden:NO];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   

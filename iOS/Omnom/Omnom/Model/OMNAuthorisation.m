@@ -31,10 +31,14 @@ NSString * const kTokenServiceName = @"token";
 - (instancetype)init {
   self = [super init];
   if (self) {
-
+    
 #if kForgetLoginInfo
 #else
+#if OMN_TEST
+    NSString *token = @"yeshackvofPigCob";
+#else
     NSString *token = [SSKeychain passwordForService:kTokenServiceName account:kAccountName];
+#endif
     [self updateAuthenticationToken:token];
 #endif
   }
@@ -135,7 +139,7 @@ NSString * const kTokenServiceName = @"token";
   }
   
   [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
-
+  NSLog(@"updateAuthenticationToken>%@", token);
   [self checkTokenWithBlock:^(BOOL tokenIsValid) {
   }];
 
@@ -214,12 +218,12 @@ NSString * const kTokenServiceName = @"token";
   }
   else {
     
-    NSString *errorString = ([self[@"error"] description].length) ? (self[@"error"]) : (@"");
+    NSString *message = self[@"error"][@"message"];
     NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
                                          code:0
-                                     userInfo:@{NSLocalizedDescriptionKey : errorString}];
+                                     userInfo:@{NSLocalizedDescriptionKey : (message)?(message):(@"")}];
     failureBlock(error);
-    
+
   }
   
 }

@@ -12,6 +12,4 @@
 
 @interface OMNMailRuBankCardsModel : OMNBankCardsModel
 
-@property (nonatomic, strong, readonly) OMNMailRuPaymentInfo *selectedCardPaymentInfo;
-
 @end

@@ -40,10 +40,11 @@ target :omnom do
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
 
-target :omnomTests do
+target 'omnomTests', :exclusive => true do
   import_pods
   pod 'OCMock'
   pod 'KIF', '~> 3.0.4'
+  pod 'Kiwi'
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
 

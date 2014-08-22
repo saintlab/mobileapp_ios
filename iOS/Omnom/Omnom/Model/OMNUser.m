@@ -74,13 +74,14 @@
 
     NSLog(@"registerWithCompletion>%@", responseObject);
     NSLog(@"registerWithCompletion>%@", responseObject[@"error"][@"message"]);
-    if ([responseObject[@"status"] isEqualToString:@"registered"]) {
+    if ([responseObject[@"status"] isEqualToString:@"success"]) {
       completion();
     }
     else {
+      
       failureBlock([NSError errorWithDomain:NSStringFromClass(self.class) code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
+      
     }
-    
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -233,6 +234,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"userWithToken>%@", operation.responseString);
+    NSLog(@"userWithToken>%@", error);
     failureBlock(error);
     
   }];

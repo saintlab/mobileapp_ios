@@ -16,7 +16,7 @@
   self = [super init];
   if (self) {
 #warning _demo
-//    _demo = YES;
+    _demo = [data[@"is_demo"] boolValue];
     _decodeBeaconData = data;
     _uuid = [data[@"uuid"] description];
     _table_id = [data[@"table_id"] description];

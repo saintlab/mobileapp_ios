@@ -20,6 +20,8 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 @interface OMNOrder : NSObject
 
 @property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *bill_id;
+
 @property (nonatomic, assign) long long amount;
 @property (nonatomic, copy) NSString *created;
 @property (nonatomic, copy) NSString *Description;

@@ -2,7 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNWizardPageVC">
@@ -23,7 +23,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jCn-wz-hnh">
-                    <rect key="frame" x="60" y="100" width="200" height="200"/>
+                    <rect key="frame" x="60" y="70" width="200" height="200"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="GVn-lv-WEI"/>
@@ -34,19 +34,29 @@
                     </state>
                 </button>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JTl-Di-Km4">
-                    <rect key="frame" x="20" y="308" width="280" height="240"/>
+                    <rect key="frame" x="20" y="278" width="280" height="195"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <pageControl opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="wcf-7q-sBf">
+                    <rect key="frame" x="141" y="481" width="39" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="37" id="c1l-NQ-XuB"/>
+                    </constraints>
+                </pageControl>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="jCn-wz-hnh" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="200" id="4Bc-sW-i04"/>
+                <constraint firstItem="jCn-wz-hnh" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="bottom" multiplier="0.3" id="4Bc-sW-i04"/>
+                <constraint firstAttribute="trailing" secondItem="wcf-7q-sBf" secondAttribute="trailing" constant="140" id="9Ea-2f-oX3"/>
                 <constraint firstAttribute="trailing" secondItem="JTl-Di-Km4" secondAttribute="trailing" constant="20" id="JGn-k9-a2R"/>
-                <constraint firstAttribute="bottom" secondItem="JTl-Di-Km4" secondAttribute="bottom" constant="20" id="K2L-Se-Z1M"/>
+                <constraint firstItem="wcf-7q-sBf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="141" id="bA4-cH-aQq"/>
                 <constraint firstItem="JTl-Di-Km4" firstAttribute="top" secondItem="jCn-wz-hnh" secondAttribute="bottom" constant="8" id="eNo-8B-kjm"/>
+                <constraint firstItem="wcf-7q-sBf" firstAttribute="top" secondItem="JTl-Di-Km4" secondAttribute="bottom" constant="8" id="kpU-ce-Kwh"/>
+                <constraint firstAttribute="bottom" secondItem="wcf-7q-sBf" secondAttribute="bottom" constant="50" id="qOr-9x-Ebn"/>
                 <constraint firstItem="JTl-Di-Km4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="wNu-ye-2X6"/>
                 <constraint firstAttribute="centerX" secondItem="jCn-wz-hnh" secondAttribute="centerX" id="xCL-cn-CtG"/>
             </constraints>

@@ -8,13 +8,12 @@
 
 #import "OMNSocketManager.h"
 #import <OMNSocketIO.h>
+#import "OMNConstants.h"
 
 NSString * const OMNSocketIODidReceiveCardIdNotification = @"OMNSocketIODidReceiveCardIdNotification";
 NSString * const OMNSocketIODidPayNotification = @"OMNSocketIODidPayNotification";
 NSString * const OMNSocketIOWaiterCallDoneNotification = @"OMNSocketIOWaiterCallDoneNotification";
 NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDoneNotification";
-
-NSString * const kSocketUrl = @"http://omnom.laaaab.com";
 
 @implementation OMNSocketManager {
   OMNSocketIO *_io;
@@ -33,7 +32,7 @@ NSString * const kSocketUrl = @"http://omnom.laaaab.com";
 - (void)safeConnectWithToken:(NSString *)token {
   
   NSString *query = [NSString stringWithFormat:@"token=%@", token];
-  _socket = [_io of:kSocketUrl and:@{@"query" : query}];
+  _socket = [_io of:kBaseUrlString and:@{@"query" : query}];
   
   [_socket emit:@"handshake", nil];
   
@@ -80,7 +79,7 @@ NSString * const kSocketUrl = @"http://omnom.laaaab.com";
 }
 
 - (void)join:(NSString *)roomId {
-  [_socket emit:@"join",roomId, nil];
+  [_socket emit:@"join", roomId, nil];
 }
 
 - (void)leave:(NSString *)roomId {

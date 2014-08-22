@@ -16,6 +16,8 @@
 #import "OMNAddBankCardVC.h"
 #import <OMNStyler.h>
 #import "OMNMailRUCardConfirmVC.h"
+#import "OMNOrder+omn_mailru.h"
+#import "OMNAuthorisation.h"
 
 @interface OMNMailRUPayVC()
 <OMNAddBankCardVCDelegate,
@@ -120,22 +122,20 @@ OMNMailRUCardConfirmVCDelegate>
     [self demoPay];
   }
   else {
-    [self checkBillAndCreateIfNeeded];
+    [self createOrderPaymentInfo];
   }
   
 }
 
-- (void)checkBillAndCreateIfNeeded {
+- (void)createOrderPaymentInfo {
   
-  if (_bill) {
-    [self billDidCreated:_bill];
-    return;
-  }
+  OMNBankCard *bankCard = [_bankCardsModel selectedCard];
+  OMNMailRuCardInfo *cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:bankCard.external_card_id cvv:@"123"];
   
   __weak typeof(self)weakSelf = self;
-  [_order createBill:^(OMNBill *bill) {
+  [_order getPaymentInfoForUser:[OMNAuthorisation authorisation].user cardInfo:cardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
     
-    [weakSelf billDidCreated:bill];
+    [weakSelf orderPaymentInfoDidCreated:paymentInfo];
     
   } failure:^(NSError *error) {
     
@@ -145,15 +145,7 @@ OMNMailRUCardConfirmVCDelegate>
   
 }
 
-- (void)billDidCreated:(OMNBill *)bill {
-  
-  _bill = bill;
-  
-  OMNMailRuPaymentInfo *paymentInfo = [_bankCardsModel selectedCardPaymentInfo];
-  paymentInfo.order_id = _bill.id;
-  paymentInfo.extra.tip = _order.tipAmount;
-  paymentInfo.extra.restaurant_id = @"1";
-  paymentInfo.order_amount = @(_order.toPayAmount/100.);
+- (void)orderPaymentInfoDidCreated:(OMNMailRuPaymentInfo *)paymentInfo {
   
   __weak typeof(self)weakSelf = self;
   [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
