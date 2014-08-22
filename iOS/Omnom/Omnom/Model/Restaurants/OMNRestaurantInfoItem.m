@@ -67,13 +67,22 @@ RestaurantInfoItemType typeFromString(NSString *s) {
 }
 
 - (void)open {
-   
+  
   switch (self.type) {
     case kRestaurantInfoItemTypeAddress: {
       NSString *query = [[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.value] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
       [[UIApplication sharedApplication] openURL:[NSURL URLWithString:query]];
     } break;
     case kRestaurantInfoItemTypePhone: {
+      
+      NSString *cleanedString = [[self.value componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789-+()"] invertedSet]] componentsJoinedByString:@""];
+      NSString *phoneNumber = [@"telprompt://" stringByAppendingString:cleanedString];
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+      
+    } break;
+    case kRestaurantInfoItemTypeWifi: {
+      
+      
       
     } break;
     default:
