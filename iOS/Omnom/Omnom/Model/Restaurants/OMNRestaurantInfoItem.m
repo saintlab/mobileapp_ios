@@ -67,7 +67,7 @@ RestaurantInfoItemType typeFromString(NSString *s) {
 }
 
 - (void)open {
-  
+   
   switch (self.type) {
     case kRestaurantInfoItemTypeAddress: {
       NSString *query = [[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.value] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
