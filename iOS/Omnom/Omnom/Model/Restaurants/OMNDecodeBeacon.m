@@ -64,13 +64,15 @@
     ordersBlock([ordersData decodeOrdersWithError:nil]);
     return;
   }
-  
+  __weak typeof(self)weakSelf = self;
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurantId, self.tableId];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
     if ([response isKindOfClass:[NSArray class]]) {
       NSArray *ordersData = response;
-      ordersBlock([ordersData decodeOrdersWithError:nil]);
+      NSArray *orders = [ordersData decodeOrdersWithError:nil];
+      weakSelf.orders = orders;
+      ordersBlock(orders);
     }
     else {
       errorBlock(nil);

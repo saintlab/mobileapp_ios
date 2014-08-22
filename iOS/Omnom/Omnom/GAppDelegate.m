@@ -80,7 +80,6 @@
   [OMNOperationManager sharedManager];
   [OMNAuthorisation authorisation];
   
-  [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
   self.window = [[OMNShakeWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.tintColor = [UIColor blackColor];
   

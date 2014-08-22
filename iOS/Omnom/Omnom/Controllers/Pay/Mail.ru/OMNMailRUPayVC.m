@@ -95,7 +95,7 @@ OMNMailRUCardConfirmVCDelegate>
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel loadCardsWithCompletion:^{
     
-    [weakSelf.tableView reloadData];
+    [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     
   }];
   

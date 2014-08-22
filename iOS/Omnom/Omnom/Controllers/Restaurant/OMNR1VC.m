@@ -56,8 +56,18 @@
 
   if (_decodeBeacon.demo) {
 
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    UIButton *cancelButton = [[UIButton alloc] init];
+    [cancelButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateNormal];
+    [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [cancelButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
+    cancelButton.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
+    cancelButton.layer.cornerRadius = 5.0f;
+    [cancelButton sizeToFit];
+    CGRect frame = cancelButton.frame;
+    frame.size.width += 20.0f;
+    cancelButton.frame = frame;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
     
   }
   else {
@@ -72,7 +82,10 @@
   
   [self addActionsBoard];
   [self socketConnect];
-  
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
 }
 
 - (void)beginCircleAnimationIfNeeded {
@@ -226,7 +239,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  
+  [self setNeedsStatusBarAppearanceUpdate];
   [self.navigationItem setHidesBackButton:YES animated:animated];
   [self.navigationController setNavigationBarHidden:NO];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];

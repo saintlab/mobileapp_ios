@@ -14,6 +14,7 @@
 #import "OMNSearchRestaurantVC.h"
 #import "OMNR1VC.h"
 #import "OMNDecodeBeaconManager.h"
+#import "OMNNavigationController.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
@@ -74,7 +75,6 @@ OMNSearchRestaurantVCDelegate>
 
 - (void)startSearchingBeacons {
   
-
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
   searchRestaurantVC.delegate = self;
   
@@ -84,7 +84,8 @@ OMNSearchRestaurantVCDelegate>
     searchRestaurantVC.decodeBeacon = decodeBeacon;
   }
 
-  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:searchRestaurantVC];
+  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];
+  navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
   navigationController.delegate = _navigationControllerDelegate;
   [self presentViewController:navigationController animated:NO completion:nil];
 

@@ -102,6 +102,8 @@
 		93676E4B18D1F10300FC55F1 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E4A18D1F10300FC55F1 /* menu.json */; };
 		93676E4C18D1F10300FC55F1 /* menu.json in Resources */ = {isa = PBXBuildFile; fileRef = 93676E4A18D1F10300FC55F1 /* menu.json */; };
 		9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9367CE8C193CC67600116AC2 /* homeScreenTest.m */; };
+		936BAD9619A77F5E0029873B /* OMNNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936BAD9519A77F5E0029873B /* OMNNavigationController.m */; };
+		936BAD9719A77F5E0029873B /* OMNNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936BAD9519A77F5E0029873B /* OMNNavigationController.m */; };
 		936E71DA1991FEFF008FF864 /* OMNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71D91991FEFF008FF864 /* OMNViewController.m */; };
 		936E71DB1991FEFF008FF864 /* OMNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71D91991FEFF008FF864 /* OMNViewController.m */; };
 		936E71F119921B5C008FF864 /* OMNErrorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F019921B5C008FF864 /* OMNErrorTextField.m */; };
@@ -449,6 +451,8 @@
 		93676E3F18D1EAB900FC55F1 /* restaurants.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restaurants.json; sourceTree = "<group>"; };
 		93676E4A18D1F10300FC55F1 /* menu.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu.json; sourceTree = "<group>"; };
 		9367CE8C193CC67600116AC2 /* homeScreenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = homeScreenTest.m; sourceTree = "<group>"; };
+		936BAD9419A77F5E0029873B /* OMNNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationController.h; sourceTree = "<group>"; };
+		936BAD9519A77F5E0029873B /* OMNNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationController.m; sourceTree = "<group>"; };
 		936E71D81991FEFF008FF864 /* OMNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNViewController.h; path = ../../OMNCardEnterControl/Example/OMNCardEnterControl/OMNViewController.h; sourceTree = "<group>"; };
 		936E71D91991FEFF008FF864 /* OMNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNViewController.m; path = ../../OMNCardEnterControl/Example/OMNCardEnterControl/OMNViewController.m; sourceTree = "<group>"; };
 		936E71EF19921B5C008FF864 /* OMNErrorTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNErrorTextField.h; sourceTree = "<group>"; };
@@ -836,6 +840,8 @@
 				939DA166195405710063AB23 /* Start */,
 				930554E81935DA7C00E6F4EC /* Pay */,
 				930554D619347BFA00E6F4EC /* SearchBeacon */,
+				936BAD9419A77F5E0029873B /* OMNNavigationController.h */,
+				936BAD9519A77F5E0029873B /* OMNNavigationController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1892,6 +1898,7 @@
 				93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				9328F3981988C6360065DC58 /* OMNSocketManager.m in Sources */,
 				936E71F119921B5C008FF864 /* OMNErrorTextField.m in Sources */,
+				936BAD9619A77F5E0029873B /* OMNNavigationController.m in Sources */,
 				931456B8193CA84D003E2CD6 /* OMNTipButton.m in Sources */,
 				938E8F5A192F3A200088EF38 /* OMNDecodeBeacon.m in Sources */,
 				9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */,
@@ -1908,6 +1915,7 @@
 				9390D2D2196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
 				939F992F19752CFC0051822E /* OMNEnterCodeView.m in Sources */,
 				93F4DBDF1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */,
+				936BAD9719A77F5E0029873B /* OMNNavigationController.m in Sources */,
 				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				937A37341980F68200EF5C31 /* OMNLoaderView.m in Sources */,
 				9308FE7C196E815600B482AA /* OMNDecodeBeaconManager.m in Sources */,

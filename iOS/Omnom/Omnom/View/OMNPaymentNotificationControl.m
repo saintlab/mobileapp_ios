@@ -50,15 +50,12 @@
   } completion:^(BOOL finished) {
     
     [self removeFromSuperview];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 
   }];
   
 }
 
 + (void)showWithInfo:(NSDictionary *)info {
-  
-  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
   
   UIWindow *window = [[UIApplication sharedApplication].delegate window];
   
