@@ -16,6 +16,15 @@
 @implementation OMNErrorTextField {
   UIView *_colorView;
   UILabel *_errorLabel;
+  CGFloat _width;
+}
+
+- (instancetype)initWithWidth:(CGFloat)width {
+  _width = width;
+  self = [super init];
+  if (self) {
+  }
+  return self;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -64,7 +73,14 @@
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|" options:0 metrics:nil views:views]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorView]|" options:0 metrics:nil views:views]];
+  if (_width > 0.0f) {
+    NSDictionary *metrics = @{@"width" : @(_width)};
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[colorView(width)]" options:0 metrics:metrics views:views]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_colorView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  }
+  else {
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorView]|" options:0 metrics:nil views:views]];
+  }
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[errorLabel]|" options:0 metrics:nil views:views]];
   

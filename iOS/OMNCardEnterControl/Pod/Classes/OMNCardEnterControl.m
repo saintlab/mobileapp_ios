@@ -115,6 +115,8 @@ NSString * const kMM_YYSeporator = @"/";
     [@{
       @"saveButtonHeight" : @(50.0f),
       @"height" : @(50.0f),
+      @"width" : @(100.0f),
+      @"offset" : @(28.0f),
       } mutableCopy];
     
     NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panTF]|" options:0 metrics:nil views:_views];
@@ -123,7 +125,7 @@ NSString * const kMM_YYSeporator = @"/";
     panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[saveButton]|" options:0 metrics:nil views:_views];
     [self addConstraints:panH];
     
-    panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[expireTF]-[cvvTF]" options:0 metrics:nil views:_views];
+    panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[expireTF(width)]-(offset)-[cvvTF(width)]" options:0 metrics:_metrics views:_views];
     [self addConstraints:panH];
     
     NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]" options:0 metrics:_metrics views:_views];

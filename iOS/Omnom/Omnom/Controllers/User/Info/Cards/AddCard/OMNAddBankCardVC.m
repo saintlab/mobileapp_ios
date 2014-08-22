@@ -12,6 +12,7 @@
 #import <OMNCardEnterControl.h>
 #import "OMNAuthorisation.h"
 #import "OMNCardBrandView.h"
+#import "OMNBorderedButton.h"
 
 @interface OMNAddBankCardVC ()
 <CardIOPaymentViewControllerDelegate,
@@ -51,13 +52,11 @@ OMNCardEnterControlDelegate>
   UIView *bankCardDescriptionView = [[OMNCardBrandView alloc] init];
   [self.view addSubview:bankCardDescriptionView];
   
-  _addCardButton = [[UIButton alloc] init];
+  _addCardButton = [[OMNBorderedButton alloc] init];
   _addCardButton.translatesAutoresizingMaskIntoConstraints = NO;
-  _addCardButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
-  [_addCardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [_addCardButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
   [_addCardButton addTarget:self action:@selector(addCardTap:) forControlEvents:UIControlEventTouchUpInside];
   [_addCardButton setTitle:NSLocalizedString(@"Готово", nil) forState:UIControlStateNormal];
+  _addCardButton.enabled = NO;
   [self.view addSubview:_addCardButton];
   
   NSDictionary *views =
@@ -74,7 +73,7 @@ OMNCardEnterControlDelegate>
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-[bankCardDescriptionView]-[addCardButton]" options:0 metrics:nil views:views]];
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[addCardButton]|" options:0 metrics:0 views:views]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_addCardButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
 
 }
 
@@ -87,6 +86,7 @@ OMNCardEnterControlDelegate>
   _cardInfo.expiryMonth = [cardData[OMNCardEnterControlMonthString] integerValue];
   _cardInfo.expiryYear = [cardData[OMNCardEnterControlYearString] integerValue];
   _cardInfo.cvv = cardData[OMNCardEnterControlCVVString];
+  _addCardButton.enabled = YES;
   [control endEditing:YES];
   
 }

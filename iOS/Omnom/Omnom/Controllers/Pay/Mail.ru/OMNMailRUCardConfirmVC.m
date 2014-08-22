@@ -13,6 +13,7 @@
 #import "OMNSocketManager.h"
 #import "OMNAuthorisation.h"
 #import "OMNErrorTextField.h"
+#import "OMNBorderedButton.h"
 
 NSString *kCommaString = @".";
 
@@ -70,12 +71,8 @@ NSString *kCommaString = @".";
 
 - (void)setupView {
   
-  _validateButton = [[UIButton alloc] init];
-  [_validateButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  _validateButton = [[OMNBorderedButton alloc] init];
   _validateButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_validateButton setBackgroundImage:[[UIImage imageNamed:@"roundy_button_white_black_border"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 30.0f, 0.0f, 30.0f)] forState:UIControlStateNormal];
-  [_validateButton setBackgroundImage:[[UIImage imageNamed:@"roundy_button_white_light_grey_border"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 30.0f, 0.0f, 30.0f)] forState:UIControlStateDisabled];
-  _validateButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:20.0f];
   [_validateButton setTitle:NSLocalizedString(@"Привязать", nil) forState:UIControlStateNormal];
   _validateButton.enabled = NO;
   [_validateButton addTarget:self action:@selector(validateTap) forControlEvents:UIControlEventTouchUpInside];
@@ -89,7 +86,7 @@ NSString *kCommaString = @".";
   _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:15.0f];
   [self.view addSubview:_textLabel];
   
-  _cardHoldValueTF = [[OMNErrorTextField alloc] init];
+  _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f];
   _cardHoldValueTF.textField.textAlignment = NSTextAlignmentCenter;
   _cardHoldValueTF.textField.placeholder = NSLocalizedString(@"00.00 Р", nil);
   _cardHoldValueTF.textField.keyboardType = UIKeyboardTypeNumberPad;
@@ -106,7 +103,6 @@ NSString *kCommaString = @".";
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardHoldValueTF]-[textLabel]" options:0 metrics:0 views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[validateButton(40)]" options:0 metrics:0 views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardHoldValueTF]-|" options:0 metrics:0 views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textLabel]-|" options:0 metrics:0 views:views]];
   
@@ -210,17 +206,6 @@ NSString *kCommaString = @".";
   
 }
 
-- (void)didReceiveCardId:(NSNotification *)n {
-  
-  NSString *card_id = n.userInfo[@"card_id"];
-  if (card_id) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-      self.card_id = card_id;
-    });
-  }
-
-}
-
 - (void)registerCard {
   
   [_spinner startAnimating];
@@ -254,9 +239,9 @@ NSString *kCommaString = @".";
     
   }
   else {
-    
+    [_cardHoldValueTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil) animated:YES];
   }
-  
+
 }
 
 - (void)commaTap:(UIButton *)button {
