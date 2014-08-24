@@ -12,6 +12,7 @@
 #import "NSString+omn_color.h"
 #import "OMNSocketManager.h"
 #import "UIImage+omn_helper.h"
+#import <SDWebImageManager.h>
 
 @interface NSData (omn_restaurants)
 
@@ -24,7 +25,6 @@
 
 
 @implementation OMNRestaurant {
-  NSOperationQueue *_imageRequestsQueue;
   dispatch_block_t _waiterCallStopBlock;
 }
 
@@ -59,8 +59,6 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:nil];
     
-    _imageRequestsQueue = [[NSOperationQueue alloc] init];
-    _imageRequestsQueue.maxConcurrentOperationCount = 1;
   }
   return self;
 }
@@ -209,21 +207,11 @@
 
 - (void)loadImageWithUrlString:(NSString *)urlString imageBlock:(OMNImageBlock)imageBlock {
   
-  NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-  
-  AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-  requestOperation.responseSerializer = [AFImageResponseSerializer serializer];
-  
-  [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:urlString] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
     
-    imageBlock(responseObject);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    imageBlock(nil);
+    imageBlock(image);
     
   }];
-  [_imageRequestsQueue addOperation:requestOperation];
   
 }
 

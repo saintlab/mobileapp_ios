@@ -122,16 +122,13 @@ NSString * const kMM_YYSeporator = @"/";
     NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panTF]|" options:0 metrics:nil views:_views];
     [self addConstraints:panH];
     
-    panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[saveButton]|" options:0 metrics:nil views:_views];
-    [self addConstraints:panH];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[saveButton]|" options:0 metrics:nil views:_views]];
     
-    panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[expireTF(width)]-(offset)-[cvvTF(width)]" options:0 metrics:_metrics views:_views];
-    [self addConstraints:panH];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[expireTF(width)]-(offset)-[cvvTF(width)]" options:0 metrics:_metrics views:_views]];
     
-    NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]" options:0 metrics:_metrics views:_views];
-    [self addConstraints:panV];
-      NSLayoutConstraint *centerYConstraint = [NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-    [self addConstraint:centerYConstraint];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]" options:0 metrics:_metrics views:_views]];
+
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     
     NSArray *equalVConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[cvvTF(==expireTF)]"
                                                                     options:0
