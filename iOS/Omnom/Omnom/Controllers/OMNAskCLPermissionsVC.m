@@ -60,17 +60,11 @@
 - (void)addActionsBoard {
   [self addBottomButtons];
   
-  UIButton *leftButton = [[OMNToolbarButton alloc] init];
-  [leftButton setImage:[UIImage imageNamed:@"cancel_later_icon_small"] forState:UIControlStateNormal];
+  UIButton *leftButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"cancel_later_icon_small"] title:NSLocalizedString(@"Запретить", nil)];
   [leftButton addTarget:self action:@selector(denyPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
-  [leftButton setTitle:NSLocalizedString(@"Запретить", nil) forState:UIControlStateNormal];
-  [leftButton sizeToFit];
   
-  UIButton *rightButton = [[OMNToolbarButton alloc] init];
-  [rightButton setImage:[UIImage imageNamed:@"allow_icon_small"] forState:UIControlStateNormal];
+  UIButton *rightButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"allow_icon_small"] title:NSLocalizedString(@"Разрешить", nil)];
   [rightButton addTarget:self action:@selector(askPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
-  [rightButton setTitle:NSLocalizedString(@"Разрешить", nil) forState:UIControlStateNormal];
-  [rightButton sizeToFit];
   
   self.bottomToolbar.items =
   @[

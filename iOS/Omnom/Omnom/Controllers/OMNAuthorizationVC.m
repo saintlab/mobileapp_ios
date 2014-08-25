@@ -53,17 +53,11 @@
 - (void)addActionsBoard {
   [self addBottomButtons];
   
-  UIButton *leftButton = [[OMNToolbarButton alloc] init];
-  [leftButton setImage:[[UIImage imageNamed:@"user_settings_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+  UIButton *leftButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] title:NSLocalizedString(@"Регистрация", nil)];
   [leftButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];
-  [leftButton setTitle:NSLocalizedString(@"Регистрация", nil) forState:UIControlStateNormal];
-  [leftButton sizeToFit];
   
-  UIButton *rightButton = [[OMNToolbarButton alloc] init];
-  [rightButton setImage:[UIImage imageNamed:@"login_icon_small"] forState:UIControlStateNormal];
+  UIButton *rightButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"login_icon_small"] title:NSLocalizedString(@"Вход", nil)];
   [rightButton addTarget:self action:@selector(loginTap:) forControlEvents:UIControlEventTouchUpInside];
-  [rightButton setTitle:NSLocalizedString(@"Вход", nil) forState:UIControlStateNormal];
-  [rightButton sizeToFit];
   
   self.bottomToolbar.items =
   @[

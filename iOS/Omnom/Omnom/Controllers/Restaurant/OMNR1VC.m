@@ -195,9 +195,7 @@
   
   [self addBottomButtons];
   
-  _callWaiterButton = [[OMNToolbarButton alloc] init];
-  [_callWaiterButton setImage:[UIImage imageNamed:@"call_waiter_icon_small"] forState:UIControlStateNormal];
-  [_callWaiterButton setTitle:NSLocalizedString(@"Официант", nil) forState:UIControlStateNormal];
+  _callWaiterButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] title:NSLocalizedString(@"Официант", nil)];
   
   NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Отменить\nвызов", nil)];
   NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
@@ -212,11 +210,8 @@
   [_callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
   [_callWaiterButton sizeToFit];
   
-  UIButton *callBillButton = [[OMNToolbarButton alloc] init];
-  [callBillButton setImage:[UIImage imageNamed:@"call_bill_icon_small"] forState:UIControlStateNormal];
-  [callBillButton setTitle:NSLocalizedString(@"Счет", nil) forState:UIControlStateNormal];
+  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_bill_icon_small"] title:NSLocalizedString(@"Счет", nil)];
   [callBillButton addTarget:_restaurantMediator action:@selector(callBillAction) forControlEvents:UIControlEventTouchUpInside];
-  [callBillButton sizeToFit];
 
   self.bottomToolbar.items =
   @[

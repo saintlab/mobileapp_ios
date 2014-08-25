@@ -10,4 +10,6 @@
 
 @interface OMNToolbarButton : UIButton
 
+- (instancetype)initWithImage:(UIImage *)image title:(NSString *)title;
+
 @end

@@ -36,15 +36,11 @@
 
 - (void)configureBottomButtons {
   
-  UIButton *leftButton = [[OMNToolbarButton alloc] init];
-  [leftButton setTitle:NSLocalizedString(@"Позже", nil) forState:UIControlStateNormal];
+  UIButton *leftButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Позже", nil)];
   [leftButton addTarget:self action:@selector(didFinish) forControlEvents:UIControlEventTouchUpInside];
-  [leftButton sizeToFit];
   
-  UIButton *rightButton = [[OMNToolbarButton alloc] init];
-  [rightButton setTitle:NSLocalizedString(@"Разрешить", nil) forState:UIControlStateNormal];
+  UIButton *rightButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Разрешить", nil)];
   [rightButton addTarget:self action:@selector(requestPermissionTap) forControlEvents:UIControlEventTouchUpInside];
-  [rightButton sizeToFit];
   
   self.bottomToolbar.items =
   @[

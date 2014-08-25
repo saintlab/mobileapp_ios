@@ -97,17 +97,13 @@
 }
 
 - (UIBarButtonItem *)buttonWithInfo:(NSDictionary *)info {
-  UIButton *button = [[OMNToolbarButton alloc] init];
-  [button setImage:[UIImage imageNamed:@"cancel_later_icon_small"] forState:UIControlStateNormal];
+  UIButton *button = [[OMNToolbarButton alloc] initWithImage:info[@"image"] title:info[@"title"]];
   [button bk_addEventHandler:^(id sender) {
     dispatch_block_t block = info[@"block"];
     if (block) {
       block();
     }
   } forControlEvents:UIControlEventTouchUpInside];
-  [button setTitle:info[@"title"] forState:UIControlStateNormal];
-  [button setImage:info[@"image"] forState:UIControlStateNormal];
-  [button sizeToFit];
   return [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 
