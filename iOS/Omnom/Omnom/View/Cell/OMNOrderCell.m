@@ -50,9 +50,9 @@
   _priceLabel.textAlignment = NSTextAlignmentRight;
   [self.contentView addSubview:_priceLabel];
   
-  _iconView = [[UIImageView alloc] init];
-  _iconView.contentMode = UIViewContentModeCenter;
-  [self.contentView addSubview:_iconView];
+//  _iconView = [[UIImageView alloc] init];
+//  _iconView.contentMode = UIViewContentModeCenter;
+//  [self.contentView addSubview:_iconView];
   
 }
 
@@ -63,7 +63,7 @@
   
   _iconView.frame = CGRectMake(0, 0, self.height, self.height);
   _priceLabel.frame = CGRectMake(self.width - priceLabelWidth - 15.0f, 0, priceLabelWidth, self.height);
-  _nameLabel.frame = CGRectMake(_iconView.right, 0, self.width - _iconView.width - _priceLabel.width, self.height);
+  _nameLabel.frame = CGRectMake(_iconView.right + 8.0f, 0, self.width - _iconView.width - _priceLabel.width, self.height);
   
 }
 
@@ -73,12 +73,6 @@
   _priceLabel.text = [NSString stringWithFormat:@"%.0fР", orderItem.price];
   _nameLabel.text = orderItem.name;
   
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-  [super setSelected:selected animated:animated];
-  
-  // Configure the view for the selected state
 }
 
 @end

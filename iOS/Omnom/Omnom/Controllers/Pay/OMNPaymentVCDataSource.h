@@ -12,6 +12,8 @@
 <UITableViewDataSource,
 UITableViewDelegate>
 
+@property (nonatomic, assign) BOOL showTotalView;
+
 - (instancetype)initWithOrder:(OMNOrder *)order;
 
 @end

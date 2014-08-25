@@ -33,7 +33,6 @@ static const CGFloat kTopOffset = 40.0f;
 @implementation OMNCalculatorVC {
   OMNOrder *_order;
   UIButton *_totalButton;
-  UIView *_containerView;
   long long _total;
 }
 
@@ -103,8 +102,12 @@ static const CGFloat kTopOffset = 40.0f;
   
   [self.view bringSubviewToFront:_totalButton];
   
-  [self totalDidChange:0];
+  [self totalDidChange:_order.selectedItemsTotal];
   
+}
+
+- (UITableView *)splitTableView {
+  return self.firstViewController.tableView;
 }
 
 - (void)totalTap {
@@ -116,6 +119,7 @@ static const CGFloat kTopOffset = 40.0f;
 
 - (void)viewWillLayoutSubviews {
   
+  [super viewWillLayoutSubviews];
   CGRect toFrame = self.view.bounds;
   toFrame.origin.y = kTopOffset;
   toFrame.size.height -= kTopOffset;

@@ -288,6 +288,10 @@
 		93C9915F193F175E0028F76C /* FuturaPT-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C9915D193F175E0028F76C /* FuturaPT-Book.ttf */; };
 		93C99161193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99160193F176B0028F76C /* FuturaPT-Medium.ttf */; };
 		93C99162193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 93C99160193F176B0028F76C /* FuturaPT-Medium.ttf */; };
+		93CA085819AA33D100615F43 /* UITableView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085719AA33D100615F43 /* UITableView+screenshot.m */; };
+		93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085719AA33D100615F43 /* UITableView+screenshot.m */; };
+		93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
+		93CA085D19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
 		93E2996F197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E2996E197CCBFC00051B04 /* UIImage+omn_helper.m */; };
 		93E29970197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E2996E197CCBFC00051B04 /* UIImage+omn_helper.m */; };
 		93E2997A197CD24F00051B04 /* OMNStartVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E29978197CD24F00051B04 /* OMNStartVC.m */; };
@@ -628,6 +632,10 @@
 		93C99115193EF6F20028F76C /* OMNOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrder.m; sourceTree = "<group>"; };
 		93C9915D193F175E0028F76C /* FuturaPT-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FuturaPT-Book.ttf"; sourceTree = "<group>"; };
 		93C99160193F176B0028F76C /* FuturaPT-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FuturaPT-Medium.ttf"; sourceTree = "<group>"; };
+		93CA085619AA33D100615F43 /* UITableView+screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+screenshot.h"; sourceTree = "<group>"; };
+		93CA085719AA33D100615F43 /* UITableView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+screenshot.m"; sourceTree = "<group>"; };
+		93CA085A19AA34FA00615F43 /* UIView+screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+screenshot.h"; sourceTree = "<group>"; };
+		93CA085B19AA34FA00615F43 /* UIView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+screenshot.m"; sourceTree = "<group>"; };
 		93E2996D197CCBFC00051B04 /* UIImage+omn_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+omn_helper.h"; sourceTree = "<group>"; };
 		93E2996E197CCBFC00051B04 /* UIImage+omn_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+omn_helper.m"; sourceTree = "<group>"; };
 		93E29977197CD24F00051B04 /* OMNStartVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNStartVC.h; sourceTree = "<group>"; };
@@ -867,6 +875,10 @@
 				93E2996E197CCBFC00051B04 /* UIImage+omn_helper.m */,
 				939FD05C1989D7EB008F3B62 /* NSString+omn_color.h */,
 				939FD05D1989D7EB008F3B62 /* NSString+omn_color.m */,
+				93CA085619AA33D100615F43 /* UITableView+screenshot.h */,
+				93CA085719AA33D100615F43 /* UITableView+screenshot.m */,
+				93CA085A19AA34FA00615F43 /* UIView+screenshot.h */,
+				93CA085B19AA34FA00615F43 /* UIView+screenshot.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1864,6 +1876,7 @@
 				937822A01963E65F00CE6661 /* OMNOrderItemCell.m in Sources */,
 				93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */,
 				936E71F519923DE2008FF864 /* OMNShakeWindow.m in Sources */,
+				93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */,
 				930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */,
 				938E8F5C192F3A200088EF38 /* OMNTable.m in Sources */,
 				9319FD65192F33B90053F3A4 /* OMNTipSelector.m in Sources */,
@@ -1889,6 +1902,7 @@
 				939FD05E1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
 				93676DF918D1E4FC00FC55F1 /* main.m in Sources */,
 				938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */,
+				93CA085819AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				937822881963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
 				9345AFC5199B7DCC00328F73 /* OMNRestaurantInfo.m in Sources */,
 				9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */,
@@ -1927,10 +1941,12 @@
 				937A37341980F68200EF5C31 /* OMNLoaderView.m in Sources */,
 				9308FE7C196E815600B482AA /* OMNDecodeBeaconManager.m in Sources */,
 				93750B22196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
+				93CA085D19AA34FA00615F43 /* UIView+screenshot.m in Sources */,
 				939F991519752BE90051822E /* OMNBankCardsVC.m in Sources */,
 				9345AFD2199BB3C700328F73 /* OMNPaymentNotificationControl.m in Sources */,
 				939F992519752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				9390D25F1966DA68007E13AB /* OMNRestaurantMediator.m in Sources */,
+				93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,
 				936E71DB1991FEFF008FF864 /* OMNViewController.m in Sources */,
 				9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */,

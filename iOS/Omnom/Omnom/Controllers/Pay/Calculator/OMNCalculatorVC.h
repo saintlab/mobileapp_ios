@@ -12,6 +12,8 @@
 @interface OMNCalculatorVC : UIViewController
 
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
+@property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, strong, readonly) UITableView *splitTableView;
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
 

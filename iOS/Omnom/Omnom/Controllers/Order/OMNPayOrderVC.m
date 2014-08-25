@@ -78,6 +78,8 @@ OMNMailRUPayVCDelegate>
   }
   
   _dataSource = [[OMNPaymentVCDataSource alloc] initWithOrder:_order];
+  _dataSource.showTotalView = YES;
+  
   _tableView.dataSource = _dataSource;
   [_tableView reloadData];
   
@@ -91,14 +93,16 @@ OMNMailRUPayVCDelegate>
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
   
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
-  self.navigationController.navigationBar.shadowImage = nil;
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"calc_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(calculatorTap:)];
   
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = nil;
+
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   
   _tableView.delegate = self;
@@ -129,6 +133,7 @@ OMNMailRUPayVCDelegate>
 
   [super viewDidAppear:animated];
   _beginSplitAnimation = NO;
+  _tableView.scrollEnabled = YES;
   [self handleKeyboardEvents];
 
 }
@@ -140,6 +145,21 @@ OMNMailRUPayVCDelegate>
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
+}
+
+
+- (IBAction)calculatorTap:(id)sender {
+  
+  if (_beginSplitAnimation) {
+    return;
+  }
+  _beginSplitAnimation = YES;
+  _tableView.delegate = nil;
+  OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithOrder:_order];
+  calculatorVC.delegate = self;
+  calculatorVC.navigationItem.title = NSLocalizedString(@"Калькуляция", nil);
+  [self.navigationController pushViewController:calculatorVC animated:YES];
+  
 }
 
 - (void)cancelTap {
@@ -262,16 +282,6 @@ OMNMailRUPayVCDelegate>
   
 }
 
-- (IBAction)calculatorTap:(id)sender {
-  
-  _tableView.delegate = nil;
-  OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithOrder:_order];
-  calculatorVC.delegate = self;
-  calculatorVC.navigationItem.title = NSLocalizedString(@"Калькуляция", nil);
-  [self.navigationController pushViewController:calculatorVC animated:YES];
-
-}
-
 #pragma mark - GCalculatorVCDelegate
 
 - (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(long long)total {
@@ -333,9 +343,8 @@ OMNMailRUPayVCDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
-  if (NO == _beginSplitAnimation &&
-      (scrollView.contentOffset.y + scrollView.contentInset.top) < - 100.0f) {
-    _beginSplitAnimation = YES;
+  if ((scrollView.contentOffset.y + scrollView.contentInset.top) < - 70.0f) {
+    scrollView.scrollEnabled = NO;
     [self calculatorTap:nil];
   }
   
