@@ -53,7 +53,6 @@ NSString *kCommaString = @".";
   
   _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   _spinner.hidesWhenStopped = YES;
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
   
   [self setupView];
   
@@ -209,6 +208,8 @@ NSString *kCommaString = @".";
 
 - (void)registerCard {
   
+  [_cardHoldValueTF setError:nil animated:YES];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
   [_spinner startAnimating];
 #warning register card stub
   NSDictionary *cardInfo =
@@ -237,9 +238,10 @@ NSString *kCommaString = @".";
   NSString *card_id = response[@"card_id"];
   self.card_id = card_id;
   if (card_id) {
-    
+    self.navigationItem.rightBarButtonItem = nil;
   }
   else {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"repeat_icon_small"] style:UIBarButtonItemStylePlain target:self action:@selector(registerCard)];
     [_cardHoldValueTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil) animated:YES];
   }
 

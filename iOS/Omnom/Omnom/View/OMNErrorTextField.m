@@ -7,6 +7,7 @@
 //
 
 #import "OMNErrorTextField.h"
+#import <OMNStyler.h>
 
 @interface OMNErrorTextField ()
 <UITextFieldDelegate>
@@ -58,7 +59,6 @@
   
   _errorLabel = [[UILabel alloc] init];
   _errorLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-  _errorLabel.textColor = [UIColor redColor];
   _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _errorLabel.numberOfLines = 0;
   _errorLabel.textAlignment = NSTextAlignmentCenter;
@@ -120,13 +120,13 @@
 - (void)updateColorView {
   
   if (_errorLabel.text.length) {
-    _colorView.backgroundColor = [UIColor redColor];
+    _errorLabel.textColor = colorWithHexString(@"d0021b");
   }
   else if(_textField.editing) {
     _colorView.backgroundColor = [UIColor blackColor];
   }
   else {
-    _colorView.backgroundColor = [UIColor lightGrayColor];
+    _colorView.backgroundColor = colorWithHexString(@"787878");
   }
   
 }
