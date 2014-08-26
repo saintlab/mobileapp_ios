@@ -19,3 +19,13 @@
 - (void)addBottomButtons;
 
 @end
+
+@interface OMNBarButtonInfo : NSObject
+
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, strong) UIImage *image;
+@property (nonatomic, copy) dispatch_block_t block;
+
++ (OMNBarButtonInfo *)infoWithTitle:(NSString *)title image:(UIImage *)image block:(dispatch_block_t)block;
+
+@end

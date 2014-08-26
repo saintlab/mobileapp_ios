@@ -107,15 +107,11 @@
   __weak typeof(self)weakSelf = self;
   denyCLPermissionVC.buttonInfo =
   @[
-    @{
-      @"title" : NSLocalizedString(@"Повторить", nil),
-      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
-      @"block" : ^{
-        
-        [weakSelf.navigationController popToViewController:weakSelf animated:YES];
-        
-      },
-      }
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Повторить", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      
+      [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+      
+    }]
     ];
   [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
   

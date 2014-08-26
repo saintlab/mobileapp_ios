@@ -167,14 +167,13 @@ OMNDemoRestaurantVCDelegate>
   scanQRCodeInfoVC.circleIcon = [UIImage imageNamed:@"scan_qr_icon"];
   scanQRCodeInfoVC.buttonInfo =
   @[
-    @{
-      @"title" : NSLocalizedString(@"Сканировать", nil),
-      @"block" : ^{
-        OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
-        scanQRCodeVC.delegate = self;
-        [self.navigationController pushViewController:scanQRCodeVC animated:YES];
-      },
-      }
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Сканировать", nil) image:nil block:^{
+      
+      OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
+      scanQRCodeVC.delegate = self;
+      [self.navigationController pushViewController:scanQRCodeVC animated:YES];
+      
+    }]
     ];
 
   [self.navigationController pushViewController:scanQRCodeInfoVC animated:YES];
@@ -208,13 +207,11 @@ OMNDemoRestaurantVCDelegate>
   __weak typeof(self)weakSelf = self;
   didFailOmnomVC.buttonInfo =
   @[
-    @{
-      @"title" : NSLocalizedString(@"Проверить еще", nil),
-      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
-      @"block" : ^{
-        [weakSelf startSearchingBeacon];
-      },
-      }
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      
+      [weakSelf startSearchingBeacon];
+      
+    }]
     ];
 
   [self.navigationController pushViewController:didFailOmnomVC animated:YES];
@@ -336,10 +333,7 @@ OMNDemoRestaurantVCDelegate>
   OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
   denyCLPermissionVC.buttonInfo =
   @[
-    @{
-      @"title" : NSLocalizedString(@"Включить", nil),
-      @"block" : block,
-      }
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Включить", nil) image:nil block:block]
     ];
   [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
   
@@ -354,23 +348,19 @@ OMNDemoRestaurantVCDelegate>
   __weak typeof(self)weakSelf = self;
   noInternetVC.buttonInfo =
   @[
-    @{
-      @"title" : NSLocalizedString(@"Проверить еще", nil),
-      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
-      @"block" : ^{
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      
+      [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
         
-        [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
+        if (kOMNReachableStateIsReachable == reachableState) {
           
-          if (kOMNReachableStateIsReachable == reachableState) {
-            
-            [weakSelf startSearchingBeacon];
-            
-          }
+          [weakSelf startSearchingBeacon];
           
-        }];
+        }
         
-      },
-      }
+      }];
+      
+    }]
     ];
 
   [self.navigationController pushViewController:noInternetVC animated:YES];
@@ -381,25 +371,17 @@ OMNDemoRestaurantVCDelegate>
   
   OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
   notFoundBeaconVC.faded = YES;
-  notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Возможно, вы вне заведения", nil);
+  notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Телефон рядом с центром стола? Возможно это место ещё не подключено к Омном.", nil);
   notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"sad_table_icon_big"];
   __weak typeof(self)weakSelf = self;
   notFoundBeaconVC.buttonInfo =
   @[
-    @{
-      @"title" : NSLocalizedString(@"Повторить", nil),
-      @"image" : [UIImage imageNamed:@"repeat_icon_small"],
-      @"block" : ^{
-        [weakSelf startSearchingBeacon];
-      },
-      },
-    @{
-      @"title" : NSLocalizedString(@"Демо-режим", nil),
-      @"image" : [UIImage imageNamed:@"demo_mode_icon_small"],
-      @"block" : ^{
-        [weakSelf demoModeTap];
-      },
-      }
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Повторить", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      [weakSelf startSearchingBeacon];
+    }],
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Демо-режим", nil) image:[UIImage imageNamed:@"demo_mode_icon_small"] block:^{
+      [weakSelf demoModeTap];
+    }]
     ];
   [self.navigationController pushViewController:notFoundBeaconVC animated:YES];
   

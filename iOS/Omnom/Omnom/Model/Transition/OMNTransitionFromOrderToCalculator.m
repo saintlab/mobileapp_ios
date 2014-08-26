@@ -55,7 +55,6 @@
   
   [fromViewController.tableView addSubview:blankView];
   
-  // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView addSubview:toViewController.view];
   [toViewController.view layoutIfNeeded];
@@ -69,10 +68,6 @@
   CGPoint contentOffset = initialContentOffset;
   contentOffset.y -= tableVisiblePart;
 
-  NSLog(@"%f", fromViewController.tableView.contentSize.height);
-  NSLog(@"%f", fromViewController.tableView.contentOffset.y);
-  NSLog(@"%f", fromViewController.tableView.frame.size.height);
-  
   [fromViewController.view bringSubviewToFront:fromViewController.tableView];
   toViewController.containerView.alpha = 0.5f;
   toViewController.view.alpha = 0.0f;

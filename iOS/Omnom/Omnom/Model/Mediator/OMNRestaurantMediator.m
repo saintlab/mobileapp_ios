@@ -171,14 +171,11 @@ OMNPayOrderVCDelegate>
   __weak typeof(self)weakSelf = self;
   didFailOmnomVC.buttonInfo =
   @[
-    @{
-      @"title" : NSLocalizedString(@"Ок", nil),
-      @"block" : ^{
-        
-        [weakSelf popToRootViewControllerAnimated:YES];
-        
-      },
-      }
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
+      
+      [weakSelf popToRootViewControllerAnimated:YES];
+      
+    }]
     ];
   [self pushViewController:didFailOmnomVC];
   

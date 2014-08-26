@@ -96,15 +96,28 @@
   
 }
 
-- (UIBarButtonItem *)buttonWithInfo:(NSDictionary *)info {
-  UIButton *button = [[OMNToolbarButton alloc] initWithImage:info[@"image"] title:info[@"title"]];
+- (UIBarButtonItem *)buttonWithInfo:(OMNBarButtonInfo *)info {
+  UIButton *button = [[OMNToolbarButton alloc] initWithImage:info.image title:info.title];
   [button bk_addEventHandler:^(id sender) {
-    dispatch_block_t block = info[@"block"];
-    if (block) {
-      block();
+
+    if (info.block) {
+      info.block();
     }
   } forControlEvents:UIControlEventTouchUpInside];
   return [[UIBarButtonItem alloc] initWithCustomView:button];
+}
+
+@end
+
+
+@implementation OMNBarButtonInfo
+
++ (OMNBarButtonInfo *)infoWithTitle:(NSString *)title image:(UIImage *)image block:(dispatch_block_t)block {
+  OMNBarButtonInfo *info = [[OMNBarButtonInfo alloc] init];
+  info.title = title;
+  info.image = image;
+  info.block = block;
+  return info;
 }
 
 @end
