@@ -21,14 +21,18 @@ describe(@"demo stand test", ^{
   __block OMNDecodeBeacon *_decodeBeacon = nil;
   __block OMNOrder *_order = nil;
   __block OMNUser *_user = nil;
-  NSString *aCafeUUID = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+A+1";
+  
+  OMNBeacon *aCafeBeacon = [[OMNBeacon alloc] init];
+  aCafeBeacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
+  aCafeBeacon.major = @"A";
+  aCafeBeacon.minor = @"1";
   
   beforeAll(^{
     
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
     __block NSArray *_decodeBeacons = nil;
-    [[OMNDecodeBeaconManager manager] decodeBeacons:@[@{@"uuid" : aCafeUUID}] success:^(NSArray *decodeBeacons) {
+    [[OMNDecodeBeaconManager manager] decodeBeacons:@[aCafeBeacon] success:^(NSArray *decodeBeacons) {
       
       _decodeBeacons = decodeBeacons;
       
@@ -41,8 +45,10 @@ describe(@"demo stand test", ^{
     _decodeBeacon = [_decodeBeacons firstObject];
     
     __block NSArray *_orders = nil;
-    [_decodeBeacon.restaurant getOrdersForTableID:_decodeBeacon.table_id orders:^(NSArray *orders) {
+    [_decodeBeacon getOrders:^(NSArray *orders) {
+      
       _orders = orders;
+      
     } error:^(NSError *error) {
       
     }];
@@ -65,7 +71,6 @@ describe(@"demo stand test", ^{
   it(@"should check initial conditions", ^{
     
     [[_decodeBeacon should] beNonNil];
-    [[_decodeBeacon.uuid should] equal:aCafeUUID];
 
     [[_order should] beNonNil];
 

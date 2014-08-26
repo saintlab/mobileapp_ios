@@ -33,6 +33,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
+    NSLog(@"responseString>%@", operation.responseString);
     completion(nil);
     
   }];

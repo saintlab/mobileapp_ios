@@ -21,10 +21,14 @@ describe(@"waiter call tests", ^{
     
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
-    NSString *aCafeUUID = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+A+1";
+    OMNBeacon *aCafeBeacon = [[OMNBeacon alloc] init];
+    aCafeBeacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
+    aCafeBeacon.major = @"A";
+    aCafeBeacon.minor = @"1";
+    
     __block NSArray *_decodeBeacons = nil;
     
-    [[OMNDecodeBeaconManager manager] decodeBeacons:@[@{@"uuid" : aCafeUUID}] success:^(NSArray *decodeBeacons) {
+    [[OMNDecodeBeaconManager manager] decodeBeacons:@[aCafeBeacon] success:^(NSArray *decodeBeacons) {
       
       _decodeBeacons = decodeBeacons;
       
@@ -37,17 +41,15 @@ describe(@"waiter call tests", ^{
     _decodeBeacon = [_decodeBeacons firstObject];
     [[_decodeBeacon should] beNonNil];
     
-    [[_decodeBeacon.uuid should] equal:aCafeUUID];
-    
+    [[_decodeBeacon.uuid should] equal:aCafeBeacon.UUIDString];
+
   });
   
   it(@"should new guest", ^{
     
     __block NSNumber *is_new_guest = nil;
-    [_decodeBeacon.restaurant newGuestForTableID:_decodeBeacon.table_id completion:^{
-      
+    [_decodeBeacon newGuestWithCompletion:^{
       is_new_guest = @(YES);
-      
     } failure:^(NSError *error) {
       
     }];
@@ -59,7 +61,7 @@ describe(@"waiter call tests", ^{
   it(@"should call waiter", ^{
     
     __block NSNumber *is_called = nil;
-    [_decodeBeacon.restaurant waiterCallForTableID:_decodeBeacon.table_id completion:^{
+    [_decodeBeacon.restaurant waiterCallForTableID:_decodeBeacon.tableId completion:^{
       
       is_called = @(YES);
       

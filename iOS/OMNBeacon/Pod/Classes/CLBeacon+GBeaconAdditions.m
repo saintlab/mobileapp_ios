@@ -14,8 +14,8 @@
   
   OMNBeacon *beacon = [[OMNBeacon alloc] init];
   beacon.UUIDString = self.proximityUUID.UUIDString;
-  beacon.major = self.major;
-  beacon.minor = self.minor;
+  beacon.major = [self.major description];
+  beacon.minor = [self.minor description];
   beacon.proximity = self.proximity;
   beacon.rssi = self.rssi;
   beacon.accuracy = self.accuracy;

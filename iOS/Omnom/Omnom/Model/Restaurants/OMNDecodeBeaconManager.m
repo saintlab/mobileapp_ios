@@ -93,8 +93,20 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   }
   */
   
+  NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
+  [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
+    
+    [jsonBeacons addObject:[beacon JSONObject]];
+    
+  }];
+  
+  if (![NSJSONSerialization isValidJSONObject:jsonBeacons]) {
+    failure(nil);
+    return;
+  }
+  
   __weak typeof(self)weakSelf = self;
-  [[OMNOperationManager sharedManager] PUT:@"ibeacons/decode" parameters:beacons success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNOperationManager sharedManager] PUT:@"ibeacons/decode" parameters:jsonBeacons success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject isKindOfClass:[NSDictionary class]] &&
         responseObject[@"errors"]) {
@@ -138,8 +150,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   }
   
   __weak typeof(self)weakSelf = self;
-  NSDictionary *uuid = @{@"uuid" : [beacon uuid]};
-  [self decodeBeacons:@[uuid] success:^(NSArray *decodeBeacons) {
+  [self decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
     
     OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
     

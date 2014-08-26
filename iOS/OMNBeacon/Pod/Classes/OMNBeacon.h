@@ -20,8 +20,8 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 @interface OMNBeacon : NSObject
 
 @property (nonatomic, copy) NSString *UUIDString;
-@property (nonatomic, strong) NSNumber *major;
-@property (nonatomic, strong) NSNumber *minor;
+@property (nonatomic, strong) NSString *major;
+@property (nonatomic, strong) NSString *minor;
 @property (nonatomic, assign) CLProximity proximity;
 @property (nonatomic, assign) CLLocationAccuracy accuracy;
 @property (nonatomic, assign) NSInteger rssi;
@@ -47,7 +47,9 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
  */
 - (void)newIterationBegin;
 
-- (NSString *)uuid;
+- (NSString *)key;
+
+- (NSDictionary *)JSONObject;
 
 @end
 

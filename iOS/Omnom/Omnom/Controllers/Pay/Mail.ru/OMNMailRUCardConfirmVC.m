@@ -184,7 +184,8 @@ NSString *kCommaString = @".";
   _validateButton.enabled = YES;
   _cardHoldValueTF.textField.text = @"";
   
-  if (response[@"error"]) {
+  if (response[@"error"] ||
+      nil == response) {
 
     NSString *code = response[@"error"][@"code"];
     NSString *errorText = nil;

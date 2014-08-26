@@ -15,7 +15,7 @@ extern NSString * const OMNDecodeBeaconManagerNotificationLaunchKey;
 + (instancetype)manager;
 /**
  Decode list of OMNBeacon objects and get related restaurant and table info
- @param beacons list of @{"uuid" : uuid} objects
+ @param beacons list of @{OMNBeacon} objects
  @param success success callback, contains list of OMNDecodeBeacon objects
  @param failure error callback, contains NSError object
  */

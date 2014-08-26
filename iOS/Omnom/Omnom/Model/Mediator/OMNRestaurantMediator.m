@@ -72,7 +72,7 @@ OMNPayOrderVCDelegate>
   searchBeaconVC.estimateAnimationDuration = 2.0;
   searchBeaconVC.circleIcon = icon;
   if (self.restaurantVC.decodeBeacon.demo) {
-    searchBeaconVC.uuid = self.restaurantVC.decodeBeacon.uuid;
+    searchBeaconVC.decodeBeacon = self.restaurantVC.decodeBeacon;
   }
   [self pushViewController:searchBeaconVC];
   

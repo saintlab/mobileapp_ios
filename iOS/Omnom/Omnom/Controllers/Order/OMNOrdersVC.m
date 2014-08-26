@@ -22,6 +22,7 @@
 - (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
   self = [super initWithNibName:@"OMNOrdersVC" bundle:nil];
   if (self) {
+    _decodeBeacon = decodeBeacon;
     _orders = decodeBeacon.orders;
   }
   return self;

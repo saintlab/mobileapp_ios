@@ -35,7 +35,7 @@
       
       OMNBeacon *newBeacon = [beacon omn_beacon];
       
-      OMNBeacon *existingBeacon = existingBeaconsDictionary[newBeacon.uuid];
+      OMNBeacon *existingBeacon = existingBeaconsDictionary[newBeacon.key];
       
       if (existingBeacon) {
         
@@ -44,7 +44,7 @@
       }
       else {
         
-        existingBeaconsDictionary[newBeacon.uuid] = newBeacon;
+        existingBeaconsDictionary[newBeacon.key] = newBeacon;
         
       }
       

@@ -9,6 +9,8 @@
 #import "GCalculatorVCDelegate.h"
 @class OMNOrder;
 
+extern const CGFloat kCalculatorTopOffset;
+
 @interface OMNCalculatorVC : UIViewController
 
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;

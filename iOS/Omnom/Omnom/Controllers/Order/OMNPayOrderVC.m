@@ -344,7 +344,10 @@ OMNMailRUPayVCDelegate>
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
   if ((scrollView.contentOffset.y + scrollView.contentInset.top) < - 70.0f) {
+    CGPoint offset = scrollView.contentOffset;
     scrollView.scrollEnabled = NO;
+    //remove glitch when content scrolls to top
+    scrollView.contentOffset = offset;
     [self calculatorTap:nil];
   }
   

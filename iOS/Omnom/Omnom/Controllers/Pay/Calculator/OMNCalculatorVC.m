@@ -16,7 +16,7 @@
 #import "UIView+frame.h"
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
-static const CGFloat kTopOffset = 40.0f;
+const CGFloat kCalculatorTopOffset = 40.0f;
 
 @interface OMNCalculatorVC ()
 <OMNCalculatorVCDelegate>
@@ -121,8 +121,8 @@ static const CGFloat kTopOffset = 40.0f;
   
   [super viewWillLayoutSubviews];
   CGRect toFrame = self.view.bounds;
-  toFrame.origin.y = kTopOffset;
-  toFrame.size.height -= kTopOffset;
+  toFrame.origin.y = kCalculatorTopOffset;
+  toFrame.size.height -= kCalculatorTopOffset;
   _containerView.frame = toFrame;
   
   _totalButton.bottom = self.view.height - 11.0f;

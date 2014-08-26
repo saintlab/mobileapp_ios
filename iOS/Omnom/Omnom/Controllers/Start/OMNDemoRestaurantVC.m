@@ -17,12 +17,18 @@
 
 @implementation OMNDemoRestaurantVC {
   BOOL _decodeBeaconsStarted;
+  OMNBeacon *_demoRestaurantBeacon;
 }
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
   self = [super initWithParent:parent];
   if (self) {
     
+    _demoRestaurantBeacon = [[OMNBeacon alloc] init];
+    _demoRestaurantBeacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
+    _demoRestaurantBeacon.major = @"A";
+    _demoRestaurantBeacon.minor = @"1";
+   
     self.circleIcon = [UIImage imageNamed:@"logo_icon"];
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     
@@ -40,7 +46,11 @@
   [self.loaderView startAnimating:10.0];
   _decodeBeaconsStarted = YES;
   __weak typeof(self)weakSelf = self;
-  [[OMNDecodeBeaconManager manager] decodeBeacons:@[@{@"uuid" : @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0+A+1"}] success:^(NSArray *decodeBeacons) {
+  
+  
+  
+  
+  [[OMNDecodeBeaconManager manager] decodeBeacons:@[_demoRestaurantBeacon] success:^(NSArray *decodeBeacons) {
     
     OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
     if (decodeBeacon) {

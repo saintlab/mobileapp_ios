@@ -81,11 +81,11 @@ OMNDemoRestaurantVCDelegate>
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  if (self.uuid) {
+  if (self.decodeBeacon) {
     
     [self.loaderView startAnimating:self.estimateAnimationDuration];
     dispatch_async(dispatch_get_main_queue(), ^{
-      [weakSelf decodeUUID:weakSelf.uuid];
+      [weakSelf didDecodeBeacon:weakSelf.decodeBeacon];
     });
     
   }
@@ -101,11 +101,11 @@ OMNDemoRestaurantVCDelegate>
   
 }
 
-- (void)decodeUUID:(NSString *)uuid {
+- (void)decodeBeacon:(OMNBeacon *)beacon {
   __weak typeof(self)weakSelf = self;
-  [[OMNDecodeBeaconManager manager] decodeBeacons:@[@{@"uuid" : uuid}] success:^(NSArray *decodeBeacons) {
+  [[OMNDecodeBeaconManager manager] decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
     
-    [weakSelf didFindBeacon:[decodeBeacons firstObject]];
+    [weakSelf didDecodeBeacon:[decodeBeacons firstObject]];
     
   } failure:^(NSError *error) {
     
@@ -114,7 +114,7 @@ OMNDemoRestaurantVCDelegate>
   }];
 }
 
-- (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (void)didDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
   
   [self stopBeaconManager:YES];
   if (decodeBeacon) {
@@ -223,9 +223,9 @@ OMNDemoRestaurantVCDelegate>
 
 #pragma mark - OMNBeaconSearchManagerDelegate
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindUUID:(NSString *)uuid {
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon {
   
-  [self decodeUUID:uuid];
+  [self decodeBeacon:beacon];
   
 }
 
