@@ -19,6 +19,7 @@
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
   self = [super initWithNibName:@"OMNCircleRootVC" bundle:nil];
   if (self) {
+    self.text = @"";
     self.circleBackground = parent.circleBackground;
     self.backgroundImage = parent.backgroundImage;
   }
@@ -41,8 +42,15 @@
   self.circleBackground = _circleBackground;
   self.label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:25.0f];
   
-  
-  self.label.text = self.text;
+  NSString *text = (self.text) ? (self.text) : @"";
+  NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
+  NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+  style.lineSpacing = 5.0f;
+  style.maximumLineHeight = 20.0f;
+  [attributedText addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributedText.length)];
+
+  self.label.attributedText = attributedText;
+  self.label.textAlignment = NSTextAlignmentCenter;
   self.label.alpha = 0.0f;
   self.label.textColor = [UIColor blackColor];
   
@@ -66,7 +74,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-
+  
   [UIView animateWithDuration:0.3 animations:^{
     self.label.alpha = 1.0f;
     [self.label layoutIfNeeded];
