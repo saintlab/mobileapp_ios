@@ -18,10 +18,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gc5-5i-U4a">
-                    <rect key="frame" x="35" y="158" width="250" height="275"/>
+                    <rect key="frame" x="35" y="158" width="250" height="277"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="275" id="OKa-gG-e3z"/>
+                        <constraint firstAttribute="height" constant="277" id="OKa-gG-e3z"/>
                         <constraint firstAttribute="width" constant="250" id="ryb-ji-rrz"/>
                     </constraints>
                 </scrollView>
@@ -47,7 +47,7 @@
                 <constraint firstItem="nZu-9J-fJl" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="PJG-wf-pfg"/>
                 <constraint firstItem="nZu-9J-fJl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="cbH-wZ-Vh7"/>
                 <constraint firstAttribute="centerX" secondItem="Gc5-5i-U4a" secondAttribute="centerX" id="nED-g6-D7V"/>
-                <constraint firstItem="j2a-6M-xSX" firstAttribute="top" secondItem="Gc5-5i-U4a" secondAttribute="bottom" constant="8" id="s91-xD-Lf9"/>
+                <constraint firstItem="j2a-6M-xSX" firstAttribute="top" secondItem="Gc5-5i-U4a" secondAttribute="bottom" constant="6" id="s91-xD-Lf9"/>
                 <constraint firstAttribute="trailing" secondItem="nZu-9J-fJl" secondAttribute="trailing" constant="20" id="vUV-mW-N6D"/>
             </constraints>
         </view>

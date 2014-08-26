@@ -81,7 +81,14 @@
 
 - (void)setPage:(NSInteger)page {
   
-  _label.text = _labelTexts[page];
+  NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:_labelTexts[page]];
+  NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
+  style.lineSpacing = 5.0f;
+  style.maximumLineHeight = 20.0f;
+  [attributedText addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributedText.length)];
+  
+  _label.attributedText = attributedText;
+  _label.textAlignment = NSTextAlignmentCenter;
   _pageControl.currentPage = page;
   
 }
