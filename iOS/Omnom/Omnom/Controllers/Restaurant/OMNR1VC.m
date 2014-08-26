@@ -197,13 +197,7 @@
   
   _callWaiterButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] title:NSLocalizedString(@"Официант", nil)];
   
-  NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Отменить\nвызов", nil)];
-  NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-  style.lineSpacing = 0.0f;
-  style.maximumLineHeight = 20.0f;
-  [attrString addAttribute:NSParagraphStyleAttributeName
-                     value:style
-                     range:NSMakeRange(0, attrString.length)];
+  NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Отменить", nil)];
   [_callWaiterButton setAttributedTitle:attrString forState:UIControlStateSelected];
   [_callWaiterButton setAttributedTitle:attrString forState:UIControlStateSelected|UIControlStateHighlighted];
   
