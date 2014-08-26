@@ -57,7 +57,7 @@
   }
   else {
     
-    _loadingCircleVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+    _loadingCircleVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *decodeBeacon) {
       
       [weakSelf didFindBeacon:decodeBeacon];
       
@@ -81,7 +81,7 @@
   
 }
 
-- (void)didFindBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (void)didFindBeacon:(OMNVisitor *)decodeBeacon {
   
   if (nil == self.decodeBeacon) {
     [decodeBeacon newGuestWithCompletion:^{
@@ -98,7 +98,7 @@
 
 }
 
-- (void)didLoadLogoForRestaurant:(OMNDecodeBeacon *)decodeBeacon {
+- (void)didLoadLogoForRestaurant:(OMNVisitor *)decodeBeacon {
   
   __weak typeof(_loadingCircleVC)weakBeaconSearch = _loadingCircleVC;
   UIImage *logo = decodeBeacon.restaurant.logo;
@@ -120,7 +120,7 @@
   
 }
 
-- (void)didLoadBackgroundForRestaurant:(OMNDecodeBeacon *)decodeBeacon {
+- (void)didLoadBackgroundForRestaurant:(OMNVisitor *)decodeBeacon {
   
   [self.delegate searchRestaurantVC:self didFindBeacon:decodeBeacon];
   

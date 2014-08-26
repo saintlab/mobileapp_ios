@@ -9,7 +9,7 @@
 #import "OMNBeaconSearchManager.h"
 #import "OMNOperationManager.h"
 #import "OMNBluetoothManager.h"
-#import "OMNDecodeBeaconManager.h"
+#import "OMNVisitorManager.h"
 #import "OMNNearestBeaconsManager.h"
 #import <OMNBeaconBackgroundManager.h>
 

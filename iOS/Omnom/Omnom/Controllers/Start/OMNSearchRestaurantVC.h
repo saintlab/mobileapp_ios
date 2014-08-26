@@ -14,7 +14,7 @@
 
 @interface OMNSearchRestaurantVC : UIViewController
 
-@property (nonatomic, strong) OMNDecodeBeacon *decodeBeacon;
+@property (nonatomic, strong) OMNVisitor *decodeBeacon;
 @property (nonatomic, strong) UIImageView *logoIV;
 @property (weak, nonatomic) IBOutlet UIImageView *logoIconsIV;
 @property (weak, nonatomic) IBOutlet UIImageView *bgIV;
@@ -27,6 +27,6 @@
 
 @protocol OMNSearchRestaurantVCDelegate <NSObject>
 
-- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindBeacon:(OMNDecodeBeacon *)decodeBeacon;
+- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindBeacon:(OMNVisitor *)decodeBeacon;
 
 @end

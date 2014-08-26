@@ -7,7 +7,7 @@
 //
 
 #import "OMNBackgroundVC.h"
-#import "OMNDecodeBeacon.h"
+#import "OMNVisitor.h"
 
 @interface OMNStartVC : OMNBackgroundVC
 

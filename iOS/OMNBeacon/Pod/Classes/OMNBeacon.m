@@ -29,6 +29,16 @@ const NSInteger kNearestDeltaRSSI = 10;
 
 }
 
+- (instancetype)initWithJsonData:(id)jsonData {
+  self = [self init];
+  if (self) {
+    self.UUIDString = jsonData[@"uuid"];
+    self.major = jsonData[@"major"];
+    self.minor = jsonData[@"minor"];
+  }
+  return self;
+}
+
 - (instancetype)init {
   self = [super init];
   if (self) {

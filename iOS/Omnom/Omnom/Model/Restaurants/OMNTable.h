@@ -10,8 +10,7 @@
 
 @interface OMNTable : NSObject
 
-@property (nonatomic, strong) NSString *restaurantId;
-@property (nonatomic, strong) NSString *tableId;
+@property (nonatomic, copy) NSString *id;
 
 - (instancetype)initWithJsonData:(id)data;
 

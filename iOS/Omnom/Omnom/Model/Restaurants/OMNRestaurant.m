@@ -42,6 +42,7 @@
   self = [super init];
   if (self) {
     self.id = jsonData[@"id"];
+    self.is_demo = [jsonData[@"is_demo"] boolValue];
     self.title = jsonData[@"title"];
     self.image = jsonData[@"image"];
     self.Description = jsonData[@"description"];

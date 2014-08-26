@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNDecodeBeaconManager.h"
+#import "OMNVisitorManager.h"
 #import "OMNOperationManager.h"
 
 NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeaconManagerNotificationLaunchKey";
 
-@implementation OMNDecodeBeaconManager {
+@implementation OMNVisitorManager {
   NSMutableDictionary *_decodedBeacons;
 }
 
@@ -58,8 +58,8 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
   [decodedBecons enumerateObjectsUsingBlock:^(OMNDecodeBeacon *decodedBeacon, NSUInteger idx, BOOL *stop) {
     
-    if (decodedBeacon.uuid) {
-      _decodedBeacons[decodedBeacon.uuid] = decodedBeacon;
+    if (decodedBeacon.id) {
+      _decodedBeacons[decodedBeacon.id] = decodedBeacon;
     }
     
   }];
@@ -67,7 +67,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
 }
 
-- (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNDecodeBeaconBlock)success failure:(void (^)(NSError *error))failure; {
+- (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure; {
   
   [self decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
     
@@ -76,7 +76,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   } failure:failure];
 }
 
-- (void)decodeBeacons:(NSArray *)beacons success:(OMNDecodeBeaconsBlock)success failure:(void (^)(NSError *error))failure {
+- (void)decodeBeacons:(NSArray *)beacons success:(OMNVisitorsBlock)success failure:(void (^)(NSError *error))failure {
   
   if (kUseStubBeaconDecodeData) {
     success(nil);
@@ -188,11 +188,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 #warning readyForPush
   return YES;
   BOOL readyForPush = NO;
-  OMNDecodeBeacon *savedBeacon = _decodedBeacons[decodeBeacon.uuid];
+  OMNDecodeBeacon *savedBeacon = _decodedBeacons[decodeBeacon.id];
   if (nil == savedBeacon ||
       savedBeacon.readyForPush) {
     readyForPush = YES;
-    _decodedBeacons[decodeBeacon.uuid] = decodeBeacon;
+    _decodedBeacons[decodeBeacon.id] = decodeBeacon;
     [self save];
   }
   
@@ -205,7 +205,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   if ([self readyForPush:decodeBeacon]) {
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = decodeBeacon.restaurantId;
+    localNotification.alertBody = decodeBeacon.restaurant.id;
     localNotification.alertAction = NSLocalizedString(@"Запустить", nil);
     localNotification.soundName = kPushSoundName;
     

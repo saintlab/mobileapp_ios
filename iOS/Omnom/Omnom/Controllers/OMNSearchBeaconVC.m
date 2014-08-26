@@ -13,7 +13,7 @@
 #import "OMNTablePositionVC.h"
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNCircleRootVC.h"
-#import "OMNDecodeBeaconManager.h"
+#import "OMNVisitorManager.h"
 #import "OMNScanQRCodeVC.h"
 #import "OMNTurnOnBluetoothVC.h"
 #import "UINavigationController+omn_replace.h"
@@ -60,7 +60,7 @@ OMNDemoRestaurantVCDelegate>
     [_cancelButton setImage:[UIImage imageNamed:@"cross_icon_white"] forState:UIControlStateNormal];
     [_cancelButton sizeToFit];
     [_cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
-    _cancelButton.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 50.0f);
+    _cancelButton.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 42.0f);
     [self.view addSubview:_cancelButton];
   }
   
@@ -103,7 +103,7 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)decodeBeacon:(OMNBeacon *)beacon {
   __weak typeof(self)weakSelf = self;
-  [[OMNDecodeBeaconManager manager] decodeBeacon:beacon success:^(OMNDecodeBeacon *decodeBeacon) {
+  [[OMNVisitorManager manager] decodeBeacon:beacon success:^(OMNVisitor *decodeBeacon) {
     
     [weakSelf didDecodeBeacon:decodeBeacon];
     
@@ -114,7 +114,7 @@ OMNDemoRestaurantVCDelegate>
   }];
 }
 
-- (void)didDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (void)didDecodeBeacon:(OMNVisitor *)decodeBeacon {
   
   [self stopBeaconManager:YES];
   if (decodeBeacon) {

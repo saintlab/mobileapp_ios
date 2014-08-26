@@ -111,7 +111,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.5;
+  return 10.5;
 }
 
 + (NSArray *)keys {

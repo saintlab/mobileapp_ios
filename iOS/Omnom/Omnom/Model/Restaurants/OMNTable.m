@@ -13,8 +13,7 @@
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
-    self.restaurantId = data[@"restaurantId"];
-    self.tableId = data[@"tableId"];
+    self.id = data[@"id"];
   }
   return self;
 }

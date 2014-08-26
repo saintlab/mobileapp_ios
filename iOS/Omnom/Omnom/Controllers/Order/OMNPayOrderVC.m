@@ -23,7 +23,7 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNGPBPayVC.h"
 #import "OMNSocketManager.h"
-#import "OMNDecodeBeacon.h"
+#import "OMNVisitor.h"
 #import "OMNMailRUPayVC.h"
 #import "OMNAddBankCardVC.h"
 #import "OMNPaymentNotificationControl.h"
@@ -48,19 +48,19 @@ OMNMailRUPayVCDelegate>
   __weak IBOutlet UIImageView *_backgroundIV;
   BOOL _beginSplitAnimation;
   OMNOrder *_order;
-  OMNDecodeBeacon *_decodeBeacon;
+  OMNVisitor *_decodeBeacon;
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
-  if (NO == _decodeBeacon.demo) {
+  if (NO == _decodeBeacon.restaurant.is_demo) {
     [[OMNSocketManager manager] leave:_order.id];
   }
   
 }
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon {
   self = [super init];
   if (self) {
     _order = decodeBeacon.selectedOrder;
@@ -73,7 +73,7 @@ OMNMailRUPayVCDelegate>
   
   [super viewDidLoad];
 
-  if (NO == _decodeBeacon.demo) {
+  if (NO == _decodeBeacon.restaurant.is_demo) {
     [[OMNSocketManager manager] join:_order.id];
   }
   
@@ -247,7 +247,7 @@ OMNMailRUPayVCDelegate>
 #else
   
   OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
-  mailRUPayVC.demo = _decodeBeacon.demo;
+  mailRUPayVC.demo = _decodeBeacon.restaurant.is_demo;
   mailRUPayVC.delegate = self;
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:mailRUPayVC];
   [self.navigationController presentViewController:navigationController animated:YES completion:^{

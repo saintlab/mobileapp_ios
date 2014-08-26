@@ -8,12 +8,12 @@
 
 #import "OMNLoadingCircleVC.h"
 
-@class OMNDecodeBeacon;
+@class OMNVisitor;
 @protocol OMNDemoRestaurantVCDelegate;
 
 @interface OMNDemoRestaurantVC : OMNLoadingCircleVC
 
-@property (nonatomic, strong) OMNDecodeBeacon *decodeBeacon;
+@property (nonatomic, strong) OMNVisitor *decodeBeacon;
 @property (nonatomic, weak) id<OMNDemoRestaurantVCDelegate> delegate;
 
 @end

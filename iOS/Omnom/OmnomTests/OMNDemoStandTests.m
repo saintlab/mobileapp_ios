@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import <Kiwi.h>
 #import "OMNAuthorisation.h"
-#import "OMNDecodeBeaconManager.h"
+#import "OMNVisitorManager.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNOrder+omn_mailru.h"
 #import "OMNBankCard.h"
@@ -18,7 +18,7 @@ SPEC_BEGIN(OMNDemoStandTest)
 
 describe(@"demo stand test", ^{
 
-  __block OMNDecodeBeacon *_decodeBeacon = nil;
+  __block OMNVisitor *_decodeBeacon = nil;
   __block OMNOrder *_order = nil;
   __block OMNUser *_user = nil;
   
@@ -28,7 +28,7 @@ describe(@"demo stand test", ^{
     
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
-    [[OMNDecodeBeaconManager manager] decodeBeacon:aCafeBeacon success:^(OMNDecodeBeacon *decodeBeacon) {
+    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNVisitor *decodeBeacon) {
       
       _decodeBeacon = decodeBeacon;
       

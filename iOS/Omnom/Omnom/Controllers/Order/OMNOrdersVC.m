@@ -8,7 +8,7 @@
 
 #import "OMNOrdersVC.h"
 #import "OMNOrderItemCell.h"
-#import "OMNDecodeBeacon.h"
+#import "OMNVisitor.h"
 
 @interface OMNOrdersVC ()
 
@@ -16,10 +16,10 @@
 
 @implementation OMNOrdersVC {
   NSArray *_orders;
-  OMNDecodeBeacon *_decodeBeacon;
+  OMNVisitor *_decodeBeacon;
 }
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon {
   self = [super initWithNibName:@"OMNOrdersVC" bundle:nil];
   if (self) {
     _decodeBeacon = decodeBeacon;

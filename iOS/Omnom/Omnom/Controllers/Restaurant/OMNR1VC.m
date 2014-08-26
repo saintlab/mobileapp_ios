@@ -18,7 +18,7 @@
 #import "OMNPushPermissionVC.h"
 #import "OMNToolbarButton.h"
 #import "OMNSocketManager.h"
-#import "OMNDecodeBeacon.h"
+#import "OMNVisitor.h"
 #import "OMNRestaurantMediator.h"
 
 @interface OMNR1VC ()
@@ -41,7 +41,7 @@
   [[OMNSocketManager manager] disconnect];
 }
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon {
   self = [super initWithParent:nil];
   if (self) {
     _decodeBeacon = decodeBeacon;
@@ -56,7 +56,7 @@
 
   _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
   
-  if (_decodeBeacon.demo) {
+  if (_decodeBeacon.restaurant.is_demo) {
 
     UIButton *cancelButton = [[UIButton alloc] init];
     [cancelButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateNormal];
@@ -185,7 +185,7 @@
 
 - (void)socketConnect {
   
-  if (NO == _decodeBeacon.demo) {
+  if (NO == _decodeBeacon.restaurant.is_demo) {
     [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token];
   }
   
@@ -307,9 +307,9 @@
   
   OMNRestaurant *restaurant = _restaurant;
   __weak typeof(self)weakSelf = self;
-  [_restaurantMediator searchBeaconWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+  [_restaurantMediator searchBeaconWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *decodeBeacon) {
   
-    [restaurant waiterCallForTableID:decodeBeacon.tableId completion:^{
+    [restaurant waiterCallForTableID:decodeBeacon.table.id completion:^{
       
       dispatch_async(dispatch_get_main_queue(), ^{
         

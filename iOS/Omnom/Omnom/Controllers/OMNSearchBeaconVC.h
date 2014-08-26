@@ -6,17 +6,17 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNDecodeBeacon.h"
+#import "OMNVisitor.h"
 #import "OMNLoadingCircleVC.h"
 #import "OMNLoaderView.h"
 
 @class OMNSearchBeaconVC;
 
-typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon);
+typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *decodeBeacon);
 
 @interface OMNSearchBeaconVC : OMNLoadingCircleVC
 
-@property (nonatomic, strong) OMNDecodeBeacon *decodeBeacon;
+@property (nonatomic, strong) OMNVisitor *decodeBeacon;
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
 

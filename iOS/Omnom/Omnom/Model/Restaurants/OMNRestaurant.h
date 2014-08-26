@@ -18,6 +18,7 @@ typedef void(^OMNImageBlock)(UIImage *image);
 @interface OMNRestaurant : NSObject
 
 @property (nonatomic, copy) NSString *id;
+@property (nonatomic, assign) BOOL is_demo;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, copy) NSString *image;

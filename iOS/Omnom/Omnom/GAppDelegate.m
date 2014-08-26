@@ -10,7 +10,7 @@
 #import "OMNAuthorisation.h"
 #import "OMNStartVC.h"
 #import "OMNBeaconBackgroundManager.h"
-#import "OMNDecodeBeaconManager.h"
+#import "OMNVisitorManager.h"
 #import "OMNOperationManager.h"
 #import "OMNViewController.h"
 #import "OMNShakeWindow.h"
@@ -33,7 +33,7 @@
   [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
     
     [OMNAuthorisation authorisation];
-    [[OMNDecodeBeaconManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
+    [[OMNVisitorManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
     
   }];
   

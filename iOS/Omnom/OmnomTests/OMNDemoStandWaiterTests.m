@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import <Kiwi.h>
-#import "OMNDecodeBeaconManager.h"
+#import "OMNVisitorManager.h"
 #import "OMNAuthorisation.h"
 
 SPEC_BEGIN(OMNDemoStandWaiterTests)
@@ -23,7 +23,7 @@ describe(@"waiter call tests", ^{
     
     OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
     
-    [[OMNDecodeBeaconManager manager] decodeBeacon:aCafeBeacon success:^(OMNDecodeBeacon *decodeBeacon) {
+    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNDecodeBeacon *decodeBeacon) {
       
       _decodeBeacon = decodeBeacon;
       

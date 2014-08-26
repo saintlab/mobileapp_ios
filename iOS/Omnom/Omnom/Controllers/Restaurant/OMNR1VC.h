@@ -8,15 +8,15 @@
 
 #import "OMNCircleRootVC.h"
 
-@class OMNDecodeBeacon;
+@class OMNVisitor;
 @protocol OMNR1VCDelegate;
 
 @interface OMNR1VC : OMNCircleRootVC
 
 @property (nonatomic, weak) id<OMNR1VCDelegate> delegate;
-@property (nonatomic, strong, readonly) OMNDecodeBeacon *decodeBeacon;
+@property (nonatomic, strong, readonly) OMNVisitor *decodeBeacon;
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
+- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon;
 
 - (void)callWaiterDidStart;
 - (void)callWaiterDidStop;

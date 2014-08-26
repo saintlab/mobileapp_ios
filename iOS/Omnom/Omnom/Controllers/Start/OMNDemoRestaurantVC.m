@@ -7,7 +7,7 @@
 //
 
 #import "OMNDemoRestaurantVC.h"
-#import "OMNDecodeBeaconManager.h"
+#import "OMNVisitorManager.h"
 #import "OMNR1VC.h"
 
 @interface OMNDemoRestaurantVC ()
@@ -44,7 +44,7 @@
   
   
   
-  [[OMNDecodeBeaconManager manager] decodeBeacon:[OMNBeacon aCafeBeacon] success:^(OMNDecodeBeacon *decodeBeacon) {
+  [[OMNVisitorManager manager] decodeBeacon:[OMNBeacon aCafeBeacon] success:^(OMNVisitor *decodeBeacon) {
     
     if (decodeBeacon) {
       [weakSelf didDecodeUUID:decodeBeacon];
@@ -67,7 +67,7 @@
   
 }
 
-- (void)didDecodeUUID:(OMNDecodeBeacon *)decodeBeacon {
+- (void)didDecodeUUID:(OMNVisitor *)decodeBeacon {
   _decodeBeacon = decodeBeacon;
   
   __weak typeof(self)weakSelf = self;

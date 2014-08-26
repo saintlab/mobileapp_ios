@@ -12,7 +12,7 @@
 #import "OMNRestaurantInfo.h"
 #import "OMNRestaurantFeedItemCell.h"
 #import "OMNProductDetailsVC.h"
-#import "OMNDecodeBeacon.h"
+#import "OMNVisitor.h"
 
 @interface OMNRestaurantInfoVC ()
 <OMNProductDetailsVCDelegate,
@@ -58,7 +58,7 @@ UIScrollViewDelegate>
   [closeButton sizeToFit];
   self.navigationItem.titleView = closeButton;
   
-  if (NO == _decodeBeacon.demo) {
+  if (NO == _decodeBeacon.restaurant.is_demo) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
   }

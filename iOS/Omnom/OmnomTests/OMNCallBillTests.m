@@ -8,14 +8,14 @@
 
 #import <XCTest/XCTest.h>
 #import <Kiwi.h>
-#import "OMNDecodeBeaconManager.h"
+#import "OMNVisitorManager.h"
 #import "OMNAuthorisation.h"
 
 SPEC_BEGIN(OMNDemoCallBillTests)
 
 describe(@"call bill test", ^{
   
-  __block OMNDecodeBeacon *_decodeBeacon = nil;
+  __block OMNVisitor *_decodeBeacon = nil;
   __block OMNOrder *_order = nil;
   
   beforeAll(^{
@@ -24,7 +24,7 @@ describe(@"call bill test", ^{
     
     OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
     
-    [[OMNDecodeBeaconManager manager] decodeBeacon:aCafeBeacon success:^(OMNDecodeBeacon *decodeBeacon) {
+    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNVisitor *decodeBeacon) {
       
       _decodeBeacon = decodeBeacon;
       

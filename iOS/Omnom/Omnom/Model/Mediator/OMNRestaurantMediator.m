@@ -10,7 +10,7 @@
 #import "OMNUserInfoVC.h"
 #import "OMNRestaurantInfoVC.h"
 #import "OMNR1VC.h"
-#import "OMNDecodeBeacon.h"
+#import "OMNVisitor.h"
 #import "OMNSearchBeaconVC.h"
 #import "OMNAuthorisation.h"
 #import "OMNPushPermissionVC.h"
@@ -71,7 +71,7 @@ OMNPayOrderVCDelegate>
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:completionBlock cancelBlock:cancelBlock];
   searchBeaconVC.estimateAnimationDuration = 2.0;
   searchBeaconVC.circleIcon = icon;
-  if (self.restaurantVC.decodeBeacon.demo) {
+  if (self.restaurantVC.decodeBeacon.restaurant.is_demo) {
     searchBeaconVC.decodeBeacon = self.restaurantVC.decodeBeacon;
   }
   [self pushViewController:searchBeaconVC];
@@ -81,7 +81,7 @@ OMNPayOrderVCDelegate>
 - (void)callBillAction {
   
   __weak typeof(self)weakSelf = self;
-  [self searchBeaconWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNDecodeBeacon *decodeBeacon) {
+  [self searchBeaconWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *decodeBeacon) {
     
     [decodeBeacon getOrders:^(NSArray *orders) {
       
@@ -103,7 +103,7 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)checkPushNotificationAndProcessBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (void)checkPushNotificationAndProcessBeacon:(OMNVisitor *)decodeBeacon {
   
   if ([OMNAuthorisation authorisation].pushNotificationsRequested) {
     
@@ -112,7 +112,7 @@ OMNPayOrderVCDelegate>
   }
   else {
     
-    if (!self.restaurantVC.decodeBeacon.demo &&
+    if (!self.restaurantVC.decodeBeacon.restaurant.is_demo &&
         decodeBeacon.orders.count &&
         !TARGET_IPHONE_SIMULATOR) {
       OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self.restaurantVC];
@@ -132,7 +132,7 @@ OMNPayOrderVCDelegate>
 }
 
 
-- (void)processOrdersAtBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (void)processOrdersAtBeacon:(OMNVisitor *)decodeBeacon {
   
   if (decodeBeacon.orders.count > 1) {
     
@@ -153,7 +153,7 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)processOrderAtBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (void)processOrderAtBeacon:(OMNVisitor *)decodeBeacon {
   
   OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithDecodeBeacon:decodeBeacon];
   paymentVC.delegate = self;
@@ -181,7 +181,7 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)selectOrderAtBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (void)selectOrderAtBeacon:(OMNVisitor *)decodeBeacon {
   
   OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithDecodeBeacon:decodeBeacon];
   ordersVC.delegate = self;
@@ -219,7 +219,7 @@ OMNPayOrderVCDelegate>
 
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
   
-  if (self.restaurantVC.decodeBeacon.demo) {
+  if (self.restaurantVC.decodeBeacon.restaurant.is_demo) {
     [self.restaurantVC.delegate r1VCDidFinish:self.restaurantVC];
   }
   else {

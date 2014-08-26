@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNDecodeBeacon.h"
+#import "OMNVisitor.h"
 #import "OMNOperationManager.h"
 
 @interface NSArray (omn_restaurants)
@@ -15,20 +15,18 @@
 
 @end
 
-@implementation OMNDecodeBeacon {
+@implementation OMNVisitor {
   id _decodeBeaconData;
 }
 
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
-    _demo = [data[@"is_demo"] boolValue];
     _decodeBeaconData = data;
-    _uuid = [data[@"uuid"] description];
-    _tableId = [data[@"table_id"] description];
-    _restaurantId = [data[@"restaurant_id"] description];
-    _foundDate = [NSDate date];
+    _beacon = [[OMNBeacon alloc] initWithJsonData:@"beacon"];
     _restaurant = [[OMNRestaurant alloc] initWithJsonData:data[@"restaurant"]];
+    _table = [[OMNTable alloc] initWithJsonData:data[@"table"]];
+    _foundDate = [NSDate date];
   }
   return self;
 }
@@ -49,8 +47,15 @@
   
 }
 
+- (NSString *)id {
+  if (self.beacon) {
+    return self.beacon.key;
+  }
+  return @"";
+}
+
 - (NSString *)description {
-  return [NSString stringWithFormat:@"table = %@\nrestaurant = %@", _tableId, _restaurantId];
+  return [NSString stringWithFormat:@"table = %@\nrestaurant = %@", self.table.id, self.restaurant.id];
 }
 
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
@@ -64,7 +69,8 @@
     return;
   }
   __weak typeof(self)weakSelf = self;
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurantId, self.tableId];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant.id, self.table.id];
+  
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
     if ([response isKindOfClass:[NSArray class]]) {
@@ -88,7 +94,7 @@
 
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/new/guest", self.restaurantId, self.tableId];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/new/guest", self.restaurant.id, self.table.id];
   
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     

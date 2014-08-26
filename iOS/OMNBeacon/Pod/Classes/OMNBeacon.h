@@ -32,6 +32,8 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 
 @property (nonatomic, assign, readonly) BOOL nearTheTable;
 
+- (instancetype)initWithJsonData:(id)jsonData;
+
 - (NSTimeInterval)atTheTableTime;
 
 - (BOOL)closeToBeacon:(OMNBeacon *)beacon;

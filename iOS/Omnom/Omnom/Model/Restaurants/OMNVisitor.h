@@ -1,5 +1,5 @@
 //
-//  OMNDecodeBeacon.h
+//  OMNVisitor.h
 //  restaurants
 //
 //  Created by tea on 14.04.14.
@@ -8,30 +8,29 @@
 
 #import "OMNBeacon.h"
 #import "OMNRestaurant.h"
+#import "OMNTable.h"
 #import "OMNConstants.h"
 
-@class OMNDecodeBeacon;
+@class OMNVisitor;
 
-typedef void(^OMNDecodeBeaconBlock)(OMNDecodeBeacon *decodeBeacon);
-typedef void(^OMNDecodeBeaconsBlock)(NSArray *decodeBeacons);
+typedef void(^OMNVisitorBlock)(OMNVisitor *decodeBeacon);
+typedef void(^OMNVisitorsBlock)(NSArray *decodeBeacons);
 
-@interface OMNDecodeBeacon : NSObject
+@interface OMNVisitor : NSObject
 <NSCoding>
 
-@property (nonatomic, copy) NSString *uuid;
-@property (nonatomic, copy) NSString *tableId;
-@property (nonatomic, copy) NSString *restaurantId;
 @property (nonatomic, strong) NSDate *foundDate;
-@property (nonatomic, assign, readonly) BOOL demo;
-
+@property (nonatomic, strong) OMNBeacon *beacon;
+@property (nonatomic, strong) OMNTable *table;
 @property (nonatomic, strong) OMNRestaurant *restaurant;
+
 @property (nonatomic, strong) NSArray *orders;
 @property (nonatomic, weak) OMNOrder *selectedOrder;
 
 - (instancetype)initWithJsonData:(id)data;
 
 - (BOOL)readyForPush;
-
+- (NSString *)id;
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 

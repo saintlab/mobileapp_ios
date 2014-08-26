@@ -9,15 +9,15 @@
 #import "OMNOrderVCDelegate.h"
 #import "OMNOrder.h"
 
-@class OMNDecodeBeacon;
+@class OMNVisitor;
 @protocol OMNOrdersVCDelegate;
 
 @interface OMNOrdersVC : UICollectionViewController
 
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
-@property (nonatomic, strong, readonly) OMNDecodeBeacon *decodeBeacon;
+@property (nonatomic, strong, readonly) OMNVisitor *decodeBeacon;
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
+- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon;
 
 @end
 
