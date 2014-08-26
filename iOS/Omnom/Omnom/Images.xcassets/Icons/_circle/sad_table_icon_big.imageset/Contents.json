@@ -1,9 +1,6 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
       "filename" : "sad_table_icon_big.png"
@@ -12,6 +9,10 @@
       "idiom" : "universal",
       "scale" : "2x",
       "filename" : "sad_table_icon_big@2x.png"
+    },
+    {
+      "idiom" : "universal",
+      "unassigned" : true
     }
   ],
   "info" : {
