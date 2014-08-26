@@ -9,19 +9,25 @@
 #import "OMNMailRuBankCardsModel.h"
 #import <SSKeychain.h>
 
+NSString * const kAccountName = @"mail.ru";
+NSString * const kCardIdServiceName = @"card_id";
+
 @implementation OMNMailRuBankCardsModel {
-  
 }
 
-@synthesize selectedCard=_selectedCard;
 @synthesize cards=_cards;
 
 - (NSString *)card_id {
-  return [SSKeychain passwordForService:@"card_id" account:@"mail.ru"];
+  return [SSKeychain passwordForService:kCardIdServiceName account:kAccountName];
 }
 
 - (void)setCard_id:(NSString *)card_id {
-  [SSKeychain setPassword:card_id forService:@"card_id" account:@"mail.ru"];
+  if (nil == card_id) {
+    [SSKeychain deletePasswordForService:kCardIdServiceName account:kAccountName];
+  }
+  else {
+    [SSKeychain setPassword:card_id forService:kCardIdServiceName account:kAccountName];
+  }
 }
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock {
@@ -61,7 +67,7 @@
     }];
     
     if (selectedCard) {
-      _selectedCard = selectedCard;
+      self.selectedCard = selectedCard;
     }
     else {
       [self updateCardSelection];

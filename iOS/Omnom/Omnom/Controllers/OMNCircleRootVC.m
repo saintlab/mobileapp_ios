@@ -7,6 +7,7 @@
 //
 
 #import "OMNCircleRootVC.h"
+#import "UILabel+numberOfLines.h"
 
 @interface OMNCircleRootVC ()
 
@@ -50,7 +51,12 @@
   [attributedText addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributedText.length)];
 
   self.label.attributedText = attributedText;
-  self.label.textAlignment = NSTextAlignmentCenter;
+  if ([self.label omn_linesCount] >= 3) {
+    self.label.textAlignment = NSTextAlignmentLeft;
+  }
+  else {
+    self.label.textAlignment = NSTextAlignmentCenter;
+  }
   self.label.alpha = 0.0f;
   self.label.textColor = [UIColor blackColor];
   

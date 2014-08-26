@@ -24,8 +24,8 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1w-k1-jr8">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="2YX-13-NuN">
-                            <rect key="frame" x="20" y="307" width="280" height="203"/>
+                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" asdkfj askdjf askdjf akjdfsaksdds fdf sadfks dfs k fsadjk fadsjklafds klafsd jk af dsjkadfs ljkl adfks adfjs " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="270" translatesAutoresizingMaskIntoConstraints="NO" id="2YX-13-NuN">
+                            <rect key="frame" x="30" y="307" width="270" height="203"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -43,11 +43,12 @@
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="dkP-fe-wik" secondAttribute="centerX" id="2VV-7O-L6v"/>
+                        <constraint firstAttribute="centerX" secondItem="2YX-13-NuN" secondAttribute="centerX" constant="-5" id="6r4-wx-1Ag"/>
                         <constraint firstItem="2YX-13-NuN" firstAttribute="top" relation="lessThanOrEqual" secondItem="dkP-fe-wik" secondAttribute="bottom" priority="750" constant="8" id="DX3-4A-CXp"/>
                         <constraint firstAttribute="bottom" secondItem="2YX-13-NuN" secondAttribute="bottom" constant="58" id="Oib-vf-vxO"/>
                         <constraint firstItem="dkP-fe-wik" firstAttribute="centerY" secondItem="z1w-k1-jr8" secondAttribute="bottom" multiplier="0.35" id="Sfg-Zb-Aum"/>
-                        <constraint firstItem="2YX-13-NuN" firstAttribute="leading" secondItem="z1w-k1-jr8" secondAttribute="leading" constant="20" id="V8T-CJ-c4Z"/>
-                        <constraint firstAttribute="trailing" secondItem="2YX-13-NuN" secondAttribute="trailing" constant="20" id="eON-cW-Ean"/>
+                        <constraint firstItem="2YX-13-NuN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z1w-k1-jr8" secondAttribute="leading" priority="200" constant="20" id="V8T-CJ-c4Z"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2YX-13-NuN" secondAttribute="trailing" priority="200" constant="20" id="eON-cW-Ean"/>
                     </constraints>
                 </view>
             </subviews>

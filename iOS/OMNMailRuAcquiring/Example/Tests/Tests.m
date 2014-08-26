@@ -102,6 +102,7 @@ describe(@"register test", ^{
     
   });
   
+
   it(@"should delete card", ^{
     
     __block id cardDeleteResponse = nil;
@@ -114,7 +115,7 @@ describe(@"register test", ^{
     [[expectFutureValue(cardDeleteResponse) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
     
   });
-  
+
 });
 
 SPEC_END

@@ -202,6 +202,9 @@
 		939689BF195C010900AAAF9C /* OMNWizardPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939689BC195C010900AAAF9C /* OMNWizardPageVC.m */; };
 		939689C0195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939689BD195C010900AAAF9C /* OMNWizardPageVC.xib */; };
 		939689C1195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939689BD195C010900AAAF9C /* OMNWizardPageVC.xib */; };
+		93998C1219ACB0F800FEE940 /* UILabel+numberOfLines.m in Sources */ = {isa = PBXBuildFile; fileRef = 93998C1119ACB0F800FEE940 /* UILabel+numberOfLines.m */; };
+		93998C1519ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */; };
+		93998C1619ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */; };
 		939DA162195405650063AB23 /* OMNAuthorizationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA160195405650063AB23 /* OMNAuthorizationVC.m */; };
 		939DA163195405650063AB23 /* OMNAuthorizationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA160195405650063AB23 /* OMNAuthorizationVC.m */; };
 		939DA1761958226B0063AB23 /* OMNAnalitics.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA1751958226B0063AB23 /* OMNAnalitics.m */; };
@@ -553,6 +556,10 @@
 		939689BB195C010900AAAF9C /* OMNWizardPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWizardPageVC.h; sourceTree = "<group>"; };
 		939689BC195C010900AAAF9C /* OMNWizardPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWizardPageVC.m; sourceTree = "<group>"; };
 		939689BD195C010900AAAF9C /* OMNWizardPageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNWizardPageVC.xib; sourceTree = "<group>"; };
+		93998C1019ACB0F800FEE940 /* UILabel+numberOfLines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+numberOfLines.h"; sourceTree = "<group>"; };
+		93998C1119ACB0F800FEE940 /* UILabel+numberOfLines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+numberOfLines.m"; sourceTree = "<group>"; };
+		93998C1319ACB6BD00FEE940 /* OMNScrollExtendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScrollExtendView.h; sourceTree = "<group>"; };
+		93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNScrollExtendView.m; sourceTree = "<group>"; };
 		939DA15F195405650063AB23 /* OMNAuthorizationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorizationVC.h; sourceTree = "<group>"; };
 		939DA160195405650063AB23 /* OMNAuthorizationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationVC.m; sourceTree = "<group>"; };
 		939DA1741958226B0063AB23 /* OMNAnalitics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAnalitics.h; sourceTree = "<group>"; };
@@ -795,6 +802,8 @@
 				9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */,
 				936BAD9819A797030029873B /* OMNBorderedButton.h */,
 				936BAD9919A797030029873B /* OMNBorderedButton.m */,
+				93998C1319ACB6BD00FEE940 /* OMNScrollExtendView.h */,
+				93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -881,6 +890,8 @@
 				93CA085719AA33D100615F43 /* UITableView+screenshot.m */,
 				93CA085A19AA34FA00615F43 /* UIView+screenshot.h */,
 				93CA085B19AA34FA00615F43 /* UIView+screenshot.m */,
+				93998C1019ACB0F800FEE940 /* UILabel+numberOfLines.h */,
+				93998C1119ACB0F800FEE940 /* UILabel+numberOfLines.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1861,6 +1872,7 @@
 				93E29997197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
 				93958B5D198747E1009BB2ED /* OMNBill.m in Sources */,
 				9345AFD5199C6F8B00328F73 /* OMNToolbarButton.m in Sources */,
+				93998C1219ACB0F800FEE940 /* UILabel+numberOfLines.m in Sources */,
 				9321181A1962DF7C00183729 /* OMNProduct.m in Sources */,
 				939F991819752BE90051822E /* OMNEditTableVC.m in Sources */,
 				939F991419752BE90051822E /* OMNBankCardsVC.m in Sources */,
@@ -1868,6 +1880,7 @@
 				93535F0E19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				93B368A019A4CF1100B6E6CB /* OMNSlideDownTransition.m in Sources */,
 				937A37821981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
+				93998C1519ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */,
 				939F992019752BE90051822E /* OMNLoginVC.m in Sources */,
 				9345AFCD199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
 				937822A41963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,
@@ -1974,6 +1987,7 @@
 				939F992719752BE90051822E /* OMNRegisterUserVC.m in Sources */,
 				93535F00198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
 				93E299A3197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */,
+				93998C1619ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */,
 				939F991119752BE90051822E /* OMNAddBankCardVC.m in Sources */,
 				939F993719752D400051822E /* OMNUserInfoTransition.m in Sources */,
 				937A37381980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,

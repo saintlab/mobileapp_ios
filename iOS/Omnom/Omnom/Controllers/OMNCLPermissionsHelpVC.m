@@ -7,6 +7,7 @@
 //
 
 #import "OMNCLPermissionsHelpVC.h"
+#import "OMNScrollExtendView.h"
 
 @interface OMNCLPermissionsHelpVC ()
 <UIScrollViewDelegate>
@@ -44,6 +45,11 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  OMNScrollExtendView *scrollExtendView = (OMNScrollExtendView *)self.view;
+  if ([scrollExtendView respondsToSelector:@selector(setScrollView:)]) {
+    scrollExtendView.scrollView = _scrollView;
+  }
   
   _label.textColor = [UIColor blackColor];
   _label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:25.0f];

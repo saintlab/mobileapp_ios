@@ -56,9 +56,17 @@
   if (self.cards.count) {
     OMNBankCard *card = [self.cards firstObject];
     self.card_id = card.id;
-    _selectedCard = card;
+    self.selectedCard = card;
   }
   
+}
+
+- (void)removeCard:(OMNBankCard *)bankCard {
+  if ([self.card_id isEqualToString:bankCard.id]) {
+    self.card_id = nil;
+  }
+  [self.cards removeObject:bankCard];
+  [self updateCardSelection];
 }
 
 #pragma mark - Table view data source
@@ -131,10 +139,10 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNBankCard *card = self.cards[indexPath.row];
-  NSMutableArray *cards = self.cards;
+  __weak typeof(self)weakSelf = self;
   [card deleteWithCompletion:^{
     
-    [cards removeObject:card];
+    [weakSelf removeCard:card];
     dispatch_async(dispatch_get_main_queue(), ^{
       [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     });
@@ -158,8 +166,8 @@
     [indexPaths addObject:_selectedIndexPath];
   }
 
-  _selectedCard = self.cards[indexPath.row];
-  self.card_id = _selectedCard.id;
+  self.selectedCard = self.cards[indexPath.row];
+  self.card_id = self.selectedCard.id;
   
   [tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
   _selectedIndexPath = indexPath;
