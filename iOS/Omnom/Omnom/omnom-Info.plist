@@ -32,17 +32,17 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1807</string>
+	<string>1808</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Пермишен для блютуса</string>
+	<string>Это необходимо для определения заведения и вашего столика</string>
 	<key>NSCameraUsageDescription</key>
 	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Пермишен мне</string>
+	<string>Это необходимо для определения заведения и вашего столика</string>
 	<key>NSLocationUsageDescription</key>
-	<string>Пермишен для использования геопозиции</string>
+	<string>Это необходимо для определения заведения и вашего столика</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Пермишен для использования кор мошена</string>
 	<key>UIAppFonts</key>
