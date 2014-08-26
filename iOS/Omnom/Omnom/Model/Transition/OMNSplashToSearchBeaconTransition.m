@@ -34,6 +34,7 @@
   UIImageView *fromViewSnapshot = [[UIImageView alloc] initWithImage:toViewController.backgroundView.image];
   
   _layer = [CAShapeLayer layer];
+  _layer.fillRule = kCAFillRuleEvenOdd;
   _layer.fillColor = [UIColor colorWithPatternImage:fromViewController.bgIV.image].CGColor;
   CGFloat diametr = hypotf(containerView.frame.size.width, containerView.frame.size.height);
   CGFloat xOffset = (diametr - containerView.frame.size.width)/2.0f;
@@ -80,6 +81,15 @@
   _layer.path = toPath.CGPath;
   [_layer addAnimation:pathAnimation forKey:@"path"];
 
+  
+//  CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
+//  colorAnimation.duration = duration;
+//  colorAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+//  colorAnimation.fromValue = (id)[UIColor colorWithPatternImage:fromViewController.bgIV.image].CGColor;
+//  colorAnimation.toValue = (id)[UIColor redColor].CGColor;
+//  [_layer addAnimation:colorAnimation forKey:@"fillColor"];
+//  _layer.fillColor = [UIColor redColor].CGColor;
+  
   [UIView animateWithDuration:duration/2. delay:delay options:0 animations:^{
     iconsIV.alpha = 0.0f;
     oldLogoIV.alpha = 0.0f;
@@ -104,6 +114,10 @@
     
   }];
   
+}
+
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+  return 0.5;
 }
 
 + (NSArray *)keys {

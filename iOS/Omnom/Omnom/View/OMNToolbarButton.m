@@ -18,13 +18,15 @@
   self = [self init];
   if (self) {
     if (image) {
-      self.imageEdgeInsets = UIEdgeInsetsMake(0.0f, -8.0f, 0.0f, 0.0f);
+      CGFloat space = 8.0f;
+      self.titleLabel.textAlignment = NSTextAlignmentRight;
+      self.titleEdgeInsets = UIEdgeInsetsMake(0.0f, space, 0.0f, -space);
+      self.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, space);
       UIImage *templateImage = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
       
       [self setImage:[templateImage omn_tintWithColor:kBarButtonNormalColor] forState:UIControlStateNormal];
       [self setImage:[templateImage omn_tintWithColor:kBarButtonHighlightedColor] forState:UIControlStateHighlighted];
     }
-    
     [self setTitle:title forState:UIControlStateNormal];
     [self sizeToFit];
   }
@@ -37,7 +39,6 @@
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.tintColor = [UIColor blackColor];
     self.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
-    self.titleLabel.numberOfLines = 0;
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self setTitleColor:kBarButtonNormalColor forState:UIControlStateNormal];
     [self setTitleColor:kBarButtonHighlightedColor forState:UIControlStateHighlighted];
