@@ -23,6 +23,8 @@
 <OMNAddBankCardVCDelegate,
 OMNMailRUCardConfirmVCDelegate>
 
+@property (nonatomic, strong, readonly) UITableView *tableView;
+
 @end
 
 @implementation OMNMailRUPayVC {
@@ -32,6 +34,7 @@ OMNMailRUCardConfirmVCDelegate>
   UILabel *_offerLabel;
   UIButton *_offer1Button;
   UIButton *_payButton;
+  UIView *_bottomView;
   
   OMNOrder *_order;
   OMNBill *_bill;
@@ -72,6 +75,11 @@ OMNMailRUCardConfirmVCDelegate>
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
   
+  UIColor *offserButtonColor = [UIColor colorWithRed:57/255.0f  green:142/255.0f blue:225/255.0f alpha:1.0f];
+  [_offer1Button setTitleColor:offserButtonColor forState:UIControlStateNormal];
+  [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+  
   _errorLabel.text = nil;
   _offerLabel.text = nil;
   _offerLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
@@ -103,6 +111,7 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
+  
   _errorLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.view.frame);
   _offerLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.view.frame);
   
@@ -114,6 +123,13 @@ OMNMailRUCardConfirmVCDelegate>
   frame.size = size;
   tableFooterView.frame = frame;
   self.tableView.tableFooterView = tableFooterView;
+  
+  UIEdgeInsets insets = self.tableView.contentInset;
+  insets.bottom = CGRectGetHeight(_contentView.frame);
+  self.tableView.contentInset = insets;
+  
+  [self.view layoutIfNeeded];
+  
 }
 
 - (void)payTap {
@@ -185,6 +201,14 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)setup {
   
+  _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+  [self.view addSubview:_tableView];
+  
+  _bottomView = [[UIView alloc] init];
+  _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_bottomView];
+  
   UIView *tableFooterView = [[UIView alloc] initWithFrame:self.view.bounds];
   
   _contentView = [[UIView alloc] init];
@@ -205,20 +229,15 @@ OMNMailRUCardConfirmVCDelegate>
   _offerLabel.numberOfLines = 0;
   _offerLabel.textAlignment = NSTextAlignmentCenter;
   _offerLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  [_contentView addSubview:_offerLabel];
-  
-  UIColor *offserButtonColor = [UIColor colorWithRed:57/255.0f  green:142/255.0f blue:225/255.0f alpha:1.0f];
+  [_bottomView addSubview:_offerLabel];
   
   _offer1Button = [[UIButton alloc] init];
-  [_offer1Button setTitleColor:offserButtonColor forState:UIControlStateNormal];
   _offer1Button.translatesAutoresizingMaskIntoConstraints = NO;
-  [_contentView addSubview:_offer1Button];
+  [_bottomView addSubview:_offer1Button];
 
   _payButton = [[UIButton alloc] init];
-  [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   _payButton.translatesAutoresizingMaskIntoConstraints = NO;
-  
-  [_contentView addSubview:_payButton];
+  [_bottomView addSubview:_payButton];
   
   NSDictionary *views =
   @{
@@ -229,6 +248,7 @@ OMNMailRUCardConfirmVCDelegate>
     @"offerLabel" : _offerLabel,
     @"offer1Button" : _offer1Button,
     @"payButton" : _payButton,
+    @"bottomView" : _bottomView,
     @"topLayoutGuide" : self.topLayoutGuide,
     };
   
@@ -238,12 +258,16 @@ OMNMailRUCardConfirmVCDelegate>
     @"offset" : @(8.0f),
     };
   
+  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[offerLabel]-|" options:0 metrics:0 views:views]];
+  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[offer1Button]-|" options:0 metrics:0 views:views]];
+  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payButton]-|" options:0 metrics:0 views:views]];
+  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[offerLabel]-(offset)-[offer1Button]-(offset)-[payButton]-|" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView]|" options:0 metrics:metrics views:views]];
+  
   [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[errorLabel]-|" options:0 metrics:0 views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[offerLabel]-|" options:0 metrics:0 views:views]];
   [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[bankCardDescriptionView]" options:0 metrics:0 views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[offer1Button]-|" options:0 metrics:0 views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payButton]-|" options:0 metrics:0 views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[bankCardDescriptionView]-(offset)-[errorLabel(>=0)]-(offset)-[offerLabel]-(offset)-[offer1Button]-(offset)-[payButton]-|" options:0 metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[bankCardDescriptionView]-(offset)-[errorLabel(>=0)]-|" options:0 metrics:metrics views:views]];
   
   [tableFooterView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:0 metrics:metrics views:views]];
   [tableFooterView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:metrics views:views]];

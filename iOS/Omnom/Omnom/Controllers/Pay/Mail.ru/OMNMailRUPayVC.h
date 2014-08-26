@@ -10,7 +10,7 @@
 @class OMNOrder;
 @protocol OMNMailRUPayVCDelegate;
 
-@interface OMNMailRUPayVC : UITableViewController
+@interface OMNMailRUPayVC : UIViewController
 
 @property (nonatomic, weak) id<OMNMailRUPayVCDelegate> delegate;
 @property (nonatomic, assign) BOOL demo;

@@ -22,28 +22,22 @@ describe(@"demo stand test", ^{
   __block OMNOrder *_order = nil;
   __block OMNUser *_user = nil;
   
-  OMNBeacon *aCafeBeacon = [[OMNBeacon alloc] init];
-  aCafeBeacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
-  aCafeBeacon.major = @"A";
-  aCafeBeacon.minor = @"1";
+  OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
   
   beforeAll(^{
     
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
-    __block NSArray *_decodeBeacons = nil;
-    [[OMNDecodeBeaconManager manager] decodeBeacons:@[aCafeBeacon] success:^(NSArray *decodeBeacons) {
+    [[OMNDecodeBeaconManager manager] decodeBeacon:aCafeBeacon success:^(OMNDecodeBeacon *decodeBeacon) {
       
-      _decodeBeacons = decodeBeacons;
+      _decodeBeacon = decodeBeacon;
       
     } failure:^(NSError *error) {
       
     }];
     
-    [[expectFutureValue(_decodeBeacons) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
-    
-    _decodeBeacon = [_decodeBeacons firstObject];
-    
+    [[expectFutureValue(_decodeBeacon) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+
     __block NSArray *_orders = nil;
     [_decodeBeacon getOrders:^(NSArray *orders) {
       

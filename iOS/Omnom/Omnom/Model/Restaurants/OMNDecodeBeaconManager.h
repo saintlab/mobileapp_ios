@@ -19,7 +19,8 @@ extern NSString * const OMNDecodeBeaconManagerNotificationLaunchKey;
  @param success success callback, contains list of OMNDecodeBeacon objects
  @param failure error callback, contains NSError object
  */
-- (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(void (^)(NSError *error))failure;
+- (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNDecodeBeaconBlock)success failure:(void (^)(NSError *error))failure;
+//- (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(void (^)(NSError *error))failure;
 
 - (void)handleBackgroundBeacon:(OMNBeacon *)beacon completion:(dispatch_block_t)completion;
 

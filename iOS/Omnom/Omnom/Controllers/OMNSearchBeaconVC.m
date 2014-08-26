@@ -103,9 +103,9 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)decodeBeacon:(OMNBeacon *)beacon {
   __weak typeof(self)weakSelf = self;
-  [[OMNDecodeBeaconManager manager] decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
+  [[OMNDecodeBeaconManager manager] decodeBeacon:beacon success:^(OMNDecodeBeacon *decodeBeacon) {
     
-    [weakSelf didDecodeBeacon:[decodeBeacons firstObject]];
+    [weakSelf didDecodeBeacon:decodeBeacon];
     
   } failure:^(NSError *error) {
     

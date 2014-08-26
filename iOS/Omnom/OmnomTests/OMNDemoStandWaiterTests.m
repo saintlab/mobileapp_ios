@@ -21,24 +21,18 @@ describe(@"waiter call tests", ^{
     
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
-    OMNBeacon *aCafeBeacon = [[OMNBeacon alloc] init];
-    aCafeBeacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
-    aCafeBeacon.major = @"A";
-    aCafeBeacon.minor = @"1";
+    OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
     
-    __block NSArray *_decodeBeacons = nil;
-    
-    [[OMNDecodeBeaconManager manager] decodeBeacons:@[aCafeBeacon] success:^(NSArray *decodeBeacons) {
+    [[OMNDecodeBeaconManager manager] decodeBeacon:aCafeBeacon success:^(OMNDecodeBeacon *decodeBeacon) {
       
-      _decodeBeacons = decodeBeacons;
+      _decodeBeacon = decodeBeacon;
       
     } failure:^(NSError *error) {
       
     }];
     
-    [[expectFutureValue(_decodeBeacons) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_decodeBeacon) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
     
-    _decodeBeacon = [_decodeBeacons firstObject];
     [[_decodeBeacon should] beNonNil];
     
     [[_decodeBeacon.uuid should] equal:aCafeBeacon.UUIDString];

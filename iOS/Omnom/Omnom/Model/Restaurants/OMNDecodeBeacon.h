@@ -10,7 +10,10 @@
 #import "OMNRestaurant.h"
 #import "OMNConstants.h"
 
-typedef void(^OMNBeaconsBlock)(NSArray *decodeBeacons);
+@class OMNDecodeBeacon;
+
+typedef void(^OMNDecodeBeaconBlock)(OMNDecodeBeacon *decodeBeacon);
+typedef void(^OMNDecodeBeaconsBlock)(NSArray *decodeBeacons);
 
 @interface OMNDecodeBeacon : NSObject
 <NSCoding>
