@@ -221,7 +221,7 @@ OMNMailRUCardConfirmVCDelegate>
   _errorLabel = [[UILabel alloc] init];
   _errorLabel.numberOfLines = 0;
   _errorLabel.textAlignment = NSTextAlignmentCenter;
-  _errorLabel.textColor = [UIColor redColor];
+  _errorLabel.textColor = colorWithHexString(@"d0021b");
   _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_contentView addSubview:_errorLabel];
   

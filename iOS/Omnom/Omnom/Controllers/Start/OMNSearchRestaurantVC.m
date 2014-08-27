@@ -10,6 +10,7 @@
 #import "UIImage+omn_helper.h"
 #import <AFHTTPRequestOperation.h>
 #import "UINavigationController+omn_replace.h"
+#import <OMNStyler.h>
 
 @interface OMNSearchRestaurantVC ()
 
@@ -62,6 +63,9 @@
       [weakSelf didFindBeacon:decodeBeacon];
       
     } cancelBlock:nil];
+
+    UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
+    _loadingCircleVC.circleBackground = circleBackground;
 
   }
   _loadingCircleVC.circleIcon = [UIImage imageNamed:@"logo_icon"];

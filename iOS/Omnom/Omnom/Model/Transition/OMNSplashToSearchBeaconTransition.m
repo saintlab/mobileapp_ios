@@ -10,6 +10,7 @@
 #import "OMNSearchRestaurantVC.h"
 #import "OMNSearchBeaconVC.h"
 #import "UIImage+omn_helper.h"
+#import <OMNStyler.h>
 
 @implementation OMNSplashToSearchBeaconTransition {
   CAShapeLayer *_layer;
@@ -25,9 +26,6 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
 
-  UIImage *toCircleBackground = [fromViewController.bgIV.image omn_ovalImageInRect:toViewController.circleButton.frame];
-  toViewController.circleBackground = toCircleBackground;
-  
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView addSubview:toViewController.view];
   
@@ -79,16 +77,24 @@
   pathAnimation.fromValue = (id)fromPath.CGPath;
   pathAnimation.toValue = (id)toPath.CGPath;
   _layer.path = toPath.CGPath;
+  _layer.masksToBounds = YES;
   [_layer addAnimation:pathAnimation forKey:@"path"];
 
+  CAShapeLayer *colorLayer = [CAShapeLayer layer];
+  colorLayer.frame = containerView.bounds;
+  colorLayer.fillColor = [UIColor clearColor].CGColor;
+  [_layer addSublayer:colorLayer];
   
-//  CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
-//  colorAnimation.duration = duration;
-//  colorAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-//  colorAnimation.fromValue = (id)[UIColor colorWithPatternImage:fromViewController.bgIV.image].CGColor;
-//  colorAnimation.toValue = (id)[UIColor redColor].CGColor;
-//  [_layer addAnimation:colorAnimation forKey:@"fillColor"];
-//  _layer.fillColor = [UIColor redColor].CGColor;
+  CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
+  colorAnimation.duration = duration;
+  colorAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+  colorAnimation.fromValue = (id)[UIColor clearColor].CGColor;
+  UIColor *redColor = colorWithHexString(@"d0021b");
+  colorAnimation.toValue = (id)redColor.CGColor;
+  [colorLayer addAnimation:colorAnimation forKey:@"fillColor"];
+  [colorLayer addAnimation:pathAnimation forKey:@"path"];
+  colorLayer.fillColor = redColor.CGColor;
+  colorLayer.path = toPath.CGPath;
   
   [UIView animateWithDuration:duration/2. delay:delay options:0 animations:^{
     iconsIV.alpha = 0.0f;

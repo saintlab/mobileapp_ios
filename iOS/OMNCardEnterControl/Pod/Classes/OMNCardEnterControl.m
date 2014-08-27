@@ -8,6 +8,7 @@
 
 #import "OMNCardEnterControl.h"
 #import "OMNDeletedTextField.h"
+#import <OMNStyler.h>
 
 NSString * const OMNCardEnterControlPanString = @"OMNCardEnterControlPanString";
 NSString * const OMNCardEnterControlMonthString = @"OMNCardEnterControlMonthString";
@@ -334,12 +335,15 @@ NSString * const kMM_YYSeporator = @"/";
 
       if (0 == yy.length &&
           0 == string.length) {
+        
         MM_YYComponents = @[mm];
+        
       }
       
-      else if (yy.length >= 2) {
+      else if (yy.length > 2) {
         
         yy = [yy substringToIndex:2];
+        MM_YYComponents = @[mm, yy];
         
       }
       
@@ -347,9 +351,11 @@ NSString * const kMM_YYSeporator = @"/";
     else {
 
       if (mm.length > 2) {
+        
         yy = [mm substringFromIndex:2];
         mm = [mm substringToIndex:2];
         MM_YYComponents = @[mm, yy];
+        
       }
       else if (2 == mm.length) {
         
@@ -366,13 +372,15 @@ NSString * const kMM_YYSeporator = @"/";
     NSString *MMYYString = [MM_YYComponents componentsJoinedByString:kMM_YYSeporator];
     NSMutableAttributedString *attributedMMYYString = [[NSMutableAttributedString alloc] initWithString:MMYYString];
     
+    UIColor *redColor = colorWithHexString(@"d0021b");
+    
     if (2 == mm.length &&
         [mm integerValue] > 12) {
-      [attributedMMYYString setAttributes:@{NSForegroundColorAttributeName : [UIColor redColor]} range:NSMakeRange(0, MMYYString.length)];
+      [attributedMMYYString setAttributes:@{NSForegroundColorAttributeName : redColor} range:NSMakeRange(0, MMYYString.length)];
     }
     else if (2 == yy.length &&
         [yy integerValue] < 14) {
-      [attributedMMYYString setAttributes:@{NSForegroundColorAttributeName : [UIColor redColor]} range:NSMakeRange(0, MMYYString.length)];
+      [attributedMMYYString setAttributes:@{NSForegroundColorAttributeName : redColor} range:NSMakeRange(0, MMYYString.length)];
     }
     else {
       [attributedMMYYString setAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor]} range:NSMakeRange(0, MMYYString.length)];
