@@ -23,7 +23,7 @@
   self = [super init];
   if (self) {
     _decodeBeaconData = data;
-    _beacon = [[OMNBeacon alloc] initWithJsonData:@"beacon"];
+    _beacon = [[OMNBeacon alloc] initWithJsonData:data[@"beacon"]];
     _restaurant = [[OMNRestaurant alloc] initWithJsonData:data[@"restaurant"]];
     _table = [[OMNTable alloc] initWithJsonData:data[@"table"]];
     _foundDate = [NSDate date];

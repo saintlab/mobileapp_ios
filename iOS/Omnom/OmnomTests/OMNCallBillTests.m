@@ -15,7 +15,7 @@ SPEC_BEGIN(OMNDemoCallBillTests)
 
 describe(@"call bill test", ^{
   
-  __block OMNVisitor *_decodeBeacon = nil;
+  __block OMNVisitor *_visitor = nil;
   __block OMNOrder *_order = nil;
   
   beforeAll(^{
@@ -24,22 +24,22 @@ describe(@"call bill test", ^{
     
     OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
     
-    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNVisitor *decodeBeacon) {
+    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNVisitor *visitor) {
       
-      _decodeBeacon = decodeBeacon;
+      _visitor = visitor;
       
     } failure:^(NSError *error) {
       
     }];
     
-    [[expectFutureValue(_decodeBeacon) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
     
-    [[_decodeBeacon should] beNonNil];
+    [[_visitor should] beNonNil];
     
-    [[_decodeBeacon.uuid should] equal:aCafeBeacon.UUIDString];
+    [[_visitor.beacon.UUIDString should] equal:aCafeBeacon.UUIDString];
     
     __block NSArray *_oredrs = nil;
-    [_decodeBeacon getOrders:^(NSArray *orders) {
+    [_visitor getOrders:^(NSArray *orders) {
       
       _oredrs = orders;
       

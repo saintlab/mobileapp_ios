@@ -77,16 +77,20 @@
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
       completion();
     }
+    else if ([responseObject isKindOfClass:[NSDictionary class]]) {
+      
+      NSDictionary *error = responseObject[@"error"];
+      failureBlock([NSError errorWithDomain:NSStringFromClass(self.class) code:[error[@"code"] integerValue] userInfo:@{NSLocalizedDescriptionKey : error[@"message"]}]);
+      
+    }
     else {
-      
-      failureBlock([NSError errorWithDomain:NSStringFromClass(self.class) code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
-      
+      failureBlock(nil);
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"registerWithComplition>%@", error);
-    failureBlock(error);
+    failureBlock(nil);
     
   }];
   

@@ -15,7 +15,7 @@ SPEC_BEGIN(OMNDemoStandWaiterTests)
 
 describe(@"waiter call tests", ^{
   
-  __block OMNDecodeBeacon *_decodeBeacon = nil;
+  __block OMNVisitor *_visitor = nil;
   
   beforeAll(^{
     
@@ -23,26 +23,26 @@ describe(@"waiter call tests", ^{
     
     OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
     
-    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNDecodeBeacon *decodeBeacon) {
+    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNVisitor *visitor) {
       
-      _decodeBeacon = decodeBeacon;
+      _visitor = visitor;
       
     } failure:^(NSError *error) {
       
     }];
     
-    [[expectFutureValue(_decodeBeacon) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
     
-    [[_decodeBeacon should] beNonNil];
+    [[_visitor should] beNonNil];
     
-    [[_decodeBeacon.uuid should] equal:aCafeBeacon.UUIDString];
+    [[_visitor.beacon.UUIDString should] equal:aCafeBeacon.UUIDString];
 
   });
   
   it(@"should new guest", ^{
     
     __block NSNumber *is_new_guest = nil;
-    [_decodeBeacon newGuestWithCompletion:^{
+    [_visitor newGuestWithCompletion:^{
       is_new_guest = @(YES);
     } failure:^(NSError *error) {
       
@@ -55,7 +55,7 @@ describe(@"waiter call tests", ^{
   it(@"should call waiter", ^{
     
     __block NSNumber *is_called = nil;
-    [_decodeBeacon.restaurant waiterCallForTableID:_decodeBeacon.tableId completion:^{
+    [_visitor.restaurant waiterCallForTableID:_visitor.table.id completion:^{
       
       is_called = @(YES);
       
@@ -72,7 +72,7 @@ describe(@"waiter call tests", ^{
   it(@"should stop waiter", ^{
     
     __block NSNumber *is_stopped = nil;
-    [_decodeBeacon.restaurant waiterCallStopCompletion:^{
+    [_visitor.restaurant waiterCallStopCompletion:^{
       
       is_stopped = @(YES);
       

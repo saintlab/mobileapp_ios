@@ -12,6 +12,7 @@
 #import "OMNAnalitics.h"
 #import "OMNErrorTextField.h"
 #import "OMNNavigationBarProgressView.h"
+#import <OMNStyler.h>
 
 @interface OMNRegisterUserVC ()
 <OMNConfirmCodeVCDelegate>
@@ -27,6 +28,7 @@
   
   UIDatePicker *_datePicker;
   UIScrollView *_scroll;
+  UILabel *_errorLabel;
   
   OMNUser *_user;
 }
@@ -65,10 +67,13 @@
                                              object:nil];
   
   _scroll = [[UIScrollView alloc] init];
-
   _scroll.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_scroll];
 
+  UIView *contentView = [[UIView alloc] init];
+  contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  [_scroll addSubview:contentView];
+  
   UILabel *hintLabel = [[UILabel alloc] init];
   hintLabel.translatesAutoresizingMaskIntoConstraints = NO;
   hintLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
@@ -76,11 +81,16 @@
   hintLabel.text = NSLocalizedString(@"Укажите, чтобы мы не забыли вас поздравить", nil);
   hintLabel.textAlignment = NSTextAlignmentCenter;
   hintLabel.numberOfLines = 0;
-  
-  UIView *contentView = [[UIView alloc] init];
-  contentView.translatesAutoresizingMaskIntoConstraints = NO;
-  [_scroll addSubview:contentView];
   [contentView addSubview:hintLabel];
+  
+  _errorLabel = [[UILabel alloc] init];
+  _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _errorLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _errorLabel.textColor = colorWithHexString(@"d0021b");
+  _errorLabel.text = nil;
+  _errorLabel.textAlignment = NSTextAlignmentCenter;
+  _errorLabel.numberOfLines = 0;
+  [contentView addSubview:_errorLabel];
   
   _nameTF = [[OMNErrorTextField alloc] init];
   _nameTF.textField.placeholder = NSLocalizedString(@"Имя", nil);
@@ -109,6 +119,7 @@
     @"tf3" : _phoneTF,
     @"tf4" : _birthdayTF,
     @"hintLabel" : hintLabel,
+    @"errorLabel" : _errorLabel,
     @"contentView" : contentView,
     @"topLayoutGuide" : self.topLayoutGuide,
     @"scroll" : _scroll,
@@ -127,8 +138,10 @@
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf4]-|" options:0 metrics:nil views:views]];
 
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[hintLabel]-|" options:0 metrics:nil views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-45-[tf4]-[hintLabel]-|" options:0 metrics:nil views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[errorLabel]-|" options:0 metrics:nil views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-45-[errorLabel]-[tf4]-[hintLabel]-|" options:0 metrics:nil views:views]];
 
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   
@@ -219,14 +232,26 @@
     
   } failure:^(NSError *error) {
     
-    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    [weakSelf processError:error];
     
   }];
   
 }
 
+- (void)processError:(NSError *)error {
+
+  if (error) {
+    _errorLabel.text = error.localizedDescription;
+  }
+  else {
+    _errorLabel.text = NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil);
+  }
+  
+}
+
 - (void)requestAuthorizationCode {
   
+  _errorLabel.text = @"";
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:_user.phone];
   confirmCodeVC.delegate = self;
   [self.navigationController pushViewController:confirmCodeVC animated:YES];
