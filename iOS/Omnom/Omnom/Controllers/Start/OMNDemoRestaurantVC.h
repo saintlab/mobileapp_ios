@@ -13,7 +13,7 @@
 
 @interface OMNDemoRestaurantVC : OMNLoadingCircleVC
 
-@property (nonatomic, strong) OMNVisitor *decodeBeacon;
+@property (nonatomic, strong) OMNVisitor *visitor;
 @property (nonatomic, weak) id<OMNDemoRestaurantVCDelegate> delegate;
 
 @end

@@ -12,11 +12,11 @@
 
 @class OMNSearchBeaconVC;
 
-typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *decodeBeacon);
+typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor);
 
 @interface OMNSearchBeaconVC : OMNLoadingCircleVC
 
-@property (nonatomic, strong) OMNVisitor *decodeBeacon;
+@property (nonatomic, strong) OMNVisitor *visitor;
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
 

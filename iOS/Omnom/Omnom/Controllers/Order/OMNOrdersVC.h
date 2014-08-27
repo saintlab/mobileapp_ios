@@ -17,7 +17,7 @@
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
 @property (nonatomic, strong, readonly) OMNVisitor *decodeBeacon;
 
-- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon;
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
 @end
 

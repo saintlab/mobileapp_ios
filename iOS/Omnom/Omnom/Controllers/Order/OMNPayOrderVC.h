@@ -7,7 +7,7 @@
 //
 
 @class OMNOrder;
-@class OMNDecodeBeacon;
+@class OMNVisitor;
 @protocol OMNPayOrderVCDelegate;
 
 @interface OMNPayOrderVC : UIViewController
@@ -15,7 +15,7 @@
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
 @end
 

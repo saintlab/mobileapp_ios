@@ -41,11 +41,11 @@
   [[OMNSocketManager manager] disconnect];
 }
 
-- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super initWithParent:nil];
   if (self) {
-    _decodeBeacon = decodeBeacon;
-    _restaurant = decodeBeacon.restaurant;
+    _visitor = visitor;
+    _restaurant = visitor.restaurant;
     self.circleIcon = _restaurant.logo;
   }
   return self;
@@ -56,7 +56,7 @@
 
   _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
   
-  if (_decodeBeacon.restaurant.is_demo) {
+  if (_visitor.restaurant.is_demo) {
 
     UIButton *cancelButton = [[UIButton alloc] init];
     [cancelButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateNormal];
@@ -185,7 +185,7 @@
 
 - (void)socketConnect {
   
-  if (NO == _decodeBeacon.restaurant.is_demo) {
+  if (NO == _visitor.restaurant.is_demo) {
     [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token];
   }
   

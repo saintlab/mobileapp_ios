@@ -14,9 +14,9 @@
 @interface OMNR1VC : OMNCircleRootVC
 
 @property (nonatomic, weak) id<OMNR1VCDelegate> delegate;
-@property (nonatomic, strong, readonly) OMNVisitor *decodeBeacon;
+@property (nonatomic, strong, readonly) OMNVisitor *visitor;
 
-- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon;
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
 - (void)callWaiterDidStart;
 - (void)callWaiterDidStop;

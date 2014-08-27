@@ -10,13 +10,13 @@
 
 @protocol OMNRestaurantInfoVCDelegate;
 @class OMNFeedItem;
-@class OMNDecodeBeacon;
+@class OMNVisitor;
 
 @interface OMNRestaurantInfoVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNRestaurantInfoVCDelegate> delegate;
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon;
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
 - (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem;
 

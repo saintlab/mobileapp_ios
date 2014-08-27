@@ -41,13 +41,10 @@
   _decodeBeaconsStarted = YES;
   __weak typeof(self)weakSelf = self;
   
-  
-  
-  
-  [[OMNVisitorManager manager] decodeBeacon:[OMNBeacon aCafeBeacon] success:^(OMNVisitor *decodeBeacon) {
+  [[OMNVisitorManager manager] decodeBeacon:[OMNBeacon aCafeBeacon] success:^(OMNVisitor *visitor) {
     
-    if (decodeBeacon) {
-      [weakSelf didDecodeUUID:decodeBeacon];
+    if (visitor) {
+      [weakSelf didFindVisitor:visitor];
     }
     else {
       [weakSelf didFailOmnom];
@@ -67,11 +64,11 @@
   
 }
 
-- (void)didDecodeUUID:(OMNVisitor *)decodeBeacon {
-  _decodeBeacon = decodeBeacon;
+- (void)didFindVisitor:(OMNVisitor *)visitor {
+  _visitor = visitor;
   
   __weak typeof(self)weakSelf = self;
-  [_decodeBeacon.restaurant loadLogo:^(UIImage *image) {
+  [_visitor.restaurant loadLogo:^(UIImage *image) {
     //TODO: handle error loading image
     [weakSelf didLoadLogo];
     
@@ -81,7 +78,7 @@
 
 - (void)didLoadLogo {
   
-  OMNRestaurant *restaurant = _decodeBeacon.restaurant;
+  OMNRestaurant *restaurant = _visitor.restaurant;
   UIImage *logo = restaurant.logo;
   UIColor *restaurantBackgroundColor = restaurant.background_color;
   __weak typeof(self)weakSelf = self;
@@ -103,7 +100,7 @@
 
 - (void)didLoadBackground {
   
-  OMNR1VC *restaurantVC = [[OMNR1VC alloc] initWithDecodeBeacon:_decodeBeacon];
+  OMNR1VC *restaurantVC = [[OMNR1VC alloc] initWithVisitor:_visitor];
   restaurantVC.delegate = self;
   [self.navigationController pushViewController:restaurantVC animated:YES];
   

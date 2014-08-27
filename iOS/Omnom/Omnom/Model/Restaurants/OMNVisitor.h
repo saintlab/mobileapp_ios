@@ -13,8 +13,8 @@
 
 @class OMNVisitor;
 
-typedef void(^OMNVisitorBlock)(OMNVisitor *decodeBeacon);
-typedef void(^OMNVisitorsBlock)(NSArray *decodeBeacons);
+typedef void(^OMNVisitorBlock)(OMNVisitor *visitor);
+typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 
 @interface OMNVisitor : NSObject
 <NSCoding>

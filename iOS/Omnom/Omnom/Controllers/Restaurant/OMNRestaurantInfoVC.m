@@ -22,16 +22,16 @@ UIScrollViewDelegate>
 
 @implementation OMNRestaurantInfoVC {
   OMNRestaurantInfo *_restaurantInfo;
-  OMNDecodeBeacon *_decodeBeacon;
+  OMNVisitor *_visitor;
   UIImageView *_arrowView;
   
   BOOL _disableNavigationBarAnimation;
 }
 
-- (instancetype)initWithDecodeBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super init];
   if (self) {
-    _decodeBeacon = decodeBeacon;
+    _visitor = visitor;
   }
   return self;
 }
@@ -40,7 +40,7 @@ UIScrollViewDelegate>
   [super viewDidLoad];
   
   __weak typeof(self)weakSelf = self;
-  [_decodeBeacon.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
+  [_visitor.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
     
     [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
     
@@ -58,7 +58,7 @@ UIScrollViewDelegate>
   [closeButton sizeToFit];
   self.navigationItem.titleView = closeButton;
   
-  if (NO == _decodeBeacon.restaurant.is_demo) {
+  if (NO == _visitor.restaurant.is_demo) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
   }

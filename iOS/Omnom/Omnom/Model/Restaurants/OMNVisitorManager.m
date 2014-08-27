@@ -12,7 +12,7 @@
 NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeaconManagerNotificationLaunchKey";
 
 @implementation OMNVisitorManager {
-  NSMutableDictionary *_decodedBeacons;
+  NSMutableDictionary *_visitors;
 }
 
 + (instancetype)manager {
@@ -29,13 +29,13 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   if (self) {
     
     @try {
-      _decodedBeacons = [NSKeyedUnarchiver unarchiveObjectWithFile:[self path]];
+      _visitors = [NSKeyedUnarchiver unarchiveObjectWithFile:[self path]];
     }
     @catch (NSException *exception) {
     }
     
-    if (nil == _decodedBeacons) {
-      _decodedBeacons = [NSMutableDictionary dictionary];
+    if (nil == _visitors) {
+      _visitors = [NSMutableDictionary dictionary];
     }
     
   }
@@ -43,23 +43,23 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 }
 
 - (void)save {
-  [NSKeyedArchiver archiveRootObject:_decodedBeacons toFile:[self path]];
+  [NSKeyedArchiver archiveRootObject:_visitors toFile:[self path]];
 }
 
 - (NSString *)path {
   
   NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-  NSString *storedBeaconsPath = [documentsDirectory stringByAppendingPathComponent:@"decodedBeacons.dat"];
+  NSString *storedBeaconsPath = [documentsDirectory stringByAppendingPathComponent:@"visitors.dat"];
   return storedBeaconsPath;
   
 }
 
-- (void)addDecodedBecons:(NSArray *)decodedBecons {
+- (void)addVisitors:(NSArray *)visitors {
   
-  [decodedBecons enumerateObjectsUsingBlock:^(OMNDecodeBeacon *decodedBeacon, NSUInteger idx, BOOL *stop) {
+  [visitors enumerateObjectsUsingBlock:^(OMNVisitor *visitor, NSUInteger idx, BOOL *stop) {
     
-    if (decodedBeacon.id) {
-      _decodedBeacons[decodedBeacon.id] = decodedBeacon;
+    if (visitor.id) {
+      _visitors[visitor.id] = visitor;
     }
     
   }];
@@ -124,17 +124,17 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
       
       NSArray *beacons = responseObject;
       NSLog(@"ibeacons/decode>%lu", (unsigned long)beacons.count);
-      NSMutableArray *decodedBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
+      NSMutableArray *visitors = [NSMutableArray arrayWithCapacity:beacons.count];
       [beacons enumerateObjectsUsingBlock:^(id beaconData, NSUInteger idx, BOOL *stop) {
         
-        OMNDecodeBeacon *beacon = [[OMNDecodeBeacon alloc] initWithJsonData:beaconData];
-        [decodedBeacons addObject:beacon];
+        OMNVisitor *visitor = [[OMNVisitor alloc] initWithJsonData:beaconData];
+        [visitors addObject:visitor];
         
       }];
       
-      [weakSelf addDecodedBecons:decodedBeacons];
+      [weakSelf addVisitors:visitors];
       
-      success([decodedBeacons copy]);
+      success([visitors copy]);
       
     }
     
@@ -155,21 +155,24 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   }
   
   __weak typeof(self)weakSelf = self;
-  [self decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
+  
+  [self decodeBeacon:beacon success:^(OMNVisitor *visitor) {
     
-    OMNDecodeBeacon *decodeBeacon = [decodeBeacons firstObject];
-    
-    if (decodeBeacon) {
-      [decodeBeacon newGuestWithCompletion:^{
+    if (visitor) {
+      
+      [weakSelf showLocalPushForVisitor:visitor];
+      
+      [visitor newGuestWithCompletion:^{
         completion();
       } failure:^(NSError *error) {
         completion();
       }];
-      [weakSelf showLocalPushWithBeacon:decodeBeacon];
+      
     }
     else {
       completion();
     }
+
     
   } failure:^(NSError *error) {
     
@@ -179,7 +182,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
 }
 
-- (BOOL)readyForPush:(OMNDecodeBeacon *)decodeBeacon {
+- (BOOL)readyForPush:(OMNVisitor *)visitor {
   
   if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
     return NO;
@@ -188,11 +191,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 #warning readyForPush
   return YES;
   BOOL readyForPush = NO;
-  OMNDecodeBeacon *savedBeacon = _decodedBeacons[decodeBeacon.id];
-  if (nil == savedBeacon ||
-      savedBeacon.readyForPush) {
+  OMNVisitor *savedVisitor = _visitors[visitor.id];
+  if (nil == savedVisitor ||
+      savedVisitor.readyForPush) {
     readyForPush = YES;
-    _decodedBeacons[decodeBeacon.id] = decodeBeacon;
+    _visitors[visitor.id] = visitor;
     [self save];
   }
   
@@ -200,12 +203,12 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
 }
 
-- (void)showLocalPushWithBeacon:(OMNDecodeBeacon *)decodeBeacon {
+- (void)showLocalPushForVisitor:(OMNVisitor *)visitor {
   
-  if ([self readyForPush:decodeBeacon]) {
+  if ([self readyForPush:visitor]) {
     
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = decodeBeacon.restaurant.id;
+    localNotification.alertBody = visitor.restaurant.id;
     localNotification.alertAction = NSLocalizedString(@"Запустить", nil);
     localNotification.soundName = kPushSoundName;
     
@@ -218,7 +221,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 
     localNotification.userInfo =
     @{
-      OMNDecodeBeaconManagerNotificationLaunchKey : [NSKeyedArchiver archivedDataWithRootObject:decodeBeacon],
+      OMNDecodeBeaconManagerNotificationLaunchKey : [NSKeyedArchiver archivedDataWithRootObject:visitor],
       };
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
     

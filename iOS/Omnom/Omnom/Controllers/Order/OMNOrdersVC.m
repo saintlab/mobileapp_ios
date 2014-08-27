@@ -16,14 +16,14 @@
 
 @implementation OMNOrdersVC {
   NSArray *_orders;
-  OMNVisitor *_decodeBeacon;
+  OMNVisitor *_visitor;
 }
 
-- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super initWithNibName:@"OMNOrdersVC" bundle:nil];
   if (self) {
-    _decodeBeacon = decodeBeacon;
-    _orders = decodeBeacon.orders;
+    _visitor = visitor;
+    _orders = visitor.orders;
   }
   return self;
 }

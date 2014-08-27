@@ -59,7 +59,7 @@ OMNPayOrderVCDelegate>
 
 - (void)showRestaurantInfo {
   
-  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithDecodeBeacon:self.restaurantVC.decodeBeacon];
+  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithVisitor:self.restaurantVC.visitor];
   restaurantInfoVC.delegate = self;
   [self pushViewController:restaurantInfoVC];
 
@@ -71,8 +71,8 @@ OMNPayOrderVCDelegate>
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:completionBlock cancelBlock:cancelBlock];
   searchBeaconVC.estimateAnimationDuration = 2.0;
   searchBeaconVC.circleIcon = icon;
-  if (self.restaurantVC.decodeBeacon.restaurant.is_demo) {
-    searchBeaconVC.decodeBeacon = self.restaurantVC.decodeBeacon;
+  if (self.restaurantVC.visitor.restaurant.is_demo) {
+    searchBeaconVC.visitor = self.restaurantVC.visitor;
   }
   [self pushViewController:searchBeaconVC];
   
@@ -112,7 +112,7 @@ OMNPayOrderVCDelegate>
   }
   else {
     
-    if (!self.restaurantVC.decodeBeacon.restaurant.is_demo &&
+    if (!self.restaurantVC.visitor.restaurant.is_demo &&
         decodeBeacon.orders.count &&
         !TARGET_IPHONE_SIMULATOR) {
       OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self.restaurantVC];
@@ -153,9 +153,9 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)processOrderAtBeacon:(OMNVisitor *)decodeBeacon {
+- (void)processOrderAtBeacon:(OMNVisitor *)visitor {
   
-  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithDecodeBeacon:decodeBeacon];
+  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithVisitor:visitor];
   paymentVC.delegate = self;
   [self pushViewController:paymentVC];
   
@@ -181,9 +181,9 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)selectOrderAtBeacon:(OMNVisitor *)decodeBeacon {
+- (void)selectOrderAtBeacon:(OMNVisitor *)visitor {
   
-  OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithDecodeBeacon:decodeBeacon];
+  OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithVisitor:visitor];
   ordersVC.delegate = self;
   [self pushViewController:ordersVC];
   
@@ -219,7 +219,7 @@ OMNPayOrderVCDelegate>
 
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
   
-  if (self.restaurantVC.decodeBeacon.restaurant.is_demo) {
+  if (self.restaurantVC.visitor.restaurant.is_demo) {
     [self.restaurantVC.delegate r1VCDidFinish:self.restaurantVC];
   }
   else {

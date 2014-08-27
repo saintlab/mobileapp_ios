@@ -111,9 +111,9 @@ OMNSearchRestaurantVCDelegate>
 
 #pragma mark - OMNSearchRestaurantVCDelegate
 
-- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindBeacon:(OMNVisitor *)decodeBeacon {
+- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindBeacon:(OMNVisitor *)visitor {
   
-  OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithDecodeBeacon:decodeBeacon];
+  OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithVisitor:visitor];
   [searchBeaconVC.navigationController pushViewController:restaurantMenuVC animated:YES];
   
 }

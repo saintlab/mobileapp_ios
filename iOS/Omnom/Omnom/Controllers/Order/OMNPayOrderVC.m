@@ -48,23 +48,23 @@ OMNMailRUPayVCDelegate>
   __weak IBOutlet UIImageView *_backgroundIV;
   BOOL _beginSplitAnimation;
   OMNOrder *_order;
-  OMNVisitor *_decodeBeacon;
+  OMNVisitor *_visitor;
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
-  if (NO == _decodeBeacon.restaurant.is_demo) {
+  if (NO == _visitor.restaurant.is_demo) {
     [[OMNSocketManager manager] leave:_order.id];
   }
   
 }
 
-- (instancetype)initWithDecodeBeacon:(OMNVisitor *)decodeBeacon {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super init];
   if (self) {
-    _order = decodeBeacon.selectedOrder;
-    _decodeBeacon = decodeBeacon;
+    _order = visitor.selectedOrder;
+    _visitor = visitor;
   }
   return self;
 }
@@ -73,7 +73,7 @@ OMNMailRUPayVCDelegate>
   
   [super viewDidLoad];
 
-  if (NO == _decodeBeacon.restaurant.is_demo) {
+  if (NO == _visitor.restaurant.is_demo) {
     [[OMNSocketManager manager] join:_order.id];
   }
   
@@ -175,7 +175,7 @@ OMNMailRUPayVCDelegate>
 - (void)setup {
   
   self.view.backgroundColor = [UIColor clearColor];
-  _backgroundIV.backgroundColor = _decodeBeacon.restaurant.background_color;
+  _backgroundIV.backgroundColor = _visitor.restaurant.background_color;
   _tableView.backgroundColor = [UIColor clearColor];
   _tableView.separatorColor = [UIColor clearColor];
   UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _tableView.width, self.view.height)];
@@ -247,7 +247,7 @@ OMNMailRUPayVCDelegate>
 #else
   
   OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
-  mailRUPayVC.demo = _decodeBeacon.restaurant.is_demo;
+  mailRUPayVC.demo = _visitor.restaurant.is_demo;
   mailRUPayVC.delegate = self;
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:mailRUPayVC];
   [self.navigationController presentViewController:navigationController animated:YES completion:^{

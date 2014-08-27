@@ -81,11 +81,11 @@ OMNDemoRestaurantVCDelegate>
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  if (self.decodeBeacon) {
+  if (self.visitor) {
     
     [self.loaderView startAnimating:self.estimateAnimationDuration];
     dispatch_async(dispatch_get_main_queue(), ^{
-      [weakSelf didDecodeBeacon:weakSelf.decodeBeacon];
+      [weakSelf didFindVisitor:weakSelf.visitor];
     });
     
   }
@@ -103,9 +103,9 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)decodeBeacon:(OMNBeacon *)beacon {
   __weak typeof(self)weakSelf = self;
-  [[OMNVisitorManager manager] decodeBeacon:beacon success:^(OMNVisitor *decodeBeacon) {
+  [[OMNVisitorManager manager] decodeBeacon:beacon success:^(OMNVisitor *visitor) {
     
-    [weakSelf didDecodeBeacon:decodeBeacon];
+    [weakSelf didFindVisitor:visitor];
     
   } failure:^(NSError *error) {
     
@@ -114,11 +114,11 @@ OMNDemoRestaurantVCDelegate>
   }];
 }
 
-- (void)didDecodeBeacon:(OMNVisitor *)decodeBeacon {
+- (void)didFindVisitor:(OMNVisitor *)visitor {
   
   [self stopBeaconManager:YES];
-  if (decodeBeacon) {
-    _didFindBlock(self, decodeBeacon);
+  if (visitor) {
+    _didFindBlock(self, visitor);
   }
   else {
     [self beaconsNotFound];
