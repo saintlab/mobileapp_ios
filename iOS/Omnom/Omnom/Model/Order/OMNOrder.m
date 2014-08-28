@@ -48,7 +48,7 @@
 
     _tipsThreshold = [tipsData[@"threshold"] longLongValue];
     NSMutableArray *tips = [NSMutableArray arrayWithCapacity:4];
-    //TODO: remove stub data
+
     for (id tipData in tipsData[@"values"]) {
       long long amount = [tipData[@"amount"] longLongValue];
       double percent = [tipData[@"percent"] doubleValue];
@@ -104,21 +104,8 @@
 
 - (void)createBill:(OMNBillBlock)completion failure:(void (^)(NSError *error))failureBlock {
   
-  NSString *description = @"";
-  
-  NSError *error = nil;
-  NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_data options:0 error:&error];
-  
-  if (jsonData &&
-      nil == error) {
-//    description = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-//    description = [description stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-  }
-  description = @"на тебе кебаб";
-  
   NSDictionary *parameters =
   @{
-    @"description" : description,
     @"amount": @(self.toPayAmount),
     @"restaurant_id" : self.restaurant_id,
     @"restaurateur_order_id" : self.id,
@@ -132,12 +119,12 @@
       completion(bill);
     }
     else {
-      failureBlock([NSError errorWithDomain:@"" code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
+      failureBlock(nil);
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock(error);
+    failureBlock(nil);
     
   }];
   

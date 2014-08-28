@@ -197,9 +197,6 @@
     @"items" : items,
     };
   
-//TODO: create order
-  return;
-  
 }
 
 - (NSString *)description {

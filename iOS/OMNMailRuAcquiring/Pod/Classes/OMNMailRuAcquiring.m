@@ -46,11 +46,9 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFHTTPRequestSerializer serializer];
     
-    NSString *cerPath = [[NSBundle mainBundle] pathForResource:@"mail.ru" ofType:@"cer"];
-    NSData *certData = [NSData dataWithContentsOfFile:cerPath];
     AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
     [securityPolicy setAllowInvalidCertificates:NO];
-    [securityPolicy setPinnedCertificates:@[certData]];
+    [securityPolicy setPinnedCertificates:@[[self certificateData]]];
     securityPolicy.validatesCertificateChain = NO;
     [securityPolicy setSSLPinningMode:AFSSLPinningModeCertificate];
     
@@ -58,6 +56,12 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     
   }
   return self;
+}
+
+- (NSData *)certificateData {
+  NSString *certificatePath = [[NSBundle mainBundle] pathForResource:@"mail.ru" ofType:@"cer"];
+  NSData *certificateData = [NSData dataWithContentsOfFile:certificatePath];
+  return certificateData;
 }
 
 /*

@@ -34,8 +34,9 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
 - (instancetype)init {
   self = [super init];
   if (self) {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"Hello" ofType:@"wav"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pay_done" ofType:@"caf"];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &_soundID);
+    
   }
   return self;
 }
@@ -53,12 +54,14 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
     
   }];
   
+  __weak typeof(self)weakSelf = self;
   [_socket on:@"payment" listener:^(id data) {
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidPayNotification object:nil userInfo:data];
-    });
+
     NSLog(@"payment response %@, %@", data, [data class]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [weakSelf paymentDone:data];
+      
+    });
     
   }];
   
@@ -71,13 +74,13 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
     
   }];
   
-  __weak typeof(self)weakSelf = self;
   [_socket on:@"bill_call_done" listener:^(id data) {
     
     NSLog(@"bill_call_done response %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf billCallDone:data];
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOBillCallDoneNotification object:nil userInfo:data];
+
 
     });
     
@@ -92,8 +95,9 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
   
 }
 
-- (void)billCallDone:(id)data {
-  [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOBillCallDoneNotification object:nil userInfo:data];
+- (void)paymentDone:(id)data {
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidPayNotification object:nil userInfo:data];
   AudioServicesPlaySystemSound(_soundID);
 }
 

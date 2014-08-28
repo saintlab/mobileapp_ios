@@ -13,6 +13,8 @@
 
 + (instancetype)acquiring;
 
+- (NSData *)certificateData;
+
 - (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response))completion;
 
 - (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(void(^)(id response))completion;

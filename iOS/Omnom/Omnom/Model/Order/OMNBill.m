@@ -29,11 +29,12 @@
   
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
+    NSLog(@"linkForAmount>%@", responseObject);
     completion(responseObject[@"link"]);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-    NSLog(@"responseString>%@", operation.responseString);
+    NSLog(@"linkForAmount>%@", operation.responseString);
     completion(nil);
     
   }];

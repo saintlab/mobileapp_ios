@@ -76,6 +76,8 @@ describe(@"demo stand test", ^{
   __block NSString *_card_id = nil;
   it(@"should create new card", ^{
     
+    [[[[OMNMailRuAcquiring acquiring] certificateData] should] beNonNil];
+    
     NSDictionary *cardInfo =
     @{
       //      @"pan" : @"4111111111111112",
