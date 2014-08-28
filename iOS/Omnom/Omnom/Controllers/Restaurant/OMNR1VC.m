@@ -54,6 +54,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+
+  
   _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
   
   if (_visitor.restaurant.is_demo) {

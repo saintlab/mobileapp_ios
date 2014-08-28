@@ -15,6 +15,7 @@
 #import "OMNViewController.h"
 #import "OMNShakeWindow.h"
 #import <SDWebImageManager.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface GAppDelegate ()
 
@@ -40,7 +41,7 @@
   if (nil == launchOptions[UIApplicationLaunchOptionsLocationKey]) {
     [self startApplication:nil];
   }
-
+  
   return YES;
   
 }
@@ -79,6 +80,8 @@
   
   [OMNOperationManager sharedManager];
   [OMNAuthorisation authorisation];
+  
+  [Crashlytics startWithAPIKey:@"1ea87b52b1d0946ed506dcc3bd5b586f422bf03a"];
   
   self.window = [[OMNShakeWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.tintColor = [UIColor blackColor];

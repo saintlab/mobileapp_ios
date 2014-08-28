@@ -1593,6 +1593,7 @@
 				93676DE718D1E4FC00FC55F1 /* Resources */,
 				4F9249CB50BE4BCAA2D125E0 /* Copy Pods Resources */,
 				931E7849198674AC00BBFE94 /* build increment script */,
+				9388A0A919AF61EB00A246E5 /* Crashlytics.framework */,
 			);
 			buildRules = (
 			);
@@ -1840,6 +1841,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\n#buildNumber=$((0x$buildNumber))\nbuildNumber=$(($buildNumber + 1))\nbuildNumber=$(printf \"%d\" $buildNumber)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
+		9388A0A919AF61EB00A246E5 /* Crashlytics.framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Crashlytics.framework;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 1ea87b52b1d0946ed506dcc3bd5b586f422bf03a 24581047190989dd3b32483cd77da4a030cb7d2ed58171c008823f918c327652";
 		};
 /* End PBXShellScriptBuildPhase section */
 
