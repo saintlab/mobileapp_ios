@@ -51,16 +51,16 @@
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  if (self.decodeBeacon) {
+  if (self.visitor) {
     
     _loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
     
   }
   else {
     
-    _loadingCircleVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *decodeBeacon) {
+    _loadingCircleVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
       
-      [weakSelf didFindBeacon:decodeBeacon];
+      [weakSelf didFindVisitor:visitor];
       
     } cancelBlock:nil];
 
@@ -75,8 +75,8 @@
     
     [self.navigationController omn_pushViewController:_loadingCircleVC animated:YES completion:^{
     
-      if (weakSelf.decodeBeacon) {
-        [weakSelf didFindBeacon:weakSelf.decodeBeacon];
+      if (weakSelf.visitor) {
+        [weakSelf didFindVisitor:weakSelf.visitor];
       }
       
     }];
@@ -85,36 +85,36 @@
   
 }
 
-- (void)didFindBeacon:(OMNVisitor *)decodeBeacon {
+- (void)didFindVisitor:(OMNVisitor *)visitor {
   
-  if (nil == self.decodeBeacon) {
-    [decodeBeacon newGuestWithCompletion:^{
+  if (nil == self.visitor) {
+    [visitor newGuestWithCompletion:^{
     } failure:^(NSError *error) {
     }];
   }
   
   __weak typeof(self)weakSelf = self;
-  [decodeBeacon.restaurant loadLogo:^(UIImage *image) {
+  [visitor.restaurant loadLogo:^(UIImage *image) {
     //TODO: handle error loading image
-    [weakSelf didLoadLogoForRestaurant:decodeBeacon];
+    [weakSelf didLoadLogoForVisitor:visitor];
     
   }];
 
 }
 
-- (void)didLoadLogoForRestaurant:(OMNVisitor *)decodeBeacon {
+- (void)didLoadLogoForVisitor:(OMNVisitor *)visitor {
   
   __weak typeof(_loadingCircleVC)weakBeaconSearch = _loadingCircleVC;
-  UIImage *logo = decodeBeacon.restaurant.logo;
-  UIColor *restaurantBackgroundColor = decodeBeacon.restaurant.background_color;
+  UIImage *logo = visitor.restaurant.logo;
+  UIColor *restaurantBackgroundColor = visitor.restaurant.background_color;
   __weak typeof(self)weakSelf = self;
   [_loadingCircleVC setLogo:logo withColor:restaurantBackgroundColor completion:^{
     
-    [decodeBeacon.restaurant loadBackground:^(UIImage *image) {
+    [visitor.restaurant loadBackground:^(UIImage *image) {
       
       [weakBeaconSearch finishLoading:^{
         
-        [weakSelf didLoadBackgroundForRestaurant:decodeBeacon];
+        [weakSelf didLoadBackgroundForVisitor:visitor];
         
       }];
 
@@ -124,9 +124,9 @@
   
 }
 
-- (void)didLoadBackgroundForRestaurant:(OMNVisitor *)decodeBeacon {
+- (void)didLoadBackgroundForVisitor:(OMNVisitor *)visitor {
   
-  [self.delegate searchRestaurantVC:self didFindBeacon:decodeBeacon];
+  [self.delegate searchRestaurantVC:self didFindVisitor:visitor];
   
 }
 

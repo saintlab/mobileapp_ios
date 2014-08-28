@@ -15,7 +15,7 @@
 @interface OMNOrdersVC : UICollectionViewController
 
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
-@property (nonatomic, strong, readonly) OMNVisitor *decodeBeacon;
+@property (nonatomic, strong, readonly) OMNVisitor *visitor;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 

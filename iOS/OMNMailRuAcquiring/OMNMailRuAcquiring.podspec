@@ -28,9 +28,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes'
-  s.resources = 'Pod/Assets/*.png'
-  s.resources = 'Pod/Assets/*.cer'
-  s.resources = 'Pod/Assets/*.plist'
+  s.resources = 'Pod/Assets/*.png', 'Pod/Assets/*.cer', 'Pod/Assets/*.plist'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

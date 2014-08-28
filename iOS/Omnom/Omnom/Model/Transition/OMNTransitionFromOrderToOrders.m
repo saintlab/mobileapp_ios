@@ -27,8 +27,8 @@
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
   // Get a snapshot of the image view
-  UIView *imageSnapshot = [fromViewController.tableView snapshotViewAfterScreenUpdates:NO];
-  imageSnapshot.frame = [containerView convertRect:fromViewController.tableView.frame fromView:fromViewController.tableView.superview];
+  UIView *tableSnapshot = [fromViewController.tableView snapshotViewAfterScreenUpdates:NO];
+  tableSnapshot.frame = [containerView convertRect:fromViewController.tableView.frame fromView:fromViewController.tableView.superview];
   fromViewController.tableView.hidden = YES;
   
   // Get the cell we'll animate to
@@ -38,17 +38,30 @@
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
-  [containerView addSubview:imageSnapshot];
+  [containerView addSubview:tableSnapshot];
   
   [UIView animateWithDuration:duration animations:^{
     // Fade out the source view controller
     fromViewController.view.alpha = 0.0;
     
+    CGFloat bottomOffset = fromViewController.tableView.contentInset.bottom;
+    CGRect toFrame = [containerView convertRect:cell.frame fromView:cell.superview];
+
+    CGRect tableFrame = tableSnapshot.frame;
+    CGFloat scale = CGRectGetWidth(toFrame)/CGRectGetWidth(tableFrame);
+    tableFrame.size.width *= scale;
+    tableFrame.size.height *= scale;
+    bottomOffset *= scale;
+    tableFrame.origin.y = CGRectGetMaxY(toFrame) + bottomOffset - CGRectGetHeight(tableFrame);
+    tableFrame.origin.x = toFrame.origin.x;
+    
+    tableSnapshot.frame = tableFrame;
+    
     // Move the image view
-    imageSnapshot.frame = [containerView convertRect:cell.frame fromView:cell.superview];
+//    tableSnapshot.frame = [containerView convertRect:cell.frame fromView:cell.superview];
   } completion:^(BOOL finished) {
     // Clean up
-    [imageSnapshot removeFromSuperview];
+    [tableSnapshot removeFromSuperview];
     fromViewController.tableView.hidden = NO;
     cell.hidden = NO;
     

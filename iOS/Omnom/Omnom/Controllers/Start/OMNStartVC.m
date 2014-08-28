@@ -80,8 +80,8 @@ OMNSearchRestaurantVCDelegate>
   
   NSData *decodeBeaconData = self.info[OMNDecodeBeaconManagerNotificationLaunchKey];
   if (decodeBeaconData) {
-    OMNVisitor *decodeBeacon = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
-    searchRestaurantVC.decodeBeacon = decodeBeacon;
+    OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
+    searchRestaurantVC.visitor = visitor;
   }
 
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];
@@ -111,7 +111,7 @@ OMNSearchRestaurantVCDelegate>
 
 #pragma mark - OMNSearchRestaurantVCDelegate
 
-- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindBeacon:(OMNVisitor *)visitor {
+- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindVisitor:(OMNVisitor *)visitor {
   
   OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithVisitor:visitor];
   [searchBeaconVC.navigationController pushViewController:restaurantMenuVC animated:YES];

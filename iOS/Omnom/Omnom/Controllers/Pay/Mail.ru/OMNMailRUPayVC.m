@@ -18,6 +18,7 @@
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNOrder+omn_mailru.h"
 #import "OMNAuthorisation.h"
+#import "OMNSocketManager.h"
 
 @interface OMNMailRUPayVC()
 <OMNAddBankCardVCDelegate,
@@ -53,6 +54,8 @@ OMNMailRUCardConfirmVCDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPay:) name:OMNSocketIODidPayNotification object:nil];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
@@ -93,7 +96,7 @@ OMNMailRUCardConfirmVCDelegate>
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_payButton setTitle:NSLocalizedString(@"Оплатить", nil) forState:UIControlStateNormal];
   [_payButton sizeToFit];
-  [_payButton addTarget:self action:@selector(payTap) forControlEvents:UIControlEventTouchUpInside];
+  [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
   
 }
 
@@ -132,7 +135,9 @@ OMNMailRUCardConfirmVCDelegate>
   
 }
 
-- (void)payTap {
+- (void)payTap:(UIButton *)button {
+  
+  button.enabled = NO;
   
   if (self.demo) {
     [self demoPay];
@@ -173,9 +178,15 @@ OMNMailRUCardConfirmVCDelegate>
 
 }
 
+- (void)didPay:(NSNotification *)n {
+  NSLog(@"%@", n);
+  [self.delegate mailRUPayVCDidFinish:self];
+}
+
 - (void)didPayWithResponse:(id)response {
   
-  [self.delegate mailRUPayVCDidFinish:self];
+  
+//  [self.delegate mailRUPayVCDidFinish:self];
   
 }
 

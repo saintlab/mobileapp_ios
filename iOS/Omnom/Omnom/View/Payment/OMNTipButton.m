@@ -9,6 +9,7 @@
 #import "OMNTipButton.h"
 #import "OMNTip.h"
 #import "OMNConstants.h"
+#import <OMNStyler.h>
 
 @implementation OMNTipButton
 
@@ -35,11 +36,11 @@
 
 - (void)setup {
   
-  [self setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-  [self setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
+  [self setTitleColor:[colorWithHexString(@"ffffff") colorWithAlphaComponent:0.6] forState:UIControlStateNormal];
+  [self setTitleColor:colorWithHexString(@"ffffff") forState:UIControlStateSelected];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.textAlignment = NSTextAlignmentCenter;
-  self.titleLabel.font = ALSRublFont(15);
+  self.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:17.0f];
   
 }
 

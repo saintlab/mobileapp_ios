@@ -55,6 +55,8 @@
       OMNTip *tip = [[OMNTip alloc] initWithAmount:amount percent:percent];
       [tips addObject:tip];
     }
+    OMNTip *tip = tips[3];
+    tip.amount = 0;
     _tips = [tips copy];
     
   }

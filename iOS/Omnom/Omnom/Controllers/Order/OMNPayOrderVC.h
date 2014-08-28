@@ -22,7 +22,7 @@
 @protocol OMNPayOrderVCDelegate <NSObject>
 
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC;
-
+- (void)payOrderVCRequestOrders:(OMNPayOrderVC *)ordersVC;
 - (void)payOrderVCDidCancel:(OMNPayOrderVC *)payOrderVC;
 
 @end

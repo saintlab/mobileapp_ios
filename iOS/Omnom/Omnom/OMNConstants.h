@@ -26,9 +26,9 @@ typedef void(^OMNDataBlock)(id data);
 #define kUseStubUser 0
 #define kUseStubBeacon 1
 #define kUseStubBeaconDecodeData 0
+#define kUseStubOrdersData 0
 #define kUseStubLogin 0
 #define kUseGPBAcquiring 0
-#define kForgetLoginInfo 0
 #define kForgetRequestPushNotification 1
 
 #define kGreenColor ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1])

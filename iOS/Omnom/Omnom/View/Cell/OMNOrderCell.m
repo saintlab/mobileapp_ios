@@ -70,8 +70,13 @@
 - (void)setOrderItem:(OMNOrderItem *)orderItem {
   
   _iconView.image = orderItem.icon;
-  _priceLabel.text = [NSString stringWithFormat:@"%.0fР", orderItem.price];
-  _nameLabel.text = orderItem.name;
+  [self setTitle:orderItem.name subtitle:[NSString stringWithFormat:@"%.0fР", orderItem.price]];
+  
+}
+
+- (void)setTitle:(NSString *)title subtitle:(NSString *)subtitle {
+  _nameLabel.text = title;
+  _priceLabel.text = subtitle;
   
 }
 

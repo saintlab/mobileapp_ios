@@ -125,7 +125,7 @@
 - (void)updateToPayButton {
 
   _payButton.enabled = (_calculationAmount.totalValue > 0) ? (YES) : (NO);
-  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %.0fi", _calculationAmount.totalValue / 100.0f] forState:UIControlStateNormal];
+  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %.0fр", _calculationAmount.totalValue / 100.0f] forState:UIControlStateNormal];
   
 }
 
@@ -218,18 +218,18 @@
 }
 
 - (long long)enteredValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
- 
+  long long enteredValue = 0;
   if (self.tipsMode) {
     
-    return _calculationAmount.customTipAmount;
+    enteredValue = _calculationAmount.customTipAmount;
     
   }
   else {
     
-    return _calculationAmount.enteredAmount;
+    enteredValue = _calculationAmount.enteredAmount;
     
   }
-  
+  return enteredValue;
 }
 
 @end

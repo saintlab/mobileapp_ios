@@ -307,9 +307,9 @@
   
   OMNRestaurant *restaurant = _restaurant;
   __weak typeof(self)weakSelf = self;
-  [_restaurantMediator searchBeaconWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *decodeBeacon) {
+  [_restaurantMediator searchBeaconWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
   
-    [restaurant waiterCallForTableID:decodeBeacon.table.id completion:^{
+    [restaurant waiterCallForTableID:visitor.table.id completion:^{
       
       dispatch_async(dispatch_get_main_queue(), ^{
         

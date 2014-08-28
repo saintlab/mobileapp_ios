@@ -9,6 +9,7 @@
 #import "OMNSocketManager.h"
 #import <OMNSocketIO.h>
 #import "OMNConstants.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 NSString * const OMNSocketIODidReceiveCardIdNotification = @"OMNSocketIODidReceiveCardIdNotification";
 NSString * const OMNSocketIODidPayNotification = @"OMNSocketIODidPayNotification";
@@ -18,6 +19,7 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
 @implementation OMNSocketManager {
   OMNSocketIO *_io;
   Socket *_socket;
+  SystemSoundID _soundID;
 }
 
 + (instancetype)manager {
@@ -27,6 +29,15 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
     manager = [[[self class] alloc] init];
   });
   return manager;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Hello" ofType:@"wav"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &_soundID);
+  }
+  return self;
 }
 
 - (void)safeConnectWithToken:(NSString *)token {
@@ -60,11 +71,14 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
     
   }];
   
+  __weak typeof(self)weakSelf = self;
   [_socket on:@"bill_call_done" listener:^(id data) {
     
     NSLog(@"bill_call_done response %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOBillCallDoneNotification object:nil userInfo:data];
+      
+      [weakSelf billCallDone:data];
+
     });
     
   }];
@@ -76,6 +90,11 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
     
   }];
   
+}
+
+- (void)billCallDone:(id)data {
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOBillCallDoneNotification object:nil userInfo:data];
+  AudioServicesPlaySystemSound(_soundID);
 }
 
 - (void)join:(NSString *)roomId {

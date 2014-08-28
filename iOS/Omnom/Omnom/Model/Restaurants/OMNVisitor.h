@@ -35,3 +35,9 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
 @end
+
+@interface NSArray (omn_visitor)
+
+- (NSArray *)omn_visitors;
+
+@end

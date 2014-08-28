@@ -9,6 +9,7 @@
 #import "OMNOrdersVC.h"
 #import "OMNOrderItemCell.h"
 #import "OMNVisitor.h"
+#import "OMNOrderItemsFlowLayout.h"
 
 @interface OMNOrdersVC ()
 
@@ -16,7 +17,7 @@
 
 @implementation OMNOrdersVC {
   NSArray *_orders;
-  OMNVisitor *_visitor;
+  OMNOrderItemsFlowLayout *_orderItemsFlowLayout;
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
@@ -31,12 +32,9 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.collectionView.backgroundColor = _decodeBeacon.restaurant.background_color;
-  UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
-  flowLayout.sectionInset = UIEdgeInsetsMake(0.0f, 18.0f, 0.0f, 18.0f);
-  flowLayout.itemSize = CGSizeMake(273.0f, 415.0f);
-  flowLayout.minimumInteritemSpacing = 10.0f;
+  _orderItemsFlowLayout = [[OMNOrderItemsFlowLayout alloc] init];
   
+  self.collectionView.backgroundColor = _visitor.restaurant.background_color;
   [self.collectionView registerClass:[OMNOrderItemCell class] forCellWithReuseIdentifier:@"OMNOrderItemCell"];
   
 }
@@ -77,6 +75,8 @@
   OMNOrderItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OMNOrderItemCell" forIndexPath:indexPath];
   OMNOrder *order = _orders[indexPath.item];
   cell.order = order;
+  cell.index = indexPath.item;
+  
   return cell;
 }
 
@@ -88,7 +88,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
   OMNOrder *order = _orders[indexPath.item];
-  _decodeBeacon.selectedOrder = order;
+  _visitor.selectedOrder = order;
   [self.delegate ordersVC:self didSelectOrder:order];
   
 }

@@ -13,6 +13,8 @@
 @interface OMNPaymentFooterView : UIView
 
 @property (nonatomic, strong) OMNCalculationAmount *calculationAmount;
+@property (nonatomic, weak) IBOutlet UILabel *toPayLabel;
+@property (nonatomic, weak) IBOutlet UILabel *tipLabel;
 
 - (void)updateView;
 - (void)setKeyboardShown:(BOOL)keyboardShown;

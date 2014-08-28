@@ -36,7 +36,7 @@
   
   CGFloat toPayViewHeight = rows1Image.size.height;
   CGFloat footerViewHeight = footerImage.size.height;
-  
+  NSLog(@"%f", fromViewController.tableView.contentSize.height);
   CGFloat blankImageTopOffset = fromViewController.tableView.contentSize.height - footerViewHeight - toPayViewHeight;
   
   UIView *blankView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, blankImageTopOffset, rows1Image.size.width, toPayViewHeight)];
@@ -69,7 +69,7 @@
   contentOffset.y -= tableVisiblePart;
 
   [fromViewController.view bringSubviewToFront:fromViewController.tableView];
-  toViewController.containerView.alpha = 0.5f;
+  toViewController.containerView.alpha = 0.0f;
   toViewController.view.alpha = 0.0f;
   
   CGFloat destinationStartOffset = fromViewController.tableView.contentOffset.y - CGRectGetHeight(fromViewController.tableView.tableHeaderView.frame) + kCalculatorTopOffset;
@@ -85,8 +85,7 @@
     toViewController.splitTableView.contentOffset = CGPointMake(0.0f, 0.0f);
     fromViewController.tableView.contentOffset = CGPointMake(0.0f, CGRectGetHeight(fromViewController.tableView.tableHeaderView.frame) - kCalculatorTopOffset);
     
-    
-    CGFloat height = toViewController.splitTableView.frame.size.height - toViewController.splitTableView.contentSize.height;
+    CGFloat height = MAX(0.0f, toViewController.splitTableView.frame.size.height - toViewController.splitTableView.contentSize.height);
     
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     CGRect blankViewFrame = blankView.frame;
@@ -111,7 +110,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 10.5;
+  return 0.5;
 }
 
 + (NSArray *)keys {

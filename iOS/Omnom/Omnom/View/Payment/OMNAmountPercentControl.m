@@ -11,6 +11,7 @@
 #import <UIControl+BlocksKit.h>
 #import "UIView+frame.h"
 #import "OMNConstants.h"
+#import <OMNStyler.h>
 
 @interface OMNAmountPercentControl ()
 <UIPickerViewDataSource,
@@ -42,8 +43,11 @@ UITextFieldDelegate>
 - (TSCurrencyTextField *)createCurrencyTextField {
   TSCurrencyTextField *currencyTextField = [[TSCurrencyTextField alloc] init];
   currencyTextField.currencyNumberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"ru"];
+  currencyTextField.clipsToBounds = NO;
   currencyTextField.currencyNumberFormatter.maximumFractionDigits = 0;
-  currencyTextField.font = ALSRublFont(25);
+  currencyTextField.backgroundColor = [UIColor lightGrayColor];
+  currencyTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
+  currencyTextField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:50.0f];
   currencyTextField.textColor = [UIColor whiteColor];
   currencyTextField.adjustsFontSizeToFitWidth = YES;
   currencyTextField.textAlignment = NSTextAlignmentLeft;
@@ -55,7 +59,6 @@ UITextFieldDelegate>
 
 - (void)setup {
   
-  self.clipsToBounds = YES;
   self.backgroundColor = [UIColor clearColor];
   
   _percentTF = [self createCurrencyTextField];
@@ -64,8 +67,7 @@ UITextFieldDelegate>
   
   _amountTF = [self createCurrencyTextField];
   _amountTF.textAlignment = NSTextAlignmentRight;
-  _amountTF.currencyNumberFormatter.positiveSuffix = @"i";
-  _amountTF.currencyNumberFormatter.currencySymbol = @"i";
+  _amountTF.currencyNumberFormatter.positiveSuffix = @"Р";
   _amountTF.currencyNumberFormatter.currencyGroupingSeparator = @" ";
   
   _percentPicker = [[UIPickerView alloc] init];
@@ -102,7 +104,7 @@ UITextFieldDelegate>
 
 - (void)updatePercentValue {
   
-  double percentValue = (self.expectedAmount > 0) ? (100 * [_amountTF.amount doubleValue] / self.expectedAmount) : (0.);
+  double percentValue = (self.expectedAmount > 0) ? (100 * 100 * [_amountTF.amount doubleValue] / self.expectedAmount) : (0.);
   
   if (percentValue < [_percentPicker numberOfRowsInComponent:0]) {
     
@@ -136,6 +138,7 @@ UITextFieldDelegate>
 }
 
 - (BOOL)resignFirstResponder {
+  
   _isFirstResponder = NO;
   BOOL result = [_amountTF resignFirstResponder] || [_percentTF resignFirstResponder];
   return result;

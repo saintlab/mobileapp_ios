@@ -13,7 +13,12 @@
 #import <SSKeychain.h>
 
 static NSString * const kAccountName = @"test_account6";
+
+#if OMN_TEST
+NSString * const kTokenServiceName = @"test_token";
+#else
 NSString * const kTokenServiceName = @"token";
+#endif
 
 @implementation OMNAuthorisation {
   void(^_notificationRegisterCompletionBlock)(BOOL completion);
@@ -32,15 +37,12 @@ NSString * const kTokenServiceName = @"token";
   self = [super init];
   if (self) {
     
-#if kForgetLoginInfo
-#else
 #if OMN_TEST
     NSString *token = @"yeshackvofPigCob";
 #else
     NSString *token = [SSKeychain passwordForService:kTokenServiceName account:kAccountName];
 #endif
     [self updateAuthenticationToken:token];
-#endif
   }
   return self;
 }
@@ -165,26 +167,6 @@ NSString * const kTokenServiceName = @"token";
   
 }
 
-- (void)confirmPhone:(NSString *)phone code:(NSString *)code {
-  
-  NSDictionary *parameters =
-  @{
-    @"phone" : phone,
-    @"code" : code,
-    };
-  
-  [[OMNAuthorizationManager sharedManager] POST:@"confirm/phone" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    NSLog(@"confirmPhone>%@", responseObject);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    NSLog(@"confirmPhone>%@", error);
-    
-  }];
-  
-}
-
 - (NSString *)installId {
   
   NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
@@ -219,10 +201,15 @@ NSString * const kTokenServiceName = @"token";
   else {
     
     NSString *message = self[@"error"][@"message"];
-    NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
-                                         code:0
-                                     userInfo:@{NSLocalizedDescriptionKey : (message)?(message):(@"")}];
-    failureBlock(error);
+    if (message) {
+      NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
+                                           code:0
+                                       userInfo:@{NSLocalizedDescriptionKey : message}];
+      failureBlock(error);
+    }
+    else {
+      failureBlock(nil);
+    }
 
   }
   

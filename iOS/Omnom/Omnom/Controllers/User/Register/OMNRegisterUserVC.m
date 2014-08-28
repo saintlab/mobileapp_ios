@@ -270,7 +270,7 @@
   } failure:^(NSError *error) {
     
     [confirmCodeVC resetAnimated:YES];
-    [[[UIAlertView alloc] initWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    [weakSelf processError:error];
     
   }];
   
@@ -288,15 +288,22 @@
 
 - (void)didRegisterWithToken:(NSString *)token {
   
-  [OMNUser userWithToken:token user:^(OMNUser *user) {
+  if (token) {
+
+    [OMNUser userWithToken:token user:^(OMNUser *user) {
+      
+      [[OMNAnalitics analitics] logRegisterUser:user];
+      
+    } failure:^(NSError *error) {
+      //TODO: handle
+    }];
     
-    [[OMNAnalitics analitics] logRegisterUser:user];
+    [self.delegate authorizationVC:self didReceiveToken:token];
     
-  } failure:^(NSError *error) {
-    //TODO: handle
-  }];
-  
-  [self.delegate authorizationVC:self didReceiveToken:token];
+  }
+  else {
+    [self processError:nil];
+  }
   
 }
 

@@ -11,5 +11,7 @@
 @interface OMNOrderItemCell : UICollectionViewCell
 
 @property (nonatomic, strong) OMNOrder *order;
+@property (nonatomic, assign) NSInteger index;
+@property (nonatomic, strong) UITableView *tableView;
 
 @end

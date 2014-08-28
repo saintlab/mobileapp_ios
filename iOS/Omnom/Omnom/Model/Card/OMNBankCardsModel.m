@@ -144,7 +144,7 @@
     
     [weakSelf removeCard:card];
     dispatch_async(dispatch_get_main_queue(), ^{
-      [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+      [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     });
 
   } failure:^(NSError *error) {

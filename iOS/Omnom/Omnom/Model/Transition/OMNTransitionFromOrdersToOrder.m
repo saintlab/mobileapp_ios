@@ -9,6 +9,7 @@
 #import "OMNTransitionFromOrdersToOrder.h"
 #import "OMNOrdersVC.h"
 #import "OMNPayOrderVC.h"
+#import "OMNOrderItemCell.h"
 
 @implementation OMNTransitionFromOrdersToOrder
 
@@ -27,12 +28,11 @@
   // Get a snapshot of the thing cell we're transitioning from
   
   NSIndexPath *selectedIndexPath = [fromViewController.collectionView indexPathsForSelectedItems].firstObject;
-  UICollectionViewCell *cell = [fromViewController.collectionView cellForItemAtIndexPath:selectedIndexPath];
-  
+  OMNOrderItemCell *cell = (OMNOrderItemCell *)[fromViewController.collectionView cellForItemAtIndexPath:selectedIndexPath];
   UIView *cellImageSnapshot = [cell snapshotViewAfterScreenUpdates:NO];
   cellImageSnapshot.frame = [containerView convertRect:cell.frame fromView:cell.superview];
   cell.hidden = YES;
-  
+  [toViewController.view layoutIfNeeded];
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   toViewController.view.alpha = 0;
@@ -41,13 +41,21 @@
   [containerView addSubview:toViewController.view];
   [containerView addSubview:cellImageSnapshot];
   
+  
   [UIView animateWithDuration:duration animations:^{
     // Fade in the second view controller's view
     toViewController.view.alpha = 1.0;
     
-    // Move the cell snapshot so it's over the second view controller's image view
-    CGRect frame = [containerView convertRect:toViewController.tableView.frame fromView:toViewController.view];
-    cellImageSnapshot.frame = frame;
+    CGRect calulateFrame = [toViewController.tableView.tableFooterView convertRect:toViewController.tableView.tableFooterView.bounds toView:containerView];
+    
+    CGRect toFrame = cellImageSnapshot.frame;
+    CGFloat aspect = calulateFrame.size.width/toFrame.size.width;
+    toFrame.size.width = calulateFrame.size.width;
+    toFrame.size.height *= aspect;
+    toFrame.origin.x = 0.0f;
+    toFrame.origin.y = CGRectGetMaxY(calulateFrame) - toFrame.size.height;
+    cellImageSnapshot.frame = toFrame;
+    
   } completion:^(BOOL finished) {
     // Clean up
     toViewController.tableView.hidden = NO;

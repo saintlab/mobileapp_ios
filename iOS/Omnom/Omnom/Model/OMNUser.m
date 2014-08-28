@@ -207,7 +207,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     NSLog(@"loginWithParameters>%@", operation.responseString);
-    failureBlock(error);
+    failureBlock(nil);
     
   }];
   

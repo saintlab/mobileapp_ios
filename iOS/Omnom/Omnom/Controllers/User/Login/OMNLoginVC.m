@@ -125,7 +125,12 @@
 
 - (void)processLoginError:(NSError *)error {
   
-  [_loginTF setError:error.localizedDescription animated:NO];
+  if (error) {
+    [_loginTF setError:error.localizedDescription animated:NO];
+  }
+  else {
+    [_loginTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil) animated:NO];
+  }
   
 }
 

@@ -28,6 +28,7 @@ OMNPayOrderVCDelegate>
 @end
 
 @implementation OMNRestaurantMediator {
+  __weak OMNOrdersVC *_ordersVC;
 }
 
 - (instancetype)initWithRootViewController:(OMNR1VC *)restaurantVC {
@@ -65,7 +66,6 @@ OMNPayOrderVCDelegate>
 
 }
 
-
 - (void)searchBeaconWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
   
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:completionBlock cancelBlock:cancelBlock];
@@ -81,12 +81,12 @@ OMNPayOrderVCDelegate>
 - (void)callBillAction {
   
   __weak typeof(self)weakSelf = self;
-  [self searchBeaconWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *decodeBeacon) {
+  [self searchBeaconWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
     
-    [decodeBeacon getOrders:^(NSArray *orders) {
+    [visitor getOrders:^(NSArray *orders) {
       
       [searchBeaconVC finishLoading:^{
-        [weakSelf checkPushNotificationAndProcessBeacon:decodeBeacon];
+        [weakSelf checkPushNotificationForVisitor:visitor];
       }];
       
     } error:^(NSError *error) {
@@ -103,46 +103,45 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)checkPushNotificationAndProcessBeacon:(OMNVisitor *)decodeBeacon {
+- (void)checkPushNotificationForVisitor:(OMNVisitor *)visitor {
   
   if ([OMNAuthorisation authorisation].pushNotificationsRequested) {
     
-    [self processOrdersAtBeacon:decodeBeacon];
+    [self processOrdersForVisitor:visitor];
     
   }
   else {
     
     if (!self.restaurantVC.visitor.restaurant.is_demo &&
-        decodeBeacon.orders.count &&
+        visitor.orders.count &&
         !TARGET_IPHONE_SIMULATOR) {
       OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self.restaurantVC];
       __weak typeof(self)weakSelf = self;
       pushPermissionVC.completionBlock = ^{
-        [weakSelf processOrdersAtBeacon:decodeBeacon];
+        [weakSelf processOrdersForVisitor:visitor];
       };
       [self pushViewController:pushPermissionVC];
       
     }
     else {
-      [self processOrdersAtBeacon:decodeBeacon];
+      [self processOrdersForVisitor:visitor];
     }
     
   }
   
 }
 
-
-- (void)processOrdersAtBeacon:(OMNVisitor *)decodeBeacon {
+- (void)processOrdersForVisitor:(OMNVisitor *)visitor {
   
-  if (decodeBeacon.orders.count > 1) {
+  if (visitor.orders.count > 1) {
     
-    [self selectOrderAtBeacon:decodeBeacon];
+    [self selectOrderForVisitor:visitor];
     
   }
-  else if (1 == decodeBeacon.orders.count){
+  else if (1 == visitor.orders.count){
     
-    decodeBeacon.selectedOrder = [decodeBeacon.orders firstObject];
-    [self processOrderAtBeacon:decodeBeacon];
+    visitor.selectedOrder = [visitor.orders firstObject];
+    [self processOrderForVisitor:visitor];
     
   }
   else {
@@ -153,7 +152,7 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)processOrderAtBeacon:(OMNVisitor *)visitor {
+- (void)processOrderForVisitor:(OMNVisitor *)visitor {
   
   OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithVisitor:visitor];
   paymentVC.delegate = self;
@@ -181,7 +180,7 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)selectOrderAtBeacon:(OMNVisitor *)visitor {
+- (void)selectOrderForVisitor:(OMNVisitor *)visitor {
   
   OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithVisitor:visitor];
   ordersVC.delegate = self;
@@ -208,7 +207,10 @@ OMNPayOrderVCDelegate>
 #pragma mark - OMNOrdersVCDelegate
 
 - (void)ordersVC:(OMNOrdersVC *)ordersVC didSelectOrder:(OMNOrder *)order {
-  [self processOrderAtBeacon:ordersVC.decodeBeacon];
+  
+  _ordersVC = ordersVC;
+  [self processOrderForVisitor:ordersVC.visitor];
+  
 }
 
 - (void)ordersVCDidCancel:(OMNOrdersVC *)ordersVC {
@@ -224,6 +226,14 @@ OMNPayOrderVCDelegate>
   }
   else {
     [self popToRootViewControllerAnimated:YES];
+  }
+  
+}
+
+- (void)payOrderVCRequestOrders:(OMNPayOrderVC *)ordersVC {
+  
+  if (_ordersVC) {
+    [self.restaurantVC.navigationController popToViewController:_ordersVC animated:YES];
   }
   
 }

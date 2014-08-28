@@ -28,8 +28,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.source_files = 'Pod/Classes'
-  s.resources = 'Pod/Assets/*.png'
-  s.resources = 'Pod/Classes/*.js'
+  s.resources = 'Pod/Assets/*.png', 'Pod/Classes/*.js'
   s.dependency "Emitter"
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

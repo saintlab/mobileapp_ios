@@ -7,7 +7,7 @@
 //
 
 #import "OMNPayOrderVC.h"
-#import "OMNPaymentVCDataSource.h"
+#import "OMNOrderDataSource.h"
 #import "OMNPaymentFooterView.h"
 #import <BlocksKit+UIKit.h>
 #import "GRateAlertView.h"
@@ -29,6 +29,7 @@
 #import "OMNPaymentNotificationControl.h"
 #import "OMNNavigationController.h"
 #import "OMNMailRuBankCardsModel.h"
+#import <OMNStyler.h>
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -41,14 +42,18 @@ OMNMailRUPayVCDelegate>
 @end
 
 @implementation OMNPayOrderVC {
-  OMNPaymentVCDataSource *_dataSource;
+  OMNOrderDataSource *_dataSource;
 
   __weak IBOutlet OMNPaymentFooterView *_paymentView;
   __weak IBOutlet UIButton *_toPayButton;
   __weak IBOutlet UIImageView *_backgroundIV;
+  __weak IBOutlet UILabel *_toPayLabel;
+  __weak IBOutlet UILabel *_tipLabel;
+  
   BOOL _beginSplitAnimation;
   OMNOrder *_order;
   OMNVisitor *_visitor;
+  CGRect _keyboardFrame;
 }
 
 - (void)dealloc {
@@ -63,6 +68,7 @@ OMNMailRUPayVCDelegate>
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super init];
   if (self) {
+    _keyboardFrame = CGRectZero;
     _order = visitor.selectedOrder;
     _visitor = visitor;
   }
@@ -77,7 +83,7 @@ OMNMailRUPayVCDelegate>
     [[OMNSocketManager manager] join:_order.id];
   }
   
-  _dataSource = [[OMNPaymentVCDataSource alloc] initWithOrder:_order];
+  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
   _dataSource.showTotalView = YES;
   
   _tableView.dataSource = _dataSource;
@@ -85,6 +91,25 @@ OMNMailRUPayVCDelegate>
   
   _tableView.allowsSelection = NO;
   [self setup];
+
+  if (_visitor.orders.count > 1) {
+    
+    NSUInteger index = [_visitor.orders indexOfObject:_visitor.selectedOrder];
+    if (index != NSNotFound) {
+      UIButton *button = [[UIButton alloc] init];
+      button.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:20.0f];
+      [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+      [button setTitle:[NSString stringWithFormat:@"Счет N%d", index + 1] forState:UIControlStateNormal];
+      button.layer.borderColor = [UIColor blackColor].CGColor;
+      button.contentEdgeInsets = UIEdgeInsetsMake(3.0f, 10.0f, 3.0f, 10.0f);
+      button.layer.borderWidth = 1.0f;
+      button.layer.cornerRadius = 2.0f;
+      [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
+      [button sizeToFit];
+      self.navigationItem.titleView = button;
+    }
+
+  }
   
   _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
 
@@ -119,9 +144,7 @@ OMNMailRUPayVCDelegate>
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   
-//  CGFloat realContentSize = _tableView.contentSize.height - _tableView.tableHeaderView.height;
-//  CGFloat bottomInset = MAX(0.0f, _tableView.height - realContentSize - _paymentView.height) + _paymentView.height;
-  CGFloat bottomInset = _paymentView.height;
+  CGFloat bottomInset = _paymentView.height + CGRectGetHeight(_keyboardFrame);
   CGFloat visibleTablePart = _tableView.height - bottomInset;
   CGFloat topInset = MIN(0.0f, visibleTablePart - _tableView.contentSize.height);
   _tableView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
@@ -147,6 +170,9 @@ OMNMailRUPayVCDelegate>
 
 }
 
+- (void)selectedOrderTap {
+  [self.delegate payOrderVCRequestOrders:self];
+}
 
 - (IBAction)calculatorTap:(id)sender {
   
@@ -174,18 +200,14 @@ OMNMailRUPayVCDelegate>
 
 - (void)setup {
   
+  _tipLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _tipLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
+  _toPayLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _toPayLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
+  
   self.view.backgroundColor = [UIColor clearColor];
   _backgroundIV.backgroundColor = _visitor.restaurant.background_color;
-  _tableView.backgroundColor = [UIColor clearColor];
-  _tableView.separatorColor = [UIColor clearColor];
-  UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _tableView.width, self.view.height)];
-  logoView.contentMode = UIViewContentModeBottom;
-  logoView.image = [UIImage imageNamed:@"bill_placeholder_icon"];
-  _tableView.tableHeaderView = logoView;
-  _tableView.tableHeaderView.backgroundColor = [UIColor whiteColor];
-  
-  _tableView.tableFooterView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cheque_bottom_bg"]];
-  _tableView.clipsToBounds = NO;
+
   NSDictionary *views =
   @{
     @"table" : _tableView,
@@ -320,9 +342,12 @@ OMNMailRUPayVCDelegate>
 
 - (void)setupViewsWithNotification:(NSNotification *)n keyboardShown:(BOOL)keyboardShown {
   
-  [self.navigationController setNavigationBarHidden:keyboardShown animated:YES];
   CGRect keyboardFrame = [n.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  _keyboardFrame = (keyboardShown) ? (keyboardFrame) : (CGRectZero);
+  
+  [self.navigationController setNavigationBarHidden:keyboardShown animated:YES];
   [UIView animateWithDuration:0.5 delay:0.0f usingSpringWithDamping:500.0f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
+    
     
     _paymentView.bottom = MIN(keyboardFrame.origin.y, self.view.height);
     

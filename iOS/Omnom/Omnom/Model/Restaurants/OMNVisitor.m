@@ -60,18 +60,21 @@
 
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
   
-  if (kUseStubData) {
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"orders.data" ofType:nil];
+  if (kUseStubOrdersData) {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"orders" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSArray *ordersData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    ordersBlock([ordersData decodeOrdersWithError:nil]);
+    NSArray *orders = [ordersData decodeOrdersWithError:nil];
+    self.orders = orders;
+    ordersBlock(orders);
     return;
   }
   __weak typeof(self)weakSelf = self;
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant.id, self.table.id];
   
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    [operation.responseData writeToFile:[@"~/Documents/1.json" stringByExpandingTildeInPath] atomically:YES];
     
     if ([response isKindOfClass:[NSArray class]]) {
       NSArray *ordersData = response;
@@ -130,3 +133,20 @@
 }
 
 @end
+
+@implementation NSArray (omn_visitor)
+
+- (NSArray *)omn_visitors {
+  NSMutableArray *visitors = [NSMutableArray arrayWithCapacity:self.count];
+  [self enumerateObjectsUsingBlock:^(id visitorData, NSUInteger idx, BOOL *stop) {
+    
+    OMNVisitor *visitor = [[OMNVisitor alloc] initWithJsonData:visitorData];
+    [visitors addObject:visitor];
+    
+  }];
+  return [visitors copy];
+}
+
+@end
+
+

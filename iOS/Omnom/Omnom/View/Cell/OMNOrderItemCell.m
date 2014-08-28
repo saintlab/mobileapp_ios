@@ -7,42 +7,62 @@
 //
 
 #import "OMNOrderItemCell.h"
+#import "OMNOrderDataSource.h"
+#import "OMNOrderTableView.h"
 
 @implementation OMNOrderItemCell {
+  OMNOrderDataSource *_orderDataSource;
   UILabel *_label;
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-      self.backgroundColor = [UIColor whiteColor];
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
 
-      UIImageView *bgIV = [[UIImageView alloc] initWithFrame:self.bounds];
-      bgIV.image = [UIImage imageNamed:@"bill_bg"];
-      bgIV.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-      [self addSubview:bgIV];
-      
-      _label = [[UILabel alloc] initWithFrame:self.bounds];
-      _label.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-      _label.numberOfLines = 0;
-      [self addSubview:_label];
-      
-    }
-    return self;
+    self.backgroundView = [[UIView alloc] init];
+    self.backgroundView.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor clearColor];
+    
+    _label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.frame), 50.0f)];
+    _label.textAlignment = NSTextAlignmentCenter;
+    _label.textColor = [UIColor whiteColor];
+    _label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:24.0f];
+    [self addSubview:_label];
+    
+    _orderDataSource = [[OMNOrderDataSource alloc] initWithOrder:nil];
+    _orderDataSource.showTotalView = YES;
+    
+    CGRect tableFrame = CGRectMake(0.0f, CGRectGetHeight(_label.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - CGRectGetHeight(_label.frame));
+    _tableView = [[OMNOrderTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
+    _tableView.dataSource = _orderDataSource;
+    _tableView.userInteractionEnabled = NO;
+    _tableView.allowsSelection = NO;
+    [self addSubview:_tableView];
+
+  }
+  return self;
+}
+
+- (void)setIndex:(NSInteger)index {
+  _index = index;
+  _label.text = [NSString stringWithFormat:@"Счет N%d", index + 1];
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+  
+}
+
+- (void)setSelected:(BOOL)selected {
+  
 }
 
 - (void)setOrder:(OMNOrder *)order {
+  
   _order = order;
   
-  NSMutableString *str = [NSMutableString stringWithString:@""];
-  [str appendFormat:@"%@\n", order.restaurant_id];
-  [str appendFormat:@"%@\n", order.tableId];
-  [order.items enumerateObjectsUsingBlock:^(OMNOrderItem *item, NSUInteger idx, BOOL *stop) {
-    [str appendFormat:@"%@\n", item.name];
-  }];
-  
-  _label.text = str;
+  _orderDataSource.order = order;
+  [_tableView reloadData];
+  [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
 }
 
 @end

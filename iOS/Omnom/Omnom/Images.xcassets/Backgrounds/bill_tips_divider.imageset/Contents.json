@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "ask_permissions_bg.png"
+      "filename" : "bill_tips_divider.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "ask_permissions_bg@2x.png"
+      "filename" : "bill_tips_divider@2x.png"
     }
   ],
   "info" : {

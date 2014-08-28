@@ -8,11 +8,12 @@
 
 @class OMNOrder;
 
-@interface OMNPaymentVCDataSource : NSObject
+@interface OMNOrderDataSource : NSObject
 <UITableViewDataSource,
 UITableViewDelegate>
 
 @property (nonatomic, assign) BOOL showTotalView;
+@property (nonatomic, strong) OMNOrder *order;
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
 

@@ -79,7 +79,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNVisitorsBlock)success failure:(void (^)(NSError *error))failure {
   
   if (kUseStubBeaconDecodeData) {
-    success(nil);
+    
+    id responseObject = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ibeaconsdecode" ofType:@"json"]] options:0 error:nil];
+    NSArray *visitors = [responseObject omn_visitors];
+    [self addVisitors:visitors];
+    success(visitors);
     return;
   }
   
@@ -122,19 +126,10 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     }
     else {
       
-      NSArray *beacons = responseObject;
       NSLog(@"ibeacons/decode>%lu", (unsigned long)beacons.count);
-      NSMutableArray *visitors = [NSMutableArray arrayWithCapacity:beacons.count];
-      [beacons enumerateObjectsUsingBlock:^(id beaconData, NSUInteger idx, BOOL *stop) {
-        
-        OMNVisitor *visitor = [[OMNVisitor alloc] initWithJsonData:beaconData];
-        [visitors addObject:visitor];
-        
-      }];
-      
+      NSArray *visitors = [responseObject omn_visitors];
       [weakSelf addVisitors:visitors];
-      
-      success([visitors copy]);
+      success(visitors);
       
     }
     
