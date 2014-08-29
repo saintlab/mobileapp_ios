@@ -36,7 +36,6 @@
   
   CGFloat toPayViewHeight = rows1Image.size.height;
   CGFloat footerViewHeight = footerImage.size.height;
-  NSLog(@"%f", fromViewController.tableView.contentSize.height);
   CGFloat blankImageTopOffset = fromViewController.tableView.contentSize.height - footerViewHeight - toPayViewHeight;
   
   UIView *blankView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, blankImageTopOffset, rows1Image.size.width, toPayViewHeight)];

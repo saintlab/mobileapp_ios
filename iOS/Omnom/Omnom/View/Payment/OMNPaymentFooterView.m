@@ -13,6 +13,7 @@
 #import "OMNAmountPercentControl.h"
 #import "UIView+frame.h"
 #import "OMNConstants.h"
+#import "OMNUtils.h"
 
 @interface OMNPaymentFooterView ()
 <GAmountPercentControlDelegate>
@@ -125,7 +126,8 @@
 - (void)updateToPayButton {
 
   _payButton.enabled = (_calculationAmount.totalValue > 0) ? (YES) : (NO);
-  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %.0fр", _calculationAmount.totalValue / 100.0f] forState:UIControlStateNormal];
+  
+  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils moneyStringFromKop:_calculationAmount.totalValue]] forState:UIControlStateNormal];
   
 }
 
@@ -158,7 +160,7 @@
     
   }
   
-  [_amountPercentControl setNeedsLayout];
+//  [_amountPercentControl setNeedsLayout];
   [_amountPercentControl layoutIfNeeded];
   
   if (NO == keyboardShown) {

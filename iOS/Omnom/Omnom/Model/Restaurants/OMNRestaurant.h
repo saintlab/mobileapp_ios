@@ -9,6 +9,7 @@
 #import "OMNMenu.h"
 #import "OMNOrder.h"
 #import "OMNRestaurantInfo.h"
+#import "OMNPushTexts.h"
 
 typedef void(^GRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
@@ -26,6 +27,7 @@ typedef void(^OMNImageBlock)(UIImage *image);
 @property (nonatomic, strong) UIColor *background_color;
 @property (nonatomic, strong) NSString *background_imageUrl;
 @property (nonatomic, strong) NSString *logoUrl;
+@property (nonatomic, strong) OMNPushTexts *mobile_texts;
 
 @property (nonatomic, strong) UIImage *logo;
 @property (nonatomic, strong) UIImage *background;

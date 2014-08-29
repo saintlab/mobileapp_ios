@@ -11,6 +11,7 @@
 #import "OMNOrder.h"
 #import "OMNConstants.h"
 #import "OMNOrderCell.h"
+#import "OMNUtils.h"
 
 @implementation OMNOrderDataSource
 
@@ -66,10 +67,10 @@
       
       
       if (0 == indexPath.row) {
-        [cell setTitle:NSLocalizedString(@"Total", nil) subtitle:[NSString stringWithFormat:@"%.2f", _order.total/100.]];
+        [cell setTitle:NSLocalizedString(@"Total", nil) subtitle:[OMNUtils moneyStringFromKop:_order.total]];
       }
       else if (1 == indexPath.row) {
-        [cell setTitle:NSLocalizedString(@"Заплачено", nil) subtitle:[NSString stringWithFormat:@"%.2f", _order.paid_amount/100.]];
+        [cell setTitle:NSLocalizedString(@"Заплачено", nil) subtitle:[OMNUtils moneyStringFromKop:_order.paid_amount]];
       }
       
     } break;

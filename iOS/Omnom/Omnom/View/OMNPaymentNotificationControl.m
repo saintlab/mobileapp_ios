@@ -7,6 +7,7 @@
 //
 
 #import "OMNPaymentNotificationControl.h"
+#import "OMNUtils.h"
 
 @interface OMNPaymentNotificationControl()
 
@@ -61,7 +62,7 @@
   
   OMNPaymentNotificationControl *control = [[OMNPaymentNotificationControl alloc] init];
   NSDictionary *user = info[@"user"];
-  NSString *title = [NSString stringWithFormat:@"%@ Оплатил %.0fР", user[@"name"], [info[@"amount"] doubleValue]/100.];
+  NSString *title = [NSString stringWithFormat:@"%@ Оплатил %@", user[@"name"], [OMNUtils moneyStringFromKop:[info[@"amount"] longLongValue]]];
   [control.closeButton setTitle:title forState:UIControlStateNormal];
   [window addSubview:control];
 }

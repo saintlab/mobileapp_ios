@@ -202,9 +202,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
   if ([self readyForPush:visitor]) {
     
+    OMNPushText *at_entrance = visitor.restaurant.mobile_texts.at_entrance;
     UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = visitor.restaurant.id;
-    localNotification.alertAction = NSLocalizedString(@"Запустить", nil);
+    
+    localNotification.alertBody = at_entrance.greeting;
+    localNotification.alertAction = at_entrance.open_action;
     localNotification.soundName = kPushSoundName;
     
 #pragma clang diagnostic push

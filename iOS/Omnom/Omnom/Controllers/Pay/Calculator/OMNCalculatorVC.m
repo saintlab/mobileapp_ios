@@ -14,6 +14,7 @@
 #import "OMNNavigationBarSelector.h"
 #import "OMNConstants.h"
 #import "UIView+frame.h"
+#import "OMNUtils.h"
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
 const CGFloat kCalculatorTopOffset = 40.0f;
@@ -234,7 +235,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 - (void)totalDidChange:(long long)total {
   
   _total = total;
-  [_totalButton setTitle:[NSString stringWithFormat:@"%.2fР", total/100.] forState:UIControlStateNormal];
+  [_totalButton setTitle:[OMNUtils moneyStringFromKop:total] forState:UIControlStateNormal];
   
 }
 

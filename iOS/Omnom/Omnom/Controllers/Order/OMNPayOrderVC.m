@@ -131,6 +131,7 @@ OMNMailRUPayVCDelegate>
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   
   _tableView.delegate = self;
+  [self.view insertSubview:_tableView belowSubview:_paymentView];
   
   self.automaticallyAdjustsScrollViewInsets = YES;
   self.edgesForExtendedLayout = UIRectEdgeAll;
@@ -143,13 +144,15 @@ OMNMailRUPayVCDelegate>
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
-  
+  [self layoutTableView];
+}
+
+- (void)layoutTableView {
   CGFloat bottomInset = _paymentView.height + CGRectGetHeight(_keyboardFrame);
   CGFloat visibleTablePart = _tableView.height - bottomInset;
   CGFloat topInset = MIN(0.0f, visibleTablePart - _tableView.contentSize.height);
   _tableView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
   _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -328,14 +331,12 @@ OMNMailRUPayVCDelegate>
 
 - (void)keyboardWillShow:(NSNotification *)n {
   
-  [_paymentView setKeyboardShown:YES];
   [self setupViewsWithNotification:n keyboardShown:YES];
   
 }
 
 - (void)keyboardWillHide:(NSNotification *)n {
 
-  [_paymentView setKeyboardShown:NO];
   [self setupViewsWithNotification:n keyboardShown:NO];
   
 }
@@ -346,11 +347,12 @@ OMNMailRUPayVCDelegate>
   _keyboardFrame = (keyboardShown) ? (keyboardFrame) : (CGRectZero);
   
   [self.navigationController setNavigationBarHidden:keyboardShown animated:YES];
+  [_paymentView setKeyboardShown:keyboardShown];
   [UIView animateWithDuration:0.5 delay:0.0f usingSpringWithDamping:500.0f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
     
-    
     _paymentView.bottom = MIN(keyboardFrame.origin.y, self.view.height);
-    
+    [self layoutTableView];
+
   } completion:nil];
   
 }

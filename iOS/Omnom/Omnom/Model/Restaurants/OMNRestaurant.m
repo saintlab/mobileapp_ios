@@ -49,8 +49,8 @@
     
     id decoration = jsonData[@"decoration"];
     self.logoUrl = decoration[@"logo"];
+    self.mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
     self.background_imageUrl = decoration[@"background_image"];
-    
     if ([decoration[@"background_color"] isKindOfClass:[NSString class]]) {
       self.background_color = [decoration[@"background_color"] omn_colorFormHex];
     }

@@ -24,7 +24,7 @@ typedef void(^OMNDataBlock)(id data);
 
 #define kUseStubData 0
 #define kUseStubUser 0
-#define kUseStubBeacon 1
+#define kUseStubBeacon 0
 #define kUseStubBeaconDecodeData 0
 #define kUseStubOrdersData 0
 #define kUseStubLogin 0
