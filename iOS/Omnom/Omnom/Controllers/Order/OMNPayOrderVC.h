@@ -12,7 +12,7 @@
 
 @interface OMNPayOrderVC : UIViewController
 
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;

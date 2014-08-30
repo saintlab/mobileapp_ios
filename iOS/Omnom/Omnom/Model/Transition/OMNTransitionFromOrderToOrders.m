@@ -27,8 +27,16 @@
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
   // Get a snapshot of the image view
+  CGRect fromRect = [containerView convertRect:fromViewController.tableView.frame fromView:fromViewController.tableView.superview];
+  UIView *moveView = [[UIView alloc] initWithFrame:fromRect];
+  moveView.clipsToBounds = YES;
+  [containerView addSubview:moveView];
+  
   UIView *tableSnapshot = [fromViewController.tableView snapshotViewAfterScreenUpdates:NO];
-  tableSnapshot.frame = [containerView convertRect:fromViewController.tableView.frame fromView:fromViewController.tableView.superview];
+  tableSnapshot.frame = moveView.bounds;
+  tableSnapshot.layer.anchorPoint = CGPointMake(0.5f, 1.0f);
+  tableSnapshot.center = CGPointMake(CGRectGetMidX(moveView.bounds), CGRectGetHeight(moveView.bounds));
+  [moveView addSubview:tableSnapshot];
   fromViewController.tableView.hidden = YES;
   
   // Get the cell we'll animate to
@@ -38,30 +46,22 @@
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
-  [containerView addSubview:tableSnapshot];
+//  [containerView addSubview:tableSnapshot];
   
   [UIView animateWithDuration:duration animations:^{
     // Fade out the source view controller
     fromViewController.view.alpha = 0.0;
     
-    CGFloat bottomOffset = fromViewController.tableView.contentInset.bottom;
-    CGRect toFrame = [containerView convertRect:cell.frame fromView:cell.superview];
+    CGRect finalFrame = [cell.tableView convertRect:cell.tableView.bounds toView:containerView];
+    CGFloat scale = CGRectGetWidth(finalFrame)/CGRectGetWidth(tableSnapshot.frame);
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    tableSnapshot.transform = CGAffineTransformMakeScale(scale, scale);
+    tableSnapshot.center = CGPointMake(CGRectGetWidth(finalFrame)/2.0f, CGRectGetHeight(finalFrame));
+    moveView.frame = finalFrame;
 
-    CGRect tableFrame = tableSnapshot.frame;
-    CGFloat scale = CGRectGetWidth(toFrame)/CGRectGetWidth(tableFrame);
-    tableFrame.size.width *= scale;
-    tableFrame.size.height *= scale;
-    bottomOffset *= scale;
-    tableFrame.origin.y = CGRectGetMaxY(toFrame) + bottomOffset - CGRectGetHeight(tableFrame);
-    tableFrame.origin.x = toFrame.origin.x;
-    
-    tableSnapshot.frame = tableFrame;
-    
-    // Move the image view
-//    tableSnapshot.frame = [containerView convertRect:cell.frame fromView:cell.superview];
   } completion:^(BOOL finished) {
     // Clean up
-    [tableSnapshot removeFromSuperview];
+    [moveView removeFromSuperview];
     fromViewController.tableView.hidden = NO;
     cell.hidden = NO;
     

@@ -30,6 +30,7 @@
 #import "OMNNavigationController.h"
 #import "OMNMailRuBankCardsModel.h"
 #import <OMNStyler.h>
+#import "OMNOrderTableView.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -46,9 +47,10 @@ OMNMailRUPayVCDelegate>
 
   __weak IBOutlet OMNPaymentFooterView *_paymentView;
   __weak IBOutlet UIButton *_toPayButton;
-  __weak IBOutlet UIImageView *_backgroundIV;
   __weak IBOutlet UILabel *_toPayLabel;
   __weak IBOutlet UILabel *_tipLabel;
+  
+  UIScrollView *_scrollView;
   
   BOOL _beginSplitAnimation;
   OMNOrder *_order;
@@ -83,13 +85,6 @@ OMNMailRUPayVCDelegate>
     [[OMNSocketManager manager] join:_order.id];
   }
   
-  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
-  _dataSource.showTotalView = YES;
-  
-  _tableView.dataSource = _dataSource;
-  [_tableView reloadData];
-  
-  _tableView.allowsSelection = NO;
   [self setup];
 
   if (_visitor.orders.count > 1) {
@@ -99,7 +94,7 @@ OMNMailRUPayVCDelegate>
       UIButton *button = [[UIButton alloc] init];
       button.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:20.0f];
       [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-      [button setTitle:[NSString stringWithFormat:@"Счет N%d", index + 1] forState:UIControlStateNormal];
+      [button setTitle:[NSString stringWithFormat:@"Счет N%u", index + 1] forState:UIControlStateNormal];
       button.layer.borderColor = [UIColor blackColor].CGColor;
       button.contentEdgeInsets = UIEdgeInsetsMake(3.0f, 10.0f, 3.0f, 10.0f);
       button.layer.borderWidth = 1.0f;
@@ -130,9 +125,6 @@ OMNMailRUPayVCDelegate>
 
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   
-  _tableView.delegate = self;
-  [self.view insertSubview:_tableView belowSubview:_paymentView];
-  
   self.automaticallyAdjustsScrollViewInsets = YES;
   self.edgesForExtendedLayout = UIRectEdgeAll;
   
@@ -145,29 +137,26 @@ OMNMailRUPayVCDelegate>
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   [self layoutTableView];
+  [self.view layoutIfNeeded];
 }
 
 - (void)layoutTableView {
-  CGFloat bottomInset = _paymentView.height + CGRectGetHeight(_keyboardFrame);
-  CGFloat visibleTablePart = _tableView.height - bottomInset;
-  CGFloat topInset = MIN(0.0f, visibleTablePart - _tableView.contentSize.height);
-  _tableView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
-  _tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
+  CGFloat topInset = MIN(0.0f, _scrollView.height - _tableView.height);
+  CGFloat bottomInset = 1.0f;
+  _scrollView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
+  _scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
 
   [super viewDidAppear:animated];
   _beginSplitAnimation = NO;
-  _tableView.scrollEnabled = YES;
   [self handleKeyboardEvents];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   
-  _tableView.delegate = self;
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 
@@ -183,7 +172,6 @@ OMNMailRUPayVCDelegate>
     return;
   }
   _beginSplitAnimation = YES;
-  _tableView.delegate = nil;
   OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithOrder:_order];
   calculatorVC.delegate = self;
   calculatorVC.navigationItem.title = NSLocalizedString(@"Калькуляция", nil);
@@ -208,23 +196,43 @@ OMNMailRUPayVCDelegate>
   _toPayLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   _toPayLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
   
-  self.view.backgroundColor = [UIColor clearColor];
-  _backgroundIV.backgroundColor = _visitor.restaurant.background_color;
+  self.view.backgroundColor = _visitor.restaurant.background_color;
 
+  _scrollView = [[UIScrollView alloc] init];
+  _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+  _scrollView.clipsToBounds = NO;
+  _scrollView.delegate = self;
+  [self.view addSubview:_scrollView];
+  
+  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
+  _dataSource.showTotalView = YES;
+  
+  _tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  _tableView.dataSource = _dataSource;
+  [_tableView reloadData];
+  CGRect frame = _tableView.frame;
+  frame.size = _tableView.contentSize;
+  _tableView.frame = frame;
+  _tableView.userInteractionEnabled = NO;
+  _tableView.allowsSelection = NO;
+  [_scrollView addSubview:_tableView];
+  _scrollView.contentSize = _tableView.frame.size;;
+  
   NSDictionary *views =
   @{
     @"table" : _tableView,
     @"payment" : _paymentView,
+    @"scrollView" : _scrollView,
     };
-  _tableView.translatesAutoresizingMaskIntoConstraints = NO;
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[table]|" options:0 metrics:nil views:views]];
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[table]|" options:0 metrics:nil views:views]];
+
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]" options:0 metrics:nil views:views]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scrollView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_paymentView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
   
   UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap:)];
   [_tableView addGestureRecognizer:tapGR];
   
+  [self.view layoutIfNeeded];
 }
 
 - (void)showRating {
@@ -359,20 +367,10 @@ OMNMailRUPayVCDelegate>
 
 #pragma mark - UITableViewDelegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-  [self.view bringSubviewToFront:scrollView];
-  [self.view bringSubviewToFront:_toPayButton];
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-  [self.view insertSubview:scrollView belowSubview:_paymentView];
-}
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
   if ((scrollView.contentOffset.y + scrollView.contentInset.top) < - 70.0f) {
     CGPoint offset = scrollView.contentOffset;
-    scrollView.scrollEnabled = NO;
     //remove glitch when content scrolls to top
     scrollView.contentOffset = offset;
     [self calculatorTap:nil];

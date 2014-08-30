@@ -6,12 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OMNPayOrderVC">
             <connections>
-                <outlet property="_backgroundIV" destination="h2o-on-5VF" id="d7J-ia-RBX"/>
                 <outlet property="_paymentView" destination="U7Q-Au-hTx" id="Oxc-eE-mjp"/>
                 <outlet property="_tipLabel" destination="jfw-6Z-OH0" id="LJQ-TK-9dz"/>
                 <outlet property="_toPayButton" destination="ULB-uT-bQT" id="vCF-wA-cWC"/>
                 <outlet property="_toPayLabel" destination="X8K-Z6-5qo" id="kJF-kB-0MB"/>
-                <outlet property="tableView" destination="uts-JE-lbX" id="KTw-fm-WcX"/>
                 <outlet property="view" destination="mFc-S6-dbH" id="iRX-Af-Al2"/>
             </connections>
         </placeholder>
@@ -20,15 +18,6 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="h2o-on-5VF">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="uts-JE-lbX" customClass="OMNOrderTableView">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
                 <view contentMode="scaleToFill" id="U7Q-Au-hTx" customClass="OMNPaymentFooterView">
                     <rect key="frame" x="0.0" y="332" width="320" height="236"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -87,7 +76,7 @@
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" red="0.74741078564704577" green="0.8061943389575128" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="_amountPercentControl" destination="Tb5-dQ-gtn" id="okL-2r-jan"/>
