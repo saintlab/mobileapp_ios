@@ -9,7 +9,7 @@
 #import "OMNTransitionFromOrdersToOrder.h"
 #import "OMNOrdersVC.h"
 #import "OMNPayOrderVC.h"
-#import "OMNOrderItemCell.h"
+#import "OMNOrderViewCell.h"
 
 @implementation OMNTransitionFromOrdersToOrder
 
@@ -28,7 +28,7 @@
   // Get a snapshot of the thing cell we're transitioning from
   
   NSIndexPath *selectedIndexPath = [fromViewController.collectionView indexPathsForSelectedItems].firstObject;
-  OMNOrderItemCell *cell = (OMNOrderItemCell *)[fromViewController.collectionView cellForItemAtIndexPath:selectedIndexPath];
+  OMNOrderViewCell *cell = (OMNOrderViewCell *)[fromViewController.collectionView cellForItemAtIndexPath:selectedIndexPath];
   UIView *cellImageSnapshot = [cell snapshotViewAfterScreenUpdates:NO];
   cellImageSnapshot.frame = [containerView convertRect:cell.frame fromView:cell.superview];
   cell.hidden = YES;

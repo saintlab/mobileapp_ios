@@ -8,6 +8,7 @@
 
 #import "OMNCalculationAmount.h"
 #import "OMNTipButton.h"
+#import "OMNUtils.h"
 
 @implementation OMNCalculationAmount {
   OMNOrder *_order;
@@ -124,22 +125,22 @@
     if (tip.amount > 0 &&
         _expectedValue > 0) {
       double percent = 100*tip.amount/_expectedValue;
-      title = [NSString stringWithFormat:@"%.0f%%\n%.0fр", percent, tip.amount*0.01];
+      title = [NSString stringWithFormat:@"%.0f%%\n%@", percent, [OMNUtils commaStringFromKop:tip.amount]];
     }
     [tipButton setTitle:title forState:UIControlStateNormal];
     [tipButton setTitle:title forState:UIControlStateSelected];
     
   }
   else if (_enteredAmount > _order.tipsThreshold) {
-    
+    long long amount = (tip.percent*0.01)*_enteredAmount;
     [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%", tip.percent] forState:UIControlStateNormal];
-    [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%\n%.0fр", tip.percent, 0.01*(tip.percent*0.01)*_enteredAmount] forState:UIControlStateSelected];
+    [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%\n%@", tip.percent, [OMNUtils commaStringFromKop:amount]] forState:UIControlStateSelected];
     
   }
   else {
     
-    [tipButton setTitle:[NSString stringWithFormat:@"%.0fр", tip.amount*0.01] forState:UIControlStateNormal];
-    [tipButton setTitle:[NSString stringWithFormat:@"%.0fр", tip.amount*0.01] forState:UIControlStateSelected];
+    [tipButton setTitle:[OMNUtils commaStringFromKop:tip.amount] forState:UIControlStateNormal];
+    [tipButton setTitle:[OMNUtils commaStringFromKop:tip.amount] forState:UIControlStateSelected];
     
   }
   

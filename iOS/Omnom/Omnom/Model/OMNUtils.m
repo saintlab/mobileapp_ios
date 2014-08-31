@@ -8,6 +8,10 @@
 
 #import "OMNUtils.h"
 
+//NSString * const kRubleSign = @"";
+NSString * const kRubleSign = @"\uf5fc";
+NSString * const kCommaString = @".";
+
 @implementation OMNUtils
 
 + (NSString *)moneyStringFromKop:(long long)kop {
@@ -19,9 +23,29 @@
     currencyNumberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"ru"];
     currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
     currencyNumberFormatter.usesGroupingSeparator = YES;
-    currencyNumberFormatter.minimumFractionDigits = 2;
+    currencyNumberFormatter.minimumFractionDigits = 0;
     currencyNumberFormatter.maximumFractionDigits = 2;
-    currencyNumberFormatter.currencySymbol = @"Р";
+    currencyNumberFormatter.currencySymbol = kRubleSign;
+    currencyNumberFormatter.currencyDecimalSeparator = @".";
+    currencyNumberFormatter.currencyGroupingSeparator = @" ";
+  }
+  
+  return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
+}
+
++ (NSString *)commaStringFromKop:(long long)kop {
+  
+  static NSNumberFormatter *currencyNumberFormatter = nil;
+  if (nil == currencyNumberFormatter) {
+    currencyNumberFormatter = [[NSNumberFormatter alloc] init];
+    currencyNumberFormatter.locale = [NSLocale currentLocale];
+    currencyNumberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"ru"];
+    currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
+    currencyNumberFormatter.usesGroupingSeparator = YES;
+    currencyNumberFormatter.minimumFractionDigits = 0;
+    currencyNumberFormatter.maximumFractionDigits = 2;
+    currencyNumberFormatter.currencySymbol = @"";
+    currencyNumberFormatter.currencyDecimalSeparator = @".";
     currencyNumberFormatter.currencyGroupingSeparator = @" ";
   }
   

@@ -14,6 +14,7 @@
 #import "UIView+frame.h"
 #import "OMNConstants.h"
 #import "OMNUtils.h"
+#import <OMNStyler.h>
 
 @interface OMNPaymentFooterView ()
 <GAmountPercentControlDelegate>
@@ -70,10 +71,9 @@
   [_cancelEditingButton setImage:[UIImage imageNamed:@"cancel_editing_button"] forState:UIControlStateNormal];
   _cancelEditingButton.tintColor = [UIColor whiteColor];
   
-  _payButton.titleLabel.font = kPayButtonFont;
-  _payButton.titleEdgeInsets = UIEdgeInsetsMake(3.0f, 0.0f, 0.0f, 0.0f);
+  _payButton.titleLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:20.0f];
   [_payButton setBackgroundImage:[UIImage imageNamed:@"button_red"] forState:UIControlStateNormal];
-  [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   [_payButton sizeToFit];
   
@@ -127,7 +127,7 @@
 
   _payButton.enabled = (_calculationAmount.totalValue > 0) ? (YES) : (NO);
   
-  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils moneyStringFromKop:_calculationAmount.totalValue]] forState:UIControlStateNormal];
+  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_calculationAmount.totalValue]] forState:UIControlStateNormal];
   
 }
 
@@ -142,8 +142,7 @@
   _cancelEditingButton.transform = buttonTransform;
   _doneEditingButton.transform = buttonTransform;
 
-  _amountPercentControl.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, 75.0f)) : (CGAffineTransformIdentity);
-  
+  _amountPercentControl.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, 97.0f)) : (CGAffineTransformIdentity);
   _payButton.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, 50.0f)) : (CGAffineTransformIdentity);
 
   if (self.tipsMode) {
@@ -160,7 +159,6 @@
     
   }
   
-//  [_amountPercentControl setNeedsLayout];
   [_amountPercentControl layoutIfNeeded];
   
   if (NO == keyboardShown) {

@@ -32,11 +32,12 @@
   [super viewDidLoad];
   
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
+  [_dataSource registerCellsForTableView:self.tableView];
   
   self.tableView.allowsMultipleSelection = YES;
   self.tableView.tableFooterView = [[UIView alloc] init];
   self.tableView.dataSource = _dataSource;
-  
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -1,17 +1,17 @@
 //
-//  OMNOrderItemCell.h
+//  OMNOrderCell.h
 //  restaurants
 //
-//  Created by tea on 02.07.14.
+//  Created by tea on 29.05.14.
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNOrder.h"
+#import "OMNOrderItem.h"
 
-@interface OMNOrderItemCell : UICollectionViewCell
+@interface OMNOrderItemCell : UITableViewCell
 
-@property (nonatomic, strong) OMNOrder *order;
-@property (nonatomic, assign) NSInteger index;
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) OMNOrderItem *orderItem;
+
+- (void)setTitle:(NSString *)title subtitle:(NSString *)subtitle;
 
 @end

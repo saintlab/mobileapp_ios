@@ -17,4 +17,6 @@ UITableViewDelegate>
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
 
+- (void)registerCellsForTableView:(UITableView *)tableView;
+
 @end

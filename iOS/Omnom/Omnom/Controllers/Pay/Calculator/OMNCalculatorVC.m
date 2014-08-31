@@ -235,7 +235,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 - (void)totalDidChange:(long long)total {
   
   _total = total;
-  [_totalButton setTitle:[OMNUtils moneyStringFromKop:total] forState:UIControlStateNormal];
+  [_totalButton setTitle:[OMNUtils commaStringFromKop:total] forState:UIControlStateNormal];
   
 }
 

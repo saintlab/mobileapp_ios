@@ -12,6 +12,7 @@
 #import "UIView+frame.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
+#import "OMNUtils.h"
 
 @interface OMNAmountPercentControl ()
 <UIPickerViewDataSource,
@@ -22,9 +23,9 @@ UITextFieldDelegate>
 
 @implementation OMNAmountPercentControl {
   
-  TSCurrencyTextField *_pureAmountTF;
+  UITextField *_pureAmountTF;
   
-  TSCurrencyTextField *_amountTF;
+  UITextField *_amountTF;
   TSCurrencyTextField *_percentTF;
   
   UIPickerView *_percentPicker;
@@ -32,6 +33,7 @@ UITextFieldDelegate>
   UIView *_seporatorView;
   UIView *_flexibleBottomView;
   UIView *_bottomView;
+  UIButton *_commaButton;
 }
 
 @dynamic selectedPercent;
@@ -52,7 +54,7 @@ UITextFieldDelegate>
   currencyTextField.clipsToBounds = NO;
   currencyTextField.currencyNumberFormatter.maximumFractionDigits = 0;
   currencyTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-  currencyTextField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:40.0f];
+  currencyTextField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:30.0f];
   currencyTextField.textColor = [UIColor whiteColor];
   currencyTextField.adjustsFontSizeToFitWidth = YES;
   currencyTextField.minimumFontSize = 10.0f;
@@ -66,37 +68,42 @@ UITextFieldDelegate>
   
   self.backgroundColor = [UIColor clearColor];
   
-  _percentTF = [self createCurrencyTextField];
-  _percentTF.currencyNumberFormatter.currencySymbol = @"%";
-  _percentTF.textAlignment = NSTextAlignmentRight;
-  
-  _pureAmountTF = [self createCurrencyTextField];
-  _pureAmountTF.currencyNumberFormatter.minimumFractionDigits = 2;
-  _pureAmountTF.currencyNumberFormatter.maximumFractionDigits = 2;
+  _pureAmountTF = [[UITextField alloc] init];
+  _pureAmountTF.translatesAutoresizingMaskIntoConstraints = NO;
   _pureAmountTF.adjustsFontSizeToFitWidth = YES;
+  _pureAmountTF.minimumFontSize = 10.0f;
+  _pureAmountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
+  _pureAmountTF.textColor = colorWithHexString(@"FFFFFF");
+  _pureAmountTF.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:50.0f];
   _pureAmountTF.textAlignment = NSTextAlignmentCenter;
   _pureAmountTF.delegate = self;
-  _pureAmountTF.currencyNumberFormatter.positiveSuffix = @"Р";
-  _pureAmountTF.currencyNumberFormatter.currencyGroupingSeparator = @" ";
+  [self addSubview:_pureAmountTF];
   
-  _amountTF = [self createCurrencyTextField];
+  _amountTF = [[UITextField alloc] init];
+  _amountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
+  _amountTF.translatesAutoresizingMaskIntoConstraints = NO;
+  _amountTF.adjustsFontSizeToFitWidth = YES;
+  _amountTF.minimumFontSize = 10.0f;
+  _amountTF.textColor = colorWithHexString(@"FFFFFF");
+  _amountTF.delegate = self;
+  _amountTF.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:30.0f];
   _amountTF.textAlignment = NSTextAlignmentRight;
-  _amountTF.currencyNumberFormatter.positiveSuffix = @"Р";
-  _amountTF.currencyNumberFormatter.currencyGroupingSeparator = @" ";
   _amountTF.keyboardType = UIKeyboardTypeNumberPad;
-  
-  _percentPicker = [[UIPickerView alloc] init];
-  _percentPicker.delegate = self;
-  _percentPicker.dataSource = self;
-  _percentTF.inputView = _percentPicker;
-  
-
   [_amountTF bk_addEventHandler:^(TSCurrencyTextField *sender) {
     
     [self updatePercentValue];
     
   } forControlEvents:UIControlEventEditingChanged];
- 
+  [self addSubview:_amountTF];
+  
+  _percentPicker = [[UIPickerView alloc] init];
+  _percentPicker.delegate = self;
+  _percentPicker.dataSource = self;
+
+  _percentTF = [self createCurrencyTextField];
+  _percentTF.currencyNumberFormatter.currencySymbol = @"%";
+  _percentTF.textAlignment = NSTextAlignmentCenter;
+  _percentTF.inputView = _percentPicker;
   [_percentTF bk_addEventHandler:^(TSCurrencyTextField *sender) {
     
     [self updateAmountValue];
@@ -147,7 +154,7 @@ UITextFieldDelegate>
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(1)]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[amountTF]-[seporatorView(1)]-[percentTF]|" options:0 metrics:metrics views:views]];
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_amountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:0.57f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_amountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:0.655f constant:0.0f]];
   
   [self omn_setIsFirstResponder:NO];
   
@@ -161,7 +168,7 @@ UITextFieldDelegate>
 
 - (void)updatePercentValue {
   
-  double percentValue = (self.expectedAmount > 0) ? (100 * 100 * [_amountTF.amount doubleValue] / self.expectedAmount) : (0.);
+  double percentValue = (self.expectedAmount > 0) ? (100.*(double)[self selectedAmount] / self.expectedAmount) : (0.);
   
   if (percentValue < [_percentPicker numberOfRowsInComponent:0]) {
     
@@ -186,7 +193,7 @@ UITextFieldDelegate>
 - (void)omn_setIsFirstResponder:(BOOL)isFirstResponder {
   
   _isFirstResponder = isFirstResponder;
-//  [self layoutIfNeeded];
+
 }
 
 - (BOOL)becomeFirstResponder {
@@ -211,37 +218,40 @@ UITextFieldDelegate>
 - (void)reset {
   
   long long amount = [self.delegate enteredValueForAmountPercentControl:self];
-  _amountTF.amount = @(amount/100);
-  _pureAmountTF.amount = @(amount/100);
+  _amountTF.text = [OMNUtils moneyStringFromKop:amount];
+  _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
   [self updatePercentValue];
   
 }
 
 - (void)updateAmountValue {
   
-  _amountTF.amount = @(self.expectedAmount * _percentTF.amount.doubleValue / 100. / 100.);
-  _pureAmountTF.amount = @(self.expectedAmount * _percentTF.amount.doubleValue / 100. / 100.);
+  long long amount = self.expectedAmount * _percentTF.amount.doubleValue / 100.;
+  _amountTF.text = [OMNUtils moneyStringFromKop:amount];
+  _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
   
 }
 
 - (void)setCurrentAmount:(long long)currentAmount {
   _currentAmount = currentAmount;
   
-  _amountTF.amount = @(_currentAmount/100);
-  _pureAmountTF.amount = @(_currentAmount/100);
+  _amountTF.text = [OMNUtils moneyStringFromKop:_currentAmount];
+  _pureAmountTF.text = [OMNUtils moneyStringFromKop:_currentAmount];
   [self updatePercentValue];
   
 }
 
 - (long long)selectedAmount {
   
-  return [_amountTF.amount longLongValue]*100;
+  NSString *pureAmount = [self pureAmountString:_amountTF.text];
+  long long amount = 100ll*[pureAmount doubleValue];
+  return amount;
   
 }
 
 - (long long)selectedPercent {
   
-  return [_percentTF.amount longLongValue]*100;
+  return [_percentTF.amount doubleValue]*100;
   
 }
 
@@ -291,15 +301,119 @@ UITextFieldDelegate>
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-  [self omn_setIsFirstResponder:YES];
-  _amountTF.alpha = 0.2;
-  [_amountTF becomeFirstResponder];
-  [UIView animateWithDuration:0.3 animations:^{
-    [self setNeedsLayout];
-  }];
+- (NSString *)pureAmountString:(NSString *)string {
+  NSCharacterSet *charactersSet = [[NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"0123456789%@", kCommaString]] invertedSet];
+  NSString *finalString = [[string componentsSeparatedByCharactersInSet:charactersSet] componentsJoinedByString:@""];
+  return finalString;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
-  return NO;
+  if ([textField isEqual:_amountTF]) {
+    
+    NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    finalString = [self pureAmountString:finalString];
+    
+    if (0 == string.length &&
+        finalString.length > 0) {
+      finalString = [finalString substringToIndex:finalString.length - 1];
+    }
+    
+    if (NSNotFound != [finalString rangeOfString:kCommaString].location) {
+      NSString *fractionalString = @"";
+      NSArray *components = [finalString componentsSeparatedByString:kCommaString];
+      if (2 == components.count) {
+        
+        fractionalString = components[1];
+        if (fractionalString.length > 2) {
+          fractionalString = [fractionalString substringToIndex:2];
+        }
+        
+      }
+      
+      finalString = [@[components[0], fractionalString] componentsJoinedByString:kCommaString];
+    }
+    
+    long long value = [finalString doubleValue]*100;
+    if (value <= 200000000000ll) {
+      textField.text = [OMNUtils moneyStringFromKop:value];
+      [self updateCaratPosition];
+    }
+    return NO;
+  }
+  
+  return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+  
+  if ([textField isEqual:_pureAmountTF]) {
+    [self omn_setIsFirstResponder:YES];
+    _amountTF.alpha = 0.2;
+    [_amountTF becomeFirstResponder];
+    [UIView animateWithDuration:0.3 animations:^{
+      [self setNeedsLayout];
+    }];
+    
+    return NO;
+  }
+  return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+  if ([textField isEqual:_amountTF]) {
+    if (nil == _commaButton) {
+      _commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      _commaButton.frame = CGRectMake(0, 163, 106, 53);
+      _commaButton.adjustsImageWhenHighlighted = NO;
+      _commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
+      [_commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
+      [_commaButton setTitle:kCommaString forState:UIControlStateNormal];
+      [_commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+      [_commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      UIView *keyboardView = [[[[[UIApplication sharedApplication] windows] lastObject] subviews] firstObject];
+      [_commaButton setFrame:CGRectMake(0, keyboardView.frame.size.height - 53, 106, 53)];
+      [keyboardView addSubview:_commaButton];
+      [keyboardView bringSubviewToFront:_commaButton];
+      
+    });
+  }
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+  if ([textField isEqual:_amountTF]) {
+    [_commaButton removeFromSuperview];
+  }
+}
+
+- (void)commaTap:(UIButton *)b {
+  if (NSNotFound == [_amountTF.text rangeOfString:kCommaString].location) {
+    NSString *endOfString = [_amountTF.text substringFromIndex:_amountTF.text.length - 2];
+    NSString *commaEndOfString = [kCommaString stringByAppendingString:endOfString];
+    _amountTF.text = [_amountTF.text stringByReplacingOccurrencesOfString:endOfString withString:commaEndOfString];
+    [self updateCaratPosition];
+  }
+}
+
+- (void)updateCaratPosition {
+  if (_amountTF.text.length >= 2) {
+    [self setSelectionRange:NSMakeRange(_amountTF.text.length - 1, 0)];
+  }
+  [self updatePercentValue];
+}
+
+- (void)setSelectionRange:(NSRange) range {
+  UITextPosition *start = [_amountTF positionFromPosition: [_amountTF beginningOfDocument]
+                                              offset: range.location];
+  
+  UITextPosition *end = [_amountTF positionFromPosition: start
+                                            offset: range.length];
+  
+  [_amountTF setSelectedTextRange: [_amountTF textRangeFromPosition:start toPosition:end]];
 }
 
 @end

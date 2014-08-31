@@ -14,8 +14,7 @@
 #import "OMNAuthorisation.h"
 #import "OMNErrorTextField.h"
 #import "OMNBorderedButton.h"
-
-NSString *kCommaString = @".";
+#import "OMNUtils.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate>
@@ -31,6 +30,7 @@ NSString *kCommaString = @".";
   OMNErrorTextField *_cardHoldValueTF;
   NSLayoutConstraint *_buttomConstraint;
   UILabel *_textLabel;
+  UIButton *_commaButton;
 }
 
 - (void)dealloc {
@@ -113,20 +113,23 @@ NSString *kCommaString = @".";
 
 - (void)keyboardWillShow:(NSNotification *)n {
   
-  UIButton *commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  commaButton.frame = CGRectMake(0, 163, 106, 53);
-  commaButton.adjustsImageWhenHighlighted = NO;
-  commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
-  [commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
-  [commaButton setTitle:kCommaString forState:UIControlStateNormal];
-  [commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+  if (nil == _commaButton) {
+    _commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _commaButton.frame = CGRectMake(0, 163, 106, 53);
+    _commaButton.adjustsImageWhenHighlighted = NO;
+    _commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
+    [_commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
+    [_commaButton setTitle:kCommaString forState:UIControlStateNormal];
+    [_commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+  }
+
   dispatch_async(dispatch_get_main_queue(), ^{
     
     UIView *keyboardView = [[[[[UIApplication sharedApplication] windows] lastObject] subviews] firstObject];
-    [commaButton setFrame:CGRectMake(0, keyboardView.frame.size.height - 53, 106, 53)];
-    [keyboardView addSubview:commaButton];
-    [keyboardView bringSubviewToFront:commaButton];
+    [_commaButton setFrame:CGRectMake(0, keyboardView.frame.size.height - 53, 106, 53)];
+    [keyboardView addSubview:_commaButton];
+    [keyboardView bringSubviewToFront:_commaButton];
 
   });
   
@@ -141,7 +144,7 @@ NSString *kCommaString = @".";
 }
 
 - (void)keyboardWillHide:(NSNotification *)n {
-  
+  [_commaButton removeFromSuperview];
   _buttomConstraint.constant = 10.0f;
   CGFloat animationDuration = [n.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
   [UIView animateWithDuration:animationDuration animations:^{

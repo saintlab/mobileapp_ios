@@ -34,7 +34,7 @@
     self.restaurant_id = jsonData[@"restaurant_id"];
     self.tableId = jsonData[@"table_id"];
     self.paid_amount = [jsonData[@"paid_amount"] longLongValue];
-    
+
     NSArray *itemsData = jsonData[@"items"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsData.count];
     [itemsData enumerateObjectsUsingBlock:^(id itemData, NSUInteger idx, BOOL *stop) {
@@ -87,13 +87,12 @@
 
 - (long long)totalForAllItems:(BOOL)allItems {
   
-  const long long kKopsInRuble = 100;
   __block long long total = 0.;
   [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
     
     if (allItems ||
         orderItem.selected) {
-      total += orderItem.price * kKopsInRuble;
+      total += orderItem.price_total;
     }
     
   }];

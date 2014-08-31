@@ -7,7 +7,7 @@
 //
 
 #import "OMNOrdersVC.h"
-#import "OMNOrderItemCell.h"
+#import "OMNOrderViewCell.h"
 #import "OMNVisitor.h"
 #import "OMNOrderItemsFlowLayout.h"
 
@@ -35,7 +35,7 @@
   _orderItemsFlowLayout = [[OMNOrderItemsFlowLayout alloc] init];
   
   self.collectionView.backgroundColor = _visitor.restaurant.background_color;
-  [self.collectionView registerClass:[OMNOrderItemCell class] forCellWithReuseIdentifier:@"OMNOrderItemCell"];
+  [self.collectionView registerClass:[OMNOrderViewCell class] forCellWithReuseIdentifier:@"OMNOrderItemCell"];
   
 }
 
@@ -72,7 +72,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   
-  OMNOrderItemCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OMNOrderItemCell" forIndexPath:indexPath];
+  OMNOrderViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OMNOrderItemCell" forIndexPath:indexPath];
   OMNOrder *order = _orders[indexPath.item];
   cell.order = order;
   cell.index = indexPath.item;

@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const kRubleSign;
+extern NSString * const kCommaString;
+
 @interface OMNUtils : NSObject
 
 + (NSString *)moneyStringFromKop:(long long)kop;
++ (NSString *)commaStringFromKop:(long long)kop;
 
 @end

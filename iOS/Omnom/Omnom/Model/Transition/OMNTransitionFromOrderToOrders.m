@@ -9,7 +9,7 @@
 #import "OMNTransitionFromOrderToOrders.h"
 #import "OMNOrdersVC.h"
 #import "OMNPayOrderVC.h"
-#import "OMNOrderItemCell.h"
+#import "OMNOrderViewCell.h"
 @implementation OMNTransitionFromOrderToOrders
 
 + (NSArray *)keys {
@@ -40,7 +40,7 @@
   fromViewController.tableView.hidden = YES;
   
   // Get the cell we'll animate to
-  OMNOrderItemCell *cell = (OMNOrderItemCell *)[toViewController.collectionView cellForItemAtIndexPath:[toViewController.collectionView indexPathsForSelectedItems].firstObject];
+  OMNOrderViewCell *cell = (OMNOrderViewCell *)[toViewController.collectionView cellForItemAtIndexPath:[toViewController.collectionView indexPathsForSelectedItems].firstObject];
   cell.hidden = YES;
   
   // Setup the initial view states

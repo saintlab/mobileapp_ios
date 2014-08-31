@@ -33,9 +33,6 @@ typedef void(^OMNDataBlock)(id data);
 
 #define kGreenColor ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1])
 
-#define ALSRublFont(__FONTSIZE__) ([UIFont fontWithName:@"ALSRubl" size:__FONTSIZE__])
-#define kPayButtonFont ALSRublFont(20.0f)
-
 #define FuturaMediumFont(__FONTSIZE__) ([UIFont fontWithName:@"FuturaPT-Medium" size:__FONTSIZE__])
 #define FuturaBookFont(__FONTSIZE__) ([UIFont fontWithName:@"FuturaPT-Book" size:__FONTSIZE__])
 //Futura-OSF-Omnom-Regular

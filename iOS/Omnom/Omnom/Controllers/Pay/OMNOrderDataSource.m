@@ -10,7 +10,8 @@
 #import "OMNPaymentFooterView.h"
 #import "OMNOrder.h"
 #import "OMNConstants.h"
-#import "OMNOrderCell.h"
+#import "OMNOrderItemCell.h"
+#import "OMNOrderTotalCell.h"
 #import "OMNUtils.h"
 
 @implementation OMNOrderDataSource
@@ -21,6 +22,24 @@
     _order = order;
   }
   return self;
+}
+
+- (void)registerCellsForTableView:(UITableView *)tableView {
+  [tableView registerClass:[OMNOrderItemCell class] forCellReuseIdentifier:@"OMNOrderItemCell"];
+  [tableView registerClass:[OMNOrderTotalCell class] forCellReuseIdentifier:@"OMNOrderTotalCell"];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  CGFloat heightForRow = 0.0f;
+  switch (indexPath.section) {
+    case 0: {
+      heightForRow = 45.0f;
+    } break;
+    case 1: {
+      heightForRow = (_order.paid_amount > 0) ? (70.0f) : (45.0f);
+    } break;
+  }
+  return heightForRow;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -34,7 +53,7 @@
       numberOfRows = _order.items.count;
     } break;
     case 1: {
-      numberOfRows = 2;
+      numberOfRows = 1;
     } break;
   }
   
@@ -44,34 +63,29 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  static NSString * const orderCellIdentifier = @"orderCellIdentifier";
-  OMNOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:orderCellIdentifier];
-  if (nil == cell) {
-    cell = [[OMNOrderCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:orderCellIdentifier];
-  }
+  UITableViewCell *cell = nil;
   
   switch (indexPath.section) {
     case 0: {
+  
+      OMNOrderItemCell *orderItemCell = [tableView dequeueReusableCellWithIdentifier:@"OMNOrderItemCell"];
       
       OMNOrderItem *orderItem = _order.items[indexPath.row];
-      cell.orderItem = orderItem;
+      orderItemCell.orderItem = orderItem;
       if (orderItem.selected) {
         [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
       }
       else {
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
       }
+      cell = orderItemCell;
       
     } break;
     case 1: {
       
-      
-      if (0 == indexPath.row) {
-        [cell setTitle:NSLocalizedString(@"Total", nil) subtitle:[OMNUtils moneyStringFromKop:_order.total]];
-      }
-      else if (1 == indexPath.row) {
-        [cell setTitle:NSLocalizedString(@"Заплачено", nil) subtitle:[OMNUtils moneyStringFromKop:_order.paid_amount]];
-      }
+      OMNOrderTotalCell *orderTotalCell = [tableView dequeueReusableCellWithIdentifier:@"OMNOrderTotalCell"];
+      orderTotalCell.order = _order;
+      cell = orderTotalCell;
       
     } break;
   }

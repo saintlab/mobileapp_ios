@@ -1,68 +1,102 @@
 //
-//  OMNOrderItemCell.m
+//  OMNOrderCell.m
 //  restaurants
 //
-//  Created by tea on 02.07.14.
+//  Created by tea on 29.05.14.
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
 #import "OMNOrderItemCell.h"
-#import "OMNOrderDataSource.h"
-#import "OMNOrderTableView.h"
+#import "UIView+frame.h"
+#import "OMNConstants.h"
+#import <OMNStyler.h>
+#import "OMNUtils.h"
 
 @implementation OMNOrderItemCell {
-  OMNOrderDataSource *_orderDataSource;
-  UILabel *_label;
+  UILabel *_nameLabel;
+  UILabel *_priceLabel;
+  
+  UIImageView *_iconView;
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+  self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
   if (self) {
-
-    self.backgroundView = [[UIView alloc] init];
-    self.backgroundView.backgroundColor = [UIColor clearColor];
-    self.backgroundColor = [UIColor clearColor];
-    
-    _label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.frame), 50.0f)];
-    _label.textAlignment = NSTextAlignmentCenter;
-    _label.textColor = [UIColor whiteColor];
-    _label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:24.0f];
-    [self addSubview:_label];
-    
-    _orderDataSource = [[OMNOrderDataSource alloc] initWithOrder:nil];
-    _orderDataSource.showTotalView = YES;
-    
-    CGRect tableFrame = CGRectMake(0.0f, CGRectGetHeight(_label.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - CGRectGetHeight(_label.frame));
-    _tableView = [[OMNOrderTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
-    _tableView.dataSource = _orderDataSource;
-    _tableView.userInteractionEnabled = NO;
-    _tableView.allowsSelection = NO;
-    [self addSubview:_tableView];
-
+    [self setup];
   }
   return self;
 }
 
-- (void)setIndex:(NSInteger)index {
-  _index = index;
-  _label.text = [NSString stringWithFormat:@"Счет N%d", index + 1];
+- (void)awakeFromNib {
+  [self setup];
 }
 
-- (void)setHighlighted:(BOOL)highlighted {
+- (void)setup {
+  
+  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
+  
+  self.selectionStyle = UITableViewCellSelectionStyleBlue;
+  self.selectedBackgroundView = [[UIView alloc] init];
+  self.selectedBackgroundView.backgroundColor = kGreenColor;
+  
+  _nameLabel = [[UILabel alloc] init];
+  _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _nameLabel.textColor = [style colorForKey:@"nameLabelColor"];
+  _nameLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:18.0f];
+  [_nameLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
+  [self.contentView addSubview:_nameLabel];
+  
+  _priceLabel = [[UILabel alloc] init];
+  _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  UIColor *priceLabelColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f];
+  _priceLabel.textColor = priceLabelColor;
+  _priceLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:17.0f];
+  _priceLabel.textAlignment = NSTextAlignmentRight;
+  [self.contentView addSubview:_priceLabel];
+  
+  NSDictionary *views =
+  @{
+    @"nameLabel" : _nameLabel,
+    @"priceLabel" : _priceLabel,
+      };
+  
+  NSDictionary *metrics =
+  @{
+    @"labelsOffset": @(12.0f),
+    @"lowPriority":@(UILayoutPriorityDefaultLow)
+    };
+  
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[nameLabel]|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[priceLabel]|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLabel]-(labelsOffset)-[priceLabel]-|" options:0 metrics:metrics views:views]];
   
 }
 
-- (void)setSelected:(BOOL)selected {
+- (void)setOrderItem:(OMNOrderItem *)orderItem {
+  
+  _iconView.image = orderItem.icon;
+  
+  NSMutableAttributedString *priceQuantityString = nil;
+  NSString *priceString = [OMNUtils commaStringFromKop:orderItem.price_per_item];
+  if (orderItem.quantity > 1) {
+    priceQuantityString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d x %@", orderItem.quantity, priceString]];
+  }
+  else {
+    priceQuantityString = [[NSMutableAttributedString alloc] initWithString:priceString];
+  }
+  
+  UIColor *priceColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  [priceQuantityString setAttributes:@{NSForegroundColorAttributeName : priceColor} range:[priceQuantityString.string rangeOfString:priceString]];
+  
+  _nameLabel.text = orderItem.name;
+  _priceLabel.attributedText = priceQuantityString;
   
 }
 
-- (void)setOrder:(OMNOrder *)order {
+- (void)setTitle:(NSString *)title subtitle:(NSString *)subtitle {
+  _nameLabel.text = title;
+  _priceLabel.text = subtitle;
   
-  _order = order;
-  
-  _orderDataSource.order = order;
-  [_tableView reloadData];
-  [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
 }
 
 @end

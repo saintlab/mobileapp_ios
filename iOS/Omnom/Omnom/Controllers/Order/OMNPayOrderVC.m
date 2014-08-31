@@ -208,14 +208,17 @@ OMNMailRUPayVCDelegate>
   _dataSource.showTotalView = YES;
   
   _tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  _tableView.userInteractionEnabled = NO;
+  _tableView.allowsSelection = NO;
+  [_scrollView addSubview:_tableView];
+  
   _tableView.dataSource = _dataSource;
+  _tableView.delegate = _dataSource;
+  [_dataSource registerCellsForTableView:self.tableView];
   [_tableView reloadData];
   CGRect frame = _tableView.frame;
   frame.size = _tableView.contentSize;
   _tableView.frame = frame;
-  _tableView.userInteractionEnabled = NO;
-  _tableView.allowsSelection = NO;
-  [_scrollView addSubview:_tableView];
   _scrollView.contentSize = _tableView.frame.size;;
   
   NSDictionary *views =
