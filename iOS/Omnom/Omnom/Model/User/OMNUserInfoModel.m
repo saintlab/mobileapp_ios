@@ -12,6 +12,7 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNAuthorisation.h"
 #import "OMNBankCardUserInfoItem.h"
+#import <OMNStyler.h>
 
 @implementation OMNUserInfoModel {
   NSArray *_sectionItems;
@@ -25,7 +26,7 @@
     @[
       self.moneyItems,
 //      self.otherItems,
-      self.logoutItems,
+//      self.logoutItems,
       ];
    
     NSString *token = [OMNAuthorisation authorisation].token;
@@ -128,6 +129,8 @@
   
   if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    cell.textLabel.textColor = colorWithHexString(@"000000");
+    cell.textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   }
   
   OMNUserInfoItem *userInfoItem = [self itemAtIndexPath:indexPath];

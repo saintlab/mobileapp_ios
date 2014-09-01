@@ -21,7 +21,7 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.title = NSLocalizedString(@"Привязать карты", nil);
+    self.title = NSLocalizedString(@"Мои привязанные карты", nil);
     self.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     __weak typeof(self)weakSelf = self;
     [self setActionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {

@@ -11,6 +11,7 @@
 #import "OMNUser.h"
 #import "OMNUserInfoModel.h"
 #import "OMNEditTableVC.h"
+#import <OMNStyler.h>
 
 @interface OMNUserInfoVC ()
 <OMNEditTableVCDelegate>
@@ -21,7 +22,10 @@
   OMNUserInfoModel *_userInfoModel;
   
   __weak IBOutlet UILabel *_userNameLabel;
-  __weak IBOutlet UIImageView *_iconView;
+  __weak IBOutlet UIButton *_iconView;
+  __weak IBOutlet UIButton *_logoutButton;
+  __weak IBOutlet UIButton *_pinButton;
+  UIView *_tableFooterView;
 }
 
 - (void)dealloc {
@@ -47,7 +51,7 @@
   
   if ([keyPath isEqualToString:NSStringFromSelector(@selector(user))]) {
     
-    _userNameLabel.text = _userInfoModel.user.phone;
+    _userNameLabel.text = [NSString stringWithFormat:@"%@\n%@\n%@", _userInfoModel.user.name, _userInfoModel.user.email, _userInfoModel.user.phone];
     [self.tableView reloadData];
     
   }
@@ -57,12 +61,22 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _iconView.image = [UIImage imageNamed:@"placeholder_icon"];
-  _iconView.userInteractionEnabled = YES;
-  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(iconTap)];
-  [_iconView addGestureRecognizer:tapGR];
+  [_pinButton setImage:[UIImage imageNamed:@"table_marker_icon"] forState:UIControlStateNormal];
+  _pinButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+  [_pinButton setTitle:@"284" forState:UIControlStateNormal];
   
-  self.tableView.tableFooterView = [[UIView alloc] init];
+  [_iconView setBackgroundImage:[UIImage imageNamed:@"green_circle_big"] forState:UIControlStateNormal];
+  [_iconView setImage:[UIImage imageNamed:@"add_photo_button_icon"] forState:UIControlStateNormal];
+  
+  [_logoutButton setBackgroundImage:[UIImage imageNamed:@"bottom_rectangle"] forState:UIControlStateNormal];
+  [_logoutButton setTitle:NSLocalizedString(@"Выход из аккаунта", nil) forState:UIControlStateNormal];
+  _logoutButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+  [_logoutButton setTitleColor:colorWithHexString(@"D0021B") forState:UIControlStateNormal];
+  
+  _userNameLabel.numberOfLines = 3;
+  _userNameLabel.textColor = colorWithHexString(@"000000");
+  _userNameLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+  
   self.tableView.dataSource = _userInfoModel;
 
   self.navigationController.navigationBar.shadowImage = [UIImage new];
@@ -79,6 +93,14 @@
   [closeButton sizeToFit];
   [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.titleView = closeButton;
+
+  _tableFooterView = self.tableView.tableFooterView;
+  self.tableView.tableFooterView = [UIView new];
+  [self.view addSubview:_tableFooterView];
+  
+  UIEdgeInsets inset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_tableFooterView.frame), 0.0f);
+  self.tableView.contentInset = inset;
+  self.tableView.scrollIndicatorInsets = inset;
   
 }
 
@@ -129,6 +151,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
   [_userInfoModel controller:self tableView:tableView didSelectRowAtIndexPath:indexPath];
+  
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  
+  CGRect frame = _tableFooterView.frame;
+  frame.origin.y = CGRectGetHeight(scrollView.frame) + scrollView.contentOffset.y - CGRectGetHeight(frame);
+  _tableFooterView.frame = frame;
   
 }
 
