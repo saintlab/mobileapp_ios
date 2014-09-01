@@ -33,7 +33,6 @@ OMNMailRUCardConfirmVCDelegate>
   UILabel *_errorLabel;
   
   UILabel *_offerLabel;
-  UIButton *_offer1Button;
   UIButton *_payButton;
   UIView *_bottomView;
   
@@ -78,20 +77,11 @@ OMNMailRUCardConfirmVCDelegate>
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
   
-  UIColor *offserButtonColor = [UIColor colorWithRed:57/255.0f  green:142/255.0f blue:225/255.0f alpha:1.0f];
-  [_offer1Button setTitleColor:offserButtonColor forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
   
   _errorLabel.text = nil;
   _offerLabel.text = nil;
   _offerLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-  
-  [_offer1Button setTitle:NSLocalizedString(@"Оферта на оплату счета", nil) forState:UIControlStateNormal];
-  _offer1Button.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-  [_offer1Button setTitleColor:colorWithHexString(@"4A90E2") forState:UIControlStateNormal];
-  [_offer1Button setTitleColor:[colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
-  [_offer1Button sizeToFit];
   
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_payButton setTitle:NSLocalizedString(@"Оплатить", nil) forState:UIControlStateNormal];
@@ -242,10 +232,6 @@ OMNMailRUCardConfirmVCDelegate>
   _offerLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_bottomView addSubview:_offerLabel];
   
-  _offer1Button = [[UIButton alloc] init];
-  _offer1Button.translatesAutoresizingMaskIntoConstraints = NO;
-  [_bottomView addSubview:_offer1Button];
-
   _payButton = [[UIButton alloc] init];
   _payButton.translatesAutoresizingMaskIntoConstraints = NO;
   [_bottomView addSubview:_payButton];
@@ -257,7 +243,6 @@ OMNMailRUCardConfirmVCDelegate>
     @"bankCardDescriptionView" : bankCardDescriptionView,
     @"errorLabel" : _errorLabel,
     @"offerLabel" : _offerLabel,
-    @"offer1Button" : _offer1Button,
     @"payButton" : _payButton,
     @"bottomView" : _bottomView,
     @"topLayoutGuide" : self.topLayoutGuide,
@@ -270,9 +255,8 @@ OMNMailRUCardConfirmVCDelegate>
     };
   
   [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[offerLabel]-|" options:0 metrics:0 views:views]];
-  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[offer1Button]-|" options:0 metrics:0 views:views]];
   [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payButton]-|" options:0 metrics:0 views:views]];
-  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[offerLabel]-(offset)-[offer1Button]-(offset)-[payButton]-|" options:0 metrics:metrics views:views]];
+  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[offerLabel]-(offset)-[payButton]-|" options:0 metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView]|" options:0 metrics:metrics views:views]];
   
