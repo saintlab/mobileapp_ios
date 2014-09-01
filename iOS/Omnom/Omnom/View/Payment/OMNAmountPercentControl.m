@@ -220,7 +220,7 @@ UITextFieldDelegate>
   long long amount = [self.delegate enteredValueForAmountPercentControl:self];
   _amountTF.text = [OMNUtils moneyStringFromKop:amount];
   _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
-  [self updatePercentValue];
+  [self updateCaratPosition];
   
 }
 
@@ -314,11 +314,6 @@ UITextFieldDelegate>
     NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     finalString = [self pureAmountString:finalString];
     
-    if (0 == string.length &&
-        finalString.length > 0) {
-      finalString = [finalString substringToIndex:finalString.length - 1];
-    }
-    
     if (NSNotFound != [finalString rangeOfString:kCommaString].location) {
       NSString *fractionalString = @"";
       NSArray *components = [finalString componentsSeparatedByString:kCommaString];
@@ -401,7 +396,7 @@ UITextFieldDelegate>
 
 - (void)updateCaratPosition {
   if (_amountTF.text.length >= 2) {
-    [self setSelectionRange:NSMakeRange(_amountTF.text.length - 1, 0)];
+    [self setSelectionRange:NSMakeRange(_amountTF.text.length - 2, 0)];
   }
   [self updatePercentValue];
 }
