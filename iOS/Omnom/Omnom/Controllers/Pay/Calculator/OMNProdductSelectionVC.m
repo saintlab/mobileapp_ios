@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GProdductSelectionVC.h"
+#import "OMNProdductSelectionVC.h"
 #import "OMNOrderDataSource.h"
 #import "OMNOrder.h"
 
-@interface GProdductSelectionVC ()
+@interface OMNProdductSelectionVC ()
 
 @end
 
-@implementation GProdductSelectionVC {
+@implementation OMNProdductSelectionVC {
   OMNOrder *_order;
   OMNOrderDataSource *_dataSource;
 }
@@ -62,6 +62,10 @@
 }
 
 #pragma mark - UITableviewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return [_dataSource tableView:tableView heightForRowAtIndexPath:indexPath];
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   

@@ -31,58 +31,51 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
-  UIImage *rows1Image = [fromViewController.tableView omn_screenshotOfSection:1];
+  UIImage *totalImage = [fromViewController.tableView omn_screenshotOfSection:1];
   UIImage *footerImage = [fromViewController.tableView.tableFooterView omn_screenshot];
   
-  CGFloat toPayViewHeight = rows1Image.size.height;
+  CGFloat totalViewHeight = totalImage.size.height;
   CGFloat footerViewHeight = footerImage.size.height;
-  CGFloat blankImageTopOffset = fromViewController.tableView.contentSize.height - footerViewHeight - toPayViewHeight;
+  CGFloat blankImageTopOffset = fromViewController.tableView.contentSize.height - footerViewHeight - totalViewHeight;
   
-  UIView *blankView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, blankImageTopOffset, rows1Image.size.width, toPayViewHeight)];
+  UIView *blankView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, blankImageTopOffset, totalImage.size.width, totalViewHeight)];
   blankView.backgroundColor = [UIColor whiteColor];
   
-  UIImageView *totalView = [[UIImageView alloc] initWithImage:rows1Image];
+  UIImageView *totalView = [[UIImageView alloc] initWithImage:totalImage];
   totalView.clipsToBounds = NO;
   [blankView addSubview:totalView];
   
   UIImageView *footerView = [[UIImageView alloc] initWithImage:footerImage];
   CGRect footerViewFrame = footerView.frame;
-  footerViewFrame.origin.y = toPayViewHeight;
+  footerViewFrame.origin.y = totalViewHeight;
   footerView.frame = footerViewFrame;
   footerView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
   [blankView addSubview:footerView];
-  
-  [fromViewController.tableView addSubview:blankView];
   
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView addSubview:toViewController.view];
   [toViewController.view layoutIfNeeded];
   
-  CGFloat maxVisibleHeight = fromViewController.tableView.contentSize.height - CGRectGetHeight(fromViewController.tableView.tableHeaderView.frame) - toPayViewHeight - footerViewHeight;
-  CGFloat currentVisibleHeight = fromViewController.tableView.contentSize.height - fromViewController.tableView.contentOffset.y;
+  UIView *tableViewSnapshot = [fromViewController.tableView snapshotViewAfterScreenUpdates:NO];
+  [tableViewSnapshot addSubview:blankView];
+  tableViewSnapshot.frame = [fromViewController.tableView convertRect:fromViewController.tableView.bounds toView:containerView];
+  [containerView insertSubview:tableViewSnapshot belowSubview:toViewController.view];
   
-  CGFloat tableVisiblePart = CGRectGetHeight(fromViewController.tableView.frame) - MIN(currentVisibleHeight, maxVisibleHeight);
-  
-  CGPoint initialContentOffset = fromViewController.tableView.contentOffset;
-  CGPoint contentOffset = initialContentOffset;
-  contentOffset.y -= tableVisiblePart;
-
-  [fromViewController.view bringSubviewToFront:fromViewController.tableView];
-  toViewController.containerView.alpha = 0.0f;
+  fromViewController.tableView.hidden = YES;
+  toViewController.splitTableView.hidden = YES;
   toViewController.view.alpha = 0.0f;
+  toViewController.view.backgroundColor = [UIColor clearColor];
   
-  CGFloat destinationStartOffset = fromViewController.tableView.contentOffset.y - CGRectGetHeight(fromViewController.tableView.tableHeaderView.frame) + kCalculatorTopOffset;
-  toViewController.splitTableView.contentOffset = CGPointMake(0.0f, destinationStartOffset);
-  
+  CGPoint destinationOffset = [toViewController.splitTableView convertPoint:CGPointZero toView:containerView];
+  destinationOffset.y -= CGRectGetHeight(fromViewController.tableView.tableHeaderView.frame);
   [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    
+    CGRect frame = tableViewSnapshot.frame;
+    frame.origin = destinationOffset;
+    tableViewSnapshot.frame = frame;
     
     // Fade out the source view controller
     toViewController.view.alpha = 1.0f;
-    toViewController.containerView.alpha = 1.0f;
-    // Move the image view
-    
-    toViewController.splitTableView.contentOffset = CGPointMake(0.0f, 0.0f);
-    fromViewController.tableView.contentOffset = CGPointMake(0.0f, CGRectGetHeight(fromViewController.tableView.tableHeaderView.frame) - kCalculatorTopOffset);
     
     CGFloat height = MAX(0.0f, toViewController.splitTableView.frame.size.height - toViewController.splitTableView.contentSize.height);
     
@@ -90,17 +83,18 @@
     CGRect blankViewFrame = blankView.frame;
     blankViewFrame.size.height += height;
     blankView.frame = blankViewFrame;
+    totalView.alpha = 0.0f;
     totalView.transform = CGAffineTransformMakeTranslation(0.0f, height);
     
   } completion:^(BOOL finished) {
     
     [blankView removeFromSuperview];
-    
-    toViewController.containerView.alpha = 1.0f;
-    [toViewController.splitTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    
-    fromViewController.tableView.contentOffset = initialContentOffset;
-    
+    [tableViewSnapshot removeFromSuperview];
+
+    toViewController.view.backgroundColor = [UIColor whiteColor];
+    fromViewController.tableView.hidden = NO;
+    toViewController.splitTableView.hidden = NO;
+
     // Declare that we've finished
     [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
     
@@ -109,7 +103,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 10.5;
+  return 0.5;
 }
 
 + (NSArray *)keys {

@@ -1,5 +1,5 @@
 //
-//  GSplitSelectionVC.h
+//  GProdductSelectionVC.h
 //  seocialtest
 //
 //  Created by tea on 14.05.14.
@@ -8,12 +8,12 @@
 
 #import "GCalculatorVCDelegate.h"
 
-@interface GSplitSelectionVC : UIViewController
+@class OMNOrder;
+
+@interface OMNProdductSelectionVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
-- (instancetype)initWIthTotal:(long long)total;
+- (instancetype)initWithOrder:(OMNOrder *)order;
 
 @end
-
-

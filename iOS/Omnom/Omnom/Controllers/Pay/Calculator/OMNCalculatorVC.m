@@ -7,8 +7,8 @@
 //
 
 #import "OMNCalculatorVC.h"
-#import "GProdductSelectionVC.h"
-#import "GSplitSelectionVC.h"
+#import "OMNProdductSelectionVC.h"
+#import "OMNSplitSelectionVC.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNOrder.h"
 #import "OMNNavigationBarSelector.h"
@@ -22,8 +22,8 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 @interface OMNCalculatorVC ()
 <OMNCalculatorVCDelegate>
 
-@property (strong, nonatomic) GProdductSelectionVC *firstViewController;
-@property (strong, nonatomic) GSplitSelectionVC *secondViewController;
+@property (strong, nonatomic) OMNProdductSelectionVC *firstViewController;
+@property (strong, nonatomic) OMNSplitSelectionVC *secondViewController;
 
 @property (nonatomic, weak) UIViewController *currentController;
 
@@ -148,11 +148,11 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
 }
 
-- (GProdductSelectionVC *)firstViewController {
+- (OMNProdductSelectionVC *)firstViewController {
   
   if (nil == _firstViewController) {
     
-    _firstViewController = [[GProdductSelectionVC alloc] initWithOrder:_order];
+    _firstViewController = [[OMNProdductSelectionVC alloc] initWithOrder:_order];
     UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 60.0f, 0);
     _firstViewController.tableView.contentInset = insets;
     _firstViewController.tableView.scrollIndicatorInsets = insets;
@@ -162,12 +162,12 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
 }
 
-- (GSplitSelectionVC *)secondViewController {
+- (OMNSplitSelectionVC *)secondViewController {
   
   if (nil == _secondViewController) {
     
     long long total = [_order total];
-    _secondViewController = [[GSplitSelectionVC alloc] initWIthTotal:total];
+    _secondViewController = [[OMNSplitSelectionVC alloc] initWIthTotal:total];
     _secondViewController.delegate = self;
   }
   return _secondViewController;

@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GSplitSelectionVC.h"
+#import "OMNSplitSelectionVC.h"
 #import <UITextField+BlocksKit.h>
 
-@interface GSplitSelectionVC ()
+@interface OMNSplitSelectionVC ()
 <UIPickerViewDataSource,
 UIPickerViewDelegate>
 
 @end
 
-@implementation GSplitSelectionVC {
+@implementation OMNSplitSelectionVC {
   
   __weak IBOutlet UILabel *_numberOfGuestsLabel;
   __weak IBOutlet UIPickerView *_numberOfGuestsPicker;
