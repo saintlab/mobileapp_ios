@@ -94,7 +94,7 @@
   [attributedText addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributedText.length)];
   
   _label.attributedText = attributedText;
-  _label.textAlignment = NSTextAlignmentCenter;
+  _label.textAlignment = NSTextAlignmentLeft;
   _pageControl.currentPage = page;
   
 }
