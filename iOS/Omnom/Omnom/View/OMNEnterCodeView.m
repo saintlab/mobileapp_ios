@@ -125,6 +125,8 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
   NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+  NSArray *components = [finalString componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
+  finalString = [components componentsJoinedByString:@""];
   textField.text = finalString;
   [self setCode:finalString];
   
