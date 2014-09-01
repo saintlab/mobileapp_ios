@@ -113,34 +113,43 @@
   OMNTip *customTip = _tips[3];
 //  customTip.amount = customTipAmount;
   customTip.percent = 100*(double)customTipAmount/_expectedValue;
+  
+}
+
+- (NSString *)titleForAmount:(long long)amount {
+  double percent = 100*amount/_expectedValue;
+  NSString *title = [NSString stringWithFormat:@"%.0f%%\n%@", percent, [OMNUtils evenCommaStringFromKop:amount]];
+  return title;
+}
+
+- (NSString *)titleForPercent:(double)percent {
+  long long amount = (percent*0.01)*_enteredAmount;
+  NSString *title = [NSString stringWithFormat:@"%.0f%%\n%@", percent, [OMNUtils evenCommaStringFromKop:amount]];
+  return title;
 }
 
 - (void)configureTipButton:(OMNTipButton *)tipButton {
   
   OMNTip *tip = tipButton.tip;
   
-  if (tip.percent < 0.01) {
+  if (tip.custom) {
 
-    NSString *title = NSLocalizedString(@"Другой", nil);
-    if (tip.amount > 0 &&
-        _expectedValue > 0) {
-      double percent = 100*tip.amount/_expectedValue;
-      title = [NSString stringWithFormat:@"%.0f%%\n%@", percent, [OMNUtils commaStringFromKop:tip.amount]];
-    }
-    [tipButton setTitle:title forState:UIControlStateNormal];
+    NSString *title = [self titleForPercent:tip.percent];
+    [tipButton setTitle:NSLocalizedString(@"Другой", nil) forState:UIControlStateNormal];
     [tipButton setTitle:title forState:UIControlStateSelected];
     
   }
   else if (_enteredAmount > _order.tipsThreshold) {
-    long long amount = (tip.percent*0.01)*_enteredAmount;
+
     [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%", tip.percent] forState:UIControlStateNormal];
-    [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%\n%@", tip.percent, [OMNUtils commaStringFromKop:amount]] forState:UIControlStateSelected];
+    [tipButton setTitle:[self titleForPercent:tip.percent] forState:UIControlStateSelected];
     
   }
   else {
     
-    [tipButton setTitle:[OMNUtils commaStringFromKop:tip.amount] forState:UIControlStateNormal];
-    [tipButton setTitle:[OMNUtils commaStringFromKop:tip.amount] forState:UIControlStateSelected];
+    NSString *title = [OMNUtils evenCommaStringFromKop:tip.amount];
+    [tipButton setTitle:title forState:UIControlStateNormal];
+    [tipButton setTitle:title forState:UIControlStateSelected];
     
   }
   

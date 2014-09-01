@@ -10,14 +10,10 @@
 
 @implementation OMNTip
 
-@synthesize percent = _percent;
-@synthesize amount = _amount;
-
 + (instancetype)tipWithPercent:(double)percent {
   
   OMNTip *tip = [[OMNTip alloc] init];
   tip.percent = percent;
-
   return tip;
 }
 

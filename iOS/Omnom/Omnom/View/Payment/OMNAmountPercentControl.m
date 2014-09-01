@@ -218,27 +218,27 @@ UITextFieldDelegate>
 - (void)reset {
   
   long long amount = [self.delegate enteredValueForAmountPercentControl:self];
-  _amountTF.text = [OMNUtils moneyStringFromKop:amount];
-  _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
-  [self updateCaratPosition];
+  [self setAmountValue:amount];
   
 }
 
 - (void)updateAmountValue {
   
   long long amount = self.expectedAmount * _percentTF.amount.doubleValue / 100.;
-  _amountTF.text = [OMNUtils moneyStringFromKop:amount];
-  _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
+  [self setAmountValue:amount];
   
 }
 
 - (void)setCurrentAmount:(long long)currentAmount {
   _currentAmount = currentAmount;
+  [self setAmountValue:_currentAmount];
   
-  _amountTF.text = [OMNUtils moneyStringFromKop:_currentAmount];
-  _pureAmountTF.text = [OMNUtils moneyStringFromKop:_currentAmount];
+}
+
+- (void)setAmountValue:(long long)amount {
+  _amountTF.text = [OMNUtils moneyStringFromKop:amount];
+  _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
   [self updatePercentValue];
-  
 }
 
 - (long long)selectedAmount {

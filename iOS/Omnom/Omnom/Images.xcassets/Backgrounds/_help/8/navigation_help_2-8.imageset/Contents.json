@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "cl_permission_help_bg_7.png"
+      "filename" : "settings_geolocation_2.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "cl_permission_help_bg_7@2x.png"
+      "filename" : "settings_geolocation_2@2x.png"
     }
   ],
   "info" : {

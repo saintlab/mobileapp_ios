@@ -126,7 +126,6 @@
 - (void)updateToPayButton {
 
   _payButton.enabled = (_calculationAmount.totalValue > 0) ? (YES) : (NO);
-  
   [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_calculationAmount.totalValue]] forState:UIControlStateNormal];
   
 }

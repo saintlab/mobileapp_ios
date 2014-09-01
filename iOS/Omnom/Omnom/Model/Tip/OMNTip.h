@@ -12,6 +12,7 @@
 
 @property (nonatomic, assign) long long amount;
 @property (nonatomic, assign) double percent;
+@property (nonatomic, assign) BOOL custom;
 @property (nonatomic, assign) BOOL selected;
 
 + (instancetype)tipWithPercent:(double)percent;

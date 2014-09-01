@@ -287,7 +287,6 @@ OMNDemoRestaurantVCDelegate>
       [self showDenyLocationPermissionDescriptionWithBlock:^{
 
         OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
-        navigationPermissionsHelpVC.backgroundImage = weakSelf.backgroundImage;
         [weakSelf.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
         
       }];

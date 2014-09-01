@@ -46,10 +46,10 @@
   NSString *text = (self.text) ? (self.text) : @"";
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
   NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
-  style.lineSpacing = 5.0f;
-  style.maximumLineHeight = 20.0f;
+  style.lineSpacing = 0.0f;
+  style.maximumLineHeight = 25.0f;
   [attributedText addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributedText.length)];
-
+  
   self.label.attributedText = attributedText;
   if ([self.label omn_linesCount] >= 3) {
     self.label.textAlignment = NSTextAlignmentLeft;

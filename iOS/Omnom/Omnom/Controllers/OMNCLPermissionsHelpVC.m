@@ -8,6 +8,7 @@
 
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNScrollExtendView.h"
+#import "OMNUtils.h"
 
 @interface OMNCLPermissionsHelpVC ()
 <UIScrollViewDelegate>
@@ -25,7 +26,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
-
+    self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
 //    self.buttonInfo =
 //    @[
 //      @{
@@ -76,7 +77,11 @@
     
     frame.origin.x = frame.size.width*i;
     UIImageView *iv = [[UIImageView alloc] initWithFrame:frame];
-    iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"navigation_help_%d-7", i + 1]];
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+      iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"navigation_help_%d-7", i + 1]];
+    } else {
+      iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"navigation_help_%d-8", i + 1]];
+    }
     [_scrollView addSubview:iv];
     
   }
