@@ -70,15 +70,6 @@
 
 + (void)getRestaurantList:(GRestaurantsBlock)restaurantsBlock error:(void(^)(NSError *error))errorBlock {
   
-  if (kUseStubData) {
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"restaurants.data" ofType:nil];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    restaurantsBlock([self restaurantsFromJsonObject:responseObject]);
-    return;
-  }
-  
   [[OMNOperationManager sharedManager] GET:@"restaurants" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     restaurantsBlock([self restaurantsFromJsonObject:responseObject]);

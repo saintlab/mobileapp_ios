@@ -93,11 +93,6 @@
 
 - (IBAction)loginTap:(id)sender {
   
-  if (kUseStubLogin) {
-    [self processAuthorisation];
-    return;
-  }
-  
   OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
   loginVC.delegate = self;
   [self presentViewController:[[UINavigationController alloc] initWithRootViewController:loginVC] animated:YES completion:nil];

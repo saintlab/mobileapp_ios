@@ -15,17 +15,14 @@
 #import "OMNOrder.h"
 #import "OMNAmountPercentControl.h"
 #import "UIView+frame.h"
-#import "OMNGPBPayVC.h"
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "OMNAnalitics.h"
 #import "OMNOrdersVC.h"
 #import "OMNRatingVC.h"
 #import <BlocksKit+UIKit.h>
-#import "OMNGPBPayVC.h"
 #import "OMNSocketManager.h"
 #import "OMNVisitor.h"
 #import "OMNMailRUPayVC.h"
-#import "OMNAddBankCardVC.h"
 #import "OMNPaymentNotificationControl.h"
 #import "OMNNavigationController.h"
 #import "OMNMailRuBankCardsModel.h"
@@ -34,10 +31,8 @@
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
-OMNGPBPayVCDelegate,
 OMNRatingVCDelegate,
 UITableViewDelegate,
-OMNAddBankCardVCDelegate,
 OMNMailRUPayVCDelegate>
 
 @end
@@ -274,14 +269,6 @@ OMNMailRUPayVCDelegate>
   _order.toPayAmount = _paymentView.calculationAmount.totalValue;
   _order.tipAmount = _paymentView.calculationAmount.tipAmount;
 
-#if kUseGPBAcquiring
-  
-  OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
-  addBankCardVC.delegate = self;
-  [self.navigationController pushViewController:addBankCardVC animated:YES];
-
-#else
-  
   OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
   mailRUPayVC.demo = _visitor.restaurant.is_demo;
   mailRUPayVC.delegate = self;
@@ -290,9 +277,6 @@ OMNMailRUPayVCDelegate>
     
   }];
 
-#endif
-  
-  
 }
 
 #pragma mark - OMNRatingVCDelegate
@@ -300,21 +284,6 @@ OMNMailRUPayVCDelegate>
 - (void)ratingVCDidFinish:(OMNRatingVC *)ratingVC {
   
   [self.delegate payOrderVCDidFinish:self];
-  
-}
-
-#pragma mark - OMNGPBPayVCDelegate
-
-- (void)gpbVCDidPay:(OMNGPBPayVC *)gpbVC withOrder:(OMNOrder *)order {
-  
-  [[OMNAnalitics analitics] logPayment:nil];
-  [self showRating];
-  
-}
-
-- (void)gpbVCDidCancel:(OMNGPBPayVC *)gpbVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 
@@ -378,23 +347,6 @@ OMNMailRUPayVCDelegate>
     scrollView.contentOffset = offset;
     [self calculatorTap:nil];
   }
-  
-}
-
-#pragma mark - OMNAddBankCardVCDelegate
-
-- (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCardInfo *)bankCardInfo {
-  
-  OMNGPBPayVC *gpbVC = [[OMNGPBPayVC alloc] initWithCard:bankCardInfo order:_order];
-  gpbVC.navigationItem.title = NSLocalizedString(@"ГПБ", nil);
-  gpbVC.delegate = self;
-  [self.navigationController pushViewController:gpbVC animated:YES];
-  
-}
-
-- (void)addBankCardVCDidCancel:(OMNAddBankCardVC *)addBankCardVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 

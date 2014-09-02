@@ -48,12 +48,8 @@ NSString * const kTokenServiceName = @"token";
 }
 
 - (BOOL)pushNotificationsRequested {
-#if kForgetRequestPushNotification
-  return NO;
-#else
   BOOL pushNotificationsRequested = [[SSKeychain passwordForService:@"pushNotificationsRequested" account:kAccountName] boolValue];
   return pushNotificationsRequested;
-#endif
 }
 
 #ifdef __IPHONE_8_0

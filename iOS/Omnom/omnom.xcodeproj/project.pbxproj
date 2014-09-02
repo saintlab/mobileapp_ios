@@ -164,6 +164,8 @@
 		9389456519B0622900C37C82 /* OMNPushText.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456319B0622900C37C82 /* OMNPushText.m */; };
 		9389456819B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456719B2CF1700C37C82 /* OMNOrderTotalCell.m */; };
 		9389456919B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456719B2CF1700C37C82 /* OMNOrderTotalCell.m */; };
+		9389456B19B5957100C37C82 /* constants.json in Resources */ = {isa = PBXBuildFile; fileRef = 9389456A19B5957100C37C82 /* constants.json */; };
+		9389456C19B5957100C37C82 /* constants.json in Resources */ = {isa = PBXBuildFile; fileRef = 9389456A19B5957100C37C82 /* constants.json */; };
 		938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B92D71929EF2900476AA0 /* OMNBeaconTests.m */; };
 		938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */; };
 		938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
@@ -526,6 +528,7 @@
 		9389456319B0622900C37C82 /* OMNPushText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPushText.m; sourceTree = "<group>"; };
 		9389456619B2CF1700C37C82 /* OMNOrderTotalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderTotalCell.h; sourceTree = "<group>"; };
 		9389456719B2CF1700C37C82 /* OMNOrderTotalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTotalCell.m; sourceTree = "<group>"; };
+		9389456A19B5957100C37C82 /* constants.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = constants.json; sourceTree = "<group>"; };
 		938B92D71929EF2900476AA0 /* OMNBeaconTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconTests.m; sourceTree = "<group>"; };
 		938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDevicePositionManagerTests.m; sourceTree = "<group>"; };
 		938E54981980CCB200B38B45 /* OMNR1VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNR1VC.h; sourceTree = "<group>"; };
@@ -1067,6 +1070,7 @@
 			children = (
 				937E0B5D18F04EC20058A249 /* OMNConstants.h */,
 				937E0B5E18F04EC20058A249 /* OMNConstants.m */,
+				9389456A19B5957100C37C82 /* constants.json */,
 				936E71D81991FEFF008FF864 /* OMNViewController.h */,
 				936E71D91991FEFF008FF864 /* OMNViewController.m */,
 				938E8F65192F5C030088EF38 /* Resources */,
@@ -1730,6 +1734,7 @@
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				93750B23196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
 				932B186E19AF3C80009E440E /* pay_done.caf in Resources */,
+				9389456B19B5957100C37C82 /* constants.json in Resources */,
 				939F991619752BE90051822E /* OMNBankCardsVC.xib in Resources */,
 				93676E0818D1E4FC00FC55F1 /* Images.xcassets in Resources */,
 				9345AFAB199A0A1400328F73 /* restaurantInfo.json in Resources */,
@@ -1768,6 +1773,7 @@
 				938F3A48198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				937A37851981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
 				939F991B19752BE90051822E /* OMNEditTableVC.xib in Resources */,
+				9389456C19B5957100C37C82 /* constants.json in Resources */,
 				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
 				93750B24196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
 				93E2999A197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */,
@@ -2257,7 +2263,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "63A7F445-3A5D-4FF0-9488-CBC13D65CF7C";
+				PROVISIONING_PROFILE = "5f156ad5-643a-4b2c-9cac-67ba180094f9";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -2282,7 +2288,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "63A7F445-3A5D-4FF0-9488-CBC13D65CF7C";
+				PROVISIONING_PROFILE = "5f156ad5-643a-4b2c-9cac-67ba180094f9";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -2394,7 +2400,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "63A7F445-3A5D-4FF0-9488-CBC13D65CF7C";
+				PROVISIONING_PROFILE = "5f156ad5-643a-4b2c-9cac-67ba180094f9";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

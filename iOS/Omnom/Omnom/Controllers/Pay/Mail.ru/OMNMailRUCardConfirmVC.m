@@ -217,12 +217,19 @@
 #warning register card stub
   NSDictionary *cardInfo =
   @{
-//    @"pan" : @"4111111111111112",
+    @"pan" : @"4111111111111111",
 //    @"pan" : @"6011000000000004",
-    @"pan" : @"639002000000000003",
+//    @"pan" : @"639002000000000003",
     @"exp_date" : @"12.2015",
     @"cvv" : @"123",
     };
+  
+//  cardInfo =
+//  @{
+//    @"pan" : _bankCardInfo.pan,
+//    @"exp_date" : [NSString stringWithFormat:@"%2d.20%2d", _bankCardInfo.expiryMonth, _bankCardInfo.expiryYear],
+//    @"cvv" : _bankCardInfo.cvv,
+//    };
   
   __weak typeof(self)weakSelf = self;
   OMNUser *user = [OMNAuthorisation authorisation].user;
