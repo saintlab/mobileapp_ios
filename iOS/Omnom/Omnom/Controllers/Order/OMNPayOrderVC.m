@@ -341,8 +341,6 @@ OMNMailRUPayVCDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 
-  NSLog(@"%f", scrollView.contentOffset.y);
-  NSLog(@"%f", scrollView.contentInset.top);
   const CGFloat kDeltaOffset = 40.0f;
   if ((scrollView.contentOffset.y + scrollView.contentInset.top) < -kDeltaOffset) {
     [self calculatorTap:nil];

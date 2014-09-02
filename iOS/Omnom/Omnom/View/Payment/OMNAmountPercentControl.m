@@ -14,6 +14,8 @@
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 
+const long long kMaxEnteredValue = 999999999L;
+
 @interface OMNAmountPercentControl ()
 <UIPickerViewDataSource,
 UIPickerViewDelegate,
@@ -80,6 +82,7 @@ UITextFieldDelegate>
   [self addSubview:_pureAmountTF];
   
   _amountTF = [[UITextField alloc] init];
+  _amountTF.tintColor = colorWithHexString(@"157EFB");
   _amountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
   _amountTF.translatesAutoresizingMaskIntoConstraints = NO;
   _amountTF.adjustsFontSizeToFitWidth = YES;
@@ -101,6 +104,7 @@ UITextFieldDelegate>
   _percentPicker.dataSource = self;
 
   _percentTF = [self createCurrencyTextField];
+  _percentTF.tintColor = colorWithHexString(@"157EFB");
   _percentTF.currencyNumberFormatter.currencySymbol = @"%";
   _percentTF.textAlignment = NSTextAlignmentCenter;
   _percentTF.inputView = _percentPicker;
@@ -257,13 +261,13 @@ UITextFieldDelegate>
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  
   if (self.isFirstResponder) {
     _seporatorView.alpha = 1.0f;
     _amountTF.alpha = 1.0f;
     _percentTF.alpha = 1.0f;
     _pureAmountTF.alpha = 0.0f;
     _bottomView.alpha = 1.0f;
+    [self updateCaratPosition];
   }
   else {
     _seporatorView.alpha = 0.0f;
@@ -284,7 +288,7 @@ UITextFieldDelegate>
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-  return 101;
+  return 201;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -330,10 +334,9 @@ UITextFieldDelegate>
     }
     
     long long value = [finalString doubleValue]*100;
-    if (value <= 200000000000ll) {
-      textField.text = [OMNUtils moneyStringFromKop:value];
-      [self updateCaratPosition];
-    }
+    value = MIN(value, kMaxEnteredValue);
+    textField.text = [OMNUtils moneyStringFromKop:value];
+    [self updateCaratPosition];
     return NO;
   }
   

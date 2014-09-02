@@ -11,7 +11,7 @@
 @implementation UIView (screenshot)
 
 - (UIImage *)omn_screenshot {
-	UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
+	UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, 0.0f);
   // Create a graphics context and translate it the view we want to crop so
   // that even in grabbing (0,0), that origin point now represents the actual
   // cropping origin desired:
@@ -32,7 +32,7 @@
   }];
   
   
-  UIGraphicsBeginImageContextWithOptions(size, NO, 1.0f);
+  UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
   
   __block CGFloat offset = 0.0f;
   [images enumerateObjectsUsingBlock:^(UIImage *image, NSUInteger idx, BOOL *stop) {

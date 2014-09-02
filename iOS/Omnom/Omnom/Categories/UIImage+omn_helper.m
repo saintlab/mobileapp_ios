@@ -28,7 +28,7 @@
   CGRect drawFrame = frame;
   drawFrame.origin = CGPointZero;
   
-  UIGraphicsBeginImageContextWithOptions(drawFrame.size, NO, 0.0);
+  UIGraphicsBeginImageContextWithOptions(drawFrame.size, NO, 0.0f);
   [[UIBezierPath bezierPathWithOvalInRect:drawFrame] addClip];
   [self drawAtPoint:CGPointMake(-frame.origin.x, -frame.origin.y)];
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -37,7 +37,7 @@
 }
 
 - (UIImage *)omn_tintWithColor:(UIColor *)tintColor {
-  UIGraphicsBeginImageContextWithOptions(self.size, NO, 0);
+  UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
   CGRect drawRect = CGRectMake(0, 0, self.size.width, self.size.height);
   [self drawInRect:drawRect];
   [tintColor set];

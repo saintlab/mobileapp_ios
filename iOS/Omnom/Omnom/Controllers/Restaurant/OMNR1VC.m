@@ -20,6 +20,7 @@
 #import "OMNSocketManager.h"
 #import "OMNVisitor.h"
 #import "OMNRestaurantMediator.h"
+#import "OMNLightBackgroundButton.h"
 
 @interface OMNR1VC ()
 
@@ -53,24 +54,18 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
-
   
   _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
+
+  UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:_restaurantMediator action:@selector(showRestaurantInfo)];
+  swipeGR.direction = UISwipeGestureRecognizerDirectionUp;
+  [self.view addGestureRecognizer:swipeGR];
   
   if (_visitor.restaurant.is_demo) {
 
-    UIButton *cancelButton = [[UIButton alloc] init];
+    OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
     [cancelButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateNormal];
-    [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [cancelButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
     [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
-    cancelButton.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
-    cancelButton.layer.cornerRadius = 5.0f;
-    [cancelButton sizeToFit];
-    CGRect frame = cancelButton.frame;
-    frame.size.width += 20.0f;
-    cancelButton.frame = frame;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
     
   }

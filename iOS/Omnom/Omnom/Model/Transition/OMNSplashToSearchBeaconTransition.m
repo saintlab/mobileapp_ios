@@ -32,7 +32,6 @@
   UIImageView *fromViewSnapshot = [[UIImageView alloc] initWithImage:toViewController.backgroundView.image];
   
   _layer = [CAShapeLayer layer];
-  _layer.fillRule = kCAFillRuleEvenOdd;
   _layer.fillColor = [UIColor colorWithPatternImage:fromViewController.bgIV.image].CGColor;
   CGFloat diametr = hypotf(containerView.frame.size.width, containerView.frame.size.height);
   CGFloat xOffset = (diametr - containerView.frame.size.width)/2.0f;

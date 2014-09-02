@@ -42,30 +42,28 @@
   circleIV.image = coloredCircleImage;
   [self.circleButton addSubview:circleIV];
   
-  UIImageView *currentLogoIV = [[UIImageView alloc] initWithFrame:self.circleButton.bounds];
-  currentLogoIV.contentMode = UIViewContentModeCenter;
-  currentLogoIV.image = [self.circleButton imageForState:UIControlStateNormal];
-  [self.circleButton addSubview:currentLogoIV];
+  UIButton *currentLogoButton = [[UIButton alloc] initWithFrame:self.circleButton.bounds];
+  [currentLogoButton setImage:[self.circleButton imageForState:UIControlStateNormal] forState:UIControlStateNormal];
+  [self.circleButton addSubview:currentLogoButton];
   [self.circleButton setImage:nil forState:UIControlStateNormal];
   
-  UIImageView *nextLogoIV = [[UIImageView alloc] initWithFrame:self.circleButton.bounds];
-  nextLogoIV.contentMode = UIViewContentModeCenter;
-  nextLogoIV.image = logo;
-  nextLogoIV.alpha = 0.0f;
-  [self.circleButton addSubview:nextLogoIV];
+  UIButton *nextLogoButton = [[UIButton alloc] initWithFrame:self.circleButton.bounds];
+  [nextLogoButton setImage:logo forState:UIControlStateNormal];
+  nextLogoButton.alpha = 0.0f;
+  [self.circleButton addSubview:nextLogoButton];
   
   NSTimeInterval circleChangeLogoAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleChangeLogoAnimationDuration"];;
   NSTimeInterval circleChangeColorAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"CircleChangeColorAnimationDuration"];
   
   [UIView animateWithDuration:circleChangeLogoAnimationDuration animations:^{
     
-    currentLogoIV.alpha = 0.0f;
-    nextLogoIV.alpha = 1.0f;
+    currentLogoButton.alpha = 0.0f;
+    nextLogoButton.alpha = 1.0f;
     
   } completion:^(BOOL finished) {
     
     [self.circleButton setImage:logo forState:UIControlStateNormal];
-    [currentLogoIV removeFromSuperview];
+    [currentLogoButton removeFromSuperview];
     
     [UIView animateWithDuration:circleChangeColorAnimationDuration animations:^{
       
@@ -75,7 +73,7 @@
       
       self.circleBackground = coloredCircleImage;
       [circleIV removeFromSuperview];
-      [nextLogoIV removeFromSuperview];
+      [nextLogoButton removeFromSuperview];
       if (completionBlock) {
         completionBlock();
       }

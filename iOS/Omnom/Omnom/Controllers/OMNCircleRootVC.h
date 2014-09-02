@@ -13,9 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *label;
 @property (weak, nonatomic) IBOutlet UIButton *circleButton;
 @property (weak, nonatomic) IBOutlet UIView *foregroundView;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *circleCenterLayout;
-
 @property (nonatomic, assign) BOOL faded;
 
 @property (nonatomic, strong) NSString *text;
