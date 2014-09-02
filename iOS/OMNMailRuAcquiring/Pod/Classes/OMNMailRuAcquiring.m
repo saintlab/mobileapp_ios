@@ -156,15 +156,15 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   [self POST:@"card/verify" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"card/verify>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"card/verify>%@", responseObject);
+    NSLog(@"\ncard/verify>\n%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"\ncard/verify>\n%@", responseObject);
     
     completion(responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"card/verify>%@", error);
-    NSLog(@"card/verify>%@", operation.responseString);
+    NSLog(@"\ncard/verify>\n%@", operation.responseString);
     completion(nil);
     
   }];
@@ -203,13 +203,13 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"order/payHTTPBody>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"order/payresponse>%@", responseObject);
+    NSLog(@"\norder/payHTTPBody>\n%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"\norder/payresponse>\n%@", responseObject);
     
     [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       NSLog(@"%@", responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-      NSLog(@"%@", operation.responseString);
+      NSLog(@"\norder/payresponse>\n%@", operation.responseString);
     }];
     
     completionBlock(responseObject);
@@ -222,8 +222,6 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     completionBlock(nil);
     
   }];
-  
-  
   
 }
 

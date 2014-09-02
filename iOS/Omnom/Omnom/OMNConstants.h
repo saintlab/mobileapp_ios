@@ -42,6 +42,5 @@ extern NSString * const kPushSoundName;
 + (BOOL)useStubBeacon;
 + (BOOL)useStubBeaconDecodeData;
 + (BOOL)useStubOrdersData;
-+ (BOOL)forgetRequestPushNotification;
 
 @end
