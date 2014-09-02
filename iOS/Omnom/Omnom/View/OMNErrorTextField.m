@@ -120,7 +120,7 @@
 - (void)updateColorView {
   
   if (_errorLabel.text.length) {
-    _errorLabel.textColor = colorWithHexString(@"d0021b");
+    _errorLabel.textColor = colorWithHexString(@"D0021B");
   }
   else if(_textField.editing) {
     _colorView.backgroundColor = [UIColor blackColor];

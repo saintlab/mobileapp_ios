@@ -194,19 +194,18 @@
   [_birthdayTF setError:nil animated:NO];
   
   BOOL hasErrors = NO;
-  
   if (0 == _emailTF.textField.text.length) {
-    [_emailTF setError:NSLocalizedString(@"Неправильный емайл", nil) animated:NO];
+    [_emailTF setError:NSLocalizedString(@"Вы забыли ввести e-mail", nil) animated:NO];
     hasErrors = YES;
   }
   
   if (0 == _phoneTF.textField.text.length) {
-    [_phoneTF setError:NSLocalizedString(@"Неправильный телефон", nil) animated:NO];
+    [_phoneTF setError:NSLocalizedString(@"Вы забыли ввести номер телефона", nil) animated:NO];
     hasErrors = YES;
   }
   
   if (0 == _nameTF.textField.text.length) {
-    [_nameTF setError:NSLocalizedString(@"Неправильное имя", nil) animated:NO];
+    [_nameTF setError:NSLocalizedString(@"Вы забыли ввести имя", nil) animated:NO];
     hasErrors = YES;
   }
   
