@@ -17,7 +17,7 @@
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
   self = [super initWithParent:parent];
   if (self) {
-    self.faded = YES;
+    self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     self.text = NSLocalizedString(@"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем определить столик.", nil);
   }
   return self;

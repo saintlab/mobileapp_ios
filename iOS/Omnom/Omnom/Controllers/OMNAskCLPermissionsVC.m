@@ -26,6 +26,7 @@
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
   self = [super initWithParent:parent];
   if (self) {
+    self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     self.text = NSLocalizedString(@"Необходимо разрешение на использование службы геолокации", nil);
     _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
   }
