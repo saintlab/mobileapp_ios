@@ -11,8 +11,9 @@
 
 @interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
 
-+ (instancetype)acquiring;
 
++ (instancetype)acquiring;
++ (void)setConfig:(NSString *)config;
 - (NSData *)certificateData;
 
 - (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response))completion;

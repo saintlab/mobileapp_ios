@@ -60,6 +60,8 @@
     return;
   }
   
+  [OMNMailRuAcquiring setConfig:@"OMNMailRu_prod"];
+  
   [self initCache];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];

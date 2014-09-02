@@ -9,13 +9,7 @@
 #import "OMNMailRuAcquiring.h"
 #import <CommonCrypto/CommonDigest.h>
 
-static NSString * const kOMNMailRu_merch_id = @"DGIS";
-static NSString * const kOMNMailRu_vterm_id = @"DGISMobile";
-//static NSString * const kOMNMailRu_vterm_id = @"DGISMobileDemo";
-static NSString * const kOMNMailRu_cardholder = @"Omnom";
-static NSString * const kOMNMailRu_secret_key = @"ohMDLYVUy0y8FKenvcVuPCYTtbeB7MI6qNOBxOCwSAmOoqwpXj";
-
-static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.mail.ru/api/";
+static NSDictionary *_config = nil;
 
 @interface NSString (omn_mailRu)
 
@@ -32,12 +26,30 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
 @implementation OMNMailRuAcquiring
 
 + (instancetype)acquiring {
+  
+  if (nil == _config) {
+    [self setConfig:@"OMNMailRu_stand"];
+  }
+  
   static id manager = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:kOMNMailRuAcquiringBaseURL]];
+    NSString *urlString = _config[@"OMNMailRuAcquiringBaseURL"];
+    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:urlString]];
   });
   return manager;
+}
+
++ (void)setConfig:(NSString *)configName {
+  
+  _config = [self configWithName:configName];
+  
+}
+
++ (NSDictionary *)configWithName:(NSString *)name {
+  NSData *data = [NSData dataWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:name ofType:@"json"]];
+  NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+  return config;
 }
 
 - (instancetype)initWithBaseURL:(NSURL *)url {
@@ -59,7 +71,8 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
 }
 
 - (NSData *)certificateData {
-  NSString *certificatePath = [[NSBundle mainBundle] pathForResource:@"mail.ru" ofType:@"cer"];
+  NSString *name = _config[@"OMNMailRuCertificateName"];
+  NSString *certificatePath = [[NSBundle mainBundle] pathForResource:name ofType:nil];
   NSData *certificateData = [NSData dataWithContentsOfFile:certificatePath];
   return certificateData;
 }
@@ -97,15 +110,15 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   NSDictionary *reqiredSignatureParams =
   @{
-    @"merch_id" : kOMNMailRu_merch_id,
-    @"vterm_id" : kOMNMailRu_vterm_id,
+    @"merch_id" : _config[@"OMNMailRu_merch_id"],
+    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
     @"user_login" : user_login,
     };
   
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
   
   parameters[@"signature"] = [reqiredSignatureParams omn_signature];
-  parameters[@"cardholder"] = kOMNMailRu_cardholder;
+  parameters[@"cardholder"] = _config[@"OMNMailRu_cardholder"];
   parameters[@"user_phone"] = user_phone;
 
   [parameters addEntriesFromDictionary:cardInfo];
@@ -143,8 +156,8 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   
   NSDictionary *reqiredSignatureParams =
   @{
-    @"merch_id" : kOMNMailRu_merch_id,
-    @"vterm_id" : kOMNMailRu_vterm_id,
+    @"merch_id" : _config[@"OMNMailRu_merch_id"],
+    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
     @"user_login" : user_login,
     @"card_id" : card_id,
     };
@@ -179,10 +192,11 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     return;
   }
   
+  
   NSDictionary *reqiredSignatureParams =
   @{
-    @"merch_id" : kOMNMailRu_merch_id,
-    @"vterm_id" : kOMNMailRu_vterm_id,
+    @"merch_id" : _config[@"OMNMailRu_merch_id"],
+    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
     @"user_login" : paymentInfo.user_login,
     @"order_id" : paymentInfo.order_id,
     @"order_amount" : paymentInfo.order_amount,
@@ -198,7 +212,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
   NSDictionary *card_info = [paymentInfo.cardInfo card_info];
   [parameters addEntriesFromDictionary:card_info];
 
-  parameters[@"cardholder"] = kOMNMailRu_cardholder;
+  parameters[@"cardholder"] = _config[@"OMNMailRu_cardholder"];
   parameters[@"user_phone"] = paymentInfo.user_phone;
   
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -227,10 +241,11 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
 
 - (void)cardDelete:(NSString *)card_id user_login:(NSString *)user_login completion:(void(^)(id response))completionBlock {
   
+  
   NSDictionary *reqiredSignatureParams =
   @{
-    @"merch_id" : kOMNMailRu_merch_id,
-    @"vterm_id" : kOMNMailRu_vterm_id,
+    @"merch_id" : _config[@"OMNMailRu_merch_id"],
+    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
     @"user_login" : user_login,
     @"card_id" : card_id,
     };
@@ -290,7 +305,7 @@ static NSString * const kOMNMailRuAcquiringBaseURL = @"https://test-cpg.money.ma
     [sortedValues addObject:self[sortedKey]];
     
   }];
-  [sortedValues addObject:kOMNMailRu_secret_key];
+  [sortedValues addObject:_config[@"OMNMailRu_secret_key"]];
   
   NSString *baseSignatureString = [sortedValues componentsJoinedByString:@""];
   NSLog(@"baseSignatureString>%@", baseSignatureString);

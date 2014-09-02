@@ -8,7 +8,7 @@
 
 #import "OMNConstants.h"
 
-#define USE_STAND 0
+#define USE_STAND 1
 
 #if USE_STAND
 
