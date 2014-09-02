@@ -11,6 +11,7 @@
 #import "OMNAuthorizationManager.h"
 #import "OMNUser.h"
 #import <SSKeychain.h>
+#import <Crashlytics/Crashlytics.h>
 
 static NSString * const kAccountName = @"test_account6";
 
@@ -19,6 +20,12 @@ NSString * const kTokenServiceName = @"test_token";
 #else
 NSString * const kTokenServiceName = @"token";
 #endif
+
+@interface OMNAuthorisation ()
+
+@property (nonatomic, strong) OMNUser *user;
+
+@end
 
 @implementation OMNAuthorisation {
   void(^_notificationRegisterCompletionBlock)(BOOL completion);
@@ -45,6 +52,13 @@ NSString * const kTokenServiceName = @"token";
     [self updateAuthenticationToken:token];
   }
   return self;
+}
+
+-(void)setUser:(OMNUser *)user {
+  _user = user;
+  [Crashlytics setUserEmail:user.email];
+  [Crashlytics setUserName:user.id];
+  [Crashlytics setUserIdentifier:kBaseUrlString];
 }
 
 - (BOOL)pushNotificationsRequested {
@@ -150,9 +164,10 @@ NSString * const kTokenServiceName = @"token";
     return;
   }
   
+  __weak typeof(self)weakSelf = self;
   [OMNUser userWithToken:self.token user:^(OMNUser *user) {
     
-    _user = user;
+    weakSelf.user = user;
     block(YES);
     
   } failure:^(NSError *error) {

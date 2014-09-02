@@ -16,6 +16,7 @@ typedef void(^OMNBillPayLinkBlock)(NSString *url);
 @property (nonatomic, assign) long long int amount;
 @property (nonatomic, copy) NSString *table_id;
 @property (nonatomic, copy) NSString *restaurant_id;
+@property (nonatomic, copy) NSString *mail_restaurant_id;
 @property (nonatomic, copy) NSString *status;
 
 - (instancetype)initWithJsonData:(id)jsonData;

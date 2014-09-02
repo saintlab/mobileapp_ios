@@ -11,6 +11,7 @@
 @interface OMNTable : NSObject
 
 @property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *internalTableId;
 
 - (instancetype)initWithJsonData:(id)data;
 

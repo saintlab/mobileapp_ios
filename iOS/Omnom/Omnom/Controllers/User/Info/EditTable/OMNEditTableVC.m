@@ -10,28 +10,28 @@
 #import <OMNStyler.h>
 #import "OMNBluetoothManager.h"
 #import "OMNScanQRCodeVC.h"
+#import "OMNErrorTextField.h"
 
 @interface OMNEditTableVC ()
-<OMNScanQRCodeVCDelegate>
+<OMNScanQRCodeVCDelegate,
+UITextFieldDelegate>
 
 @end
 
 @implementation OMNEditTableVC {
   
-  __weak IBOutlet UISwitch *_switch;
-  __weak IBOutlet UILabel *_tableNumberLabel;
-  __weak IBOutlet UILabel *_switchLabel;
-  __weak IBOutlet UIImageView *_bgIV;
-  __weak IBOutlet UITextField *_tableNumberTF;
-
+  UISwitch *_switch;
+  UILabel *_switchLabel;
+  UILabel *_hintLabel;
+  OMNErrorTextField *_tableNumberTF;
+  
   UIButton *_qrScanButton;
   
   OMNStyle *_style;
-
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (instancetype)init {
+  self = [super init];
   if (self) {
     _style = [[OMNStyler styler] styleForClass:self.class];
   }
@@ -41,33 +41,20 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.view.backgroundColor = [UIColor whiteColor];
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  self.navigationItem.title = NSLocalizedString(@"Номер стола", nil);
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
+//  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+//  
+//  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
   
-  _switch.tintColor = [UIColor redColor];
-  _switch.onTintColor = [UIColor redColor];
-  
-  _tableNumberLabel.font = [_style fontForKey:@"tableNumberLabelFont"];
-  _tableNumberLabel.text = [_style stringForKey:@"tableNumberLabelText"];
-  _tableNumberLabel.textColor = [_style colorForKey:@"tableNumberLabelColor"];
-  _tableNumberLabel.textAlignment = NSTextAlignmentCenter;
-  
-  _tableNumberTF.textAlignment = NSTextAlignmentCenter;
-  _tableNumberTF.font = [_style fontForKey:@"tableNumberFieldFont"];
-  _tableNumberTF.textColor = [_style colorForKey:@"tableNumberFieldColor"];
-  _tableNumberTF.rightViewMode = UITextFieldViewModeAlways;
-  
-  _switchLabel.font = [_style fontForKey:@"switchLabelFont"];
-  _switchLabel.text = [_style stringForKey:@"switchLabelText"];
-  _switchLabel.textColor = [_style colorForKey:@"switchLabelColor"];
+  [self setup];
   
   _qrScanButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
   [_qrScanButton addTarget:self action:@selector(scanQRCode) forControlEvents:UIControlEventTouchUpInside];
-  _tableNumberTF.rightView = _qrScanButton;
   
   _switch.hidden = YES;
   _switchLabel.hidden = YES;
@@ -79,18 +66,69 @@
         
         _switch.hidden = NO;
         _switchLabel.hidden = NO;
-
+        
       } break;
       default: {
-  
-        _tableNumberTF.rightView = _qrScanButton;
+        
+        //        _tableNumberTF.rightView = _qrScanButton;
         
       } break;
     }
-
+    
     [self updateTableNumberField];
     
   }];
+  
+}
+
+- (void)setup {
+  
+  _switch = [[UISwitch alloc] init];
+  _switch.on = YES;
+  [_switch addTarget:self action:@selector(switchChange:) forControlEvents:UIControlEventValueChanged];
+  _switch.translatesAutoresizingMaskIntoConstraints = NO;
+  _switch.onTintColor = [UIColor redColor];
+  [self.view addSubview:_switch];
+  
+  _tableNumberTF = [[OMNErrorTextField alloc] initWithWidth:125.0f];
+  _tableNumberTF.textFieldDelegate = self;
+  _tableNumberTF.textField.returnKeyType = UIReturnKeyDone;
+  _tableNumberTF.textField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:50.0f];
+  _tableNumberTF.textField.textColor = colorWithHexString(@"000000");
+  _tableNumberTF.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+  _tableNumberTF.textField.textAlignment = NSTextAlignmentCenter;
+  [self.view addSubview:_tableNumberTF];
+  
+  _switchLabel = [[UILabel alloc] init];
+  _switchLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _switchLabel.text = NSLocalizedString(@"Определять автоматически", nil);
+  _switchLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _switchLabel.textColor = colorWithHexString(@"000000");
+  [self.view addSubview:_switchLabel];
+
+  _hintLabel = [[UILabel alloc] init];
+  _hintLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _hintLabel.text = NSLocalizedString(@"Номер лучше уточнить у официанта", nil);
+  _hintLabel.textAlignment = NSTextAlignmentCenter;
+  _hintLabel.numberOfLines = 0;
+  _hintLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:15.0f];
+  _hintLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  [self.view addSubview:_hintLabel];
+  
+  NSDictionary *views =
+  @{
+    @"switch" : _switch,
+    @"tableNumberTF" : _tableNumberTF,
+    @"hintLabel" : _hintLabel,
+    @"switchLabel" : _switchLabel,
+    @"topLayoutGuide" : self.topLayoutGuide,
+    };
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tableNumberTF]-|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[switchLabel]-[switch]-|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[hintLabel]-|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[tableNumberTF]-[switch]-[hintLabel]" options:0 metrics:nil views:views]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_switchLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_switch attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   
 }
 
@@ -105,8 +143,8 @@
 #pragma mark - OMNScanQRCodeVCDelegate
 
 - (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
-
-  _tableNumberTF.text = code;
+  
+  _tableNumberTF.textField.text = code;
   [self.navigationController popToViewController:self animated:YES];
   
 }
@@ -119,7 +157,7 @@
   
   BOOL enterTableNumberEnabled = (NO == _switch.on || _switch.hidden);
   
-  _tableNumberTF.enabled = enterTableNumberEnabled;
+  _tableNumberTF.textField.enabled = enterTableNumberEnabled;
   if (enterTableNumberEnabled) {
     [_tableNumberTF becomeFirstResponder];
   }
@@ -142,6 +180,13 @@
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+  [self.delegate editTableVCDidFinish:self];
+  return YES;
 }
 
 @end

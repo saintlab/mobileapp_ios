@@ -18,6 +18,7 @@
     self.amount = [jsonData[@"amount"] longLongValue];
     self.table_id = jsonData[@"table_id"];
     self.restaurant_id = jsonData[@"restaurant_id"];
+    self.mail_restaurant_id = jsonData[@"mail_restaurant_id"];
     self.status = jsonData[@"status"];
   }
   return self;

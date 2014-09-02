@@ -84,7 +84,7 @@
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[errorLabel]|" options:0 metrics:nil views:views]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(45)][colorView(1)]-[errorLabel]|" options:0 metrics:nil views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(>=45)][colorView(1)]-[errorLabel]|" options:0 metrics:nil views:views]];
   
   [self updateColorView];
   
@@ -98,15 +98,38 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   [self setError:nil animated:NO];
-  return YES;
+  
+  if ([self.textFieldDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
+    return [self.textFieldDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string];
+  }
+  else {
+    return YES;
+  }
+  
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+  if ([self.textFieldDelegate respondsToSelector:@selector(textFieldShouldReturn:)]) {
+    return [self.textFieldDelegate textFieldShouldReturn:textField];
+  }
+  else {
+    return YES;
+  }
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
   [self updateColorView];
+  if ([self.textFieldDelegate respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
+    [self.textFieldDelegate textFieldDidBeginEditing:textField];
+  }
+  
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
   [self updateColorView];
+  if ([self.textFieldDelegate respondsToSelector:@selector(textFieldDidEndEditing:)]) {
+    [self.textFieldDelegate textFieldDidEndEditing:textField];
+  }
 }
 
 - (void)setError:(NSString *)text animated:(BOOL)animated {

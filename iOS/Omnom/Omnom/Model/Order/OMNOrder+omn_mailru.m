@@ -10,6 +10,12 @@
 #import <OMNMailRuPaymentInfo.h>
 #import "OMNUser.h"
 
+@interface OMNMailRuPaymentInfo (omn_order)
+
+- (void)omn_updateWithBill:(OMNBill *)bill;
+
+@end
+
 @implementation OMNOrder (omn_mailru)
 
 - (void)getPaymentInfoForUser:(OMNUser *)user cardInfo:(OMNMailRuCardInfo *)cardInfo copmletion:(OMNMailRuPaymentInfoBlock)completionBlock failure:(void (^)(NSError *error))failureBlock {
@@ -23,8 +29,8 @@
   paymentInfo.extra.restaurant_id = @"1";
   paymentInfo.order_amount = @(self.toPayAmount/100.);
   
-  if (self.bill_id) {
-    paymentInfo.order_id = self.bill_id;
+  if (self.bill) {
+    [paymentInfo omn_updateWithBill:self.bill];
     completionBlock(paymentInfo);
   }
   else {
@@ -32,14 +38,23 @@
     __weak typeof(self)weakSelf = self;
     [self createBill:^(OMNBill *bill) {
       
-      weakSelf.bill_id = bill.id;
-      paymentInfo.order_id = bill.id;
+      weakSelf.bill = bill;
+      [paymentInfo omn_updateWithBill:bill];
       completionBlock(paymentInfo);
       
     } failure:failureBlock];
     
   }
   
+}
+
+@end
+
+@implementation OMNMailRuPaymentInfo (omn_order)
+
+- (void)omn_updateWithBill:(OMNBill *)bill {
+  self.order_id = bill.id;
+  self.extra.restaurant_id = bill.mail_restaurant_id;
 }
 
 @end

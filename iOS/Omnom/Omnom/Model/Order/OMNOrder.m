@@ -32,7 +32,7 @@
     self.openTime = jsonData[@"open_time"];
     self.modifiedTime = jsonData[@"modified_time"];
     self.restaurant_id = jsonData[@"restaurant_id"];
-    self.tableId = jsonData[@"table_id"];
+    self.table_id = jsonData[@"table_id"];
     self.paid_amount = [jsonData[@"paid_amount"] longLongValue];
 
     NSArray *itemsData = jsonData[@"items"];
@@ -109,7 +109,8 @@
     @"amount": @(self.toPayAmount),
     @"restaurant_id" : self.restaurant_id,
     @"restaurateur_order_id" : self.id,
-    @"table_id" : self.tableId,
+    @"table_id" : self.table_id,
+    @"description" : @"",
     };
   
   [[OMNOperationManager sharedManager] POST:@"/bill" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -132,7 +133,7 @@
 
 - (void)billCall:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders/%@/bill/call", self.restaurant_id, self.tableId, self.id];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders/%@/bill/call", self.restaurant_id, self.table_id, self.id];
 
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
@@ -154,7 +155,7 @@
 }
 
 - (void)billCallStop:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders/%@/bill/call/stop", self.restaurant_id, self.tableId, self.id];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders/%@/bill/call/stop", self.restaurant_id, self.table_id, self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if (responseObject[@"status"]) {

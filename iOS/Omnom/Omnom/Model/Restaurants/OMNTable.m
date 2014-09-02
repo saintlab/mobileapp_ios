@@ -14,6 +14,7 @@
   self = [super init];
   if (self) {
     self.id = data[@"id"];
+    self.internalTableId = data[@"internalTableId"];
   }
   return self;
 }

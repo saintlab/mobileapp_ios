@@ -241,8 +241,6 @@
 		939F991719752BE90051822E /* OMNBankCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939F98F919752BE90051822E /* OMNBankCardsVC.xib */; };
 		939F991819752BE90051822E /* OMNEditTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98FC19752BE90051822E /* OMNEditTableVC.m */; };
 		939F991919752BE90051822E /* OMNEditTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98FC19752BE90051822E /* OMNEditTableVC.m */; };
-		939F991A19752BE90051822E /* OMNEditTableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939F98FD19752BE90051822E /* OMNEditTableVC.xib */; };
-		939F991B19752BE90051822E /* OMNEditTableVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939F98FD19752BE90051822E /* OMNEditTableVC.xib */; };
 		939F991C19752BE90051822E /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98FF19752BE90051822E /* OMNUserInfoVC.m */; };
 		939F991D19752BE90051822E /* OMNUserInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98FF19752BE90051822E /* OMNUserInfoVC.m */; };
 		939F991E19752BE90051822E /* OMNUserInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939F990019752BE90051822E /* OMNUserInfoVC.xib */; };
@@ -605,7 +603,6 @@
 		939F98F919752BE90051822E /* OMNBankCardsVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNBankCardsVC.xib; sourceTree = "<group>"; };
 		939F98FB19752BE90051822E /* OMNEditTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditTableVC.h; sourceTree = "<group>"; };
 		939F98FC19752BE90051822E /* OMNEditTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditTableVC.m; sourceTree = "<group>"; };
-		939F98FD19752BE90051822E /* OMNEditTableVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNEditTableVC.xib; sourceTree = "<group>"; };
 		939F98FE19752BE90051822E /* OMNUserInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoVC.h; sourceTree = "<group>"; };
 		939F98FF19752BE90051822E /* OMNUserInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoVC.m; sourceTree = "<group>"; };
 		939F990019752BE90051822E /* OMNUserInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNUserInfoVC.xib; sourceTree = "<group>"; };
@@ -1435,7 +1432,6 @@
 			children = (
 				939F98FB19752BE90051822E /* OMNEditTableVC.h */,
 				939F98FC19752BE90051822E /* OMNEditTableVC.m */,
-				939F98FD19752BE90051822E /* OMNEditTableVC.xib */,
 			);
 			path = EditTable;
 			sourceTree = "<group>";
@@ -1732,7 +1728,6 @@
 				93E299A9197D0C9700051B04 /* OMNCircleRootVC.xib in Resources */,
 				93676E4018D1EAB900FC55F1 /* restaurants.json in Resources */,
 				938E8F68192F5C030088EF38 /* ALSRubl.otf in Resources */,
-				939F991A19752BE90051822E /* OMNEditTableVC.xib in Resources */,
 				939F991E19752BE90051822E /* OMNUserInfoVC.xib in Resources */,
 				93E29999197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */,
 				938F3A4F198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
@@ -1778,7 +1773,6 @@
 				93C9915F193F175E0028F76C /* FuturaPT-Book.ttf in Resources */,
 				938F3A48198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				937A37851981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
-				939F991B19752BE90051822E /* OMNEditTableVC.xib in Resources */,
 				9389456C19B5957100C37C82 /* constants.json in Resources */,
 				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
 				93750B24196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,

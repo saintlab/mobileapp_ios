@@ -20,7 +20,6 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 @interface OMNOrder : NSObject
 
 @property (nonatomic, copy) NSString *id;
-@property (nonatomic, copy) NSString *bill_id;
 
 @property (nonatomic, assign) long long amount;
 @property (nonatomic, copy) NSString *created;
@@ -29,7 +28,7 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic, copy) NSString *openTime;
 @property (nonatomic, copy) NSString *modifiedTime;
-@property (nonatomic, copy) NSString *tableId;
+@property (nonatomic, copy) NSString *table_id;
 @property (nonatomic, copy) NSString *restaurant_id;
 @property (nonatomic, copy) NSString *restarateurOrderId;
 
@@ -41,6 +40,8 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 @property (nonatomic, assign) long long toPayAmount;
 @property (nonatomic, assign) long long tipAmount;
 @property (nonatomic, assign) long long paid_amount;
+
+@property (nonatomic, strong) OMNBill *bill;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 

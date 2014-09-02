@@ -62,6 +62,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.navigationItem.title = @"";
+  
   [_pinButton setImage:[UIImage imageNamed:@"table_marker_icon"] forState:UIControlStateNormal];
   _pinButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
   [_pinButton setTitle:@"284" forState:UIControlStateNormal];
