@@ -8,7 +8,6 @@
             <connections>
                 <outlet property="_paymentView" destination="U7Q-Au-hTx" id="Oxc-eE-mjp"/>
                 <outlet property="_tipLabel" destination="jfw-6Z-OH0" id="LJQ-TK-9dz"/>
-                <outlet property="_toPayButton" destination="ULB-uT-bQT" id="vCF-wA-cWC"/>
                 <outlet property="_toPayLabel" destination="X8K-Z6-5qo" id="kJF-kB-0MB"/>
                 <outlet property="view" destination="mFc-S6-dbH" id="iRX-Af-Al2"/>
             </connections>

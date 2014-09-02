@@ -12,6 +12,7 @@
 #import "OMNUserInfoModel.h"
 #import "OMNEditTableVC.h"
 #import <OMNStyler.h>
+#import <BlocksKit+UIKit.h>
 
 @interface OMNUserInfoVC ()
 <OMNEditTableVCDelegate>
@@ -72,7 +73,7 @@
   [_logoutButton setTitle:NSLocalizedString(@"Выход из аккаунта", nil) forState:UIControlStateNormal];
   _logoutButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
   [_logoutButton setTitleColor:colorWithHexString(@"D0021B") forState:UIControlStateNormal];
-  
+  [_logoutButton addTarget:self action:@selector(logoutTap) forControlEvents:UIControlEventTouchUpInside];
   _userNameLabel.numberOfLines = 3;
   _userNameLabel.textColor = colorWithHexString(@"000000");
   _userNameLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
@@ -101,6 +102,18 @@
   UIEdgeInsets inset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_tableFooterView.frame), 0.0f);
   self.tableView.contentInset = inset;
   self.tableView.scrollIndicatorInsets = inset;
+  
+}
+
+- (void)logoutTap {
+  
+  UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
+  [logoutSheet bk_setDestructiveButtonWithTitle:NSLocalizedString(@"Выйти", nil) handler:^{
+    
+    [[OMNAuthorisation authorisation] logout];
+    
+  }];
+  [logoutSheet showInView:self.view.window];
   
 }
 

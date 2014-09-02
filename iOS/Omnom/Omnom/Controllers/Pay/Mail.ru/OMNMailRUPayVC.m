@@ -252,11 +252,15 @@ OMNMailRUCardConfirmVCDelegate>
   @{
     @"height" : @(50.0f),
     @"offset" : @(8.0f),
+    @"bottomOffset" : @(10.0f),
+    @"payButtonWidth" : @(200.0f),
     };
   
   [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[offerLabel]-|" options:0 metrics:0 views:views]];
-  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payButton]-|" options:0 metrics:0 views:views]];
-  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[offerLabel]-(offset)-[payButton]-|" options:0 metrics:metrics views:views]];
+  [_bottomView addConstraint:[NSLayoutConstraint constraintWithItem:_payButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_bottomView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  
+  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[payButton(payButtonWidth)]" options:0 metrics:metrics views:views]];
+  [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[offerLabel]-(offset)-[payButton]-(bottomOffset)-|" options:0 metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView]|" options:0 metrics:metrics views:views]];
   

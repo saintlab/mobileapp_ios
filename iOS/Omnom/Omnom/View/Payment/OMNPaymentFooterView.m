@@ -72,10 +72,9 @@
   _cancelEditingButton.tintColor = [UIColor whiteColor];
   
   _payButton.titleLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:20.0f];
-  [_payButton setBackgroundImage:[UIImage imageNamed:@"button_red"] forState:UIControlStateNormal];
+  [_payButton setBackgroundImage:[UIImage imageNamed:@"red_roundy_button"] forState:UIControlStateNormal];
   [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
-  [_payButton sizeToFit];
   
   _amountPercentControl.delegate = self;
   

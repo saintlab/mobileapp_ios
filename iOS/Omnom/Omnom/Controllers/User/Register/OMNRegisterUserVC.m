@@ -73,12 +73,17 @@
   UIView *contentView = [[UIView alloc] init];
   contentView.translatesAutoresizingMaskIntoConstraints = NO;
   [_scroll addSubview:contentView];
-  
+
   UILabel *hintLabel = [[UILabel alloc] init];
+  hintLabel.userInteractionEnabled = YES;
   hintLabel.translatesAutoresizingMaskIntoConstraints = NO;
   hintLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   hintLabel.textColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-  hintLabel.text = NSLocalizedString(@"Укажите, чтобы мы не забыли вас поздравить", nil);
+  
+  NSMutableAttributedString * str = [[NSMutableAttributedString alloc] initWithString:@"Google"];
+  [str addAttribute:NSLinkAttributeName value:@"http://www.google.com" range:NSMakeRange(0, str.length)];
+  hintLabel.attributedText = str;
+//  hintLabel.text = NSLocalizedString(@"Укажите, чтобы мы не забыли вас поздравить", nil);
   hintLabel.textAlignment = NSTextAlignmentCenter;
   hintLabel.numberOfLines = 0;
   [contentView addSubview:hintLabel];
@@ -118,9 +123,9 @@
     @"tf2" : _emailTF,
     @"tf3" : _phoneTF,
     @"tf4" : _birthdayTF,
-    @"hintLabel" : hintLabel,
     @"errorLabel" : _errorLabel,
     @"contentView" : contentView,
+    @"hintLabel" : hintLabel,
     @"topLayoutGuide" : self.topLayoutGuide,
     @"scroll" : _scroll,
     };
@@ -141,7 +146,7 @@
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[errorLabel]-|" options:0 metrics:nil views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-45-[errorLabel]-[tf4]-[hintLabel]-|" options:0 metrics:nil views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-[tf4]-45-[errorLabel]-[hintLabel]-|" options:0 metrics:nil views:views]];
 
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   

@@ -46,7 +46,6 @@ OMNMailRUPayVCDelegate>
   OMNOrderDataSource *_dataSource;
 
   __weak IBOutlet OMNPaymentFooterView *_paymentView;
-  __weak IBOutlet UIButton *_toPayButton;
   __weak IBOutlet UILabel *_toPayLabel;
   __weak IBOutlet UILabel *_tipLabel;
   
@@ -193,6 +192,7 @@ OMNMailRUPayVCDelegate>
   
   _tipLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   _tipLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
+  
   _toPayLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   _toPayLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
   
