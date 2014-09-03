@@ -15,9 +15,9 @@
 #import "OMNConstants.h"
 #import "OMNUtils.h"
 #import <OMNStyler.h>
+#import "OMNAmountPercentValue.h"
 
 @interface OMNPaymentFooterView ()
-<GAmountPercentControlDelegate>
 
 @property (nonatomic, assign) BOOL tipsMode;
 
@@ -35,18 +35,12 @@
   __weak IBOutlet UIButton *_doneEditingButton;
 
   __weak IBOutlet OMNAmountPercentControl *_amountPercentControl;
+  OMNAmountPercentValue *_tipAmountPercentValue;
   
   BOOL _keyboardShown;
 }
 
-- (void)dealloc {
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-}
-
-- (id)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
     [self setup];
@@ -76,42 +70,68 @@
   [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   
-  _amountPercentControl.delegate = self;
-  
   _tipsSelector.selectedIndex = 1;
-  
-  [_tipsSelector bk_addEventHandler:^(UISegmentedControl *sender) {
-
-    [self updateToPayButton];
-    
-  } forControlEvents:UIControlEventValueChanged];
   
   __weak typeof(self)weakSelf = self;
   [_tipsSelector bk_addEventHandler:^(OMNTipSelector *sender) {
     
-    __strong __typeof(weakSelf)strongSelf = weakSelf;
     if (3 == sender.selectedIndex) {
       
-      strongSelf.tipsMode = YES;
-      [_amountPercentControl becomeFirstResponder];
+      [weakSelf startTipEditing];
       
     }
     else {
       
-      [strongSelf updateToPayButton];
+      [weakSelf updateToPayButton];
       
     }
     
   } forControlEvents:UIControlEventValueChanged];
   
-  [self setKeyboardShown:NO];
+  [_amountPercentControl bk_addEventHandler:^(id sender) {
+
+    [weakSelf updatePercentAmountControl];
+    
+  } forControlEvents:UIControlEventEditingDidBegin];
+  [_amountPercentControl bk_addEventHandler:^(id sender) {
+    
+    [weakSelf updatePercentAmountControl];
+    
+  } forControlEvents:UIControlEventEditingDidEnd];
   
-  [self updateToPayButton];
+  [self setKeyboardShown:NO];
   
 }
 
-- (void)setFrame:(CGRect)frame {
-  [super setFrame:frame];
+- (void)startTipEditing {
+  
+  self.tipsMode = YES;
+  if (_tipAmountPercentValue) {
+    _amountPercentControl.amountPercentValue = _tipAmountPercentValue;
+  }
+  else {
+    OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
+    amountPercentValue.amount = _calculationAmount.customTip.amount;
+    amountPercentValue.percent = _calculationAmount.customTip.percent;
+    amountPercentValue.totalAmount = _calculationAmount.enteredAmount;
+    _amountPercentControl.amountPercentValue = amountPercentValue;
+  }
+  
+  [_amountPercentControl becomeFirstResponder];
+  
+}
+
+- (void)updatePercentAmountControl {
+  
+  OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
+  amountPercentValue.isAmountSelected = YES;
+  amountPercentValue.amount = _calculationAmount.enteredAmount;
+  if (_calculationAmount.expectedValue) {
+    amountPercentValue.percent = 100.*(double)_calculationAmount.enteredAmount/_calculationAmount.expectedValue;
+  }
+  amountPercentValue.totalAmount = _calculationAmount.expectedValue;
+  _amountPercentControl.amountPercentValue = amountPercentValue;
+  
 }
 
 - (void)setCalculationAmount:(OMNCalculationAmount *)calculationAmount {
@@ -119,6 +139,7 @@
   _calculationAmount = calculationAmount;
   [_tipsSelector setCalculationAmount:calculationAmount];
   [self updateView];
+  [self updatePercentAmountControl];
   
 }
 
@@ -171,7 +192,6 @@
 
   [_tipsSelector update];
   [self updateToPayButton];
-  [_amountPercentControl reset];
   
 }
 
@@ -185,49 +205,27 @@
   
   if (self.tipsMode) {
 
-    _calculationAmount.customTipAmount = _amountPercentControl.selectedAmount;
+    _tipAmountPercentValue = _amountPercentControl.amountPercentValue;
+    _tipAmountPercentValue.isAmountSelected = [_amountPercentControl isAmountSelected];
+    OMNTip *customTip = _calculationAmount.customTip;
+    if (_tipAmountPercentValue.isAmountSelected) {
+      customTip.amount = _tipAmountPercentValue.amount;
+      customTip.percent = 0.0;
+    }
+    else {
+      customTip.amount = 0;
+      customTip.percent = _tipAmountPercentValue.percent;
+    }
    
   }
   else {
 
-    _calculationAmount.enteredAmount = _amountPercentControl.selectedAmount;
+    _calculationAmount.enteredAmount = _amountPercentControl.amountPercentValue.amount;
     
   }
   
   [_amountPercentControl resignFirstResponder];
 
-}
-
-#pragma mark - GAmountPercentControlDelegate
-
-- (long long)expectedValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
-  
-  if (self.tipsMode) {
-  
-    return _calculationAmount.enteredAmount;
-    
-  }
-  else {
-    
-    return _calculationAmount.expectedValue;
-    
-  }
-
-}
-
-- (long long)enteredValueForAmountPercentControl:(OMNAmountPercentControl *)amountPercentControl {
-  long long enteredValue = 0;
-  if (self.tipsMode) {
-    
-    enteredValue = _calculationAmount.customTipAmount;
-    
-  }
-  else {
-    
-    enteredValue = _calculationAmount.enteredAmount;
-    
-  }
-  return enteredValue;
 }
 
 @end

@@ -37,6 +37,8 @@
 		9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE1192F365B0053F3A4 /* NSString+jquery.m */; };
 		9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */; };
 		9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
+		931B15CE19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */; };
+		931B15CF19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */; };
 		931BD3881941C04100F77AA7 /* OMNCalcaulcationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */; };
 		932118121962D8A700183729 /* OMNProductsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932118111962D8A700183729 /* OMNProductsModel.m */; };
 		932118131962D8A700183729 /* OMNProductsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932118111962D8A700183729 /* OMNProductsModel.m */; };
@@ -407,6 +409,8 @@
 		9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+OMNQuery.m"; sourceTree = "<group>"; };
 		9319FDE6192F36910053F3A4 /* UIView+frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frame.h"; sourceTree = "<group>"; };
 		9319FDE7192F36910053F3A4 /* UIView+frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frame.m"; sourceTree = "<group>"; };
+		931B15CC19B75BB900A774E4 /* OMNAmountPercentValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAmountPercentValue.h; sourceTree = "<group>"; };
+		931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAmountPercentValue.m; sourceTree = "<group>"; };
 		931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCalcaulcationTests.m; sourceTree = "<group>"; };
 		932118101962D8A700183729 /* OMNProductsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNProductsModel.h; sourceTree = "<group>"; };
 		932118111962D8A700183729 /* OMNProductsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNProductsModel.m; sourceTree = "<group>"; };
@@ -1272,6 +1276,8 @@
 				938E8F4B192F3A200088EF38 /* OMNCalculationAmount.m */,
 				938E8F4C192F3A200088EF38 /* OMNTip.h */,
 				938E8F4D192F3A200088EF38 /* OMNTip.m */,
+				931B15CC19B75BB900A774E4 /* OMNAmountPercentValue.h */,
+				931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */,
 			);
 			path = Tip;
 			sourceTree = "<group>";
@@ -1971,6 +1977,7 @@
 				938E8F55192F3A200088EF38 /* OMNOrderItem.m in Sources */,
 				939DA162195405650063AB23 /* OMNAuthorizationVC.m in Sources */,
 				930554FF1935DA7C00E6F4EC /* OMNCalculatorVC.m in Sources */,
+				931B15CE19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */,
 				932B185B19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
 				939F994B197544820051822E /* OMNUserInfoModel.m in Sources */,
 				93535EFF198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
@@ -2109,6 +2116,7 @@
 				9345AFCA199B7E1A00328F73 /* OMNRestaurantInfoItem.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				936E71F619923DE2008FF864 /* OMNShakeWindow.m in Sources */,
+				931B15CF19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
 				93E2998A197CE0FD00051B04 /* OMNSearchBeaconVC.m in Sources */,
 				9378228E1963E29900CE6661 /* OMNPayOrderVC.m in Sources */,

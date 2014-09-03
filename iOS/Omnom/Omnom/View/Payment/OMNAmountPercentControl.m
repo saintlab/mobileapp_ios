@@ -38,8 +38,7 @@ UITextFieldDelegate>
   UIButton *_commaButton;
 }
 
-@dynamic selectedPercent;
-@dynamic selectedAmount;
+@synthesize amountPercentValue=_amountPercentValue;
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
@@ -102,7 +101,7 @@ UITextFieldDelegate>
   _percentPicker = [[UIPickerView alloc] init];
   _percentPicker.delegate = self;
   _percentPicker.dataSource = self;
-
+  
   _percentTF = [self createCurrencyTextField];
   _percentTF.tintColor = colorWithHexString(@"157EFB");
   _percentTF.currencyNumberFormatter.currencySymbol = @"%";
@@ -143,7 +142,7 @@ UITextFieldDelegate>
   @{
     @"seporatorViewHeight" : @(11.0f),
     };
-
+  
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:-20.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
@@ -164,29 +163,24 @@ UITextFieldDelegate>
   
 }
 
-- (double)expectedAmount {
-  
-  return [self.delegate expectedValueForAmountPercentControl:self];
-  
+- (OMNAmountPercentValue *)amountPercentValue {
+  return _amountPercentValue;
 }
 
-- (void)updatePercentValue {
-  
-  double percentValue = (self.expectedAmount > 0) ? (100.*(double)[self selectedAmount] / self.expectedAmount) : (0.);
-  
-  if (percentValue < [_percentPicker numberOfRowsInComponent:0]) {
-    
-    [_percentPicker selectRow:(NSInteger)percentValue inComponent:0 animated:NO];
-    
+- (void)setAmountPercentValue:(OMNAmountPercentValue *)amountPercentValue {
+  _amountPercentValue = amountPercentValue;
+  if (amountPercentValue.isAmountSelected) {
+    [self setAmountValue:_amountPercentValue.amount];
+    [self updatePercentValue];
   }
   else {
-    
-    [_percentPicker selectRow:[_percentPicker numberOfRowsInComponent:0] - 1 inComponent:0 animated:NO];
-    
+    [self setPercentValue:_amountPercentValue.percent];
+    [self updateAmountValue];
   }
-  
-  _percentTF.amount = @(percentValue);
-  
+}
+
+- (BOOL)isAmountSelected {
+  return _amountTF.isFirstResponder;
 }
 
 - (BOOL)isFirstResponder {
@@ -197,16 +191,13 @@ UITextFieldDelegate>
 - (void)omn_setIsFirstResponder:(BOOL)isFirstResponder {
   
   _isFirstResponder = isFirstResponder;
-
+  
 }
 
 - (BOOL)becomeFirstResponder {
+  
   [self omn_setIsFirstResponder:YES];
   BOOL result = [_amountTF becomeFirstResponder];
-  
-  [self updateAmountValue];
-  [self updatePercentValue];
-  
   return result;
   
 }
@@ -215,48 +206,60 @@ UITextFieldDelegate>
   
   [self omn_setIsFirstResponder:NO];
   BOOL result = [_amountTF resignFirstResponder] || [_percentTF resignFirstResponder];
+  [self sendActionsForControlEvents:UIControlEventEditingDidEnd];
   return result;
-  
-}
-
-- (void)reset {
-  
-  long long amount = [self.delegate enteredValueForAmountPercentControl:self];
-  [self setAmountValue:amount];
   
 }
 
 - (void)updateAmountValue {
   
-  long long amount = self.expectedAmount * _percentTF.amount.doubleValue / 100.;
+  long long amount = _amountPercentValue.totalAmount * [self selectedPercent] / 100.;
   [self setAmountValue:amount];
   
 }
 
-- (void)setCurrentAmount:(long long)currentAmount {
-  _currentAmount = currentAmount;
-  [self setAmountValue:_currentAmount];
+- (void)setAmountValue:(long long)amount {
+  
+  _amountTF.text = [OMNUtils moneyStringFromKop:amount];
+  [self updateCaratPosition];
+  _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
+  _amountPercentValue.amount = amount;
   
 }
 
-- (void)setAmountValue:(long long)amount {
-  _amountTF.text = [OMNUtils moneyStringFromKop:amount];
-  _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
-  [self updatePercentValue];
+- (void)setPercentValue:(double)percentValue {
+  _percentTF.amount = @(percentValue);
+  _amountPercentValue.percent = percentValue;
+}
+
+- (void)updatePercentValue {
+  
+  double percentValue = 100.*(double)_amountPercentValue.amount/_amountPercentValue.totalAmount;
+  _amountPercentValue.percent = percentValue;
+  
+  if (percentValue < [_percentPicker numberOfRowsInComponent:0]) {
+    
+    [_percentPicker selectRow:(NSInteger)percentValue inComponent:0 animated:NO];
+    
+  }
+  else {
+    
+    [_percentPicker selectRow:20 inComponent:0 animated:NO];
+    
+  }
+  
+  _percentTF.amount = @(percentValue);
+  
 }
 
 - (long long)selectedAmount {
-  
   NSString *pureAmount = [self pureAmountString:_amountTF.text];
   long long amount = 100ll*[pureAmount doubleValue];
   return amount;
-  
 }
 
-- (long long)selectedPercent {
-  
-  return [_percentTF.amount doubleValue]*100;
-  
+- (double)selectedPercent {
+  return [_percentTF.amount doubleValue];
 }
 
 - (void)layoutSubviews {
@@ -283,7 +286,7 @@ UITextFieldDelegate>
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
   
-  return [NSString stringWithFormat:@"%ld", (long)row];
+  return [NSString stringWithFormat:@"%ld%%", (long)row];
   
 }
 
@@ -297,10 +300,9 @@ UITextFieldDelegate>
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
   
-  double percentValue = row;
-  _percentTF.amount = @(percentValue);
+  [self setPercentValue:(double)row];
   [_percentTF sendActionsForControlEvents:UIControlEventEditingChanged];
-
+  
 }
 
 #pragma mark - UITextFieldDelegate
@@ -335,8 +337,8 @@ UITextFieldDelegate>
     
     long long value = [finalString doubleValue]*100;
     value = MIN(value, kMaxEnteredValue);
-    textField.text = [OMNUtils moneyStringFromKop:value];
-    [self updateCaratPosition];
+    [self setAmountValue:value];
+    [self updatePercentValue];
     return NO;
   }
   
@@ -352,7 +354,7 @@ UITextFieldDelegate>
     [UIView animateWithDuration:0.3 animations:^{
       [self setNeedsLayout];
     }];
-    
+    [self sendActionsForControlEvents:UIControlEventEditingDidBegin];
     return NO;
   }
   return YES;
@@ -383,35 +385,40 @@ UITextFieldDelegate>
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
+  
   if ([textField isEqual:_amountTF]) {
     [_commaButton removeFromSuperview];
   }
+  
 }
 
 - (void)commaTap:(UIButton *)b {
+  
   if (NSNotFound == [_amountTF.text rangeOfString:kCommaString].location) {
     NSString *endOfString = [_amountTF.text substringFromIndex:_amountTF.text.length - 2];
     NSString *commaEndOfString = [kCommaString stringByAppendingString:endOfString];
     _amountTF.text = [_amountTF.text stringByReplacingOccurrencesOfString:endOfString withString:commaEndOfString];
     [self updateCaratPosition];
   }
+  
 }
 
 - (void)updateCaratPosition {
+  
   if (_amountTF.text.length >= 2) {
     [self setSelectionRange:NSMakeRange(_amountTF.text.length - 2, 0)];
   }
-  [self updatePercentValue];
+  
 }
 
 - (void)setSelectionRange:(NSRange) range {
-  UITextPosition *start = [_amountTF positionFromPosition: [_amountTF beginningOfDocument]
-                                              offset: range.location];
+  UITextPosition *start = [_amountTF positionFromPosition:[_amountTF beginningOfDocument]
+                                                   offset:range.location];
   
-  UITextPosition *end = [_amountTF positionFromPosition: start
-                                            offset: range.length];
+  UITextPosition *end = [_amountTF positionFromPosition:start
+                                                 offset:range.length];
   
-  [_amountTF setSelectedTextRange: [_amountTF textRangeFromPosition:start toPosition:end]];
+  [_amountTF setSelectedTextRange:[_amountTF textRangeFromPosition:start toPosition:end]];
 }
 
 @end

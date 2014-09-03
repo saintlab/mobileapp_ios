@@ -15,18 +15,14 @@
 - (instancetype)initWithOrder:(OMNOrder *)order;
 
 @property (nonatomic, strong, readonly) NSArray *tips;
-
+@property (nonatomic, strong, readonly) OMNTip *customTip;
 @property (nonatomic, assign, readonly) long long expectedValue;
-
 @property (nonatomic, assign, readonly) long long totalValue;
-
 @property (nonatomic, assign, readonly) long long tipAmount;
-
 @property (nonatomic, assign) long long enteredAmount;
 
 @property (nonatomic, assign) NSInteger selectedTipIndex;
 
-@property (nonatomic, assign) long long customTipAmount;
 
 - (BOOL)paymentValueIsTooHigh;
 

@@ -20,10 +20,11 @@
   self = [super init];
   if (self) {
     
+    _order = order;
     _tips = order.tips;
-    _expectedValue = order.total;
-    _enteredAmount = order.total;
-
+    _expectedValue = MAX(0ll, order.total - order.paid_amount);
+    _enteredAmount = _expectedValue;
+    
   }
   return self;
 }
@@ -35,7 +36,7 @@
     tip.selected = (idx == selectedTipIndex);
     
   }];
-
+  
 }
 
 - (NSInteger)selectedTipIndex {
@@ -49,13 +50,13 @@
     }
     
   }];
-
+  
   return selectedTipIndex;
   
 }
 
 - (void)setEnteredAmount:(long long)enteredAmount {
-
+  
   [self willChangeValueForKey:NSStringFromSelector(@selector(enteredAmount))];
   _enteredAmount = enteredAmount;
   [self didChangeValueForKey:NSStringFromSelector(@selector(enteredAmount))];
@@ -70,15 +71,17 @@
 
 - (long long)tipAmount {
   
-  long long tipAmount = 0.;
+  long long tipAmount = 0ll;
   OMNTip *selectedTip = self.selectedTip;
   
-  if (_enteredAmount > _order.tipsThreshold &&
-      selectedTip.percent > 0) {
-    tipAmount = _enteredAmount * selectedTip.percent * 0.01;
+  if (selectedTip.amount &&
+      (selectedTip.custom || _enteredAmount < _order.tipsThreshold)) {
+    
+    tipAmount = selectedTip.amount;
+    
   }
   else {
-    tipAmount = selectedTip.amount;
+    tipAmount = _enteredAmount * selectedTip.percent * 0.01;
   }
   
   return tipAmount;
@@ -104,22 +107,22 @@
 - (long long)customTipAmount {
   
   OMNTip *customTip = _tips[3];
-  return (customTip.percent/100.)*_expectedValue;
+  return (customTip.percent*0.01)*_expectedValue;
   
 }
 
-- (void)setCustomTipAmount:(long long)customTipAmount {
-  
-  OMNTip *customTip = _tips[3];
-//  customTip.amount = customTipAmount;
-  customTip.percent = 100*(double)customTipAmount/_expectedValue;
-  
+- (OMNTip *)customTip {
+  return _tips[3];
 }
 
 - (NSString *)titleForAmount:(long long)amount {
-  double percent = 100*amount/_expectedValue;
-  NSString *title = [NSString stringWithFormat:@"%.0f%%\n%@", percent, [OMNUtils evenCommaStringFromKop:amount]];
-  return title;
+  if (_expectedValue) {
+    double percent = 100.*(double)amount/_expectedValue;
+    return [NSString stringWithFormat:@"%.0f%%\n%@", percent, [OMNUtils evenCommaStringFromKop:amount]];
+  }
+  else {
+    return [OMNUtils evenCommaStringFromKop:amount];
+  }
 }
 
 - (NSString *)titleForPercent:(double)percent {
@@ -133,14 +136,14 @@
   OMNTip *tip = tipButton.tip;
   
   if (tip.custom) {
-
-    NSString *title = [self titleForPercent:tip.percent];
+    
+    NSString *title = (tip.amount) ? ([self titleForAmount:tip.amount]) : ([self titleForPercent:tip.percent]);
     [tipButton setTitle:NSLocalizedString(@"Другой", nil) forState:UIControlStateNormal];
     [tipButton setTitle:title forState:UIControlStateSelected];
     
   }
   else if (_enteredAmount > _order.tipsThreshold) {
-
+    
     [tipButton setTitle:[NSString stringWithFormat:@"%.0f%%", tip.percent] forState:UIControlStateNormal];
     [tipButton setTitle:[self titleForPercent:tip.percent] forState:UIControlStateSelected];
     
