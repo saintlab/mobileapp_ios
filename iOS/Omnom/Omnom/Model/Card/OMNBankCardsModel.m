@@ -44,7 +44,7 @@
   OMNBankCard *bankCard = [[OMNBankCard alloc] init];
   bankCard.id = @"1";
   bankCard.association = @"visa";
-  bankCard.masked_pan = @"4111..1111";
+  bankCard.masked_pan = @"4111 .... .... 1111";
   _cards = [NSMutableArray arrayWithObject:bankCard];
   [self updateCardSelection];
   completionBlock();
