@@ -13,6 +13,7 @@
 #import "OMNEditTableVC.h"
 #import <OMNStyler.h>
 #import <BlocksKit+UIKit.h>
+#import "OMNVisitor.h"
 
 @interface OMNUserInfoVC ()
 <OMNEditTableVCDelegate>
@@ -27,6 +28,7 @@
   __weak IBOutlet UIButton *_logoutButton;
   __weak IBOutlet UIButton *_pinButton;
   UIView *_tableFooterView;
+  OMNVisitor *_visitor;
 }
 
 - (void)dealloc {
@@ -39,9 +41,10 @@
   
 }
 
-- (instancetype)init {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super initWithNibName:@"OMNUserInfoVC" bundle:nil];
   if (self) {
+    _visitor = visitor;
     _userInfoModel = [[OMNUserInfoModel alloc] init];
     [_userInfoModel addObserver:self forKeyPath:NSStringFromSelector(@selector(user)) options:NSKeyValueObservingOptionNew context:NULL];
   }
@@ -66,10 +69,10 @@
   
   [_pinButton setImage:[UIImage imageNamed:@"table_marker_icon"] forState:UIControlStateNormal];
   _pinButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
-  [_pinButton setTitle:@"284" forState:UIControlStateNormal];
+  [_pinButton setTitle:_visitor.table.internal_id forState:UIControlStateNormal];
   
   [_iconView setBackgroundImage:[UIImage imageNamed:@"green_circle_big"] forState:UIControlStateNormal];
-  [_iconView setImage:[UIImage imageNamed:@"add_photo_button_icon"] forState:UIControlStateNormal];
+//  [_iconView setImage:[UIImage imageNamed:@"add_photo_button_icon"] forState:UIControlStateNormal];
   
   [_logoutButton setBackgroundImage:[UIImage imageNamed:@"bottom_rectangle"] forState:UIControlStateNormal];
   [_logoutButton setTitle:NSLocalizedString(@"Выход из аккаунта", nil) forState:UIControlStateNormal];
@@ -85,12 +88,12 @@
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Стол", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editTableTap)];
-  self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
-  
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
-  self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
-  
+//  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Стол", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editTableTap)];
+//  self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
+//  
+//  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
+//  self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
+
   UIButton *closeButton = [[UIButton alloc] init];
   [closeButton setImage:[UIImage imageNamed:@"cross_icon_black"] forState:UIControlStateNormal];
   [closeButton sizeToFit];
@@ -115,6 +118,7 @@
     [[OMNAuthorisation authorisation] logout];
     
   }];
+  [logoutSheet bk_addButtonWithTitle:NSLocalizedString(@"Отмена", nil) handler:nil];
   [logoutSheet showInView:self.view.window];
   
 }
