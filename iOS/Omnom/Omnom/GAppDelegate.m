@@ -32,12 +32,15 @@
 #if OMN_TEST
   return YES;
 #endif
-  [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
-    
-    [OMNAuthorisation authorisation];
-    [[OMNVisitorManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
-    
-  }];
+  
+  if ([OMNConstants useBackgroundNotifications]) {
+    [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
+      
+      [OMNAuthorisation authorisation];
+      [[OMNVisitorManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
+      
+    }];
+  }
   
   if (nil == launchOptions[UIApplicationLaunchOptionsLocationKey]) {
     [self startApplication:nil];
@@ -61,6 +64,7 @@
     return;
   }
   
+  [OMNConstants setCustomConfigName:@"config_stand"];
   [OMNMailRuAcquiring setConfig:[OMNConstants mailRuConfig]];
   
   [self initCache];

@@ -34,10 +34,9 @@
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
   [_dataSource registerCellsForTableView:self.tableView];
   
-  self.tableView.allowsMultipleSelection = YES;
   self.tableView.tableFooterView = [[UIView alloc] init];
   self.tableView.dataSource = _dataSource;
-
+  self.tableView.allowsMultipleSelection = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -55,7 +54,6 @@
   }
   
 }
-
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
@@ -85,9 +83,7 @@
     
     OMNOrderItem *orderItem = _order.items[indexPath.row];
     [orderItem changeSelection];
-    
     [self updateTotalValue];
-    
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
   }

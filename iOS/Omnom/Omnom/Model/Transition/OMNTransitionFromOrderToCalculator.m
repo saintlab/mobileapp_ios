@@ -68,7 +68,8 @@
   
   CGPoint destinationOffset = [toViewController.splitTableView convertPoint:CGPointZero toView:containerView];
   destinationOffset.y -= CGRectGetHeight(fromViewController.tableView.tableHeaderView.frame);
-  [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+  
+  [UIView animateWithDuration:duration - 0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
     
     CGRect frame = tableViewSnapshot.frame;
     frame.origin = destinationOffset;
@@ -89,21 +90,30 @@
   } completion:^(BOOL finished) {
     
     [blankView removeFromSuperview];
-    [tableViewSnapshot removeFromSuperview];
-
-    toViewController.view.backgroundColor = [UIColor whiteColor];
-    fromViewController.tableView.hidden = NO;
     toViewController.splitTableView.hidden = NO;
-
-    // Declare that we've finished
-    [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+    toViewController.splitTableView.alpha = 0.0f;
+    
+    [UIView animateWithDuration:0.3 animations:^{
+      
+      toViewController.splitTableView.alpha = 1.0f;
+      
+    } completion:^(BOOL finished) {
+      [tableViewSnapshot removeFromSuperview];
+      
+      toViewController.view.backgroundColor = [UIColor whiteColor];
+      fromViewController.tableView.hidden = NO;
+      
+      // Declare that we've finished
+      [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+      
+    }];
     
   }];
   
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.5;
+  return 0.8;
 }
 
 + (NSArray *)keys {

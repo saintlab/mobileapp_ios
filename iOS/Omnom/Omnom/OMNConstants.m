@@ -80,6 +80,9 @@ static NSDictionary *_customConfig = nil;
 + (BOOL)useStubOrdersData {
   return [self boolForKey:@"UseStubOrdersData"];
 }
++ (BOOL)useBackgroundNotifications {
+  return [self boolForKey:@"UseBackgroundNotifications"];
+}
 + (NSString *)mailRuConfig {
   return [self stringForKey:@"MailRuConfigName"];
 }
