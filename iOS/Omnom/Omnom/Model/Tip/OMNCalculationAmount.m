@@ -84,6 +84,8 @@
     tipAmount = _enteredAmount * selectedTip.percent * 0.01;
   }
   
+  tipAmount = 100LL*ceil(tipAmount*0.01L);
+
   return tipAmount;
   
 }

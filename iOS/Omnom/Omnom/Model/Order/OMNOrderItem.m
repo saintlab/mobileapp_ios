@@ -14,8 +14,8 @@
   self = [super init];
   if (self) {
     self.name = data[@"title"];
-    self.price_per_item = [data[@"price_per_item"] longLongValue]*100L;
-    self.price_total = [data[@"price_per_item"] longLongValue]*100L;
+    self.price_per_item = [data[@"price_per_item"] doubleValue]*100L;
+    self.price_total = [data[@"price_per_item"] doubleValue]*100L;
     self.quantity = [data[@"quantity"] integerValue];
   }
   return self;
