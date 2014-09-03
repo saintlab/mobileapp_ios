@@ -64,7 +64,7 @@ describe(@"call bill test", ^{
     }];
     
     [[expectFutureValue(_bill) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
-    [[_bill.table_id should] equal:_order.tableId];
+    [[_bill.table_id should] equal:_order.table_id];
     
   });
   

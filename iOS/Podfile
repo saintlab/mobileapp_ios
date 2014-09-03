@@ -74,6 +74,12 @@ target :OMNMailRuAcquiring do
   xcodeproj 'OMNMailRuAcquiring/Example/OMNMailRuAcquiring.xcodeproj'
 end
 
+target 'Tests', :exclusive => true do
+  import_pods
+  pod 'Kiwi'
+  xcodeproj 'OMNMailRuAcquiring/Example/OMNMailRuAcquiring.xcodeproj'
+end
+
 target :OMNSocketIO do
   pod "OMNSocketIO", :path => "OMNSocketIO/"
   xcodeproj 'OMNSocketIO/Example/OMNSocketIO.xcodeproj'

@@ -32,6 +32,8 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 
 @property (nonatomic, assign, readonly) BOOL nearTheTable;
 
++ (NSString *)defaultUUID;
+
 - (instancetype)initWithJsonData:(id)jsonData;
 
 - (NSTimeInterval)atTheTableTime;

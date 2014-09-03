@@ -8,6 +8,7 @@
 //
 
 #import "OMNBeaconRangingManager.h"
+#import "OMNBeacon.h"
 
 @interface OMNBeaconRangingManager ()
 <CLLocationManagerDelegate>
@@ -39,8 +40,7 @@
   self = [super init];
   if (self) {
     NSString *identifier = [NSString stringWithFormat:@"%@.rangingTask", [[NSBundle mainBundle] bundleIdentifier]];
-    NSDictionary *beaconInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"OMNBeaconUUID" ofType:@"plist"]];
-    _rangingBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:beaconInfo[@"uuid"]] identifier:identifier];
+    _rangingBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:[OMNBeacon defaultUUID]] identifier:identifier];
     
   }
   return self;

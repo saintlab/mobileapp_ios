@@ -58,7 +58,7 @@ NSString * const kTokenServiceName = @"token";
   _user = user;
   [Crashlytics setUserEmail:user.email];
   [Crashlytics setUserName:user.id];
-  [Crashlytics setUserIdentifier:kBaseUrlString];
+  [Crashlytics setUserIdentifier:[OMNConstants baseUrlString]];
 }
 
 - (BOOL)pushNotificationsRequested {

@@ -18,7 +18,7 @@
   static id manager = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:kBaseUrlString]];
+    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:[OMNConstants baseUrlString]]];
   });
   return manager;
 }

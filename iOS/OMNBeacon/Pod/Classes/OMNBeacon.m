@@ -50,6 +50,13 @@ const NSInteger kNearestDeltaRSSI = 10;
   return self;
 }
 
++ (NSString *)defaultUUID {
+  
+  NSDictionary *beaconInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"OMNBeaconUUID" ofType:@"plist"]];
+  return beaconInfo[@"uuid"];
+  
+}
+
 - (void)updateWithBeacon:(OMNBeacon *)beacon {
   
   dispatch_semaphore_wait(_updateBeaconLock, DISPATCH_TIME_FOREVER);

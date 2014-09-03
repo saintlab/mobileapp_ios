@@ -16,6 +16,7 @@
 #import "OMNShakeWindow.h"
 #import <SDWebImageManager.h>
 #import <Crashlytics/Crashlytics.h>
+#import <OMNMailRuAcquiring.h>
 
 @interface GAppDelegate ()
 
@@ -60,7 +61,7 @@
     return;
   }
   
-  [OMNMailRuAcquiring setConfig:@"OMNMailRu_prod"];
+  [OMNMailRuAcquiring setConfig:[OMNConstants mailRuConfig]];
   
   [self initCache];
   

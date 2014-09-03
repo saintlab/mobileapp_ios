@@ -86,7 +86,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
     [weakSelf totalTap];
     
   }];
-  self.navigationItem.rightBarButtonItem.tintColor = kGreenColor;
+  self.navigationItem.rightBarButtonItem.tintColor = ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1]);
   
   self.view.backgroundColor = [UIColor whiteColor];
   

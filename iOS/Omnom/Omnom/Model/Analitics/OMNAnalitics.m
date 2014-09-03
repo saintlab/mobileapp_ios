@@ -32,12 +32,10 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _mixpanel = [Mixpanel sharedInstanceWithToken:kMixpanelToken];
+    _mixpanel = [Mixpanel sharedInstanceWithToken:[OMNConstants mixpanelToken]];
   }
   return self;
 }
-
-
 
 - (void)logRegisterUser:(OMNUser *)user {
   

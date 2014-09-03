@@ -12,6 +12,7 @@
 #import "OMNDenyCLPermissionVC.h"
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNToolbarButton.h"
+#import <OMNBeacon.h>
 
 @interface OMNAskCLPermissionsVC ()
 <CLLocationManagerDelegate>
@@ -28,7 +29,7 @@
   if (self) {
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     self.text = NSLocalizedString(@"Необходимо разрешение на использование службы геолокации", nil);
-    _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:kBeaconUUIDString] identifier:@"ask_permission_identifier"];
+    _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:[OMNBeacon defaultUUID]] identifier:@"ask_permission_identifier"];
   }
   return self;
 }

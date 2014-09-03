@@ -33,7 +33,7 @@
   self.navigationItem.title = NSLocalizedString(@"QRCode reader", nil);
   
   if (TARGET_IPHONE_SIMULATOR ||
-      kUseStubBeacon) {
+      [OMNConstants useStubBeacon]) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub scan", nil) style:UIBarButtonItemStylePlain target:self action:@selector(stubScan)];
 
   }

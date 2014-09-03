@@ -32,7 +32,6 @@
   
   self.selectionStyle = UITableViewCellSelectionStyleBlue;
   self.selectedBackgroundView = [[UIView alloc] init];
-  self.selectedBackgroundView.backgroundColor = kGreenColor;
   
   _totalLabel = [[UILabel alloc] init];
   [_totalLabel setContentHuggingPriority:751 forAxis:UILayoutConstraintAxisVertical];

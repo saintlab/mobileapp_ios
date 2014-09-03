@@ -44,7 +44,7 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
 - (void)safeConnectWithToken:(NSString *)token {
   
   NSString *query = [NSString stringWithFormat:@"token=%@", token];
-  _socket = [_io of:kBaseUrlString and:@{@"query" : query}];
+  _socket = [_io of:[OMNConstants baseUrlString] and:@{@"query" : query}];
   
   [_socket emit:@"handshake", nil];
   

@@ -78,7 +78,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNVisitorsBlock)success failure:(void (^)(NSError *error))failure {
   
-  if (kUseStubBeaconDecodeData) {
+  if ([OMNConstants useStubBeaconDecodeData]) {
     
     id responseObject = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ibeaconsdecode" ofType:@"json"]] options:0 error:nil];
     NSArray *visitors = [responseObject omn_visitors];

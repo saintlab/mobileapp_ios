@@ -37,7 +37,7 @@
   
   self.selectionStyle = UITableViewCellSelectionStyleBlue;
   self.selectedBackgroundView = [[UIView alloc] init];
-  self.selectedBackgroundView.backgroundColor = kGreenColor;
+  self.selectedBackgroundView.backgroundColor = ([UIColor colorWithRed:2/255. green:193/255. blue:100/255. alpha:1]);
   
   _nameLabel = [[UILabel alloc] init];
   _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;

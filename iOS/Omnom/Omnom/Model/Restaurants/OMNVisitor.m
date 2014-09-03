@@ -60,7 +60,7 @@
 
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
   
-  if (kUseStubOrdersData) {
+  if ([OMNConstants useStubOrdersData]) {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"orders" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSArray *ordersData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];

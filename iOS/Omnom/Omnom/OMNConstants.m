@@ -8,34 +8,14 @@
 
 #import "OMNConstants.h"
 
-#define USE_STAND 1
-
-#if USE_STAND
-
-NSString * const kBaseUrlString = @"http://omnom.stand.saintlab.com";
-NSString * const kAuthorizationUrlString = @"http://wicket.stand.saintlab.com";
-
-#else
-
-NSString * const kBaseUrlString = @"http://omnom.laaaab.com";
-NSString * const kAuthorizationUrlString = @"http://wicket.laaaab.com";
-
-#endif
-
-NSString * const CardIOAppToken = @"9a0e0afb32e642a09e1fd55093d317f5";
-NSString * const kFlurryApiKey = @"K5R4NK5S2B7WZY4WGR57";
-NSString * const kMixpanelToken = @"e9386a1100754e8f62565a1b8cda8d8c";
 
 NSString * const kPushSoundName = @"new_guest.caf";
 
-#define kEstimoteBeaconUUIDString @"B9407F30-F5F8-466E-AFF9-25556B57FE6D"
-#define kRadBeaconUSBUUIDString  @"2F234454-CF6D-4A0F-ADF2-F4911BA9FFA6"
-
+//#define kEstimoteBeaconUUIDString @"B9407F30-F5F8-466E-AFF9-25556B57FE6D"
+//#define kRadBeaconUSBUUIDString  @"2F234454-CF6D-4A0F-ADF2-F4911BA9FFA6"
 //old
 //#define kRedBearBeaconUUIDString @"E2C56DB5-DFFB-48D2-B060-D0F5A71096EE"
-#define kRedBearBeaconUUIDString @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0"
-
-NSString * const kBeaconUUIDString = kRedBearBeaconUUIDString;
+//#define kRedBearBeaconUUIDString @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0"
 
 static NSDictionary *_defaultConfig = nil;
 static NSDictionary *_customConfig = nil;
@@ -52,7 +32,7 @@ static NSDictionary *_customConfig = nil;
 
 + (NSDictionary *)defaultConfig {
   if (nil == _defaultConfig) {
-    _defaultConfig = [self configWithName:@"constants"];
+    _defaultConfig = [self configWithName:@"config"];
   }
   return _defaultConfig;
 }
@@ -88,7 +68,7 @@ static NSDictionary *_customConfig = nil;
 }
 
 + (NSString *)pushSoundName {
-  return [self stringForKey:@"beaconUUID"];
+  return nil;
 }
 
 + (BOOL)useStubBeacon {
@@ -100,5 +80,7 @@ static NSDictionary *_customConfig = nil;
 + (BOOL)useStubOrdersData {
   return [self boolForKey:@"UseStubOrdersData"];
 }
-
++ (NSString *)mailRuConfig {
+  return [self stringForKey:@"MailRuConfigName"];
+}
 @end

@@ -40,10 +40,10 @@ static NSDictionary *_config = nil;
   return manager;
 }
 
-+ (void)setConfig:(NSString *)configName {
++ (BOOL)setConfig:(NSString *)configName {
   
   _config = [self configWithName:configName];
-  
+  return (_config != nil);
 }
 
 + (NSDictionary *)configWithName:(NSString *)name {
