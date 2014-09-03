@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "OMNBackgroundVC.h"
 
 @protocol OMNScanQRCodeVCDelegate;
 
-@interface OMNScanQRCodeVC : UIViewController
+@interface OMNScanQRCodeVC : OMNBackgroundVC
 
 @property (nonatomic, weak) id<OMNScanQRCodeVCDelegate> delegate;
 
@@ -22,7 +22,6 @@
 @protocol OMNScanQRCodeVCDelegate <NSObject>
 
 - (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code;
-
 - (void)scanQRCodeVCDidCancel:(OMNScanQRCodeVC *)scanQRCodeVC;
 
 @end

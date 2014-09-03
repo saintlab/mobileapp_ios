@@ -49,7 +49,7 @@
 
 - (void)setIndex:(NSInteger)index {
   _index = index;
-  _label.text = [NSString stringWithFormat:@"Счет N%d", index + 1];
+  _label.text = [NSString stringWithFormat:@"Счет %ld", (long)index + 1];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {

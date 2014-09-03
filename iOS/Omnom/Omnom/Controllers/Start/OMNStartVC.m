@@ -18,7 +18,8 @@
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
-OMNSearchRestaurantVCDelegate>
+OMNSearchRestaurantVCDelegate,
+OMNR1VCDelegate>
 
 @end
 
@@ -85,7 +86,7 @@ OMNSearchRestaurantVCDelegate>
   }
 
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];
-  navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
+  navigationController.navigationBar.barStyle = UIBarStyleDefault;
   navigationController.delegate = _navigationControllerDelegate;
   [self presentViewController:navigationController animated:NO completion:nil];
 
@@ -114,7 +115,16 @@ OMNSearchRestaurantVCDelegate>
 - (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindVisitor:(OMNVisitor *)visitor {
   
   OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithVisitor:visitor];
+  restaurantMenuVC.delegate = self;
   [searchBeaconVC.navigationController pushViewController:restaurantMenuVC animated:YES];
+  
+}
+
+#pragma mark - OMNR1VCDelegate
+
+- (void)r1VCDidFinish:(OMNR1VC *)r1VC {
+  
+  [r1VC.navigationController popToRootViewControllerAnimated:YES];
   
 }
 

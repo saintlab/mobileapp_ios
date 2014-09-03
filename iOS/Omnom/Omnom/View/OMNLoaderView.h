@@ -12,9 +12,11 @@
 
 - (instancetype)initWithInnerFrame:(CGRect)frame;
 
+- (void)setLoaderColor:(UIColor *)color;
 - (void)startAnimating:(NSTimeInterval)duration;
 - (void)completeAnimation:(dispatch_block_t)complitionBlock;
 - (void)setProgress:(CGFloat)progress;
 - (void)stop;
+
 
 @end

@@ -67,6 +67,38 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
 }
 
+- (void)decodeQRCode:(NSString *)qrCode success:(OMNVisitorBlock)successBlock failure:(void (^)(NSError *error))failureBlock {
+  
+  if (0 == qrCode.length) {
+    failureBlock(nil);
+    return;
+  }
+  
+  NSDictionary *parameters =
+  @{
+    @"qr": qrCode
+    };
+  
+  [[OMNOperationManager sharedManager] PUT:@"/qr/decode" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"\nqr/decode>\n%@", responseObject);
+    if (responseObject[@"restaurant"]) {
+      OMNVisitor *visitor = [[OMNVisitor alloc] initWithJsonData:responseObject];
+      successBlock(visitor);
+    }
+    else {
+      failureBlock(nil);
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    NSLog(@"\nqr/decode>\n%@", operation.responseString);
+    failureBlock(nil);
+    
+  }];
+  
+}
+
 - (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure; {
   
   [self decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {

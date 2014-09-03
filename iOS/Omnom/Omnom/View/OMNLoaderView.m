@@ -46,6 +46,10 @@
   return self;
 }
 
+- (void)setLoaderColor:(UIColor *)color {
+  _loaderLayer.strokeColor = color.CGColor;
+}
+
 - (void)startAnimating:(NSTimeInterval)duration {
   _loaderLayer.hidden = NO;
   

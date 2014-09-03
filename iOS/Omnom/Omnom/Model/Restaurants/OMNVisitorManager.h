@@ -21,6 +21,7 @@ extern NSString * const OMNDecodeBeaconManagerNotificationLaunchKey;
  */
 - (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure;
 //- (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(void (^)(NSError *error))failure;
+- (void)decodeQRCode:(NSString *)qrCode success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure;
 
 - (void)handleBackgroundBeacon:(OMNBeacon *)beacon completion:(dispatch_block_t)completion;
 

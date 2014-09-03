@@ -88,7 +88,7 @@ OMNMailRUPayVCDelegate>
       UIButton *button = [[UIButton alloc] init];
       button.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:20.0f];
       [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-      [button setTitle:[NSString stringWithFormat:@"Счет N%u", index + 1] forState:UIControlStateNormal];
+      [button setTitle:[NSString stringWithFormat:@"Счет %lu", (long unsigned)index + 1] forState:UIControlStateNormal];
       button.layer.borderColor = [UIColor blackColor].CGColor;
       button.contentEdgeInsets = UIEdgeInsetsMake(3.0f, 10.0f, 3.0f, 10.0f);
       button.layer.borderWidth = 1.0f;
@@ -273,6 +273,7 @@ OMNMailRUPayVCDelegate>
   mailRUPayVC.demo = _visitor.restaurant.is_demo;
   mailRUPayVC.delegate = self;
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:mailRUPayVC];
+  navigationController.delegate = self.navigationController.delegate;
   [self.navigationController presentViewController:navigationController animated:YES completion:^{
     
   }];

@@ -79,7 +79,7 @@
   NSMutableAttributedString *priceQuantityString = nil;
   NSString *priceString = [OMNUtils commaStringFromKop:orderItem.price_per_item];
   if (orderItem.quantity > 1) {
-    priceQuantityString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d x %@", orderItem.quantity, priceString]];
+    priceQuantityString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld x %@", (long)orderItem.quantity, priceString]];
   }
   else {
     priceQuantityString = [[NSMutableAttributedString alloc] initWithString:priceString];

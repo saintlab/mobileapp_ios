@@ -161,39 +161,67 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)requestQRCode {
   
-  OMNCircleRootVC *scanQRCodeInfoVC = [[OMNCircleRootVC alloc] initWithParent:self];
-  scanQRCodeInfoVC.faded = YES;
-  scanQRCodeInfoVC.text = NSLocalizedString(@"Отсканируйте QR-код", nil);
-  scanQRCodeInfoVC.circleIcon = [UIImage imageNamed:@"scan_qr_icon"];
-  scanQRCodeInfoVC.buttonInfo =
+  OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
+  scanQRCodeVC.backgroundImage = self.backgroundImage;
+  __weak typeof(self)weakSelf = self;
+  scanQRCodeVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Сканировать", nil) image:nil block:^{
-      
-      OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
-      scanQRCodeVC.delegate = self;
-      [self.navigationController pushViewController:scanQRCodeVC animated:YES];
-      
+    [OMNBarButtonInfo infoWithTitle:nil image:nil block:nil],
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Демо-режим", nil) image:[UIImage imageNamed:@"demo_mode_icon_small"] block:^{
+      [weakSelf demoModeTap];
     }]
     ];
-
-  [self.navigationController pushViewController:scanQRCodeInfoVC animated:YES];
+  scanQRCodeVC.delegate = self;
+  [self.navigationController pushViewController:scanQRCodeVC animated:YES];
   
 }
 
 #pragma mark - OMNScanQRCodeVCDelegate
 
 - (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
-  
-#warning scanQRCodeVC
+
   [scanQRCodeVC stopScanning];
-  [self.navigationController popToViewController:self animated:YES];
+  __weak typeof(self)weakSelf = self;
+  [self.loaderView startAnimating:10.0f];
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
+    
+    [[OMNVisitorManager manager] decodeQRCode:code success:^(OMNVisitor *visitor) {
+      
+      [weakSelf finishLoading:^{
+        [weakSelf didFindVisitor:visitor];
+      }];
+      
+    } failure:^(NSError *error) {
+      [weakSelf didFailQRCode];
+    }];
+    
+  }];
+  
+}
+
+- (void)didFailQRCode {
+  
+  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  didFailOmnomVC.faded = YES;
+  didFailOmnomVC.text = NSLocalizedString(@"Неверный QR-код,\nнайдите Omnom", nil);
+  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  __weak typeof(self)weakSelf = self;
+  didFailOmnomVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      [weakSelf startSearchingBeacon];
+    }]
+    ];
+  [self.navigationController pushViewController:didFailOmnomVC animated:YES];
   
 }
 
 - (void)scanQRCodeVCDidCancel:(OMNScanQRCodeVC *)scanQRCodeVC {
   
   [scanQRCodeVC stopScanning];
-  [self.navigationController popToViewController:self animated:YES];
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
+    
+  }];
   
 }
 

@@ -125,8 +125,6 @@
 		936E71FA19925563008FF864 /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
 		93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */; };
 		93750B22196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */; };
-		93750B23196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */; };
-		93750B24196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */; };
 		93750B28196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
 		93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
 		93750B2D196D51020031AD31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93750B2C196D51020031AD31 /* AVFoundation.framework */; };
@@ -496,7 +494,6 @@
 		936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationBarProgressView.m; sourceTree = "<group>"; };
 		93750B1E196BF40F0031AD31 /* OMNScanQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScanQRCodeVC.h; sourceTree = "<group>"; };
 		93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNScanQRCodeVC.m; sourceTree = "<group>"; };
-		93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNScanQRCodeVC.xib; sourceTree = "<group>"; };
 		93750B25196C14100031AD31 /* OMNTurnOnBluetoothVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTurnOnBluetoothVC.h; sourceTree = "<group>"; };
 		93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTurnOnBluetoothVC.m; sourceTree = "<group>"; };
 		93750B2C196D51020031AD31 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1570,7 +1567,6 @@
 			children = (
 				93750B1E196BF40F0031AD31 /* OMNScanQRCodeVC.h */,
 				93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */,
-				93750B20196BF40F0031AD31 /* OMNScanQRCodeVC.xib */,
 			);
 			name = QR;
 			sourceTree = "<group>";
@@ -1626,9 +1622,9 @@
 				471B3C426B7446CBA4EE48D9 /* Check Pods Manifest.lock */,
 				93676DE518D1E4FC00FC55F1 /* Sources */,
 				93676DE618D1E4FC00FC55F1 /* Frameworks */,
+				931E7849198674AC00BBFE94 /* build increment script */,
 				93676DE718D1E4FC00FC55F1 /* Resources */,
 				4F9249CB50BE4BCAA2D125E0 /* Copy Pods Resources */,
-				931E7849198674AC00BBFE94 /* build increment script */,
 				9388A0A919AF61EB00A246E5 /* Crashlytics.framework */,
 			);
 			buildRules = (
@@ -1738,7 +1734,6 @@
 				938F3A4F198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
 				93056D251990BD4A006FBF48 /* Main.storyboard in Resources */,
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
-				93750B23196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
 				932B186E19AF3C80009E440E /* pay_done.caf in Resources */,
 				9389456B19B5957100C37C82 /* config.json in Resources */,
 				939F991619752BE90051822E /* OMNBankCardsVC.xib in Resources */,
@@ -1780,7 +1775,6 @@
 				937A37851981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
 				9389456C19B5957100C37C82 /* config.json in Resources */,
 				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
-				93750B24196BF40F0031AD31 /* OMNScanQRCodeVC.xib in Resources */,
 				93E2999A197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */,
 				9345AFAC199A0A1400328F73 /* restaurantInfo.json in Resources */,
 				93C99162193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,

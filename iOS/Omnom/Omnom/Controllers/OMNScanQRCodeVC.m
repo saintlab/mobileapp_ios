@@ -20,33 +20,32 @@
   AVCaptureVideoPreviewLayer *_videoPreviewLayer;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+- (instancetype)init {
+  self = [super init];
   if (self) {
-    // Custom initialization
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.navigationItem.title = NSLocalizedString(@"QRCode reader", nil);
-  
+  self.navigationItem.title = NSLocalizedString(@"QR", nil);
+  self.view.backgroundColor = [UIColor whiteColor];
   if (TARGET_IPHONE_SIMULATOR ||
       [OMNConstants useStubBeacon]) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub scan", nil) style:UIBarButtonItemStylePlain target:self action:@selector(stubScan)];
-
   }
   
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:NO animated:animated];
+  [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  
   NSString *mediaType = AVMediaTypeVideo;
   AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
   switch (authStatus) {
@@ -108,7 +107,6 @@
   
   AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
   
-  
   if (!input) {
     // If any error occurs, simply log the description of it and don't continue any more.
     NSLog(@"startScanning>%@", [error localizedDescription]);
@@ -116,7 +114,6 @@
   }
   
   _captureSession = [[AVCaptureSession alloc] init];
-
   [_captureSession addInput:input];
   
 
@@ -125,12 +122,11 @@
 
   [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
   [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
-
   
   _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
   [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
-  [_videoPreviewLayer setFrame:self.view.layer.bounds];
-  [self.view.layer addSublayer:_videoPreviewLayer];
+  [_videoPreviewLayer setFrame:self.backgroundView.layer.bounds];
+  [self.backgroundView.layer addSublayer:_videoPreviewLayer];
 
   [_captureSession startRunning];
   

@@ -19,6 +19,9 @@
 #import "OMNOrder+omn_mailru.h"
 #import "OMNAuthorisation.h"
 #import "OMNSocketManager.h"
+#import "OMNLoadingCircleVC.h"
+#import "UINavigationController+omn_replace.h"
+#import "UIImage+omn_helper.h"
 
 @interface OMNMailRUPayVC()
 <OMNAddBankCardVCDelegate,
@@ -40,6 +43,7 @@ OMNMailRUCardConfirmVCDelegate>
   OMNBill *_bill;
   OMNBankCardsModel *_bankCardsModel;
   UIView *_contentView;
+  OMNLoadingCircleVC *_loadingCircleVC;
 }
 
 - (instancetype)initWithOrder:(OMNOrder *)order {
@@ -87,6 +91,7 @@ OMNMailRUCardConfirmVCDelegate>
   [_payButton setTitle:NSLocalizedString(@"Оплатить", nil) forState:UIControlStateNormal];
   [_payButton sizeToFit];
   [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
+  _payButton.enabled = NO;
   
 }
 
@@ -96,10 +101,17 @@ OMNMailRUCardConfirmVCDelegate>
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel loadCardsWithCompletion:^{
     
-    [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [weakSelf didLoadCards];
     
   }];
   
+}
+
+- (void)didLoadCards {
+  if (_bankCardsModel.cards.count) {
+    _payButton.enabled = YES;
+  }
+  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -133,13 +145,24 @@ OMNMailRUCardConfirmVCDelegate>
     [self demoPay];
   }
   else {
-    [self createOrderPaymentInfo];
+    _loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
+    _loadingCircleVC.circleIcon = [UIImage imageNamed:@"flying_credit_card_icon"];
+    _loadingCircleVC.estimateAnimationDuration = 10.0;
+    UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"000000")];
+    _loadingCircleVC.circleBackground = circleBackground;
+    __weak typeof(self)weakSelf = self;
+    [self.navigationController omn_pushViewController:_loadingCircleVC animated:YES completion:^{
+      [weakSelf createOrderPaymentInfo];
+    }];
   }
   
 }
 
 - (void)createOrderPaymentInfo {
   
+  [_loadingCircleVC.loaderView setLoaderColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
+  [_loadingCircleVC.loaderView startAnimating:10.0];
+
   OMNBankCard *bankCard = [_bankCardsModel selectedCard];
   OMNMailRuCardInfo *cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:bankCard.external_card_id cvv:@"123"];
   
@@ -150,10 +173,15 @@ OMNMailRUCardConfirmVCDelegate>
     
   } failure:^(NSError *error) {
     
-    _errorLabel.text = error.localizedDescription;
+    [weakSelf didFailCreateOrderWithError:error];
     
   }];
   
+}
+
+- (void)didFailCreateOrderWithError:(NSError *)error {
+  [self.navigationController popToViewController:self animated:YES];
+  _errorLabel.text = error.localizedDescription;
 }
 
 - (void)orderPaymentInfoDidCreated:(OMNMailRuPaymentInfo *)paymentInfo {
@@ -170,7 +198,10 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)didPay:(NSNotification *)n {
   NSLog(@"%@", n);
-  [self.delegate mailRUPayVCDidFinish:self];
+  [_loadingCircleVC finishLoading:^{
+    [self.delegate mailRUPayVCDidFinish:self];
+  }];
+  
 }
 
 - (void)didPayWithResponse:(id)response {
