@@ -10,4 +10,7 @@
 
 @interface OMNDeletedTextField : UITextField
 
+@property (nonatomic, strong) UIColor *errorColor;
+@property (nonatomic, assign) BOOL error;
+
 @end

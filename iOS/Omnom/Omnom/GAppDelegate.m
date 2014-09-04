@@ -76,6 +76,11 @@
      NSForegroundColorAttributeName : [UIColor blackColor],
      NSFontAttributeName : font
      } forState:UIControlStateNormal];
+  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
+   @{
+     NSForegroundColorAttributeName : [UIColor lightGrayColor],
+     NSFontAttributeName : font
+     } forState:UIControlStateDisabled];
   
   [[UINavigationBar appearance] setTitleTextAttributes:
    @{

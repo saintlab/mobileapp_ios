@@ -7,6 +7,7 @@
 //
 
 #import "OMNDeletedTextField.h"
+#import <OMNStyler.h>
 
 @implementation OMNDeletedTextField
 
@@ -23,7 +24,21 @@
   [self setup];
 }
 
+- (void)setError:(BOOL)error {
+  _error = error;
+  
+  if (_error) {
+    self.textColor = self.errorColor;
+  }
+  else {
+    self.textColor = colorWithHexString(@"000000");
+  }
+  
+  [self setNeedsDisplay];
+}
+
 - (void)setup {
+  self.errorColor = colorWithHexString(@"d0021b");
   self.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
 }
 
@@ -36,8 +51,17 @@
 - (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
   
-  UIImage *image = [UIImage imageNamed:(self.editing) ? (@"input_card_number_field_active") : (@"input_card_number_field_no_active")];
-  [image drawInRect:CGRectMake(0.0f, CGRectGetHeight(self.frame) - image.size.height, CGRectGetWidth(self.frame), image.size.height)];
+  if (self.error) {
+
+    [self.errorColor set];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextFillRect(context, CGRectMake(0.0f, CGRectGetHeight(self.frame) - 1.0f, CGRectGetWidth(self.frame), 1.0f));
+    
+  }
+  else {
+    UIImage *image = [UIImage imageNamed:(self.editing) ? (@"input_card_number_field_active") : (@"input_card_number_field_no_active")];
+    [image drawInRect:CGRectMake(0.0f, CGRectGetHeight(self.frame) - image.size.height, CGRectGetWidth(self.frame), image.size.height)];
+  }
   
 }
 

@@ -34,6 +34,12 @@ NSString * const OMNBluetoothManagerUnspported = @"OMNBluetoothManagerUnspported
   self = [super init];
   if (self) {
     _unsupported = [[NSUserDefaults standardUserDefaults] boolForKey:OMNBluetoothManagerUnspported];
+    if (_unsupported) {
+      _state = CBCentralManagerStateUnsupported;
+    }
+    else {
+      _state = CBCentralManagerStateUnknown;
+    }
   }
   return self;
 }
@@ -69,6 +75,7 @@ NSString * const OMNBluetoothManagerUnspported = @"OMNBluetoothManagerUnspported
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
   
+  _state = central.state;
   if (_centralManagerStateBlock) {
     _centralManagerStateBlock(central.state);
   }

@@ -28,6 +28,7 @@ extern NSString * const OMNCardEnterControlCVVString;
 @protocol OMNCardEnterControlDelegate <NSObject>
 
 - (void)cardEnterControl:(OMNCardEnterControl *)control didEnterCardData:(NSDictionary *)cardData;
+- (void)cardEnterControlDidEnterFailCardData:(OMNCardEnterControl *)control;
 - (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control;
 
 @end

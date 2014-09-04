@@ -297,7 +297,7 @@ OMNDemoRestaurantVCDelegate>
       
       [self.loaderView setProgress:0.2];
       //dismiss turn BLE on controller
-      [self.navigationController popToViewController:self animated:YES];
+//      [self.navigationController popToViewController:self animated:YES];
       
     } break;
       

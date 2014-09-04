@@ -28,17 +28,20 @@ OMNCardEnterControlDelegate>
   UIButton *_addCardButton;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
-
+  
+  self.navigationItem.title = @"";
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+  
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap:)];
   
   self.view.backgroundColor = [UIColor whiteColor];  
   [self setup];
+  
+  
+  [self setRightButtonEnabled:NO];
+  
 }
 
 - (void)setup {
@@ -57,6 +60,7 @@ OMNCardEnterControlDelegate>
   [_addCardButton addTarget:self action:@selector(addCardTap:) forControlEvents:UIControlEventTouchUpInside];
   [_addCardButton setTitle:NSLocalizedString(@"Готово", nil) forState:UIControlStateNormal];
   _addCardButton.enabled = NO;
+  _addCardButton.hidden = YES;
   [self.view addSubview:_addCardButton];
   
   NSDictionary *views =
@@ -77,18 +81,27 @@ OMNCardEnterControlDelegate>
 
 }
 
+- (void)setRightButtonEnabled:(BOOL)enabled {
+  self.navigationItem.rightBarButtonItem.enabled = enabled;
+}
+
 #pragma mark - OMNCardEnterControlDelegate
 
 - (void)cardEnterControl:(OMNCardEnterControl *)control didEnterCardData:(NSDictionary *)cardData {
   
+  [self setRightButtonEnabled:YES];
   _cardInfo = [[OMNBankCardInfo alloc] init];
   _cardInfo.pan = cardData[OMNCardEnterControlPanString];
   _cardInfo.expiryMonth = [cardData[OMNCardEnterControlMonthString] integerValue];
   _cardInfo.expiryYear = [cardData[OMNCardEnterControlYearString] integerValue];
   _cardInfo.cvv = cardData[OMNCardEnterControlCVVString];
-  _addCardButton.enabled = YES;
-  [control endEditing:YES];
+//  _addCardButton.enabled = YES;
+//  [control endEditing:YES];
   
+}
+
+- (void)cardEnterControlDidEnterFailCardData:(OMNCardEnterControl *)control {
+  [self setRightButtonEnabled:NO];
 }
 
 - (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {

@@ -12,6 +12,8 @@ typedef void(^CBCentralManagerStateBlock)(CBCentralManagerState state);
 
 @interface OMNBluetoothManager : NSObject
 
+@property (nonatomic, assign, readonly) CBCentralManagerState state;
+
 + (instancetype)manager;
 
 - (void)getBluetoothState:(CBCentralManagerStateBlock)block;

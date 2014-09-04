@@ -75,12 +75,12 @@
     frame.origin = destinationOffset;
     tableViewSnapshot.frame = frame;
     
-    // Fade out the source view controller
-    toViewController.view.alpha = 1.0f;
     
     CGFloat height = MAX(0.0f, toViewController.splitTableView.frame.size.height - toViewController.splitTableView.contentSize.height);
     
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+
+    toViewController.view.alpha = 1.0f;
     CGRect blankViewFrame = blankView.frame;
     blankViewFrame.size.height += height;
     blankView.frame = blankViewFrame;

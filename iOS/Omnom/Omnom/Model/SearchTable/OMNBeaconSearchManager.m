@@ -15,6 +15,12 @@
 
 NSTimeInterval kBeaconSearchTimeout = 2.0;
 
+@interface OMNBeaconSearchManager ()
+
+@property (nonatomic, assign) CBCentralManagerState previousBluetoothState;
+
+@end
+
 @implementation OMNBeaconSearchManager {
   OMNNearestBeaconsManager *_nearestBeaconsManager;
   NSTimer *_nearestBeaconsRangingTimer;
@@ -57,14 +63,14 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 }
 
 - (void)stop:(BOOL)didFind {
-
+  
   [self stopRangingNearestBeacons:didFind];
   _nearestBeaconsManager = nil;
   
 }
 
 - (void)startSearching {
-
+  
 #if TARGET_IPHONE_SIMULATOR
   [self didFindBeacon:[OMNBeacon demoBeacon]];
 #else
@@ -80,7 +86,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
     
     switch (reachableState) {
       case kOMNReachableStateIsReachable: {
-
+        
         [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerInternetFound];
         [weakSelf checkBluetoothState];
         
@@ -91,7 +97,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
         
       } break;
       case kOMNReachableStateNoInternet: {
-      
+        
         [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerInternetUnavaliable];
         
       } break;
@@ -106,16 +112,20 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 }
 
 - (void)checkBluetoothState {
-  
+
   __weak typeof(self)weakSelf = self;
-  
   [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
     
     switch (state) {
       case CBCentralManagerStatePoweredOn: {
         
-        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerBLEDidOn];
-        [weakSelf startRangeNearestBeacons];
+        if (CBCentralManagerStatePoweredOff == weakSelf.previousBluetoothState) {
+          [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerRequestReload];
+        }
+        else {
+          [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerBLEDidOn];
+          [weakSelf startRangeNearestBeacons];
+        }
         
       } break;
       case CBCentralManagerStateUnsupported: {
@@ -139,6 +149,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
       } break;
     }
     
+    weakSelf.previousBluetoothState = state;
     if (state != CBCentralManagerStatePoweredOn) {
       [weakSelf.delegate beaconSearchManagerDidStop:weakSelf found:NO];
     }
@@ -180,9 +191,9 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   if (_nearestBeaconsManager.isRanging) {
     return;
   }
-
+  
   [self.delegate beaconSearchManager:self didChangeState:kSearchManagerStartSearchingBeacons];
-
+  
   _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconSearchTimeout) userInfo:nil repeats:NO];
   
   __weak typeof(self)weakSelf = self;
@@ -202,7 +213,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   
   
   if (nearestBeacons.count > 1) {
-  
+    
     [self stopRangingNearestBeacons:NO];
     [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestDeviceFaceUpPosition];
     
@@ -232,7 +243,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 - (void)processCoreLocationAuthorizationStatus:(CLAuthorizationStatus)status {
   
   switch (status) {
-
+      
     case kCLAuthorizationStatusDenied: {
       
       [self processCoreLocationDenySituation:kSearchManagerRequestCoreLocationDeniedPermission];
@@ -244,7 +255,7 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
     case kCLAuthorizationStatusRestricted: {
       
       [self processCoreLocationDenySituation:kSearchManagerRequestCoreLocationRestrictedPermission];
-
+      
     } break;
     default: {
       
