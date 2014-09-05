@@ -45,6 +45,7 @@ UITextFieldDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.automaticallyAdjustsScrollViewInsets = NO;
   self.view.backgroundColor = [UIColor whiteColor];
   
   _datePicker = [[UIDatePicker alloc] init];
@@ -63,12 +64,19 @@ UITextFieldDelegate>
   
 }
 
-- (void)setup {
-  
-  self.automaticallyAdjustsScrollViewInsets = NO;
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidBeginEditing:) name:UITextFieldTextDidBeginEditingNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)setup {
   
   _scroll = [[UIScrollView alloc] init];
   _scroll.translatesAutoresizingMaskIntoConstraints = NO;
@@ -272,6 +280,8 @@ UITextFieldDelegate>
     return;
   }
   
+  [self.view endEditing:YES];
+  
   _user = [[OMNUser alloc] init];
   _user.email = _emailTF.textField.text;
   _user.phone = _phoneTF.textField.text;
@@ -382,11 +392,6 @@ UITextFieldDelegate>
   _scroll.contentInset = contentInsets;
   _scroll.scrollIndicatorInsets = contentInsets;
   
-  CGRect aRect = self.view.frame;
-  aRect.size.height -= kbRect.size.height;
-//  if (!CGRectContainsPoint(aRect, self.activeField.frame.origin) ) {
-//    [_scroll scrollRectToVisible:self.activeField.frame animated:YES];
-//  }
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {

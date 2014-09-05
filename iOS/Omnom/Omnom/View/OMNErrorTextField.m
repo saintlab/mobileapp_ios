@@ -8,6 +8,7 @@
 
 #import "OMNErrorTextField.h"
 #import <OMNStyler.h>
+#import "OMNConstants.h"
 
 @interface OMNErrorTextField ()
 
@@ -47,7 +48,7 @@
   _textField = [[UITextField alloc] init];
   _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   _textField.textColor = [UIColor blackColor];
-  _textField.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+  _textField.font = FuturaLSFOmnomRegular(20.0f);
   _textField.translatesAutoresizingMaskIntoConstraints = NO;
   [self addSubview:_textField];
   
