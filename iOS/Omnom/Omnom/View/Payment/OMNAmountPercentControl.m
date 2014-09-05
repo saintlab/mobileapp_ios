@@ -213,7 +213,10 @@ UITextFieldDelegate>
 
 - (void)calculateRelativePercentValue {
   
-  double percentValue = 100.*(double)_amountPercentValue.amount/_amountPercentValue.totalAmount;
+  double percentValue = 0.0f;
+  if (_amountPercentValue.totalAmount) {
+    percentValue = 100.*(double)_amountPercentValue.amount/_amountPercentValue.totalAmount;
+  }
   [self setPercentValue:percentValue];
   
 }
