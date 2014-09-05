@@ -292,8 +292,9 @@ OMNMailRUPayVCDelegate>
 
 - (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(long long)total {
   
-  _paymentView.calculationAmount.enteredAmount = total;
-  [_paymentView updateView];
+  OMNCalculationAmount *calculationAmount = _paymentView.calculationAmount;
+  calculationAmount.enteredAmount = total;
+  _paymentView.calculationAmount = calculationAmount;
   [self.navigationController popToViewController:self animated:YES];
   
 }
