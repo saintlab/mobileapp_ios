@@ -26,7 +26,7 @@
   
   __weak IBOutlet UILabel *_userNameLabel;
   __weak IBOutlet UIButton *_iconView;
-  __weak IBOutlet UIButton *_logoutButton;
+  IBOutlet UIButton *_logoutButton;
   __weak IBOutlet UIButton *_pinButton;
   UIView *_tableFooterView;
   OMNVisitor *_visitor;
@@ -98,12 +98,9 @@
   UIButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"cross_icon_black"] title:nil];
   [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.titleView = closeButton;
-
-  _tableFooterView = self.tableView.tableFooterView;
-  self.tableView.tableFooterView = [UIView new];
-  [self.view addSubview:_tableFooterView];
   
-  UIEdgeInsets inset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_tableFooterView.frame), 0.0f);
+  [self.view addSubview:_logoutButton];
+  UIEdgeInsets inset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_logoutButton.frame), 0.0f);
   self.tableView.contentInset = inset;
   self.tableView.scrollIndicatorInsets = inset;
   
@@ -174,9 +171,9 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   
-  CGRect frame = _tableFooterView.frame;
+  CGRect frame = _logoutButton.frame;
   frame.origin.y = CGRectGetHeight(scrollView.frame) + scrollView.contentOffset.y - CGRectGetHeight(frame);
-  _tableFooterView.frame = frame;
+  _logoutButton.frame = frame;
   
 }
 
