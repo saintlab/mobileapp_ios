@@ -330,6 +330,8 @@
 		93E435B41998CA6400EDC488 /* OMNRestaurantInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B21998CA6400EDC488 /* OMNRestaurantInfoVC.m */; };
 		93E435B71998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */; };
 		93E435B81998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */; };
+		93EDD46D19B86D9F0017B6ED /* config_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDD46C19B86D9F0017B6ED /* config_prod.json */; };
+		93EDD46E19B86D9F0017B6ED /* config_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDD46C19B86D9F0017B6ED /* config_prod.json */; };
 		93EE3084198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EE3082198F57150024EAF4 /* OMNMailRUCardConfirmVC.m */; };
 		93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EE3082198F57150024EAF4 /* OMNMailRUCardConfirmVC.m */; };
 		93F21B9019B6031B00D5F78A /* OMNLightBackgroundButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F21B8F19B6031B00D5F78A /* OMNLightBackgroundButton.m */; };
@@ -692,6 +694,7 @@
 		93E435B21998CA6400EDC488 /* OMNRestaurantInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantInfoVC.m; sourceTree = "<group>"; };
 		93E435B51998CF4900EDC488 /* OMNRestaurantInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantInfoCell.h; sourceTree = "<group>"; };
 		93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantInfoCell.m; sourceTree = "<group>"; };
+		93EDD46C19B86D9F0017B6ED /* config_prod.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_prod.json; sourceTree = "<group>"; };
 		93EE3081198F57150024EAF4 /* OMNMailRUCardConfirmVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMailRUCardConfirmVC.h; sourceTree = "<group>"; };
 		93EE3082198F57150024EAF4 /* OMNMailRUCardConfirmVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMailRUCardConfirmVC.m; sourceTree = "<group>"; };
 		93F21B8E19B6031B00D5F78A /* OMNLightBackgroundButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLightBackgroundButton.h; sourceTree = "<group>"; };
@@ -1081,6 +1084,7 @@
 				9389456A19B5957100C37C82 /* config.json */,
 				93F21BE919B6283300D5F78A /* config_laaaab.json */,
 				93F21BEC19B6284B00D5F78A /* config_stand.json */,
+				93EDD46C19B86D9F0017B6ED /* config_prod.json */,
 				936E71D81991FEFF008FF864 /* OMNViewController.h */,
 				936E71D91991FEFF008FF864 /* OMNViewController.m */,
 				938E8F65192F5C030088EF38 /* Resources */,
@@ -1724,6 +1728,7 @@
 				93A59B131933181000AE1A6F /* restaurants.data in Resources */,
 				938F3A49198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf in Resources */,
 				93C99161193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
+				93EDD46D19B86D9F0017B6ED /* config_prod.json in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
 				93C9915E193F175E0028F76C /* FuturaPT-Book.ttf in Resources */,
 				938F3A43198B859100AB288E /* timings.json in Resources */,
@@ -1768,6 +1773,7 @@
 				93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
 				939689BA195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				9390D2621966E559007E13AB /* OMNOrderCell.json in Resources */,
+				93EDD46E19B86D9F0017B6ED /* config_prod.json in Resources */,
 				93056D261990BD4A006FBF48 /* Main.storyboard in Resources */,
 				9390D2651966E945007E13AB /* UINavigationBar.json in Resources */,
 				938F3A53198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
@@ -2275,7 +2281,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "5f156ad5-643a-4b2c-9cac-67ba180094f9";
+				PROVISIONING_PROFILE = "03c202fb-0b81-49db-9d28-99b544e032fd";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -2300,7 +2306,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "5f156ad5-643a-4b2c-9cac-67ba180094f9";
+				PROVISIONING_PROFILE = "03c202fb-0b81-49db-9d28-99b544e032fd";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -2412,7 +2418,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "5f156ad5-643a-4b2c-9cac-67ba180094f9";
+				PROVISIONING_PROFILE = "03c202fb-0b81-49db-9d28-99b544e032fd";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -2494,7 +2500,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "5f156ad5-643a-4b2c-9cac-67ba180094f9";
+				PROVISIONING_PROFILE = "03c202fb-0b81-49db-9d28-99b544e032fd";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

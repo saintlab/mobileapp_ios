@@ -4,5 +4,6 @@
   "OMNMailRu_cardholder" : "Omnom",
   "OMNMailRu_secret_key" : "qmluSZ1HkWQRWkUtcDOM",
   "OMNMailRuAcquiringBaseURL" : "https://cpg.money.mail.ru/api/",
-  "OMNMailRuCertificateName" : "cpg.money.mail.ru.cer"
+  "OMNMailRuCertificateName" : "cpg.money.mail.ru.cer",
+  "OMNMailRuTestCVV" : ""
 }

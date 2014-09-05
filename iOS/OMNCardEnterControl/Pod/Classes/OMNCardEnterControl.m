@@ -299,7 +299,7 @@ CGFloat kTextFieldsOffset = 20.0f;
   if (updateTextField) {
     _expireTF.error = (NO == isValidDate);
   }
-  
+  isValidDate= YES;
   return isValidDate;
   
 }

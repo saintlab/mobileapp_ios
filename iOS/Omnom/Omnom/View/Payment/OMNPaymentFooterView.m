@@ -191,6 +191,7 @@
 - (void)updateView {
 
   [_tipsSelector update];
+  [self updatePercentAmountControl];
   [self updateToPayButton];
   
 }

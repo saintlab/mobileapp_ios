@@ -202,7 +202,7 @@ NSString * const kTokenServiceName = @"token";
 
 @implementation NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(OMNTokenBlock)completion failure:(void(^)(NSError *))failureBlock {
+- (void)decodeToken:(void (^)(NSString *token))completion failure:(void(^)(NSError *))failureBlock {
   
   if ([self[@"status"] isEqualToString:@"success"]) {
     
@@ -212,6 +212,7 @@ NSString * const kTokenServiceName = @"token";
   else {
     
     NSString *message = self[@"error"][@"message"];
+    NSLog(@"decodeToken:Error>%@", message);
     if (message) {
       NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
                                            code:0

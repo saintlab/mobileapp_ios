@@ -13,6 +13,7 @@
 @property (nonatomic, strong) OMNAmountPercentValue *amountPercentValue;
 
 - (BOOL)isAmountSelected;
+- (void)update;
 
 @end
 

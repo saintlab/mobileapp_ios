@@ -96,7 +96,26 @@
   
 }
 
-- (void)confirmPhone:(NSString *)code completion:(OMNTokenBlock)completion failure:(void (^)(NSError *error))failureBlock {
+- (void)verifyPhoneCode:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
+  
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObject:self.phone forKey:@"phone"];
+  if (code.length) {
+    parameters[@"code"] = code;
+  }
+  
+  [[OMNAuthorizationManager sharedManager] POST:@"/verify/phone" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [responseObject decodeToken:completion failure:failureBlock];
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(nil);
+    
+  }];
+
+}
+
+- (void)confirmPhone:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
   
   NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
@@ -143,7 +162,7 @@
   
 }
 
-+ (void)loginUsingData:(NSString *)data code:(NSString *)code completion:(OMNTokenBlock)completion failure:(void (^)(NSError *error))failureBlock {
++ (void)loginUsingData:(NSString *)data code:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
   
   NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
@@ -198,7 +217,7 @@
   
 }
 
-+ (void)loginWithParameters:(NSDictionary *)parameters completion:(OMNTokenBlock)completion failure:(void (^)(NSError *error))failureBlock {
++ (void)loginWithParameters:(NSDictionary *)parameters completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
   
   [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     

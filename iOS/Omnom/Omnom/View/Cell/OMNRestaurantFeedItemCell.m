@@ -9,6 +9,7 @@
 #import "OMNRestaurantFeedItemCell.h"
 #import <UIImageView+AFNetworking.h>
 #import "OMNFeedItem.h"
+#import <SDWebImageManager.h>
 
 @implementation OMNRestaurantFeedItemCell {
   OMNFeedItem *_feedItem;
@@ -17,11 +18,20 @@
   UILabel *_priceLabel;
 }
 
+- (void)dealloc {
+  @try {
+    [_feedItem removeObserver:self forKeyPath:NSStringFromSelector(@selector(image))];
+  }
+  @catch (NSException *exception) {
+  }
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     
     _iconView = [[UIImageView alloc] init];
+    _iconView.clipsToBounds = YES;
     _iconView.contentMode = UIViewContentModeScaleAspectFill;
     _iconView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_iconView];
@@ -41,11 +51,33 @@
 }
 
 - (void)setFeedItem:(OMNFeedItem *)feedItem {
+  
+  [_feedItem removeObserver:self forKeyPath:NSStringFromSelector(@selector(image))];
+  
   _feedItem = feedItem;
+  [_feedItem addObserver:self forKeyPath:NSStringFromSelector(@selector(image)) options:NSKeyValueObservingOptionNew context:NULL];
+  
   _textLabel.text = feedItem.title;
   _priceLabel.text = feedItem.price;
   _iconView.image = feedItem.image;
-//  [_iconView setImageWithURL:[NSURL URLWithString:feedItem.imageURL]];
+  
+  if (nil == _feedItem.image) {
+    
+    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:feedItem.imageURL] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+      
+      feedItem.image = image;
+      
+    }];
+    
+  }
+  
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  
+  if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
+    _iconView.image = _feedItem.image;
+  }
   
 }
 

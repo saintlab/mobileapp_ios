@@ -41,7 +41,7 @@
 @property (nonatomic, copy) NSString *card_id;
 @property (nonatomic, assign) BOOL add_card;
 
-+ (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id cvv:(NSString *)cvv;
++ (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id;
 + (OMNMailRuCardInfo *)cardInfoWithCardPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv;
 
 - (NSDictionary *)card_info;

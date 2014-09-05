@@ -40,6 +40,7 @@
   self.view.backgroundColor = [UIColor whiteColor];
   
   _datePicker = [[UIDatePicker alloc] init];
+  _datePicker.backgroundColor = [UIColor whiteColor];
   _datePicker.datePickerMode = UIDatePickerModeDate;
   [_datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
   
@@ -257,7 +258,7 @@
 - (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code {
   
   __weak typeof(self)weakSelf = self;
-  [_user confirmPhone:code completion:^(NSString *token) {
+  [_user verifyPhoneCode:code completion:^(NSString *token) {
     
     [weakSelf didRegisterWithToken:token];
     
@@ -272,7 +273,7 @@
 
 - (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC {
   
-  [_user registerWithCompletion:^{
+  [_user verifyPhoneCode:nil completion:^(NSString *token) {
     
   } failure:^(NSError *error) {
     

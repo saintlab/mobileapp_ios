@@ -47,6 +47,7 @@ UIPickerViewDelegate>
 - (void)viewDidLoad {
   
   [super viewDidLoad];
+  _numberOfGuestsPicker.backgroundColor = [UIColor whiteColor];
   [self setNumberOfGuests:1];
   
 }

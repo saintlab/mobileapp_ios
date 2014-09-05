@@ -73,34 +73,6 @@ describe(@"demo stand test", ^{
     
   });
   
-  __block NSString *_card_id = nil;
-  it(@"should create new card", ^{
-    
-    [[[[OMNMailRuAcquiring acquiring] certificateData] should] beNonNil];
-    
-    NSDictionary *cardInfo =
-    @{
-      //      @"pan" : @"4111111111111112",
-      //      @"pan" : @"639002000000000003",
-      @"pan" : @"6011000000000004",
-      @"exp_date" : @"12.2015",
-      @"cvv" : @"123",
-      };
-    
-    __block id cardRegisterResponse = nil;
-    [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:_user.id user_phone:_user.phone completion:^(id response) {
-      
-      cardRegisterResponse = response;
-      
-    }];
-    
-    [[expectFutureValue(cardRegisterResponse) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
-    
-    _card_id = cardRegisterResponse[@"card_id"];
-    [[_card_id should] beNonNil];
-    
-  });
-  
 });
 
 SPEC_END

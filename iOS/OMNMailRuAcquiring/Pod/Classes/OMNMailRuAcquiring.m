@@ -70,6 +70,10 @@ static NSDictionary *_config = nil;
   return self;
 }
 
+- (NSString *)testCVV {
+  return _config[@"OMNMailRuTestCVV"];
+}
+
 - (NSData *)certificateData {
   NSString *name = _config[@"OMNMailRuCertificateName"];
   NSString *certificatePath = [[NSBundle mainBundle] pathForResource:name ofType:nil];

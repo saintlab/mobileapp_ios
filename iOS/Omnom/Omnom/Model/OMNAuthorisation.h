@@ -8,8 +8,6 @@
 
 #import "OMNUser.h"
 
-typedef void(^OMNTokenBlock)(NSString *token);
-
 @interface OMNAuthorisation : NSObject
 
 @property (nonatomic, copy, readonly) NSString *token;
@@ -36,6 +34,6 @@ typedef void(^OMNTokenBlock)(NSString *token);
 
 @interface NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(OMNTokenBlock)completion failure:(void(^)(NSError *))failureBlock;
+- (void)decodeToken:(void (^)(NSString *token))completion failure:(void(^)(NSError *))failureBlock;
 
 @end

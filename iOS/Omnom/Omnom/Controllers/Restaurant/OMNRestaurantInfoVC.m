@@ -13,6 +13,7 @@
 #import "OMNRestaurantFeedItemCell.h"
 #import "OMNProductDetailsVC.h"
 #import "OMNVisitor.h"
+#import "OMNToolbarButton.h"
 
 @interface OMNRestaurantInfoVC ()
 <OMNProductDetailsVCDelegate,
@@ -46,16 +47,12 @@ UIScrollViewDelegate>
     
   } error:^(NSError *error) {
     
-    
-    
   }];
   
   _arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"show_button_icon"]];
   
-  UIButton *closeButton = [[UIButton alloc] init];
-  [closeButton setImage:[UIImage imageNamed:@"back_button_icon"] forState:UIControlStateNormal];
+  OMNToolbarButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"back_button_icon"] title:nil];
   [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
-  [closeButton sizeToFit];
   self.navigationItem.titleView = closeButton;
   
   if (NO == _visitor.restaurant.is_demo) {
@@ -67,7 +64,7 @@ UIScrollViewDelegate>
   [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"InfoCell"];
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"DefaultCell"];
   [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
-  
+  _disableNavigationBarAnimation = YES;
 }
 
 - (void)didFinishLoadingRestaurantInfo:(OMNRestaurantInfo *)restaurantInfo {
@@ -232,6 +229,13 @@ UIScrollViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
   [self updateNavigationBarLayer];
+  
+  if (_restaurantInfo &&
+      scrollView.contentInset.top + scrollView.contentOffset.y < -40.0f &&
+      !_disableNavigationBarAnimation) {
+    [self closeTap];
+  }
+  
 }
 
 - (void)updateNavigationBarLayer {

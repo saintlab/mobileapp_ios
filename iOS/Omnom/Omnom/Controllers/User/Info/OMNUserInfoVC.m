@@ -14,6 +14,7 @@
 #import <OMNStyler.h>
 #import <BlocksKit+UIKit.h>
 #import "OMNVisitor.h"
+#import "OMNToolbarButton.h"
 
 @interface OMNUserInfoVC ()
 <OMNEditTableVCDelegate>
@@ -94,9 +95,7 @@
 //  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
 //  self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
 
-  UIButton *closeButton = [[UIButton alloc] init];
-  [closeButton setImage:[UIImage imageNamed:@"cross_icon_black"] forState:UIControlStateNormal];
-  [closeButton sizeToFit];
+  UIButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"cross_icon_black"] title:nil];
   [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.titleView = closeButton;
 

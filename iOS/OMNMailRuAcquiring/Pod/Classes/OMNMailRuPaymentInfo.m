@@ -7,6 +7,7 @@
 //
 
 #import "OMNMailRuPaymentInfo.h"
+#import "OMNMailRuAcquiring.h"
 
 @implementation OMNMailRuPaymentInfo
 
@@ -75,10 +76,10 @@
   return self;
 }
 
-+ (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id cvv:(NSString *)cvv {
++ (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id {
   OMNMailRuCardInfo *cardInfo = [[OMNMailRuCardInfo alloc] init];
   cardInfo.card_id = card_id;
-  cardInfo.cvv = cvv;
+  cardInfo.cvv = [[OMNMailRuAcquiring acquiring] testCVV];
   return cardInfo;
 }
 

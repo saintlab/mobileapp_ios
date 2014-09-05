@@ -157,7 +157,7 @@
   _card_id = card_id;
   
   if (_card_id) {
-    _textLabel.text = NSLocalizedString(@"С вашей карты списана случайная сумма до 30р. Введите сумму списания в это поле, чтобы привязать карту к вашему аккаунту", nil);
+    _textLabel.text = NSLocalizedString(@"С вашей карты списана случайная сумма до 50р. Введите сумму списания в это поле, чтобы привязать карту к вашему аккаунту", nil);
     _cardHoldValueTF.textField.enabled = YES;
     [_cardHoldValueTF.textField becomeFirstResponder];
     _validateButton.enabled = YES;
@@ -230,7 +230,6 @@
 //    @"cvv" : @"602",
 //    };
   
-//  cardInfo =
 //  @{
 //    @"pan" : _bankCardInfo.pan,
 //    @"exp_date" : [NSString stringWithFormat:@"%2d.20%2d", _bankCardInfo.expiryMonth, _bankCardInfo.expiryYear],

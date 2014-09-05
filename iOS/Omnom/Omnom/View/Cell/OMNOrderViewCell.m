@@ -26,7 +26,7 @@
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.frame), 50.0f)];
     _label.textAlignment = NSTextAlignmentCenter;
     _label.textColor = [UIColor whiteColor];
-    _label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:24.0f];
+    _label.font = FuturaLSFOmnomRegular(24.0f);
     [self addSubview:_label];
     
     _orderDataSource = [[OMNOrderDataSource alloc] initWithOrder:nil];

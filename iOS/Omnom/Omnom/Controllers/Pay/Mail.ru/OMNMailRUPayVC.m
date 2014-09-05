@@ -164,7 +164,7 @@ OMNMailRUCardConfirmVCDelegate>
   [_loadingCircleVC.loaderView startAnimating:10.0];
 
   OMNBankCard *bankCard = [_bankCardsModel selectedCard];
-  OMNMailRuCardInfo *cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:bankCard.external_card_id cvv:@"123"];
+  OMNMailRuCardInfo *cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:bankCard.external_card_id];
   
   __weak typeof(self)weakSelf = self;
   [_order getPaymentInfoForUser:[OMNAuthorisation authorisation].user cardInfo:cardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {

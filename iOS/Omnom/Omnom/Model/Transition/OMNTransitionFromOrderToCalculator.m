@@ -89,7 +89,6 @@
     
   } completion:^(BOOL finished) {
     
-    [blankView removeFromSuperview];
     toViewController.splitTableView.hidden = NO;
     toViewController.splitTableView.alpha = 0.0f;
     
@@ -98,8 +97,9 @@
       toViewController.splitTableView.alpha = 1.0f;
       
     } completion:^(BOOL finished) {
-      [tableViewSnapshot removeFromSuperview];
       
+      [tableViewSnapshot removeFromSuperview];
+      [blankView removeFromSuperview];
       toViewController.view.backgroundColor = [UIColor whiteColor];
       fromViewController.tableView.hidden = NO;
       

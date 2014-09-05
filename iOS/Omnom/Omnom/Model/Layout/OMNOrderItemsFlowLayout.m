@@ -26,14 +26,15 @@
   
   self.sectionInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
   self.itemSize = CGSizeMake(320.0f, 420.0f);
-
+  self.minimumLineSpacing = -40.0f;
+  
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
   
   NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
   [attributes enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes *obj, NSUInteger idx, BOOL *stop) {
-    obj.transform = CGAffineTransformMakeScale(0.9f, 0.9f);
+    obj.transform = CGAffineTransformMakeScale(0.85f, 0.85f);
   }];
   return attributes;
   

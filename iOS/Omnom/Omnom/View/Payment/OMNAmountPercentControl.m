@@ -99,6 +99,7 @@ UITextFieldDelegate>
   [self addSubview:_amountTF];
   
   _percentPicker = [[UIPickerView alloc] init];
+  _percentPicker.backgroundColor = [UIColor whiteColor];
   _percentPicker.delegate = self;
   _percentPicker.dataSource = self;
   
@@ -169,7 +170,11 @@ UITextFieldDelegate>
 
 - (void)setAmountPercentValue:(OMNAmountPercentValue *)amountPercentValue {
   _amountPercentValue = amountPercentValue;
-  if (amountPercentValue.isAmountSelected) {
+  [self update];
+}
+
+- (void)update {
+  if (_amountPercentValue.isAmountSelected) {
     [self setAmountValue:_amountPercentValue.amount];
     [self updatePercentValue];
   }

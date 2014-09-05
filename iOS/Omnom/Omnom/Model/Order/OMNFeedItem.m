@@ -15,9 +15,8 @@
   if (self) {
     self.title = jsonData[@"title"];
     self.price = jsonData[@"price"];
-    self.imageURL = jsonData[@"imageURL"];
+    self.imageURL = jsonData[@"image"];
     self.Description = jsonData[@"description"];
-    self.image = [UIImage imageNamed:@"promo_pic"];
   }
   return self;
 }

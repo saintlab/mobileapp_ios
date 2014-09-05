@@ -51,6 +51,10 @@
   
 }
 
+- (void)cardEnterControlDidEnterFailCardData:(OMNCardEnterControl *)control {
+  
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
