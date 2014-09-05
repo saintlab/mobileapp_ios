@@ -27,6 +27,7 @@ extern NSString * const kPushSoundName;
 
 + (NSString *)cardIOAppToken;
 + (NSString *)mixpanelToken;
++ (NSString *)crashlyticsAPIKey;
 
 + (NSString *)pushSoundName;
 

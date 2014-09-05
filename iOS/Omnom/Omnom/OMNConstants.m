@@ -66,6 +66,9 @@ static NSDictionary *_customConfig = nil;
 + (NSString *)mixpanelToken {
   return [self stringForKey:@"MixpanelToken"];
 }
++ (NSString *)crashlyticsAPIKey {
+  return [self stringForKey:@"CrashlyticsAPIKey"];
+}
 
 + (NSString *)pushSoundName {
   return nil;

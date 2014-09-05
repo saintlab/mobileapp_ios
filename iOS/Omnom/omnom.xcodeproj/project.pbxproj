@@ -121,8 +121,6 @@
 		936E71DB1991FEFF008FF864 /* OMNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71D91991FEFF008FF864 /* OMNViewController.m */; };
 		936E71F119921B5C008FF864 /* OMNErrorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F019921B5C008FF864 /* OMNErrorTextField.m */; };
 		936E71F219921B5C008FF864 /* OMNErrorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F019921B5C008FF864 /* OMNErrorTextField.m */; };
-		936E71F519923DE2008FF864 /* OMNShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F419923DE2008FF864 /* OMNShakeWindow.m */; };
-		936E71F619923DE2008FF864 /* OMNShakeWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F419923DE2008FF864 /* OMNShakeWindow.m */; };
 		936E71F919925563008FF864 /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
 		936E71FA19925563008FF864 /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
 		93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B1F196BF40F0031AD31 /* OMNScanQRCodeVC.m */; };
@@ -494,8 +492,6 @@
 		936E71D91991FEFF008FF864 /* OMNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNViewController.m; path = ../../OMNCardEnterControl/Example/OMNCardEnterControl/OMNViewController.m; sourceTree = "<group>"; };
 		936E71EF19921B5C008FF864 /* OMNErrorTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNErrorTextField.h; sourceTree = "<group>"; };
 		936E71F019921B5C008FF864 /* OMNErrorTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNErrorTextField.m; sourceTree = "<group>"; };
-		936E71F319923DE2008FF864 /* OMNShakeWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNShakeWindow.h; sourceTree = "<group>"; };
-		936E71F419923DE2008FF864 /* OMNShakeWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNShakeWindow.m; sourceTree = "<group>"; };
 		936E71F719925563008FF864 /* OMNNavigationBarProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationBarProgressView.h; sourceTree = "<group>"; };
 		936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationBarProgressView.m; sourceTree = "<group>"; };
 		93750B1E196BF40F0031AD31 /* OMNScanQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScanQRCodeVC.h; sourceTree = "<group>"; };
@@ -826,8 +822,6 @@
 				9319FD56192F33B90053F3A4 /* Payment */,
 				937A37311980F68200EF5C31 /* OMNLoaderView.h */,
 				937A37321980F68200EF5C31 /* OMNLoaderView.m */,
-				936E71F319923DE2008FF864 /* OMNShakeWindow.h */,
-				936E71F419923DE2008FF864 /* OMNShakeWindow.m */,
 				9345AFCF199BB3C700328F73 /* OMNPaymentNotificationControl.h */,
 				9345AFD0199BB3C700328F73 /* OMNPaymentNotificationControl.m */,
 				9345AFD3199C6F8B00328F73 /* OMNToolbarButton.h */,
@@ -1989,7 +1983,6 @@
 				93535EFF198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
 				937822A01963E65F00CE6661 /* OMNOrderViewCell.m in Sources */,
 				93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */,
-				936E71F519923DE2008FF864 /* OMNShakeWindow.m in Sources */,
 				93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */,
 				930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */,
 				938E8F5C192F3A200088EF38 /* OMNTable.m in Sources */,
@@ -2121,7 +2114,6 @@
 				937822A51963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,
 				9345AFCA199B7E1A00328F73 /* OMNRestaurantInfoItem.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
-				936E71F619923DE2008FF864 /* OMNShakeWindow.m in Sources */,
 				931B15CF19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
 				93E2998A197CE0FD00051B04 /* OMNSearchBeaconVC.m in Sources */,

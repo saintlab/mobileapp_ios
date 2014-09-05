@@ -8,6 +8,7 @@
 
 #import "OMNDisclamerView.h"
 #import <OMNStyler.h>
+#import "OMNConstants.h"
 
 @interface OMNDisclamerView ()
 <UITextViewDelegate>
@@ -36,23 +37,23 @@
   self.textContainer.lineFragmentPadding = 0;
   self.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
   self.delegate = self;
-
-  NSString *buttonText = NSLocalizedString(@"Пользовательского соглашения", nil);
-  NSString *text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Нажимая Далее, вы выражаете согласие с условиями", nil), buttonText];
+  
+  NSString *buttonText = NSLocalizedString(@"Пользовательское соглашение", nil);
+  NSString *text = [NSString stringWithFormat:@"%@\n%@", NSLocalizedString(@"Нажимая «Далее», вы принимаете", nil), buttonText];
   
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
-  
   [attributedString setAttributes:
   @{
     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
-    NSFontAttributeName : [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:16.0f],
-    NSLinkAttributeName : [NSURL URLWithString:@"http://legal.saintlab.com/omnom/user-agreement/"],
-    }
-                            range:[text rangeOfString:buttonText]];
+    NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
+    } range:NSMakeRange(0, text.length)];
+  
+  [attributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://legal.saintlab.com/omnom/user-agreement/"] range:[text rangeOfString:buttonText]];
+  
   self.linkTextAttributes =
   @{
     NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
-    NSFontAttributeName : [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:16.0f],
+    NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
     };
   self.attributedText = attributedString;
 

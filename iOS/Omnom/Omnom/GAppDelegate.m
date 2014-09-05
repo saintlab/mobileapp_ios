@@ -13,7 +13,6 @@
 #import "OMNVisitorManager.h"
 #import "OMNOperationManager.h"
 #import "OMNViewController.h"
-#import "OMNShakeWindow.h"
 #import <SDWebImageManager.h>
 #import <Crashlytics/Crashlytics.h>
 #import <OMNMailRuAcquiring.h>
@@ -93,14 +92,14 @@
   [OMNOperationManager sharedManager];
   [OMNAuthorisation authorisation];
   
-  [Crashlytics startWithAPIKey:@"1ea87b52b1d0946ed506dcc3bd5b586f422bf03a"];
+  [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
   
-  self.window = [[OMNShakeWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.backgroundColor = [UIColor whiteColor];
   self.window.tintColor = [UIColor blackColor];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   startVC.info = info;
-  //  OMNViewController *startVC = [[OMNViewController alloc] init];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
   [self.window makeKeyAndVisible];
   
