@@ -7,8 +7,8 @@
 //
 
 #import "OMNEnterCodeView.h"
-
-@interface OMNEnterCodeLabel : UILabel
+#import "OMNConstants.h"
+@interface OMNEnterCodeTextField : UITextField
 
 @end
 
@@ -19,6 +19,7 @@
 
 @implementation OMNEnterCodeView {
   NSArray *_labels;
+  NSString *_code;
 }
 
 - (instancetype)init {
@@ -36,27 +37,18 @@
 }
 
 - (BOOL)becomeFirstResponder {
-  return [_textField becomeFirstResponder];
+  return [[_labels firstObject] becomeFirstResponder];
 }
 
 - (void)setup {
   
   self.translatesAutoresizingMaskIntoConstraints = NO;
   
-  _textField = [[UITextField alloc] init];
-  _textField.keyboardType = UIKeyboardTypeDecimalPad;
-  _textField.delegate = self;
-  [self addSubview:_textField];
-  
   NSMutableArray *labels = [NSMutableArray arrayWithCapacity:4];
   
   for (int i = 0; i < 4; i++) {
-    OMNEnterCodeLabel *label = [[OMNEnterCodeLabel alloc] init];
-    label.translatesAutoresizingMaskIntoConstraints = NO;
-    label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:30.0f];
-    label.textColor = [UIColor blackColor];
-    label.backgroundColor = [UIColor clearColor];
+    OMNEnterCodeTextField *label = [[OMNEnterCodeTextField alloc] init];
+    label.delegate = self;
     [self addSubview:label];
     [labels addObject:label];
   }
@@ -95,17 +87,21 @@
 
 - (void)setCode:(NSString *)code {
   
-  _textField.text = code;
+  _code = code;
   
-  [_labels enumerateObjectsUsingBlock:^(UILabel *label, NSUInteger idx, BOOL *stop) {
+  [_labels enumerateObjectsUsingBlock:^(OMNEnterCodeTextField *enterCodeTextField, NSUInteger idx, BOOL *stop) {
     
     if (idx < code.length) {
     
       char ch = [code characterAtIndex:idx];
-      label.text = [NSString stringWithFormat:@"%c", ch];
+      enterCodeTextField.text = [NSString stringWithFormat:@"%c", ch];
     }
     else {
-      label.text = @"";
+      enterCodeTextField.text = @"";
+    }
+    
+    if (idx == code.length) {
+      [enterCodeTextField becomeFirstResponder];
     }
     
   }];
@@ -117,29 +113,60 @@
 }
 
 - (NSString *)code {
-  return _textField.text;
+  return _code;
 }
 
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
+  if (0 == string.length) {
+    if (_code.length) {
+      _code = [_code substringToIndex:_code.length - 1];
+    }
+    [self setCode:_code];
+    return NO;
+  }
+  
   NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
   NSArray *components = [finalString componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
   finalString = [components componentsJoinedByString:@""];
+  if (finalString.length > 1) {
+    finalString = [finalString substringToIndex:1];
+  }
   textField.text = finalString;
-  [self setCode:finalString];
+  
+  if (finalString.length) {
+    NSString *code = [_code stringByAppendingString:finalString];
+    [self setCode:code];
+  }
   
   return NO;
 }
 
 @end
 
-@implementation OMNEnterCodeLabel
+@implementation OMNEnterCodeTextField
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    self.textAlignment = NSTextAlignmentCenter;
+    self.keyboardType = UIKeyboardTypeDecimalPad;
+    self.font = FuturaLSFOmnomRegular(30.0f);
+    self.textColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor clearColor];
+  }
+  return self;
+}
+
+- (void)deleteBackward {
+  [self.delegate textField:self shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
+}
 
 - (void)setText:(NSString *)text {
   [super setText:text];
-  
 }
 
 - (void)drawRect:(CGRect)rect {

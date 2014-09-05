@@ -11,6 +11,7 @@
 #import "OMNUser.h"
 #import "OMNNavigationBarProgressView.h"
 #import "OMNResetPasswordVC.h"
+#import <BlocksKit.h>
 
 @interface OMNConfirmCodeVC ()
 
@@ -20,8 +21,14 @@
 
   OMNEnterCodeView *_codeView;
   UILabel *_helpLabel;
-  
+  UIButton *_resendButton;
   NSString *_phone;
+  NSTimer *_timer;
+}
+
+- (void)dealloc {
+  [_timer invalidate];
+  _timer = nil;
 }
 
 - (instancetype)initWithPhone:(NSString *)phone {
@@ -45,7 +52,7 @@
   label.translatesAutoresizingMaskIntoConstraints = NO;
   label.textAlignment = NSTextAlignmentCenter;
   label.numberOfLines = 0;
-  label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  label.font = FuturaOSFOmnomRegular(18.0f);
   label.textColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
   label.text = [NSString stringWithFormat:NSLocalizedString(@"Должна прийти\nSMS с кодом на номер\n%@", nil), _phone];
   [self.view addSubview:label];
@@ -54,30 +61,59 @@
   [_codeView addTarget:self action:@selector(didEnterCode) forControlEvents:UIControlEventEditingDidEnd];
   [self.view addSubview:_codeView];
 
-  UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), 44.0f)];
-  toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+  _resendButton = [[UIButton alloc] init];
+  _resendButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [_resendButton setBackgroundImage:[UIImage imageNamed:@"roundy_button_white_black_border"] forState:UIControlStateNormal];
+  [_resendButton setBackgroundImage:[UIImage imageNamed:@"roundy_button_white_light_grey_border"] forState:UIControlStateHighlighted];
+  [_resendButton setBackgroundImage:[UIImage imageNamed:@"roundy_button_white_light_grey_border"] forState:UIControlStateDisabled];
+  [_resendButton setTitle:NSLocalizedString(@"Выслать новый код", nil) forState:UIControlStateNormal];
+  [_resendButton addTarget:self action:@selector(resentTap) forControlEvents:UIControlEventTouchUpInside];
+  _resendButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
+  _resendButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
+  [_resendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [_resendButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
+  [_resendButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+  [self.view addSubview:_resendButton];
   
-  NSMutableArray *items = [NSMutableArray arrayWithObject:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить код", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resentTap)]];
-  if (self.allowChangePhoneNumber) {
-    [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
-    [items addObject:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить номер", nil) style:UIBarButtonItemStylePlain target:self action:@selector(changeNumberTap)]];
-  }
   
-  toolBar.items = items;
-  _codeView.textField.inputAccessoryView = toolBar;
+//  UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), 44.0f)];
+//  toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+//  
+//  NSMutableArray *items = [NSMutableArray arrayWithObject:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить код", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resentTap)]];
+//  if (self.allowChangePhoneNumber) {
+//    [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+//    [items addObject:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить номер", nil) style:UIBarButtonItemStylePlain target:self action:@selector(changeNumberTap)]];
+//  }
+//  
+//  toolBar.items = items;
+//  _codeView.textField.inputAccessoryView = toolBar;
 
-  
   NSDictionary *views =
   @{
     @"label" : label,
     @"codeView" : _codeView,
+    @"resendButton" : _resendButton,
     @"topLayoutGuide" : self.topLayoutGuide,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[label]-[codeView]" options:0 metrics:0 views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[label]-[codeView]-(20)-[resendButton]" options:0 metrics:0 views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_codeView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_resendButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
 
+  [self startTimer];
+  
+}
+
+- (void)startTimer {
+  [_timer invalidate];
+  _resendButton.enabled = NO;
+  __weak UIButton *resendButton = _resendButton;
+  _timer = [NSTimer bk_scheduledTimerWithTimeInterval:5.0 block:^(NSTimer *timer) {
+    
+    resendButton.enabled = YES;
+    
+  } repeats:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -87,6 +123,7 @@
 
 - (void)resentTap {
   
+  [self startTimer];
   [self.delegate confirmCodeVCRequestResendCode:self];
   
 }

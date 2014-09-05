@@ -38,16 +38,34 @@
   
   [self setup];
   
-//  _phoneNumberTextFieldDelegate = [[OMNPhoneNumberTextFieldDelegate alloc] init];
-//  _loginTF.delegate = _phoneNumberTextFieldDelegate;
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
   
   OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"Вход", nil) count:2];
   [navigationBarProgressView setPage:0];
   self.navigationItem.titleView = navigationBarProgressView;
-  [self.navigationController.navigationBar setNeedsLayout];
+  [self setNextButtonLoading:NO];
+  [self.navigationController.navigationBar layoutIfNeeded];
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
+}
+
+- (void)setNextButtonLoading:(BOOL)loading {
+  
+  UIBarButtonItem *rightBarButtonItem = nil;
+  
+  if (loading) {
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+  }
+  else {
+    rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
+  }
+  [self.navigationItem setRightBarButtonItem:rightBarButtonItem animated:YES];
   
 }
 
@@ -100,6 +118,7 @@
 
 - (void)loginTap {
 
+  [self setNextButtonLoading:YES];
   __weak typeof(self)weakSelf = self;
   [self requestAuthorisationCodeCompletion:^{
     [weakSelf requestAuthorizationCode];
@@ -124,7 +143,7 @@
 }
 
 - (void)processLoginError:(NSError *)error {
-  
+  [self setNextButtonLoading:NO];
   if (error) {
     [_loginTF setError:error.localizedDescription animated:NO];
   }
@@ -135,12 +154,11 @@
 }
 
 - (void)requestAuthorizationCode {
-  
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:self.decimalPhoneNumber];
   confirmCodeVC.allowChangePhoneNumber = YES;
   confirmCodeVC.delegate = self;
   [self.navigationController pushViewController:confirmCodeVC animated:YES];
-  
+  [self setNextButtonLoading:NO];
 }
 
 #pragma mark - OMNConfirmCodeVCDelegate
