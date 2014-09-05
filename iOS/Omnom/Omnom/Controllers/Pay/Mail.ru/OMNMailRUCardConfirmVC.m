@@ -216,13 +216,13 @@
   [_spinner startAnimating];
 #warning register card stub
   NSDictionary *cardInfo =
-  @{
-//    @"pan" : @"4111111111111111",
-    @"pan" : @"6011000000000004",
+//  @{
+////    @"pan" : @"4111111111111111",
+////    @"pan" : @"6011000000000004",
 //    @"pan" : @"639002000000000003",
-    @"exp_date" : @"12.2015",
-    @"cvv" : @"123",
-    };
+//    @"exp_date" : @"12.2015",
+//    @"cvv" : @"123",
+//    };
 
 //  @{
 //    @"pan" : @"5213243739794467",
@@ -230,29 +230,29 @@
 //    @"cvv" : @"602",
 //    };
   
-//  @{
-//    @"pan" : _bankCardInfo.pan,
-//    @"exp_date" : [NSString stringWithFormat:@"%2d.20%2d", _bankCardInfo.expiryMonth, _bankCardInfo.expiryYear],
-//    @"cvv" : _bankCardInfo.cvv,
-//    };
+  @{
+    @"pan" : _bankCardInfo.pan,
+    @"exp_date" : [NSString stringWithFormat:@"%2ld.20%2ld", (long)_bankCardInfo.expiryMonth, (long)_bankCardInfo.expiryYear],
+    @"cvv" : _bankCardInfo.cvv,
+    };
   
   __weak typeof(self)weakSelf = self;
   OMNUser *user = [OMNAuthorisation authorisation].user;
-  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(id response) {
+  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(id response, NSString *cardId) {
     
-    [weakSelf didFinishPostCardInfo:response];
+    [weakSelf didFinishPostWithResponse:response cardId:cardId];
     
   }];
   
 }
 
-- (void)didFinishPostCardInfo:(id)response {
-  NSLog(@"registerCard>%@", response);
+- (void)didFinishPostWithResponse:(id)response cardId:(NSString *)cardId {
+
   [_spinner stopAnimating];
   
-  NSString *card_id = response[@"card_id"];
-  self.card_id = card_id;
-  if (card_id) {
+  NSString *status = response[@"status"];
+  if ([status isEqualToString:@"OK_FINISH"]) {
+    self.card_id = cardId;
     self.navigationItem.rightBarButtonItem = nil;
   }
   else {

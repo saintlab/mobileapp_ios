@@ -88,7 +88,6 @@
   
   [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:_user_login user_phone:_user_phone completion:^(id response) {
     
-    NSLog(@"registerCard>%@", response);
     
   }];
 

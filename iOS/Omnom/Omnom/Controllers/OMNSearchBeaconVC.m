@@ -398,8 +398,9 @@ OMNDemoRestaurantVCDelegate>
   
   OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
   notFoundBeaconVC.faded = YES;
-  notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Телефон рядом с центром стола? Возможно это место ещё не подключено к Омном.", nil);
-  notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"sad_table_icon_big"];
+  notFoundBeaconVC.text = NSLocalizedString(@"Вы в ресторане? Телефон в центре стола?\nХм, вероятно, тут мы ещё не работаем. Демо-режим для вас.", nil);
+//  notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Телефон рядом с центром стола? Возможно это место ещё не подключено к Омном.", nil);
+  notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"weak_signal_table_icon_big"];
   __weak typeof(self)weakSelf = self;
   notFoundBeaconVC.buttonInfo =
   @[

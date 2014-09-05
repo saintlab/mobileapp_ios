@@ -110,7 +110,9 @@ static NSDictionary *_config = nil;
  
  cardholder имя держателя карты
  */
-- (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response))completion {
+- (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response, NSString *cardId))completionBlock {
+  
+  NSAssert(completionBlock != nil, @"registerCard completionBlock is nil");
   
   NSDictionary *reqiredSignatureParams =
   @{
@@ -127,36 +129,63 @@ static NSDictionary *_config = nil;
 
   [parameters addEntriesFromDictionary:cardInfo];
   
+  __weak typeof(self)weakSelf = self;
   [self POST:@"card/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"card/register>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"card/register>%@", responseObject);
+    NSLog(@"\ncard/register>\n%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
+    NSLog(@"\ncard/register>\n%@", responseObject);
     
     if (responseObject[@"url"]) {
-      if (completion) {
-        completion(responseObject);
-      }
       
+      [weakSelf checkRegisterForResponse:responseObject withCompletion:completionBlock];
+
     }
     else {
-      if (completion) {
-        completion(nil);
-      }
+
+      completionBlock(responseObject, nil);
+      
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"card/register>%@", error);
-    NSLog(@"card/register>%@", operation.responseString);
-    if (completion) {
-      completion(nil);
-    }
+    NSLog(@"\ncard/register>\n%@", error);
+    NSLog(@"\ncard/register>\n%@", operation.responseString);
+    completionBlock(nil, nil);
     
   }];
   
 }
 
-- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(void(^)(id response))completion {
+- (void)checkRegisterForResponse:(id)response withCompletion:(void(^)(id response, NSString *cardId))completionBlock {
+  
+  __weak typeof(self)weakSelf = self;
+  NSString *url = response[@"url"];
+  [self GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"checkRegisterForUrl>%@", responseObject);
+    NSString *status = responseObject[@"status"];
+    if ([status isEqualToString:@"OK_CONTINUE"]) {
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf checkRegisterForResponse:response withCompletion:completionBlock];
+      });
+    }
+    else {
+      
+      completionBlock(responseObject, response[@"card_id"]);
+      
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    completionBlock(response, nil);
+    
+  }];
+  
+}
+
+- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(void(^)(id response))completionBlock {
+  
+  NSAssert(completionBlock != nil, @"cardVerify completionBlock is nil");
   
   NSDictionary *reqiredSignatureParams =
   @{
@@ -171,18 +200,59 @@ static NSDictionary *_config = nil;
   parameters[@"signature"] = [reqiredSignatureParams omn_signature];
   parameters[@"amount"] = @(amount);
   
+  __weak typeof(self)weakSelf = self;
   [self POST:@"card/verify" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"\ncard/verify>\n%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
     NSLog(@"\ncard/verify>\n%@", responseObject);
-    
-    completion(responseObject);
+    if (responseObject[@"error"]) {
+      completionBlock(responseObject);
+    }
+    else {
+      
+      NSString *url = responseObject[@"url"];
+      if (NSNotFound == [url rangeOfString:@"Success=True"].location) {
+        completionBlock(nil);
+      }
+      else {
+        completionBlock(responseObject);
+      }
+      
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"card/verify>%@", error);
     NSLog(@"\ncard/verify>\n%@", operation.responseString);
-    completion(nil);
+    completionBlock(nil);
+    
+  }];
+  
+}
+
+- (void)pollUrl:(NSString *)url withCompletion:(void(^)(id response))completionBlock {
+  
+  __weak typeof(self)weakSelf = self;
+  [self GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"\npollUrl:>\n%@", responseObject);
+    
+    NSString *status = responseObject[@"status"];
+    if ([status isEqualToString:@"OK_CONTINUE"]) {
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf pollUrl:url withCompletion:completionBlock];
+      });
+    }
+    else {
+      
+      completionBlock(responseObject);
+      
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    NSLog(@"\npollUrl:>\n%@", operation.responseString);
+    completionBlock(nil);
     
   }];
   

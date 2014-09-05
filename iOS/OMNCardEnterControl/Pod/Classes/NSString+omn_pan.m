@@ -87,19 +87,29 @@ const NSInteger kPanGroupLength = 4;
   NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
   NSDateComponents *dateComponents = [calendar components:NSYearCalendarUnit|NSMonthCalendarUnit fromDate:[NSDate date]];
   
-  if (year < [dateComponents year]%100) {
-    return NO;
-  }
-
   NSString *mm = components[0];
   NSInteger month = [mm integerValue];
   
-  if (month < [dateComponents month] ||
-      month > 12) {
+  if (month > 12) {
     return NO;
   }
+  
+  NSInteger currentYear = [dateComponents year]%100;
+  if (year < currentYear) {
+    return NO;
+  }
+  else if (year == currentYear) {
+
+    if (month < [dateComponents month]) {
+      return NO;
+    }
+    else {
+      return YES;
+    }
+    
+  }
   else {
-    return year;
+    return YES;
   }
   
 }

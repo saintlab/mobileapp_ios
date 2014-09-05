@@ -54,10 +54,9 @@ CGFloat kTextFieldsOffset = 20.0f;
     
     _dynamycConstraints = [NSMutableArray array];
     
-    UIButton *cameraButton = [[UIButton alloc] init];
+    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 44.0f, 44.0f)];
     [cameraButton setImage:[UIImage imageNamed:@"camera_icon"] forState:UIControlStateNormal];
     [cameraButton addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
-    [cameraButton sizeToFit];
     
     _panTF = [[OMNDeletedTextField alloc] init];
     _panTF.rightViewMode = UITextFieldViewModeAlways;
@@ -131,10 +130,7 @@ CGFloat kTextFieldsOffset = 20.0f;
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     
-    NSArray *equalVConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[cvvTF(==expireTF)]"
-                                                                         options:0
-                                                                         metrics:nil
-                                                                           views:_views];
+    NSArray *equalVConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[cvvTF(==expireTF)]" options:0 metrics:nil views:_views];
     [self addConstraints:equalVConstraints];
     [self setExpireCCVTFHidden:YES animated:NO completion:nil];
     
@@ -220,6 +216,7 @@ CGFloat kTextFieldsOffset = 20.0f;
 - (void)setPan:(NSString *)pan {
   _panTF.text = [pan omn_panFormatedString];
   if (_panTF.text.length >= kDesiredPanLength) {
+    [self checkPanTF:YES];
     [self showExpireTF];
   }
   
@@ -299,7 +296,6 @@ CGFloat kTextFieldsOffset = 20.0f;
   if (updateTextField) {
     _expireTF.error = (NO == isValidDate);
   }
-  isValidDate= YES;
   return isValidDate;
   
 }

@@ -63,7 +63,7 @@
     return;
   }
   
-  [OMNConstants setCustomConfigName:@"config_stand"];
+  [OMNConstants setCustomConfigName:@"config_prod"];
   [OMNMailRuAcquiring setConfig:[OMNConstants mailRuConfig]];
   
   [self initCache];
