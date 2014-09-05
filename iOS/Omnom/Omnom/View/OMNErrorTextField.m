@@ -10,7 +10,6 @@
 #import <OMNStyler.h>
 
 @interface OMNErrorTextField ()
-<UITextFieldDelegate>
 
 @end
 
@@ -47,7 +46,6 @@
   
   _textField = [[UITextField alloc] init];
   _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-  _textField.delegate = self;
   _textField.textColor = [UIColor blackColor];
   _textField.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
   _textField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -89,48 +87,18 @@
   
   [self updateColorView];
   
+  [_textField addTarget:self action:@selector(updateColorView) forControlEvents:UIControlEventEditingDidBegin];
+  [_textField addTarget:self action:@selector(updateColorView) forControlEvents:UIControlEventEditingDidEnd];
+  [_textField addTarget:self action:@selector(editingChanged) forControlEvents:UIControlEventEditingChanged];
+  
+}
+
+- (void)editingChanged {
+  [self setError:nil animated:NO];
 }
 
 - (BOOL)becomeFirstResponder {
   return [_textField becomeFirstResponder];
-}
-
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-  [self setError:nil animated:NO];
-  
-  if ([self.textFieldDelegate respondsToSelector:@selector(textField:shouldChangeCharactersInRange:replacementString:)]) {
-    return [self.textFieldDelegate textField:textField shouldChangeCharactersInRange:range replacementString:string];
-  }
-  else {
-    return YES;
-  }
-  
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  if ([self.textFieldDelegate respondsToSelector:@selector(textFieldShouldReturn:)]) {
-    return [self.textFieldDelegate textFieldShouldReturn:textField];
-  }
-  else {
-    return YES;
-  }
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-  [self updateColorView];
-  if ([self.textFieldDelegate respondsToSelector:@selector(textFieldDidBeginEditing:)]) {
-    [self.textFieldDelegate textFieldDidBeginEditing:textField];
-  }
-  
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-  [self updateColorView];
-  if ([self.textFieldDelegate respondsToSelector:@selector(textFieldDidEndEditing:)]) {
-    [self.textFieldDelegate textFieldDidEndEditing:textField];
-  }
 }
 
 - (void)setError:(NSString *)text animated:(BOOL)animated {

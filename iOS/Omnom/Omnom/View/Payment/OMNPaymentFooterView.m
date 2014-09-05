@@ -8,7 +8,6 @@
 
 #import "OMNPaymentFooterView.h"
 #import <BlocksKit+UIKit.h>
-#import <TSCurrencyTextField.h>
 #import "OMNTipSelector.h"
 #import "OMNAmountPercentControl.h"
 #import "UIView+frame.h"

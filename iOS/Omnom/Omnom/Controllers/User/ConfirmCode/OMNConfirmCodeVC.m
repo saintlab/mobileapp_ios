@@ -47,7 +47,7 @@
   label.numberOfLines = 0;
   label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   label.textColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-  label.text = [NSString stringWithFormat:NSLocalizedString(@"Введите код\nприсланный на номер\n%@", nil), _phone];
+  label.text = [NSString stringWithFormat:NSLocalizedString(@"Должна прийти\nSMS с кодом на номер\n%@", nil), _phone];
   [self.view addSubview:label];
   
   _codeView = [[OMNEnterCodeView alloc] init];

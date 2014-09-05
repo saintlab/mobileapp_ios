@@ -11,7 +11,6 @@
 @interface OMNErrorTextField : UIView
 
 @property (nonatomic, strong, readonly) UITextField *textField;
-@property (nonatomic, weak) id<UITextFieldDelegate> textFieldDelegate;
 
 - (instancetype)initWithWidth:(CGFloat)width;
 - (void)setError:(NSString *)text animated:(BOOL)animated;

@@ -91,7 +91,7 @@ UITextFieldDelegate>
   [self.view addSubview:_switch];
   
   _tableNumberTF = [[OMNErrorTextField alloc] initWithWidth:125.0f];
-  _tableNumberTF.textFieldDelegate = self;
+  _tableNumberTF.textField.delegate = self;
   _tableNumberTF.textField.returnKeyType = UIReturnKeyDone;
   _tableNumberTF.textField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:50.0f];
   _tableNumberTF.textField.textColor = colorWithHexString(@"000000");

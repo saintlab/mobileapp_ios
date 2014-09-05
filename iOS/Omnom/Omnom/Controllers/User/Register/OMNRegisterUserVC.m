@@ -16,7 +16,8 @@
 #import "OMNDisclamerView.h"
 
 @interface OMNRegisterUserVC ()
-<OMNConfirmCodeVCDelegate>
+<OMNConfirmCodeVCDelegate,
+UITextFieldDelegate>
 
 @end
 
@@ -31,7 +32,14 @@
   UIScrollView *_scroll;
   UILabel *_errorLabel;
   
+  __weak UITextField *_currentTextField;
+  NSArray *_textFields;
+  
   OMNUser *_user;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad {
@@ -56,17 +64,11 @@
 }
 
 - (void)setup {
-
-  self.automaticallyAdjustsScrollViewInsets = NO;
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardDidShow:)
-                                               name:UIKeyboardDidShowNotification
-                                             object:nil];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(keyboardWillHide:)
-                                               name:UIKeyboardWillHideNotification
-                                             object:nil];
+  self.automaticallyAdjustsScrollViewInsets = NO;
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidBeginEditing:) name:UITextFieldTextDidBeginEditingNotification object:nil];
   
   _scroll = [[UIScrollView alloc] init];
   _scroll.translatesAutoresizingMaskIntoConstraints = NO;
@@ -79,6 +81,22 @@
   OMNDisclamerView *disclamerView = [[OMNDisclamerView alloc] init];
   [contentView addSubview:disclamerView];
   
+  UIToolbar *nextToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
+  nextToolbar.items =
+  @[
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Следующий", nil) style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)],
+    ];
+  
+  UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
+  doneToolbar.items =
+  @[
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)],
+    ];
+  
   _errorLabel = [[UILabel alloc] init];
   _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _errorLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
@@ -89,24 +107,39 @@
   [contentView addSubview:_errorLabel];
   
   _nameTF = [[OMNErrorTextField alloc] init];
+  _nameTF.textField.returnKeyType = UIReturnKeyNext;
+  _nameTF.textField.inputAccessoryView = nextToolbar;
+  _nameTF.textField.tag = 0;
+  _nameTF.textField.delegate = self;
   _nameTF.textField.placeholder = NSLocalizedString(@"Имя", nil);
   [contentView addSubview:_nameTF];
   
-  _phoneTF = [[OMNErrorTextField alloc] init];
-  _phoneTF.textField.keyboardType = UIKeyboardTypePhonePad;
-  _phoneTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
-  [contentView addSubview:_phoneTF];
-  
   _emailTF = [[OMNErrorTextField alloc] init];
+  _emailTF.textField.tag = 1;
+  _emailTF.textField.inputAccessoryView = nextToolbar;
+  _emailTF.textField.delegate = self;
   _emailTF.textField.keyboardType = UIKeyboardTypeEmailAddress;
+  _emailTF.textField.returnKeyType = UIReturnKeyNext;
   _emailTF.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
   _emailTF.textField.autocorrectionType = UITextAutocorrectionTypeNo;
   _emailTF.textField.placeholder = NSLocalizedString(@"Почта", nil);
   [contentView addSubview:_emailTF];
   
+  _phoneTF = [[OMNErrorTextField alloc] init];
+  _phoneTF.textField.tag = 2;
+  _phoneTF.textField.keyboardType = UIKeyboardTypePhonePad;
+  _phoneTF.textField.inputAccessoryView = nextToolbar;
+  _phoneTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
+  [contentView addSubview:_phoneTF];
+  
   _birthdayTF = [[OMNErrorTextField alloc] init];
+  _birthdayTF.textField.tag = 3;
   _birthdayTF.textField.inputView = _datePicker;
+  _birthdayTF.textField.inputAccessoryView = doneToolbar;
+  _birthdayTF.textField.placeholder = NSLocalizedString(@"День рождения", nil);
   [contentView addSubview:_birthdayTF];
+  
+  _textFields = @[_nameTF, _emailTF, _phoneTF, _birthdayTF];
   
   NSDictionary *views =
   @{
@@ -145,13 +178,38 @@
   
   [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
   
-  [self updateBirthDate];
+}
+
+- (void)doneTap {
+  
+  if ([[NSDate date] timeIntervalSinceDate:_datePicker.date] > 18 * 365 * 24 * 60 * 60) {
+    [self updateBirthDate];
+    [_birthdayTF setError:nil animated:YES];
+    [self.view endEditing:YES];
+  }
+  else {
+    
+    [_birthdayTF setError:NSLocalizedString(@"Слишком мало лет =(", nil) animated:YES];
+    
+  }
   
 }
 
-- (void)datePickerChange:(UIDatePicker *)datePicker {
+- (void)nextTap {
   
-  [self updateBirthDate];
+  NSInteger index = (_currentTextField.tag + 1)%_textFields.count;
+  if (index < _textFields.count) {
+    OMNErrorTextField *textField = _textFields[index];
+    [textField.textField becomeFirstResponder];
+  }
+  
+}
+
+- (void)cancelTap {
+  [self.view endEditing:YES];
+}
+
+- (void)datePickerChange:(UIDatePicker *)datePicker {
   
 }
 
@@ -218,7 +276,9 @@
   _user.email = _emailTF.textField.text;
   _user.phone = _phoneTF.textField.text;
   _user.name = _nameTF.textField.text;
-  _user.birthDate = _datePicker.date;
+  if (_birthdayTF.textField.text) {
+    _user.birthDate = _datePicker.date;
+  }
   
   __weak typeof(self)weakSelf = self;
   [_user registerWithCompletion:^{
@@ -302,12 +362,18 @@
   
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
+- (void)textDidBeginEditing:(NSNotification *)notification {
+
+  UITextField *textField = notification.object;
+  _currentTextField = textField;
+  
+  CGRect textFieldFrame = [textField convertRect:textField.bounds toView:_scroll];
+  [_scroll setContentOffset:CGPointMake(0.0f, textFieldFrame.origin.y - 20.0f) animated:YES];
+  
 }
 
-
 - (void)keyboardDidShow:(NSNotification *)notification {
+  
   NSDictionary* info = [notification userInfo];
   CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
   kbRect = [self.view convertRect:kbRect fromView:nil];
@@ -327,6 +393,13 @@
   UIEdgeInsets contentInsets = UIEdgeInsetsZero;
   _scroll.contentInset = contentInsets;
   _scroll.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+  [self nextTap];
+  return YES;
 }
 
 @end
