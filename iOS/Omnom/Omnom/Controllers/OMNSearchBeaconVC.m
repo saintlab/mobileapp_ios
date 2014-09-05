@@ -398,8 +398,7 @@ OMNDemoRestaurantVCDelegate>
   
   OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
   notFoundBeaconVC.faded = YES;
-  notFoundBeaconVC.text = NSLocalizedString(@"Вы в ресторане? Телефон в центре стола?\nХм, вероятно, тут мы ещё не работаем. Демо-режим для вас.", nil);
-//  notFoundBeaconVC.text = NSLocalizedString(@"Столик не найден. Телефон рядом с центром стола? Возможно это место ещё не подключено к Омном.", nil);
+  notFoundBeaconVC.text = NSLocalizedString(@"Телефон в центре стола?\nЗаведение подключено\nк Omnom?", nil);
   notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"weak_signal_table_icon_big"];
   __weak typeof(self)weakSelf = self;
   notFoundBeaconVC.buttonInfo =
@@ -418,7 +417,7 @@ OMNDemoRestaurantVCDelegate>
 - (void)determineFaceUpPosition {
   
   OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] initWithParent:self];
-  tablePositionVC.text = NSLocalizedString(@"Слабый сигнал. Положите телефон в центр стола, пожалуйста.", nil);
+  tablePositionVC.text = NSLocalizedString(@"Слабый сигнал.\nПоложите телефон\nв центр стола,\nпожалуйста.", nil);
   tablePositionVC.circleIcon = [UIImage imageNamed:@"weak_signal_table_icon_big"];
   tablePositionVC.tablePositionDelegate = self;
   [self.navigationController pushViewController:tablePositionVC animated:YES];

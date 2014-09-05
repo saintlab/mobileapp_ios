@@ -48,6 +48,7 @@
     _visitor = visitor;
     _restaurant = visitor.restaurant;
     self.circleIcon = _restaurant.logo;
+    
   }
   return self;
 }
@@ -76,7 +77,6 @@
   
   self.backgroundImage = _restaurant.background;
   self.circleBackground = _restaurant.circleBackground;
-
   
   [self addActionsBoard];
   [self socketConnect];
@@ -190,8 +190,9 @@
 
 - (void)addActionsBoard {
   
-  [self addBottomButtons];
-  
+  [self addActionBoardIfNeeded];
+
+
   _callWaiterButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] title:NSLocalizedString(@"Официант", nil)];
   
   NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Отменить", nil)];
@@ -204,13 +205,15 @@
   UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_bill_icon_small"] title:NSLocalizedString(@"Счет", nil)];
   [callBillButton addTarget:_restaurantMediator action:@selector(callBillAction) forControlEvents:UIControlEventTouchUpInside];
 
+  self.bottomToolbar.hidden = NO;
+  self.bottomViewConstraint.constant = 0.0f;
   self.bottomToolbar.items =
   @[
     [[UIBarButtonItem alloc] initWithCustomView:_callWaiterButton],
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
     [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
     ];
-  
+
   UIButton *actionButton = [[UIButton alloc] init];
   actionButton.translatesAutoresizingMaskIntoConstraints = NO;
   [actionButton addTarget:_restaurantMediator action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
@@ -222,6 +225,8 @@
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:50.0f]];
   
+  [self.view layoutIfNeeded];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {

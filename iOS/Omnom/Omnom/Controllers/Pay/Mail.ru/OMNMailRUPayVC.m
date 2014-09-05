@@ -58,7 +58,7 @@ OMNMailRUCardConfirmVCDelegate>
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPay:) name:OMNSocketIODidPayNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPayNotification:) name:OMNSocketIODidPayNotification object:nil];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
@@ -196,18 +196,48 @@ OMNMailRUCardConfirmVCDelegate>
 
 }
 
-- (void)didPay:(NSNotification *)n {
-  NSLog(@"%@", n);
-  [_loadingCircleVC finishLoading:^{
-    [self.delegate mailRUPayVCDidFinish:self];
-  }];
-  
+- (void)didPayNotification:(NSNotification *)n {
+  NSLog(@"didPayNotification>%@", n);
 }
 
 - (void)didPayWithResponse:(id)response {
   
+  __weak typeof(self)weakSelf = self;
+  [_loadingCircleVC finishLoading:^{
+    
+    NSString *status = response[@"status"];
+    NSString *order_status = response[@"order_status"];
+    if ([status isEqualToString:@"OK_FINISH"] &&
+        [order_status isEqualToString:@"PAID"]) {
+
+      [weakSelf.delegate mailRUPayVCDidFinish:weakSelf];
+      
+    }
+    else {
+      
+      [weakSelf mailRuDidFail];
+      
+    }
+
+  }];
   
-//  [self.delegate mailRUPayVCDidFinish:self];
+}
+
+- (void)mailRuDidFail {
+  
+  [_loadingCircleVC setText:NSLocalizedString(@"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.", nil)];
+  __weak typeof(self)weakSelf = self;
+  _loadingCircleVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
+      
+      [weakSelf cancelTap];
+      
+    }]
+    ];
+  [_loadingCircleVC updateActionBoard];
+  _loadingCircleVC.bottomViewConstraint.constant = 0.0f;
+  [_loadingCircleVC.view layoutIfNeeded];
   
 }
 

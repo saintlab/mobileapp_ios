@@ -29,7 +29,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self addBottomButtons];
   [self configureBottomButtons];
   self.bottomViewConstraint.constant = 0.0f;
 }

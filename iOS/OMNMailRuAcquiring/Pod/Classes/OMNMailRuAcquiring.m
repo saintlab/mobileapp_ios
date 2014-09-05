@@ -266,7 +266,6 @@ static NSDictionary *_config = nil;
     return;
   }
   
-  
   NSDictionary *reqiredSignatureParams =
   @{
     @"merch_id" : _config[@"OMNMailRu_merch_id"],
@@ -289,18 +288,22 @@ static NSDictionary *_config = nil;
   parameters[@"cardholder"] = _config[@"OMNMailRu_cardholder"];
   parameters[@"user_phone"] = paymentInfo.user_phone;
   
+  __weak typeof(self)weakSelf = self;
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"\norder/payHTTPBody>\n%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
     NSLog(@"\norder/payresponse>\n%@", responseObject);
     
-    [self GET:responseObject[@"url"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-      NSLog(@"%@", responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-      NSLog(@"\norder/payresponse>\n%@", operation.responseString);
-    }];
-    
-    completionBlock(responseObject);
+    if (responseObject[@"url"]) {
+      
+      [weakSelf pollUrl:responseObject[@"url"] withCompletion:completionBlock];
+      
+    }
+    else {
+      
+      completionBlock(responseObject);
+      
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     

@@ -51,7 +51,7 @@
 }
 
 - (void)addActionsBoard {
-  [self addBottomButtons];
+  [self addActionBoardIfNeeded];
   
   UIButton *leftButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] title:NSLocalizedString(@"Регистрация", nil)];
   [leftButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];

@@ -16,7 +16,8 @@
 
 @property (nonatomic, strong) NSArray *buttonInfo;
 
-- (void)addBottomButtons;
+- (void)addActionBoardIfNeeded;
+- (void)updateActionBoard;
 
 @end
 

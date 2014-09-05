@@ -27,21 +27,17 @@
     _backgroundView.image = self.backgroundImage;
   }
   
-  [self showActionBoard];
-  
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  
   if (self.buttonInfo.count) {
+    [self updateActionBoard];
+    self.bottomToolbar.hidden = NO;
     self.bottomViewConstraint.constant = 0.0f;
+    [self.view layoutIfNeeded];
   }
   
 }
 
-- (void)showActionBoard {
-  [self addBottomButtons];
+- (void)updateActionBoard {
+  [self addActionBoardIfNeeded];
   
   NSArray *items = nil;
   
@@ -64,8 +60,9 @@
       [self buttonWithInfo:self.buttonInfo[1]],
       ];
   }
-  
   self.bottomToolbar.items = items;
+
+  _bottomToolbar.hidden = (self.buttonInfo.count == 0);
   
 }
 
@@ -74,9 +71,14 @@
   _backgroundView.image = self.backgroundImage;
 }
 
-- (void)addBottomButtons {
+- (void)addActionBoardIfNeeded {
+  
+  if (_bottomToolbar) {
+    return;
+  }
   
   _bottomToolbar = [[UIToolbar alloc] init];
+  _bottomToolbar.hidden = YES;
   _bottomToolbar.translatesAutoresizingMaskIntoConstraints = NO;
   [_bottomToolbar setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionAny];
   [_bottomToolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];

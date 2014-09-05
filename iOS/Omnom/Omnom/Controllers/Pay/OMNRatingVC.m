@@ -47,6 +47,7 @@
   [_chequeButton setTitle:NSLocalizedString(@"Чек пожалуйста", nil) forState:UIControlStateNormal];
   [_chequeButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateSelected];
   [_chequeButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateSelected|UIControlStateHighlighted];
+  _chequeButton.hidden = YES;
   
   if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
     self.automaticallyAdjustsScrollViewInsets = NO;

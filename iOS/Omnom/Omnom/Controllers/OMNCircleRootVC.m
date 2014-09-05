@@ -20,7 +20,7 @@
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
   self = [super initWithNibName:@"OMNCircleRootVC" bundle:nil];
   if (self) {
-    self.text = @"";
+    _text = @"";
     self.circleBackground = parent.circleBackground;
     self.backgroundImage = parent.backgroundImage;
   }
@@ -42,6 +42,18 @@
   
   self.circleBackground = _circleBackground;
   self.label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:25.0f];
+  self.label.alpha = 0.0f;
+
+  self.text = _text;
+  
+}
+
+- (void)setText:(NSString *)newText {
+  _text = newText;
+  
+  if (NO == self.isViewLoaded) {
+    return;
+  }
   
   NSString *text = (self.text) ? (self.text) : @"";
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
@@ -51,17 +63,21 @@
   [attributedText addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributedText.length)];
   
   self.label.attributedText = attributedText;
-  if ([self.label omn_linesCount] >= 3) {
+  if ([self.label omn_linesCount] > 3) {
     self.label.textAlignment = NSTextAlignmentLeft;
   }
   else {
     self.label.textAlignment = NSTextAlignmentCenter;
   }
-  self.label.alpha = 0.0f;
   self.label.textColor = [UIColor blackColor];
   
+  [UIView animateWithDuration:0.3 animations:^{
+    self.label.alpha = 1.0f;
+    [self.label layoutIfNeeded];
+    [self.view layoutIfNeeded];
+  }];
+  
 }
-
 
 - (void)setCircleBackground:(UIImage *)circleBackground {
   _circleBackground = circleBackground;
@@ -75,17 +91,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  self.text = _text;
   [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [UIView animateWithDuration:0.3 animations:^{
-    self.label.alpha = 1.0f;
-    [self.label layoutIfNeeded];
-    [self.view layoutIfNeeded];
-  }];
+  
 }
 
 - (void)setFaded:(BOOL)faded {

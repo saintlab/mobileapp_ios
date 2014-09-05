@@ -30,6 +30,21 @@
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     self.text = NSLocalizedString(@"Необходимо разрешение на использование службы геолокации", nil);
     _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:[OMNBeacon defaultUUID]] identifier:@"ask_permission_identifier"];
+    __weak typeof(self)weakSelf = self;
+    self.buttonInfo =
+    @[
+      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Запретить", nil) image:[UIImage imageNamed:@"cancel_later_icon_small"] block:^{
+        
+        [weakSelf denyPermissionTap];
+        
+      }],
+      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Разрешить", nil) image:[UIImage imageNamed:@"allow_icon_small"] block:^{
+        
+        [weakSelf askPermissionTap];
+        
+      }]
+      ];
+
   }
   return self;
 }
@@ -49,7 +64,6 @@
   
   _permissionLocationManager = [[CLLocationManager alloc] init];
   _permissionLocationManager.pausesLocationUpdatesAutomatically = NO;
-  [self addActionsBoard];
   
 }
 
@@ -57,24 +71,6 @@
   [super viewWillAppear:animated];
   [self.navigationController.navigationItem setHidesBackButton:YES animated:animated];
   
-}
-
-- (void)addActionsBoard {
-  [self addBottomButtons];
-  
-  UIButton *leftButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"cancel_later_icon_small"] title:NSLocalizedString(@"Запретить", nil)];
-  [leftButton addTarget:self action:@selector(denyPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
-  
-  UIButton *rightButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"allow_icon_small"] title:NSLocalizedString(@"Разрешить", nil)];
-  [rightButton addTarget:self action:@selector(askPermissionTap:) forControlEvents:UIControlEventTouchUpInside];
-  
-  self.bottomToolbar.items =
-  @[
-    [[UIBarButtonItem alloc] initWithCustomView:leftButton],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithCustomView:rightButton],
-    ];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -87,7 +83,7 @@
   
 }
 
-- (IBAction)askPermissionTap:(id)sender {
+- (IBAction)askPermissionTap {
   
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
@@ -103,7 +99,7 @@
   
 }
 
-- (IBAction)denyPermissionTap:(id)sender {
+- (void)denyPermissionTap {
   
   OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
   __weak typeof(self)weakSelf = self;
