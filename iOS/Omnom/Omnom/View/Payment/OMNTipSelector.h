@@ -11,6 +11,7 @@
 @interface OMNTipSelector : UIControl
 
 @property (nonatomic, assign) NSInteger selectedIndex;
+@property (nonatomic, assign, readonly) NSInteger previousSelectedIndex;
 
 @property (nonatomic, strong) OMNCalculationAmount *calculationAmount;
 

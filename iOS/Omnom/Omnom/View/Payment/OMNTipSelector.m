@@ -31,7 +31,7 @@
 }
 
 - (void)setup {
-  
+  _previousSelectedIndex = -1;
   [self setupButtons];
   self.backgroundColor = [UIColor clearColor];
 }
@@ -111,6 +111,7 @@
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex {
 
+  _previousSelectedIndex = _selectedIndex;
   _selectedIndex = selectedIndex;
   _calculationAmount.selectedTipIndex = selectedIndex;
   

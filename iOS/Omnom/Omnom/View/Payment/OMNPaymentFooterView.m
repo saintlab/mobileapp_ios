@@ -87,12 +87,7 @@
     }
     
   } forControlEvents:UIControlEventValueChanged];
-  
-  [_amountPercentControl bk_addEventHandler:^(id sender) {
 
-    [weakSelf updatePercentAmountControl];
-    
-  } forControlEvents:UIControlEventEditingDidBegin];
   [_amountPercentControl bk_addEventHandler:^(id sender) {
     
     [weakSelf updatePercentAmountControl];
@@ -191,13 +186,13 @@
 - (void)updateView {
 
   [_tipsSelector update];
-  [self updatePercentAmountControl];
   [self updateToPayButton];
   
 }
 
 - (IBAction)cancelEditingTap:(id)sender {
   
+  _tipsSelector.selectedIndex = _tipsSelector.previousSelectedIndex;
   [_amountPercentControl resignFirstResponder];
   
 }

@@ -7,7 +7,6 @@
 //
 
 #import "OMNAmountPercentControl.h"
-#import <TSCurrencyTextField.h>
 #import <UIControl+BlocksKit.h>
 #import "UIView+frame.h"
 #import "OMNConstants.h"
@@ -28,7 +27,7 @@ UITextFieldDelegate>
   UITextField *_pureAmountTF;
   
   UITextField *_amountTF;
-  TSCurrencyTextField *_percentTF;
+  UITextField *_percentTF;
   
   UIPickerView *_percentPicker;
   BOOL _isFirstResponder;
@@ -46,23 +45,6 @@ UITextFieldDelegate>
     [self setup];
   }
   return self;
-}
-
-- (TSCurrencyTextField *)createCurrencyTextField {
-  TSCurrencyTextField *currencyTextField = [[TSCurrencyTextField alloc] init];
-  currencyTextField.currencyNumberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"ru"];
-  currencyTextField.translatesAutoresizingMaskIntoConstraints = NO;
-  currencyTextField.clipsToBounds = NO;
-  currencyTextField.currencyNumberFormatter.maximumFractionDigits = 0;
-  currencyTextField.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-  currencyTextField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:30.0f];
-  currencyTextField.textColor = [UIColor whiteColor];
-  currencyTextField.adjustsFontSizeToFitWidth = YES;
-  currencyTextField.minimumFontSize = 10.0f;
-  currencyTextField.textAlignment = NSTextAlignmentLeft;
-  currencyTextField.amount = @(0);
-  [self addSubview:currencyTextField];
-  return currencyTextField;
 }
 
 - (void)setup {
@@ -91,9 +73,9 @@ UITextFieldDelegate>
   _amountTF.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:30.0f];
   _amountTF.textAlignment = NSTextAlignmentRight;
   _amountTF.keyboardType = UIKeyboardTypeNumberPad;
-  [_amountTF bk_addEventHandler:^(TSCurrencyTextField *sender) {
+  [_amountTF bk_addEventHandler:^(UITextField *sender) {
     
-    [self updatePercentValue];
+    [self calculateRelativePercentValue];
     
   } forControlEvents:UIControlEventEditingChanged];
   [self addSubview:_amountTF];
@@ -103,16 +85,22 @@ UITextFieldDelegate>
   _percentPicker.delegate = self;
   _percentPicker.dataSource = self;
   
-  _percentTF = [self createCurrencyTextField];
+  _percentTF = [[UITextField alloc] init];
   _percentTF.tintColor = colorWithHexString(@"157EFB");
-  _percentTF.currencyNumberFormatter.currencySymbol = @"%";
   _percentTF.textAlignment = NSTextAlignmentCenter;
   _percentTF.inputView = _percentPicker;
-  [_percentTF bk_addEventHandler:^(TSCurrencyTextField *sender) {
+  _percentTF.adjustsFontSizeToFitWidth = YES;
+  _percentTF.minimumFontSize = 10.0f;
+  _percentTF.translatesAutoresizingMaskIntoConstraints = NO;
+  _percentTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
+  _percentTF.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:30.0f];
+  _percentTF.textColor = [UIColor whiteColor];
+  [_percentTF bk_addEventHandler:^(UITextField *sender) {
     
-    [self updateAmountValue];
+    [self calculateRelativeAmountValue];
     
   } forControlEvents:UIControlEventEditingChanged];
+  [self addSubview:_percentTF ];
   
   _bottomView = [[UIView alloc] init];
   _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -176,11 +164,11 @@ UITextFieldDelegate>
 - (void)update {
   if (_amountPercentValue.isAmountSelected) {
     [self setAmountValue:_amountPercentValue.amount];
-    [self updatePercentValue];
+    [self calculateRelativePercentValue];
   }
   else {
     [self setPercentValue:_amountPercentValue.percent];
-    [self updateAmountValue];
+    [self calculateRelativeAmountValue];
   }
 }
 
@@ -216,10 +204,17 @@ UITextFieldDelegate>
   
 }
 
-- (void)updateAmountValue {
+- (void)calculateRelativeAmountValue {
   
-  long long amount = _amountPercentValue.totalAmount * [self selectedPercent] / 100.;
+  long long amount = _amountPercentValue.totalAmount * _amountPercentValue.percent / 100.;
   [self setAmountValue:amount];
+  
+}
+
+- (void)calculateRelativePercentValue {
+  
+  double percentValue = 100.*(double)_amountPercentValue.amount/_amountPercentValue.totalAmount;
+  [self setPercentValue:percentValue];
   
 }
 
@@ -233,13 +228,7 @@ UITextFieldDelegate>
 }
 
 - (void)setPercentValue:(double)percentValue {
-  _percentTF.amount = @(percentValue);
-  _amountPercentValue.percent = percentValue;
-}
-
-- (void)updatePercentValue {
-  
-  double percentValue = 100.*(double)_amountPercentValue.amount/_amountPercentValue.totalAmount;
+  _percentTF.text = [NSString stringWithFormat:@"%.0f%%", percentValue];
   _amountPercentValue.percent = percentValue;
   
   if (percentValue < [_percentPicker numberOfRowsInComponent:0]) {
@@ -249,11 +238,9 @@ UITextFieldDelegate>
   }
   else {
     
-    [_percentPicker selectRow:20 inComponent:0 animated:NO];
+    [_percentPicker selectRow:0 inComponent:0 animated:NO];
     
   }
-  
-  _percentTF.amount = @(percentValue);
   
 }
 
@@ -261,10 +248,6 @@ UITextFieldDelegate>
   NSString *pureAmount = [self pureAmountString:_amountTF.text];
   long long amount = 100ll*[pureAmount doubleValue];
   return amount;
-}
-
-- (double)selectedPercent {
-  return [_percentTF.amount doubleValue];
 }
 
 - (void)layoutSubviews {
@@ -343,7 +326,10 @@ UITextFieldDelegate>
     long long value = [finalString doubleValue]*100;
     value = MIN(value, kMaxEnteredValue);
     [self setAmountValue:value];
-    [self updatePercentValue];
+    [self calculateRelativePercentValue];
+    return NO;
+  }
+  else if ([textField isEqual:_percentTF]) {
     return NO;
   }
   

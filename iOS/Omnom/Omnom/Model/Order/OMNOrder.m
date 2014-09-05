@@ -57,6 +57,8 @@
     }
     
     OMNTip *customTip = tips[3];
+    customTip.amount = 0;
+    customTip.percent = 0.0;
     customTip.custom = YES;
     _tips = [tips copy];
     
