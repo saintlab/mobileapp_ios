@@ -66,7 +66,7 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]" options:0 metrics:nil views:views]];
   
   _loginTF.textField.placeholder = NSLocalizedString(@"Почта или номер телефона", nil);
-  _loginTF.textField.keyboardType = UIKeyboardTypeNumberPad;
+  _loginTF.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
 
 //  [_vkButton setBackgroundImage:[UIImage imageNamed:@"vk_login_icon"] forState:UIControlStateNormal];
 //  [_fbButton setBackgroundImage:[UIImage imageNamed:@"fb_login_icon"] forState:UIControlStateNormal];
