@@ -247,6 +247,10 @@ CGFloat kTextFieldsOffset = 20.0f;
     NSString *pan = [self panString];
     
     NSArray *mmyyComponents = [_expireTF.text componentsSeparatedByString:kMM_YYSeporator];
+    if (mmyyComponents.count != 2) {
+      [self didEnterFailCardData];
+      return;
+    }
     NSString *mm = mmyyComponents[0];
     NSString *yy = mmyyComponents[1];
     
@@ -265,12 +269,16 @@ CGFloat kTextFieldsOffset = 20.0f;
   }
   else {
     
-    if ([self.delegate respondsToSelector:@selector(cardEnterControlDidEnterFailCardData:)]) {
-      [self.delegate cardEnterControlDidEnterFailCardData:self];
-    }
+    [self didEnterFailCardData];
     
   }
   
+}
+
+- (void)didEnterFailCardData {
+  if ([self.delegate respondsToSelector:@selector(cardEnterControlDidEnterFailCardData:)]) {
+    [self.delegate cardEnterControlDidEnterFailCardData:self];
+  }
 }
 
 - (NSString *)panString {
@@ -333,7 +341,8 @@ CGFloat kTextFieldsOffset = 20.0f;
     
     NSArray *MM_YYComponents = [finalString componentsSeparatedByString:kMM_YYSeporator];
     
-    NSString *mm = MM_YYComponents[0];
+    
+    NSString *mm = (MM_YYComponents.count) ? (MM_YYComponents[0]) : (@"");
     NSString *yy = @"";
     
     if (MM_YYComponents.count == 2) {

@@ -120,6 +120,10 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
+  if (NO == self.enabled) {
+    return NO;
+  }
+  
   if (0 == string.length) {
     if (_code.length) {
       _code = [_code substringToIndex:_code.length - 1];

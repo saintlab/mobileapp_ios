@@ -86,7 +86,7 @@
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textLabel]-|" options:0 metrics:nil views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(250)]-[textLabel]-|" options:0 metrics:nil views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]-[textLabel]-|" options:0 metrics:nil views:views]];
   
   NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:contentView
                                                                     attribute:NSLayoutAttributeLeading

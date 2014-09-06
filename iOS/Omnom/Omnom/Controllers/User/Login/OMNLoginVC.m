@@ -120,6 +120,7 @@
 
   [self setNextButtonLoading:YES];
   __weak typeof(self)weakSelf = self;
+
   [self requestAuthorisationCodeCompletion:^{
     [weakSelf requestAuthorizationCode];
   }];

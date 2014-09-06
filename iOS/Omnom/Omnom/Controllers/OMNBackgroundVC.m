@@ -27,12 +27,17 @@
     _backgroundView.image = self.backgroundImage;
   }
   
+
   if (self.buttonInfo.count) {
+    
     [self updateActionBoard];
     self.bottomToolbar.hidden = NO;
-    self.bottomViewConstraint.constant = 0.0f;
-    [self.view layoutIfNeeded];
+    
   }
+  
+  self.bottomViewConstraint.constant = 0.0f;
+  [self.view layoutIfNeeded];
+
   
 }
 

@@ -20,6 +20,8 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
   OMNSocketIO *_io;
   Socket *_socket;
   SystemSoundID _soundID;
+  NSMutableSet *_rooms;
+  NSString *_token;
 }
 
 + (instancetype)manager {
@@ -34,14 +36,36 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
 - (instancetype)init {
   self = [super init];
   if (self) {
+    _rooms = [NSMutableSet set];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pay_done" ofType:@"caf"];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &_soundID);
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
   }
   return self;
 }
 
-- (void)safeConnectWithToken:(NSString *)token {
+- (void)willEnterForeground {
+  
+  if (0 == _token.length) {
+    return;
+  }
+  
+  [self connectWithToken:_token completion:^{
+    
+    [_rooms enumerateObjectsUsingBlock:^(id roomId, BOOL *stop) {
+      [self join:roomId];
+    }];
+    
+  }];
+  
+}
+
+- (void)didEnterBackground {
+  [self disconnect];
+}
+
+- (void)safeConnectWithToken:(NSString *)token  completion:(dispatch_block_t)completionBlock {
   
   NSString *query = [NSString stringWithFormat:@"token=%@", token];
   _socket = [_io of:[OMNConstants baseUrlString] and:@{@"query" : query}];
@@ -50,6 +74,11 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
   
   [_socket on:@"handshake" listener:^(id data) {
     
+    if (completionBlock &&
+        [data isKindOfClass:[NSString class]] &&
+        [data isEqualToString:@"authentication success"]) {
+      completionBlock();
+    }
     NSLog(@"handshake response %@, %@", data, [data class]);
     
   }];
@@ -99,34 +128,56 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
   
   [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidPayNotification object:nil userInfo:data];
   AudioServicesPlaySystemSound(_soundID);
+  
 }
 
 - (void)join:(NSString *)roomId {
-  [_socket emit:@"join", roomId, nil];
+  
+  if (roomId.length) {
+    [_rooms addObject:roomId];
+    [_socket emit:@"join", roomId, nil];
+  }
+  
 }
 
 - (void)leave:(NSString *)roomId {
-  [_socket emit:@"leave", roomId, nil];
+  
+  if (roomId) {
+    [_rooms removeObject:roomId];
+    [_socket emit:@"leave", roomId, nil];
+  }
+  
 }
 
 - (void)connectWithToken:(NSString *)token {
+  [self connectWithToken:token completion:nil];
+}
+
+- (void)connectWithToken:(NSString *)token completion:(dispatch_block_t)completionBlock {
   
+  if (0 == token.length) {
+    return;
+  }
+  
+  _token = token;
   if (_io) {
-    [self safeConnectWithToken:token];
+    [self safeConnectWithToken:token completion:completionBlock];
   }
   else {
     _io = [[OMNSocketIO alloc] init];
     __weak typeof(self)weakSelf = self;
     [_io once:@"ready" listener:^{
-      [weakSelf safeConnectWithToken:token];
+      [weakSelf safeConnectWithToken:token completion:completionBlock];
     }];
   }
   
 }
 
 - (void)disconnect {
-  
+
+  [_socket emit:@"disconnect", nil];
   _socket = nil;
+  _io = nil;
   
 }
 

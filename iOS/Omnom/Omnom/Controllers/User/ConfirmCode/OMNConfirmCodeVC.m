@@ -58,6 +58,7 @@
   [self.view addSubview:label];
   
   _codeView = [[OMNEnterCodeView alloc] init];
+  _codeView.enabled = YES;
   [_codeView addTarget:self action:@selector(didEnterCode) forControlEvents:UIControlEventEditingDidEnd];
   [self.view addSubview:_codeView];
 
@@ -164,12 +165,17 @@
 
 - (void)didEnterCode {
   
+  _codeView.enabled = NO;
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [spinner startAnimating];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
   [self.delegate confirmCodeVC:self didEnterCode:[_codeView.code copy]];
   
 }
 
 - (void)resetAnimated:(BOOL)animated {
   
+  self.navigationItem.rightBarButtonItem = nil;
   if (animated) {
     
     const CGFloat offset = 5.0f;
@@ -187,7 +193,7 @@
   }
   
   _codeView.code = @"";
-  
+  _codeView.enabled = YES;
 }
 
 - (void)didReceiveMemoryWarning {

@@ -23,7 +23,6 @@
   
   // Get a snapshot of the image view
   UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:NO];
-//  fromImageSnapshot.frame = [transitionContext finalFrameForViewController:to];
   fromViewController.view.hidden = YES;
 
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
@@ -31,6 +30,7 @@
   [containerView addSubview:toViewController.view];
   
   UIImage *circleBackground = [toViewController.circleButton backgroundImageForState:UIControlStateNormal];
+  [toViewController.view layoutIfNeeded];
   UIImageView *bigCircleIV = [[UIImageView alloc] initWithFrame:toViewController.circleButton.frame];
   bigCircleIV.image = circleBackground;
   [containerView addSubview:bigCircleIV];

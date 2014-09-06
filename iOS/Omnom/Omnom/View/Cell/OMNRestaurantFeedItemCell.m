@@ -16,6 +16,8 @@
   BOOL _constraintsUpdated;
   UILabel *_textLabel;
   UILabel *_priceLabel;
+  UIActivityIndicatorView *_spinner;
+
 }
 
 - (void)dealloc {
@@ -35,6 +37,11 @@
     _iconView.contentMode = UIViewContentModeScaleAspectFill;
     _iconView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_iconView];
+    
+    _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _spinner.translatesAutoresizingMaskIntoConstraints = NO;
+    _spinner.hidesWhenStopped = YES;
+    [_iconView addSubview:_spinner];
     
     _textLabel = [[UILabel alloc] init];
     _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
@@ -62,7 +69,7 @@
   _iconView.image = feedItem.image;
   
   if (nil == _feedItem.image) {
-    
+    [_spinner startAnimating];
     [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:feedItem.imageURL] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
       
       feedItem.image = image;
@@ -76,7 +83,13 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
   
   if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
+    [_spinner stopAnimating];
+    _iconView.alpha = 0.0f;
     _iconView.image = _feedItem.image;
+    [UIView animateWithDuration:0.3 animations:^{
+      _iconView.alpha = 1.0f;
+    }];
+    
   }
   
 }
@@ -96,6 +109,7 @@
     @"textLabel" : _textLabel,
     @"priceLabel" : _priceLabel,
     @"imageView" : _iconView,
+    @"spinner" : _spinner,
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:0 metrics:0 views:views]];
@@ -103,6 +117,9 @@
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(250)][textLabel(30)]" options:0 metrics:0 views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[priceLabel(==textLabel)]" options:0 metrics:0 views:views]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_priceLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_textLabel attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+  
+  [_iconView addConstraint:[NSLayoutConstraint constraintWithItem:_spinner attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_iconView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+  [_iconView addConstraint:[NSLayoutConstraint constraintWithItem:_spinner attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_iconView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   
 }
 

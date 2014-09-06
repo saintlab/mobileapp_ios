@@ -140,12 +140,15 @@
   
   OMNBankCard *card = self.cards[indexPath.row];
   __weak typeof(self)weakSelf = self;
+  __weak UITableView *weakTableView = tableView;
   [card deleteWithCompletion:^{
     
     [weakSelf removeCard:card];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    });
+    if (weakTableView) {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [weakTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+      });
+    }
 
   } failure:^(NSError *error) {
   

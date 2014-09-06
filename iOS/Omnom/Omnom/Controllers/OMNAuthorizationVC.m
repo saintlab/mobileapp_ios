@@ -41,6 +41,21 @@
   
   self = [super initWithViewControllers:@[page1, page2, page3]];
   if (self) {
+    __weak typeof(self)weakSelf = self;
+    self.buttonInfo =
+    @[
+      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Регистрация", nil) image:[UIImage imageNamed:@"user_settings_icon"] block:^{
+        
+        [weakSelf registerTap:nil];
+        
+      }],
+      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Вход", nil) image:[UIImage imageNamed:@"login_icon_small"] block:^{
+        
+        [weakSelf loginTap:nil];
+        
+      }]
+      ];
+    
   }
   return self;
 }
@@ -53,23 +68,8 @@
 - (void)addActionsBoard {
   [self addActionBoardIfNeeded];
   
-  UIButton *leftButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] title:NSLocalizedString(@"Регистрация", nil)];
-  [leftButton addTarget:self action:@selector(registerTap:) forControlEvents:UIControlEventTouchUpInside];
-  
-  UIButton *rightButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"login_icon_small"] title:NSLocalizedString(@"Вход", nil)];
-  [rightButton addTarget:self action:@selector(loginTap:) forControlEvents:UIControlEventTouchUpInside];
-  
-  self.bottomToolbar.items =
-  @[
-    [[UIBarButtonItem alloc] initWithCustomView:leftButton],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithCustomView:rightButton],
-    ];
-  
-  
-
   self.pageControl.translatesAutoresizingMaskIntoConstraints = NO;
-
+  
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomToolbar attribute:NSLayoutAttributeTop multiplier:1 constant:0.0f]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pageControl attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.bottomToolbar attribute:NSLayoutAttributeCenterX multiplier:1 constant:0.0f]];
@@ -79,6 +79,7 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -127,7 +128,7 @@
 }
 
 - (void)processAuthorisation {
-
+  
   [self.delegate authorizationVCDidReceiveToken:self];
   
 }

@@ -23,7 +23,7 @@
   self = [super init];
   if (self) {
     _data = jsonData;
-    self.id = jsonData[@"id"];
+    self.id = [jsonData[@"id"] description];
     self.amount = [jsonData[@"amount"] longLongValue];
     self.created = jsonData[@"created"];
     self.Description = jsonData[@"description"];

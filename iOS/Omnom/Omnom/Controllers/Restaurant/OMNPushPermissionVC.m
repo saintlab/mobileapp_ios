@@ -23,31 +23,28 @@
     self.circleIcon = [UIImage imageNamed:@"allow_push_icon_big"];
     self.faded = YES;
     self.text = NSLocalizedString(@"Разрешить Omnom получить push-уведомления", nil);
+    
+    __weak typeof(self)weakSelf = self;
+    self.buttonInfo =
+    @[
+      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Позже", nil) image:nil block:^{
+        
+        [weakSelf didFinish];
+        
+      }],
+      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Разрешить", nil) image:nil block:^{
+        
+        [weakSelf requestPermissionTap];
+        
+      }]
+      ];
+    
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  [self configureBottomButtons];
-  self.bottomViewConstraint.constant = 0.0f;
-}
-
-- (void)configureBottomButtons {
-  
-  UIButton *leftButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Позже", nil)];
-  [leftButton addTarget:self action:@selector(didFinish) forControlEvents:UIControlEventTouchUpInside];
-  
-  UIButton *rightButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Разрешить", nil)];
-  [rightButton addTarget:self action:@selector(requestPermissionTap) forControlEvents:UIControlEventTouchUpInside];
-  
-  self.bottomToolbar.items =
-  @[
-    [[UIBarButtonItem alloc] initWithCustomView:leftButton],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithCustomView:rightButton],
-    ];
-  
 }
 
 - (void)didFinish {

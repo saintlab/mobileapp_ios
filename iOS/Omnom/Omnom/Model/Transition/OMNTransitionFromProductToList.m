@@ -26,8 +26,10 @@
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
   // Get a snapshot of the image view
-  UIView *imageSnapshot = [fromViewController.imageView snapshotViewAfterScreenUpdates:NO];
-  imageSnapshot.frame = [containerView convertRect:fromViewController.imageView.frame fromView:fromViewController.imageView.superview];
+  UIImageView *imageSnapshot = [[UIImageView alloc] initWithFrame:[containerView convertRect:fromViewController.imageView.frame fromView:fromViewController.imageView.superview]];
+  imageSnapshot.image = fromViewController.imageView.image;
+  imageSnapshot.clipsToBounds = YES;
+  imageSnapshot.contentMode = fromViewController.imageView.contentMode;
   fromViewController.imageView.hidden = YES;
   
   // Get the cell we'll animate to
@@ -44,6 +46,7 @@
     fromViewController.view.alpha = 0.0;
     
     // Move the image view
+    imageSnapshot.contentMode = cell.iconView.contentMode;
     imageSnapshot.frame = [containerView convertRect:cell.iconView.frame fromView:cell.iconView];
     
   } completion:^(BOOL finished) {

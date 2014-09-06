@@ -25,10 +25,7 @@
 
 @implementation OMNMailRUCardConfirmVC {
   OMNBankCardInfo *_bankCardInfo;
-  UIActivityIndicatorView *_spinner;
-  UIButton *_validateButton;
   OMNErrorTextField *_cardHoldValueTF;
-  NSLayoutConstraint *_buttomConstraint;
   UILabel *_textLabel;
   UIButton *_commaButton;
 }
@@ -51,9 +48,6 @@
   self.navigationItem.title = NSLocalizedString(@"Привязка карты", nil);
   self.view.backgroundColor = [UIColor whiteColor];
   
-  _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-  _spinner.hidesWhenStopped = YES;
-  
   [self setupView];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -68,14 +62,17 @@
 
 }
 
+- (void)startLoader {
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [spinner startAnimating];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+}
+
+- (void)addDoneButton {
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)];
+}
+
 - (void)setupView {
-  
-  _validateButton = [[OMNBorderedButton alloc] init];
-  _validateButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_validateButton setTitle:NSLocalizedString(@"Привязать", nil) forState:UIControlStateNormal];
-  _validateButton.enabled = NO;
-  [_validateButton addTarget:self action:@selector(validateTap) forControlEvents:UIControlEventTouchUpInside];
-  [self.view addSubview:_validateButton];
   
   _textLabel = [[UILabel alloc] init];
   _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -95,7 +92,6 @@
   
   NSDictionary *views =
   @{
-    @"validateButton" : _validateButton,
     @"textLabel" : _textLabel,
     @"cardHoldValueTF" : _cardHoldValueTF,
     @"topLayoutGuide" : self.topLayoutGuide,
@@ -105,24 +101,18 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardHoldValueTF]-|" options:0 metrics:0 views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textLabel]-|" options:0 metrics:0 views:views]];
   
-  _buttomConstraint = [NSLayoutConstraint constraintWithItem:_validateButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-10.0f];
-  [self.view addConstraint:_buttomConstraint];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_validateButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  
 }
 
 - (void)keyboardWillShow:(NSNotification *)n {
   
-  if (nil == _commaButton) {
-    _commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _commaButton.frame = CGRectMake(0, 163, 106, 53);
-    _commaButton.adjustsImageWhenHighlighted = NO;
-    _commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
-    [_commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
-    [_commaButton setTitle:kCommaString forState:UIControlStateNormal];
-    [_commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-  }
+  _commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
+  _commaButton.frame = CGRectMake(0, 163, 106, 53);
+  _commaButton.adjustsImageWhenHighlighted = NO;
+  _commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
+  [_commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
+  [_commaButton setTitle:kCommaString forState:UIControlStateNormal];
+  [_commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [_commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
 
   dispatch_async(dispatch_get_main_queue(), ^{
     
@@ -133,9 +123,6 @@
 
   });
   
-  CGRect keyboardFrame = [n.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-  _buttomConstraint.constant = -keyboardFrame.size.height - 10.0f;
-
   CGFloat animationDuration = [n.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
   [UIView animateWithDuration:animationDuration animations:^{
     [self.view layoutIfNeeded];
@@ -145,12 +132,7 @@
 
 - (void)keyboardWillHide:(NSNotification *)n {
   [_commaButton removeFromSuperview];
-  _buttomConstraint.constant = 10.0f;
-  CGFloat animationDuration = [n.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
-  [UIView animateWithDuration:animationDuration animations:^{
-    [self.view layoutIfNeeded];
-  }];
-  
+  _commaButton = nil;
 }
 
 - (void)setCard_id:(NSString *)card_id {
@@ -160,7 +142,7 @@
     _textLabel.text = NSLocalizedString(@"С вашей карты списана случайная сумма до 50р. Введите сумму списания в это поле, чтобы привязать карту к вашему аккаунту", nil);
     _cardHoldValueTF.textField.enabled = YES;
     [_cardHoldValueTF.textField becomeFirstResponder];
-    _validateButton.enabled = YES;
+    [self addDoneButton];
   }
   
 }
@@ -168,8 +150,7 @@
 - (void)validateTap {
   
   double value = [_cardHoldValueTF.textField.text doubleValue];
-  _validateButton.enabled = NO;
-  [_spinner startAnimating];
+  [self startLoader];
   OMNUser *user = [OMNAuthorisation authorisation].user;
   __weak typeof(self)weakSelf = self;
   [[OMNMailRuAcquiring acquiring] cardVerify:value user_login:user.id card_id:_card_id completion:^(id response) {
@@ -182,13 +163,11 @@
 
 - (void)cardDidVerify:(id)response {
 
-  [_spinner stopAnimating];
-  _validateButton.enabled = YES;
-  _cardHoldValueTF.textField.text = @"";
-  
   if (response[@"error"] ||
       nil == response) {
 
+    [self addDoneButton];
+    
     NSString *code = response[@"error"][@"code"];
     NSString *errorText = nil;
     if ([code isEqualToString:@"ERR_CARD_AMOUNT"]) {
@@ -210,10 +189,8 @@
 }
 
 - (void)registerCard {
-  
+
   [_cardHoldValueTF setError:nil animated:YES];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
-  [_spinner startAnimating];
 #warning register card stub
   NSDictionary *cardInfo =
 //  @{
@@ -238,6 +215,7 @@
   
   __weak typeof(self)weakSelf = self;
   OMNUser *user = [OMNAuthorisation authorisation].user;
+  [self startLoader];
   [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(id response, NSString *cardId) {
     
     [weakSelf didFinishPostWithResponse:response cardId:cardId];
@@ -248,12 +226,10 @@
 
 - (void)didFinishPostWithResponse:(id)response cardId:(NSString *)cardId {
 
-  [_spinner stopAnimating];
-  
   NSString *status = response[@"status"];
-  if ([status isEqualToString:@"OK_FINISH"]) {
+  if ([status isEqualToString:@"OK_FINISH"] &&
+      cardId.length) {
     self.card_id = cardId;
-    self.navigationItem.rightBarButtonItem = nil;
   }
   else {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"repeat_icon_small"] style:UIBarButtonItemStylePlain target:self action:@selector(registerCard)];

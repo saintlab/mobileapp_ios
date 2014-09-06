@@ -32,8 +32,10 @@
   
   OMNRestaurantFeedItemCell *cell = (OMNRestaurantFeedItemCell *)[fromViewController.tableView cellForRowAtIndexPath:[fromViewController.tableView indexPathForSelectedRow]];
   
-  UIView *cellImageSnapshot = [cell.iconView snapshotViewAfterScreenUpdates:NO];
-  cellImageSnapshot.frame = [containerView convertRect:cell.iconView.frame fromView:cell.iconView.superview];
+  UIImageView *cellImageSnapshot = [[UIImageView alloc] initWithFrame:[containerView convertRect:cell.iconView.frame fromView:cell.iconView.superview]];
+  cellImageSnapshot.image = cell.iconView.image;
+  cellImageSnapshot.clipsToBounds = YES;
+  cellImageSnapshot.contentMode = cell.iconView.contentMode;
   cell.iconView.hidden = YES;
   
   // Setup the initial view states
@@ -54,6 +56,7 @@
     // Move the cell snapshot so it's over the second view controller's image view
     CGRect frame = [containerView convertRect:toViewController.imageView.frame fromView:toViewController.imageView];
     cellImageSnapshot.frame = frame;
+    cellImageSnapshot.contentMode = toViewController.imageView.contentMode;
     
   } completion:^(BOOL finished) {
     // Clean up

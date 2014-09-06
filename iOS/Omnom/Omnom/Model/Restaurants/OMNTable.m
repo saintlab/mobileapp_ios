@@ -13,7 +13,7 @@
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
-    self.id = data[@"id"];
+    self.id = [data[@"id"] description];
     self.internal_id = data[@"internal_id"];
   }
   return self;

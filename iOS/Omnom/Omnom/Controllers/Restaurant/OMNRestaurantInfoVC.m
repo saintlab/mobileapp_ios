@@ -25,8 +25,9 @@ UIScrollViewDelegate>
   OMNRestaurantInfo *_restaurantInfo;
   OMNVisitor *_visitor;
   UIImageView *_arrowView;
-  
+  UIActivityIndicatorView *_spinner;
   BOOL _disableNavigationBarAnimation;
+  BOOL _disableSwipeTransition;
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
@@ -40,14 +41,8 @@ UIScrollViewDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  __weak typeof(self)weakSelf = self;
-  [_visitor.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
-    
-    [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
-    
-  } error:^(NSError *error) {
-    
-  }];
+  _disableSwipeTransition = YES;
+  _disableNavigationBarAnimation = YES;
   
   _arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"show_button_icon"]];
   
@@ -55,21 +50,37 @@ UIScrollViewDelegate>
   [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.titleView = closeButton;
   
+  _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
+  
   if (NO == _visitor.restaurant.is_demo) {
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
   }
 
   [self.navigationItem setHidesBackButton:YES animated:NO];
+  self.tableView.tableFooterView = [UIView new];
   [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"InfoCell"];
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"DefaultCell"];
   [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
-  _disableNavigationBarAnimation = YES;
+
+  __weak typeof(self)weakSelf = self;
+  [_spinner startAnimating];
+  [_visitor.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
+    
+    [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
+    
+  } error:^(NSError *error) {
+    
+  }];
+
+  
 }
 
 - (void)didFinishLoadingRestaurantInfo:(OMNRestaurantInfo *)restaurantInfo {
+  [_spinner stopAnimating];
   _restaurantInfo = restaurantInfo;
-  [self.tableView reloadData];
+  [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)userProfileTap {
@@ -82,22 +93,28 @@ UIScrollViewDelegate>
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  _disableNavigationBarAnimation = NO;
   [self updateNavigationBarLayer];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  _disableNavigationBarAnimation = NO;
+  _disableSwipeTransition = NO;
+  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   _disableNavigationBarAnimation = YES;
+  _disableSwipeTransition = YES;
+  
   CALayer *navigationBarLayer = self.navigationController.navigationBar.layer;
   [UIView animateWithDuration:0.3 animations:^{
     navigationBarLayer.transform = CATransform3DIdentity;
     navigationBarLayer.opacity = 1.0f;
   }];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
 }
 
 - (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem {
@@ -232,7 +249,8 @@ UIScrollViewDelegate>
   
   if (_restaurantInfo &&
       scrollView.contentInset.top + scrollView.contentOffset.y < -40.0f &&
-      !_disableNavigationBarAnimation) {
+      !_disableSwipeTransition) {
+    _disableSwipeTransition = YES;
     [self closeTap];
   }
   
