@@ -147,7 +147,7 @@ NSString *stringFromSplitType(SplitType splitType) {
 }
 
 - (long long)expectedValue {
-  long long expectedValue = self.total - self.paid_amount;
+  long long expectedValue = self.totalAmount - self.paid_amount;
   return expectedValue;
 }
 

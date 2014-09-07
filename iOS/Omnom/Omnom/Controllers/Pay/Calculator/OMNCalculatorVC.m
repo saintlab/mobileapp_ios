@@ -173,7 +173,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
   if (nil == _secondViewController) {
     
-    long long total = [_order total];
+    long long total = [_order totalAmount];
     _secondViewController = [[OMNSplitSelectionVC alloc] initWIthTotal:total];
     _secondViewController.delegate = self;
   }
