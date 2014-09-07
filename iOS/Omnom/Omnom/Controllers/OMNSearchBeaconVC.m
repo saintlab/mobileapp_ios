@@ -77,6 +77,18 @@ OMNDemoRestaurantVCDelegate>
   _cancelButton.hidden = YES;
 }
 
+- (void)finishLoading:(dispatch_block_t)completionBlock {
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    _cancelButton.alpha = 0.0f;
+  } completion:^(BOOL finished) {
+    _cancelButton.hidden = YES;
+    _cancelButton.alpha = 1.0f;
+  }];
+  
+  [super finishLoading:completionBlock];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   

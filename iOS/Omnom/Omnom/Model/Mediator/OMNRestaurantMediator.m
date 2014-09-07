@@ -69,7 +69,7 @@ OMNPayOrderVCDelegate>
 - (void)searchBeaconWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
   
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:completionBlock cancelBlock:cancelBlock];
-  searchBeaconVC.estimateAnimationDuration = 2.0;
+  searchBeaconVC.estimateAnimationDuration = 10.0;
   searchBeaconVC.circleIcon = icon;
   if (self.restaurantVC.visitor.restaurant.is_demo) {
     searchBeaconVC.visitor = self.restaurantVC.visitor;
