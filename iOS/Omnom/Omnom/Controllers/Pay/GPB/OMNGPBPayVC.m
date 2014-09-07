@@ -7,7 +7,7 @@
 //
 
 #import "OMNGPBPayVC.h"
-#import "OMNOrder.h"
+#import "OMNOrder+network.h"
 #import "OMNCardView.h"
 #import "OMNBankCardInfo.h"
 
@@ -101,7 +101,7 @@
 
   _bill = bill;
   __weak typeof(self)weakSelf = self;
-  [bill linkForAmount:_order.toPayAmount tip:_order.tipAmount completion:^(NSString *url) {
+  [bill linkForAmount:_order.totaAmountWithTips tip:_order.tipAmount completion:^(NSString *url) {
 
     if (url.length) {
       [weakSelf processCardPayment:url];

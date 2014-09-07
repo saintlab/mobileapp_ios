@@ -22,11 +22,11 @@
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
+    _foundDate = [NSDate date];
     _decodeBeaconData = data;
     _beacon = [[OMNBeacon alloc] initWithJsonData:data[@"beacon"]];
     _restaurant = [[OMNRestaurant alloc] initWithJsonData:data[@"restaurant"]];
     _table = [[OMNTable alloc] initWithJsonData:data[@"table"]];
-    _foundDate = [NSDate date];
   }
   return self;
 }
@@ -34,16 +34,32 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
   _decodeBeaconData = [aDecoder decodeObjectForKey:@"decodeBeaconData"];
   self = [self initWithJsonData:_decodeBeaconData];
+  if (self) {
+    _foundDate = [aDecoder decodeObjectForKey:@"foundDate"];
+  }
   return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+  [aCoder encodeObject:self.foundDate forKey:@"foundDate"];
   [aCoder encodeObject:_decodeBeaconData forKey:@"decodeBeaconData"];
 }
 
 - (BOOL)readyForPush {
   
   return ([[NSDate date] timeIntervalSinceDate:self.foundDate] > 4*60*60);
+  
+}
+
+- (BOOL)expired {
+  
+  if (self.foundDate) {
+    NSTimeInterval timeElapsed = [[NSDate date] timeIntervalSinceDate:self.foundDate];
+    return (timeElapsed > 20*60);
+  }
+  else {
+    return YES;
+  }
   
 }
 

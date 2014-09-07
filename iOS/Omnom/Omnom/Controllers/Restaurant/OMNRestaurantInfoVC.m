@@ -14,6 +14,7 @@
 #import "OMNProductDetailsVC.h"
 #import "OMNVisitor.h"
 #import "OMNToolbarButton.h"
+#import "OMNFeedItem.h"
 
 @interface OMNRestaurantInfoVC ()
 <OMNProductDetailsVCDelegate,
@@ -193,7 +194,8 @@ UIScrollViewDelegate>
     case 2: {
       
       OMNRestaurantFeedItemCell *restaurantFeedInfoCell = [tableView dequeueReusableCellWithIdentifier:@"FeedItemCell" forIndexPath:indexPath];
-      id feedItem = _restaurantInfo.feedItems[indexPath.row];
+      OMNFeedItem *feedItem = _restaurantInfo.feedItems[indexPath.row];
+      [feedItem logViewEvent];
       [restaurantFeedInfoCell setFeedItem:feedItem];
       cell = restaurantFeedInfoCell;
       
@@ -221,10 +223,12 @@ UIScrollViewDelegate>
       OMNRestaurantInfoItem *item = items[indexPath.row];
       [item open];
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
+      
     } break;
     case 2: {
       
       OMNFeedItem *feedItem = _restaurantInfo.feedItems[indexPath.row];
+      [feedItem logClickEvent];
       OMNProductDetailsVC *productDetailsVC = [[OMNProductDetailsVC alloc] initFeedItem:feedItem];
       productDetailsVC.delegate = self;
       [self.navigationController pushViewController:productDetailsVC animated:YES];

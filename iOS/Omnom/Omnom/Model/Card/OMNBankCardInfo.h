@@ -17,4 +17,9 @@
 @property (nonatomic, copy) NSString *card_id;
 @property (nonatomic, assign) BOOL saveCard;
 
+@property (nonatomic, assign) BOOL scanUsed;
+@property (nonatomic, assign) NSInteger numberOfRegisterAttempts;
+
+- (void)logCardRegister;
+
 @end

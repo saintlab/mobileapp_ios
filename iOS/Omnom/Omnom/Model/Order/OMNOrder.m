@@ -7,16 +7,50 @@
 //
 
 #import "OMNOrder.h"
-#import "OMNOperationManager.h"
-#import "OMNSocketManager.h"
+
+NSString *stringFromTipType(TipType tipType) {
+  
+  NSString *string = @"";
+  switch (tipType) {
+    case kTipTypeCustom: {
+      string = @"kTipTypeCustom";
+    } break;
+    case kTipTypeCustomAmount: {
+      string = @"kTipTypeCustomAmount";
+    } break;
+    case kTipTypeCustomPercent: {
+      string = @"kTipTypeCustomPercent";
+    } break;
+    default: {
+      string = @"kTipTypeDefault";
+    } break;
+  }
+  return string;
+}
+
+NSString *stringFromSplitType(SplitType splitType) {
+  NSString *string = @"";
+  switch (splitType) {
+    case kSplitTypePercent: {
+      string = @"kSplitTypePercent";
+    } break;
+    case kSplitTypeNumberOfGuersts: {
+      string = @"kSplitTypeNumberOfGuersts";
+    } break;
+    case kSplitTypeOrders: {
+      string = @"kSplitTypeOrders";
+    } break;
+    default: {
+      string = @"kSplitTypeNone";
+    } break;
+  }
+  return string;
+}
+
 
 @implementation OMNOrder {
   id _data;
   NSString *_callBillOrderId;
-}
-
-- (void)dealloc {
-  [[OMNSocketManager manager] leave:self.id];
 }
 
 - (instancetype)initWithJsonData:(id)jsonData {
@@ -60,7 +94,9 @@
     customTip.amount = 0;
     customTip.percent = 0.0;
     customTip.custom = YES;
-    _tips = [tips copy];
+    _tips = tips;
+    
+    _enteredAmount = self.expectedValue;
     
   }
   return self;
@@ -76,7 +112,7 @@
   
 }
 
-- (long long)total {
+- (long long)totalAmount {
   
   return [self totalForAllItems:YES];
   
@@ -104,76 +140,98 @@
   
 }
 
-- (void)createBill:(OMNBillBlock)completion failure:(void (^)(NSError *error))failureBlock {
+- (BOOL)paymentValueIsTooHigh {
   
-  NSDictionary *parameters =
-  @{
-    @"amount": @(self.toPayAmount),
-    @"restaurant_id" : self.restaurant_id,
-    @"restaurateur_order_id" : self.id,
-    @"table_id" : self.table_id,
-    @"description" : @"",
-    };
+  return self.enteredAmount > 1.5 * self.expectedValue;
   
-  [[OMNOperationManager sharedManager] POST:@"/bill" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+}
+
+- (long long)expectedValue {
+  long long expectedValue = self.total - self.paid_amount;
+  return expectedValue;
+}
+
+- (void)setSelectedTipIndex:(NSInteger)selectedTipIndex {
+  
+  [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
     
-    if (responseObject[@"status"]) {
-      OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
-      completion(bill);
-    }
-    else {
-      failureBlock(nil);
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock(nil);
+    tip.selected = (idx == selectedTipIndex);
     
   }];
   
 }
 
-- (void)billCall:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
+- (NSInteger)selectedTipIndex {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders/%@/bill/call", self.restaurant_id, self.table_id, self.id];
-
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  __block NSInteger selectedTipIndex = -1;
+  [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
     
-    if (responseObject[@"status"]) {
-      
-      [[OMNSocketManager manager] join:self.id];
-      
-      completionBlock();
+    if (tip.selected) {
+      selectedTipIndex = idx;
+      *stop = YES;
     }
-    else {
-      failureBlock([NSError errorWithDomain:@"" code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock(error);
     
   }];
+  
+  return selectedTipIndex;
+  
 }
 
-- (void)billCallStop:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders/%@/bill/call/stop", self.restaurant_id, self.table_id, self.id];
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (long long)totaAmountWithTips {
+  
+  return (self.enteredAmount + self.tipAmount);
+  
+}
+
+- (long long)tipAmount {
+  
+  long long tipAmount = 0ll;
+  OMNTip *selectedTip = self.selectedTip;
+  
+  if (selectedTip.amount &&
+      (selectedTip.custom || self.enteredAmount < self.tipsThreshold)) {
     
-    if (responseObject[@"status"]) {
-      [[OMNSocketManager manager] leave:self.id];
-      completionBlock();
+    tipAmount = selectedTip.amount;
+    
+  }
+  else {
+    tipAmount = self.enteredAmount * selectedTip.percent * 0.01l;
+  }
+  
+  tipAmount = 100ll*round(tipAmount*0.01l);
+  
+  return tipAmount;
+  
+}
+
+- (OMNTip *)selectedTip {
+  
+  __block OMNTip *selectedTip = nil;
+  [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
+    
+    if (tip.selected) {
+      selectedTip = tip;
+      *stop = YES;
     }
-    else {
-      failureBlock([NSError errorWithDomain:@"" code:0 userInfo:@{NSLocalizedDescriptionKey : [responseObject description]}]);
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock(error);
     
   }];
+  
+  return selectedTip;
+  
 }
 
+- (OMNTip *)customTip {
+  return _tips[3];
+}
+
+- (void)setCustomTip:(OMNTip *)customTip {
+  if (customTip.amount) {
+    self.tipType = kTipTypeCustomAmount;
+  }
+  else {
+    self.tipType = kTipTypeCustomPercent;
+  }
+  _tips[3] = customTip;
+}
 
 @end

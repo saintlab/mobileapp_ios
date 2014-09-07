@@ -14,6 +14,7 @@
 #import "OMNConstants.h"
 #import "OMNToolbarButton.h"
 #import "UIImage+omn_helper.h"
+#import "OMNAnalitics.h"
 
 @interface OMNAuthorizationVC ()
 <OMNAuthorizationDelegate>
@@ -116,20 +117,28 @@
   
 }
 
-- (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token {
+- (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token fromRegstration:(BOOL)fromRegstration {
   
-  [[OMNAuthorisation authorisation] updateAuthenticationToken:token];
-  
-  
-  [self dismissViewControllerAnimated:NO completion:^{
-    [self processAuthorisation];
+  __weak typeof(self)weakSelf = self;
+  [[OMNAuthorisation authorisation] updateAuthenticationToken:token withBlock:^(BOOL tokenIsValid) {
+    
+    if (fromRegstration) {
+      [[OMNAnalitics analitics] logRegister];
+    }
+    else {
+      [[OMNAnalitics analitics] logLogin];
+    }
+    [weakSelf processAuthorisation];
+    
   }];
   
 }
 
 - (void)processAuthorisation {
   
-  [self.delegate authorizationVCDidReceiveToken:self];
+  [self dismissViewControllerAnimated:NO completion:^{
+    [self.delegate authorizationVCDidReceiveToken:self];
+  }];
   
 }
 

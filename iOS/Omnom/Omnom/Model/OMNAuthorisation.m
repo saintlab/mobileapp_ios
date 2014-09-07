@@ -12,6 +12,7 @@
 #import "OMNUser.h"
 #import <SSKeychain.h>
 #import <Crashlytics/Crashlytics.h>
+#import "OMNAnalitics.h"
 
 static NSString * const kAccountName = @"test_account6";
 
@@ -49,13 +50,14 @@ NSString * const kTokenServiceName = @"token";
 #else
     NSString *token = [SSKeychain passwordForService:kTokenServiceName account:kAccountName];
 #endif
-    [self updateAuthenticationToken:token];
+    [self updateAuthenticationToken:token withBlock:nil];
   }
   return self;
 }
 
 -(void)setUser:(OMNUser *)user {
   _user = user;
+  [[OMNAnalitics analitics] setUser:user];
   [Crashlytics setUserEmail:user.email];
   [Crashlytics setUserName:user.id];
   [Crashlytics setUserIdentifier:[OMNConstants baseUrlString]];
@@ -130,18 +132,20 @@ NSString * const kTokenServiceName = @"token";
 }
 
 - (void)logout {
-  [self updateAuthenticationToken:nil];
+  self.user = nil;
+  [self updateAuthenticationToken:nil withBlock:nil];
   if (self.logoutCallback) {
     self.logoutCallback();
   }
 }
 
-- (void)updateAuthenticationToken:(NSString *)token {
+- (void)updateAuthenticationToken:(NSString *)token withBlock:(void (^)(BOOL tokenIsValid))block {
 
   if ([_token isEqualToString:token]) {
     return;
   }
-  
+  NSLog(@"updateAuthenticationToken>%@", token);
+
   _token = token;
   if (token) {
     [SSKeychain setPassword:token forService:kTokenServiceName account:kAccountName];
@@ -151,9 +155,10 @@ NSString * const kTokenServiceName = @"token";
   }
   
   [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
-  NSLog(@"updateAuthenticationToken>%@", token);
-  [self checkTokenWithBlock:^(BOOL tokenIsValid) {
-  }];
+  
+  if (block) {
+    [self checkTokenWithBlock:block];
+  }
 
 }
 

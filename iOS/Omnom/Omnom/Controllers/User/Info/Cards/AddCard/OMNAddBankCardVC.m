@@ -26,10 +26,13 @@ OMNCardEnterControlDelegate>
   
   OMNCardEnterControl *_cardEnterControl;
   UIButton *_addCardButton;
+  
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _cardInfo = [[OMNBankCardInfo alloc] init];
   
   self.navigationItem.title = @"";
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
@@ -90,13 +93,10 @@ OMNCardEnterControlDelegate>
 - (void)cardEnterControl:(OMNCardEnterControl *)control didEnterCardData:(NSDictionary *)cardData {
   
   [self setRightButtonEnabled:YES];
-  _cardInfo = [[OMNBankCardInfo alloc] init];
   _cardInfo.pan = cardData[OMNCardEnterControlPanString];
   _cardInfo.expiryMonth = [cardData[OMNCardEnterControlMonthString] integerValue];
   _cardInfo.expiryYear = [cardData[OMNCardEnterControlYearString] integerValue];
   _cardInfo.cvv = cardData[OMNCardEnterControlCVVString];
-//  _addCardButton.enabled = YES;
-//  [control endEditing:YES];
   
 }
 
@@ -118,10 +118,8 @@ OMNCardEnterControlDelegate>
 
 - (IBAction)addCardTap:(id)sender {
 
-  if (_cardInfo) {
-    _cardInfo.saveCard = _cardEnterControl.saveButtonSelected;
-    [self.delegate addBankCardVC:self didAddCard:_cardInfo];
-  }
+  _cardInfo.saveCard = _cardEnterControl.saveButtonSelected;
+  [self.delegate addBankCardVC:self didAddCard:_cardInfo];
   
 }
 
@@ -133,16 +131,14 @@ OMNCardEnterControlDelegate>
 
 - (void)userDidProvideCreditCardInfo:(CardIOCreditCardInfo *)info inPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
   
-  NSLog(@"Scan succeeded with info: %@", info);
   // Do whatever needs to be done to deliver the purchased items.
   [self dismissViewControllerAnimated:YES completion:nil];
-  
   _cardEnterControl.pan = info.cardNumber;
+  _cardInfo.scanUsed = YES;
   
 }
 
 - (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
-  NSLog(@"User cancelled scan");
   [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -12,6 +12,6 @@
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 
-- (instancetype)initWithTitles:(NSArray *)titles;
+- (instancetype)initWithFrame:(CGRect)frame titles:(NSArray *)titles;
 
 @end

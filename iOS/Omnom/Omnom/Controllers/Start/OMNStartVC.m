@@ -15,6 +15,7 @@
 #import "OMNR1VC.h"
 #import "OMNVisitorManager.h"
 #import "OMNNavigationController.h"
+#import "OMNAnalitics.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
@@ -65,6 +66,7 @@ OMNR1VCDelegate>
   [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
     
     if (tokenIsValid) {
+      [[OMNAnalitics analitics] logLogin];
       [weakSelf startSearchingBeacons];
     }
     else {

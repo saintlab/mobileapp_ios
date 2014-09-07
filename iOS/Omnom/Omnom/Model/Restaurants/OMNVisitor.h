@@ -19,7 +19,7 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 @interface OMNVisitor : NSObject
 <NSCoding>
 
-@property (nonatomic, strong) NSDate *foundDate;
+@property (nonatomic, strong, readonly) NSDate *foundDate;
 @property (nonatomic, strong) OMNBeacon *beacon;
 @property (nonatomic, strong) OMNTable *table;
 @property (nonatomic, strong) OMNRestaurant *restaurant;
@@ -30,6 +30,7 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 - (instancetype)initWithJsonData:(id)data;
 
 - (BOOL)readyForPush;
+- (BOOL)expired;
 - (NSString *)id;
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;

@@ -49,10 +49,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [super viewDidLoad];
   
   self.view.backgroundColor = [UIColor whiteColor];
-//  self.automaticallyAdjustsScrollViewInsets = NO;
-//  self.edgesForExtendedLayout = UIRectEdgeNone;
-  
-  OMNNavigationBarSelector *_navSelector = [[OMNNavigationBarSelector alloc] initWithTitles:
+  OMNNavigationBarSelector *_navSelector = [[OMNNavigationBarSelector alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kCalculatorTopOffset) titles:
                                             @[
                                               NSLocalizedString(@"По блюдам", nil),
                                               NSLocalizedString(@"Поровну", nil)
@@ -112,10 +109,20 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 }
 
 - (void)totalTap {
-  if ([self.delegate respondsToSelector:@selector(calculatorVC:didFinishWithTotal:)]) {
-    [self.delegate calculatorVC:self didFinishWithTotal:_total];
-  }
+  if ([self.delegate respondsToSelector:@selector(calculatorVC:splitType:didFinishWithTotal:)]) {
+    
+    SplitType splitType = kSplitTypeNone;
+    
+    if ([[self.childViewControllers objectAtIndex:0] isEqual:self.firstViewController]) {
+      splitType = kSplitTypeOrders;
+    }
+    else if ([[self.childViewControllers objectAtIndex:0] isEqual:self.secondViewController]) {
+      splitType = kSplitTypeNumberOfGuersts;
+    }
 
+    [self.delegate calculatorVC:self splitType:splitType didFinishWithTotal:_total];
+  }
+  
 }
 
 - (void)viewWillLayoutSubviews {

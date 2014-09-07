@@ -105,9 +105,9 @@
   }
   else {
     OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
-    amountPercentValue.amount = _calculationAmount.customTip.amount;
-    amountPercentValue.percent = _calculationAmount.customTip.percent;
-    amountPercentValue.totalAmount = _calculationAmount.enteredAmount;
+    amountPercentValue.amount = _order.customTip.amount;
+    amountPercentValue.percent = _order.customTip.percent;
+    amountPercentValue.totalAmount = _order.enteredAmount;
     _amountPercentControl.amountPercentValue = amountPercentValue;
   }
   
@@ -119,19 +119,19 @@
   
   OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
   amountPercentValue.isAmountSelected = YES;
-  amountPercentValue.amount = _calculationAmount.enteredAmount;
-  if (_calculationAmount.expectedValue) {
-    amountPercentValue.percent = 100.*(double)_calculationAmount.enteredAmount/_calculationAmount.expectedValue;
+  amountPercentValue.amount = _order.enteredAmount;
+  if (_order.expectedValue) {
+    amountPercentValue.percent = 100.*(double)_order.enteredAmount/_order.expectedValue;
   }
-  amountPercentValue.totalAmount = _calculationAmount.expectedValue;
+  amountPercentValue.totalAmount = _order.expectedValue;
   _amountPercentControl.amountPercentValue = amountPercentValue;
   
 }
 
-- (void)setCalculationAmount:(OMNCalculationAmount *)calculationAmount {
+- (void)setOrder:(OMNOrder *)order {
   
-  _calculationAmount = calculationAmount;
-  [_tipsSelector setCalculationAmount:calculationAmount];
+  _order = order;
+  [_tipsSelector setOrder:order];
   [self updateView];
   [self updatePercentAmountControl];
   
@@ -139,8 +139,8 @@
 
 - (void)updateToPayButton {
 
-  _payButton.enabled = (_calculationAmount.totalValue > 0) ? (YES) : (NO);
-  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_calculationAmount.totalValue]] forState:UIControlStateNormal];
+  _payButton.enabled = (_order.totalValue > 0) ? (YES) : (NO);
+  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_order.totalValue]] forState:UIControlStateNormal];
   
 }
 
@@ -202,7 +202,7 @@
 
     _tipAmountPercentValue = _amountPercentControl.amountPercentValue;
     _tipAmountPercentValue.isAmountSelected = [_amountPercentControl isAmountSelected];
-    OMNTip *customTip = _calculationAmount.customTip;
+    OMNTip *customTip = _order.customTip;
     if (_tipAmountPercentValue.isAmountSelected) {
       customTip.amount = _tipAmountPercentValue.amount;
       customTip.percent = 0.0;
@@ -211,11 +211,13 @@
       customTip.amount = 0;
       customTip.percent = _tipAmountPercentValue.percent;
     }
-   
+    _order.customTip = customTip;
+    
   }
   else {
 
-    _calculationAmount.enteredAmount = _amountPercentControl.amountPercentValue.amount;
+    _order.splitType = kSplitTypePercent;
+    _order.enteredAmount = _amountPercentControl.amountPercentValue.amount;
     
   }
   

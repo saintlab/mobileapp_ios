@@ -100,7 +100,7 @@ OMNMailRUPayVCDelegate>
 
   }
   
-  _paymentView.calculationAmount = [[OMNCalculationAmount alloc] initWithOrder:_order];
+  _paymentView.order = _order;
 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPay:) name:OMNSocketIODidPayNotification object:nil];
   
@@ -244,7 +244,7 @@ OMNMailRUPayVCDelegate>
 
 - (IBAction)payTap:(id)sender {
   
-  if (_paymentView.calculationAmount.paymentValueIsTooHigh) {
+  if (_paymentView.order.paymentValueIsTooHigh) {
     
     __weak typeof(self)weakSelf = self;
     [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -265,9 +265,6 @@ OMNMailRUPayVCDelegate>
 }
 
 - (void)processCardPaymentVC {
-
-  _order.toPayAmount = _paymentView.calculationAmount.totalValue;
-  _order.tipAmount = _paymentView.calculationAmount.tipAmount;
 
   OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
   mailRUPayVC.demo = _visitor.restaurant.is_demo;
@@ -290,11 +287,11 @@ OMNMailRUPayVCDelegate>
 
 #pragma mark - GCalculatorVCDelegate
 
-- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(long long)total {
+- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC splitType:(SplitType)splitType didFinishWithTotal:(long long)total {
   
-  OMNCalculationAmount *calculationAmount = _paymentView.calculationAmount;
-  calculationAmount.enteredAmount = total;
-  _paymentView.calculationAmount = calculationAmount;
+  _order.enteredAmount = total;
+  _order.splitType = splitType;
+  _paymentView.order = _order;
   [self.navigationController popToViewController:self animated:YES];
   
 }

@@ -10,7 +10,7 @@
 
 @protocol OMNAuthorizationDelegate <NSObject>
 
-- (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token;
+- (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token fromRegstration:(BOOL)fromRegstration;
 
 - (void)authorizationVCDidCancel:(UIViewController *)authorizationVC;
 

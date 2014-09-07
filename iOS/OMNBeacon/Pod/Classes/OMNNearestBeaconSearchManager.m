@@ -74,7 +74,6 @@
     
   } failure:^(NSError *error) {
     
-    NSLog(@"error>%@", error);
     [weakSelf didFailRangeBeacons];
     
   }];

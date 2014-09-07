@@ -10,7 +10,7 @@
 #import "OMNBankCardInfo.h"
 #import <OMNMailRuAcquiring.h>
 #import <OMNDeletedTextField.h>
-#import "OMNOrder.h"
+#import "OMNOrder+network.h"
 #import "OMNMailRuBankCardsModel.h"
 #import "OMNCardBrandView.h"
 #import "OMNAddBankCardVC.h"
@@ -44,6 +44,8 @@ OMNMailRUCardConfirmVCDelegate>
   OMNBankCardsModel *_bankCardsModel;
   UIView *_contentView;
   OMNLoadingCircleVC *_loadingCircleVC;
+  
+  BOOL _addBankCardRequested;
 }
 
 - (instancetype)initWithOrder:(OMNOrder *)order {
@@ -108,10 +110,14 @@ OMNMailRUCardConfirmVCDelegate>
 }
 
 - (void)didLoadCards {
+  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
   if (_bankCardsModel.cards.count) {
     _payButton.enabled = YES;
   }
-  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+  else if (NO ==_addBankCardRequested){
+    _addBankCardRequested = YES;
+    [self addCardTap];
+  }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -179,28 +185,27 @@ OMNMailRUCardConfirmVCDelegate>
   
 }
 
-- (void)didFailCreateOrderWithError:(NSError *)error {
-  [self.navigationController popToViewController:self animated:YES];
-  _errorLabel.text = error.localizedDescription;
-}
-
 - (void)orderPaymentInfoDidCreated:(OMNMailRuPaymentInfo *)paymentInfo {
   
   __weak typeof(self)weakSelf = self;
   [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
     
-    NSLog(@"payWithCardInfo>%@", response);
-    [weakSelf didPayWithResponse:response];
+    [weakSelf paymentInfo:paymentInfo didPayWithResponse:response];
     
   }];
 
+}
+
+- (void)didFailCreateOrderWithError:(NSError *)error {
+  [self.navigationController popToViewController:self animated:YES];
+  _errorLabel.text = error.localizedDescription;
 }
 
 - (void)didPayNotification:(NSNotification *)n {
   NSLog(@"didPayNotification>%@", n);
 }
 
-- (void)didPayWithResponse:(id)response {
+- (void)paymentInfo:(OMNMailRuPaymentInfo *)paymentInfo didPayWithResponse:(id)response {
   
   __weak typeof(self)weakSelf = self;
   [_loadingCircleVC finishLoading:^{
@@ -210,7 +215,7 @@ OMNMailRUCardConfirmVCDelegate>
     if ([status isEqualToString:@"OK_FINISH"] &&
         [order_status isEqualToString:@"PAID"]) {
 
-      [weakSelf.delegate mailRUPayVCDidFinish:weakSelf];
+      [weakSelf mailRuDidFinish];
       
     }
     else {
@@ -220,6 +225,13 @@ OMNMailRUCardConfirmVCDelegate>
     }
 
   }];
+  
+}
+
+- (void)mailRuDidFinish {
+
+  [_order logPayment];
+  [self.delegate mailRUPayVCDidFinish:self];
   
 }
 

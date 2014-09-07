@@ -13,7 +13,7 @@
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 
-const long long kMaxEnteredValue = 999999999L;
+const long long kMaxEnteredValue = 99999999L;
 
 @interface OMNAmountPercentControl ()
 <UIPickerViewDataSource,
@@ -225,7 +225,7 @@ UITextFieldDelegate>
   
   _amountTF.text = [OMNUtils moneyStringFromKop:amount];
   [self updateCaratPosition];
-  _pureAmountTF.text = [OMNUtils moneyStringFromKop:amount];
+  _pureAmountTF.text = [OMNUtils formattedMoneyStringFromKop:amount];
   _amountPercentValue.amount = amount;
   
 }
@@ -236,7 +236,7 @@ UITextFieldDelegate>
   
   if (percentValue < [_percentPicker numberOfRowsInComponent:0]) {
     
-    [_percentPicker selectRow:(NSInteger)percentValue inComponent:0 animated:NO];
+    [_percentPicker selectRow:(NSInteger)round(percentValue) inComponent:0 animated:NO];
     
   }
   else {
@@ -325,8 +325,7 @@ UITextFieldDelegate>
       
       finalString = [@[components[0], fractionalString] componentsJoinedByString:kCommaString];
     }
-    
-    long long value = [finalString doubleValue]*100;
+    long long value = round(100.0*[finalString doubleValue]);
     value = MIN(value, kMaxEnteredValue);
     [self setAmountValue:value];
     [self calculateRelativePercentValue];

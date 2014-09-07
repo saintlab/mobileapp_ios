@@ -7,14 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "OMNCalculationAmount.h"
 
 @interface OMNCalcaulcationTests : XCTestCase
 
 @end
 
 @implementation OMNCalcaulcationTests {
-  OMNCalculationAmount *_calculationAmount;
 }
 
 - (void)setUp {

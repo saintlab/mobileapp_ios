@@ -6,19 +6,24 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNUser.h"
+@class OMNUser;
+@class AFHTTPRequestOperation;
+@class OMNVisitor;
+@class OMNOrder;
 
 //https://trello.com/c/KirovnYP/32--
 @interface OMNAnalitics : NSObject
 
 + (instancetype)analitics;
 
-- (void)logRegisterUser:(OMNUser *)user;
+- (void)setUser:(OMNUser *)user;
 
-- (void)logLoginUser:(OMNUser *)user;
+- (void)logRegister;
+- (void)logLogin;
+- (void)logEnterRestaurant:(OMNVisitor *)visitor;
+- (void)logPayment:(OMNOrder *)order;
 
-- (void)logCardAdd:(OMNUser *)user;
-
-- (void)logPayment:(OMNUser *)user;
+- (void)logEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
+- (void)logEvent:(NSString *)eventName operation:(AFHTTPRequestOperation *)operation;
 
 @end

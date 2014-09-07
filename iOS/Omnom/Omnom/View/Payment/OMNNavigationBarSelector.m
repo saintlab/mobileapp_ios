@@ -20,8 +20,8 @@ const CGFloat kButtonWidth = 100.0f;
   NSMutableArray *_buttons;
 }
 
-- (instancetype)initWithTitles:(NSArray *)titles {
-  self = [super initWithFrame:CGRectMake(0, 0, 320.0f, 40.0f)];
+- (instancetype)initWithFrame:(CGRect)frame titles:(NSArray *)titles {
+  self = [super initWithFrame:frame];
   if (self) {
     _titles = titles;
     [self setup];

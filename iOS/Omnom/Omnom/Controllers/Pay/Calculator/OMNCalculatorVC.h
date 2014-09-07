@@ -6,8 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GCalculatorVCDelegate.h"
-@class OMNOrder;
+#import "OMNCalculatorVCDelegate.h"
 
 extern const CGFloat kCalculatorTopOffset;
 

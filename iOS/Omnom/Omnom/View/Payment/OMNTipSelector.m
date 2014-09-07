@@ -8,6 +8,7 @@
 
 #import "OMNTipSelector.h"
 #import "OMNTipButton.h"
+#import "OMNOrder+tipButton.h"
 
 @implementation OMNTipSelector {
   NSMutableArray *_buttons;
@@ -111,31 +112,38 @@
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex {
 
+  if (selectedIndex == kDefaultTipSelectedIndex) {
+    _order.tipType = kTipTypeDefault;
+  }
+  else {
+    _order.tipType = kTipTypeCustom;
+  }
+  
   _previousSelectedIndex = _selectedIndex;
   _selectedIndex = selectedIndex;
-  _calculationAmount.selectedTipIndex = selectedIndex;
+  _order.selectedTipIndex = selectedIndex;
   
 }
 
 - (void)update {
   
-  OMNCalculationAmount *calculationAmount = _calculationAmount;
+  OMNOrder *order = _order;
   [_buttons enumerateObjectsUsingBlock:^(OMNTipButton *tipButton, NSUInteger idx, BOOL *stop) {
     
-    tipButton.tip = calculationAmount.tips[idx];
-    [calculationAmount configureTipButton:tipButton];
-    tipButton.selected = (idx == calculationAmount.selectedTipIndex);
+    tipButton.tip = order.tips[idx];
+    [order configureTipButton:tipButton];
+    tipButton.selected = (idx == order.selectedTipIndex);
     
   }];
   
 }
 
-- (void)setCalculationAmount:(OMNCalculationAmount *)calculationAmount {
-  _calculationAmount = calculationAmount;
-  self.selectedIndex = 1;
+- (void)setOrder:(OMNOrder *)order {
+  
+  _order = order;
+  _selectedIndex = order.selectedTipIndex;
   [self update];
   
 }
-
 
 @end

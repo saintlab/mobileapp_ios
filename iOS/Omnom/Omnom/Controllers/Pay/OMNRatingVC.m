@@ -7,7 +7,7 @@
 //
 
 #import "OMNRatingVC.h"
-#import "OMNOrder.h"
+#import "OMNOrder+network.h"
 #import "OMNSocketManager.h"
 
 @interface OMNRatingVC ()

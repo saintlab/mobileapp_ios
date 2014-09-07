@@ -97,9 +97,7 @@
 }
 
 - (void)processError:(NSError *)error {
-  
-  NSLog(@"error>%@", error);
-  
+//TODO:
 }
 
 - (void)findNearestBeacons:(NSArray *)beacons {

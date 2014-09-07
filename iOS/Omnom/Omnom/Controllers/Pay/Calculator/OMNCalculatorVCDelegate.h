@@ -7,16 +7,14 @@
 //
 
 @class OMNCalculatorVC;
+#import "OMNOrder.h"
 
 @protocol OMNCalculatorVCDelegate <NSObject>
 
 @optional
 
-- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC didFinishWithTotal:(long long)total;
-
+- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC splitType:(SplitType)splitType didFinishWithTotal:(long long)total;
 - (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC;
-
-
 - (void)totalDidChange:(long long)total;
 
 @end

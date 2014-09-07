@@ -6,14 +6,16 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNCalculationAmount.h"
+#import "OMNOrder.h"
+
+#define kDefaultTipSelectedIndex 1
 
 @interface OMNTipSelector : UIControl
 
 @property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, assign, readonly) NSInteger previousSelectedIndex;
 
-@property (nonatomic, strong) OMNCalculationAmount *calculationAmount;
+@property (nonatomic, strong) OMNOrder *order;
 
 - (void)update;
 

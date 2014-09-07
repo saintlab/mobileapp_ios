@@ -15,6 +15,7 @@
 #import "OMNErrorTextField.h"
 #import "OMNBorderedButton.h"
 #import "OMNUtils.h"
+#import "OMNAnalitics.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate>
@@ -138,6 +139,7 @@
 - (void)setCard_id:(NSString *)card_id {
   _card_id = card_id;
   
+  _bankCardInfo.card_id = card_id;
   if (_card_id) {
     _textLabel.text = NSLocalizedString(@"С вашей карты списана случайная сумма до 50р. Введите сумму списания в это поле, чтобы привязать карту к вашему аккаунту", nil);
     _cardHoldValueTF.textField.enabled = YES;
@@ -149,6 +151,8 @@
 
 - (void)validateTap {
   
+  _bankCardInfo.numberOfRegisterAttempts++;
+
   double value = [_cardHoldValueTF.textField.text doubleValue];
   [self startLoader];
   OMNUser *user = [OMNAuthorisation authorisation].user;
@@ -182,6 +186,7 @@
   }
   else {
     
+    [_bankCardInfo logCardRegister];
     [self.delegate mailRUCardConfirmVCDidFinish:self];
     
   }

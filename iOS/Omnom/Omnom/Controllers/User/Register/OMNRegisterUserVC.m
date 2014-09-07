@@ -355,15 +355,7 @@ UITextFieldDelegate>
   
   if (token) {
 
-    [OMNUser userWithToken:token user:^(OMNUser *user) {
-      
-      [[OMNAnalitics analitics] logRegisterUser:user];
-      
-    } failure:^(NSError *error) {
-      //TODO: handle
-    }];
-    
-    [self.delegate authorizationVC:self didReceiveToken:token];
+    [self.delegate authorizationVC:self didReceiveToken:token fromRegstration:YES];
     
   }
   else {

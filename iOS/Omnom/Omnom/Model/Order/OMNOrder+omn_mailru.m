@@ -9,6 +9,7 @@
 #import "OMNOrder+omn_mailru.h"
 #import <OMNMailRuPaymentInfo.h>
 #import "OMNUser.h"
+#import "OMNOrder+network.h"
 
 @interface OMNMailRuPaymentInfo (omn_order)
 
@@ -27,7 +28,7 @@
   paymentInfo.order_message = @"message";
   paymentInfo.extra.tip = self.tipAmount;
   paymentInfo.extra.restaurant_id = @"1";
-  paymentInfo.order_amount = @(self.toPayAmount/100.);
+  paymentInfo.order_amount = @(self.enteredAmount/100.);
   
   if (self.bill) {
     [paymentInfo omn_updateWithBill:self.bill];

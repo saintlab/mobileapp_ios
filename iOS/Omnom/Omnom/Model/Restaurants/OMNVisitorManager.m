@@ -99,7 +99,29 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
 }
 
+- (OMNVisitor *)cachedVisitorForKey:(NSString *)key {
+
+  if (0 == key.length) {
+    return nil;
+  }
+  
+  OMNVisitor *cachedVisitor = _visitors[key];
+  if (cachedVisitor.expired) {
+    [_visitors removeObjectForKey:key];
+    [self save];
+    cachedVisitor = nil;
+  }
+  
+  return cachedVisitor;
+}
+
 - (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure; {
+
+  OMNVisitor *visitor = [self cachedVisitorForKey:beacon.key];
+  if (visitor) {
+    success(visitor);
+    return;
+  }
   
   [self decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
     
@@ -118,21 +140,6 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     success(visitors);
     return;
   }
-  
-#warning chache
-  /*
-  OMNBeacon *beacon = [beacons firstObject];
-  if (beacon.key) {
-  
-    OMNDecodeBeacon *decodeBeacon = _decodedBeacons[beacon.key];
-  
-    if (decodeBeacon) {
-      success(@[decodeBeacon]);
-      return;
-    }
-  
-  }
-  */
   
   NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
   [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {

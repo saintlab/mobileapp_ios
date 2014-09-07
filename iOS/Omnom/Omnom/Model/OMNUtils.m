@@ -22,6 +22,19 @@ NSString * const kGroupingSeparator = @" ";
     currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
     currencyNumberFormatter.currencySymbol = kRubleSign;
     currencyNumberFormatter.currencyDecimalSeparator = kCommaString;
+    currencyNumberFormatter.minimumFractionDigits = 0;
+    currencyNumberFormatter.maximumFractionDigits = 2;
+  }
+  return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
+}
+
++ (NSString *)formattedMoneyStringFromKop:(long long)kop {
+  static NSNumberFormatter *currencyNumberFormatter = nil;
+  if (nil == currencyNumberFormatter) {
+    currencyNumberFormatter = [self commaNumberFormatter];
+    currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
+    currencyNumberFormatter.currencySymbol = kRubleSign;
+    currencyNumberFormatter.currencyDecimalSeparator = kCommaString;
   }
   currencyNumberFormatter.minimumFractionDigits = (kop%100ll == 0) ? (0) : (2);
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
@@ -46,7 +59,7 @@ NSString * const kGroupingSeparator = @" ";
   if (nil == currencyNumberFormatter) {
     currencyNumberFormatter = [self commaNumberFormatter];
   }
-  return [currencyNumberFormatter stringFromNumber:@(ceil(kop/100.))];
+  return [currencyNumberFormatter stringFromNumber:@(round(kop/100.))];
 }
 
 + (NSString *)commaStringFromKop:(long long)kop {

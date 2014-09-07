@@ -18,6 +18,7 @@ extern NSString * const kCommaString;
 @interface OMNUtils : NSObject
 
 + (NSString *)evenCommaStringFromKop:(long long)kop;
++ (NSString *)formattedMoneyStringFromKop:(long long)kop;
 + (NSString *)moneyStringFromKop:(long long)kop;
 + (NSString *)commaStringFromKop:(long long)kop;
 

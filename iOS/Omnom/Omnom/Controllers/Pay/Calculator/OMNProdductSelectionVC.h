@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GCalculatorVCDelegate.h"
+#import "OMNCalculatorVCDelegate.h"
 
 @class OMNOrder;
 

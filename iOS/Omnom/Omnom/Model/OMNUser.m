@@ -9,6 +9,7 @@
 #import "OMNUser.h"
 #import "OMNAuthorizationManager.h"
 #import "OMNAuthorisation.h"
+#import "OMNAnalitics.h"
 
 @implementation OMNUser
 
@@ -72,13 +73,12 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-    NSLog(@"registerWithCompletion>%@", responseObject);
-    NSLog(@"registerWithCompletion>%@", responseObject[@"error"][@"message"]);
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
       completion();
     }
     else if ([responseObject isKindOfClass:[NSDictionary class]]) {
-      
+
+      [[OMNAnalitics analitics] logEvent:@"USER_REGISTER_ERROR" parametrs:responseObject];
       NSDictionary *error = responseObject[@"error"];
       failureBlock([NSError errorWithDomain:NSStringFromClass(self.class) code:[error[@"code"] integerValue] userInfo:@{NSLocalizedDescriptionKey : error[@"message"]}]);
       
@@ -88,9 +88,8 @@
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    NSLog(@"registerWithComplition>%@", error);
-    failureBlock(nil);
+
+    [[OMNAnalitics analitics] logEvent:@"USER_REGISTER_ERROR" operation:operation];
     
   }];
   
@@ -109,6 +108,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logEvent:@"VERIFY_PHONE_ERROR" operation:operation];
     failureBlock(nil);
     
   }];
@@ -132,6 +132,7 @@
 
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logEvent:@"CONFIRM_PHONE_ERROR" operation:operation];
     failureBlock(error);
     
   }];
@@ -200,7 +201,6 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"recover" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"recoverUsingData>%@", responseObject);
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
       completionBlock();
     }
@@ -225,7 +225,8 @@
     [responseObject decodeToken:completion failure:failureBlock];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    NSLog(@"loginWithParameters>%@", operation.responseString);
+    
+    [[OMNAnalitics analitics] logEvent:@"AUTHORIZATION_USER_ERROR" operation:operation];
     failureBlock(nil);
     
   }];
@@ -241,7 +242,6 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"userWithToken>>%@", responseObject);
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
 
       OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
@@ -250,14 +250,14 @@
     }
     else {
 
+      [[OMNAnalitics analitics] logEvent:@"GET_USER_ERROR" parametrs:parameters];
       failureBlock(nil);
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"userWithToken>%@", operation.responseString);
-    NSLog(@"userWithToken>%@", error);
+    [[OMNAnalitics analitics] logEvent:@"GET_USER_ERROR" operation:operation];
     failureBlock(error);
     
   }];

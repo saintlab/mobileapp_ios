@@ -141,11 +141,12 @@ const NSInteger kNearestDeltaRSSI = 10;
 }
 
 - (NSDictionary *)JSONObject {
-  
+#warning JSONObject
   return @{
            @"uuid" : self.UUIDString,
            @"major" : self.major,
-           @"minor" : self.minor,
+           @"minor" : @"3",
+//           @"minor" : self.minor,
            };
   
 }

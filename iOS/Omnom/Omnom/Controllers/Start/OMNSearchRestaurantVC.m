@@ -11,6 +11,7 @@
 #import <AFHTTPRequestOperation.h>
 #import "UINavigationController+omn_replace.h"
 #import <OMNStyler.h>
+#import "OMNAnalitics.h"
 
 @interface OMNSearchRestaurantVC ()
 
@@ -92,6 +93,8 @@
     } failure:^(NSError *error) {
     }];
   }
+
+  [[OMNAnalitics analitics] logEnterRestaurant:visitor];
   
   __weak typeof(self)weakSelf = self;
   [visitor.restaurant loadLogo:^(UIImage *image) {

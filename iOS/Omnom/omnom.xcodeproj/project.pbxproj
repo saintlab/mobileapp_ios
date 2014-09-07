@@ -39,6 +39,10 @@
 		9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
 		931B15CE19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */; };
 		931B15CF19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */; };
+		931B2DF219BC710C0071883C /* OMNOrder+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF119BC710C0071883C /* OMNOrder+network.m */; };
+		931B2DF319BC710C0071883C /* OMNOrder+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF119BC710C0071883C /* OMNOrder+network.m */; };
+		931B2DF619BC83910071883C /* OMNOrder+tipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF519BC83910071883C /* OMNOrder+tipButton.m */; };
+		931B2DF719BC83910071883C /* OMNOrder+tipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF519BC83910071883C /* OMNOrder+tipButton.m */; };
 		931BD3881941C04100F77AA7 /* OMNCalcaulcationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */; };
 		932118121962D8A700183729 /* OMNProductsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932118111962D8A700183729 /* OMNProductsModel.m */; };
 		932118131962D8A700183729 /* OMNProductsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 932118111962D8A700183729 /* OMNProductsModel.m */; };
@@ -363,7 +367,7 @@
 		930554E01934978400E6F4EC /* OMNAuthorisation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorisation.m; sourceTree = "<group>"; };
 		930554E21934A1AC00E6F4EC /* OMNUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUser.h; sourceTree = "<group>"; };
 		930554E31934A1AC00E6F4EC /* OMNUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUser.m; sourceTree = "<group>"; };
-		930554EA1935DA7C00E6F4EC /* GCalculatorVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCalculatorVCDelegate.h; sourceTree = "<group>"; };
+		930554EA1935DA7C00E6F4EC /* OMNCalculatorVCDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCalculatorVCDelegate.h; sourceTree = "<group>"; };
 		930554EB1935DA7C00E6F4EC /* OMNProdductSelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNProdductSelectionVC.h; sourceTree = "<group>"; };
 		930554EC1935DA7C00E6F4EC /* OMNProdductSelectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNProdductSelectionVC.m; sourceTree = "<group>"; };
 		930554ED1935DA7C00E6F4EC /* OMNSplitSelectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSplitSelectionVC.h; sourceTree = "<group>"; };
@@ -411,6 +415,10 @@
 		9319FDE7192F36910053F3A4 /* UIView+frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frame.m"; sourceTree = "<group>"; };
 		931B15CC19B75BB900A774E4 /* OMNAmountPercentValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAmountPercentValue.h; sourceTree = "<group>"; };
 		931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAmountPercentValue.m; sourceTree = "<group>"; };
+		931B2DF019BC710C0071883C /* OMNOrder+network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+network.h"; sourceTree = "<group>"; };
+		931B2DF119BC710C0071883C /* OMNOrder+network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+network.m"; sourceTree = "<group>"; };
+		931B2DF419BC83910071883C /* OMNOrder+tipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+tipButton.h"; sourceTree = "<group>"; };
+		931B2DF519BC83910071883C /* OMNOrder+tipButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+tipButton.m"; sourceTree = "<group>"; };
 		931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCalcaulcationTests.m; sourceTree = "<group>"; };
 		932118101962D8A700183729 /* OMNProductsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNProductsModel.h; sourceTree = "<group>"; };
 		932118111962D8A700183729 /* OMNProductsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNProductsModel.m; sourceTree = "<group>"; };
@@ -551,8 +559,8 @@
 		938E8F46192F3A200088EF38 /* OMNRestaurant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurant.m; sourceTree = "<group>"; };
 		938E8F47192F3A200088EF38 /* OMNTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTable.h; sourceTree = "<group>"; };
 		938E8F48192F3A200088EF38 /* OMNTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTable.m; sourceTree = "<group>"; };
-		938E8F4A192F3A200088EF38 /* OMNCalculationAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCalculationAmount.h; sourceTree = "<group>"; };
-		938E8F4B192F3A200088EF38 /* OMNCalculationAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCalculationAmount.m; sourceTree = "<group>"; };
+		938E8F4A192F3A200088EF38 /* OMNCalculationAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNCalculationAmount.h; path = ../Tip/OMNCalculationAmount.h; sourceTree = "<group>"; };
+		938E8F4B192F3A200088EF38 /* OMNCalculationAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNCalculationAmount.m; path = ../Tip/OMNCalculationAmount.m; sourceTree = "<group>"; };
 		938E8F4C192F3A200088EF38 /* OMNTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTip.h; sourceTree = "<group>"; };
 		938E8F4D192F3A200088EF38 /* OMNTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTip.m; sourceTree = "<group>"; };
 		938E8F62192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTransitionFromOrderToCalculator.h; sourceTree = "<group>"; };
@@ -778,7 +786,7 @@
 			children = (
 				930554F01935DA7C00E6F4EC /* OMNCalculatorVC.h */,
 				930554F11935DA7C00E6F4EC /* OMNCalculatorVC.m */,
-				930554EA1935DA7C00E6F4EC /* GCalculatorVCDelegate.h */,
+				930554EA1935DA7C00E6F4EC /* OMNCalculatorVCDelegate.h */,
 				930554EB1935DA7C00E6F4EC /* OMNProdductSelectionVC.h */,
 				930554EC1935DA7C00E6F4EC /* OMNProdductSelectionVC.m */,
 				930554ED1935DA7C00E6F4EC /* OMNSplitSelectionVC.h */,
@@ -1217,6 +1225,12 @@
 				93B368A319A4D24300B6E6CB /* OMNFeedItem.m */,
 				93B368B019A7030900B6E6CB /* OMNOrder+omn_mailru.h */,
 				93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */,
+				931B2DF019BC710C0071883C /* OMNOrder+network.h */,
+				931B2DF119BC710C0071883C /* OMNOrder+network.m */,
+				938E8F4A192F3A200088EF38 /* OMNCalculationAmount.h */,
+				938E8F4B192F3A200088EF38 /* OMNCalculationAmount.m */,
+				931B2DF419BC83910071883C /* OMNOrder+tipButton.h */,
+				931B2DF519BC83910071883C /* OMNOrder+tipButton.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -1270,8 +1284,6 @@
 		938E8F49192F3A200088EF38 /* Tip */ = {
 			isa = PBXGroup;
 			children = (
-				938E8F4A192F3A200088EF38 /* OMNCalculationAmount.h */,
-				938E8F4B192F3A200088EF38 /* OMNCalculationAmount.m */,
 				938E8F4C192F3A200088EF38 /* OMNTip.h */,
 				938E8F4D192F3A200088EF38 /* OMNTip.m */,
 				931B15CC19B75BB900A774E4 /* OMNAmountPercentValue.h */,
@@ -1954,6 +1966,7 @@
 				930D8BAB1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
 				936BAD9A19A797030029873B /* OMNBorderedButton.m in Sources */,
 				9345AFC9199B7E1A00328F73 /* OMNRestaurantInfoItem.m in Sources */,
+				931B2DF219BC710C0071883C /* OMNOrder+network.m in Sources */,
 				93E2996F197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
 				9345AFB7199A2EC200328F73 /* OMNMailRUPayVC.m in Sources */,
 				9390D2D1196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
@@ -1976,6 +1989,7 @@
 				937822A41963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,
 				938E8F55192F3A200088EF38 /* OMNOrderItem.m in Sources */,
 				939DA162195405650063AB23 /* OMNAuthorizationVC.m in Sources */,
+				931B2DF619BC83910071883C /* OMNOrder+tipButton.m in Sources */,
 				930554FF1935DA7C00E6F4EC /* OMNCalculatorVC.m in Sources */,
 				931B15CE19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */,
 				932B185B19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
@@ -2102,6 +2116,7 @@
 				9389455D19B0531C00C37C82 /* OMNUtils.m in Sources */,
 				939F991919752BE90051822E /* OMNEditTableVC.m in Sources */,
 				932118131962D8A700183729 /* OMNProductsModel.m in Sources */,
+				931B2DF719BC83910071883C /* OMNOrder+tipButton.m in Sources */,
 				9321182D1962E16100183729 /* OMNProductDetailsVC.m in Sources */,
 				932118371962E88000183729 /* OMNTransitionFromProductToList.m in Sources */,
 				931BD3881941C04100F77AA7 /* OMNCalcaulcationTests.m in Sources */,
@@ -2129,6 +2144,7 @@
 				939F994019752D680051822E /* OMNBankCard.m in Sources */,
 				93E29970197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
 				939F992119752BE90051822E /* OMNLoginVC.m in Sources */,
+				931B2DF319BC710C0071883C /* OMNOrder+network.m in Sources */,
 				9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */,
 				939F994A197544820051822E /* OMNUserInfoItem.m in Sources */,
 				939FD05F1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
@@ -2265,6 +2281,11 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"MIXPANEL_DEBUG=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/**",

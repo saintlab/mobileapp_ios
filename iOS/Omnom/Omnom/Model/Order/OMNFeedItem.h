@@ -19,4 +19,7 @@
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
+- (void)logClickEvent;
+- (void)logViewEvent;
+
 @end

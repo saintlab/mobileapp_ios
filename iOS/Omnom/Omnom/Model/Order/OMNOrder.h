@@ -12,10 +12,28 @@
 #import "OMNBill.h"
 
 @class OMNOrder;
+@class OMNTipButton;
 
 typedef void(^OMNOrdersBlock)(NSArray *orders);
 typedef void(^OMNOrderBlock)(OMNOrder *order);
 typedef void(^OMNBillBlock)(OMNBill *bill);
+
+typedef NS_ENUM(NSInteger, TipType) {
+  kTipTypeDefault = 0,
+  kTipTypeCustom,
+  kTipTypeCustomPercent,
+  kTipTypeCustomAmount,
+};
+
+typedef NS_ENUM(NSInteger, SplitType) {
+  kSplitTypeNone = 0,
+  kSplitTypePercent,
+  kSplitTypeOrders,
+  kSplitTypeNumberOfGuersts,
+};
+
+inline NSString *stringFromTipType(TipType tipType);
+inline NSString *stringFromSplitType(SplitType splitType);
 
 @interface OMNOrder : NSObject
 
@@ -34,29 +52,28 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 
 @property (nonatomic, strong) NSArray *items;
 
-@property (nonatomic, strong, readonly) NSArray *tips;
+@property (nonatomic, strong, readonly) NSMutableArray *tips;
 @property (nonatomic, assign, readonly) long long tipsThreshold;
 
-@property (nonatomic, assign) long long toPayAmount;
-@property (nonatomic, assign) long long tipAmount;
 @property (nonatomic, assign) long long paid_amount;
 
 @property (nonatomic, strong) OMNBill *bill;
 
+@property (nonatomic, strong) OMNTip *customTip;
+@property (nonatomic, assign, readonly) long long expectedValue;
+@property (nonatomic, assign, readonly) long long totaAmountWithTips;
+@property (nonatomic, assign, readonly) long long tipAmount;
+@property (nonatomic, assign) long long enteredAmount;
+
+@property (nonatomic, assign) TipType tipType;
+@property (nonatomic, assign) SplitType splitType;
+
+@property (nonatomic, assign) NSInteger selectedTipIndex;
+
 - (instancetype)initWithJsonData:(id)jsonData;
-
-- (long long)total;
-
+- (BOOL)paymentValueIsTooHigh;
+- (long long)totalAmount;
 - (void)deselectAll;
-
 - (long long)selectedItemsTotal;
-
-/**
- https://github.com/saintlab/backend/tree/master/applications/omnom#create-restaurateur-order
- */
-- (void)createBill:(OMNBillBlock)completion failure:(void (^)(NSError *error))failureBlock;
-
-- (void)billCall:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock;
-- (void)billCallStop:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock;
 
 @end
