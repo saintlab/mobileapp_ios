@@ -11,6 +11,12 @@
 
 static NSDictionary *_config = nil;
 
+@interface AFHTTPRequestOperation (omn_mailRu)
+
+- (NSDictionary *)omn_errorResponse;
+
+@end
+
 @interface NSString (omn_mailRu)
 
 - (NSString *)omn_sha1;
@@ -132,9 +138,6 @@ static NSDictionary *_config = nil;
   __weak typeof(self)weakSelf = self;
   [self POST:@"card/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"\ncard/register>\n%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"\ncard/register>\n%@", responseObject);
-    
     if (responseObject[@"url"]) {
       
       [weakSelf checkRegisterForResponse:responseObject withCompletion:completionBlock];
@@ -147,10 +150,8 @@ static NSDictionary *_config = nil;
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    NSLog(@"\ncard/register>\n%@", error);
-    NSLog(@"\ncard/register>\n%@", operation.responseString);
-    completionBlock(nil, nil);
+
+    completionBlock([operation omn_errorResponse], nil);
     
   }];
   
@@ -162,7 +163,6 @@ static NSDictionary *_config = nil;
   NSString *url = response[@"url"];
   [self GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"checkRegisterForUrl>%@", responseObject);
     NSString *status = responseObject[@"status"];
     if ([status isEqualToString:@"OK_CONTINUE"]) {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -177,7 +177,7 @@ static NSDictionary *_config = nil;
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    completionBlock(response, nil);
+    completionBlock([operation omn_errorResponse], response[@"card_id"]);
     
   }];
   
@@ -202,29 +202,27 @@ static NSDictionary *_config = nil;
   
   __weak typeof(self)weakSelf = self;
   [self POST:@"card/verify" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    NSLog(@"\ncard/verify>\n%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"\ncard/verify>\n%@", responseObject);
-    if (responseObject[@"error"]) {
-      completionBlock(responseObject);
-    }
-    else {
-      
-      NSString *url = responseObject[@"url"];
-      if (NSNotFound == [url rangeOfString:@"Success=True"].location) {
-        completionBlock(nil);
-      }
-      else {
-        completionBlock(responseObject);
-      }
-      
-    }
+
+    completionBlock(responseObject);
+#warning card/verify
+//    if (responseObject[@"error"]) {
+//      completionBlock(responseObject);
+//    }
+//    else {
+//      
+//      NSString *url = responseObject[@"url"];
+//      if (NSNotFound == [url rangeOfString:@"Success=True"].location) {
+//        completionBlock(nil);
+//      }
+//      else {
+//        completionBlock(responseObject);
+//      }
+//      
+//    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"card/verify>%@", error);
-    NSLog(@"\ncard/verify>\n%@", operation.responseString);
-    completionBlock(nil);
+    completionBlock([operation omn_errorResponse]);
     
   }];
   
@@ -251,8 +249,7 @@ static NSDictionary *_config = nil;
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"\npollUrl:>\n%@", operation.responseString);
-    completionBlock(nil);
+    completionBlock([operation omn_errorResponse]);
     
   }];
   
@@ -291,9 +288,6 @@ static NSDictionary *_config = nil;
   __weak typeof(self)weakSelf = self;
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"\norder/payHTTPBody>\n%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"\norder/payresponse>\n%@", responseObject);
-    
     if (responseObject[@"url"]) {
       
       [weakSelf pollUrl:responseObject[@"url"] withCompletion:completionBlock];
@@ -307,10 +301,7 @@ static NSDictionary *_config = nil;
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"order/pay>%@", error);
-    NSLog(@"order/pay>%@", operation.responseString);
-
-    completionBlock(nil);
+    completionBlock([operation omn_errorResponse]);
     
   }];
   
@@ -332,16 +323,11 @@ static NSDictionary *_config = nil;
   
   [self POST:@"card/delete" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"card/delete>%@", responseObject);
-    NSLog(@"card/delete>%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
-    NSLog(@"card/delete>%@", operation.responseString);
     completionBlock(responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"card/delete>%@", error);
-    NSLog(@"card/delete>%@", operation.responseString);
-    completionBlock(nil);
+    completionBlock([operation omn_errorResponse]);
     
   }];
   
@@ -390,6 +376,19 @@ static NSDictionary *_config = nil;
 
   
   return signature;
+}
+
+@end
+
+@implementation AFHTTPRequestOperation (omn_mailRu)
+
+- (NSDictionary *)omn_errorResponse {
+  NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
+  parametrs[@"error"] = (self.error.localizedDescription) ? (self.error.localizedDescription) : (@"");
+  if (self.responseString) {
+    parametrs[@"response_string"] = self.responseString;
+  }
+  return parametrs;
 }
 
 @end

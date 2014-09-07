@@ -22,6 +22,7 @@
 #import "OMNLoadingCircleVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "UIImage+omn_helper.h"
+#import "OMNAnalitics.h"
 
 @interface OMNMailRUPayVC()
 <OMNAddBankCardVCDelegate,
@@ -220,6 +221,7 @@ OMNMailRUCardConfirmVCDelegate>
     }
     else {
       
+      [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_PAY" parametrs:response];
       [weakSelf mailRuDidFail];
       
     }

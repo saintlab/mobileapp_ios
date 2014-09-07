@@ -28,7 +28,7 @@
   paymentInfo.order_message = @"message";
   paymentInfo.extra.tip = self.tipAmount;
   paymentInfo.extra.restaurant_id = @"1";
-  paymentInfo.order_amount = @(self.enteredAmount/100.);
+  paymentInfo.order_amount = @(self.enteredAmountWithTips/100.);
   
   if (self.bill) {
     [paymentInfo omn_updateWithBill:self.bill];

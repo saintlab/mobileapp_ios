@@ -61,7 +61,7 @@ inline NSString *stringFromSplitType(SplitType splitType);
 
 @property (nonatomic, strong) OMNTip *customTip;
 @property (nonatomic, assign, readonly) long long expectedValue;
-@property (nonatomic, assign, readonly) long long totaAmountWithTips;
+@property (nonatomic, assign, readonly) long long enteredAmountWithTips;
 @property (nonatomic, assign, readonly) long long tipAmount;
 @property (nonatomic, assign) long long enteredAmount;
 

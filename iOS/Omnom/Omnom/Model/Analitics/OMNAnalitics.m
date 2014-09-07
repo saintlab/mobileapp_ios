@@ -102,10 +102,10 @@
   
   [_mixpanel.people increment:
    @{
-     @"amount" : @(order.enteredAmount),
-     @"tip_amount" : @(order.tipAmount),
-     @"total_amount" : @(order.totaAmountWithTips),
-     @"count" : @(1),
+     @"sum_amount" : @(order.enteredAmount),
+     @"sum_tip_amount" : @(order.tipAmount),
+     @"sum_total_amount" : @(order.enteredAmountWithTips),
+     @"number_of_payments" : @(1),
      }];
   
   double percent = 0.0f;
@@ -117,7 +117,7 @@
    @{
      @"amount" : @(order.enteredAmount),
      @"tip_amount" : @(order.tipAmount),
-     @"total_amount" : @(order.totaAmountWithTips),
+     @"total_amount" : @(order.enteredAmountWithTips),
      @"percent" : @(percent),
      @"tip_type" : stringFromTipType(order.tipType),
      @"split_type" : stringFromSplitType(order.splitType),

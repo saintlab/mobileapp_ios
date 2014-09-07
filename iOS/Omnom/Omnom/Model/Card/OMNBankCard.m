@@ -9,6 +9,7 @@
 #import "OMNBankCard.h"
 #import "OMNOperationManager.h"
 #import <OMNMailRuAcquiring.h>
+#import "OMNAnalitics.h"
 
 @interface OMNBankCard ()
 
@@ -124,6 +125,7 @@
       
     }
     else {
+      [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_DELETE" parametrs:response];
       weakSelf.deleting = NO;
       failureBlock(nil);
     }

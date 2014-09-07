@@ -163,7 +163,7 @@ NSString *stringFromSplitType(SplitType splitType) {
 
 - (NSInteger)selectedTipIndex {
   
-  __block NSInteger selectedTipIndex = -1;
+  __block NSInteger selectedTipIndex = 1;
   [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
     
     if (tip.selected) {
@@ -177,7 +177,7 @@ NSString *stringFromSplitType(SplitType splitType) {
   
 }
 
-- (long long)totaAmountWithTips {
+- (long long)enteredAmountWithTips {
   
   return (self.enteredAmount + self.tipAmount);
   

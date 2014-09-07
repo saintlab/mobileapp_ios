@@ -108,7 +108,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"VERIFY_PHONE_ERROR" operation:operation];
+    [[OMNAnalitics analitics] logEvent:@"USER_VERIFY_PHONE_ERROR" operation:operation];
     failureBlock(nil);
     
   }];

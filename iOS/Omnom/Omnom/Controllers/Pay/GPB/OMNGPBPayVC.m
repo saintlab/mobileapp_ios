@@ -101,7 +101,7 @@
 
   _bill = bill;
   __weak typeof(self)weakSelf = self;
-  [bill linkForAmount:_order.totaAmountWithTips tip:_order.tipAmount completion:^(NSString *url) {
+  [bill linkForAmount:_order.enteredAmountWithTips tip:_order.tipAmount completion:^(NSString *url) {
 
     if (url.length) {
       [weakSelf processCardPayment:url];

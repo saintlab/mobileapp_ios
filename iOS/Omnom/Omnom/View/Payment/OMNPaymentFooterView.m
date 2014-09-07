@@ -139,8 +139,8 @@
 
 - (void)updateToPayButton {
 
-  _payButton.enabled = (_order.totaAmountWithTips > 0) ? (YES) : (NO);
-  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_order.totaAmountWithTips]] forState:UIControlStateNormal];
+  _payButton.enabled = (_order.enteredAmountWithTips > 0) ? (YES) : (NO);
+  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_order.enteredAmountWithTips]] forState:UIControlStateNormal];
   
 }
 
