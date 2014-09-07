@@ -8,9 +8,9 @@
 
 #import "OMNUtils.h"
 
-//NSString * const kRubleSign = @"";
 NSString * const kRubleSign = @"\uf5fc";
 NSString * const kCommaString = @".";
+NSString * const kGroupingSeparator = @" ";
 
 @implementation OMNUtils
 
@@ -19,9 +19,11 @@ NSString * const kCommaString = @".";
   static NSNumberFormatter *currencyNumberFormatter = nil;
   if (nil == currencyNumberFormatter) {
     currencyNumberFormatter = [self commaNumberFormatter];
+    currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
     currencyNumberFormatter.currencySymbol = kRubleSign;
+    currencyNumberFormatter.currencyDecimalSeparator = kCommaString;
   }
-  
+  currencyNumberFormatter.minimumFractionDigits = (kop%100ll == 0) ? (0) : (2);
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
 }
 
@@ -29,13 +31,13 @@ NSString * const kCommaString = @".";
   NSNumberFormatter *commaNumberFormatter = [[NSNumberFormatter alloc] init];
   commaNumberFormatter.locale = [NSLocale currentLocale];
   commaNumberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"ru"];
-  commaNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
+  commaNumberFormatter.numberStyle = kCFNumberFormatterDecimalStyle;
   commaNumberFormatter.usesGroupingSeparator = YES;
+  commaNumberFormatter.decimalSeparator = kCommaString;
+  commaNumberFormatter.currencyGroupingSeparator = kGroupingSeparator;
+  commaNumberFormatter.maximumFractionDigits = 0;
   commaNumberFormatter.minimumFractionDigits = 0;
-  commaNumberFormatter.maximumFractionDigits = 2;
   commaNumberFormatter.currencySymbol = @"";
-  commaNumberFormatter.currencyDecimalSeparator = @".";
-  commaNumberFormatter.currencyGroupingSeparator = @" ";
   return commaNumberFormatter;
 }
 
@@ -53,7 +55,7 @@ NSString * const kCommaString = @".";
   if (nil == currencyNumberFormatter) {
     currencyNumberFormatter = [self commaNumberFormatter];
   }
-  
+  currencyNumberFormatter.minimumFractionDigits = (kop%100ll == 0) ? (0) : (2);
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
 }
 

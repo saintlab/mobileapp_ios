@@ -62,7 +62,8 @@
   
   OMNPaymentNotificationControl *control = [[OMNPaymentNotificationControl alloc] init];
   NSDictionary *user = info[@"user"];
-  NSString *title = [NSString stringWithFormat:NSLocalizedString(@"%@ оплатил %@ руб.", nil), user[@"name"], [OMNUtils commaStringFromKop:[info[@"amount"] longLongValue]]];
+  
+  NSString *title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено %@ руб.", nil), user[@"name"], [OMNUtils commaStringFromKop:[info[@"amount"] longLongValue]]];
   [control.closeButton setTitle:title forState:UIControlStateNormal];
   [window addSubview:control];
 }
