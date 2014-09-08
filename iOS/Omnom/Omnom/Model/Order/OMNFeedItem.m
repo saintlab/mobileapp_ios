@@ -27,13 +27,13 @@
 }
 
 - (void)logClickEvent {
-  [[OMNAnalitics analitics] logEvent:@"USER_CLICK_FEED_ITEM" parametrs:_jsonData];
+//  [[OMNAnalitics analitics] logEvent:@"USER_CLICK_FEED_ITEM" parametrs:_jsonData];
 }
 
 - (void)logViewEvent {
   if (!_viewEventLogged) {
     _viewEventLogged = YES;
-    [[OMNAnalitics analitics] logEvent:@"USER_VIEW_FEED_ITEM" parametrs:_jsonData];
+//    [[OMNAnalitics analitics] logEvent:@"promolist_view" parametrs:_jsonData];
   }
 }
 

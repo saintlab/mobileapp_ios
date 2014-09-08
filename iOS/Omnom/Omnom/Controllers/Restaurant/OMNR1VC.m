@@ -82,10 +82,6 @@
   [self socketConnect];
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return UIStatusBarStyleLightContent;
-}
-
 - (void)beginCircleAnimationIfNeeded {
 
   if (NO == _callWaiterButton.selected) {
@@ -191,8 +187,6 @@
 - (void)addActionsBoard {
   
   [self addActionBoardIfNeeded];
-
-
   _callWaiterButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] title:NSLocalizedString(@"Официант", nil)];
   
   NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Отменить", nil)];
@@ -224,19 +218,27 @@
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:50.0f]];
-  
   [self.view layoutIfNeeded];
-
+  
+  NSLog(@"%@", self.circleButton);
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self setNeedsStatusBarAppearanceUpdate];
+  NSLog(@"%@", self.circleButton);
+  [self.navigationController setNavigationBarHidden:NO animated:NO];
   [self.navigationItem setHidesBackButton:YES animated:animated];
-  [self.navigationController setNavigationBarHidden:NO];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  NSLog(@"%@", self.circleButton);
+  
+  [self beginCircleAnimationIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -244,14 +246,6 @@
   [self finishCircleAnimation];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  self.bottomViewConstraint.constant = 0.0f;
-  [UIView animateWithDuration:0.3 animations:^{
-    [self.view layoutIfNeeded];
-  }];
-  [self beginCircleAnimationIfNeeded];
-}
 
 - (void)callWaiterStop {
   

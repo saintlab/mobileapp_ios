@@ -31,6 +31,8 @@
   
   [super viewDidLoad];
   
+  [self setupCircle];
+  
   if (self.circleIcon) {
     [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
   }
@@ -45,6 +47,12 @@
   self.label.alpha = 0.0f;
 
   self.text = _text;
+  
+}
+
+- (void)setupCircle {
+  
+  
   
 }
 
@@ -92,13 +100,7 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   self.text = _text;
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  
-  
+  [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
 
 - (void)setFaded:(BOOL)faded {

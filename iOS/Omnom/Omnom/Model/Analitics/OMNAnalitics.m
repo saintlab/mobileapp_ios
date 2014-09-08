@@ -55,7 +55,7 @@
   }
   if (user.id) {
     [_mixpanel identify:user.id];
-    userInfo[@"id"] = user.id;
+    userInfo[@"ID"] = user.id;
   }
   if (user.email) {
     userInfo[@"email"] = user.email;
@@ -66,7 +66,9 @@
   if (user.birthDate) {
     userInfo[@"phone"] = user.birthDate;
   }
-  
+  if (user.created_at) {
+    userInfo[@"created"] = user.created_at;
+  }
   [_mixpanel.people set:userInfo];
   [_mixpanel registerSuperProperties:@{@"omn_user" : userInfo}];
 }
@@ -75,20 +77,24 @@
   
   NSMutableDictionary *properties = [NSMutableDictionary dictionary];
   if (visitor.restaurant.title) {
-    properties[@"name"] = visitor.restaurant.title;
+    properties[@"restaurant_name"] = visitor.restaurant.title;
   }
   if (visitor.beacon) {
-    properties[@"source"] = @"beacon";
+    properties[@"method_used"] = @"Bluetooth";
     properties[@"id"] = [visitor.beacon key];
   }
-  
-  [_mixpanel track:@"USER_DID_ENTER_RESTAURANT" properties:properties];
+  else {
+    properties[@"method_used"] = @"QR";
+  }
+  [_mixpanel track:@"restaurant_enter" properties:properties];
+  [_mixpanel.people set:@"last_visited" to:[NSDate date]];
+  [_mixpanel.people increment:@"total_visits" by:@(1)];
   
 }
 
 - (void)logRegister {
   
-  [_mixpanel track:@"USER_DID_REGISTER" properties:nil];
+  [_mixpanel track:@"user_registered" properties:nil];
   
 }
 
@@ -102,9 +108,9 @@
   
   [_mixpanel.people increment:
    @{
-     @"sum_amount" : @(order.enteredAmount),
-     @"sum_tip_amount" : @(order.tipAmount),
-     @"sum_total_amount" : @(order.enteredAmountWithTips),
+     @"bill_sum" : @(order.enteredAmount),
+     @"tips_sum" : @(order.tipAmount),
+     @"total_sum" : @(order.enteredAmountWithTips),
      @"number_of_payments" : @(1),
      }];
   
@@ -113,14 +119,14 @@
     percent = (double)order.tipAmount/order.enteredAmount;
   }
   
-  [_mixpanel track:@"USER_DID_PAY" properties:
+  [_mixpanel track:@"payment_success" properties:
    @{
-     @"amount" : @(order.enteredAmount),
-     @"tip_amount" : @(order.tipAmount),
+     @"bill_sum" : @(order.enteredAmount),
+     @"tips_sum" : @(order.tipAmount),
      @"total_amount" : @(order.enteredAmountWithTips),
      @"percent" : @(percent),
-     @"tip_type" : stringFromTipType(order.tipType),
-     @"split_type" : stringFromSplitType(order.splitType),
+     @"tips_way" : stringFromTipType(order.tipType),
+     @"split" : stringFromSplitType(order.splitType),
      }];
   
 }
@@ -131,11 +137,23 @@
   
 }
 
-- (void)logEvent:(NSString *)eventName operation:(AFHTTPRequestOperation *)operation {
+- (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse {
   
-  NSString *response = (operation.responseString) ? (operation.responseString) : (operation.error.localizedDescription);
-  response = (response.length) ? (response) : @"";
-  [_mixpanel track:eventName properties:@{@"response" : response}];
+  NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
+  parametrs[@"jsonRequest"] = (jsonRequest) ? (jsonRequest) : (@"");
+  parametrs[@"jsonResponse"] = (jsonResponse) ? (jsonResponse) : (@"");
+  [_mixpanel track:eventName properties:parametrs];
+  
+}
+
+- (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation {
+  
+  [_mixpanel track:eventName properties:
+  @{
+    @"jsonRequest" : (jsonRequest) ? (jsonRequest) : (@""),
+    @"error" : (responseOperation.error.localizedDescription) ? (responseOperation.error.localizedDescription) : (@""),
+    @"responseString" : (responseOperation.responseString) ? (responseOperation.responseString) : (@""),
+    }];
   
 }
 

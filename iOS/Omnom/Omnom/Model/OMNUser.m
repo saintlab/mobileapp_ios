@@ -21,6 +21,7 @@
     self.email = [data[@"email"] description];
     self.phone = [data[@"phone"] description];
     self.status = [data[@"status"] description];
+    self.created_at = [data[@"created_at"] description];
 //    self.birthDate = data[@"birth_date"];
 
     self.phone_validated = [data[@"phone_validated"] boolValue];
@@ -89,7 +90,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-    [[OMNAnalitics analitics] logEvent:@"USER_REGISTER_ERROR" operation:operation];
+    [[OMNAnalitics analitics] logEvent:@"USER_REGISTER_ERROR" jsonRequest:parameters responseOperation:operation];
     
   }];
   
@@ -108,7 +109,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"USER_VERIFY_PHONE_ERROR" operation:operation];
+    [[OMNAnalitics analitics] logEvent:@"USER_VERIFY_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock(nil);
     
   }];
@@ -132,7 +133,7 @@
 
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"CONFIRM_PHONE_ERROR" operation:operation];
+    [[OMNAnalitics analitics] logEvent:@"CONFIRM_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock(error);
     
   }];
@@ -226,7 +227,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"AUTHORIZATION_USER_ERROR" operation:operation];
+    [[OMNAnalitics analitics] logEvent:@"AUTHORIZATION_USER_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock(nil);
     
   }];
@@ -257,7 +258,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"GET_USER_ERROR" operation:operation];
+    [[OMNAnalitics analitics] logEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock(error);
     
   }];

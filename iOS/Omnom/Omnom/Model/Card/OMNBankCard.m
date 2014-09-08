@@ -112,13 +112,18 @@
       NSString *path = [NSString stringWithFormat:@"/cards/%@", self.id];
       [[OMNOperationManager sharedManager] DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSLog(@"delete/cards/>%@", responseObject);
-        completionBlock();
+        if ([responseObject[@"status"] isEqualToString:@"success"]) {
+          [[OMNAnalitics analitics] logEvent:@"card_deleted" parametrs:@{@"card_id" : self.external_card_id}];
+          completionBlock();
+        }
+        else {
+          [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path jsonResponse:responseObject];
+          failureBlock(nil);
+        }
         
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSLog(@"delete/cards/>%@", error);
-        NSLog(@"delete/cards/>%@", operation.responseString);
+        [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path responseOperation:operation];
         weakSelf.deleting = NO;
         failureBlock(error);
       }];

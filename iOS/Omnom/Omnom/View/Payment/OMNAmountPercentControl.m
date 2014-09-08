@@ -232,11 +232,11 @@ UITextFieldDelegate>
 
 - (void)setPercentValue:(double)percentValue {
   _percentTF.text = [NSString stringWithFormat:@"%.0f%%", percentValue];
-  _amountPercentValue.percent = percentValue;
+  _amountPercentValue.percent = percentValue = MAX(0.0, percentValue);
   
-  if (percentValue < [_percentPicker numberOfRowsInComponent:0]) {
+  if (_amountPercentValue.percent < [_percentPicker numberOfRowsInComponent:0]) {
     
-    [_percentPicker selectRow:(NSInteger)round(percentValue) inComponent:0 animated:NO];
+    [_percentPicker selectRow:(NSInteger)round(_amountPercentValue.percent) inComponent:0 animated:NO];
     
   }
   else {

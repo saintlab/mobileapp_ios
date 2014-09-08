@@ -13,16 +13,16 @@ inline NSString *stringFromTipType(TipType tipType) {
   NSString *string = @"";
   switch (tipType) {
     case kTipTypeCustom: {
-      string = @"kTipTypeCustom";
+      string = @"bill_screen";
     } break;
     case kTipTypeCustomAmount: {
-      string = @"kTipTypeCustomAmount";
+      string = @"manual_sum";
     } break;
     case kTipTypeCustomPercent: {
-      string = @"kTipTypeCustomPercent";
+      string = @"manual_percentages";
     } break;
     default: {
-      string = @"kTipTypeDefault";
+      string = @"default";
     } break;
   }
   return string;
@@ -32,16 +32,16 @@ inline NSString *stringFromSplitType(SplitType splitType) {
   NSString *string = @"";
   switch (splitType) {
     case kSplitTypePercent: {
-      string = @"kSplitTypePercent";
+      string = @"by_percentages";
     } break;
     case kSplitTypeNumberOfGuersts: {
-      string = @"kSplitTypeNumberOfGuersts";
+      string = @"by_guests";
     } break;
     case kSplitTypeOrders: {
-      string = @"kSplitTypeOrders";
+      string = @"by_positions";
     } break;
     default: {
-      string = @"kSplitTypeNone";
+      string = @"wasnt_used";
     } break;
   }
   return string;
@@ -149,7 +149,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 }
 
 - (long long)expectedValue {
-  long long expectedValue = self.totalAmount - self.paid_amount;
+  long long expectedValue = MAX(0ll, self.totalAmount - self.paid_amount);
   return expectedValue;
 }
 

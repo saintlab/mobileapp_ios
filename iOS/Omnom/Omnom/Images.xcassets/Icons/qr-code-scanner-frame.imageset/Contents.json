@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "promo_pic.png"
+      "filename" : "qr-code-scanner-frame.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "promo_pic@2x.png"
+      "filename" : "qr-code-scanner-frame@2x.png"
     }
   ],
   "info" : {

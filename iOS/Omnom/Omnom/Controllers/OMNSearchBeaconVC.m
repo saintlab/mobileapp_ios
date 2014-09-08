@@ -19,6 +19,7 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNDemoRestaurantVC.h"
 #import "OMNDenyCLPermissionVC.h"
+#import "OMNAnalitics.h"
 
 @interface OMNSearchBeaconVC ()
 <OMNBeaconSearchManagerDelegate,
@@ -68,7 +69,6 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
   _cancelButton.hidden = NO;
 }
 
@@ -243,6 +243,7 @@ OMNDemoRestaurantVCDelegate>
   didFailOmnomVC.faded = YES;
   didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
   didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  [[OMNAnalitics analitics] logEvent:@"no_server_connection" parametrs:nil];
   
   __weak typeof(self)weakSelf = self;
   didFailOmnomVC.buttonInfo =
@@ -296,6 +297,7 @@ OMNDemoRestaurantVCDelegate>
       
     case kSearchManagerRequestTurnBLEOn: {
       
+      [[OMNAnalitics analitics] logEvent:@"bluetooth_turned_off" parametrs:nil];
       OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] initWithParent:self];
       [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
       
@@ -316,6 +318,7 @@ OMNDemoRestaurantVCDelegate>
     case kSearchManagerRequestCoreLocationRestrictedPermission: {
       
       NSLog(@"kSearchManagerRequestCoreLocationRestrictedPermission");
+      [[OMNAnalitics analitics] logEvent:@"no_geolocation_permission" parametrs:nil];
       OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
       [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
       
@@ -323,6 +326,7 @@ OMNDemoRestaurantVCDelegate>
     case kSearchManagerRequestCoreLocationDeniedPermission: {
       
       NSLog(@"kSearchManagerRequestCoreLocationDeniedPermission");
+      [[OMNAnalitics analitics] logEvent:@"no_geolocation_permission" parametrs:nil];
       __weak typeof(self)weakSelf = self;
       [self showDenyLocationPermissionDescriptionWithBlock:^{
 
@@ -335,6 +339,7 @@ OMNDemoRestaurantVCDelegate>
     case kSearchManagerRequestDeviceFaceUpPosition: {
       
       NSLog(@"determineFaceUpPosition");
+      [[OMNAnalitics analitics] logEvent:@"low_signal" parametrs:nil];
       [self determineFaceUpPosition];
       
     } break;
@@ -355,6 +360,7 @@ OMNDemoRestaurantVCDelegate>
     } break;
     case kSearchManagerOmnomServerUnavaliable: {
       
+      [[OMNAnalitics analitics] logEvent:@"no_server_connection" parametrs:nil];
       [self showNoInternetErrorWithText:NSLocalizedString(@"нет доступа к серверам omnom.", nil)];
       
     } break;

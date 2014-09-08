@@ -37,6 +37,8 @@
   self.tableView.tableFooterView = [[UIView alloc] init];
   self.tableView.dataSource = _dataSource;
   self.tableView.allowsMultipleSelection = YES;
+  self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -87,6 +89,9 @@
     [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
   }
+  
+  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
   
 }
 

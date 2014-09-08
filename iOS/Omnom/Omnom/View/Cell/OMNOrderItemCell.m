@@ -35,8 +35,9 @@
   
   OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
   
-  self.selectionStyle = UITableViewCellSelectionStyleBlue;
+  self.selectionStyle = UITableViewCellSelectionStyleDefault;
   self.selectedBackgroundView = [[UIView alloc] init];
+  self.selectedBackgroundView.layer.masksToBounds = YES;
   self.selectedBackgroundView.backgroundColor = ([UIColor colorWithRed:2/255. green:193/255. blue:100/255. alpha:1]);
   
   _nameLabel = [[UILabel alloc] init];
@@ -70,6 +71,20 @@
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[priceLabel]|" options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLabel]-(labelsOffset)-[priceLabel]-|" options:0 metrics:metrics views:views]];
   
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+  [super setHighlighted:highlighted animated:animated];
+  if (highlighted) {
+    // Recover backgroundColor of subviews.
+  }
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+  [super setSelected:selected animated:animated];
+  if (selected) {
+    // Recover backgroundColor of subviews.
+  }
 }
 
 - (void)setOrderItem:(OMNOrderItem *)orderItem {

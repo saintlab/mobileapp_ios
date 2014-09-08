@@ -8,6 +8,7 @@
 
 #import "OMNVisitorManager.h"
 #import "OMNOperationManager.h"
+#import "OMNAnalitics.h"
 
 NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeaconManagerNotificationLaunchKey";
 
@@ -81,18 +82,18 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   
   [[OMNOperationManager sharedManager] PUT:@"/qr/decode" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"\nqr/decode>\n%@", responseObject);
     if (responseObject[@"restaurant"]) {
       OMNVisitor *visitor = [[OMNVisitor alloc] initWithJsonData:responseObject];
       successBlock(visitor);
     }
     else {
+      [[OMNAnalitics analitics] logEvent:@"ERROR_QR_DECODE" jsonRequest:parameters jsonResponse:responseObject];
       failureBlock(nil);
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"\nqr/decode>\n%@", operation.responseString);
+    [[OMNAnalitics analitics] logEvent:@"ERROR_QR_DECODE" jsonRequest:parameters responseOperation:operation];
     failureBlock(nil);
     
   }];
@@ -156,10 +157,9 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   __weak typeof(self)weakSelf = self;
   [[OMNOperationManager sharedManager] PUT:@"ibeacons/decode" parameters:jsonBeacons success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    if ([responseObject isKindOfClass:[NSDictionary class]] &&
-        responseObject[@"errors"]) {
+    if ([responseObject isKindOfClass:[NSDictionary class]]) {
       
-      NSLog(@"ibeacons/decode>%@", responseObject);
+      [[OMNAnalitics analitics] logEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
       failure(nil);
       
     }
@@ -174,7 +174,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"ibeacons/decode>%@", operation.responseString);
+    [[OMNAnalitics analitics] logEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
     failure(error);
     
   }];
@@ -247,12 +247,12 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     localNotification.alertBody = at_entrance.greeting;
     localNotification.alertAction = at_entrance.open_action;
     localNotification.soundName = kPushSoundName;
-    
+    [[OMNAnalitics analitics] logEvent:@"push_sent" parametrs:@{@"text" : (at_entrance.greeting ? (at_entrance.greeting) : (@""))}];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
-    if ([localNotification respondsToSelector:@selector(category)]) {
-      [localNotification performSelector:@selector(setCategory:) withObject:@"incomingCall"];
-    }
+//    if ([localNotification respondsToSelector:@selector(category)]) {
+//      [localNotification performSelector:@selector(setCategory:) withObject:@"incomingCall"];
+//    }
 #pragma clang diagnostic pop
 
     localNotification.userInfo =

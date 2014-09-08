@@ -11,7 +11,7 @@
 @class OMNVisitor;
 @class OMNOrder;
 
-//https://trello.com/c/KirovnYP/32--
+//https://docs.google.com/document/d/1qCgjmjynrECxBm5tY934WzkvPo_3AoRpC0bpz-nfVc8/edit
 @interface OMNAnalitics : NSObject
 
 + (instancetype)analitics;
@@ -24,6 +24,7 @@
 - (void)logPayment:(OMNOrder *)order;
 
 - (void)logEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
-- (void)logEvent:(NSString *)eventName operation:(AFHTTPRequestOperation *)operation;
+- (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse;
+- (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation;
 
 @end

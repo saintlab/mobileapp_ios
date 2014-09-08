@@ -30,6 +30,8 @@
   [toViewController.backgroundView addSubview:fromImageSnapshot];
   [containerView addSubview:toViewController.view];
   [containerView addSubview:fromImageSnapshot];
+
+  [toViewController.view layoutIfNeeded];
   
   [UIView animateWithDuration:duration animations:^{
     

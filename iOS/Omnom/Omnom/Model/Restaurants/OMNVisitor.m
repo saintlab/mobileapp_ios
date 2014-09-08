@@ -8,6 +8,7 @@
 
 #import "OMNVisitor.h"
 #import "OMNOperationManager.h"
+#import "OMNAnalitics.h"
 
 @interface NSArray (omn_restaurants)
 
@@ -85,25 +86,29 @@
     ordersBlock(orders);
     return;
   }
+  
   __weak typeof(self)weakSelf = self;
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant.id, self.table.id];
-  
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
-    [operation.responseData writeToFile:[@"~/Documents/1.json" stringByExpandingTildeInPath] atomically:YES];
-    
     if ([response isKindOfClass:[NSArray class]]) {
+      
       NSArray *ordersData = response;
       NSArray *orders = [ordersData decodeOrdersWithError:nil];
       weakSelf.orders = orders;
       ordersBlock(orders);
+      
     }
     else {
+      
+      [[OMNAnalitics analitics] logEvent:@"ERROR_GET_ORDERS" jsonRequest:path jsonResponse:response];
       errorBlock(nil);
+      
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
     errorBlock(error);
     
   }];

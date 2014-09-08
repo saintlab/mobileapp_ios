@@ -13,6 +13,7 @@
 #import "OMNSocketManager.h"
 #import "UIImage+omn_helper.h"
 #import <SDWebImageManager.h>
+#import "OMNAnalitics.h"
 
 @interface NSData (omn_restaurants)
 
@@ -233,11 +234,23 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/advertisement", self.id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
-    OMNRestaurantInfo *restaurantInfo = [[OMNRestaurantInfo alloc] initWithJsonData:response];
-    completionBlock(restaurantInfo);
+    if (response &&
+        [response isKindOfClass:[NSDictionary class]] &&
+        response[@"title"]) {
+      
+      OMNRestaurantInfo *restaurantInfo = [[OMNRestaurantInfo alloc] initWithJsonData:response];
+      completionBlock(restaurantInfo);
+      
+    }
+    else {
+      
+      [[OMNAnalitics analitics] logEvent:@"ERROR_RESTAURANT_ADVERTISMENT" jsonRequest:path jsonResponse:response];
+      
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logEvent:@"ERROR_RESTAURANT_ADVERTISMENT" jsonRequest:path responseOperation:operation];
     errorBlock(error);
     
   }];

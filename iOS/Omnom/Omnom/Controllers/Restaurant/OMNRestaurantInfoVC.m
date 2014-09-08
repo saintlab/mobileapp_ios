@@ -15,6 +15,7 @@
 #import "OMNVisitor.h"
 #import "OMNToolbarButton.h"
 #import "OMNFeedItem.h"
+#import "OMNAnalitics.h"
 
 @interface OMNRestaurantInfoVC ()
 <OMNProductDetailsVCDelegate,
@@ -95,6 +96,9 @@ UIScrollViewDelegate>
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self updateNavigationBarLayer];
+  
+  [[OMNAnalitics analitics] logEvent:@"promolist_view" parametrs:nil];
+  
 }
 
 
