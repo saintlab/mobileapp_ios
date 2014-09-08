@@ -35,6 +35,7 @@
   UIImageView *_iv3;
   NSTimer *_circleAnimationTimer;
   
+  UIButton *_placeholderCircleButton;
   OMNRestaurantMediator *_restaurantMediator;
 }
 
@@ -220,13 +221,10 @@
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:50.0f]];
   [self.view layoutIfNeeded];
   
-  NSLog(@"%@", self.circleButton);
-  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  NSLog(@"%@", self.circleButton);
   [self.navigationController setNavigationBarHidden:NO animated:NO];
   [self.navigationItem setHidesBackButton:YES animated:animated];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
@@ -236,8 +234,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  NSLog(@"%@", self.circleButton);
-  
   [self beginCircleAnimationIfNeeded];
 }
 
@@ -261,11 +257,14 @@
 
 - (void)callWaiterDidStart {
   
-  [self beginCircleAnimationIfNeeded];
+  _placeholderCircleButton = [[UIButton alloc] initWithFrame:self.circleButton.frame];
+  [_placeholderCircleButton setImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"] forState:UIControlStateNormal];
+  [_placeholderCircleButton setBackgroundImage:[self.circleButton backgroundImageForState:UIControlStateNormal] forState:UIControlStateNormal];
+  _placeholderCircleButton.userInteractionEnabled = NO;
+  [self.circleButton.superview addSubview:_placeholderCircleButton];
   
   _callWaiterButton.selected = YES;
   [_callWaiterButton sizeToFit];
-  [self.circleButton setImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"] forState:UIControlStateNormal];
   [self.navigationController popToViewController:self animated:YES];
   
 }
@@ -274,16 +273,11 @@
   
   [self finishCircleAnimation];
 
-  UIButton *placeholderCircleButton = [[UIButton alloc] initWithFrame:self.circleButton.frame];
-  [placeholderCircleButton setImage:[self.circleButton imageForState:UIControlStateNormal] forState:UIControlStateNormal];
-  [placeholderCircleButton setBackgroundImage:[self.circleButton backgroundImageForState:UIControlStateNormal] forState:UIControlStateNormal];
-  [self.circleButton.superview addSubview:placeholderCircleButton];
-  [self.circleButton setImage:_restaurant.logo forState:UIControlStateNormal];
-  
   [UIView animateWithDuration:0.3 animations:^{
-    placeholderCircleButton.alpha = 0.0f;
+    _placeholderCircleButton.alpha = 0.0f;
   } completion:^(BOOL finished) {
-    [placeholderCircleButton removeFromSuperview];
+    [_placeholderCircleButton removeFromSuperview];
+    _placeholderCircleButton = nil;
   }];
   
   _callWaiterButton.selected = NO;

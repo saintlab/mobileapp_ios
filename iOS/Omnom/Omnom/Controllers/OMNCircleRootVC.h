@@ -10,8 +10,8 @@
 
 @interface OMNCircleRootVC : OMNBackgroundVC
 
-@property (weak, nonatomic) IBOutlet UILabel *label;
-@property (weak, nonatomic) IBOutlet UIButton *circleButton;
+@property (strong, nonatomic) IBOutlet UILabel *label;
+@property (strong, nonatomic) IBOutlet UIButton *circleButton;
 @property (weak, nonatomic) IBOutlet UIView *foregroundView;
 @property (nonatomic, assign) BOOL faded;
 

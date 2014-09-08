@@ -18,7 +18,7 @@
 }
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
-  self = [super initWithNibName:@"OMNCircleRootVC" bundle:nil];
+  self = [super init];
   if (self) {
     _text = @"";
     self.circleBackground = parent.circleBackground;
@@ -52,8 +52,36 @@
 
 - (void)setupCircle {
   
+  _label = [[UILabel alloc] init];
+  _label.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_label];
   
+  _circleButton = [[UIButton alloc] init];
+  _circleButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_circleButton];
   
+  NSDictionary *views =
+  @{
+    @"label" : _label,
+    @"circleButton" : _circleButton,
+    };
+  
+  NSDictionary *metrics =
+  @{
+    @"circleSize" : @(200.0f),
+    @"bottomOffset" : @(60.0f),
+    
+    };
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[circleButton(circleSize)]-[label]-(bottomOffset)-|" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[circleButton(circleSize)]" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=20)-[label]-(>=20)-|" options:0 metrics:metrics views:views]];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_circleButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_circleButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:0.35f constant:0.0f]];
+  
+  [self.view layoutIfNeeded];
 }
 
 - (void)setText:(NSString *)newText {
@@ -81,7 +109,6 @@
   
   [UIView animateWithDuration:0.3 animations:^{
     self.label.alpha = 1.0f;
-    [self.label layoutIfNeeded];
     [self.view layoutIfNeeded];
   }];
   

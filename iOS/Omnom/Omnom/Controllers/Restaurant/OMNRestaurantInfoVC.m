@@ -53,11 +53,16 @@ UIScrollViewDelegate>
   self.navigationItem.titleView = closeButton;
   
   _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  _spinner.hidesWhenStopped = YES;
+  
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
   
   if (NO == _visitor.restaurant.is_demo) {
+    
+    [[OMNAnalitics analitics] logEvent:@"promolist_view" parametrs:nil];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
+    
   }
 
   [self.navigationItem setHidesBackButton:YES animated:NO];
@@ -66,23 +71,16 @@ UIScrollViewDelegate>
   [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"DefaultCell"];
   [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
 
-  __weak typeof(self)weakSelf = self;
-  [_spinner startAnimating];
-  [_visitor.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
-    
-    [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
-    
-  } error:^(NSError *error) {
-    
-  }];
-
-  
 }
 
 - (void)didFinishLoadingRestaurantInfo:(OMNRestaurantInfo *)restaurantInfo {
   [_spinner stopAnimating];
   _restaurantInfo = restaurantInfo;
-  [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)] withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.tableView reloadData];
+}
+
+- (void)didFail {
+  [_spinner stopAnimating];
 }
 
 - (void)userProfileTap {
@@ -97,7 +95,20 @@ UIScrollViewDelegate>
   [super viewWillAppear:animated];
   [self updateNavigationBarLayer];
   
-  [[OMNAnalitics analitics] logEvent:@"promolist_view" parametrs:nil];
+  if (!_restaurantInfo) {
+    __weak typeof(self)weakSelf = self;
+    [_spinner startAnimating];
+    [_visitor.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
+      
+      [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
+      
+    } error:^(NSError *error) {
+      
+      [weakSelf didFail];
+      
+    }];
+  }
+  
   
 }
 

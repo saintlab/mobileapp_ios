@@ -16,6 +16,7 @@
 #import "OMNBorderedButton.h"
 #import "OMNUtils.h"
 #import "OMNAnalitics.h"
+#import "OMNOperationManager.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate>
@@ -117,17 +118,12 @@
 
   dispatch_async(dispatch_get_main_queue(), ^{
     
-    UIView *keyboardView = [[[[[UIApplication sharedApplication] windows] lastObject] subviews] firstObject];
+    UIView *keyboardView = [[[UIApplication sharedApplication] windows] lastObject];
     [_commaButton setFrame:CGRectMake(0, keyboardView.frame.size.height - 53, 106, 53)];
     [keyboardView addSubview:_commaButton];
     [keyboardView bringSubviewToFront:_commaButton];
 
   });
-  
-  CGFloat animationDuration = [n.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
-  [UIView animateWithDuration:animationDuration animations:^{
-    [self.view layoutIfNeeded];
-  }];
   
 }
 
@@ -236,6 +232,9 @@
   NSString *status = response[@"status"];
   if ([status isEqualToString:@"OK_FINISH"] &&
       cardId.length) {
+    
+    [[OMNOperationManager sharedManager] POST:@"/report/mail/register" parameters:@{@"card_id" : cardId} success:nil failure:nil];
+    
     self.card_id = cardId;
   }
   else {

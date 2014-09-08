@@ -243,7 +243,7 @@ OMNDemoRestaurantVCDelegate>
   didFailOmnomVC.faded = YES;
   didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
   didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
-  [[OMNAnalitics analitics] logEvent:@"no_server_connection" parametrs:nil];
+  [[OMNAnalitics analitics] logEvent:@"no_table" parametrs:nil];
   
   __weak typeof(self)weakSelf = self;
   didFailOmnomVC.buttonInfo =

@@ -23,7 +23,7 @@
 #import "UINavigationController+omn_replace.h"
 #import "UIImage+omn_helper.h"
 #import "OMNAnalitics.h"
-
+#import "OMNOperationManager.h"
 @interface OMNMailRUPayVC()
 <OMNAddBankCardVCDelegate,
 OMNMailRUCardConfirmVCDelegate>
@@ -154,7 +154,7 @@ OMNMailRUCardConfirmVCDelegate>
   else {
     _loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
     _loadingCircleVC.circleIcon = [UIImage imageNamed:@"flying_credit_card_icon"];
-    _loadingCircleVC.estimateAnimationDuration = 10.0;
+    _loadingCircleVC.estimateAnimationDuration = 15.0;
     UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"000000")];
     _loadingCircleVC.circleBackground = circleBackground;
     __weak typeof(self)weakSelf = self;
@@ -216,6 +216,7 @@ OMNMailRUCardConfirmVCDelegate>
     if ([status isEqualToString:@"OK_FINISH"] &&
         [order_status isEqualToString:@"PAID"]) {
 
+      [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
       [weakSelf mailRuDidFinish];
       
     }

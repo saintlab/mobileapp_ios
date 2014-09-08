@@ -38,13 +38,12 @@
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [toViewController.view layoutIfNeeded];
-  [containerView addSubview:fromImageSnapshot];
   [containerView addSubview:toViewController.view];
-  toViewController.view.alpha = 0.0f;
+  [containerView addSubview:fromImageSnapshot];
   
   [UIView animateWithDuration:duration animations:^{
     
-    toViewController.view.alpha = 1.0f;
+    fromImageSnapshot.alpha = 0.0f;
     
   } completion:^(BOOL finished) {
     

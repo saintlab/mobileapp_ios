@@ -354,21 +354,21 @@ UITextFieldDelegate>
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
+  
   if ([textField isEqual:_amountTF]) {
-    if (nil == _commaButton) {
-      _commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      _commaButton.frame = CGRectMake(0, 163, 106, 53);
-      _commaButton.adjustsImageWhenHighlighted = NO;
-      _commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
-      [_commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
-      [_commaButton setTitle:kCommaString forState:UIControlStateNormal];
-      [_commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-      [_commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    }
+    
+    _commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _commaButton.frame = CGRectMake(0, 163, 106, 53);
+    _commaButton.adjustsImageWhenHighlighted = NO;
+    _commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
+    [_commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
+    [_commaButton setTitle:kCommaString forState:UIControlStateNormal];
+    [_commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      UIView *keyboardView = [[[[[UIApplication sharedApplication] windows] lastObject] subviews] firstObject];
+      UIView *keyboardView = [[[UIApplication sharedApplication] windows] lastObject];
       [_commaButton setFrame:CGRectMake(0, keyboardView.frame.size.height - 53, 106, 53)];
       [keyboardView addSubview:_commaButton];
       [keyboardView bringSubviewToFront:_commaButton];
@@ -379,9 +379,8 @@ UITextFieldDelegate>
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
   
-  if ([textField isEqual:_amountTF]) {
-    [_commaButton removeFromSuperview];
-  }
+  [_commaButton removeFromSuperview];
+  _commaButton = nil;
   
 }
 

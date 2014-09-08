@@ -12,5 +12,5 @@
   
   "MailRuConfigName" : "OMNMailRu_prod",
   
-  "UseBackgroundNotifications" : "false"
+  "UseBackgroundNotifications" : "true"
 }

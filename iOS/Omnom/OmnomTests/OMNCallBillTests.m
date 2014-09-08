@@ -10,6 +10,7 @@
 #import <Kiwi.h>
 #import "OMNVisitorManager.h"
 #import "OMNAuthorisation.h"
+#import "OMNOrder+network.h"
 
 SPEC_BEGIN(OMNDemoCallBillTests)
 

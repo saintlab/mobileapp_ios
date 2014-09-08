@@ -100,7 +100,7 @@
 
 - (void)logLogin {
   
-  [_mixpanel track:@"USER_DID_LOGIN" properties:nil];
+  [_mixpanel track:@"user_login" properties:nil];
   
 }
 

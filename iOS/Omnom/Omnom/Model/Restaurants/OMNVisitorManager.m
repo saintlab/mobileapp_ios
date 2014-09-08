@@ -222,8 +222,14 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     return NO;
   }
   
-#warning readyForPush
-  return YES;
+  if (NO == [OMNConstants useBackgroundNotifications]) {
+    return NO;
+  }
+  
+  if (nil == visitor.id) {
+    return NO;
+  }
+  
   BOOL readyForPush = NO;
   OMNVisitor *savedVisitor = _visitors[visitor.id];
   if (nil == savedVisitor ||
