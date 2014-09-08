@@ -58,7 +58,6 @@ inline NSString *stringFromSplitType(SplitType splitType) {
   if (self) {
     _data = jsonData;
     self.id = [jsonData[@"id"] description];
-    self.amount = [jsonData[@"amount"] longLongValue];
     self.created = jsonData[@"created"];
     self.Description = jsonData[@"description"];
     self.notes = jsonData[@"notes"];
@@ -102,6 +101,13 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     
   }
   return self;
+}
+
+- (void)updateWithOrder:(OMNOrder *)order {
+  
+  self.items = order.items;
+  self.paid_amount = order.paid_amount;
+  
 }
 
 - (void)deselectAll {

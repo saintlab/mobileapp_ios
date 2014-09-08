@@ -39,7 +39,6 @@ extern NSString *stringFromSplitType(SplitType splitType);
 
 @property (nonatomic, copy) NSString *id;
 
-@property (nonatomic, assign) long long amount;
 @property (nonatomic, copy) NSString *created;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, copy) NSString *notes;
@@ -71,6 +70,7 @@ extern NSString *stringFromSplitType(SplitType splitType);
 @property (nonatomic, assign) NSInteger selectedTipIndex;
 
 - (instancetype)initWithJsonData:(id)jsonData;
+- (void)updateWithOrder:(OMNOrder *)order;
 - (BOOL)paymentValueIsTooHigh;
 - (long long)totalAmount;
 - (void)deselectAll;

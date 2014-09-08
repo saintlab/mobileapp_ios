@@ -36,6 +36,11 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub scan", nil) style:UIBarButtonItemStylePlain target:self action:@selector(stubScan)];
   }
   
+  UIImageView *scanFrame = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qr-code-scanner-frame"]];
+  scanFrame.center = self.view.center;
+  scanFrame.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+  [self.view addSubview:scanFrame];
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -33,6 +33,12 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  if (CGRectGetHeight([UIScreen mainScreen].bounds) <= 480.0f) {
+    self.logoIconsIV.hidden = YES;
+    _logoIV.hidden = YES;
+    self.bgIV.image = [UIImage imageNamed:@"LaunchImage-700"];
+  }
+  
   [self.navigationController setNavigationBarHidden:YES animated:NO];
   
 }

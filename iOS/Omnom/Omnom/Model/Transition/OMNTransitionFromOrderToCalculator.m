@@ -75,7 +75,6 @@
     frame.origin = destinationOffset;
     tableViewSnapshot.frame = frame;
     
-    
     CGFloat height = MAX(0.0f, toViewController.splitTableView.frame.size.height - toViewController.splitTableView.contentSize.height);
     
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];

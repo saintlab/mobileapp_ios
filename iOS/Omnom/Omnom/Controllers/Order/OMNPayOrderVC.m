@@ -145,7 +145,9 @@ OMNMailRUPayVCDelegate>
 
   [super viewDidAppear:animated];
   _beginSplitAnimation = NO;
-  [self handleKeyboardEvents];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -179,7 +181,13 @@ OMNMailRUPayVCDelegate>
 
 - (void)didPay:(NSNotification *)n {
   
-  [OMNPaymentNotificationControl showWithInfo:n.userInfo];
+  NSDictionary *info = n.userInfo;
+  
+  OMNOrder *order = [[OMNOrder alloc] initWithJsonData:info[@"order"]];
+  [_order updateWithOrder:order];
+  _paymentView.order = _order;
+  [self.tableView reloadData];
+  [OMNPaymentNotificationControl showWithInfo:info];
 
 }
 
@@ -300,12 +308,6 @@ OMNMailRUPayVCDelegate>
   
   [self.navigationController popToViewController:self animated:YES];
   
-}
-
-- (void)handleKeyboardEvents {
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)keyboardWillShow:(NSNotification *)n {

@@ -49,6 +49,10 @@ OMNMailRUCardConfirmVCDelegate>
   BOOL _addBankCardRequested;
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (instancetype)initWithOrder:(OMNOrder *)order {
   self = [super init];
   if (self) {
