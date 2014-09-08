@@ -32,8 +32,8 @@ typedef NS_ENUM(NSInteger, SplitType) {
   kSplitTypeNumberOfGuersts,
 };
 
-inline NSString *stringFromTipType(TipType tipType);
-inline NSString *stringFromSplitType(SplitType splitType);
+extern NSString *stringFromTipType(TipType tipType);
+extern NSString *stringFromSplitType(SplitType splitType);
 
 @interface OMNOrder : NSObject
 

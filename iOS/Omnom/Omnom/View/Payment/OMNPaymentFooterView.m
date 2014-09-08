@@ -132,8 +132,8 @@
   
   _order = order;
   [_tipsSelector setOrder:order];
-  [self updateView];
   [self updatePercentAmountControl];
+  [self updateView];
   
 }
 

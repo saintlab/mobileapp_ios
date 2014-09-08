@@ -8,7 +8,7 @@
 
 #import "OMNOrder.h"
 
-NSString *stringFromTipType(TipType tipType) {
+inline NSString *stringFromTipType(TipType tipType) {
   
   NSString *string = @"";
   switch (tipType) {
@@ -28,7 +28,7 @@ NSString *stringFromTipType(TipType tipType) {
   return string;
 }
 
-NSString *stringFromSplitType(SplitType splitType) {
+inline NSString *stringFromSplitType(SplitType splitType) {
   NSString *string = @"";
   switch (splitType) {
     case kSplitTypePercent: {
@@ -97,6 +97,8 @@ NSString *stringFromSplitType(SplitType splitType) {
     _tips = tips;
     
     _enteredAmount = self.expectedValue;
+    
+    self.selectedTipIndex = 1;
     
   }
   return self;
