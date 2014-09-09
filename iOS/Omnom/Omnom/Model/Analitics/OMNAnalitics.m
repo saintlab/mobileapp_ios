@@ -114,6 +114,7 @@
      @"total_sum" : @(order.enteredAmountWithTips),
      @"number_of_payments" : @(1),
      }];
+  [_mixpanel.people set:@"last_payment" to:[NSDate date]];
   
   double percent = 0.0f;
   if (order.enteredAmount) {

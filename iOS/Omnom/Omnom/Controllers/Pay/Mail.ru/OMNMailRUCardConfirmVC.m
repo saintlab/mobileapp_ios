@@ -137,7 +137,7 @@
   
   _bankCardInfo.card_id = card_id;
   if (_card_id) {
-    _textLabel.text = NSLocalizedString(@"С вашей карты списана случайная сумма до 50р. Введите сумму списания в это поле, чтобы привязать карту к вашему аккаунту", nil);
+    _textLabel.text = NSLocalizedString(@"С вашей карты списана и будет возвращена случайная сумма до 50р. Введите сумму списания в это поле,\nчтобы привязать карту к вашему аккаунту", nil);
     _cardHoldValueTF.textField.enabled = YES;
     [_cardHoldValueTF.textField becomeFirstResponder];
     [self addDoneButton];
