@@ -44,6 +44,7 @@
   
   self.circleBackground = _circleBackground;
   self.label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:25.0f];
+  self.label.numberOfLines = 0;
   self.label.alpha = 0.0f;
 
   self.text = _text;

@@ -172,7 +172,7 @@ OMNMailRUCardConfirmVCDelegate>
 - (void)createOrderPaymentInfo {
   
   [_loadingCircleVC.loaderView setLoaderColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
-  [_loadingCircleVC.loaderView startAnimating:10.0];
+  [_loadingCircleVC.loaderView startAnimating:15.0];
 
   OMNBankCard *bankCard = [_bankCardsModel selectedCard];
   OMNMailRuCardInfo *cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:bankCard.external_card_id];

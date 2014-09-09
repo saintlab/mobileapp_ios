@@ -19,6 +19,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.view.backgroundColor = [UIColor whiteColor];
+  
   _backgroundView = [[UIImageView alloc] initWithFrame:self.view.bounds];
   _backgroundView.contentMode = UIViewContentModeBottom;
   [self.view insertSubview:_backgroundView atIndex:0];
@@ -26,7 +28,6 @@
   if (self.backgroundImage) {
     _backgroundView.image = self.backgroundImage;
   }
-  
 
   if (self.buttonInfo.count) {
     

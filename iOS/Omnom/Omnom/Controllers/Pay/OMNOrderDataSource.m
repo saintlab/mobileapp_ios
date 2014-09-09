@@ -36,7 +36,7 @@
       heightForRow = 45.0f;
     } break;
     case 1: {
-      heightForRow = (_order.paid_amount > 0) ? (70.0f) : (45.0f);
+      heightForRow = (_order.paid_net > 0) ? (70.0f) : (45.0f);
     } break;
   }
   return heightForRow;

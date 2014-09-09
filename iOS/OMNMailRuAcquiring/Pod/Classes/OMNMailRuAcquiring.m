@@ -287,8 +287,9 @@ static NSDictionary *_config = nil;
   
   __weak typeof(self)weakSelf = self;
   [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    if (responseObject[@"url"]) {
+
+    if (responseObject[@"url"] &&
+        nil == responseObject[@"error"]) {
       
       [weakSelf pollUrl:responseObject[@"url"] withCompletion:completionBlock];
       

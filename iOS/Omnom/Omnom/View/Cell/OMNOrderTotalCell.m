@@ -70,8 +70,8 @@
 - (void)setOrder:(OMNOrder *)order {
 
   _totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Итого: %@", nil), [OMNUtils commaStringFromKop:order.totalAmount]];
-  if (order.paid_amount > 0) {
-    _payLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Оплачено: %@", nil), [OMNUtils commaStringFromKop:order.paid_amount]];
+  if (order.paid_net > 0) {
+    _payLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Оплачено: %@", nil), [OMNUtils commaStringFromKop:order.paid_net]];
   }
   else {
     _payLabel.text = nil;

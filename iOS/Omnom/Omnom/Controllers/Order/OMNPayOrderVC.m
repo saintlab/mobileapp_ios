@@ -349,6 +349,18 @@ OMNMailRUPayVCDelegate>
   
 }
 
+-(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+  
+  return [[UIView alloc] initWithFrame:CGRectZero];
+  
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+  
+  return 0.01f;
+  
+}
+
 #pragma mark - OMNMailRUPayVCDelegate
 
 - (void)mailRUPayVCDidFinish:(OMNMailRUPayVC *)mailRUPayVC {
