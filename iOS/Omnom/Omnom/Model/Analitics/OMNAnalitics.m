@@ -86,6 +86,7 @@
   else {
     properties[@"method_used"] = @"QR";
   }
+  properties[@"timestamp"] = [NSDate date];
   [_mixpanel track:@"restaurant_enter" properties:properties];
   [_mixpanel.people set:@"last_visited" to:[NSDate date]];
   [_mixpanel.people increment:@"total_visits" by:@(1)];
@@ -127,13 +128,16 @@
      @"percent" : @(percent),
      @"tips_way" : stringFromTipType(order.tipType),
      @"split" : stringFromSplitType(order.splitType),
+     @"timestamp" : [NSDate date],
      }];
   
 }
 
 - (void)logEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
   
-  [_mixpanel track:eventName properties:parametrs];
+  NSMutableDictionary *newParamentrs = [NSMutableDictionary dictionaryWithDictionary:parametrs];
+  newParamentrs[@"timestamp"] = [NSDate date];
+  [_mixpanel track:eventName properties:newParamentrs];
   
 }
 
@@ -142,6 +146,7 @@
   NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
   parametrs[@"jsonRequest"] = (jsonRequest) ? (jsonRequest) : (@"");
   parametrs[@"jsonResponse"] = (jsonResponse) ? (jsonResponse) : (@"");
+  parametrs[@"timestamp"] = [NSDate date];
   [_mixpanel track:eventName properties:parametrs];
   
 }
@@ -150,6 +155,7 @@
   
   [_mixpanel track:eventName properties:
   @{
+    @"timestamp" : [NSDate date],
     @"jsonRequest" : (jsonRequest) ? (jsonRequest) : (@""),
     @"error" : (responseOperation.error.localizedDescription) ? (responseOperation.error.localizedDescription) : (@""),
     @"responseString" : (responseOperation.responseString) ? (responseOperation.responseString) : (@""),

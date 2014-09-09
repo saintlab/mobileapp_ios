@@ -1637,7 +1637,7 @@
 				931E7849198674AC00BBFE94 /* build increment script */,
 				93676DE718D1E4FC00FC55F1 /* Resources */,
 				4F9249CB50BE4BCAA2D125E0 /* Copy Pods Resources */,
-				9388A0A919AF61EB00A246E5 /* Crashlytics.framework */,
+				932112ED19BE1AE20074CF2A /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -1881,21 +1881,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\nif [ \"${CONFIGURATION}\" = \"Ad-Hoc\" ]; then\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"\nfi\n";
+			shellScript = "#!/bin/bash\nif [[ \"${CONFIGURATION}\" = \"Ad-Hoc\" || \"${CONFIGURATION}\" = \"AppStore\" ]]; then\n\n{\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\";\necho $buildNumber\n}\n\nfi\n";
 		};
-		9388A0A919AF61EB00A246E5 /* Crashlytics.framework */ = {
+		932112ED19BE1AE20074CF2A /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = Crashlytics.framework;
+			name = Crashlytics;
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Ad-Hoc\" ]; then\n${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run 1ea87b52b1d0946ed506dcc3bd5b586f422bf03a 24581047190989dd3b32483cd77da4a030cb7d2ed58171c008823f918c327652\nfi\n";
+			shellScript = "#!/bin/bash\n${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run 1ea87b52b1d0946ed506dcc3bd5b586f422bf03a 24581047190989dd3b32483cd77da4a030cb7d2ed58171c008823f918c327652;";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2191,6 +2191,84 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		932112EA19BE10AD0074CF2A /* AppStore */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "23BAD38B-74FE-4C55-8297-2E7FD79F21F8";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = AppStore;
+		};
+		932112EB19BE10AD0074CF2A /* AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 698DEBA8EA22478F8304C88F /* Pods-omnom.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/**",
+				);
+				INFOPLIST_FILE = "omnom/omnom-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = omnom;
+				PROVISIONING_PROFILE = "0421280b-ccf5-46b0-ae61-8db1a0102f7f";
+				REZ_SEARCH_PATHS = "$(inherited)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = AppStore;
+		};
+		932112EC19BE10AD0074CF2A /* AppStore */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DE9EF230F754C178C5DEFEA /* Pods-omnomTests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/omnom.app/omnom";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
+				INFOPLIST_FILE = "omnomTests/omnomTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				PRODUCT_NAME = omnomTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = AppStore;
+		};
 		93676E1C18D1E4FC00FC55F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2542,6 +2620,7 @@
 				93676E1C18D1E4FC00FC55F1 /* Debug */,
 				93B368A819A5C00400B6E6CB /* Test */,
 				93676E1D18D1E4FC00FC55F1 /* Release */,
+				932112EA19BE10AD0074CF2A /* AppStore */,
 				93F21B8B19B5EA3800D5F78A /* Ad-Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2553,6 +2632,7 @@
 				93676E1F18D1E4FC00FC55F1 /* Debug */,
 				93B368A919A5C00400B6E6CB /* Test */,
 				93676E2018D1E4FC00FC55F1 /* Release */,
+				932112EB19BE10AD0074CF2A /* AppStore */,
 				93F21B8C19B5EA3800D5F78A /* Ad-Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
@@ -2564,6 +2644,7 @@
 				93676E2218D1E4FC00FC55F1 /* Debug */,
 				93B368AA19A5C00400B6E6CB /* Test */,
 				93676E2318D1E4FC00FC55F1 /* Release */,
+				932112EC19BE10AD0074CF2A /* AppStore */,
 				93F21B8D19B5EA3800D5F78A /* Ad-Hoc */,
 			);
 			defaultConfigurationIsVisible = 0;
