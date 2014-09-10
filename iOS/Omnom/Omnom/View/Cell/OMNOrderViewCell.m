@@ -43,6 +43,9 @@
     
     [_orderDataSource registerCellsForTableView:self.tableView];
 
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    self.layer.shouldRasterize = YES;
+    
   }
   return self;
 }

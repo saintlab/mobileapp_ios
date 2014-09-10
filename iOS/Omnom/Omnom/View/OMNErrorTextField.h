@@ -13,6 +13,7 @@
 @property (nonatomic, strong, readonly) UITextField *textField;
 
 - (instancetype)initWithWidth:(CGFloat)width;
-- (void)setError:(NSString *)text animated:(BOOL)animated;
+- (void)setError:(NSString *)text;
+- (void)setAttributedError:(NSAttributedString *)attributedString;
 
 @end

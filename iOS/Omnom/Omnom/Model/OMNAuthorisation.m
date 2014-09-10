@@ -217,10 +217,9 @@ NSString * const kTokenServiceName = @"token";
   else {
     
     NSString *message = self[@"error"][@"message"];
-    NSLog(@"decodeToken:Error>%@", message);
     if (message) {
       NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
-                                           code:0
+                                           code:[self[@"error"][@"code"] integerValue]
                                        userInfo:@{NSLocalizedDescriptionKey : message}];
       failureBlock(error);
     }

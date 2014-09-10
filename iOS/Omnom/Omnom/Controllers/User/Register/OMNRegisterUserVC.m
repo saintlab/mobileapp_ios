@@ -192,12 +192,12 @@ UITextFieldDelegate>
   
   if ([[NSDate date] timeIntervalSinceDate:_datePicker.date] > 18 * 365 * 24 * 60 * 60) {
     [self updateBirthDate];
-    [_birthdayTF setError:nil animated:YES];
+    [_birthdayTF setError:nil];
     [self.view endEditing:YES];
   }
   else {
     
-    [_birthdayTF setError:NSLocalizedString(@"Слишком мало лет =(", nil) animated:YES];
+    [_birthdayTF setError:NSLocalizedString(@"Слишком мало лет =(", nil)];
     
   }
   
@@ -255,24 +255,24 @@ UITextFieldDelegate>
 
 - (void)createUserTap {
   
-  [_emailTF setError:nil animated:NO];
-  [_phoneTF setError:nil animated:NO];
-  [_nameTF setError:nil animated:NO];
-  [_birthdayTF setError:nil animated:NO];
+  [_emailTF setError:nil];
+  [_phoneTF setError:nil];
+  [_nameTF setError:nil];
+  [_birthdayTF setError:nil];
   
   BOOL hasErrors = NO;
   if (0 == _emailTF.textField.text.length) {
-    [_emailTF setError:NSLocalizedString(@"Вы забыли ввести e-mail", nil) animated:NO];
+    [_emailTF setError:NSLocalizedString(@"Вы забыли ввести e-mail", nil)];
     hasErrors = YES;
   }
   
   if (0 == _phoneTF.textField.text.length) {
-    [_phoneTF setError:NSLocalizedString(@"Вы забыли ввести номер телефона", nil) animated:NO];
+    [_phoneTF setError:NSLocalizedString(@"Вы забыли ввести номер телефона", nil)];
     hasErrors = YES;
   }
   
   if (0 == _nameTF.textField.text.length) {
-    [_nameTF setError:NSLocalizedString(@"Вы забыли ввести имя", nil) animated:NO];
+    [_nameTF setError:NSLocalizedString(@"Вы забыли ввести имя", nil)];
     hasErrors = YES;
   }
   

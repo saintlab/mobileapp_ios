@@ -93,6 +93,8 @@
 		9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */; };
 		9345AFDA199E0ED200328F73 /* OMNCardBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */; };
 		9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */; };
+		9351677119BFF7460071DA57 /* OMNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351677019BFF7460071DA57 /* OMNImageManager.m */; };
+		9351677219BFF7460071DA57 /* OMNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351677019BFF7460071DA57 /* OMNImageManager.m */; };
 		93535EFF198246F50084C3E7 /* OMNBackgroundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535EFD198246F50084C3E7 /* OMNBackgroundVC.m */; };
 		93535F00198246F50084C3E7 /* OMNBackgroundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535EFD198246F50084C3E7 /* OMNBackgroundVC.m */; };
 		93535F0E19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535F0D19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m */; };
@@ -463,6 +465,8 @@
 		9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNToolbarButton.m; sourceTree = "<group>"; };
 		9345AFD8199E0ED200328F73 /* OMNCardBrandView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardBrandView.h; sourceTree = "<group>"; };
 		9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardBrandView.m; sourceTree = "<group>"; };
+		9351676F19BFF7460071DA57 /* OMNImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNImageManager.h; sourceTree = "<group>"; };
+		9351677019BFF7460071DA57 /* OMNImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNImageManager.m; sourceTree = "<group>"; };
 		93535EFC198246F50084C3E7 /* OMNBackgroundVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBackgroundVC.h; sourceTree = "<group>"; };
 		93535EFD198246F50084C3E7 /* OMNBackgroundVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBackgroundVC.m; sourceTree = "<group>"; };
 		93535F0C19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantToSearchBeaconTransition.h; sourceTree = "<group>"; };
@@ -1204,6 +1208,8 @@
 				938E8F49192F3A200088EF38 /* Tip */,
 				9389455A19B0531C00C37C82 /* OMNUtils.h */,
 				9389455B19B0531C00C37C82 /* OMNUtils.m */,
+				9351676F19BFF7460071DA57 /* OMNImageManager.h */,
+				9351677019BFF7460071DA57 /* OMNImageManager.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1918,6 +1924,7 @@
 				932118161962DA2800183729 /* OMNStubProductCell.m in Sources */,
 				9389456419B0622900C37C82 /* OMNPushText.m in Sources */,
 				9307C5731937022800408519 /* OMNOrderItemCell.m in Sources */,
+				9351677119BFF7460071DA57 /* OMNImageManager.m in Sources */,
 				937A37331980F68200EF5C31 /* OMNLoaderView.m in Sources */,
 				93B9048D19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
 				93E29989197CE0FD00051B04 /* OMNSearchBeaconVC.m in Sources */,
@@ -2137,6 +2144,7 @@
 				939F994C197544820051822E /* OMNUserInfoModel.m in Sources */,
 				939F994019752D680051822E /* OMNBankCard.m in Sources */,
 				93E29970197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
+				9351677219BFF7460071DA57 /* OMNImageManager.m in Sources */,
 				939F992119752BE90051822E /* OMNLoginVC.m in Sources */,
 				931B2DF319BC710C0071883C /* OMNOrder+network.m in Sources */,
 				9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */,

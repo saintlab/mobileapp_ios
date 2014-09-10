@@ -95,18 +95,22 @@
 }
 
 - (void)editingChanged {
-  [self setError:nil animated:NO];
+  [self setError:nil];
 }
 
 - (BOOL)becomeFirstResponder {
   return [_textField becomeFirstResponder];
 }
 
-- (void)setError:(NSString *)text animated:(BOOL)animated {
+- (void)setError:(NSString *)text {
   
   _errorLabel.text = text;
   [self layoutIfNeeded];
   [self updateColorView];
+  
+}
+
+- (void)setAttributedError:(NSAttributedString *)attributedString {
   
 }
 

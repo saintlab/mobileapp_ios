@@ -12,8 +12,8 @@
 #import "NSString+omn_color.h"
 #import "OMNSocketManager.h"
 #import "UIImage+omn_helper.h"
-#import <SDWebImageManager.h>
 #import "OMNAnalitics.h"
+#import "OMNImageManager.h"
 
 @interface NSData (omn_restaurants)
 
@@ -195,32 +195,22 @@
   return [NSString stringWithFormat:@"%@, %@", _title, _id];
 }
 
-- (void)loadImageWithUrlString:(NSString *)urlString imageBlock:(OMNImageBlock)imageBlock {
-  
-  [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:urlString] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
-    
-    imageBlock(image);
-    
-  }];
-  
-}
-
 - (void)loadLogo:(OMNImageBlock)imageBlock {
   
   __weak typeof(self)weakSelf = self;
-  [self loadImageWithUrlString:self.logoUrl imageBlock:^(UIImage *image) {
+  [[OMNImageManager manager] downloadImageWithURL:self.logoUrl completion:^(UIImage *image) {
     
     weakSelf.logo = image;
     imageBlock(image);
     
   }];
-  
+
 }
 
 - (void)loadBackground:(OMNImageBlock)imageBlock {
   
   __weak typeof(self)weakSelf = self;
-  [self loadImageWithUrlString:self.background_imageUrl imageBlock:^(UIImage *image) {
+  [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl completion:^(UIImage *image) {
     
     weakSelf.background = image;
     imageBlock(image);

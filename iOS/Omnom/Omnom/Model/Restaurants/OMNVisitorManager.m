@@ -167,6 +167,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
       
       NSLog(@"ibeacons/decode>%lu", (unsigned long)beacons.count);
       NSArray *visitors = [responseObject omn_visitors];
+      
+      if (0 == visitors.count) {
+        [[OMNAnalitics analitics] logEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
+      }
+      
       [weakSelf addVisitors:visitors];
       success(visitors);
       

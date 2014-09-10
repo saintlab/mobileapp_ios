@@ -81,6 +81,7 @@
   
   [self addActionsBoard];
   [self socketConnect];
+  
 }
 
 - (void)beginCircleAnimationIfNeeded {

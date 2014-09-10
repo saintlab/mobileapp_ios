@@ -95,6 +95,9 @@
       
       NSArray *ordersData = response;
       NSArray *orders = [ordersData decodeOrdersWithError:nil];
+      if (0 == orders.count) {
+        [[OMNAnalitics analitics] logEvent:@"NO_ORDERS" jsonRequest:path jsonResponse:response];
+      }
       weakSelf.orders = orders;
       ordersBlock(orders);
       
@@ -146,7 +149,7 @@
     
     OMNOrder *order = [[OMNOrder alloc] initWithJsonData:orderData];
     [orders addObject:order];
-    
+
   }
   
   return [orders copy];

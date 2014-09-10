@@ -179,7 +179,7 @@
     
     [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_VERIFY" parametrs:response];
 
-    [_cardHoldValueTF setError:errorText animated:YES];
+    [_cardHoldValueTF setError:errorText];
     
   }
   else {
@@ -193,7 +193,7 @@
 
 - (void)registerCard {
 
-  [_cardHoldValueTF setError:nil animated:YES];
+  [_cardHoldValueTF setError:nil];
 #warning register card stub
   NSDictionary *cardInfo =
 //  @{
@@ -248,7 +248,7 @@
     [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_REGISTER" parametrs:response];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"repeat_icon_small"] style:UIBarButtonItemStylePlain target:self action:@selector(registerCard)];
-    [_cardHoldValueTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil) animated:YES];
+    [_cardHoldValueTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil)];
   }
 
 }

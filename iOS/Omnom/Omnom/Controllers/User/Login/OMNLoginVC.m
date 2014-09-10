@@ -145,11 +145,18 @@
 
 - (void)processLoginError:(NSError *)error {
   [self setNextButtonLoading:NO];
-  if (error) {
-    [_loginTF setError:error.localizedDescription animated:NO];
+  //no such user error code
+  if (101 == error.code) {
+    
+    [_loginTF setError:error.localizedDescription];
+    
+//    [_loginTF setAttributedError:<#(NSAttributedString *)#>]
+  }
+  else if (error) {
+    [_loginTF setError:error.localizedDescription];
   }
   else {
-    [_loginTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil) animated:NO];
+    [_loginTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil)];
   }
   
 }

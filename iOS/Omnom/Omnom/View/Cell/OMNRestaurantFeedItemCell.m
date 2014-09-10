@@ -9,7 +9,7 @@
 #import "OMNRestaurantFeedItemCell.h"
 #import <UIImageView+AFNetworking.h>
 #import "OMNFeedItem.h"
-#import <SDWebImageManager.h>
+#import "OMNImageManager.h"
 
 @implementation OMNRestaurantFeedItemCell {
   OMNFeedItem *_feedItem;
@@ -69,8 +69,9 @@
   _iconView.image = feedItem.image;
   
   if (nil == _feedItem.image) {
+    
     [_spinner startAnimating];
-    [[SDWebImageManager sharedManager] downloadImageWithURL:[NSURL URLWithString:feedItem.imageURL] options:0 progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+    [[OMNImageManager manager] downloadImageWithURL:feedItem.imageURL completion:^(UIImage *image) {
       
       feedItem.image = image;
       
