@@ -21,6 +21,7 @@
 #import "OMNVisitor.h"
 #import "OMNRestaurantMediator.h"
 #import "OMNLightBackgroundButton.h"
+#import "OMNImageManager.h"
 
 @interface OMNR1VC ()
 
@@ -40,6 +41,11 @@
 }
 
 - (void)dealloc {
+  @try {
+    [_restaurant removeObserver:self forKeyPath:NSStringFromSelector(@selector(background))];
+  }
+  @catch (NSException *exception) {
+  }
   [[OMNSocketManager manager] disconnect];
 }
 
@@ -81,6 +87,15 @@
   
   [self addActionsBoard];
   [self socketConnect];
+
+  __weak typeof(self)weakSelf = self;
+  [_restaurant loadBackgroundBlurred:NO completion:^(UIImage *image) {
+    
+    if (image) {
+      [weakSelf setBackgroundImage:image animated:YES];
+    }
+    
+  }];
   
 }
 

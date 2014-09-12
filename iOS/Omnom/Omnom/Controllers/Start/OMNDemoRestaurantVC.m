@@ -84,7 +84,7 @@
   __weak typeof(self)weakSelf = self;
   [self setLogo:logo withColor:restaurantBackgroundColor completion:^{
     
-    [restaurant loadBackground:^(UIImage *image) {
+    [restaurant loadBackgroundBlurred:YES completion:^(UIImage *image) {
       
       [weakSelf finishLoading:^{
         

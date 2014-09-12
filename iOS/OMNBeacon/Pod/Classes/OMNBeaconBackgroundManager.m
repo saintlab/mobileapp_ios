@@ -23,7 +23,8 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   BOOL _monitoring;
 }
 
-@property (nonatomic, strong) CLBeaconRegion *backgroundBeaconRegion;
+@property (nonatomic, strong) NSArray *backgroundBeaconRegions;
+@property (nonatomic, strong) NSArray *deprecatedBeaconRegions;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
@@ -52,10 +53,12 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
       [[NSUserDefaults standardUserDefaults] setObject:device_id forKey:@"device_id"];
       [[NSUserDefaults standardUserDefaults] synchronize];
     }
+
+    NSMutableArray *backgroundBeaconRegions = [NSMutableArray array];
+    OMNBeaconUUID *beaconUUID = [OMNBeacon beaconUUID];
     
-    self.backgroundBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:[OMNBeacon defaultUUID]] identifier:device_id];
-    self.backgroundBeaconRegion.notifyOnEntry = YES;
-    self.backgroundBeaconRegion.notifyOnExit = YES;
+    _backgroundBeaconRegions = [[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:device_id];
+    _deprecatedBeaconRegions = [[OMNBeacon beaconUUID] deprecatedBeaconsRegionsWithIdentifier:device_id];
     
     [self startBeaconRegionMonitoring];
   }
@@ -125,8 +128,24 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     return;
   }
   
+  [_deprecatedBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+    
+    if ([self.locationManager.monitoredRegions containsObject:beaconRegion]) {
+      [self.locationManager stopMonitoringForRegion:beaconRegion];
+    }
+    
+  }];
+  
+  
   _monitoring = YES;
-  [self.locationManager startMonitoringForRegion:self.backgroundBeaconRegion];
+  
+  [_backgroundBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+    
+    if (NO == [self.locationManager.monitoredRegions containsObject:beaconRegion]) {
+      [self.locationManager startMonitoringForRegion:beaconRegion];
+    }
+    
+  }];
   
 }
 
@@ -166,16 +185,31 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
   if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
     _monitoring = NO;
-    [self.locationManager stopMonitoringForRegion:self.backgroundBeaconRegion];
+    
+    [_backgroundBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+      
+      if ([self.locationManager.monitoredRegions containsObject:beaconRegion]) {
+        [self.locationManager stopMonitoringForRegion:beaconRegion];
+      }
+      
+    }];
+    
+    [_deprecatedBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+      
+      if ([self.locationManager.monitoredRegions containsObject:beaconRegion]) {
+        [self.locationManager stopMonitoringForRegion:beaconRegion];
+      }
+      
+    }];
     
   }
   
 }
 
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
-  
+
   // check if we found exactly our region
-  if (NO == [self.backgroundBeaconRegion isEqual:region]) {
+  if (NO == [self.backgroundBeaconRegions containsObject:region]) {
     return;
   }
   

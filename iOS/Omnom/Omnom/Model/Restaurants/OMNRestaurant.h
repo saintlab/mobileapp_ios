@@ -49,6 +49,6 @@ typedef void(^OMNImageBlock)(UIImage *image);
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock;
 
 - (void)loadLogo:(OMNImageBlock)imageBlock;
-- (void)loadBackground:(OMNImageBlock)imageBlock;
+- (void)loadBackgroundBlurred:(BOOL)blurred completion:(OMNImageBlock)imageBlock;
 
 @end

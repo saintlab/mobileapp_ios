@@ -18,8 +18,13 @@ extern NSString * const OMNSocketIOBillCallDoneNotification;
 + (instancetype)manager;
 
 - (void)connectWithToken:(NSString *)token;
+- (void)connectWithToken:(NSString *)token completion:(dispatch_block_t)completionBlock;
 - (void)disconnect;
 - (void)leave:(NSString *)roomId;
 - (void)join:(NSString *)roomId;
+
+- (void)subscribe:(NSString *)event block:(void (^)(id data))block;
+- (void)unsubscribe:(NSString *)event;
+- (void)echo:(NSString *)message;
 
 @end

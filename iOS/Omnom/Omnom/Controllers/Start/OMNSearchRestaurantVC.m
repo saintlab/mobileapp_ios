@@ -119,7 +119,7 @@
   __weak typeof(self)weakSelf = self;
   [_loadingCircleVC setLogo:logo withColor:restaurantBackgroundColor completion:^{
     
-    [visitor.restaurant loadBackground:^(UIImage *image) {
+    [visitor.restaurant loadBackgroundBlurred:YES completion:^(UIImage *image) {
       
       [weakBeaconSearch finishLoading:^{
         

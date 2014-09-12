@@ -8,6 +8,7 @@
 
 #import "OMNImageManager.h"
 #import <SDWebImageManager.h>
+#import "UIImage+ImageEffects.h"
 
 @interface OMNImageManager ()
 <SDWebImageManagerDelegate>
@@ -40,6 +41,10 @@
   return self;
 }
 
+- (void)removeImageForUrl:(NSURL *)url {
+  [_imageManager.imageCache removeImageForKey:[_imageManager cacheKeyForURL:url]];
+}
+
 - (void)downloadImageWithURL:(NSString *)urlString completion:(void (^)(UIImage *image))completionBlock {
   
   NSURL *imageUrl = [NSURL URLWithString:urlString];
@@ -54,8 +59,9 @@
       
       SDWebImageOptions options = 0;
       if ([response expectedContentLength] != [weakSelf cachedImageSizeForUrl:imageUrl]) {
-        options = SDWebImageRefreshCached;
+        [weakSelf removeImageForUrl:imageUrl];
       }
+      
       [weakSelf startDownloadImageWithURL:imageUrl options:options completion:completionBlock];
       
     }];
@@ -67,6 +73,37 @@
     
   }
 
+}
+
+- (void)downloadBlurredImageWithURL:(NSString *)urlString expectedSize:(CGSize)expectedSize completion:(void (^)(UIImage *image))completionBlock {
+  
+  NSURL *smallImageUrl = [NSURL URLWithString:[urlString stringByAppendingString:@"?w=50"]];
+  
+  [self startDownloadImageWithURL:smallImageUrl options:0 completion:^(UIImage *image) {
+    
+    CGRect drawFrame = (CGRect){CGPointZero, expectedSize};
+    UIGraphicsBeginImageContextWithOptions(expectedSize, YES, 0.0);
+    [image drawInRect:drawFrame];
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIImage *finalImage = [scaledImage applyLightEffect];
+    completionBlock(finalImage);
+    
+  }];
+  
+}
+
+- (void)getImageSizeWithURL:(NSURL *)url comletionBlock:(void (^)(long long size))comletionBlock {
+  
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+  [request setHTTPMethod:@"HEAD"];
+  request.timeoutInterval = 5.0;
+  [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue new] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+    
+    comletionBlock([response expectedContentLength]);
+    
+  }];
+  
 }
 
 - (void)startDownloadImageWithURL:(NSURL *)imageUrl options:(SDWebImageOptions)options completion:(void (^)(UIImage *image))completionBlock {

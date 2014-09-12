@@ -207,16 +207,22 @@
 
 }
 
-- (void)loadBackground:(OMNImageBlock)imageBlock {
+- (void)loadBackgroundBlurred:(BOOL)blurred completion:(OMNImageBlock)imageBlock {
   
   __weak typeof(self)weakSelf = self;
-  [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl completion:^(UIImage *image) {
-    
+  
+  void(^imageB)(UIImage *image) = ^(UIImage *image) {
     weakSelf.background = image;
     imageBlock(image);
-    
-  }];
+  };
   
+  if (blurred) {
+    [[OMNImageManager manager] downloadBlurredImageWithURL:self.background_imageUrl expectedSize:CGSizeMake(320.0f, 568.0f) completion:imageB];
+  }
+  else {
+    [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl completion:imageB];
+  }
+
 }
 
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock {

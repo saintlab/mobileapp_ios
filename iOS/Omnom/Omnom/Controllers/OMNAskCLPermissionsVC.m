@@ -29,7 +29,8 @@
   if (self) {
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     self.text = NSLocalizedString(@"Необходимо разрешение на использование службы геолокации", nil);
-    _beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:[OMNBeacon defaultUUID]] identifier:@"ask_permission_identifier"];
+    
+    _beaconRegion = [[[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:@"ask_permission_identifier"] firstObject];
     __weak typeof(self)weakSelf = self;
     self.buttonInfo =
     @[
@@ -51,7 +52,7 @@
 
 - (void)dealloc {
   
-  [_permissionLocationManager stopMonitoringForRegion:_beaconRegion];
+  [_permissionLocationManager stopRangingBeaconsInRegion:_beaconRegion];
   _permissionLocationManager.delegate = nil;
   _permissionLocationManager = nil;
   

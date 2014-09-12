@@ -22,10 +22,21 @@
   UIScrollView *_scroll;
 }
 
+- (void)dealloc
+{
+  @try {
+    [_feedItem removeObserver:self forKeyPath:NSStringFromSelector(@selector(image))];
+  }
+  @catch (NSException *exception) {
+  }
+}
+
 - (instancetype)initFeedItem:(OMNFeedItem *)feedItem {
   self = [super init];
   if (self) {
     _feedItem = feedItem;
+    [_feedItem addObserver:self forKeyPath:NSStringFromSelector(@selector(image)) options:NSKeyValueObservingOptionNew context:NULL];
+
   }
   return self;
 }
@@ -47,6 +58,24 @@
   UIScreenEdgePanGestureRecognizer *popRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePopRecognizer:)];
   popRecognizer.edges = UIRectEdgeLeft;
   [self.view addGestureRecognizer:popRecognizer];
+  
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  
+  if ([keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
+    
+    if (NO == self.isViewLoaded) {
+      return;
+    }
+    
+    _imageView.alpha = 0.0f;
+    _imageView.image = _feedItem.image;
+    [UIView animateWithDuration:0.3 animations:^{
+      _imageView.alpha = 1.0f;
+    }];
+    
+  }
   
 }
 

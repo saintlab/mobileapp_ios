@@ -7,6 +7,7 @@
 //
 
 #import <CoreLocation/CoreLocation.h>
+#import "OMNBeaconUUID.h"
 
 extern const NSInteger kBoardingRSSI;
 
@@ -32,7 +33,9 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 
 @property (nonatomic, assign, readonly) BOOL nearTheTable;
 
-+ (NSString *)defaultUUID;
+
++ (void)setBaeconUUID:(OMNBeaconUUID *)beaconUUID;
++ (OMNBeaconUUID *)beaconUUID;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
@@ -46,9 +49,6 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 
 - (double)totalRSSI;
 
-/**
- Ttis method is used to notify beacon remove outdated info
- */
 - (void)newIterationBegin;
 
 - (NSString *)key;
@@ -59,19 +59,4 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 + (OMNBeacon *)aCafeBeacon;
 
 @end
-
-/**
- При обнаружении метки записанной в базу, обновляется поле с временной меткой последнего обнаружения
- */
-
-/**
- При обнаружении метки записанной в базу, обновляется поле с временной меткой последнего обнаружения
- Если с момента последнего обнаружения метки прошло больше N часов, то запись удаляется из хранилища
- 
- время первого обнаружения
- время последнего обнаружения
- */
-//@property (nonatomic, strong, readonly) NSDate *firstFoundDate;
-//@property (nonatomic, strong, readonly) NSDate *previousFoundDate;
-//@property (nonatomic, strong, readonly) NSDate *lastFoundDate;
 

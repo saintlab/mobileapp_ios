@@ -118,12 +118,14 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
 
 - (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure; {
 
+#warning cachedVisitorForKey
+  /*
   OMNVisitor *visitor = [self cachedVisitorForKey:beacon.key];
   if (visitor) {
     success(visitor);
     return;
   }
-  
+  */
   [self decodeBeacons:@[beacon] success:^(NSArray *decodeBeacons) {
     
     success([decodeBeacons firstObject]);

@@ -71,9 +71,15 @@
   if (nil == _feedItem.image) {
     
     [_spinner startAnimating];
-    [[OMNImageManager manager] downloadImageWithURL:feedItem.imageURL completion:^(UIImage *image) {
+    
+    [[OMNImageManager manager] downloadBlurredImageWithURL:feedItem.imageURL expectedSize:CGSizeMake(320.0f, 305.0f) completion:^(UIImage *image) {
       
       feedItem.image = image;
+      [[OMNImageManager manager] downloadImageWithURL:feedItem.imageURL completion:^(UIImage *image) {
+        
+        feedItem.image = image;
+        
+      }];
       
     }];
     

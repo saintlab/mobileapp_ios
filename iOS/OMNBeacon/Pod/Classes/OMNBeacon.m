@@ -13,6 +13,8 @@
 //NSTimeInterval const kTimeToDeleteMarkSec = 4 * 60 * 60;
 NSTimeInterval const kTimeToDeleteMarkSec = 1 * 60;
 
+static OMNBeaconUUID *_beaconUUID = nil;
+
 __unused static NSTimeInterval const kGTimeToFindMarkSeconds = 2.0;
 __unused static NSTimeInterval const kGTimeToLoseMarkSeconds = 5.0;
 
@@ -26,7 +28,7 @@ const NSInteger kNearestDeltaRSSI = 10;
   NSMutableArray *_beaconSessionInfo;
   dispatch_semaphore_t _updateBeaconLock;
   NSDate *_firstImmediateDate;
-
+  
 }
 
 - (instancetype)initWithJsonData:(id)jsonData {
@@ -42,7 +44,7 @@ const NSInteger kNearestDeltaRSSI = 10;
 - (instancetype)init {
   self = [super init];
   if (self) {
-
+    
     _updateBeaconLock = dispatch_semaphore_create(1);
     _beaconSessionInfo = [NSMutableArray arrayWithCapacity:kMaxBeaconCount];
     
@@ -50,10 +52,18 @@ const NSInteger kNearestDeltaRSSI = 10;
   return self;
 }
 
-+ (NSString *)defaultUUID {
++ (void)setBaeconUUID:(OMNBeaconUUID *)beaconUUID {
+  _beaconUUID = beaconUUID;
+}
+
++ (OMNBeaconUUID *)beaconUUID {
   
-  NSDictionary *beaconInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"OMNBeaconUUID" ofType:@"plist"]];
-  return beaconInfo[@"uuid"];
+  if (nil == _beaconUUID) {
+    NSDictionary *beaconInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"OMNBeaconUUID" ofType:@"plist"]];
+    _beaconUUID = [[OMNBeaconUUID alloc] initWithJsonData:beaconInfo];
+  }
+  
+  return _beaconUUID;
   
 }
 
@@ -63,12 +73,12 @@ const NSInteger kNearestDeltaRSSI = 10;
   
   OMNBeaconSessionInfo *sessionInfo = [[OMNBeaconSessionInfo alloc] initWithBeacon:beacon];
   [_beaconSessionInfo addObject:sessionInfo];
-
+  
   if (nil == _firstImmediateDate &&
       (CLProximityImmediate == sessionInfo.proximity ||
        CLProximityNear == sessionInfo.proximity)) {
-    _firstImmediateDate = [NSDate date];
-  }
+        _firstImmediateDate = [NSDate date];
+      }
   
   if (_beaconSessionInfo.count > kMaxBeaconCount) {
     [_beaconSessionInfo omn_removeFirstObject];
@@ -132,7 +142,7 @@ const NSInteger kNearestDeltaRSSI = 10;
   if (self.atTheTable) {
     [_beaconSessionInfo omn_removeFirstObject];
   }
-
+  
 }
 
 - (NSString *)key {
@@ -141,7 +151,7 @@ const NSInteger kNearestDeltaRSSI = 10;
 }
 
 - (NSDictionary *)JSONObject {
-
+  
   return @{
            @"uuid" : self.UUIDString,
            @"major" : self.major,
@@ -183,7 +193,8 @@ const NSInteger kNearestDeltaRSSI = 10;
   OMNBeacon *beacon = [[OMNBeacon alloc] init];
   beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
   beacon.major = @"1";
-  beacon.minor = @"VIP";
+//  beacon.minor = @"VIP";
+  beacon.minor = @"1";
   return beacon;
 }
 

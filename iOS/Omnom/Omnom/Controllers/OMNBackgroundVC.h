@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) NSArray *buttonInfo;
 
+- (void)setBackgroundImage:(UIImage *)backgroundImage animated:(BOOL)animated;
 - (void)addActionBoardIfNeeded;
 - (void)updateActionBoard;
 

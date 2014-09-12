@@ -22,6 +22,7 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
   SystemSoundID _soundID;
   NSMutableSet *_rooms;
   NSString *_token;
+  NSMutableDictionary *_listners;
 }
 
 + (instancetype)manager {
@@ -37,6 +38,7 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
   self = [super init];
   if (self) {
     _rooms = [NSMutableSet set];
+    _listners = [NSMutableDictionary dictionary];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pay_done" ofType:@"caf"];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &_soundID);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -121,6 +123,31 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
     NSLog(@"card_register response %@, %@", data, [data class]);
     
   }];
+  
+}
+
+- (void)subscribe:(NSString *)event block:(void (^)(id data))block {
+  
+  if (!_listners[event]) {
+    _listners[event] = [NSMutableSet set];
+  }
+  [_listners[event] addObject:block];
+  [_socket on:event listener:block];
+  
+}
+
+- (void)unsubscribe:(NSString *)event {
+  
+  NSSet *listners = _listners[event];
+  [listners enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+    [_socket removeListener:event listener:obj];
+  }];
+  
+}
+
+- (void)echo:(NSString *)message {
+  
+  [_socket emit:@"echo", message, nil];
   
 }
 

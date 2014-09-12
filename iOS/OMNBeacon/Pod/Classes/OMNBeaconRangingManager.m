@@ -19,7 +19,7 @@
 
 @implementation OMNBeaconRangingManager {
   
-  CLBeaconRegion *_rangingBeaconRegion;
+  NSArray *_rangingBeaconRegions;
   
   
   CLBeaconsBlock _didRangeBeaconsBlock;
@@ -40,7 +40,7 @@
   self = [super init];
   if (self) {
     NSString *identifier = [NSString stringWithFormat:@"%@.rangingTask", [[NSBundle mainBundle] bundleIdentifier]];
-    _rangingBeaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:[[NSUUID alloc] initWithUUIDString:[OMNBeacon defaultUUID]] identifier:identifier];
+    _rangingBeaconRegions = [[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:identifier];
     
   }
   return self;
@@ -58,16 +58,11 @@
 
 - (CLLocationManager *)rangingLocationManager {
   if (nil == _rangingLocationManager) {
+    
     _rangingLocationManager = [[CLLocationManager alloc] init];
     _rangingLocationManager.pausesLocationUpdatesAutomatically = NO;
     _rangingLocationManager.delegate = self;
-//#pragma clang diagnostic push
-//#pragma clang diagnostic ignored "-Wundeclared-selector"
-//    if ([_rangingLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-//      [_rangingLocationManager performSelector:@selector(requestAlwaysAuthorization) withObject:nil];
-//    }
-//#pragma clang diagnostic pop
-    
+
   }
   return _rangingLocationManager;
 }
@@ -91,9 +86,13 @@
     return;
   }
   
-  if (![self.rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
-    [self.rangingLocationManager startRangingBeaconsInRegion:_rangingBeaconRegion];
-  }
+  [_rangingBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+
+    if (![self.rangingLocationManager.rangedRegions containsObject:beaconRegion]) {
+      [self.rangingLocationManager startRangingBeaconsInRegion:beaconRegion];
+    }
+    
+  }];
   
   _ranging = YES;
   
@@ -104,9 +103,14 @@
   _didRangeBeaconsBlock = nil;
   _didFailRangeBeaconsBlock = nil;
   
-  if ([self.rangingLocationManager.rangedRegions containsObject:_rangingBeaconRegion]) {
-    [self.rangingLocationManager stopRangingBeaconsInRegion:_rangingBeaconRegion];
-  }
+  [_rangingBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+    
+    if ([self.rangingLocationManager.rangedRegions containsObject:beaconRegion]) {
+      [self.rangingLocationManager stopRangingBeaconsInRegion:beaconRegion];
+    }
+    
+  }];
+  
   _ranging = NO;
 }
 

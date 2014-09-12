@@ -50,7 +50,6 @@
 
 - (void)startApplication:(NSDictionary *)info {
 
-//  F93C1AF8-FFB2-488A-A952-A250DB61DEC4
   if (_applicationStartedForeground) {
     return;
   }

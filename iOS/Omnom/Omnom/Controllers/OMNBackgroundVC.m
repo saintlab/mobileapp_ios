@@ -72,9 +72,29 @@
   
 }
 
+- (void)setBackgroundImage:(UIImage *)backgroundImage animated:(BOOL)animated {
+  _backgroundImage = backgroundImage;
+  if (self.isViewLoaded) {
+    
+    UIImageView *iv = [[UIImageView alloc] initWithFrame:_backgroundView.bounds];
+    iv.alpha = 0.0f;
+    iv.image = backgroundImage;
+    [_backgroundView addSubview:iv];
+    
+    [UIView animateWithDuration:0.5 animations:^{
+      iv.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+      _backgroundView.image = backgroundImage;
+      [iv removeFromSuperview];
+    }];
+    
+  }
+  
+}
+
 - (void)setBackgroundImage:(UIImage *)backgroundImage {
   _backgroundImage = backgroundImage;
-  _backgroundView.image = self.backgroundImage;
+  _backgroundView.image = backgroundImage;
 }
 
 - (void)addActionBoardIfNeeded {

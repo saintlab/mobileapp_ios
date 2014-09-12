@@ -1,0 +1,309 @@
+/* No comment provided by engineer. */
+"%@: оплачено %@ руб." = "%1$@: оплачено %2$@ руб."; /* NEW */
+
+/* No comment provided by engineer. */
+"00.00 Р" = "00.00 Р"; /* NEW */
+
+/* No comment provided by engineer. */
+"Ok" = "Ok"; /* NEW */
+
+/* No comment provided by engineer. */
+"QR" = "QR"; /* NEW */
+
+/* No comment provided by engineer. */
+"Stub scan" = "Stub scan"; /* NEW */
+
+/* No comment provided by engineer. */
+"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными." = "Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными."; /* NEW */
+
+/* No comment provided by engineer. */
+"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем определить столик." = "Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем определить столик."; /* NEW */
+
+/* No comment provided by engineer. */
+"Введите почту и телефон" = "Введите почту и телефон"; /* NEW */
+
+/* No comment provided by engineer. */
+"Включите Bluetooth. Можно справиться, потянув пальцем снизу-вверх" = "Включите Bluetooth. Можно справиться, потянув пальцем снизу-вверх"; /* NEW */
+
+/* No comment provided by engineer. */
+"Включить" = "Включить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Вход" = "Вход"; /* NEW */
+
+/* No comment provided by engineer. */
+"Вы забыли ввести e-mail" = "Вы забыли ввести e-mail"; /* NEW */
+
+/* No comment provided by engineer. */
+"Вы забыли ввести имя" = "Вы забыли ввести имя"; /* NEW */
+
+/* No comment provided by engineer. */
+"Вы забыли ввести номер телефона" = "Вы забыли ввести номер телефона"; /* NEW */
+
+/* No comment provided by engineer. */
+"Выбрать из библиотеки" = "Выбрать из библиотеки"; /* NEW */
+
+/* No comment provided by engineer. */
+"Вызвать официанта в любой момент" = "Вызвать официанта в любой момент"; /* NEW */
+
+/* No comment provided by engineer. */
+"Выйти" = "Выйти"; /* NEW */
+
+/* No comment provided by engineer. */
+"Выслать новый код" = "Выслать новый код"; /* NEW */
+
+/* No comment provided by engineer. */
+"Выход" = "Выход"; /* NEW */
+
+/* No comment provided by engineer. */
+"Выход из аккаунта" = "Выход из аккаунта"; /* NEW */
+
+/* No comment provided by engineer. */
+"Готово" = "Готово"; /* NEW */
+
+/* No comment provided by engineer. */
+"Далее" = "Далее"; /* NEW */
+
+/* No comment provided by engineer. */
+"Демо-режим" = "Демо-режим"; /* NEW */
+
+/* No comment provided by engineer. */
+"День рождения" = "День рождения"; /* NEW */
+
+/* No comment provided by engineer. */
+"Добавить карту" = "Добавить карту"; /* NEW */
+
+/* No comment provided by engineer. */
+"Должна прийти\nSMS с кодом на номер\n%@" = "Должна прийти\nSMS с кодом на номер\n%@"; /* NEW */
+
+/* No comment provided by engineer. */
+"Другой" = "Другой"; /* NEW */
+
+/* No comment provided by engineer. */
+"Завершить" = "Завершить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Закрыть" = "Закрыть"; /* NEW */
+
+/* No comment provided by engineer. */
+"Запретить" = "Запретить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Затем откройте службы геолокации:" = "Затем откройте службы геолокации:"; /* NEW */
+
+/* No comment provided by engineer. */
+"Изменить" = "Изменить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Изменить номер" = "Изменить номер"; /* NEW */
+
+/* No comment provided by engineer. */
+"Имя" = "Имя"; /* NEW */
+
+/* No comment provided by engineer. */
+"Итого: %@" = "Итого: %@"; /* NEW */
+
+/* No comment provided by engineer. */
+"Как вам в \"Тарас Бульба\"?" = "Как вам в \"Тарас Бульба\"?"; /* NEW */
+
+/* No comment provided by engineer. */
+"Калькуляция" = "Калькуляция"; /* NEW */
+
+/* No comment provided by engineer. */
+"Мои привязанные карты" = "Мои привязанные карты"; /* NEW */
+
+/* No comment provided by engineer. */
+"На ваш e-mail выслана ссылка\nдля смены номера\nтелефона" = "На ваш e-mail выслана ссылка\nдля смены номера\nтелефона"; /* NEW */
+
+/* No comment provided by engineer. */
+"На этом столике нет заказов" = "На этом столике нет заказов"; /* NEW */
+
+/* No comment provided by engineer. */
+"Нажимая «Далее», вы принимаете" = "Нажимая «Далее», вы принимаете"; /* NEW */
+
+/* No comment provided by engineer. */
+"Неверный QR-код,\nнайдите Omnom" = "Неверный QR-код,\nнайдите Omnom"; /* NEW */
+
+/* No comment provided by engineer. */
+"Необходимо разрешение на использование службы геолокации" = "Необходимо разрешение на использование службы геолокации"; /* NEW */
+
+/* No comment provided by engineer. */
+"Неправильная почта или телефон" = "Неправильная почта или телефон"; /* NEW */
+
+/* No comment provided by engineer. */
+"нет доступа к серверам omnom." = "нет доступа к серверам omnom."; /* NEW */
+
+/* No comment provided by engineer. */
+"Нет связи с заведением.\nОфициант в помощь" = "Нет связи с заведением.\nОфициант в помощь"; /* NEW */
+
+/* No comment provided by engineer. */
+"Нет соединения с интернетом." = "Нет соединения с интернетом."; /* NEW */
+
+/* No comment provided by engineer. */
+"Номер лучше уточнить у официанта" = "Номер лучше уточнить у официанта"; /* NEW */
+
+/* No comment provided by engineer. */
+"Номер стола" = "Номер стола"; /* NEW */
+
+/* No comment provided by engineer. */
+"Номер телефона" = "Номер телефона"; /* NEW */
+
+/* No comment provided by engineer. */
+"О приложении" = "О приложении"; /* NEW */
+
+/* No comment provided by engineer. */
+"Ок" = "Ок"; /* NEW */
+
+/* No comment provided by engineer. */
+"Оплата прошла успешно\nСчет отправлен на ваш e-mail" = "Оплата прошла успешно\nСчет отправлен на ваш e-mail"; /* NEW */
+
+/* No comment provided by engineer. */
+"Оплатить" = "Оплатить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Оплатить счёт через телефон" = "Оплатить счёт через телефон"; /* NEW */
+
+/* No comment provided by engineer. */
+"Оплачено: %@" = "Оплачено: %@"; /* NEW */
+
+/* No comment provided by engineer. */
+"Определять автоматически" = "Определять автоматически"; /* NEW */
+
+/* No comment provided by engineer. */
+"Отказаться" = "Отказаться"; /* NEW */
+
+/* No comment provided by engineer. */
+"Отмена" = "Отмена"; /* NEW */
+
+/* No comment provided by engineer. */
+"Отменить" = "Отменить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Официант" = "Официант"; /* NEW */
+
+/* No comment provided by engineer. */
+"Оцените, чтобы и другие знали на что рассчитывать :)" = "Оцените, чтобы и другие знали на что рассчитывать :)"; /* NEW */
+
+/* No comment provided by engineer. */
+"Оценить" = "Оценить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Ошибка при создании платежа" = "Ошибка при создании платежа"; /* NEW */
+
+/* No comment provided by engineer. */
+"По блюдам" = "По блюдам"; /* NEW */
+
+/* No comment provided by engineer. */
+"Повторить" = "Повторить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Повторить код" = "Повторить код"; /* NEW */
+
+/* No comment provided by engineer. */
+"Позже" = "Позже"; /* NEW */
+
+/* No comment provided by engineer. */
+"Пользовательское соглашение" = "Пользовательское соглашение"; /* NEW */
+
+/* No comment provided by engineer. */
+"Помощь" = "Помощь"; /* NEW */
+
+/* No comment provided by engineer. */
+"Поровну" = "Поровну"; /* NEW */
+
+/* No comment provided by engineer. */
+"Почта" = "Почта"; /* NEW */
+
+/* No comment provided by engineer. */
+"Почта или номер телефона" = "Почта или номер телефона"; /* NEW */
+
+/* No comment provided by engineer. */
+"Привязать карты" = "Привязать карты"; /* NEW */
+
+/* No comment provided by engineer. */
+"Привязка карты" = "Привязка карты"; /* NEW */
+
+/* No comment provided by engineer. */
+"Пригласть друзей" = "Пригласть друзей"; /* NEW */
+
+/* No comment provided by engineer. */
+"Проверить еще" = "Проверить еще"; /* NEW */
+
+/* No comment provided by engineer. */
+"Промо-коды" = "Промо-коды"; /* NEW */
+
+/* No comment provided by engineer. */
+"Разделить счёт между друзьями" = "Разделить счёт между друзьями"; /* NEW */
+
+/* No comment provided by engineer. */
+"Разрешите, наконец, использовать службы геолокации для Omnom:" = "Разрешите, наконец, использовать службы геолокации для Omnom:"; /* NEW */
+
+/* No comment provided by engineer. */
+"Разрешить" = "Разрешить"; /* NEW */
+
+/* No comment provided by engineer. */
+"Разрешить Omnom получить push-уведомления" = "Разрешить Omnom получить push-уведомления"; /* NEW */
+
+/* No comment provided by engineer. */
+"Регистрация" = "Регистрация"; /* NEW */
+
+/* No comment provided by engineer. */
+"С вашей карты списана и будет возвращена случайная сумма до 50р. Введите сумму списания в это поле,\nчтобы привязать карту к вашему аккаунту" = "С вашей карты списана и будет возвращена случайная сумма до 50р. Введите сумму списания в это поле,\nчтобы привязать карту к вашему аккаунту"; /* NEW */
+
+/* No comment provided by engineer. */
+"Сделать снимок" = "Сделать снимок"; /* NEW */
+
+/* No comment provided by engineer. */
+"Слабый сигнал.\nПоложите телефон\nв центр стола,\nпожалуйста." = "Слабый сигнал.\nПоложите телефон\nв центр стола,\nпожалуйста."; /* NEW */
+
+/* No comment provided by engineer. */
+"Следующий" = "Следующий"; /* NEW */
+
+/* No comment provided by engineer. */
+"Слишком мало лет =(" = "Слишком мало лет =("; /* NEW */
+
+/* No comment provided by engineer. */
+"Создаем платеж..." = "Создаем платеж..."; /* NEW */
+
+/* No comment provided by engineer. */
+"Создать аккаунт" = "Создать аккаунт"; /* NEW */
+
+/* No comment provided by engineer. */
+"Спасибо" = "Спасибо"; /* NEW */
+
+/* No comment provided by engineer. */
+"Стол" = "Стол"; /* NEW */
+
+/* No comment provided by engineer. */
+"Сумма слишком большая" = "Сумма слишком большая"; /* NEW */
+
+/* No comment provided by engineer. */
+"Счет" = "Счет"; /* NEW */
+
+/* No comment provided by engineer. */
+"Счет успешно оплачен" = "Счет успешно оплачен"; /* NEW */
+
+/* No comment provided by engineer. */
+"Телефон в центре стола?\nЗаведение подключено\nк Omnom?" = "Телефон в центре стола?\nЗаведение подключено\nк Omnom?"; /* NEW */
+
+/* No comment provided by engineer. */
+"тут должен быть логин через facebook" = "тут должен быть логин через facebook"; /* NEW */
+
+/* No comment provided by engineer. */
+"тут должен быть логин через twitter" = "тут должен быть логин через twitter"; /* NEW */
+
+/* No comment provided by engineer. */
+"тут должен быть логин через VK" = "тут должен быть логин через VK"; /* NEW */
+
+/* No comment provided by engineer. */
+"Указана неверная проверочная сумма. Введите сумму ещё раз и нажмите \"Привязать\"." = "Указана неверная проверочная сумма. Введите сумму ещё раз и нажмите \"Привязать\"."; /* NEW */
+
+/* No comment provided by engineer. */
+"Чек пожалуйста" = "Чек пожалуйста"; /* NEW */
+
+/* No comment provided by engineer. */
+"Что-то пошло не так. Повторите попытку" = "Что-то пошло не так. Повторите попытку"; /* NEW */
+
+/* No comment provided by engineer. */
+"Чтобы разрешить геолокацию, откройте список приватности:" = "Чтобы разрешить геолокацию, откройте список приватности:"; /* NEW */
+
