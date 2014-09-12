@@ -21,9 +21,9 @@ describe(@"waiter call tests", ^{
     
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
-    OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
+    OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
     
-    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNVisitor *visitor) {
+    [[OMNVisitorManager manager] decodeBeacon:demoBeacon success:^(OMNVisitor *visitor) {
       
       _visitor = visitor;
       
@@ -31,11 +31,11 @@ describe(@"waiter call tests", ^{
       
     }];
     
-    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
     [[_visitor should] beNonNil];
     
-    [[_visitor.beacon.UUIDString should] equal:aCafeBeacon.UUIDString];
+    [[_visitor.beacon.UUIDString should] equal:demoBeacon.UUIDString];
 
   });
   
@@ -48,7 +48,7 @@ describe(@"waiter call tests", ^{
       
     }];
     
-    [[expectFutureValue(is_new_guest) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(is_new_guest) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
   });
   
@@ -65,7 +65,7 @@ describe(@"waiter call tests", ^{
       
     }];
     
-    [[expectFutureValue(is_called) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(is_called) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
   });
   
@@ -79,7 +79,7 @@ describe(@"waiter call tests", ^{
     } failure:^(NSError *error) {
       
     }];
-    [[expectFutureValue(is_stopped) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(is_stopped) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
   });
   

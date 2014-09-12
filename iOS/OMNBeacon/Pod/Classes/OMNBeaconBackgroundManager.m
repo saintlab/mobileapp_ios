@@ -219,7 +219,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   //doesn't handle foreground region monitoring
   if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
     NSLog(@"doesn't handle foreground region monitoring");
-    //    return;
+    return;
   }
   
   switch (state) {

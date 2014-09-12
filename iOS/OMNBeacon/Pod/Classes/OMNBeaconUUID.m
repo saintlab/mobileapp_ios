@@ -78,7 +78,8 @@
   [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     
     if ([obj isKindOfClass:[NSUUID class]]) {
-      CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:obj identifier:identifier];
+      NSString *indexedIdentifier = [NSString stringWithFormat:@"%@-%d", identifier, idx];
+      CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc] initWithProximityUUID:obj identifier:indexedIdentifier];
       beaconRegion.notifyOnEntry = YES;
       beaconRegion.notifyOnExit = YES;
       [regions addObject:beaconRegion];

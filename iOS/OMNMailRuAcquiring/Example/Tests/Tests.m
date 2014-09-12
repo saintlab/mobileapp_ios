@@ -35,7 +35,7 @@ describe(@"register test", ^{
       
     }];
     
-    [[expectFutureValue(cardRegisterResponse) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(cardRegisterResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
     _cardId = cardRegisterResponse[@"card_id"];
     [[_cardId should] beNonNil];
@@ -57,7 +57,7 @@ describe(@"register test", ^{
       
     }];
     
-    [[expectFutureValue(cardVerifyResponse) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(cardVerifyResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
     [[cardVerifyResponse[@"error"][@"code"] should] equal:@"ERR_CARD_AMOUNT"];
     
@@ -72,7 +72,7 @@ describe(@"register test", ^{
       
     }];
     
-    [[expectFutureValue(cardVerifyResponse) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(cardVerifyResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
     [[cardVerifyResponse[@"error"] should] beNil];
     
@@ -98,7 +98,7 @@ describe(@"register test", ^{
       
     }];
     
-    [[expectFutureValue(cardPayResponse) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(cardPayResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
   });
   
@@ -112,7 +112,7 @@ describe(@"register test", ^{
       
     }];
 
-    [[expectFutureValue(cardDeleteResponse) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(cardDeleteResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
   });
 

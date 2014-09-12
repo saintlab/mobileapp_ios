@@ -36,7 +36,7 @@ describe(@"demo stand test", ^{
       
     }];
     
-    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
 
     __block NSArray *_orders = nil;
     [_visitor getOrders:^(NSArray *orders) {
@@ -47,7 +47,7 @@ describe(@"demo stand test", ^{
       
     }];
     
-    [[expectFutureValue(_orders) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_orders) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     _order = [_orders firstObject];
     
     [OMNUser userWithToken:[OMNAuthorisation authorisation].token user:^(OMNUser *user) {
@@ -58,7 +58,7 @@ describe(@"demo stand test", ^{
       
     }];
     
-    [[expectFutureValue(_user) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_user) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
   });
   

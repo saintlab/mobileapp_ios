@@ -88,12 +88,9 @@
   
   [_rangingBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
 
-    if (![self.rangingLocationManager.rangedRegions containsObject:beaconRegion]) {
-      [self.rangingLocationManager startRangingBeaconsInRegion:beaconRegion];
-    }
+    [self.rangingLocationManager startRangingBeaconsInRegion:beaconRegion];
     
   }];
-  
   _ranging = YES;
   
 }
@@ -129,7 +126,8 @@
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
   
-  if (_didRangeBeaconsBlock) {
+  if (_didRangeBeaconsBlock &&
+      beacons.count) {
     _didRangeBeaconsBlock(beacons);
   }
   else {

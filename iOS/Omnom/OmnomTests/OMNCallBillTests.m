@@ -23,9 +23,9 @@ describe(@"call bill test", ^{
     
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
-    OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
+    OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
     
-    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNVisitor *visitor) {
+    [[OMNVisitorManager manager] decodeBeacon:demoBeacon success:^(OMNVisitor *visitor) {
       
       _visitor = visitor;
       
@@ -33,11 +33,11 @@ describe(@"call bill test", ^{
       
     }];
     
-    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
     [[_visitor should] beNonNil];
     
-    [[_visitor.beacon.UUIDString should] equal:aCafeBeacon.UUIDString];
+    [[_visitor.beacon.UUIDString should] equal:demoBeacon.UUIDString];
     
     __block NSArray *_oredrs = nil;
     [_visitor getOrders:^(NSArray *orders) {
@@ -48,7 +48,7 @@ describe(@"call bill test", ^{
       
     }];
     
-    [[expectFutureValue(_oredrs) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_oredrs) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     _order = [_oredrs firstObject];
     
   });
@@ -64,7 +64,7 @@ describe(@"call bill test", ^{
       
     }];
     
-    [[expectFutureValue(_bill) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_bill) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     [[_bill.table_id should] equal:_order.table_id];
     
   });
@@ -82,7 +82,7 @@ describe(@"call bill test", ^{
       
     }];
     
-    [[expectFutureValue(is_billCall) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(is_billCall) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
   });
   
@@ -91,15 +91,20 @@ describe(@"call bill test", ^{
     [[_order should] beNonNil];
     
     __block NSNumber *is_billCallStop = nil;
+    __block NSError *_error = nil;
     [_order billCallStop:^{
       
       is_billCallStop = @(YES);
       
     } failure:^(NSError *error) {
       
+      _error = error;
+      NSLog(@"should stop call bill error> %@", error);
     }];
     
-    [[expectFutureValue(is_billCallStop) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    
+    [[expectFutureValue(is_billCallStop) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
+    [[expectFutureValue(_error) shouldEventuallyBeforeTimingOutAfter(10.0)] beNil];
     
   });
   
