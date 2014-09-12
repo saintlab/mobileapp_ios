@@ -18,28 +18,28 @@ SPEC_BEGIN(OMNDemoStandTest)
 
 describe(@"demo stand test", ^{
 
-  __block OMNVisitor *_decodeBeacon = nil;
+  __block OMNVisitor *_visitor = nil;
   __block OMNOrder *_order = nil;
   __block OMNUser *_user = nil;
   
-  OMNBeacon *aCafeBeacon = [OMNBeacon aCafeBeacon];
+  OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
   
   beforeAll(^{
     
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
-    [[OMNVisitorManager manager] decodeBeacon:aCafeBeacon success:^(OMNVisitor *decodeBeacon) {
+    [[OMNVisitorManager manager] decodeBeacon:demoBeacon success:^(OMNVisitor *visitor) {
       
-      _decodeBeacon = decodeBeacon;
+      _visitor = visitor;
       
     } failure:^(NSError *error) {
       
     }];
     
-    [[expectFutureValue(_decodeBeacon) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
+    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(5)] beNonNil];
 
     __block NSArray *_orders = nil;
-    [_decodeBeacon getOrders:^(NSArray *orders) {
+    [_visitor getOrders:^(NSArray *orders) {
       
       _orders = orders;
       
@@ -64,7 +64,7 @@ describe(@"demo stand test", ^{
   
   it(@"should check initial conditions", ^{
     
-    [[_decodeBeacon should] beNonNil];
+    [[_visitor should] beNonNil];
 
     [[_order should] beNonNil];
 

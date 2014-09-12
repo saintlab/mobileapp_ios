@@ -133,6 +133,41 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   } failure:failure];
 }
 
+- (void)demoVisitor:(OMNVisitorBlock)completionBlock failure:(void (^)(NSError *error))failureBlock {
+  
+  __weak typeof(self)weakSelf = self;
+  NSString *path = @"ibeacons/demo";
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if ([responseObject isKindOfClass:[NSDictionary class]]) {
+      
+      [[OMNAnalitics analitics] logEvent:@"ERROR_DEMO_BEACON" jsonRequest:path jsonResponse:responseObject];
+      failureBlock(nil);
+      
+    }
+    else {
+      
+      NSArray *visitors = [responseObject omn_visitors];
+      OMNVisitor *visitor = [visitors firstObject];
+      if (visitor) {
+        [weakSelf addVisitors:@[visitor]];
+        completionBlock(visitor);
+      }
+      else {
+        [[OMNAnalitics analitics] logEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
+      }
+      
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    [[OMNAnalitics analitics] logEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
+    failureBlock(nil);
+    
+  }];
+  
+}
+
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNVisitorsBlock)success failure:(void (^)(NSError *error))failure {
   
   if ([OMNConstants useStubBeaconDecodeData]) {

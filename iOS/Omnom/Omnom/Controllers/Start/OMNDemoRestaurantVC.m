@@ -40,15 +40,9 @@
   [self.loaderView startAnimating:10.0];
   _decodeBeaconsStarted = YES;
   __weak typeof(self)weakSelf = self;
-  
-  [[OMNVisitorManager manager] decodeBeacon:[OMNBeacon aCafeBeacon] success:^(OMNVisitor *visitor) {
+  [[OMNVisitorManager manager] demoVisitor:^(OMNVisitor *visitor) {
     
-    if (visitor) {
-      [weakSelf didFindVisitor:visitor];
-    }
-    else {
-      [weakSelf didFailOmnom];
-    }
+    [weakSelf didFindVisitor:visitor];
     
   } failure:^(NSError *error) {
     

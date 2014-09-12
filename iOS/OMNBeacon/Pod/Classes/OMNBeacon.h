@@ -56,7 +56,6 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 - (NSDictionary *)JSONObject;
 
 + (OMNBeacon *)demoBeacon;
-+ (OMNBeacon *)aCafeBeacon;
 
 @end
 
