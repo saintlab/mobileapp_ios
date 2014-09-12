@@ -174,11 +174,8 @@
     parameters[@"code"] = code;
   }
   
-  if ([data omn_isValidPhone]) {
+  if (data) {
     parameters[@"phone"] = data;
-  }
-  else if ([data omn_isValidEmail]) {
-    parameters[@"email"] = data;
   }
   else {
     
