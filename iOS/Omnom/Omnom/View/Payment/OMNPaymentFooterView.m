@@ -101,6 +101,7 @@
   
   self.tipsMode = YES;
   if (_tipAmountPercentValue) {
+    _tipAmountPercentValue.totalAmount = _order.enteredAmount;
     _amountPercentControl.amountPercentValue = _tipAmountPercentValue;
   }
   else {

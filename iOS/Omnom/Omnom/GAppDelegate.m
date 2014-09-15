@@ -48,13 +48,14 @@
   if (_applicationStartedForeground) {
     return;
   }
-  
-#ifdef APP_STORE
+
+#if defined (APP_STORE)
+  [OMNConstants setCustomConfigName:@"config_prod"];
+#elif defined (AD_HOC)
   [OMNConstants setCustomConfigName:@"config_prod"];
 #else
   [OMNConstants setCustomConfigName:@"config_stand"];
 #endif
-//  [OMNConstants setCustomConfigName:@"config_prod"];
   [OMNMailRuAcquiring setConfig:[OMNConstants mailRuConfig]];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
