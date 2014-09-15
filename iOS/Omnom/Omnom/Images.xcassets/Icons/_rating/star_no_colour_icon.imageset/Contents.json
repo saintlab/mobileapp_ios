@@ -1,17 +1,14 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
-    },
-    {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "bg_table.png"
+      "filename" : "star_no_colour_icon.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "bg_table@2x.png"
+      "filename" : "star_no_colour_icon@2x.png"
     }
   ],
   "info" : {

@@ -10,4 +10,6 @@
 
 @interface OMNBorderedButton : UIButton
 
+- (void)setTitle:(NSString *)title selectedTitle:(NSString *)selectedTitle image:(UIImage *)image;
+
 @end
