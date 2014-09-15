@@ -51,6 +51,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 @implementation OMNOrder {
   id _data;
   NSString *_callBillOrderId;
+  BOOL _enteredAmountChanged;
 }
 
 - (instancetype)initWithJsonData:(id)jsonData {
@@ -111,12 +112,19 @@ inline NSString *stringFromSplitType(SplitType splitType) {
   self.items = order.items;
   _paid_amount = order.paid_amount;
   _paid_tip = order.paid_tip;
-  
+  if (NO == _enteredAmountChanged) {
+    _enteredAmount = MAX(0ll, self.expectedValue);
+  }
 }
 
 - (long long)paid_net {
   long long paid_net = MAX(0ll, self.paid_amount - self.paid_tip);
   return paid_net;
+}
+
+- (void)setEnteredAmount:(long long)enteredAmount {
+  _enteredAmount = enteredAmount;
+  _enteredAmountChanged = YES;
 }
 
 - (void)deselectAll {
