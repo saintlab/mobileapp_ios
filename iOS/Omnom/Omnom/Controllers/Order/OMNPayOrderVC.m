@@ -257,7 +257,7 @@ OMNMailRUPayVCDelegate>
     [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
 
       if (buttonIndex != alertView.cancelButtonIndex) {
-        [weakSelf processCardPaymentVC];
+        [weakSelf processCardPayment];
       }
       
     }];
@@ -265,13 +265,13 @@ OMNMailRUPayVCDelegate>
   }
   else {
 
-    [self processCardPaymentVC];
+    [self processCardPayment];
     
   }
   
 }
 
-- (void)processCardPaymentVC {
+- (void)processCardPayment {
 
   OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
   mailRUPayVC.demo = _visitor.restaurant.is_demo;

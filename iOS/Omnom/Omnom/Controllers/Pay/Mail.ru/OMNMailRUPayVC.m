@@ -90,12 +90,12 @@ OMNMailRUCardConfirmVCDelegate>
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
   
-  [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   
   _errorLabel.text = nil;
   _offerLabel.text = nil;
   _offerLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   
+  [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_order.enteredAmountWithTips]] forState:UIControlStateNormal];
   [_payButton sizeToFit];

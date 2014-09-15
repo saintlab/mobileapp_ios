@@ -18,6 +18,7 @@
 #import "OMNTurnOnBluetoothVC.h"
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNDemoRestaurantVC.h"
+#import "OMNMailRUPayVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -87,6 +88,8 @@
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNDenyCLPermissionVC class]],
     [self keyFromClass:[OMNDenyCLPermissionVC class] toClass:[OMNAskCLPermissionsVC class]],
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNCLPermissionsHelpVC class]],
+    
+    [self keyFromClass:[OMNMailRUPayVC class] toClass:[OMNLoadingCircleVC class]],
     ];
 }
 
