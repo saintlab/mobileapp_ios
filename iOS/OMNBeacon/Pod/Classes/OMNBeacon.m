@@ -193,18 +193,20 @@ const NSInteger kNearestDeltaRSSI = 10;
   OMNBeacon *beacon = [[OMNBeacon alloc] init];
   beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
   beacon.major = @"1";
+  beacon.minor = @"1";
+
+//  iico
+//  beacon.major = @"1";
 //  beacon.minor = @"VIP";
-  beacon.minor = @"1";
+
+//  mexico
+//  beacon.major = @"100";
+//  beacon.minor = @"3007";
+  
+//  a-cafe
+//  beacon.major = @"A";
+//  beacon.minor = @"1";
+  
   return beacon;
 }
-
-+ (OMNBeacon *)aCafeBeacon {
-  OMNBeacon *beacon = [[OMNBeacon alloc] init];
-  beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
-  beacon.major = @"A";
-  beacon.minor = @"1";
-  return beacon;
-}
-
-
 @end

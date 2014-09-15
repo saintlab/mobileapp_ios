@@ -34,7 +34,7 @@
   [self setupCircle];
   
   if (self.circleIcon) {
-    [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
+    self.circleIcon = _circleIcon;
   }
   
   _fadeView = [[UIView alloc] initWithFrame:self.backgroundView.bounds];
@@ -48,7 +48,7 @@
   self.label.alpha = 0.0f;
 
   self.text = _text;
-  
+  [self.view layoutIfNeeded];
 }
 
 - (void)setupCircle {
@@ -58,6 +58,7 @@
   [self.view addSubview:_label];
   
   _circleButton = [[UIButton alloc] init];
+  _circleButton.userInteractionEnabled = NO;
   _circleButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_circleButton];
   
@@ -117,12 +118,18 @@
 
 - (void)setCircleBackground:(UIImage *)circleBackground {
   _circleBackground = circleBackground;
-  [self.circleButton setBackgroundImage:self.circleBackground forState:UIControlStateNormal];
+  if (self.isViewLoaded) {
+    [self.circleButton setBackgroundImage:self.circleBackground forState:UIControlStateNormal];
+  }
+  
 }
 
 - (void)setCircleIcon:(UIImage *)circleIcon {
   _circleIcon = circleIcon;
-  [self.circleButton setImage:circleIcon forState:UIControlStateNormal];
+  if (self.isViewLoaded) {
+    [self.circleButton setImage:circleIcon forState:UIControlStateNormal];
+  }
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
