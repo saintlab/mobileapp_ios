@@ -30,6 +30,7 @@
   __weak IBOutlet UIButton *_pinButton;
   UIView *_tableFooterView;
   OMNVisitor *_visitor;
+  __weak IBOutlet UILabel *_versionLabel;
 }
 
 - (void)dealloc {
@@ -46,8 +47,6 @@
   self = [super initWithNibName:@"OMNUserInfoVC" bundle:nil];
   if (self) {
     _visitor = visitor;
-    _userInfoModel = [[OMNUserInfoModel alloc] init];
-    [_userInfoModel addObserver:self forKeyPath:NSStringFromSelector(@selector(user)) options:NSKeyValueObservingOptionNew context:NULL];
   }
   return self;
 }
@@ -56,11 +55,15 @@
   
   if ([keyPath isEqualToString:NSStringFromSelector(@selector(user))]) {
     
-    _userNameLabel.text = [NSString stringWithFormat:@"%@\n%@\n%@", _userInfoModel.user.name, _userInfoModel.user.email, _userInfoModel.user.phone];
-    [self.tableView reloadData];
+    [self updateUserInfo];
     
   }
   
+}
+
+- (void)updateUserInfo {
+  _userNameLabel.text = [NSString stringWithFormat:@"%@\n%@\n%@", _userInfoModel.user.name, _userInfoModel.user.email, _userInfoModel.user.phone];
+  [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -68,18 +71,21 @@
   
   self.navigationItem.title = @"";
   
+  _userInfoModel = [[OMNUserInfoModel alloc] init];
+  [_userInfoModel addObserver:self forKeyPath:NSStringFromSelector(@selector(user)) options:NSKeyValueObservingOptionNew context:NULL];
+  
+  _versionLabel.textAlignment = NSTextAlignmentCenter;
+  _versionLabel.font = FuturaLSFOmnomRegular(15.0);
+  _versionLabel.text = [NSString stringWithFormat:@"version %@ build %@", CURRENT_VERSION, CURRENT_BUILD];
+  _versionLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  
   [_pinButton setImage:[UIImage imageNamed:@"table_marker_icon"] forState:UIControlStateNormal];
   _pinButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
   [_pinButton setTitle:_visitor.table.internal_id forState:UIControlStateNormal];
   
   [_iconView setBackgroundImage:[UIImage imageNamed:@"green_circle_big"] forState:UIControlStateNormal];
 //  [_iconView setImage:[UIImage imageNamed:@"add_photo_button_icon"] forState:UIControlStateNormal];
-  
-  [_logoutButton setBackgroundImage:[UIImage imageNamed:@"bottom_rectangle"] forState:UIControlStateNormal];
-  [_logoutButton setTitle:NSLocalizedString(@"Выход из аккаунта", nil) forState:UIControlStateNormal];
-  _logoutButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
-  [_logoutButton setTitleColor:colorWithHexString(@"D0021B") forState:UIControlStateNormal];
-  [_logoutButton addTarget:self action:@selector(logoutTap) forControlEvents:UIControlEventTouchUpInside];
+
   _userNameLabel.numberOfLines = 3;
   _userNameLabel.textColor = colorWithHexString(@"000000");
   _userNameLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
@@ -88,34 +94,12 @@
 
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-  
-//  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Стол", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editTableTap)];
-//  self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
-//  
-//  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
-//  self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
 
   UIButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"cross_icon_black"] title:nil];
   [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.titleView = closeButton;
   
-  [self.view addSubview:_logoutButton];
-  UIEdgeInsets inset = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_logoutButton.frame), 0.0f);
-  self.tableView.contentInset = inset;
-  self.tableView.scrollIndicatorInsets = inset;
-  
-}
-
-- (void)logoutTap {
-  
-  UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
-  [logoutSheet bk_setDestructiveButtonWithTitle:NSLocalizedString(@"Выйти", nil) handler:^{
-    
-    [[OMNAuthorisation authorisation] logout];
-    
-  }];
-  [logoutSheet bk_addButtonWithTitle:NSLocalizedString(@"Отмена", nil) handler:nil];
-  [logoutSheet showInView:self.view.window];
+  [self updateUserInfo];
   
 }
 
@@ -166,14 +150,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   
   [_userInfoModel controller:self tableView:tableView didSelectRowAtIndexPath:indexPath];
-  
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  
-  CGRect frame = _logoutButton.frame;
-  frame.origin.y = CGRectGetHeight(scrollView.frame) + scrollView.contentOffset.y - CGRectGetHeight(frame);
-  _logoutButton.frame = frame;
   
 }
 

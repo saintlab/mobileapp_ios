@@ -26,11 +26,11 @@
     @[
       self.moneyItems,
 //      self.otherItems,
-//      self.logoutItems,
+      self.logoutItems,
       ];
    
     NSString *token = [OMNAuthorisation authorisation].token;
-    
+    self.user = [OMNAuthorisation authorisation].user;
     if (token.length) {
       __weak typeof(self)weakSelf = self;
       [OMNUser userWithToken:token user:^(OMNUser *user) {
@@ -84,7 +84,7 @@
 
 - (NSArray *)logoutItems {
   
-  OMNUserInfoItem *logoutItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Выход", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
+  OMNUserInfoItem *logoutItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Выход из аккаунта", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
     
     UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
     [logoutSheet bk_setDestructiveButtonWithTitle:NSLocalizedString(@"Выйти", nil) handler:^{
@@ -101,7 +101,7 @@
     [logoutSheet showInView:vc.view.window];
     
   }];
-  logoutItem.titleColor = [UIColor redColor];
+  logoutItem.titleColor = colorWithHexString(@"D0021B");
   return @[logoutItem];
   
 }

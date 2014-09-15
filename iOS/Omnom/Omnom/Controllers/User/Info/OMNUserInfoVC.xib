@@ -10,6 +10,7 @@
                 <outlet property="_logoutButton" destination="cPW-z2-2MA" id="TaX-7h-SzU"/>
                 <outlet property="_pinButton" destination="4aW-nE-3rH" id="xvn-Jx-W6T"/>
                 <outlet property="_userNameLabel" destination="IrN-UU-2WN" id="z43-VI-nrT"/>
+                <outlet property="_versionLabel" destination="rzX-XR-xcU" id="ntU-38-p1K"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -43,16 +44,23 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <view key="tableFooterView" contentMode="scaleToFill" id="RXV-Z0-eld">
-                <rect key="frame" x="0.0" y="446" width="320" height="58"/>
+                <rect key="frame" x="0.0" y="429" width="320" height="75"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4aW-nE-3rH">
-                        <rect key="frame" x="20" y="14" width="280" height="30"/>
+                        <rect key="frame" x="20" y="10" width="280" height="30"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rzX-XR-xcU">
+                        <rect key="frame" x="20" y="43" width="280" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
