@@ -10,6 +10,8 @@
 @class OMNOrder;
 @protocol OMNMailRUPayVCDelegate;
 
+#import "OMNBill.h"
+
 @interface OMNMailRUPayVC : UIViewController
 
 @property (nonatomic, weak) id<OMNMailRUPayVCDelegate> delegate;
@@ -21,7 +23,7 @@
 
 @protocol OMNMailRUPayVCDelegate <NSObject>
 
-- (void)mailRUPayVCDidFinish:(OMNMailRUPayVC *)mailRUPayVC;
+- (void)mailRUPayVCDidFinish:(OMNMailRUPayVC *)mailRUPayVC withBill:(OMNBill *)bill;
 
 - (void)mailRUPayVCDidCancel:(OMNMailRUPayVC *)mailRUPayVC;
 

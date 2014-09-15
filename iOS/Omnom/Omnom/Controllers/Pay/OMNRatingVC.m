@@ -69,7 +69,7 @@
 
 - (void)setup {
   
-  self.view.backgroundColor = [UIColor redColor];
+  self.view.backgroundColor = _visitor.restaurant.background_color;
   
   UIView *bottomContentView = [[UIView alloc] init];
   bottomContentView.translatesAutoresizingMaskIntoConstraints = NO;

@@ -90,6 +90,7 @@
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNCLPermissionsHelpVC class]],
     
     [self keyFromClass:[OMNMailRUPayVC class] toClass:[OMNLoadingCircleVC class]],
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNMailRUPayVC class]],
     ];
 }
 

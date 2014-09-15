@@ -7,14 +7,15 @@
 //
 
 #import "OMNBackgroundVC.h"
+#import "OMNVisitor.h"
 
 @protocol OMNRatingVCDelegate;
-@class OMNOrder;
 
 @interface OMNRatingVC : OMNBackgroundVC
 
 @property (nonatomic, weak) id<OMNRatingVCDelegate> delegate;
 @property (nonatomic, strong) OMNOrder *order;
+@property (nonatomic, strong) OMNVisitor *visitor;
 
 @end
 

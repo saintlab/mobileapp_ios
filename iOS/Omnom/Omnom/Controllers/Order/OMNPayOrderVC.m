@@ -240,10 +240,11 @@ OMNMailRUPayVCDelegate>
   [self.view layoutIfNeeded];
 }
 
-- (void)showRating {
+- (void)showRatingForBill:(OMNBill *)bill {
   
   OMNRatingVC *ratingVC = [[OMNRatingVC alloc] init];
   ratingVC.order = _order;
+  ratingVC.visitor = _visitor;
   ratingVC.delegate = self;
   [self.navigationController pushViewController:ratingVC animated:YES];
   
@@ -350,9 +351,9 @@ OMNMailRUPayVCDelegate>
 
 #pragma mark - OMNMailRUPayVCDelegate
 
-- (void)mailRUPayVCDidFinish:(OMNMailRUPayVC *)mailRUPayVC {
+- (void)mailRUPayVCDidFinish:(OMNMailRUPayVC *)mailRUPayVC withBill:(OMNBill *)bill {
   
-  [self showRating];
+  [self showRatingForBill:bill];
   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
   
 }

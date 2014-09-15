@@ -104,6 +104,11 @@ OMNMailRUCardConfirmVCDelegate>
   
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
@@ -240,7 +245,7 @@ OMNMailRUCardConfirmVCDelegate>
 - (void)mailRuDidFinish {
 
   [_order logPayment];
-  [self.delegate mailRUPayVCDidFinish:self];
+  [self.delegate mailRUPayVCDidFinish:self withBill:_bill];
   
 }
 
@@ -252,7 +257,7 @@ OMNMailRUCardConfirmVCDelegate>
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
       
-      [weakSelf cancelTap];
+      [weakSelf didFailCreateOrderWithError:nil];
       
     }]
     ];
@@ -264,7 +269,7 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)demoPay {
   
-  [self.delegate mailRUPayVCDidFinish:self];
+  [self.delegate mailRUPayVCDidFinish:self withBill:nil];
   
 }
 
