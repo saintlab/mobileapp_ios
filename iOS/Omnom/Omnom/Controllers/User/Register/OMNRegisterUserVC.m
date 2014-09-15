@@ -62,6 +62,9 @@ UITextFieldDelegate>
   
   [self setup];
   
+  _emailTF.textField.text = self.email;
+  _phoneTF.textField.text = self.phone;
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {

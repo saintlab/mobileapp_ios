@@ -12,8 +12,8 @@
 
 @property (nonatomic, strong, readonly) UITextField *textField;
 
+
 - (instancetype)initWithWidth:(CGFloat)width;
 - (void)setError:(NSString *)text;
-- (void)setAttributedError:(NSAttributedString *)attributedString;
 
 @end

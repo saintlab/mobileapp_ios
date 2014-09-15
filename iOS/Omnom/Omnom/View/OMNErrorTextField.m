@@ -12,11 +12,12 @@
 
 @interface OMNErrorTextField ()
 
+@property (nonatomic, strong, readonly) UITextView *errorTextView;
+
 @end
 
 @implementation OMNErrorTextField {
   UIView *_colorView;
-  UILabel *_errorLabel;
   CGFloat _width;
 }
 
@@ -56,19 +57,23 @@
   _colorView.translatesAutoresizingMaskIntoConstraints = NO;
   [self addSubview:_colorView];
   
-  _errorLabel = [[UILabel alloc] init];
-  _errorLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-  _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _errorLabel.textColor = colorWithHexString(@"D0021B");
-  _errorLabel.numberOfLines = 0;
-  _errorLabel.textAlignment = NSTextAlignmentCenter;
-  [self addSubview:_errorLabel];
+  
+  _errorTextView = [[UITextView alloc] init];
+  _errorTextView.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _errorTextView.translatesAutoresizingMaskIntoConstraints = NO;
+  _errorTextView.textColor = colorWithHexString(@"D0021B");
+  _errorTextView.textAlignment = NSTextAlignmentCenter;
+  _errorTextView.scrollEnabled = NO;
+  _errorTextView.editable = NO;
+  _errorTextView.textContainer.lineFragmentPadding = 0;
+  _errorTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
+  [self addSubview:_errorTextView];
   
   NSDictionary *views =
   @{
     @"textField" : _textField,
     @"colorView" : _colorView,
-    @"errorLabel" : _errorLabel,
+    @"errorLabel" : _errorTextView,
     };
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|" options:0 metrics:nil views:views]];
@@ -104,19 +109,16 @@
 
 - (void)setError:(NSString *)text {
   
-  _errorLabel.text = text;
+  _errorTextView.text = text;
   [self layoutIfNeeded];
   [self updateColorView];
   
 }
 
-- (void)setAttributedError:(NSAttributedString *)attributedString {
-  
-}
-
 - (void)updateColorView {
   
-  if (_errorLabel.text.length) {
+  if (_errorTextView.text.length ||
+      _errorTextView.attributedText.length) {
     _colorView.backgroundColor = colorWithHexString(@"D0021B");
   }
   else if(_textField.editing) {
