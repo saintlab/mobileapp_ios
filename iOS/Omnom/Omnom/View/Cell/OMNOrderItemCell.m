@@ -40,6 +40,11 @@
   self.selectedBackgroundView.layer.masksToBounds = YES;
   self.selectedBackgroundView.backgroundColor = ([UIColor colorWithRed:2/255. green:193/255. blue:100/255. alpha:1]);
   
+  UIView *seporatorView = [[UIView alloc] init];
+  seporatorView.translatesAutoresizingMaskIntoConstraints = NO;
+  seporatorView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
+  [self.contentView addSubview:seporatorView];
+  
   _nameLabel = [[UILabel alloc] init];
   _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _nameLabel.textColor = [style colorForKey:@"nameLabelColor"];
@@ -59,6 +64,7 @@
   @{
     @"nameLabel" : _nameLabel,
     @"priceLabel" : _priceLabel,
+    @"seporatorView" : seporatorView,
       };
   
   NSDictionary *metrics =
@@ -67,9 +73,10 @@
     @"lowPriority":@(UILayoutPriorityDefaultLow)
     };
   
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[nameLabel]|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[nameLabel][seporatorView(1)]|" options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[priceLabel]|" options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLabel]-(labelsOffset)-[priceLabel]-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[seporatorView]-|" options:0 metrics:metrics views:views]];
   
 }
 

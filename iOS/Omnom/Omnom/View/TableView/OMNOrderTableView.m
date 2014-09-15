@@ -29,8 +29,7 @@
   self.backgroundView.backgroundColor = [UIColor clearColor];
   
   self.backgroundColor = [UIColor clearColor];
-  self.separatorColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
-  self.separatorInset = UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 12.0f);
+  self.separatorStyle = UITableViewCellSeparatorStyleNone;
   UIImageView *tableHeaderView = [[UIImageView alloc] initWithFrame:self.bounds];
   tableHeaderView.contentMode = UIViewContentModeBottom;
   tableHeaderView.image = [UIImage imageNamed:@"bill_placeholder_icon"];
