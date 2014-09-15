@@ -127,7 +127,7 @@ OMNDemoRestaurantVCDelegate>
 }
 
 - (void)didFindVisitor:(OMNVisitor *)visitor {
-  
+
   [self stopBeaconManager:YES];
   if (visitor) {
     _didFindBlock(self, visitor);

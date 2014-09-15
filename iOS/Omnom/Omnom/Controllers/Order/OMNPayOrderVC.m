@@ -211,7 +211,6 @@ OMNMailRUPayVCDelegate>
   _dataSource.showTotalView = YES;
   
   _tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-  _tableView.userInteractionEnabled = NO;
   _tableView.allowsSelection = NO;
   [_scrollView addSubview:_tableView];
   
@@ -349,13 +348,13 @@ OMNMailRUPayVCDelegate>
   
 }
 
--(UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
   
   return [[UIView alloc] initWithFrame:CGRectZero];
   
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
   
   return 0.01f;
   
