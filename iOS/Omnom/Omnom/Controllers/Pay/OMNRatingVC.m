@@ -11,6 +11,7 @@
 #import "OMNSocketManager.h"
 #import "OMNBorderedButton.h"
 #import "TQStarRatingView.h"
+#import <OMNStyler.h>
 
 @interface OMNRatingVC ()
 
@@ -44,8 +45,8 @@
   [self setup];
   
   _ratingLabel.text = NSLocalizedString(@"Вам здесь понравилось?", nil);
-  _ratingLabel.textColor = [UIColor whiteColor];
-  _ratingLabel.font = FuturaOSFOmnomRegular(18.0f);
+  _ratingLabel.textColor = colorWithHexString(@"FBF7F7");
+  _ratingLabel.font = FuturaOSFOmnomRegular(20.0f);
   
   [_chequeButton addTarget:self action:@selector(chequeTap:) forControlEvents:UIControlEventTouchUpInside];
   [_chequeButton setTitle:NSLocalizedString(@"Чек пожалуйста", nil) selectedTitle:NSLocalizedString(@"Отмена", nil) image:[UIImage imageNamed:@"bill_icon_black_small"]];

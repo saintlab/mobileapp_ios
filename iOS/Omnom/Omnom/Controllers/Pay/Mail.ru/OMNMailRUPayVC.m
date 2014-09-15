@@ -24,6 +24,8 @@
 #import "UIImage+omn_helper.h"
 #import "OMNAnalitics.h"
 #import "OMNOperationManager.h"
+#import "OMNUtils.h"
+
 @interface OMNMailRUPayVC()
 <OMNAddBankCardVCDelegate,
 OMNMailRUCardConfirmVCDelegate>
@@ -95,7 +97,7 @@ OMNMailRUCardConfirmVCDelegate>
   _offerLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
-  [_payButton setTitle:NSLocalizedString(@"Оплатить", nil) forState:UIControlStateNormal];
+  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_order.enteredAmountWithTips]] forState:UIControlStateNormal];
   [_payButton sizeToFit];
   [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
   _payButton.enabled = NO;
