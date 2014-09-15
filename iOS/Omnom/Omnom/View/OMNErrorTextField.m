@@ -51,6 +51,8 @@
   _textField.textColor = [UIColor blackColor];
   _textField.font = FuturaLSFOmnomRegular(20.0f);
   _textField.translatesAutoresizingMaskIntoConstraints = NO;
+  _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+  _textField.autocorrectionType = UITextAutocorrectionTypeNo;
   [self addSubview:_textField];
   
   _colorView = [[UIView alloc] init];

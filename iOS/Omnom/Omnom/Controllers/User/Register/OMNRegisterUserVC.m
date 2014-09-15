@@ -118,6 +118,7 @@ UITextFieldDelegate>
   [contentView addSubview:_errorLabel];
   
   _nameTF = [[OMNErrorTextField alloc] init];
+  _nameTF.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
   _nameTF.textField.returnKeyType = UIReturnKeyNext;
   _nameTF.textField.inputAccessoryView = nextToolbar;
   _nameTF.textField.tag = 0;

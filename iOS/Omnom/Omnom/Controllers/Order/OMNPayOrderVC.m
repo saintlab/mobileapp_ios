@@ -135,10 +135,17 @@ OMNMailRUPayVCDelegate>
 }
 
 - (void)layoutTableView {
+  
+  [_tableView reloadData];
+  CGRect frame = _tableView.frame;
+  frame.size = _tableView.contentSize;
+  _tableView.frame = frame;
+  _scrollView.contentSize = _tableView.frame.size;
   CGFloat topInset = MIN(0.0f, _scrollView.height - _tableView.height);
   CGFloat bottomInset = 1.0f;
   _scrollView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
   _scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -186,8 +193,8 @@ OMNMailRUPayVCDelegate>
   OMNOrder *order = [[OMNOrder alloc] initWithJsonData:info[@"order"]];
   [_order updateWithOrder:order];
   _paymentView.order = _order;
-  [self.tableView reloadData];
   [OMNPaymentNotificationControl showWithInfo:info];
+  [self layoutTableView];
 
 }
 
@@ -218,10 +225,7 @@ OMNMailRUPayVCDelegate>
   _tableView.delegate = _dataSource;
   [_dataSource registerCellsForTableView:self.tableView];
   [_tableView reloadData];
-  CGRect frame = _tableView.frame;
-  frame.size = _tableView.contentSize;
-  _tableView.frame = frame;
-  _scrollView.contentSize = _tableView.frame.size;;
+
   
   NSDictionary *views =
   @{

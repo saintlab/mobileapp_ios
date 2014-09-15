@@ -66,9 +66,8 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     self.modifiedTime = jsonData[@"modified_time"];
     self.restaurant_id = jsonData[@"restaurant_id"];
     self.table_id = jsonData[@"table_id"];
-    self.paid_amount1 = [jsonData[@"paid_amount"] longLongValue];
+    self.paid_amount = [jsonData[@"paid_amount"] longLongValue];
     self.paid_tip = [jsonData[@"paid_tip"] longLongValue];
-    _paid_net = MAX(0ll, self.paid_amount1 - self.paid_tip);
     
     NSArray *itemsData = jsonData[@"items"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsData.count];
@@ -110,10 +109,14 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 - (void)updateWithOrder:(OMNOrder *)order {
   
   self.items = order.items;
-  _paid_amount1 = order.paid_amount1;
+  _paid_amount = order.paid_amount;
   _paid_tip = order.paid_tip;
-  _paid_net = order.paid_net;
   
+}
+
+- (long long)paid_net {
+  long long paid_net = MAX(0ll, self.paid_amount - self.paid_tip);
+  return paid_net;
 }
 
 - (void)deselectAll {

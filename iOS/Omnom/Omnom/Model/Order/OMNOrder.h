@@ -54,7 +54,7 @@ extern NSString *stringFromSplitType(SplitType splitType);
 @property (nonatomic, strong, readonly) NSMutableArray *tips;
 @property (nonatomic, assign, readonly) long long tipsThreshold;
 
-@property (nonatomic, assign) long long paid_amount1;
+@property (nonatomic, assign) long long paid_amount;
 @property (nonatomic, assign) long long paid_tip;
 @property (nonatomic, assign, readonly) long long paid_net;
 

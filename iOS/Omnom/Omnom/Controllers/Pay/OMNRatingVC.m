@@ -168,7 +168,7 @@
   
   [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_chequeButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
 
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[logoView]-[thankLabel][thankTextLabel]-20-[chequeButton]-[chequeImageView]|" options:0 metrics:nil views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[logoView]-[thankLabel][thankTextLabel]-20-[chequeButton]-27-[chequeImageView]|" options:0 metrics:nil views:views]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   

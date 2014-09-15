@@ -71,12 +71,14 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
 
 - (void)startSearching {
   
-#if TARGET_IPHONE_SIMULATOR
-  [self didFindBeacon:[OMNBeacon demoBeacon]];
-#else
-  [self checkNetworkState];
-#endif
-  
+  if (TARGET_IPHONE_SIMULATOR ||
+      [OMNConstants useStubBeacon]) {
+    [self didFindBeacon:[OMNBeacon demoBeacon]];
+  }
+  else {
+    [self checkNetworkState];
+  }
+
 }
 
 - (void)checkNetworkState {
