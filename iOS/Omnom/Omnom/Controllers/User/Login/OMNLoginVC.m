@@ -14,15 +14,11 @@
 #import "OMNNavigationBarProgressView.h"
 #import "OMNErrorTextField.h"
 #import <OMNStyler.h>
-#import <OMNRegisterUserVC.h>
+#import "OMNRegisterUserVC.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate,
 UITextViewDelegate> {
-//  __weak IBOutlet UIButton *_vkButton;
-//  __weak IBOutlet UIButton *_fbButton;
-//  __weak IBOutlet UIButton *_twitterButton;
-  
 }
 
 @end

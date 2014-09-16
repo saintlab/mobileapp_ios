@@ -21,7 +21,7 @@
   self = [super init];
   if (self) {
     _text = @"";
-    self.circleBackground = parent.circleBackground;
+    _circleBackground = parent.circleBackground;
     self.backgroundImage = parent.backgroundImage;
   }
   return self;

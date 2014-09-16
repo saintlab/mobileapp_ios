@@ -70,13 +70,13 @@ OMNMailRUCardConfirmVCDelegate>
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPayNotification:) name:OMNSocketIODidPayNotification object:nil];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
   [self setup];
   
   if (self.demo) {
     _bankCardsModel = [[OMNBankCardsModel alloc] init];
   }
   else {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
     _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
   }
   
@@ -89,7 +89,6 @@ OMNMailRUCardConfirmVCDelegate>
   
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
-  
   
   _errorLabel.text = nil;
   _offerLabel.text = nil;
