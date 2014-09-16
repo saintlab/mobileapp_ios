@@ -94,7 +94,10 @@
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage {
   _backgroundImage = backgroundImage;
-  _backgroundView.image = backgroundImage;
+  if (self.isViewLoaded) {
+    _backgroundView.image = backgroundImage;
+  }
+  
 }
 
 - (void)addActionBoardIfNeeded {
