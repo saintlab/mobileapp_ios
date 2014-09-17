@@ -217,7 +217,6 @@
   [callBillButton addTarget:_restaurantMediator action:@selector(callBillAction) forControlEvents:UIControlEventTouchUpInside];
 
   self.bottomToolbar.hidden = NO;
-  self.bottomViewConstraint.constant = 0.0f;
   self.bottomToolbar.items =
   @[
     [[UIBarButtonItem alloc] initWithCustomView:_callWaiterButton],

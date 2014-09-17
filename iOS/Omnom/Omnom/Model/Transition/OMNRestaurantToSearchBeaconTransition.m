@@ -29,9 +29,11 @@
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [toViewController.backgroundView addSubview:fromImageSnapshot];
   [containerView addSubview:toViewController.view];
+  [toViewController.view layoutIfNeeded];
+  
   [containerView addSubview:fromImageSnapshot];
 
-  [toViewController.view layoutIfNeeded];
+  
   
   [UIView animateWithDuration:duration animations:^{
     

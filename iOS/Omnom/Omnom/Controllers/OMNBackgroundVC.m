@@ -36,10 +36,6 @@
     
   }
   
-  self.bottomViewConstraint.constant = 0.0f;
-  [self.view layoutIfNeeded];
-
-  
 }
 
 - (void)updateActionBoard {
@@ -121,7 +117,7 @@
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomToolbar]|" options:0 metrics:nil views:views]];
   
-  _bottomViewConstraint = [NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:50.0f];
+  _bottomViewConstraint = [NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
   [self.view addConstraint:_bottomViewConstraint];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomToolbar(==50)]" options:0 metrics:nil views:views]];

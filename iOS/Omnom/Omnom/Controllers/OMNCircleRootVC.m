@@ -82,8 +82,7 @@
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_circleButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_circleButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:0.35f constant:0.0f]];
-  
-  [self.view layoutIfNeeded];
+
 }
 
 - (void)setText:(NSString *)newText {
@@ -111,7 +110,6 @@
   
   [UIView animateWithDuration:0.3 animations:^{
     self.label.alpha = 1.0f;
-    [self.view layoutIfNeeded];
   }];
   
 }

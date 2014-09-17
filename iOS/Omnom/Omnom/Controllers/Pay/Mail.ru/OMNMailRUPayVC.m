@@ -261,7 +261,6 @@ OMNMailRUCardConfirmVCDelegate>
     }]
     ];
   [_loadingCircleVC updateActionBoard];
-  _loadingCircleVC.bottomViewConstraint.constant = 0.0f;
   [_loadingCircleVC.view layoutIfNeeded];
   
 }

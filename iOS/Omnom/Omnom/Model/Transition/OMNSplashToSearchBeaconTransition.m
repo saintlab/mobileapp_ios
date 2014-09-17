@@ -21,16 +21,16 @@
   
   OMNSearchRestaurantVC *fromViewController = (OMNSearchRestaurantVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNSearchBeaconVC *toViewController = (OMNSearchBeaconVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-  [toViewController.view layoutIfNeeded];
   
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
 
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView addSubview:toViewController.view];
+  [toViewController.view layoutIfNeeded];
   
   UIImageView *fromViewSnapshot = [[UIImageView alloc] initWithImage:toViewController.backgroundView.image];
-  
+  fromViewSnapshot.contentMode = UIViewContentModeTop;
   _layer = [CAShapeLayer layer];
   _layer.fillColor = [UIColor colorWithPatternImage:fromViewController.bgIV.image].CGColor;
   CGFloat diametr = hypotf(containerView.frame.size.width, containerView.frame.size.height);
@@ -54,7 +54,8 @@
   oldLogoIV.center = fromViewController.logoIV.center;
   [fromViewSnapshot addSubview:oldLogoIV];
   
-  UIImageView *newLogoIV = [[UIImageView alloc] initWithImage:toViewController.circleIcon];
+  UIButton *newLogoIV = [[UIButton alloc] initWithFrame:toViewController.circleButton.frame];
+  [newLogoIV setImage:toViewController.circleIcon forState:UIControlStateNormal];
   newLogoIV.transform =  CGAffineTransformMakeScale(scale, scale);
   newLogoIV.alpha = 0.0f;
   newLogoIV.center = fromViewController.logoIV.center;
@@ -96,9 +97,12 @@
   colorLayer.path = toPath.CGPath;
   
   [UIView animateWithDuration:duration/2. delay:delay options:0 animations:^{
+    
     iconsIV.alpha = 0.0f;
     oldLogoIV.alpha = 0.0f;
+    
   } completion:^(BOOL finished) {
+    
     [iconsIV removeFromSuperview];
   }];
   
