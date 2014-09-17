@@ -61,16 +61,9 @@ static NSDictionary *_config = nil;
 - (instancetype)initWithBaseURL:(NSURL *)url {
   self = [super initWithBaseURL:url];
   if (self) {
+
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFHTTPRequestSerializer serializer];
-    
-    AFSecurityPolicy *securityPolicy = [[AFSecurityPolicy alloc] init];
-    [securityPolicy setAllowInvalidCertificates:NO];
-    [securityPolicy setPinnedCertificates:@[[self certificateData]]];
-    securityPolicy.validatesCertificateChain = NO;
-    [securityPolicy setSSLPinningMode:AFSSLPinningModeCertificate];
-    
-    self.securityPolicy = securityPolicy;
     
   }
   return self;
@@ -78,13 +71,6 @@ static NSDictionary *_config = nil;
 
 - (NSString *)testCVV {
   return _config[@"OMNMailRuTestCVV"];
-}
-
-- (NSData *)certificateData {
-  NSString *name = _config[@"OMNMailRuCertificateName"];
-  NSString *certificatePath = [[NSBundle mainBundle] pathForResource:name ofType:nil];
-  NSData *certificateData = [NSData dataWithContentsOfFile:certificatePath];
-  return certificateData;
 }
 
 /*

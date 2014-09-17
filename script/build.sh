@@ -7,7 +7,11 @@ cd $GIT_DIR
 echo "pull repo..."
 git pull origin master
 
-type pod >/dev/null 2>&1 || { echo >&2 "I require CocoaPods but it's not installed. Aborting."; exit 1; }
+type pod >/dev/null 2>&1 || {
+echo >&2 "I require CocoaPods but it's not installed. Aborting.";
+echo "to install run \"sudo gem install cocoapods\""
+exit 1;
+}
 
 cd $PROJECT_DIR
 echo "install Pods..."
