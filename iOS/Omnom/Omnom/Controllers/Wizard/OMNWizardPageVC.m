@@ -33,7 +33,7 @@
   OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
   
   if (self.bgImageName) {
-    _iv.contentMode = UIViewContentModeTop;
+    _iv.contentMode = UIViewContentModeCenter;
     _iv.image = [UIImage imageNamed:self.bgImageName];
   }
   

@@ -30,7 +30,7 @@
   [toViewController.view layoutIfNeeded];
   
   UIImageView *fromViewSnapshot = [[UIImageView alloc] initWithImage:toViewController.backgroundView.image];
-  fromViewSnapshot.contentMode = UIViewContentModeTop;
+  fromViewSnapshot.contentMode = UIViewContentModeCenter;
   _layer = [CAShapeLayer layer];
   _layer.fillColor = [UIColor colorWithPatternImage:fromViewController.bgIV.image].CGColor;
   CGFloat diametr = hypotf(containerView.frame.size.width, containerView.frame.size.height);

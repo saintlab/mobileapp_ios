@@ -9,6 +9,7 @@
 #import "OMNErrorTextField.h"
 #import <OMNStyler.h>
 #import "OMNConstants.h"
+#import "OMNNonSelectableTextView.h"
 
 @interface OMNErrorTextField ()
 
@@ -60,15 +61,12 @@
   [self addSubview:_colorView];
   
   
-  _errorTextView = [[UITextView alloc] init];
+  _errorTextView = [[OMNNonSelectableTextView alloc] init];
+  _errorTextView.selectable = NO;
   _errorTextView.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   _errorTextView.translatesAutoresizingMaskIntoConstraints = NO;
   _errorTextView.textColor = colorWithHexString(@"D0021B");
   _errorTextView.textAlignment = NSTextAlignmentCenter;
-  _errorTextView.scrollEnabled = NO;
-  _errorTextView.editable = NO;
-  _errorTextView.textContainer.lineFragmentPadding = 0;
-  _errorTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
   [self addSubview:_errorTextView];
   
   NSDictionary *views =

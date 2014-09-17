@@ -107,6 +107,8 @@
 		93535F13198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535F11198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m */; };
 		935C284219066755003B4881 /* fill-form in Resources */ = {isa = PBXBuildFile; fileRef = 935C283C19066737003B4881 /* fill-form */; };
 		935C284319066755003B4881 /* jquery-2.0.3.min in Resources */ = {isa = PBXBuildFile; fileRef = 935C283D19066737003B4881 /* jquery-2.0.3.min */; };
+		935DBF4D19C991CD0045C9DC /* OMNNonSelectableTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 935DBF4C19C991CD0045C9DC /* OMNNonSelectableTextView.m */; };
+		935DBF4E19C991CD0045C9DC /* OMNNonSelectableTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 935DBF4C19C991CD0045C9DC /* OMNNonSelectableTextView.m */; };
 		93676DED18D1E4FC00FC55F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DEC18D1E4FC00FC55F1 /* Foundation.framework */; };
 		93676DEF18D1E4FC00FC55F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DEE18D1E4FC00FC55F1 /* CoreGraphics.framework */; };
 		93676DF118D1E4FC00FC55F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DF018D1E4FC00FC55F1 /* UIKit.framework */; };
@@ -488,6 +490,8 @@
 		93535F11198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchBeaconToPayOrderTransition.m; sourceTree = "<group>"; };
 		935C283C19066737003B4881 /* fill-form */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fill-form"; sourceTree = "<group>"; };
 		935C283D19066737003B4881 /* jquery-2.0.3.min */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "jquery-2.0.3.min"; sourceTree = "<group>"; };
+		935DBF4B19C991CD0045C9DC /* OMNNonSelectableTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNonSelectableTextView.h; sourceTree = "<group>"; };
+		935DBF4C19C991CD0045C9DC /* OMNNonSelectableTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNonSelectableTextView.m; sourceTree = "<group>"; };
 		93676DE918D1E4FC00FC55F1 /* omnom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = omnom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93676DEC18D1E4FC00FC55F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93676DEE18D1E4FC00FC55F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -855,6 +859,8 @@
 				93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */,
 				93F21B8E19B6031B00D5F78A /* OMNLightBackgroundButton.h */,
 				93F21B8F19B6031B00D5F78A /* OMNLightBackgroundButton.m */,
+				935DBF4B19C991CD0045C9DC /* OMNNonSelectableTextView.h */,
+				935DBF4C19C991CD0045C9DC /* OMNNonSelectableTextView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2015,6 +2021,7 @@
 				93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */,
 				93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */,
 				930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */,
+				935DBF4D19C991CD0045C9DC /* OMNNonSelectableTextView.m in Sources */,
 				938E8F5C192F3A200088EF38 /* OMNTable.m in Sources */,
 				9319FD65192F33B90053F3A4 /* OMNTipSelector.m in Sources */,
 				9321182C1962E16100183729 /* OMNProductDetailsVC.m in Sources */,
@@ -2087,6 +2094,7 @@
 				9345AFD2199BB3C700328F73 /* OMNPaymentNotificationControl.m in Sources */,
 				939F992519752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				9390D25F1966DA68007E13AB /* OMNRestaurantMediator.m in Sources */,
+				935DBF4E19C991CD0045C9DC /* OMNNonSelectableTextView.m in Sources */,
 				93175DC119C2DD2D005EE4C6 /* UIImage+ImageEffects.m in Sources */,
 				93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,

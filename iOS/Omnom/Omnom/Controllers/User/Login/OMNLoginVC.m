@@ -15,6 +15,7 @@
 #import "OMNErrorTextField.h"
 #import <OMNStyler.h>
 #import "OMNRegisterUserVC.h"
+#import "OMNNonSelectableTextView.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate,
@@ -74,15 +75,12 @@ UITextViewDelegate> {
   _loginTF = [[OMNErrorTextField alloc] init];
   [self.view addSubview:_loginTF];
   
-  _hintTextView = [[UITextView alloc] init];
+  _hintTextView = [[OMNNonSelectableTextView alloc] init];
   _hintTextView.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   _hintTextView.translatesAutoresizingMaskIntoConstraints = NO;
   _hintTextView.textColor = colorWithHexString(@"D0021B");
   _hintTextView.delegate = self;
-  _hintTextView.scrollEnabled = NO;
-  _hintTextView.editable = NO;
-  _hintTextView.textContainer.lineFragmentPadding = 0;
-  _hintTextView.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
+
   [self.view addSubview:_hintTextView];
   
   NSDictionary *views =

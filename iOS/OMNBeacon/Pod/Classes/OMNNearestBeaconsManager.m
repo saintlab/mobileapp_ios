@@ -19,7 +19,7 @@
   
   dispatch_semaphore_t _addBeaconLock;
 
-  OMNFoundBeaconsBlock _foundNearestBeaconsBlock;
+  void (^_foundNearestBeaconsBlock)(NSArray *foundBeacons);
 
   OMNBeaconRangingManager *_beaconRangingManager;
   CLAuthorizationStatusBlock _statusBlock;
@@ -49,7 +49,7 @@
   return self;
 }
 
-- (void)rangeNearestBeacons:(OMNFoundBeaconsBlock)block {
+- (void)rangeNearestBeacons:(void (^)(NSArray *foundBeacons))block {
   
   NSAssert(block != nil, @"rangeNearestBeacons block shouldn't be nil");
   
