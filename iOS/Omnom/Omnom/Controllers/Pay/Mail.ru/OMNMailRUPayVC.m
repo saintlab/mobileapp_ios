@@ -266,12 +266,18 @@ OMNMailRUCardConfirmVCDelegate>
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
       
-      [weakSelf didFailCreateOrderWithError:nil];
+      [weakSelf popViewController];
       
     }]
     ];
   [_loadingCircleVC updateActionBoard];
   [_loadingCircleVC.view layoutIfNeeded];
+  
+}
+
+- (void)popViewController {
+  
+  [self.navigationController popToViewController:self animated:YES];
   
 }
 
@@ -382,7 +388,7 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)addBankCardVCDidCancel:(OMNAddBankCardVC *)addBankCardVC {
   
-  [self.navigationController popToViewController:self animated:YES];
+  [self popViewController];
   
 }
 
@@ -390,7 +396,7 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)mailRUCardConfirmVCDidFinish:(OMNMailRUCardConfirmVC *)mailRUCardConfirmVC {
 
-  [self.navigationController popToViewController:self animated:YES];
+  [self popViewController];
   
 }
 
