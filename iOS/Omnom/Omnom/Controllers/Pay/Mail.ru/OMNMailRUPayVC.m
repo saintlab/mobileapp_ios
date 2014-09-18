@@ -208,8 +208,18 @@ OMNMailRUCardConfirmVCDelegate>
 }
 
 - (void)didFailCreateOrderWithError:(NSError *)error {
-  [self.navigationController popToViewController:self animated:YES];
-  _errorLabel.text = error.localizedDescription;
+  
+  if (_order.id) {
+    [[OMNAnalitics analitics] logEvent:@"ERROR_BILL_CREATE" parametrs:@{@"order_id" : _order.id}];
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  [_loadingCircleVC finishLoading:^{
+    
+    [weakSelf didFailWithError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку позже", nil)];
+    
+  }];
+  
 }
 
 - (void)didPayNotification:(NSNotification *)n {
@@ -233,7 +243,7 @@ OMNMailRUCardConfirmVCDelegate>
     else {
       
       [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_PAY" parametrs:response];
-      [weakSelf mailRuDidFail];
+      [weakSelf didFailWithError:NSLocalizedString(@"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.", nil)];
       
     }
 
@@ -248,9 +258,9 @@ OMNMailRUCardConfirmVCDelegate>
   
 }
 
-- (void)mailRuDidFail {
+- (void)didFailWithError:(NSString *)errorText {
   
-  [_loadingCircleVC setText:NSLocalizedString(@"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.", nil)];
+  [_loadingCircleVC setText:errorText];
   __weak typeof(self)weakSelf = self;
   _loadingCircleVC.buttonInfo =
   @[
