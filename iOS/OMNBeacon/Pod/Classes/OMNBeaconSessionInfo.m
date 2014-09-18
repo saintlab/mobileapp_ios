@@ -10,7 +10,7 @@
 
 @implementation OMNBeaconSessionInfo
 
-- (instancetype)initWithBeacon:(OMNBeacon *)beacon {
+- (instancetype)initWithBeacon:(CLBeacon *)beacon {
   self = [super init];
   if (self) {
     self.proximity = beacon.proximity;

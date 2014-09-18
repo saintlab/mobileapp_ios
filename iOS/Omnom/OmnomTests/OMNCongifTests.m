@@ -52,8 +52,6 @@ describe(@"check initial state", ^{
     BOOL isConfigSet = [OMNMailRuAcquiring setConfig:mailRuConfig];
     [[@(isConfigSet) should] equal:@(YES)];
     
-    [[[[OMNMailRuAcquiring acquiring] certificateData] should] beNonNil];
-    
   });
   
 });

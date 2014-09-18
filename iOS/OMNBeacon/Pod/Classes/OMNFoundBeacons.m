@@ -15,16 +15,17 @@
   NSMutableDictionary *_existingBeaconsDictionary;
 }
 
+@dynamic atTheTableBeacons;
+
 - (instancetype)init {
   self = [super init];
   if (self) {
     _existingBeaconsDictionary = [NSMutableDictionary dictionary];
-    _atTheTableBeacons = [NSMutableArray array];
   }
   return self;
 }
 
-- (BOOL)updateWithFoundBeacons:(NSArray *)foundBeacons {
+- (BOOL)updateWithBeacons:(NSArray *)foundBeacons {
  
   NSMutableDictionary *existingBeaconsDictionary = _existingBeaconsDictionary;
 
@@ -39,7 +40,7 @@
       
       if (existingBeacon) {
         
-        [existingBeacon updateWithBeacon:newBeacon];
+        [existingBeacon updateWithBeacon:beacon];
         
       }
       else {
@@ -52,28 +53,38 @@
     
   }];
   
-  __block BOOL hasChanges = NO;
+}
+
+- (NSArray *)atTheTableBeacons {
+  
+  NSMutableDictionary *rssiInfo = [NSMutableDictionary dictionary];
   [_existingBeaconsDictionary enumerateKeysAndObjectsUsingBlock:^(id key, OMNBeacon *beacon, BOOL *stop) {
     
-    if (beacon.atTheTable &&
-        ![_atTheTableBeacons containsObject:beacon]) {
-      
-      [_atTheTableBeacons addObject:beacon];
-      hasChanges = YES;
-      
-    }
-    else if ([_atTheTableBeacons containsObject:beacon] &&
-             !beacon.atTheTable){
-      
-      [_atTheTableBeacons removeObject:beacon];
-      hasChanges = YES;
-      
+    if (beacon.averageRSSI > kBoardingRSSI) {
+      rssiInfo[@(beacon.averageRSSI)] = beacon;
     }
     
   }];
+
   
-  return hasChanges;
+  if (rssiInfo.count == 0) {
+    return nil;
+  }
   
+  return [rssiInfo allValues];
+  
+  /*
+  NSArray *sortedRssi = [[rssiInfo allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
+    return [obj2 compare:obj1];
+  }];
+
+  
+  
+  NSLog(@"%@", sortedRssi);
+  
+  NSMutableArray *atTheTableBeacons = [NSMutableArray array];
+  return atTheTableBeacons;
+   */
 }
 
 @end

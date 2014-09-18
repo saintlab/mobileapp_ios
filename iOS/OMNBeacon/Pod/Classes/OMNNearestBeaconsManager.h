@@ -8,7 +8,6 @@
 
 #import "OMNBeaconRangingManager.h"
 
-
 @interface OMNNearestBeaconsManager : NSObject 
 
 @property (nonatomic, assign, readonly) BOOL isRanging;

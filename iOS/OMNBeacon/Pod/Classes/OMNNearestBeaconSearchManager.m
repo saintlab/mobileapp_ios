@@ -24,8 +24,7 @@
   
   OMNBeaconRangingManager *_beaconRangingManager;
   OMNDevicePositionManager *_devicePositionManager;
-  
-  OMNBeaconBlock _didFindNearestBeaconBlock;
+  void(^_didFindNearestBeaconBlock)(OMNBeacon *beacon);
   dispatch_block_t _failureBlock;
   
 }
@@ -44,7 +43,7 @@
   
 }
 
-- (void)findNearestBeacon:(OMNBeaconBlock)didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock {
+- (void)findNearestBeacon:(void(^)(OMNBeacon *beacon))didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock {
   
   _didFindNearestBeaconBlock = didFindNearestBeaconBlock;
   _failureBlock = failureBlock;

@@ -13,7 +13,7 @@
 #import "OMNNearestBeaconsManager.h"
 #import <OMNBeaconBackgroundManager.h>
 
-NSTimeInterval kBeaconSearchTimeout = 2.0;
+NSTimeInterval kBeaconSearchTimeout = 5.0;
 
 @interface OMNBeaconSearchManager ()
 
@@ -73,10 +73,14 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
   
   if (TARGET_IPHONE_SIMULATOR ||
       [OMNConstants useStubBeacon]) {
-    [self didFindBeacon:[OMNBeacon demoBeacon]];
+    
+    [self checkNearestBeacons:@[[OMNBeacon demoBeacon]]];
+    
   }
   else {
+    
     [self checkNetworkState];
+    
   }
 
 }
@@ -213,26 +217,9 @@ NSTimeInterval kBeaconSearchTimeout = 2.0;
     return;
   }
   
-  
-  if (nearestBeacons.count > 1) {
-    
-    [self stopRangingNearestBeacons:NO];
-    [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestDeviceFaceUpPosition];
-    
-  }
-  else {
-    
-    OMNBeacon *beacon = [nearestBeacons firstObject];
-    [self didFindBeacon:beacon];
-    
-  }
-  
-}
-
-- (void)didFindBeacon:(OMNBeacon *)beacon {
-  
-  [self stopRangingNearestBeacons:YES];
-  [self.delegate beaconSearchManager:self didFindBeacon:beacon];
+  BOOL beaconDidFound = (nearestBeacons.count == 1);
+  [self stopRangingNearestBeacons:beaconDidFound];
+  [self.delegate beaconSearchManager:self didFindBeacons:nearestBeacons];
   
 }
 

@@ -8,11 +8,9 @@
 
 #import "OMNBeacon.h"
 
-typedef void(^OMNBeaconBlock)(OMNBeacon *beacon);
-
 @interface OMNNearestBeaconSearchManager : NSObject
 
-- (void)findNearestBeacon:(OMNBeaconBlock)didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock;
+- (void)findNearestBeacon:(void(^)(OMNBeacon *beacon))didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock;
 
 - (void)stop;
 

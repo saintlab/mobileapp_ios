@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNBeacon.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface OMNBeaconSessionInfo : NSObject
 
@@ -14,6 +14,6 @@
 @property (nonatomic, assign) CLProximity proximity;
 @property (nonatomic, assign) NSInteger rssi;
 
-- (instancetype)initWithBeacon:(OMNBeacon *)beacon;
+- (instancetype)initWithBeacon:(CLBeacon *)beacon;
 
 @end

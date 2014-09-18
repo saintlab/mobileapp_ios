@@ -21,7 +21,8 @@ __unused static NSTimeInterval const kGTimeToLoseMarkSeconds = 5.0;
 static NSUInteger const kMaxBeaconCount = 7;
 static NSUInteger const kBeaconDesiredTimesAccuracy = 2;
 
-const NSInteger kBoardingRSSI = -68;
+const NSInteger kBoardingRSSI = -70;
+const NSInteger kMaxRSSI = -80;
 const NSInteger kNearestDeltaRSSI = 10;
 
 @implementation OMNBeacon {
@@ -67,21 +68,14 @@ const NSInteger kNearestDeltaRSSI = 10;
   
 }
 
-- (void)updateWithBeacon:(OMNBeacon *)beacon {
+- (void)updateWithBeacon:(CLBeacon *)beacon {
   
   dispatch_semaphore_wait(_updateBeaconLock, DISPATCH_TIME_FOREVER);
   
   OMNBeaconSessionInfo *sessionInfo = [[OMNBeaconSessionInfo alloc] initWithBeacon:beacon];
-  [_beaconSessionInfo addObject:sessionInfo];
-  
-  if (nil == _firstImmediateDate &&
-      (CLProximityImmediate == sessionInfo.proximity ||
-       CLProximityNear == sessionInfo.proximity)) {
-        _firstImmediateDate = [NSDate date];
-      }
-  
-  if (_beaconSessionInfo.count > kMaxBeaconCount) {
-    [_beaconSessionInfo omn_removeFirstObject];
+  if (sessionInfo.rssi > kMaxRSSI &&
+      sessionInfo.rssi != 0) {
+    [_beaconSessionInfo addObject:sessionInfo];
   }
   
   self.accuracy = beacon.accuracy;
@@ -92,20 +86,37 @@ const NSInteger kNearestDeltaRSSI = 10;
   
 }
 
-- (BOOL)atTheTable {
+- (double)averageRSSI {
   
-  __block NSInteger atTheTableTimes = 0;
+  if (_beaconSessionInfo.count < 2) {
+    return -100;
+  }
   
+  __block double totalRSSI = 0;
   [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *sessionInfo, NSUInteger idx, BOOL *stop) {
     
-    if (CLProximityImmediate == sessionInfo.proximity ||
-        CLProximityNear == sessionInfo.proximity) {
-      atTheTableTimes++;
+    totalRSSI += sessionInfo.rssi;
+    
+  }];
+  return totalRSSI/_beaconSessionInfo.count;
+
+}
+
+- (BOOL)atTheTable {
+  
+  __block NSInteger totalRSSI = 0;
+  [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *sessionInfo, NSUInteger idx, BOOL *stop) {
+    
+    if (sessionInfo.rssi > kBoardingRSSI) {
+      totalRSSI += (sessionInfo.rssi - kBoardingRSSI);
     }
     
   }];
   
-  return (atTheTableTimes >= kBeaconDesiredTimesAccuracy);
+  NSLog(@"atTheTableTimes>%d totalRSSI>%d, %@", _beaconSessionInfo.count, totalRSSI, self.key);
+  
+  return (_beaconSessionInfo.count >= kBeaconDesiredTimesAccuracy &&
+          totalRSSI > 0);
   
 }
 
@@ -113,28 +124,9 @@ const NSInteger kNearestDeltaRSSI = 10;
   return (self.rssi > kBoardingRSSI);
 }
 
-- (double)totalRSSI {
-  
-  if (_beaconSessionInfo.count == 0) {
-    return -1000;
-  }
-  
-  __block double totalRSSI = 0;
-  [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *sessionInfo, NSUInteger idx, BOOL *stop) {
-    totalRSSI += sessionInfo.rssi;
-  }];
-  
-  return totalRSSI / _beaconSessionInfo.count;
-  
-}
-
 - (void)removeFromTable {
   _firstImmediateDate = nil;
   [_beaconSessionInfo removeAllObjects];
-}
-
-- (BOOL)locatedNearMark {
-  return (CLProximityImmediate == self.proximity);
 }
 
 - (void)newIterationBegin {

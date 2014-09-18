@@ -261,9 +261,25 @@ OMNDemoRestaurantVCDelegate>
 
 #pragma mark - OMNBeaconSearchManagerDelegate
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon {
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacons:(NSArray *)beacons {
   
-  [self decodeBeacon:beacon];
+  if (1 == beacons.count) {
+    OMNBeacon *beacon = [beacons firstObject];
+    [self decodeBeacon:beacon];
+  }
+  else {
+    
+    NSMutableDictionary *beaconsRSSIData = [NSMutableDictionary dictionaryWithCapacity:beacons.count];
+    [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
+      
+      beaconsRSSIData[beacon.key] = @(beacon.averageRSSI);
+      
+    }];
+    
+    [[OMNAnalitics analitics] logEvent:@"low_signal" parametrs:@{@"beacons" : beaconsRSSIData}];
+    [self determineFaceUpPosition];
+    
+  }
   
 }
 
@@ -334,13 +350,6 @@ OMNDemoRestaurantVCDelegate>
         [weakSelf.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
         
       }];
-      
-    } break;
-    case kSearchManagerRequestDeviceFaceUpPosition: {
-      
-      NSLog(@"determineFaceUpPosition");
-      [[OMNAnalitics analitics] logEvent:@"low_signal" parametrs:nil];
-      [self determineFaceUpPosition];
       
     } break;
     case kSearchManagerRequestLocationManagerPermission: {

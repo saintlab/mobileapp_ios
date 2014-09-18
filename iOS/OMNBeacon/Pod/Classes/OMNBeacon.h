@@ -43,11 +43,11 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 
 - (BOOL)closeToBeacon:(OMNBeacon *)beacon;
 
-- (void)updateWithBeacon:(OMNBeacon *)beacon;
+- (void)updateWithBeacon:(CLBeacon *)beacon;
 
 - (void)removeFromTable;
 
-- (double)totalRSSI;
+- (double)averageRSSI;
 
 - (void)newIterationBegin;
 

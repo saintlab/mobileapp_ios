@@ -25,7 +25,6 @@ typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
   kSearchManagerBLEDidOn,
   kSearchManagerBLEUnsupported,
   kSearchManagerRequestTurnBLEOn,
-  kSearchManagerRequestDeviceFaceUpPosition,
   
 };
 
@@ -40,7 +39,7 @@ typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
 
 @protocol OMNBeaconSearchManagerDelegate <NSObject>
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacon:(OMNBeacon *)beacon;
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacons:(NSArray *)beacons;
 
 - (void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager found:(BOOL)foundBeacon;
 

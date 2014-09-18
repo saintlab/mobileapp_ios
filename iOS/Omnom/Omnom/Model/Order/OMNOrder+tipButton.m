@@ -13,8 +13,8 @@
 @implementation OMNOrder (tipButton)
 
 - (NSString *)titleForAmount:(long long)amount {
-  if (self.expectedValue) {
-    double percent = 100.*(double)amount/self.expectedValue;
+  if (self.enteredAmount) {
+    double percent = 100.*(double)amount/self.enteredAmount;
     return [NSString stringWithFormat:@"%.0f%%\n%@", percent, [OMNUtils evenCommaStringFromKop:amount]];
   }
   else {

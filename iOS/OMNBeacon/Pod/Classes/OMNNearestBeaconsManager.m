@@ -18,11 +18,11 @@
 @implementation OMNNearestBeaconsManager {
   
   dispatch_semaphore_t _addBeaconLock;
-
   void (^_foundNearestBeaconsBlock)(NSArray *foundBeacons);
-
+  OMNFoundBeacons *_foundBeacons;
   OMNBeaconRangingManager *_beaconRangingManager;
   CLAuthorizationStatusBlock _statusBlock;
+  
 }
 
 - (void)dealloc {
@@ -42,6 +42,7 @@
 - (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock {
   self = [super init];
   if (self) {
+    _foundBeacons = [[OMNFoundBeacons alloc] init];
     _statusBlock = statusBlock;
     _addBeaconLock = dispatch_semaphore_create(1);
     _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:_statusBlock];
@@ -83,14 +84,13 @@
   
   dispatch_semaphore_wait(_addBeaconLock, DISPATCH_TIME_FOREVER);
 
-  NSMutableArray *foundBeacons = [NSMutableArray arrayWithCapacity:newBeacons.count];
-  [newBeacons enumerateObjectsUsingBlock:^(CLBeacon *beacon, NSUInteger idx, BOOL *stop) {
-    
-    [foundBeacons addObject:[beacon omn_beacon]];
-    
-  }];
+  [_foundBeacons updateWithBeacons:newBeacons];
   
-  [self findNearestBeacons:foundBeacons];
+  NSArray *nearestBeacons = _foundBeacons.atTheTableBeacons;
+  if (nearestBeacons.count) {
+    _foundNearestBeaconsBlock(nearestBeacons);
+    _foundBeacons = [[OMNFoundBeacons alloc] init];
+  }
   
   dispatch_semaphore_signal(_addBeaconLock);
   
@@ -98,32 +98,6 @@
 
 - (void)processError:(NSError *)error {
 //TODO:
-}
-
-- (void)findNearestBeacons:(NSArray *)beacons {
-  
-  if (nil == _foundNearestBeaconsBlock) {
-    return;
-  }
-  
-  OMNBeacon *nearestBeacon = [beacons firstObject];
-  
-  if (NO == nearestBeacon.nearTheTable) {
-    return;
-  }
-  
-  NSMutableArray *nearestBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
-  [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
-    
-    if ([beacon closeToBeacon:nearestBeacon]
-        ) {
-      [nearestBeacons addObject:beacon];
-    }
-    
-  }];
-  
-  _foundNearestBeaconsBlock(nearestBeacons);
-  
 }
 
 @end

@@ -12,6 +12,6 @@
 
 @property (nonatomic, strong, readonly) NSMutableArray *atTheTableBeacons;
 
-- (BOOL)updateWithFoundBeacons:(NSArray *)foundBeacons;
+- (BOOL)updateWithBeacons:(NSArray *)foundBeacons;
 
 @end

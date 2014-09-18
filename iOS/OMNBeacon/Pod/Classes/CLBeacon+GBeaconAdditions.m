@@ -16,9 +16,7 @@
   beacon.UUIDString = self.proximityUUID.UUIDString;
   beacon.major = [self.major description];
   beacon.minor = [self.minor description];
-  beacon.proximity = self.proximity;
-  beacon.rssi = self.rssi;
-  beacon.accuracy = self.accuracy;
+  [beacon updateWithBeacon:self];
   
   return beacon;
   

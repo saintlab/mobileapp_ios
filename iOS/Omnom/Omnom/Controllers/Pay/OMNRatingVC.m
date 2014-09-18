@@ -40,16 +40,19 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(billCallDone:) name:OMNSocketIOBillCallDoneNotification object:nil];
   
   [self setup];
+  
+  [_starRatingView setScore:0.0f withAnimation:NO];
   
   _ratingLabel.text = NSLocalizedString(@"Вам здесь понравилось?", nil);
   _ratingLabel.textColor = colorWithHexString(@"FBF7F7");
   _ratingLabel.font = FuturaOSFOmnomRegular(20.0f);
   
   [_chequeButton addTarget:self action:@selector(chequeTap:) forControlEvents:UIControlEventTouchUpInside];
-  [_chequeButton setTitle:NSLocalizedString(@"Чек пожалуйста", nil) selectedTitle:NSLocalizedString(@"Отмена", nil) image:[UIImage imageNamed:@"bill_icon_black_small"]];
+  [_chequeButton setTitle:NSLocalizedString(@"Бумажный чек", nil) selectedTitle:NSLocalizedString(@"Отмена", nil) image:[UIImage imageNamed:@"bill_icon_black_small"]];
   
   if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
     self.automaticallyAdjustsScrollViewInsets = NO;

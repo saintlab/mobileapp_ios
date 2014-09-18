@@ -68,13 +68,36 @@ OMNPayOrderVCDelegate>
 
 - (void)searchBeaconWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
   
-  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:completionBlock cancelBlock:cancelBlock];
+  __weak typeof(self)weakSelf = self;
+  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
+    
+    [weakSelf checkNewGuestForVisitor:visitor];
+    completionBlock(searchBeaconVC, visitor);
+    
+  } cancelBlock:cancelBlock];
   searchBeaconVC.estimateAnimationDuration = 10.0;
   searchBeaconVC.circleIcon = icon;
   if (self.restaurantVC.visitor.restaurant.is_demo) {
     searchBeaconVC.visitor = self.restaurantVC.visitor;
   }
   [self pushViewController:searchBeaconVC];
+  
+}
+
+- (void)checkNewGuestForVisitor:(OMNVisitor *)visitor {
+  
+  if (visitor.table.id &&
+      NO == [self.restaurantVC.visitor.table.id isEqualToString:visitor.table.id]) {
+    
+    self.restaurantVC.visitor.table.id = visitor.table.id;
+    
+    [visitor newGuestWithCompletion:^{
+      
+    } failure:^(NSError *error) {
+      
+    }];
+    
+  }
   
 }
 
