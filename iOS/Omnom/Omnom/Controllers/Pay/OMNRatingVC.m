@@ -30,13 +30,6 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-  if (self) {
-  }
-  return self;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
   
@@ -58,7 +51,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
   }
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
 
 }
 
@@ -187,8 +180,6 @@
   [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[ratingLabel][starRatingView(50)]|" options:0 metrics:nil views:views]];
   [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[starRatingView(225)]" options:0 metrics:nil views:views]];
   [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[ratingLabel]|" options:0 metrics:nil views:views]];
-  
-  
   
 }
 
