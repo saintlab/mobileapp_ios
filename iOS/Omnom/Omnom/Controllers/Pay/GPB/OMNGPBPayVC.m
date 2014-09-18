@@ -176,7 +176,7 @@
     UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Завершить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(finishPayment)];
     [self.navigationItem setRightBarButtonItem:button animated:YES];
     [self.navigationItem setHidesBackButton:YES animated:YES];
-    self.navigationItem.prompt = NSLocalizedString(@"Счет успешно оплачен", nil);
+    self.navigationItem.prompt = NSLocalizedString(@"Счёт успешно оплачен", nil);
     
   }
   

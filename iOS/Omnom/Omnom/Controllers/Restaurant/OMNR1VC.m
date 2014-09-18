@@ -213,7 +213,7 @@
   [_callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
   [_callWaiterButton sizeToFit];
   
-  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_bill_icon_small"] title:NSLocalizedString(@"Счет", nil)];
+  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_bill_icon_small"] title:NSLocalizedString(@"Счёт", nil)];
   [callBillButton addTarget:_restaurantMediator action:@selector(callBillAction) forControlEvents:UIControlEventTouchUpInside];
 
   self.bottomToolbar.hidden = NO;

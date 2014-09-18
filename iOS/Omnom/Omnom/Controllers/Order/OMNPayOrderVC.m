@@ -88,7 +88,7 @@ OMNMailRUPayVCDelegate>
       UIButton *button = [[UIButton alloc] init];
       button.titleLabel.font = FuturaLSFOmnomRegular(20.0f);
       [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-      [button setTitle:[NSString stringWithFormat:@"Счет %lu", (long unsigned)index + 1] forState:UIControlStateNormal];
+      [button setTitle:[NSString stringWithFormat:@"Счёт %lu", (long unsigned)index + 1] forState:UIControlStateNormal];
       button.layer.borderColor = [UIColor blackColor].CGColor;
       button.contentEdgeInsets = UIEdgeInsetsMake(3.0f, 10.0f, 3.0f, 10.0f);
       button.layer.borderWidth = 1.0f;
