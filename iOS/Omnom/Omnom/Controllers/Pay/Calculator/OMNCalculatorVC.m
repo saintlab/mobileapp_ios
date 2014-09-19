@@ -245,15 +245,24 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 - (void)totalDidChange:(long long)total {
   
   _total = total;
-  [_totalButton setTitle:[OMNUtils commaStringFromKop:total] forState:UIControlStateNormal];
+  [UIView animateWithDuration:0.3 animations:^{
+
+    if (_total > 0) {
+      _totalButton.alpha = 1.0f;
+      [_totalButton setTitle:[OMNUtils commaStringFromKop:total] forState:UIControlStateNormal];
+    }
+    else {
+      _totalButton.alpha = 0.0f;
+    }
+    
+  }];
   
 }
 
 - (void)calculatorVC:(OMNCalculatorVC *)calculatorVC splitType:(SplitType)splitType didFinishWithTotal:(long long)total {
-  
 }
-- (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {
-  
+
+- (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {  
 }
 
 @end
