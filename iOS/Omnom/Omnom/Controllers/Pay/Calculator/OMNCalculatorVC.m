@@ -33,6 +33,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 @implementation OMNCalculatorVC {
   OMNOrder *_order;
+  UIView *_fadeView;
   UIButton *_totalButton;
   long long _total;
 }
@@ -49,21 +50,35 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [super viewDidLoad];
   
   self.view.backgroundColor = [UIColor whiteColor];
-  OMNNavigationBarSelector *_navSelector = [[OMNNavigationBarSelector alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kCalculatorTopOffset) titles:
+  OMNNavigationBarSelector *navSelector = [[OMNNavigationBarSelector alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kCalculatorTopOffset) titles:
                                             @[
                                               NSLocalizedString(@"По блюдам", nil),
                                               NSLocalizedString(@"Поровну", nil)
                                               ]];
-  [self.view addSubview:_navSelector];
-  [_navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
+  [self.view addSubview:navSelector];
+  [navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
+  
+  _fadeView = [[UIView alloc] init];
+  _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
+  _fadeView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_fadeView];
   
   _totalButton = [[UIButton alloc] init];
+  _totalButton.translatesAutoresizingMaskIntoConstraints = NO;
   [_totalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_totalButton setBackgroundImage:[UIImage imageNamed:@"button_green"] forState:UIControlStateNormal];
   [_totalButton addTarget:self action:@selector(totalTap) forControlEvents:UIControlEventTouchUpInside];
-  [_totalButton sizeToFit];
+  [_fadeView addSubview:_totalButton];
   
-  [self.view addSubview:_totalButton];
+  NSDictionary *views =
+  @{
+    @"fadeView" : _fadeView,
+    @"totalButton" : _totalButton,
+    };
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[fadeView(60)]|" options:0 metrics:nil views:views]];
+  [_fadeView addConstraint:[NSLayoutConstraint constraintWithItem:_totalButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_fadeView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [_fadeView addConstraint:[NSLayoutConstraint constraintWithItem:_totalButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_fadeView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   
   _containerView = [[UIView alloc] init];
   [self.view addSubview:_containerView];
@@ -98,7 +113,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [_containerView addSubview:self.firstViewController.view];
   [self.firstViewController didMoveToParentViewController:self];
   
-  [self.view bringSubviewToFront:_totalButton];
+  [self.view bringSubviewToFront:_fadeView];
   
   [self totalDidChange:_order.selectedItemsTotal];
   
@@ -135,9 +150,6 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   toFrame.origin.y = kCalculatorTopOffset;
   toFrame.size.height -= kCalculatorTopOffset;
   _containerView.frame = toFrame;
-  
-  _totalButton.bottom = self.view.height - 11.0f;
-  _totalButton.x = self.view.width * 0.5f;
   
 }
 
@@ -248,11 +260,11 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [UIView animateWithDuration:0.3 animations:^{
 
     if (_total > 0) {
-      _totalButton.alpha = 1.0f;
+      _fadeView.alpha = 1.0f;
       [_totalButton setTitle:[OMNUtils commaStringFromKop:total] forState:UIControlStateNormal];
     }
     else {
-      _totalButton.alpha = 0.0f;
+      _fadeView.alpha = 0.0f;
     }
     
   }];
