@@ -8,6 +8,7 @@
 
 #import "OMNFeedItem.h"
 #import "OMNAnalitics.h"
+#import "OMNImageManager.h"
 
 @implementation OMNFeedItem {
   id _jsonData;
@@ -35,6 +36,17 @@
     _viewEventLogged = YES;
 //    [[OMNAnalitics analitics] logEvent:@"promolist_view" parametrs:_jsonData];
   }
+}
+
+- (void)downloadImage {
+  
+  __weak typeof(self)weakSelf = self;
+  [[OMNImageManager manager] downloadImageWithURL:self.imageURL completion:^(UIImage *image) {
+    
+    weakSelf.image = image;
+    
+  }];
+  
 }
 
 @end

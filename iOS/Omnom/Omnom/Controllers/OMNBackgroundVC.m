@@ -75,6 +75,7 @@
   }
   
   UIImageView *iv = [[UIImageView alloc] initWithFrame:_backgroundView.bounds];
+  iv.contentMode = UIViewContentModeCenter;
   iv.alpha = 0.0f;
   iv.image = backgroundImage;
   [_backgroundView addSubview:iv];

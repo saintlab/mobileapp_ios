@@ -16,7 +16,6 @@
 @end
 
 @implementation OMNPaymentNotificationControl {
-  BOOL _constraintsUpdated;
   
 }
 
@@ -38,6 +37,18 @@
     [_closeButton addTarget:self action:@selector(removeTap) forControlEvents:UIControlEventTouchUpInside];
     _closeButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:_closeButton];
+    
+    NSDictionary *views =
+    @{
+      @"self" : self,
+      @"closeButton" : _closeButton,
+      };
+    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[closeButton]|" options:0 metrics:0 views:views]];
+    [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|" options:0 metrics:nil views:views]];
+    [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(64.0)]" options:0 metrics:nil views:views]];
+    
   }
   return self;
 }
@@ -67,27 +78,6 @@
   NSString *title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено %@ руб.", nil), user[@"name"], [OMNUtils commaStringFromKop:[transaction[@"amount"] longLongValue]]];
   [control.closeButton setTitle:title forState:UIControlStateNormal];
   [window addSubview:control];
-}
-
-- (void)updateConstraints {
-  [super updateConstraints];
-  
-  if (_constraintsUpdated) {
-    return;
-  }
-  _constraintsUpdated = YES;
-  
-  NSDictionary *views =
-  @{
-    @"self" : self,
-    @"closeButton" : _closeButton,
-    };
-  
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[closeButton]|" options:0 metrics:0 views:views]];
-  [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|" options:0 metrics:nil views:views]];
-  [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(64.0)]" options:0 metrics:nil views:views]];
-  
 }
 
 @end

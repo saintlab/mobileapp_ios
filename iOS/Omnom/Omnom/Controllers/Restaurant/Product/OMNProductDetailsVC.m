@@ -118,7 +118,7 @@
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]-[textLabel]-|" options:0 metrics:nil views:views]];
   
   NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:contentView
-                                                                    attribute:NSLayoutAttributeLeading
+                                                                    attribute:NSLayoutAttributeLeft
                                                                     relatedBy:0
                                                                        toItem:self.view
                                                                     attribute:NSLayoutAttributeLeft
@@ -127,7 +127,7 @@
   [self.view addConstraint:leftConstraint];
   
   NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:contentView
-                                                                     attribute:NSLayoutAttributeTrailing
+                                                                     attribute:NSLayoutAttributeRight
                                                                      relatedBy:0
                                                                         toItem:self.view
                                                                      attribute:NSLayoutAttributeRight

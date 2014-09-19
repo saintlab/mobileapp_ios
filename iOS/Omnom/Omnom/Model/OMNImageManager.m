@@ -81,13 +81,20 @@
   
   [self startDownloadImageWithURL:smallImageUrl options:0 completion:^(UIImage *image) {
     
-    CGRect drawFrame = (CGRect){CGPointZero, expectedSize};
-    UIGraphicsBeginImageContextWithOptions(expectedSize, YES, 0.0);
-    [image drawInRect:drawFrame];
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    UIImage *finalImage = [scaledImage applyLightEffect];
-    completionBlock(finalImage);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+      
+      CGRect drawFrame = (CGRect){CGPointZero, expectedSize};
+      UIGraphicsBeginImageContextWithOptions(expectedSize, YES, 0.0);
+      [image drawInRect:drawFrame];
+      UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+      UIGraphicsEndImageContext();
+      UIImage *finalImage = [scaledImage applyLightEffect];
+
+      dispatch_async(dispatch_get_main_queue(), ^{
+        completionBlock(finalImage);
+      });
+    
+    });
     
   }];
   

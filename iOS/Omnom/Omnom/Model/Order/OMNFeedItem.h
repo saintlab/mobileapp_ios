@@ -15,11 +15,13 @@
 @property (nonatomic, copy) NSString *imageURL;
 @property (nonatomic, copy) NSString *Description;
 
+@property (nonatomic, strong) UIImage *thumbImage;
 @property (nonatomic, strong) UIImage *image;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
 - (void)logClickEvent;
 - (void)logViewEvent;
+- (void)downloadImage;
 
 @end
