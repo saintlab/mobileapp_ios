@@ -33,7 +33,7 @@
   OMNWizardPageVC *page2 = [[OMNWizardPageVC alloc] init];
   page2.bgImageName = @"green_color_wood_bg";
   page2.iconName = @"bell_ringing_icon_big";
-  page2.text = NSLocalizedString(@"Вызвать официанта в любой момент", nil);
+  page2.text = NSLocalizedString(@"Вызвать официанта\nв любой момент", nil);
   
   OMNWizardPageVC *page3 = [[OMNWizardPageVC alloc] init];
   page3.bgImageName = @"blue_color_wood_bg";
