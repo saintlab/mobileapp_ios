@@ -12,6 +12,7 @@
 #import "OMNBorderedButton.h"
 #import "TQStarRatingView.h"
 #import <OMNStyler.h>
+#import "UIImage+omn_helper.h"
 
 @interface OMNRatingVC ()
 
@@ -64,8 +65,6 @@
 }
 
 - (void)setup {
-  
-  self.view.backgroundColor = _visitor.restaurant.background_color;
   
   UIView *bottomContentView = [[UIView alloc] init];
   bottomContentView.translatesAutoresizingMaskIntoConstraints = NO;

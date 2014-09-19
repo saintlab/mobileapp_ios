@@ -18,7 +18,7 @@
   self = [super initWithParent:parent];
   if (self) {
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-    self.text = NSLocalizedString(@"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем определить столик.", nil);
+    self.text = NSLocalizedString(@"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем.", nil);
   }
   return self;
 }

@@ -16,4 +16,6 @@
 
 - (UIImage *)omn_tintWithColor:(UIColor *)tintColor;
 
+- (UIImage *)omn_blendWithColor:(UIColor *)tintColor;
+
 @end

@@ -28,6 +28,7 @@
 #import "OMNMailRuBankCardsModel.h"
 #import <OMNStyler.h>
 #import "OMNOrderTableView.h"
+#import "UIImage+omn_helper.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -74,6 +75,8 @@ OMNMailRUPayVCDelegate>
 - (void)viewDidLoad {
   
   [super viewDidLoad];
+
+  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.background_color];
 
   if (NO == _visitor.restaurant.is_demo) {
     [[OMNSocketManager manager] join:_order.id];
@@ -206,8 +209,6 @@ OMNMailRUPayVCDelegate>
   _toPayLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   _toPayLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
   
-  self.view.backgroundColor = _visitor.restaurant.background_color;
-
   _scrollView = [[UIScrollView alloc] init];
   _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
   _scrollView.clipsToBounds = NO;
@@ -247,6 +248,7 @@ OMNMailRUPayVCDelegate>
 - (void)showRatingForBill:(OMNBill *)bill {
   
   OMNRatingVC *ratingVC = [[OMNRatingVC alloc] init];
+  ratingVC.backgroundImage = self.backgroundImage;
   ratingVC.order = _order;
   ratingVC.visitor = _visitor;
   ratingVC.delegate = self;

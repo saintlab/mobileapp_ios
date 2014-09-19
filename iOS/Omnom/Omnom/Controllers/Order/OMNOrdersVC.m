@@ -10,6 +10,7 @@
 #import "OMNOrderViewCell.h"
 #import "OMNVisitor.h"
 #import "OMNOrderItemsFlowLayout.h"
+#import "UIImage+omn_helper.h"
 
 @interface OMNOrdersVC ()
 
@@ -34,7 +35,11 @@
   
   _orderItemsFlowLayout = [[OMNOrderItemsFlowLayout alloc] init];
   
-  self.collectionView.backgroundColor = _visitor.restaurant.background_color;
+  UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+  backgroundView.contentMode = UIViewContentModeCenter;
+  backgroundView.image = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.background_color];
+  self.collectionView.backgroundView = backgroundView;
+
   [self.collectionView registerClass:[OMNOrderViewCell class] forCellWithReuseIdentifier:@"OMNOrderItemCell"];
   
 }

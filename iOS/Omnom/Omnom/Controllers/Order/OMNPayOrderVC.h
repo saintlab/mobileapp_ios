@@ -6,11 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNBackgroundVC.h"
+
 @class OMNOrder;
 @class OMNVisitor;
 @protocol OMNPayOrderVCDelegate;
 
-@interface OMNPayOrderVC : UIViewController
+@interface OMNPayOrderVC : OMNBackgroundVC
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
