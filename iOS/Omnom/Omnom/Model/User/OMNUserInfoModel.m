@@ -13,6 +13,12 @@
 #import "OMNAuthorisation.h"
 #import "OMNBankCardUserInfoItem.h"
 #import <OMNStyler.h>
+#import <MessageUI/MessageUI.h>
+
+@interface OMNUserInfoModel ()
+<MFMailComposeViewControllerDelegate>
+
+@end
 
 @implementation OMNUserInfoModel {
   NSArray *_sectionItems;
@@ -52,13 +58,17 @@
 - (NSArray *)moneyItems {
   
   OMNUserInfoItem *cardItem = [[OMNBankCardUserInfoItem alloc] init];
-  return @[cardItem];
   
-  OMNUserInfoItem *promoItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Промо-коды", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
+  __weak typeof(self)weakSelf = self;
+  OMNUserInfoItem *feedbackItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Обратная связь", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
+    
+    MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+    composeViewController.mailComposeDelegate = weakSelf;
+    [composeViewController setToRecipients:@[@"team@omnom.menu"]];
+    [vc presentViewController:composeViewController animated:YES completion:nil];
     
   }];
-  promoItem.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-  return @[cardItem, promoItem];
+  return @[cardItem, feedbackItem];
   
 }
 
@@ -149,6 +159,14 @@
   else {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
   }
+  
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+  
+  [controller.presentingViewController dismissViewControllerAnimated:YES completion:nil];
   
 }
 
