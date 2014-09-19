@@ -39,6 +39,20 @@
   return self;
 }
 
+- (void)setSelectedImage:(UIImage *)selectedImage selectedTitle:(NSString *)selectedTitle {
+  
+  UIImage *templateImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+  [self setImage:[templateImage omn_tintWithColor:kBarButtonNormalColor] forState:UIControlStateSelected];
+  [self setImage:[templateImage omn_tintWithColor:kBarButtonHighlightedColor] forState:UIControlStateSelected|UIControlStateHighlighted];
+
+  [self setTitle:selectedTitle forState:UIControlStateSelected];
+  [self setTitle:selectedTitle forState:UIControlStateSelected|UIControlStateHighlighted];
+
+  [self setTitleColor:kBarButtonNormalColor forState:UIControlStateSelected];
+  [self setTitleColor:kBarButtonHighlightedColor forState:UIControlStateSelected|UIControlStateHighlighted];
+  
+}
+
 - (instancetype)init {
   self = [super init];
   if (self) {

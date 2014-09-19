@@ -29,7 +29,7 @@
 
 @implementation OMNR1VC {
   OMNRestaurant *_restaurant;
-  UIButton *_callWaiterButton;
+  OMNToolbarButton *_callWaiterButton;
   
   UIImageView *_iv1;
   UIImageView *_iv2;
@@ -204,12 +204,9 @@
 - (void)addActionsBoard {
   
   [self addActionBoardIfNeeded];
-  _callWaiterButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] title:NSLocalizedString(@"Официант", nil)];
-  
-  NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"Отменить", nil)];
-  [_callWaiterButton setAttributedTitle:attrString forState:UIControlStateSelected];
-  [_callWaiterButton setAttributedTitle:attrString forState:UIControlStateSelected|UIControlStateHighlighted];
-  
+  UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
+  _callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:NSLocalizedString(@"Официант", nil)];
+  [_callWaiterButton setSelectedImage:callWaiterImage selectedTitle:NSLocalizedString(@"Отменить", nil)];
   [_callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
   [_callWaiterButton sizeToFit];
   

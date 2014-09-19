@@ -262,7 +262,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 - (void)calculatorVC:(OMNCalculatorVC *)calculatorVC splitType:(SplitType)splitType didFinishWithTotal:(long long)total {
 }
 
-- (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {  
+- (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {
 }
 
 @end
