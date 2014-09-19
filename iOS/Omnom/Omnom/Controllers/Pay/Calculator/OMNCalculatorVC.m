@@ -109,19 +109,22 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 }
 
 - (void)totalTap {
-  if ([self.delegate respondsToSelector:@selector(calculatorVC:splitType:didFinishWithTotal:)]) {
-    
-    SplitType splitType = kSplitTypeNone;
-    
-    if ([[self.childViewControllers objectAtIndex:0] isEqual:self.firstViewController]) {
-      splitType = kSplitTypeOrders;
-    }
-    else if ([[self.childViewControllers objectAtIndex:0] isEqual:self.secondViewController]) {
-      splitType = kSplitTypeNumberOfGuersts;
-    }
-
-    [self.delegate calculatorVC:self splitType:splitType didFinishWithTotal:_total];
+  
+  if (0ll == _total) {
+    [self.delegate calculatorVCDidCancel:self];
+    return;
   }
+  
+  SplitType splitType = kSplitTypeNone;
+  
+  if ([[self.childViewControllers objectAtIndex:0] isEqual:self.firstViewController]) {
+    splitType = kSplitTypeOrders;
+  }
+  else if ([[self.childViewControllers objectAtIndex:0] isEqual:self.secondViewController]) {
+    splitType = kSplitTypeNumberOfGuersts;
+  }
+  
+  [self.delegate calculatorVC:self splitType:splitType didFinishWithTotal:_total];
   
 }
 
@@ -243,6 +246,13 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
   _total = total;
   [_totalButton setTitle:[OMNUtils commaStringFromKop:total] forState:UIControlStateNormal];
+  
+}
+
+- (void)calculatorVC:(OMNCalculatorVC *)calculatorVC splitType:(SplitType)splitType didFinishWithTotal:(long long)total {
+  
+}
+- (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {
   
 }
 
