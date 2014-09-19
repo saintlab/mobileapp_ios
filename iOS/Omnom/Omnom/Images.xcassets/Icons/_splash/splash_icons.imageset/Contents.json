@@ -11,11 +11,7 @@
     },
     {
       "idiom" : "universal",
-      "unassigned" : true
-    },
-    {
-      "idiom" : "universal",
-      "unassigned" : true
+      "scale" : "3x"
     }
   ],
   "info" : {

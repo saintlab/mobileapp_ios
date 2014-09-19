@@ -11,6 +11,7 @@
 #import "OMNOrdersVC.h"
 #import "OMNPayOrderVC.h"
 #import <OMNStyler.h>
+#import "OMNRatingVC.h"
 
 @implementation OMNOrderToRestaurantTransition
 
@@ -86,6 +87,7 @@
 + (NSArray *)keys {
   return
   @[
+    [self keyFromClass:[OMNRatingVC class] toClass:[OMNR1VC class]],
     [self keyFromClass:[OMNOrdersVC class] toClass:[OMNR1VC class]],
     [self keyFromClass:[OMNPayOrderVC class] toClass:[OMNR1VC class]],
     ];

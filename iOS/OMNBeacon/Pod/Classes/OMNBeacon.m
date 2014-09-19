@@ -185,7 +185,7 @@ const NSInteger kNearestDeltaRSSI = 10;
   OMNBeacon *beacon = [[OMNBeacon alloc] init];
   beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
   beacon.major = @"1";
-  beacon.minor = @"1";
+  beacon.minor = @"4";
 
 //  iico
 //  beacon.major = @"1";

@@ -12,6 +12,10 @@
       "idiom" : "universal",
       "scale" : "2x",
       "filename" : "selected_nav_button@2x.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
