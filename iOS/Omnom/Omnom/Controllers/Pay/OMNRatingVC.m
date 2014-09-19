@@ -46,7 +46,7 @@
   _ratingLabel.font = FuturaOSFOmnomRegular(20.0f);
   
   [_chequeButton addTarget:self action:@selector(chequeTap:) forControlEvents:UIControlEventTouchUpInside];
-  [_chequeButton setTitle:NSLocalizedString(@"Бумажный чек", nil) selectedTitle:NSLocalizedString(@"Отмена", nil) image:[UIImage imageNamed:@"bill_icon_black_small"]];
+  [_chequeButton setTitle:NSLocalizedString(@"Бумажный чек", nil) selectedTitle:NSLocalizedString(@"Отмена", nil) image:[UIImage imageNamed:@"bill_icon_small"]];
   
   if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
     self.automaticallyAdjustsScrollViewInsets = NO;
