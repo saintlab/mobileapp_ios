@@ -49,6 +49,12 @@ UITextFieldDelegate>
   self.view.backgroundColor = [UIColor whiteColor];
   
   _datePicker = [[UIDatePicker alloc] init];
+  
+  
+  NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+  NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
+  components.year -= 30;
+  _datePicker.date = [calendar dateFromComponents:components];
   _datePicker.backgroundColor = [UIColor whiteColor];
   _datePicker.datePickerMode = UIDatePickerModeDate;
   [_datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
