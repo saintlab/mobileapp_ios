@@ -157,7 +157,8 @@
   _payButton.alpha = (keyboardShown) ? (0.0f) : (1.0f);
   _tipsSelector.alpha = (keyboardShown) ? (0.0f) : (1.0f);
   
-  CGAffineTransform buttonTransform = (keyboardShown) ? (CGAffineTransformIdentity) : (CGAffineTransformMakeTranslation(0, -50.0f));
+  CGFloat actionButtonDelta = ([UIScreen mainScreen].bounds.size.height < 481.0f) ? (20.0f) : (0.0f);
+  CGAffineTransform buttonTransform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, actionButtonDelta)) : (CGAffineTransformMakeTranslation(0, -50.0f));
   _cancelEditingButton.transform = buttonTransform;
   _doneEditingButton.transform = buttonTransform;
   
