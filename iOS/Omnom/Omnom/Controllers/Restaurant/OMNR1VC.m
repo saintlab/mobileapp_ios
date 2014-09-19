@@ -72,7 +72,7 @@
   if (_visitor.restaurant.is_demo) {
 
     OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
-    [cancelButton setTitle:NSLocalizedString(@"Отмена", nil) forState:UIControlStateNormal];
+    [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
     
