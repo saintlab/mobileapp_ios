@@ -27,12 +27,12 @@
   __weak IBOutlet UILabel *_tipsLabel;
   __weak IBOutlet UILabel *_payLabel;
   __weak IBOutlet OMNTipSelector *_tipsSelector;
-
+  
   __weak IBOutlet UIButton *_payButton;
   
   __weak IBOutlet UIButton *_cancelEditingButton;
   __weak IBOutlet UIButton *_doneEditingButton;
-
+  
   __weak IBOutlet OMNAmountPercentControl *_amountPercentControl;
   OMNAmountPercentValue *_tipAmountPercentValue;
   
@@ -86,7 +86,7 @@
     }
     
   } forControlEvents:UIControlEventValueChanged];
-
+  
   [_amountPercentControl bk_addEventHandler:^(id sender) {
     
     [weakSelf updatePercentAmountControl];
@@ -139,9 +139,14 @@
 }
 
 - (void)updateToPayButton {
-
+  
   _payButton.enabled = (_order.enteredAmountWithTips > 0) ? (YES) : (NO);
-  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_order.enteredAmountWithTips]] forState:UIControlStateNormal];
+
+  [UIView performWithoutAnimation:^{
+    
+    [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_order.enteredAmountWithTips]] forState:UIControlStateNormal];
+    
+  }];
   
 }
 
@@ -155,16 +160,16 @@
   CGAffineTransform buttonTransform = (keyboardShown) ? (CGAffineTransformIdentity) : (CGAffineTransformMakeTranslation(0, -50.0f));
   _cancelEditingButton.transform = buttonTransform;
   _doneEditingButton.transform = buttonTransform;
-
+  
   _amountPercentControl.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, 97.0f)) : (CGAffineTransformIdentity);
   _payButton.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, 50.0f)) : (CGAffineTransformIdentity);
-
+  
   if (self.tipsMode) {
     
     _payLabel.alpha = (keyboardShown) ? (0.0f) : (1.0f);
     CGFloat deltaY = fabsf(_payLabel.y - _tipsLabel.y);
     _tipsLabel.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, -deltaY)) : (CGAffineTransformIdentity);
-
+    
   }
   else {
     
@@ -178,13 +183,13 @@
   if (NO == keyboardShown) {
     self.tipsMode = NO;
   }
-
+  
   [self updateView];
   
 }
 
 - (void)updateView {
-
+  
   [_tipsSelector update];
   [self updateToPayButton];
   
@@ -200,7 +205,7 @@
 - (IBAction)doneEdidtingTap:(id)sender {
   
   if (self.tipsMode) {
-
+    
     _tipAmountPercentValue = _amountPercentControl.amountPercentValue;
     _tipAmountPercentValue.isAmountSelected = [_amountPercentControl isAmountSelected];
     OMNTip *customTip = _order.customTip;
@@ -216,14 +221,14 @@
     
   }
   else {
-
+    
     _order.splitType = kSplitTypePercent;
     _order.enteredAmount = _amountPercentControl.amountPercentValue.amount;
     
   }
   
   [_amountPercentControl resignFirstResponder];
-
+  
 }
 
 @end

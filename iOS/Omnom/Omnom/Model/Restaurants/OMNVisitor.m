@@ -125,12 +125,11 @@
   
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
-    NSLog(@"newGuestForTableID>done");
     completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"newGuestForTableID>%@", error);
+    [[OMNAnalitics analitics] logEvent:@"ERROR_NEW_GUEST" jsonRequest:path responseOperation:operation];
     failureBlock(error);
     
   }];
