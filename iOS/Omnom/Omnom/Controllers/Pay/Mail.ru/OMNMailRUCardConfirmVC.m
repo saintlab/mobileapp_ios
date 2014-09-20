@@ -26,6 +26,7 @@
 @end
 
 @implementation OMNMailRUCardConfirmVC {
+  UIScrollView *_scrollView;
   OMNBankCardInfo *_bankCardInfo;
   OMNErrorTextField *_cardHoldValueTF;
   UILabel *_textLabel;
@@ -71,10 +72,18 @@
 }
 
 - (void)addDoneButton {
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Привязать", nil) style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)];
 }
 
 - (void)setupView {
+  
+  _scrollView = [[UIScrollView alloc] init];
+  _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_scrollView];
+  
+  UIView *contentView = [[UIView alloc] init];
+  contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  [_scrollView addSubview:contentView];
   
   _textLabel = [[UILabel alloc] init];
   _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -82,7 +91,7 @@
   _textLabel.textAlignment = NSTextAlignmentCenter;
   _textLabel.textColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
   _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:15.0f];
-  [self.view addSubview:_textLabel];
+  [contentView addSubview:_textLabel];
   
   _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f];
   _cardHoldValueTF.textField.textAlignment = NSTextAlignmentCenter;
@@ -90,18 +99,28 @@
   _cardHoldValueTF.textField.keyboardType = UIKeyboardTypeNumberPad;
   _cardHoldValueTF.textField.enabled = NO;
   _cardHoldValueTF.textField.delegate = self;
-  [self.view addSubview:_cardHoldValueTF];
+  [contentView addSubview:_cardHoldValueTF];
   
   NSDictionary *views =
   @{
     @"textLabel" : _textLabel,
     @"cardHoldValueTF" : _cardHoldValueTF,
     @"topLayoutGuide" : self.topLayoutGuide,
+    @"scroll" : _scrollView,
+    @"contentView" : contentView,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardHoldValueTF]-[textLabel]" options:0 metrics:0 views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardHoldValueTF]-|" options:0 metrics:0 views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textLabel]-|" options:0 metrics:0 views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:nil views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-[textLabel]-|" options:0 metrics:0 views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardHoldValueTF]-|" options:0 metrics:0 views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textLabel]-|" options:0 metrics:0 views:views]];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeft relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+  
+  [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
   
 }
 
@@ -125,9 +144,18 @@
 
   });
   
+  CGRect keyboardFrame = [n.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(keyboardFrame), 0.0f);
+  _scrollView.scrollIndicatorInsets = insets;
+  _scrollView.contentInset = insets;
+  
 }
 
 - (void)keyboardWillHide:(NSNotification *)n {
+  
+  _scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
+  _scrollView.contentInset = UIEdgeInsetsZero;
+
   [_commaButton removeFromSuperview];
   _commaButton = nil;
 }
@@ -137,7 +165,7 @@
   
   _bankCardInfo.card_id = card_id;
   if (_card_id) {
-    _textLabel.text = NSLocalizedString(@"С вашей карты списана и будет возвращена случайная сумма до 50р. Введите сумму списания в это поле,\nчтобы привязать карту к вашему аккаунту", nil);
+    _textLabel.text = NSLocalizedString(@"Для привязки карты вам нужно подтвердить, что вы её владелец. Мы списали с вашей карты секретную сумму (до 50 руб.), о чём вам должна прийти SMS от банка. Посмотрите в сообщении, сколько списано и укажите сумму в поле выше.", nil);
     _cardHoldValueTF.textField.enabled = YES;
     [_cardHoldValueTF.textField becomeFirstResponder];
     [self addDoneButton];
@@ -171,7 +199,7 @@
     NSString *code = response[@"error"][@"code"];
     NSString *errorText = nil;
     if ([code isEqualToString:@"ERR_CARD_AMOUNT"]) {
-      errorText = NSLocalizedString(@"Указана неверная проверочная сумма. Введите сумму ещё раз и нажмите \"Привязать\".", nil);
+      errorText = NSLocalizedString(@"Введена неверная проверочная сумма.\nЗагляните в последние SMS. Там должно быть сообщение от банка. Введите сумму из SMS. Если сообщения нет, в банковской выписке посмотрите последнее списание.", nil);
     }
     else {
       errorText = NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil);

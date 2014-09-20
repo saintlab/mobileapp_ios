@@ -117,23 +117,9 @@
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]-[textLabel]-|" options:0 metrics:nil views:views]];
   
-  NSLayoutConstraint *leftConstraint = [NSLayoutConstraint constraintWithItem:contentView
-                                                                    attribute:NSLayoutAttributeLeft
-                                                                    relatedBy:0
-                                                                       toItem:self.view
-                                                                    attribute:NSLayoutAttributeLeft
-                                                                   multiplier:1.0
-                                                                     constant:0];
-  [self.view addConstraint:leftConstraint];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeft relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   
-  NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:contentView
-                                                                     attribute:NSLayoutAttributeRight
-                                                                     relatedBy:0
-                                                                        toItem:self.view
-                                                                     attribute:NSLayoutAttributeRight
-                                                                    multiplier:1.0
-                                                                      constant:0];
-  [self.view addConstraint:rightConstraint];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
   
   [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
   

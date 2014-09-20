@@ -42,7 +42,6 @@ OMNCardEnterControlDelegate>
   self.view.backgroundColor = [UIColor whiteColor];  
   [self setup];
   
-  
   [self setRightButtonEnabled:NO];
   
 }

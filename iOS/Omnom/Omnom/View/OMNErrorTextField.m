@@ -19,11 +19,10 @@
 
 @implementation OMNErrorTextField {
   UIView *_colorView;
-  CGFloat _width;
 }
 
 - (instancetype)initWithWidth:(CGFloat)width {
-  _width = width;
+  _controlWidth = width;
   self = [super init];
   if (self) {
   }
@@ -60,7 +59,6 @@
   _colorView.translatesAutoresizingMaskIntoConstraints = NO;
   [self addSubview:_colorView];
   
-  
   _errorTextView = [[OMNNonSelectableTextView alloc] init];
   _errorTextView.selectable = NO;
   _errorTextView.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
@@ -76,14 +74,18 @@
     @"errorLabel" : _errorTextView,
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|" options:0 metrics:nil views:views]];
   
-  if (_width > 0.0f) {
-    NSDictionary *metrics = @{@"width" : @(_width)};
+  if (_controlWidth > 0.0f) {
+    NSDictionary *metrics = @{@"width" : @(_controlWidth)};
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[colorView(width)]" options:0 metrics:metrics views:views]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_colorView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[textField(width)]" options:0 metrics:metrics views:views]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_textField attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    
   }
   else {
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|" options:0 metrics:nil views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorView]|" options:0 metrics:nil views:views]];
   }
   

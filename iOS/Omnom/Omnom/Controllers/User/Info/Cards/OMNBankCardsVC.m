@@ -57,6 +57,7 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)setupInterface {
   
+  self.navigationItem.title = NSLocalizedString(@"Карты", nil);
   [_addCardButton setTitle:NSLocalizedString(@"Добавить карту", nil) forState:UIControlStateNormal];
   [_addCardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _addCardButton.titleLabel.font = FuturaBookFont(20);

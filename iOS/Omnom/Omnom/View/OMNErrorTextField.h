@@ -11,7 +11,7 @@
 @interface OMNErrorTextField : UIView
 
 @property (nonatomic, strong, readonly) UITextField *textField;
-
+@property (nonatomic, assign, readonly) CGFloat controlWidth;
 
 - (instancetype)initWithWidth:(CGFloat)width;
 - (void)setError:(NSString *)text;
