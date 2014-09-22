@@ -20,6 +20,7 @@
 @interface TQStarRatingView : UIView
 
 @property (nonatomic, readonly) int numberOfStar;
+@property (nonatomic, readonly) CGFloat score;
 
 @property (nonatomic, weak) id <StarRatingViewDelegate> delegate;
 

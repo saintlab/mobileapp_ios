@@ -26,6 +26,9 @@
     self.userInteractionEnabled = YES;
     self.translatesAutoresizingMaskIntoConstraints = NO;
     
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    [window addSubview:self];
+    
     _closeButton = [[UIButton alloc] init];
     [_closeButton setImage:[UIImage imageNamed:@"cross_icon_white"] forState:UIControlStateNormal];
     _closeButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
@@ -69,15 +72,12 @@
 
 + (void)showWithInfo:(NSDictionary *)info {
   
-  UIWindow *window = [[UIApplication sharedApplication].delegate window];
-  
   OMNPaymentNotificationControl *control = [[OMNPaymentNotificationControl alloc] init];
   NSDictionary *user = info[@"user"];
   NSDictionary *transaction = info[@"transaction"];
   
   NSString *title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено %@ руб.", nil), user[@"name"], [OMNUtils commaStringFromKop:[transaction[@"amount"] longLongValue]]];
   [control.closeButton setTitle:title forState:UIControlStateNormal];
-  [window addSubview:control];
 }
 
 @end

@@ -10,7 +10,7 @@
 
 @class OMNOrder;
 
-@interface OMNProdductSelectionVC : UITableViewController
+@interface OMNProductSelectionVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 

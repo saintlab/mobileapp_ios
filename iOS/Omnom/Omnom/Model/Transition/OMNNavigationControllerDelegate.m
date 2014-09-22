@@ -21,6 +21,7 @@
 #import "OMNSlideUpTransition.h"
 #import "OMNSlideDownTransition.h"
 #import "OMNTransitionFromProductToList.h"
+#import "OMNTransitionFromCalculatorToOrder.h"
 
 @implementation OMNNavigationControllerDelegate {
   NSMutableDictionary *_transitions;
@@ -45,6 +46,7 @@
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
     [self addTansitionForClass:[OMNSlideUpTransition class]];
     [self addTansitionForClass:[OMNSlideDownTransition class]];
+//    [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
     
   }
   return self;

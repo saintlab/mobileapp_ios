@@ -84,6 +84,18 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
     NSLog(@"handshake response %@, %@", data, [data class]);
     
   }];
+
+  [_socket on:@"order_close" listener:^(id data) {
+    
+    NSLog(@"order_close %@, %@", data, [data class]);
+    
+  }];
+  
+  [_socket on:@"order_update" listener:^(id data) {
+    
+    NSLog(@"order_update %@, %@", data, [data class]);
+    
+  }];
   
   __weak typeof(self)weakSelf = self;
   [_socket on:@"payment" listener:^(id data) {

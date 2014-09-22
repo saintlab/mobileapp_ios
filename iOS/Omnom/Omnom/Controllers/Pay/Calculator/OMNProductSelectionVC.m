@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNProdductSelectionVC.h"
+#import "OMNProductSelectionVC.h"
 #import "OMNOrderDataSource.h"
 #import "OMNOrder.h"
 
-@interface OMNProdductSelectionVC ()
+@interface OMNProductSelectionVC ()
 
 @end
 
-@implementation OMNProdductSelectionVC {
+@implementation OMNProductSelectionVC {
   OMNOrder *_order;
   OMNOrderDataSource *_dataSource;
 }

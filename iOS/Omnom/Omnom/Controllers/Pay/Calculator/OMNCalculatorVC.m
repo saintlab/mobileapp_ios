@@ -7,7 +7,7 @@
 //
 
 #import "OMNCalculatorVC.h"
-#import "OMNProdductSelectionVC.h"
+#import "OMNProductSelectionVC.h"
 #import "OMNSplitSelectionVC.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNOrder.h"
@@ -22,7 +22,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 @interface OMNCalculatorVC ()
 <OMNCalculatorVCDelegate>
 
-@property (strong, nonatomic) OMNProdductSelectionVC *firstViewController;
+@property (strong, nonatomic) OMNProductSelectionVC *firstViewController;
 @property (strong, nonatomic) OMNSplitSelectionVC *secondViewController;
 
 @property (nonatomic, weak) UIViewController *currentController;
@@ -170,11 +170,11 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
 }
 
-- (OMNProdductSelectionVC *)firstViewController {
+- (OMNProductSelectionVC *)firstViewController {
   
   if (nil == _firstViewController) {
     
-    _firstViewController = [[OMNProdductSelectionVC alloc] initWithOrder:_order];
+    _firstViewController = [[OMNProductSelectionVC alloc] initWithOrder:_order];
     UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 60.0f, 0);
     _firstViewController.tableView.contentInset = insets;
     _firstViewController.tableView.scrollIndicatorInsets = insets;
@@ -259,13 +259,17 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   _total = total;
   [UIView animateWithDuration:0.3 animations:^{
 
+    UIEdgeInsets insets = UIEdgeInsetsZero;
     if (_total > 0) {
+      insets = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_fadeView.frame), 0.0f);
       _fadeView.alpha = 1.0f;
       [_totalButton setTitle:[OMNUtils commaStringFromKop:total] forState:UIControlStateNormal];
     }
     else {
       _fadeView.alpha = 0.0f;
     }
+    _firstViewController.tableView.scrollIndicatorInsets = insets;
+    _firstViewController.tableView.contentInset = insets;
     
   }];
   

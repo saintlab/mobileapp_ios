@@ -22,6 +22,7 @@
 - (void)logLogin;
 - (void)logEnterRestaurant:(OMNVisitor *)visitor;
 - (void)logPayment:(OMNOrder *)order;
+- (void)logScore:(CGFloat)score order:(OMNOrder *)order;
 
 - (void)logEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
 - (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse;

@@ -13,6 +13,7 @@
 #import "TQStarRatingView.h"
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
+#import "OMNAnalitics.h"
 
 @interface OMNRatingVC ()
 
@@ -45,6 +46,7 @@
   _ratingLabel.textColor = colorWithHexString(@"FBF7F7");
   _ratingLabel.font = FuturaOSFOmnomRegular(20.0f);
   
+  _chequeButton.hidden = YES;
   [_chequeButton addTarget:self action:@selector(chequeTap:) forControlEvents:UIControlEventTouchUpInside];
   [_chequeButton setTitle:NSLocalizedString(@"Бумажный чек", nil) selectedTitle:NSLocalizedString(@"Отмена", nil) image:[UIImage imageNamed:@"bill_icon_small"]];
   
@@ -198,6 +200,11 @@
 }
 
 - (void)closeTap {
+  
+  if (_starRatingView.score > 0.0f) {
+    [[OMNAnalitics analitics] logScore:5*_starRatingView.score order:_order];
+  }
+  
   [self.delegate ratingVCDidFinish:self];
 }
 

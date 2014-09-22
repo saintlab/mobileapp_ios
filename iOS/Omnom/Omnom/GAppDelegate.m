@@ -54,7 +54,7 @@
 #elif defined (AD_HOC)
   [OMNConstants setCustomConfigName:@"config_prod"];
 #else
-  [OMNConstants setCustomConfigName:@"config_stand"];
+  [OMNConstants setCustomConfigName:@"config_prod"];
 #endif
   [OMNMailRuAcquiring setConfig:[OMNConstants mailRuConfig]];
   

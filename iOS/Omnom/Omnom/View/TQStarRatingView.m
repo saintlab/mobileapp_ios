@@ -15,7 +15,9 @@
 
 @end
 
-@implementation TQStarRatingView
+@implementation TQStarRatingView {
+  
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -190,6 +192,7 @@
     
     NSString * str = [NSString stringWithFormat:@"%0.2f",p.x / self.frame.size.width];
     float score = [str floatValue];
+  _score = score;
     p.x = score * self.frame.size.width;
     self.starForegroundView.frame = CGRectMake(0, 0, p.x, self.frame.size.height);
     

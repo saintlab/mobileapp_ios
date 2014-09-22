@@ -93,6 +93,17 @@
   
 }
 
+- (void)logScore:(CGFloat)score order:(OMNOrder *)order {
+
+  NSMutableDictionary *properties = [NSMutableDictionary dictionary];
+  properties[@"timestamp"] = [self dateString];
+  properties[@"score"] = @(score);
+  properties[@"order_id"] = (order.id) ? (order.id) : (@"");
+  properties[@"bill_id"] = (order.bill.id) ? (order.bill.id) : (@"");
+  [_mixpanel track:@"user_score" properties:properties];
+
+}
+
 - (void)logRegister {
   
   [_mixpanel track:@"user_registered" properties:nil];
@@ -120,6 +131,11 @@
   if (order.enteredAmount) {
     percent = (double)order.tipAmount/order.enteredAmount;
   }
+  
+//  (0.7% счёта + 50% чая)
+  double charge = 0.007l*order.enteredAmount + 0.5l*order.tipAmount;
+  [_mixpanel.people trackCharge:@(charge)];
+
   
   [_mixpanel track:@"payment_success" properties:
    @{

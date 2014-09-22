@@ -62,12 +62,22 @@
 
   _scrollView.delegate = self;
   
-  _labelTexts =
-  @[
-    NSLocalizedString(@"Чтобы разрешить геолокацию, откройте список приватности:", nil),
-    NSLocalizedString(@"Затем откройте службы геолокации:", nil),
-    NSLocalizedString(@"Разрешите, наконец, использовать службы геолокации для Omnom:", nil),
-    ];
+  if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+    _labelTexts =
+    @[
+      NSLocalizedString(@"Чтобы разрешить геолокацию, откройте список приватности:", nil),
+      NSLocalizedString(@"Затем откройте службы геолокации:", nil),
+      NSLocalizedString(@"Разрешите, наконец, использовать службы геолокации для Omnom:", nil),
+      ];
+  } else {
+    
+    _labelTexts =
+    @[
+      NSLocalizedString(@"Чтобы разрешить геолокацию, откройте Конфиденциальность:", nil),
+      NSLocalizedString(@"Затем откройте службы геолокации:", nil),
+      NSLocalizedString(@"Разрешите доступ к геопозиции:", nil),
+      ];
+  }
   
   CGRect frame = _scrollView.bounds;
   CGSize contentSize = CGSizeMake(frame.size.width*pagesCount, frame.size.height);
@@ -90,6 +100,12 @@
   
 }
 
+- (void)settingsTap {
+  if (&UIApplicationOpenSettingsURLString) {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+  }
+}
+
 - (void)setPage:(NSInteger)page {
   
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:_labelTexts[page]];
@@ -106,6 +122,15 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  
+  if (NO == SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self.navigationItem setHidesBackButton:YES animated:NO];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Перейти", nil) style:UIBarButtonItemStylePlain target:self action:@selector(settingsTap)];
+  }
+  
 }
 
 #pragma mark - UIScrollViewDelegate
