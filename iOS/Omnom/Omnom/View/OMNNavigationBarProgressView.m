@@ -26,6 +26,8 @@
     [self addSubview:_label];
     
     _pageControl = [[UIPageControl alloc] init];
+    CGFloat scale = 0.6f;
+    _pageControl.transform = CGAffineTransformMakeScale(scale, scale);
     _pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
     _pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     _pageControl.userInteractionEnabled = NO;
@@ -40,10 +42,10 @@
 - (void)layoutSubviews {
   [super layoutSubviews];
   
-  CGFloat superviewCenter = self.superview.frame.size.width/2.0f;
-  CGFloat centerOffset = (superviewCenter - self.frame.origin.x);
-  _label.center = CGPointMake(centerOffset, 10.0f);
-  _pageControl.center = CGPointMake(centerOffset, 30.0f);
+  CGFloat superviewCenter = 0.5f*CGRectGetWidth(self.superview.frame);
+  CGFloat centerXOffset = (superviewCenter - CGRectGetMinX(self.frame));
+  _label.center = CGPointMake(centerXOffset, 17.0f);
+  _pageControl.center = CGPointMake(centerXOffset, 32.0f);
 }
 
 - (void)setPage:(NSInteger)page {
