@@ -9,6 +9,7 @@
 #import "OMNLoadingCircleVC.h"
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
+#import "UINavigationController+omn_replace.h"
 
 @implementation OMNLoadingCircleVC
 
@@ -90,9 +91,21 @@
   didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
   didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
   
+  __weak typeof(self)weakSelf = self;
   didFailOmnomVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:retryBlock]
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+
+      
+      [weakSelf.navigationController omn_popToViewController:weakSelf animated:YES completion:^{
+        
+        if (retryBlock) {
+          retryBlock();
+        }
+        
+      }];
+
+    }]
     ];
   
   [self.navigationController pushViewController:didFailOmnomVC animated:YES];
