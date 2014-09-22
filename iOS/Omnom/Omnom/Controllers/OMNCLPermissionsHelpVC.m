@@ -101,9 +101,13 @@
 }
 
 - (void)settingsTap {
+  
+#ifdef __IPHONE_8_0
   if (&UIApplicationOpenSettingsURLString) {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
   }
+#endif
+  
 }
 
 - (void)setPage:(NSInteger)page {
