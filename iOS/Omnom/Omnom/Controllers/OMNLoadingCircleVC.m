@@ -83,5 +83,21 @@
   [_loaderView completeAnimation:completionBlock];
 }
 
+- (void)showRetryMessageWithBlock:(dispatch_block_t)retryBlock {
+  
+  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  didFailOmnomVC.faded = YES;
+  didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
+  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  
+  didFailOmnomVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:retryBlock]
+    ];
+  
+  [self.navigationController pushViewController:didFailOmnomVC animated:YES];
+  
+}
+
 
 @end

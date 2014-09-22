@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "phone_icon.png"
+      "filename" : "ic_phone.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "phone_icon@2x.png"
+      "filename" : "ic_phone@2x.png"
     },
     {
       "idiom" : "universal",

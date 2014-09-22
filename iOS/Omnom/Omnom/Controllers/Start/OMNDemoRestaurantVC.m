@@ -62,9 +62,14 @@
   _visitor = visitor;
   
   __weak typeof(self)weakSelf = self;
-  [_visitor.restaurant loadLogo:^(UIImage *image) {
-    //TODO: handle error loading image
-    [weakSelf didLoadLogo];
+  [_visitor.restaurant.decoration loadLogo:^(UIImage *image) {
+    
+    if (image) {
+      [weakSelf didLoadLogo];
+    }
+    else {
+      [weakSelf didFailOmnom];
+    }
     
   }];
   
@@ -72,13 +77,11 @@
 
 - (void)didLoadLogo {
   
-  OMNRestaurant *restaurant = _visitor.restaurant;
-  UIImage *logo = restaurant.logo;
-  UIColor *restaurantBackgroundColor = restaurant.background_color;
+  OMNRestaurantDecoration *decoration = _visitor.restaurant.decoration;
   __weak typeof(self)weakSelf = self;
-  [self setLogo:logo withColor:restaurantBackgroundColor completion:^{
+  [self setLogo:decoration.logo withColor:decoration.background_color completion:^{
     
-    [restaurant loadBackgroundBlurred:YES completion:^(UIImage *image) {
+    [decoration loadBackgroundBlurred:YES completion:^(UIImage *image) {
       
       [weakSelf finishLoading:^{
         

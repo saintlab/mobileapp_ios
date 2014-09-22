@@ -76,7 +76,7 @@ OMNMailRUPayVCDelegate>
   
   [super viewDidLoad];
 
-  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.background_color];
+  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
 
   if (NO == _visitor.restaurant.is_demo) {
     [[OMNSocketManager manager] join:_order.id];

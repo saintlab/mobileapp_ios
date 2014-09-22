@@ -57,12 +57,11 @@
     __weak typeof(self)weakSelf = self;
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue new] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
       
-      SDWebImageOptions options = 0;
       if ([response expectedContentLength] != [weakSelf cachedImageSizeForUrl:imageUrl]) {
         [weakSelf removeImageForUrl:imageUrl];
       }
       
-      [weakSelf startDownloadImageWithURL:imageUrl options:options completion:completionBlock];
+      [weakSelf startDownloadImageWithURL:imageUrl options:SDWebImageRetryFailed completion:completionBlock];
       
     }];
 
@@ -79,7 +78,7 @@
   
   NSURL *smallImageUrl = [NSURL URLWithString:[urlString stringByAppendingString:@"?w=50"]];
   
-  [self startDownloadImageWithURL:smallImageUrl options:0 completion:^(UIImage *image) {
+  [self startDownloadImageWithURL:smallImageUrl options:SDWebImageRetryFailed completion:^(UIImage *image) {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       

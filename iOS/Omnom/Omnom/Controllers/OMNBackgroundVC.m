@@ -21,7 +21,7 @@
   
   self.view.backgroundColor = [UIColor whiteColor];
   
-  _backgroundView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+  _backgroundView = [[UIImageView alloc] init];
   _backgroundView.contentMode = UIViewContentModeCenter;
   [self.view insertSubview:_backgroundView atIndex:0];
   
@@ -36,6 +36,11 @@
     
   }
   
+}
+
+-(void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  _backgroundView.frame = self.view.bounds;
 }
 
 - (void)updateActionBoard {

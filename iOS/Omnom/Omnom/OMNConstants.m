@@ -56,9 +56,6 @@ static NSDictionary *_customConfig = nil;
 + (NSString *)authorizationUrlString {
   return [self stringForKey:@"authorizationUrlString"];
 }
-+ (NSString *)beaconUUIDString {
-  return [self stringForKey:@"beaconUUID"];
-}
 
 + (NSString *)cardIOAppToken {
   return [self stringForKey:@"CardIOAppToken"];

@@ -22,6 +22,7 @@
 #import "OMNRestaurantMediator.h"
 #import "OMNLightBackgroundButton.h"
 #import "OMNImageManager.h"
+#import "OMNAnalitics.h"
 
 @interface OMNR1VC ()
 
@@ -54,8 +55,8 @@
   if (self) {
     _visitor = visitor;
     _restaurant = visitor.restaurant;
-    self.circleIcon = _restaurant.logo;
-    
+    self.circleIcon = _restaurant.decoration.logo;
+    [[OMNAnalitics analitics] logEnterRestaurant:visitor];
   }
   return self;
 }
@@ -82,113 +83,42 @@
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
   }
   
-  self.backgroundImage = _restaurant.background;
-  self.circleBackground = _restaurant.circleBackground;
+  
+  
+  self.circleBackground = _restaurant.decoration.circleBackground;
   
   [self addActionsBoard];
   [self socketConnect];
+  [self loadBackgroundIfNeeded];
+  
+  
+}
 
+- (void)loadBackgroundIfNeeded {
+  
+  if (_restaurant.decoration.background_image) {
+    self.backgroundImage = _restaurant.decoration.background_image;
+    return;
+  }
+  
+  self.backgroundImage = _restaurant.decoration.blurred_background_image;
   __weak typeof(self)weakSelf = self;
-  [_restaurant loadBackgroundBlurred:NO completion:^(UIImage *image) {
+  [_restaurant.decoration loadBackgroundBlurred:NO completion:^(UIImage *image) {
     
     if (image) {
       [weakSelf setBackgroundImage:image animated:YES];
     }
+    else {
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [weakSelf loadBackgroundIfNeeded];
+      });
+    }
     
   }];
-  
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
-}
-
-- (void)beginCircleAnimationIfNeeded {
-
-  if (NO == _callWaiterButton.selected) {
-    return;
-  }
-  
-  _iv1 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  _iv1.center = self.circleButton.center;
-  [self.backgroundView addSubview:_iv1];
-
-  _iv2 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  _iv2.alpha = 0.5f;
-  _iv2.center = self.circleButton.center;
-  [self.backgroundView addSubview:_iv2];
-
-  _iv3 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  _iv3.alpha = 0.25f;
-  _iv3.center = self.circleButton.center;
-  [self.backgroundView addSubview:_iv3];
-  
-  [_circleAnimationTimer invalidate];
-  
-  CGFloat animationRepeatCount = 3.0f;
-
-  NSTimeInterval duration = 2.5;
-  NSTimeInterval delay = 0.0f;
-  NSTimeInterval animationPause = 3.0;
-  NSTimeInterval totalAnimationCicleDuration = duration*animationRepeatCount + animationPause;
-  _circleAnimationTimer = [NSTimer bk_scheduledTimerWithTimeInterval:totalAnimationCicleDuration block:^(NSTimer *timer) {
-    
-    [UIView transitionWithView:_iv1 duration:duration/2. options:UIViewAnimationOptionAutoreverse animations:^{
-      
-      [UIView setAnimationRepeatCount:animationRepeatCount - 0.5f];
-      _iv1.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
-
-    } completion:^(BOOL finished) {
-      
-      [UIView animateWithDuration:duration/2. animations:^{
-        _iv1.transform = CGAffineTransformIdentity;
-      }];
-
-    }];
-    
-    [UIView animateWithDuration:duration delay:delay options:0 animations:^{
-      [UIView setAnimationRepeatCount:animationRepeatCount];
-
-      _iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
-      _iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
-      
-      _iv2.alpha = 0.0f;
-      _iv3.alpha = 0.0f;
-      
-    } completion:^(BOOL finished) {
-      _iv2.transform = CGAffineTransformIdentity;
-      _iv3.transform = CGAffineTransformIdentity;
-      
-      _iv2.alpha = 0.5f;
-      _iv3.alpha = 0.25f;
-    }];
-    
-  } repeats:YES];
-  [_circleAnimationTimer fire];
-}
-
-- (void)finishCircleAnimation {
-  
-  [_circleAnimationTimer invalidate];
-  _circleAnimationTimer = nil;
-  
-  [UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-    
-    _iv1.alpha = 0.0f;
-    _iv2.alpha = 0.0f;
-    _iv3.alpha = 0.0f;
-    _iv1.transform = CGAffineTransformIdentity;
-    _iv2.transform = CGAffineTransformIdentity;
-    _iv3.transform = CGAffineTransformIdentity;
-    
-  } completion:^(BOOL finished) {
-
-    [_iv1 removeFromSuperview];
-    [_iv2 removeFromSuperview];
-    [_iv3 removeFromSuperview];
-    
-  }];
-  
 }
 
 - (void)cancelTap {
@@ -348,6 +278,94 @@
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+
+- (void)beginCircleAnimationIfNeeded {
+  
+  if (NO == _callWaiterButton.selected) {
+    return;
+  }
+  
+  _iv1 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  _iv1.center = self.circleButton.center;
+  [self.backgroundView addSubview:_iv1];
+  
+  _iv2 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  _iv2.alpha = 0.5f;
+  _iv2.center = self.circleButton.center;
+  [self.backgroundView addSubview:_iv2];
+  
+  _iv3 = [[UIImageView alloc] initWithImage:self.circleBackground];
+  _iv3.alpha = 0.25f;
+  _iv3.center = self.circleButton.center;
+  [self.backgroundView addSubview:_iv3];
+  
+  [_circleAnimationTimer invalidate];
+  
+  CGFloat animationRepeatCount = 3.0f;
+  
+  NSTimeInterval duration = 2.5;
+  NSTimeInterval delay = 0.0f;
+  NSTimeInterval animationPause = 3.0;
+  NSTimeInterval totalAnimationCicleDuration = duration*animationRepeatCount + animationPause;
+  _circleAnimationTimer = [NSTimer bk_scheduledTimerWithTimeInterval:totalAnimationCicleDuration block:^(NSTimer *timer) {
+    
+    [UIView transitionWithView:_iv1 duration:duration/2. options:UIViewAnimationOptionAutoreverse animations:^{
+      
+      [UIView setAnimationRepeatCount:animationRepeatCount - 0.5f];
+      _iv1.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
+      
+    } completion:^(BOOL finished) {
+      
+      [UIView animateWithDuration:duration/2. animations:^{
+        _iv1.transform = CGAffineTransformIdentity;
+      }];
+      
+    }];
+    
+    [UIView animateWithDuration:duration delay:delay options:0 animations:^{
+      [UIView setAnimationRepeatCount:animationRepeatCount];
+      
+      _iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
+      _iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
+      
+      _iv2.alpha = 0.0f;
+      _iv3.alpha = 0.0f;
+      
+    } completion:^(BOOL finished) {
+      _iv2.transform = CGAffineTransformIdentity;
+      _iv3.transform = CGAffineTransformIdentity;
+      
+      _iv2.alpha = 0.5f;
+      _iv3.alpha = 0.25f;
+    }];
+    
+  } repeats:YES];
+  [_circleAnimationTimer fire];
+}
+
+- (void)finishCircleAnimation {
+  
+  [_circleAnimationTimer invalidate];
+  _circleAnimationTimer = nil;
+  
+  [UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+    
+    _iv1.alpha = 0.0f;
+    _iv2.alpha = 0.0f;
+    _iv3.alpha = 0.0f;
+    _iv1.transform = CGAffineTransformIdentity;
+    _iv2.transform = CGAffineTransformIdentity;
+    _iv3.transform = CGAffineTransformIdentity;
+    
+  } completion:^(BOOL finished) {
+    
+    [_iv1 removeFromSuperview];
+    [_iv2 removeFromSuperview];
+    [_iv3 removeFromSuperview];
+    
+  }];
+  
 }
 
 @end

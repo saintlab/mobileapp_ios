@@ -239,23 +239,14 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)didFailOmnom {
   
-  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
-  didFailOmnomVC.faded = YES;
-  didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
-  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
   [[OMNAnalitics analitics] logEvent:@"no_table" parametrs:nil];
-  
-  __weak typeof(self)weakSelf = self;
-  didFailOmnomVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      
-      [weakSelf startSearchingBeacon];
-      
-    }]
-    ];
 
-  [self.navigationController pushViewController:didFailOmnomVC animated:YES];
+  __weak typeof(self)weakSelf = self;
+  [self showRetryMessageWithBlock:^{
+    
+    [weakSelf startSearchingBeacon];
+    
+  }];
   
 }
 

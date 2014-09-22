@@ -83,7 +83,7 @@
     [self.navigationController omn_pushViewController:_loadingCircleVC animated:YES completion:^{
     
       if (weakSelf.visitor) {
-        [weakSelf didFindVisitor:weakSelf.visitor];
+        [weakSelf loadLogo];
       }
       
     }];
@@ -94,36 +94,48 @@
 
 - (void)didFindVisitor:(OMNVisitor *)visitor {
   
-  if (nil == self.visitor) {
-    [visitor newGuestWithCompletion:^{
-    } failure:^(NSError *error) {
-    }];
-  }
-
-  [[OMNAnalitics analitics] logEnterRestaurant:visitor];
-  
-  __weak typeof(self)weakSelf = self;
-  [visitor.restaurant loadLogo:^(UIImage *image) {
-    //TODO: handle error loading image
-    [weakSelf didLoadLogoForVisitor:visitor];
-    
+  [visitor newGuestWithCompletion:^{
+  } failure:^(NSError *error) {
   }];
+  self.visitor = visitor;
+  [self loadLogo];
 
 }
 
-- (void)didLoadLogoForVisitor:(OMNVisitor *)visitor {
+- (void)loadLogo {
+  
+  __weak typeof(self)weakSelf = self;
+  __weak OMNLoadingCircleVC *loadingCircleVC = _loadingCircleVC;
+  [self.visitor.restaurant.decoration loadLogo:^(UIImage *image) {
+
+    if (image) {
+      [weakSelf didLoadLogo];
+    }
+    else {
+      [loadingCircleVC showRetryMessageWithBlock:^{
+        
+        [weakSelf loadLogo];
+        
+      }];
+    }
+    
+  }];
+  
+}
+
+- (void)didLoadLogo {
   
   __weak typeof(_loadingCircleVC)weakBeaconSearch = _loadingCircleVC;
-  UIImage *logo = visitor.restaurant.logo;
-  UIColor *restaurantBackgroundColor = visitor.restaurant.background_color;
+  OMNRestaurantDecoration *decoration = self.visitor.restaurant.decoration;
+
   __weak typeof(self)weakSelf = self;
-  [_loadingCircleVC setLogo:logo withColor:restaurantBackgroundColor completion:^{
+  [_loadingCircleVC setLogo:decoration.logo withColor:decoration.background_color completion:^{
     
-    [visitor.restaurant loadBackgroundBlurred:YES completion:^(UIImage *image) {
+    [decoration loadBackgroundBlurred:YES completion:^(UIImage *image) {
       
       [weakBeaconSearch finishLoading:^{
         
-        [weakSelf didLoadBackgroundForVisitor:visitor];
+        [weakSelf didLoadBackground];
         
       }];
 
@@ -133,9 +145,9 @@
   
 }
 
-- (void)didLoadBackgroundForVisitor:(OMNVisitor *)visitor {
+- (void)didLoadBackground {
   
-  [self.delegate searchRestaurantVC:self didFindVisitor:visitor];
+  [self.delegate searchRestaurantVC:self didFindVisitor:self.visitor];
   
 }
 

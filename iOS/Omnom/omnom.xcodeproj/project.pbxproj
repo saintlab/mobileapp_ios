@@ -97,6 +97,8 @@
 		9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */; };
 		9345AFDA199E0ED200328F73 /* OMNCardBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */; };
 		9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */; };
+		934FC72A19D03CED008AC4B0 /* OMNRestaurantDecoration.m in Sources */ = {isa = PBXBuildFile; fileRef = 934FC72919D03CED008AC4B0 /* OMNRestaurantDecoration.m */; };
+		934FC72B19D03CED008AC4B0 /* OMNRestaurantDecoration.m in Sources */ = {isa = PBXBuildFile; fileRef = 934FC72919D03CED008AC4B0 /* OMNRestaurantDecoration.m */; };
 		9351677119BFF7460071DA57 /* OMNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351677019BFF7460071DA57 /* OMNImageManager.m */; };
 		9351677219BFF7460071DA57 /* OMNImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9351677019BFF7460071DA57 /* OMNImageManager.m */; };
 		93535EFF198246F50084C3E7 /* OMNBackgroundVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535EFD198246F50084C3E7 /* OMNBackgroundVC.m */; };
@@ -478,6 +480,8 @@
 		9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNToolbarButton.m; sourceTree = "<group>"; };
 		9345AFD8199E0ED200328F73 /* OMNCardBrandView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardBrandView.h; sourceTree = "<group>"; };
 		9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardBrandView.m; sourceTree = "<group>"; };
+		934FC72819D03CED008AC4B0 /* OMNRestaurantDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantDecoration.h; sourceTree = "<group>"; };
+		934FC72919D03CED008AC4B0 /* OMNRestaurantDecoration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantDecoration.m; sourceTree = "<group>"; };
 		9351676F19BFF7460071DA57 /* OMNImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNImageManager.h; sourceTree = "<group>"; };
 		9351677019BFF7460071DA57 /* OMNImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNImageManager.m; sourceTree = "<group>"; };
 		9351677319C08E8F0071DA57 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
@@ -1274,6 +1278,8 @@
 				9389455F19B0620D00C37C82 /* OMNPushTexts.m */,
 				9389456219B0622900C37C82 /* OMNPushText.h */,
 				9389456319B0622900C37C82 /* OMNPushText.m */,
+				934FC72819D03CED008AC4B0 /* OMNRestaurantDecoration.h */,
+				934FC72919D03CED008AC4B0 /* OMNRestaurantDecoration.m */,
 			);
 			path = Restaurants;
 			sourceTree = "<group>";
@@ -1996,6 +2002,7 @@
 				932B186019ADEE91009E440E /* OMNOrderTableView.m in Sources */,
 				939F992019752BE90051822E /* OMNLoginVC.m in Sources */,
 				9345AFCD199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
+				934FC72A19D03CED008AC4B0 /* OMNRestaurantDecoration.m in Sources */,
 				937822A41963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,
 				938E8F55192F3A200088EF38 /* OMNOrderItem.m in Sources */,
 				939DA162195405650063AB23 /* OMNAuthorizationVC.m in Sources */,
@@ -2114,6 +2121,7 @@
 				93E299A3197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */,
 				93998C1619ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */,
 				939F991119752BE90051822E /* OMNAddBankCardVC.m in Sources */,
+				934FC72B19D03CED008AC4B0 /* OMNRestaurantDecoration.m in Sources */,
 				937A37381980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				9345AFB8199A2EC200328F73 /* OMNMailRUPayVC.m in Sources */,
 				93E29998197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,

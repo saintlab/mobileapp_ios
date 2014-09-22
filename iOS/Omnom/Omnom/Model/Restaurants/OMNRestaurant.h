@@ -10,11 +10,11 @@
 #import "OMNOrder.h"
 #import "OMNRestaurantInfo.h"
 #import "OMNPushTexts.h"
+#import "OMNRestaurantDecoration.h"
 
 typedef void(^GRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 typedef void(^GMenuBlock)(OMNMenu *menu);
-typedef void(^OMNImageBlock)(UIImage *image);
 
 @interface OMNRestaurant : NSObject
 
@@ -22,16 +22,14 @@ typedef void(^OMNImageBlock)(UIImage *image);
 @property (nonatomic, assign) BOOL is_demo;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
-@property (nonatomic, copy) NSString *image;
+@property (nonatomic, strong) OMNRestaurantDecoration *decoration;
 
-@property (nonatomic, strong) UIColor *background_color;
-@property (nonatomic, strong) NSString *background_imageUrl;
-@property (nonatomic, strong) NSString *logoUrl;
+//@property (nonatomic, strong) UIColor *background_color;
+//@property (nonatomic, strong) NSString *background_imageUrl;
+//@property (nonatomic, strong) NSString *logoUrl;
+//@property (nonatomic, strong) UIImage *logo;
+//@property (nonatomic, strong) UIImage *background;
 @property (nonatomic, strong) OMNPushTexts *mobile_texts;
-
-@property (nonatomic, strong) UIImage *logo;
-@property (nonatomic, strong) UIImage *background;
-@property (nonatomic, strong, readonly) UIImage *circleBackground;
 
 @property (nonatomic, copy, readonly) NSString *waiterCallTableID;
 
@@ -47,8 +45,5 @@ typedef void(^OMNImageBlock)(UIImage *image);
 - (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block error:(void(^)(NSError *error))errorBlock;
 
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock;
-
-- (void)loadLogo:(OMNImageBlock)imageBlock;
-- (void)loadBackgroundBlurred:(BOOL)blurred completion:(OMNImageBlock)imageBlock;
 
 @end

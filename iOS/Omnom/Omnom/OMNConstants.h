@@ -26,7 +26,6 @@ extern NSString * const kPushSoundName;
 
 + (NSString *)baseUrlString;
 + (NSString *)authorizationUrlString;
-+ (NSString *)beaconUUIDString;
 
 + (NSString *)cardIOAppToken;
 + (NSString *)mixpanelToken;

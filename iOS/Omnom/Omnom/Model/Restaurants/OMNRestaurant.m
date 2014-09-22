@@ -9,11 +9,8 @@
 #import "OMNRestaurant.h"
 #import <AFNetworking/AFNetworking.h>
 #import "OMNOperationManager.h"
-#import "NSString+omn_color.h"
 #import "OMNSocketManager.h"
-#import "UIImage+omn_helper.h"
 #import "OMNAnalitics.h"
-#import "OMNImageManager.h"
 
 @interface NSData (omn_restaurants)
 
@@ -45,19 +42,9 @@
     self.id = jsonData[@"id"];
     self.is_demo = [jsonData[@"is_demo"] boolValue];
     self.title = jsonData[@"title"];
-    self.image = jsonData[@"image"];
     self.Description = jsonData[@"description"];
-    
-    id decoration = jsonData[@"decoration"];
-    self.logoUrl = decoration[@"logo"];
+    self.decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
     self.mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
-    self.background_imageUrl = decoration[@"background_image"];
-    if ([decoration[@"background_color"] isKindOfClass:[NSString class]]) {
-      self.background_color = [decoration[@"background_color"] omn_colorFormHex];
-    }
-    else {
-      self.background_color = [UIColor blackColor];
-    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:nil];
     
@@ -136,10 +123,6 @@
   
 }
 
-- (UIImage *)circleBackground {
-  return [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:self.background_color];
-}
-
 - (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
   
   if (nil == _waiterCallTableID) {
@@ -193,36 +176,6 @@
 
 - (NSString *)description {
   return [NSString stringWithFormat:@"%@, %@", _title, _id];
-}
-
-- (void)loadLogo:(OMNImageBlock)imageBlock {
-  
-  __weak typeof(self)weakSelf = self;
-  [[OMNImageManager manager] downloadImageWithURL:self.logoUrl completion:^(UIImage *image) {
-    
-    weakSelf.logo = image;
-    imageBlock(image);
-    
-  }];
-
-}
-
-- (void)loadBackgroundBlurred:(BOOL)blurred completion:(OMNImageBlock)imageBlock {
-  
-  __weak typeof(self)weakSelf = self;
-  
-  void(^imageB)(UIImage *image) = ^(UIImage *image) {
-    weakSelf.background = image;
-    imageBlock(image);
-  };
-  
-  if (blurred) {
-    [[OMNImageManager manager] downloadBlurredImageWithURL:self.background_imageUrl expectedSize:CGSizeMake(320.0f, 568.0f) completion:imageB];
-  }
-  else {
-    [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl completion:imageB];
-  }
-
 }
 
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock {

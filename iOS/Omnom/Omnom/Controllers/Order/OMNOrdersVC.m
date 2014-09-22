@@ -37,7 +37,7 @@
   
   UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:self.view.bounds];
   backgroundView.contentMode = UIViewContentModeCenter;
-  backgroundView.image = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.background_color];
+  backgroundView.image = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
   self.collectionView.backgroundView = backgroundView;
 
   [self.collectionView registerClass:[OMNOrderViewCell class] forCellWithReuseIdentifier:@"OMNOrderItemCell"];
