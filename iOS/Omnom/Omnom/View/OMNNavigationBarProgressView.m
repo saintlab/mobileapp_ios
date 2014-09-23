@@ -45,7 +45,7 @@
   CGFloat superviewCenter = 0.5f*CGRectGetWidth(self.superview.frame);
   CGFloat centerXOffset = (superviewCenter - CGRectGetMinX(self.frame));
   _label.center = CGPointMake(centerXOffset, 17.0f);
-  _pageControl.center = CGPointMake(centerXOffset, 32.0f);
+  _pageControl.center = CGPointMake(centerXOffset, 34.0f);
 }
 
 - (void)setPage:(NSInteger)page {
