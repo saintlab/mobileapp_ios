@@ -48,7 +48,7 @@
   if (_applicationStartedForeground) {
     return;
   }
-
+  
 #if defined (APP_STORE)
   [OMNConstants setCustomConfigName:@"config_prod"];
 #elif defined (AD_HOC)

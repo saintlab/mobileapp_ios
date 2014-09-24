@@ -21,6 +21,14 @@
 
 @implementation OMNSocketIO
 
+- (void)dealloc {
+  _context.exceptionHandler = nil;
+  _context = nil;
+  _webView.delegate = nil;
+  [_webView stopLoading];
+  _webView = nil;
+}
+
 - (instancetype) init {
   self = [super init];
   if (self) {

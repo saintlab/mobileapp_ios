@@ -39,7 +39,7 @@
 
 - (void)setup {
   self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-  self.errorColor = colorWithHexString(@"d0021b");
+  self.errorColor = colorWithHexString(@"D0021B");
   self.font = [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:20.0f];
   [self addTarget:self action:@selector(editingDidChange) forControlEvents:UIControlEventEditingDidBegin];
   [self addTarget:self action:@selector(editingDidChange) forControlEvents:UIControlEventEditingDidEnd];

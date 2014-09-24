@@ -201,7 +201,8 @@ CGFloat kTextFieldsOffset = 20.0f;
   if (_expireCCVTFHidden) {
     
     [self setExpireCCVTFHidden:NO animated:YES completion:^{
-      
+
+      [_cvvTF setNeedsDisplay];
       [_expireTF becomeFirstResponder];
       
     }];
@@ -333,7 +334,13 @@ CGFloat kTextFieldsOffset = 20.0f;
       pan = [pan substringToIndex:kDesiredPanLength];
     }
     
+    UITextRange *selectedTextRange = [textField selectedTextRange];
+    UITextRange *startPosition = [textField positionFromPosition:selectedTextRange.start offset:(string.length) ? (string.length) : (-1)];
     [self setPan:pan];
+    if (startPosition) {
+      [textField setSelectedTextRange:[textField textRangeFromPosition:startPosition toPosition:startPosition]];
+    }
+    
     [self didFinishEnterCardDetails:NO];
     return NO;
   }
@@ -341,63 +348,71 @@ CGFloat kTextFieldsOffset = 20.0f;
     
     NSArray *MM_YYComponents = [finalString componentsSeparatedByString:kMM_YYSeporator];
     
+    NSString *mm = [MM_YYComponents firstObject];
     
-    NSString *mm = (MM_YYComponents.count) ? (MM_YYComponents[0]) : (@"");
-    NSString *yy = @"";
+    if (0 == mm.length &&
+        [string isEqualToString:@""]) {
+      textField.text = @"";
+      [self showPANTF];
+      return NO;
+    }
     
-    if (MM_YYComponents.count == 2) {
+    if (1 == MM_YYComponents.count) {
       
-      yy = MM_YYComponents[1];
-      
-      if (0 == yy.length &&
-          0 == string.length) {
+      if (mm.length < 2) {
         
-        MM_YYComponents = @[mm];
+        textField.text = mm;
         
       }
-      
-      else if (yy.length > 2) {
+      else {
         
-        yy = [yy substringToIndex:2];
-        MM_YYComponents = @[mm, yy];
+        NSString *yy = [mm substringFromIndex:2];
+        mm = [mm substringToIndex:2];
+        
+        if (0 == yy.length &&
+            [string isEqualToString:@""]) {
+          textField.text = mm;
+        }
+        else {
+          textField.text = [NSString stringWithFormat:@"%@%@%@", mm, kMM_YYSeporator, yy];
+        }
         
       }
       
     }
     else {
       
-      if (mm.length > 2) {
+      NSString *yy = MM_YYComponents[1];
+      
+      if (0 == yy.length &&
+          [string isEqualToString:@""]) {
         
-        yy = [mm substringFromIndex:2];
-        mm = [mm substringToIndex:2];
-        MM_YYComponents = @[mm, yy];
-        
-      }
-      else if (2 == mm.length) {
-        
-        if ([string isEqualToString:@""]) {
-          MM_YYComponents = @[mm];
-        }
-        else {
-          MM_YYComponents = @[mm, @""];
-        }
+        textField.text = mm;
         
       }
+      else if (yy.length < 2) {
+        
+        textField.text = [NSString stringWithFormat:@"%@%@%@", mm, kMM_YYSeporator, yy];
+        
+      }
+      else {
+        
+        NSString *left = [yy substringFromIndex:2];
+        yy = [yy substringToIndex:2];
+        textField.text = [NSString stringWithFormat:@"%@%@%@", mm, kMM_YYSeporator, yy];
+
+        if (left.length) {
+          _cvvTF.text = left;
+        }
+        [_cvvTF becomeFirstResponder];
+        
+      }
+      
     }
     
-    NSString *MMYYString = [MM_YYComponents componentsJoinedByString:kMM_YYSeporator];
-    textField.text = MMYYString;
-    
-    if (0 == mm.length &&
-        [string isEqualToString:@""]) {
-      [self showPANTF];
-    }
-    else if (2 == mm.length &&
-             2 == yy.length) {
-      [_cvvTF becomeFirstResponder];
-    }
     [self didFinishEnterCardDetails:NO];
     return NO;
+    
   }
   else if ([textField isEqual:_cvvTF]) {
     
