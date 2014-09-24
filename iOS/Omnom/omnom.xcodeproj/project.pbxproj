@@ -334,8 +334,6 @@
 		93E29991197CEA7000051B04 /* OMNDenyCLPermissionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E2998E197CEA7000051B04 /* OMNDenyCLPermissionVC.m */; };
 		93E29997197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E29995197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m */; };
 		93E29998197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E29995197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m */; };
-		93E29999197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93E29996197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib */; };
-		93E2999A197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93E29996197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib */; };
 		93E299A2197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E299A1197D0B7500051B04 /* OMNCircleFadeTransition.m */; };
 		93E299A3197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E299A1197D0B7500051B04 /* OMNCircleFadeTransition.m */; };
 		93E299A7197D0C9700051B04 /* OMNCircleRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E299A5197D0C9700051B04 /* OMNCircleRootVC.m */; };
@@ -720,7 +718,6 @@
 		93E2998E197CEA7000051B04 /* OMNDenyCLPermissionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDenyCLPermissionVC.m; sourceTree = "<group>"; };
 		93E29994197CEC5C00051B04 /* OMNCLPermissionsHelpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCLPermissionsHelpVC.h; sourceTree = "<group>"; };
 		93E29995197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCLPermissionsHelpVC.m; sourceTree = "<group>"; };
-		93E29996197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNCLPermissionsHelpVC.xib; sourceTree = "<group>"; };
 		93E299A0197D0B7500051B04 /* OMNCircleFadeTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleFadeTransition.h; sourceTree = "<group>"; };
 		93E299A1197D0B7500051B04 /* OMNCircleFadeTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCircleFadeTransition.m; sourceTree = "<group>"; };
 		93E299A4197D0C9700051B04 /* OMNCircleRootVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleRootVC.h; sourceTree = "<group>"; };
@@ -1606,7 +1603,6 @@
 				93E2998E197CEA7000051B04 /* OMNDenyCLPermissionVC.m */,
 				93E29994197CEC5C00051B04 /* OMNCLPermissionsHelpVC.h */,
 				93E29995197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m */,
-				93E29996197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib */,
 			);
 			name = CoreLocation;
 			sourceTree = "<group>";
@@ -1788,7 +1784,6 @@
 				9390D2611966E559007E13AB /* OMNOrderCell.json in Resources */,
 				93676E4018D1EAB900FC55F1 /* restaurants.json in Resources */,
 				939F991E19752BE90051822E /* OMNUserInfoVC.xib in Resources */,
-				93E29999197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */,
 				938F3A4F198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				932B186E19AF3C80009E440E /* pay_done.caf in Resources */,
@@ -1834,7 +1829,6 @@
 				9389456C19B5957100C37C82 /* config.json in Resources */,
 				93D17D6519D260970066DCE7 /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
 				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
-				93E2999A197CEC5C00051B04 /* OMNCLPermissionsHelpVC.xib in Resources */,
 				9345AFAC199A0A1400328F73 /* restaurantInfo.json in Resources */,
 				93C99162193F176B0028F76C /* FuturaPT-Medium.ttf in Resources */,
 				938F3A44198B859100AB288E /* timings.json in Resources */,
