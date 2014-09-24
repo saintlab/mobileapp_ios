@@ -59,22 +59,23 @@
   [OMNMailRuAcquiring setConfig:[OMNConstants mailRuConfig]];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
-  UIFont *font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+  UIFont *buttonFont = FuturaOSFOmnomRegular(20.0f);
   [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
    @{
      NSForegroundColorAttributeName : [UIColor blackColor],
-     NSFontAttributeName : font
+     NSFontAttributeName : buttonFont
      } forState:UIControlStateNormal];
   [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
    @{
      NSForegroundColorAttributeName : [UIColor lightGrayColor],
-     NSFontAttributeName : font
+     NSFontAttributeName : buttonFont
      } forState:UIControlStateDisabled];
   
+  UIFont *titleFont = FuturaOSFOmnomMedium(20.0f);
   [[UINavigationBar appearance] setTitleTextAttributes:
    @{
      NSForegroundColorAttributeName : [UIColor blackColor],
-     NSFontAttributeName : font,
+     NSFontAttributeName : titleFont,
      }];
   
   _applicationStartedForeground = YES;

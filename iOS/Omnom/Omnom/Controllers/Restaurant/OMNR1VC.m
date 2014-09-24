@@ -178,7 +178,7 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:NO animated:NO];
-  [self.navigationItem setHidesBackButton:YES animated:animated];
+  [self.navigationItem setHidesBackButton:YES animated:NO];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   
