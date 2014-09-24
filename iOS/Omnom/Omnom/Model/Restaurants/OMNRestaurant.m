@@ -9,7 +9,6 @@
 #import "OMNRestaurant.h"
 #import <AFNetworking/AFNetworking.h>
 #import "OMNOperationManager.h"
-#import "OMNSocketManager.h"
 #import "OMNAnalitics.h"
 
 @interface NSData (omn_restaurants)
@@ -27,7 +26,6 @@
 }
 
 - (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [self stopWaiterCall];
 }
 
@@ -45,15 +43,8 @@
     self.Description = jsonData[@"description"];
     self.decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
     self.mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:nil];
-    
   }
   return self;
-}
-
-- (void)waiterCallDone:(NSNotification *)n {
-  [self stopWaiterCall];
 }
 
 + (void)getRestaurantList:(GRestaurantsBlock)restaurantsBlock error:(void(^)(NSError *error))errorBlock {
@@ -95,8 +86,6 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.id, tableID];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
     
-    [[OMNSocketManager manager] join:tableID];
-    
     completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -110,8 +99,6 @@
 - (void)stopWaiterCall {
   
   if (_waiterCallTableID) {
-
-    [[OMNSocketManager manager] leave:_waiterCallTableID];
     _waiterCallTableID = nil;
 
     if (_waiterCallStopBlock) {

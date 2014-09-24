@@ -12,6 +12,7 @@
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
+#import "OMNDotTextField.h"
 
 const long long kMaxEnteredValue = 99999999L;
 
@@ -34,7 +35,7 @@ UITextFieldDelegate>
   UIView *_seporatorView;
   UIView *_flexibleBottomView;
   UIView *_bottomView;
-  UIButton *_commaButton;
+  
 }
 
 @synthesize amountPercentValue=_amountPercentValue;
@@ -57,12 +58,12 @@ UITextFieldDelegate>
   _pureAmountTF.minimumFontSize = 10.0f;
   _pureAmountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
   _pureAmountTF.textColor = colorWithHexString(@"FFFFFF");
-  _pureAmountTF.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:50.0f];
+  _pureAmountTF.font = FuturaLSFOmnomLERegular(50.0f);
   _pureAmountTF.textAlignment = NSTextAlignmentCenter;
   _pureAmountTF.delegate = self;
   [self addSubview:_pureAmountTF];
   
-  _amountTF = [[UITextField alloc] init];
+  _amountTF = [[OMNDotTextField alloc] init];
   _amountTF.tintColor = colorWithHexString(@"157EFB");
   _amountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
   _amountTF.translatesAutoresizingMaskIntoConstraints = NO;
@@ -70,9 +71,8 @@ UITextFieldDelegate>
   _amountTF.minimumFontSize = 10.0f;
   _amountTF.textColor = colorWithHexString(@"FFFFFF");
   _amountTF.delegate = self;
-  _amountTF.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:30.0f];
+  _amountTF.font = FuturaLSFOmnomLERegular(30.0f);
   _amountTF.textAlignment = NSTextAlignmentRight;
-  _amountTF.keyboardType = UIKeyboardTypeNumberPad;
   [_amountTF bk_addEventHandler:^(UITextField *sender) {
     
     [self calculateRelativePercentValue];
@@ -93,7 +93,7 @@ UITextFieldDelegate>
   _percentTF.minimumFontSize = 10.0f;
   _percentTF.translatesAutoresizingMaskIntoConstraints = NO;
   _percentTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-  _percentTF.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:30.0f];
+  _percentTF.font = FuturaLSFOmnomLERegular(30.0f);
   _percentTF.textColor = [UIColor whiteColor];
   [_percentTF bk_addEventHandler:^(UITextField *sender) {
     
@@ -249,7 +249,7 @@ UITextFieldDelegate>
 
 - (long long)selectedAmount {
   NSString *pureAmount = [self pureAmountString:_amountTF.text];
-  long long amount = 100ll*[pureAmount doubleValue];
+  long long amount = 100ll*[pureAmount omn_doubleValue];
   return amount;
 }
 
@@ -299,7 +299,7 @@ UITextFieldDelegate>
 #pragma mark - UITextFieldDelegate
 
 - (NSString *)pureAmountString:(NSString *)string {
-  NSCharacterSet *charactersSet = [[NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"0123456789%@", kCommaString]] invertedSet];
+  NSCharacterSet *charactersSet = [[NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"0123456789%@", omnCommaString()]] invertedSet];
   NSString *finalString = [[string componentsSeparatedByCharactersInSet:charactersSet] componentsJoinedByString:@""];
   return finalString;
 }
@@ -308,12 +308,23 @@ UITextFieldDelegate>
   
   if ([textField isEqual:_amountTF]) {
     
+    if ([string isEqualToString:omnCommaString()]) {
+      
+      if (NSNotFound == [textField.text rangeOfString:omnCommaString()].location) {
+        NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:omnCommaString()];
+        textField.text = finalString;
+        [self updateCaratPosition];
+      }
+      
+      return NO;
+    }
+    
     NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     finalString = [self pureAmountString:finalString];
     
-    if (NSNotFound != [finalString rangeOfString:kCommaString].location) {
+    if (NSNotFound != [finalString rangeOfString:omnCommaString()].location) {
       NSString *fractionalString = @"";
-      NSArray *components = [finalString componentsSeparatedByString:kCommaString];
+      NSArray *components = [finalString componentsSeparatedByString:omnCommaString()];
       if (2 == components.count) {
         
         fractionalString = components[1];
@@ -323,9 +334,9 @@ UITextFieldDelegate>
         
       }
       
-      finalString = [@[components[0], fractionalString] componentsJoinedByString:kCommaString];
+      finalString = [@[components[0], fractionalString] componentsJoinedByString:omnCommaString()];
     }
-    long long value = round(100.0*[finalString doubleValue]);
+    long long value = round(100.0*[finalString omn_doubleValue]);
     value = MIN(value, kMaxEnteredValue);
     [self setAmountValue:value];
     [self calculateRelativePercentValue];
@@ -351,48 +362,6 @@ UITextFieldDelegate>
     return NO;
   }
   return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-  
-  if ([textField isEqual:_amountTF]) {
-    
-    _commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _commaButton.frame = CGRectMake(0, 163, 106, 53);
-    _commaButton.adjustsImageWhenHighlighted = NO;
-    _commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
-    [_commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
-    [_commaButton setTitle:kCommaString forState:UIControlStateNormal];
-    [_commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-      
-      UIView *keyboardView = [[[UIApplication sharedApplication] windows] lastObject];
-      [_commaButton setFrame:CGRectMake(0, keyboardView.frame.size.height - 53, 106, 53)];
-      [keyboardView addSubview:_commaButton];
-      [keyboardView bringSubviewToFront:_commaButton];
-      
-    });
-  }
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-  
-  [_commaButton removeFromSuperview];
-  _commaButton = nil;
-  
-}
-
-- (void)commaTap:(UIButton *)b {
-  
-  if (NSNotFound == [_amountTF.text rangeOfString:kCommaString].location) {
-    NSString *endOfString = [_amountTF.text substringFromIndex:_amountTF.text.length - 2];
-    NSString *commaEndOfString = [kCommaString stringByAppendingString:endOfString];
-    _amountTF.text = [_amountTF.text stringByReplacingOccurrencesOfString:endOfString withString:commaEndOfString];
-    [self updateCaratPosition];
-  }
-  
 }
 
 - (void)updateCaratPosition {

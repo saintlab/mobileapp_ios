@@ -13,7 +13,6 @@
 #import "OMNOperationManager.h"
 #import "OMNAuthorisation.h"
 #import <BlocksKit+UIKit.h>
-#import "OMNSocketManager.h"
 #import "UIImage+omn_helper.h"
 #import "OMNPushPermissionVC.h"
 #import "OMNToolbarButton.h"
@@ -130,7 +129,13 @@
 - (void)socketConnect {
   
   if (NO == _visitor.restaurant.is_demo) {
-    [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token];
+    
+    __weak OMNVisitor *visitor = _visitor;
+    [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token completion:^{
+      
+      [visitor subscribeForTableEvents];
+      
+    }];
   }
   
 }

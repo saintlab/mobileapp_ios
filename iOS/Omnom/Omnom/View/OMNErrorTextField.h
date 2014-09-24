@@ -14,6 +14,7 @@
 @property (nonatomic, assign, readonly) CGFloat controlWidth;
 
 - (instancetype)initWithWidth:(CGFloat)width;
+- (instancetype)initWithWidth:(CGFloat)width textFieldClass:(Class)textFieldClass;
 - (void)setError:(NSString *)text;
 
 @end

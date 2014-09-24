@@ -37,7 +37,7 @@
     self.circleIcon = _circleIcon;
   }
   
-  _fadeView = [[UIView alloc] initWithFrame:self.backgroundView.bounds];
+  _fadeView = [[UIView alloc] init];
   _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
   _fadeView.hidden = !self.faded;
   [self.backgroundView addSubview:_fadeView];
@@ -49,6 +49,11 @@
 
   self.text = _text;
   [self.view layoutIfNeeded];
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  _fadeView.frame = self.backgroundView.bounds;
 }
 
 - (void)setupCircle {

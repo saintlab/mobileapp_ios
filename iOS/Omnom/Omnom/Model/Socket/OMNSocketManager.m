@@ -14,7 +14,11 @@
 NSString * const OMNSocketIODidReceiveCardIdNotification = @"OMNSocketIODidReceiveCardIdNotification";
 NSString * const OMNSocketIODidPayNotification = @"OMNSocketIODidPayNotification";
 NSString * const OMNSocketIOWaiterCallDoneNotification = @"OMNSocketIOWaiterCallDoneNotification";
-NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDoneNotification";
+NSString * const OMNSocketIOOrderDidChangeNotification = @"OMNSocketIOOrderDidChangeNotification";
+NSString * const OMNSocketIOOrderDidCloseNotification = @"OMNSocketIOOrderDidCloseNotification";
+
+NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
+
 
 @implementation OMNSocketManager {
   OMNSocketIO *_io;
@@ -88,12 +92,28 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
   [_socket on:@"order_close" listener:^(id data) {
     
     NSLog(@"order_close %@, %@", data, [data class]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      if (data) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidCloseNotification object:self
+                                                          userInfo:@{OMNOrderDataKey : data}];
+      }
+      
+    });
     
   }];
   
   [_socket on:@"order_update" listener:^(id data) {
     
     NSLog(@"order_update %@, %@", data, [data class]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      if (data) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidChangeNotification object:self
+                                                          userInfo:@{OMNOrderDataKey : data}];
+      }
+      
+    });
     
   }];
   
@@ -118,15 +138,7 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
   }];
   
   [_socket on:@"bill_call_done" listener:^(id data) {
-    
     NSLog(@"bill_call_done response %@, %@", data, [data class]);
-    dispatch_async(dispatch_get_main_queue(), ^{
-      
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOBillCallDoneNotification object:nil userInfo:data];
-
-
-    });
-    
   }];
   
   [_socket on:@"card_register" listener:^(id data) {
@@ -172,7 +184,8 @@ NSString * const OMNSocketIOBillCallDoneNotification = @"OMNSocketIOBillCallDone
 
 - (void)join:(NSString *)roomId {
   
-  if (roomId.length) {
+  if (roomId.length &&
+      NO == [_rooms containsObject:roomId]) {
     [_rooms addObject:roomId];
     [_socket emit:@"join", roomId, nil];
   }

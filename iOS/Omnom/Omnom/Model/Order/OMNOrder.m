@@ -67,8 +67,10 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     self.modifiedTime = jsonData[@"modified_time"];
     self.restaurant_id = jsonData[@"restaurant_id"];
     self.table_id = jsonData[@"table_id"];
-    self.paid_amount = [jsonData[@"paid_amount"] longLongValue];
-    self.paid_tip = [jsonData[@"paid_tip"] longLongValue];
+    
+    if (jsonData[@"paid_amount"]) {
+      self.paid = [[OMNOrderPaid alloc] initWithTotal:[jsonData[@"paid_amount"] longLongValue] tip:[jsonData[@"paid_tip"] longLongValue]];
+    }
     
     NSArray *itemsData = jsonData[@"items"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsData.count];
@@ -86,7 +88,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 
     for (id tipData in tipsData[@"values"]) {
       long long amount = [tipData[@"amount"] longLongValue];
-      double percent = [tipData[@"percent"] doubleValue];
+      double percent = [tipData[@"percent"] omn_doubleValue];
       OMNTip *tip = [[OMNTip alloc] initWithAmount:amount percent:percent];
       [tips addObject:tip];
     }
@@ -110,16 +112,14 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 - (void)updateWithOrder:(OMNOrder *)order {
   
   self.items = order.items;
-  _paid_amount = order.paid_amount;
-  _paid_tip = order.paid_tip;
+  if (order.paid) {
+    self.paid = order.paid;
+  }
+
   if (NO == _enteredAmountChanged) {
     _enteredAmount = MAX(0ll, self.expectedValue);
   }
-}
-
-- (long long)paid_net {
-  long long paid_net = MAX(0ll, self.paid_amount - self.paid_tip);
-  return paid_net;
+  
 }
 
 - (void)setEnteredAmount:(long long)enteredAmount {
@@ -172,7 +172,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 }
 
 - (long long)expectedValue {
-  long long expectedValue = MAX(0ll, self.totalAmount - self.paid_net);
+  long long expectedValue = MAX(0ll, self.totalAmount - self.paid.net_amount);
   return expectedValue;
 }
 

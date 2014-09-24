@@ -16,6 +16,12 @@
 typedef void(^OMNVisitorBlock)(OMNVisitor *visitor);
 typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 
+extern NSString * const OMNOrderDidChangeNotification;
+extern NSString * const OMNOrderDidCloseNotification;
+
+extern NSString * const OMNOrderKey;
+extern NSString * const OMNOrderIndexKey;
+
 @interface OMNVisitor : NSObject
 <NSCoding>
 
@@ -29,6 +35,8 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 
 - (instancetype)initWithJsonData:(id)data;
 
+- (void)updateWithVisitor:(OMNVisitor *)visitor;
+- (void)subscribeForTableEvents;
 - (BOOL)readyForPush;
 - (BOOL)expired;
 - (NSString *)id;

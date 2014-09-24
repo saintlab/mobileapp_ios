@@ -1,13 +1,13 @@
 {
-  "tableNumberLabelFont": "FuturaPT-Medium:15",
+  "tableNumberLabelFont": "Futura-OSF-Omnom-Medium:15",
   "tableNumberLabelText": "Номер вашего стола",
   "tableNumberLabelColor": "#FFFFFF",
 
-  "tableNumberFieldFont": "FuturaPT-Medium:25",
+  "tableNumberFieldFont": "Futura-OSF-Omnom-Medium:25",
   "tableNumberFieldText": "",
   "tableNumberFieldColor": "#FFFFFF",
   
-  "switchLabelFont": "FuturaPT-Medium:15",
+  "switchLabelFont": "Futura-OSF-Omnom-Medium:15",
   "switchLabelText": "Определять автоматически",
   "switchLabelColor": "#FFFFFF"
 }

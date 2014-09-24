@@ -9,6 +9,13 @@
 #import "OMNVisitor.h"
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
+#import "OMNSocketManager.h"
+
+NSString * const OMNOrderDidChangeNotification = @"OMNOrderDidChangeNotification";
+NSString * const OMNOrderDidCloseNotification = @"OMNOrderDidCloseNotification";
+
+NSString * const OMNOrderKey = @"OMNOrderKey";
+NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
 
 @interface NSArray (omn_restaurants)
 
@@ -20,6 +27,10 @@
   id _decodeBeaconData;
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
@@ -28,6 +39,11 @@
     _beacon = [[OMNBeacon alloc] initWithJsonData:data[@"beacon"]];
     _restaurant = [[OMNRestaurant alloc] initWithJsonData:data[@"restaurant"]];
     _table = [[OMNTable alloc] initWithJsonData:data[@"table"]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:[OMNSocketManager manager]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidChangeNotification object:[OMNSocketManager manager]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNSocketIOOrderDidCloseNotification object:[OMNSocketManager manager]];
+    
   }
   return self;
 }
@@ -44,6 +60,81 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   [aCoder encodeObject:self.foundDate forKey:@"foundDate"];
   [aCoder encodeObject:_decodeBeaconData forKey:@"decodeBeaconData"];
+}
+
+- (void)waiterCallDone:(NSNotification *)n {
+  [_restaurant stopWaiterCall];
+}
+
+- (void)orderDidChange:(NSNotification *)n {
+  
+  OMNOrder *newOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
+  
+  [_orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+
+    if ([newOrder.id isEqualToString:order.id]) {
+      [order updateWithOrder:newOrder];
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification
+                                                          object:self
+                                                        userInfo:@{OMNOrderKey : order}];
+      *stop = YES;
+    }
+    
+  }];
+  
+}
+
+- (void)orderDidClose:(NSNotification *)n {
+  
+  OMNOrder *closeOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
+  
+  [_orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+    
+    if ([closeOrder.id isEqualToString:order.id]) {
+      
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification
+                                                          object:self
+                                                        userInfo:@{OMNOrderKey : order,
+                                                                   OMNOrderIndexKey : @(idx)}];
+      *stop = YES;
+    }
+    
+  }];
+  
+}
+
+- (void)updateWithVisitor:(OMNVisitor *)visitor {
+  
+  if (nil == visitor.table.id) {
+    return;
+  }
+  
+  if (NO == [self.table.id isEqualToString:visitor.table.id]) {
+    self.table = visitor.table;
+    
+    [visitor newGuestWithCompletion:^{
+      
+    } failure:^(NSError *error) {
+      
+    }];
+    
+  }
+  
+}
+
+- (void)subscribeForTableEvents {
+  [[OMNSocketManager manager] join:self.table.id];
+}
+
+- (void)setTable:(OMNTable *)table {
+  
+  if (NO == [_table.id isEqualToString:table.id]) {
+    [[OMNSocketManager manager] leave:_table.id];
+    [[OMNSocketManager manager] join:table.id];
+  }
+  
+  _table = table;
+  
 }
 
 - (BOOL)readyForPush {

@@ -9,10 +9,28 @@
 #import "OMNUtils.h"
 
 NSString * const kRubleSign = @"\uf5fc";
-NSString * const kCommaString = @".";
 NSString * const kGroupingSeparator = @" ";
 
+NSString *omnCommaString() {
+  static NSString *commaString = nil;
+  
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    commaString = [[NSLocale currentLocale] objectForKey:NSLocaleDecimalSeparator];
+  });
+  return commaString;
+}
+
 @implementation OMNUtils
+
++(instancetype)manager{
+  static id manager = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    manager = [[[self class] alloc] init];
+  });
+  return manager;
+}
 
 + (NSString *)moneyStringFromKop:(long long)kop {
   
@@ -21,7 +39,7 @@ NSString * const kGroupingSeparator = @" ";
     currencyNumberFormatter = [self commaNumberFormatter];
     currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
     currencyNumberFormatter.currencySymbol = kRubleSign;
-    currencyNumberFormatter.currencyDecimalSeparator = kCommaString;
+    currencyNumberFormatter.currencyDecimalSeparator = omnCommaString();
     currencyNumberFormatter.minimumFractionDigits = 0;
     currencyNumberFormatter.maximumFractionDigits = 2;
   }
@@ -34,7 +52,7 @@ NSString * const kGroupingSeparator = @" ";
     currencyNumberFormatter = [self commaNumberFormatter];
     currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
     currencyNumberFormatter.currencySymbol = kRubleSign;
-    currencyNumberFormatter.currencyDecimalSeparator = kCommaString;
+    currencyNumberFormatter.currencyDecimalSeparator = omnCommaString();
   }
   currencyNumberFormatter.minimumFractionDigits = (kop%100ll == 0) ? (0) : (2);
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
@@ -46,7 +64,7 @@ NSString * const kGroupingSeparator = @" ";
   commaNumberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"ru"];
   commaNumberFormatter.numberStyle = kCFNumberFormatterDecimalStyle;
   commaNumberFormatter.usesGroupingSeparator = YES;
-  commaNumberFormatter.decimalSeparator = kCommaString;
+  commaNumberFormatter.decimalSeparator = omnCommaString();
   commaNumberFormatter.currencyGroupingSeparator = kGroupingSeparator;
   commaNumberFormatter.maximumFractionDigits = 0;
   commaNumberFormatter.minimumFractionDigits = 0;

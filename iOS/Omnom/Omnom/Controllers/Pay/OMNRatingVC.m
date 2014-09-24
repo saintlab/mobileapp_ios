@@ -8,7 +8,6 @@
 
 #import "OMNRatingVC.h"
 #import "OMNOrder+network.h"
-#import "OMNSocketManager.h"
 #import "OMNBorderedButton.h"
 #import "TQStarRatingView.h"
 #import <OMNStyler.h>
@@ -34,9 +33,6 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(billCallDone:) name:OMNSocketIOBillCallDoneNotification object:nil];
   
   [self setup];
   

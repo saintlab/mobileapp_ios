@@ -8,6 +8,8 @@
 
 #import "OMNOrder.h"
 
+@class OMNTipButton;
+
 @interface OMNOrder (tipButton)
 
 - (void)configureTipButton:(OMNTipButton *)tipButton;

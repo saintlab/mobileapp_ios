@@ -17,15 +17,19 @@
 @end
 
 @implementation OMNOrdersVC {
-  NSArray *_orders;
+  NSMutableArray *_orders;
   OMNOrderItemsFlowLayout *_orderItemsFlowLayout;
+}
+
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super initWithNibName:@"OMNOrdersVC" bundle:nil];
   if (self) {
     _visitor = visitor;
-    _orders = visitor.orders;
+    _orders = [visitor.orders mutableCopy];
   }
   return self;
 }
@@ -41,6 +45,10 @@
   self.collectionView.backgroundView = backgroundView;
 
   [self.collectionView registerClass:[OMNOrderViewCell class] forCellWithReuseIdentifier:@"OMNOrderItemCell"];
+  
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:_visitor];
   
 }
 
@@ -60,6 +68,24 @@
 - (void)cancelTap {
   
   [self.delegate ordersVCDidCancel:self];
+  
+}
+
+- (void)orderDidChange:(NSNotification *)n {
+  
+  [self.collectionView reloadData];
+  
+}
+
+- (void)orderDidClose:(NSNotification *)n {
+  
+  OMNOrder *order = n.userInfo[OMNOrderKey];
+  if (order) {
+    
+    NSArray *orders = [_orders copy];
+//    [_orders removeObjectAtIndex:[index integerValue]];
+//    [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:[index integerValue] inSection:0]]];
+  }
   
 }
 

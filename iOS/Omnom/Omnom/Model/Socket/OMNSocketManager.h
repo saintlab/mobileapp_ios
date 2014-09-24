@@ -10,8 +10,11 @@
 
 extern NSString * const OMNSocketIODidReceiveCardIdNotification;
 extern NSString * const OMNSocketIODidPayNotification;
+extern NSString * const OMNSocketIOOrderDidChangeNotification;
+extern NSString * const OMNSocketIOOrderDidCloseNotification;
 extern NSString * const OMNSocketIOWaiterCallDoneNotification;
-extern NSString * const OMNSocketIOBillCallDoneNotification;
+
+extern NSString * const OMNOrderDataKey;
 
 @interface OMNSocketManager : NSObject
 

@@ -358,7 +358,6 @@ static NSDictionary *_config = nil;
   [sortedValues addObject:_config[@"OMNMailRu_secret_key"]];
   
   NSString *baseSignatureString = [sortedValues componentsJoinedByString:@""];
-  NSLog(@"baseSignatureString>%@", baseSignatureString);
   NSString *signature = [baseSignatureString omn_sha1];
 
   

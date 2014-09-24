@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2474</string>
+	<string>2475</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
@@ -47,11 +47,10 @@
 	<string>Это необходимо для определения заведения и вашего столика</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>FuturaPT-Medium.ttf</string>
-		<string>FuturaPT-Book.ttf</string>
 		<string>Futura-LSF-Omnom-Regular.otf</string>
 		<string>Futura-OSF-Omnom-Regular.otf</string>
 		<string>Futura-OSF-Omnom-Medium.otf</string>
+		<string>Futura-LSF-Omnom-LE-Regular.otf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

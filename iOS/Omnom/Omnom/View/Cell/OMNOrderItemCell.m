@@ -48,7 +48,7 @@
   _nameLabel = [[UILabel alloc] init];
   _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _nameLabel.textColor = [style colorForKey:@"nameLabelColor"];
-  _nameLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:18.0f];
+  _nameLabel.font = FuturaLSFOmnomLERegular(18.0f);
   [_nameLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
   [self.contentView addSubview:_nameLabel];
   
@@ -56,7 +56,7 @@
   _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
   UIColor *priceLabelColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f];
   _priceLabel.textColor = priceLabelColor;
-  _priceLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:17.0f];
+  _priceLabel.font = FuturaLSFOmnomLERegular(17.0f);
   _priceLabel.textAlignment = NSTextAlignmentRight;
   [self.contentView addSubview:_priceLabel];
   

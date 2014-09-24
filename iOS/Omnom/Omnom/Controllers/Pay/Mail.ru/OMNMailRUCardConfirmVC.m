@@ -17,6 +17,7 @@
 #import "OMNUtils.h"
 #import "OMNAnalitics.h"
 #import "OMNOperationManager.h"
+#import "OMNDotTextField.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate>
@@ -30,7 +31,6 @@
   OMNBankCardInfo *_bankCardInfo;
   OMNErrorTextField *_cardHoldValueTF;
   UILabel *_textLabel;
-  UIButton *_commaButton;
 }
 
 - (void)dealloc {
@@ -93,10 +93,9 @@
   _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:15.0f];
   [contentView addSubview:_textLabel];
   
-  _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f];
+  _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f textFieldClass:[OMNDotTextField class]];
   _cardHoldValueTF.textField.textAlignment = NSTextAlignmentCenter;
   _cardHoldValueTF.textField.placeholder = NSLocalizedString(@"00.00 Р", nil);
-  _cardHoldValueTF.textField.keyboardType = UIKeyboardTypeNumberPad;
   _cardHoldValueTF.textField.enabled = NO;
   _cardHoldValueTF.textField.delegate = self;
   [contentView addSubview:_cardHoldValueTF];
@@ -126,24 +125,6 @@
 
 - (void)keyboardWillShow:(NSNotification *)n {
   
-  _commaButton = [UIButton buttonWithType:UIButtonTypeCustom];
-  _commaButton.frame = CGRectMake(0, 163, 106, 53);
-  _commaButton.adjustsImageWhenHighlighted = NO;
-  _commaButton.titleLabel.font = [UIFont systemFontOfSize:25.0f];
-  [_commaButton addTarget:self action:@selector(commaTap:) forControlEvents:UIControlEventTouchUpInside];
-  [_commaButton setTitle:kCommaString forState:UIControlStateNormal];
-  [_commaButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-  [_commaButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-
-  dispatch_async(dispatch_get_main_queue(), ^{
-    
-    UIView *keyboardView = [[[UIApplication sharedApplication] windows] lastObject];
-    [_commaButton setFrame:CGRectMake(0, keyboardView.frame.size.height - 53, 106, 53)];
-    [keyboardView addSubview:_commaButton];
-    [keyboardView bringSubviewToFront:_commaButton];
-
-  });
-  
   CGRect keyboardFrame = [n.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
   UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(keyboardFrame), 0.0f);
   _scrollView.scrollIndicatorInsets = insets;
@@ -156,8 +137,6 @@
   _scrollView.scrollIndicatorInsets = UIEdgeInsetsZero;
   _scrollView.contentInset = UIEdgeInsetsZero;
 
-  [_commaButton removeFromSuperview];
-  _commaButton = nil;
 }
 
 - (void)setCard_id:(NSString *)card_id {
@@ -177,7 +156,7 @@
   
   _bankCardInfo.numberOfRegisterAttempts++;
 
-  double value = [_cardHoldValueTF.textField.text doubleValue];
+  double value = [_cardHoldValueTF.textField.text omn_doubleValue];
   [self startLoader];
   OMNUser *user = [OMNAuthorisation authorisation].user;
   __weak typeof(self)weakSelf = self;
@@ -281,16 +260,6 @@
 
 }
 
-- (void)commaTap:(UIButton *)button {
-  
-  if (NSNotFound == [_cardHoldValueTF.textField.text rangeOfString:kCommaString].location) {
-
-    _cardHoldValueTF.textField.text = [_cardHoldValueTF.textField.text stringByAppendingString:kCommaString];
-    
-  }
-  
-}
-
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
 }
@@ -301,13 +270,22 @@
   
   NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
   
-  if (NSNotFound == [finalString rangeOfString:kCommaString].location) {
+  if ([string isEqualToString:omnCommaString()]) {
+    
+    if (NSNotFound == [textField.text rangeOfString:omnCommaString()].location) {
+      
+      textField.text = finalString;
+      
+    }
+    
+  }
+  else if (NSNotFound == [finalString rangeOfString:omnCommaString()].location) {
     textField.text = finalString;
   }
   else {
     
     NSString *fractionalString = @"";
-    NSArray *components = [finalString componentsSeparatedByString:kCommaString];
+    NSArray *components = [finalString componentsSeparatedByString:omnCommaString()];
     if (2 == components.count) {
 
       fractionalString = components[1];
@@ -317,7 +295,7 @@
       
     }
     
-    textField.text = [@[components[0], fractionalString] componentsJoinedByString:kCommaString];
+    textField.text = [@[components[0], fractionalString] componentsJoinedByString:omnCommaString()];
     
   }
   

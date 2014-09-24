@@ -10,9 +10,9 @@
 #import "OMNOrderItem.h"
 #import "OMNTip.h"
 #import "OMNBill.h"
+#import "OMNOrderPaid.h"
 
 @class OMNOrder;
-@class OMNTipButton;
 
 typedef void(^OMNOrdersBlock)(NSArray *orders);
 typedef void(^OMNOrderBlock)(OMNOrder *order);
@@ -54,9 +54,10 @@ extern NSString *stringFromSplitType(SplitType splitType);
 @property (nonatomic, strong, readonly) NSMutableArray *tips;
 @property (nonatomic, assign, readonly) long long tipsThreshold;
 
-@property (nonatomic, assign) long long paid_amount;
-@property (nonatomic, assign) long long paid_tip;
-@property (nonatomic, assign, readonly) long long paid_net;
+@property (nonatomic, strong) OMNOrderPaid *paid;
+//@property (nonatomic, assign) long long paid_amount;
+//@property (nonatomic, assign) long long paid_tip;
+//@property (nonatomic, assign, readonly) long long paid_net;
 
 @property (nonatomic, strong) OMNBill *bill;
 

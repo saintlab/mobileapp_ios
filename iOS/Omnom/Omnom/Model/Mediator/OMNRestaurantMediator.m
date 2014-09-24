@@ -86,18 +86,7 @@ OMNPayOrderVCDelegate>
 
 - (void)checkNewGuestForVisitor:(OMNVisitor *)visitor {
   
-  if (visitor.table.id &&
-      NO == [self.restaurantVC.visitor.table.id isEqualToString:visitor.table.id]) {
-    
-    self.restaurantVC.visitor.table.id = visitor.table.id;
-    
-    [visitor newGuestWithCompletion:^{
-      
-    } failure:^(NSError *error) {
-      
-    }];
-    
-  }
+  [self.restaurantVC.visitor updateWithVisitor:visitor];
   
 }
 

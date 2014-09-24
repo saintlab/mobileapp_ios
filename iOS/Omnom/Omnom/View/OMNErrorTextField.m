@@ -19,11 +19,22 @@
 
 @implementation OMNErrorTextField {
   UIView *_colorView;
+  Class _textFieldClass;
+}
+
+- (instancetype)initWithWidth:(CGFloat)width textFieldClass:(Class)textFieldClass {
+  
+  _controlWidth = width;
+  _textFieldClass = textFieldClass;
+  self = [super init];
+  if (self) {
+  }
+  return self;
 }
 
 - (instancetype)initWithWidth:(CGFloat)width {
-  _controlWidth = width;
-  self = [super init];
+  
+  self = [self initWithWidth:width textFieldClass:[UITextField class]];
   if (self) {
   }
   return self;
@@ -46,7 +57,11 @@
   
   self.translatesAutoresizingMaskIntoConstraints = NO;
   
-  _textField = [[UITextField alloc] init];
+  if (nil == _textFieldClass) {
+    _textFieldClass = [UITextField class];
+  }
+  
+  _textField = [[[_textFieldClass class] alloc] init];
   _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   _textField.textColor = [UIColor blackColor];
   _textField.font = FuturaLSFOmnomRegular(20.0f);

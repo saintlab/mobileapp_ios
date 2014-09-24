@@ -38,7 +38,8 @@
   _totalLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f];
   _totalLabel.textAlignment = NSTextAlignmentRight;
   _totalLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _totalLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:17.0f];
+
+  _totalLabel.font = FuturaLSFOmnomLERegular(17.0f);
   [self.contentView addSubview:_totalLabel];
   
   _payLabel = [[UILabel alloc] init];
@@ -46,7 +47,7 @@
   _payLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   _payLabel.textAlignment = NSTextAlignmentRight;
   _payLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _payLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:17.0f];
+  _payLabel.font = FuturaLSFOmnomLERegular(17.0f);
   _payLabel.textAlignment = NSTextAlignmentRight;
   [self.contentView addSubview:_payLabel];
   
@@ -70,8 +71,8 @@
 - (void)setOrder:(OMNOrder *)order {
 
   _totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Итого: %@", nil), [OMNUtils commaStringFromKop:order.totalAmount]];
-  if (order.paid_net > 0) {
-    _payLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Оплачено: %@", nil), [OMNUtils commaStringFromKop:order.paid_net]];
+  if (order.paid.net_amount > 0) {
+    _payLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Оплачено: %@", nil), [OMNUtils commaStringFromKop:order.paid.net_amount]];
   }
   else {
     _payLabel.text = nil;

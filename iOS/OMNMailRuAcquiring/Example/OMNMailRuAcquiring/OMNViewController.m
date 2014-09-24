@@ -86,8 +86,9 @@
     @"cvv" : @"123",
     };
   
-  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:_user_login user_phone:_user_phone completion:^(id response) {
-    
+  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:_user_login user_phone:_user_phone completion:^(id response, NSString *cardId) {
+
+    NSLog(@"%@", response);
     
   }];
 

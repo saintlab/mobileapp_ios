@@ -39,7 +39,7 @@
 
 - (void)setup {
   self.errorColor = colorWithHexString(@"d0021b");
-  self.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:20.0f];
+  self.font = [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:20.0f];
 }
 
 - (void)deleteBackward {

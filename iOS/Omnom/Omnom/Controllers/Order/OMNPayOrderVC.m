@@ -29,6 +29,7 @@
 #import <OMNStyler.h>
 #import "OMNOrderTableView.h"
 #import "UIImage+omn_helper.h"
+#import "OMNSocketManager.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -51,15 +52,12 @@ OMNMailRUPayVCDelegate>
   OMNOrder *_order;
   OMNVisitor *_visitor;
   CGRect _keyboardFrame;
+  
 }
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-  if (NO == _visitor.restaurant.is_demo) {
-    [[OMNSocketManager manager] leave:_order.id];
-  }
-  
+  [[OMNSocketManager manager] leave:_order.id];
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
@@ -68,6 +66,7 @@ OMNMailRUPayVCDelegate>
     _keyboardFrame = CGRectZero;
     _order = visitor.selectedOrder;
     _visitor = visitor;
+    [[OMNSocketManager manager] join:_order.id];
   }
   return self;
 }
@@ -77,10 +76,6 @@ OMNMailRUPayVCDelegate>
   [super viewDidLoad];
 
   self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
-
-  if (NO == _visitor.restaurant.is_demo) {
-    [[OMNSocketManager manager] join:_order.id];
-  }
   
   [self setup];
 
@@ -106,6 +101,8 @@ OMNMailRUPayVCDelegate>
   _paymentView.order = _order;
 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPay:) name:OMNSocketIODidPayNotification object:nil];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
@@ -187,6 +184,13 @@ OMNMailRUPayVCDelegate>
 
 - (void)cancelTap {
   [self.delegate payOrderVCDidCancel:self];
+}
+
+- (void)orderDidChange:(NSNotification *)n {
+
+  _paymentView.order = _order;
+  [self layoutTableView];
+  
 }
 
 - (void)didPay:(NSNotification *)n {
