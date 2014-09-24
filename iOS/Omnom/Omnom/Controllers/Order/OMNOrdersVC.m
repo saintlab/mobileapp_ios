@@ -19,6 +19,7 @@
 @implementation OMNOrdersVC {
   NSMutableArray *_orders;
   OMNOrderItemsFlowLayout *_orderItemsFlowLayout;
+  BOOL _animationPerformed;
 }
 
 - (void)dealloc {
@@ -45,7 +46,6 @@
   self.collectionView.backgroundView = backgroundView;
 
   [self.collectionView registerClass:[OMNOrderViewCell class] forCellWithReuseIdentifier:@"OMNOrderItemCell"];
-  
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:_visitor];
@@ -79,13 +79,21 @@
 
 - (void)orderDidClose:(NSNotification *)n {
   
-  OMNOrder *order = n.userInfo[OMNOrderKey];
-  if (order) {
-    
-    NSArray *orders = [_orders copy];
-//    [_orders removeObjectAtIndex:[index integerValue]];
-//    [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:[index integerValue] inSection:0]]];
+  OMNOrder *closeOrder = n.userInfo[OMNOrderKey];
+  if (nil == closeOrder) {
+    return;
   }
+  
+  NSArray *orders = [_orders copy];
+  [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+    
+    if ([order.id isEqualToString:closeOrder.id]) {
+      [_orders removeObjectAtIndex:idx];
+      [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:idx inSection:0]]];
+      *stop = YES;
+    }
+    
+  }];
   
 }
 
@@ -105,9 +113,22 @@
   
   OMNOrderViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"OMNOrderItemCell" forIndexPath:indexPath];
   OMNOrder *order = _orders[indexPath.item];
+  
+  if (1 == indexPath.item &&
+      NO == _animationPerformed) {
+    _animationPerformed = YES;
+    
+    CGAffineTransform initialTransform = cell.transform;
+    cell.transform = CGAffineTransformConcat(initialTransform, CGAffineTransformMakeTranslation(0.0f, -500.0f));
+    [UIView animateWithDuration:0.5 delay:1 options:0 animations:^{
+      cell.transform = initialTransform;
+    } completion:nil];
+
+  }
+  
   cell.order = order;
   cell.index = indexPath.item;
-  
+
   return cell;
 }
 
