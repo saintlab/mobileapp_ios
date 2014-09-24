@@ -9,6 +9,7 @@
 #import "OMNProductDetailsVC.h"
 #import "OMNTransitionFromProductToList.h"
 #import "OMNFeedItem.h"
+#import "OMNToolbarButton.h"
 
 @interface OMNProductDetailsVC ()
 <UINavigationControllerDelegate>
@@ -46,6 +47,12 @@
 
   [self setup];
   
+  [self.navigationItem setHidesBackButton:YES animated:NO];
+  
+  UIButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"cross_icon_black"] title:nil];
+  [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.titleView = closeButton;
+  
   self.view.backgroundColor = [UIColor whiteColor];
   
   _imageView.image = _feedItem.image;
@@ -59,6 +66,10 @@
   popRecognizer.edges = UIRectEdgeLeft;
   [self.view addGestureRecognizer:popRecognizer];
   
+}
+
+- (void)closeTap {
+  [self.delegate productDetailsVCDidFinish:self];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

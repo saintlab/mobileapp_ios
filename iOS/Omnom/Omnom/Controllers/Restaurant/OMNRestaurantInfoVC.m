@@ -93,7 +93,6 @@ UIScrollViewDelegate>
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self updateNavigationBarLayer];
   
   if (!_restaurantInfo) {
     __weak typeof(self)weakSelf = self;
@@ -110,13 +109,14 @@ UIScrollViewDelegate>
   }
   
   
+  _disableNavigationBarAnimation = NO;
+  [self updateNavigationBarLayer];
+
 }
 
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
-  
-  _disableNavigationBarAnimation = NO;
   _disableSwipeTransition = NO;
   
 }
@@ -127,8 +127,9 @@ UIScrollViewDelegate>
   _disableSwipeTransition = YES;
   
   CALayer *navigationBarLayer = self.navigationController.navigationBar.layer;
+  navigationBarLayer.transform = CATransform3DIdentity;
+  navigationBarLayer.opacity = 0.0f;
   [UIView animateWithDuration:0.3 animations:^{
-    navigationBarLayer.transform = CATransform3DIdentity;
     navigationBarLayer.opacity = 1.0f;
   }];
 }
@@ -176,7 +177,7 @@ UIScrollViewDelegate>
       heightForRow = 40.0f;
     } break;
     case 2: {
-      heightForRow = 301.0f;
+      heightForRow = 237.0f;
     } break;
   }
   return heightForRow;
