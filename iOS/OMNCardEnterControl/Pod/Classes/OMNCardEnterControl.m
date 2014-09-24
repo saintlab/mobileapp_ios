@@ -226,11 +226,13 @@ CGFloat kTextFieldsOffset = 20.0f;
 - (void)showPANTF {
   
   if (0 == _cvvTF.text.length &&
-      0 == _expireTF.text.length) {
-    
+      0 == _expireTF.text.length &&
+      _panTF.text.length < kDesiredPanLength) {
+
     [self setExpireCCVTFHidden:YES animated:YES completion:^{
       [_panTF becomeFirstResponder];
     }];
+    
   }
   else {
     [_panTF becomeFirstResponder];
