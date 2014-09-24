@@ -114,10 +114,9 @@ OMNMailRUPayVCDelegate>
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"white_pixel"] forBarMetrics:UIBarMetricsDefault];
-  self.navigationController.navigationBar.shadowImage = nil;
-
   [self.navigationController setNavigationBarHidden:NO animated:animated];
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_gray_bg"] forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = nil;
   
   self.automaticallyAdjustsScrollViewInsets = YES;
   self.edgesForExtendedLayout = UIRectEdgeAll;

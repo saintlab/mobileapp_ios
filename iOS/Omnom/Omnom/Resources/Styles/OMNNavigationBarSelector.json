@@ -1,6 +1,6 @@
 {
-  "buttonFont": "Futura-OSF-Omnom-Medium:17",
-  "buttonSelectedFont": "Futura-OSF-Omnom-Medium:18",
+  "buttonFont": "Futura-OSF-Omnom-Regular:17",
+  "buttonSelectedFont": "Futura-OSF-Omnom-Regular:18",
   "buttonColor": "#AAAAAA",
   "buttonSelectedColor": "#000000"
 }

@@ -88,7 +88,7 @@
   
   [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:_user_login user_phone:_user_phone completion:^(id response, NSString *cardId) {
 
-    NSLog(@"%@", response);
+    NSLog(@"%@  %@", response, cardId);
     
   }];
 
@@ -96,7 +96,8 @@
 
 - (IBAction)verifyTap:(id)sender {
   
-  [[OMNMailRuAcquiring acquiring] cardVerify:1.4 user_login:_user_login card_id:_cardId completion:^(id response) {
+//  _cardId = @"30008685803965102459";
+  [[OMNMailRuAcquiring acquiring] cardVerify:1.02 user_login:_user_login card_id:_cardId completion:^(id response) {
     
     NSLog(@"cardVerify>%@", response);
 

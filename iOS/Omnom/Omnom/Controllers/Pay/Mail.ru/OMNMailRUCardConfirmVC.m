@@ -62,7 +62,6 @@
   [super viewDidAppear:animated];
 
   [self registerCard];
-
 }
 
 - (void)startLoader {
@@ -95,7 +94,7 @@
   
   _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f textFieldClass:[OMNDotTextField class]];
   _cardHoldValueTF.textField.textAlignment = NSTextAlignmentCenter;
-  _cardHoldValueTF.textField.placeholder = NSLocalizedString(@"00.00 Р", nil);
+  _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00", omnCommaString()];
   _cardHoldValueTF.textField.enabled = NO;
   _cardHoldValueTF.textField.delegate = self;
   [contentView addSubview:_cardHoldValueTF];
@@ -280,7 +279,22 @@
     
   }
   else if (NSNotFound == [finalString rangeOfString:omnCommaString()].location) {
+    
+    if (finalString.length >= 2) {
+      
+      if (finalString.length > 4) {
+        finalString = [finalString substringToIndex:4];
+      }
+      
+      if (NO == [string isEqualToString:@""]) {
+        NSString *component1 = [finalString substringToIndex:2];
+        NSString *component2 = [finalString substringFromIndex:2];
+        finalString = [NSString stringWithFormat:@"%@%@%@", component1, omnCommaString(), component2];
+      }
+      
+    }
     textField.text = finalString;
+    
   }
   else {
     

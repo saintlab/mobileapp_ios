@@ -55,8 +55,9 @@ const CGFloat kCalculatorTopOffset = 40.0f;
                                               NSLocalizedString(@"По блюдам", nil),
                                               NSLocalizedString(@"Поровну", nil)
                                               ]];
-  [self.view addSubview:navSelector];
   [navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
+  [navSelector setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"nav_gray_bg"]]];
+  [self.view addSubview:navSelector];
   
   _fadeView = [[UIView alloc] init];
   _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
@@ -156,7 +157,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"white_pixel"];
+  self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"nav_gray_bg"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

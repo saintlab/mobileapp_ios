@@ -26,7 +26,6 @@ UIScrollViewDelegate>
 @implementation OMNRestaurantInfoVC {
   OMNRestaurantInfo *_restaurantInfo;
   OMNVisitor *_visitor;
-  UIImageView *_arrowView;
   UIActivityIndicatorView *_spinner;
   BOOL _disableNavigationBarAnimation;
   BOOL _disableSwipeTransition;
@@ -45,8 +44,6 @@ UIScrollViewDelegate>
   
   _disableSwipeTransition = YES;
   _disableNavigationBarAnimation = YES;
-  
-  _arrowView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"show_button_icon"]];
   
   OMNToolbarButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"back_button_icon"] title:nil];
   [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
@@ -194,7 +191,7 @@ UIScrollViewDelegate>
       defaultCell.selectionStyle = UITableViewCellSelectionStyleNone;
       defaultCell.textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:30.0f];
       defaultCell.textLabel.text = _restaurantInfo.title;
-      defaultCell.accessoryView = _arrowView;
+      defaultCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"show_button_icon"]];
       cell = defaultCell;
       
     } break;
@@ -226,9 +223,6 @@ UIScrollViewDelegate>
     case 0: {
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
       _restaurantInfo.selected = !_restaurantInfo.selected;
-      [UIView animateWithDuration:0.3 animations:^{
-        _arrowView.transform = CGAffineTransformMakeRotation((_restaurantInfo.selected) ? (M_PI) : (0));
-      }];
       [tableView beginUpdates];
       [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
       [tableView endUpdates];
