@@ -22,7 +22,7 @@ extern NSString * const OMNPaymentDataKey;
 
 - (void)connectWithToken:(NSString *)token;
 - (void)connectWithToken:(NSString *)token completion:(dispatch_block_t)completionBlock;
-- (void)disconnect;
+- (void)disconnectAndLeave:(BOOL)leave;
 - (void)leave:(NSString *)roomId;
 - (void)join:(NSString *)roomId;
 

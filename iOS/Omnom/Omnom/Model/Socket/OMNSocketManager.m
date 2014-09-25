@@ -40,15 +40,24 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   if (self) {
     _rooms = [NSMutableSet set];
     _listners = [NSMutableDictionary dictionary];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeConnection) name:UIApplicationDidBecomeActiveNotification object:nil];
+
   }
   return self;
 }
 
-- (void)willEnterForeground {
+- (void)willResignActive {
+  [self disconnectAndLeave:NO];
+}
+
+- (void)resumeConnection {
   
   if (0 == _token.length) {
+    return;
+  }
+  
+  if (_io) {
     return;
   }
   
@@ -62,10 +71,6 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
 }
 
-- (void)didEnterBackground {
-  [self disconnect];
-}
-
 - (void)safeConnectWithToken:(NSString *)token  completion:(dispatch_block_t)completionBlock {
   
   NSString *query = [NSString stringWithFormat:@"token=%@", token];
@@ -75,12 +80,12 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
   [_socket on:@"handshake" listener:^(id data) {
     
+    NSLog(@"handshake response %@, %@", data, [data class]);
     if (completionBlock &&
         [data isKindOfClass:[NSString class]] &&
         [data isEqualToString:@"authentication success"]) {
       completionBlock();
     }
-    NSLog(@"handshake response %@, %@", data, [data class]);
     
   }];
 
@@ -189,10 +194,10 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 
 - (void)join:(NSString *)roomId {
   
-  if (roomId.length &&
-      NO == [_rooms containsObject:roomId]) {
+  if (roomId.length) {
     [_rooms addObject:roomId];
     [_socket emit:@"join", roomId, nil];
+    NSLog(@"join:%@", roomId);
   }
   
 }
@@ -230,8 +235,11 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
 }
 
-- (void)disconnect {
+- (void)disconnectAndLeave:(BOOL)leave {
 
+  if (leave) {
+    [_rooms removeAllObjects];
+  }
   [_socket emit:@"disconnect", nil];
   _socket = nil;
   _io = nil;

@@ -178,16 +178,6 @@ OMNMailRUPayVCDelegate>
   [self.delegate payOrderVCDidCancel:self];
 }
 
-- (void)orderDidPay:(NSNotification *)n {
-#warning orderDidPay
-//
-//  OMNOrder *order = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
-//  [_order updateWithOrder:order];
-//  _paymentView.order = _order;
-//  [self layoutTableView];
-  
-}
-
 - (void)orderDidChange:(NSNotification *)n {
 
   _paymentView.order = _order;

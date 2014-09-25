@@ -48,7 +48,8 @@
   @catch (NSException *exception) {
   }
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [[OMNSocketManager manager] disconnect];
+  [[OMNSocketManager manager] disconnectAndLeave:YES];
+  
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
