@@ -26,7 +26,7 @@ describe(@"check initial state", ^{
     }];
     
     [[expectFutureValue(_didConnect) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(YES)];
-    [[OMNSocketManager manager] disconnect];
+    [[OMNSocketManager manager] disconnectAndLeave:YES];
     
   });
   
