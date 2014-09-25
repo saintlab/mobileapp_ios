@@ -16,6 +16,15 @@ extern NSString * const kPushSoundName;
 #define CURRENT_VERSION ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"])
 #define CURRENT_BUILD ([[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey])
 
+enum {
+  
+  OMNErrorUnknoun = -1,
+  OMNErrorNoSuchUser = 101,
+  OMNErrorTimedOut = NSURLErrorTimedOut,
+  OMNErrorNotConnectedToInternet = NSURLErrorNotConnectedToInternet,
+  
+};
+
 @interface OMNConstants : NSObject
 
 + (void)setCustomConfigName:(NSString *)name;

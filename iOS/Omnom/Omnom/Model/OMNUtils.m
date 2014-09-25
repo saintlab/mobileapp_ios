@@ -7,6 +7,7 @@
 //
 
 #import "OMNUtils.h"
+#import "OMNConstants.h"
 
 NSString * const kRubleSign = @"\uf5fc";
 NSString * const kGroupingSeparator = @" ";
@@ -88,6 +89,34 @@ NSString *omnCommaString() {
   }
   currencyNumberFormatter.minimumFractionDigits = (kop%100ll == 0) ? (0) : (2);
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
+}
+
++ (NSError *)errorFromCode:(NSInteger)code {
+  
+  NSString *description = @"";
+  
+  switch (code) {
+    case OMNErrorNotConnectedToInternet: {
+      description = NSLocalizedString(@"Нет доступа в интернет", nil);
+    } break;
+    case OMNErrorUnknoun:
+    default: {
+      description = NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil);
+    } break;
+  }
+  
+  return [NSError errorWithDomain:@"OMNError" code:code userInfo:@{NSLocalizedDescriptionKey : description}];
+  
+}
+
+@end
+
+@implementation NSError (omn_internet)
+
+- (NSError *)omn_internetError {
+  
+  return [OMNUtils errorFromCode:self.code];
+  
 }
 
 @end

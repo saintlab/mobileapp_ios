@@ -10,6 +10,7 @@
 #import "OMNAuthorizationManager.h"
 #import "OMNAuthorisation.h"
 #import "OMNAnalitics.h"
+#import "OMNUtils.h"
 
 @implementation OMNUser
 
@@ -110,7 +111,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logEvent:@"USER_VERIFY_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock(nil);
+    failureBlock([error omn_internetError]);
     
   }];
 
@@ -134,7 +135,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logEvent:@"CONFIRM_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
   
@@ -158,7 +159,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     NSLog(@"/confirm/phone/resend>%@", error);
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
   
@@ -208,8 +209,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"recoverUsingData>%@", operation.responseString);
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
   
@@ -219,14 +219,13 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"loginWithParameters>%@", responseObject);
     [responseObject decodeToken:completion failure:failureBlock];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logEvent:@"AUTHORIZATION_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock(nil);
-    
+    failureBlock([error omn_internetError]);
+
   }];
   
 }
@@ -256,7 +255,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
   

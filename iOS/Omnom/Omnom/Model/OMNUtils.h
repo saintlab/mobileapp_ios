@@ -22,4 +22,12 @@ extern NSString *omnCommaString();
 + (NSString *)moneyStringFromKop:(long long)kop;
 + (NSString *)commaStringFromKop:(long long)kop;
 
++ (NSError *)errorFromCode:(NSInteger)code;
+
+@end
+
+@interface NSError (omn_internet)
+
+- (NSError *)omn_internetError;
+
 @end
