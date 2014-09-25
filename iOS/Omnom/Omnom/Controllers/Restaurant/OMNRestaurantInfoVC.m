@@ -16,6 +16,16 @@
 #import "OMNToolbarButton.h"
 #import "OMNFeedItem.h"
 #import "OMNAnalitics.h"
+#import "OMNLabelCell.h"
+#import "OMNBottomLabelView.h"
+
+typedef NS_ENUM(NSInteger, RestaurantInfoSection) {
+  kRestaurantInfoSectionName = 0,
+  kRestaurantInfoSectionAbout,
+  kRestaurantInfoSectionMore,
+  kRestaurantInfoSectionFeed,
+  kRestaurantInfoSectionMax,
+};
 
 @interface OMNRestaurantInfoVC ()
 <OMNProductDetailsVCDelegate,
@@ -61,12 +71,15 @@ UIScrollViewDelegate>
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
     
   }
-
+  self.automaticallyAdjustsScrollViewInsets = NO;
   [self.navigationItem setHidesBackButton:YES animated:NO];
+
   self.tableView.tableFooterView = [UIView new];
   [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"InfoCell"];
-  [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"DefaultCell"];
+  [self.tableView registerClass:[OMNLabelCell class] forCellReuseIdentifier:@"MoreCell"];
+  [self.tableView registerClass:[OMNLabelCell class] forCellReuseIdentifier:@"DefaultCell"];
   [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
+  self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
 
 }
 
@@ -85,6 +98,7 @@ UIScrollViewDelegate>
 }
 
 - (void)closeTap {
+  _disableSwipeTransition = YES;
   [self.delegate restaurantInfoVCDidFinish:self];
 }
 
@@ -104,7 +118,6 @@ UIScrollViewDelegate>
       
     }];
   }
-  
   
   _disableNavigationBarAnimation = NO;
   [self updateNavigationBarLayer];
@@ -135,7 +148,7 @@ UIScrollViewDelegate>
   UITableViewCell *cell = nil;
   NSUInteger index = [_restaurantInfo.feedItems indexOfObject:feedItem];
   if (index != NSNotFound) {
-    cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:2]];
+    cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:kRestaurantInfoSectionFeed]];
   }
   return cell;
 }
@@ -143,21 +156,26 @@ UIScrollViewDelegate>
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 3;
+  return kRestaurantInfoSectionMax;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+
   NSInteger numberOfRows = 0;
-  
-  switch (section) {
-    case 0: {
+  switch ((RestaurantInfoSection)section) {
+    case kRestaurantInfoSectionName: {
       numberOfRows = 1;
     } break;
-    case 1: {
+    case kRestaurantInfoSectionAbout: {
       numberOfRows = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems.count) : (_restaurantInfo.shortItems.count);
     } break;
-    case 2: {
+    case kRestaurantInfoSectionMore: {
+      numberOfRows = (_restaurantInfo.selected) ? (0) : (1);
+    } break;
+    case kRestaurantInfoSectionFeed: {
       numberOfRows = _restaurantInfo.feedItems.count;
+    } break;
+    case kRestaurantInfoSectionMax: {
     } break;
   }
   
@@ -166,15 +184,20 @@ UIScrollViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   CGFloat heightForRow = 44.0f;
-  switch (indexPath.section) {
-    case 0: {
+  switch ((RestaurantInfoSection)indexPath.section) {
+    case kRestaurantInfoSectionName: {
       heightForRow = 50.0f;
     } break;
-    case 1: {
+    case kRestaurantInfoSectionAbout: {
       heightForRow = 40.0f;
     } break;
-    case 2: {
+    case kRestaurantInfoSectionMore: {
+      heightForRow = 30.0f;
+    } break;
+    case kRestaurantInfoSectionFeed: {
       heightForRow = 237.0f;
+    } break;
+    case kRestaurantInfoSectionMax: {
     } break;
   }
   return heightForRow;
@@ -184,18 +207,18 @@ UIScrollViewDelegate>
   
   UITableViewCell *cell = nil;
   
-  switch (indexPath.section) {
-    case 0: {
+  switch ((RestaurantInfoSection)indexPath.section) {
+    case kRestaurantInfoSectionName: {
       
-      UITableViewCell *defaultCell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell" forIndexPath:indexPath];
+      OMNLabelCell *defaultCell = [tableView dequeueReusableCellWithIdentifier:@"DefaultCell" forIndexPath:indexPath];
+      defaultCell.separatorInset = UIEdgeInsetsMake(0.0f, CGRectGetWidth(self.view.frame), 0.0f, 0.0f);
       defaultCell.selectionStyle = UITableViewCellSelectionStyleNone;
-      defaultCell.textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:30.0f];
-      defaultCell.textLabel.text = _restaurantInfo.title;
-      defaultCell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"show_button_icon"]];
+      defaultCell.label.font = FuturaOSFOmnomRegular(30.0f);
+      defaultCell.label.text = _restaurantInfo.title;
       cell = defaultCell;
       
     } break;
-    case 1: {
+    case kRestaurantInfoSectionAbout: {
       
       OMNRestaurantInfoCell *restaurantInfoCell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell" forIndexPath:indexPath];
       NSArray *items = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems) : (_restaurantInfo.shortItems);
@@ -204,7 +227,16 @@ UIScrollViewDelegate>
       cell = restaurantInfoCell;
       
     } break;
-    case 2: {
+    case kRestaurantInfoSectionMore: {
+      
+      OMNLabelCell *labelCell = [tableView dequeueReusableCellWithIdentifier:@"MoreCell" forIndexPath:indexPath];
+      labelCell.label.text = NSLocalizedString(@"подробнее о заведении...", nil);
+      labelCell.separatorInset = UIEdgeInsetsMake(0.0f, CGRectGetWidth(self.view.frame), 0.0f, 0.0f);
+      labelCell.label.textColor = [UIColor colorWithWhite:127.0f/255.0f alpha:1.0f];
+      cell = labelCell;
+      
+    } break;
+    case kRestaurantInfoSectionFeed: {
       
       OMNRestaurantFeedItemCell *restaurantFeedInfoCell = [tableView dequeueReusableCellWithIdentifier:@"FeedItemCell" forIndexPath:indexPath];
       OMNFeedItem *feedItem = _restaurantInfo.feedItems[indexPath.row];
@@ -213,21 +245,16 @@ UIScrollViewDelegate>
       cell = restaurantFeedInfoCell;
       
     } break;
+    case kRestaurantInfoSectionMax: {
+    } break;
   }
   
   return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  switch (indexPath.section) {
-    case 0: {
-      [tableView deselectRowAtIndexPath:indexPath animated:YES];
-      _restaurantInfo.selected = !_restaurantInfo.selected;
-      [tableView beginUpdates];
-      [tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-      [tableView endUpdates];
-    } break;
-    case 1: {
+  switch ((RestaurantInfoSection)indexPath.section) {
+    case kRestaurantInfoSectionAbout: {
       
       NSArray *items = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems) : (_restaurantInfo.shortItems);
       OMNRestaurantInfoItem *item = items[indexPath.row];
@@ -235,7 +262,16 @@ UIScrollViewDelegate>
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
       
     } break;
-    case 2: {
+    case kRestaurantInfoSectionMore: {
+      
+      _restaurantInfo.selected = !_restaurantInfo.selected;
+      [tableView beginUpdates];
+      [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:kRestaurantInfoSectionMore]] withRowAnimation:UITableViewRowAnimationFade];
+      [tableView reloadSections:[NSIndexSet indexSetWithIndex:kRestaurantInfoSectionAbout] withRowAnimation:UITableViewRowAnimationFade];
+      [tableView endUpdates];
+      
+    } break;
+    case kRestaurantInfoSectionFeed: {
       
       OMNFeedItem *feedItem = _restaurantInfo.feedItems[indexPath.row];
       [feedItem logClickEvent];
@@ -243,6 +279,9 @@ UIScrollViewDelegate>
       productDetailsVC.delegate = self;
       [self.navigationController pushViewController:productDetailsVC animated:YES];
       
+    } break;
+    case kRestaurantInfoSectionName:
+    case kRestaurantInfoSectionMax: {
     } break;
   }
 
@@ -258,13 +297,48 @@ UIScrollViewDelegate>
 
 #pragma mark - UIScrollViewDelegate
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  UIView *viewForHeader = nil;
+  
+  switch ((RestaurantInfoSection)section) {
+    case kRestaurantInfoSectionFeed: {
+      OMNBottomLabelView *bottomLabelView = [[OMNBottomLabelView alloc] init];
+      bottomLabelView.label.text = NSLocalizedString(@"Стоит попробовать", nil);
+      viewForHeader = bottomLabelView;
+    } break;
+    case kRestaurantInfoSectionName: {
+      viewForHeader = [[UIView alloc] init];
+      viewForHeader.backgroundColor = [UIColor clearColor];
+    } break;
+    default: {
+    } break;
+  }
+  return viewForHeader;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  
+  CGFloat heightForHeader = 0.0f;
+  
+  switch ((RestaurantInfoSection)section) {
+    case kRestaurantInfoSectionFeed: {
+      heightForHeader = 70.0f;
+    } break;
+    case kRestaurantInfoSectionName: {
+      heightForHeader = 64.0f;
+    } break;
+    default: {
+    } break;
+  }
+  return heightForHeader;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView {
   [self updateNavigationBarLayer];
   
   if (_restaurantInfo &&
       scrollView.contentInset.top + scrollView.contentOffset.y < -40.0f &&
       !_disableSwipeTransition) {
-    _disableSwipeTransition = YES;
     [self closeTap];
   }
   
@@ -276,15 +350,19 @@ UIScrollViewDelegate>
     return;
   }
   CALayer *navigationBarLayer = self.navigationController.navigationBar.layer;
-  CGFloat deltaOffset = self.tableView.contentOffset.y + self.tableView.contentInset.top;
+  CGFloat deltaOffset = self.tableView.contentOffset.y;
   
   if (deltaOffset > 0.0f) {
-    navigationBarLayer.transform = CATransform3DMakeTranslation(0.0f, -deltaOffset, 0.0f);
+
+    navigationBarLayer.transform = CATransform3DMakeTranslation(0.0f, -deltaOffset - self.tableView.contentInset.top, 0.0f);
+
   }
   else {
+    
     navigationBarLayer.transform = CATransform3DIdentity;
+    
   }
-
+  
 }
 
 @end
