@@ -71,9 +71,29 @@ UICollectionViewDelegate>
 
 - (void)updateOrders {
   
-  _label.text = [NSString stringWithFormat:NSLocalizedString(@"На вашем столике\n%d раздельных счетов", nil), _orders.count];
+  _label.text = [NSString stringWithFormat:NSLocalizedString(@"На вашем столике\nраздельных счетов: %d", nil), _orders.count];
   _pageControl.numberOfPages = _orders.count;
+  [self updateSelectedIndex];
+  
+}
 
+- (void)updateSelectedIndex {
+  
+  __block NSInteger index = -1;
+  __block CGFloat minSpacing = 999.0f;
+  CGFloat centerX = _collectionView.contentOffset.x + CGRectGetMidX(_collectionView.frame);
+  [_collectionView.visibleCells enumerateObjectsUsingBlock:^(UICollectionViewCell *cell, NSUInteger idx, BOOL *stop) {
+    
+    CGFloat spacing = fabsf(cell.center.x - centerX);
+    if (spacing < minSpacing) {
+      minSpacing = spacing;
+      index = [_collectionView indexPathForCell:cell].item;
+    }
+    
+  }];
+  
+  _pageControl.currentPage = index;
+  
 }
 
 - (void)setup {
@@ -141,6 +161,7 @@ UICollectionViewDelegate>
 - (void)orderDidChange:(NSNotification *)n {
   
   [_collectionView reloadData];
+  [self updateOrders];
   
 }
 
@@ -161,6 +182,7 @@ UICollectionViewDelegate>
     }
     
   }];
+  [self updateOrders];
   
 }
 
@@ -209,20 +231,7 @@ UICollectionViewDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   
-  __block NSInteger index = -1;
-  __block CGFloat minSpacing = 999.0f;
-  CGFloat centerX = scrollView.contentOffset.x + CGRectGetMidX(scrollView.frame);
-  [_collectionView.visibleCells enumerateObjectsUsingBlock:^(UICollectionViewCell *cell, NSUInteger idx, BOOL *stop) {
-    
-    CGFloat spacing = fabsf(cell.center.x - centerX);
-    if (spacing < minSpacing) {
-      minSpacing = spacing;
-      index = [_collectionView indexPathForCell:cell].item;
-    }
-    
-  }];
-  
-  _pageControl.currentPage = index;
+  [self updateSelectedIndex];
   
 }
 

@@ -71,11 +71,11 @@
   
 }
 
-+ (void)showWithInfo:(NSDictionary *)info {
++ (void)showWithPaymentData:(NSDictionary *)paymentData {
   
   OMNPaymentNotificationControl *control = [[OMNPaymentNotificationControl alloc] init];
-  NSDictionary *user = info[@"user"];
-  NSDictionary *transaction = info[@"transaction"];
+  NSDictionary *user = paymentData[@"user"];
+  NSDictionary *transaction = paymentData[@"transaction"];
   
   NSString *title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено %@ руб.", nil), user[@"name"], [OMNUtils commaStringFromKop:[transaction[@"amount"] longLongValue]]];
   [control.closeButton setTitle:title forState:UIControlStateNormal];

@@ -14,6 +14,7 @@ extern NSString * const OMNSocketIOOrderDidCloseNotification;
 extern NSString * const OMNSocketIOWaiterCallDoneNotification;
 
 extern NSString * const OMNOrderDataKey;
+extern NSString * const OMNPaymentDataKey;
 
 @interface OMNSocketManager : NSObject
 

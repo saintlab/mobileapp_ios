@@ -20,7 +20,6 @@
 #import "OMNOrdersVC.h"
 #import "OMNRatingVC.h"
 #import <BlocksKit+UIKit.h>
-#import "OMNSocketManager.h"
 #import "OMNVisitor.h"
 #import "OMNMailRUPayVC.h"
 #import "OMNNavigationController.h"
@@ -28,7 +27,6 @@
 #import <OMNStyler.h>
 #import "OMNOrderTableView.h"
 #import "UIImage+omn_helper.h"
-#import "OMNSocketManager.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -97,7 +95,6 @@ OMNMailRUPayVCDelegate>
   
   _paymentView.order = _order;
 
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
@@ -182,11 +179,12 @@ OMNMailRUPayVCDelegate>
 }
 
 - (void)orderDidPay:(NSNotification *)n {
-  
-  OMNOrder *order = [[OMNOrder alloc] initWithJsonData:n.userInfo[@"order"]];
-  [_order updateWithOrder:order];
-  _paymentView.order = _order;
-  [self layoutTableView];
+#warning orderDidPay
+//
+//  OMNOrder *order = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
+//  [_order updateWithOrder:order];
+//  _paymentView.order = _order;
+//  [self layoutTableView];
   
 }
 

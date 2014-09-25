@@ -13,6 +13,7 @@
 
 NSString * const OMNOrderDidChangeNotification = @"OMNOrderDidChangeNotification";
 NSString * const OMNOrderDidCloseNotification = @"OMNOrderDidCloseNotification";
+NSString * const OMNOrderDidPayNotification = @"OMNOrderDidPayNotification";
 
 NSString * const OMNOrderKey = @"OMNOrderKey";
 NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
@@ -42,6 +43,7 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:[OMNSocketManager manager]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidChangeNotification object:[OMNSocketManager manager]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNSocketIOOrderDidCloseNotification object:[OMNSocketManager manager]];
 
   }
@@ -71,7 +73,7 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
   OMNOrder *newOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
   
   [_orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
-
+    
     if ([newOrder.id isEqualToString:order.id]) {
       [order updateWithOrder:newOrder];
       [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification
@@ -81,7 +83,6 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
     }
     
   }];
-  
 }
 
 - (void)orderDidClose:(NSNotification *)n {

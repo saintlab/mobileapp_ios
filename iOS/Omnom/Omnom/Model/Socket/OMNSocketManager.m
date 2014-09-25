@@ -16,7 +16,7 @@ NSString * const OMNSocketIOOrderDidCloseNotification = @"OMNSocketIOOrderDidClo
 NSString * const OMNSocketIOOrderDidPayNotification = @"OMNSocketIOOrderDidPayNotification";
 
 NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
-
+NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 
 @implementation OMNSocketManager {
   OMNSocketIO *_io;
@@ -117,11 +117,16 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
   [_socket on:@"payment" listener:^(id data) {
 
     NSLog(@"payment response %@, %@", data, [data class]);
+    
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidPayNotification
-                                                          object:self
-                                                        userInfo:data];
+      id order = data[@"order"];
+      if (order) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidPayNotification
+                                                            object:self
+                                                          userInfo:@{OMNOrderDataKey : order,
+                                                                     OMNPaymentDataKey : data}];
+      }
       
     });
     

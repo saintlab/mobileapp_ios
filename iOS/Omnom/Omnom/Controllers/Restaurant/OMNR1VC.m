@@ -144,7 +144,8 @@
 
 - (void)orderDidPay:(NSNotification *)n {
   
-  [OMNPaymentNotificationControl showWithInfo:n.userInfo];
+  id paymentData = n.userInfo[OMNPaymentDataKey];
+  [OMNPaymentNotificationControl showWithPaymentData:paymentData];
 
 }
 
