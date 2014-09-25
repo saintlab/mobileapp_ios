@@ -15,18 +15,70 @@ SPEC_BEGIN(OMNSocketTests)
 
 describe(@"check initial state", ^{
   
-  beforeAll(^{
-  });
-  
-  it(@"should check socket connection", ^{
+  beforeEach(^{
 
     __block NSNumber *_didConnect = nil;
     [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token completion:^{
       _didConnect = @(YES);
     }];
-    
     [[expectFutureValue(_didConnect) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(YES)];
-    [[OMNSocketManager manager] disconnectAndLeave:YES];
+    
+  });
+  
+  afterEach(^{
+    
+    [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
+    
+  });
+  
+  it(@"should check socket room connection", ^{
+
+    [[OMNSocketManager manager] join:nil];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(0)];
+    
+    NSString *roomID1 = @"roomID1";
+    NSString *roomID2 = @"roomID2";
+    
+    [[OMNSocketManager manager] join:roomID1];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
+
+    [[OMNSocketManager manager] join:roomID1];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
+    
+    [[OMNSocketManager manager] leave:roomID2];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
+
+    [[OMNSocketManager manager] join:roomID2];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(2)];
+
+    [[OMNSocketManager manager] leave:roomID2];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
+    
+    [[OMNSocketManager manager] leave:roomID1];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(0)];
+    
+    [[OMNSocketManager manager] join:roomID2];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
+
+  });
+  
+  it(@"shold check disconnection", ^{
+    
+    NSString *roomID1 = @"roomID1";
+    
+    [[OMNSocketManager manager] join:roomID1];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
+    
+    [[OMNSocketManager manager] disconnectAndLeaveAllRooms:NO];
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
+
+    __block NSNumber *_didConnect = nil;
+    [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token completion:^{
+      _didConnect = @(YES);
+    }];
+    [[expectFutureValue(_didConnect) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(YES)];
+    
+    [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
     
   });
   

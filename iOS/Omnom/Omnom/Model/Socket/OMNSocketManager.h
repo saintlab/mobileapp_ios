@@ -18,11 +18,13 @@ extern NSString * const OMNPaymentDataKey;
 
 @interface OMNSocketManager : NSObject
 
+@property (nonatomic, strong, readonly) NSMutableSet *rooms;
+
 + (instancetype)manager;
 
 - (void)connectWithToken:(NSString *)token;
 - (void)connectWithToken:(NSString *)token completion:(dispatch_block_t)completionBlock;
-- (void)disconnectAndLeave:(BOOL)leave;
+- (void)disconnectAndLeaveAllRooms:(BOOL)leave;
 - (void)leave:(NSString *)roomId;
 - (void)join:(NSString *)roomId;
 

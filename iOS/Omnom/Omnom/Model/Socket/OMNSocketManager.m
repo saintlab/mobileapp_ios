@@ -21,7 +21,6 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 @implementation OMNSocketManager {
   OMNSocketIO *_io;
   Socket *_socket;
-  NSMutableSet *_rooms;
   NSString *_token;
   NSMutableDictionary *_listners;
 }
@@ -48,7 +47,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 }
 
 - (void)willResignActive {
-  [self disconnectAndLeave:NO];
+  [self disconnectAndLeaveAllRooms:NO];
 }
 
 - (void)resumeConnection {
@@ -235,7 +234,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
 }
 
-- (void)disconnectAndLeave:(BOOL)leave {
+- (void)disconnectAndLeaveAllRooms:(BOOL)leave {
 
   if (leave) {
     [_rooms removeAllObjects];

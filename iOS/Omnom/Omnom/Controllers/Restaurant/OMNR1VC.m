@@ -48,7 +48,7 @@
   @catch (NSException *exception) {
   }
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [[OMNSocketManager manager] disconnectAndLeave:YES];
+  [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
   
 }
 
