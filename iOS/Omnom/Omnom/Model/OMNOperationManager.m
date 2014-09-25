@@ -36,7 +36,12 @@
     __unused BOOL ir = _internetReachabilityManager.isReachable;
     
     self.responseSerializer = [AFJSONResponseSerializer serializer];
+    
     self.requestSerializer = [AFJSONRequestSerializer serializer];
+    [self.requestSerializer setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];
+    [self.requestSerializer setValue:CURRENT_VERSION forHTTPHeaderField:@"current-app-version"];
+    self.requestSerializer.timeoutInterval = 15.0;
+
   }
   return self;
 }
