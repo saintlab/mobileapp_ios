@@ -24,9 +24,10 @@
 
 - (void)setup {
   
-  self.sectionInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
-  self.itemSize = CGSizeMake(320.0f, 420.0f);
-  self.minimumLineSpacing = -40.0f;
+  self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+  self.sectionInset = UIEdgeInsetsMake(0.0f, 20.0f, 75.0f, 20.0f);
+  self.itemSize = CGSizeMake(275.0f, 360.0f);
+  self.minimumLineSpacing = 10.0f;
   
 }
 
@@ -34,7 +35,7 @@
   
   NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
   [attributes enumerateObjectsUsingBlock:^(UICollectionViewLayoutAttributes *obj, NSUInteger idx, BOOL *stop) {
-    obj.transform = CGAffineTransformMakeScale(0.85f, 0.85f);
+//    obj.transform = CGAffineTransformMakeScale(0.85f, 0.85f);
   }];
   return attributes;
   

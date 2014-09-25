@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const OMNSocketIODidReceiveCardIdNotification;
-extern NSString * const OMNSocketIODidPayNotification;
+extern NSString * const OMNSocketIOOrderDidPayNotification;
 extern NSString * const OMNSocketIOOrderDidChangeNotification;
 extern NSString * const OMNSocketIOOrderDidCloseNotification;
 extern NSString * const OMNSocketIOWaiterCallDoneNotification;

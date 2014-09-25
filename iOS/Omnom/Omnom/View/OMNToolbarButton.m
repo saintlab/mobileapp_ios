@@ -33,7 +33,7 @@
     [self setTitle:title forState:UIControlStateNormal];
     [self sizeToFit];
     CGRect frame = self.frame;
-    frame.size.width = MAX(100.0f, frame.size.width);
+    frame.size.width = MAX(70.0f, frame.size.width);
     self.frame = frame;
   }
   return self;

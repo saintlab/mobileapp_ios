@@ -23,7 +23,6 @@
 #import "OMNSocketManager.h"
 #import "OMNVisitor.h"
 #import "OMNMailRUPayVC.h"
-#import "OMNPaymentNotificationControl.h"
 #import "OMNNavigationController.h"
 #import "OMNMailRuBankCardsModel.h"
 #import <OMNStyler.h>
@@ -57,7 +56,6 @@ OMNMailRUPayVCDelegate>
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [[OMNSocketManager manager] leave:_order.id];
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
@@ -66,7 +64,6 @@ OMNMailRUPayVCDelegate>
     _keyboardFrame = CGRectZero;
     _order = visitor.selectedOrder;
     _visitor = visitor;
-    [[OMNSocketManager manager] join:_order.id];
   }
   return self;
 }
@@ -100,8 +97,7 @@ OMNMailRUPayVCDelegate>
   
   _paymentView.order = _order;
 
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPay:) name:OMNSocketIODidPayNotification object:nil];
-  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
@@ -185,23 +181,20 @@ OMNMailRUPayVCDelegate>
   [self.delegate payOrderVCDidCancel:self];
 }
 
-- (void)orderDidChange:(NSNotification *)n {
-
+- (void)orderDidPay:(NSNotification *)n {
+  
+  OMNOrder *order = [[OMNOrder alloc] initWithJsonData:n.userInfo[@"order"]];
+  [_order updateWithOrder:order];
   _paymentView.order = _order;
   [self layoutTableView];
   
 }
 
-- (void)didPay:(NSNotification *)n {
-  
-  NSDictionary *info = n.userInfo;
-  
-  OMNOrder *order = [[OMNOrder alloc] initWithJsonData:info[@"order"]];
-  [_order updateWithOrder:order];
-  _paymentView.order = _order;
-  [OMNPaymentNotificationControl showWithInfo:info];
-  [self layoutTableView];
+- (void)orderDidChange:(NSNotification *)n {
 
+  _paymentView.order = _order;
+  [self layoutTableView];
+  
 }
 
 - (void)setup {

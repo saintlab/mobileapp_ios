@@ -11,5 +11,6 @@
 @interface OMNPaymentNotificationControl : UIView
 
 + (void)showWithInfo:(NSDictionary *)info;
++ (void)playPaySound;
 
 @end

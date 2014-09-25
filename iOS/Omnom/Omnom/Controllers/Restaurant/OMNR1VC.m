@@ -22,6 +22,7 @@
 #import "OMNLightBackgroundButton.h"
 #import "OMNImageManager.h"
 #import "OMNAnalitics.h"
+#import "OMNPaymentNotificationControl.h"
 
 @interface OMNR1VC ()
 
@@ -46,6 +47,7 @@
   }
   @catch (NSException *exception) {
   }
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[OMNSocketManager manager] disconnect];
 }
 
@@ -82,7 +84,7 @@
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
   }
   
-  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
   
   self.circleBackground = _restaurant.decoration.circleBackground;
   
@@ -138,6 +140,12 @@
     }];
   }
   
+}
+
+- (void)orderDidPay:(NSNotification *)n {
+  
+  [OMNPaymentNotificationControl showWithInfo:n.userInfo];
+
 }
 
 - (void)addActionsBoard {

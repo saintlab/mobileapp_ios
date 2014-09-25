@@ -9,13 +9,11 @@
 #import "OMNSocketManager.h"
 #import <OMNSocketIO.h>
 #import "OMNConstants.h"
-#import <AudioToolbox/AudioToolbox.h>
 
-NSString * const OMNSocketIODidReceiveCardIdNotification = @"OMNSocketIODidReceiveCardIdNotification";
-NSString * const OMNSocketIODidPayNotification = @"OMNSocketIODidPayNotification";
 NSString * const OMNSocketIOWaiterCallDoneNotification = @"OMNSocketIOWaiterCallDoneNotification";
 NSString * const OMNSocketIOOrderDidChangeNotification = @"OMNSocketIOOrderDidChangeNotification";
 NSString * const OMNSocketIOOrderDidCloseNotification = @"OMNSocketIOOrderDidCloseNotification";
+NSString * const OMNSocketIOOrderDidPayNotification = @"OMNSocketIOOrderDidPayNotification";
 
 NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
 
@@ -23,7 +21,6 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
 @implementation OMNSocketManager {
   OMNSocketIO *_io;
   Socket *_socket;
-  SystemSoundID _soundID;
   NSMutableSet *_rooms;
   NSString *_token;
   NSMutableDictionary *_listners;
@@ -43,8 +40,6 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
   if (self) {
     _rooms = [NSMutableSet set];
     _listners = [NSMutableDictionary dictionary];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"pay_done" ofType:@"caf"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &_soundID);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
   }
@@ -95,7 +90,8 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
     dispatch_async(dispatch_get_main_queue(), ^{
       
       if (data) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidCloseNotification object:self
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidCloseNotification
+                                                            object:self
                                                           userInfo:@{OMNOrderDataKey : data}];
       }
       
@@ -109,7 +105,8 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
     dispatch_async(dispatch_get_main_queue(), ^{
       
       if (data) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidChangeNotification object:self
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidChangeNotification
+                                                            object:self
                                                           userInfo:@{OMNOrderDataKey : data}];
       }
       
@@ -117,12 +114,14 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
     
   }];
   
-  __weak typeof(self)weakSelf = self;
   [_socket on:@"payment" listener:^(id data) {
 
     NSLog(@"payment response %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
-      [weakSelf paymentDone:data];
+      
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidPayNotification
+                                                          object:self
+                                                        userInfo:data];
       
     });
     
@@ -132,7 +131,11 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
     
     NSLog(@"waiter_call_done response %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOWaiterCallDoneNotification object:nil userInfo:data];
+      
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOWaiterCallDoneNotification
+                                                          object:self
+                                                        userInfo:data];
+      
     });
     
   }];
@@ -141,12 +144,16 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
     NSLog(@"bill_call_done response %@, %@", data, [data class]);
   }];
   
+  /*
   [_socket on:@"card_register" listener:^(id data) {
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidReceiveCardIdNotification object:nil userInfo:data];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidReceiveCardIdNotification
+                                                        object:self
+                                                      userInfo:data];
     NSLog(@"card_register response %@, %@", data, [data class]);
     
   }];
+   */
   
 }
 
@@ -172,13 +179,6 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
 - (void)echo:(NSString *)message {
   
   [_socket emit:@"echo", message, nil];
-  
-}
-
-- (void)paymentDone:(id)data {
-  
-  [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidPayNotification object:nil userInfo:data];
-  AudioServicesPlaySystemSound(_soundID);
   
 }
 

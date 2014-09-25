@@ -51,10 +51,6 @@ OMNMailRUCardConfirmVCDelegate>
   BOOL _addBankCardRequested;
 }
 
-- (void)dealloc {
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 - (instancetype)initWithOrder:(OMNOrder *)order {
   self = [super init];
   if (self) {
@@ -66,8 +62,6 @@ OMNMailRUCardConfirmVCDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didPayNotification:) name:OMNSocketIODidPayNotification object:nil];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   [self setup];
@@ -220,10 +214,6 @@ OMNMailRUCardConfirmVCDelegate>
     
   }];
   
-}
-
-- (void)didPayNotification:(NSNotification *)n {
-  NSLog(@"didPayNotification>%@", n);
 }
 
 - (void)paymentInfo:(OMNMailRuPaymentInfo *)paymentInfo didPayWithResponse:(id)response {

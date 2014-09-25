@@ -33,21 +33,30 @@
 
     _orderDataSource.showTotalView = YES;
     
-    CGRect tableFrame = CGRectMake(0.0f, CGRectGetHeight(_label.frame), CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) - CGRectGetHeight(_label.frame));
+    CGFloat tableWidth = 320.0f;
+    CGFloat scale = CGRectGetWidth(self.frame)/tableWidth;
+    CGFloat tableHeight = (CGRectGetHeight(self.frame) - CGRectGetHeight(_label.frame))/scale;
+    
+    CGRect tableFrame = CGRectMake(0.0f,0.0f, tableWidth, tableHeight);
     _tableView = [[OMNOrderTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
+    _tableView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
     _tableView.dataSource = _orderDataSource;
     _tableView.delegate = _orderDataSource;
     _tableView.userInteractionEnabled = NO;
     _tableView.allowsSelection = NO;
+    _tableView.transform = CGAffineTransformMakeScale(scale, scale);
     [self addSubview:_tableView];
     
-    [_orderDataSource registerCellsForTableView:self.tableView];
-
-    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
-    self.layer.shouldRasterize = YES;
     
+    
+    [_orderDataSource registerCellsForTableView:self.tableView];
   }
   return self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  _tableView.center = CGPointMake(0.0f, CGRectGetMaxY(_label.frame));
 }
 
 - (void)setIndex:(NSInteger)index {
@@ -70,6 +79,9 @@
   _orderDataSource.order = order;
   [_tableView reloadData];
   [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+  _tableView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+  _tableView.layer.shouldRasterize = YES;
+
 }
 
 @end

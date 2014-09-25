@@ -12,10 +12,11 @@
 @class OMNVisitor;
 @protocol OMNOrdersVCDelegate;
 
-@interface OMNOrdersVC : UICollectionViewController
+@interface OMNOrdersVC : UIViewController
 
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
 @property (nonatomic, strong, readonly) OMNVisitor *visitor;
+@property (nonatomic, strong, readonly) UICollectionView *collectionView;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 

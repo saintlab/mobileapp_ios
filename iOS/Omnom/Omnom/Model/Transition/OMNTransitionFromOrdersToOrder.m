@@ -25,22 +25,18 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
-  // Get a snapshot of the thing cell we're transitioning from
-  
   NSIndexPath *selectedIndexPath = [fromViewController.collectionView indexPathsForSelectedItems].firstObject;
   OMNOrderViewCell *cell = (OMNOrderViewCell *)[fromViewController.collectionView cellForItemAtIndexPath:selectedIndexPath];
   UIView *cellImageSnapshot = [cell snapshotViewAfterScreenUpdates:NO];
   cellImageSnapshot.frame = [containerView convertRect:cell.frame fromView:cell.superview];
   cell.hidden = YES;
-  [toViewController.view layoutIfNeeded];
-  // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
+  [toViewController.view layoutIfNeeded];
   toViewController.view.alpha = 0;
   toViewController.tableView.hidden = YES;
   
   [containerView addSubview:toViewController.view];
   [containerView addSubview:cellImageSnapshot];
-  
   
   [UIView animateWithDuration:duration animations:^{
     // Fade in the second view controller's view

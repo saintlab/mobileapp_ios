@@ -8,6 +8,7 @@
 
 #import "OMNPaymentNotificationControl.h"
 #import "OMNUtils.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @interface OMNPaymentNotificationControl()
 
@@ -78,6 +79,18 @@
   
   NSString *title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено %@ руб.", nil), user[@"name"], [OMNUtils commaStringFromKop:[transaction[@"amount"] longLongValue]]];
   [control.closeButton setTitle:title forState:UIControlStateNormal];
+  
+  [self playPaySound];
+
+}
+
++ (void)playPaySound {
+  static SystemSoundID paySoundID = 0;
+  if (0 == paySoundID) {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"pay_done" ofType:@"caf"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &paySoundID);
+  }
+  AudioServicesPlaySystemSound(paySoundID);
 }
 
 @end
