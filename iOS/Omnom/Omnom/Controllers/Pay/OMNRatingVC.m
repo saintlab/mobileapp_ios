@@ -24,6 +24,8 @@
   UIScrollView *_scroll;
   UIView *_contentView;
   UILabel *_ratingLabel;
+  UILabel *_thankLabel;
+  UILabel *_thankTextLabel;
   TQStarRatingView *_starRatingView;
 }
 
@@ -37,20 +39,23 @@
   [self setup];
   
   [_starRatingView setScore:0.0f withAnimation:NO];
-  
-  _ratingLabel.text = NSLocalizedString(@"Вам здесь понравилось?", nil);
+
+  _ratingLabel.text = NSLocalizedString(@"RATINGSCREEN_RATE_CONTROL_TITLE", @"Вам здесь понравилось?");
   _ratingLabel.textColor = colorWithHexString(@"FBF7F7");
   _ratingLabel.font = FuturaOSFOmnomRegular(20.0f);
-  
   _chequeButton.hidden = YES;
   [_chequeButton addTarget:self action:@selector(chequeTap:) forControlEvents:UIControlEventTouchUpInside];
-  [_chequeButton setTitle:NSLocalizedString(@"Бумажный чек", nil) selectedTitle:NSLocalizedString(@"Отмена", nil) image:[UIImage imageNamed:@"bill_icon_small"]];
+  [_chequeButton setTitle:NSLocalizedString(@"RATINGSCREEN_BILL_BUTTON_TITLE", @"Бумажный чек") selectedTitle:nil image:[UIImage imageNamed:@"bill_icon_small"]];
+  
+  _thankLabel.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE", @"Спасибо");
+  _thankTextLabel.text = NSLocalizedString(@"RATINGSCREEN_THANK_SUBTITLE", @"Оплата прошла успешно\nСчет отправлен на почту");
+
   
   if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
     self.automaticallyAdjustsScrollViewInsets = NO;
   }
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"RATINGSCREEN_DONE_BUTTON_TITLE", @"Готово") style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
 
 }
 
@@ -101,21 +106,19 @@
   logoView.translatesAutoresizingMaskIntoConstraints = NO;
   [_contentView addSubview:logoView];
   
-  UILabel *thankLabel = [[UILabel alloc] init];
-  thankLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  thankLabel.textAlignment = NSTextAlignmentCenter;
-  thankLabel.numberOfLines = 0;
-  thankLabel.text = NSLocalizedString(@"Спасибо", nil);
-  thankLabel.font = FuturaOSFOmnomRegular(24.0f);
-  [_contentView addSubview:thankLabel];
+  _thankLabel = [[UILabel alloc] init];
+  _thankLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _thankLabel.textAlignment = NSTextAlignmentCenter;
+  _thankLabel.numberOfLines = 0;
+  _thankLabel.font = FuturaOSFOmnomRegular(24.0f);
+  [_contentView addSubview:_thankLabel];
   
-  UILabel *thankTextLabel = [[UILabel alloc] init];
-  thankTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  thankTextLabel.textAlignment = NSTextAlignmentCenter;
-  thankTextLabel.numberOfLines = 0;
-  thankTextLabel.text = NSLocalizedString(@"Оплата прошла успешно\nСчет отправлен на ваш e-mail", nil);
-  thankTextLabel.font = FuturaOSFOmnomRegular(18.0f);
-  [_contentView addSubview:thankTextLabel];
+  _thankTextLabel = [[UILabel alloc] init];
+  _thankTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _thankTextLabel.textAlignment = NSTextAlignmentCenter;
+  _thankTextLabel.numberOfLines = 0;
+  _thankTextLabel.font = FuturaOSFOmnomRegular(18.0f);
+  [_contentView addSubview:_thankTextLabel];
 
   _chequeButton = [[OMNBorderedButton alloc] init];
   _chequeButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -133,8 +136,8 @@
     @"ratingLabel" : _ratingLabel,
     @"starRatingView" : _starRatingView,
     @"logoView" : logoView,
-    @"thankLabel" : thankLabel,
-    @"thankTextLabel" : thankTextLabel,
+    @"thankLabel" : _thankLabel,
+    @"thankTextLabel" : _thankTextLabel,
     @"chequeButton" : _chequeButton,
     @"chequeImageView" : chequeImageView,
     @"contentView" : _contentView,

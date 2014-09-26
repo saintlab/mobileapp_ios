@@ -47,6 +47,7 @@
   }
   
   [self setTitle:title forState:UIControlStateNormal];
+
   [self setTitle:selectedTitle forState:UIControlStateSelected];
   [self setTitle:selectedTitle forState:UIControlStateSelected|UIControlStateHighlighted];
 }

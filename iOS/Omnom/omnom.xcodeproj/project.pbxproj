@@ -463,9 +463,6 @@
 		932B186B19AF3C80009E440E /* pay_done.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pay_done.caf; sourceTree = "<group>"; };
 		933A2E8819861CA5000055AB /* OMNOrderToRestaurantTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderToRestaurantTransition.h; sourceTree = "<group>"; };
 		933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderToRestaurantTransition.m; sourceTree = "<group>"; };
-		933AB0D119C1D49A004D8F55 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		933AB0D219C1D49A004D8F55 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		933AB0D819C1D4D8004D8F55 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		933AB0DA19C1D4DD004D8F55 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9345AFAA199A0A1400328F73 /* restaurantInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restaurantInfo.json; sourceTree = "<group>"; };
 		9345AFAD199A253F00328F73 /* OMNBankCardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCardInfo.h; sourceTree = "<group>"; };
@@ -1748,7 +1745,6 @@
 			knownRegions = (
 				en,
 				Base,
-				ru,
 			);
 			mainGroup = 93676DE018D1E4FC00FC55F1;
 			productRefGroup = 93676DEA18D1E4FC00FC55F1 /* Products */;
@@ -2243,7 +2239,6 @@
 		933AB0D919C1D4D8004D8F55 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				933AB0D819C1D4D8004D8F55 /* ru */,
 				933AB0DA19C1D4DD004D8F55 /* en */,
 			);
 			name = Localizable.strings;
@@ -2253,7 +2248,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				93676DF618D1E4FC00FC55F1 /* en */,
-				933AB0D119C1D49A004D8F55 /* ru */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2262,7 +2256,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				93676E1818D1E4FC00FC55F1 /* en */,
-				933AB0D219C1D49A004D8F55 /* ru */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
