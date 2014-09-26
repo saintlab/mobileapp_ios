@@ -52,38 +52,35 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 
 - (void)resumeConnection {
   
-  if (0 == _token.length) {
-    return;
-  }
-  
-  if (_io) {
+  if (0 == _token.length ||
+      _io) {
     return;
   }
   
   [self connectWithToken:_token completion:^{
-    
-    [_rooms enumerateObjectsUsingBlock:^(id roomId, BOOL *stop) {
-      [self join:roomId];
-    }];
-    
+    NSLog(@"socket did resume connection");
   }];
   
 }
 
-- (void)safeConnectWithToken:(NSString *)token  completion:(dispatch_block_t)completionBlock {
+- (void)establishConnecttionWithToken:(NSString *)token completion:(dispatch_block_t)completionBlock {
   
   NSString *query = [NSString stringWithFormat:@"token=%@", token];
   _socket = [_io of:[OMNConstants baseUrlString] and:@{@"query" : query}];
   
   [_socket emit:@"handshake", nil];
   
+  __weak typeof(self)weakSelf = self;
   [_socket on:@"handshake" listener:^(id data) {
     
     NSLog(@"handshake response %@, %@", data, [data class]);
     if (completionBlock &&
         [data isKindOfClass:[NSString class]] &&
         [data isEqualToString:@"authentication success"]) {
+      
+      [weakSelf socketDidAuthenticate];
       completionBlock();
+      
     }
     
   }];
@@ -166,6 +163,14 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
 }
 
+- (void)socketDidAuthenticate {
+  
+  [_rooms enumerateObjectsUsingBlock:^(id roomId, BOOL *stop) {
+    [self join:roomId];
+  }];
+  
+}
+
 - (void)subscribe:(NSString *)event block:(void (^)(id data))block {
   
   if (!_listners[event]) {
@@ -222,13 +227,13 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
   _token = token;
   if (_io) {
-    [self safeConnectWithToken:token completion:completionBlock];
+    [self establishConnecttionWithToken:token completion:completionBlock];
   }
   else {
     _io = [[OMNSocketIO alloc] init];
     __weak typeof(self)weakSelf = self;
     [_io once:@"ready" listener:^{
-      [weakSelf safeConnectWithToken:token completion:completionBlock];
+      [weakSelf establishConnecttionWithToken:token completion:completionBlock];
     }];
   }
   
@@ -237,6 +242,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 - (void)disconnectAndLeaveAllRooms:(BOOL)leave {
 
   if (leave) {
+    _token = nil;
     [_rooms removeAllObjects];
   }
   [_socket emit:@"disconnect", nil];
