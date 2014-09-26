@@ -19,6 +19,7 @@
 
 @implementation OMNErrorTextField {
   UIView *_colorView;
+  UILabel *_label;
   Class _textFieldClass;
 }
 
@@ -112,12 +113,41 @@
   
   [_textField addTarget:self action:@selector(updateColorView) forControlEvents:UIControlEventEditingDidBegin];
   [_textField addTarget:self action:@selector(updateColorView) forControlEvents:UIControlEventEditingDidEnd];
-  [_textField addTarget:self action:@selector(editingChanged) forControlEvents:UIControlEventEditingChanged];
+  [_textField addTarget:self action:@selector(valueChanged) forControlEvents:UIControlEventEditingChanged];
   
 }
 
-- (void)editingChanged {
+- (void)setText:(NSString *)text description:(NSString *)description {
+  
+  self.textField.text = text;
+  
+  dispatch_async(dispatch_get_main_queue(), ^{
+    UITextRange *textRange = [self.textField textRangeFromPosition:self.textField.beginningOfDocument toPosition:self.textField.endOfDocument];
+    CGRect textFrame = [self.textField firstRectForRange:textRange];
+    
+    if (nil == _label) {
+      _label = [[UILabel alloc] init];
+      [self.textField addSubview:_label];
+    }
+    
+    _label.hidden = (0 == text.length);
+    _label.font = self.textField.font;
+    _label.textColor = self.textField.textColor;
+    _label.text = description;
+    [_label sizeToFit];
+    CGRect labelFrame = _label.frame;
+    labelFrame.origin.x = CGRectGetMaxX(textFrame);
+    labelFrame.origin.y = textFrame.origin.y;
+    labelFrame.size.height = textFrame.size.height;
+    _label.frame = labelFrame;
+    
+  });
+  
+}
+
+- (void)valueChanged {
   [self setError:nil];
+  _label.hidden = (0 == _textField.text.length);
 }
 
 - (BOOL)becomeFirstResponder {

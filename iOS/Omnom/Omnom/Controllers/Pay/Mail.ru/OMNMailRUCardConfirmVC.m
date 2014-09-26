@@ -19,6 +19,8 @@
 #import "OMNOperationManager.h"
 #import "OMNDotTextField.h"
 
+#define kCurrencyString @" руб."
+
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate>
 
@@ -62,6 +64,8 @@
   [super viewDidAppear:animated];
 
   [self registerCard];
+//  _cardHoldValueTF.textField.enabled = YES;
+//  [_cardHoldValueTF.textField becomeFirstResponder];
 }
 
 - (void)startLoader {
@@ -94,7 +98,7 @@
   
   _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f textFieldClass:[OMNDotTextField class]];
   _cardHoldValueTF.textField.textAlignment = NSTextAlignmentCenter;
-  _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00", omnCommaString()];
+  _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00%@", omnCommaString(), kCurrencyString];
   _cardHoldValueTF.textField.enabled = NO;
   _cardHoldValueTF.textField.delegate = self;
   [contentView addSubview:_cardHoldValueTF];
@@ -155,7 +159,7 @@
   
   _bankCardInfo.numberOfRegisterAttempts++;
 
-  double value = [_cardHoldValueTF.textField.text omn_doubleValue];
+  double value = [self.currentAmountString omn_doubleValue];
   [self startLoader];
   OMNUser *user = [OMNAuthorisation authorisation].user;
   __weak typeof(self)weakSelf = self;
@@ -200,22 +204,8 @@
 - (void)registerCard {
 
   [_cardHoldValueTF setError:nil];
-#warning register card stub
-  NSDictionary *cardInfo =
-//  @{
-////    @"pan" : @"4111111111111111",
-////    @"pan" : @"6011000000000004",
-//    @"pan" : @"639002000000000003",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : @"123",
-//    };
 
-//  @{
-//    @"pan" : @"5213243739794467",
-//    @"exp_date" : @"12.2016",
-//    @"cvv" : @"602",
-//    };
-  
+  NSDictionary *cardInfo =
   @{
     @"pan" : _bankCardInfo.pan,
     @"exp_date" : [NSString stringWithFormat:@"%2ld.20%2ld", (long)_bankCardInfo.expiryMonth, (long)_bankCardInfo.expiryYear],
@@ -263,17 +253,22 @@
   [super didReceiveMemoryWarning];
 }
 
+- (NSString *)currentAmountString {
+  return [_cardHoldValueTF.textField.text stringByReplacingOccurrencesOfString:kCurrencyString withString:@""];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
   NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+  finalString = [finalString stringByReplacingOccurrencesOfString:kCurrencyString withString:@""];
   
   if ([string isEqualToString:omnCommaString()]) {
     
-    if (NSNotFound == [textField.text rangeOfString:omnCommaString()].location) {
+    if (NSNotFound == [self.currentAmountString rangeOfString:omnCommaString()].location) {
       
-      textField.text = finalString;
+      [self setAmountString:finalString];
       
     }
     
@@ -293,7 +288,7 @@
       }
       
     }
-    textField.text = finalString;
+    [self setAmountString:finalString];
     
   }
   else {
@@ -309,11 +304,26 @@
       
     }
     
-    textField.text = [@[components[0], fractionalString] componentsJoinedByString:omnCommaString()];
+    [self setAmountString:[@[components[0], fractionalString] componentsJoinedByString:omnCommaString()]];
     
   }
   
   return NO;
+}
+
+- (void)setAmountString:(NSString *)amountString {
+
+  [_cardHoldValueTF setText:amountString description:kCurrencyString];
+  
+}
+
+- (void)setSelectionRange:(NSRange)range {
+  UITextPosition *start = [_cardHoldValueTF.textField positionFromPosition:[_cardHoldValueTF.textField beginningOfDocument]
+                                                                    offset:range.location];
+  UITextPosition *end = [_cardHoldValueTF.textField positionFromPosition:start
+                                                                  offset:range.length];
+  
+  [_cardHoldValueTF.textField setSelectedTextRange:[_cardHoldValueTF.textField textRangeFromPosition:start toPosition:end]];
 }
 
 @end

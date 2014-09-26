@@ -17,4 +17,6 @@
 - (instancetype)initWithWidth:(CGFloat)width textFieldClass:(Class)textFieldClass;
 - (void)setError:(NSString *)text;
 
+- (void)setText:(NSString *)text description:(NSString *)description;
+
 @end
