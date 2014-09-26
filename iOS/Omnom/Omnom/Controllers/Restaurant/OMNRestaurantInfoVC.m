@@ -7,17 +7,21 @@
 //
 
 #import "OMNRestaurantInfoVC.h"
-#import "OMNRestaurantInfoCell.h"
 #import <AFNetworking.h>
 #import "OMNRestaurantInfo.h"
-#import "OMNRestaurantFeedItemCell.h"
-#import "OMNProductDetailsVC.h"
 #import "OMNVisitor.h"
-#import "OMNToolbarButton.h"
 #import "OMNFeedItem.h"
 #import "OMNAnalitics.h"
+#import <OMNStyler.h>
+
+#import "OMNToolbarButton.h"
+
 #import "OMNLabelCell.h"
+#import "OMNRestaurantFeedItemCell.h"
+#import "OMNRestaurantInfoCell.h"
 #import "OMNBottomLabelView.h"
+
+#import "OMNProductDetailsVC.h"
 
 typedef NS_ENUM(NSInteger, RestaurantInfoSection) {
   kRestaurantInfoSectionName = 0,
@@ -80,7 +84,7 @@ UIScrollViewDelegate>
   [self.tableView registerClass:[OMNLabelCell class] forCellReuseIdentifier:@"DefaultCell"];
   [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
   self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
-
+  self.tableView.separatorInset = UIEdgeInsetsMake(0.0f, [[[OMNStyler styler] leftOffset] floatValue], 0.0f, 0.0f);
 }
 
 - (void)didFinishLoadingRestaurantInfo:(OMNRestaurantInfo *)restaurantInfo {

@@ -8,6 +8,7 @@
 
 #import "OMNRestaurantInfoCell.h"
 #import "OMNRestaurantInfoItem.h"
+#import <OMNStyler.h>
 
 @implementation OMNRestaurantInfoCell {
   OMNRestaurantInfoItem *_restaurantInfoItem;
@@ -38,7 +39,12 @@
       @"iconView" : _iconView,
       };
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[iconView(40)]-[label]|" options:0 metrics:0 views:views]];
+    NSDictionary *metrics =
+    @{
+      @"leftOffset" : [[OMNStyler styler] leftOffset],
+      };
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[iconView(40)]-[label]|" options:0 metrics:metrics views:views]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_iconView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:0 metrics:0 views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[iconView(40)]" options:0 metrics:0 views:views]];

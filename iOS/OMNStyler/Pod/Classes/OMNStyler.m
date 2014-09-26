@@ -29,6 +29,10 @@
   return self;
 }
 
+- (NSNumber *)leftOffset {
+  return @(20.0f);
+}
+
 - (OMNStyle *)styleForClass:(Class)class {
   
   NSString *className = NSStringFromClass(class);

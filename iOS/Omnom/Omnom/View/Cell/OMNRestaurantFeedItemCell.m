@@ -10,6 +10,7 @@
 #import <UIImageView+AFNetworking.h>
 #import "OMNFeedItem.h"
 #import "OMNImageManager.h"
+#import <OMNStyler.h>
 
 @implementation OMNRestaurantFeedItemCell {
   OMNFeedItem *_feedItem;
@@ -63,8 +64,13 @@
       @"spinner" : _spinner,
       };
     
+    NSDictionary *metrics =
+    @{
+      @"leftOffset" : [[OMNStyler styler] leftOffset],
+      };
+    
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:0 metrics:0 views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[textLabel][priceLabel(>=70@1000)]-15-|" options:0 metrics:0 views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel][priceLabel(>=70@1000)]-(leftOffset)-|" options:0 metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(180)][textLabel(44)]" options:0 metrics:0 views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[priceLabel(==textLabel)]" options:0 metrics:0 views:views]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_priceLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_textLabel attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
