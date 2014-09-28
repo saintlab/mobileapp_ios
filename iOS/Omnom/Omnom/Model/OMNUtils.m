@@ -47,6 +47,14 @@ NSString *omnCommaString() {
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
 }
 
++ (NSString *)formatedStringFromRub:(long long)rub {
+  static NSNumberFormatter *currencyNumberFormatter = nil;
+  if (nil == currencyNumberFormatter) {
+    currencyNumberFormatter = [self commaNumberFormatter];
+  }
+  return [currencyNumberFormatter stringFromNumber:@(rub)];
+}
+
 + (NSString *)formattedMoneyStringFromKop:(long long)kop {
   static NSNumberFormatter *currencyNumberFormatter = nil;
   if (nil == currencyNumberFormatter) {
@@ -61,7 +69,6 @@ NSString *omnCommaString() {
 
 + (NSNumberFormatter *)commaNumberFormatter {
   NSNumberFormatter *commaNumberFormatter = [[NSNumberFormatter alloc] init];
-  commaNumberFormatter.locale = [NSLocale currentLocale];
   commaNumberFormatter.locale = [NSLocale localeWithLocaleIdentifier:@"ru"];
   commaNumberFormatter.numberStyle = kCFNumberFormatterDecimalStyle;
   commaNumberFormatter.usesGroupingSeparator = YES;
@@ -116,6 +123,84 @@ NSString *omnCommaString() {
 - (NSError *)omn_internetError {
   
   return [OMNUtils errorFromCode:self.code];
+  
+}
+
+@end
+
+@implementation NSString (omn_money)
+
+- (NSString *)omn_pureAmountString {
+  
+  static NSCharacterSet *charactersSet = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    charactersSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+  });
+  NSString *finalString = [[self componentsSeparatedByCharactersInSet:charactersSet] componentsJoinedByString:@""];
+  return finalString;
+}
+
+- (NSString *)omn_moneyFormattedString {
+  return [self omn_moneyFormattedStringWithMaxValue:0];
+}
+
+- (long long)omn_MoneyAmount {
+  
+  NSArray *priceComponents = [self componentsSeparatedByString:omnCommaString()];
+  NSString *evenComponent = [priceComponents firstObject];
+  NSString *evenString = [evenComponent omn_pureAmountString];
+  
+  long long amount = 100ll*[evenString longLongValue];
+  
+  if (priceComponents.count > 1) {
+    
+    NSString *fractionalComponent = priceComponents[1];
+    NSString *fractionalString = [fractionalComponent omn_pureAmountString];
+    
+    if (fractionalString.length == 1) {
+      amount += 10ll*[fractionalString longLongValue];
+    }
+    else if (fractionalString.length >= 2) {
+      fractionalString = [fractionalString substringToIndex:2];
+      amount += [fractionalString longLongValue];
+    }
+
+  }
+  
+  return amount;
+  
+}
+
+- (NSString *)omn_moneyFormattedStringWithMaxValue:(long long)maxValue {
+  
+  NSArray *priceComponents = [self componentsSeparatedByString:omnCommaString()];
+  NSString *evenComponent = [priceComponents firstObject];
+  NSString *evenString = [evenComponent omn_pureAmountString];
+  
+  long long evenAmount = 0ll;
+  if (maxValue > 0) {
+    evenAmount = MIN([evenString longLongValue], maxValue);
+  }
+  else {
+    evenAmount = [evenString longLongValue];
+  }
+  
+  NSMutableString *priceString = [NSMutableString stringWithString:[OMNUtils formatedStringFromRub:evenAmount]];
+  NSString *fractionalString = nil;
+  
+  if (priceComponents.count > 1) {
+    
+    NSString *fractionalComponent = priceComponents[1];
+    fractionalString = [fractionalComponent omn_pureAmountString];
+    if (fractionalString.length > 2) {
+      fractionalString = [fractionalString substringToIndex:2];
+    }
+    
+    [priceString appendFormat:@"%@%@", omnCommaString(), fractionalString];
+  }
+  
+  return [priceString copy];
   
 }
 

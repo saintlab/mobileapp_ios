@@ -56,9 +56,16 @@
   self.clipsToBounds = YES;
   self.backgroundColor = [UIColor clearColor];
   
+  _payLabel.text = NSLocalizedString(@"PAYMENT_TIPS_LABEL", @"чаевые");
   _tipsLabel.textColor = [UIColor colorWithWhite:136 / 255. alpha:1];
+  _tipsLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _tipsLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
+
+  _payLabel.text = NSLocalizedString(@"PAYMENT_TO_PAY_LABEL", @"я оплачу");
   _payLabel.textColor = [UIColor colorWithWhite:136 / 255. alpha:1];
-  
+  _payLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _payLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
+
   [_doneEditingButton setImage:[UIImage imageNamed:@"done_editing_button"] forState:UIControlStateNormal];
   _doneEditingButton.tintColor = [UIColor whiteColor];
   [_cancelEditingButton setImage:[UIImage imageNamed:@"cancel_editing_button"] forState:UIControlStateNormal];
@@ -112,7 +119,7 @@
     _amountPercentControl.amountPercentValue = amountPercentValue;
   }
   
-  [_amountPercentControl becomeFirstResponder];
+  [_amountPercentControl beginTipEditing];
   
 }
 
@@ -124,7 +131,7 @@
   if (_order.expectedValue) {
     amountPercentValue.percent = 100.*(double)_order.enteredAmount/_order.expectedValue;
   }
-  amountPercentValue.totalAmount = _order.expectedValue;
+  amountPercentValue.totalAmount = _order.enteredAmount;
   _amountPercentControl.amountPercentValue = amountPercentValue;
   
 }
@@ -176,6 +183,7 @@
     
     _tipsLabel.alpha = (keyboardShown) ? (0.0f) : (1.0f);
     _tipsLabel.transform = CGAffineTransformIdentity;
+    _payLabel.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0.0f, 96.0f)) : (CGAffineTransformIdentity);
     
   }
   
@@ -224,7 +232,7 @@
   else {
     
     _order.splitType = kSplitTypePercent;
-    _order.enteredAmount = _amountPercentControl.amountPercentValue.amount;
+    _order.enteredAmount = _amountPercentControl.amountPercentValue.totalAmount;
     
   }
   

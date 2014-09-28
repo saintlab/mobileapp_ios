@@ -15,6 +15,14 @@
 @implementation OMNToolbarButton
 
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title {
+  return [self initWithImage:image title:title minimumSize:70.0f];
+}
+
+- (instancetype)initWithFitImage:(UIImage *)image title:(NSString *)title {
+  return [self initWithImage:image title:title minimumSize:0.0f];
+}
+
+- (instancetype)initWithImage:(UIImage *)image title:(NSString *)title minimumSize:(CGFloat)minimumSize {
   self = [self init];
   if (self) {
     if (image) {
@@ -32,9 +40,12 @@
     }
     [self setTitle:title forState:UIControlStateNormal];
     [self sizeToFit];
-    CGRect frame = self.frame;
-    frame.size.width = MAX(70.0f, frame.size.width);
-    self.frame = frame;
+    if (minimumSize > 0.0f) {
+      CGRect frame = self.frame;
+      frame.size.width = MAX(minimumSize, frame.size.width);
+      self.frame = frame;
+    }
+    
   }
   return self;
 }

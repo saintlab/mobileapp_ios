@@ -48,12 +48,14 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   self.view.backgroundColor = [UIColor whiteColor];
+  self.navigationItem.title = NSLocalizedString(@"CALCULATOR_TITLE", @"Разделить счёт");
+
   OMNNavigationBarSelector *navSelector = [[OMNNavigationBarSelector alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kCalculatorTopOffset) titles:
                                             @[
-                                              NSLocalizedString(@"По блюдам", nil),
-                                              NSLocalizedString(@"Поровну", nil)
+                                              NSLocalizedString(@"CALCULATOR_ORDER_SELECTION_BUTTON_TITLE", @"По блюдам"),
+                                              NSLocalizedString(@"CALCULATOR_SPLIT_SELECTION_BUTTON_TITLE", @"Поровну")
                                               ]];
   [navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
   [navSelector setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"nav_gray_bg"]]];
@@ -84,39 +86,26 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   _containerView = [[UIView alloc] init];
   [self.view addSubview:_containerView];
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
-    
-    if ([self.delegate respondsToSelector:@selector(calculatorVCDidCancel:)]) {
-      [self.delegate calculatorVCDidCancel:self];
-    }
-    
-  }];
-  self.navigationItem.leftBarButtonItem.tintColor = [UIColor blackColor];
-  
-  __weak typeof(self)weakSelf = self;
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] bk_initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain handler:^(id sender) {
-    
-    [weakSelf totalTap];
-    
-  }];
-  self.navigationItem.rightBarButtonItem.tintColor = ([UIColor colorWithRed:2 / 255. green:193 / 255. blue:100 / 255. alpha:1]);
-  
-  self.view.backgroundColor = [UIColor whiteColor];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+
   
   self.transitionInProgress = NO;
-  
-  self.currentController = self.firstViewController;
-  
+
   // If this is the very first time we're loading this we need to do
   // an initial load and not a swap.
+  self.currentController = self.firstViewController;
   [self addChildViewController:self.firstViewController];
   self.firstViewController.view.frame = _containerView.bounds;
   [_containerView addSubview:self.firstViewController.view];
   [self.firstViewController didMoveToParentViewController:self];
-  
   [self.view bringSubviewToFront:_fadeView];
-  
   [self totalDidChange:_order.selectedItemsTotal];
+  
+}
+
+- (void)closeTap {
+  
+  [self.delegate calculatorVCDidCancel:self];
   
 }
 
@@ -264,7 +253,8 @@ const CGFloat kCalculatorTopOffset = 40.0f;
     if (_total > 0) {
       insets = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_fadeView.frame), 0.0f);
       _fadeView.alpha = 1.0f;
-      [_totalButton setTitle:[OMNUtils commaStringFromKop:total] forState:UIControlStateNormal];
+      NSString *title = [NSString stringWithFormat:@"= %@", [OMNUtils commaStringFromKop:total]];
+      [_totalButton setTitle:title forState:UIControlStateNormal];
     }
     else {
       _fadeView.alpha = 0.0f;

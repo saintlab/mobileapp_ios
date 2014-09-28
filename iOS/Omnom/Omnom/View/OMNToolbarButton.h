@@ -11,6 +11,8 @@
 @interface OMNToolbarButton : UIButton
 
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title;
+- (instancetype)initWithFitImage:(UIImage *)image title:(NSString *)title;
+
 - (void)setSelectedImage:(UIImage *)selectedImage selectedTitle:(NSString *)selectedTitle;
 
 @end

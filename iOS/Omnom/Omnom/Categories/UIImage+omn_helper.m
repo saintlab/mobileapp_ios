@@ -50,13 +50,16 @@
 }
 
 - (UIImage *)omn_blendWithColor:(UIColor *)tintColor {
+  return [self omn_blendWithColor:tintColor blendMode:kCGBlendModeMultiply];
+}
+
+- (UIImage *)omn_blendWithColor:(UIColor *)tintColor blendMode:(CGBlendMode)blendMode {
   
   UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
   CGRect drawRect = CGRectMake(0, 0, self.size.width, self.size.height);
-  [tintColor set];
-  UIRectFill(drawRect);
-  [self drawInRect:drawRect blendMode:kCGBlendModeMultiply alpha:0.8f];
-  
+  [self drawInRect:drawRect];
+  [[tintColor colorWithAlphaComponent:0.8f] set];
+  UIRectFillUsingBlendMode(drawRect, blendMode);
   UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return tintedImage;

@@ -17,26 +17,29 @@
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  OMNBackgroundVC *fromViewController = (OMNBackgroundVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNR1VC *toViewController = (OMNR1VC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
   
   // Get a snapshot of the image view
-  UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:NO];
-  fromViewController.view.hidden = YES;
 
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
-  
   [containerView addSubview:toViewController.view];
-  
+
   UIImage *circleBackground = [toViewController.circleButton backgroundImageForState:UIControlStateNormal];
   [toViewController.view layoutIfNeeded];
   UIImageView *bigCircleIV = [[UIImageView alloc] initWithFrame:toViewController.circleButton.frame];
   bigCircleIV.image = circleBackground;
   [containerView addSubview:bigCircleIV];
+
+  UIImageView *toBackgroundView = [[UIImageView alloc] initWithFrame:fromViewController.view.frame];
+  toBackgroundView.contentMode = UIViewContentModeCenter;
+  toBackgroundView.image = fromViewController.backgroundImage;
+  [containerView addSubview:toBackgroundView];
   
-  [containerView addSubview:fromImageSnapshot];
+  fromViewController.backgroundView.hidden = YES;
+  [containerView addSubview:fromViewController.view];
   
   CGFloat scale = 5.0f;
   bigCircleIV.transform = CGAffineTransformMakeScale(scale, scale);
@@ -47,11 +50,14 @@
   
   [UIView animateWithDuration:OrderSlideAnimationDuration animations:^{
     
-    fromImageSnapshot.transform = CGAffineTransformMakeTranslation(0.0f, -2*CGRectGetHeight(fromImageSnapshot.frame));
+    fromViewController.view.transform = CGAffineTransformMakeTranslation(0.0f, -2*CGRectGetHeight(fromViewController.view.frame));
+    toBackgroundView.alpha = 0.0f;
     
   } completion:^(BOOL finished) {
 
-    [fromImageSnapshot removeFromSuperview];
+    [toBackgroundView removeFromSuperview];
+    fromViewController.backgroundView.hidden = NO;
+    
     [UIView animateWithDuration:OrderCircleChangeSizeAnimationDuration animations:^{
       
       bigCircleIV.transform = CGAffineTransformIdentity;
@@ -64,8 +70,10 @@
         
       } completion:^(BOOL finished) {
 
+        fromViewController.backgroundView.alpha = 1.0f;
         fromViewController.view.hidden = NO;
         [bigCircleIV removeFromSuperview];
+        fromViewController.view.transform = CGAffineTransformIdentity;
         [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
         
       }];

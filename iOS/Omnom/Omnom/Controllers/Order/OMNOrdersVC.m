@@ -45,7 +45,7 @@ UICollectionViewDelegate>
   [self setup];
   
   self.automaticallyAdjustsScrollViewInsets = YES;
-  
+  self.view.backgroundColor = [UIColor clearColor];
   _label.font = FuturaOSFOmnomRegular(15);
   _label.textAlignment = NSTextAlignmentCenter;
   _label.textColor = [UIColor colorWithWhite:146.0f/255.0f alpha:1.0f];
@@ -54,11 +54,9 @@ UICollectionViewDelegate>
   _pageControl.pageIndicatorTintColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
   _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
   
-  UIImageView *backgroundView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-  backgroundView.contentMode = UIViewContentModeCenter;
-  backgroundView.image = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
-  _collectionView.backgroundView = backgroundView;
-
+  _collectionView.backgroundColor = [UIColor clearColor];
+  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
+  
   OMNToolbarButton *cancelButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Отмена", nil)];
   [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];

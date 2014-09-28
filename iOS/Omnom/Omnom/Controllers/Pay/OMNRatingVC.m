@@ -38,6 +38,8 @@
   
   [self setup];
   
+  self.view.backgroundColor = [UIColor clearColor];
+
   [_starRatingView setScore:0.0f withAnimation:NO];
 
   _ratingLabel.text = NSLocalizedString(@"RATINGSCREEN_RATE_CONTROL_TITLE", @"Вам здесь понравилось?");
@@ -51,9 +53,7 @@
   _thankTextLabel.text = NSLocalizedString(@"RATINGSCREEN_THANK_SUBTITLE", @"Оплата прошла успешно\nСчет отправлен на почту");
 
   
-  if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
-    self.automaticallyAdjustsScrollViewInsets = NO;
-  }
+  self.automaticallyAdjustsScrollViewInsets = NO;
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"RATINGSCREEN_DONE_BUTTON_TITLE", @"Готово") style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
 

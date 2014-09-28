@@ -18,7 +18,7 @@
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNCircleRootVC *fromViewController = (OMNCircleRootVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-  UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  OMNBackgroundVC *toViewController = (OMNBackgroundVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
 
@@ -27,18 +27,24 @@
   fromViewController.view.hidden = YES;
   
   // Setup the initial view states
-  toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
-
   [containerView addSubview:fromImageSnapshot];
   
   UIImage *circleBackground = fromViewController.circleBackground;
   UIImageView *bigCircleIV = [[UIImageView alloc] initWithFrame:fromViewController.circleButton.frame];
   bigCircleIV.image = circleBackground;
   [containerView addSubview:bigCircleIV];
+
+  UIImageView *toBackgroundView = [[UIImageView alloc] initWithFrame:toViewController.view.frame];
+  toBackgroundView.contentMode = UIViewContentModeCenter;
+  toBackgroundView.image = toViewController.backgroundImage;
+  toBackgroundView.alpha = 0.0f;
+  [containerView addSubview:toBackgroundView];
   
+  toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView addSubview:toViewController.view];
+  toViewController.backgroundView.alpha = 0.0f;
   toViewController.view.transform = CGAffineTransformMakeTranslation(0.0f, -2*CGRectGetHeight(toViewController.view.frame));
-  
+
   NSTimeInterval OrderSlideAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderSlideAnimationDuration"];
   NSTimeInterval OrderCircleChangeSizeAnimationDuration = [[OMNStyler styler] animationDurationForKey:@"OrderCircleChangeSizeAnimationDuration"];
   
@@ -53,11 +59,14 @@
     [fromImageSnapshot removeFromSuperview];
     [UIView animateWithDuration:OrderSlideAnimationDuration animations:^{
       
+      toBackgroundView.alpha = 1.0f;
       toViewController.view.transform = CGAffineTransformIdentity;
       
     } completion:^(BOOL finished) {
       
+      toViewController.backgroundView.alpha = 1.0f;
       [bigCircleIV removeFromSuperview];
+      [toBackgroundView removeFromSuperview];
       fromViewController.view.hidden = NO;
       [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
       

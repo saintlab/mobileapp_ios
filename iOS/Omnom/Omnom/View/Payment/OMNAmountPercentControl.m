@@ -13,8 +13,9 @@
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import "OMNDotTextField.h"
+#import "OMNLabeledTextField.h"
 
-const long long kMaxEnteredValue = 99999999L;
+const long long kMaxEnteredValue = 999999ll;
 
 @interface OMNAmountPercentControl ()
 <UIPickerViewDataSource,
@@ -25,13 +26,12 @@ UITextFieldDelegate>
 
 @implementation OMNAmountPercentControl {
   
-  UITextField *_pureAmountTF;
+  OMNLabeledTextField *_pureAmountTF;
   
-  UITextField *_amountTF;
+  OMNLabeledTextField *_amountTF;
   UITextField *_percentTF;
   
   UIPickerView *_percentPicker;
-  BOOL _isFirstResponder;
   UIView *_seporatorView;
   UIView *_flexibleBottomView;
   UIView *_bottomView;
@@ -52,7 +52,9 @@ UITextFieldDelegate>
   
   self.backgroundColor = [UIColor clearColor];
   
-  _pureAmountTF = [[UITextField alloc] init];
+  _pureAmountTF = [[OMNLabeledTextField alloc] init];
+  _pureAmountTF.keyboardType = UIKeyboardTypeDecimalPad;
+  _pureAmountTF.tintColor = colorWithHexString(@"157EFB");
   _pureAmountTF.translatesAutoresizingMaskIntoConstraints = NO;
   _pureAmountTF.adjustsFontSizeToFitWidth = YES;
   _pureAmountTF.minimumFontSize = 10.0f;
@@ -61,9 +63,11 @@ UITextFieldDelegate>
   _pureAmountTF.font = FuturaLSFOmnomLERegular(50.0f);
   _pureAmountTF.textAlignment = NSTextAlignmentCenter;
   _pureAmountTF.delegate = self;
+  [_pureAmountTF setDetailedText:[NSString stringWithFormat:@" %@", kRubleSign]];
   [self addSubview:_pureAmountTF];
   
-  _amountTF = [[OMNDotTextField alloc] init];
+  _amountTF = [[OMNLabeledTextField alloc] init];
+  _amountTF.keyboardType = UIKeyboardTypeDecimalPad;
   _amountTF.tintColor = colorWithHexString(@"157EFB");
   _amountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
   _amountTF.translatesAutoresizingMaskIntoConstraints = NO;
@@ -73,6 +77,7 @@ UITextFieldDelegate>
   _amountTF.delegate = self;
   _amountTF.font = FuturaLSFOmnomLERegular(30.0f);
   _amountTF.textAlignment = NSTextAlignmentRight;
+  [_amountTF setDetailedText:[NSString stringWithFormat:@" %@", kRubleSign]];
   [_amountTF bk_addEventHandler:^(UITextField *sender) {
     
     [self calculateRelativePercentValue];
@@ -134,11 +139,12 @@ UITextFieldDelegate>
   
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:-20.0f]];
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_pureAmountTF attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pureAmountTF]|" options:0 metrics:metrics views:views]];
+  
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:180.0f]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pureAmountTF]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[amountTF]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[percentTF]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seporatorView(seporatorViewHeight)]|" options:0 metrics:metrics views:views]];
@@ -148,8 +154,6 @@ UITextFieldDelegate>
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[amountTF]-[seporatorView(1)]-[percentTF]|" options:0 metrics:metrics views:views]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_amountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:0.655f constant:0.0f]];
   
-  [self omn_setIsFirstResponder:NO];
-  
 }
 
 - (OMNAmountPercentValue *)amountPercentValue {
@@ -158,6 +162,7 @@ UITextFieldDelegate>
 
 - (void)setAmountPercentValue:(OMNAmountPercentValue *)amountPercentValue {
   _amountPercentValue = amountPercentValue;
+  _pureAmountTF.text = [[OMNUtils commaStringFromKop:_amountPercentValue.totalAmount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
   [self update];
 }
 
@@ -176,29 +181,20 @@ UITextFieldDelegate>
   return _amountTF.isFirstResponder;
 }
 
-- (BOOL)isFirstResponder {
-  return _isFirstResponder;
-  
-}
-
-- (void)omn_setIsFirstResponder:(BOOL)isFirstResponder {
-  
-  _isFirstResponder = isFirstResponder;
-  
-}
-
-- (BOOL)becomeFirstResponder {
-  
-  [self omn_setIsFirstResponder:YES];
-  BOOL result = [_amountTF becomeFirstResponder];
-  return result;
-  
+- (void)beginTipEditing {
+  _tipEdidting = YES;
+  [UIView animateWithDuration:0.3 animations:^{
+    _amountTF.alpha = 1.0f;
+  }];
+  [_amountTF becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
-  
-  [self omn_setIsFirstResponder:NO];
-  BOOL result = [_amountTF resignFirstResponder] || [_percentTF resignFirstResponder];
+  _tipEdidting = NO;
+  BOOL result =
+  [_pureAmountTF resignFirstResponder] ||
+  [_amountTF resignFirstResponder] ||
+  [_percentTF resignFirstResponder];
   [self sendActionsForControlEvents:UIControlEventEditingDidEnd];
   return result;
   
@@ -223,10 +219,15 @@ UITextFieldDelegate>
 
 - (void)setAmountValue:(long long)amount {
   
-  _amountTF.text = [OMNUtils moneyStringFromKop:amount];
-  [self updateCaratPosition];
-  _pureAmountTF.text = [OMNUtils formattedMoneyStringFromKop:amount];
+  _amountTF.text = [[OMNUtils commaStringFromKop:amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
   _amountPercentValue.amount = amount;
+
+}
+
+- (void)setPureAmountValue:(long long)amount {
+  
+  _pureAmountTF.text = [[OMNUtils commaStringFromKop:amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
+  _amountPercentValue.totalAmount = amount;
   
 }
 
@@ -247,27 +248,20 @@ UITextFieldDelegate>
   
 }
 
-- (long long)selectedAmount {
-  NSString *pureAmount = [self pureAmountString:_amountTF.text];
-  long long amount = 100ll*[pureAmount omn_doubleValue];
-  return amount;
-}
-
 - (void)layoutSubviews {
   [super layoutSubviews];
-  if (self.isFirstResponder) {
+  if (_tipEdidting) {
+    _pureAmountTF.alpha = 0.0f;
     _seporatorView.alpha = 1.0f;
     _amountTF.alpha = 1.0f;
     _percentTF.alpha = 1.0f;
-    _pureAmountTF.alpha = 0.0f;
     _bottomView.alpha = 1.0f;
-    [self updateCaratPosition];
   }
   else {
+    _pureAmountTF.alpha = 1.0f;
     _seporatorView.alpha = 0.0f;
     _amountTF.alpha = 0.0f;
     _percentTF.alpha = 0.0f;
-    _pureAmountTF.alpha = 1.0f;
     _bottomView.alpha = 0.0f;
   }
   
@@ -298,48 +292,25 @@ UITextFieldDelegate>
 
 #pragma mark - UITextFieldDelegate
 
-- (NSString *)pureAmountString:(NSString *)string {
-  NSCharacterSet *charactersSet = [[NSCharacterSet characterSetWithCharactersInString:[NSString stringWithFormat:@"0123456789%@", omnCommaString()]] invertedSet];
-  NSString *finalString = [[string componentsSeparatedByCharactersInSet:charactersSet] componentsJoinedByString:@""];
-  return finalString;
-}
-
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
-  if ([textField isEqual:_amountTF]) {
-    
-    if ([string isEqualToString:omnCommaString()]) {
-      
-      if (NSNotFound == [textField.text rangeOfString:omnCommaString()].location) {
-        NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:omnCommaString()];
-        textField.text = finalString;
-        [self updateCaratPosition];
-      }
-      
-      return NO;
-    }
+  if ([textField isEqual:_amountTF] ||
+      [textField isEqual:_pureAmountTF]) {
     
     NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    finalString = [self pureAmountString:finalString];
-    
-    if (NSNotFound != [finalString rangeOfString:omnCommaString()].location) {
-      NSString *fractionalString = @"";
-      NSArray *components = [finalString componentsSeparatedByString:omnCommaString()];
-      if (2 == components.count) {
-        
-        fractionalString = components[1];
-        if (fractionalString.length > 2) {
-          fractionalString = [fractionalString substringToIndex:2];
-        }
-        
-      }
-      
-      finalString = [@[components[0], fractionalString] componentsJoinedByString:omnCommaString()];
+    NSString *moneyFormattedString = [finalString omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
+    long long amount = [finalString omn_MoneyAmount];
+
+    if ([textField isEqual:_amountTF]) {
+      [self setAmountValue:amount];
     }
-    long long value = round(100.0*[finalString omn_doubleValue]);
-    value = MIN(value, kMaxEnteredValue);
-    [self setAmountValue:value];
+    else if ([textField isEqual:_pureAmountTF]) {
+      [self setPureAmountValue:amount];
+    }
+    
+    textField.text = moneyFormattedString;
     [self calculateRelativePercentValue];
+    
     return NO;
   }
   else if ([textField isEqual:_percentTF]) {
@@ -347,39 +318,6 @@ UITextFieldDelegate>
   }
   
   return YES;
-}
-
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
-  
-  if ([textField isEqual:_pureAmountTF]) {
-    [self omn_setIsFirstResponder:YES];
-    _amountTF.alpha = 0.2;
-    [_amountTF becomeFirstResponder];
-    [UIView animateWithDuration:0.3 animations:^{
-      [self setNeedsLayout];
-    }];
-    [self sendActionsForControlEvents:UIControlEventEditingDidBegin];
-    return NO;
-  }
-  return YES;
-}
-
-- (void)updateCaratPosition {
-  
-  if (_amountTF.text.length >= 2) {
-    [self setSelectionRange:NSMakeRange(_amountTF.text.length - 2, 0)];
-  }
-  
-}
-
-- (void)setSelectionRange:(NSRange) range {
-  UITextPosition *start = [_amountTF positionFromPosition:[_amountTF beginningOfDocument]
-                                                   offset:range.location];
-  
-  UITextPosition *end = [_amountTF positionFromPosition:start
-                                                 offset:range.length];
-  
-  [_amountTF setSelectedTextRange:[_amountTF textRangeFromPosition:start toPosition:end]];
 }
 
 @end

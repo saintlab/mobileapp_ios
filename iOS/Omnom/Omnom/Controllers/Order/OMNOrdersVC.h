@@ -8,11 +8,12 @@
 
 #import "OMNOrderVCDelegate.h"
 #import "OMNOrder.h"
+#import "OMNBackgroundVC.h"
 
 @class OMNVisitor;
 @protocol OMNOrdersVCDelegate;
 
-@interface OMNOrdersVC : UIViewController
+@interface OMNOrdersVC : OMNBackgroundVC
 
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
 @property (nonatomic, strong, readonly) OMNVisitor *visitor;

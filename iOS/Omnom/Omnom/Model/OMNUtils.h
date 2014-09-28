@@ -21,6 +21,7 @@ extern NSString *omnCommaString();
 + (NSString *)formattedMoneyStringFromKop:(long long)kop;
 + (NSString *)moneyStringFromKop:(long long)kop;
 + (NSString *)commaStringFromKop:(long long)kop;
++ (NSString *)formatedStringFromRub:(long long)rub;
 
 + (NSError *)errorFromCode:(NSInteger)code;
 
@@ -29,5 +30,14 @@ extern NSString *omnCommaString();
 @interface NSError (omn_internet)
 
 - (NSError *)omn_internetError;
+
+@end
+
+@interface NSString (omn_money)
+
+- (long long)omn_MoneyAmount;
+- (NSString *)omn_pureAmountString;
+- (NSString *)omn_moneyFormattedString;
+- (NSString *)omn_moneyFormattedStringWithMaxValue:(long long)maxValue;
 
 @end

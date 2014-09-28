@@ -9,6 +9,7 @@
 #import "OMNProductSelectionVC.h"
 #import "OMNOrderDataSource.h"
 #import "OMNOrder.h"
+#import <BlocksKit+UIKit.h>
 
 @interface OMNProductSelectionVC ()
 
@@ -41,9 +42,47 @@
 
 }
 
+- (void)checkConditionAndSelectProducts {
+ 
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"checkConditionAndSelectProducts"]) {
+    return;
+  }
+  
+  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"checkConditionAndSelectProducts"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+  
+  NSIndexPath *demoIndexPath = nil;
+  
+  if (_order.items.count) {
+    
+    demoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    
+  }
+
+  UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:nil message:NSLocalizedString(@"CALCULATOR_ALERT_TEXT", @"Отметьте ваши блюда в чеке и платите только за себя") cancelButtonTitle:NSLocalizedString(@"OK", @"OK") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    
+    if (demoIndexPath) {
+      [self updateTableView:self.tableView atIndexPath:demoIndexPath];
+    }
+
+  }];
+  
+  [alert bk_setDidShowBlock:^(UIAlertView *a) {
+    
+    if (demoIndexPath) {
+      [self updateTableView:self.tableView atIndexPath:demoIndexPath];
+    }
+    
+  }];
+  
+}
+
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   [self updateTotalValue];
+  
+  [self checkConditionAndSelectProducts];
+  
 }
 
 - (void)updateTotalValue {

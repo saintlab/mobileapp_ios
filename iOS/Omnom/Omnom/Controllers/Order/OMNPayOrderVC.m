@@ -40,8 +40,6 @@ OMNMailRUPayVCDelegate>
   OMNOrderDataSource *_dataSource;
 
   __weak IBOutlet OMNPaymentFooterView *_paymentView;
-  __weak IBOutlet UILabel *_toPayLabel;
-  __weak IBOutlet UILabel *_tipLabel;
   
   UIScrollView *_scrollView;
   
@@ -70,6 +68,7 @@ OMNMailRUPayVCDelegate>
   
   [super viewDidLoad];
 
+  self.view.backgroundColor = [UIColor clearColor];
   self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
   
   [self setup];
@@ -169,7 +168,6 @@ OMNMailRUPayVCDelegate>
   _beginSplitAnimation = YES;
   OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithOrder:_order];
   calculatorVC.delegate = self;
-  calculatorVC.navigationItem.title = NSLocalizedString(@"Калькуляция", nil);
   [self.navigationController pushViewController:calculatorVC animated:YES];
   
 }
@@ -186,13 +184,7 @@ OMNMailRUPayVCDelegate>
 }
 
 - (void)setup {
-  
-  _tipLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-  _tipLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
-  
-  _toPayLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-  _toPayLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6f];
-  
+    
   _scrollView = [[UIScrollView alloc] init];
   _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
   _scrollView.clipsToBounds = NO;
