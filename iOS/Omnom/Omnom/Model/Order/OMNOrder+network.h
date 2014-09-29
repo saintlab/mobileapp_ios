@@ -11,7 +11,7 @@
 @interface OMNOrder (network)
 
 /**
- https://github.com/saintlab/backend/tree/master/applications/omnom#create-restaurateur-order
+https://github.com/saintlab/backend/tree/master/applications/omnom#bill
  */
 - (void)createBill:(OMNBillBlock)completion failure:(void (^)(NSError *error))failureBlock;
 

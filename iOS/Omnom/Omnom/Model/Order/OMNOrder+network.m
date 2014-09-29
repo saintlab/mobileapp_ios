@@ -9,10 +9,11 @@
 #import "OMNOrder+network.h"
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
+#import "OMNUtils.h"
 
 @implementation OMNOrder (network)
 
-- (void)createBill:(OMNBillBlock)completion failure:(void (^)(NSError *error))failureBlock {
+- (void)createBill:(OMNBillBlock)completionBlock failure:(void (^)(NSError *error))failureBlock {
   
   NSDictionary *parameters =
   @{
@@ -25,17 +26,30 @@
   
   [[OMNOperationManager sharedManager] POST:@"/bill" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    if (responseObject[@"status"]) {
-      OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
-      completion(bill);
+    if ([responseObject isKindOfClass:[NSDictionary class]]) {
+      
+      NSString *status = responseObject[@"status"];
+      if ([status isEqualToString:@"new"]) {
+        OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
+        completionBlock(bill);
+      }
+      else if ([status isEqualToString:@"paid"]) {
+        failureBlock([OMNUtils errorFromCode:OMNErrorOrderClosed]);
+      }
+      else {
+        failureBlock([OMNUtils errorFromCode:OMNErrorUnknoun]);
+      }
+      
     }
     else {
-      failureBlock(nil);
+      
+      failureBlock([OMNUtils errorFromCode:OMNErrorUnknoun]);
+      
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock(nil);
+    failureBlock([error omn_internetError]);
     
   }];
   
@@ -56,7 +70,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
 }

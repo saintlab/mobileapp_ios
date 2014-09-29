@@ -210,7 +210,7 @@ OMNMailRUCardConfirmVCDelegate>
   __weak typeof(self)weakSelf = self;
   [_loadingCircleVC finishLoading:^{
     
-    [weakSelf didFailWithError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку позже", nil)];
+    [weakSelf didFailWithError:error];
     
   }];
   
@@ -233,7 +233,7 @@ OMNMailRUCardConfirmVCDelegate>
     else {
       
       [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_PAY" parametrs:response];
-      [weakSelf didFailWithError:NSLocalizedString(@"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.", nil)];
+      [weakSelf didFailWithError:[OMNUtils errorFromCode:OMNErrorPaymentError]];
       
     }
 
@@ -248,15 +248,20 @@ OMNMailRUCardConfirmVCDelegate>
   
 }
 
-- (void)didFailWithError:(NSString *)errorText {
+- (void)didFailWithError:(NSError *)error {
   
-  [_loadingCircleVC setText:errorText];
+  [_loadingCircleVC setText:error.localizedDescription];
   __weak typeof(self)weakSelf = self;
   _loadingCircleVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
       
-      [weakSelf popViewController];
+      if (OMNErrorOrderClosed == error.code) {
+        [weakSelf orderDidClosed];
+      }
+      else {
+        [weakSelf popViewController];
+      }
       
     }]
     ];
@@ -268,6 +273,12 @@ OMNMailRUCardConfirmVCDelegate>
 - (void)popViewController {
   
   [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+- (void)orderDidClosed {
+  
+  [self.delegate mailRUPayVCOrderDidClosed:self];
   
 }
 

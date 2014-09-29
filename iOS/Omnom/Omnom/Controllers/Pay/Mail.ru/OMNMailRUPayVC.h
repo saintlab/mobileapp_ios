@@ -24,7 +24,7 @@
 @protocol OMNMailRUPayVCDelegate <NSObject>
 
 - (void)mailRUPayVCDidFinish:(OMNMailRUPayVC *)mailRUPayVC withBill:(OMNBill *)bill;
-
 - (void)mailRUPayVCDidCancel:(OMNMailRUPayVC *)mailRUPayVC;
+- (void)mailRUPayVCOrderDidClosed:(OMNMailRUPayVC *)mailRUPayVC;
 
 @end

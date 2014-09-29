@@ -346,4 +346,14 @@ OMNMailRUPayVCDelegate>
   
 }
 
+- (void)mailRUPayVCOrderDidClosed:(OMNMailRUPayVC *)mailRUPayVC {
+  
+  [self.navigationController dismissViewControllerAnimated:YES completion:^{
+  
+    [self.delegate payOrderVCDidCancel:self];
+    
+  }];
+  
+}
+
 @end

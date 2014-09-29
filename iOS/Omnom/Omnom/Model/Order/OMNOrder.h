@@ -55,10 +55,6 @@ extern NSString *stringFromSplitType(SplitType splitType);
 @property (nonatomic, assign, readonly) long long tipsThreshold;
 
 @property (nonatomic, strong) OMNOrderPaid *paid;
-//@property (nonatomic, assign) long long paid_amount;
-//@property (nonatomic, assign) long long paid_tip;
-//@property (nonatomic, assign, readonly) long long paid_net;
-
 @property (nonatomic, strong) OMNBill *bill;
 
 @property (nonatomic, strong) OMNTip *customTip;

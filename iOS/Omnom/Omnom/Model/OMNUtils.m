@@ -104,11 +104,17 @@ NSString *omnCommaString() {
   
   switch (code) {
     case OMNErrorNotConnectedToInternet: {
-      description = NSLocalizedString(@"Нет доступа в интернет", nil);
+      description = NSLocalizedString(@"ERROR_MESSAGE_NO_INTERNET", @"Нет доступа в интернет");
+    } break;
+    case OMNErrorOrderClosed: {
+      description = NSLocalizedString(@"ERROR_MESSAGE_ORDER_CLOSED", @"Оплата по счёту невозможна - стол уже закрыт. Попробуйте запросить счёт заново или позовите официанта.");
+    } break;
+    case OMNErrorPaymentError: {
+      description = NSLocalizedString(@"ERROR_MESSAGE_PAYMENT_ERROR", @"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.");
     } break;
     case OMNErrorUnknoun:
     default: {
-      description = NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil);
+      description = NSLocalizedString(@"ERROR_MESSAGE_UNKNOWN_ERROR", @"Что-то пошло не так. Повторите попытку");
     } break;
   }
   

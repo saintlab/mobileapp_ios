@@ -20,8 +20,12 @@ enum {
   
   OMNErrorUnknoun = -1,
   OMNErrorNoSuchUser = 101,
+
   OMNErrorTimedOut = NSURLErrorTimedOut,
   OMNErrorNotConnectedToInternet = NSURLErrorNotConnectedToInternet,
+  
+  OMNErrorOrderClosed = 300,
+  OMNErrorPaymentError,
   
 };
 
