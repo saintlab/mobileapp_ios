@@ -60,37 +60,40 @@
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
+  OMNLoadingCircleVC *loadingCircleVC = nil;
   if (self.visitor) {
     
-    _loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
+    loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
     
   }
   else {
     
-    _loadingCircleVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
+    loadingCircleVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
       
       [weakSelf didFindVisitor:visitor];
       
     } cancelBlock:nil];
 
-
   }
   UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
-  _loadingCircleVC.circleBackground = circleBackground;
-  _loadingCircleVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
-  _loadingCircleVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-
+  loadingCircleVC.circleBackground = circleBackground;
+  loadingCircleVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
+  loadingCircleVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
+  
   dispatch_async(dispatch_get_main_queue(), ^{
     
-    [self.navigationController omn_pushViewController:_loadingCircleVC animated:YES completion:^{
+    [self.navigationController omn_pushViewController:loadingCircleVC animated:YES completion:^{
     
       if (weakSelf.visitor) {
+        [loadingCircleVC.loaderView startAnimating:10.0f];
         [weakSelf loadLogo];
       }
       
     }];
 
   });
+  
+  _loadingCircleVC = loadingCircleVC;
   
 }
 

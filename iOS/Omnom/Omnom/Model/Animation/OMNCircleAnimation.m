@@ -20,7 +20,10 @@
 }
 
 - (void)dealloc {
-  [self finishCircleAnimation];
+  
+  [self stopTimer];
+  [self removeViews];
+  
 }
 
 - (instancetype)initWithCircleButton:(UIButton *)circleButton {
@@ -103,10 +106,22 @@
   [_circleAnimationTimer fire];
 }
 
+- (void)stopTimer {
+  [_circleAnimationTimer invalidate], _circleAnimationTimer = nil;
+}
+
+- (void)removeViews {
+  
+  [_iv1 removeFromSuperview], _iv1 = nil;
+  [_iv2 removeFromSuperview], _iv2 = nil;
+  [_iv3 removeFromSuperview], _iv3 = nil;
+  [_placeholderCircleButton removeFromSuperview], _placeholderCircleButton = nil;
+  
+}
+
 - (void)finishCircleAnimation {
   
-  [_circleAnimationTimer invalidate];
-  _circleAnimationTimer = nil;
+  [self stopTimer];
   
   [UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
     
@@ -116,20 +131,12 @@
     _iv1.transform = CGAffineTransformIdentity;
     _iv2.transform = CGAffineTransformIdentity;
     _iv3.transform = CGAffineTransformIdentity;
-    
-  } completion:^(BOOL finished) {
-    
-    [_iv1 removeFromSuperview], _iv1 = nil;
-    [_iv2 removeFromSuperview], _iv2 = nil;
-    [_iv3 removeFromSuperview], _iv3 = nil;
-    
-  }];
-  
-  [UIView animateWithDuration:0.3 animations:^{
     _placeholderCircleButton.alpha = 0.0f;
+    
   } completion:^(BOOL finished) {
-    [_placeholderCircleButton removeFromSuperview];
-    _placeholderCircleButton = nil;
+    
+    [self removeViews];
+    
   }];
   
 }

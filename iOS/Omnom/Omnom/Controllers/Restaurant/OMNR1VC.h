@@ -14,7 +14,7 @@
 @interface OMNR1VC : OMNCircleRootVC
 
 @property (nonatomic, weak) id<OMNR1VCDelegate> delegate;
-@property (nonatomic, strong) OMNVisitor *visitor;
+@property (nonatomic, strong, readonly) OMNVisitor *visitor;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 

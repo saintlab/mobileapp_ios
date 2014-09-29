@@ -23,7 +23,7 @@ OMNUserInfoVCDelegate,
 OMNOrdersVCDelegate,
 OMNPayOrderVCDelegate>
 
-@property (nonatomic, strong) OMNR1VC *restaurantVC;
+@property (nonatomic, weak) OMNR1VC *restaurantVC;
 
 @end
 

@@ -42,6 +42,7 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
 
 - (void)dealloc {
   
+  _circleAnimation = nil;
   [_visitor bk_removeObserversWithIdentifier:kWaiterCallIdentifier];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
@@ -102,7 +103,7 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
   __weak typeof(self)weakSelf = self;
   [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) identifier:kWaiterCallIdentifier options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
     
-    if (_visitor.waiterIsCalled) {
+    if (weakSelf.visitor.waiterIsCalled) {
       [weakSelf callWaiterDidStart];
     }
     else {
