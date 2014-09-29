@@ -10,7 +10,7 @@
 #import "OMNUserInfoVC.h"
 #import "OMNRestaurantInfoVC.h"
 #import "OMNR1VC.h"
-#import "OMNVisitor.h"
+#import "OMNVisitor+network.h"
 #import "OMNSearchBeaconVC.h"
 #import "OMNAuthorisation.h"
 #import "OMNPushPermissionVC.h"

@@ -15,6 +15,9 @@ typedef NS_ENUM(NSInteger, RestaurantInfoItemType) {
   kRestaurantInfoItemTypeAddress,
   kRestaurantInfoItemTypeSchedule,
   kRestaurantInfoItemTypePhone,
+  kRestaurantInfoItemTypeLunch,
+  kRestaurantInfoItemTypeBreakfast,
+  kRestaurantInfoItemTypeExternaLink,
 };
 
 @interface OMNRestaurantInfoItem : NSObject

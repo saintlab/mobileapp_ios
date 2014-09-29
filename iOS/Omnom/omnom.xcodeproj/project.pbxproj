@@ -284,6 +284,8 @@
 		93A59B1719331B5B00AE1A6F /* orders.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B1619331B5B00AE1A6F /* orders.data */; };
 		93A8C1A719D918A300CB4F09 /* OMNCircleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */; };
 		93A8C1A819D918A300CB4F09 /* OMNCircleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */; };
+		93A8C1AB19D9611C00CB4F09 /* OMNVisitor+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8C1AA19D9611C00CB4F09 /* OMNVisitor+network.m */; };
+		93A8C1AC19D9611C00CB4F09 /* OMNVisitor+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8C1AA19D9611C00CB4F09 /* OMNVisitor+network.m */; };
 		93B09C3D18F3F5400027B19F /* orders.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B09C3C18F3F5400027B19F /* orders.json */; };
 		93B25FAF19B6BF9D00F3AE88 /* OMNCongifTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B25FAE19B6BF9D00F3AE88 /* OMNCongifTests.m */; };
 		93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */; };
@@ -671,6 +673,8 @@
 		93A59B1619331B5B00AE1A6F /* orders.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = orders.data; sourceTree = "<group>"; };
 		93A8C1A519D918A300CB4F09 /* OMNCircleAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleAnimation.h; sourceTree = "<group>"; };
 		93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCircleAnimation.m; sourceTree = "<group>"; };
+		93A8C1A919D9611C00CB4F09 /* OMNVisitor+network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNVisitor+network.h"; sourceTree = "<group>"; };
+		93A8C1AA19D9611C00CB4F09 /* OMNVisitor+network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNVisitor+network.m"; sourceTree = "<group>"; };
 		93B09C3C18F3F5400027B19F /* orders.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orders.json; sourceTree = "<group>"; };
 		93B25FAE19B6BF9D00F3AE88 /* OMNCongifTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCongifTests.m; sourceTree = "<group>"; };
 		93B3688C19A22BB300B6E6CB /* OMNDemoRestaurantVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoRestaurantVC.h; sourceTree = "<group>"; };
@@ -1298,6 +1302,8 @@
 				938E8F3E192F3A200088EF38 /* Menu */,
 				938E8F43192F3A200088EF38 /* OMNVisitor.h */,
 				938E8F44192F3A200088EF38 /* OMNVisitor.m */,
+				93A8C1A919D9611C00CB4F09 /* OMNVisitor+network.h */,
+				93A8C1AA19D9611C00CB4F09 /* OMNVisitor+network.m */,
 				938E8F45192F3A200088EF38 /* OMNRestaurant.h */,
 				938E8F46192F3A200088EF38 /* OMNRestaurant.m */,
 				938E8F47192F3A200088EF38 /* OMNTable.h */,
@@ -1961,6 +1967,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93A8C1AB19D9611C00CB4F09 /* OMNVisitor+network.m in Sources */,
 				9389456819B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */,
 				938E8F64192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
@@ -2183,6 +2190,7 @@
 				93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */,
 				938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */,
 				93E29991197CEA7000051B04 /* OMNDenyCLPermissionVC.m in Sources */,
+				93A8C1AC19D9611C00CB4F09 /* OMNVisitor+network.m in Sources */,
 				9389455D19B0531C00C37C82 /* OMNUtils.m in Sources */,
 				939F991919752BE90051822E /* OMNEditTableVC.m in Sources */,
 				932118131962D8A700183729 /* OMNProductsModel.m in Sources */,

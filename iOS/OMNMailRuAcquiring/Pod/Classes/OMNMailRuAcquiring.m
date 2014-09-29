@@ -34,7 +34,15 @@ static NSDictionary *_config = nil;
 + (instancetype)acquiring {
   
   if (nil == _config) {
-    [self setConfig:@"OMNMailRu_stand"];
+    [self setConfig:
+     @{
+       @"OMNMailRu_merch_id" : @"DGIS",
+       @"OMNMailRu_vterm_id" : @"DGISMobile",
+       @"OMNMailRu_cardholder" : @"Omnom",
+       @"OMNMailRu_secret_key" : @"qmluSZ1HkWQRWkUtcDOM",
+       @"OMNMailRuAcquiringBaseURL" : @"https://cpg.money.mail.ru/api/",
+       @"OMNMailRuTestCVV" : @"",
+       }];
   }
   
   static id manager = nil;
@@ -46,10 +54,27 @@ static NSDictionary *_config = nil;
   return manager;
 }
 
-+ (BOOL)setConfig:(NSString *)configName {
++ (BOOL)isValidConfig:(NSDictionary *)config {
   
-  _config = [self configWithName:configName];
-  return (_config != nil);
+  if (config[@"OMNMailRu_merch_id"] &&
+      config[@"OMNMailRu_vterm_id"] &&
+      config[@"OMNMailRu_cardholder"] &&
+      config[@"OMNMailRu_secret_key"] &&
+      config[@"OMNMailRuAcquiringBaseURL"]) {
+    return YES;
+  }
+  else {
+    return NO;
+  }
+  
+}
+
++ (void)setConfig:(NSDictionary *)config {
+  
+  if ([self isValidConfig:config]) {
+    _config = config;
+  }
+
 }
 
 + (NSDictionary *)configWithName:(NSString *)name {

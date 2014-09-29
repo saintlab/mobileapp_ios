@@ -26,16 +26,20 @@ RestaurantInfoItemType typeFromString(NSString *s) {
   if (nil == types) {
     types =
     @{
-      @"time": @(kRestaurantInfoItemTypeTime),
-      @"wifi": @(kRestaurantInfoItemTypeWifi),
-      @"address": @(kRestaurantInfoItemTypeAddress),
-      @"schedule": @(kRestaurantInfoItemTypeSchedule),
-      @"phone": @(kRestaurantInfoItemTypePhone),
+      @"time" : @(kRestaurantInfoItemTypeTime),
+      @"wifi" : @(kRestaurantInfoItemTypeWifi),
+      @"address" : @(kRestaurantInfoItemTypeAddress),
+      @"schedule" : @(kRestaurantInfoItemTypeSchedule),
+      @"phone" : @(kRestaurantInfoItemTypePhone),
+      @"lunch" : @(kRestaurantInfoItemTypeLunch),
+      @"breakfast" : @(kRestaurantInfoItemTypeBreakfast),
+      @"external_link" : @(kRestaurantInfoItemTypeExternaLink),
       };
   }
   if (0 == s.length) {
     return kRestaurantInfoItemTypeText;
   }
+  
   
   return [types[s] integerValue];
   
@@ -62,6 +66,15 @@ RestaurantInfoItemType typeFromString(NSString *s) {
     } break;
     case kRestaurantInfoItemTypeText: {
     } break;
+    case kRestaurantInfoItemTypeBreakfast: {
+      
+    } break;
+    case kRestaurantInfoItemTypeExternaLink: {
+      icon = [UIImage imageNamed:@"external_link_icon"];
+    } break;
+    case kRestaurantInfoItemTypeLunch: {
+
+    } break;
   }
   return icon;
 }
@@ -81,8 +94,13 @@ RestaurantInfoItemType typeFromString(NSString *s) {
       
     } break;
     case kRestaurantInfoItemTypeWifi: {
-      
-      
+
+      if (self.value.length) {
+        UIPasteboard *pb = [UIPasteboard generalPasteboard];
+        [pb setString:self.value];
+        [pb setString:@"123123"];
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ALERT_WIFI_COPY_TITILE", @"Пароль скопирован в буфер обмена") message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"OK") otherButtonTitles:nil] show];
+      }
       
     } break;
     default:

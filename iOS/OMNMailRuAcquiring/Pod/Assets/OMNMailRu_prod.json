@@ -1,8 +1,0 @@
-{
-  "OMNMailRu_merch_id" : "DGIS",
-  "OMNMailRu_vterm_id" : "DGISMobile",
-  "OMNMailRu_cardholder" : "Omnom",
-  "OMNMailRu_secret_key" : "qmluSZ1HkWQRWkUtcDOM",
-  "OMNMailRuAcquiringBaseURL" : "https://cpg.money.mail.ru/api/",
-  "OMNMailRuTestCVV" : ""
-}

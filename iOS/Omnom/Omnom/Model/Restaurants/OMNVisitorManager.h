@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNVisitor.h"
+#import "OMNVisitor+network.h"
 
 extern NSString * const OMNDecodeBeaconManagerNotificationLaunchKey;
 

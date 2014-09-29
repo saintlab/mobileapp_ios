@@ -17,7 +17,7 @@
 #import "OMNPushPermissionVC.h"
 #import "OMNToolbarButton.h"
 #import "OMNSocketManager.h"
-#import "OMNVisitor.h"
+#import "OMNVisitor+network.h"
 #import "OMNRestaurantMediator.h"
 #import "OMNLightBackgroundButton.h"
 #import "OMNImageManager.h"

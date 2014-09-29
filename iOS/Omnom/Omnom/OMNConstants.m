@@ -7,7 +7,9 @@
 //
 
 #import "OMNConstants.h"
-
+#import "OMNOperationManager.h"
+#import <OMNMailRuAcquiring.h>
+#import "OMNAnalitics.h"
 
 NSString * const kPushSoundName = @"new_guest.caf";
 
@@ -21,6 +23,32 @@ static NSDictionary *_defaultConfig = nil;
 static NSDictionary *_customConfig = nil;
 
 @implementation OMNConstants
+
++ (void)loadConfig {
+  
+  NSString *path = @"/mobile/config";
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [self updateConfig:responseObject];
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+    [[OMNAnalitics analitics] logEvent:@"ERROR_CONFIG" jsonRequest:path responseOperation:operation];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      [self loadConfig];
+    });
+    
+  }];
+  
+}
+
++ (void)updateConfig:(NSDictionary *)config {
+  
+  NSDictionary *mailRuConfig = config[@"mail_ru"];
+  [OMNMailRuAcquiring setConfig:mailRuConfig];
+  __unused NSDictionary *tokensConfig = config[@"tokens"];
+  
+}
 
 + (void)setCustomConfigName:(NSString *)name {
   _customConfig = [self configWithName:name];
@@ -83,7 +111,5 @@ static NSDictionary *_customConfig = nil;
 + (BOOL)useBackgroundNotifications {
   return [self boolForKey:@"UseBackgroundNotifications"];
 }
-+ (NSString *)mailRuConfig {
-  return [self stringForKey:@"MailRuConfigName"];
-}
+
 @end

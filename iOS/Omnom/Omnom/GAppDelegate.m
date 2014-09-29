@@ -26,10 +26,11 @@
   return YES;
 #endif
   
+  [OMNAuthorisation authorisation];
+  
   if ([OMNConstants useBackgroundNotifications]) {
     [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
       
-      [OMNAuthorisation authorisation];
       [[OMNVisitorManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
       
     }];
@@ -49,6 +50,8 @@
     return;
   }
   
+  [OMNConstants loadConfig];
+  
 #if defined (APP_STORE)
   [OMNConstants setCustomConfigName:@"config_prod"];
 #elif defined (AD_HOC)
@@ -56,7 +59,6 @@
 #else
   [OMNConstants setCustomConfigName:@"config_prod"];
 #endif
-  [OMNMailRuAcquiring setConfig:[OMNConstants mailRuConfig]];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
   UIFont *buttonFont = FuturaOSFOmnomRegular(20.0f);
@@ -81,7 +83,6 @@
   _applicationStartedForeground = YES;
   
   [OMNOperationManager sharedManager];
-  [OMNAuthorisation authorisation];
   
   [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
   

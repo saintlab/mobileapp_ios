@@ -13,7 +13,7 @@
 
 
 + (instancetype)acquiring;
-+ (BOOL)setConfig:(NSString *)configName;
++ (void)setConfig:(NSDictionary *)config;
 - (NSString *)testCVV;
 
 - (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response, NSString *cardId))completion;

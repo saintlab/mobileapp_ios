@@ -13,6 +13,7 @@
 #import <OMNStyler.h>
 #import "OMNAnalitics.h"
 #import "OMNR1VC.h"
+#import "OMNVisitor+network.h"
 
 @interface OMNSearchRestaurantVC ()
 <OMNR1VCDelegate>

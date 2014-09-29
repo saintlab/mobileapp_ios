@@ -28,7 +28,7 @@ enum {
 @interface OMNConstants : NSObject
 
 + (void)setCustomConfigName:(NSString *)name;
-
++ (void)loadConfig;
 + (NSString *)stringForKey:(NSString *)key;
 + (BOOL)boolForKey:(NSString *)key;
 
@@ -45,6 +45,5 @@ enum {
 + (BOOL)useStubBeaconDecodeData;
 + (BOOL)useStubOrdersData;
 + (BOOL)useBackgroundNotifications;
-+ (NSString *)mailRuConfig;
 
 @end
