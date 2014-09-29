@@ -24,18 +24,21 @@ static NSDictionary *_customConfig = nil;
 
 @implementation OMNConstants
 
-+ (void)loadConfig {
++ (void)loadConfigWithCompletion:(dispatch_block_t)completionBlock {
   
   NSString *path = @"/mobile/config";
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     [self updateConfig:responseObject];
+    if (completionBlock) {
+      completionBlock();
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
     [[OMNAnalitics analitics] logEvent:@"ERROR_CONFIG" jsonRequest:path responseOperation:operation];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      [self loadConfig];
+      [self loadConfigWithCompletion:completionBlock];
     });
     
   }];

@@ -13,6 +13,8 @@
 
 
 + (instancetype)acquiring;
++ (NSDictionary *)config;
++ (BOOL)isValidConfig:(NSDictionary *)config;
 + (void)setConfig:(NSDictionary *)config;
 - (NSString *)testCVV;
 

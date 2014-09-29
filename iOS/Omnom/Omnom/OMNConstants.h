@@ -28,7 +28,7 @@ enum {
 @interface OMNConstants : NSObject
 
 + (void)setCustomConfigName:(NSString *)name;
-+ (void)loadConfig;
++ (void)loadConfigWithCompletion:(dispatch_block_t)completionBlock;
 + (NSString *)stringForKey:(NSString *)key;
 + (BOOL)boolForKey:(NSString *)key;
 

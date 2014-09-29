@@ -122,7 +122,7 @@
 
 - (void)stopWaiterCall {
   
-  
+  self.waiterIsCalled = NO;
   
 }
 

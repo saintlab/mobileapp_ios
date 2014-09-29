@@ -50,7 +50,7 @@
     return;
   }
   
-  [OMNConstants loadConfig];
+  [OMNConstants loadConfigWithCompletion:nil];
   
 #if defined (APP_STORE)
   [OMNConstants setCustomConfigName:@"config_prod"];

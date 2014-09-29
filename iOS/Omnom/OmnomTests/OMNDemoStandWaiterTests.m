@@ -54,7 +54,7 @@ describe(@"waiter call tests", ^{
   
   it(@"should call waiter", ^{
     
-    [[@(_visitor.waiterIsCalled) should] equal:@(NO)];
+    _visitor.waiterIsCalled = NO;
     [_visitor waiterCallWithFailure:^(NSError *error) {
     }];
     [[expectFutureValue(@(_visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
@@ -63,7 +63,7 @@ describe(@"waiter call tests", ^{
   
   it(@"should stop waiter", ^{
     
-    [[@(_visitor.waiterIsCalled) should] equal:@(YES)];
+    _visitor.waiterIsCalled = YES;
     [_visitor waiterCallStopWithFailure:^(NSError *error) {
       
     }];

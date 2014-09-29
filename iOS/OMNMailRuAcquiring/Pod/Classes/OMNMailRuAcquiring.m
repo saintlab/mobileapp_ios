@@ -31,6 +31,10 @@ static NSDictionary *_config = nil;
 
 @implementation OMNMailRuAcquiring
 
++ (NSDictionary *)config {
+  return _config;
+}
+
 + (instancetype)acquiring {
   
   if (nil == _config) {

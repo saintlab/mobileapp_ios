@@ -11,6 +11,7 @@
 #import "OMNConstants.h"
 #import <OMNMailRuAcquiring.h>
 #import <OMNBeacon.h>
+#import "OMNAuthorisation.h"
 
 SPEC_BEGIN(OMNConfigTests)
 
@@ -18,6 +19,7 @@ describe(@"check initial state", ^{
   
   __block OMNBeaconUUID *_beaconUUID = nil;
   beforeAll(^{
+    
     _beaconUUID = [OMNBeacon beaconUUID];
   });
   
@@ -46,11 +48,17 @@ describe(@"check initial state", ^{
   
   it(@"should check mail.ru config", ^{
     
-    NSString *mailRuConfig = [OMNConstants mailRuConfig];
-    [[mailRuConfig should] beNonNil];
+    [[[OMNAuthorisation authorisation].token should] beNonNil];
     
-    BOOL isConfigSet = [OMNMailRuAcquiring setConfig:mailRuConfig];
-    [[@(isConfigSet) should] equal:@(YES)];
+    __block NSNumber *isConfigLoaded = nil;
+    [OMNConstants loadConfigWithCompletion:^{
+      isConfigLoaded = @(YES);
+    }];
+    [[expectFutureValue(isConfigLoaded) shouldEventuallyBeforeTimingOutAfter(10.0)] equal:@(YES)];
+    
+    NSDictionary *config = [OMNMailRuAcquiring config];
+    [[config should] beNonNil];
+    [[@([OMNMailRuAcquiring isValidConfig:config]) should] equal:@(YES)];
     
   });
   
