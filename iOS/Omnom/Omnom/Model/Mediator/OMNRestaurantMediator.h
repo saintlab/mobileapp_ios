@@ -19,8 +19,8 @@
 
 - (void)showRestaurantInfo;
 
-- (void)searchBeaconWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
-
 - (void)callBillAction;
+
+- (void)callWaiterAction;
 
 @end

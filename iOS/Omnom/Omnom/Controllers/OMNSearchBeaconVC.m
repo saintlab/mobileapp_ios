@@ -139,7 +139,10 @@ OMNDemoRestaurantVCDelegate>
 }
 
 - (void)cancelTap {
-  _cancelBlock();
+  [self stopBeaconManager:YES];
+  if (_cancelBlock) {
+    _cancelBlock();
+  }
 }
 
 - (void)demoModeTap {

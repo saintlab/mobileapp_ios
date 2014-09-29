@@ -25,13 +25,13 @@
 #import "OMNPaymentNotificationControl.h"
 #import "OMNCircleAnimation.h"
 
+NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
+
 @interface OMNR1VC ()
 
 @end
 
 @implementation OMNR1VC {
-  
-  NSString *_waiterCallIdentifier;
   
   OMNRestaurant *_restaurant;
   OMNToolbarButton *_callWaiterButton;
@@ -42,11 +42,7 @@
 
 - (void)dealloc {
   
-  if (_waiterCallIdentifier) {
-    _waiterCallIdentifier = nil;
-    [_visitor bk_removeObserversWithIdentifier:_waiterCallIdentifier];
-  }
-  
+  [_visitor bk_removeObserversWithIdentifier:kWaiterCallIdentifier];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
   
@@ -55,7 +51,7 @@
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super initWithParent:nil];
   if (self) {
-    _visitor = visitor;
+    self.visitor = visitor;
     _restaurant = visitor.restaurant;
     self.circleIcon = _restaurant.decoration.logo;
     [[OMNAnalitics analitics] logEnterRestaurant:visitor];
@@ -95,8 +91,16 @@
   [self socketConnect];
   [self loadBackgroundIfNeeded];
   
+  
+  
+}
+
+- (void)setVisitor:(OMNVisitor *)visitor {
+  
+  [_visitor bk_removeObserversWithIdentifier:kWaiterCallIdentifier];
+  _visitor = visitor;
   __weak typeof(self)weakSelf = self;
-  _waiterCallIdentifier = [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+  [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) identifier:kWaiterCallIdentifier options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
     
     if (_visitor.waiterIsCalled) {
       [weakSelf callWaiterDidStart];
@@ -214,6 +218,13 @@
   [_circleAnimation finishCircleAnimation];
 }
 
+- (void)beginCircleAnimationIfNeeded {
+  
+  if (_visitor.waiterIsCalled) {
+    [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
+  }
+  
+}
 
 - (void)callWaiterStop {
   
@@ -233,56 +244,24 @@
 - (void)callWaiterDidStop {
   
   [_circleAnimation finishCircleAnimation];
-  
   _callWaiterButton.selected = NO;
   [_callWaiterButton sizeToFit];
 
-  [self.navigationController popToViewController:self animated:YES];
 }
 
 - (void)callWaiterTap {
   
   if (_visitor.waiterIsCalled) {
     [self callWaiterStop];
-    return;
   }
-  
-  __weak OMNVisitor *v = _visitor;
-  __weak typeof(self)weakSelf = self;
-  [_restaurantMediator searchBeaconWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
-    
-    [v waiterCallWithFailure:^(NSError *error) {
-      
-      dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [searchBeaconVC finishLoading:^{
-          
-          [weakSelf.navigationController popToViewController:weakSelf animated:YES];
-          
-        }];
-        
-      });
-      
-    }];
-    
-  } cancelBlock:^{
-    
-    [weakSelf callWaiterDidStop];
-    
-  }];
+  else {
+    [_restaurantMediator callWaiterAction];
+  }
   
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-}
-
-- (void)beginCircleAnimationIfNeeded {
-  
-  if (_visitor.waiterIsCalled) {
-    [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
-  }
-
 }
 
 @end

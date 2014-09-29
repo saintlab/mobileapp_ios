@@ -14,7 +14,7 @@
 @interface OMNR1VC : OMNCircleRootVC
 
 @property (nonatomic, weak) id<OMNR1VCDelegate> delegate;
-@property (nonatomic, strong, readonly) OMNVisitor *visitor;
+@property (nonatomic, strong) OMNVisitor *visitor;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
@@ -25,7 +25,7 @@
 
 @protocol OMNR1VCDelegate <NSObject>
 
-- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeRestaurant:(OMNVisitor *)visitor;
+- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor;
 - (void)restaurantVCDidFinish:(OMNR1VC *)restaurantVC;
 
 @end

@@ -66,7 +66,7 @@ OMNPayOrderVCDelegate>
 
 }
 
-- (void)searchBeaconWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
+- (void)searchVisitorWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
   
   __weak typeof(self)weakSelf = self;
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
@@ -75,7 +75,7 @@ OMNPayOrderVCDelegate>
       completionBlock(searchBeaconVC, visitor);
     }
     else {
-#warning change restaurant
+      [weakSelf visitorDidChange:visitor];
     }
     
   } cancelBlock:cancelBlock];
@@ -100,10 +100,45 @@ OMNPayOrderVCDelegate>
 
 }
 
+- (void)visitorDidChange:(OMNVisitor *)visitor {
+  
+  [self.restaurantVC.delegate restaurantVC:self.restaurantVC didChangeVisitor:visitor];
+  
+}
+
+- (void)callWaiterAction {
+  
+  __weak typeof(self)weakSelf = self;
+  OMNVisitor *v = self.restaurantVC.visitor;
+  [self searchVisitorWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
+    
+    [v waiterCallWithFailure:^(NSError *error) {
+      
+      dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [searchBeaconVC finishLoading:^{
+          
+          [weakSelf popToRootViewControllerAnimated:YES];
+          
+        }];
+        
+      });
+      
+    }];
+    
+  } cancelBlock:^{
+    
+    v.waiterIsCalled = NO;
+    [weakSelf popToRootViewControllerAnimated:YES];
+    
+  }];
+  
+}
+
 - (void)callBillAction {
   
   __weak typeof(self)weakSelf = self;
-  [self searchBeaconWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
+  [self searchVisitorWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
     
     [visitor getOrders:^(NSArray *orders) {
       

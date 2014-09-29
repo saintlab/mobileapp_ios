@@ -73,10 +73,10 @@
       
     } cancelBlock:nil];
 
-    UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
-    _loadingCircleVC.circleBackground = circleBackground;
 
   }
+  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
+  _loadingCircleVC.circleBackground = circleBackground;
   _loadingCircleVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
   _loadingCircleVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
 
@@ -157,17 +157,9 @@
   
 }
 
-#pragma mark - OMNSearchRestaurantVCDelegate
-
-- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindVisitor:(OMNVisitor *)visitor {
-  
-  
-  
-}
-
 #pragma mark - OMNR1VCDelegate
 
-- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeRestaurant:(OMNVisitor *)visitor {
+- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
   
   self.visitor = visitor;
   [self.navigationController popToViewController:self animated:YES];

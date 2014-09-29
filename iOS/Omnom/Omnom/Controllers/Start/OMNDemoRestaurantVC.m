@@ -111,7 +111,7 @@
   
 }
 
-- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeRestaurant:(OMNVisitor *)visitor {
+- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
   //do nothing
 }
 

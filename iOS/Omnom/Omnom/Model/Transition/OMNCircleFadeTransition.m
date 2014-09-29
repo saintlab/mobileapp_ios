@@ -19,6 +19,7 @@
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNDemoRestaurantVC.h"
 #import "OMNMailRUPayVC.h"
+#import "OMNSearchRestaurantVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -77,6 +78,7 @@
     
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNR1VC class]],
     [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNDenyCLPermissionVC class]],
+    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNSearchRestaurantVC class]],
     
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNR1VC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNR1VC class]],
@@ -91,6 +93,7 @@
     
     [self keyFromClass:[OMNMailRUPayVC class] toClass:[OMNLoadingCircleVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNMailRUPayVC class]],
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNR1VC class]],
     ];
 }
 
