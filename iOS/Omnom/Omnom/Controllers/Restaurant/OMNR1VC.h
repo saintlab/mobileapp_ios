@@ -25,6 +25,7 @@
 
 @protocol OMNR1VCDelegate <NSObject>
 
-- (void)r1VCDidFinish:(OMNR1VC *)r1VC;
+- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeRestaurant:(OMNVisitor *)visitor;
+- (void)restaurantVCDidFinish:(OMNR1VC *)restaurantVC;
 
 @end

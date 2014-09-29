@@ -105,10 +105,14 @@
 
 #pragma mark - OMNR1VCDelegate
 
-- (void)r1VCDidFinish:(OMNR1VC *)r1VC {
+- (void)restaurantVCDidFinish:(OMNR1VC *)r1VC {
   
   [self.delegate demoRestaurantVCDidFinish:self];
   
+}
+
+- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeRestaurant:(OMNVisitor *)visitor {
+  //do nothing
 }
 
 - (void)didReceiveMemoryWarning {

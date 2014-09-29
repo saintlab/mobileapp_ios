@@ -65,7 +65,7 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
 }
 
 - (void)waiterCallDone:(NSNotification *)n {
-  [_restaurant stopWaiterCall];
+  [self stopWaiterCall];
 }
 
 - (void)orderDidChange:(NSNotification *)n {
@@ -120,6 +120,12 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
     }];
     
   }
+  
+}
+
+- (BOOL)isSameRestaurant:(OMNVisitor *)visitor {
+  
+  return [self.restaurant.id isEqualToString:visitor.restaurant.id];
   
 }
 
@@ -222,6 +228,51 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logEvent:@"ERROR_NEW_GUEST" jsonRequest:path responseOperation:operation];
+    failureBlock(error);
+    
+  }];
+  
+}
+
+#pragma mark - waiter call
+
+- (void)waiterCallWithFailure:(void(^)(NSError *error))failureBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.id, self.table.id];
+  __weak typeof(self)weakSelf = self;
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    if ([response isKindOfClass:[NSDictionary class]] &&
+        [response[@"status"] isEqualToString:@"success"]) {
+      weakSelf.waiterIsCalled = YES;
+    }
+    failureBlock(nil);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error);
+    
+  }];
+  
+}
+
+- (void)stopWaiterCall {
+  
+  self.waiterIsCalled = NO;
+  
+}
+
+- (void)waiterCallStopWithFailure:(void(^)(NSError *error))failureBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.id, self.table.id];
+  __weak typeof(self)weakSelf = self;
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+    
+    [weakSelf stopWaiterCall];
+    failureBlock(nil);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
     failureBlock(error);
     
   }];

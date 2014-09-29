@@ -12,8 +12,10 @@
 #import "UINavigationController+omn_replace.h"
 #import <OMNStyler.h>
 #import "OMNAnalitics.h"
+#import "OMNR1VC.h"
 
 @interface OMNSearchRestaurantVC ()
+<OMNR1VCDelegate>
 
 @end
 
@@ -149,7 +151,32 @@
 
 - (void)didLoadBackground {
   
-  [self.delegate searchRestaurantVC:self didFindVisitor:self.visitor];
+  OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithVisitor:self.visitor];
+  restaurantMenuVC.delegate = self;
+  [self.navigationController pushViewController:restaurantMenuVC animated:YES];
+  
+}
+
+#pragma mark - OMNSearchRestaurantVCDelegate
+
+- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindVisitor:(OMNVisitor *)visitor {
+  
+  
+  
+}
+
+#pragma mark - OMNR1VCDelegate
+
+- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeRestaurant:(OMNVisitor *)visitor {
+  
+  self.visitor = visitor;
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+- (void)restaurantVCDidFinish:(OMNR1VC *)r1VC {
+  
+  [self.delegate searchRestaurantVCDidFinish:self];
   
 }
 

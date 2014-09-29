@@ -21,13 +21,7 @@
 
 
 
-@implementation OMNRestaurant {
-  dispatch_block_t _waiterCallStopBlock;
-}
-
-- (void)dealloc {
-  [self stopWaiterCall];
-}
+@implementation OMNRestaurant
 
 - (instancetype)initWithJsonData:(id)jsonData {
   
@@ -75,60 +69,6 @@
   }
   
   return [restaurants copy];
-  
-}
-
-- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock stop:(dispatch_block_t)stopBlock {
-  
-  _waiterCallTableID = tableID;
-  _waiterCallStopBlock = stopBlock;
-  
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.id, tableID];
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
-    
-    completionBlock();
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
-    failureBlock(error);
-    
-  }];
-
-}
-
-- (void)stopWaiterCall {
-  
-  if (_waiterCallTableID) {
-    _waiterCallTableID = nil;
-
-    if (_waiterCallStopBlock) {
-      _waiterCallStopBlock();
-      _waiterCallStopBlock = nil;
-    }
-
-  }
-  
-}
-
-- (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
-  
-  if (nil == _waiterCallTableID) {
-    completionBlock();
-    return;
-  }
-  
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.id, _waiterCallTableID];
-  __weak typeof(self)weakSelf = self;
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
-    
-    [weakSelf stopWaiterCall];
-    completionBlock();
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock(error);
-    
-  }];
   
 }
 

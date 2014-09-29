@@ -31,16 +31,14 @@ typedef void(^GMenuBlock)(OMNMenu *menu);
 //@property (nonatomic, strong) UIImage *background;
 @property (nonatomic, strong) OMNPushTexts *mobile_texts;
 
-@property (nonatomic, copy, readonly) NSString *waiterCallTableID;
-
 - (instancetype)initWithJsonData:(id)jsonData;
 
 + (void)getRestaurantList:(GRestaurantsBlock)restaurantsBlock error:(void(^)(NSError *error))errorBlock;
 
-- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock stop:(dispatch_block_t)stopBlock;
-
-- (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
-- (void)stopWaiterCall;
+//- (void)waiterCallForTableID:(NSString *)tableID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock stop:(dispatch_block_t)stopBlock;
+//
+//- (void)waiterCallStopCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
+//- (void)stopWaiterCall;
 
 - (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block error:(void(^)(NSError *error))errorBlock;
 

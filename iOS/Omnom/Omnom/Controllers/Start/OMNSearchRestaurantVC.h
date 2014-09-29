@@ -24,6 +24,6 @@
 
 @protocol OMNSearchRestaurantVCDelegate <NSObject>
 
-- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindVisitor:(OMNVisitor *)visitor;
+- (void)searchRestaurantVCDidFinish:(OMNSearchRestaurantVC *)searchRestaurantVC;
 
 @end

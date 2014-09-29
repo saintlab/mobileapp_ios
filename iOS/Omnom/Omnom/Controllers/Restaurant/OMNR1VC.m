@@ -23,30 +23,30 @@
 #import "OMNImageManager.h"
 #import "OMNAnalitics.h"
 #import "OMNPaymentNotificationControl.h"
+#import "OMNCircleAnimation.h"
 
 @interface OMNR1VC ()
 
 @end
 
 @implementation OMNR1VC {
+  
+  NSString *_waiterCallIdentifier;
+  
   OMNRestaurant *_restaurant;
   OMNToolbarButton *_callWaiterButton;
   
-  UIImageView *_iv1;
-  UIImageView *_iv2;
-  UIImageView *_iv3;
-  NSTimer *_circleAnimationTimer;
-  
-  UIButton *_placeholderCircleButton;
   OMNRestaurantMediator *_restaurantMediator;
+  OMNCircleAnimation *_circleAnimation;
 }
 
 - (void)dealloc {
-  @try {
-    [_restaurant removeObserver:self forKeyPath:NSStringFromSelector(@selector(background))];
+  
+  if (_waiterCallIdentifier) {
+    _waiterCallIdentifier = nil;
+    [_visitor bk_removeObserversWithIdentifier:_waiterCallIdentifier];
   }
-  @catch (NSException *exception) {
-  }
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
   
@@ -65,6 +65,8 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
   
   _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
 
@@ -93,6 +95,17 @@
   [self socketConnect];
   [self loadBackgroundIfNeeded];
   
+  __weak typeof(self)weakSelf = self;
+  _waiterCallIdentifier = [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+    
+    if (_visitor.waiterIsCalled) {
+      [weakSelf callWaiterDidStart];
+    }
+    else {
+      [weakSelf callWaiterDidStop];
+    }
+    
+  }];
   
 }
 
@@ -125,7 +138,7 @@
 
 - (void)cancelTap {
   
-  [self.delegate r1VCDidFinish:self];
+  [self.delegate restaurantVCDidFinish:self];
   
 }
 
@@ -186,61 +199,40 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+  
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:NO animated:NO];
   [self.navigationItem setHidesBackButton:YES animated:NO];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = [UIImage new];
-  
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
   [self beginCircleAnimationIfNeeded];
+  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-  [self finishCircleAnimation];
+  [_circleAnimation finishCircleAnimation];
 }
 
 
 - (void)callWaiterStop {
   
-  [_restaurant waiterCallStopCompletion:^{
-    
-  } failure:^(NSError *error) {
-    
+  [_visitor waiterCallStopWithFailure:^(NSError *error) {
     NSLog(@"waiterCallStopError>%@", error);
-    
   }];
   
 }
 
 - (void)callWaiterDidStart {
   
-  _placeholderCircleButton = [[UIButton alloc] initWithFrame:self.circleButton.frame];
-  [_placeholderCircleButton setImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"] forState:UIControlStateNormal];
-  [_placeholderCircleButton setBackgroundImage:[self.circleButton backgroundImageForState:UIControlStateNormal] forState:UIControlStateNormal];
-  _placeholderCircleButton.userInteractionEnabled = NO;
-  [self.circleButton.superview addSubview:_placeholderCircleButton];
-  
   _callWaiterButton.selected = YES;
   [_callWaiterButton sizeToFit];
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 
 - (void)callWaiterDidStop {
   
-  [self finishCircleAnimation];
-
-  [UIView animateWithDuration:0.3 animations:^{
-    _placeholderCircleButton.alpha = 0.0f;
-  } completion:^(BOOL finished) {
-    [_placeholderCircleButton removeFromSuperview];
-    _placeholderCircleButton = nil;
-  }];
+  [_circleAnimation finishCircleAnimation];
   
   _callWaiterButton.selected = NO;
   [_callWaiterButton sizeToFit];
@@ -250,36 +242,26 @@
 
 - (void)callWaiterTap {
   
-  if (_restaurant.waiterCallTableID) {
-    
+  if (_visitor.waiterIsCalled) {
     [self callWaiterStop];
     return;
-
   }
   
-  OMNRestaurant *restaurant = _restaurant;
+  __weak OMNVisitor *v = _visitor;
   __weak typeof(self)weakSelf = self;
   [_restaurantMediator searchBeaconWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
-  
-    [restaurant waiterCallForTableID:visitor.table.id completion:^{
+    
+    [v waiterCallWithFailure:^(NSError *error) {
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
         [searchBeaconVC finishLoading:^{
           
-          [weakSelf callWaiterDidStart];
+          [weakSelf.navigationController popToViewController:weakSelf animated:YES];
           
         }];
         
       });
-      
-    } failure:^(NSError *error) {
-      
-      NSLog(@"callWaiterTap>%@", error);
-      
-    } stop:^{
-      
-      [weakSelf callWaiterDidStop];
       
     }];
     
@@ -297,90 +279,10 @@
 
 - (void)beginCircleAnimationIfNeeded {
   
-  if (NO == _callWaiterButton.selected) {
-    return;
+  if (_visitor.waiterIsCalled) {
+    [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
   }
-  
-  _iv1 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  _iv1.center = self.circleButton.center;
-  [self.backgroundView addSubview:_iv1];
-  
-  _iv2 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  _iv2.alpha = 0.5f;
-  _iv2.center = self.circleButton.center;
-  [self.backgroundView addSubview:_iv2];
-  
-  _iv3 = [[UIImageView alloc] initWithImage:self.circleBackground];
-  _iv3.alpha = 0.25f;
-  _iv3.center = self.circleButton.center;
-  [self.backgroundView addSubview:_iv3];
-  
-  [_circleAnimationTimer invalidate];
-  
-  CGFloat animationRepeatCount = 3.0f;
-  
-  NSTimeInterval duration = 2.5;
-  NSTimeInterval delay = 0.0f;
-  NSTimeInterval animationPause = 3.0;
-  NSTimeInterval totalAnimationCicleDuration = duration*animationRepeatCount + animationPause;
-  _circleAnimationTimer = [NSTimer bk_scheduledTimerWithTimeInterval:totalAnimationCicleDuration block:^(NSTimer *timer) {
-    
-    [UIView transitionWithView:_iv1 duration:duration/2. options:UIViewAnimationOptionAutoreverse animations:^{
-      
-      [UIView setAnimationRepeatCount:animationRepeatCount - 0.5f];
-      _iv1.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
-      
-    } completion:^(BOOL finished) {
-      
-      [UIView animateWithDuration:duration/2. animations:^{
-        _iv1.transform = CGAffineTransformIdentity;
-      }];
-      
-    }];
-    
-    [UIView animateWithDuration:duration delay:delay options:0 animations:^{
-      [UIView setAnimationRepeatCount:animationRepeatCount];
-      
-      _iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
-      _iv3.transform = CGAffineTransformMakeScale(5.0f, 5.0f);
-      
-      _iv2.alpha = 0.0f;
-      _iv3.alpha = 0.0f;
-      
-    } completion:^(BOOL finished) {
-      _iv2.transform = CGAffineTransformIdentity;
-      _iv3.transform = CGAffineTransformIdentity;
-      
-      _iv2.alpha = 0.5f;
-      _iv3.alpha = 0.25f;
-    }];
-    
-  } repeats:YES];
-  [_circleAnimationTimer fire];
-}
 
-- (void)finishCircleAnimation {
-  
-  [_circleAnimationTimer invalidate];
-  _circleAnimationTimer = nil;
-  
-  [UIView animateWithDuration:0.50 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
-    
-    _iv1.alpha = 0.0f;
-    _iv2.alpha = 0.0f;
-    _iv3.alpha = 0.0f;
-    _iv1.transform = CGAffineTransformIdentity;
-    _iv2.transform = CGAffineTransformIdentity;
-    _iv3.transform = CGAffineTransformIdentity;
-    
-  } completion:^(BOOL finished) {
-    
-    [_iv1 removeFromSuperview];
-    [_iv2 removeFromSuperview];
-    [_iv3 removeFromSuperview];
-    
-  }];
-  
 }
 
 @end

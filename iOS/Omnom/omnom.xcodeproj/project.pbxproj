@@ -282,6 +282,8 @@
 		93A59B131933181000AE1A6F /* restaurants.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B121933181000AE1A6F /* restaurants.data */; };
 		93A59B151933193400AE1A6F /* menu.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B141933193400AE1A6F /* menu.data */; };
 		93A59B1719331B5B00AE1A6F /* orders.data in Resources */ = {isa = PBXBuildFile; fileRef = 93A59B1619331B5B00AE1A6F /* orders.data */; };
+		93A8C1A719D918A300CB4F09 /* OMNCircleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */; };
+		93A8C1A819D918A300CB4F09 /* OMNCircleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */; };
 		93B09C3D18F3F5400027B19F /* orders.json in Resources */ = {isa = PBXBuildFile; fileRef = 93B09C3C18F3F5400027B19F /* orders.json */; };
 		93B25FAF19B6BF9D00F3AE88 /* OMNCongifTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B25FAE19B6BF9D00F3AE88 /* OMNCongifTests.m */; };
 		93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */; };
@@ -667,6 +669,8 @@
 		93A59B121933181000AE1A6F /* restaurants.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = restaurants.data; sourceTree = "<group>"; };
 		93A59B141933193400AE1A6F /* menu.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = menu.data; sourceTree = "<group>"; };
 		93A59B1619331B5B00AE1A6F /* orders.data */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = orders.data; sourceTree = "<group>"; };
+		93A8C1A519D918A300CB4F09 /* OMNCircleAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleAnimation.h; sourceTree = "<group>"; };
+		93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCircleAnimation.m; sourceTree = "<group>"; };
 		93B09C3C18F3F5400027B19F /* orders.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orders.json; sourceTree = "<group>"; };
 		93B25FAE19B6BF9D00F3AE88 /* OMNCongifTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCongifTests.m; sourceTree = "<group>"; };
 		93B3688C19A22BB300B6E6CB /* OMNDemoRestaurantVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoRestaurantVC.h; sourceTree = "<group>"; };
@@ -1240,6 +1244,7 @@
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				93A8C1A419D9189500CB4F09 /* Animation */,
 				932B185819ADE655009E440E /* Layout */,
 				9328F3951988C6190065DC58 /* Socket */,
 				93F4DBDB1978F0CF00D06E32 /* SearchTable */,
@@ -1555,6 +1560,15 @@
 				9345AFB2199A291C00328F73 /* OMNBankCardUserInfoItem.m */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		93A8C1A419D9189500CB4F09 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				93A8C1A519D918A300CB4F09 /* OMNCircleAnimation.h */,
+				93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 		93B9047919652B9B007D21C4 /* Transitions */ = {
@@ -1994,6 +2008,7 @@
 				9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */,
 				93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */,
 				939F993F19752D680051822E /* OMNBankCard.m in Sources */,
+				93A8C1A719D918A300CB4F09 /* OMNCircleAnimation.m in Sources */,
 				93B90494196550F4007D21C4 /* OMNRatingModel.m in Sources */,
 				938E8F5D192F3A200088EF38 /* OMNCalculationAmount.m in Sources */,
 				93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */,
@@ -2189,6 +2204,7 @@
 				931B15CF19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
 				93E2998A197CE0FD00051B04 /* OMNSearchBeaconVC.m in Sources */,
+				93A8C1A819D918A300CB4F09 /* OMNCircleAnimation.m in Sources */,
 				9378228E1963E29900CE6661 /* OMNPayOrderVC.m in Sources */,
 				932118171962DA2800183729 /* OMNStubProductCell.m in Sources */,
 				939DA163195405650063AB23 /* OMNAuthorizationVC.m in Sources */,

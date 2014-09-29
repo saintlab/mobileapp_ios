@@ -71,8 +71,12 @@ OMNPayOrderVCDelegate>
   __weak typeof(self)weakSelf = self;
   OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
     
-    [weakSelf checkNewGuestForVisitor:visitor];
-    completionBlock(searchBeaconVC, visitor);
+    if ([weakSelf checkVisitor:visitor]) {
+      completionBlock(searchBeaconVC, visitor);
+    }
+    else {
+#warning change restaurant
+    }
     
   } cancelBlock:cancelBlock];
   searchBeaconVC.estimateAnimationDuration = 10.0;
@@ -84,10 +88,16 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)checkNewGuestForVisitor:(OMNVisitor *)visitor {
+- (BOOL)checkVisitor:(OMNVisitor *)visitor {
   
-  [self.restaurantVC.visitor updateWithVisitor:visitor];
-  
+  if ([self.restaurantVC.visitor isSameRestaurant:visitor]) {
+    [self.restaurantVC.visitor updateWithVisitor:visitor];
+    return YES;
+  }
+  else {
+    return NO;
+  }
+
 }
 
 - (void)callBillAction {
@@ -234,7 +244,7 @@ OMNPayOrderVCDelegate>
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
   
   if (self.restaurantVC.visitor.restaurant.is_demo) {
-    [self.restaurantVC.delegate r1VCDidFinish:self.restaurantVC];
+    [self.restaurantVC.delegate restaurantVCDidFinish:self.restaurantVC];
   }
   else {
     [self popToRootViewControllerAnimated:YES];

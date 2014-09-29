@@ -33,16 +33,22 @@ extern NSString * const OMNOrderIndexKey;
 
 @property (nonatomic, strong) NSArray *orders;
 @property (nonatomic, weak) OMNOrder *selectedOrder;
+@property (nonatomic, assign) BOOL waiterIsCalled;
 
 - (instancetype)initWithJsonData:(id)data;
 
 - (void)updateWithVisitor:(OMNVisitor *)visitor;
+- (BOOL)isSameRestaurant:(OMNVisitor *)visitor;
 - (void)subscribeForTableEvents;
 - (BOOL)readyForPush;
 - (BOOL)expired;
 - (NSString *)id;
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
+
+- (void)waiterCallWithFailure:(void(^)(NSError *error))failureBlock;
+- (void)waiterCallStopWithFailure:(void(^)(NSError *error))failureBlock;
+- (void)stopWaiterCall;
 
 @end
 

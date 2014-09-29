@@ -12,15 +12,14 @@
 #import "OMNAuthorisation.h"
 #import "OMNAuthorizationVC.h"
 #import "OMNSearchRestaurantVC.h"
-#import "OMNR1VC.h"
-#import "OMNVisitorManager.h"
 #import "OMNNavigationController.h"
 #import "OMNAnalitics.h"
+#import "UINavigationController+omn_replace.h"
+#import "OMNVisitorManager.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
-OMNSearchRestaurantVCDelegate,
-OMNR1VCDelegate>
+OMNSearchRestaurantVCDelegate>
 
 @end
 
@@ -67,7 +66,7 @@ OMNR1VCDelegate>
     
     if (tokenIsValid) {
       [[OMNAnalitics analitics] logLogin];
-      [weakSelf startSearchingBeacons];
+      [weakSelf startSearchingRestaurant];
     }
     else {
       [weakSelf requestAuthorization];
@@ -76,7 +75,7 @@ OMNR1VCDelegate>
   }];
 }
 
-- (void)startSearchingBeacons {
+- (void)startSearchingRestaurant {
   
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
   searchRestaurantVC.delegate = self;
@@ -95,38 +94,31 @@ OMNR1VCDelegate>
 }
 
 - (void)requestAuthorization {
+  
   OMNAuthorizationVC *authorizationVC = [[OMNAuthorizationVC alloc] init];
   authorizationVC.delegate = self;
   [self.navigationController pushViewController:authorizationVC animated:YES];
+  
+}
+
+#pragma mark - OMNSearchRestaurantVCDelegate
+
+- (void)searchRestaurantVCDidFinish:(OMNSearchRestaurantVC *)searchRestaurantVC {
+  
+  [self dismissViewControllerAnimated:YES completion:nil];
+  
 }
 
 #pragma mark - OMNStartVC1Delegate
 
 - (void)authorizationVCDidReceiveToken:(OMNAuthorizationVC *)startVC {
   
-  [self.navigationController popToViewController:self animated:NO];
   __weak typeof(self)weakSelf = self;
-  dispatch_async(dispatch_get_main_queue(), ^{
-    [weakSelf startSearchingBeacons];
-  });
+  [self.navigationController omn_popToViewController:self animated:NO completion:^{
   
-}
+    [weakSelf startSearchingRestaurant];
 
-#pragma mark - OMNSearchRestaurantVCDelegate
-
-- (void)searchRestaurantVC:(OMNSearchRestaurantVC *)searchBeaconVC didFindVisitor:(OMNVisitor *)visitor {
-  
-  OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithVisitor:visitor];
-  restaurantMenuVC.delegate = self;
-  [searchBeaconVC.navigationController pushViewController:restaurantMenuVC animated:YES];
-  
-}
-
-#pragma mark - OMNR1VCDelegate
-
-- (void)r1VCDidFinish:(OMNR1VC *)r1VC {
-  
-  [r1VC.navigationController popToRootViewControllerAnimated:YES];
+  }];
   
 }
 
