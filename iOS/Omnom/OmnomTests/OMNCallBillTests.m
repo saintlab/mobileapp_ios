@@ -25,7 +25,7 @@ describe(@"call bill test", ^{
     
     OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
     
-    [demoBeacon unsupportedSelector];
+    [[demoBeacon should] beNil];
     
     [[OMNVisitorManager manager] decodeBeacon:demoBeacon success:^(OMNVisitor *visitor) {
       
