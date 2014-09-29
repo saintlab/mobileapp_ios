@@ -25,3 +25,6 @@ Podfile.lock
 
 # Omnom
 Omnom.xcworkspace
+
+# build
+test-reports/

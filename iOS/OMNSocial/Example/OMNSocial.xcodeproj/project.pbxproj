@@ -103,7 +103,7 @@ fi
 			<key>shellPath</key>
 			<string>/bin/sh</string>
 			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Pods-OMNSocial-resources.sh"
+			<string>"${SRCROOT}/../../Pods/Target Support Files/Pods-OMNSocial/Pods-OMNSocial-resources.sh"
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
@@ -132,6 +132,7 @@ fi
 				<string>6003F58B195388D20070C39A</string>
 				<string>B979D39A29204D059AB6844C</string>
 				<string>73C8C7C8634B4D60894423B1</string>
+				<string>6AB23EFE8DFB0ABE57BD76D9</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -1017,7 +1018,7 @@ fi
 		<key>6003F5C0195388D20070C39A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>B979D39A29204D059AB6844C</string>
+			<string>C4AA08E3B09FFE997D56E6BE</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -1043,7 +1044,7 @@ fi
 		<key>6003F5C1195388D20070C39A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>B979D39A29204D059AB6844C</string>
+			<string>6BF6782806AD8431DCCE1BAD</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -1175,6 +1176,35 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>6AB23EFE8DFB0ABE57BD76D9</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>C4AA08E3B09FFE997D56E6BE</string>
+				<string>6BF6782806AD8431DCCE1BAD</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6BF6782806AD8431DCCE1BAD</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-OMNSocial.release.xcconfig</string>
+			<key>path</key>
+			<string>../../Pods/Target Support Files/Pods-OMNSocial/Pods-OMNSocial.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>73C8C7C8634B4D60894423B1</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -1237,6 +1267,21 @@ fi
 			<string>libPods-OMNSocial.a</string>
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>C4AA08E3B09FFE997D56E6BE</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-OMNSocial.debug.xcconfig</string>
+			<key>path</key>
+			<string>../../Pods/Target Support Files/Pods-OMNSocial/Pods-OMNSocial.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>CA4FEC4BAC204EA2B8D346DF</key>
 		<dict>

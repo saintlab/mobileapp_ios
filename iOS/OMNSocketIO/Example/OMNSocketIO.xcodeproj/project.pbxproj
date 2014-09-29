@@ -62,6 +62,7 @@
 				<string>6003F58B195388D20070C39A</string>
 				<string>709C3994621644EE87B58465</string>
 				<string>228C715605D642A1A6E2C308</string>
+				<string>A0FFDB13EA3F9DCAAD31C6BC</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -947,7 +948,7 @@
 		<key>6003F5C0195388D20070C39A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>709C3994621644EE87B58465</string>
+			<string>7387B91B03A321038139C5D3</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -973,7 +974,7 @@
 		<key>6003F5C1195388D20070C39A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>709C3994621644EE87B58465</string>
+			<string>8B03B9FD3940F39DD2A597C7</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
@@ -1150,6 +1151,36 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>7387B91B03A321038139C5D3</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-OMNSocketIO.debug.xcconfig</string>
+			<key>path</key>
+			<string>../../Pods/Target Support Files/Pods-OMNSocketIO/Pods-OMNSocketIO.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>8B03B9FD3940F39DD2A597C7</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-OMNSocketIO.release.xcconfig</string>
+			<key>path</key>
+			<string>../../Pods/Target Support Files/Pods-OMNSocketIO/Pods-OMNSocketIO.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>925CA01394BA49B080EBDDC9</key>
 		<dict>
 			<key>buildActionMask</key>
@@ -1169,10 +1200,24 @@ fi
 			<key>shellPath</key>
 			<string>/bin/sh</string>
 			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Pods-OMNSocketIO-resources.sh"
+			<string>"${SRCROOT}/../../Pods/Target Support Files/Pods-OMNSocketIO/Pods-OMNSocketIO-resources.sh"
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
+		</dict>
+		<key>A0FFDB13EA3F9DCAAD31C6BC</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>7387B91B03A321038139C5D3</string>
+				<string>8B03B9FD3940F39DD2A597C7</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>A9EB2C2360664AA79E56CEF4</key>
 		<dict>
