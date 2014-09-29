@@ -54,33 +54,21 @@ describe(@"waiter call tests", ^{
   
   it(@"should call waiter", ^{
     
-    __block NSNumber *is_called = nil;
-    [_visitor.restaurant waiterCallForTableID:_visitor.table.id completion:^{
-      
-      is_called = @(YES);
-      
-    } failure:^(NSError *error) {
-      
-    } stop:^{
-      
+    [[@(_visitor.waiterIsCalled) should] equal:@(NO)];
+    [_visitor waiterCallWithFailure:^(NSError *error) {
     }];
-    
-    [[expectFutureValue(is_called) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
-    
+    [[expectFutureValue(@(_visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
+                        
   });
   
   it(@"should stop waiter", ^{
     
-    __block NSNumber *is_stopped = nil;
-    [_visitor.restaurant waiterCallStopCompletion:^{
-      
-      is_stopped = @(YES);
-      
-    } failure:^(NSError *error) {
+    [[@(_visitor.waiterIsCalled) should] equal:@(YES)];
+    [_visitor waiterCallStopWithFailure:^(NSError *error) {
       
     }];
-    [[expectFutureValue(is_stopped) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
-    
+    [[expectFutureValue(@(_visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(NO)];
+
   });
   
 });
