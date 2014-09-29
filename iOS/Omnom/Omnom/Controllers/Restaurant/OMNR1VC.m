@@ -92,8 +92,6 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
   [self socketConnect];
   [self loadBackgroundIfNeeded];
   
-  
-  
 }
 
 - (void)setVisitor:(OMNVisitor *)visitor {
@@ -188,12 +186,23 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
     [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
     ];
 
+  UIImageView *gradientView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"restaurant_bg_gradient"]];
+  gradientView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.backgroundView addSubview:gradientView];
+  
+  NSDictionary *views =
+  @{
+    @"gradientView" : gradientView,
+    };
+  
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:0 metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[gradientView]|" options:0 metrics:nil views:views]];
+  
   UIButton *actionButton = [[UIButton alloc] init];
   actionButton.translatesAutoresizingMaskIntoConstraints = NO;
   [actionButton addTarget:_restaurantMediator action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
   [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
   [self.view addSubview:actionButton];
-  
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];

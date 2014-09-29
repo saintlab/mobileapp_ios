@@ -22,8 +22,16 @@
   self.view.backgroundColor = [UIColor whiteColor];
   
   _backgroundView = [[UIImageView alloc] init];
+  _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
   _backgroundView.contentMode = UIViewContentModeCenter;
   [self.view insertSubview:_backgroundView atIndex:0];
+  NSDictionary *views =
+  @{
+    @"backgroundView" : _backgroundView,
+    };
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backgroundView]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[backgroundView]|" options:0 metrics:nil views:views]];
   
   if (self.backgroundImage) {
     _backgroundView.image = self.backgroundImage;
@@ -36,11 +44,6 @@
     
   }
   
-}
-
--(void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  _backgroundView.frame = self.view.bounds;
 }
 
 - (void)updateActionBoard {
@@ -83,7 +86,7 @@
   iv.contentMode = UIViewContentModeCenter;
   iv.alpha = 0.0f;
   iv.image = backgroundImage;
-  [_backgroundView addSubview:iv];
+  [_backgroundView insertSubview:iv atIndex:0];
   
   [UIView animateWithDuration:0.5 animations:^{
     iv.alpha = 1.0f;
