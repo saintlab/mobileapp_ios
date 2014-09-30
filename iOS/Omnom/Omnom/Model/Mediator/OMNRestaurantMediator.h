@@ -9,18 +9,20 @@
 #import "OMNSearchVisitorVC.h"
 
 @class OMNProduct;
-@class OMNR1VC;
+@class OMNRestaurantActionsVC;
 
 @interface OMNRestaurantMediator : NSObject
 
-- (instancetype)initWithRootViewController:(OMNR1VC *)restaurantVC;
+@property (nonatomic, strong, readonly) OMNVisitor *visitor;
+
+- (instancetype)initWithRootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC;
 
 - (void)showUserProfile;
-
-- (void)showRestaurantInfo;
 
 - (void)callBillAction;
 
 - (void)callWaiterAction;
+
+- (void)exitRestaurant;
 
 @end

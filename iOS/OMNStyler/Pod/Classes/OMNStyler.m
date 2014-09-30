@@ -33,6 +33,10 @@
   return @(20.0f);
 }
 
+- (NSNumber *)bottomToolbarHeight {
+  return @(50.0f);
+}
+
 - (OMNStyle *)styleForClass:(Class)class {
   
   NSString *className = NSStringFromClass(class);

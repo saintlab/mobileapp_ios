@@ -15,6 +15,7 @@
 + (instancetype)styler;
 
 - (NSNumber *)leftOffset;
+- (NSNumber *)bottomToolbarHeight;
 - (OMNStyle *)styleForClass:(Class)class;
 - (NSTimeInterval)animationDurationForKey:(NSString *)key;
 - (void)reset;

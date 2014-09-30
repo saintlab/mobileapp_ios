@@ -20,6 +20,7 @@
 #import "OMNDemoRestaurantVC.h"
 #import "OMNMailRUPayVC.h"
 #import "OMNSearchRestaurantVC.h"
+#import "OMNRestaurantActionsVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -72,20 +73,24 @@
     [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchVisitorVC class]],
     
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNPushPermissionVC class]],
-    [self keyFromClass:[OMNR1VC class] toClass:[OMNPushPermissionVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNPushPermissionVC class]],
 
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNTurnOnBluetoothVC class]],
     [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchVisitorVC class]],
     
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNR1VC class]],
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNSearchVisitorVC class]],
+    
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNDenyCLPermissionVC class]],
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNSearchRestaurantVC class]],
     
-    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNR1VC class]],
-    [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNR1VC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNSearchVisitorVC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNCircleRootVC class]],
-    [self keyFromClass:[OMNR1VC class] toClass:[OMNCircleRootVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNCircleRootVC class]],
 
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNDemoRestaurantVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNDemoRestaurantVC class]],
@@ -95,8 +100,6 @@
     
     [self keyFromClass:[OMNMailRUPayVC class] toClass:[OMNLoadingCircleVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNMailRUPayVC class]],
-    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNR1VC class]],
-    
     
     ];
 }

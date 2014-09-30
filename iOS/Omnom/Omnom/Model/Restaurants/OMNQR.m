@@ -22,8 +22,8 @@
 }
 
 - (BOOL)isValid {
-  BOOL isValid = ([[NSDate date] timeIntervalSinceDate:_date] < 3.*60.*60.);
-  return isValid;
+  BOOL isValidDate = ([[NSDate date] timeIntervalSinceDate:_date] < 3.*60.*60.);
+  return (isValidDate && self.code.length);
 }
 
 @end

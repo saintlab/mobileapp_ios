@@ -8,8 +8,7 @@
 
 #import "OMNRestaurantMediator.h"
 #import "OMNUserInfoVC.h"
-#import "OMNRestaurantInfoVC.h"
-#import "OMNR1VC.h"
+#import "OMNRestaurantActionsVC.h"
 #import "OMNVisitor+network.h"
 #import "OMNSearchVisitorVC.h"
 #import "OMNAuthorisation.h"
@@ -18,12 +17,11 @@
 #import "OMNPayOrderVC.h"
 
 @interface OMNRestaurantMediator ()
-<OMNRestaurantInfoVCDelegate,
-OMNUserInfoVCDelegate,
+<OMNUserInfoVCDelegate,
 OMNOrdersVCDelegate,
 OMNPayOrderVCDelegate>
 
-@property (nonatomic, weak) OMNR1VC *restaurantVC;
+@property (nonatomic, weak) OMNRestaurantActionsVC *restaurantActionsVC;
 
 @end
 
@@ -31,50 +29,52 @@ OMNPayOrderVCDelegate>
   __weak OMNOrdersVC *_ordersVC;
 }
 
-- (instancetype)initWithRootViewController:(OMNR1VC *)restaurantVC {
+- (instancetype)initWithRootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC {
   self = [super init];
   if (self) {
-    _restaurantVC = restaurantVC;
+    _restaurantActionsVC = restaurantActionsVC;
   }
   return self;
 }
 
+- (OMNVisitor *)visitor {
+  return _restaurantActionsVC.visitor;
+}
+
 - (void)popToRootViewControllerAnimated:(BOOL)animated {
   
-  [self.restaurantVC.navigationController popToViewController:self.restaurantVC animated:animated];
+  [self.restaurantActionsVC.navigationController popToViewController:self.restaurantActionsVC animated:animated];
   
 }
 
 - (void)pushViewController:(UIViewController *)vc {
-  [self.restaurantVC.navigationController pushViewController:vc animated:YES];
+  [self.restaurantActionsVC.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)showUserProfile {
   
-  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithVisitor:_restaurantVC.visitor];
+  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithVisitor:self.visitor];
   userInfoVC.delegate = self;
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
-  [self.restaurantVC.navigationController presentViewController:navigationController animated:YES completion:nil];
+  [self.restaurantActionsVC.navigationController presentViewController:navigationController animated:YES completion:nil];
   
 }
 
-- (void)showRestaurantInfo {
+- (void)exitRestaurant {
   
-  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithVisitor:self.restaurantVC.visitor];
-  restaurantInfoVC.delegate = self;
-  [self pushViewController:restaurantInfoVC];
-
+  [self.restaurantActionsVC.delegate restaurantActionsVCDidFinish:self.restaurantActionsVC];
+  
 }
 
 - (void)searchVisitorWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
   
-  if ([self.restaurantVC.visitor.qr isValid]) {
-    completionBlock(nil, self.restaurantVC.visitor);
+  if ([self.visitor.qr isValid]) {
+    completionBlock(nil, self.visitor);
     return;
   }
   
   __weak typeof(self)weakSelf = self;
-  OMNSearchVisitorVC *searchBeaconVC = [[OMNSearchVisitorVC alloc] initWithParent:self.restaurantVC completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
+  OMNSearchVisitorVC *searchBeaconVC = [[OMNSearchVisitorVC alloc] initWithParent:self.restaurantActionsVC.r1VC completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
     
     if ([weakSelf checkVisitor:visitor]) {
       completionBlock(searchBeaconVC, visitor);
@@ -86,8 +86,8 @@ OMNPayOrderVCDelegate>
   } cancelBlock:cancelBlock];
   searchBeaconVC.estimateAnimationDuration = 10.0;
   searchBeaconVC.circleIcon = icon;
-  if (self.restaurantVC.visitor.restaurant.is_demo) {
-    searchBeaconVC.visitor = self.restaurantVC.visitor;
+  if (self.visitor.restaurant.is_demo) {
+    searchBeaconVC.visitor = self.visitor;
   }
   [self pushViewController:searchBeaconVC];
   
@@ -95,8 +95,8 @@ OMNPayOrderVCDelegate>
 
 - (BOOL)checkVisitor:(OMNVisitor *)visitor {
   
-  if ([self.restaurantVC.visitor isSameRestaurant:visitor]) {
-    [self.restaurantVC.visitor updateWithVisitor:visitor];
+  if ([self.visitor isSameRestaurant:visitor]) {
+    [self.visitor updateWithVisitor:visitor];
     return YES;
   }
   else {
@@ -107,14 +107,14 @@ OMNPayOrderVCDelegate>
 
 - (void)visitorDidChange:(OMNVisitor *)visitor {
   
-  [self.restaurantVC.delegate restaurantVC:self.restaurantVC didChangeVisitor:visitor];
+  [self.restaurantActionsVC.delegate restaurantActionsVC:self.restaurantActionsVC didChangeVisitor:visitor];
   
 }
 
 - (void)callWaiterAction {
   
   __weak typeof(self)weakSelf = self;
-  OMNVisitor *v = self.restaurantVC.visitor;
+  OMNVisitor *v = self.visitor;
   [self searchVisitorWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
     
     [v waiterCallWithFailure:^(NSError *error) {
@@ -181,10 +181,10 @@ OMNPayOrderVCDelegate>
   }
   else {
     
-    if (!self.restaurantVC.visitor.restaurant.is_demo &&
+    if (!self.visitor.restaurant.is_demo &&
         visitor.orders.count &&
         !TARGET_IPHONE_SIMULATOR) {
-      OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self.restaurantVC];
+      OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self.restaurantActionsVC.r1VC];
       __weak typeof(self)weakSelf = self;
       pushPermissionVC.completionBlock = ^{
         [weakSelf processOrdersForVisitor:visitor];
@@ -231,7 +231,7 @@ OMNPayOrderVCDelegate>
 
 - (void)processNoOrders {
   
-  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self.restaurantVC];
+  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self.restaurantActionsVC.r1VC];
   didFailOmnomVC.faded = YES;
   didFailOmnomVC.text = NSLocalizedString(@"На этом столике нет заказов", nil);
   didFailOmnomVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
@@ -260,17 +260,9 @@ OMNPayOrderVCDelegate>
 #pragma mark - OMNUserInfoVCDelegate
 
 - (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
-  [self.restaurantVC.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - OMNRestaurantInfoVCDelegate
-
-- (void)restaurantInfoVCDidFinish:(OMNRestaurantInfoVC *)restaurantInfoVC {
-  [self popToRootViewControllerAnimated:YES];
-}
-
-- (void)restaurantInfoVCShowUserInfo:(OMNRestaurantInfoVC *)restaurantInfoVC {
-  [self showUserProfile];
+  
+  [self.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+  
 }
 
 #pragma mark - OMNOrdersVCDelegate
@@ -290,8 +282,8 @@ OMNPayOrderVCDelegate>
 
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
   
-  if (self.restaurantVC.visitor.restaurant.is_demo) {
-    [self.restaurantVC.delegate restaurantVCDidFinish:self.restaurantVC];
+  if (self.visitor.restaurant.is_demo) {
+    [self.restaurantActionsVC.delegate restaurantActionsVCDidFinish:self.restaurantActionsVC];
   }
   else {
     [self popToRootViewControllerAnimated:YES];
@@ -302,7 +294,7 @@ OMNPayOrderVCDelegate>
 - (void)payOrderVCRequestOrders:(OMNPayOrderVC *)ordersVC {
   
   if (_ordersVC) {
-    [self.restaurantVC.navigationController popToViewController:_ordersVC animated:YES];
+    [self.restaurantActionsVC.navigationController popToViewController:_ordersVC animated:YES];
   }
   
 }

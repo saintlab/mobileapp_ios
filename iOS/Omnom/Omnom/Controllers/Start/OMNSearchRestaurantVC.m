@@ -14,9 +14,10 @@
 #import "OMNAnalitics.h"
 #import "OMNR1VC.h"
 #import "OMNVisitor+network.h"
+#import "OMNRestaurantActionsVC.h"
 
 @interface OMNSearchRestaurantVC ()
-<OMNR1VCDelegate>
+//<OMNR1VCDelegate>
 
 @end
 
@@ -155,9 +156,12 @@
 
 - (void)didLoadBackground {
   
-  OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithVisitor:self.visitor];
-  restaurantMenuVC.delegate = self;
-  [self.navigationController pushViewController:restaurantMenuVC animated:YES];
+  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithVisitor:self.visitor];
+  [self.navigationController pushViewController:restaurantActionsVC animated:YES];
+
+//  OMNR1VC *restaurantMenuVC = [[OMNR1VC alloc] initWithVisitor:self.visitor];
+//  restaurantMenuVC.delegate = self;
+//  [self.navigationController pushViewController:restaurantMenuVC animated:YES];
   
 }
 

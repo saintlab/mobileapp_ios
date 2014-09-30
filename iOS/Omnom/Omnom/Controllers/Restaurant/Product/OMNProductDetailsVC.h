@@ -14,11 +14,9 @@
 @interface OMNProductDetailsVC : UIViewController
 
 @property (nonatomic, strong) UIImageView *imageView;
-//@property (nonatomic, strong, readonly) OMNProduct *product;
 @property (nonatomic, strong, readonly) OMNFeedItem *feedItem;
 @property (nonatomic, weak) id<OMNProductDetailsVCDelegate> delegate;
 
-//- (instancetype)initWithProduct:(OMNProduct *)product;
 - (instancetype)initFeedItem:(OMNFeedItem *)feedItem;
 
 @end

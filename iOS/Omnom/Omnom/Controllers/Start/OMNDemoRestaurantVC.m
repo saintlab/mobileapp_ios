@@ -8,10 +8,10 @@
 
 #import "OMNDemoRestaurantVC.h"
 #import "OMNVisitorManager.h"
-#import "OMNR1VC.h"
+#import "OMNRestaurantActionsVC.h"
 
 @interface OMNDemoRestaurantVC ()
-<OMNR1VCDelegate>
+<OMNRestaurantActionsVCDelegate>
 
 @end
 
@@ -97,21 +97,21 @@
 
 - (void)didLoadBackground {
   
-  OMNR1VC *restaurantVC = [[OMNR1VC alloc] initWithVisitor:_visitor];
-  restaurantVC.delegate = self;
-  [self.navigationController pushViewController:restaurantVC animated:YES];
+  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithVisitor:_visitor];
+  restaurantActionsVC.delegate = self;
+  [self.navigationController pushViewController:restaurantActionsVC animated:YES];
   
 }
 
-#pragma mark - OMNR1VCDelegate
+#pragma mark - OMNRestaurantActionsVCDelegate
 
-- (void)restaurantVCDidFinish:(OMNR1VC *)r1VC {
+- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
   
   [self.delegate demoRestaurantVCDidFinish:self];
   
 }
 
-- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
+- (void)restaurantActionsVC:(OMNRestaurantActionsVC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
   //do nothing
 }
 

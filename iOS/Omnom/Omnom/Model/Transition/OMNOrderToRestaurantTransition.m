@@ -7,7 +7,7 @@
 //
 
 #import "OMNOrderToRestaurantTransition.h"
-#import "OMNR1VC.h"
+#import "OMNRestaurantActionsVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNPayOrderVC.h"
 #import <OMNStyler.h>
@@ -18,7 +18,7 @@
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNBackgroundVC *fromViewController = (OMNBackgroundVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-  OMNR1VC *toViewController = (OMNR1VC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  OMNRestaurantActionsVC *toViewController = (OMNRestaurantActionsVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
   
@@ -27,9 +27,9 @@
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   [containerView addSubview:toViewController.view];
 
-  UIImage *circleBackground = [toViewController.circleButton backgroundImageForState:UIControlStateNormal];
+  UIImage *circleBackground = [toViewController.r1VC.circleButton backgroundImageForState:UIControlStateNormal];
   [toViewController.view layoutIfNeeded];
-  UIImageView *bigCircleIV = [[UIImageView alloc] initWithFrame:toViewController.circleButton.frame];
+  UIImageView *bigCircleIV = [[UIImageView alloc] initWithFrame:toViewController.r1VC.circleButton.frame];
   bigCircleIV.image = circleBackground;
   [containerView addSubview:bigCircleIV];
 
@@ -60,7 +60,12 @@
     
     [UIView animateWithDuration:OrderCircleChangeSizeAnimationDuration animations:^{
       
-      bigCircleIV.transform = CGAffineTransformIdentity;
+      if (toViewController.r1VC.isViewVisible) {
+        bigCircleIV.transform = CGAffineTransformIdentity;
+      }
+      else {
+        bigCircleIV.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
+      }
       
     } completion:^(BOOL finished) {
       
@@ -95,9 +100,9 @@
 + (NSArray *)keys {
   return
   @[
-    [self keyFromClass:[OMNRatingVC class] toClass:[OMNR1VC class]],
-    [self keyFromClass:[OMNOrdersVC class] toClass:[OMNR1VC class]],
-    [self keyFromClass:[OMNPayOrderVC class] toClass:[OMNR1VC class]],
+    [self keyFromClass:[OMNRatingVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNOrdersVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNPayOrderVC class] toClass:[OMNRestaurantActionsVC class]],
     ];
 }
 

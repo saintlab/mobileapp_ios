@@ -120,6 +120,8 @@
 		935DBF4E19C991CD0045C9DC /* OMNNonSelectableTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 935DBF4C19C991CD0045C9DC /* OMNNonSelectableTextView.m */; };
 		9366557C19DA5DED00EF7098 /* OMNQR.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366557B19DA5DED00EF7098 /* OMNQR.m */; };
 		9366557D19DA5DED00EF7098 /* OMNQR.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366557B19DA5DED00EF7098 /* OMNQR.m */; };
+		9366558119DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */; };
+		9366558219DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */; };
 		93676DED18D1E4FC00FC55F1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DEC18D1E4FC00FC55F1 /* Foundation.framework */; };
 		93676DEF18D1E4FC00FC55F1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DEE18D1E4FC00FC55F1 /* CoreGraphics.framework */; };
 		93676DF118D1E4FC00FC55F1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93676DF018D1E4FC00FC55F1 /* UIKit.framework */; };
@@ -514,6 +516,8 @@
 		935DBF4C19C991CD0045C9DC /* OMNNonSelectableTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNonSelectableTextView.m; sourceTree = "<group>"; };
 		9366557A19DA5DED00EF7098 /* OMNQR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNQR.h; sourceTree = "<group>"; };
 		9366557B19DA5DED00EF7098 /* OMNQR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNQR.m; sourceTree = "<group>"; };
+		9366557F19DA7F0600EF7098 /* OMNRestaurantActionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantActionsVC.h; sourceTree = "<group>"; };
+		9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantActionsVC.m; sourceTree = "<group>"; };
 		93676DE918D1E4FC00FC55F1 /* omnom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = omnom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93676DEC18D1E4FC00FC55F1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93676DEE18D1E4FC00FC55F1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1028,6 +1032,8 @@
 				938E54991980CCB200B38B45 /* OMNR1VC.m */,
 				93E435B11998CA6400EDC488 /* OMNRestaurantInfoVC.h */,
 				93E435B21998CA6400EDC488 /* OMNRestaurantInfoVC.m */,
+				9366557F19DA7F0600EF7098 /* OMNRestaurantActionsVC.h */,
+				9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */,
 			);
 			path = Restaurant;
 			sourceTree = "<group>";
@@ -2123,6 +2129,7 @@
 				9308FE7B196E815600B482AA /* OMNVisitorManager.m in Sources */,
 				9389455C19B0531C00C37C82 /* OMNUtils.m in Sources */,
 				939FD05E1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
+				9366558119DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */,
 				93676DF918D1E4FC00FC55F1 /* main.m in Sources */,
 				938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */,
 				93CA085819AA33D100615F43 /* UITableView+screenshot.m in Sources */,
@@ -2189,6 +2196,7 @@
 				93B368A719A5BB0E00B6E6CB /* OMNDemoStandTests.m in Sources */,
 				930C481519CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				93958B5E198747E1009BB2ED /* OMNBill.m in Sources */,
+				9366558219DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */,
 				9345AFC6199B7DCC00328F73 /* OMNRestaurantInfo.m in Sources */,
 				939689B7195BDD3400AAAF9C /* OMNViewControllerTest.m in Sources */,
 				934CDF5119D4078900D73FC4 /* OMNLabelCell.m in Sources */,

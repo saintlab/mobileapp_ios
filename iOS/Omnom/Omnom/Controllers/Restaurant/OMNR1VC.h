@@ -8,24 +8,16 @@
 
 #import "OMNCircleRootVC.h"
 
+@class OMNRestaurantMediator;
 @class OMNVisitor;
 @protocol OMNR1VCDelegate;
 
 @interface OMNR1VC : OMNCircleRootVC
 
-@property (nonatomic, weak) id<OMNR1VCDelegate> delegate;
 @property (nonatomic, strong, readonly) OMNVisitor *visitor;
+@property (nonatomic, assign, readonly) BOOL isViewVisible;
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
-
-- (void)callWaiterDidStart;
-- (void)callWaiterDidStop;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end
 
-@protocol OMNR1VCDelegate <NSObject>
-
-- (void)restaurantVC:(OMNR1VC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor;
-- (void)restaurantVCDidFinish:(OMNR1VC *)restaurantVC;
-
-@end

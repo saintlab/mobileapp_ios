@@ -18,44 +18,48 @@
 #import "OMNToolbarButton.h"
 #import "OMNSocketManager.h"
 #import "OMNVisitor+network.h"
-#import "OMNRestaurantMediator.h"
 #import "OMNLightBackgroundButton.h"
 #import "OMNImageManager.h"
 #import "OMNAnalitics.h"
 #import "OMNPaymentNotificationControl.h"
 #import "OMNCircleAnimation.h"
+#import "OMNRestaurantInfoVC.h"
+#import <OMNStyler.h>
+#import "OMNRestaurantMediator.h"
 
-NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
+NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdentifier";
 
 @interface OMNR1VC ()
+<OMNRestaurantInfoVCDelegate>
 
 @end
 
 @implementation OMNR1VC {
   
   OMNRestaurant *_restaurant;
-  OMNToolbarButton *_callWaiterButton;
-  
-  OMNRestaurantMediator *_restaurantMediator;
   OMNCircleAnimation *_circleAnimation;
+  __weak OMNRestaurantMediator *_restaurantMediator;
 }
 
 - (void)dealloc {
   
   _circleAnimation = nil;
-  [_visitor bk_removeObserversWithIdentifier:kWaiterCallIdentifier];
+  [_visitor bk_removeObserversWithIdentifier:kRestaurantWaiterCallIdentifier];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
   
 }
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super initWithParent:nil];
   if (self) {
-    self.visitor = visitor;
-    _restaurant = visitor.restaurant;
+    _restaurantMediator = restaurantMediator;
+    self.visitor = _restaurantMediator.visitor;
+    [[OMNAnalitics analitics] logEnterRestaurant:self.visitor];
+    
+    _restaurant = self.visitor.restaurant;
     self.circleIcon = _restaurant.decoration.logo;
-    [[OMNAnalitics analitics] logEnterRestaurant:visitor];
+
   }
   return self;
 }
@@ -64,10 +68,8 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
   [super viewDidLoad];
   
   _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
-  
-  _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
-
-  UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:_restaurantMediator action:@selector(showRestaurantInfo)];
+  _isViewVisible = YES;
+  UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showRestaurantInfo)];
   swipeGR.direction = UISwipeGestureRecognizerDirectionUp;
   [self.view addGestureRecognizer:swipeGR];
   
@@ -75,31 +77,53 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
 
     OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
     [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
-    [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
+    [cancelButton addTarget:_restaurantMediator action:@selector(exitRestaurant) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
     
   }
   else {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:_restaurantMediator action:@selector(showUserProfile)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserProfile)];
     self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    
   }
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
   
   self.circleBackground = _restaurant.decoration.circleBackground;
   
-  [self addActionsBoard];
+  [self omn_setup];
   [self socketConnect];
   [self loadBackgroundIfNeeded];
   
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  
+  [super viewWillAppear:animated];
+  [self.navigationController setNavigationBarHidden:NO animated:NO];
+  [self.navigationItem setHidesBackButton:YES animated:NO];
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+  self.navigationController.navigationBar.shadowImage = [UIImage new];
+  [self beginCircleAnimationIfNeeded];
+  
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  [_circleAnimation finishCircleAnimation];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleLightContent;
+}
+
 - (void)setVisitor:(OMNVisitor *)visitor {
   
-  [_visitor bk_removeObserversWithIdentifier:kWaiterCallIdentifier];
+  [_visitor bk_removeObserversWithIdentifier:kRestaurantWaiterCallIdentifier];
   _visitor = visitor;
   __weak typeof(self)weakSelf = self;
-  [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) identifier:kWaiterCallIdentifier options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+  [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) identifier:kRestaurantWaiterCallIdentifier options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
     
     if (weakSelf.visitor.waiterIsCalled) {
       [weakSelf callWaiterDidStart];
@@ -135,13 +159,9 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
   }];
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return UIStatusBarStyleLightContent;
-}
-
-- (void)cancelTap {
+- (void)showUserProfile {
   
-  [self.delegate restaurantVCDidFinish:self];
+  [_restaurantMediator showUserProfile];
   
 }
 
@@ -166,26 +186,8 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
 
 }
 
-- (void)addActionsBoard {
+- (void)omn_setup {
   
-  [self addActionBoardIfNeeded];
-  UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
-  _callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:NSLocalizedString(@"Официант", nil)];
-  [_callWaiterButton setSelectedImage:callWaiterImage selectedTitle:NSLocalizedString(@"Отменить", nil)];
-  [_callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
-  [_callWaiterButton sizeToFit];
-  
-  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:NSLocalizedString(@"Счёт", nil)];
-  [callBillButton addTarget:_restaurantMediator action:@selector(callBillAction) forControlEvents:UIControlEventTouchUpInside];
-
-  self.bottomToolbar.hidden = NO;
-  self.bottomToolbar.items =
-  @[
-    [[UIBarButtonItem alloc] initWithCustomView:_callWaiterButton],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-    ];
-
   UIImageView *gradientView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"restaurant_bg_gradient"]];
   gradientView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.backgroundView addSubview:gradientView];
@@ -200,79 +202,65 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
   
   UIButton *actionButton = [[UIButton alloc] init];
   actionButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [actionButton addTarget:_restaurantMediator action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
+  [actionButton addTarget:self action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
   [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
   [self.view addSubview:actionButton];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.bottomToolbar attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-[OMNStyler styler].bottomToolbarHeight.floatValue]];
   [self.view layoutIfNeeded];
   
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)showRestaurantInfo {
   
-  [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:NO animated:NO];
-  [self.navigationItem setHidesBackButton:YES animated:NO];
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-  self.navigationController.navigationBar.shadowImage = [UIImage new];
-  [self beginCircleAnimationIfNeeded];
+  _isViewVisible = NO;
+  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithVisitor:self.visitor];
+  restaurantInfoVC.delegate = self;
+  [self.navigationController pushViewController:restaurantInfoVC animated:YES];
   
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  [_circleAnimation finishCircleAnimation];
 }
 
 - (void)beginCircleAnimationIfNeeded {
   
-  if (_visitor.waiterIsCalled) {
+  if (_visitor.waiterIsCalled &&
+      _isViewVisible) {
     [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
   }
-  
-}
-
-- (void)callWaiterStop {
-  
-  [_visitor waiterCallStopWithFailure:^(NSError *error) {
-    NSLog(@"waiterCallStopError>%@", error);
-  }];
   
 }
 
 - (void)callWaiterDidStart {
   
   [self beginCircleAnimationIfNeeded];
-  _callWaiterButton.selected = YES;
-  [_callWaiterButton sizeToFit];
   
 }
 
 - (void)callWaiterDidStop {
   
   [_circleAnimation finishCircleAnimation];
-  _callWaiterButton.selected = NO;
-  [_callWaiterButton sizeToFit];
 
-}
-
-- (void)callWaiterTap {
-  
-  if (_visitor.waiterIsCalled) {
-    [self callWaiterStop];
-  }
-  else {
-    [_restaurantMediator callWaiterAction];
-  }
-  
 }
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+
+#pragma mark - OMNRestaurantInfoVCDelegate
+
+- (void)restaurantInfoVCDidFinish:(OMNRestaurantInfoVC *)restaurantInfoVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  _isViewVisible = YES;
+  
+}
+
+- (void)restaurantInfoVCShowUserInfo:(OMNRestaurantInfoVC *)restaurantInfoVC {
+  
+  [self showUserProfile];
+  
 }
 
 @end

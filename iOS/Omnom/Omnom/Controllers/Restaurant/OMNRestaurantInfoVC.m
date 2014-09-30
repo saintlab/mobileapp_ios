@@ -83,8 +83,11 @@ UIScrollViewDelegate>
   [self.tableView registerClass:[OMNLabelCell class] forCellReuseIdentifier:@"MoreCell"];
   [self.tableView registerClass:[OMNLabelCell class] forCellReuseIdentifier:@"DefaultCell"];
   [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
-  self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
+
   self.tableView.separatorInset = UIEdgeInsetsMake(0.0f, [[[OMNStyler styler] leftOffset] floatValue], 0.0f, 0.0f);
+  self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, [[OMNStyler styler] bottomToolbarHeight].floatValue, 0.0f);
+  self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0.0f, [[OMNStyler styler] bottomToolbarHeight].floatValue, 0.0f);
+  
 }
 
 - (void)didFinishLoadingRestaurantInfo:(OMNRestaurantInfo *)restaurantInfo {

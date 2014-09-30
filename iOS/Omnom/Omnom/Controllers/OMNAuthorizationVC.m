@@ -86,7 +86,6 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  self.bottomViewConstraint.constant = 0.0f;
   [UIView animateWithDuration:0.3 animations:^{
     [self.view layoutIfNeeded];
   }];

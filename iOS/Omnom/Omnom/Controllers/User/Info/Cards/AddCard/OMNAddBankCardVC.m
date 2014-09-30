@@ -107,6 +107,7 @@ OMNCardEnterControlDelegate>
   
   CardIOPaymentViewController *scanViewController = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
   scanViewController.collectCVV = NO;
+  scanViewController.useCardIOLogo = YES;
   scanViewController.collectExpiry = NO;
   scanViewController.collectPostalCode = NO;
   scanViewController.disableManualEntryButtons = YES;

@@ -9,6 +9,7 @@
 #import "OMNBackgroundVC.h"
 #import "OMNToolbarButton.h"
 #import <BlocksKit+UIKit.h>
+#import <OMNStyler.h>
 
 @interface OMNBackgroundVC ()
 
@@ -124,12 +125,13 @@
     @"bottomToolbar": _bottomToolbar,
     };
   
+  NSDictionary *metrics =
+  @{
+    @"bottomToolbarHeight" : [[OMNStyler styler] bottomToolbarHeight],
+    };
+  
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomToolbar]|" options:0 metrics:nil views:views]];
-  
-  _bottomViewConstraint = [NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f];
-  [self.view addConstraint:_bottomViewConstraint];
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomToolbar(==50)]" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomToolbar(bottomToolbarHeight)]|" options:0 metrics:metrics views:views]];
   
 }
 

@@ -12,13 +12,13 @@
 #import "OMNOrdersVC.h"
 #import <OMNStyler.h>
 #import "OMNPushPermissionVC.h"
-#import "OMNR1VC.h"
+#import "OMNRestaurantActionsVC.h"
 
 @implementation OMNSearchBeaconToPayOrderTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  OMNCircleRootVC *fromViewController = (OMNCircleRootVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNBackgroundVC *toViewController = (OMNBackgroundVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
@@ -30,12 +30,37 @@
   // Setup the initial view states
   [containerView addSubview:fromImageSnapshot];
   
-  UIImage *circleBackground = fromViewController.circleBackground;
-  UIImageView *bigCircleIV = [[UIImageView alloc] initWithFrame:fromViewController.circleButton.frame];
+  
+  
+  OMNCircleRootVC *circleRootVC = nil;
+
+  if ([fromViewController isKindOfClass:[OMNCircleRootVC class]]) {
+    
+    circleRootVC = (OMNCircleRootVC *)fromViewController;
+    
+  }
+  else if ([fromViewController isKindOfClass:[OMNRestaurantActionsVC class]]) {
+    
+    OMNRestaurantActionsVC *restaurantActionsVC = (OMNRestaurantActionsVC *)fromViewController;
+    circleRootVC = restaurantActionsVC.r1VC;
+    
+    if (NO == restaurantActionsVC.r1VC.isViewVisible) {
+
+//      CGFloat scale = 0.1f;
+//      initialCircleTransofrm = CGAffineTransformMakeScale(scale, scale);
+
+    }
+    
+  }
+  
+  UIImage *circleBackground = circleRootVC.circleBackground;
+  UIImageView *bigCircleIV = [[UIImageView alloc] init];
+  bigCircleIV.frame = circleRootVC.circleButton.frame;
   bigCircleIV.image = circleBackground;
   [containerView addSubview:bigCircleIV];
 
   UIImageView *toBackgroundView = [[UIImageView alloc] initWithFrame:toViewController.view.frame];
+  
   toBackgroundView.contentMode = UIViewContentModeCenter;
   toBackgroundView.image = toViewController.backgroundImage;
   toBackgroundView.alpha = 0.0f;
@@ -90,7 +115,7 @@
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNOrdersVC class]],
     [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNPayOrderVC class]],
     [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNOrdersVC class]],
-    [self keyFromClass:[OMNR1VC class] toClass:[OMNOrdersVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrdersVC class]],
     ];
 }
 
