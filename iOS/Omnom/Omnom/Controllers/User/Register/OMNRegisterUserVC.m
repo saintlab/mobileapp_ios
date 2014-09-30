@@ -63,8 +63,7 @@ UITextFieldDelegate>
   self.navigationItem.titleView = navigationBarProgressView;
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
   
-  UIBarButtonItem *submitButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];
-  self.navigationItem.rightBarButtonItem = submitButton;
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];;
   
   [self setup];
   
@@ -300,6 +299,7 @@ UITextFieldDelegate>
     _user.birthDate = _datePicker.date;
   }
   
+  self.navigationItem.rightBarButtonItem.enabled = NO;
   __weak typeof(self)weakSelf = self;
   [_user registerWithCompletion:^{
     
@@ -315,6 +315,7 @@ UITextFieldDelegate>
 
 - (void)processError:(NSError *)error {
 
+  self.navigationItem.rightBarButtonItem.enabled = YES;
   if (error) {
     _errorLabel.text = error.localizedDescription;
   }
@@ -330,6 +331,7 @@ UITextFieldDelegate>
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:_user.phone];
   confirmCodeVC.delegate = self;
   [self.navigationController pushViewController:confirmCodeVC animated:YES];
+  self.navigationItem.rightBarButtonItem.enabled = YES;
   
 }
 
