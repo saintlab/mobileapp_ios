@@ -102,13 +102,14 @@
 
 - (void)waiterCallWithFailure:(void(^)(NSError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.id, self.table.id];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.restaurant.id, self.table.id];
   __weak typeof(self)weakSelf = self;
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
     if ([response isKindOfClass:[NSDictionary class]] &&
         [response[@"status"] isEqualToString:@"success"]) {
-      weakSelf.waiterIsCalled = YES;
+      [[OMNAnalitics analitics] logEvent:@"WAITER_CALL" parametrs:response];
+      [weakSelf waiterDidCalled];
     }
     failureBlock(nil);
     
@@ -120,6 +121,11 @@
   
 }
 
+- (void)waiterDidCalled {
+  
+  self.waiterIsCalled = YES;
+}
+
 - (void)stopWaiterCall {
   
   self.waiterIsCalled = NO;
@@ -128,11 +134,12 @@
 
 - (void)waiterCallStopWithFailure:(void(^)(NSError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.id, self.table.id];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.restaurant.id, self.table.id];
   __weak typeof(self)weakSelf = self;
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
     [weakSelf stopWaiterCall];
+    [[OMNAnalitics analitics] logEvent:@"WAITER_CALL_DONE" parametrs:response];
     failureBlock(nil);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
