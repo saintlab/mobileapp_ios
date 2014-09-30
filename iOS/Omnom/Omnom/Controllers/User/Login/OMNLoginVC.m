@@ -94,8 +94,8 @@ UITextViewDelegate> {
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[hintTextView]-|" options:0 metrics:nil views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]-[hintTextView]" options:0 metrics:nil views:views]];
   
-  _loginTF.textField.placeholder = NSLocalizedString(@"Почта или номер телефона", nil);
-  _loginTF.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+  _loginTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
+  _loginTF.textField.keyboardType = UIKeyboardTypePhonePad;
 
   NSString *buttonText = NSLocalizedString(@"регистрация", nil);
   NSString *text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Ещё нет аккаунта? Прошу сюда –", nil), buttonText];
