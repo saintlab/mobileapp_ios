@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchBeaconVC.h"
+#import "OMNSearchVisitorVC.h"
 #import "OMNOperationManager.h"
 #import "OMNBeaconSearchManager.h"
 #import "OMNAskCLPermissionsVC.h"
@@ -21,7 +21,7 @@
 #import "OMNDenyCLPermissionVC.h"
 #import "OMNAnalitics.h"
 
-@interface OMNSearchBeaconVC ()
+@interface OMNSearchVisitorVC ()
 <OMNBeaconSearchManagerDelegate,
 OMNTablePositionVCDelegate,
 OMNScanQRCodeVCDelegate,
@@ -29,7 +29,7 @@ OMNDemoRestaurantVCDelegate>
 
 @end
 
-@implementation OMNSearchBeaconVC {
+@implementation OMNSearchVisitorVC {
   OMNBeaconSearchManager *_beaconSearchManager;
   OMNSearchBeaconVCBlock _didFindBlock;
   dispatch_block_t _cancelBlock;
@@ -202,12 +202,12 @@ OMNDemoRestaurantVCDelegate>
     
     [[OMNVisitorManager manager] decodeQRCode:code success:^(OMNVisitor *visitor) {
       
-      [weakSelf finishLoading:^{
-        [weakSelf didFindVisitor:visitor];
-      }];
+      [weakSelf didFindVisitor:visitor];
       
     } failure:^(NSError *error) {
+      
       [weakSelf didFailQRCode];
+      
     }];
     
   }];
@@ -320,8 +320,6 @@ OMNDemoRestaurantVCDelegate>
     case kSearchManagerBLEDidOn: {
       
       [self.loaderView setProgress:0.2];
-      //dismiss turn BLE on controller
-//      [self.navigationController popToViewController:self animated:YES];
       
     } break;
       

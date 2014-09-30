@@ -10,11 +10,11 @@
 #import "OMNLoadingCircleVC.h"
 #import "OMNLoaderView.h"
 
-@class OMNSearchBeaconVC;
+@class OMNSearchVisitorVC;
 
-typedef void(^OMNSearchBeaconVCBlock)(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor);
+typedef void(^OMNSearchBeaconVCBlock)(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor);
 
-@interface OMNSearchBeaconVC : OMNLoadingCircleVC
+@interface OMNSearchVisitorVC : OMNLoadingCircleVC
 
 @property (nonatomic, strong) OMNVisitor *visitor;
 

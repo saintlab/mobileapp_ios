@@ -8,7 +8,7 @@
 
 #import "OMNSplashToSearchBeaconTransition.h"
 #import "OMNSearchRestaurantVC.h"
-#import "OMNSearchBeaconVC.h"
+#import "OMNSearchVisitorVC.h"
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
 
@@ -20,7 +20,7 @@
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNSearchRestaurantVC *fromViewController = (OMNSearchRestaurantVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-  OMNSearchBeaconVC *toViewController = (OMNSearchBeaconVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  OMNSearchVisitorVC *toViewController = (OMNSearchVisitorVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
@@ -132,7 +132,7 @@
 + (NSArray *)keys {
   return
   @[
-    [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNSearchBeaconVC class]],
+    [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNSearchVisitorVC class]],
     [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNLoadingCircleVC class]]
     ];
 }

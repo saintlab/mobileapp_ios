@@ -10,6 +10,7 @@
 #import "OMNRestaurant.h"
 #import "OMNTable.h"
 #import "OMNConstants.h"
+#import "OMNQR.h"
 
 @class OMNVisitor;
 
@@ -26,6 +27,7 @@ extern NSString * const OMNOrderIndexKey;
 @property (nonatomic, strong, readonly) NSDate *foundDate;
 @property (nonatomic, strong) OMNBeacon *beacon;
 @property (nonatomic, strong) OMNTable *table;
+@property (nonatomic, strong) OMNQR *qr;
 @property (nonatomic, strong) OMNRestaurant *restaurant;
 
 @property (nonatomic, strong) NSArray *orders;

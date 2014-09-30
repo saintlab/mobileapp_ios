@@ -7,7 +7,7 @@
 //
 
 #import "OMNCircleFadeTransition.h"
-#import "OMNSearchBeaconVC.h"
+#import "OMNSearchVisitorVC.h"
 #import "OMNCircleRootVC.h"
 #import "OMNTablePositionVC.h"
 #import "OMNR1VC.h"
@@ -62,30 +62,32 @@
 + (NSArray *)keys {
   return
   @[
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNAskCLPermissionsVC class]],
-    [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNSearchBeaconVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNAskCLPermissionsVC class]],
+    [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNSearchVisitorVC class]],
     
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNCircleRootVC class]],
-    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchBeaconVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNCircleRootVC class]],
+    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchVisitorVC class]],
     
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNTablePositionVC class]],
-    [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchBeaconVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNTablePositionVC class]],
+    [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchVisitorVC class]],
     
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNPushPermissionVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNPushPermissionVC class]],
+    [self keyFromClass:[OMNR1VC class] toClass:[OMNPushPermissionVC class]],
+
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNTurnOnBluetoothVC class]],
+    [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchVisitorVC class]],
     
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNTurnOnBluetoothVC class]],
-    [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchBeaconVC class]],
-    
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNR1VC class]],
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNDenyCLPermissionVC class]],
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNSearchRestaurantVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNR1VC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNDenyCLPermissionVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNSearchRestaurantVC class]],
     
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNR1VC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNR1VC class]],
-    [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNSearchBeaconVC class]],
+    [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNSearchVisitorVC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNCircleRootVC class]],
+    [self keyFromClass:[OMNR1VC class] toClass:[OMNCircleRootVC class]],
 
-    [self keyFromClass:[OMNSearchBeaconVC class] toClass:[OMNDemoRestaurantVC class]],
+    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNDemoRestaurantVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNDemoRestaurantVC class]],
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNDenyCLPermissionVC class]],
     [self keyFromClass:[OMNDenyCLPermissionVC class] toClass:[OMNAskCLPermissionsVC class]],
@@ -94,6 +96,8 @@
     [self keyFromClass:[OMNMailRUPayVC class] toClass:[OMNLoadingCircleVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNMailRUPayVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNR1VC class]],
+    
+    
     ];
 }
 

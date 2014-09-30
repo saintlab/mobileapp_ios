@@ -23,7 +23,6 @@ def import_all
   pod 'CardIO'
   pod 'BlocksKit'
   pod 'Mixpanel'
-  #pod 'UrbanAirship-iOS-SDK'
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"
@@ -33,7 +32,7 @@ def import_all
   #  pod "OMNSocial", :path => "OMNSocial/"
 end
 
-target :omnom do
+target 'omnom', :exclusive => true do
   import_all
   pod 'CrashlyticsFramework'
   pod 'EAIntroView'
@@ -49,27 +48,27 @@ target 'omnomTests', :exclusive => true do
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
 
-target :OMNSocial do
+target 'OMNSocial', :exclusive => true do
   pod "OMNSocial", :path => "OMNSocial/"
   xcodeproj 'OMNSocial/Example/OMNSocial.xcodeproj'
 end
 
-target :OMNStyler do
+target 'OMNStyler', :exclusive => true do
   pod "OMNStyler", :path => "OMNStyler/"
   xcodeproj 'OMNStyler/Example/OMNStyler.xcodeproj'
 end
 
-target :OMNCardEnterControl do
+target 'OMNCardEnterControl', :exclusive => true do
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   xcodeproj 'OMNCardEnterControl/Example/OMNCardEnterControl.xcodeproj'
 end
 
-target :OMNBeacon do
+target 'OMNBeacon', :exclusive => true do
   pod "OMNBeacon", :path => "OMNBeacon/"
   xcodeproj 'OMNBeacon/Example/OMNBeacon.xcodeproj'
 end
 
-target :OMNMailRuAcquiring do
+target 'OMNMailRuAcquiring', :exclusive => true do
   pod "OMNMailRuAcquiring", :path => "OMNMailRuAcquiring/"
   xcodeproj 'OMNMailRuAcquiring/Example/OMNMailRuAcquiring.xcodeproj'
 end
@@ -80,7 +79,7 @@ target 'Tests', :exclusive => true do
   xcodeproj 'OMNMailRuAcquiring/Example/OMNMailRuAcquiring.xcodeproj'
 end
 
-target :OMNSocketIO do
+target 'OMNSocketIO', :exclusive => true do
   pod "OMNSocketIO", :path => "OMNSocketIO/"
   xcodeproj 'OMNSocketIO/Example/OMNSocketIO.xcodeproj'
 end

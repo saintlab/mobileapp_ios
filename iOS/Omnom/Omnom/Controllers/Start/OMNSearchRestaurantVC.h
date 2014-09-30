@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchBeaconVC.h"
+#import "OMNSearchVisitorVC.h"
 #import "OMNRestaurant.h"
 
 @protocol OMNSearchRestaurantVCDelegate;

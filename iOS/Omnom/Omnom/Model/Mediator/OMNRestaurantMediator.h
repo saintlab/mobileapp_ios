@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchBeaconVC.h"
+#import "OMNSearchVisitorVC.h"
 
 @class OMNProduct;
 @class OMNR1VC;

@@ -69,7 +69,7 @@
   }
   else {
     
-    loadingCircleVC = [[OMNSearchBeaconVC alloc] initWithParent:nil completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
+    loadingCircleVC = [[OMNSearchVisitorVC alloc] initWithParent:nil completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
       
       [weakSelf didFindVisitor:visitor];
       

@@ -29,11 +29,13 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
+    
     _foundDate = [NSDate date];
     _decodeBeaconData = data;
     _beacon = [[OMNBeacon alloc] initWithJsonData:data[@"beacon"]];
     _restaurant = [[OMNRestaurant alloc] initWithJsonData:data[@"restaurant"]];
     _table = [[OMNTable alloc] initWithJsonData:data[@"table"]];
+    _qr = [[OMNQR alloc] initWithJsonData:data[@"qr"]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:[OMNSocketManager manager]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidChangeNotification object:[OMNSocketManager manager]];

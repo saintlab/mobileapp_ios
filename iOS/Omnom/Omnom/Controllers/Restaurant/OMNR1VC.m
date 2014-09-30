@@ -7,7 +7,7 @@
 //
 
 #import "OMNR1VC.h"
-#import "OMNSearchBeaconVC.h"
+#import "OMNSearchVisitorVC.h"
 #import "OMNPayOrderVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNOperationManager.h"
@@ -246,6 +246,7 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
 
 - (void)callWaiterDidStart {
   
+  [self beginCircleAnimationIfNeeded];
   _callWaiterButton.selected = YES;
   [_callWaiterButton sizeToFit];
   

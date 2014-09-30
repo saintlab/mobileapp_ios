@@ -11,7 +11,7 @@
 #import "OMNRestaurantInfoVC.h"
 #import "OMNR1VC.h"
 #import "OMNVisitor+network.h"
-#import "OMNSearchBeaconVC.h"
+#import "OMNSearchVisitorVC.h"
 #import "OMNAuthorisation.h"
 #import "OMNPushPermissionVC.h"
 #import "OMNOrdersVC.h"
@@ -68,8 +68,13 @@ OMNPayOrderVCDelegate>
 
 - (void)searchVisitorWithIcon:(UIImage *)icon completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
   
+  if ([self.restaurantVC.visitor.qr isValid]) {
+    completionBlock(nil, self.restaurantVC.visitor);
+    return;
+  }
+  
   __weak typeof(self)weakSelf = self;
-  OMNSearchBeaconVC *searchBeaconVC = [[OMNSearchBeaconVC alloc] initWithParent:self.restaurantVC completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
+  OMNSearchVisitorVC *searchBeaconVC = [[OMNSearchVisitorVC alloc] initWithParent:self.restaurantVC completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
     
     if ([weakSelf checkVisitor:visitor]) {
       completionBlock(searchBeaconVC, visitor);
@@ -110,7 +115,7 @@ OMNPayOrderVCDelegate>
   
   __weak typeof(self)weakSelf = self;
   OMNVisitor *v = self.restaurantVC.visitor;
-  [self searchVisitorWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
+  [self searchVisitorWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
     
     [v waiterCallWithFailure:^(NSError *error) {
       
@@ -138,13 +143,20 @@ OMNPayOrderVCDelegate>
 - (void)callBillAction {
   
   __weak typeof(self)weakSelf = self;
-  [self searchVisitorWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchBeaconVC *searchBeaconVC, OMNVisitor *visitor) {
+  [self searchVisitorWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
     
     [visitor getOrders:^(NSArray *orders) {
       
-      [searchBeaconVC finishLoading:^{
+      if (searchBeaconVC) {
+
+        [searchBeaconVC finishLoading:^{
+          [weakSelf checkPushNotificationForVisitor:visitor];
+        }];
+        
+      }
+      else {
         [weakSelf checkPushNotificationForVisitor:visitor];
-      }];
+      }
       
     } error:^(NSError *error) {
       
