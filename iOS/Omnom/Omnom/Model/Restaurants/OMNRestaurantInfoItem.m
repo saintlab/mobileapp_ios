@@ -98,7 +98,6 @@ RestaurantInfoItemType typeFromString(NSString *s) {
       if (self.value.length) {
         UIPasteboard *pb = [UIPasteboard generalPasteboard];
         [pb setString:self.value];
-        [pb setString:@"123123"];
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ALERT_WIFI_COPY_TITILE", @"Пароль скопирован в буфер обмена") message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", @"OK") otherButtonTitles:nil] show];
       }
       

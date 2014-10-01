@@ -460,6 +460,13 @@ OMNUserInfoVCDelegate>
   tablePositionVC.text = NSLocalizedString(@"Слабый сигнал.\nПоложите телефон\nв центр стола,\nпожалуйста.", nil);
   tablePositionVC.circleIcon = [UIImage imageNamed:@"weak_signal_table_icon_big"];
   tablePositionVC.tablePositionDelegate = self;
+  __weak typeof(self)weakSelf = self;
+  tablePositionVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Повторить", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      [weakSelf startSearchingBeacon];
+    }]
+    ];
   [self.navigationController pushViewController:tablePositionVC animated:YES];
   
 }

@@ -41,8 +41,6 @@
     [weakSelf didPlaceOnTable];
     
   }];
-
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
 }
 
