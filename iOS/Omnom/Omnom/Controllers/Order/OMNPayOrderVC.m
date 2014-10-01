@@ -78,7 +78,7 @@ OMNMailRUPayVCDelegate>
     NSUInteger index = [_visitor.orders indexOfObject:_visitor.selectedOrder];
     if (index != NSNotFound) {
       UIButton *button = [[UIButton alloc] init];
-      button.titleLabel.font = FuturaLSFOmnomRegular(20.0f);
+      button.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
       [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
       [button setTitle:[NSString stringWithFormat:@"Счёт %lu", (long unsigned)index + 1] forState:UIControlStateNormal];
       button.layer.borderColor = [UIColor blackColor].CGColor;

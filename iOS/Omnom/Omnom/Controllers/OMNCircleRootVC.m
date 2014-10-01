@@ -138,7 +138,12 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   self.text = _text;
-  [self.navigationController setNavigationBarHidden:YES animated:NO];
+  
+  [self.navigationItem setHidesBackButton:YES animated:NO];
+  [self.navigationController setNavigationBarHidden:NO animated:NO];
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+  [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+
 }
 
 - (void)setFaded:(BOOL)faded {

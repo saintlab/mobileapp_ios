@@ -47,7 +47,6 @@
 	<string>Это необходимо для определения заведения и вашего столика</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Futura-LSF-Omnom-Regular.otf</string>
 		<string>Futura-OSF-Omnom-Regular.otf</string>
 		<string>Futura-OSF-Omnom-Medium.otf</string>
 		<string>Futura-LSF-Omnom-LE-Regular.otf</string>

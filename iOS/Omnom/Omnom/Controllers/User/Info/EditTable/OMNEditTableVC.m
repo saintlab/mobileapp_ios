@@ -11,6 +11,7 @@
 #import "OMNBluetoothManager.h"
 #import "OMNScanQRCodeVC.h"
 #import "OMNErrorTextField.h"
+#import "OMNConstants.h"
 
 @interface OMNEditTableVC ()
 <OMNScanQRCodeVCDelegate,
@@ -93,7 +94,7 @@ UITextFieldDelegate>
   _tableNumberTF = [[OMNErrorTextField alloc] initWithWidth:125.0f];
   _tableNumberTF.textField.delegate = self;
   _tableNumberTF.textField.returnKeyType = UIReturnKeyDone;
-  _tableNumberTF.textField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:50.0f];
+  _tableNumberTF.textField.font = FuturaLSFOmnomLERegular(50.0f);
   _tableNumberTF.textField.textColor = colorWithHexString(@"000000");
   _tableNumberTF.textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
   _tableNumberTF.textField.textAlignment = NSTextAlignmentCenter;

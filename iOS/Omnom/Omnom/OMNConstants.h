@@ -10,7 +10,6 @@ extern NSString * const kPushSoundName;
 
 #define FuturaOSFOmnomMedium(__FONTSIZE__) ([UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:__FONTSIZE__])
 #define FuturaOSFOmnomRegular(__FONTSIZE__) ([UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:__FONTSIZE__])
-#define FuturaLSFOmnomRegular(__FONTSIZE__) ([UIFont fontWithName:@"Futura-LSF-Omnom-Regular" size:__FONTSIZE__])
 #define FuturaLSFOmnomLERegular(__FONTSIZE__) ([UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:__FONTSIZE__])
 
 #define CURRENT_VERSION ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"])

@@ -11,6 +11,7 @@
 #import <SSKeychain.h>
 #import "OMNAuthorisation.h"
 #import <OMNStyler.h>
+#import "OMNBankCardCell.h"
 
 @interface OMNBankCardsModel ()
 
@@ -90,38 +91,20 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   static NSString *cellIdentifier = @"cellIdentifier";
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+  OMNBankCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
   
   if (nil == cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-
-    cell.textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-    cell.textLabel.textColor = [UIColor blackColor];
-
+    cell = [[OMNBankCardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
   }
-
   
   OMNBankCard *card = self.cards[indexPath.row];
-
-  UIColor *masked_panColor = nil;
-  UIColor *associationColor = nil;
-
-  if ([card isEqual:self.selectedCard]) {
+  BOOL selected = [card isEqual:self.selectedCard];
+  
+  if (selected) {
     _selectedIndexPath = indexPath;
-    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_card_icon_blue"]];
-    masked_panColor = colorWithHexString(@"4A90E2");
-    associationColor = [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f];
-  }
-  else {
-    masked_panColor = [UIColor blackColor];
-    associationColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-    cell.accessoryView = nil;
   }
   
-  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", card.masked_pan, card.association]];
-  [attributedString setAttributes:@{NSForegroundColorAttributeName : masked_panColor} range:[attributedString.string rangeOfString:card.masked_pan]];
-  [attributedString setAttributes:@{NSForegroundColorAttributeName : associationColor} range:[attributedString.string rangeOfString:card.association]];
-  cell.textLabel.attributedText = attributedString;
+  [cell setBankCard:card selected:selected];
 
   return cell;
   

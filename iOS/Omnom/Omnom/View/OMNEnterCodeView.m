@@ -158,7 +158,7 @@
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.textAlignment = NSTextAlignmentCenter;
     self.keyboardType = UIKeyboardTypeNumberPad;
-    self.font = FuturaLSFOmnomRegular(30.0f);
+    self.font = FuturaLSFOmnomLERegular(30.0f);
     self.textColor = [UIColor blackColor];
     self.backgroundColor = [UIColor clearColor];
   }

@@ -20,12 +20,14 @@
 #import "OMNDemoRestaurantVC.h"
 #import "OMNDenyCLPermissionVC.h"
 #import "OMNAnalitics.h"
+#import "OMNUserInfoVC.h"
 
 @interface OMNSearchVisitorVC ()
 <OMNBeaconSearchManagerDelegate,
 OMNTablePositionVCDelegate,
 OMNScanQRCodeVCDelegate,
-OMNDemoRestaurantVCDelegate>
+OMNDemoRestaurantVCDelegate,
+OMNUserInfoVCDelegate>
 
 @end
 
@@ -49,6 +51,22 @@ OMNDemoRestaurantVCDelegate>
     
   }
   return self;
+}
+
+- (UIBarButtonItem *)userInfoButton {
+  
+  UIBarButtonItem *userInfoButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserProfile)];
+  return userInfoButton;
+  
+}
+
+- (void)showUserProfile {
+  
+  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithVisitor:self.visitor];
+  userInfoVC.delegate = self;
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
+  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+  
 }
 
 - (void)viewDidLoad {
@@ -178,6 +196,7 @@ OMNDemoRestaurantVCDelegate>
   
   OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
   scanQRCodeVC.backgroundImage = self.backgroundImage;
+  scanQRCodeVC.navigationItem.rightBarButtonItem = [self userInfoButton];
   __weak typeof(self)weakSelf = self;
   scanQRCodeVC.buttonInfo =
   @[
@@ -419,6 +438,8 @@ OMNDemoRestaurantVCDelegate>
   notFoundBeaconVC.faded = YES;
   notFoundBeaconVC.text = NSLocalizedString(@"Телефон в центре стола?\nЗаведение подключено\nк Omnom?", nil);
   notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"weak_signal_table_icon_big"];
+  notFoundBeaconVC.navigationItem.rightBarButtonItem = [self userInfoButton];
+
   __weak typeof(self)weakSelf = self;
   notFoundBeaconVC.buttonInfo =
   @[
@@ -476,6 +497,14 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
+}
+
+#pragma mark - OMNUserInfoVCDelegate
+
+- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
+  
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+  
 }
 
 @end

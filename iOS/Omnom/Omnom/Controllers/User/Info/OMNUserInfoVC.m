@@ -75,13 +75,13 @@
   [_userInfoModel addObserver:self forKeyPath:NSStringFromSelector(@selector(user)) options:NSKeyValueObservingOptionNew context:NULL];
   
   _versionLabel.textAlignment = NSTextAlignmentCenter;
-  _versionLabel.font = FuturaLSFOmnomRegular(15.0);
+  _versionLabel.font = FuturaLSFOmnomLERegular(15.0f);
   _versionLabel.text = [NSString stringWithFormat:@"version %@ build %@", CURRENT_VERSION, CURRENT_BUILD];
   _versionLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   
   [_pinButton setTitleColor:[UIColor colorWithWhite:135.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
   [_pinButton setImage:[UIImage imageNamed:@"table_marker_icon"] forState:UIControlStateNormal];
-  _pinButton.titleLabel.font = FuturaLSFOmnomRegular(20.0);
+  _pinButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
   [_pinButton setTitle:_visitor.table.internal_id forState:UIControlStateNormal];
   _pinButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 5.0f, 0.0f, 0.0f);
   
@@ -102,6 +102,8 @@
   self.navigationItem.titleView = closeButton;
   
   [self updateUserInfo];
+  
+  _pinButton.hidden = (nil == _visitor);
   
 }
 
