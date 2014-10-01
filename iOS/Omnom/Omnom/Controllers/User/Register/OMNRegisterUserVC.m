@@ -195,7 +195,7 @@ UITextFieldDelegate>
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-|" options:0 metrics:metrics views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-[tf4]-[errorLabel]-[disclamerView]-|" options:0 metrics:nil views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-[tf4]-[disclamerView]-[errorLabel]-|" options:0 metrics:nil views:views]];
 
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   
