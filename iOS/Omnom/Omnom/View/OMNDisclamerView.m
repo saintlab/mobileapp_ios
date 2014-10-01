@@ -20,22 +20,18 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    [self setup];
+    [self omn_setup];
   }
   return self;
 }
 
 - (void)awakeFromNib {
-  [self setup];
+  [self omn_setup];
 }
 
-- (void)setup {
+- (void)omn_setup {
   
   self.translatesAutoresizingMaskIntoConstraints = NO;
-  self.scrollEnabled = NO;
-  self.editable = NO;
-  self.textContainer.lineFragmentPadding = 0;
-  self.textContainerInset = UIEdgeInsetsMake(0, 0, 0, 0);
   self.delegate = self;
   
   NSString *buttonText = NSLocalizedString(@"Пользовательское соглашение", nil);
@@ -45,7 +41,7 @@
   [attributedString setAttributes:
   @{
     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
-    NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
+    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
     } range:NSMakeRange(0, text.length)];
   
   [attributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://legal.saintlab.com/omnom/user-agreement/"] range:[text rangeOfString:buttonText]];
@@ -53,7 +49,7 @@
   self.linkTextAttributes =
   @{
     NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
-    NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
+    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
     };
   self.attributedText = attributedString;
 

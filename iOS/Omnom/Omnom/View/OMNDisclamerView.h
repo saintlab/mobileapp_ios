@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNNonSelectableTextView.h"
 
-@interface OMNDisclamerView : UITextView
+@interface OMNDisclamerView : OMNNonSelectableTextView
 
 @end

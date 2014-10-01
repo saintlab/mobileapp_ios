@@ -76,7 +76,7 @@
   
   _errorLabel = [[UILabel alloc] init];
   _errorLabel.numberOfLines = 0;
-  _errorLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _errorLabel.font = FuturaOSFOmnomRegular(18.0f);
   _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _errorLabel.textColor = colorWithHexString(@"D0021B");
   _errorLabel.textAlignment = NSTextAlignmentCenter;

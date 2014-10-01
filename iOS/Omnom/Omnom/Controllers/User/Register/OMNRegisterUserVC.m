@@ -118,7 +118,7 @@ UITextFieldDelegate>
   
   _errorLabel = [[UILabel alloc] init];
   _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _errorLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _errorLabel.font = FuturaOSFOmnomRegular(18.0f);
   _errorLabel.textColor = colorWithHexString(@"d0021b");
   _errorLabel.text = nil;
   _errorLabel.textAlignment = NSTextAlignmentCenter;
@@ -195,7 +195,7 @@ UITextFieldDelegate>
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-|" options:0 metrics:metrics views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-[tf4]-45-[errorLabel]-[disclamerView]-|" options:0 metrics:nil views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-[tf4]-[errorLabel]-[disclamerView]-|" options:0 metrics:nil views:views]];
 
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   
@@ -390,7 +390,8 @@ UITextFieldDelegate>
   _currentTextField = textField;
   
   CGRect textFieldFrame = [textField convertRect:textField.bounds toView:_scroll];
-  [_scroll setContentOffset:CGPointMake(0.0f, textFieldFrame.origin.y - 20.0f) animated:YES];
+  CGPoint contentOffset = CGPointMake(0.0f, textFieldFrame.origin.y - 20.0f);
+  [_scroll setContentOffset:contentOffset animated:YES];
   
 }
 
