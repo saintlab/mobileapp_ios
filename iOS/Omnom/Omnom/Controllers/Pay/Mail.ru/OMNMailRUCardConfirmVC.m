@@ -19,6 +19,7 @@
 #import "OMNOperationManager.h"
 #import "OMNDotTextField.h"
 #import "OMNLabeledTextField.h"
+#import <OMNStyler.h>
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate>
@@ -125,12 +126,17 @@
     @"contentView" : contentView,
     };
   
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    };
+  
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:nil views:views]];
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[textLabel]-|" options:0 metrics:0 views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardHoldValueTF]-|" options:0 metrics:0 views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textLabel]-|" options:0 metrics:0 views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardHoldValueTF]-|" options:0 metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-|" options:0 metrics:0 views:views]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeft relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];

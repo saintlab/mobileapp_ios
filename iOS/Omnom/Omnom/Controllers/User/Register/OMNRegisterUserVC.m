@@ -171,21 +171,26 @@ UITextFieldDelegate>
     @"scroll" : _scroll,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views]];
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:nil views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf1]-|" options:0 metrics:nil views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf2]-|" options:0 metrics:nil views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf3]-|" options:0 metrics:nil views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[tf4]-|" options:0 metrics:nil views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[disclamerView]-|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:metrics views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[errorLabel]-|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:metrics views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf1]-|" options:0 metrics:metrics views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf2]-|" options:0 metrics:metrics views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf3]-|" options:0 metrics:metrics views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf4]-|" options:0 metrics:metrics views:views]];
+
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[disclamerView]-|" options:0 metrics:metrics views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-|" options:0 metrics:metrics views:views]];
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-[tf4]-45-[errorLabel]-[disclamerView]-|" options:0 metrics:nil views:views]];
 

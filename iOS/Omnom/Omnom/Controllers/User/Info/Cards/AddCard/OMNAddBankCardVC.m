@@ -13,6 +13,7 @@
 #import "OMNAuthorisation.h"
 #import "OMNCardBrandView.h"
 #import "OMNBorderedButton.h"
+#import <OMNStyler.h>
 
 @interface OMNAddBankCardVC ()
 <CardIOPaymentViewControllerDelegate,
@@ -73,9 +74,14 @@ OMNCardEnterControlDelegate>
     @"bankCardDescriptionView" : bankCardDescriptionView,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardEnterControl]-|" options:0 metrics:nil views:views]];
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[bankCardDescriptionView]" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardEnterControl]-|" options:0 metrics:metrics views:views]];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[bankCardDescriptionView]" options:0 metrics:metrics views:views]];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-[bankCardDescriptionView]-[addCardButton]" options:0 metrics:nil views:views]];
   

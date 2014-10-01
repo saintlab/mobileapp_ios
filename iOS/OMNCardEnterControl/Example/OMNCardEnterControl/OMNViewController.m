@@ -8,6 +8,7 @@
 
 #import "OMNViewController.h"
 #import <OMNCardEnterControl.h>
+#import <OMNStyler.h>
 
 @interface OMNViewController ()
 <OMNCardEnterControlDelegate>
@@ -32,7 +33,12 @@
     @"topLayoutGuide" : self.topLayoutGuide,
     };
   
-  NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardEnterControl]-|" options:0 metrics:nil views:views];
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    };
+  
+  NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardEnterControl]-|" options:0 metrics:metrics views:views];
   [self.view addConstraints:panH];
 
   NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]" options:0 metrics:nil views:views];

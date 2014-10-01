@@ -90,8 +90,13 @@ UITextViewDelegate> {
     @"topLayoutGuide" : self.topLayoutGuide,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[loginTF]-|" options:0 metrics:nil views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[hintTextView]-|" options:0 metrics:nil views:views]];
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    };
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[loginTF]-|" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintTextView]-|" options:0 metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]-[hintTextView]" options:0 metrics:nil views:views]];
   
   _loginTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);

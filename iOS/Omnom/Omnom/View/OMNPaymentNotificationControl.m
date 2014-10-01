@@ -9,6 +9,7 @@
 #import "OMNPaymentNotificationControl.h"
 #import "OMNUtils.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import <OMNStyler.h>
 
 @interface OMNPaymentNotificationControl()
 
@@ -48,8 +49,13 @@
       @"closeButton" : _closeButton,
       };
     
+    NSDictionary *metrics =
+    @{
+      @"leftOffset" : [[OMNStyler styler] leftOffset],
+      };
+    
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-20-[closeButton]|" options:0 metrics:0 views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[closeButton]|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[closeButton]|" options:0 metrics:0 views:views]];
     [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|" options:0 metrics:nil views:views]];
     [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(64.0)]" options:0 metrics:nil views:views]];
