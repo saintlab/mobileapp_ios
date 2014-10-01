@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "ic_external_link@1x.png"
+      "filename" : "ic_breakfast.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "ic_external_link@2x.png"
+      "filename" : "ic_breakfast@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "ic_external_link@3x.png"
+      "filename" : "ic_breakfast@3x.png"
     }
   ],
   "info" : {

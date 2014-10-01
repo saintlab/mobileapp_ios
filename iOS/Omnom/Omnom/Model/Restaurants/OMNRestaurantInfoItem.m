@@ -67,13 +67,13 @@ RestaurantInfoItemType typeFromString(NSString *s) {
     case kRestaurantInfoItemTypeText: {
     } break;
     case kRestaurantInfoItemTypeBreakfast: {
-      
+      icon = [UIImage imageNamed:@"ic_breakfast"];
     } break;
     case kRestaurantInfoItemTypeExternaLink: {
       icon = [UIImage imageNamed:@"external_link_icon"];
     } break;
     case kRestaurantInfoItemTypeLunch: {
-
+      icon = [UIImage imageNamed:@"ic_lunch"];
     } break;
   }
   return icon;
