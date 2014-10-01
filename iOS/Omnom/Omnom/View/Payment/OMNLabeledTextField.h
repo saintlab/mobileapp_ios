@@ -10,6 +10,8 @@
 
 @interface OMNLabeledTextField : UITextField
 
+@property (nonatomic, copy) NSString *detailedText;
+
 - (void)setDetailedText:(NSString *)text;
 
 @end

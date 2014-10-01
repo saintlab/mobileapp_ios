@@ -18,8 +18,7 @@
 #import "OMNAnalitics.h"
 #import "OMNOperationManager.h"
 #import "OMNDotTextField.h"
-
-#define kCurrencyString @" руб."
+#import "OMNLabeledTextField.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate>
@@ -33,6 +32,7 @@
   OMNBankCardInfo *_bankCardInfo;
   OMNErrorTextField *_cardHoldValueTF;
   UILabel *_textLabel;
+  NSString *_detailedText;
 }
 
 - (void)dealloc {
@@ -50,7 +50,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.navigationItem.title = NSLocalizedString(@"Привязка карты", nil);
+  self.navigationItem.title = NSLocalizedString(@"CARD_CONFIRM_NAVIGATION_TITLE", @"Привязка карты");
   self.view.backgroundColor = [UIColor whiteColor];
   
   [self setupView];
@@ -64,18 +64,28 @@
   [super viewDidAppear:animated];
 
   [self registerCard];
+//  _cardHoldValueTF.backgroundColor = [UIColor redColor];
 //  _cardHoldValueTF.textField.enabled = YES;
 //  [_cardHoldValueTF.textField becomeFirstResponder];
+//  NSString *errorText = NSLocalizedString(@"CARD_CONFIRM_WRONG_ENTER_AMOUNT_ERROR", @"Введена неверная проверочная сумма. Загляните в последние SMS. Там должно быть сообщение\nот банка. Введите сумму из SMS. Если сообщения нет, в банковской выписке посмотрите последнее списание.");
+//  [_cardHoldValueTF setError:errorText];
+//  _textLabel.backgroundColor = [UIColor greenColor];
+//  self.card_id = @"123";
+  
 }
 
 - (void)startLoader {
+  
   UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   [spinner startAnimating];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+  
 }
 
 - (void)addDoneButton {
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Привязать", nil) style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)];
+  
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"CARD_CONFIRM_ENTER_BUTTON_TITLE", @"Привязать") style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)];
+  
 }
 
 - (void)setupView {
@@ -96,9 +106,12 @@
   _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:15.0f];
   [contentView addSubview:_textLabel];
   
-  _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f textFieldClass:[OMNDotTextField class]];
+  _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f textFieldClass:[OMNLabeledTextField class]];
+  _detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
+  [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:_detailedText];
   _cardHoldValueTF.textField.textAlignment = NSTextAlignmentCenter;
-  _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00%@", omnCommaString(), kCurrencyString];
+  _cardHoldValueTF.textField.keyboardType = UIKeyboardTypeDecimalPad;
+  _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00 %@", omnCommaString(), kRubleSign];
   _cardHoldValueTF.textField.enabled = NO;
   _cardHoldValueTF.textField.delegate = self;
   [contentView addSubview:_cardHoldValueTF];
@@ -115,7 +128,7 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:nil views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-[textLabel]-|" options:0 metrics:0 views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[textLabel]-|" options:0 metrics:0 views:views]];
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[cardHoldValueTF]-|" options:0 metrics:0 views:views]];
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[textLabel]-|" options:0 metrics:0 views:views]];
   
@@ -147,7 +160,7 @@
   
   _bankCardInfo.card_id = card_id;
   if (_card_id) {
-    _textLabel.text = NSLocalizedString(@"Для привязки карты вам нужно подтвердить, что вы её владелец. Мы списали с вашей карты секретную сумму (до 50 руб.), о чём вам должна прийти SMS от банка. Посмотрите в сообщении, сколько списано и укажите сумму в поле выше.", nil);
+    _textLabel.text = NSLocalizedString(@"CARD_CONFIRM_HINT_LABEL_TEXT", @"Для привязки карты вам нужно подтвердить, что вы её владелец.\nМы списали с вашей карты секретную сумму (до 50 руб.), о чём вам должна прийти SMS от банка.\nПосмотрите в сообщении, сколько списано и укажите сумму в поле выше.");
     _cardHoldValueTF.textField.enabled = YES;
     [_cardHoldValueTF.textField becomeFirstResponder];
     [self addDoneButton];
@@ -181,10 +194,10 @@
     NSString *code = response[@"error"][@"code"];
     NSString *errorText = nil;
     if ([code isEqualToString:@"ERR_CARD_AMOUNT"]) {
-      errorText = NSLocalizedString(@"Введена неверная проверочная сумма.\nЗагляните в последние SMS. Там должно быть сообщение от банка. Введите сумму из SMS. Если сообщения нет, в банковской выписке посмотрите последнее списание.", nil);
+      errorText = NSLocalizedString(@"CARD_CONFIRM_WRONG_ENTER_AMOUNT_ERROR", @"Введена неверная проверочная сумма. Загляните в последние SMS. Там должно быть сообщение\nот банка. Введите сумму из SMS. Если сообщения нет, в банковской выписке посмотрите последнее списание.");
     }
     else {
-      errorText = NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil);
+      errorText = NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку");
     }
     
     [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_VERIFY" parametrs:response];
@@ -244,7 +257,7 @@
     [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_REGISTER" parametrs:response];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"repeat_icon_small"] style:UIBarButtonItemStylePlain target:self action:@selector(registerCard)];
-    [_cardHoldValueTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil)];
+    [_cardHoldValueTF setError:NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку")];
   }
 
 }
@@ -254,7 +267,7 @@
 }
 
 - (NSString *)currentAmountString {
-  return [_cardHoldValueTF.textField.text stringByReplacingOccurrencesOfString:kCurrencyString withString:@""];
+  return [_cardHoldValueTF.textField.text stringByReplacingOccurrencesOfString:kRubleSign withString:@""];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -262,7 +275,6 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
   NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-  finalString = [finalString stringByReplacingOccurrencesOfString:kCurrencyString withString:@""];
   
   if ([string isEqualToString:omnCommaString()]) {
     
@@ -313,7 +325,7 @@
 
 - (void)setAmountString:(NSString *)amountString {
 
-  [_cardHoldValueTF setText:amountString description:kCurrencyString];
+  _cardHoldValueTF.textField.text = amountString;
   
 }
 

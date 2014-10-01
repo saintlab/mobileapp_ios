@@ -13,13 +13,12 @@
 
 @interface OMNErrorTextField ()
 
-@property (nonatomic, strong, readonly) UITextView *errorTextView;
-
 @end
 
 @implementation OMNErrorTextField {
   UIView *_colorView;
   UILabel *_label;
+  UILabel *_errorLabel;
   Class _textFieldClass;
 }
 
@@ -75,21 +74,20 @@
   _colorView.translatesAutoresizingMaskIntoConstraints = NO;
   [self addSubview:_colorView];
   
-  _errorTextView = [[OMNNonSelectableTextView alloc] init];
-  _errorTextView.selectable = NO;
-  _errorTextView.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-  _errorTextView.translatesAutoresizingMaskIntoConstraints = NO;
-  _errorTextView.textColor = colorWithHexString(@"D0021B");
-  _errorTextView.textAlignment = NSTextAlignmentCenter;
-  [self addSubview:_errorTextView];
+  _errorLabel = [[UILabel alloc] init];
+  _errorLabel.numberOfLines = 0;
+  _errorLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _errorLabel.textColor = colorWithHexString(@"D0021B");
+  _errorLabel.textAlignment = NSTextAlignmentCenter;
+  [self addSubview:_errorLabel];
   
   NSDictionary *views =
   @{
     @"textField" : _textField,
     @"colorView" : _colorView,
-    @"errorLabel" : _errorTextView,
+    @"errorLabel" : _errorLabel,
     };
-  
   
   if (_controlWidth > 0.0f) {
     NSDictionary *metrics = @{@"width" : @(_controlWidth)};
@@ -156,7 +154,7 @@
 
 - (void)setError:(NSString *)text {
   
-  _errorTextView.text = text;
+  _errorLabel.text = text;
   [self layoutIfNeeded];
   [self updateColorView];
   
@@ -164,8 +162,7 @@
 
 - (void)updateColorView {
   
-  if (_errorTextView.text.length ||
-      _errorTextView.attributedText.length) {
+  if (_errorLabel.text.length) {
     _colorView.backgroundColor = colorWithHexString(@"D0021B");
   }
   else if(_textField.editing) {

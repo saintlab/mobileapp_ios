@@ -29,8 +29,6 @@
     else {
       self.background_color = [UIColor blackColor];
     }
-#warning background_color
-//    self.background_color = [UIColor blackColor];
   }
   return self;
 }

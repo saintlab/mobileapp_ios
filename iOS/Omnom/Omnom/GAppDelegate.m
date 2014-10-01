@@ -90,7 +90,6 @@
   self.window.backgroundColor = [UIColor whiteColor];
   self.window.tintColor = [UIColor blackColor];
   
-//  OMNRatingVC *startVC = [[OMNRatingVC alloc] init];
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   startVC.info = info;
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];

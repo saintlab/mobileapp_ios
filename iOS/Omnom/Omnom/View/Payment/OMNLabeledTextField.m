@@ -13,9 +13,7 @@
 
 @end
 
-@implementation OMNLabeledTextField {
-  NSString *_detailedText;
-}
+@implementation OMNLabeledTextField 
 
 - (instancetype)init {
   self = [super init];
@@ -52,6 +50,16 @@
   editingText = [editingText stringByAppendingString:_detailedText];
   [super setText:editingText];
   [self updateSelectedRange];
+  
+}
+
+- (NSString *)text {
+  
+  NSString *text = super.text;
+  if (_detailedText.length) {
+    text = [text stringByReplacingOccurrencesOfString:_detailedText withString:@""];
+  }
+  return text;
   
 }
 
