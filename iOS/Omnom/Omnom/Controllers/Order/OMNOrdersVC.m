@@ -57,7 +57,7 @@ UICollectionViewDelegate>
   _collectionView.backgroundColor = [UIColor clearColor];
   self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
   
-  OMNToolbarButton *cancelButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Отмена", nil)];
+  OMNToolbarButton *cancelButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Закрыть", nil)];
   [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
