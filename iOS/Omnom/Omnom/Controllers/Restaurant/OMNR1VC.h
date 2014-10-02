@@ -10,7 +10,6 @@
 
 @class OMNRestaurantMediator;
 @class OMNVisitor;
-@protocol OMNR1VCDelegate;
 
 @interface OMNR1VC : OMNCircleRootVC
 

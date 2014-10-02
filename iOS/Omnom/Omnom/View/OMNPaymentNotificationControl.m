@@ -10,6 +10,7 @@
 #import "OMNUtils.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <OMNStyler.h>
+#import "OMNAuthorisation.h"
 
 @interface OMNPaymentNotificationControl()
 
@@ -33,7 +34,7 @@
     
     _closeButton = [[UIButton alloc] init];
     [_closeButton setImage:[UIImage imageNamed:@"cross_icon_white"] forState:UIControlStateNormal];
-    _closeButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+    _closeButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
     _closeButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     _closeButton.titleLabel.minimumScaleFactor = 0.2f;
     _closeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -55,7 +56,7 @@
       };
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[closeButton]|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[closeButton]-|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[closeButton]|" options:0 metrics:0 views:views]];
     [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|" options:0 metrics:nil views:views]];
     [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(64.0)]" options:0 metrics:nil views:views]];
@@ -84,7 +85,23 @@
   NSDictionary *user = paymentData[@"user"];
   NSDictionary *transaction = paymentData[@"transaction"];
   
-  NSString *title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено %@ руб.", nil), user[@"name"], [OMNUtils commaStringFromKop:[transaction[@"amount"] longLongValue]]];
+  long long totalAmount = [transaction[@"amount"] longLongValue];
+  long long tipAmount = [transaction[@"tip"] longLongValue];
+  long long netAmount = totalAmount - tipAmount;
+  
+  NSString *title = @"";
+  NSString *userID = [user[@"id"] description];
+  
+  if ([userID isEqualToString:[OMNAuthorisation authorisation].user.id]) {
+    
+    title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено по счету %@ + чай %@", nil), user[@"name"], [OMNUtils moneyStringFromKop:netAmount], [OMNUtils moneyStringFromKop:tipAmount]];
+    
+  }
+  else {
+    
+    title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено по счету %@", nil), user[@"name"], [OMNUtils moneyStringFromKop:netAmount]];
+    
+  }
   [control.closeButton setTitle:title forState:UIControlStateNormal];
   
   [self playPaySound];

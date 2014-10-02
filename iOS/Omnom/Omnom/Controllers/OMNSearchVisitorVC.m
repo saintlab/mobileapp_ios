@@ -74,7 +74,6 @@ OMNUserInfoVCDelegate>
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
   if (_cancelBlock) {
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
     _cancelButton = [[UIButton alloc] init];
     [_cancelButton setImage:[UIImage imageNamed:@"cross_icon_white"] forState:UIControlStateNormal];
     [_cancelButton sizeToFit];
