@@ -39,6 +39,7 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
   OMNRestaurant *_restaurant;
   OMNCircleAnimation *_circleAnimation;
   __weak OMNRestaurantMediator *_restaurantMediator;
+  BOOL _viewDidAppear;
 }
 
 - (void)dealloc {
@@ -101,12 +102,14 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
 - (void)viewWillAppear:(BOOL)animated {
   
   [super viewWillAppear:animated];
+  _viewDidAppear = YES;
   [self beginCircleAnimationIfNeeded];
   
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
+  _viewDidAppear = NO;
   [_circleAnimation finishCircleAnimation];
 }
 
@@ -222,7 +225,7 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
 - (void)beginCircleAnimationIfNeeded {
   
   if (_visitor.waiterIsCalled &&
-      _isViewVisible) {
+      _viewDidAppear) {
     [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
   }
   

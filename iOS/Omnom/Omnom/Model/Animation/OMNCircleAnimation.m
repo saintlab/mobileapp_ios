@@ -68,7 +68,7 @@
   
   NSTimeInterval duration = 2.5;
   NSTimeInterval delay = 0.0f;
-  NSTimeInterval animationPause = 3.0;
+  NSTimeInterval animationPause = 1.5;
   NSTimeInterval totalAnimationCicleDuration = duration*animationRepeatCount + animationPause;
   _circleAnimationTimer = [NSTimer bk_scheduledTimerWithTimeInterval:totalAnimationCicleDuration block:^(NSTimer *timer) {
     
