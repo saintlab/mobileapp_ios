@@ -8,6 +8,8 @@
 
 #import "OMNEnterCodeView.h"
 #import "OMNConstants.h"
+#import <OMNStyler.h>
+
 @interface OMNEnterCodeTextField : UITextField
 
 @end
@@ -155,10 +157,11 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
+    self.tintColor = colorWithHexString(@"157EFB");
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.textAlignment = NSTextAlignmentCenter;
     self.keyboardType = UIKeyboardTypeNumberPad;
-    self.font = FuturaLSFOmnomLERegular(30.0f);
+    self.font = FuturaLSFOmnomLERegular(25.0f);
     self.textColor = [UIColor blackColor];
     self.backgroundColor = [UIColor clearColor];
   }
