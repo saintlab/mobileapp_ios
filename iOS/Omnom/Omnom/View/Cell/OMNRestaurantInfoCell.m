@@ -9,6 +9,7 @@
 #import "OMNRestaurantInfoCell.h"
 #import "OMNRestaurantInfoItem.h"
 #import <OMNStyler.h>
+#import "OMNConstants.h"
 
 @implementation OMNRestaurantInfoCell {
   OMNRestaurantInfoItem *_restaurantInfoItem;
@@ -19,15 +20,20 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
+    self.contentView.opaque = YES;
+    self.contentView.backgroundColor = [UIColor whiteColor];
     
     _iconView = [[UIImageView alloc] init];
+    _iconView.opaque = YES;
     _iconView.contentMode = UIViewContentModeLeft;
     _iconView.translatesAutoresizingMaskIntoConstraints = NO;
     [_iconView sizeToFit];
     [self.contentView addSubview:_iconView];
     
     _label = [[UILabel alloc] init];
-    _label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+    _label.opaque = YES;
+    _label.backgroundColor = [UIColor whiteColor];
+    _label.font = FuturaOSFOmnomRegular(18.0f);
     _label.numberOfLines = 0;
     _label.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_label];

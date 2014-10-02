@@ -8,14 +8,15 @@
 
 #import "OMNCircleRootVC.h"
 #import "UILabel+numberOfLines.h"
+#import "OMNConstants.h"
 
 @interface OMNCircleRootVC ()
 
+@property (nonatomic, strong) UIView *fadeView;
+
 @end
 
-@implementation OMNCircleRootVC {
-  UIView *_fadeView;
-}
+@implementation OMNCircleRootVC
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
   self = [super init];
@@ -37,28 +38,45 @@
     self.circleIcon = _circleIcon;
   }
   
-  _fadeView = [[UIView alloc] init];
-  _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
-  _fadeView.hidden = !self.faded;
-  [self.backgroundView addSubview:_fadeView];
+  if (self.faded) {
+    self.fadeView.hidden = NO;
+  }
   
   self.circleBackground = _circleBackground;
-  self.label.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:25.0f];
-  self.label.numberOfLines = 0;
   self.label.alpha = 0.0f;
-
   self.text = _text;
   [self.view layoutIfNeeded];
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  _fadeView.frame = self.backgroundView.bounds;
+- (UIView *)fadeView {
+  
+  if (_fadeView) {
+    return _fadeView;
+  }
+  
+  _fadeView = [[UIView alloc] init];
+  _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
+  _fadeView.translatesAutoresizingMaskIntoConstraints = NO;
+  _fadeView.hidden = !self.faded;
+  [self.backgroundView addSubview:_fadeView];
+  
+  NSDictionary *views =
+  @{
+    @"fadeView" : _fadeView,
+    };
+  
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:0 metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:0 metrics:nil views:views]];
+  
+  return _fadeView;
 }
 
 - (void)setupCircle {
   
   _label = [[UILabel alloc] init];
+  _label.hidden = YES;
+  _label.font = FuturaOSFOmnomRegular(25.0f);
+  _label.numberOfLines = 0;
   _label.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_label];
   
@@ -112,7 +130,7 @@
     self.label.textAlignment = NSTextAlignmentCenter;
   }
   self.label.textColor = [UIColor blackColor];
-  
+  self.label.hidden = NO;
   [UIView animateWithDuration:0.3 animations:^{
     self.label.alpha = 1.0f;
   }];
@@ -148,7 +166,10 @@
 
 - (void)setFaded:(BOOL)faded {
   _faded = faded;
-  _fadeView.hidden = !self.faded;
+  if (self.isViewLoaded) {
+    self.fadeView.hidden = !self.faded;
+  }
+  
 }
 
 - (void)didReceiveMemoryWarning {

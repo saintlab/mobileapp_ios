@@ -24,8 +24,6 @@
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate>
 
-@property (nonatomic, strong) NSString *card_id;
-
 @end
 
 @implementation OMNMailRUCardConfirmVC {
@@ -33,7 +31,6 @@
   OMNBankCardInfo *_bankCardInfo;
   OMNErrorTextField *_cardHoldValueTF;
   UILabel *_textLabel;
-  NSString *_detailedText;
 }
 
 - (void)dealloc {
@@ -64,7 +61,13 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
-  [self registerCard];
+  if (_bankCardInfo.card_id) {
+    [self setCard_id:_bankCardInfo.card_id];
+  }
+  else {
+    [self registerCard];
+  }
+  
 //  _cardHoldValueTF.backgroundColor = [UIColor redColor];
 //  _cardHoldValueTF.textField.enabled = YES;
 //  [_cardHoldValueTF.textField becomeFirstResponder];
@@ -108,8 +111,8 @@
   [contentView addSubview:_textLabel];
   
   _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f textFieldClass:[OMNLabeledTextField class]];
-  _detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
-  [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:_detailedText];
+  NSString *detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
+  [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:detailedText];
   _cardHoldValueTF.textField.textAlignment = NSTextAlignmentCenter;
   _cardHoldValueTF.textField.keyboardType = UIKeyboardTypeDecimalPad;
   _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00 %@", omnCommaString(), kRubleSign];
@@ -131,12 +134,12 @@
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:metrics views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[textLabel]-|" options:0 metrics:0 views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[textLabel]-|" options:0 metrics:metrics views:views]];
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardHoldValueTF]-|" options:0 metrics:metrics views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-|" options:0 metrics:0 views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-|" options:0 metrics:metrics views:views]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeft relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
@@ -162,10 +165,9 @@
 }
 
 - (void)setCard_id:(NSString *)card_id {
-  _card_id = card_id;
-  
+
   _bankCardInfo.card_id = card_id;
-  if (_card_id) {
+  if (_bankCardInfo.card_id) {
     _textLabel.text = NSLocalizedString(@"CARD_CONFIRM_HINT_LABEL_TEXT", @"Для привязки карты вам нужно подтвердить, что вы её владелец.\nМы списали с вашей карты секретную сумму (до 50 руб.), о чём вам должна прийти SMS от банка.\nПосмотрите в сообщении, сколько списано и укажите сумму в поле выше.");
     _cardHoldValueTF.textField.enabled = YES;
     [_cardHoldValueTF.textField becomeFirstResponder];
@@ -182,7 +184,7 @@
   [self startLoader];
   OMNUser *user = [OMNAuthorisation authorisation].user;
   __weak typeof(self)weakSelf = self;
-  [[OMNMailRuAcquiring acquiring] cardVerify:value user_login:user.id card_id:_card_id completion:^(id response) {
+  [[OMNMailRuAcquiring acquiring] cardVerify:value user_login:user.id card_id:_bankCardInfo.card_id completion:^(id response) {
     
     [weakSelf cardDidVerify:response];
     
@@ -214,7 +216,9 @@
   else {
     
     [_bankCardInfo logCardRegister];
-    [self.delegate mailRUCardConfirmVCDidFinish:self];
+    if (self.didFinishBlock) {
+      self.didFinishBlock();
+    }
     
   }
   

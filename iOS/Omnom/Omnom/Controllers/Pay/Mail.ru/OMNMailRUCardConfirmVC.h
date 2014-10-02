@@ -8,18 +8,11 @@
 
 
 @class OMNBankCardInfo;
-@protocol OMNMailRUCardConfirmVCDelegate;
 
 @interface OMNMailRUCardConfirmVC : UIViewController
 
-@property (nonatomic, weak) id<OMNMailRUCardConfirmVCDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t didFinishBlock;
 
 - (instancetype)initWithCardInfo:(OMNBankCardInfo *)cardInfo;
-
-@end
-
-@protocol OMNMailRUCardConfirmVCDelegate <NSObject>
-
-- (void)mailRUCardConfirmVCDidFinish:(OMNMailRUCardConfirmVC *)mailRUCardConfirmVC;
 
 @end

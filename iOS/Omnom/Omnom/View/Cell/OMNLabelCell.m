@@ -26,7 +26,14 @@
 
 - (void)setup {
   
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
+  self.contentView.opaque = YES;
+  self.contentView.backgroundColor = backgroundColor;
+  
   _label = [[UILabel alloc] init];
+  _label.opaque = YES;
+  _label.backgroundColor = backgroundColor;
   _label.translatesAutoresizingMaskIntoConstraints = NO;
   _label.textColor = [UIColor blackColor];
   _label.font = FuturaOSFOmnomRegular(18.0f);

@@ -70,18 +70,20 @@
   }
   else {
     
-    loadingCircleVC = [[OMNSearchVisitorVC alloc] initWithParent:nil completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
+    OMNSearchVisitorVC *searchVisitorVC = [[OMNSearchVisitorVC alloc] initWithParent:nil completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
       
       [weakSelf didFindVisitor:visitor];
       
     } cancelBlock:nil];
-
+    searchVisitorVC.qr = self.qr;
+    loadingCircleVC = searchVisitorVC;
+    
   }
   UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
   loadingCircleVC.circleBackground = circleBackground;
   loadingCircleVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
   loadingCircleVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-  
+
   dispatch_async(dispatch_get_main_queue(), ^{
     
     [self.navigationController omn_pushViewController:loadingCircleVC animated:YES completion:^{

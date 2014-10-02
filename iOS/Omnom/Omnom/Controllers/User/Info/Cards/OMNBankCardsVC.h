@@ -14,7 +14,6 @@
 @interface OMNBankCardsVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNBankCardsVCDelegate> delegate;
-@property (nonatomic, assign) BOOL allowSaveCard;
 
 @end
 

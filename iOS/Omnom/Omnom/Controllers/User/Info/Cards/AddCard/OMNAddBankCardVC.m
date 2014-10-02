@@ -51,7 +51,7 @@ OMNCardEnterControlDelegate>
   
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
-  [_cardEnterControl setSaveButtonHidden:!self.allowSaveCard];
+  [_cardEnterControl setSaveButtonHidden:YES];
   _cardEnterControl.delegate = self;
   [self.view addSubview:_cardEnterControl];
   
@@ -125,7 +125,9 @@ OMNCardEnterControlDelegate>
 - (IBAction)addCardTap:(id)sender {
 
   _cardInfo.saveCard = _cardEnterControl.saveButtonSelected;
-  [self.delegate addBankCardVC:self didAddCard:_cardInfo];
+  if (self.addCardBlock) {
+    self.addCardBlock(_cardInfo);
+  }
   
 }
 
@@ -150,7 +152,9 @@ OMNCardEnterControlDelegate>
 
 - (void)cancelTap {
   
-  [self.delegate addBankCardVCDidCancel:self];
+  if (self.cancelBlock) {
+    self.cancelBlock();
+  }
   
 }
 

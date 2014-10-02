@@ -10,7 +10,7 @@
 #import "OMNBankCardInfo.h"
 #import <OMNMailRuPaymentInfo.h>
 
-typedef void(^OMNSelectCardBlock)(OMNBankCard *bankCard);
+typedef UIViewController *(^OMNSelectCardBlock)(OMNBankCard *bankCard);
 
 @interface OMNBankCardsModel : NSObject
 <UITableViewDataSource,
@@ -23,5 +23,6 @@ UITableViewDelegate>
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;
 - (void)updateCardSelection;
+- (void)addCardFromViewController:(__weak UIViewController *)viewController;
 
 @end

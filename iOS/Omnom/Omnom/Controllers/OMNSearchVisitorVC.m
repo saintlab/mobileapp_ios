@@ -119,6 +119,13 @@ OMNUserInfoVCDelegate>
     });
     
   }
+  else if (self.qr) {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [weakSelf scanQRCodeVC:nil didScanCode:weakSelf.qr];
+    });
+    
+  }
   else if (nil == _beaconSearchManager) {
     
     _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];

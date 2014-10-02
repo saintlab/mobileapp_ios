@@ -13,7 +13,6 @@
 #import "OMNOrder+network.h"
 #import "OMNMailRuBankCardsModel.h"
 #import "OMNCardBrandView.h"
-#import "OMNAddBankCardVC.h"
 #import <OMNStyler.h>
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNOrder+omn_mailru.h"
@@ -27,8 +26,6 @@
 #import "OMNUtils.h"
 
 @interface OMNMailRUPayVC()
-<OMNAddBankCardVCDelegate,
-OMNMailRUCardConfirmVCDelegate>
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
 
@@ -74,10 +71,10 @@ OMNMailRUCardConfirmVCDelegate>
     _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
   }
   
-//  __weak typeof(self)weakSelf = self;
+  __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
-//    [weakSelf.delegate bankCardsVC:weakSelf didSelectCard:bankCard];
+    return weakSelf;
     
   }];
   
@@ -296,9 +293,7 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (void)addCardTap {
   
-  OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
-  addBankCardVC.delegate = self;
-  [self.navigationController pushViewController:addBankCardVC animated:YES];
+  [_bankCardsModel addCardFromViewController:self];
   
 }
 
@@ -376,30 +371,5 @@ OMNMailRUCardConfirmVCDelegate>
   self.tableView.tableFooterView = tableFooterView;
   
 }
-
-#pragma mark - OMNAddBankCardVCDelegate
-
-- (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCardInfo *)bankCardInfo {
-  
-  OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
-  mailRUCardConfirmVC.delegate = self;
-  [self.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
-  
-}
-
-- (void)addBankCardVCDidCancel:(OMNAddBankCardVC *)addBankCardVC {
-  
-  [self popViewController];
-  
-}
-
-#pragma mark - OMNMailRUCardConfirmVCDelegate
-
-- (void)mailRUCardConfirmVCDidFinish:(OMNMailRUCardConfirmVC *)mailRUCardConfirmVC {
-
-  [self popViewController];
-  
-}
-
 
 @end

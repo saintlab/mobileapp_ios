@@ -21,6 +21,7 @@
 
 - (void)dealloc {
   [_devicePositionManager stop];
+  _devicePositionManager = nil;
 }
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {

@@ -30,7 +30,7 @@
 }
 
 - (NSNumber *)leftOffset {
-  return @(20.0f);
+  return @(15.0f);
 }
 
 - (NSNumber *)bottomToolbarHeight {

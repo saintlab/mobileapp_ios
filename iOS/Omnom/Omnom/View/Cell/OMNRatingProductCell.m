@@ -21,8 +21,8 @@
   }
 }
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithFrame:(CGRect)frame {
+  
   self = [super initWithFrame:frame];
   if (self) {
     _iconView = [[UIImageView alloc] initWithFrame:self.bounds];

@@ -28,12 +28,29 @@
     self.created_at = jsonData[@"created_at"];
     self.external_card_id = jsonData[@"external_card_id"];
     self.masked_pan = jsonData[@"masked_pan"];
-    self.status = jsonData[@"status"];
+    self.status = [self statusFromString:jsonData[@"status"]];
     self.updated_at = jsonData[@"updated_at"];
     self.user_id = jsonData[@"user_id"];
     
   }
   return self;
+}
+
+- (OMNBankCardStatus)statusFromString:(NSString *)string {
+  
+  OMNBankCardStatus status = kOMNBankCardStatusUnknown;
+  
+  if (NO == [string isKindOfClass:[NSString class]]) {
+    //do nothing
+  }
+  else if ([string isEqualToString:@"registered"]) {
+    status = kOMNBankCardStatusRegistered;
+  }
+  else if ([string isEqualToString:@"held"]) {
+    status = kOMNBankCardStatusHeld;
+  }
+  return status;
+  
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -62,21 +79,6 @@
     return self.cardNumber;
   }
 
-}
-
-- (NSString *)fillFormScript {
-  
-  NSString *path = [[NSBundle mainBundle] pathForResource:@"fill-form" ofType:nil];
-  NSString *qFormat = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-  
-  //  NSString *month = [NSString stringWithFormat:@"%02d", self.expiryMonth];
-  //  NSString *year = [NSString stringWithFormat:@"%02d", self.expiryYear - 2000];
-  NSString *cardNumber = @"9000000000000000001";
-  NSString *month = @"01";
-  NSString *year = @"15";
-  NSString *cvv = @"123";
-  
-  return [NSString stringWithFormat:qFormat, @"Test", cardNumber, month, year, cvv];
 }
 
 + (void)getCardsWithCompletion:(void(^)(NSArray *cards))completionBlock failure:(void(^)(NSError *error))failureBlock {

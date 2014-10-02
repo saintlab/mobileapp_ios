@@ -14,8 +14,6 @@
 #import "OMNMailRuBankCardsModel.h"
 
 @interface OMNBankCardsVC ()
-<OMNAddBankCardVCDelegate,
-OMNMailRUCardConfirmVCDelegate>
 
 @end
 
@@ -34,7 +32,7 @@ OMNMailRUCardConfirmVCDelegate>
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
-    [weakSelf.delegate bankCardsVC:weakSelf didSelectCard:bankCard];
+    return weakSelf;
     
   }];
   
@@ -66,34 +64,7 @@ OMNMailRUCardConfirmVCDelegate>
 
 - (IBAction)addCardTap:(id)sender {
   
-  OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
-  addBankCardVC.allowSaveCard = self.allowSaveCard;
-  addBankCardVC.delegate = self;
-  [self.navigationController pushViewController:addBankCardVC animated:YES];
-  
-}
-
-#pragma mark - OMNAddBankCardVCDelegate
-
-- (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCardInfo *)bankCardInfo {
-
-  OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
-  mailRUCardConfirmVC.delegate = self;
-  [self.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
-  
-}
-
-- (void)addBankCardVCDidCancel:(OMNAddBankCardVC *)addBankCardVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
-}
-
-#pragma mark - OMNMailRUCardConfirmVCDelegate
-
-- (void)mailRUCardConfirmVCDidFinish:(OMNMailRUCardConfirmVC *)mailRUCardConfirmVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
+  [_bankCardsModel addCardFromViewController:self];
   
 }
 

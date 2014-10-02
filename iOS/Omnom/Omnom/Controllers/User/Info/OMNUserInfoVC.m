@@ -74,7 +74,11 @@
   _userInfoModel = [[OMNUserInfoModel alloc] init];
   [_userInfoModel addObserver:self forKeyPath:NSStringFromSelector(@selector(user)) options:NSKeyValueObservingOptionNew context:NULL];
   
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
   _versionLabel.textAlignment = NSTextAlignmentCenter;
+  _versionLabel.backgroundColor = backgroundColor;
+  _versionLabel.opaque = YES;
   _versionLabel.font = FuturaLSFOmnomLERegular(15.0f);
   _versionLabel.text = [NSString stringWithFormat:@"version %@ build %@", CURRENT_VERSION, CURRENT_BUILD];
   _versionLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
@@ -89,8 +93,10 @@
 //  [_iconView setImage:[UIImage imageNamed:@"add_photo_button_icon"] forState:UIControlStateNormal];
 
   _userNameLabel.numberOfLines = 3;
+  _userNameLabel.backgroundColor = backgroundColor;
+  _userNameLabel.opaque = YES;
   _userNameLabel.textColor = colorWithHexString(@"000000");
-  _userNameLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+  _userNameLabel.font = FuturaLSFOmnomLERegular(20.0f);
   
   self.tableView.dataSource = _userInfoModel;
 

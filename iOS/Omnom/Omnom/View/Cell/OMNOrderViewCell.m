@@ -47,8 +47,6 @@
     _tableView.transform = CGAffineTransformMakeScale(scale, scale);
     [self addSubview:_tableView];
     
-    
-    
     [_orderDataSource registerCellsForTableView:self.tableView];
   }
   return self;

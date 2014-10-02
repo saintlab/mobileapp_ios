@@ -40,7 +40,7 @@
   [self setTitleColor:colorWithHexString(@"ffffff") forState:UIControlStateSelected];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.textAlignment = NSTextAlignmentCenter;
-  self.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:17.0f];
+  self.titleLabel.font = FuturaLSFOmnomLERegular(17.0f);
   
 }
 

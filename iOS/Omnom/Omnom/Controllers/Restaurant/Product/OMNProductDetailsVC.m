@@ -97,19 +97,29 @@
 
 - (void)setup {
   
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
   _scroll = [[UIScrollView alloc] init];
   _scroll.translatesAutoresizingMaskIntoConstraints = NO;
+  _scroll.opaque = YES;
+  _scroll.backgroundColor = backgroundColor;
   [self.view addSubview:_scroll];
   
   UIView *contentView = [[UIView alloc] init];
+  contentView.opaque = YES;
+  contentView.backgroundColor = backgroundColor;
   contentView.translatesAutoresizingMaskIntoConstraints = NO;
   [_scroll addSubview:contentView];
   
   _imageView = [[UIImageView alloc] init];
+  _imageView.opaque = YES;
+  _imageView.backgroundColor = backgroundColor;
   _imageView.translatesAutoresizingMaskIntoConstraints = NO;
   [contentView addSubview:_imageView];
   
   _textLabel = [[UILabel alloc] init];
+  _textLabel.opaque = YES;
+  _textLabel.backgroundColor = backgroundColor;
   _textLabel.numberOfLines = 0;
   _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [contentView addSubview:_textLabel];

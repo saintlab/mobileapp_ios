@@ -26,6 +26,8 @@
   return YES;
 #endif
   
+  
+  NSLog(@"%@", launchOptions);
   [OMNAuthorisation authorisation];
   
   if ([OMNConstants useBackgroundNotifications]) {
@@ -37,7 +39,7 @@
   }
   
   if (nil == launchOptions[UIApplicationLaunchOptionsLocationKey]) {
-    [self startApplication:nil];
+    [self startApplication:launchOptions];
   }
   
   return YES;
@@ -105,8 +107,11 @@
   
 }
 
+
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   NSLog(@"url recieved: %@", url);
+  NSLog(@"url recieved: %@", [url query]);
   NSLog(@"sourceApplication: %@", sourceApplication);
   NSLog(@"annotation: %@", annotation);
   return YES;

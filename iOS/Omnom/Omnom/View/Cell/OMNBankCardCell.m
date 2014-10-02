@@ -30,17 +30,26 @@
 
 - (void)omn_setup {
   
+  UIColor *backgroundColor = [UIColor whiteColor];
+  self.contentView.opaque = YES;
+  self.contentView.backgroundColor = backgroundColor;
+  
   _label = [[UILabel alloc] init];
   _label.translatesAutoresizingMaskIntoConstraints = NO;
   _label.font = FuturaLSFOmnomLERegular(15.0f);
+  _label.opaque = YES;
+  _label.backgroundColor = backgroundColor;
   _label.textColor = [UIColor blackColor];
+  [_label setContentCompressionResistancePriority:751 forAxis:UILayoutConstraintAxisHorizontal];
   [self.contentView addSubview:_label];
 
   _iconView = [[UIImageView alloc] init];
-  _iconView.contentMode = UIViewContentModeCenter;
+  _iconView.opaque = YES;
+  [_iconView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+  _iconView.backgroundColor = backgroundColor;
+  _iconView.contentMode = UIViewContentModeRight;
   _iconView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentView addSubview:_iconView];
-  
   
   NSDictionary *views =
   @{
@@ -59,10 +68,23 @@
   
 }
 
+- (UILabel *)confirmButton {
+  
+  UILabel *label = [[UILabel alloc] init];
+  label.text = NSLocalizedString(@"CARD_CONFIRM_BUTTON_TITLE", @"Подтвердить");
+  label.textColor = colorWithHexString(@"4A90E2");
+  label.font = FuturaOSFOmnomRegular(15.0f);
+  [label sizeToFit];
+  return label;
+  
+}
+
 - (void)setBankCard:(OMNBankCard *)bankCard selected:(BOOL)selected {
 
   UIColor *masked_panColor = nil;
   UIColor *associationColor = nil;
+  
+  self.accessoryView = (kOMNBankCardStatusHeld == bankCard.status) ? ([self confirmButton]) : (nil);
   
   if (selected) {
     _iconView.image = [UIImage imageNamed:@"selected_card_icon_blue"];
@@ -70,7 +92,7 @@
     associationColor = [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f];
   }
   else {
-    masked_panColor = [UIColor blackColor];
+    masked_panColor = [UIColor colorWithWhite:0.0f alpha:1.0f];
     associationColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
     _iconView.image = nil;
   }

@@ -19,30 +19,38 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
-    [self setup];
+    [self omn_setup];
   }
   return self;
 }
 
 - (void)awakeFromNib {
-  [self setup];
+  [self omn_setup];
 }
 
-- (void)setup {
+- (void)omn_setup {
+  
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
+  self.contentView.opaque = YES;
+  self.contentView.backgroundColor = backgroundColor;
   
   self.selectionStyle = UITableViewCellSelectionStyleBlue;
   self.selectedBackgroundView = [[UIView alloc] init];
   
   _totalLabel = [[UILabel alloc] init];
+  _totalLabel.opaque = YES;
+  _totalLabel.backgroundColor = backgroundColor;
   [_totalLabel setContentHuggingPriority:751 forAxis:UILayoutConstraintAxisVertical];
   _totalLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f];
   _totalLabel.textAlignment = NSTextAlignmentRight;
   _totalLabel.translatesAutoresizingMaskIntoConstraints = NO;
-
   _totalLabel.font = FuturaLSFOmnomLERegular(17.0f);
   [self.contentView addSubview:_totalLabel];
   
   _payLabel = [[UILabel alloc] init];
+  _payLabel.opaque = YES;
+  _payLabel.backgroundColor = backgroundColor;
   [_payLabel setContentHuggingPriority:750 forAxis:UILayoutConstraintAxisVertical];
   _payLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   _payLabel.textAlignment = NSTextAlignmentRight;
@@ -60,11 +68,12 @@
   NSDictionary *metrics =
   @{
     @"labelHeight" : @(24.0f),
+    @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10@751)-[totalLabel(labelHeight@751)]-(2@750)-[payLabel(labelHeight@750)]-(10@751)-|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[totalLabel]-|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payLabel]-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[totalLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
   
 }
 

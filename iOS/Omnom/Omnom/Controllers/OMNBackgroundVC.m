@@ -20,9 +20,14 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.view.backgroundColor = [UIColor whiteColor];
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
+  self.view.backgroundColor = backgroundColor;
+  self.view.opaque = YES;
   
   _backgroundView = [[UIImageView alloc] init];
+  _backgroundView.opaque = YES;
+  _backgroundView.backgroundColor = backgroundColor;
   _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
   _backgroundView.contentMode = UIViewContentModeCenter;
   [self.view insertSubview:_backgroundView atIndex:0];
@@ -84,6 +89,7 @@
   }
   
   UIImageView *iv = [[UIImageView alloc] initWithFrame:_backgroundView.bounds];
+  iv.opaque = YES;
   iv.contentMode = UIViewContentModeCenter;
   iv.alpha = 0.0f;
   iv.image = backgroundImage;

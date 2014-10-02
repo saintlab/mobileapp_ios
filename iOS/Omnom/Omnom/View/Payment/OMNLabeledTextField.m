@@ -47,7 +47,9 @@
 - (void)setText:(NSString *)text {
   
   NSString *editingText = [text stringByReplacingOccurrencesOfString:_detailedText withString:@""];
-  editingText = [editingText stringByAppendingString:_detailedText];
+  if (editingText.length) {
+    editingText = [editingText stringByAppendingString:_detailedText];
+  }
   [super setText:editingText];
   [self updateSelectedRange];
   

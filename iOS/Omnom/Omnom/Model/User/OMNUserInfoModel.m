@@ -140,7 +140,9 @@
   if (cell == nil) {
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     cell.textLabel.textColor = colorWithHexString(@"000000");
-    cell.textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+    cell.textLabel.opaque = YES;
+    cell.textLabel.backgroundColor = [UIColor whiteColor];
+    cell.textLabel.font = FuturaOSFOmnomRegular(18.0f);
   }
   
   OMNUserInfoItem *userInfoItem = [self itemAtIndexPath:indexPath];

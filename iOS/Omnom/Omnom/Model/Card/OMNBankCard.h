@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, OMNBankCardStatus) {
+  kOMNBankCardStatusUnknown = 0,
+  kOMNBankCardStatusHeld,
+  kOMNBankCardStatusRegistered,
+};
+
 @interface OMNBankCard : NSObject
 <NSCoding>
 
@@ -17,7 +23,7 @@
 @property(nonatomic, copy) NSString *created_at;
 @property(nonatomic, copy) NSString *external_card_id;
 @property(nonatomic, copy) NSString *masked_pan;
-@property(nonatomic, copy) NSString *status;
+@property(nonatomic, assign) OMNBankCardStatus status;
 @property(nonatomic, copy) NSString *updated_at;
 @property(nonatomic, copy) NSString *user_id;
 
@@ -40,8 +46,6 @@
 /// Security code (aka CSC, CVV, CVV2, etc.)
 /// @note May be nil, if security code was not requested.
 @property(nonatomic, copy, readwrite) NSString *cvv;
-
-- (NSString *)fillFormScript;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 

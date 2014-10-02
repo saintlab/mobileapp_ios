@@ -33,7 +33,14 @@
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
   if (self) {
     
+    UIColor *backgroundColor = [UIColor whiteColor];
+    
+    self.contentView.backgroundColor = backgroundColor;
+    self.contentView.opaque = YES;
+
     _iconView = [[UIImageView alloc] init];
+    _iconView.backgroundColor = backgroundColor;
+    _iconView.opaque = YES;
     _iconView.clipsToBounds = YES;
     _iconView.contentMode = UIViewContentModeScaleAspectFill;
     _iconView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -45,11 +52,15 @@
     [_iconView addSubview:_spinner];
     
     _textLabel = [[UILabel alloc] init];
+    _textLabel.backgroundColor = backgroundColor;
+    _textLabel.opaque = YES;
     _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
     _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_textLabel];
     
     _priceLabel = [[UILabel alloc] init];
+    _priceLabel.backgroundColor = backgroundColor;
+    _priceLabel.opaque = YES;
     _priceLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
     _priceLabel.textAlignment = NSTextAlignmentRight;
     _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;

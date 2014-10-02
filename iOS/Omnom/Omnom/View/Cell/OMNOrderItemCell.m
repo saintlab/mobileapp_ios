@@ -35,6 +35,11 @@
   
   OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
   
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
+  self.contentView.opaque = YES;
+  self.contentView.backgroundColor = backgroundColor;
+  
   self.selectionStyle = UITableViewCellSelectionStyleDefault;
   self.selectedBackgroundView = [[UIView alloc] init];
   self.selectedBackgroundView.layer.masksToBounds = YES;
@@ -46,6 +51,8 @@
   [self.contentView addSubview:seporatorView];
   
   _nameLabel = [[UILabel alloc] init];
+  _nameLabel.opaque = YES;
+  _nameLabel.backgroundColor = backgroundColor;
   _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _nameLabel.textColor = [style colorForKey:@"nameLabelColor"];
   _nameLabel.font = FuturaLSFOmnomLERegular(18.0f);
@@ -54,6 +61,8 @@
   
   _priceLabel = [[UILabel alloc] init];
   _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _priceLabel.opaque = YES;
+  _priceLabel.backgroundColor = backgroundColor;
   UIColor *priceLabelColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f];
   _priceLabel.textColor = priceLabelColor;
   _priceLabel.font = FuturaLSFOmnomLERegular(17.0f);
@@ -65,33 +74,20 @@
     @"nameLabel" : _nameLabel,
     @"priceLabel" : _priceLabel,
     @"seporatorView" : seporatorView,
-      };
+    };
   
   NSDictionary *metrics =
   @{
-    @"labelsOffset": @(12.0f),
-    @"lowPriority":@(UILayoutPriorityDefaultLow)
+    @"labelsOffset" : @(12.0f),
+    @"lowPriority" : @(UILayoutPriorityDefaultLow),
+    @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[nameLabel][seporatorView(1)]|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[priceLabel]|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[nameLabel]-(labelsOffset)-[priceLabel]-|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[seporatorView]-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[priceLabel]-1-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(labelsOffset)-[priceLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[seporatorView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
   
-}
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-  [super setHighlighted:highlighted animated:animated];
-  if (highlighted) {
-    // Recover backgroundColor of subviews.
-  }
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-  [super setSelected:selected animated:animated];
-  if (selected) {
-    // Recover backgroundColor of subviews.
-  }
 }
 
 - (void)setOrderItem:(OMNOrderItem *)orderItem {

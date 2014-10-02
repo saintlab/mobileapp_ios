@@ -12,15 +12,7 @@
 
 @interface OMNAddBankCardVC : UIViewController
 
-@property (nonatomic, assign) BOOL allowSaveCard;
-@property (nonatomic, weak) id<OMNAddBankCardVCDelegate> delegate;
-
-@end
-
-@protocol OMNAddBankCardVCDelegate <NSObject>
-
-- (void)addBankCardVC:(OMNAddBankCardVC *)addBankCardVC didAddCard:(OMNBankCardInfo *)bankCardInfo;
-
-- (void)addBankCardVCDidCancel:(OMNAddBankCardVC *)addBankCardVC;
+@property (nonatomic, copy) void(^addCardBlock)(OMNBankCardInfo *bankCardInfo);
+@property (nonatomic, copy) dispatch_block_t cancelBlock;
 
 @end

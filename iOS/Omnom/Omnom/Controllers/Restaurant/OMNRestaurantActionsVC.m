@@ -43,6 +43,8 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.view.opaque = YES;
+  self.view.backgroundColor = [UIColor whiteColor];
   
   _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRootViewController:self];
   _r1VC = [[OMNR1VC alloc] initWithMediator:_restaurantMediator];
@@ -70,22 +72,7 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
   [self.navigationController setNavigationBarHidden:YES animated:NO];
-  [self.r1VC beginAppearanceTransition:YES animated:animated];
-}
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  [self.r1VC endAppearanceTransition];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  [self.r1VC beginAppearanceTransition:NO animated:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-  [super viewDidDisappear:animated];
-  [self.r1VC endAppearanceTransition];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

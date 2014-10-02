@@ -96,6 +96,8 @@ UICollectionViewDelegate>
 
 - (void)setup {
  
+
+  
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[[OMNOrderItemsFlowLayout alloc] init]];
   [_collectionView registerClass:[OMNOrderViewCell class] forCellWithReuseIdentifier:@"Cell"];
   _collectionView.delegate = self;
