@@ -64,7 +64,8 @@
   if (_applicationStartedForeground) {
     return;
   }
-  
+  _applicationStartedForeground = YES;
+
   [OMNConstants loadConfigWithCompletion:nil];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
@@ -87,7 +88,6 @@
      NSFontAttributeName : titleFont,
      }];
   
-  _applicationStartedForeground = YES;
   
   [OMNOperationManager sharedManager];
   
@@ -99,6 +99,9 @@
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   startVC.info = info;
+  
+//  OMNViewController*startVC = [[OMNViewController alloc] init];
+  
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
   [self.window makeKeyAndVisible];
   

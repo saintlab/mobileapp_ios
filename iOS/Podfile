@@ -35,7 +35,6 @@ end
 target 'omnom', :exclusive => true do
   import_all
   pod 'CrashlyticsFramework'
-  pod 'EAIntroView'
   pod 'SDWebImage'
   xcodeproj 'Omnom/omnom.xcodeproj'
 end

@@ -42,7 +42,7 @@
   CGRect drawRect = CGRectMake(0, 0, self.size.width, self.size.height);
   [self drawInRect:drawRect];
   [tintColor set];
-  UIRectFillUsingBlendMode(drawRect, kCGBlendModeSourceAtop);
+  UIRectFillUsingBlendMode(drawRect, kCGBlendModeSourceIn);
   UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return tintedImage;
