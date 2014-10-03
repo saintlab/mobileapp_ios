@@ -41,7 +41,7 @@ target 'omnom', :exclusive => true do
 end
 
 target 'omnomTests', :exclusive => true do
-  import_pods
+  import_all
   pod 'OCMock'
   pod 'KIF', '~> 3.0.4'
   pod 'Kiwi'
