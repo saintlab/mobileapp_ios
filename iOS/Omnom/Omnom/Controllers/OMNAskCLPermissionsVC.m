@@ -70,7 +70,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController.navigationItem setHidesBackButton:YES animated:animated];
+  [self.navigationItem setHidesBackButton:YES animated:NO];
   
 }
 

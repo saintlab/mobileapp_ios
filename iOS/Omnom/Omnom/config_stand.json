@@ -10,7 +10,5 @@
   "UseStubBeaconDecodeData" : "false",
   "UseStubOrdersData" : "false",
   
-  "MailRuConfigName" : "OMNMailRu_prod",
-  
   "UseBackgroundNotifications" : "true"
 }

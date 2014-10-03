@@ -71,7 +71,6 @@
   
 }
 
-
 - (void)stop {
   
   _foundNearestBeaconsBlock = nil;

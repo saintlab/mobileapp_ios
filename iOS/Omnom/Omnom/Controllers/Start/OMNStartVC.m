@@ -16,6 +16,7 @@
 #import "OMNAnalitics.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNVisitorManager.h"
+#import "NSURL+omn_query.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
@@ -82,19 +83,9 @@ OMNSearchRestaurantVCDelegate>
   
   if (self.info[UIApplicationLaunchOptionsURLKey]) {
     
-    NSURL *url = self.info[UIApplicationLaunchOptionsURLKey];
-    
-    NSArray *components = [[url query] componentsSeparatedByString:@"&"];
-    NSMutableDictionary *parametrs = [NSMutableDictionary dictionaryWithCapacity:components.count];
-    [components enumerateObjectsUsingBlock:^(NSString *component, NSUInteger idx, BOOL *stop) {
-      
-      NSArray *keyValue = [component componentsSeparatedByString:@"="];
-      if (keyValue.count == 2) {
-        parametrs[keyValue[0]] = keyValue[1];
-      }
-      
-    }];
+    NSDictionary *parametrs = [self.info[UIApplicationLaunchOptionsURLKey] omn_query];
     searchRestaurantVC.qr = parametrs[@"qr"];
+    
   }
   NSData *decodeBeaconData = self.info[OMNDecodeBeaconManagerNotificationLaunchKey];
   if (decodeBeaconData) {

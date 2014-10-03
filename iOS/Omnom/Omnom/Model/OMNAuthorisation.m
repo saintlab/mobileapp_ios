@@ -16,12 +16,6 @@
 
 static NSString * const kAccountName = @"test_account6";
 
-#if OMN_TEST
-NSString * const kTokenServiceName = @"test_token";
-#else
-NSString * const kTokenServiceName = @"token";
-#endif
-
 @interface OMNAuthorisation ()
 
 @property (nonatomic, strong) OMNUser *user;
@@ -41,14 +35,24 @@ NSString * const kTokenServiceName = @"token";
   return manager;
 }
 
+- (NSString *)tokenServiceName {
+  
+#if OMN_TEST
+  NSString *tokenServiceName = @"test_token";
+#else
+  NSString *tokenServiceName = [OMNConstants baseUrlString];
+#endif
+  return tokenServiceName;
+  
+}
+
 - (instancetype)init {
   self = [super init];
   if (self) {
-    
 #if OMN_TEST
     NSString *token = @"yeshackvofPigCob";
 #else
-    NSString *token = [SSKeychain passwordForService:kTokenServiceName account:kAccountName];
+    NSString *token = [SSKeychain passwordForService:[self tokenServiceName] account:kAccountName];
 #endif
     [self updateAuthenticationToken:token withBlock:nil];
   }
@@ -148,10 +152,10 @@ NSString * const kTokenServiceName = @"token";
 
   _token = token;
   if (token) {
-    [SSKeychain setPassword:token forService:kTokenServiceName account:kAccountName];
+    [SSKeychain setPassword:token forService:[self tokenServiceName] account:kAccountName];
   }
   else {
-    [SSKeychain deletePasswordForService:kTokenServiceName account:kAccountName];
+    [SSKeychain deletePasswordForService:[self tokenServiceName] account:kAccountName];
   }
   
   [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];

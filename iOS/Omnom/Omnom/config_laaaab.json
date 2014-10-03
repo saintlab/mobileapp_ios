@@ -8,7 +8,6 @@
   "beaconUUID" : "E2C56DB5-DFFB-48D2-B060-D0F5A71096E0",
   "UseStubBeacon" : "false",
   "UseStubBeaconDecodeData" : "false",
-  "UseStubOrdersData" : "false",
+  "UseStubOrdersData" : "false"
   
-  "MailRuConfigName" : "OMNMailRu_laaaab"
 }

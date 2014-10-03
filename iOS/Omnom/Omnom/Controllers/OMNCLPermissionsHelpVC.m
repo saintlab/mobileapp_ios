@@ -34,6 +34,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  [self.navigationItem setHidesBackButton:YES animated:NO];
+
   self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
   
   [self setup];

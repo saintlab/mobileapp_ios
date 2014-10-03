@@ -15,6 +15,7 @@
 #import "OMNViewController.h"
 #import <Crashlytics/Crashlytics.h>
 #import <OMNMailRuAcquiring.h>
+#import "NSURL+omn_query.h"
 
 @implementation GAppDelegate {
   BOOL _applicationStartedForeground;
@@ -26,6 +27,18 @@
   return YES;
 #endif
   
+#if defined (APP_STORE)
+  [OMNConstants setCustomConfigName:@"config_prod"];
+#else
+  
+  NSDictionary *parametrs = [launchOptions[UIApplicationLaunchOptionsURLKey] omn_query];
+  if (parametrs[@"omnom_config"]) {
+    [OMNConstants setCustomConfigName:parametrs[@"omnom_config"]];
+  }
+  else {
+    [OMNConstants setCustomConfigName:@"config_prod"];
+  }
+#endif
   
   NSLog(@"%@", launchOptions);
   [OMNAuthorisation authorisation];
@@ -53,14 +66,6 @@
   }
   
   [OMNConstants loadConfigWithCompletion:nil];
-  
-#if defined (APP_STORE)
-  [OMNConstants setCustomConfigName:@"config_prod"];
-#elif defined (AD_HOC)
-  [OMNConstants setCustomConfigName:@"config_prod"];
-#else
-  [OMNConstants setCustomConfigName:@"config_prod"];
-#endif
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
   UIFont *buttonFont = FuturaOSFOmnomRegular(20.0f);

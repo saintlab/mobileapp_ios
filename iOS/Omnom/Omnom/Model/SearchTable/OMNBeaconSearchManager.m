@@ -199,7 +199,7 @@ NSTimeInterval kBeaconSearchTimeout = 5.0;
   }
   
   [self.delegate beaconSearchManager:self didChangeState:kSearchManagerStartSearchingBeacons];
-  
+
   _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconSearchTimeout) userInfo:nil repeats:NO];
   
   __weak typeof(self)weakSelf = self;
@@ -216,7 +216,7 @@ NSTimeInterval kBeaconSearchTimeout = 5.0;
   if (0 == nearestBeacons.count) {
     return;
   }
-  
+
   BOOL beaconDidFound = (nearestBeacons.count == 1);
   [self stopRangingNearestBeacons:beaconDidFound];
   [self.delegate beaconSearchManager:self didFindBeacons:nearestBeacons];

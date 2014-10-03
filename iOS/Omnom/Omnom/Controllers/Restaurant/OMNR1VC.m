@@ -102,6 +102,7 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
 - (void)viewWillAppear:(BOOL)animated {
   
   [super viewWillAppear:animated];
+  NSLog(@"viewWillAppear>%@", self.view);
   _viewDidAppear = YES;
   [self beginCircleAnimationIfNeeded];
   

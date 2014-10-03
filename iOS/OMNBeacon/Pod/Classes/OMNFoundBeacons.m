@@ -67,6 +67,8 @@
   }];
 
   
+  NSLog(@"%@", rssiInfo);
+  
   if (rssiInfo.count == 0) {
     return nil;
   }

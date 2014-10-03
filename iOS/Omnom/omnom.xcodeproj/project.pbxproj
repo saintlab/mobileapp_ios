@@ -30,6 +30,8 @@
 		93175DC119C2DD2D005EE4C6 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 93175DBF19C2DD2D005EE4C6 /* UIImage+ImageEffects.m */; };
 		93175DC419C6BEFE005EE4C6 /* TQStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93175DC319C6BEFE005EE4C6 /* TQStarRatingView.m */; };
 		93175DC519C6BEFE005EE4C6 /* TQStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93175DC319C6BEFE005EE4C6 /* TQStarRatingView.m */; };
+		9317C06719DE52000071E42B /* NSURL+omn_query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9317C06619DE52000071E42B /* NSURL+omn_query.m */; };
+		9317C06819DE52000071E42B /* NSURL+omn_query.m in Sources */ = {isa = PBXBuildFile; fileRef = 9317C06619DE52000071E42B /* NSURL+omn_query.m */; };
 		9319FD62192F33B90053F3A4 /* OMNAmountPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD58192F33B90053F3A4 /* OMNAmountPercentControl.m */; };
 		9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5A192F33B90053F3A4 /* OMNNavigationBarSelector.m */; };
 		9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5C192F33B90053F3A4 /* OMNPaymentFooterView.m */; };
@@ -420,6 +422,8 @@
 		93175DBF19C2DD2D005EE4C6 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		93175DC219C6BEFE005EE4C6 /* TQStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TQStarRatingView.h; sourceTree = "<group>"; };
 		93175DC319C6BEFE005EE4C6 /* TQStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TQStarRatingView.m; sourceTree = "<group>"; };
+		9317C06519DE52000071E42B /* NSURL+omn_query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+omn_query.h"; sourceTree = "<group>"; };
+		9317C06619DE52000071E42B /* NSURL+omn_query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+omn_query.m"; sourceTree = "<group>"; };
 		9319FD57192F33B90053F3A4 /* OMNAmountPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAmountPercentControl.h; sourceTree = "<group>"; };
 		9319FD58192F33B90053F3A4 /* OMNAmountPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAmountPercentControl.m; sourceTree = "<group>"; };
 		9319FD59192F33B90053F3A4 /* OMNNavigationBarSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationBarSelector.h; sourceTree = "<group>"; };
@@ -1009,6 +1013,8 @@
 				93998C1119ACB0F800FEE940 /* UILabel+numberOfLines.m */,
 				93D34DAE19D2689800B7BDBE /* NSString+omnScanner.h */,
 				93D34DAF19D2689800B7BDBE /* NSString+omnScanner.m */,
+				9317C06519DE52000071E42B /* NSURL+omn_query.h */,
+				9317C06619DE52000071E42B /* NSURL+omn_query.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2061,6 +2067,7 @@
 				932118321962E35C00183729 /* OMNTransitionFromListToProduct.m in Sources */,
 				93B3689C19A4CD2D00B6E6CB /* OMNSlideUpTransition.m in Sources */,
 				930555111935DB7700E6F4EC /* UINavigationController+omn_replace.m in Sources */,
+				9317C06719DE52000071E42B /* NSURL+omn_query.m in Sources */,
 				938E8F53192F3A200088EF38 /* OMNOperationManager.m in Sources */,
 				933A2E8A19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */,
 				930D8BAB1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
@@ -2237,6 +2244,7 @@
 				932118131962D8A700183729 /* OMNProductsModel.m in Sources */,
 				931B2DF719BC83910071883C /* OMNOrder+tipButton.m in Sources */,
 				9321182D1962E16100183729 /* OMNProductDetailsVC.m in Sources */,
+				9317C06819DE52000071E42B /* NSURL+omn_query.m in Sources */,
 				934FC72F19D054F8008AC4B0 /* OMNOrderPaid.m in Sources */,
 				932118371962E88000183729 /* OMNTransitionFromProductToList.m in Sources */,
 				931BD3881941C04100F77AA7 /* OMNCalcaulcationTests.m in Sources */,
@@ -2514,7 +2522,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "dfcbe9ca-8356-41dd-bf24-1b989626150a";
+				PROVISIONING_PROFILE = "19afd5c8-6124-4eb7-a411-c71fc8d6f02d";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -2744,7 +2752,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "dfcbe9ca-8356-41dd-bf24-1b989626150a";
+				PROVISIONING_PROFILE = "19afd5c8-6124-4eb7-a411-c71fc8d6f02d";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

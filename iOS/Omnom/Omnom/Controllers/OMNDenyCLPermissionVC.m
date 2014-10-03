@@ -26,6 +26,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  [self.navigationItem setHidesBackButton:YES animated:NO];
   self.circleBackground = nil;
   self.circleIcon = [[UIImage imageNamed:@"allow_geolocation_icon_big"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
   self.circleButton.tintColor = [UIColor blackColor];
