@@ -25,7 +25,6 @@
 @end
 
 @implementation OMNBankCardsModel {
-  NSIndexPath *_selectedIndexPath;
   OMNOrder *_order;
   OMNBankCardInfoBlock _paymentWithCardBlock;
 }
@@ -39,12 +38,36 @@
   return self;
 }
 
+- (OMNBankCard *)selectedCard {
+  
+  __block OMNBankCard *selectedCard = nil;
+  NSArray *cards = [self.cards copy];
+  [cards enumerateObjectsUsingBlock:^(OMNBankCard *card, NSUInteger idx, BOOL *stop) {
+    
+    if ([card.id isEqualToString:self.card_id]) {
+      selectedCard = card;
+      *stop = YES;
+    }
+    
+  }];
+  
+  return selectedCard;
+  
+}
+
 - (NSString *)card_id {
   return [SSKeychain passwordForService:@"card_id" account:@"demo"];
 }
 
 - (void)setCard_id:(NSString *)card_id {
-  [SSKeychain setPassword:card_id forService:@"card_id" account:@"demo"];
+  
+  if (card_id) {
+    [SSKeychain setPassword:card_id forService:@"card_id" account:@"demo"];
+  }
+  else {
+    [SSKeychain deletePasswordForService:@"card_id" account:@"demo"];
+  }
+  
 }
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock {
@@ -61,11 +84,18 @@
 
 - (void)updateCardSelection {
   
-  if (self.cards.count) {
-    OMNBankCard *card = [self.cards firstObject];
-    self.card_id = card.id;
-    self.selectedCard = card;
+  if (self.selectedCard) {
+    return;
   }
+  
+  [self.cards enumerateObjectsUsingBlock:^(OMNBankCard *card, NSUInteger idx, BOOL *stop) {
+    
+    if (kOMNBankCardStatusRegistered == card.status) {
+      self.card_id = card.id;
+      *stop = YES;
+    }
+    
+  }];
   
 }
 
@@ -142,12 +172,7 @@
   }
   
   OMNBankCard *card = self.cards[indexPath.row];
-  BOOL selected = [card isEqual:self.selectedCard];
-  
-  if (selected) {
-    _selectedIndexPath = indexPath;
-  }
-  
+  BOOL selected = [card.id isEqualToString:self.card_id];
   [cell setBankCard:card selected:selected];
 
   return cell;
@@ -179,8 +204,6 @@
     [weakTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 
   } failure:^(NSError *error) {
-  
-//    [weakTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
   }];
   
@@ -202,18 +225,8 @@
 
   if (kOMNBankCardStatusRegistered == selectedCard.status) {
     
-    NSMutableArray *indexPaths = [@[indexPath] mutableCopy];
-    
-    if (_selectedIndexPath &&
-        ![_selectedIndexPath isEqual:indexPath]) {
-      [indexPaths addObject:_selectedIndexPath];
-    }
-    
-    self.selectedCard = selectedCard;
-    self.card_id = self.selectedCard.id;
-    
-    [tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-    _selectedIndexPath = indexPath;
+    self.card_id = selectedCard.id;
+    [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     
   }
   else {

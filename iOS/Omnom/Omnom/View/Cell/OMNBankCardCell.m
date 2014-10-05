@@ -38,23 +38,17 @@ NSString * const OMNBankCardCellDeleteIdentifier = @"OMNBankCardCellDeleteIdenti
 
 - (void)omn_setup {
   
-  UIColor *backgroundColor = [UIColor whiteColor];
-  self.contentView.opaque = YES;
-  self.contentView.backgroundColor = backgroundColor;
-  
   _label = [[UILabel alloc] init];
   _label.translatesAutoresizingMaskIntoConstraints = NO;
   _label.font = FuturaLSFOmnomLERegular(15.0f);
-  _label.opaque = YES;
-  _label.backgroundColor = backgroundColor;
+  _label.backgroundColor = [UIColor clearColor];
   _label.textColor = [UIColor blackColor];
   [_label setContentCompressionResistancePriority:751 forAxis:UILayoutConstraintAxisHorizontal];
   [self.contentView addSubview:_label];
 
   _iconView = [[UIImageView alloc] init];
-  _iconView.opaque = YES;
   [_iconView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-  _iconView.backgroundColor = backgroundColor;
+  _iconView.backgroundColor = [UIColor clearColor];
   _iconView.contentMode = UIViewContentModeRight;
   _iconView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentView addSubview:_iconView];
@@ -73,7 +67,6 @@ NSString * const OMNBankCardCellDeleteIdentifier = @"OMNBankCardCellDeleteIdenti
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]|" options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-[iconView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-  
   
 }
 
@@ -114,15 +107,30 @@ NSString * const OMNBankCardCellDeleteIdentifier = @"OMNBankCardCellDeleteIdenti
   UIColor *masked_panColor = nil;
   UIColor *associationColor = nil;
   
-  if (selected) {
+  self.backgroundView = nil;
+  _iconView.image = nil;
+
+  if (kOMNBankCardStatusHeld == bankCard.status) {
+    
+    UIView *backgroundView = [[UIView alloc] init];
+    backgroundView.backgroundColor = [UIColor colorWithWhite:216.0f/255.0f alpha:1.0f];
+    self.backgroundView = backgroundView;
+    masked_panColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
+    associationColor = [UIColor colorWithWhite:0.0f alpha:0.15f];
+    
+  }
+  else if (selected) {
+    
     _iconView.image = [UIImage imageNamed:@"selected_card_icon_blue"];
     masked_panColor = colorWithHexString(@"4A90E2");
     associationColor = [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f];
+    
   }
   else {
+    
     masked_panColor = [UIColor colorWithWhite:0.0f alpha:1.0f];
     associationColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-    _iconView.image = nil;
+    
   }
 
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", bankCard.masked_pan, bankCard.association]];

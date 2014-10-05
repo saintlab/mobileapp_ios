@@ -52,31 +52,7 @@ NSString * const kCardIdServiceName = @"card_id";
 - (void)didLoadCards:(NSArray *)cards {
   
   _cards = [cards mutableCopy];
-
-  if (nil == self.card_id) {
-    
-    [self updateCardSelection];
-    
-  }
-  else {
-    
-    __block OMNBankCard *selectedCard = nil;
-    NSString *card_id = self.card_id;
-    [_cards enumerateObjectsUsingBlock:^(OMNBankCard *bankCard, NSUInteger idx, BOOL *stop) {
-      if ([bankCard.id isEqualToString:card_id]) {
-        selectedCard = bankCard;
-        *stop = YES;
-      }
-    }];
-    
-    if (selectedCard) {
-      self.selectedCard = selectedCard;
-    }
-    else {
-      [self updateCardSelection];
-    }
-    
-  }
+  [self updateCardSelection];
   
 }
 
