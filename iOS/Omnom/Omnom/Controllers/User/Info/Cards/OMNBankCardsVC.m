@@ -12,6 +12,9 @@
 #import "OMNConstants.h"
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNMailRuBankCardsModel.h"
+#import <BlocksKit.h>
+
+NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdentifier";
 
 @interface OMNBankCardsVC ()
 
@@ -20,6 +23,10 @@
 @implementation OMNBankCardsVC {
   OMNBankCardsModel *_bankCardsModel;
   __weak IBOutlet UIButton *_addCardButton;
+}
+
+- (void)dealloc {
+  [_bankCardsModel bk_removeObserversWithIdentifier:OMNBankCardsVCLoadingIdentifier];
 }
 
 - (void)viewDidLoad {
@@ -33,6 +40,15 @@
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
     return weakSelf;
+    
+  }];
+
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+  
+  [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) identifier:OMNBankCardsVCLoadingIdentifier options:NSKeyValueObservingOptionNew task:^(OMNMailRuBankCardsModel *obj, NSDictionary *change) {
+    
+    (obj.loading) ? ([spinner startAnimating]) : ([spinner stopAnimating]);
     
   }];
   
@@ -64,7 +80,7 @@
 
 - (IBAction)addCardTap:(id)sender {
   
-  [_bankCardsModel addCardFromViewController:self];
+  [_bankCardsModel addCardFromViewController:self forOrder:nil requestPaymentWithCard:nil];
   
 }
 

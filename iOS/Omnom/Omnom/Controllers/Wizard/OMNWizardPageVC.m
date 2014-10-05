@@ -8,6 +8,7 @@
 
 #import "OMNWizardPageVC.h"
 #import <OMNStyler.h>
+#import "UIImage+omn_helper.h"
 
 @interface OMNWizardPageVC ()
 
@@ -33,8 +34,9 @@
   OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
   
   if (self.bgImageName) {
+    UIImage *image = [[UIImage imageNamed:self.bgImageName] omn_blendWithColor:self.bgColor];
     _iv.contentMode = UIViewContentModeCenter;
-    _iv.image = [UIImage imageNamed:self.bgImageName];
+    _iv.image = image;
   }
   
   if (self.iconName) {

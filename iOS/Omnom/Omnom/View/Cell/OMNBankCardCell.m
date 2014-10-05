@@ -10,10 +10,18 @@
 #import "OMNBankCard.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
+#import <BlocksKit.h>
+
+NSString * const OMNBankCardCellDeleteIdentifier = @"OMNBankCardCellDeleteIdentifier";
 
 @implementation OMNBankCardCell {
   UILabel *_label;
   UIImageView *_iconView;
+  OMNBankCard *_bankCard;
+}
+
+- (void)dealloc {
+  [_bankCard bk_removeObserversWithIdentifier:OMNBankCardCellDeleteIdentifier];
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -64,8 +72,15 @@
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:0 metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-[iconView]-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-[iconView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
   
+  
+}
+
+- (UIActivityIndicatorView *)spinner {
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [spinner startAnimating];
+  return spinner;
 }
 
 - (UILabel *)confirmButton {
@@ -81,10 +96,23 @@
 
 - (void)setBankCard:(OMNBankCard *)bankCard selected:(BOOL)selected {
 
+  [_bankCard bk_removeObserversWithIdentifier:OMNBankCardCellDeleteIdentifier];
+  _bankCard = bankCard;
+  __weak typeof(self)weakSelf = self;
+
+  [_bankCard bk_addObserverForKeyPath:NSStringFromSelector(@selector(deleting)) identifier:OMNBankCardCellDeleteIdentifier options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial task:^(OMNBankCard *bc, NSDictionary *change) {
+    
+    if (bc.deleting) {
+      weakSelf.accessoryView = [weakSelf spinner];
+    }
+    else {
+      weakSelf.accessoryView = (kOMNBankCardStatusHeld == bankCard.status) ? ([weakSelf confirmButton]) : (nil);
+    }
+    
+  }];
+  
   UIColor *masked_panColor = nil;
   UIColor *associationColor = nil;
-  
-  self.accessoryView = (kOMNBankCardStatusHeld == bankCard.status) ? ([self confirmButton]) : (nil);
   
   if (selected) {
     _iconView.image = [UIImage imageNamed:@"selected_card_icon_blue"];

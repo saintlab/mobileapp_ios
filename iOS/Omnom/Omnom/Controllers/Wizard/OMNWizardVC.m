@@ -8,6 +8,7 @@
 
 #import "OMNWizardVC.h"
 #import <OMNStyler.h>
+#import "UIImage+omn_helper.h"
 
 @interface OMNWizardVC ()
 <UIScrollViewDelegate>

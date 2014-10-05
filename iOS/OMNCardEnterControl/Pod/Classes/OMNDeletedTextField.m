@@ -50,6 +50,7 @@
 }
 
 - (void)deleteBackward {
+  [super deleteBackward];
   if (0 == self.text.length) {
     [self.delegate textField:self shouldChangeCharactersInRange:NSMakeRange(0, 0) replacementString:@""];
   }

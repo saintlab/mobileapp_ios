@@ -12,6 +12,7 @@
 @interface OMNMailRUCardConfirmVC : UIViewController
 
 @property (nonatomic, copy) dispatch_block_t didFinishBlock;
+@property (nonatomic, copy) dispatch_block_t noSMSBlock;
 
 - (instancetype)initWithCardInfo:(OMNBankCardInfo *)cardInfo;
 

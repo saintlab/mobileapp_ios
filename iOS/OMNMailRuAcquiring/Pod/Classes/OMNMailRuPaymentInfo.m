@@ -76,6 +76,10 @@
   return self;
 }
 
++ (NSString *)exp_dateFromMonth:(NSInteger)month year:(NSInteger)year {
+  return [NSString stringWithFormat:@"%2ld.20%2ld", (long)month, (long)year];
+}
+
 + (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id {
   OMNMailRuCardInfo *cardInfo = [[OMNMailRuCardInfo alloc] init];
   cardInfo.card_id = card_id;
@@ -99,9 +103,14 @@
     card_info[@"card_id"] = self.card_id;
   }
   else {
-    card_info[@"pan"] = self.pan;
-    card_info[@"exp_date"] = self.exp_date;
-    card_info[@"add_card"] = @(1);
+
+    if (self.pan.length) {
+      card_info[@"pan"] = self.pan;
+    }
+    if (self.exp_date.length) {
+      card_info[@"exp_date"] = self.exp_date;
+    }
+    card_info[@"add_card"] = @(0);
   }
   
   if (self.cvv.length) {

@@ -15,6 +15,8 @@
 
 - (instancetype)initWithWidth:(CGFloat)width;
 - (instancetype)initWithWidth:(CGFloat)width textFieldClass:(Class)textFieldClass;
-- (void)setError:(NSString *)text;
+
+- (void)setErrorText:(NSString *)text;
+- (void)setError:(BOOL)isError;
 
 @end

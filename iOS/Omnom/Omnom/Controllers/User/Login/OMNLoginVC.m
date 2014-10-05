@@ -182,19 +182,23 @@ UITextViewDelegate> {
   [self setNextButtonLoading:NO];
   
   if (error) {
-  
+    
     //no such user error code
     if (101 == error.code) {
       _hintTextView.hidden = NO;
     }
-    [_loginTF setError:error.localizedDescription];
+    [_loginTF setErrorText:error.localizedDescription];
     
   }
   else {
     
-    [_loginTF setError:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil)];
+    [_loginTF setErrorText:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil)];
     
   }
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    [self.view layoutIfNeeded];
+  }];
   
 }
 

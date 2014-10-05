@@ -24,6 +24,9 @@
 #import "OMNAnalitics.h"
 #import "OMNOperationManager.h"
 #import "OMNUtils.h"
+#import <BlocksKit.h>
+
+NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdentifier";
 
 @interface OMNMailRUPayVC()
 
@@ -63,15 +66,21 @@
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   [self setup];
   
+  __weak typeof(self)weakSelf = self;
   if (self.demo) {
     _bankCardsModel = [[OMNBankCardsModel alloc] init];
   }
   else {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
+    
     _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
+    [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) identifier:OMNMailRUPayVCLoadingIdentifier options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
+      
+      [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([weakSelf loadingButton]) : ([weakSelf addCardButton]) animated:YES];
+      
+    }];
+    
   }
-  
-  __weak typeof(self)weakSelf = self;
+
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
     return weakSelf;
@@ -94,6 +103,16 @@
   
 }
 
+- (UIBarButtonItem *)loadingButton {
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [spinner startAnimating];
+  return [[UIBarButtonItem alloc] initWithCustomView:spinner];
+}
+
+- (UIBarButtonItem *)addCardButton {
+  return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:NO animated:animated];
@@ -112,14 +131,22 @@
 }
 
 - (void)didLoadCards {
+  
   [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-  if (_bankCardsModel.cards.count) {
+  
+  if (_bankCardsModel.hasRegisterdCards) {
+    
     _payButton.enabled = YES;
+    
   }
-  else if (NO ==_addBankCardRequested){
+  else if (NO ==_addBankCardRequested &&
+           0 == _bankCardsModel.cards.count) {
+    
     _addBankCardRequested = YES;
     [self addCardTap];
+    
   }
+  
 }
 
 - (void)viewDidLayoutSubviews {
@@ -153,29 +180,39 @@
     [self demoPay];
   }
   else {
-    _loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
-    _loadingCircleVC.circleIcon = [UIImage imageNamed:@"flying_credit_card_icon"];
-    _loadingCircleVC.estimateAnimationDuration = 15.0;
-    UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"000000")];
-    _loadingCircleVC.circleBackground = circleBackground;
-    __weak typeof(self)weakSelf = self;
-    [self.navigationController omn_pushViewController:_loadingCircleVC animated:YES completion:^{
-      [weakSelf createOrderPaymentInfo];
-    }];
+    
+    OMNBankCard *bankCard = [_bankCardsModel selectedCard];
+    OMNMailRuCardInfo *cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:bankCard.external_card_id];
+    [self payWithCardInfo:cardInfo];
+    
   }
   
 }
 
-- (void)createOrderPaymentInfo {
+- (void)payWithCardInfo:(OMNMailRuCardInfo *)mailRuCardInfo {
+  
+  _loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
+  _loadingCircleVC.circleIcon = [UIImage imageNamed:@"flying_credit_card_icon"];
+  _loadingCircleVC.estimateAnimationDuration = 15.0;
+  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"000000")];
+  _loadingCircleVC.circleBackground = circleBackground;
+  __weak typeof(self)weakSelf = self;
+  
+  [self.navigationController omn_pushViewController:_loadingCircleVC animated:YES completion:^{
+    
+    [weakSelf createOrderPaymentInfoWithCardInfo:mailRuCardInfo];
+    
+  }];
+  
+}
+
+- (void)createOrderPaymentInfoWithCardInfo:(OMNMailRuCardInfo *)mailRuCardInfo {
   
   [_loadingCircleVC.loaderView setLoaderColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
   [_loadingCircleVC.loaderView startAnimating:15.0];
-
-  OMNBankCard *bankCard = [_bankCardsModel selectedCard];
-  OMNMailRuCardInfo *cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:bankCard.external_card_id];
   
   __weak typeof(self)weakSelf = self;
-  [_order getPaymentInfoForUser:[OMNAuthorisation authorisation].user cardInfo:cardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
+  [_order getPaymentInfoForUser:[OMNAuthorisation authorisation].user cardInfo:mailRuCardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
     
     [weakSelf orderPaymentInfoDidCreated:paymentInfo];
     
@@ -293,7 +330,14 @@
 
 - (void)addCardTap {
   
-  [_bankCardsModel addCardFromViewController:self];
+  __weak typeof(self)weakSelf = self;
+  [_bankCardsModel addCardFromViewController:self forOrder:_order requestPaymentWithCard:^(OMNBankCardInfo *bankCardInfo) {
+    
+    NSString *exp_date = [OMNMailRuCardInfo exp_dateFromMonth:bankCardInfo.expiryMonth year:bankCardInfo.expiryYear];
+    OMNMailRuCardInfo *mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardPan:bankCardInfo.pan exp_date:exp_date cvv:bankCardInfo.cvv];
+    [weakSelf payWithCardInfo:mailRuCardInfo];
+    
+  }];
   
 }
 

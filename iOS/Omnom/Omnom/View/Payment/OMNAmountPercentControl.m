@@ -54,7 +54,6 @@ UITextFieldDelegate>
   
   _pureAmountTF = [[OMNLabeledTextField alloc] init];
   _pureAmountTF.keyboardType = UIKeyboardTypeDecimalPad;
-  _pureAmountTF.tintColor = colorWithHexString(@"157EFB");
   _pureAmountTF.translatesAutoresizingMaskIntoConstraints = NO;
   _pureAmountTF.adjustsFontSizeToFitWidth = YES;
   _pureAmountTF.minimumFontSize = 10.0f;
@@ -68,7 +67,6 @@ UITextFieldDelegate>
   
   _amountTF = [[OMNLabeledTextField alloc] init];
   _amountTF.keyboardType = UIKeyboardTypeDecimalPad;
-  _amountTF.tintColor = colorWithHexString(@"157EFB");
   _amountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
   _amountTF.translatesAutoresizingMaskIntoConstraints = NO;
   _amountTF.adjustsFontSizeToFitWidth = YES;
@@ -91,7 +89,6 @@ UITextFieldDelegate>
   _percentPicker.dataSource = self;
   
   _percentTF = [[UITextField alloc] init];
-  _percentTF.tintColor = colorWithHexString(@"157EFB");
   _percentTF.textAlignment = NSTextAlignmentCenter;
   _percentTF.inputView = _percentPicker;
   _percentTF.adjustsFontSizeToFitWidth = YES;

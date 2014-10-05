@@ -62,10 +62,18 @@
   __weak typeof(self)weakSelf = self;
   OMNUserInfoItem *feedbackItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Обратная связь", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
     
-    MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
-    composeViewController.mailComposeDelegate = weakSelf;
-    [composeViewController setToRecipients:@[@"team@omnom.menu"]];
-    [vc presentViewController:composeViewController animated:YES completion:nil];
+    if ([MFMailComposeViewController canSendMail]) {
+      MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+      composeViewController.mailComposeDelegate = weakSelf;
+      [composeViewController setToRecipients:@[@"team@omnom.menu"]];
+      [vc presentViewController:composeViewController animated:YES completion:nil];
+    }
+    else {
+      
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mailto:team@omnom.menu"]];
+      [tv deselectRowAtIndexPath:indexPath animated:YES];
+      
+    }
     
   }];
   return @[cardItem, feedbackItem];

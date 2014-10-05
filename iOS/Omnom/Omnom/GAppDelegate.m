@@ -12,10 +12,13 @@
 #import "OMNBeaconBackgroundManager.h"
 #import "OMNVisitorManager.h"
 #import "OMNOperationManager.h"
-#import "OMNViewController.h"
 #import <Crashlytics/Crashlytics.h>
 #import <OMNMailRuAcquiring.h>
 #import "NSURL+omn_query.h"
+#import <OMNStyler.h>
+
+#import "OMNViewController.h"
+#import "OMNMailRUCardConfirmVC.h"
 
 @implementation GAppDelegate {
   BOOL _applicationStartedForeground;
@@ -67,6 +70,29 @@
   _applicationStartedForeground = YES;
 
   [OMNConstants loadConfigWithCompletion:nil];
+  [OMNOperationManager sharedManager];
+  
+  [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
+  
+  [self setupAppearance];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.backgroundColor = [UIColor whiteColor];
+  self.window.tintColor = [UIColor blackColor];
+
+  OMNStartVC *startVC = [[OMNStartVC alloc] init];
+  startVC.info = info;
+  
+//  OMNViewController *startVC = [[OMNViewController alloc] init];
+//  OMNMailRUCardConfirmVC*startVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:nil];
+  
+  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
+  [self.window makeKeyAndVisible];
+  
+}
+
+- (void)setupAppearance {
+  [[UITextField appearance] setTintColor:colorWithHexString(@"157EFB")];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
   UIFont *buttonFont = FuturaOSFOmnomRegular(20.0f);
@@ -87,23 +113,6 @@
      NSForegroundColorAttributeName : [UIColor blackColor],
      NSFontAttributeName : titleFont,
      }];
-  
-  
-  [OMNOperationManager sharedManager];
-  
-  [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
-  
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  self.window.backgroundColor = [UIColor whiteColor];
-  self.window.tintColor = [UIColor blackColor];
-  
-  OMNStartVC *startVC = [[OMNStartVC alloc] init];
-  startVC.info = info;
-  
-//  OMNViewController*startVC = [[OMNViewController alloc] init];
-  
-  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
-  [self.window makeKeyAndVisible];
   
 }
 

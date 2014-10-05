@@ -93,6 +93,7 @@ static NSDictionary *_config = nil;
 
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFHTTPRequestSerializer serializer];
+    self.requestSerializer.timeoutInterval = 15.0;
     
   }
   return self;

@@ -17,9 +17,9 @@
 
 @implementation OMNErrorTextField {
   UIView *_colorView;
-  UILabel *_label;
   UILabel *_errorLabel;
   Class _textFieldClass;
+  BOOL _error;
 }
 
 - (instancetype)initWithWidth:(CGFloat)width textFieldClass:(Class)textFieldClass {
@@ -115,54 +115,49 @@
   
 }
 
-- (void)setText:(NSString *)text description:(NSString *)description {
-  
-  self.textField.text = text;
-  
-  dispatch_async(dispatch_get_main_queue(), ^{
-    UITextRange *textRange = [self.textField textRangeFromPosition:self.textField.beginningOfDocument toPosition:self.textField.endOfDocument];
-    CGRect textFrame = [self.textField firstRectForRange:textRange];
-    
-    if (nil == _label) {
-      _label = [[UILabel alloc] init];
-      [self.textField addSubview:_label];
-    }
-    
-    _label.hidden = (0 == text.length);
-    _label.font = self.textField.font;
-    _label.textColor = self.textField.textColor;
-    _label.text = description;
-    [_label sizeToFit];
-    CGRect labelFrame = _label.frame;
-    labelFrame.origin.x = CGRectGetMaxX(textFrame);
-    labelFrame.origin.y = textFrame.origin.y;
-    labelFrame.size.height = textFrame.size.height;
-    _label.frame = labelFrame;
-    
-  });
-  
-}
-
 - (void)valueChanged {
-  [self setError:nil];
-  _label.hidden = (0 == _textField.text.length);
+  
+  [self setErrorText:nil];
+  
 }
 
 - (BOOL)becomeFirstResponder {
   return [_textField becomeFirstResponder];
 }
 
-- (void)setError:(NSString *)text {
+- (void)setError:(BOOL)isError {
   
-  _errorLabel.text = text;
-  [self layoutIfNeeded];
+  _error = isError;
   [self updateColorView];
+  
+}
+
+- (void)setErrorText:(NSString *)text {
+
+  [self setError:(text.length > 0)];
+  
+  if (0 == text.length &&
+      _errorLabel.text.length) {
+  
+    _errorLabel.text = text;
+    [UIView animateWithDuration:0.3 animations:^{
+      _errorLabel.alpha = 0.0f;
+      [self.superview layoutIfNeeded];
+    }];
+
+  }
+  else {
+    
+    _errorLabel.alpha = 1.0f;
+    _errorLabel.text = text;
+    
+  }
   
 }
 
 - (void)updateColorView {
   
-  if (_errorLabel.text.length) {
+  if (_error) {
     _colorView.backgroundColor = colorWithHexString(@"D0021B");
   }
   else if(_textField.editing) {

@@ -31,7 +31,8 @@ CGFloat kTextFieldsOffset = 20.0f;
   OMNDeletedTextField *_panTF;
   OMNDeletedTextField *_expireTF;
   OMNDeletedTextField *_cvvTF;
-  UIButton *_saveButton;
+  
+  NSLayoutConstraint *_heightConstraint;
   
   CGSize _panSize;
   CGFloat _expireWidth;
@@ -83,6 +84,7 @@ CGFloat kTextFieldsOffset = 20.0f;
     _cvvTF.placeholder = @"CVV";
     [self addSubview:_cvvTF];
     
+  /*
     _saveButton = [[UIButton alloc] init];
     [_saveButton addTarget:self action:@selector(saveTap) forControlEvents:UIControlEventTouchUpInside];
     _saveButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -100,7 +102,7 @@ CGFloat kTextFieldsOffset = 20.0f;
     _saveButton.titleLabel.minimumScaleFactor = 0.1f;
     [_saveButton setTitle:NSLocalizedString(@"Сохранить данные для следующих платежей", nil) forState:UIControlStateNormal];
     [self addSubview:_saveButton];
-    
+    */
     self.clipsToBounds = YES;
     
     _views =
@@ -108,12 +110,10 @@ CGFloat kTextFieldsOffset = 20.0f;
       @"panTF" : _panTF,
       @"cvvTF" : _cvvTF,
       @"expireTF" : _expireTF,
-      @"saveButton" : _saveButton,
       };
     
     _metrics =
     [@{
-       @"saveButtonHeight" : @(50.0f),
        @"height" : @(50.0f),
        @"width" : @(100.0f),
        @"offset" : @(28.0f),
@@ -122,18 +122,14 @@ CGFloat kTextFieldsOffset = 20.0f;
     NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panTF]|" options:0 metrics:nil views:_views];
     [self addConstraints:panH];
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[saveButton]|" options:0 metrics:nil views:_views]];
-    
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[expireTF(width)]-(offset)-[cvvTF(width)]" options:0 metrics:_metrics views:_views]];
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]" options:0 metrics:_metrics views:_views]];
-    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-(20)-[expireTF]|" options:0 metrics:_metrics views:_views]];
+
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-    
-    NSArray *equalVConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[cvvTF(==expireTF)]" options:0 metrics:nil views:_views];
-    [self addConstraints:equalVConstraints];
-    [self setExpireCCVTFHidden:YES animated:NO completion:nil];
-    
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
+    _heightConstraint = [NSLayoutConstraint constraintWithItem:_expireTF attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
+    [self addConstraint:_heightConstraint];
+    _expireCCVTFHidden = YES;
   }
   return self;
 }
@@ -143,33 +139,38 @@ CGFloat kTextFieldsOffset = 20.0f;
 }
 
 - (void)saveTap {
-  _saveButton.selected = !_saveButton.selected;
 }
 
 - (BOOL)saveButtonSelected {
-  return _saveButton.selected;
+  return NO;
 }
 
 - (void)setSaveButtonHidden:(BOOL)hidden {
-  _metrics[@"saveButtonHeight"] = (hidden) ? (@(0.0f)) : (@(50.0f));
-  _saveButton.hidden = hidden;
+//  _metrics[@"saveButtonHeight"] = (hidden) ? (@(0.0f)) : (@(50.0f));
+//  _saveButton.hidden = hidden;
   [self updateConstraintsAnimated:NO completion:nil];
 }
 
 - (void)setExpireCCVTFHidden:(BOOL)hidden animated:(BOOL)animated completion:(dispatch_block_t)completion {
-  _metrics[@"expireTFHeight"] = (hidden) ? (@(0.0f)) : (@(50.0f));
+//  _metrics[@"expireTFHeight"] = (hidden) ? (@(1.0f)) : (@(50.0f));
+  
+  _heightConstraint.constant = (hidden) ? (1.0f) : (50.0f);
+  
   [self updateConstraintsAnimated:animated completion:completion];
   _expireCCVTFHidden = hidden;
 }
 
 - (void)updateConstraintsAnimated:(BOOL)animated completion:(dispatch_block_t)completion {
-  NSMutableArray *dynamycConstraints = [NSMutableArray array];
-  NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-[expireTF(expireTFHeight)]-[saveButton(saveButtonHeight)]|" options:0 metrics:_metrics views:_views];
-  [dynamycConstraints addObjectsFromArray:constraintsV];
+
   
-  [self removeConstraints:_dynamycConstraints];
-  _dynamycConstraints = dynamycConstraints;
-  [self addConstraints:_dynamycConstraints];
+  //  NSMutableArray *dynamycConstraints = [NSMutableArray array];
+//  NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-(20)-[expireTF(expireTFHeight)]|" options:0 metrics:_metrics views:_views];
+//  NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]|" options:0 metrics:_metrics views:_views];
+
+//  [dynamycConstraints addObjectsFromArray:constraintsV];
+//  [self removeConstraints:_dynamycConstraints];
+//  _dynamycConstraints = dynamycConstraints;
+//  [self addConstraints:_dynamycConstraints];
   
   if (animated) {
     

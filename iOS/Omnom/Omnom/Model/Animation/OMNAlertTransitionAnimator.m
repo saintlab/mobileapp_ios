@@ -11,35 +11,38 @@
 
 @implementation OMNAlertTransitionAnimator
 
+- (void)dealloc
+{
+  
+}
+
 - (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
   return 0.5f;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
-  // Grab the from and to view controllers from the context
-  UIViewController *fromViewController = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-  UIViewController *toViewController = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-  
-  // Set our ending frame. We'll modify this later if we have to
+
+  UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  UIView *fromView = fromVC.view;
+  UIView *toView = toVC.view;
+  UIView *containerView = [transitionContext containerView];
+  NSTimeInterval duration = [self transitionDuration:transitionContext];
   
   if (self.presenting) {
     
-    OMNPaymentAlertVC *paymentAlertVC = (OMNPaymentAlertVC *)toViewController;
+    OMNPaymentAlertVC *paymentAlertVC = (OMNPaymentAlertVC *)toVC;
     
-    fromViewController.view.userInteractionEnabled = NO;
+    fromView.userInteractionEnabled = NO;
+    [containerView addSubview:toView];
     
-    [transitionContext.containerView addSubview:fromViewController.view];
-    [transitionContext.containerView addSubview:toViewController.view];
-  
-    toViewController.view.frame = fromViewController.view.frame;
-    
-    paymentAlertVC.containerView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toViewController.view.frame));
+    paymentAlertVC.contentView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toView.frame));
     paymentAlertVC.fadeView.alpha = 0.0f;
     
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+    [UIView animateWithDuration:duration animations:^{
       
-      fromViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
-      paymentAlertVC.containerView.transform = CGAffineTransformIdentity;
+      fromView.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
+      paymentAlertVC.contentView.transform = CGAffineTransformIdentity;
       paymentAlertVC.fadeView.alpha = 1.0f;
       
     } completion:^(BOOL finished) {
@@ -51,22 +54,17 @@
   }
   else {
     
-    [transitionContext.containerView addSubview:toViewController.view];
-    [transitionContext.containerView addSubview:fromViewController.view];
+    OMNPaymentAlertVC *paymentAlertVC = (OMNPaymentAlertVC *)fromVC;
     
-    OMNPaymentAlertVC *paymentAlertVC = (OMNPaymentAlertVC *)fromViewController;
-    
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+    [UIView animateWithDuration:duration animations:^{
       
-      toViewController.view.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
-      
-      paymentAlertVC.containerView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(fromViewController.view.frame));
+      toView.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
+      paymentAlertVC.contentView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toView.frame));
       paymentAlertVC.fadeView.alpha = 0.0f;
       
     } completion:^(BOOL finished) {
       
-      toViewController.view.userInteractionEnabled = YES;
-      [fromViewController.view removeFromSuperview];
+      toView.userInteractionEnabled = YES;
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
       
     }];

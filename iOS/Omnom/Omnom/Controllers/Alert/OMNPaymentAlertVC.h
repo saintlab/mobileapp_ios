@@ -10,12 +10,12 @@
 
 @interface OMNPaymentAlertVC : UIViewController
 
-@property (nonatomic, copy) NSString *text;
-@property (nonatomic, copy) NSString *detailedText;
 @property (nonatomic, strong) UIView *fadeView;
-@property (nonatomic, strong) UIView *containerView;
+@property (nonatomic, strong) UIView *contentView;
 
 @property (nonatomic, copy) dispatch_block_t didPayBlock;
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
+
+- (instancetype)initWithText:(NSString *)text detailedText:(NSString *)detailedText amount:(long long)amount;
 
 @end

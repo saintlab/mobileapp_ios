@@ -11,20 +11,28 @@
 #import "OMNConstants.h"
 #import "UIButton+omn_helper.h"
 #import "OMNAlertTransitionAnimator.h"
+#import "OMNUtils.h"
 
 @interface OMNPaymentAlertVC ()
 <UIViewControllerTransitioningDelegate>
+
+@property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSString *detailedText;
 
 @end
 
 @implementation OMNPaymentAlertVC {
   UIButton *_payButton;
   UIButton *_closeButton;
+  long long _amount;
 }
 
-- (instancetype)init {
+- (instancetype)initWithText:(NSString *)text detailedText:(NSString *)detailedText amount:(long long)amount {
   self = [super init];
   if (self) {
+    _amount = amount;
+    self.text = text;
+    self.detailedText = detailedText;
     self.modalPresentationStyle = UIModalPresentationCustom;
     self.transitioningDelegate = self;
   }
@@ -38,8 +46,12 @@
   [_closeButton omn_setImage:[UIImage imageNamed:@"cross_icon_black"] withColor:[UIColor blackColor]];
   [_closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
   
-  [_payButton setImage:[UIImage imageNamed:@"cross_icon_black"] forState:UIControlStateNormal];
+  _payButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
+  [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
+  [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
+  [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   [_payButton addTarget:self action:@selector(payTap) forControlEvents:UIControlEventTouchUpInside];
+  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_amount]] forState:UIControlStateNormal];
   
 }
 
@@ -65,35 +77,35 @@
   
   UIColor *backgroundColor = [UIColor whiteColor];
   
-  _containerView = [[UIView alloc] init];
-  _containerView.opaque = YES;
-  _containerView.backgroundColor = backgroundColor;
-  _containerView.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_containerView];
+  _contentView = [[UIView alloc] init];
+  _contentView.opaque = YES;
+  _contentView.backgroundColor = backgroundColor;
+  _contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_contentView];
 
   UILabel *textLabel = [self textLabel];
   textLabel.text = self.text;
   textLabel.backgroundColor = backgroundColor;
-  [_containerView addSubview:textLabel];
+  [_contentView addSubview:textLabel];
   
   UILabel *detailedTextLabel = [self textLabel];
   detailedTextLabel.text = self.detailedText;
   detailedTextLabel.backgroundColor = backgroundColor;
-  [_containerView addSubview:detailedTextLabel];
+  [_contentView addSubview:detailedTextLabel];
   
   _closeButton = [[UIButton alloc] init];
   _closeButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_containerView addSubview:_closeButton];
+  [_contentView addSubview:_closeButton];
   
   _payButton = [[UIButton alloc] init];
   _payButton.hidden = YES;
   _payButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_containerView addSubview:_payButton];
+  [_contentView addSubview:_payButton];
   
   NSDictionary *views =
   @{
     @"closeButton" : _closeButton,
-    @"containerView" : _containerView,
+    @"containerView" : _contentView,
     @"textLabel" : textLabel,
     @"detailedTextLabel" : detailedTextLabel,
     @"payButton" : _payButton,
@@ -112,23 +124,22 @@
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[containerView]|" options:0 metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[containerView]|" options:0 metrics:metrics views:views]];
-  [_containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
   
-  [_containerView addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_containerView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [_containerView addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:buttonSize]];
-  [_containerView addConstraint:[NSLayoutConstraint constraintWithItem:_payButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:buttonSize]];
+  [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:buttonSize]];
   
   if (_detailedText.length) {
 
     _payButton.hidden = NO;
-    [_containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[detailedTextLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-    [_containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[closeButton(buttonSize)]-[textLabel]-[detailedTextLabel]-[payButton]-|" options:0 metrics:metrics views:views]];
-    [_containerView addConstraint:[NSLayoutConstraint constraintWithItem:_payButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_containerView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[detailedTextLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[closeButton(buttonSize)]-[textLabel]-[detailedTextLabel]-20-[payButton]-(10)-|" options:0 metrics:metrics views:views]];
+    [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_payButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
     
   }
   else {
 
-    [_containerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[closeButton(buttonSize)]-[textLabel]-|" options:0 metrics:metrics views:views]];
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[closeButton(buttonSize)]-[textLabel]-|" options:0 metrics:metrics views:views]];
     
   }
   
@@ -156,13 +167,13 @@
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
                                                                   presentingController:(UIViewController *)presenting
                                                                       sourceController:(UIViewController *)source {
-  OMNAlertTransitionAnimator *animator = [OMNAlertTransitionAnimator new];
+  OMNAlertTransitionAnimator *animator = [[OMNAlertTransitionAnimator alloc] init];
   animator.presenting = YES;
   return animator;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-  OMNAlertTransitionAnimator *animator = [OMNAlertTransitionAnimator new];
+  OMNAlertTransitionAnimator *animator = [[OMNAlertTransitionAnimator alloc] init];
   return animator;
 }
 

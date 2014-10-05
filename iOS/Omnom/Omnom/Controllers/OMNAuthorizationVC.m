@@ -15,6 +15,7 @@
 #import "OMNToolbarButton.h"
 #import "UIImage+omn_helper.h"
 #import "OMNAnalitics.h"
+#import <OMNStyler.h>
 
 @interface OMNAuthorizationVC ()
 <OMNAuthorizationDelegate>
@@ -26,17 +27,20 @@
 - (instancetype)init {
   
   OMNWizardPageVC *page1 = [[OMNWizardPageVC alloc] init];
-  page1.bgImageName = @"red_color_wood_bg";
+  page1.bgImageName = @"wood_bg";
+  page1.bgColor = colorWithHexString(@"ED5749");
   page1.iconName = @"credit_cards_icon_big";
   page1.text = NSLocalizedString(@"Оплатить счёт через телефон", nil);
   
   OMNWizardPageVC *page2 = [[OMNWizardPageVC alloc] init];
-  page2.bgImageName = @"green_color_wood_bg";
+  page2.bgImageName = @"wood_bg";
+  page2.bgColor = colorWithHexString(@"089E7D");
   page2.iconName = @"bell_ringing_icon_big";
   page2.text = NSLocalizedString(@"Вызвать официанта\nв любой момент", nil);
-  
+
   OMNWizardPageVC *page3 = [[OMNWizardPageVC alloc] init];
-  page3.bgImageName = @"blue_color_wood_bg";
+  page3.bgImageName = @"wood_bg";
+  page3.bgColor = colorWithHexString(@"266BA6");
   page3.iconName = @"split_bill_icon_big";
   page3.text = NSLocalizedString(@"Разделить счёт между друзьями", nil);
   
@@ -79,7 +83,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
+  [self.navigationController setNavigationBarHidden:YES animated:NO];
   
 }
 

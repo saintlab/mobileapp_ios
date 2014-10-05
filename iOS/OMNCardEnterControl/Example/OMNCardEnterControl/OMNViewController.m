@@ -59,9 +59,7 @@
 
 - (void)tap {
   
-  OMNPaymentAlertVC *paVC = [[OMNPaymentAlertVC alloc] init];
-  paVC.text = @"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму.";
-  paVC.detailedText = @"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты.";
+  OMNPaymentAlertVC *paVC = [[OMNPaymentAlertVC alloc] initWithText:@"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму." detailedText:@"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты." amount:100500];
   __weak typeof(self)weakSelf = self;
   
   paVC.didCloseBlock = ^{

@@ -20,9 +20,11 @@
 #import "OMNDotTextField.h"
 #import "OMNLabeledTextField.h"
 #import <OMNStyler.h>
+#import "OMNCardEnterErrorView.h"
 
 @interface OMNMailRUCardConfirmVC ()
-<UITextFieldDelegate>
+<UITextFieldDelegate,
+UITextViewDelegate>
 
 @end
 
@@ -30,7 +32,7 @@
   UIScrollView *_scrollView;
   OMNBankCardInfo *_bankCardInfo;
   OMNErrorTextField *_cardHoldValueTF;
-  UILabel *_textLabel;
+  OMNCardEnterErrorView *_errorTextView;
 }
 
 - (void)dealloc {
@@ -50,8 +52,17 @@
   
   self.navigationItem.title = NSLocalizedString(@"CARD_CONFIRM_NAVIGATION_TITLE", @"Привязка карты");
   self.view.backgroundColor = [UIColor whiteColor];
+  self.automaticallyAdjustsScrollViewInsets = NO;
   
   [self setupView];
+  
+  _errorTextView.textColor = colorWithHexString(@"D0021B");
+  _errorTextView.font = FuturaOSFOmnomRegular(15.0f);
+  
+  NSString *detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
+  [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:detailedText];
+  _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00 %@", omnCommaString(), kRubleSign];
+
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -68,14 +79,11 @@
     [self registerCard];
   }
   
-//  _cardHoldValueTF.backgroundColor = [UIColor redColor];
 //  _cardHoldValueTF.textField.enabled = YES;
 //  [_cardHoldValueTF.textField becomeFirstResponder];
-//  NSString *errorText = NSLocalizedString(@"CARD_CONFIRM_WRONG_ENTER_AMOUNT_ERROR", @"Введена неверная проверочная сумма. Загляните в последние SMS. Там должно быть сообщение\nот банка. Введите сумму из SMS. Если сообщения нет, в банковской выписке посмотрите последнее списание.");
-//  [_cardHoldValueTF setError:errorText];
-//  _textLabel.backgroundColor = [UIColor greenColor];
+//  [_errorTextView setWrongAmountError];
 //  self.card_id = @"123";
-  
+
 }
 
 - (void)startLoader {
@@ -88,7 +96,7 @@
 
 - (void)addDoneButton {
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"CARD_CONFIRM_ENTER_BUTTON_TITLE", @"Привязать") style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)];
+  [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"CARD_CONFIRM_ENTER_BUTTON_TITLE", @"Привязать") style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)] animated:YES];
   
 }
 
@@ -98,35 +106,35 @@
   _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_scrollView];
   
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
   UIView *contentView = [[UIView alloc] init];
+  contentView.backgroundColor = backgroundColor;
+  contentView.opaque = YES;
   contentView.translatesAutoresizingMaskIntoConstraints = NO;
   [_scrollView addSubview:contentView];
   
-  _textLabel = [[UILabel alloc] init];
-  _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _textLabel.numberOfLines = 0;
-  _textLabel.textAlignment = NSTextAlignmentCenter;
-  _textLabel.textColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-  _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:15.0f];
-  [contentView addSubview:_textLabel];
-  
   _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f textFieldClass:[OMNLabeledTextField class]];
-  NSString *detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
-  [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:detailedText];
   _cardHoldValueTF.textField.textAlignment = NSTextAlignmentCenter;
   _cardHoldValueTF.textField.keyboardType = UIKeyboardTypeDecimalPad;
-  _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00 %@", omnCommaString(), kRubleSign];
   _cardHoldValueTF.textField.enabled = NO;
   _cardHoldValueTF.textField.delegate = self;
   [contentView addSubview:_cardHoldValueTF];
   
+  _errorTextView = [[OMNCardEnterErrorView alloc] init];
+  _errorTextView.delegate = self;
+  _errorTextView.translatesAutoresizingMaskIntoConstraints = NO;
+  _errorTextView.backgroundColor = backgroundColor;
+  _errorTextView.opaque = YES;
+  [contentView addSubview:_errorTextView];
+  
   NSDictionary *views =
   @{
-    @"textLabel" : _textLabel,
     @"cardHoldValueTF" : _cardHoldValueTF,
     @"topLayoutGuide" : self.topLayoutGuide,
     @"scroll" : _scrollView,
     @"contentView" : contentView,
+    @"errorTextView" : _errorTextView,
     };
   
   NSDictionary *metrics =
@@ -137,9 +145,9 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:metrics views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[textLabel]-|" options:0 metrics:metrics views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardHoldValueTF]-|" options:0 metrics:metrics views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-|" options:0 metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[errorTextView]-|" options:0 metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardHoldValueTF]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorTextView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeft relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
@@ -167,11 +175,18 @@
 - (void)setCard_id:(NSString *)card_id {
 
   _bankCardInfo.card_id = card_id;
-  if (_bankCardInfo.card_id) {
-    _textLabel.text = NSLocalizedString(@"CARD_CONFIRM_HINT_LABEL_TEXT", @"Для привязки карты вам нужно подтвердить, что вы её владелец.\nМы списали с вашей карты секретную сумму (до 50 руб.), о чём вам должна прийти SMS от банка.\nПосмотрите в сообщении, сколько списано и укажите сумму в поле выше.");
+  if (card_id) {
+    
     _cardHoldValueTF.textField.enabled = YES;
     [_cardHoldValueTF.textField becomeFirstResponder];
     [self addDoneButton];
+    
+    [UIView transitionWithView:_errorTextView duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+      
+      [_errorTextView setHelpText];
+      
+    } completion:nil];
+    
   }
   
 }
@@ -198,20 +213,10 @@
       nil == response) {
 
     [self addDoneButton];
-    
-    NSString *code = response[@"error"][@"code"];
-    NSString *errorText = nil;
-    if ([code isEqualToString:@"ERR_CARD_AMOUNT"]) {
-      errorText = NSLocalizedString(@"CARD_CONFIRM_WRONG_ENTER_AMOUNT_ERROR", @"Введена неверная проверочная сумма. Загляните в последние SMS. Там должно быть сообщение\nот банка. Введите сумму из SMS. Если сообщения нет, в банковской выписке посмотрите последнее списание.");
-    }
-    else {
-      errorText = NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку");
-    }
-    
+    [self handleResponse:response];
+    [_cardHoldValueTF setError:YES];
     [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_VERIFY" parametrs:response];
 
-    [_cardHoldValueTF setError:errorText];
-    
   }
   else {
     
@@ -224,14 +229,41 @@
   
 }
 
+- (void)handleResponse:(NSDictionary *)response {
+  
+  if (response[@"error"] ||
+      nil == response) {
+    
+    NSString *code = response[@"error"][@"code"];
+    [UIView transitionWithView:_errorTextView duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+      
+      if ([code isEqualToString:@"ERR_CARD_AMOUNT"]) {
+        [_errorTextView setWrongAmountError];
+      }
+      else {
+        [_errorTextView setUnknownError];
+      }
+      
+    } completion:nil];
+    
+  }
+  else {
+
+    [_cardHoldValueTF setError:NO];
+    _errorTextView.attributedText = nil;
+    
+  }
+  
+}
+
 - (void)registerCard {
 
-  [_cardHoldValueTF setError:nil];
+  [_cardHoldValueTF setErrorText:nil];
 
   NSDictionary *cardInfo =
   @{
     @"pan" : _bankCardInfo.pan,
-    @"exp_date" : [NSString stringWithFormat:@"%2ld.20%2ld", (long)_bankCardInfo.expiryMonth, (long)_bankCardInfo.expiryYear],
+    @"exp_date" : [OMNMailRuCardInfo exp_dateFromMonth:_bankCardInfo.expiryMonth year:_bankCardInfo.expiryYear],
     @"cvv" : _bankCardInfo.cvv,
     };
   
@@ -253,8 +285,8 @@
       cardId.length) {
     
     [[OMNOperationManager sharedManager] POST:@"/report/mail/register" parameters:@{@"card_id" : cardId} success:nil failure:nil];
-    
     self.card_id = cardId;
+    
   }
   else {
     
@@ -267,7 +299,8 @@
     [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_REGISTER" parametrs:response];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"repeat_icon_small"] style:UIBarButtonItemStylePlain target:self action:@selector(registerCard)];
-    [_cardHoldValueTF setError:NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку")];
+    [_errorTextView setUnknownError];
+    
   }
 
 }
@@ -346,6 +379,17 @@
                                                                   offset:range.length];
   
   [_cardHoldValueTF.textField setSelectedTextRange:[_cardHoldValueTF.textField textRangeFromPosition:start toPosition:end]];
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+  
+  if (self.noSMSBlock) {
+    self.noSMSBlock();
+  }
+  
+  return NO;
 }
 
 @end

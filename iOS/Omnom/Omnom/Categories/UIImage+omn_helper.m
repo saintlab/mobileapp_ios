@@ -57,9 +57,9 @@
   
   UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
   CGRect drawRect = CGRectMake(0, 0, self.size.width, self.size.height);
-  [self drawInRect:drawRect];
-  [[tintColor colorWithAlphaComponent:0.8f] set];
-  UIRectFillUsingBlendMode(drawRect, blendMode);
+  [[tintColor colorWithAlphaComponent:1.0f] set];
+  UIRectFill(drawRect);
+  [self drawInRect:drawRect blendMode:blendMode alpha:1.0f];
   UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return tintedImage;

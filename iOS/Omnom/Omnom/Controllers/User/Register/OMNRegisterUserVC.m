@@ -209,12 +209,12 @@ UITextFieldDelegate>
   
   if ([[NSDate date] timeIntervalSinceDate:_datePicker.date] > 18 * 365 * 24 * 60 * 60) {
     [self updateBirthDate];
-    [_birthdayTF setError:nil];
+    [_birthdayTF setErrorText:nil];
     [self.view endEditing:YES];
   }
   else {
     
-    [_birthdayTF setError:NSLocalizedString(@"Слишком мало лет =(", nil)];
+    [_birthdayTF setErrorText:NSLocalizedString(@"Слишком мало лет =(", nil)];
     
   }
   
@@ -272,26 +272,30 @@ UITextFieldDelegate>
 
 - (void)createUserTap {
   
-  [_emailTF setError:nil];
-  [_phoneTF setError:nil];
-  [_nameTF setError:nil];
-  [_birthdayTF setError:nil];
+  [_emailTF setErrorText:nil];
+  [_phoneTF setErrorText:nil];
+  [_nameTF setErrorText:nil];
+  [_birthdayTF setErrorText:nil];
   
   BOOL hasErrors = NO;
   if (0 == _emailTF.textField.text.length) {
-    [_emailTF setError:NSLocalizedString(@"Вы забыли ввести e-mail", nil)];
+    [_emailTF setErrorText:NSLocalizedString(@"Вы забыли ввести e-mail", nil)];
     hasErrors = YES;
   }
   
   if (0 == _phoneTF.textField.text.length) {
-    [_phoneTF setError:NSLocalizedString(@"Вы забыли ввести номер телефона", nil)];
+    [_phoneTF setErrorText:NSLocalizedString(@"Вы забыли ввести номер телефона", nil)];
     hasErrors = YES;
   }
   
   if (0 == _nameTF.textField.text.length) {
-    [_nameTF setError:NSLocalizedString(@"Вы забыли ввести имя", nil)];
+    [_nameTF setErrorText:NSLocalizedString(@"Вы забыли ввести имя", nil)];
     hasErrors = YES;
   }
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    [self.view layoutIfNeeded];
+  }];
   
   if (hasErrors) {
     return;
@@ -388,10 +392,13 @@ UITextFieldDelegate>
 
   UITextField *textField = notification.object;
   _currentTextField = textField;
-  
+
   CGRect textFieldFrame = [textField convertRect:textField.bounds toView:_scroll];
-  CGPoint contentOffset = CGPointMake(0.0f, textFieldFrame.origin.y - 20.0f);
-  [_scroll setContentOffset:contentOffset animated:YES];
+  [_scroll scrollRectToVisible:textFieldFrame animated:YES];
+  CGPoint contentOffset = CGPointMake(0.0f, MAX(0.0f, textFieldFrame.origin.y - 20.0f));
+  [UIView animateWithDuration:0.3 delay:0.1 options:0 animations:^{
+    [_scroll setContentOffset:contentOffset];
+  } completion:nil];
   
 }
 
@@ -402,8 +409,10 @@ UITextFieldDelegate>
   kbRect = [self.view convertRect:kbRect fromView:nil];
   
   UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height, 0.0);
+  CGPoint offset = _scroll.contentOffset;
   _scroll.contentInset = contentInsets;
   _scroll.scrollIndicatorInsets = contentInsets;
+  _scroll.contentOffset = offset;
   
 }
 

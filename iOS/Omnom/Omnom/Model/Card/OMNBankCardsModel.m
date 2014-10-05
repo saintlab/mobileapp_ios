@@ -14,6 +14,9 @@
 #import "OMNBankCardCell.h"
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNAddBankCardVC.h"
+#import "OMNOrder.h"
+#import "OMNPaymentAlertVC.h"
+#import "UINavigationController+omn_replace.h"
 
 @interface OMNBankCardsModel ()
 
@@ -23,6 +26,8 @@
 
 @implementation OMNBankCardsModel {
   NSIndexPath *_selectedIndexPath;
+  OMNOrder *_order;
+  OMNBankCardInfoBlock _paymentWithCardBlock;
 }
 
 @dynamic card_id;
@@ -72,7 +77,26 @@
   [self updateCardSelection];
 }
 
-- (void)addCardFromViewController:(__weak UIViewController *)viewController {
+- (BOOL)hasRegisterdCards {
+  
+  __block BOOL hasRegisterdCards = NO;
+  [self.cards enumerateObjectsUsingBlock:^(OMNBankCard *card, NSUInteger idx, BOOL *stop) {
+    
+    if (kOMNBankCardStatusRegistered == card.status) {
+      hasRegisterdCards = YES;
+      *stop = YES;
+    }
+    
+  }];
+  
+  return hasRegisterdCards;
+  
+}
+
+- (void)addCardFromViewController:(__weak UIViewController *)viewController forOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)paymentWithCardBlock {
+  
+  _order = order;
+  _paymentWithCardBlock = paymentWithCardBlock;
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
   __weak typeof(self)weakSelf = self;
@@ -139,32 +163,24 @@
   return canEdit;
 }
 
-- (UIActivityIndicatorView *)spinner {
-  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-  [spinner startAnimating];
-  return spinner;
-}
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNBankCard *card = self.cards[indexPath.row];
+  if (card.deleting) {
+    return;
+  }
+  
   __weak typeof(self)weakSelf = self;
   __weak UITableView *weakTableView = tableView;
-  UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-  cell.accessoryView = [self spinner];
-  
+  [tableView setEditing:NO animated:YES];
   [card deleteWithCompletion:^{
     
     [weakSelf removeCard:card];
-    if (weakTableView) {
-      dispatch_async(dispatch_get_main_queue(), ^{
-        [weakTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-      });
-    }
+    [weakTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 
   } failure:^(NSError *error) {
   
-    [weakTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//    [weakTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
   }];
   
@@ -206,7 +222,9 @@
     
   }
   
-  if (self.didSelectCardBlock) {
+  if (self.didSelectCardBlock &&
+      NO == self.loading &&
+      NO == selectedCard.deleting) {
     
     UIViewController *vc = self.didSelectCardBlock(selectedCard);
     if (vc &&
@@ -226,8 +244,38 @@
   
   OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
   mailRUCardConfirmVC.didFinishBlock = ^{
+    
     [sourceVC.navigationController popToViewController:sourceVC animated:YES];
+    
   };
+
+  long long enteredAmountWithTips = _order.enteredAmountWithTips;
+  NSString *alertText = NSLocalizedString(@"NO_SMS_ALERT_TEXT", @"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму.");
+  NSString *alertConfirmText = (_order) ? (NSLocalizedString(@"NO_SMS_ALERT_ACTION_TEXT", @"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты.")) : (nil);
+  
+  mailRUCardConfirmVC.noSMSBlock = ^{
+    
+    OMNPaymentAlertVC *paymentAlertVC = [[OMNPaymentAlertVC alloc] initWithText:alertText detailedText:alertConfirmText amount:enteredAmountWithTips];
+    [sourceVC.navigationController presentViewController:paymentAlertVC animated:YES completion:nil];
+    
+    paymentAlertVC.didCloseBlock = ^{
+      
+      [sourceVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+      
+    };
+    
+    paymentAlertVC.didPayBlock = ^{
+      
+      [sourceVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+      
+      if (_paymentWithCardBlock) {
+        _paymentWithCardBlock(bankCardInfo);
+      }
+      
+    };
+    
+  };
+  
   [sourceVC.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
   
 }

@@ -51,7 +51,6 @@ OMNCardEnterControlDelegate>
   
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
-  [_cardEnterControl setSaveButtonHidden:YES];
   _cardEnterControl.delegate = self;
   [self.view addSubview:_cardEnterControl];
   

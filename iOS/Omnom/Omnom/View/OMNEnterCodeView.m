@@ -157,7 +157,6 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.tintColor = colorWithHexString(@"157EFB");
     self.translatesAutoresizingMaskIntoConstraints = NO;
     self.textAlignment = NSTextAlignmentCenter;
     self.keyboardType = UIKeyboardTypeNumberPad;

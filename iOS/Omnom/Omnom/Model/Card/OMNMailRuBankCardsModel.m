@@ -31,15 +31,18 @@ NSString * const kCardIdServiceName = @"card_id";
 }
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock {
-  
+
   __weak typeof(self)weakSelf = self;
+  self.loading = YES;
   [OMNBankCard getCardsWithCompletion:^(NSArray *cards) {
     
     [weakSelf didLoadCards:cards];
+    weakSelf.loading = NO;
     completionBlock();
     
   } failure:^(NSError *error) {
     
+    weakSelf.loading = NO;
     completionBlock();
     
   }];
@@ -49,7 +52,7 @@ NSString * const kCardIdServiceName = @"card_id";
 - (void)didLoadCards:(NSArray *)cards {
   
   _cards = [cards mutableCopy];
-  
+
   if (nil == self.card_id) {
     
     [self updateCardSelection];

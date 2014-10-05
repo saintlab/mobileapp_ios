@@ -11,6 +11,9 @@
 #import <OMNMailRuPaymentInfo.h>
 
 typedef UIViewController *(^OMNSelectCardBlock)(OMNBankCard *bankCard);
+typedef void(^OMNBankCardInfoBlock)(OMNBankCardInfo *bankCardInfo);
+
+@class OMNOrder;
 
 @interface OMNBankCardsModel : NSObject
 <UITableViewDataSource,
@@ -18,11 +21,13 @@ UITableViewDelegate>
 
 @property (nonatomic, copy) OMNSelectCardBlock didSelectCardBlock;
 @property (nonatomic, assign) BOOL canDeleteCard;
+@property (nonatomic, assign, readonly) BOOL hasRegisterdCards;
+@property (nonatomic, assign) BOOL loading;
 @property (nonatomic, strong, readonly) NSMutableArray *cards;
 @property (nonatomic, weak) OMNBankCard *selectedCard;
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;
 - (void)updateCardSelection;
-- (void)addCardFromViewController:(__weak UIViewController *)viewController;
+- (void)addCardFromViewController:(__weak UIViewController *)viewController forOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)paymentWithCardBlock;
 
 @end

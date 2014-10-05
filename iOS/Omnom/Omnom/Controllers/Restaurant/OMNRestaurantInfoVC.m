@@ -72,8 +72,7 @@ UIScrollViewDelegate>
     
     [[OMNAnalitics analitics] logEvent:@"promolist_view" parametrs:nil];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
-    self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
-    
+
   }
   self.automaticallyAdjustsScrollViewInsets = NO;
   [self.navigationItem setHidesBackButton:YES animated:NO];
@@ -177,7 +176,7 @@ UIScrollViewDelegate>
       numberOfRows = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems.count) : (_restaurantInfo.shortItems.count);
     } break;
     case kRestaurantInfoSectionMore: {
-      numberOfRows = (_restaurantInfo.selected) ? (0) : (1);
+      numberOfRows = (nil == _restaurantInfo || _restaurantInfo.selected) ? (0) : (1);
     } break;
     case kRestaurantInfoSectionFeed: {
       numberOfRows = _restaurantInfo.feedItems.count;
@@ -270,12 +269,14 @@ UIScrollViewDelegate>
       
     } break;
     case kRestaurantInfoSectionMore: {
-      
-      _restaurantInfo.selected = !_restaurantInfo.selected;
-      [tableView beginUpdates];
-      [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:kRestaurantInfoSectionMore]] withRowAnimation:UITableViewRowAnimationFade];
-      [tableView reloadSections:[NSIndexSet indexSetWithIndex:kRestaurantInfoSectionAbout] withRowAnimation:UITableViewRowAnimationFade];
-      [tableView endUpdates];
+
+      if (_restaurantInfo) {
+        _restaurantInfo.selected = !_restaurantInfo.selected;
+        [tableView beginUpdates];
+        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:kRestaurantInfoSectionMore]] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:kRestaurantInfoSectionAbout] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView endUpdates];
+      }
       
     } break;
     case kRestaurantInfoSectionFeed: {
@@ -304,18 +305,32 @@ UIScrollViewDelegate>
 
 #pragma mark - UIScrollViewDelegate
 
+- (UIView *)clearView {
+  UIView *clearView = [[UIView alloc] init];
+  clearView.backgroundColor = [UIColor clearColor];
+  return clearView;
+}
+
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   UIView *viewForHeader = nil;
   
   switch ((RestaurantInfoSection)section) {
     case kRestaurantInfoSectionFeed: {
-      OMNBottomLabelView *bottomLabelView = [[OMNBottomLabelView alloc] init];
-      bottomLabelView.label.text = NSLocalizedString(@"Стоит попробовать", nil);
-      viewForHeader = bottomLabelView;
+      
+      if (_restaurantInfo.feedItems.count) {
+        OMNBottomLabelView *bottomLabelView = [[OMNBottomLabelView alloc] init];
+        bottomLabelView.label.text = NSLocalizedString(@"Стоит попробовать", nil);
+        viewForHeader = bottomLabelView;
+      }
+      else {
+        viewForHeader = [self clearView];
+      }
+      
     } break;
     case kRestaurantInfoSectionName: {
-      viewForHeader = [[UIView alloc] init];
-      viewForHeader.backgroundColor = [UIColor clearColor];
+      
+      viewForHeader = [self clearView];
+      
     } break;
     default: {
     } break;
