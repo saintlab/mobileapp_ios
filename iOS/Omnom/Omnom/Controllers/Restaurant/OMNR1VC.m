@@ -84,8 +84,8 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
   }
   else {
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserProfile)];
-    self.navigationItem.rightBarButtonItem.tintColor = [UIColor whiteColor];
+    UIImage *image = [[UIImage imageNamed:@"user_settings_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showUserProfile)];
     
   }
   

@@ -111,8 +111,9 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)callWaiterAction {
+- (void)callWaiterAction:(UIButton *)button {
   
+  button.enabled = NO;
   __weak typeof(self)weakSelf = self;
   OMNVisitor *v = self.visitor;
   [self searchVisitorWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
@@ -121,6 +122,7 @@ OMNPayOrderVCDelegate>
       
       dispatch_async(dispatch_get_main_queue(), ^{
         
+        button.enabled = YES;
         [searchBeaconVC finishLoading:^{
           
           [weakSelf popToRootViewControllerAnimated:YES];
@@ -132,7 +134,8 @@ OMNPayOrderVCDelegate>
     }];
     
   } cancelBlock:^{
-    
+  
+    button.enabled = YES;
     v.waiterIsCalled = NO;
     [weakSelf popToRootViewControllerAnimated:YES];
     
@@ -140,9 +143,10 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)callBillAction {
+- (void)callBillAction:(UIButton *)button {
   
   __weak typeof(self)weakSelf = self;
+  button.enabled = NO;
   [self searchVisitorWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
     
     [visitor getOrders:^(NSArray *orders) {
@@ -157,16 +161,19 @@ OMNPayOrderVCDelegate>
       else {
         [weakSelf checkPushNotificationForVisitor:visitor];
       }
-      
+      button.enabled = YES;
+
     } error:^(NSError *error) {
       
       [weakSelf processNoOrders];
+      button.enabled = YES;
       
     }];
     
   } cancelBlock:^{
     
     [weakSelf popToRootViewControllerAnimated:YES];
+    button.enabled = YES;
     
   }];
   

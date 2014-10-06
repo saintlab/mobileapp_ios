@@ -19,9 +19,8 @@
 
 - (void)showUserProfile;
 
-- (void)callBillAction;
-
-- (void)callWaiterAction;
+- (void)callBillAction:(UIButton *)button;
+- (void)callWaiterAction:(UIButton *)button;
 
 - (void)exitRestaurant;
 

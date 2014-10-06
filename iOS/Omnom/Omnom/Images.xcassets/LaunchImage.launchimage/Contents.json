@@ -21,14 +21,14 @@
       "idiom" : "iphone",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "Splash_iphone4@2x.png",
+      "filename" : "Splash_iphone4_640x960_for web.png",
       "scale" : "2x"
     },
     {
       "extent" : "full-screen",
       "idiom" : "iphone",
       "subtype" : "retina4",
-      "filename" : "Splash_v0.1.png",
+      "filename" : "Splash_iphone5_640x1136_for web.png",
       "minimum-system-version" : "7.0",
       "orientation" : "portrait",
       "scale" : "2x"

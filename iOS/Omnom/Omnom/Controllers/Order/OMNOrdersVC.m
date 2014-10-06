@@ -95,8 +95,6 @@ UICollectionViewDelegate>
 }
 
 - (void)setup {
- 
-
   
   _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:[[OMNOrderItemsFlowLayout alloc] init]];
   [_collectionView registerClass:[OMNOrderViewCell class] forCellWithReuseIdentifier:@"Cell"];
@@ -177,7 +175,8 @@ UICollectionViewDelegate>
     
     if ([order.id isEqualToString:closeOrder.id]) {
       [_orders removeObjectAtIndex:idx];
-      [_collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:idx inSection:0]]];
+      [_collectionView reloadData];
+//      [_collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:idx inSection:0]]];
       *stop = YES;
     }
     

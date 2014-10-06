@@ -37,6 +37,8 @@
       
       [self setImage:[templateImage omn_tintWithColor:kBarButtonNormalColor] forState:UIControlStateNormal];
       [self setImage:[templateImage omn_tintWithColor:kBarButtonHighlightedColor] forState:UIControlStateHighlighted];
+      [self setImage:[templateImage omn_tintWithColor:kBarButtonHighlightedColor] forState:UIControlStateDisabled];
+      
     }
     [self setTitle:title forState:UIControlStateNormal];
     [self sizeToFit];
@@ -73,6 +75,7 @@
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     [self setTitleColor:kBarButtonNormalColor forState:UIControlStateNormal];
     [self setTitleColor:kBarButtonHighlightedColor forState:UIControlStateHighlighted];
+    [self setTitleColor:kBarButtonHighlightedColor forState:UIControlStateDisabled];
     [self setTitleColor:kBarButtonHighlightedColor forState:UIControlStateSelected|UIControlStateHighlighted];
   }
   return self;

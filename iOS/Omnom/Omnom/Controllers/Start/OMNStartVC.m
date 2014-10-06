@@ -87,6 +87,10 @@ OMNSearchRestaurantVCDelegate>
     searchRestaurantVC.qr = parametrs[@"qr"];
     
   }
+  
+#warning http://omnom.menu/qr/zxcvbnm-61
+#  searchRestaurantVC.qr = @"http://m.2gis.ru/os/";
+  
   NSData *decodeBeaconData = self.info[OMNDecodeBeaconManagerNotificationLaunchKey];
   if (decodeBeaconData) {
     OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];

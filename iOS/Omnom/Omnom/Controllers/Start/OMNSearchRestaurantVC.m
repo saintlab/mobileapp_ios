@@ -41,6 +41,9 @@
     _logoIV.hidden = YES;
     self.bgIV.image = [UIImage imageNamed:@"LaunchImage-700"];
   }
+  else {
+    self.bgIV.image = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:colorWithHexString(@"CE1200")];
+  }
   
   [self.navigationController setNavigationBarHidden:YES animated:NO];
   
@@ -49,7 +52,7 @@
 - (void)viewWillLayoutSubviews {
   [super viewWillLayoutSubviews];
   
-  self.logoIconsIV.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 287.0f);
+  self.logoIconsIV.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 284.0f);
 
   _logoIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cross-small-new"]];
   _logoIV.center = CGPointMake(165.0f, self.logoIconsIV.center.y);
