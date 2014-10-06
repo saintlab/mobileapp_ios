@@ -10,6 +10,7 @@
 
 @interface OMNWizardPageVC : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (nonatomic, strong) UIColor *bgColor;
 @property (nonatomic, strong) NSString *bgImageName;
 @property (nonatomic, strong) NSString *iconName;

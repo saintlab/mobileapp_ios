@@ -28,7 +28,7 @@
   
   OMNWizardPageVC *page1 = [[OMNWizardPageVC alloc] init];
   page1.bgImageName = @"wood_bg";
-  page1.bgColor = colorWithHexString(@"ED5749");
+  page1.bgColor = colorWithHexString(@"CE1200");
   page1.iconName = @"credit_cards_icon_big";
   page1.text = NSLocalizedString(@"Оплатить счёт через телефон", nil);
   

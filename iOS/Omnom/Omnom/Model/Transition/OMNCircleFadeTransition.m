@@ -21,6 +21,7 @@
 #import "OMNMailRUPayVC.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNRestaurantActionsVC.h"
+#import "OMNAuthorizationVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -100,6 +101,7 @@
     
     [self keyFromClass:[OMNMailRUPayVC class] toClass:[OMNLoadingCircleVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNMailRUPayVC class]],
+    [self keyFromClass:[OMNStartVC class] toClass:[OMNAuthorizationVC class]],
     
     ];
 }
