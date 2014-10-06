@@ -48,8 +48,9 @@ UITextFieldDelegate>
   self.automaticallyAdjustsScrollViewInsets = NO;
   self.view.backgroundColor = [UIColor whiteColor];
   
-  _datePicker = [[UIDatePicker alloc] init];
+  [self omn_setup];
   
+  _datePicker = [[UIDatePicker alloc] init];
   
   NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
   NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
@@ -64,8 +65,6 @@ UITextFieldDelegate>
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
   
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];;
-  
-  [self setup];
   
   _emailTF.textField.text = self.email;
   _phoneTF.textField.text = self.phone;
@@ -85,124 +84,6 @@ UITextFieldDelegate>
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)setup {
-  
-  _scroll = [[UIScrollView alloc] init];
-  _scroll.translatesAutoresizingMaskIntoConstraints = NO;
-  [self.view addSubview:_scroll];
-
-  UIView *contentView = [[UIView alloc] init];
-  contentView.translatesAutoresizingMaskIntoConstraints = NO;
-  [_scroll addSubview:contentView];
-
-  OMNDisclamerView *disclamerView = [[OMNDisclamerView alloc] init];
-  [contentView addSubview:disclamerView];
-  
-  UIToolbar *nextToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
-  nextToolbar.items =
-  @[
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Следующий", nil) style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)],
-    ];
-  
-  UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
-  doneToolbar.items =
-  @[
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)],
-    ];
-  
-  _errorLabel = [[UILabel alloc] init];
-  _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _errorLabel.font = FuturaOSFOmnomRegular(18.0f);
-  _errorLabel.textColor = colorWithHexString(@"d0021b");
-  _errorLabel.text = nil;
-  _errorLabel.textAlignment = NSTextAlignmentCenter;
-  _errorLabel.numberOfLines = 0;
-  [contentView addSubview:_errorLabel];
-  
-  _nameTF = [[OMNErrorTextField alloc] init];
-  _nameTF.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-  _nameTF.textField.returnKeyType = UIReturnKeyNext;
-  _nameTF.textField.inputAccessoryView = nextToolbar;
-  _nameTF.textField.tag = 0;
-  _nameTF.textField.delegate = self;
-  _nameTF.textField.placeholder = NSLocalizedString(@"Имя", nil);
-  [contentView addSubview:_nameTF];
-  
-  _emailTF = [[OMNErrorTextField alloc] init];
-  _emailTF.textField.tag = 1;
-  _emailTF.textField.inputAccessoryView = nextToolbar;
-  _emailTF.textField.delegate = self;
-  _emailTF.textField.keyboardType = UIKeyboardTypeEmailAddress;
-  _emailTF.textField.returnKeyType = UIReturnKeyNext;
-  _emailTF.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-  _emailTF.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-  _emailTF.textField.placeholder = NSLocalizedString(@"Почта", nil);
-  [contentView addSubview:_emailTF];
-  
-  _phoneTF = [[OMNErrorTextField alloc] init];
-  _phoneTF.textField.tag = 2;
-  _phoneTF.textField.keyboardType = UIKeyboardTypePhonePad;
-  _phoneTF.textField.inputAccessoryView = nextToolbar;
-  _phoneTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
-  [contentView addSubview:_phoneTF];
-  
-  _birthdayTF = [[OMNErrorTextField alloc] init];
-  _birthdayTF.textField.tag = 3;
-  _birthdayTF.textField.inputView = _datePicker;
-  _birthdayTF.textField.inputAccessoryView = doneToolbar;
-  _birthdayTF.textField.placeholder = NSLocalizedString(@"День рождения", nil);
-  [contentView addSubview:_birthdayTF];
-  
-  _textFields = @[_nameTF, _emailTF, _phoneTF, _birthdayTF];
-  
-  NSDictionary *views =
-  @{
-    @"tf1" : _nameTF,
-    @"tf2" : _emailTF,
-    @"tf3" : _phoneTF,
-    @"tf4" : _birthdayTF,
-    @"errorLabel" : _errorLabel,
-    @"contentView" : contentView,
-    @"disclamerView" : disclamerView,
-    @"topLayoutGuide" : self.topLayoutGuide,
-    @"scroll" : _scroll,
-    };
-  
-  NSDictionary *metrics =
-  @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
-    };
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:metrics views:views]];
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:metrics views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf1]-|" options:0 metrics:metrics views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf2]-|" options:0 metrics:metrics views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf3]-|" options:0 metrics:metrics views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf4]-|" options:0 metrics:metrics views:views]];
-
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[disclamerView]-|" options:0 metrics:metrics views:views]];
-  
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-|" options:0 metrics:metrics views:views]];
-  
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-[tf4]-[disclamerView]-[errorLabel]-|" options:0 metrics:nil views:views]];
-
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
-  
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTrailing relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
-  
-  [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
-  
 }
 
 - (void)doneTap {
@@ -393,6 +274,11 @@ UITextFieldDelegate>
   UITextField *textField = notification.object;
   _currentTextField = textField;
 
+  if ([textField isEqual:_phoneTF.textField] &&
+      0 == _phoneTF.textField.text.length) {
+    _phoneTF.textField.text = @"+7";
+  }
+  
   CGRect textFieldFrame = [textField convertRect:textField.bounds toView:_scroll];
   [_scroll scrollRectToVisible:textFieldFrame animated:YES];
   CGPoint contentOffset = CGPointMake(0.0f, MAX(0.0f, textFieldFrame.origin.y - 20.0f));
@@ -427,6 +313,124 @@ UITextFieldDelegate>
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
   [self nextTap];
   return YES;
+}
+
+- (void)omn_setup {
+  
+  _scroll = [[UIScrollView alloc] init];
+  _scroll.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_scroll];
+  
+  UIView *contentView = [[UIView alloc] init];
+  contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  [_scroll addSubview:contentView];
+  
+  OMNDisclamerView *disclamerView = [[OMNDisclamerView alloc] init];
+  [contentView addSubview:disclamerView];
+  
+  UIToolbar *nextToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
+  nextToolbar.items =
+  @[
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Следующий", nil) style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)],
+    ];
+  
+  UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
+  doneToolbar.items =
+  @[
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)],
+    ];
+  
+  _errorLabel = [[UILabel alloc] init];
+  _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _errorLabel.font = FuturaOSFOmnomRegular(18.0f);
+  _errorLabel.textColor = colorWithHexString(@"d0021b");
+  _errorLabel.text = nil;
+  _errorLabel.textAlignment = NSTextAlignmentCenter;
+  _errorLabel.numberOfLines = 0;
+  [contentView addSubview:_errorLabel];
+  
+  _nameTF = [[OMNErrorTextField alloc] init];
+  _nameTF.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+  _nameTF.textField.returnKeyType = UIReturnKeyNext;
+  _nameTF.textField.inputAccessoryView = nextToolbar;
+  _nameTF.textField.tag = 0;
+  _nameTF.textField.delegate = self;
+  _nameTF.textField.placeholder = NSLocalizedString(@"Имя", nil);
+  [contentView addSubview:_nameTF];
+  
+  _emailTF = [[OMNErrorTextField alloc] init];
+  _emailTF.textField.tag = 1;
+  _emailTF.textField.inputAccessoryView = nextToolbar;
+  _emailTF.textField.delegate = self;
+  _emailTF.textField.keyboardType = UIKeyboardTypeEmailAddress;
+  _emailTF.textField.returnKeyType = UIReturnKeyNext;
+  _emailTF.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+  _emailTF.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+  _emailTF.textField.placeholder = NSLocalizedString(@"Почта", nil);
+  [contentView addSubview:_emailTF];
+  
+  _phoneTF = [[OMNErrorTextField alloc] init];
+  _phoneTF.textField.tag = 2;
+  _phoneTF.textField.keyboardType = UIKeyboardTypePhonePad;
+  _phoneTF.textField.inputAccessoryView = nextToolbar;
+  _phoneTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
+  [contentView addSubview:_phoneTF];
+  
+  _birthdayTF = [[OMNErrorTextField alloc] init];
+  _birthdayTF.textField.tag = 3;
+  _birthdayTF.textField.inputView = _datePicker;
+  _birthdayTF.textField.inputAccessoryView = doneToolbar;
+  _birthdayTF.textField.placeholder = NSLocalizedString(@"День рождения", nil);
+  [contentView addSubview:_birthdayTF];
+  
+  _textFields = @[_nameTF, _emailTF, _phoneTF, _birthdayTF];
+  
+  NSDictionary *views =
+  @{
+    @"tf1" : _nameTF,
+    @"tf2" : _emailTF,
+    @"tf3" : _phoneTF,
+    @"tf4" : _birthdayTF,
+    @"errorLabel" : _errorLabel,
+    @"contentView" : contentView,
+    @"disclamerView" : disclamerView,
+    @"topLayoutGuide" : self.topLayoutGuide,
+    @"scroll" : _scroll,
+    };
+  
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    };
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:metrics views:views]];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:metrics views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf1]-|" options:0 metrics:metrics views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf2]-|" options:0 metrics:metrics views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf3]-|" options:0 metrics:metrics views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf4]-|" options:0 metrics:metrics views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[disclamerView]-|" options:0 metrics:metrics views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-|" options:0 metrics:metrics views:views]];
+  
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[tf1][tf2][tf3]-[tf4]-[disclamerView]-[errorLabel]-|" options:0 metrics:nil views:views]];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeTrailing relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+  
+  [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
+  
 }
 
 @end
