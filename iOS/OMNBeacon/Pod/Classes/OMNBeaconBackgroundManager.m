@@ -127,6 +127,17 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     NSLog(@"This device does not support monitoring beacon regions");
     return;
   }
+
+  switch ([CLLocationManager authorizationStatus]) {
+    case kCLAuthorizationStatusDenied:
+    case kCLAuthorizationStatusNotDetermined:
+    case kCLAuthorizationStatusRestricted: {
+      return;
+    } break;
+    default: {
+      
+    } break;
+  }
   
   [_deprecatedBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
     
@@ -146,6 +157,8 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     }
     
   }];
+  
+  NSLog(@"%@", self.locationManager.monitoredRegions);
   
 }
 
@@ -204,6 +217,15 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     
   }
   
+}
+
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+  NSLog(@"didEnterRegion>%@", region);
+  
+}
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+  NSLog(@"didExitRegion>%@", region);
 }
 
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {

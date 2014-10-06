@@ -11,19 +11,12 @@
 #import "OMNBeaconSessionInfo.h"
 
 //NSTimeInterval const kTimeToDeleteMarkSec = 4 * 60 * 60;
-NSTimeInterval const kTimeToDeleteMarkSec = 1 * 60;
+//NSTimeInterval const kTimeToDeleteMarkSec = 1 * 60;
 
 static OMNBeaconUUID *_beaconUUID = nil;
 
-__unused static NSTimeInterval const kGTimeToFindMarkSeconds = 2.0;
-__unused static NSTimeInterval const kGTimeToLoseMarkSeconds = 5.0;
-
 static NSUInteger const kMaxBeaconCount = 7;
-static NSUInteger const kBeaconDesiredTimesAccuracy = 2;
-
-const NSInteger kBoardingRSSI = -70;
-const NSInteger kMaxRSSI = -80;
-const NSInteger kNearestDeltaRSSI = 10;
+static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 
 @implementation OMNBeacon {
   NSMutableArray *_beaconSessionInfo;
@@ -73,8 +66,10 @@ const NSInteger kNearestDeltaRSSI = 10;
   dispatch_semaphore_wait(_updateBeaconLock, DISPATCH_TIME_FOREVER);
   
   OMNBeaconSessionInfo *sessionInfo = [[OMNBeaconSessionInfo alloc] initWithBeacon:beacon];
-  if (sessionInfo.rssi > kMaxRSSI &&
-      sessionInfo.rssi != 0) {
+  if (sessionInfo.rssi != 0) {
+    if (kBeaconDesiredTimesAccuracy == _beaconSessionInfo.count) {
+      [_beaconSessionInfo removeObjectAtIndex:0];
+    }
     [_beaconSessionInfo addObject:sessionInfo];
   }
   
@@ -104,36 +99,7 @@ const NSInteger kNearestDeltaRSSI = 10;
 
 - (BOOL)atTheTable {
   
-  __block NSInteger totalRSSI = 0;
-  [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *sessionInfo, NSUInteger idx, BOOL *stop) {
-    
-    if (sessionInfo.rssi > kBoardingRSSI) {
-      totalRSSI += (sessionInfo.rssi - kBoardingRSSI);
-    }
-    
-  }];
-  
-  NSLog(@"atTheTableTimes>%d totalRSSI>%d, %@", _beaconSessionInfo.count, totalRSSI, self.key);
-  
-  return (_beaconSessionInfo.count >= kBeaconDesiredTimesAccuracy &&
-          totalRSSI > 0);
-  
-}
-
-- (BOOL)nearTheTable {
-  return (self.rssi > kBoardingRSSI);
-}
-
-- (void)removeFromTable {
-  _firstImmediateDate = nil;
-  [_beaconSessionInfo removeAllObjects];
-}
-
-- (void)newIterationBegin {
-  
-  if (self.atTheTable) {
-    [_beaconSessionInfo omn_removeFirstObject];
-  }
+  return (_beaconSessionInfo.count >= kBeaconDesiredTimesAccuracy);
   
 }
 
@@ -167,18 +133,20 @@ const NSInteger kNearestDeltaRSSI = 10;
   
 }
 
-- (BOOL)closeToBeacon:(OMNBeacon *)beacon {
-  return (self.rssi > beacon.rssi - kNearestDeltaRSSI);
+- (NSInteger)totalRSSI {
+  
+  __block NSInteger totalRSSI = 0;
+  [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *sessionInfo, NSUInteger idx, BOOL *stop) {
+    totalRSSI += sessionInfo.rssi;
+  }];
+  
+  return totalRSSI;
 }
 
 - (NSString *)description {
-  NSMutableString *debugString = [NSMutableString string];
+
+  return [NSString stringWithFormat:@"%@, %ld, %d %f, %ld", self.key, (long)self.rssi, self.atTheTable, self.atTheTableTime, self.totalRSSI];
   
-  [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *sessionInfo, NSUInteger idx, BOOL *stop) {
-    [debugString appendFormat:@"%ld,", (long)sessionInfo.proximity];
-  }];
-  
-  return [NSString stringWithFormat:@"%@, %ld, %d %f, {%@}", self.key, (long)self.rssi, self.atTheTable, self.atTheTableTime, debugString];
 }
 
 + (OMNBeacon *)demoBeacon {

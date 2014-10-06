@@ -35,7 +35,7 @@
     
     NSArray *deprecated = jsonData[@"deprecated"];
     NSMutableArray *deprecatedUUIDs = [NSMutableArray arrayWithCapacity:deprecated.count];
-    [active enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [deprecated enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
       NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:obj];
       [deprecatedUUIDs addObject:uuid];
     }];

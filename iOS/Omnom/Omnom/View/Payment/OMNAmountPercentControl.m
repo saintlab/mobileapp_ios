@@ -55,7 +55,6 @@ UITextFieldDelegate>
   _pureAmountTF = [[OMNLabeledTextField alloc] init];
   _pureAmountTF.keyboardType = UIKeyboardTypeDecimalPad;
   _pureAmountTF.translatesAutoresizingMaskIntoConstraints = NO;
-  _pureAmountTF.adjustsFontSizeToFitWidth = YES;
   _pureAmountTF.minimumFontSize = 10.0f;
   _pureAmountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
   _pureAmountTF.textColor = colorWithHexString(@"FFFFFF");
@@ -135,9 +134,9 @@ UITextFieldDelegate>
     };
   
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:-20.0f]];
+//  [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:20.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_pureAmountTF attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pureAmountTF]|" options:0 metrics:metrics views:views]];
+//  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pureAmountTF]|" options:0 metrics:metrics views:views]];
   
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:180.0f]];
@@ -145,7 +144,7 @@ UITextFieldDelegate>
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[amountTF]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[percentTF]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seporatorView(seporatorViewHeight)]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[flexibleBottomView(1)]|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pureAmountTF]-2-[flexibleBottomView(1)]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(1)]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[amountTF]-[seporatorView(1)]-[percentTF]|" options:0 metrics:metrics views:views]];
@@ -164,6 +163,9 @@ UITextFieldDelegate>
 }
 
 - (void)update {
+  _pureAmountTF.adjustsFontSizeToFitWidth = YES;
+  _pureAmountTF.tintColor = [UIColor whiteColor];
+  
   if (_amountPercentValue.isAmountSelected) {
     [self setAmountValue:_amountPercentValue.amount];
     [self calculateRelativePercentValue];
@@ -225,6 +227,11 @@ UITextFieldDelegate>
   
   _pureAmountTF.text = [[OMNUtils commaStringFromKop:amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
   _amountPercentValue.totalAmount = amount;
+  
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [_pureAmountTF invalidateIntrinsicContentSize];
+    [self layoutIfNeeded];
+  });
   
 }
 

@@ -138,6 +138,7 @@ OMNUserInfoVCDelegate>
 }
 
 - (void)decodeBeacon:(OMNBeacon *)beacon {
+  
   __weak typeof(self)weakSelf = self;
   [[OMNVisitorManager manager] decodeBeacon:beacon success:^(OMNVisitor *visitor) {
     
@@ -148,6 +149,7 @@ OMNUserInfoVCDelegate>
     [weakSelf didFailOmnom];
     
   }];
+  
 }
 
 - (void)didFindVisitor:(OMNVisitor *)visitor {

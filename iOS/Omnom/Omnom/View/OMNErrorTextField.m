@@ -63,6 +63,7 @@
   
   _textField = [[[_textFieldClass class] alloc] init];
   _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+  _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
   _textField.textColor = [UIColor blackColor];
   _textField.font = FuturaLSFOmnomLERegular(22.0f);
   _textField.translatesAutoresizingMaskIntoConstraints = NO;

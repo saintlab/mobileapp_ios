@@ -56,7 +56,7 @@
 }
 
 - (NSString *)text {
-  
+  return super.text;
   NSString *text = super.text;
   if (_detailedText.length) {
     text = [text stringByReplacingOccurrencesOfString:_detailedText withString:@""];

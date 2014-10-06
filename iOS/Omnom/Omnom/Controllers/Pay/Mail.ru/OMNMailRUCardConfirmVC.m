@@ -33,6 +33,7 @@ UITextViewDelegate>
   OMNBankCardInfo *_bankCardInfo;
   OMNErrorTextField *_cardHoldValueTF;
   OMNCardEnterErrorView *_errorTextView;
+  NSString *_detailedText;
 }
 
 - (void)dealloc {
@@ -59,8 +60,8 @@ UITextViewDelegate>
   _errorTextView.textColor = colorWithHexString(@"D0021B");
   _errorTextView.font = FuturaOSFOmnomRegular(15.0f);
   
-  NSString *detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
-  [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:detailedText];
+  _detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
+  [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:_detailedText];
   _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00 %@", omnCommaString(), kRubleSign];
 
   
@@ -318,6 +319,7 @@ UITextViewDelegate>
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
   NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+  finalString = [finalString stringByReplacingOccurrencesOfString:_detailedText withString:@""];
   
   if ([string isEqualToString:omnCommaString()]) {
     

@@ -13,7 +13,7 @@
 #import "OMNNearestBeaconsManager.h"
 #import <OMNBeaconBackgroundManager.h>
 
-NSTimeInterval kBeaconSearchTimeout = 5.0;
+NSTimeInterval kBeaconSearchTimeout = 6.0;
 
 @interface OMNBeaconSearchManager ()
 

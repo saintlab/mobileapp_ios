@@ -86,7 +86,10 @@
   [_foundBeacons updateWithBeacons:newBeacons];
   
   NSArray *nearestBeacons = _foundBeacons.atTheTableBeacons;
+  
   if (nearestBeacons.count) {
+    NSLog(@"nearestBeacons>%@", nearestBeacons);
+    
     _foundNearestBeaconsBlock(nearestBeacons);
     _foundBeacons = [[OMNFoundBeacons alloc] init];
   }

@@ -92,6 +92,7 @@
 }
 
 - (void)setupAppearance {
+  
   [[UITextField appearance] setTintColor:colorWithHexString(@"157EFB")];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];

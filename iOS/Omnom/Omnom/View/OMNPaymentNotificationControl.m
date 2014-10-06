@@ -92,7 +92,8 @@
   NSString *title = @"";
   NSString *userID = [user[@"id"] description];
   
-  if ([userID isEqualToString:[OMNAuthorisation authorisation].user.id]) {
+  if ([userID isEqualToString:[OMNAuthorisation authorisation].user.id] &&
+      tipAmount > 0) {
     
     title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено по счету %@ + чай %@", nil), user[@"name"], [OMNUtils moneyStringFromKop:netAmount], [OMNUtils moneyStringFromKop:tipAmount]];
     

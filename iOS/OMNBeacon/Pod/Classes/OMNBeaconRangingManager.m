@@ -126,7 +126,6 @@
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
   
-  NSLog(@"didRangeBeacons>%@", beacons);
   if (_didRangeBeaconsBlock &&
       beacons.count) {
     _didRangeBeaconsBlock(beacons);

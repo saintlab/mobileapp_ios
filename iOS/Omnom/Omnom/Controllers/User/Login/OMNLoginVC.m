@@ -55,6 +55,16 @@ UITextViewDelegate> {
   
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  [_loginTF becomeFirstResponder];
+  if (0 == _loginTF.textField.text.length) {
+    _loginTF.textField.text = @"+7";
+  }
+
+}
+
 - (void)setNextButtonLoading:(BOOL)loading {
   
   UIBarButtonItem *rightBarButtonItem = nil;
@@ -142,14 +152,6 @@ UITextViewDelegate> {
 }
 - (IBAction)fbLoginTap:(id)sender {
   [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"тут должен быть логин через facebook", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
-}
-
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-  
-  [_loginTF becomeFirstResponder];
-  
 }
 
 - (void)loginTap {

@@ -9,8 +9,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "OMNBeaconUUID.h"
 
-extern const NSInteger kBoardingRSSI;
-
 typedef NS_ENUM(NSInteger, BeaconDistance) {
   kBeaconDistanceNear,
   kBeaconDistanceFar,
@@ -28,11 +26,8 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 @property (nonatomic, assign) NSInteger rssi;
 
 @property (nonatomic, assign) BeaconDistance beaconDistance;
-
 @property (nonatomic, assign, readonly) BOOL atTheTable;
-
-@property (nonatomic, assign, readonly) BOOL nearTheTable;
-
+@property (nonatomic, assign, readonly) NSInteger totalRSSI;
 
 + (void)setBaeconUUID:(OMNBeaconUUID *)beaconUUID;
 + (OMNBeaconUUID *)beaconUUID;
@@ -41,15 +36,10 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 
 - (NSTimeInterval)atTheTableTime;
 
-- (BOOL)closeToBeacon:(OMNBeacon *)beacon;
-
 - (void)updateWithBeacon:(CLBeacon *)beacon;
-
-- (void)removeFromTable;
 
 - (double)averageRSSI;
 
-- (void)newIterationBegin;
 
 - (NSString *)key;
 

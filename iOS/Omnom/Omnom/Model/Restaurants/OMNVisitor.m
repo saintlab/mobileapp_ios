@@ -122,7 +122,7 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
 }
 
 - (BOOL)readyForPush {
-  
+
   return ([[NSDate date] timeIntervalSinceDate:self.foundDate] > 4*60*60);
   
 }

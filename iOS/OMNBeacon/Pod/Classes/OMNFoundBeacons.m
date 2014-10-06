@@ -57,36 +57,34 @@
 
 - (NSArray *)atTheTableBeacons {
   
-  NSMutableDictionary *rssiInfo = [NSMutableDictionary dictionary];
-  [_existingBeaconsDictionary enumerateKeysAndObjectsUsingBlock:^(id key, OMNBeacon *beacon, BOOL *stop) {
+  NSDictionary *existingBeaconsDictionary = [_existingBeaconsDictionary copy];
+  NSMutableArray *atTheTableBeacons = [NSMutableArray array];
+  __block NSInteger maxRSSI = NSIntegerMin;
+  
+  NSLog(@"existingBeaconsDictionary>%@", existingBeaconsDictionary);
+  
+  [existingBeaconsDictionary enumerateKeysAndObjectsUsingBlock:^(id key, OMNBeacon *beacon, BOOL *stop) {
     
-    if (beacon.averageRSSI > kBoardingRSSI) {
-      rssiInfo[@(beacon.averageRSSI)] = beacon;
+    if (beacon.atTheTable) {
+      maxRSSI = MAX(maxRSSI, beacon.totalRSSI);
+      [atTheTableBeacons addObject:beacon];
     }
     
   }];
 
-  
-  NSLog(@"%@", rssiInfo);
-  
-  if (rssiInfo.count == 0) {
-    return nil;
-  }
-  
-  return [rssiInfo allValues];
-  
-  /*
-  NSArray *sortedRssi = [[rssiInfo allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSNumber *obj1, NSNumber *obj2) {
-    return [obj2 compare:obj1];
+  const NSInteger kboardingRSSI = 50;
+  NSMutableArray *conditionalBeacons = [NSMutableArray array];
+  [atTheTableBeacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
+    
+    if (beacon.totalRSSI > (maxRSSI - kboardingRSSI)) {
+      [conditionalBeacons addObject:beacon];
+    }
+    
   }];
+  
+  
+  return [conditionalBeacons copy];
 
-  
-  
-  NSLog(@"%@", sortedRssi);
-  
-  NSMutableArray *atTheTableBeacons = [NSMutableArray array];
-  return atTheTableBeacons;
-   */
 }
 
 @end
