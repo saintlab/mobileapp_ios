@@ -26,7 +26,7 @@
     _label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.frame), 50.0f)];
     _label.textAlignment = NSTextAlignmentCenter;
     _label.textColor = [UIColor whiteColor];
-    _label.font = FuturaLSFOmnomLERegular(24.0f);
+    _label.font = FuturaOSFOmnomMedium(20.0f);
     [self addSubview:_label];
     
     _orderDataSource = [[OMNOrderDataSource alloc] initWithOrder:nil];
@@ -59,7 +59,8 @@
 
 - (void)setIndex:(NSInteger)index {
   _index = index;
-  _label.text = [NSString stringWithFormat:@"Счёт %ld", (long)index + 1];
+  
+  _label.text = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_TITLE %ld", @"Счёт {number}"), (long)index + 1];
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
@@ -77,7 +78,7 @@
   _orderDataSource.order = order;
   [_tableView reloadData];
   [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-  _tableView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+  _tableView.layer.rasterizationScale = 2.0f;
   _tableView.layer.shouldRasterize = YES;
 
 }

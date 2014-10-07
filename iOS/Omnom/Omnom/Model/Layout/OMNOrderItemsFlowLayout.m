@@ -25,7 +25,7 @@
 - (void)setup {
   
   self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-  self.sectionInset = UIEdgeInsetsMake(0.0f, 20.0f, 75.0f, 20.0f);
+  self.sectionInset = UIEdgeInsetsMake(45.0f, 20.0f, 75.0f, 20.0f);
   self.itemSize = CGSizeMake(275.0f, 360.0f);
   self.minimumLineSpacing = 10.0f;
   
