@@ -14,14 +14,14 @@ describe(@"register test", ^{
   
   NSString *user_id = @"20";
   NSString *user_phone = @"89833087335";
-  __block NSString *_cardId = nil;
+  __block NSString *_cardID = nil;
 
   it(@"should create new card", ^{
     
     
     NSDictionary *cardInfo =
     @{
-      @"pan" : @"4111111111111112",
+      @"pan" : @"4111111111111111",
 //      @"pan" : @"639002000000000003",
 //      @"pan" : @"6011000000000004",
       @"exp_date" : @"12.2015",
@@ -29,16 +29,17 @@ describe(@"register test", ^{
       };
     
     __block id cardRegisterResponse = nil;
-    [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user_id user_phone:user_phone completion:^(id response) {
+    
+    [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user_id user_phone:user_phone completion:^(id response, NSString *cardId) {
       
       cardRegisterResponse = response;
+      _cardID = cardId;
       
     }];
     
     [[expectFutureValue(cardRegisterResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
+    [[expectFutureValue(_cardID) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
-    _cardId = cardRegisterResponse[@"card_id"];
-    [[_cardId should] beNonNil];
     
   });
 
@@ -51,7 +52,7 @@ describe(@"register test", ^{
   it(@"should fail verify test card", ^{
     
     __block id cardVerifyResponse = nil;
-    [[OMNMailRuAcquiring acquiring] cardVerify:1.2 user_login:user_id card_id:_cardId completion:^(id response) {
+    [[OMNMailRuAcquiring acquiring] cardVerify:1.2 user_login:user_id card_id:_cardID completion:^(id response) {
       
       cardVerifyResponse = response;
       
@@ -66,7 +67,7 @@ describe(@"register test", ^{
   it(@"should verify test card", ^{
     
     __block id cardVerifyResponse = nil;
-    [[OMNMailRuAcquiring acquiring] cardVerify:1.4 user_login:user_id card_id:_cardId completion:^(id response) {
+    [[OMNMailRuAcquiring acquiring] cardVerify:1.4 user_login:user_id card_id:_cardID completion:^(id response) {
       
       cardVerifyResponse = response;
       
@@ -81,7 +82,7 @@ describe(@"register test", ^{
   it(@"should pay with card id", ^{
     
     OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
-    paymentInfo.cardInfo.card_id = _cardId;
+    paymentInfo.cardInfo.card_id = _cardID;
     paymentInfo.cardInfo.cvv = @"123";
     paymentInfo.user_login = user_id;
     paymentInfo.order_message = @"message";
@@ -106,7 +107,7 @@ describe(@"register test", ^{
   it(@"should delete card", ^{
     
     __block id cardDeleteResponse = nil;
-    [[OMNMailRuAcquiring acquiring] cardDelete:_cardId user_login:user_id completion:^(id response) {
+    [[OMNMailRuAcquiring acquiring] cardDelete:_cardID user_login:user_id completion:^(id response) {
       
       cardDeleteResponse = response;
       
