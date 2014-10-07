@@ -23,27 +23,25 @@
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
+		<key>08BE6F14FE54BF89B7D92064</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-OMNMailRuAcquiringTests.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>1905FF2CFF454D46AF4B1D84</key>
 		<dict>
 			<key>fileRef</key>
 			<string>0603903452FA499D8EE8219D</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
-		</dict>
-		<key>21124ADD18A6402DBCA15AFC</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-OMNMailRuAcquiring.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Pods-OMNMailRuAcquiring.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
 		</dict>
 		<key>279BE0B563B342B481B7AAE9</key>
 		<dict>
@@ -96,8 +94,8 @@ fi
 			<array>
 				<string>655A76BEFF922BA56EAF688F</string>
 				<string>A43A7D0771A757EDBF6F940B</string>
-				<string>93C39D91AC0DC0063437C27B</string>
-				<string>FA82DB642A7D649466A32F76</string>
+				<string>EADBC47D282CC5C3C8A2DFDC</string>
+				<string>61DE5755DEEA8F017DDCA524</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -115,8 +113,6 @@ fi
 				<string>6003F5B5195388D20070C39A</string>
 				<string>6003F58C195388D20070C39A</string>
 				<string>6003F58B195388D20070C39A</string>
-				<string>21124ADD18A6402DBCA15AFC</string>
-				<string>8E5621FCE28F40CD93839407</string>
 				<string>54D01918566655D74B5E187C</string>
 			</array>
 			<key>isa</key>
@@ -299,6 +295,7 @@ fi
 				<string>6003F5AF195388D20070C39A</string>
 				<string>0603903452FA499D8EE8219D</string>
 				<string>64EB91F0F57149D4AC955B6C</string>
+				<string>08BE6F14FE54BF89B7D92064</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -641,6 +638,7 @@ fi
 				<string>6003F5B2195388D20070C39A</string>
 				<string>6003F5B1195388D20070C39A</string>
 				<string>DC15996B32D749F499A36CBF</string>
+				<string>9B288719D67528F1E87882AE</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -681,7 +679,7 @@ fi
 			<key>isa</key>
 			<string>PBXNativeTarget</string>
 			<key>name</key>
-			<string>Tests</string>
+			<string>OMNMailRuAcquiringTests</string>
 			<key>productName</key>
 			<string>OMNMailRuAcquiringTests</string>
 			<key>productReference</key>
@@ -697,8 +695,10 @@ fi
 			<string>0</string>
 			<key>isa</key>
 			<string>PBXFileReference</string>
-			<key>path</key>
+			<key>name</key>
 			<string>Tests.xctest</string>
+			<key>path</key>
+			<string>OMNMailRuAcquiringTests.xctest</string>
 			<key>sourceTree</key>
 			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
@@ -1069,7 +1069,7 @@ fi
 		<key>6003F5C3195388D20070C39A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>93C39D91AC0DC0063437C27B</string>
+			<string>EADBC47D282CC5C3C8A2DFDC</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>BUNDLE_LOADER</key>
@@ -1106,7 +1106,7 @@ fi
 		<key>6003F5C4195388D20070C39A</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>FA82DB642A7D649466A32F76</string>
+			<string>61DE5755DEEA8F017DDCA524</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>BUNDLE_LOADER</key>
@@ -1158,6 +1158,21 @@ fi
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>Podspec Metadata</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>61DE5755DEEA8F017DDCA524</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-OMNMailRuAcquiringTests.release.xcconfig</string>
+			<key>path</key>
+			<string>../../Pods/Target Support Files/Pods-OMNMailRuAcquiringTests/Pods-OMNMailRuAcquiringTests.release.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1219,35 +1234,12 @@ fi
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>8E5621FCE28F40CD93839407</key>
+		<key>9B288719D67528F1E87882AE</key>
 		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
+			<key>fileRef</key>
+			<string>08BE6F14FE54BF89B7D92064</string>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Tests.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Pods-Tests.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>93C39D91AC0DC0063437C27B</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Tests.debug.xcconfig</string>
-			<key>path</key>
-			<string>../../Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>A43A7D0771A757EDBF6F940B</key>
 		<dict>
@@ -1337,7 +1329,7 @@ fi
 			<key>shellPath</key>
 			<string>/bin/sh</string>
 			<key>shellScript</key>
-			<string>"${SRCROOT}/../../Pods/Target Support Files/Pods-Tests/Pods-Tests-resources.sh"
+			<string>"${SRCROOT}/../../Pods/Target Support Files/Pods-OMNMailRuAcquiringTests/Pods-OMNMailRuAcquiringTests-resources.sh"
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
@@ -1349,7 +1341,7 @@ fi
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>FA82DB642A7D649466A32F76</key>
+		<key>EADBC47D282CC5C3C8A2DFDC</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -1358,9 +1350,9 @@ fi
 			<key>lastKnownFileType</key>
 			<string>text.xcconfig</string>
 			<key>name</key>
-			<string>Pods-Tests.release.xcconfig</string>
+			<string>Pods-OMNMailRuAcquiringTests.debug.xcconfig</string>
 			<key>path</key>
-			<string>../../Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig</string>
+			<string>../../Pods/Target Support Files/Pods-OMNMailRuAcquiringTests/Pods-OMNMailRuAcquiringTests.debug.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>

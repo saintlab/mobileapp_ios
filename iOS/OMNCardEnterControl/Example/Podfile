@@ -1,7 +1,0 @@
-target 'OMNCardEnterControl', :exclusive => true do
-  pod "OMNCardEnterControl", :path => "../"
-end
-
-target 'Tests', :exclusive => true do
-  pod "OMNCardEnterControl", :path => "../"
-end

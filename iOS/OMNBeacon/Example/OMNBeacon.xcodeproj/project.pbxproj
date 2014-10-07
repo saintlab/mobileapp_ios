@@ -86,8 +86,6 @@ fi
 				<string>6003F5B5195388D20070C39A</string>
 				<string>6003F58C195388D20070C39A</string>
 				<string>6003F58B195388D20070C39A</string>
-				<string>ECF76DC90F1F4F47A2FB2162</string>
-				<string>BF734ABFF599467AADB316DE</string>
 				<string>FBDCBBFAA43CE0A8F7F91AEB</string>
 			</array>
 			<key>isa</key>
@@ -1039,8 +1037,6 @@ fi
 		</dict>
 		<key>6003F5C3195388D20070C39A</key>
 		<dict>
-			<key>baseConfigurationReference</key>
-			<string>BF734ABFF599467AADB316DE</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>BUNDLE_LOADER</key>
@@ -1076,8 +1072,6 @@ fi
 		</dict>
 		<key>6003F5C4195388D20070C39A</key>
 		<dict>
-			<key>baseConfigurationReference</key>
-			<string>BF734ABFF599467AADB316DE</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>BUNDLE_LOADER</key>
@@ -1159,21 +1153,6 @@ fi
 			<string>README.md</string>
 			<key>path</key>
 			<string>../README.md</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>BF734ABFF599467AADB316DE</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Tests.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Pods-Tests.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1300,21 +1279,6 @@ fi
 			<string>Pods-OMNBeacon.release.xcconfig</string>
 			<key>path</key>
 			<string>../../Pods/Target Support Files/Pods-OMNBeacon/Pods-OMNBeacon.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>ECF76DC90F1F4F47A2FB2162</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-OMNBeacon.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Pods-OMNBeacon.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>

@@ -32,21 +32,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>0E079BF48DE643F28F0E2B01</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-OMNCardEnterControl.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Pods-OMNCardEnterControl.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>105C2FCFCE0A41AD9202CA9E</key>
 		<dict>
 			<key>explicitFileType</key>
@@ -143,8 +128,6 @@ fi
 				<string>6003F5B5195388D20070C39A</string>
 				<string>6003F58C195388D20070C39A</string>
 				<string>6003F58B195388D20070C39A</string>
-				<string>0E079BF48DE643F28F0E2B01</string>
-				<string>93B414CD32684665B9EE98DE</string>
 				<string>82FC1215DD98DE0A74A6D576</string>
 			</array>
 			<key>isa</key>
@@ -1096,8 +1079,6 @@ fi
 		</dict>
 		<key>6003F5C3195388D20070C39A</key>
 		<dict>
-			<key>baseConfigurationReference</key>
-			<string>93B414CD32684665B9EE98DE</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>BUNDLE_LOADER</key>
@@ -1133,8 +1114,6 @@ fi
 		</dict>
 		<key>6003F5C4195388D20070C39A</key>
 		<dict>
-			<key>baseConfigurationReference</key>
-			<string>93B414CD32684665B9EE98DE</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>BUNDLE_LOADER</key>
@@ -1245,21 +1224,6 @@ fi
 			<string>README.md</string>
 			<key>path</key>
 			<string>../README.md</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>93B414CD32684665B9EE98DE</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Tests.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Pods-Tests.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
