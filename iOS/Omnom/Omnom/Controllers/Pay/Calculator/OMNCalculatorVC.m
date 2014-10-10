@@ -87,7 +87,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   _containerView = [[UIView alloc] init];
   [self.view addSubview:_containerView];
   
-  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor whiteColor] target:self action:@selector(closeTap)];
+  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
 
   
   self.transitionInProgress = NO;

@@ -9,6 +9,7 @@
 #import "OMNVisitorManager.h"
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
+#import "OMNUtils.h"
 
 NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeaconManagerNotificationLaunchKey";
 
@@ -88,13 +89,13 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     }
     else {
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters jsonResponse:responseObject];
-      failureBlock(nil);
+      failureBlock([OMNUtils errorFromCode:OMNErrorQrDecode]);
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters responseOperation:operation];
-    failureBlock(nil);
+    failureBlock([error omn_internetError]);
     
   }];
   

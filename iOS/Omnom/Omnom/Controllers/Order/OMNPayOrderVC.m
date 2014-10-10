@@ -112,9 +112,6 @@ OMNMailRUPayVCDelegate>
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_gray_bg"] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = nil;
   
-  self.automaticallyAdjustsScrollViewInsets = YES;
-  self.edgesForExtendedLayout = UIRectEdgeAll;
-  
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -129,7 +126,6 @@ OMNMailRUPayVCDelegate>
 
 - (void)layoutTableView {
   
-  [_tableView reloadData];
   CGRect frame = _tableView.frame;
   frame.size = _tableView.contentSize;
   _tableView.frame = frame;
@@ -181,6 +177,7 @@ OMNMailRUPayVCDelegate>
 - (void)orderDidChange:(NSNotification *)n {
 
   _paymentView.order = _order;
+  [self.tableView reloadData];
   [self layoutTableView];
   
 }
@@ -202,9 +199,8 @@ OMNMailRUPayVCDelegate>
   
   _tableView.dataSource = _dataSource;
   _tableView.delegate = _dataSource;
-  [_dataSource registerCellsForTableView:self.tableView];
+  [_dataSource registerCellsForTableView:_tableView];
   [_tableView reloadData];
-
   
   NSDictionary *views =
   @{

@@ -29,23 +29,17 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
-  UIImage *totalImage = [fromViewController.tableView omn_screenshotOfSection:1];
   UIImage *footerImage = [fromViewController.tableView.tableFooterView omn_screenshot];
   
-  CGFloat totalViewHeight = totalImage.size.height;
   CGFloat footerViewHeight = footerImage.size.height;
-  CGFloat blankImageTopOffset = fromViewController.tableView.contentSize.height - footerViewHeight - totalViewHeight;
+  CGFloat blankImageTopOffset = fromViewController.tableView.contentSize.height - footerViewHeight;
   
-  UIView *blankView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, blankImageTopOffset, totalImage.size.width, totalViewHeight)];
+  UIView *blankView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, blankImageTopOffset, footerImage.size.width, footerViewHeight)];
   blankView.backgroundColor = [UIColor whiteColor];
-  
-  UIImageView *totalView = [[UIImageView alloc] initWithImage:totalImage];
-  totalView.clipsToBounds = NO;
-  [blankView addSubview:totalView];
   
   UIImageView *footerView = [[UIImageView alloc] initWithImage:footerImage];
   CGRect footerViewFrame = footerView.frame;
-  footerViewFrame.origin.y = totalViewHeight;
+  footerViewFrame.origin.y = 0.0f;
   footerView.frame = footerViewFrame;
   footerView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
   [blankView addSubview:footerView];
@@ -81,8 +75,8 @@
     CGRect blankViewFrame = blankView.frame;
     blankViewFrame.size.height += height;
     blankView.frame = blankViewFrame;
-    totalView.alpha = 0.0f;
-    totalView.transform = CGAffineTransformMakeTranslation(0.0f, height);
+//    totalView.alpha = 0.0f;
+//    totalView.transform = CGAffineTransformMakeTranslation(0.0f, height);
     
   } completion:^(BOOL finished) {
     

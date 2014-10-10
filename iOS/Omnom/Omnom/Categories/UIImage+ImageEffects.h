@@ -97,6 +97,7 @@
 
 @interface UIImage (ImageEffects)
 
+- (UIImage *)omn_applyLightEffect;
 - (UIImage *)applyLightEffect;
 - (UIImage *)applyExtraLightEffect;
 - (UIImage *)applyDarkEffect;

@@ -12,7 +12,7 @@
 @implementation OMNOrderTableView
 
 - (instancetype)initWithFrame:(CGRect)frame style:(UITableViewStyle)style {
-  self = [super initWithFrame:frame style:style];
+  self = [super initWithFrame:frame style:UITableViewStylePlain];
   if (self) {
     [self setup];
   }

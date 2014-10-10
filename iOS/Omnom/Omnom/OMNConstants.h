@@ -25,6 +25,7 @@ enum {
   
   OMNErrorOrderClosed = 300,
   OMNErrorPaymentError,
+  OMNErrorQrDecode,
   
 };
 

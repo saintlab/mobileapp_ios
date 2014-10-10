@@ -69,6 +69,7 @@
     
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNCircleRootVC class]],
     
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNTablePositionVC class]],
     [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchVisitorVC class]],
@@ -78,7 +79,7 @@
 
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNTurnOnBluetoothVC class]],
     [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchVisitorVC class]],
-    
+
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNRestaurantActionsVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNRestaurantActionsVC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNRestaurantActionsVC class]],

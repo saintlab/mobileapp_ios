@@ -33,7 +33,7 @@
 
     _orderDataSource.showTotalView = YES;
     
-    CGFloat tableWidth = 320.0f;
+    CGFloat tableWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
     CGFloat scale = CGRectGetWidth(self.frame)/tableWidth;
     CGFloat tableHeight = (CGRectGetHeight(self.frame) - CGRectGetHeight(_label.frame))/scale;
     
@@ -47,7 +47,7 @@
     _tableView.transform = CGAffineTransformMakeScale(scale, scale);
     [self addSubview:_tableView];
     
-    [_orderDataSource registerCellsForTableView:self.tableView];
+    [_orderDataSource registerCellsForTableView:_tableView];
   }
   return self;
 }
@@ -77,7 +77,10 @@
   
   _orderDataSource.order = order;
   [_tableView reloadData];
-  [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+  
+  OMNGuest *guest = [_order.guests lastObject];
+  
+  [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:guest.items.count - 1 inSection:_order.guests.count - 1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
   _tableView.layer.rasterizationScale = 2.0f;
   _tableView.layer.shouldRasterize = YES;
 

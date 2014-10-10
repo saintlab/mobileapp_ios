@@ -14,9 +14,11 @@ UITableViewDelegate>
 
 @property (nonatomic, assign) BOOL showTotalView;
 @property (nonatomic, strong) OMNOrder *order;
+@property (nonatomic, copy) void(^didSelectBlock)(UITableView *tableView, NSIndexPath *indexPath);
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
 
 - (void)registerCellsForTableView:(UITableView *)tableView;
+- (void)updateTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
 
 @end

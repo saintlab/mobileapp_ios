@@ -233,7 +233,7 @@ OMNUserInfoVCDelegate>
       
     } failure:^(NSError *error) {
       
-      [weakSelf didFailQRCode];
+      [weakSelf didFailQRCode:error];
       
     }];
     
@@ -241,11 +241,11 @@ OMNUserInfoVCDelegate>
   
 }
 
-- (void)didFailQRCode {
+- (void)didFailQRCode:(NSError *)error {
   
   OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
   didFailOmnomVC.faded = YES;
-  didFailOmnomVC.text = NSLocalizedString(@"Неверный QR-код,\nнайдите Omnom", nil);
+  didFailOmnomVC.text = error.localizedDescription;
   didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
   __weak typeof(self)weakSelf = self;
   didFailOmnomVC.buttonInfo =

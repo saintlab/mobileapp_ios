@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface OMNOrderItem : NSObject
-<NSCopying>
+//<NSCopying>
 
 @property (nonatomic, copy) NSString *name;
+@property (nonatomic, copy) NSString *guest_id;
 @property (nonatomic, assign) long long price_per_item;
 @property (nonatomic, assign) long long price_total;
 @property (nonatomic, assign) NSInteger quantity;

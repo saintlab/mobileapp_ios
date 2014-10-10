@@ -11,6 +11,7 @@
 #import "OMNTip.h"
 #import "OMNBill.h"
 #import "OMNOrderPaid.h"
+#import "OMNGuest.h"
 
 @class OMNOrder;
 
@@ -49,7 +50,7 @@ extern NSString *stringFromSplitType(SplitType splitType);
 @property (nonatomic, copy) NSString *restaurant_id;
 @property (nonatomic, copy) NSString *restarateurOrderId;
 
-@property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong, readonly) NSArray *guests;
 
 @property (nonatomic, strong, readonly) NSMutableArray *tips;
 @property (nonatomic, assign, readonly) long long tipsThreshold;
@@ -72,7 +73,6 @@ extern NSString *stringFromSplitType(SplitType splitType);
 - (void)updateWithOrder:(OMNOrder *)order;
 - (BOOL)paymentValueIsTooHigh;
 - (long long)totalAmount;
-- (void)deselectAll;
 - (long long)selectedItemsTotal;
 
 @end

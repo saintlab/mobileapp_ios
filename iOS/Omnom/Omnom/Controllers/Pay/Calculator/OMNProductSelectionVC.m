@@ -22,7 +22,7 @@
 
 
 - (instancetype)initWithOrder:(OMNOrder *)order {
-  self = [super init];
+  self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
     _order = order;
   }
@@ -35,8 +35,16 @@
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
   [_dataSource registerCellsForTableView:self.tableView];
   
+  __weak typeof(self)weakSelf = self;
+  [_dataSource setDidSelectBlock:^(UITableView *tv, NSIndexPath *indexPath) {
+    
+    [weakSelf updateTotalValue];
+    
+  }];
+  
   self.tableView.tableFooterView = [[UIView alloc] init];
   self.tableView.dataSource = _dataSource;
+  self.tableView.delegate = _dataSource;
   self.tableView.allowsMultipleSelection = YES;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
@@ -53,27 +61,34 @@
   
   NSIndexPath *demoIndexPath = nil;
   
-  if (_order.items.count) {
-    
+  OMNGuest *guest = [_order.guests firstObject];
+  if (guest.items.count) {
     demoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    
   }
 
+  __weak typeof(self)weakSelf = self;
   UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"CALCULATOR_ALERT_TEXT", @"Отметьте ваши блюда в чеке и платите только за себя") message:nil cancelButtonTitle:NSLocalizedString(@"OK", @"OK") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
     
-    if (demoIndexPath) {
-      [self updateTableView:self.tableView atIndexPath:demoIndexPath];
-    }
+    [weakSelf updateIndexPath:demoIndexPath];
 
   }];
   
   [alert bk_setDidShowBlock:^(UIAlertView *a) {
     
-    if (demoIndexPath) {
-      [self updateTableView:self.tableView atIndexPath:demoIndexPath];
-    }
+    [weakSelf updateIndexPath:demoIndexPath];
     
   }];
+  
+}
+
+- (void)updateIndexPath:(NSIndexPath *)indexPath {
+  
+  if (nil == indexPath) {
+    return;
+  }
+  
+  [_dataSource updateTableView:self.tableView atIndexPath:indexPath];
+  [self updateTotalValue];
   
 }
 
@@ -98,37 +113,6 @@
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];
-}
-
-#pragma mark - UITableviewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return [_dataSource tableView:tableView heightForRowAtIndexPath:indexPath];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  [self updateTableView:tableView atIndexPath:indexPath];
-  
-}
-
-- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  [self updateTableView:tableView atIndexPath:indexPath];
-  
-}
-
-- (void)updateTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath {
-  
-  if (0 == indexPath.section) {
-    
-    OMNOrderItem *orderItem = _order.items[indexPath.row];
-    [orderItem changeSelection];
-    [self updateTotalValue];
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    
-  }
-  
 }
 
 @end

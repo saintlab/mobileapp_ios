@@ -112,6 +112,9 @@ NSString *omnCommaString() {
     case OMNErrorPaymentError: {
       description = NSLocalizedString(@"ERROR_MESSAGE_PAYMENT_ERROR", @"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.");
     } break;
+    case OMNErrorQrDecode: {
+      description = NSLocalizedString(@"ERROR_MESSAGE_QR_DECODE", @"Неверный QR-код,\nнайдите Omnom");
+    } break;
     case OMNErrorUnknoun:
     default: {
       description = NSLocalizedString(@"ERROR_MESSAGE_UNKNOWN_ERROR", @"Что-то пошло не так. Повторите попытку");

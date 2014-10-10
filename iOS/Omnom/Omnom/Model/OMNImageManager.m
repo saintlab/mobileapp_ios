@@ -94,7 +94,7 @@
       [image drawInRect:drawFrame];
       UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
       UIGraphicsEndImageContext();
-      UIImage *finalImage = [scaledImage applyLightEffect];
+      UIImage *finalImage = [scaledImage omn_applyLightEffect];
 
       dispatch_async(dispatch_get_main_queue(), ^{
         completionBlock(finalImage);

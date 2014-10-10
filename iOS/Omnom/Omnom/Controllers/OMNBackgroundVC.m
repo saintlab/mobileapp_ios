@@ -29,7 +29,7 @@
   _backgroundView.opaque = YES;
   _backgroundView.backgroundColor = backgroundColor;
   _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
-  _backgroundView.contentMode = UIViewContentModeCenter;
+  _backgroundView.contentMode = UIViewContentModeBottom;
   [self.view insertSubview:_backgroundView atIndex:0];
   NSDictionary *views =
   @{

@@ -72,14 +72,34 @@ inline NSString *stringFromSplitType(SplitType splitType) {
       self.paid = [[OMNOrderPaid alloc] initWithTotal:[jsonData[@"paid_amount"] longLongValue] tip:[jsonData[@"paid_tip"] longLongValue]];
     }
     
+    _guests = [NSMutableArray array];
     NSArray *itemsData = jsonData[@"items"];
-    NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsData.count];
+
+    NSMutableDictionary *guestsInfo = [NSMutableDictionary dictionary];
     [itemsData enumerateObjectsUsingBlock:^(id itemData, NSUInteger idx, BOOL *stop) {
       
-      [items addObject:[[OMNOrderItem alloc] initWithJsonData:itemData]];
+      OMNOrderItem *orderItem = [[OMNOrderItem alloc] initWithJsonData:itemData];
+      NSMutableArray *guestItems = guestsInfo[orderItem.guest_id];
+      if (nil == guestItems) {
+        guestItems = [NSMutableArray array];
+        guestsInfo[orderItem.guest_id] = guestItems;
+      }
+      
+      [guestItems addObject:orderItem];
       
     }];
-    self.items = items;
+
+    NSArray *guestIDs = [guestsInfo.allKeys sortedArrayUsingSelector:@selector(compare:)];
+    
+    NSMutableArray *guests = [NSMutableArray arrayWithCapacity:guestIDs.count];
+    [guestIDs enumerateObjectsUsingBlock:^(NSString *guestID, NSUInteger idx, BOOL *stop) {
+      
+      OMNGuest *guest = [[OMNGuest alloc] initWithID:guestID index:idx orderItems:guestsInfo[guestID]];
+      [guests addObject:guest];
+      
+    }];
+    
+    _guests = [guests copy];
     
     NSDictionary *tipsData = jsonData[@"tips"];
 
@@ -111,7 +131,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 
 - (void)updateWithOrder:(OMNOrder *)order {
   
-  self.items = order.items;
+  _guests = order.guests;
   if (order.paid) {
     self.paid = order.paid;
   }
@@ -125,16 +145,6 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 - (void)setEnteredAmount:(long long)enteredAmount {
   _enteredAmount = enteredAmount;
   _enteredAmountChanged = YES;
-}
-
-- (void)deselectAll {
-  
-  [_items enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
-    
-    [orderItem deselect];
-    
-  }];
-  
 }
 
 - (long long)totalAmount {
@@ -151,12 +161,14 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 
 - (long long)totalForAllItems:(BOOL)allItems {
   
-  __block long long total = 0.;
-  [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+  __block long long total = 0ll;
+  [_guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
     
-    if (allItems ||
-        orderItem.selected) {
-      total += orderItem.price_total;
+    if (allItems) {
+      total += [guest total];
+    }
+    else {
+      total += [guest selectedItemsTotal];
     }
     
   }];

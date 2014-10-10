@@ -116,6 +116,7 @@
     [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNPayOrderVC class]],
     [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNOrdersVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrdersVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNPayOrderVC class]],
     ];
 }
 
