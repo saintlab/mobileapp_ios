@@ -14,8 +14,14 @@
 
 @implementation OMNNavigationController
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return self.topViewController.preferredStatusBarStyle;
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  UIViewController *visibleViewController = self.topViewController;
+  return visibleViewController;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  UIViewController *visibleViewController = self.topViewController;
+  return visibleViewController;
 }
 
 @end

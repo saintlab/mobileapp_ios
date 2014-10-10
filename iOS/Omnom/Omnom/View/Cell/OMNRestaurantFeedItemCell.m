@@ -106,7 +106,9 @@
   _priceLabel.text = feedItem.price;
   
   if (_feedItem.image) {
+    
     _iconView.image = _feedItem.image;
+    
   }
   else if (_feedItem.thumbImage) {
 
@@ -161,8 +163,8 @@
   [UIView animateWithDuration:0.6 animations:^{
     iv.alpha = 1.0f;
   } completion:^(BOOL finished) {
-    [iv removeFromSuperview];
     _iconView.image = image;
+    [iv removeFromSuperview];
   }];
   
 }

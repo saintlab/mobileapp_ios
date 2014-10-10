@@ -80,7 +80,7 @@
     }
     else if ([responseObject isKindOfClass:[NSDictionary class]]) {
 
-      [[OMNAnalitics analitics] logEvent:@"USER_REGISTER_ERROR" parametrs:responseObject];
+      [[OMNAnalitics analitics] logDebugEvent:@"USER_REGISTER_ERROR" parametrs:responseObject];
       NSDictionary *error = responseObject[@"error"];
       failureBlock([NSError errorWithDomain:NSStringFromClass(self.class) code:[error[@"code"] integerValue] userInfo:@{NSLocalizedDescriptionKey : error[@"message"]}]);
       
@@ -91,7 +91,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-    [[OMNAnalitics analitics] logEvent:@"USER_REGISTER_ERROR" jsonRequest:parameters responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"USER_REGISTER_ERROR" jsonRequest:parameters responseOperation:operation];
     
   }];
   
@@ -110,7 +110,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"USER_VERIFY_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"USER_VERIFY_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
@@ -134,7 +134,7 @@
 
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"CONFIRM_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"CONFIRM_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
@@ -223,7 +223,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"AUTHORIZATION_USER_ERROR" jsonRequest:parameters responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"AUTHORIZATION_USER_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
 
   }];
@@ -247,14 +247,14 @@
     }
     else {
 
-      [[OMNAnalitics analitics] logEvent:@"GET_USER_ERROR" parametrs:parameters];
+      [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" parametrs:parameters];
       failureBlock(nil);
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];

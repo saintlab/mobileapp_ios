@@ -32,23 +32,27 @@
   
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
-  [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
+  [containerView addSubview:toViewController.view];
   [containerView addSubview:fromImageSnapshot];
   
-  toViewController.view.transform = CGAffineTransformMakeTranslation(0.0f, -CGRectGetHeight(fromImageSnapshot.frame));
+  toViewController.view.transform = CGAffineTransformMakeTranslation(0.0f, -CGRectGetHeight(fromViewController.view.frame));
   
   [UIView animateWithDuration:duration animations:^{
     
     toViewController.view.transform = CGAffineTransformIdentity;
-    fromImageSnapshot.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(fromImageSnapshot.frame));
+    fromImageSnapshot.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(fromViewController.view.frame));
     
   } completion:^(BOOL finished) {
     // Clean up
     [fromImageSnapshot removeFromSuperview];
+
+    toViewController.view.transform = CGAffineTransformIdentity;
+
     fromViewController.view.hidden = NO;
-    
+    fromViewController.view.transform = CGAffineTransformIdentity;
     // Declare that we've finished
     [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+    
   }];
   
 }

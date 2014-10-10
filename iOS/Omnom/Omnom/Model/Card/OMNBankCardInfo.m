@@ -18,7 +18,7 @@
     parametrs[@"card_id"] = self.card_id;
   }
   parametrs[@"number_of_register_attempts"] = @(self.numberOfRegisterAttempts);
-  [[OMNAnalitics analitics] logEvent:@"card_added" parametrs:parametrs];
+  [[OMNAnalitics analitics] logTargetEvent:@"card_added" parametrs:parametrs];
 }
 
 @end

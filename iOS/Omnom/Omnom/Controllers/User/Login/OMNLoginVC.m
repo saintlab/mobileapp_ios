@@ -16,6 +16,7 @@
 #import <OMNStyler.h>
 #import "OMNRegisterUserVC.h"
 #import "OMNNonSelectableTextView.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate,
@@ -37,10 +38,9 @@ UITextViewDelegate> {
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
   self.navigationItem.title = @"";
+  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor whiteColor] target:self action:@selector(closeTap)];
   
   [self setup];
-  
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
   
 }
 

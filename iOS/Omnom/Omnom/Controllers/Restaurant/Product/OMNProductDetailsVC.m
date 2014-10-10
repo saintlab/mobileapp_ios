@@ -9,8 +9,9 @@
 #import "OMNProductDetailsVC.h"
 #import "OMNTransitionFromProductToList.h"
 #import "OMNFeedItem.h"
-#import "OMNToolbarButton.h"
+#import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
+#import "OMNConstants.h"
 
 @interface OMNProductDetailsVC ()
 <UINavigationControllerDelegate>
@@ -50,17 +51,14 @@
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
   
-  UIButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"cross_icon_black"] title:nil];
-  [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.titleView = closeButton;
-  
+  self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   self.view.backgroundColor = [UIColor whiteColor];
   
   _imageView.image = _feedItem.image;
   _imageView.contentMode = UIViewContentModeScaleAspectFill;
   
   _textLabel.textColor = [UIColor blackColor];
-  _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _textLabel.font = FuturaOSFOmnomRegular(18.0f);
   _textLabel.text = _feedItem.Description;
 
   UIScreenEdgePanGestureRecognizer *popRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePopRecognizer:)];

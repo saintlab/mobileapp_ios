@@ -2,7 +2,6 @@
   "baseUrlString" : "http://omnom.stand.saintlab.com",
   "authorizationUrlString" : "http://wicket.stand.saintlab.com",
   
-  "CardIOAppToken" : "9a0e0afb32e642a09e1fd55093d317f5",
   "MixpanelToken" : "e9386a1100754e8f62565a1b8cda8d8c",
   
   "beaconUUID" : "E2C56DB5-DFFB-48D2-B060-D0F5A71096E0",

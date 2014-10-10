@@ -20,6 +20,7 @@
 
 @implementation OMNAnalitics {
   Mixpanel *_mixpanel;
+  Mixpanel *_mixpanelDebug;
 }
 
 + (instancetype)analitics {
@@ -36,6 +37,14 @@
   if (self) {
     _mixpanel = [[Mixpanel alloc] initWithToken:[OMNConstants mixpanelToken] launchOptions:nil andFlushInterval:60.0];
     _mixpanel.flushInterval = 60.0;
+    
+    NSString *mixpanelDebugToken = [OMNConstants mixpanelDebugToken];
+    if (mixpanelDebugToken.length) {
+      _mixpanelDebug = [[Mixpanel alloc] initWithToken:mixpanelDebugToken andFlushInterval:60.0];
+      _mixpanelDebug.flushInterval = 60.0;
+    }
+//    cbf84d3a959d264d62c06a48d03b1a28
+    
   }
   return self;
 }
@@ -46,6 +55,10 @@
     [_mixpanel flush];
     [_mixpanel.people deleteUser];
     [_mixpanel unregisterSuperProperty:@"omn_user"];
+    
+    [_mixpanelDebug flush];
+    [_mixpanelDebug.people deleteUser];
+    [_mixpanelDebug unregisterSuperProperty:@"omn_user"];
     return;
   }
   
@@ -71,6 +84,10 @@
   }
   [_mixpanel.people set:userInfo];
   [_mixpanel registerSuperProperties:@{@"omn_user" : userInfo}];
+  
+  [_mixpanelDebug.people set:userInfo];
+  [_mixpanelDebug registerSuperProperties:@{@"omn_user" : userInfo}];
+  
 }
 
 - (void)logEnterRestaurant:(OMNVisitor *)visitor {
@@ -150,7 +167,7 @@
   
 }
 
-- (void)logEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
+- (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
   
   NSMutableDictionary *newParamentrs = [NSMutableDictionary dictionaryWithDictionary:parametrs];
   newParamentrs[@"timestamp"] = [self dateString];
@@ -158,13 +175,21 @@
   
 }
 
-- (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse {
+- (void)logDebugEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
+  
+  NSMutableDictionary *newParamentrs = [NSMutableDictionary dictionaryWithDictionary:parametrs];
+  newParamentrs[@"timestamp"] = [self dateString];
+  [_mixpanelDebug track:eventName properties:newParamentrs];
+  
+}
+
+- (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse {
   
   NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
   parametrs[@"jsonRequest"] = (jsonRequest) ? (jsonRequest) : (@"");
   parametrs[@"jsonResponse"] = (jsonResponse) ? (jsonResponse) : (@"");
   parametrs[@"timestamp"] = [self dateString];
-  [_mixpanel track:eventName properties:parametrs];
+  [_mixpanelDebug track:eventName properties:parametrs];
   
 }
 
@@ -179,9 +204,9 @@
   
 }
 
-- (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation {
+- (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation {
   
-  [_mixpanel track:eventName properties:
+  [_mixpanelDebug track:eventName properties:
   @{
     @"timestamp" : [self dateString],
     @"jsonRequest" : (jsonRequest) ? (jsonRequest) : (@""),

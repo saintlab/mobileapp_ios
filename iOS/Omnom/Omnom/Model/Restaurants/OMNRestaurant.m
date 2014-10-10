@@ -108,6 +108,7 @@
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/advertisement", self.id];
+  __weak typeof(self)weakSelf = self;
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
     if (response &&
@@ -115,18 +116,19 @@
         response[@"title"]) {
       
       OMNRestaurantInfo *restaurantInfo = [[OMNRestaurantInfo alloc] initWithJsonData:response];
+      weakSelf.info = restaurantInfo;
       completionBlock(restaurantInfo);
       
     }
     else {
       
-      [[OMNAnalitics analitics] logEvent:@"ERROR_RESTAURANT_ADVERTISMENT" jsonRequest:path jsonResponse:response];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_RESTAURANT_ADVERTISMENT" jsonRequest:path jsonResponse:response];
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"ERROR_RESTAURANT_ADVERTISMENT" jsonRequest:path responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_RESTAURANT_ADVERTISMENT" jsonRequest:path responseOperation:operation];
     errorBlock(error);
     
   }];

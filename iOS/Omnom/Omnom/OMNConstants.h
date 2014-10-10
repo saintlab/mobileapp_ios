@@ -38,8 +38,8 @@ enum {
 + (NSString *)baseUrlString;
 + (NSString *)authorizationUrlString;
 
-+ (NSString *)cardIOAppToken;
 + (NSString *)mixpanelToken;
++ (NSString *)mixpanelDebugToken;
 + (NSString *)crashlyticsAPIKey;
 
 + (NSString *)pushSoundName;

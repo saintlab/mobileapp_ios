@@ -11,6 +11,8 @@
 @interface OMNCustomTransition : NSObject
 <UIViewControllerAnimatedTransitioning>
 
+@property (nonatomic, weak) UIViewController *sourceController;
+
 + (NSArray *)keys;
 + (NSString *)keyFromClass:(Class)fromClass toClass:(Class)toClass;
 

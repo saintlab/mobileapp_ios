@@ -36,7 +36,7 @@ static NSDictionary *_customConfig = nil;
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-    [[OMNAnalitics analitics] logEvent:@"ERROR_CONFIG" jsonRequest:path responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_CONFIG" jsonRequest:path responseOperation:operation];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       [self loadConfigWithCompletion:completionBlock];
     });
@@ -88,11 +88,11 @@ static NSDictionary *_customConfig = nil;
   return [self stringForKey:@"authorizationUrlString"];
 }
 
-+ (NSString *)cardIOAppToken {
-  return [self stringForKey:@"CardIOAppToken"];
-}
 + (NSString *)mixpanelToken {
   return [self stringForKey:@"MixpanelToken"];
+}
++ (NSString *)mixpanelDebugToken {
+  return [self stringForKey:@"MixpanelTokenDebug"];
 }
 + (NSString *)crashlyticsAPIKey {
   return [self stringForKey:@"CrashlyticsAPIKey"];

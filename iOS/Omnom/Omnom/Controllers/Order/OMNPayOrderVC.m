@@ -27,6 +27,7 @@
 #import <OMNStyler.h>
 #import "OMNOrderTableView.h"
 #import "UIImage+omn_helper.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -99,7 +100,8 @@ OMNMailRUPayVCDelegate>
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"calc_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(calculatorTap:)];
+  
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"calc_icon"] color:[UIColor blackColor] target:self action:@selector(calculatorTap)];
   
 }
 
@@ -160,7 +162,7 @@ OMNMailRUPayVCDelegate>
   [self.delegate payOrderVCRequestOrders:self];
 }
 
-- (IBAction)calculatorTap:(id)sender {
+- (void)calculatorTap {
   
   if (_beginSplitAnimation) {
     return;
@@ -215,7 +217,7 @@ OMNMailRUPayVCDelegate>
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]" options:0 metrics:nil views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scrollView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_paymentView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
   
-  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap:)];
+  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap)];
   [_tableView addGestureRecognizer:tapGR];
   
   [self.view layoutIfNeeded];
@@ -326,7 +328,7 @@ OMNMailRUPayVCDelegate>
 
   const CGFloat kDeltaOffset = 40.0f;
   if ((scrollView.contentOffset.y + scrollView.contentInset.top) < -kDeltaOffset) {
-    [self calculatorTap:nil];
+    [self calculatorTap];
   }
   
 }

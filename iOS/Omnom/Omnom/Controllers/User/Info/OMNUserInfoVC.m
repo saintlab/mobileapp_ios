@@ -14,7 +14,7 @@
 #import <OMNStyler.h>
 #import <BlocksKit+UIKit.h>
 #import "OMNVisitor.h"
-#import "OMNToolbarButton.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNUserInfoVC ()
 <OMNEditTableVCDelegate>
@@ -102,10 +102,7 @@
 
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-
-  UIButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"cross_icon_black"] title:nil];
-  [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.titleView = closeButton;
+  self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
   [self updateUserInfo];
   

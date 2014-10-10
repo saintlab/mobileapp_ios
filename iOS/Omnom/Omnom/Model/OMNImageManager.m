@@ -45,6 +45,13 @@
   [_imageManager.imageCache removeImageForKey:[_imageManager cacheKeyForURL:url]];
 }
 
+- (UIImage *)cachedImageForURL:(NSString *)urlString {
+  
+  NSString *key = [_imageManager cacheKeyForURL:[NSURL URLWithString:urlString]];
+  return [_imageManager.imageCache imageFromDiskCacheForKey:key];
+  
+}
+
 - (void)downloadImageWithURL:(NSString *)urlString completion:(void (^)(UIImage *image))completionBlock {
   
   NSURL *imageUrl = [NSURL URLWithString:urlString];

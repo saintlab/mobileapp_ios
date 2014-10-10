@@ -75,8 +75,14 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
 
 }
 
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  return [_navigationController preferredStatusBarStyle];
+- (UIViewController *)childViewControllerForStatusBarHidden {
+  UIViewController *visibleViewController = _navigationController.childViewControllerForStatusBarHidden;
+  return visibleViewController;
+}
+
+- (UIViewController *)childViewControllerForStatusBarStyle {
+  UIViewController *visibleViewController = _navigationController.childViewControllerForStatusBarStyle;
+  return visibleViewController;
 }
 
 - (void)setVisitor:(OMNVisitor *)visitor {

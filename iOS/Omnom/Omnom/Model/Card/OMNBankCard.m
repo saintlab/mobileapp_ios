@@ -115,24 +115,24 @@
       [[OMNOperationManager sharedManager] DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         if ([responseObject[@"status"] isEqualToString:@"success"]) {
-          [[OMNAnalitics analitics] logEvent:@"card_deleted" parametrs:@{@"card_id" : self.external_card_id}];
+          [[OMNAnalitics analitics] logTargetEvent:@"card_deleted" parametrs:@{@"card_id" : self.external_card_id}];
           completionBlock();
         }
         else {
-          [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path jsonResponse:responseObject];
+          [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path jsonResponse:responseObject];
           failureBlock(nil);
         }
         
       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path responseOperation:operation];
+        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path responseOperation:operation];
         weakSelf.deleting = NO;
         failureBlock(error);
       }];
       
     }
     else {
-      [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_DELETE" parametrs:response];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" parametrs:response];
       weakSelf.deleting = NO;
       failureBlock(nil);
     }

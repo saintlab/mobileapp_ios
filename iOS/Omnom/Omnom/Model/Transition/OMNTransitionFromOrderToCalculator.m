@@ -12,9 +12,7 @@
 #import "UITableView+screenshot.h"
 #import "UIView+screenshot.h"
 
-@implementation OMNTransitionFromOrderToCalculator {
-  UIPercentDrivenInteractiveTransition *_interactivePopTransition;
-}
+@implementation OMNTransitionFromOrderToCalculator 
 
 - (instancetype)init {
   self = [super init];

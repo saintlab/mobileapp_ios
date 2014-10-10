@@ -7,7 +7,6 @@
 //
 
 #import "OMNFeedItem.h"
-#import "OMNAnalitics.h"
 #import "OMNImageManager.h"
 
 @implementation OMNFeedItem {
@@ -23,20 +22,13 @@
     self.price = jsonData[@"price"];
     self.imageURL = jsonData[@"image"];
     self.Description = jsonData[@"description"];
+    
+    self.image = [[OMNImageManager manager] cachedImageForURL:self.imageURL];
+    
   }
   return self;
 }
 
-- (void)logClickEvent {
-//  [[OMNAnalitics analitics] logEvent:@"USER_CLICK_FEED_ITEM" parametrs:_jsonData];
-}
-
-- (void)logViewEvent {
-  if (!_viewEventLogged) {
-    _viewEventLogged = YES;
-//    [[OMNAnalitics analitics] logEvent:@"promolist_view" parametrs:_jsonData];
-  }
-}
 
 - (void)downloadImage {
   

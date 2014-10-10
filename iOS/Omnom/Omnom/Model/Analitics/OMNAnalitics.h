@@ -24,8 +24,10 @@
 - (void)logPayment:(OMNOrder *)order;
 - (void)logScore:(CGFloat)score order:(OMNOrder *)order;
 
-- (void)logEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
-- (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse;
-- (void)logEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation;
+- (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
+
+- (void)logDebugEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
+- (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse;
+- (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation;
 
 @end

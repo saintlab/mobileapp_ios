@@ -15,6 +15,7 @@
 #import "OMNConstants.h"
 #import "UIView+frame.h"
 #import "OMNUtils.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
 const CGFloat kCalculatorTopOffset = 40.0f;
@@ -86,7 +87,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   _containerView = [[UIView alloc] init];
   [self.view addSubview:_containerView];
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"cross_icon_white"] style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor whiteColor] target:self action:@selector(closeTap)];
 
   
   self.transitionInProgress = NO;

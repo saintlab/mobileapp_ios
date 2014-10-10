@@ -10,7 +10,7 @@
 #import "OMNRestaurantInfoVC.h"
 #import "OMNR1VC.h"
 
-@implementation OMNSlideUpTransition
+@implementation OMNSlideUpTransition 
 
 + (NSArray *)keys {
   return @[[self keyFromClass:[OMNR1VC class] toClass:[OMNRestaurantInfoVC class]]];

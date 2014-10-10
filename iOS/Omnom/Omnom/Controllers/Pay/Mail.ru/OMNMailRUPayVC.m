@@ -238,7 +238,7 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
 - (void)didFailCreateOrderWithError:(NSError *)error {
   
   if (_order.id) {
-    [[OMNAnalitics analitics] logEvent:@"ERROR_BILL_CREATE" parametrs:@{@"order_id" : _order.id}];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" parametrs:@{@"order_id" : _order.id}];
   }
   
   __weak typeof(self)weakSelf = self;
@@ -266,7 +266,7 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
     }
     else {
       
-      [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_PAY" parametrs:response];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_PAY" parametrs:response];
       [weakSelf didFailWithError:[OMNUtils errorFromCode:OMNErrorPaymentError]];
       
     }

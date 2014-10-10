@@ -13,8 +13,7 @@
 #import "OMNFeedItem.h"
 #import "OMNAnalitics.h"
 #import <OMNStyler.h>
-
-#import "OMNToolbarButton.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 #import "OMNLabelCell.h"
 #import "OMNRestaurantFeedItemCell.h"
@@ -33,16 +32,18 @@ typedef NS_ENUM(NSInteger, RestaurantInfoSection) {
 
 @interface OMNRestaurantInfoVC ()
 <OMNProductDetailsVCDelegate,
-UIScrollViewDelegate>
+UIScrollViewDelegate,
+UIGestureRecognizerDelegate>
 
 @end
 
 @implementation OMNRestaurantInfoVC {
-  OMNRestaurantInfo *_restaurantInfo;
+
   OMNVisitor *_visitor;
-  UIActivityIndicatorView *_spinner;
   BOOL _disableNavigationBarAnimation;
   BOOL _disableSwipeTransition;
+  UIPercentDrivenInteractiveTransition *_percentDrivenInteractiveTransition;
+
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
@@ -59,23 +60,15 @@ UIScrollViewDelegate>
   _disableSwipeTransition = YES;
   _disableNavigationBarAnimation = YES;
   
-  OMNToolbarButton *closeButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"back_button_icon"] title:nil];
-  [closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.titleView = closeButton;
-  
-  _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-  _spinner.hidesWhenStopped = YES;
-  
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_spinner];
+  self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"back_button_icon"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
   if (NO == _visitor.restaurant.is_demo) {
     
-    [[OMNAnalitics analitics] logEvent:@"promolist_view" parametrs:nil];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(userProfileTap)];
+    [[OMNAnalitics analitics] logTargetEvent:@"promolist_view" parametrs:nil];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:self action:@selector(userProfileTap)];
 
   }
   self.automaticallyAdjustsScrollViewInsets = NO;
-  [self.navigationItem setHidesBackButton:YES animated:NO];
 
   self.tableView.tableFooterView = [UIView new];
   [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"InfoCell"];
@@ -87,51 +80,40 @@ UIScrollViewDelegate>
   self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, [[OMNStyler styler] bottomToolbarHeight].floatValue, 0.0f);
   self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0.0f, [[OMNStyler styler] bottomToolbarHeight].floatValue, 0.0f);
   
+  [self.tableView.panGestureRecognizer addTarget:self action:@selector(pan:)];
+  
 }
 
-- (void)didFinishLoadingRestaurantInfo:(OMNRestaurantInfo *)restaurantInfo {
-  [_spinner stopAnimating];
-  _restaurantInfo = restaurantInfo;
-  [self.tableView reloadData];
-}
+- (void)startAnimating:(BOOL)start {
+  
+  if (start) {
+    
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    spinner.hidesWhenStopped = YES;
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:spinner] animated:YES];
 
-- (void)didFail {
-  [_spinner stopAnimating];
-}
-
-- (void)userProfileTap {
-  [self.delegate restaurantInfoVCShowUserInfo:self];
-}
-
-- (void)closeTap {
-  _disableSwipeTransition = YES;
-  [self.delegate restaurantInfoVCDidFinish:self];
+  }
+  else {
+    
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil] animated:YES];
+    
+  }
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  if (!_restaurantInfo) {
-    __weak typeof(self)weakSelf = self;
-    [_spinner startAnimating];
-    [_visitor.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
-      
-      [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
-      
-    } error:^(NSError *error) {
-      
-      [weakSelf didFail];
-      
-    }];
-  }
-  
+  [self loadRestaurantInfoIfNeeded];
+  [self.navigationItem setHidesBackButton:YES animated:NO];
   _disableNavigationBarAnimation = NO;
   [self updateNavigationBarLayer];
-
+  
 }
 
 
 - (void)viewDidAppear:(BOOL)animated {
+  
   [super viewDidAppear:animated];
   _disableSwipeTransition = NO;
   
@@ -150,9 +132,102 @@ UIScrollViewDelegate>
   }];
 }
 
+- (void)loadRestaurantInfoIfNeeded {
+ 
+  if (_visitor.restaurant.info) {
+    return;
+  }
+  
+  [self startAnimating:YES];
+  __weak typeof(self)weakSelf = self;
+  [_visitor.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
+    
+    [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
+    
+  } error:^(NSError *error) {
+    
+    [weakSelf didFail];
+    
+  }];
+  
+}
+
+- (void)pan:(UIPanGestureRecognizer *)panGR {
+  
+  if (self.tableView.contentOffset.y < -20 &&
+      nil == _percentDrivenInteractiveTransition) {
+    
+    [panGR setTranslation:CGPointZero inView:panGR.view];
+    _percentDrivenInteractiveTransition = [[UIPercentDrivenInteractiveTransition alloc] init];
+    [self closeTap];
+    
+  }
+  
+  if (_percentDrivenInteractiveTransition) {
+
+    CGPoint translation = [panGR translationInView:panGR.view];
+    CGFloat percentage = MAX(0.0f, translation.y / panGR.view.bounds.size.height);
+    CGFloat velocity = [panGR velocityInView:panGR.view].y;
+
+    switch (panGR.state) {
+      case UIGestureRecognizerStateChanged: {
+        
+        [_percentDrivenInteractiveTransition updateInteractiveTransition:percentage];
+        
+      } break;
+      case UIGestureRecognizerStateEnded: {
+        
+        if (percentage > 0.3f ||
+            velocity > 100.0f) {
+          [_percentDrivenInteractiveTransition finishInteractiveTransition];
+        }
+        else {
+          [_percentDrivenInteractiveTransition cancelInteractiveTransition];
+        }
+        _percentDrivenInteractiveTransition = nil;
+        
+      } break;
+      case UIGestureRecognizerStateCancelled: {
+        
+        [_percentDrivenInteractiveTransition cancelInteractiveTransition];
+        _percentDrivenInteractiveTransition = nil;
+        
+      } break;
+      default: {
+      } break;
+    }
+    
+  }
+  
+}
+
+- (void)didFinishLoadingRestaurantInfo:(OMNRestaurantInfo *)restaurantInfo {
+  
+  [self startAnimating:NO];
+  [self.tableView reloadData];
+  
+}
+
+- (void)didFail {
+  [self startAnimating:NO];
+}
+
+- (void)userProfileTap {
+  [self.delegate restaurantInfoVCShowUserInfo:self];
+}
+
+- (void)closeTap {
+  _disableSwipeTransition = YES;
+  [self.delegate restaurantInfoVCDidFinish:self];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return UIStatusBarStyleDefault;
+}
+
 - (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem {
   UITableViewCell *cell = nil;
-  NSUInteger index = [_restaurantInfo.feedItems indexOfObject:feedItem];
+  NSUInteger index = [_visitor.restaurant.info.feedItems indexOfObject:feedItem];
   if (index != NSNotFound) {
     cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:kRestaurantInfoSectionFeed]];
   }
@@ -173,13 +248,13 @@ UIScrollViewDelegate>
       numberOfRows = 1;
     } break;
     case kRestaurantInfoSectionAbout: {
-      numberOfRows = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems.count) : (_restaurantInfo.shortItems.count);
+      numberOfRows = (_visitor.restaurant.info.selected) ? (_visitor.restaurant.info.fullItems.count) : (_visitor.restaurant.info.shortItems.count);
     } break;
     case kRestaurantInfoSectionMore: {
-      numberOfRows = (nil == _restaurantInfo || _restaurantInfo.selected) ? (0) : (1);
+      numberOfRows = (nil == _visitor.restaurant.info || _visitor.restaurant.info.selected) ? (0) : (1);
     } break;
     case kRestaurantInfoSectionFeed: {
-      numberOfRows = _restaurantInfo.feedItems.count;
+      numberOfRows = _visitor.restaurant.info.feedItems.count;
     } break;
     case kRestaurantInfoSectionMax: {
     } break;
@@ -220,14 +295,14 @@ UIScrollViewDelegate>
       defaultCell.separatorInset = UIEdgeInsetsMake(0.0f, CGRectGetWidth(self.view.frame), 0.0f, 0.0f);
       defaultCell.selectionStyle = UITableViewCellSelectionStyleNone;
       defaultCell.label.font = FuturaOSFOmnomRegular(30.0f);
-      defaultCell.label.text = _restaurantInfo.title;
+      defaultCell.label.text = _visitor.restaurant.info.title;
       cell = defaultCell;
       
     } break;
     case kRestaurantInfoSectionAbout: {
       
       OMNRestaurantInfoCell *restaurantInfoCell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell" forIndexPath:indexPath];
-      NSArray *items = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems) : (_restaurantInfo.shortItems);
+      NSArray *items = (_visitor.restaurant.info.selected) ? (_visitor.restaurant.info.fullItems) : (_visitor.restaurant.info.shortItems);
       OMNRestaurantInfoItem *item = items[indexPath.row];
       [restaurantInfoCell setItem:item];
       cell = restaurantInfoCell;
@@ -245,8 +320,7 @@ UIScrollViewDelegate>
     case kRestaurantInfoSectionFeed: {
       
       OMNRestaurantFeedItemCell *restaurantFeedInfoCell = [tableView dequeueReusableCellWithIdentifier:@"FeedItemCell" forIndexPath:indexPath];
-      OMNFeedItem *feedItem = _restaurantInfo.feedItems[indexPath.row];
-      [feedItem logViewEvent];
+      OMNFeedItem *feedItem = _visitor.restaurant.info.feedItems[indexPath.row];
       [restaurantFeedInfoCell setFeedItem:feedItem];
       cell = restaurantFeedInfoCell;
       
@@ -262,7 +336,7 @@ UIScrollViewDelegate>
   switch ((RestaurantInfoSection)indexPath.section) {
     case kRestaurantInfoSectionAbout: {
       
-      NSArray *items = (_restaurantInfo.selected) ? (_restaurantInfo.fullItems) : (_restaurantInfo.shortItems);
+      NSArray *items = (_visitor.restaurant.info.selected) ? (_visitor.restaurant.info.fullItems) : (_visitor.restaurant.info.shortItems);
       OMNRestaurantInfoItem *item = items[indexPath.row];
       [item open];
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -270,8 +344,8 @@ UIScrollViewDelegate>
     } break;
     case kRestaurantInfoSectionMore: {
 
-      if (_restaurantInfo) {
-        _restaurantInfo.selected = !_restaurantInfo.selected;
+      if (_visitor.restaurant.info) {
+        _visitor.restaurant.info.selected = !_visitor.restaurant.info.selected;
         [tableView beginUpdates];
         [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:kRestaurantInfoSectionMore]] withRowAnimation:UITableViewRowAnimationFade];
         [tableView reloadSections:[NSIndexSet indexSetWithIndex:kRestaurantInfoSectionAbout] withRowAnimation:UITableViewRowAnimationFade];
@@ -281,8 +355,7 @@ UIScrollViewDelegate>
     } break;
     case kRestaurantInfoSectionFeed: {
       
-      OMNFeedItem *feedItem = _restaurantInfo.feedItems[indexPath.row];
-      [feedItem logClickEvent];
+      OMNFeedItem *feedItem = _visitor.restaurant.info.feedItems[indexPath.row];
       OMNProductDetailsVC *productDetailsVC = [[OMNProductDetailsVC alloc] initFeedItem:feedItem];
       productDetailsVC.delegate = self;
       [self.navigationController pushViewController:productDetailsVC animated:YES];
@@ -317,7 +390,7 @@ UIScrollViewDelegate>
   switch ((RestaurantInfoSection)section) {
     case kRestaurantInfoSectionFeed: {
       
-      if (_restaurantInfo.feedItems.count) {
+      if (_visitor.restaurant.info.feedItems.count) {
         OMNBottomLabelView *bottomLabelView = [[OMNBottomLabelView alloc] init];
         bottomLabelView.label.text = NSLocalizedString(@"Стоит попробовать", nil);
         viewForHeader = bottomLabelView;
@@ -355,20 +428,24 @@ UIScrollViewDelegate>
   return heightForHeader;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
-  [self updateNavigationBarLayer];
+- (CGFloat)scrollViewOffset {
   
-  if (_restaurantInfo &&
-      scrollView.contentInset.top + scrollView.contentOffset.y < -40.0f &&
-      !_disableSwipeTransition) {
-    [self closeTap];
-  }
+  const CGFloat startOffset = -40.0f;
+  CGFloat offset = startOffset - (self.tableView.contentInset.top + self.tableView.contentOffset.y);
+  return offset;
+  
+}
+
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView {
+  
+  [self updateNavigationBarLayer];
   
 }
 
 - (void)updateNavigationBarLayer {
   
-  if (_disableNavigationBarAnimation) {
+  if (_disableNavigationBarAnimation ||
+      _percentDrivenInteractiveTransition) {
     return;
   }
   CALayer *navigationBarLayer = self.navigationController.navigationBar.layer;
@@ -385,6 +462,12 @@ UIScrollViewDelegate>
     
   }
   
+}
+
+#pragma mark - OMNInteractiveTransitioningProtocol
+
+- (id<UIViewControllerInteractiveTransitioning>)interactiveTransitioning {
+  return _percentDrivenInteractiveTransition;
 }
 
 @end

@@ -15,7 +15,6 @@
 #import <BlocksKit+UIKit.h>
 #import "UIImage+omn_helper.h"
 #import "OMNPushPermissionVC.h"
-#import "OMNToolbarButton.h"
 #import "OMNSocketManager.h"
 #import "OMNVisitor+network.h"
 #import "OMNLightBackgroundButton.h"
@@ -26,6 +25,7 @@
 #import "OMNRestaurantInfoVC.h"
 #import <OMNStyler.h>
 #import "OMNRestaurantMediator.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdentifier";
 
@@ -39,7 +39,9 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
   OMNRestaurant *_restaurant;
   OMNCircleAnimation *_circleAnimation;
   __weak OMNRestaurantMediator *_restaurantMediator;
+  UIPercentDrivenInteractiveTransition *_interactiveTransition;
   BOOL _viewDidAppear;
+  
 }
 
 - (void)dealloc {
@@ -65,17 +67,19 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
   return self;
 }
 
+- (id<UIViewControllerInteractiveTransitioning>)interactiveTransitioning {
+  return _interactiveTransition;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+
   _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
   _isViewVisible = YES;
-  UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showRestaurantInfo)];
-  swipeGR.direction = UISwipeGestureRecognizerDirectionUp;
-  [self.view addGestureRecognizer:swipeGR];
+  self.navigationItem.title = @"";
   
   if (_visitor.restaurant.is_demo) {
-
+    
     OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
     [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
     [cancelButton addTarget:_restaurantMediator action:@selector(exitRestaurant) forControlEvents:UIControlEventTouchUpInside];
@@ -83,11 +87,13 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
     
   }
   else {
-    
-    UIImage *image = [[UIImage imageNamed:@"user_settings_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(showUserProfile)];
+
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor whiteColor] target:self action:@selector(showUserProfile)];
     
   }
+  
+  UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+  [self.view addGestureRecognizer:panGR];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
   
@@ -102,8 +108,13 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
 - (void)viewWillAppear:(BOOL)animated {
   
   [super viewWillAppear:animated];
-  NSLog(@"viewWillAppear>%@", self.view);
   _viewDidAppear = YES;
+  
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
   [self beginCircleAnimationIfNeeded];
   
 }
@@ -116,6 +127,49 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return UIStatusBarStyleLightContent;
+}
+
+- (void)pan:(UIPanGestureRecognizer *)panGR {
+  
+  CGPoint translation = [panGR translationInView:panGR.view];
+  CGFloat percentage = MAX(0.0f, -translation.y / panGR.view.bounds.size.height);
+  CGFloat velocity = [panGR velocityInView:panGR.view].y;
+  
+  switch (panGR.state) {
+    case UIGestureRecognizerStateBegan: {
+      
+      _interactiveTransition = [[UIPercentDrivenInteractiveTransition alloc] init];
+      [self showRestaurantInfo];
+      
+    } break;
+    case UIGestureRecognizerStateChanged: {
+      
+      [_interactiveTransition updateInteractiveTransition:percentage];
+
+      break;
+    }
+    case UIGestureRecognizerStateEnded: {
+      
+      if (percentage > 0.3f ||
+          velocity < -100.0f) {
+        [_interactiveTransition finishInteractiveTransition];
+      }
+      else {
+        [_interactiveTransition cancelInteractiveTransition];
+      }
+      _interactiveTransition = nil;
+      
+    } break;
+    case UIGestureRecognizerStateCancelled: {
+      
+      [_interactiveTransition cancelInteractiveTransition];
+      _interactiveTransition = nil;
+      
+    } break;
+    default:
+      break;
+  }
+  
 }
 
 - (void)setVisitor:(OMNVisitor *)visitor {

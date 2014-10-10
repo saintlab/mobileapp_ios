@@ -31,6 +31,7 @@
   
 }
 
+/*
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
   
   NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
@@ -40,5 +41,6 @@
   return attributes;
   
 }
+*/
 
 @end

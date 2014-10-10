@@ -87,13 +87,13 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
       successBlock(visitor);
     }
     else {
-      [[OMNAnalitics analitics] logEvent:@"ERROR_QR_DECODE" jsonRequest:parameters jsonResponse:responseObject];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters jsonResponse:responseObject];
       failureBlock(nil);
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"ERROR_QR_DECODE" jsonRequest:parameters responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters responseOperation:operation];
     failureBlock(nil);
     
   }];
@@ -139,7 +139,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     
     if ([responseObject isKindOfClass:[NSDictionary class]]) {
       
-      [[OMNAnalitics analitics] logEvent:@"ERROR_DEMO_BEACON" jsonRequest:path jsonResponse:responseObject];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path jsonResponse:responseObject];
       failureBlock(nil);
       
     }
@@ -152,14 +152,14 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
         completionBlock(visitor);
       }
       else {
-        [[OMNAnalitics analitics] logEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
+        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
       }
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
     failureBlock(nil);
     
   }];
@@ -194,7 +194,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     
     if ([responseObject isKindOfClass:[NSDictionary class]]) {
       
-      [[OMNAnalitics analitics] logEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
       failure(nil);
       
     }
@@ -204,7 +204,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
       NSArray *visitors = [responseObject omn_visitors];
       
       if (0 == visitors.count) {
-        [[OMNAnalitics analitics] logEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
+        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
       }
       
       [weakSelf addVisitors:visitors];
@@ -214,7 +214,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
     failure(error);
     
   }];
@@ -293,7 +293,7 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     localNotification.alertBody = at_entrance.greeting;
     localNotification.alertAction = at_entrance.open_action;
     localNotification.soundName = kPushSoundName;
-    [[OMNAnalitics analitics] logEvent:@"push_sent" parametrs:@{@"text" : (at_entrance.greeting ? (at_entrance.greeting) : (@""))}];
+    [[OMNAnalitics analitics] logDebugEvent:@"push_sent" parametrs:@{@"text" : (at_entrance.greeting ? (at_entrance.greeting) : (@""))}];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
 //    if ([localNotification respondsToSelector:@selector(category)]) {

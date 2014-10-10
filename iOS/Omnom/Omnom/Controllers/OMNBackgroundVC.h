@@ -6,7 +6,10 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNInteractiveTransitioningProtocol.h"
+
 @interface OMNBackgroundVC : UIViewController
+<OMNInteractiveTransitioningProtocol>
 
 @property (strong, nonatomic, readonly) UIImageView *backgroundView;
 @property (nonatomic, strong) UIImage *backgroundImage;
@@ -14,6 +17,8 @@
 @property (strong, nonatomic, readonly) UIToolbar *bottomToolbar;
 
 @property (nonatomic, strong) NSArray *buttonInfo;
+
+//@property (nonatomic, strong) UIPercentDrivenInteractiveTransition *interactiveTransition;
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage animated:(BOOL)animated;
 - (void)addActionBoardIfNeeded;

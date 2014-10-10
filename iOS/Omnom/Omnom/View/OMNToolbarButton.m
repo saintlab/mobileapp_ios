@@ -40,7 +40,11 @@
       [self setImage:[templateImage omn_tintWithColor:kBarButtonHighlightedColor] forState:UIControlStateDisabled];
       
     }
-    [self setTitle:title forState:UIControlStateNormal];
+    
+    if (title) {
+      [self setTitle:title forState:UIControlStateNormal];
+    }
+    
     [self sizeToFit];
     if (minimumSize > 0.0f) {
       CGRect frame = self.frame;
@@ -53,13 +57,17 @@
 }
 
 - (void)setSelectedImage:(UIImage *)selectedImage selectedTitle:(NSString *)selectedTitle {
-  
-  UIImage *templateImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-  [self setImage:[templateImage omn_tintWithColor:kBarButtonNormalColor] forState:UIControlStateSelected];
-  [self setImage:[templateImage omn_tintWithColor:kBarButtonHighlightedColor] forState:UIControlStateSelected|UIControlStateHighlighted];
 
-  [self setTitle:selectedTitle forState:UIControlStateSelected];
-  [self setTitle:selectedTitle forState:UIControlStateSelected|UIControlStateHighlighted];
+  if (selectedImage) {
+    UIImage *templateImage = [selectedImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self setImage:[templateImage omn_tintWithColor:kBarButtonNormalColor] forState:UIControlStateSelected];
+    [self setImage:[templateImage omn_tintWithColor:kBarButtonHighlightedColor] forState:UIControlStateSelected|UIControlStateHighlighted];
+  }
+
+  if (selectedTitle) {
+    [self setTitle:selectedTitle forState:UIControlStateSelected];
+    [self setTitle:selectedTitle forState:UIControlStateSelected|UIControlStateHighlighted];
+  }
 
   [self setTitleColor:kBarButtonNormalColor forState:UIControlStateSelected];
   [self setTitleColor:kBarButtonHighlightedColor forState:UIControlStateSelected|UIControlStateHighlighted];

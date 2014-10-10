@@ -21,6 +21,7 @@
 #import "OMNDenyCLPermissionVC.h"
 #import "OMNAnalitics.h"
 #import "OMNUserInfoVC.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNSearchVisitorVC ()
 <OMNBeaconSearchManagerDelegate,
@@ -55,8 +56,7 @@ OMNUserInfoVCDelegate>
 
 - (UIBarButtonItem *)userInfoButton {
   
-  UIBarButtonItem *userInfoButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user_settings_icon"] style:UIBarButtonItemStylePlain target:self action:@selector(showUserProfile)];
-  return userInfoButton;
+  return [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:self action:@selector(showUserProfile)];
   
 }
 
@@ -269,7 +269,7 @@ OMNUserInfoVCDelegate>
 
 - (void)didFailOmnom {
   
-  [[OMNAnalitics analitics] logEvent:@"no_table" parametrs:nil];
+  [[OMNAnalitics analitics] logTargetEvent:@"no_table" parametrs:nil];
 
   __weak typeof(self)weakSelf = self;
   [self showRetryMessageWithBlock:^{
@@ -297,7 +297,7 @@ OMNUserInfoVCDelegate>
       
     }];
     
-    [[OMNAnalitics analitics] logEvent:@"low_signal" parametrs:@{@"beacons" : beaconsRSSIData}];
+    [[OMNAnalitics analitics] logTargetEvent:@"low_signal" parametrs:@{@"beacons" : beaconsRSSIData}];
     [self determineFaceUpPosition];
     
   }
@@ -334,7 +334,7 @@ OMNUserInfoVCDelegate>
       
     case kSearchManagerRequestTurnBLEOn: {
       
-      [[OMNAnalitics analitics] logEvent:@"bluetooth_turned_off" parametrs:nil];
+      [[OMNAnalitics analitics] logTargetEvent:@"bluetooth_turned_off" parametrs:nil];
       OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] initWithParent:self];
       [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
       
@@ -353,7 +353,7 @@ OMNUserInfoVCDelegate>
     case kSearchManagerRequestCoreLocationRestrictedPermission: {
       
       NSLog(@"kSearchManagerRequestCoreLocationRestrictedPermission");
-      [[OMNAnalitics analitics] logEvent:@"no_geolocation_permission" parametrs:nil];
+      [[OMNAnalitics analitics] logDebugEvent:@"no_geolocation_permission" parametrs:nil];
       OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
       [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
       
@@ -361,7 +361,7 @@ OMNUserInfoVCDelegate>
     case kSearchManagerRequestCoreLocationDeniedPermission: {
       
       NSLog(@"kSearchManagerRequestCoreLocationDeniedPermission");
-      [[OMNAnalitics analitics] logEvent:@"no_geolocation_permission" parametrs:nil];
+      [[OMNAnalitics analitics] logDebugEvent:@"no_geolocation_permission" parametrs:nil];
       __weak typeof(self)weakSelf = self;
       [self showDenyLocationPermissionDescriptionWithBlock:^{
 
@@ -388,7 +388,7 @@ OMNUserInfoVCDelegate>
     } break;
     case kSearchManagerOmnomServerUnavaliable: {
       
-      [[OMNAnalitics analitics] logEvent:@"no_server_connection" parametrs:nil];
+      [[OMNAnalitics analitics] logDebugEvent:@"no_server_connection" parametrs:nil];
       [self showNoInternetErrorWithText:NSLocalizedString(@"нет доступа к серверам omnom.", nil)];
       
     } break;

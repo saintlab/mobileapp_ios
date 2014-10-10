@@ -58,7 +58,7 @@
       NSArray *ordersData = response;
       NSArray *orders = [ordersData decodeOrdersWithError:nil];
       if (0 == orders.count) {
-        [[OMNAnalitics analitics] logEvent:@"NO_ORDERS" jsonRequest:path jsonResponse:response];
+        [[OMNAnalitics analitics] logDebugEvent:@"NO_ORDERS" jsonRequest:path jsonResponse:response];
       }
       weakSelf.orders = orders;
       ordersBlock(orders);
@@ -66,14 +66,14 @@
     }
     else {
       
-      [[OMNAnalitics analitics] logEvent:@"ERROR_GET_ORDERS" jsonRequest:path jsonResponse:response];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path jsonResponse:response];
       errorBlock(nil);
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
     errorBlock(error);
     
   }];
@@ -91,7 +91,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logEvent:@"ERROR_NEW_GUEST" jsonRequest:path responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_NEW_GUEST" jsonRequest:path responseOperation:operation];
     failureBlock(error);
     
   }];
@@ -108,7 +108,7 @@
     
     if ([response isKindOfClass:[NSDictionary class]] &&
         [response[@"status"] isEqualToString:@"success"]) {
-      [[OMNAnalitics analitics] logEvent:@"WAITER_CALL" parametrs:response];
+      [[OMNAnalitics analitics] logDebugEvent:@"WAITER_CALL" parametrs:response];
       [weakSelf waiterDidCalled];
     }
     failureBlock(nil);
@@ -139,7 +139,7 @@
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
     [weakSelf stopWaiterCall];
-    [[OMNAnalitics analitics] logEvent:@"WAITER_CALL_DONE" parametrs:response];
+    [[OMNAnalitics analitics] logDebugEvent:@"WAITER_CALL_DONE" parametrs:response];
     failureBlock(nil);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

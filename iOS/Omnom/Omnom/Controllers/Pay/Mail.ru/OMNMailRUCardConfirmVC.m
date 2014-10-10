@@ -13,7 +13,6 @@
 #import "OMNSocketManager.h"
 #import "OMNAuthorisation.h"
 #import "OMNErrorTextField.h"
-#import "OMNBorderedButton.h"
 #import "OMNUtils.h"
 #import "OMNAnalitics.h"
 #import "OMNOperationManager.h"
@@ -21,6 +20,7 @@
 #import "OMNLabeledTextField.h"
 #import <OMNStyler.h>
 #import "OMNCardEnterErrorView.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate,
@@ -216,7 +216,7 @@ UITextViewDelegate>
     [self addDoneButton];
     [self handleResponse:response];
     [_cardHoldValueTF setError:YES];
-    [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_VERIFY" parametrs:response];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_VERIFY" parametrs:response];
 
   }
   else {
@@ -297,9 +297,9 @@ UITextViewDelegate>
       response = r;
     }
     
-    [[OMNAnalitics analitics] logEvent:@"ERROR_MAIL_CARD_REGISTER" parametrs:response];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_REGISTER" parametrs:response];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"repeat_icon_small"] style:UIBarButtonItemStylePlain target:self action:@selector(registerCard)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"repeat_icon_small"] color:[UIColor blackColor] target:self action:@selector(registerCard)];
     [_errorTextView setUnknownError];
     
   }

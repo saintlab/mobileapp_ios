@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNInteractiveTransitioningProtocol.h"
 
 @protocol OMNRestaurantInfoVCDelegate;
 @class OMNFeedItem;
 @class OMNVisitor;
 
 @interface OMNRestaurantInfoVC : UITableViewController
+<OMNInteractiveTransitioningProtocol>
 
 @property (nonatomic, weak) id<OMNRestaurantInfoVCDelegate> delegate;
 

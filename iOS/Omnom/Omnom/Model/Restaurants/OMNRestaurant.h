@@ -23,13 +23,9 @@ typedef void(^GMenuBlock)(OMNMenu *menu);
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, strong) OMNRestaurantDecoration *decoration;
-
-//@property (nonatomic, strong) UIColor *background_color;
-//@property (nonatomic, strong) NSString *background_imageUrl;
-//@property (nonatomic, strong) NSString *logoUrl;
-//@property (nonatomic, strong) UIImage *logo;
-//@property (nonatomic, strong) UIImage *background;
 @property (nonatomic, strong) OMNPushTexts *mobile_texts;
+
+@property (nonatomic, strong) OMNRestaurantInfo *info;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 

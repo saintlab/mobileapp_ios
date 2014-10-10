@@ -22,6 +22,7 @@
 #import "OMNSlideDownTransition.h"
 #import "OMNTransitionFromProductToList.h"
 #import "OMNTransitionFromCalculatorToOrder.h"
+#import "OMNInteractiveTransitioningProtocol.h"
 
 @implementation OMNNavigationControllerDelegate {
   NSMutableDictionary *_transitions;
@@ -73,7 +74,11 @@
   NSString *transition = _transitions[key];
   
   if (transition) {
-    return [[NSClassFromString(transition) alloc] init];
+
+    OMNCustomTransition *customTransition = [[NSClassFromString(transition) alloc] init];
+    customTransition.sourceController = fromVC;
+    return customTransition;
+    
   }
   else {
     return nil;
@@ -90,6 +95,15 @@
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
+
+  if ([animationController isKindOfClass:[OMNCustomTransition class]]) {
+    id backgroundVC = [(OMNCustomTransition *)animationController sourceController];
+    if ([backgroundVC conformsToProtocol:@protocol(OMNInteractiveTransitioningProtocol)]) {
+      return [backgroundVC interactiveTransitioning];
+    }
+    
+  }
+  
   return nil;
 }
 
