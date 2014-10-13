@@ -11,6 +11,7 @@
 @interface UIBarButtonItem (omn_custom)
 
 + (UIBarButtonItem *)omn_barButtonWithImage:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action;
++ (UIBarButtonItem *)omn_loadingItem;
 + (UIButton *)omn_buttonWithImage:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action;
 
 @end

@@ -147,7 +147,7 @@
 }
 
 - (void)didRecoveCode {
-  
+#warning 123
   OMNResetPasswordVC *resetPasswordVC = [[OMNResetPasswordVC alloc] init];
   __weak typeof(self)weakSelf = self;
   resetPasswordVC.completionBlock = ^{

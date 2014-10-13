@@ -23,8 +23,8 @@
     self.phone = [data[@"phone"] description];
     self.status = [data[@"status"] description];
     self.created_at = [data[@"created_at"] description];
-//    self.birthDate = data[@"birth_date"];
-
+    //    self.birthDate = data[@"birth_date"];
+    
     self.phone_validated = [data[@"phone_validated"] boolValue];
     self.email_validated = [data[@"email_validated"] boolValue];
   }
@@ -74,12 +74,12 @@
   }
   
   [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+    
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
       completion();
     }
     else if ([responseObject isKindOfClass:[NSDictionary class]]) {
-
+      
       [[OMNAnalitics analitics] logDebugEvent:@"USER_REGISTER_ERROR" parametrs:responseObject];
       NSDictionary *error = responseObject[@"error"];
       failureBlock([NSError errorWithDomain:NSStringFromClass(self.class) code:[error[@"code"] integerValue] userInfo:@{NSLocalizedDescriptionKey : error[@"message"]}]);
@@ -90,7 +90,7 @@
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+    
     [[OMNAnalitics analitics] logDebugEvent:@"USER_REGISTER_ERROR" jsonRequest:parameters responseOperation:operation];
     
   }];
@@ -114,7 +114,7 @@
     failureBlock([error omn_internetError]);
     
   }];
-
+  
 }
 
 - (void)confirmPhone:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
@@ -131,7 +131,7 @@
   [[OMNAuthorizationManager sharedManager] POST:@"/confirm/phone" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     [responseObject decodeToken:completion failure:failureBlock];
-
+    
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"CONFIRM_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
@@ -145,7 +145,7 @@
   
   NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
-
+  
   NSDictionary *parameters =
   @{
     @"phone" : self.phone,
@@ -191,6 +191,27 @@
   
 }
 
++ (NSError *)errorFromResponse:(id)response {
+  
+  NSError *error = [OMNUtils errorFromCode:OMNErrorUnknoun];
+  
+  if (NO == [response isKindOfClass:[NSDictionary class]]) {
+    return error;
+  }
+
+  NSString *message = response[@"error"][@"message"];
+  if (message) {
+    
+    error = [NSError errorWithDomain:NSStringFromClass(self.class)
+                                code:[response[@"error"][@"code"] integerValue]
+                            userInfo:@{NSLocalizedDescriptionKey : message}];
+    
+  }
+  
+  return error;
+  
+}
+
 + (void)recoverUsingData:(NSString *)data completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
@@ -204,7 +225,9 @@
       completionBlock();
     }
     else {
-      failureBlock(nil);
+      
+      failureBlock([self errorFromResponse:responseObject]);
+      
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -225,7 +248,7 @@
     
     [[OMNAnalitics analitics] logDebugEvent:@"AUTHORIZATION_USER_ERROR" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
-
+    
   }];
   
 }
@@ -240,13 +263,13 @@
   [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject[@"status"] isEqualToString:@"success"]) {
-
+      
       OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
       userBlock(user);
       
     }
     else {
-
+      
       [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" parametrs:parameters];
       failureBlock(nil);
       

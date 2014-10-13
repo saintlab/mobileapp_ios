@@ -195,6 +195,8 @@
 		937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 937E0B5E18F04EC20058A249 /* OMNConstants.m */; };
 		937EF7EF19DFB47300BD9090 /* OMNCardEnterErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorView.m */; };
 		937EF7F019DFB47300BD9090 /* OMNCardEnterErrorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorView.m */; };
+		93833E6619EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
+		93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
 		9389455C19B0531C00C37C82 /* OMNUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389455B19B0531C00C37C82 /* OMNUtils.m */; };
 		9389455D19B0531C00C37C82 /* OMNUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389455B19B0531C00C37C82 /* OMNUtils.m */; };
 		9389456019B0620D00C37C82 /* OMNPushTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389455F19B0620D00C37C82 /* OMNPushTexts.m */; };
@@ -611,6 +613,8 @@
 		937E0B5E18F04EC20058A249 /* OMNConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNConstants.m; sourceTree = "<group>"; };
 		937EF7ED19DFB47300BD9090 /* OMNCardEnterErrorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardEnterErrorView.h; sourceTree = "<group>"; };
 		937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardEnterErrorView.m; sourceTree = "<group>"; };
+		93833E6419EBADC500CBEBC0 /* OMNChangePhoneVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangePhoneVC.h; sourceTree = "<group>"; };
+		93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangePhoneVC.m; sourceTree = "<group>"; };
 		9389455A19B0531C00C37C82 /* OMNUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUtils.h; sourceTree = "<group>"; };
 		9389455B19B0531C00C37C82 /* OMNUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUtils.m; sourceTree = "<group>"; };
 		9389455E19B0620D00C37C82 /* OMNPushTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPushTexts.h; sourceTree = "<group>"; };
@@ -1350,6 +1354,15 @@
 			path = Text;
 			sourceTree = "<group>";
 		};
+		93833E6319EBADB100CBEBC0 /* ChangePhone */ = {
+			isa = PBXGroup;
+			children = (
+				93833E6419EBADC500CBEBC0 /* OMNChangePhoneVC.h */,
+				93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */,
+			);
+			path = ChangePhone;
+			sourceTree = "<group>";
+		};
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1568,6 +1581,7 @@
 			isa = PBXGroup;
 			children = (
 				939F990719752BE90051822E /* OMNAuthorizationDelegate.h */,
+				93833E6319EBADB100CBEBC0 /* ChangePhone */,
 				939F98ED19752BE90051822E /* ConfirmCode */,
 				939F98F119752BE90051822E /* Info */,
 				939F990119752BE90051822E /* Login */,
@@ -2216,6 +2230,7 @@
 				937822881963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
 				9345AFC5199B7DCC00328F73 /* OMNRestaurantInfo.m in Sources */,
 				9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */,
+				93833E6619EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */,
 				939F994119752D680051822E /* OMNBankCardsModel.m in Sources */,
 				9319FD6F192F34510053F3A4 /* OMNCardView.m in Sources */,
 				93B3689219A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */,
@@ -2339,6 +2354,7 @@
 				93EDCC9519C2D296006BC364 /* OMNSocketTest.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				931B15CF19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */,
+				93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
 				93E2998A197CE0FD00051B04 /* OMNSearchVisitorVC.m in Sources */,
 				93A8C1A819D918A300CB4F09 /* OMNCircleAnimation.m in Sources */,

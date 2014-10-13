@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
   
   [super viewDidLoad];
-  [self setup];
+  [self omn_setup];
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
   self.view.backgroundColor = [UIColor whiteColor];
@@ -26,7 +26,7 @@
   
 }
 
-- (void)setup {
+- (void)omn_setup {
   
   UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"success_icon_green"]];
   imageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -50,7 +50,7 @@
 
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|" options:0 metrics:nil views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[imageView]-[label]" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-(20)-[imageView]-[label]" options:0 metrics:nil views:views]];
   
 }
 

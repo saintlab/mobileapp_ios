@@ -28,6 +28,14 @@
   
 }
 
++ (UIBarButtonItem *)omn_loadingItem {
+  
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [spinner startAnimating];
+  return [[UIBarButtonItem alloc] initWithCustomView:spinner];
+  
+}
+
 + (UIBarButtonItem *)omn_barButtonWithImage:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action {
   
   UIButton *button = [self omn_buttonWithImage:image color:color target:target action:action];

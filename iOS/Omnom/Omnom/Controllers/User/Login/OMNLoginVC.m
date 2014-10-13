@@ -17,9 +17,11 @@
 #import "OMNRegisterUserVC.h"
 #import "OMNNonSelectableTextView.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNChangePhoneVC.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate,
+OMNChangePhoneVCDelegate,
 UITextViewDelegate> {
 }
 
@@ -31,6 +33,9 @@ UITextViewDelegate> {
   UITextView *_hintTextView;
   OMNPhoneNumberTextFieldDelegate *_phoneNumberTextFieldDelegate;
   
+  NSURL *_createUserUrl;
+  NSURL *_resetPhoneUrl;
+  
 }
 
 - (void)viewDidLoad {
@@ -39,6 +44,9 @@ UITextViewDelegate> {
   self.view.backgroundColor = [UIColor whiteColor];
   self.navigationItem.title = @"";
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
+  
+  _createUserUrl = [NSURL URLWithString:@"createUserUrl"];
+  _resetPhoneUrl = [NSURL URLWithString:@"resetPhoneUrl"];
   
   [self setup];
   
@@ -91,6 +99,11 @@ UITextViewDelegate> {
   _hintTextView.translatesAutoresizingMaskIntoConstraints = NO;
   _hintTextView.textColor = colorWithHexString(@"D0021B");
   _hintTextView.delegate = self;
+  _hintTextView.linkTextAttributes =
+  @{
+    NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
+    NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
+    };
 
   [self.view addSubview:_hintTextView];
   
@@ -113,8 +126,17 @@ UITextViewDelegate> {
   _loginTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
   _loginTF.textField.keyboardType = UIKeyboardTypePhonePad;
 
-  NSString *buttonText = NSLocalizedString(@"регистрация", nil);
-  NSString *text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Ещё нет аккаунта? Прошу сюда –", nil), buttonText];
+  [self setResetPhoneHint];
+//  [_vkButton setBackgroundImage:[UIImage imageNamed:@"vk_login_icon"] forState:UIControlStateNormal];
+//  [_fbButton setBackgroundImage:[UIImage imageNamed:@"fb_login_icon"] forState:UIControlStateNormal];
+//  [_twitterButton setBackgroundImage:[UIImage imageNamed:@"twitter_login_icon"] forState:UIControlStateNormal];
+  
+}
+
+- (void)setCreateUserHint {
+  
+  NSString *buttonText = NSLocalizedString(@"LOGIN_CREATE_USER_ACTION", @"регистрация");
+  NSString *text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"LOGIN_CREATE_USER_HINT", @"Ещё нет аккаунта? Прошу сюда –"), buttonText];
   
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
   [attributedString setAttributes:
@@ -123,18 +145,22 @@ UITextViewDelegate> {
      NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
      } range:NSMakeRange(0, text.length)];
   
-  [attributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@""] range:[text rangeOfString:buttonText]];
-  _hintTextView.linkTextAttributes =
-  @{
-    NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
-    NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
-    };
+  [attributedString addAttribute:NSLinkAttributeName value:_createUserUrl range:[text rangeOfString:buttonText]];
+
   _hintTextView.attributedText = attributedString;
   _hintTextView.textAlignment = NSTextAlignmentCenter;
-  _hintTextView.hidden = YES;
-//  [_vkButton setBackgroundImage:[UIImage imageNamed:@"vk_login_icon"] forState:UIControlStateNormal];
-//  [_fbButton setBackgroundImage:[UIImage imageNamed:@"fb_login_icon"] forState:UIControlStateNormal];
-//  [_twitterButton setBackgroundImage:[UIImage imageNamed:@"twitter_login_icon"] forState:UIControlStateNormal];
+  _hintTextView.hidden = NO;
+  
+}
+
+- (void)setResetPhoneHint {
+  
+  NSString *text = NSLocalizedString(@"LOGIN_RESET_PHONE_HINT", @"У меня сменился номер телефона");
+  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+  [attributedString addAttribute:NSLinkAttributeName value:_resetPhoneUrl range:NSMakeRange(0, text.length)];
+  _hintTextView.attributedText = attributedString;
+  _hintTextView.textAlignment = NSTextAlignmentLeft;
+  _hintTextView.hidden = NO;
   
 }
 
@@ -187,8 +213,8 @@ UITextViewDelegate> {
   if (error) {
     
     //no such user error code
-    if (101 == error.code) {
-      _hintTextView.hidden = NO;
+    if (OMNErrorNoSuchUser == error.code) {
+      [self setCreateUserHint];
     }
     [_loginTF setErrorText:error.localizedDescription];
     
@@ -221,8 +247,23 @@ UITextViewDelegate> {
   
 }
 
+- (void)resetPhone {
+  
+  OMNChangePhoneVC *changePhoneVC = [[OMNChangePhoneVC alloc] init];
+  changePhoneVC.delegate = self;
+  [self.navigationController pushViewController:changePhoneVC animated:YES];
+  
+}
+
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange {
-  [self createUser];
+  
+  if ([url isEqual:_createUserUrl]) {
+    [self createUser];
+  }
+  else if ([url isEqual:_resetPhoneUrl]) {
+    [self resetPhone];
+  }
+  
   return NO;
 }
 
@@ -261,6 +302,14 @@ UITextViewDelegate> {
 - (void)confirmCodeVCDidResetPhone:(OMNConfirmCodeVC *)confirmCodeVC {
   
   [self.delegate authorizationVCDidCancel:self];
+  
+}
+
+#pragma mark - OMNChangePhoneVCDelegate
+
+- (void)changePhoneVCDidFinish:(OMNChangePhoneVC *)changePhoneVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
   
 }
 
