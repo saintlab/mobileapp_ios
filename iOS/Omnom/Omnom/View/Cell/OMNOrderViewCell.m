@@ -80,9 +80,11 @@
   
   OMNGuest *guest = [_order.guests lastObject];
   
-  [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:guest.items.count - 1 inSection:_order.guests.count - 1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-  _tableView.layer.rasterizationScale = 2.0f;
-  _tableView.layer.shouldRasterize = YES;
+  if (guest.items.count > 0) {
+    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:guest.items.count - 1 inSection:_order.guests.count - 1] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    _tableView.layer.rasterizationScale = 2.0f;
+    _tableView.layer.shouldRasterize = YES;
+  }
 
 }
 
