@@ -59,7 +59,6 @@ NSString * const OMNGuestViewIdentifier = @"OMNGuestViewIdentifier";
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[seporatorView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seporatorView(1)]|" options:0 metrics:metrics views:views]];
     
-    
     self.backgroundView = [[UIView alloc] init];
     self.backgroundView.backgroundColor = [UIColor whiteColor];
     

@@ -91,6 +91,7 @@ OMNSearchRestaurantVCDelegate>
 #warning http://omnom.menu/qr/zxcvbnm-61
 //  searchRestaurantVC.qr = @"http://m.2gis.ru/os/";
 //  searchRestaurantVC.qr = @"qwertyuiop";
+//  searchRestaurantVC.qr = @"qr-code-3-at-saintlab-iiko";
   
   NSData *decodeBeaconData = self.info[OMNDecodeBeaconManagerNotificationLaunchKey];
   if (decodeBeaconData) {
