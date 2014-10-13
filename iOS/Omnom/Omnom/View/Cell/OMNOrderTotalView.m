@@ -32,8 +32,8 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
   
   UIColor *backgroundColor = [UIColor whiteColor];
   
-  self.contentView.opaque = YES;
-  self.contentView.backgroundColor = backgroundColor;
+  self.backgroundView = [[UIView alloc] init];
+  self.backgroundView.backgroundColor = backgroundColor;
   
   _totalLabel = [[UILabel alloc] init];
   _totalLabel.opaque = YES;
@@ -43,18 +43,18 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
   _totalLabel.textAlignment = NSTextAlignmentRight;
   _totalLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _totalLabel.font = FuturaLSFOmnomLERegular(17.0f);
-  [self.contentView addSubview:_totalLabel];
+  [self addSubview:_totalLabel];
   
   _payLabel = [[UILabel alloc] init];
+  _payLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _payLabel.opaque = YES;
   _payLabel.backgroundColor = backgroundColor;
   [_payLabel setContentHuggingPriority:750 forAxis:UILayoutConstraintAxisVertical];
   _payLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   _payLabel.textAlignment = NSTextAlignmentRight;
-  _payLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _payLabel.font = FuturaLSFOmnomLERegular(17.0f);
   _payLabel.textAlignment = NSTextAlignmentRight;
-  [self.contentView addSubview:_payLabel];
+  [self addSubview:_payLabel];
   
   NSDictionary *views =
   @{
@@ -68,9 +68,10 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10@751)-[totalLabel(labelHeight@751)]-(2@750)-[payLabel(labelHeight@750)]-(10@751)-|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[totalLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10@751)-[totalLabel(labelHeight@751)]" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[payLabel(labelHeight@750)]-(10@751)-|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[totalLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
   
 }
 
@@ -80,11 +81,13 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
   
   _totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Итого: %@", nil), [OMNUtils commaStringFromKop:order.totalAmount]];
   if (order.paid.net_amount > 0) {
+    _payLabel.hidden = NO;
     _payLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Оплачено: %@", nil), [OMNUtils commaStringFromKop:order.paid.net_amount]];
   }
   else {
-    _payLabel.text = nil;
+    _payLabel.hidden = YES;
   }
+  
 }
 
 @end

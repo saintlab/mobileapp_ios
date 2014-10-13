@@ -27,12 +27,12 @@ NSString * const OMNGuestViewIdentifier = @"OMNGuestViewIdentifier";
     _label.translatesAutoresizingMaskIntoConstraints = NO;
     _label.font = FuturaOSFOmnomMedium(16.0f);
     _label.textColor = [UIColor blackColor];
-    [self.contentView addSubview:_label];
+    [self addSubview:_label];
     
     UIView *seporatorView = [[UIView alloc] init];
     seporatorView.translatesAutoresizingMaskIntoConstraints = NO;
     seporatorView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
-    [self.contentView addSubview:seporatorView];
+    [self addSubview:seporatorView];
     
     _button = [[UIButton alloc] init];
     _button.translatesAutoresizingMaskIntoConstraints = NO;
@@ -53,11 +53,11 @@ NSString * const OMNGuestViewIdentifier = @"OMNGuestViewIdentifier";
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|" options:0 metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|" options:0 metrics:metrics views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label]-(5)-|" options:0 metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label]-(5)-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]|" options:0 metrics:metrics views:views]];
 
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[seporatorView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seporatorView(1)]|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[seporatorView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seporatorView(1)]|" options:0 metrics:metrics views:views]];
     
     self.backgroundView = [[UIView alloc] init];
     self.backgroundView.backgroundColor = [UIColor whiteColor];

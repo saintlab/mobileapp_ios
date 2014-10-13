@@ -10,7 +10,6 @@
 #import "OMNEnterCodeView.h"
 #import "OMNUser.h"
 #import "OMNNavigationBarProgressView.h"
-#import "OMNResetPasswordVC.h"
 #import <BlocksKit.h>
 
 @interface OMNConfirmCodeVC ()
@@ -75,19 +74,6 @@
   [_resendButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   [_resendButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
   [self.view addSubview:_resendButton];
-  
-  
-//  UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), 44.0f)];
-//  toolBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//  
-//  NSMutableArray *items = [NSMutableArray arrayWithObject:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить код", nil) style:UIBarButtonItemStylePlain target:self action:@selector(resentTap)]];
-//  if (self.allowChangePhoneNumber) {
-//    [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
-//    [items addObject:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Изменить номер", nil) style:UIBarButtonItemStylePlain target:self action:@selector(changeNumberTap)]];
-//  }
-//  
-//  toolBar.items = items;
-//  _codeView.textField.inputAccessoryView = toolBar;
 
   NSDictionary *views =
   @{
@@ -128,32 +114,6 @@
   
   [self startTimer];
   [self.delegate confirmCodeVCRequestResendCode:self];
-  
-}
-
-- (void)changeNumberTap {
-
-  __weak typeof(self)weakSelf = self;
-  [OMNUser recoverUsingData:_phone completion:^{
-    
-    [weakSelf didRecoveCode];
-    
-  } failure:^(NSError *error) {
-    
-    
-    
-  }];
-  
-}
-
-- (void)didRecoveCode {
-#warning 123
-  OMNResetPasswordVC *resetPasswordVC = [[OMNResetPasswordVC alloc] init];
-  __weak typeof(self)weakSelf = self;
-  resetPasswordVC.completionBlock = ^{
-    [weakSelf didFinishReset];
-  };
-  [self.navigationController pushViewController:resetPasswordVC animated:YES];
   
 }
 
