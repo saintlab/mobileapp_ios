@@ -68,8 +68,8 @@ describe(@"demo stand test", ^{
 
     [[_order should] beNonNil];
 
-    [[_user.id should] equal:@"1"];
-    [[_user.email should] equal:@"egor@saintlab.com"];
+    [[_user.id should] equal:@"12"];
+    [[_user.email should] equal:@"teanet@mail.ru"];
     
   });
   
