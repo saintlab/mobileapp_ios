@@ -21,6 +21,33 @@
   return self;
 }
 
+- (BOOL)hasSelectedItems {
+  
+  __block BOOL hasSelectedItems = NO;
+  
+  [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+    
+    if (orderItem.selected) {
+      hasSelectedItems = YES;
+      *stop = YES;
+    }
+    
+  }];
+  
+  return hasSelectedItems;
+  
+}
+
+- (void)deselectAllItems {
+  
+  [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+    
+    orderItem.selected = NO;
+    
+  }];
+  
+}
+
 - (long long)total {
   return [self totalForSelectedItems:NO];
 }

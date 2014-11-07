@@ -52,6 +52,18 @@
 
 }
 
+- (void)setSelected:(BOOL)selected {
+  
+  if (selected) {
+    self.titleLabel.font = FuturaLSFOmnomLERegular(25.0f);
+  }
+  else {
+    self.titleLabel.font = FuturaLSFOmnomLERegular(17.0f);
+  }
+  
+  [super setSelected:selected];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 
   if ([keyPath isEqualToString:NSStringFromSelector(@selector(selected))]) {

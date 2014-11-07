@@ -28,12 +28,15 @@
 #import "OMNOrderTableView.h"
 #import "UIImage+omn_helper.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNOrderTotalView.h"
+#import "OMNSelectOrderButton.h"
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
 OMNRatingVCDelegate,
 UITableViewDelegate,
-OMNMailRUPayVCDelegate>
+OMNMailRUPayVCDelegate,
+OMNOrderTotalViewDelegate>
 
 @end
 
@@ -45,10 +48,11 @@ OMNMailRUPayVCDelegate>
   UIScrollView *_scrollView;
   
   BOOL _beginSplitAnimation;
+  BOOL _keyboardShown;
   OMNOrder *_order;
   OMNVisitor *_visitor;
-  CGRect _keyboardFrame;
-  
+  OMNOrderTotalView *_orderTotalView;
+  UIView *_tableFadeView;
 }
 
 - (void)dealloc {
@@ -58,7 +62,6 @@ OMNMailRUPayVCDelegate>
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super init];
   if (self) {
-    _keyboardFrame = CGRectZero;
     _order = visitor.selectedOrder;
     _visitor = visitor;
   }
@@ -72,21 +75,15 @@ OMNMailRUPayVCDelegate>
   self.view.backgroundColor = [UIColor clearColor];
   self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
   
-  [self setup];
+  [self omn_setup];
 
   if (_visitor.orders.count > 1) {
     
     NSUInteger index = [_visitor.orders indexOfObject:_visitor.selectedOrder];
     if (index != NSNotFound) {
-      UIButton *button = [[UIButton alloc] init];
-      button.titleLabel.font = FuturaOSFOmnomMedium(20.0f);
-      [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+      UIButton *button = [[OMNSelectOrderButton alloc] init];
       NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_TITLE %ld", @"Счёт {number}"), (long)index + 1];
       [button setTitle:title forState:UIControlStateNormal];
-      button.layer.borderColor = [UIColor blackColor].CGColor;
-      button.contentEdgeInsets = UIEdgeInsetsMake(3.0f, 10.0f, 3.0f, 10.0f);
-      button.layer.borderWidth = 1.0f;
-      button.layer.cornerRadius = 2.0f;
       [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
       [button sizeToFit];
       self.navigationItem.titleView = button;
@@ -99,8 +96,6 @@ OMNMailRUPayVCDelegate>
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-  
-  
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"calc_icon"] color:[UIColor blackColor] target:self action:@selector(calculatorTap)];
   
 }
@@ -108,9 +103,26 @@ OMNMailRUPayVCDelegate>
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
+  _orderTotalView.order = _order;
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_gray_bg"] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = nil;
+  
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  
+  [super viewDidAppear:animated];
+  _beginSplitAnimation = NO;
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
   
 }
 
@@ -122,6 +134,11 @@ OMNMailRUPayVCDelegate>
   [super viewDidLayoutSubviews];
   [self layoutTableView];
   [self.view layoutIfNeeded];
+  
+  CGRect tableFrame = _tableView.frame;
+  tableFrame.size.height -= 6.0f;
+  _tableFadeView.frame = tableFrame;
+  
 }
 
 - (void)layoutTableView {
@@ -137,30 +154,14 @@ OMNMailRUPayVCDelegate>
   
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-
-  [super viewDidAppear:animated];
-  _beginSplitAnimation = NO;
-
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-
-}
-
 - (void)selectedOrderTap {
   [self.delegate payOrderVCRequestOrders:self];
 }
 
 - (void)calculatorTap {
   
-  if (_beginSplitAnimation) {
+  if (_beginSplitAnimation ||
+      _keyboardShown) {
     return;
   }
   _beginSplitAnimation = YES;
@@ -182,31 +183,48 @@ OMNMailRUPayVCDelegate>
   
 }
 
-- (void)setup {
+- (void)omn_setup {
     
   _scrollView = [[UIScrollView alloc] init];
   _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
   _scrollView.clipsToBounds = NO;
   _scrollView.delegate = self;
+  _scrollView.showsVerticalScrollIndicator = NO;
   [self.view addSubview:_scrollView];
   
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
-  _dataSource.showTotalView = YES;
-  
   _tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
   _tableView.allowsSelection = NO;
   [_scrollView addSubview:_tableView];
+
+  _orderTotalView = [[OMNOrderTotalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), 50.0f)];
+  _orderTotalView.delegate = self;
+
+  UIImageView *endBillIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bill_zubchiki"]];
+  endBillIV.top = CGRectGetHeight(_orderTotalView.frame);
   
+  UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), CGRectGetHeight(endBillIV.frame) + CGRectGetHeight(_orderTotalView.frame))];
+  [footerView addSubview:endBillIV];
+  [footerView addSubview:_orderTotalView];
+  
+  _tableView.tableFooterView = footerView;
   _tableView.dataSource = _dataSource;
   _tableView.delegate = _dataSource;
   [_dataSource registerCellsForTableView:_tableView];
   [_tableView reloadData];
+  
+  _tableFadeView = [[UIView alloc] init];
+  _tableFadeView.userInteractionEnabled = YES;
+  _tableFadeView.backgroundColor = [UIColor whiteColor];
+  _tableFadeView.alpha = 0.0f;
+  [_scrollView addSubview:_tableFadeView];
   
   NSDictionary *views =
   @{
     @"table" : _tableView,
     @"payment" : _paymentView,
     @"scrollView" : _scrollView,
+    @"tableFadeView" : _tableFadeView,
     };
 
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
@@ -217,6 +235,7 @@ OMNMailRUPayVCDelegate>
   [_tableView addGestureRecognizer:tapGR];
   
   [self.view layoutIfNeeded];
+  
 }
 
 - (void)showRatingForBill:(OMNBill *)bill {
@@ -305,14 +324,15 @@ OMNMailRUPayVCDelegate>
 - (void)setupViewsWithNotification:(NSNotification *)n keyboardShown:(BOOL)keyboardShown {
   
   CGRect keyboardFrame = [n.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-  _keyboardFrame = (keyboardShown) ? (keyboardFrame) : (CGRectZero);
+  _keyboardShown = keyboardShown;
   
   [self.navigationController setNavigationBarHidden:keyboardShown animated:YES];
   [_paymentView setKeyboardShown:keyboardShown];
   [UIView animateWithDuration:0.5 delay:0.0f usingSpringWithDamping:500.0f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
     
     _paymentView.bottom = MIN(keyboardFrame.origin.y, self.view.height);
-    [self layoutTableView];
+    _tableFadeView.alpha = (keyboardShown) ? (1.0f) : (0.0f);
+    [self.view layoutIfNeeded];
 
   } completion:nil];
   
@@ -351,6 +371,23 @@ OMNMailRUPayVCDelegate>
     [self.delegate payOrderVCDidCancel:self];
     
   }];
+  
+}
+
+#pragma mark - OMNOrderTotalViewDelegate
+
+- (void)orderTotalViewDidSplit:(OMNOrderTotalView *)orderTotalView {
+  
+  [self calculatorTap];
+  
+}
+
+- (void)orderTotalViewDidCancel:(OMNOrderTotalView *)orderTotalView {
+  
+  [_order deselectAllItems];
+  [UIView transitionWithView:_orderTotalView duration:0.3 options:kNilOptions animations:^{
+    _orderTotalView.order = _order;
+  } completion:nil];
   
 }
 

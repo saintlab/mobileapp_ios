@@ -26,13 +26,10 @@ UITextFieldDelegate>
 
 @implementation OMNAmountPercentControl {
   
-  OMNLabeledTextField *_pureAmountTF;
-  
   OMNLabeledTextField *_amountTF;
   UITextField *_percentTF;
   
   UIPickerView *_percentPicker;
-  UIView *_seporatorView;
   UIView *_flexibleBottomView;
   UIView *_bottomView;
   
@@ -48,161 +45,45 @@ UITextFieldDelegate>
   return self;
 }
 
-- (void)setup {
-  
-  self.backgroundColor = [UIColor clearColor];
-  
-  _pureAmountTF = [[OMNLabeledTextField alloc] init];
-  _pureAmountTF.keyboardType = UIKeyboardTypeDecimalPad;
-  _pureAmountTF.translatesAutoresizingMaskIntoConstraints = NO;
-  _pureAmountTF.minimumFontSize = 10.0f;
-  _pureAmountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-  _pureAmountTF.textColor = colorWithHexString(@"FFFFFF");
-  _pureAmountTF.font = FuturaLSFOmnomLERegular(50.0f);
-  _pureAmountTF.textAlignment = NSTextAlignmentCenter;
-  _pureAmountTF.delegate = self;
-  [_pureAmountTF setDetailedText:[NSString stringWithFormat:@" %@", kRubleSign]];
-  [self addSubview:_pureAmountTF];
-  
-  _amountTF = [[OMNLabeledTextField alloc] init];
-  _amountTF.keyboardType = UIKeyboardTypeDecimalPad;
-  _amountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-  _amountTF.translatesAutoresizingMaskIntoConstraints = NO;
-  _amountTF.adjustsFontSizeToFitWidth = YES;
-  _amountTF.minimumFontSize = 10.0f;
-  _amountTF.textColor = colorWithHexString(@"FFFFFF");
-  _amountTF.delegate = self;
-  _amountTF.font = FuturaLSFOmnomLERegular(30.0f);
-  _amountTF.textAlignment = NSTextAlignmentRight;
-  [_amountTF setDetailedText:[NSString stringWithFormat:@" %@", kRubleSign]];
-  [_amountTF bk_addEventHandler:^(UITextField *sender) {
-    
-    [self calculateRelativePercentValue];
-    
-  } forControlEvents:UIControlEventEditingChanged];
-  [self addSubview:_amountTF];
-  
-  _percentPicker = [[UIPickerView alloc] init];
-  _percentPicker.backgroundColor = [UIColor whiteColor];
-  _percentPicker.delegate = self;
-  _percentPicker.dataSource = self;
-  
-  _percentTF = [[UITextField alloc] init];
-  _percentTF.textAlignment = NSTextAlignmentCenter;
-  _percentTF.inputView = _percentPicker;
-  _percentTF.adjustsFontSizeToFitWidth = YES;
-  _percentTF.minimumFontSize = 10.0f;
-  _percentTF.translatesAutoresizingMaskIntoConstraints = NO;
-  _percentTF.contentVerticalAlignment = UIControlContentVerticalAlignmentBottom;
-  _percentTF.font = FuturaLSFOmnomLERegular(30.0f);
-  _percentTF.textColor = [UIColor whiteColor];
-  [_percentTF bk_addEventHandler:^(UITextField *sender) {
-    
-    [self calculateRelativeAmountValue];
-    
-  } forControlEvents:UIControlEventEditingChanged];
-  [self addSubview:_percentTF ];
-  
-  _bottomView = [[UIView alloc] init];
-  _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
-  _bottomView.backgroundColor = colorWithHexString(@"979797");
-  [self addSubview:_bottomView];
-  
-  _flexibleBottomView = [[UIView alloc] init];
-  _flexibleBottomView.translatesAutoresizingMaskIntoConstraints = NO;
-  _flexibleBottomView.backgroundColor = colorWithHexString(@"979797");
-  [self addSubview:_flexibleBottomView];
-  
-  _seporatorView = [[UIView alloc] init];
-  _seporatorView.translatesAutoresizingMaskIntoConstraints = NO;
-  _seporatorView.backgroundColor = colorWithHexString(@"979797");
-  [self addSubview:_seporatorView];
-  
-  NSDictionary *views =
-  @{
-    @"amountTF" : _amountTF,
-    @"pureAmountTF" : _pureAmountTF,
-    @"percentTF" : _percentTF,
-    @"bottomView" : _bottomView,
-    @"flexibleBottomView" : _flexibleBottomView,
-    @"seporatorView" : _seporatorView,
-    };
-  
-  NSDictionary *metrics =
-  @{
-    @"seporatorViewHeight" : @(11.0f),
-    };
-  
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-//  [self addConstraint:[NSLayoutConstraint constraintWithItem:_pureAmountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:20.0f]];
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_pureAmountTF attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
-//  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pureAmountTF]|" options:0 metrics:metrics views:views]];
-  
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:180.0f]];
-  
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[amountTF]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[percentTF]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seporatorView(seporatorViewHeight)]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[pureAmountTF]-2-[flexibleBottomView(1)]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(1)]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[amountTF]-[seporatorView(1)]-[percentTF]|" options:0 metrics:metrics views:views]];
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_amountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:0.655f constant:0.0f]];
-  
-}
-
 - (OMNAmountPercentValue *)amountPercentValue {
   return _amountPercentValue;
 }
 
 - (void)setAmountPercentValue:(OMNAmountPercentValue *)amountPercentValue {
   _amountPercentValue = amountPercentValue;
-  _pureAmountTF.text = [[OMNUtils commaStringFromKop:_amountPercentValue.totalAmount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
+  _amountTF.text = [[OMNUtils commaStringFromKop:_amountPercentValue.amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
   [self update];
 }
 
 - (void)update {
-  _pureAmountTF.adjustsFontSizeToFitWidth = YES;
-  _pureAmountTF.tintColor = [UIColor whiteColor];
   
-  if (_amountPercentValue.isAmountSelected) {
-    [self setAmountValue:_amountPercentValue.amount];
-    [self calculateRelativePercentValue];
-  }
-  else {
-    [self setPercentValue:_amountPercentValue.percent];
-    [self calculateRelativeAmountValue];
-  }
+  _amountTF.adjustsFontSizeToFitWidth = YES;
+  _amountTF.tintColor = [UIColor whiteColor];
+  [self setPercentValue:_amountPercentValue.percent];
+  
 }
 
-- (BOOL)isAmountSelected {
-  return _amountTF.isFirstResponder;
+- (BOOL)becomeFirstResponder {
+  
+  return [_amountTF becomeFirstResponder];
+  
 }
 
-- (void)beginTipEditing {
-  _tipEdidting = YES;
+- (void)beginPercentEditing {
+  _percentEditing = YES;
   [UIView animateWithDuration:0.3 animations:^{
-    _amountTF.alpha = 1.0f;
+    _percentTF.alpha = 1.0f;
   }];
-  [_amountTF becomeFirstResponder];
+  [_percentTF becomeFirstResponder];
 }
 
 - (BOOL)resignFirstResponder {
-  _tipEdidting = NO;
+  _percentEditing = NO;
   BOOL result =
-  [_pureAmountTF resignFirstResponder] ||
   [_amountTF resignFirstResponder] ||
   [_percentTF resignFirstResponder];
   [self sendActionsForControlEvents:UIControlEventEditingDidEnd];
   return result;
-  
-}
-
-- (void)calculateRelativeAmountValue {
-  
-  long long amount = _amountPercentValue.totalAmount * _amountPercentValue.percent / 100.;
-  [self setAmountValue:amount];
   
 }
 
@@ -218,20 +99,21 @@ UITextFieldDelegate>
 
 - (void)setAmountValue:(long long)amount {
   
-  _amountTF.text = [[OMNUtils commaStringFromKop:amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
   _amountPercentValue.amount = amount;
 
 }
 
 - (void)setPureAmountValue:(long long)amount {
   
-  _pureAmountTF.text = [[OMNUtils commaStringFromKop:amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
-  _amountPercentValue.totalAmount = amount;
+  _amountTF.text = [[OMNUtils commaStringFromKop:amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
+  _amountPercentValue.amount = amount;
   
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    [_pureAmountTF invalidateIntrinsicContentSize];
+    [_amountTF invalidateIntrinsicContentSize];
     [self layoutIfNeeded];
   });
+  
+  [self sendActionsForControlEvents:UIControlEventValueChanged];
   
 }
 
@@ -250,24 +132,15 @@ UITextFieldDelegate>
     
   }
   
+  [self sendActionsForControlEvents:UIControlEventValueChanged];
+  
 }
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  if (_tipEdidting) {
-    _pureAmountTF.alpha = 0.0f;
-    _seporatorView.alpha = 1.0f;
-    _amountTF.alpha = 1.0f;
-    _percentTF.alpha = 1.0f;
-    _bottomView.alpha = 1.0f;
-  }
-  else {
-    _pureAmountTF.alpha = 1.0f;
-    _seporatorView.alpha = 0.0f;
-    _amountTF.alpha = 0.0f;
-    _percentTF.alpha = 0.0f;
-    _bottomView.alpha = 0.0f;
-  }
+  
+  _amountTF.alpha = (_percentEditing) ? (0.0f) : (1.0f);
+  _percentTF.alpha = (_percentEditing) ? (1.0f) : (0.0f);
   
 }
 
@@ -290,7 +163,6 @@ UITextFieldDelegate>
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
   
   [self setPercentValue:(double)row];
-  [_percentTF sendActionsForControlEvents:UIControlEventEditingChanged];
   
 }
 
@@ -298,22 +170,14 @@ UITextFieldDelegate>
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
-  if ([textField isEqual:_amountTF] ||
-      [textField isEqual:_pureAmountTF]) {
+  if ([textField isEqual:_amountTF]) {
     
     NSString *finalString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSString *moneyFormattedString = [finalString omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
     long long amount = [finalString omn_MoneyAmount];
-
-    if ([textField isEqual:_amountTF]) {
-      [self setAmountValue:amount];
-    }
-    else if ([textField isEqual:_pureAmountTF]) {
-      [self setPureAmountValue:amount];
-    }
+    [self setPureAmountValue:amount];
     
     textField.text = moneyFormattedString;
-    [self calculateRelativePercentValue];
     
     return NO;
   }
@@ -322,6 +186,76 @@ UITextFieldDelegate>
   }
   
   return YES;
+}
+
+- (void)setup {
+  
+  self.backgroundColor = [UIColor clearColor];
+  
+  _amountTF = [[OMNLabeledTextField alloc] init];
+  _amountTF.keyboardType = UIKeyboardTypeDecimalPad;
+  _amountTF.translatesAutoresizingMaskIntoConstraints = NO;
+  _amountTF.minimumFontSize = 10.0f;
+  _amountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+  _amountTF.textColor = colorWithHexString(@"FFFFFF");
+  _amountTF.font = FuturaLSFOmnomLERegular(50.0f);
+  _amountTF.textAlignment = NSTextAlignmentCenter;
+  _amountTF.delegate = self;
+  [_amountTF setDetailedText:[NSString stringWithFormat:@" %@", kRubleSign]];
+  [self addSubview:_amountTF];
+  
+  _percentPicker = [[UIPickerView alloc] init];
+  _percentPicker.backgroundColor = [UIColor whiteColor];
+  _percentPicker.delegate = self;
+  _percentPicker.dataSource = self;
+  
+  _percentTF = [[UITextField alloc] init];
+  _percentTF.textAlignment = NSTextAlignmentCenter;
+  _percentTF.inputView = _percentPicker;
+  _percentTF.adjustsFontSizeToFitWidth = YES;
+  _percentTF.minimumFontSize = 10.0f;
+  _percentTF.translatesAutoresizingMaskIntoConstraints = NO;
+  _percentTF.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+  _percentTF.font = FuturaLSFOmnomLERegular(50.0f);
+  _percentTF.textColor = [UIColor whiteColor];
+  [self addSubview:_percentTF ];
+  
+  _bottomView = [[UIView alloc] init];
+  _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
+  _bottomView.backgroundColor = colorWithHexString(@"979797");
+  [self addSubview:_bottomView];
+  
+  _flexibleBottomView = [[UIView alloc] init];
+  _flexibleBottomView.translatesAutoresizingMaskIntoConstraints = NO;
+  _flexibleBottomView.backgroundColor = colorWithHexString(@"FFFFFF");
+  [self addSubview:_flexibleBottomView];
+  
+  NSDictionary *views =
+  @{
+    @"amountTF" : _amountTF,
+    @"percentTF" : _percentTF,
+    @"bottomView" : _bottomView,
+    @"flexibleBottomView" : _flexibleBottomView,
+    };
+  
+  NSDictionary *metrics =
+  @{
+    @"seporatorViewHeight" : @(11.0f),
+    };
+  
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_amountTF attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_amountTF attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+  
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_amountTF attribute:NSLayoutAttributeWidth multiplier:1.0f constant:10.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:150.0f]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[percentTF]-3-|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[amountTF]-2-[flexibleBottomView(1)]|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(1)]|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[percentTF]|" options:0 metrics:metrics views:views]];
+  
 }
 
 @end

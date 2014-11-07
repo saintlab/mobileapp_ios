@@ -69,7 +69,8 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
   _totalButton = [[UIButton alloc] init];
   _totalButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_totalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+  [_totalButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  _totalButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
   [_totalButton setBackgroundImage:[UIImage imageNamed:@"button_green"] forState:UIControlStateNormal];
   [_totalButton addTarget:self action:@selector(totalTap) forControlEvents:UIControlEventTouchUpInside];
   [_fadeView addSubview:_totalButton];
@@ -252,10 +253,12 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (_total > 0) {
+      
       insets = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_fadeView.frame), 0.0f);
       _fadeView.alpha = 1.0f;
-      NSString *title = [NSString stringWithFormat:@"= %@", [OMNUtils commaStringFromKop:total]];
+      NSString *title = [NSString stringWithFormat:@"= %@", [OMNUtils formattedMoneyStringFromKop:total]];
       [_totalButton setTitle:title forState:UIControlStateNormal];
+      
     }
     else {
       _fadeView.alpha = 0.0f;

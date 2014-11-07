@@ -12,7 +12,6 @@
 <UITableViewDataSource,
 UITableViewDelegate>
 
-@property (nonatomic, assign) BOOL showTotalView;
 @property (nonatomic, strong) OMNOrder *order;
 @property (nonatomic, copy) void(^didSelectBlock)(UITableView *tableView, NSIndexPath *indexPath);
 

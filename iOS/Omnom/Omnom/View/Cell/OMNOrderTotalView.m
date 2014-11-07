@@ -10,16 +10,20 @@
 #import <OMNStyler.h>
 #import "OMNConstants.h"
 #import "OMNUtils.h"
+#import "OMNToolbarButton.h"
+#import <BlocksKit+UIKit.h>
 
 NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
 
 @implementation OMNOrderTotalView {
-  UILabel *_totalLabel;
-  UILabel *_payLabel;
+  
+  OMNToolbarButton *_splitButton;
+  OMNToolbarButton *_editButton;
+  OMNToolbarButton *_cancelButton;
 }
 
-- (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
-  self = [super initWithReuseIdentifier:OMNOrderTotalViewIdentifier];
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
   if (self) {
     
     [self omn_setup];
@@ -31,35 +35,45 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
 - (void)omn_setup {
   
   UIColor *backgroundColor = [UIColor whiteColor];
+  self.backgroundColor = backgroundColor;
   
-  self.backgroundView = [[UIView alloc] init];
-  self.backgroundView.backgroundColor = backgroundColor;
+  __weak typeof(self)weakSelf = self;
   
-  _totalLabel = [[UILabel alloc] init];
-  _totalLabel.opaque = YES;
-  _totalLabel.backgroundColor = backgroundColor;
-  [_totalLabel setContentHuggingPriority:751 forAxis:UILayoutConstraintAxisVertical];
-  _totalLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f];
-  _totalLabel.textAlignment = NSTextAlignmentRight;
-  _totalLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _totalLabel.font = FuturaLSFOmnomLERegular(17.0f);
-  [self addSubview:_totalLabel];
+  _splitButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_ORDER_TITLE", @"Разделить счет") color:colorWithHexString(@"D0021B")];
+  [_splitButton bk_addEventHandler:^(id sender) {
+    
+    [weakSelf.delegate orderTotalViewDidSplit:weakSelf];
+    
+  } forControlEvents:UIControlEventTouchUpInside];
+  _splitButton.alpha = 0.0f;
+  _splitButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_splitButton];
   
-  _payLabel = [[UILabel alloc] init];
-  _payLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _payLabel.opaque = YES;
-  _payLabel.backgroundColor = backgroundColor;
-  [_payLabel setContentHuggingPriority:750 forAxis:UILayoutConstraintAxisVertical];
-  _payLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
-  _payLabel.textAlignment = NSTextAlignmentRight;
-  _payLabel.font = FuturaLSFOmnomLERegular(17.0f);
-  _payLabel.textAlignment = NSTextAlignmentRight;
-  [self addSubview:_payLabel];
+  _editButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_EDIT_TITLE", @"Изменить") color:colorWithHexString(@"D0021B")];
+  [_editButton bk_addEventHandler:^(id sender) {
+    
+    [weakSelf.delegate orderTotalViewDidSplit:weakSelf];
+    
+  } forControlEvents:UIControlEventTouchUpInside];
+  _editButton.alpha = 0.0f;
+  _editButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_editButton];
+  
+  _cancelButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"cancel_split_icon"] title:NSLocalizedString(@"SPLIT_CANCEL_TITLE", @"Отменить") color:colorWithHexString(@"888888")];
+  [_cancelButton bk_addEventHandler:^(id sender) {
+    
+    [weakSelf.delegate orderTotalViewDidCancel:weakSelf];
+    
+  } forControlEvents:UIControlEventTouchUpInside];
+  _cancelButton.alpha = 0.0f;
+  _cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [self addSubview:_cancelButton];
   
   NSDictionary *views =
   @{
-    @"totalLabel" : _totalLabel,
-    @"payLabel" : _payLabel,
+    @"splitButton" : _splitButton,
+    @"editButton" : _editButton,
+    @"cancelButton" : _cancelButton,
     };
   
   NSDictionary *metrics =
@@ -68,10 +82,13 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10@751)-[totalLabel(labelHeight@751)]" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[payLabel(labelHeight@750)]-(10@751)-|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[totalLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[payLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cancelButton]" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[editButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[splitButton]|" options:kNilOptions metrics:metrics views:views]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[splitButton]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[editButton]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[cancelButton]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
@@ -79,14 +96,10 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
   
   _order = order;
   
-  _totalLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Итого: %@", nil), [OMNUtils commaStringFromKop:order.totalAmount]];
-  if (order.paid.net_amount > 0) {
-    _payLabel.hidden = NO;
-    _payLabel.text = [NSString stringWithFormat:NSLocalizedString(@"Оплачено: %@", nil), [OMNUtils commaStringFromKop:order.paid.net_amount]];
-  }
-  else {
-    _payLabel.hidden = YES;
-  }
+  BOOL hasSelectedItems = _order.hasSelectedItems;
+  _splitButton.alpha = (hasSelectedItems) ? (0.0f) : (1.0f);
+  _editButton.alpha = (hasSelectedItems) ? (1.0f) : (0.0f);
+  _cancelButton.alpha = (hasSelectedItems) ? (1.0f) : (0.0f);
   
 }
 

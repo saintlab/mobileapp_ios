@@ -31,8 +31,6 @@
     
     _orderDataSource = [[OMNOrderDataSource alloc] initWithOrder:nil];
 
-    _orderDataSource.showTotalView = YES;
-    
     CGFloat tableWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
     CGFloat scale = CGRectGetWidth(self.frame)/tableWidth;
     CGFloat tableHeight = (CGRectGetHeight(self.frame) - CGRectGetHeight(_label.frame))/scale;

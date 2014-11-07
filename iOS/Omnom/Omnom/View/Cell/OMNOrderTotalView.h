@@ -11,8 +11,18 @@
 
 extern NSString * const OMNOrderTotalViewIdentifier;
 
-@interface OMNOrderTotalView : UITableViewHeaderFooterView
+@protocol OMNOrderTotalViewDelegate;
+
+@interface OMNOrderTotalView : UIView
 
 @property (nonatomic, strong) OMNOrder *order;
+@property (nonatomic, weak) id<OMNOrderTotalViewDelegate> delegate;
+
+@end
+
+@protocol OMNOrderTotalViewDelegate <NSObject>
+
+- (void)orderTotalViewDidSplit:(OMNOrderTotalView *)orderTotalView;
+- (void)orderTotalViewDidCancel:(OMNOrderTotalView *)orderTotalView;
 
 @end

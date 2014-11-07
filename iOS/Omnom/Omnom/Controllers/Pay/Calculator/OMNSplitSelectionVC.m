@@ -7,7 +7,6 @@
 //
 
 #import "OMNSplitSelectionVC.h"
-#import <UITextField+BlocksKit.h>
 
 @interface OMNSplitSelectionVC ()
 <UIPickerViewDataSource,

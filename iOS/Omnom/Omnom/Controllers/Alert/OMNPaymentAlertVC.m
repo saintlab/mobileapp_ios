@@ -51,7 +51,7 @@
   [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   [_payButton addTarget:self action:@selector(payTap) forControlEvents:UIControlEventTouchUpInside];
-  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_amount]] forState:UIControlStateNormal];
+  [_payButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:_amount]] forState:UIControlStateNormal];
   
 }
 

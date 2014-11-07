@@ -76,10 +76,6 @@ const NSInteger kRatedProductsCount = 100;
   return CGSizeMake(140.0f, 178.0f);
 }
 
-//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-//  return UIEdgeInsetsZero;
-//}
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNProduct *product = _products[indexPath.item];

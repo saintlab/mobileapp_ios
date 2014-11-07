@@ -10,4 +10,8 @@
 
 @implementation OMNAmountPercentValue
 
+- (long long)totalAmount {
+  return self.amount*(1.0L + self.percent/100.0L);
+}
+
 @end

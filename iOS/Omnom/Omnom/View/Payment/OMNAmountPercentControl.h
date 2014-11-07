@@ -11,10 +11,9 @@
 @interface OMNAmountPercentControl : UIControl
 
 @property (nonatomic, strong) OMNAmountPercentValue *amountPercentValue;
-@property (nonatomic, assign, readonly) BOOL tipEdidting;
+@property (nonatomic, assign, readonly) BOOL percentEditing;
 
-- (void)beginTipEditing;
-- (BOOL)isAmountSelected;
+- (void)beginPercentEditing;
 - (void)update;
 
 @end

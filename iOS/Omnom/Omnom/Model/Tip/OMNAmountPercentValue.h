@@ -10,9 +10,8 @@
 
 @interface OMNAmountPercentValue : NSObject
 
-@property (nonatomic, assign) long long totalAmount;
 @property (nonatomic, assign) long long amount;
 @property (nonatomic, assign) double percent;
-@property (nonatomic, assign) BOOL isAmountSelected;
+@property (nonatomic, assign, readonly) long long totalAmount;
 
 @end

@@ -14,7 +14,10 @@
 #import "OMNOrderTotalCell.h"
 #import "OMNUtils.h"
 #import "OMNGuestView.h"
-#import "OMNOrderTotalView.h"
+
+@interface OMNOrderDataSource ()
+
+@end
 
 @implementation OMNOrderDataSource
 
@@ -31,7 +34,6 @@
   [tableView registerClass:[OMNOrderItemCell class] forCellReuseIdentifier:@"OMNOrderItemCell"];
   [tableView registerClass:[OMNOrderTotalCell class] forCellReuseIdentifier:@"OMNOrderTotalCell"];
   [tableView registerClass:[OMNGuestView class] forHeaderFooterViewReuseIdentifier:OMNGuestViewIdentifier];
-  [tableView registerClass:[OMNOrderTotalView class] forHeaderFooterViewReuseIdentifier:OMNOrderTotalViewIdentifier];
   
 }
 
@@ -64,34 +66,6 @@
 }
 
 #pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-  
-  CGFloat heightForFooter = 0.0f;
-  if (self.showTotalView &&
-      section == _order.guests.count - 1) {
-
-    heightForFooter = (_order.paid.net_amount > 0) ? (70.0f) : (45.0f);
-  
-  }
-
-  return heightForFooter;
-  
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-  
-  UIView *viewForFooter = nil;
-  if (self.showTotalView &&
-      section == _order.guests.count - 1) {
-    OMNOrderTotalView *orderTotalView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:OMNOrderTotalViewIdentifier];
-    orderTotalView.order = _order;
-    viewForFooter = orderTotalView;
-  }
-  
-  return viewForFooter;
-  
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   

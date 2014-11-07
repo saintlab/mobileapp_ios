@@ -104,6 +104,7 @@
   
   NSAssert(completionBlock != nil, @"completionBlock is nil");
   NSAssert(failureBlock != nil, @"complitionBlock is nil");
+
   
   self.deleting = YES;
   __weak typeof(self)weakSelf = self;

@@ -72,7 +72,10 @@ extern NSString *stringFromSplitType(SplitType splitType);
 - (instancetype)initWithJsonData:(id)jsonData;
 - (void)updateWithOrder:(OMNOrder *)order;
 - (BOOL)paymentValueIsTooHigh;
+- (BOOL)hasSelectedItems;
 - (long long)totalAmount;
 - (long long)selectedItemsTotal;
+
+- (void)deselectAllItems;
 
 @end

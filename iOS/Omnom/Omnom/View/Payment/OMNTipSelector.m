@@ -132,7 +132,8 @@
     
     tipButton.tip = order.tips[idx];
     [order configureTipButton:tipButton];
-    tipButton.selected = (idx == order.selectedTipIndex);
+    BOOL selected = (idx == order.selectedTipIndex);
+    tipButton.selected = selected;
     
   }];
   

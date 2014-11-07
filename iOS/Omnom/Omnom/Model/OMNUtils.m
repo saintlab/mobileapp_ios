@@ -59,12 +59,9 @@ NSString *omnCommaString() {
   static NSNumberFormatter *currencyNumberFormatter = nil;
   if (nil == currencyNumberFormatter) {
     currencyNumberFormatter = [self commaNumberFormatter];
-    currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
-    currencyNumberFormatter.currencySymbol = kRubleSign;
-    currencyNumberFormatter.currencyDecimalSeparator = omnCommaString();
   }
   currencyNumberFormatter.minimumFractionDigits = (kop%100ll == 0) ? (0) : (2);
-  return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
+  return [NSString stringWithFormat:@"%@%@", [currencyNumberFormatter stringFromNumber:@(kop/100.)], kRubleSign];
 }
 
 + (NSNumberFormatter *)commaNumberFormatter {

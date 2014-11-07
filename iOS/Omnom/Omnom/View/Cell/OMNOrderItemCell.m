@@ -55,6 +55,7 @@
   _nameLabel.backgroundColor = backgroundColor;
   _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _nameLabel.textColor = [style colorForKey:@"nameLabelColor"];
+  _nameLabel.highlightedTextColor = [UIColor whiteColor];
   _nameLabel.font = FuturaLSFOmnomLERegular(18.0f);
   [_nameLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
   [self.contentView addSubview:_nameLabel];

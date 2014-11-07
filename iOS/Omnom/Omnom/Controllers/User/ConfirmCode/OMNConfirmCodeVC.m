@@ -53,7 +53,7 @@
   label.numberOfLines = 0;
   label.font = FuturaOSFOmnomRegular(18.0f);
   label.textColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-  label.text = [NSString stringWithFormat:NSLocalizedString(@"Должна прийти\nSMS с кодом на номер\n%@", nil), _phone];
+  label.text = [NSString stringWithFormat:NSLocalizedString(@"CONFIRM_CODE_HINT", @"Введите код из SMS, присланного на номер\n%@"), _phone];
   [self.view addSubview:label];
   
   _codeView = [[OMNEnterCodeView alloc] init];

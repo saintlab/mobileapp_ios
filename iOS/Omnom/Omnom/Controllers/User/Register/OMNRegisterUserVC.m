@@ -51,16 +51,6 @@ UITextFieldDelegate>
   
   [self omn_setup];
   
-  _datePicker = [[UIDatePicker alloc] init];
-  
-  NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-  NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:[NSDate date]];
-  components.year -= 30;
-  _datePicker.date = [calendar dateFromComponents:components];
-  _datePicker.backgroundColor = [UIColor whiteColor];
-  _datePicker.datePickerMode = UIDatePickerModeDate;
-  [_datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
-  
   OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"Создать аккаунт", nil) count:2];
   self.navigationItem.titleView = navigationBarProgressView;
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
@@ -379,6 +369,15 @@ UITextFieldDelegate>
   _phoneTF.textField.inputAccessoryView = nextToolbar;
   _phoneTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
   [contentView addSubview:_phoneTF];
+  
+  _datePicker = [[UIDatePicker alloc] init];
+  _datePicker.backgroundColor = [UIColor whiteColor];
+  _datePicker.datePickerMode = UIDatePickerModeDate;
+  [_datePicker addTarget:self action:@selector(datePickerChange:) forControlEvents:UIControlEventValueChanged];
+  NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+  NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:[NSDate date]];
+  components.year -= 30;
+  _datePicker.date = [calendar dateFromComponents:components];
   
   _birthdayTF = [[OMNErrorTextField alloc] init];
   _birthdayTF.textField.tag = 3;

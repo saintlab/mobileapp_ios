@@ -12,7 +12,7 @@
 
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title;
 - (instancetype)initWithFitImage:(UIImage *)image title:(NSString *)title;
-
+- (instancetype)initWithFitImage:(UIImage *)image title:(NSString *)title  color:(UIColor *)color;
 - (void)setSelectedImage:(UIImage *)selectedImage selectedTitle:(NSString *)selectedTitle;
 
 @end

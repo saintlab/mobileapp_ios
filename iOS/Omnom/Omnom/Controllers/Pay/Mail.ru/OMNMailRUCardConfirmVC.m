@@ -285,7 +285,9 @@ UITextViewDelegate>
   if ([status isEqualToString:@"OK_FINISH"] &&
       cardId.length) {
     
-    [[OMNOperationManager sharedManager] POST:@"/report/mail/register" parameters:@{@"card_id" : cardId} success:nil failure:nil];
+    NSDictionary *parameters = @{@"card_id" : cardId};
+    [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:parameters];
+    [[OMNOperationManager sharedManager] POST:@"/report/mail/register" parameters:parameters success:nil failure:nil];
     self.card_id = cardId;
     
   }

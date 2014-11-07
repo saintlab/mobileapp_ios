@@ -183,6 +183,22 @@ inline NSString *stringFromSplitType(SplitType splitType) {
   
 }
 
+- (BOOL)hasSelectedItems {
+  
+  __block BOOL hasSelectedItems = NO;
+  [_guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
+
+    if (guest.hasSelectedItems) {
+      hasSelectedItems = YES;
+      *stop = YES;
+    }
+    
+  }];
+  
+  return hasSelectedItems;
+  
+}
+
 - (long long)expectedValue {
   long long expectedValue = MAX(0ll, self.totalAmount - self.paid.net_amount);
   return expectedValue;
@@ -269,6 +285,16 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     self.tipType = kTipTypeCustomPercent;
   }
   _tips[3] = customTip;
+}
+
+- (void)deselectAllItems {
+  
+  [_guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
+    
+    [guest deselectAllItems];
+    
+  }];
+  
 }
 
 @end

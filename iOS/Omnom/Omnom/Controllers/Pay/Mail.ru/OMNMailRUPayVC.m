@@ -95,12 +95,14 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   _offerLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
   
   [_payButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+  _payButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
-  [_payButton setTitle:[NSString stringWithFormat:@"Оплатить %@",  [OMNUtils commaStringFromKop:_order.enteredAmountWithTips]] forState:UIControlStateNormal];
+
+  NSString *toPayString = [NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:_order.enteredAmountWithTips]];
+  [_payButton setTitle:toPayString forState:UIControlStateNormal];
   [_payButton sizeToFit];
   [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
   _payButton.enabled = NO;
-  
 }
 
 - (UIBarButtonItem *)loadingButton {

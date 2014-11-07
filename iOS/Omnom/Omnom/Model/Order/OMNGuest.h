@@ -18,5 +18,7 @@
 @property (nonatomic, strong, readonly) NSArray *items;
 
 - (instancetype)initWithID:(NSString *)id index:(NSInteger)index orderItems:(NSArray *)orderItems;
+- (BOOL)hasSelectedItems;
+- (void)deselectAllItems;
 
 @end
