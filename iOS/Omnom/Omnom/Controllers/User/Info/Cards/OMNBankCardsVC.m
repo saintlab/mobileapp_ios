@@ -35,7 +35,6 @@ NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdenti
   [self setupInterface];
   
   _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
-  _bankCardsModel.canDeleteCard = YES;
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     

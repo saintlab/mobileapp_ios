@@ -180,12 +180,12 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-  BOOL canEdit = NO;
-  if (self.canDeleteCard) {
-    OMNBankCard *card = self.cards[indexPath.row];
-    canEdit = (NO == card.deleting);
-  }
+
+  OMNBankCard *card = self.cards[indexPath.row];
+  BOOL canEdit = (NO == card.deleting);
+  
   return canEdit;
+  
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

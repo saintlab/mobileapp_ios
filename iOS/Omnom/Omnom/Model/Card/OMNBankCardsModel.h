@@ -20,7 +20,6 @@ typedef void(^OMNBankCardInfoBlock)(OMNBankCardInfo *bankCardInfo);
 UITableViewDelegate>
 
 @property (nonatomic, copy) OMNSelectCardBlock didSelectCardBlock;
-@property (nonatomic, assign) BOOL canDeleteCard;
 @property (nonatomic, assign, readonly) BOOL hasRegisterdCards;
 @property (nonatomic, assign) BOOL loading;
 @property (nonatomic, strong, readonly) NSMutableArray *cards;
