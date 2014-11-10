@@ -102,6 +102,12 @@ RestaurantInfoItemType typeFromString(NSString *s) {
       }
       
     } break;
+    case kRestaurantInfoItemTypeSchedule:
+    case kRestaurantInfoItemTypeExternaLink: {
+      
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.value]];
+      
+    } break;
     default:
       break;
   }
