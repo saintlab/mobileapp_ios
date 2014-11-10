@@ -51,10 +51,10 @@ UITextFieldDelegate>
   
   [self omn_setup];
   
-  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"Создать аккаунт", nil) count:2];
+  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"REGISTER_USER_TITLE", @"Создать аккаунт") count:2];
   self.navigationItem.titleView = navigationBarProgressView;
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];;
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_BUTTON_TITLE", @"Далее") style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];;
   
   _emailTF.textField.text = self.email;
   _phoneTF.textField.text = self.phone;
@@ -85,7 +85,7 @@ UITextFieldDelegate>
   }
   else {
     
-    [_birthdayTF setErrorText:NSLocalizedString(@"Слишком мало лет =(", nil)];
+    [_birthdayTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_AGE", @"Слишком мало лет =(")];
     
   }
   
@@ -150,17 +150,17 @@ UITextFieldDelegate>
   
   BOOL hasErrors = NO;
   if (0 == _emailTF.textField.text.length) {
-    [_emailTF setErrorText:NSLocalizedString(@"Вы забыли ввести e-mail", nil)];
+    [_emailTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_EMAIL", @"Вы забыли ввести e-mail")];
     hasErrors = YES;
   }
   
   if (0 == _phoneTF.textField.text.length) {
-    [_phoneTF setErrorText:NSLocalizedString(@"Вы забыли ввести номер телефона", nil)];
+    [_phoneTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_PHONE_NUMBER", @"Вы забыли ввести номер телефона")];
     hasErrors = YES;
   }
   
   if (0 == _nameTF.textField.text.length) {
-    [_nameTF setErrorText:NSLocalizedString(@"Вы забыли ввести имя", nil)];
+    [_nameTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NAME", @"Вы забыли ввести имя")];
     hasErrors = YES;
   }
   
@@ -203,7 +203,7 @@ UITextFieldDelegate>
     _errorLabel.text = error.localizedDescription;
   }
   else {
-    _errorLabel.text = NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil);
+    _errorLabel.text = NSLocalizedString(@"REGISTER_USER_ERROR_COMMON", @"Что-то пошло не так. Повторите попытку");
   }
   
 }
@@ -305,6 +305,18 @@ UITextFieldDelegate>
   return YES;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+  
+  if ([textField isEqual:_birthdayTF]) {
+    return NO;
+  }
+  
+  return YES;
+  
+}
+
+#pragma mark - setup
+
 - (void)omn_setup {
   
   _scroll = [[UIScrollView alloc] init];
@@ -321,17 +333,17 @@ UITextFieldDelegate>
   UIToolbar *nextToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
   nextToolbar.items =
   @[
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_CANCEL", @"Отмена") style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Следующий", nil) style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)],
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_NEXT", @"Следующий") style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)],
     ];
   
   UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
   doneToolbar.items =
   @[
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_CANCEL", @"Отмена") style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)],
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_DONE", @"Готово") style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)],
     ];
   
   _errorLabel = [[UILabel alloc] init];
@@ -349,7 +361,7 @@ UITextFieldDelegate>
   _nameTF.textField.inputAccessoryView = nextToolbar;
   _nameTF.textField.tag = 0;
   _nameTF.textField.delegate = self;
-  _nameTF.textField.placeholder = NSLocalizedString(@"Имя", nil);
+  _nameTF.textField.placeholder = NSLocalizedString(@"REGISTER_PLACEHOLDER_NAME", @"Имя");
   [contentView addSubview:_nameTF];
   
   _emailTF = [[OMNErrorTextField alloc] init];
@@ -360,14 +372,14 @@ UITextFieldDelegate>
   _emailTF.textField.returnKeyType = UIReturnKeyNext;
   _emailTF.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
   _emailTF.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-  _emailTF.textField.placeholder = NSLocalizedString(@"Почта", nil);
+  _emailTF.textField.placeholder = NSLocalizedString(@"REGISTER_PLACEHOLDER_EMAIL", @"Почта");
   [contentView addSubview:_emailTF];
   
   _phoneTF = [[OMNErrorTextField alloc] init];
   _phoneTF.textField.tag = 2;
   _phoneTF.textField.keyboardType = UIKeyboardTypePhonePad;
   _phoneTF.textField.inputAccessoryView = nextToolbar;
-  _phoneTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
+  _phoneTF.textField.placeholder = NSLocalizedString(@"REGISTER_PLACEHOLDER_PHONE_NUMBER", @"Номер телефона");
   [contentView addSubview:_phoneTF];
   
   _datePicker = [[UIDatePicker alloc] init];
@@ -381,9 +393,10 @@ UITextFieldDelegate>
   
   _birthdayTF = [[OMNErrorTextField alloc] init];
   _birthdayTF.textField.tag = 3;
+  _birthdayTF.textField.delegate = self;
   _birthdayTF.textField.inputView = _datePicker;
   _birthdayTF.textField.inputAccessoryView = doneToolbar;
-  _birthdayTF.textField.placeholder = NSLocalizedString(@"День рождения", nil);
+  _birthdayTF.textField.placeholder = NSLocalizedString(@"REGISTER_PLACEHOLDER_BIRTHDATE", @"День рождения");
   [contentView addSubview:_birthdayTF];
   
   _textFields = @[_nameTF, _emailTF, _phoneTF, _birthdayTF];
