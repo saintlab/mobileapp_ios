@@ -88,13 +88,13 @@
   
   OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
   didFailOmnomVC.faded = YES;
-  didFailOmnomVC.text = NSLocalizedString(@"Нет связи с заведением.\nОфициант в помощь", nil);
+  didFailOmnomVC.text = NSLocalizedString(@"NO_OMNOM_CONNECTION_ERROR_TEXT", @"Нет связи с заведением.\nОфициант в помощь.");
   didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
   
   __weak typeof(self)weakSelf = self;
   didFailOmnomVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
 
       
       [weakSelf.navigationController omn_popToViewController:weakSelf animated:YES completion:^{

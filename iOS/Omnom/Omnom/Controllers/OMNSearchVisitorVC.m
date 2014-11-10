@@ -250,7 +250,7 @@ OMNUserInfoVCDelegate>
   __weak typeof(self)weakSelf = self;
   didFailOmnomVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       [weakSelf startSearchingBeacon];
     }]
     ];
@@ -421,7 +421,7 @@ OMNUserInfoVCDelegate>
   __weak typeof(self)weakSelf = self;
   noInternetVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Проверить еще", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
       [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
         
