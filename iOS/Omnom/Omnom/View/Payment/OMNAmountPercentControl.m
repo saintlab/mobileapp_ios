@@ -31,7 +31,6 @@ UITextFieldDelegate>
   
   UIPickerView *_percentPicker;
   UIView *_flexibleBottomView;
-  UIView *_bottomView;
   
 }
 
@@ -220,11 +219,6 @@ UITextFieldDelegate>
   _percentTF.textColor = [UIColor whiteColor];
   [self addSubview:_percentTF ];
   
-  _bottomView = [[UIView alloc] init];
-  _bottomView.translatesAutoresizingMaskIntoConstraints = NO;
-  _bottomView.backgroundColor = colorWithHexString(@"979797");
-  [self addSubview:_bottomView];
-  
   _flexibleBottomView = [[UIView alloc] init];
   _flexibleBottomView.translatesAutoresizingMaskIntoConstraints = NO;
   _flexibleBottomView.backgroundColor = colorWithHexString(@"FFFFFF");
@@ -234,7 +228,6 @@ UITextFieldDelegate>
   @{
     @"amountTF" : _amountTF,
     @"percentTF" : _percentTF,
-    @"bottomView" : _bottomView,
     @"flexibleBottomView" : _flexibleBottomView,
     };
   
@@ -248,12 +241,10 @@ UITextFieldDelegate>
   
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_amountTF attribute:NSLayoutAttributeWidth multiplier:1.0f constant:10.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:150.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:180.0f]];
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[percentTF]-3-|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[amountTF]-2-[flexibleBottomView(1)]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView(1)]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[percentTF]|" options:0 metrics:metrics views:views]];
   
 }

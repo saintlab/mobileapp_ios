@@ -79,9 +79,31 @@
   
 }
 
+- (void)slideUp {
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    
+    self.transform = CGAffineTransformMakeTranslation(0.0f, -CGRectGetHeight(self.frame));
+    
+  } completion:^(BOOL finished) {
+    
+    [self removeFromSuperview];
+    
+  }];
+  
+}
+
 + (void)showWithPaymentData:(NSDictionary *)paymentData {
   
   OMNPaymentNotificationControl *control = [[OMNPaymentNotificationControl alloc] init];
+  
+  control.alpha = 0.0f;
+  [UIView animateWithDuration:0.3 animations:^{
+    
+    control.alpha = 1.0f;
+    
+  }];
+  
   NSDictionary *user = paymentData[@"user"];
   NSDictionary *transaction = paymentData[@"transaction"];
   
@@ -107,6 +129,13 @@
   
   [self playPaySound];
 
+  __weak typeof(control)weakControl = control;
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
+    [weakControl slideUp];
+    
+  });
+  
 }
 
 + (void)playPaySound {
