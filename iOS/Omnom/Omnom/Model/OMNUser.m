@@ -92,6 +92,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"USER_REGISTER_ERROR" jsonRequest:parameters responseOperation:operation];
+    failureBlock([error omn_internetError]);
     
   }];
   

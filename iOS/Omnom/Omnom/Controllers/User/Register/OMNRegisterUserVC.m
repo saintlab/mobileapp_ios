@@ -54,7 +54,7 @@ UITextFieldDelegate>
   OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"REGISTER_USER_TITLE", @"Создать аккаунт") count:2];
   self.navigationItem.titleView = navigationBarProgressView;
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_BUTTON_TITLE", @"Далее") style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];;
+  self.navigationItem.rightBarButtonItem = [self createUserButton];
   
   _emailTF.textField.text = self.email;
   _phoneTF.textField.text = self.phone;
@@ -74,6 +74,10 @@ UITextFieldDelegate>
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (UIBarButtonItem *)createUserButton {
+  return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_BUTTON_TITLE", @"Далее") style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];
 }
 
 - (void)doneTap {
@@ -150,17 +154,25 @@ UITextFieldDelegate>
   
   BOOL hasErrors = NO;
   if (0 == _emailTF.textField.text.length) {
-    [_emailTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_EMAIL", @"Вы забыли ввести e-mail")];
+    [_emailTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NO_EMAIL", @"Вы забыли ввести e-mail")];
+    hasErrors = YES;
+  }
+  else if (NO == [_emailTF.textField.text omn_isValidEmail]) {
+    [_emailTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_EMAIL", @"Некорректный e-mail")];
     hasErrors = YES;
   }
   
   if (0 == _phoneTF.textField.text.length) {
-    [_phoneTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_PHONE_NUMBER", @"Вы забыли ввести номер телефона")];
+    [_phoneTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NO_PHONE_NUMBER", @"Вы забыли ввести номер телефона")];
     hasErrors = YES;
   }
-  
+  else if (NO == [_phoneTF.textField.text omn_isValidPhone]) {
+    [_phoneTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_PHONE_NUMBER", @"Некорректный номер телефона")];
+    hasErrors = YES;
+  }
+
   if (0 == _nameTF.textField.text.length) {
-    [_nameTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NAME", @"Вы забыли ввести имя")];
+    [_nameTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NO_NAME", @"Вы забыли ввести имя")];
     hasErrors = YES;
   }
   
@@ -171,9 +183,7 @@ UITextFieldDelegate>
   if (hasErrors) {
     return;
   }
-  
-  [self.view endEditing:YES];
-  
+
   _user = [[OMNUser alloc] init];
   _user.email = _emailTF.textField.text;
   _user.phone = _phoneTF.textField.text;
@@ -182,7 +192,9 @@ UITextFieldDelegate>
     _user.birthDate = _datePicker.date;
   }
   
-  self.navigationItem.rightBarButtonItem.enabled = NO;
+  
+  [self.view endEditing:YES];
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
   __weak typeof(self)weakSelf = self;
   [_user registerWithCompletion:^{
     
@@ -198,7 +210,7 @@ UITextFieldDelegate>
 
 - (void)processError:(NSError *)error {
 
-  self.navigationItem.rightBarButtonItem.enabled = YES;
+  self.navigationItem.rightBarButtonItem = [self createUserButton];
   if (error) {
     _errorLabel.text = error.localizedDescription;
   }
@@ -214,7 +226,7 @@ UITextFieldDelegate>
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:_user.phone];
   confirmCodeVC.delegate = self;
   [self.navigationController pushViewController:confirmCodeVC animated:YES];
-  self.navigationItem.rightBarButtonItem.enabled = YES;
+  self.navigationItem.rightBarButtonItem = [self createUserButton];
   
 }
 
