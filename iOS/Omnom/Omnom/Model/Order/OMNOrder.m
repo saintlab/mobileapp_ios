@@ -123,7 +123,14 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     
     _enteredAmount = self.expectedValue;
     
-    self.selectedTipIndex = 1;
+    if (self.totalAmount == 0 &&
+        self.paid.net_amount == 0
+        ) {
+      self.selectedTipIndex = 1;
+    }
+    else {
+      self.selectedTipIndex = -1;
+    }
     
   }
   return self;
@@ -216,7 +223,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 
 - (NSInteger)selectedTipIndex {
   
-  __block NSInteger selectedTipIndex = 1;
+  __block NSInteger selectedTipIndex = -1;
   [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
     
     if (tip.selected) {
