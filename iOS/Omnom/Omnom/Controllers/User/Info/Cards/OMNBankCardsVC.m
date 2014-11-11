@@ -51,6 +51,7 @@ NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdenti
     
   }];
   
+  self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
   
@@ -62,7 +63,7 @@ NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdenti
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel loadCardsWithCompletion:^{
     
-    [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     
   }];
   
