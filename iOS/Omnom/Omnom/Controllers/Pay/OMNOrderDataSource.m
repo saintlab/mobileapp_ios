@@ -37,6 +37,26 @@
   
 }
 
+- (OMNOrderItem *)orderItemAtIndexPath:(NSIndexPath *)indexPath {
+  
+  OMNOrderItem *orderItem = nil;
+  
+  if (indexPath.section < _order.guests.count) {
+    
+    OMNGuest *guest = _order.guests[indexPath.section];
+    
+    if (indexPath.row < guest.items.count) {
+      
+      orderItem = guest.items[indexPath.row];
+      
+    }
+    
+  }
+  
+  return orderItem;
+  
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   return _order.guests.count;
 }

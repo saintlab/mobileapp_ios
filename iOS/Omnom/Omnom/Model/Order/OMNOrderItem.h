@@ -11,6 +11,7 @@
 @interface OMNOrderItem : NSObject
 //<NSCopying>
 
+@property (nonatomic, copy) NSString *id;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *guest_id;
 @property (nonatomic, assign) long long price_per_item;

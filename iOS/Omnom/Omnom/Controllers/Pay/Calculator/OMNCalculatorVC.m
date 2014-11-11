@@ -49,15 +49,15 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-
+  
   self.view.backgroundColor = [UIColor whiteColor];
   self.navigationItem.title = NSLocalizedString(@"CALCULATOR_TITLE", @"Разделить счёт");
-
+  
   OMNNavigationBarSelector *navSelector = [[OMNNavigationBarSelector alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kCalculatorTopOffset) titles:
-                                            @[
-                                              NSLocalizedString(@"CALCULATOR_ORDER_SELECTION_BUTTON_TITLE", @"По блюдам"),
-                                              NSLocalizedString(@"CALCULATOR_SPLIT_SELECTION_BUTTON_TITLE", @"Поровну")
-                                              ]];
+                                           @[
+                                             NSLocalizedString(@"CALCULATOR_ORDER_SELECTION_BUTTON_TITLE", @"По блюдам"),
+                                             NSLocalizedString(@"CALCULATOR_SPLIT_SELECTION_BUTTON_TITLE", @"Поровну")
+                                             ]];
   [navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
   [navSelector setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"nav_gray_bg"]]];
   [self.view addSubview:navSelector];
@@ -89,10 +89,10 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [self.view addSubview:_containerView];
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-
+  
   
   self.transitionInProgress = NO;
-
+  
   // If this is the very first time we're loading this we need to do
   // an initial load and not a swap.
   self.currentController = self.firstViewController;
@@ -106,6 +106,12 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 }
 
 - (void)closeTap {
+  
+  [self.firstViewController.changedItems enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, BOOL *stop) {
+    
+    orderItem.selected = !orderItem.selected;
+    
+  }];
   
   [self.delegate calculatorVCDidCancel:self];
   
@@ -250,7 +256,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
   _total = total;
   [UIView animateWithDuration:0.3 animations:^{
-
+    
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (_total > 0) {
       

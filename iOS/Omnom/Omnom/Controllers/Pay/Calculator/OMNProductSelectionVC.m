@@ -13,11 +13,13 @@
 
 @interface OMNProductSelectionVC ()
 
+@property (nonatomic, strong) OMNOrderDataSource *dataSource;
+
 @end
 
 @implementation OMNProductSelectionVC {
   OMNOrder *_order;
-  OMNOrderDataSource *_dataSource;
+  
 }
 
 
@@ -32,12 +34,30 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.changedItems = [NSMutableSet set];
+  
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
   [_dataSource registerCellsForTableView:self.tableView];
   
   __weak typeof(self)weakSelf = self;
   [_dataSource setDidSelectBlock:^(UITableView *tv, NSIndexPath *indexPath) {
     
+    OMNOrderItem *orderItem = [weakSelf.dataSource orderItemAtIndexPath:indexPath];
+    if (orderItem) {
+    
+      if ([weakSelf.changedItems containsObject:orderItem]) {
+        
+        [weakSelf.changedItems removeObject:orderItem];
+        
+      }
+      else {
+
+        [weakSelf.changedItems addObject:orderItem];
+        
+      }
+      
+    }
+
     [weakSelf updateTotalValue];
     
   }];
@@ -52,11 +72,12 @@
 
 - (void)checkConditionAndSelectProducts {
  
-  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"checkConditionAndSelectProducts"]) {
+  static NSString *kCheckConditionAndSelectProductsKey = @"checkConditionAndSelectProducts";
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:kCheckConditionAndSelectProductsKey]) {
     return;
   }
   
-  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"checkConditionAndSelectProducts"];
+  [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kCheckConditionAndSelectProductsKey];
   [[NSUserDefaults standardUserDefaults] synchronize];
   
   NSIndexPath *demoIndexPath = nil;

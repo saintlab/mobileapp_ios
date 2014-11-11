@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNOrderItem.h"
+
 @class OMNOrder;
 
 @interface OMNOrderDataSource : NSObject
@@ -17,6 +19,7 @@ UITableViewDelegate>
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
 
+- (OMNOrderItem *)orderItemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)registerCellsForTableView:(UITableView *)tableView;
 - (void)updateTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
 

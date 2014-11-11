@@ -124,12 +124,15 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     _enteredAmount = self.expectedValue;
     
     if (self.totalAmount == 0 &&
-        self.paid.net_amount == 0
-        ) {
-      self.selectedTipIndex = 1;
+        self.paid.net_amount == 0) {
+      
+      self.selectedTipIndex = -1;
+      
     }
     else {
-      self.selectedTipIndex = -1;
+      
+      self.selectedTipIndex = 1;
+      
     }
     
   }
