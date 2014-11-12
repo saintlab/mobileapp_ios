@@ -58,9 +58,14 @@
   self.textAlignment = NSTextAlignmentCenter;
 }
 
-- (void)setUnknownError {
+- (void)setErrorText:(NSString *)text {
   
-  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку")];
+  if (0 == text.length) {
+    self.attributedText = nil;
+    return;
+  }
+  
+  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
   [attributedString setAttributes:
    @{
      NSForegroundColorAttributeName : colorWithHexString(@"D0021B"),
@@ -68,6 +73,13 @@
      } range:NSMakeRange(0, attributedString.length)];
   self.attributedText = attributedString;
   self.userInteractionEnabled = NO;
+
+}
+
+- (void)setUnknownError {
+  
+  [self setErrorText:NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку")];
+
 }
 
 - (void)setHelpText {

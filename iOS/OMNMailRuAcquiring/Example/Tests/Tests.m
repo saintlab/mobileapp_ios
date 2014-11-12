@@ -51,31 +51,33 @@ describe(@"register test", ^{
   
   it(@"should fail verify test card", ^{
     
-    __block id cardVerifyResponse = nil;
-    [[OMNMailRuAcquiring acquiring] cardVerify:1.2 user_login:user_id card_id:_cardID completion:^(id response) {
+    __block NSError *cardVerifyError = nil;
+    [[OMNMailRuAcquiring acquiring] cardVerify:1.2 user_login:user_id card_id:_cardID completion:^{
       
-      cardVerifyResponse = response;
+    } failure:^(NSError *error, NSDictionary *debugInfo) {
+      
+      cardVerifyError = error;
       
     }];
     
     [[expectFutureValue(cardVerifyResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
-    [[cardVerifyResponse[@"error"][@"code"] should] equal:@"ERR_CARD_AMOUNT"];
+    [[@(cardVerifyError.code) should] equal:@(kOMNMailRuErrorCodeCardAmount)];
     
   });
   
   it(@"should verify test card", ^{
     
-    __block id cardVerifyResponse = nil;
-    [[OMNMailRuAcquiring acquiring] cardVerify:1.4 user_login:user_id card_id:_cardID completion:^(id response) {
+    __block NSNumber *cardVerifyResponse = nil;
+    [[OMNMailRuAcquiring acquiring] cardVerify:1.4 user_login:user_id card_id:_cardID completion:^{
       
-      cardVerifyResponse = response;
+      cardVerifyResponse = @(YES)
       
+    } failure:^(NSError *error, NSDictionary *debugInfo) {
     }];
     
     [[expectFutureValue(cardVerifyResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
-    
-    [[cardVerifyResponse[@"error"] should] beNil];
+    [cardVerifyResponse should] equal:@(YES)];
     
   });
   

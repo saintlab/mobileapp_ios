@@ -9,8 +9,12 @@
 #import <AFNetworking.h>
 #import "OMNMailRuPaymentInfo.h"
 
-@interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
+typedef NS_ENUM(NSUInteger, OMNMailRuErrorCode) {
+  kOMNMailRuErrorCodeUnknown = 0,
+  kOMNMailRuErrorCodeCardAmount,
+};
 
+@interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
 
 + (instancetype)acquiring;
 + (NSDictionary *)config;
@@ -20,7 +24,7 @@
 
 - (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(id response, NSString *cardId))completion;
 
-- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(void(^)(id response))completion;
+- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock;
 
 - (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock;
 

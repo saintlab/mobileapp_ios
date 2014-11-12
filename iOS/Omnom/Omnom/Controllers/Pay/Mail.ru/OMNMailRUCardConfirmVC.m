@@ -200,60 +200,55 @@ UITextViewDelegate>
   [self startLoader];
   OMNUser *user = [OMNAuthorisation authorisation].user;
   __weak typeof(self)weakSelf = self;
-  [[OMNMailRuAcquiring acquiring] cardVerify:value user_login:user.id card_id:_bankCardInfo.card_id completion:^(id response) {
+  [[OMNMailRuAcquiring acquiring] cardVerify:value user_login:user.id card_id:_bankCardInfo.card_id completion:^{
     
-    [weakSelf cardDidVerify:response];
+    [weakSelf cardDidVerify];
+    
+  } failure:^(NSError *error, NSDictionary *debugInfo) {
+    
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_VERIFY" parametrs:debugInfo];
+    [weakSelf processError:error];
     
   }];
 
 }
 
-- (void)cardDidVerify:(id)response {
+- (void)cardDidVerify {
 
-  if (response[@"error"] ||
-      nil == response) {
-
-    [self addDoneButton];
-    [self handleResponse:response];
-    [_cardHoldValueTF setError:YES];
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_VERIFY" parametrs:response];
-
-  }
-  else {
-    
-    [_bankCardInfo logCardRegister];
-    if (self.didFinishBlock) {
-      self.didFinishBlock();
-    }
-    
+  [_cardHoldValueTF setError:NO];
+  _errorTextView.attributedText = nil;
+  [_bankCardInfo logCardRegister];
+  if (self.didFinishBlock) {
+    self.didFinishBlock();
   }
   
 }
 
-- (void)handleResponse:(NSDictionary *)response {
+- (void)processError:(NSError *)error {
   
-  if (response[@"error"] ||
-      nil == response) {
+  [self addDoneButton];
+  [_cardHoldValueTF setError:YES];
+  
+  [UIView transitionWithView:_errorTextView duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
-    NSString *code = response[@"error"][@"code"];
-    [UIView transitionWithView:_errorTextView duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    if (kOMNMailRuErrorCodeUnknown == error.code) {
       
-      if ([code isEqualToString:@"ERR_CARD_AMOUNT"]) {
-        [_errorTextView setWrongAmountError];
-      }
-      else {
-        [_errorTextView setUnknownError];
-      }
+      [_errorTextView setUnknownError];
       
-    } completion:nil];
+    }
+    else if (kOMNMailRuErrorCodeCardAmount == error.code) {
+      
+      [_errorTextView setWrongAmountError];
+      
+    }
+    else {
+      
+      NSError *internetError = [error omn_internetError];
+      [_errorTextView setErrorText:internetError.localizedDescription];
+      
+    }
     
-  }
-  else {
-
-    [_cardHoldValueTF setError:NO];
-    _errorTextView.attributedText = nil;
-    
-  }
+  } completion:nil];
   
 }
 

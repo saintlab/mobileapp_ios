@@ -12,6 +12,7 @@
 
 - (void)setHelpText;
 - (void)setWrongAmountError;
+- (void)setErrorText:(NSString *)text;
 - (void)setUnknownError;
 
 @end

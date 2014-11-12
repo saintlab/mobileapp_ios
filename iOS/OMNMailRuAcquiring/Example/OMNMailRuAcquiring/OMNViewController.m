@@ -97,10 +97,10 @@
 - (IBAction)verifyTap:(id)sender {
   
 //  _cardId = @"30008685803965102459";
-  [[OMNMailRuAcquiring acquiring] cardVerify:1.02 user_login:_user_login card_id:_cardId completion:^(id response) {
+  [[OMNMailRuAcquiring acquiring] cardVerify:1.02 user_login:_user_login card_id:_cardId completion:^{
     
-    NSLog(@"cardVerify>%@", response);
-
+  } failure:^(NSError *error, NSDictionary *debugInfo) {
+    
   }];
 }
 

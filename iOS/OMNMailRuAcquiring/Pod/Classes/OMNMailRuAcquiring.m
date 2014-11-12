@@ -199,9 +199,21 @@ static NSDictionary *_config = nil;
   
 }
 
-- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(void(^)(id response))completionBlock {
+NSError *errorWithCode(OMNMailRuErrorCode code) {
+  
+  return [NSError errorWithDomain:@"OMNMailRuError" code:code userInfo:nil];
+  
+}
+
+- (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock {
   
   NSAssert(completionBlock != nil, @"cardVerify completionBlock is nil");
+  NSAssert(failureBlock != nil, @"cardVerify failureBlock is nil");
+  
+  if (amount <= 0.0l) {
+    failureBlock(errorWithCode(kOMNMailRuErrorCodeCardAmount), nil);
+    return;
+  }
   
   NSDictionary *reqiredSignatureParams =
   @{
@@ -217,28 +229,52 @@ static NSDictionary *_config = nil;
   parameters[@"amount"] = @(amount);
   
   __weak typeof(self)weakSelf = self;
+  
+  NSMutableDictionary *debugInfo = [NSMutableDictionary dictionaryWithObject:parameters forKey:@"request"];
+  
   [self POST:@"card/verify" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-    completionBlock(responseObject);
-#warning card/verify
-//    if (responseObject[@"error"]) {
-//      completionBlock(responseObject);
-//    }
-//    else {
-//      
-//      NSString *url = responseObject[@"url"];
-//      if (NSNotFound == [url rangeOfString:@"Success=True"].location) {
-//        completionBlock(nil);
-//      }
-//      else {
-//        completionBlock(responseObject);
-//      }
-//      
-//    }
+    if (responseObject) {
+      debugInfo[@"response"] = responseObject;
+    }
+    
+    if ([responseObject isKindOfClass:[NSDictionary class]]) {
+      
+      if (nil == responseObject[@"error"]) {
+        
+        completionBlock();
+        
+      }
+      else {
+        
+        NSString *code = responseObject[@"error"][@"code"];
+        if ([code isKindOfClass:[NSString class]] &&
+            [code isEqualToString:@"ERR_CARD_AMOUNT"]) {
+          
+          failureBlock(errorWithCode(kOMNMailRuErrorCodeCardAmount), debugInfo);
+          
+        }
+        else {
+          
+          failureBlock(errorWithCode(kOMNMailRuErrorCodeUnknown), debugInfo);
+          
+        }
+        
+      }
+      
+    }
+    else {
+      
+      failureBlock(errorWithCode(kOMNMailRuErrorCodeUnknown), debugInfo);
+      
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    completionBlock([operation omn_errorResponse]);
+    if (error.localizedDescription) {
+      debugInfo[@"response"] = error.localizedDescription;
+    }
+    failureBlock(error, debugInfo);
     
   }];
   
