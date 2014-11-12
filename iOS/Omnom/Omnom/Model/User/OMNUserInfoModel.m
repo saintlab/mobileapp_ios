@@ -58,7 +58,7 @@
 - (NSArray *)moneyItems {
   
   OMNUserInfoItem *cardItem = [[OMNBankCardUserInfoItem alloc] init];
-  
+
   __weak typeof(self)weakSelf = self;
   OMNUserInfoItem *feedbackItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Обратная связь", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
     
