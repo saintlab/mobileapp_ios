@@ -30,11 +30,34 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  [self setup];
+  
+}
+
+- (void)setup {
+  
   _arrowIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"arrow_up_icon_big"]];
+  _arrowIV.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_arrowIV];
   
   _arrowRectangleIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Rectangle 83"]];
+  _arrowRectangleIV.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_arrowRectangleIV];
+  
+  NSDictionary *views =
+  @{
+    @"arrowIV" : _arrowIV,
+    @"arrowRectangleIV" : _arrowRectangleIV,
+    };
+  
+  NSDictionary *metrics =
+  @{
+    @"bottomOffset" : @(5.0f),
+    };
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_arrowIV attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_arrowRectangleIV attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[arrowIV][arrowRectangleIV]-(bottomOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
