@@ -29,12 +29,10 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  self.navigationItem.title = NSLocalizedString(@"QR", nil);
+  
+  self.navigationItem.title = nil;
   self.view.backgroundColor = [UIColor whiteColor];
-  if (TARGET_IPHONE_SIMULATOR ||
-      [OMNConstants useStubBeacon]) {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Stub scan", nil) style:UIBarButtonItemStylePlain target:self action:@selector(stubScan)];
-  }
+  
   
   UIImageView *scanFrame = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qr-code-scanner-frame"]];
   scanFrame.center = self.view.center;
@@ -45,11 +43,26 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  [self.navigationController setNavigationBarHidden:YES animated:animated];
+  
+  [self.navigationItem setHidesBackButton:YES animated:animated];
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  
+  [self initiateScan];
+  
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  
+  [self stopScanning];
+  
+}
+
+- (void)initiateScan {
   
   NSString *mediaType = AVMediaTypeVideo;
   AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
@@ -82,17 +95,6 @@
       
     } break;
   }
-  
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  [self stopScanning];
-}
-
-- (void)stubScan {
-  
-  [self didScanCode:@"123"];
   
 }
 
