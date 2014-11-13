@@ -9,6 +9,7 @@
 #import "OMNScanQRCodeVC.h"
 #import <AVFoundation/AVFoundation.h>
 #import "OMNConstants.h"
+#import <OMNStyler.h>
 
 @interface OMNScanQRCodeVC ()
 <AVCaptureMetadataOutputObjectsDelegate>
@@ -18,6 +19,7 @@
 @implementation OMNScanQRCodeVC {
   AVCaptureSession *_captureSession;
   AVCaptureVideoPreviewLayer *_videoPreviewLayer;
+  UILabel *_label;
 }
 
 - (instancetype)init {
@@ -33,11 +35,34 @@
   self.navigationItem.title = nil;
   self.view.backgroundColor = [UIColor whiteColor];
   
+  [self setup];
+  
+  _label.textColor = colorWithHexString(@"D0021B");
+  _label.font = FuturaOSFOmnomRegular(25.0f);
+  _label.numberOfLines = 0;
+  _label.textAlignment = NSTextAlignmentCenter;
+
+  [self setText:NSLocalizedString(@"SCAN_QR_HINT_TEXT", @"Наведитесь на QR-код\nOmnom.") error:NO];
+  
+}
+
+- (void)setup {
   
   UIImageView *scanFrame = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"qr-code-scanner-frame"]];
-  scanFrame.center = self.view.center;
-  scanFrame.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+  scanFrame.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:scanFrame];
+  
+  _label = [[UILabel alloc] init];
+  _label.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_label];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:scanFrame attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:scanFrame attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:scanFrame attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:scanFrame attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:scanFrame attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:scanFrame attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   
 }
 
@@ -95,6 +120,16 @@
       
     } break;
   }
+  
+}
+
+- (void)setText:(NSString *)text error:(BOOL)error {
+  
+  [UIView transitionWithView:_label duration:0.3 options:0 animations:^{
+  
+    _label.text = text;
+    
+  } completion:nil];
   
 }
 

@@ -233,6 +233,7 @@ OMNUserInfoVCDelegate>
       
     } failure:^(NSError *error) {
       
+      [scanQRCodeVC setText:NSLocalizedString(@"SCAN_QR_ERROR_TEXT", @"Неверный QR-код,\nнайдите Omnom.") error:YES];
       [weakSelf didFailQRCode:error];
       
     }];

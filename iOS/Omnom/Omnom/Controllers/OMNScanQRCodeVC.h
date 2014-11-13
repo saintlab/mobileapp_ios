@@ -15,6 +15,7 @@
 
 @property (nonatomic, weak) id<OMNScanQRCodeVCDelegate> delegate;
 
+- (void)setText:(NSString *)text error:(BOOL)error;
 - (void)stopScanning;
 
 @end

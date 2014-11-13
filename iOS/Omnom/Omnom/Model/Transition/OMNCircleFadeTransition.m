@@ -22,6 +22,7 @@
 #import "OMNSearchRestaurantVC.h"
 #import "OMNRestaurantActionsVC.h"
 #import "OMNAuthorizationVC.h"
+#import "OMNScanQRCodeVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -66,6 +67,8 @@
   @[
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNAskCLPermissionsVC class]],
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNSearchVisitorVC class]],
+    
+    [self keyFromClass:[OMNScanQRCodeVC class] toClass:[OMNSearchVisitorVC class]],
     
     [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchVisitorVC class]],
