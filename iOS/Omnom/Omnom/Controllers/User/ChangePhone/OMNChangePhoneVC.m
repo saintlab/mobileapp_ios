@@ -26,7 +26,7 @@
   
   _phoneTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
   _phoneTF.textField.keyboardType = UIKeyboardTypePhonePad;
-  _hintLabel.text = NSLocalizedString(@"CHANGE_PHONE_HINT", @"Укажите Ваш предыдущий номер телефона");
+  _hintLabel.text = NSLocalizedString(@"CHANGE_PHONE_HINT", @"Укажите ваш предыдущий номер телефона");
   
   self.view.backgroundColor = [UIColor whiteColor];
   self.navigationItem.title = NSLocalizedString(@"CHANGE_PHONE_TITLE", @"Изменение номера");

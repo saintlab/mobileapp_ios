@@ -8,6 +8,7 @@
 
 #import "OMNResetPasswordVC.h"
 #import <OMNStyler.h>
+#import "OMNConstants.h"
 
 @interface OMNResetPasswordVC ()
 
@@ -36,8 +37,8 @@
   label.translatesAutoresizingMaskIntoConstraints = NO;
   label.numberOfLines = 0;
   label.textAlignment = NSTextAlignmentCenter;
-  label.text = NSLocalizedString(@"На ваш e-mail выслана ссылка\nдля смены номера\nтелефона", nil);
-  label.font = [UIFont fontWithName:@"Fututa-OSF-Omnom-Regular" size:20.0f];
+  label.text = NSLocalizedString(@"RESET_PASSWORD_HINT", @"На вашу почту была выслана\nссылка для смены номера\nтелефона");
+  label.font = FuturaOSFOmnomRegular(20.0f);
   label.textColor = colorWithHexString(@"787878");
   [self.view addSubview:label];
   

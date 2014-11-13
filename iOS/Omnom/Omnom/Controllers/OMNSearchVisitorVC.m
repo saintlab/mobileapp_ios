@@ -317,13 +317,13 @@ OMNUserInfoVCDelegate>
   switch (state) {
     case kSearchManagerInternetFound: {
       
-      [self.loaderView setProgress:0.2];
+      [self.loaderView setProgress:0.1];
       
     } break;
     case kSearchManagerStartSearchingBeacons: {
       
       NSLog(@"Определение вашего столика");
-      [self.loaderView setProgress:0.5f];
+      [self.loaderView setProgress:0.3];
       
     } break;
     case kSearchManagerNotFoundBeacons: {
