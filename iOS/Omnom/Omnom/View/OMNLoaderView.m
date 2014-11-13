@@ -70,7 +70,7 @@
 }
 
 - (void)completeAnimation:(dispatch_block_t)completionBlock {
-  _completionBlock = completionBlock;
+  _completionBlock = [completionBlock copy];
   
   CABasicAnimation *pathAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
   

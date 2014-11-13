@@ -118,14 +118,24 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  
+  [[OMNAuthorisation authorisation] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
   NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken>%@", deviceToken);
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   
+  [[OMNAuthorisation authorisation] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+  
 }
 
+#ifdef __IPHONE_8_0
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
 
+  [[OMNAuthorisation authorisation] application:application didRegisterUserNotificationSettings:notificationSettings];
+  
+}
+#endif
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   NSLog(@"url recieved: %@", url);
@@ -155,13 +165,6 @@
   
   
 }
-
-#ifdef __IPHONE_8_0
-- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
-  NSLog(@"%@", notificationSettings.categories);
-  NSLog(@"%@", notificationSettings);
-}
-#endif
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   

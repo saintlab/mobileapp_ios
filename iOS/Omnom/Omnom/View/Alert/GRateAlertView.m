@@ -20,7 +20,7 @@
 - (instancetype)initWithBlock:(dispatch_block_t)block {
   self = [super initWithTitle:NSLocalizedString(@"Как вам в \"Тарас Бульба\"?", nil) message:NSLocalizedString(@"Оцените, чтобы и другие знали на что рассчитывать :)", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Оценить", nil) otherButtonTitles:nil];
   if (self) {
-    _block = block;
+    _block = [block copy];
   }
   return self;
 }

@@ -14,7 +14,7 @@
 @property (nonatomic, strong, readonly) OMNUser *user;
 @property (nonatomic, copy, readonly) NSString *installId;
 
-@property (nonatomic, strong) dispatch_block_t logoutCallback;
+@property (nonatomic, copy) dispatch_block_t logoutCallback;
 
 + (instancetype)authorisation;
 
@@ -29,6 +29,7 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings;
 
 @end
 

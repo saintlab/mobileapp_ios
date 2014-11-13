@@ -15,6 +15,7 @@
 #import "OMNAnalitics.h"
 
 static NSString * const kAccountName = @"test_account6";
+static NSString * const kPushNotificationsRequestedKey = @"pushNotificationsRequested";
 
 @interface OMNAuthorisation ()
 
@@ -23,7 +24,8 @@ static NSString * const kAccountName = @"test_account6";
 @end
 
 @implementation OMNAuthorisation {
-  void(^_notificationRegisterCompletionBlock)(BOOL completion);
+  void(^_userNotificationRegisterCompletionBlock)(BOOL completion);
+  void(^_remoteNotificationRegisterCompletionBlock)(BOOL completion);
 }
 
 + (instancetype)authorisation {
@@ -68,7 +70,8 @@ static NSString * const kAccountName = @"test_account6";
 }
 
 - (BOOL)pushNotificationsRequested {
-  BOOL pushNotificationsRequested = [[SSKeychain passwordForService:@"pushNotificationsRequested" account:kAccountName] boolValue];
+  
+  BOOL pushNotificationsRequested = [[SSKeychain passwordForService:kPushNotificationsRequestedKey account:kAccountName] boolValue];
   return pushNotificationsRequested;
 }
 
@@ -98,9 +101,8 @@ static NSString * const kAccountName = @"test_account6";
 - (void)requestPushNotifications:(void(^)(BOOL))completion {
   
   if (NO == self.pushNotificationsRequested) {
-    [SSKeychain setPassword:@"YES" forService:@"pushNotificationsRequested" account:kAccountName];
-    _notificationRegisterCompletionBlock = [completion copy];
-    
+    [SSKeychain setPassword:@"YES" forService:kPushNotificationsRequestedKey account:kAccountName];
+
     UIApplication *application = [UIApplication sharedApplication];
 
 #pragma clang diagnostic push
@@ -109,30 +111,49 @@ static NSString * const kAccountName = @"test_account6";
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
       [application performSelector:@selector(registerForRemoteNotifications) withObject:nil];
 #ifdef __IPHONE_8_0
+      _userNotificationRegisterCompletionBlock = [completion copy];
       [[UIApplication sharedApplication] registerUserNotificationSettings:[self notificationSettings]];
 #endif
       
 #pragma clang diagnostic pop
     }
     else {
-      [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+      _remoteNotificationRegisterCompletionBlock = [completion copy];
     }
-    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+
   }
   else {
-    completion(NO);
+    completion(YES);
+  }
+  
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+
+  if (_userNotificationRegisterCompletionBlock) {
+    _userNotificationRegisterCompletionBlock(YES);
+    _userNotificationRegisterCompletionBlock = nil;
   }
   
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-  _notificationRegisterCompletionBlock(YES);
-  _notificationRegisterCompletionBlock = nil;
+  
+  if (_remoteNotificationRegisterCompletionBlock) {
+    _remoteNotificationRegisterCompletionBlock(YES);
+    _remoteNotificationRegisterCompletionBlock = nil;
+  }
+  
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-  _notificationRegisterCompletionBlock(NO);
-  _notificationRegisterCompletionBlock = nil;
+  
+  if (_remoteNotificationRegisterCompletionBlock) {
+    _remoteNotificationRegisterCompletionBlock(NO);
+    _remoteNotificationRegisterCompletionBlock = nil;
+  }
+  
 }
 
 - (void)logout {

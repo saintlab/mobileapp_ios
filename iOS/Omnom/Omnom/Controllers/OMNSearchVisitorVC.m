@@ -47,8 +47,8 @@ OMNUserInfoVCDelegate>
   self = [super initWithParent:parent];
   if (self) {
     
-    _didFindBlock = completionBlock;
-    _cancelBlock = cancelBlock;
+    _didFindBlock = [completionBlock copy];
+    _cancelBlock = [cancelBlock copy];
     
   }
   return self;

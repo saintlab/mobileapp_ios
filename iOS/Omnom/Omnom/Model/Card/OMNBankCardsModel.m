@@ -126,7 +126,7 @@
 - (void)addCardFromViewController:(__weak UIViewController *)viewController forOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)paymentWithCardBlock {
   
   _order = order;
-  _paymentWithCardBlock = paymentWithCardBlock;
+  _paymentWithCardBlock = [paymentWithCardBlock copy];
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
   __weak typeof(self)weakSelf = self;

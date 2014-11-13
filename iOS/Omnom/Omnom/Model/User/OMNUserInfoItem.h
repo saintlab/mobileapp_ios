@@ -15,7 +15,7 @@ typedef void(^OMNUserInfoItemBlock)(UIViewController *vc, UITableView *tv, NSInd
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, strong) UIColor *titleColor;
 @property (nonatomic, assign) UITableViewCellAccessoryType cellAccessoryType;
-@property (nonatomic, strong) OMNUserInfoItemBlock actionBlock;
+@property (nonatomic, copy) OMNUserInfoItemBlock actionBlock;
 
 + (instancetype)itemWithTitle:(NSString *)title actionBlock:(OMNUserInfoItemBlock)actionBlock;
 
