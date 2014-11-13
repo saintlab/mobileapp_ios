@@ -61,12 +61,6 @@
   
 }
 
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-  _arrowIV.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, CGRectGetHeight(self.view.frame) - CGRectGetHeight(_arrowIV.frame)/2.0f);
-  _arrowRectangleIV.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, CGRectGetHeight(self.view.frame) - CGRectGetHeight(_arrowRectangleIV.frame)/2.0f);
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self.navigationController setNavigationBarHidden:YES animated:animated];
