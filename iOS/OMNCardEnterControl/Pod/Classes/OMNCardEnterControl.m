@@ -100,8 +100,8 @@ NSInteger kCVVLength = 3;
     [_saveButton setTitleColor:[UIColor colorWithWhite:120.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
     [_saveButton setTitle:NSLocalizedString(@"Сохранить данные для следующих платежей", nil) forState:UIControlStateNormal];
     [_saveButton setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
-    [_saveButton setImage:[UIImage imageNamed:@"checkbox_galka"] forState:UIControlStateSelected];
-    [_saveButton setImage:[UIImage imageNamed:@"checkbox_galka"] forState:UIControlStateSelected|UIControlStateHighlighted];
+    [_saveButton setImage:[UIImage imageNamed:@"checkbox_icon"] forState:UIControlStateSelected];
+    [_saveButton setImage:[UIImage imageNamed:@"checkbox_icon"] forState:UIControlStateSelected|UIControlStateHighlighted];
     _saveButton.selected = YES;
     [self addSubview:_saveButton];
 

@@ -26,7 +26,6 @@ OMNCardEnterControlDelegate>
   OMNBankCardInfo *_cardInfo;
   
   OMNCardEnterControl *_cardEnterControl;
-  UIButton *_addCardButton;
   UIBarButtonItem *_cardActionButton;
   
 }
@@ -61,19 +60,10 @@ OMNCardEnterControlDelegate>
   UIView *bankCardDescriptionView = [[OMNCardBrandView alloc] init];
   [self.view addSubview:bankCardDescriptionView];
   
-  _addCardButton = [[OMNBorderedButton alloc] init];
-  _addCardButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_addCardButton addTarget:self action:@selector(addCardTap:) forControlEvents:UIControlEventTouchUpInside];
-  [_addCardButton setTitle:NSLocalizedString(@"Готово", nil) forState:UIControlStateNormal];
-  _addCardButton.enabled = NO;
-  _addCardButton.hidden = YES;
-  [self.view addSubview:_addCardButton];
-  
   NSDictionary *views =
   @{
     @"cardEnterControl" : _cardEnterControl,
     @"topLayoutGuide" : self.topLayoutGuide,
-    @"addCardButton" : _addCardButton,
     @"bankCardDescriptionView" : bankCardDescriptionView,
     };
   
@@ -83,9 +73,8 @@ OMNCardEnterControlDelegate>
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardEnterControl]-|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[bankCardDescriptionView]" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-[bankCardDescriptionView]-[addCardButton]" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_addCardButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:bankCardDescriptionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-(>=0)-[bankCardDescriptionView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
 
 }
 

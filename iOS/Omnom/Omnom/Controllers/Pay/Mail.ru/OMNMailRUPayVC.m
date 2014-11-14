@@ -6,25 +6,25 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNMailRUPayVC.h"
-#import "OMNBankCardInfo.h"
-#import <OMNMailRuAcquiring.h>
-#import <OMNDeletedTextField.h>
-#import "OMNOrder+network.h"
-#import "OMNMailRuBankCardsModel.h"
-#import "OMNCardBrandView.h"
-#import <OMNStyler.h>
-#import "OMNMailRUCardConfirmVC.h"
-#import "OMNOrder+omn_mailru.h"
-#import "OMNAuthorisation.h"
-#import "OMNSocketManager.h"
-#import "OMNLoadingCircleVC.h"
-#import "UINavigationController+omn_replace.h"
-#import "UIImage+omn_helper.h"
 #import "OMNAnalitics.h"
+#import "OMNAuthorisation.h"
+#import "OMNBankCardInfo.h"
+#import "OMNCardBrandView.h"
+#import "OMNLoadingCircleVC.h"
+#import "OMNMailRUCardConfirmVC.h"
+#import "OMNMailRUPayVC.h"
+#import "OMNMailRuBankCardsModel.h"
 #import "OMNOperationManager.h"
+#import "OMNOrder+network.h"
+#import "OMNOrder+omn_mailru.h"
+#import "OMNSocketManager.h"
 #import "OMNUtils.h"
+#import "UIImage+omn_helper.h"
+#import "UINavigationController+omn_replace.h"
 #import <BlocksKit.h>
+#import <OMNDeletedTextField.h>
+#import <OMNMailRuAcquiring.h>
+#import <OMNStyler.h>
 
 NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdentifier";
 
@@ -411,7 +411,9 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView]|" options:0 metrics:metrics views:views]];
   
   [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[errorLabel]-|" options:0 metrics:0 views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[bankCardDescriptionView]" options:0 metrics:0 views:views]];
+  
+  [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:bankCardDescriptionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  
   [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[bankCardDescriptionView]-(offset)-[errorLabel(>=0)]-|" options:0 metrics:metrics views:views]];
   
   [tableFooterView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:0 metrics:metrics views:views]];

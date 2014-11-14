@@ -168,7 +168,7 @@
      @"split" : stringFromSplitType(order.splitType),
      @"timestamp" : [self dateString],
      }];
-  
+
 }
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
