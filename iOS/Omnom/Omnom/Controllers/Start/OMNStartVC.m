@@ -93,7 +93,7 @@ OMNSearchRestaurantVCDelegate>
 //  searchRestaurantVC.qr = @"qwertyuiop";
 //  searchRestaurantVC.qr = @"qr-code-3-at-saintlab-iiko";
   
-  NSData *decodeBeaconData = self.info[OMNDecodeBeaconManagerNotificationLaunchKey];
+  NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
   if (decodeBeaconData) {
     OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
     searchRestaurantVC.visitor = visitor;

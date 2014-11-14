@@ -11,8 +11,6 @@
 #import "OMNAnalitics.h"
 #import "OMNUtils.h"
 
-NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeaconManagerNotificationLaunchKey";
-
 @implementation OMNVisitorManager {
   NSMutableDictionary *_visitors;
 }
@@ -229,13 +227,11 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     return;
   }
   
-  __weak typeof(self)weakSelf = self;
-  
   [self decodeBeacon:beacon success:^(OMNVisitor *visitor) {
     
     if (visitor) {
       
-      [weakSelf showLocalPushForVisitor:visitor];
+      [visitor showGreetingPush];
       
       [visitor newGuestWithCompletion:^{
         completion();
@@ -247,7 +243,6 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
     else {
       completion();
     }
-
     
   } failure:^(NSError *error) {
     
@@ -256,61 +251,5 @@ NSString * const OMNDecodeBeaconManagerNotificationLaunchKey = @"OMNDecodeBeacon
   }];
   
 }
-
-- (BOOL)readyForPush:(OMNVisitor *)visitor {
-  
-  if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
-    return NO;
-  }
-  
-  if (NO == [OMNConstants useBackgroundNotifications]) {
-    return NO;
-  }
-  
-  if (nil == visitor.id) {
-    return NO;
-  }
-  
-  BOOL readyForPush = NO;
-  OMNVisitor *savedVisitor = _visitors[visitor.id];
-  if (nil == savedVisitor ||
-      savedVisitor.readyForPush) {
-    readyForPush = YES;
-    _visitors[visitor.id] = visitor;
-    [self save];
-  }
-  
-  return readyForPush;
-  
-}
-
-- (void)showLocalPushForVisitor:(OMNVisitor *)visitor {
-  
-  if ([self readyForPush:visitor]) {
-    
-    OMNPushText *at_entrance = visitor.restaurant.mobile_texts.at_entrance;
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    
-    localNotification.alertBody = at_entrance.greeting;
-    localNotification.alertAction = at_entrance.open_action;
-    localNotification.soundName = kPushSoundName;
-    [[OMNAnalitics analitics] logDebugEvent:@"push_sent" parametrs:@{@"text" : (at_entrance.greeting ? (at_entrance.greeting) : (@""))}];
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-//    if ([localNotification respondsToSelector:@selector(category)]) {
-//      [localNotification performSelector:@selector(setCategory:) withObject:@"incomingCall"];
-//    }
-#pragma clang diagnostic pop
-
-    localNotification.userInfo =
-    @{
-      OMNDecodeBeaconManagerNotificationLaunchKey : [NSKeyedArchiver archivedDataWithRootObject:visitor],
-      };
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-    
-  }
-  
-}
-
 
 @end

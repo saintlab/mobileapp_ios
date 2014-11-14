@@ -6,10 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-@class OMNUser;
 @class AFHTTPRequestOperation;
-@class OMNVisitor;
 @class OMNOrder;
+@class OMNOrderTansactionInfo;
+@class OMNUser;
+@class OMNVisitor;
 
 //https://docs.google.com/document/d/1qCgjmjynrECxBm5tY934WzkvPo_3AoRpC0bpz-nfVc8/edit
 @interface OMNAnalitics : NSObject
@@ -21,7 +22,7 @@
 - (void)logRegister;
 - (void)logLogin;
 - (void)logEnterRestaurant:(OMNVisitor *)visitor;
-- (void)logPayment:(OMNOrder *)order;
+- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo bill_id:(NSString *)bill_id;
 - (void)logScore:(CGFloat)score order:(OMNOrder *)order;
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;

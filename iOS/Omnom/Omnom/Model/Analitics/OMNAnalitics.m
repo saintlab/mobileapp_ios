@@ -7,12 +7,13 @@
 //
 
 #import "OMNAnalitics.h"
-#import <Mixpanel.h>
 #import "OMNConstants.h"
-#import <AFNetworking.h>
-#import "OMNVisitor.h"
-#import "OMNUser.h"
 #import "OMNOrder.h"
+#import "OMNOrderTansactionInfo.h"
+#import "OMNUser.h"
+#import "OMNVisitor.h"
+#import <AFNetworking.h>
+#import <Mixpanel.h>
 
 @interface OMNAnalitics ()
 
@@ -43,7 +44,6 @@
       _mixpanelDebug = [[Mixpanel alloc] initWithToken:mixpanelDebugToken andFlushInterval:60.0];
       _mixpanelDebug.flushInterval = 60.0;
     }
-//    cbf84d3a959d264d62c06a48d03b1a28
     
   }
   return self;
@@ -90,6 +90,7 @@
   [_mixpanel registerSuperProperties:@{@"omn_user" : userInfo}];
   [_mixpanel flush];
   
+  [_mixpanelDebug.people set:userInfo];
   [_mixpanelDebug registerSuperProperties:@{@"omn_user" : userInfo}];
   [_mixpanelDebug flush];
 }
@@ -137,38 +138,32 @@
   
 }
 
--(void)logPayment:(OMNOrder *)order {
+- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo bill_id:(NSString *)bill_id {
   
   [_mixpanel.people increment:
    @{
-     @"bill_sum" : @(order.enteredAmount),
-     @"tips_sum" : @(order.tipAmount),
-     @"total_sum" : @(order.enteredAmountWithTips),
+     @"bill_sum" : @(orderTansactionInfo.bill_amount),
+     @"tips_sum" : @(orderTansactionInfo.tips_amount),
+     @"total_sum" : @(orderTansactionInfo.total_amount),
      @"number_of_payments" : @(1),
      }];
   [_mixpanel.people set:@"last_payment" to:[NSDate date]];
   
-  double percent = 0.0f;
-  if (order.enteredAmount) {
-    percent = (double)order.tipAmount/order.enteredAmount;
-  }
-  
-//  (0.7% счёта + 50% чая)
-  double charge = 0.007l*order.enteredAmount + 0.5l*order.tipAmount;
-  [_mixpanel.people trackCharge:@(charge)];
-
-  
   [_mixpanel track:@"payment_success" properties:
    @{
-     @"bill_sum" : @(order.enteredAmount),
-     @"tips_sum" : @(order.tipAmount),
-     @"total_amount" : @(order.enteredAmountWithTips),
-     @"percent" : @(percent),
-     @"tips_way" : stringFromTipType(order.tipType),
-     @"split" : stringFromSplitType(order.splitType),
+     @"bill_sum" : @(orderTansactionInfo.bill_amount),
+     @"tips_sum" : @(orderTansactionInfo.tips_amount),
+     @"total_amount" : @(orderTansactionInfo.total_amount),
+     @"percent" : @(orderTansactionInfo.tips_percent),
+     @"tips_way" : orderTansactionInfo.tips_way,
+     @"split" : orderTansactionInfo.split,
      @"timestamp" : [self dateString],
+     @"order_id" : orderTansactionInfo.order_id,
+     @"restaurant_id" : orderTansactionInfo.restaurant_id,
+     @"bill_id" : (bill_id) ? (bill_id) : (@""),
      }];
-
+  [_mixpanel flush];
+  
 }
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
@@ -202,7 +197,7 @@
   static NSDateFormatter *dateFormatter = nil;
   if (nil == dateFormatter) {
     dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+    [dateFormatter setDateFormat:@"{yyyy-MM-dd'T'HH:mm:ssZZZZZ}"];
   }
   return [dateFormatter stringFromDate:[NSDate date]];
   

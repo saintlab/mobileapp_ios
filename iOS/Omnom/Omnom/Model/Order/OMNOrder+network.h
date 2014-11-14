@@ -18,6 +18,4 @@ https://github.com/saintlab/backend/tree/master/applications/omnom#bill
 - (void)billCall:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock;
 - (void)billCallStop:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock;
 
-- (void)logPayment;
-
 @end

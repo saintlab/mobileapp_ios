@@ -8,6 +8,8 @@
 
 #import "OMNVisitor.h"
 
+extern NSString * const OMNVisitorNotificationLaunchKey;
+
 typedef void(^OMNVisitorBlock)(OMNVisitor *visitor);
 typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 
@@ -21,5 +23,8 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 - (void)waiterCallWithFailure:(void(^)(NSError *error))failureBlock;
 - (void)waiterCallStopWithFailure:(void(^)(NSError *error))failureBlock;
 - (void)stopWaiterCall;
+- (BOOL)readyForPush;
+- (void)showGreetingPush;
+
 
 @end

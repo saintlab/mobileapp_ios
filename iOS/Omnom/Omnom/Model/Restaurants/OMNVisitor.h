@@ -38,7 +38,6 @@ extern NSString * const OMNOrderIndexKey;
 
 - (BOOL)isSameRestaurant:(OMNVisitor *)visitor;
 - (void)subscribeForTableEvents;
-- (BOOL)readyForPush;
 - (BOOL)expired;
 - (NSString *)id;
 

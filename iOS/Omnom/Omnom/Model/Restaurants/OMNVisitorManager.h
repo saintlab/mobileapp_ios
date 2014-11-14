@@ -8,8 +8,6 @@
 
 #import "OMNVisitor+network.h"
 
-extern NSString * const OMNDecodeBeaconManagerNotificationLaunchKey;
-
 @interface OMNVisitorManager : NSObject
 
 + (instancetype)manager;

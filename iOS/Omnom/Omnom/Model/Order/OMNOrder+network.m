@@ -8,7 +8,6 @@
 
 #import "OMNOrder+network.h"
 #import "OMNOperationManager.h"
-#import "OMNAnalitics.h"
 #import "OMNUtils.h"
 
 @implementation OMNOrder (network)
@@ -92,12 +91,6 @@
     failureBlock(error);
     
   }];
-}
-
-- (void)logPayment {
-  
-  [[OMNAnalitics analitics] logPayment:self];
-
 }
 
 @end

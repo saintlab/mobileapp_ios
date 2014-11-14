@@ -26,6 +26,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
+//  static NSDateFormatter *dateFormatter = nil;
+//  if (nil == dateFormatter) {
+//    dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
+//  }
+//NSLog(@"%@", [dateFormatter stringFromDate:[NSDate date]]);
+  
 #if OMN_TEST
   return YES;
 #endif
@@ -159,7 +166,7 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
   
   NSLog(@"didReceiveLocalNotification>%@", notification);
-  if (notification.userInfo[OMNDecodeBeaconManagerNotificationLaunchKey]) {
+  if (notification.userInfo[OMNVisitorNotificationLaunchKey]) {
     [self startApplication:notification.userInfo];
   }
   

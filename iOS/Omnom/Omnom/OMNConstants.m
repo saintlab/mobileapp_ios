@@ -21,6 +21,7 @@ NSString * const kPushSoundName = @"new_guest.caf";
 
 static NSDictionary *_defaultConfig = nil;
 static NSDictionary *_customConfig = nil;
+static NSDictionary *_tokens = nil;
 
 @implementation OMNConstants
 
@@ -49,7 +50,7 @@ static NSDictionary *_customConfig = nil;
   
   NSDictionary *mailRuConfig = config[@"mail_ru"];
   [OMNMailRuAcquiring setConfig:mailRuConfig];
-  __unused NSDictionary *tokensConfig = config[@"tokens"];
+  _tokens = config[@"tokens"];
   
 }
 
@@ -88,11 +89,26 @@ static NSDictionary *_customConfig = nil;
   return [self stringForKey:@"authorizationUrlString"];
 }
 
++ (NSString *)tokenForKey:(NSString *)key {
+ 
+  if (NO == [key isKindOfClass:[NSString class]]) {
+    return @"";
+  }
+  
+  if (_tokens[key]) {
+    return _tokens[key];
+  }
+  else {
+    return [self stringForKey:key];
+  }
+
+}
+
 + (NSString *)mixpanelToken {
-  return [self stringForKey:@"MixpanelToken"];
+  return [self tokenForKey:@"MixpanelToken"];
 }
 + (NSString *)mixpanelDebugToken {
-  return [self stringForKey:@"MixpanelTokenDebug"];
+  return [self tokenForKey:@"MixpanelTokenDebug"];
 }
 + (NSString *)crashlyticsAPIKey {
   return [self stringForKey:@"CrashlyticsAPIKey"];

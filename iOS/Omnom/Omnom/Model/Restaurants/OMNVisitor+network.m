@@ -10,6 +10,8 @@
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
 
+NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunchKey";
+
 @interface NSArray (omn_restaurants)
 
 - (NSArray *)decodeOrdersWithError:(NSError **)error;
@@ -147,6 +149,49 @@
     failureBlock(error);
     
   }];
+  
+}
+
+- (BOOL)readyForPush {
+  
+  if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+    return NO;
+  }
+  
+  if (NO == [OMNConstants useBackgroundNotifications]) {
+    return NO;
+  }
+  
+  BOOL readyForPush = ([[NSDate date] timeIntervalSinceDate:self.foundDate] > 4*60*60);
+  return readyForPush;
+  
+}
+
+- (void)showGreetingPush; {
+  
+  if (NO == self.readyForPush) {
+    return;
+  }
+  
+  OMNPushText *at_entrance = self.restaurant.mobile_texts.at_entrance;
+  UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+  
+  localNotification.alertBody = at_entrance.greeting;
+  localNotification.alertAction = at_entrance.open_action;
+  localNotification.soundName = kPushSoundName;
+  [[OMNAnalitics analitics] logDebugEvent:@"push_sent" parametrs:@{@"text" : (at_entrance.greeting ? (at_entrance.greeting) : (@""))}];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+  //    if ([localNotification respondsToSelector:@selector(category)]) {
+  //      [localNotification performSelector:@selector(setCategory:) withObject:@"incomingCall"];
+  //    }
+#pragma clang diagnostic pop
+  
+  localNotification.userInfo =
+  @{
+    OMNVisitorNotificationLaunchKey : [NSKeyedArchiver archivedDataWithRootObject:self],
+    };
+  [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
   
 }
 

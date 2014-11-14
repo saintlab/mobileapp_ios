@@ -17,6 +17,7 @@
 #import "OMNOperationManager.h"
 #import "OMNOrder+network.h"
 #import "OMNOrder+omn_mailru.h"
+#import "OMNOrderTansactionInfo.h"
 #import "OMNSocketManager.h"
 #import "OMNUtils.h"
 #import "UIImage+omn_helper.h"
@@ -44,6 +45,7 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   
   OMNOrder *_order;
   OMNBill *_bill;
+  OMNOrderTansactionInfo *_orderTansactionInfo;
   OMNBankCardsModel *_bankCardsModel;
   UIView *_contentView;
   OMNLoadingCircleVC *_loadingCircleVC;
@@ -54,7 +56,10 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
 - (instancetype)initWithOrder:(OMNOrder *)order {
   self = [super init];
   if (self) {
+    
     _order = order;
+    _orderTansactionInfo = [[OMNOrderTansactionInfo alloc] initWithOrder:order];
+
   }
   return self;
 }
@@ -120,7 +125,9 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
+  
   [self.navigationController setNavigationBarHidden:NO animated:animated];
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -232,6 +239,7 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
 - (void)orderPaymentInfoDidCreated:(OMNMailRuPaymentInfo *)paymentInfo {
   
   __weak typeof(self)weakSelf = self;
+  _bill = _order.bill;
   [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
     
     [weakSelf paymentInfo:paymentInfo didPayWithResponse:response];
@@ -282,7 +290,7 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
 
 - (void)mailRuDidFinish {
 
-  [_order logPayment];
+  [[OMNAnalitics analitics] logPayment:_orderTansactionInfo bill_id:_order.bill.id];
   [self.delegate mailRUPayVCDidFinish:self withBill:_bill];
   
 }
