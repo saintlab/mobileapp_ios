@@ -27,6 +27,7 @@ OMNCardEnterControlDelegate>
   
   OMNCardEnterControl *_cardEnterControl;
   UIButton *_addCardButton;
+  UIBarButtonItem *_cardActionButton;
   
 }
 
@@ -38,11 +39,13 @@ OMNCardEnterControlDelegate>
   self.navigationItem.title = @"";
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap:)];
-  
   self.view.backgroundColor = [UIColor whiteColor];  
   [self setup];
   
+  
+  _cardActionButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap:)];
+  self.navigationItem.rightBarButtonItem = _cardActionButton;
+  [self updateSubmitButton];
   [self setRightButtonEnabled:NO];
   
 }
@@ -52,6 +55,7 @@ OMNCardEnterControlDelegate>
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
   _cardEnterControl.delegate = self;
+  [_cardEnterControl setSaveButtonHidden:self.hideSaveButton];
   [self.view addSubview:_cardEnterControl];
   
   UIView *bankCardDescriptionView = [[OMNCardBrandView alloc] init];
@@ -78,18 +82,24 @@ OMNCardEnterControlDelegate>
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardEnterControl]-|" options:0 metrics:metrics views:views]];
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[bankCardDescriptionView]" options:0 metrics:metrics views:views]];
-  
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-[bankCardDescriptionView]-[addCardButton]" options:0 metrics:nil views:views]];
-  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardEnterControl]-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[bankCardDescriptionView]" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-[bankCardDescriptionView]-[addCardButton]" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_addCardButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
 
 }
 
 - (void)setRightButtonEnabled:(BOOL)enabled {
-  self.navigationItem.rightBarButtonItem.enabled = enabled;
+  
+  _cardActionButton.enabled = enabled;
+  
+}
+
+- (void)updateSubmitButton {
+  
+  NSString *title = (_cardEnterControl.saveButtonSelected) ? (NSLocalizedString(@"BANK_CARD_ADD_BUTTON_TITLE", @"Привязать")) : (NSLocalizedString(@"BANK_CARD_PAY_BUTTON_TITLE", @"Оплатить"));
+  _cardActionButton.title = title;
+  
 }
 
 #pragma mark - OMNCardEnterControlDelegate
@@ -105,7 +115,9 @@ OMNCardEnterControlDelegate>
 }
 
 - (void)cardEnterControlDidEnterFailCardData:(OMNCardEnterControl *)control {
+  
   [self setRightButtonEnabled:NO];
+  
 }
 
 - (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {
@@ -120,6 +132,12 @@ OMNCardEnterControlDelegate>
   
 }
 
+- (void)cardEnterControlSaveButtonStateDidChange:(OMNCardEnterControl *)control {
+  
+  [self updateSubmitButton];
+  
+}
+
 - (IBAction)addCardTap:(id)sender {
 
   _cardInfo.saveCard = _cardEnterControl.saveButtonSelected;
@@ -127,10 +145,6 @@ OMNCardEnterControlDelegate>
     self.addCardBlock(_cardInfo);
   }
   
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
 }
 
 #pragma mark - CardIOPaymentViewControllerDelegate
@@ -145,7 +159,9 @@ OMNCardEnterControlDelegate>
 }
 
 - (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
+  
   [self dismissViewControllerAnimated:YES completion:nil];
+  
 }
 
 - (void)cancelTap {

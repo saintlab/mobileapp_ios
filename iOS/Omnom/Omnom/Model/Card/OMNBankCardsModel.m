@@ -123,16 +123,34 @@
   
 }
 
+- (void)payWithBankCardInfo:(OMNBankCardInfo *)bankCardInfo {
+  
+  if (_paymentWithCardBlock) {
+    _paymentWithCardBlock(bankCardInfo);
+  }
+  
+}
+
 - (void)addCardFromViewController:(__weak UIViewController *)viewController forOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)paymentWithCardBlock {
   
   _order = order;
   _paymentWithCardBlock = [paymentWithCardBlock copy];
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
+  addBankCardVC.hideSaveButton = (order == nil);
   __weak typeof(self)weakSelf = self;
   [addBankCardVC setAddCardBlock:^(OMNBankCardInfo *bankCardInfo) {
     
-    [weakSelf confirmCard:bankCardInfo sourceVC:viewController];
+    if (bankCardInfo.saveCard) {
+
+      [weakSelf confirmCard:bankCardInfo sourceVC:viewController];
+      
+    }
+    else {
+    
+      [weakSelf payWithBankCardInfo:bankCardInfo];
+      
+    }
     
   }];
   [addBankCardVC setCancelBlock:^{
@@ -266,6 +284,7 @@
   NSString *alertText = NSLocalizedString(@"NO_SMS_ALERT_TEXT", @"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму.");
   NSString *alertConfirmText = (_order) ? (NSLocalizedString(@"NO_SMS_ALERT_ACTION_TEXT", @"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты.")) : (nil);
   
+  __weak typeof(self)weakSelf = self;
   mailRUCardConfirmVC.noSMSBlock = ^{
     
     OMNPaymentAlertVC *paymentAlertVC = [[OMNPaymentAlertVC alloc] initWithText:alertText detailedText:alertConfirmText amount:enteredAmountWithTips];
@@ -280,10 +299,7 @@
     paymentAlertVC.didPayBlock = ^{
       
       [sourceVC.navigationController dismissViewControllerAnimated:YES completion:nil];
-      
-      if (_paymentWithCardBlock) {
-        _paymentWithCardBlock(bankCardInfo);
-      }
+      [weakSelf payWithBankCardInfo:bankCardInfo];
       
     };
     

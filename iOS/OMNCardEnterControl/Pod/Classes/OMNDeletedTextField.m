@@ -7,7 +7,6 @@
 //
 
 #import "OMNDeletedTextField.h"
-#import <OMNStyler.h>
 
 @implementation OMNDeletedTextField
 
@@ -31,22 +30,24 @@
     self.textColor = self.errorColor;
   }
   else {
-    self.textColor = colorWithHexString(@"000000");
+    self.textColor = [UIColor whiteColor];
   }
   
   [self setNeedsDisplay];
 }
 
 - (void)setup {
+  
   self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-  self.errorColor = colorWithHexString(@"D0021B");
-  self.font = [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:20.0f];
-  [self addTarget:self action:@selector(editingDidChange) forControlEvents:UIControlEventEditingDidBegin];
+  self.errorColor = [UIColor colorWithRed:208.0f/255.0f green:2.0f/255.0f blue:27.0f/255.0f alpha:1.0f];
   [self addTarget:self action:@selector(editingDidChange) forControlEvents:UIControlEventEditingDidEnd];
+  
 }
 
 - (void)editingDidChange {
-  self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+  
+  [self setNeedsDisplay];
+  
 }
 
 - (void)deleteBackward {
@@ -59,17 +60,23 @@
 - (void)drawRect:(CGRect)rect {
   [super drawRect:rect];
   
+  UIColor *lineColor = nil;
+  
   if (self.error) {
 
-    [self.errorColor set];
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextFillRect(context, CGRectMake(0.0f, CGRectGetHeight(self.frame) - 1.0f, CGRectGetWidth(self.frame), 1.0f));
+    lineColor = self.errorColor;
     
   }
   else {
-    UIImage *image = [UIImage imageNamed:(self.editing) ? (@"input_card_number_field_active") : (@"input_card_number_field_no_active")];
-    [image drawInRect:CGRectMake(0.0f, CGRectGetHeight(self.frame) - image.size.height, CGRectGetWidth(self.frame), image.size.height)];
+    
+    lineColor = (self.editing) ? ([UIColor whiteColor]) : ([UIColor colorWithWhite:1.0f alpha:0.3f]);
+    
   }
+  
+  [lineColor set];
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  CGContextFillRect(context, CGRectMake(0.0f, CGRectGetHeight(self.frame) - 1.0f, CGRectGetWidth(self.frame), 1.0f));
+
   
 }
 

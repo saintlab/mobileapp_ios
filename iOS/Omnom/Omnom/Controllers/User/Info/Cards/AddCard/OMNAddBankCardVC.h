@@ -12,6 +12,7 @@
 
 @interface OMNAddBankCardVC : UIViewController
 
+@property (nonatomic, assign) BOOL hideSaveButton;
 @property (nonatomic, copy) void(^addCardBlock)(OMNBankCardInfo *bankCardInfo);
 @property (nonatomic, copy) dispatch_block_t cancelBlock;
 

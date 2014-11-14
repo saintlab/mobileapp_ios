@@ -8,8 +8,7 @@
 
 #import "OMNViewController.h"
 #import <OMNCardEnterControl.h>
-#import <OMNStyler.h>
-#import "OMNPaymentAlertVC.h"
+//#import "OMNPaymentAlertVC.h"
 
 @interface OMNViewController ()
 <OMNCardEnterControlDelegate>
@@ -24,14 +23,14 @@
 {
     [super viewDidLoad];
   
-  UIButton *b = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-  b.backgroundColor = [UIColor redColor];
-  [b addTarget:self action:@selector(tap) forControlEvents:UIControlEventTouchUpInside];
-  [b setTitle:@"tap" forState:UIControlStateNormal];
-  [self.view addSubview:b];
+//  UIButton *b = [[UIButton alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
+//  b.backgroundColor = [UIColor redColor];
+//  [b addTarget:self action:@selector(tap) forControlEvents:UIControlEventTouchUpInside];
+//  [b setTitle:@"tap" forState:UIControlStateNormal];
+//  [self.view addSubview:b];
+//  return;
   
   
-  return;
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
   _cardEnterControl.delegate = self;
@@ -42,14 +41,8 @@
     @"cardEnterControl" : _cardEnterControl,
     @"topLayoutGuide" : self.topLayoutGuide,
     };
-  
-  NSDictionary *metrics =
-  @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
-    };
-  
-  NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardEnterControl]-|" options:0 metrics:metrics views:views];
-  [self.view addConstraints:panH];
+
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cardEnterControl attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
 
   NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]" options:0 metrics:nil views:views];
   [self.view addConstraints:panV];
@@ -58,7 +51,7 @@
 }
 
 - (void)tap {
-  
+  /*
   OMNPaymentAlertVC *paVC = [[OMNPaymentAlertVC alloc] initWithText:@"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму." detailedText:@"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты." amount:100500];
   __weak typeof(self)weakSelf = self;
   
@@ -69,7 +62,7 @@
   };
   
   [self presentViewController:paVC animated:YES completion:nil];
-  
+  */
 }
 
 #pragma mark - OMNCardEnterControlDelegate

@@ -63,12 +63,16 @@
   }
   
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+  if (user.id) {
+    // mixpanel identify: must be called before
+    // people properties can be set
+    [_mixpanel identify:user.id];
+    [_mixpanelDebug identify:user.id];
+    userInfo[@"ID"] = user.id;
+    
+  }
   if (user.name) {
     userInfo[@"name"] = user.name;
-  }
-  if (user.id) {
-    [_mixpanel identify:user.id];
-    userInfo[@"ID"] = user.id;
   }
   if (user.email) {
     userInfo[@"email"] = user.email;
@@ -84,10 +88,10 @@
   }
   [_mixpanel.people set:userInfo];
   [_mixpanel registerSuperProperties:@{@"omn_user" : userInfo}];
+  [_mixpanel flush];
   
-  [_mixpanelDebug.people set:userInfo];
   [_mixpanelDebug registerSuperProperties:@{@"omn_user" : userInfo}];
-  
+  [_mixpanelDebug flush];
 }
 
 - (void)logEnterRestaurant:(OMNVisitor *)visitor {

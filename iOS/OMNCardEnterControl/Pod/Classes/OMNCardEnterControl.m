@@ -16,10 +16,8 @@ NSString * const OMNCardEnterControlMonthString = @"OMNCardEnterControlMonthStri
 NSString * const OMNCardEnterControlYearString = @"OMNCardEnterControlYearString";
 NSString * const OMNCardEnterControlCVVString = @"OMNCardEnterControlCVVString";
 
-NSTimeInterval kSlideAnimationDuratiom = 0.5;
 NSInteger kDesiredPanLength = 19;
 NSInteger kCVVLength = 3;
-CGFloat kTextFieldsOffset = 20.0f;
 
 @interface OMNCardEnterControl ()
 <UITextFieldDelegate>
@@ -32,104 +30,116 @@ CGFloat kTextFieldsOffset = 20.0f;
   OMNDeletedTextField *_expireTF;
   OMNDeletedTextField *_cvvTF;
   
-  NSLayoutConstraint *_heightConstraint;
+  UIButton *_saveButton;
+
+}
+
+- (OMNDeletedTextField *)numberTextField {
   
-  CGSize _panSize;
-  CGFloat _expireWidth;
+  OMNDeletedTextField *numberTextField = [[OMNDeletedTextField alloc] init];
+  numberTextField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:20.0f];
+  numberTextField.tintColor = [UIColor whiteColor];
+  numberTextField.textAlignment = NSTextAlignmentLeft;
+  numberTextField.translatesAutoresizingMaskIntoConstraints = NO;
+  numberTextField.keyboardType = UIKeyboardTypeNumberPad;
+  numberTextField.delegate = self;
+  return numberTextField;
   
-  NSDictionary *_views;
-  NSMutableDictionary *_metrics;
+}
+
+- (NSAttributedString *)attributedPlaceholderWithText:(NSString *)text {
   
-  NSMutableArray *_dynamycConstraints;
+  UIColor *color = [UIColor colorWithWhite:1.0f alpha:0.3f];
+  return [[NSAttributedString alloc] initWithString:text attributes:@{NSForegroundColorAttributeName: color}];
   
-  BOOL _expireCCVTFHidden;
 }
 
 - (instancetype)init {
   
-  self = [super initWithFrame:(CGRect){CGPointZero, _panSize}];
+  self = [super init];
   if (self) {
+    self.userInteractionEnabled = YES;
     self.translatesAutoresizingMaskIntoConstraints = NO;
     
     self.backgroundColor = [UIColor clearColor];
     
-    _dynamycConstraints = [NSMutableArray array];
+    UIImageView *bgIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_area"]];
+    bgIV.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:bgIV];
     
-    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 44.0f, 44.0f)];
-    [cameraButton setImage:[UIImage imageNamed:@"camera_icon"] forState:UIControlStateNormal];
+    UIButton *cameraButton = [[UIButton alloc] init];
+    cameraButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [cameraButton setImage:[UIImage imageNamed:@"camera_icon_white"] forState:UIControlStateNormal];
     [cameraButton addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:cameraButton];
     
-    _panTF = [[OMNDeletedTextField alloc] init];
-    _panTF.rightViewMode = UITextFieldViewModeAlways;
-    _panTF.rightView = cameraButton;
-    _panTF.translatesAutoresizingMaskIntoConstraints = NO;
-    _panTF.placeholder = NSLocalizedString(@"Номер банковской карты", nil);
-    _panTF.keyboardType = UIKeyboardTypeNumberPad;
-    _panTF.delegate = self;
+    _panTF = [self numberTextField];
+    _panTF.attributedPlaceholder = [self attributedPlaceholderWithText:NSLocalizedString(@"Номер банковской карты", nil)];
     [self addSubview:_panTF];
     
-    _expireTF = [[OMNDeletedTextField alloc] init];
-    _expireTF.textAlignment = NSTextAlignmentLeft;
-    _expireTF.translatesAutoresizingMaskIntoConstraints = NO;
-    _expireTF.keyboardType = UIKeyboardTypeNumberPad;
-    _expireTF.delegate = self;
-    _expireTF.placeholder = [NSString stringWithFormat:@"MM%@YY", kMM_YYSeporator];
+    _expireTF = [self numberTextField];
+    _expireTF.attributedPlaceholder = [self attributedPlaceholderWithText:[NSString stringWithFormat:@"MM%@YY", kMM_YYSeporator]];
     [self addSubview:_expireTF];
     
-    _cvvTF = [[OMNDeletedTextField alloc] init];
-    _cvvTF.textAlignment = NSTextAlignmentLeft;
-    _cvvTF.translatesAutoresizingMaskIntoConstraints = NO;
-    _cvvTF.keyboardType = UIKeyboardTypeNumberPad;
-    _cvvTF.delegate = self;
-    _cvvTF.placeholder = @"CVV";
+    _cvvTF = [self numberTextField];
+    _cvvTF.attributedPlaceholder = [self attributedPlaceholderWithText:@"CVV"];
     [self addSubview:_cvvTF];
     
-  /*
+  
     _saveButton = [[UIButton alloc] init];
     [_saveButton addTarget:self action:@selector(saveTap) forControlEvents:UIControlEventTouchUpInside];
     _saveButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _saveButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f);
-    _saveButton.titleLabel.numberOfLines = 0;
-    _saveButton.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:15.0f];
-    _saveButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     _saveButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _saveButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     _saveButton.tintColor = [UIColor blackColor];
-    [_saveButton setImage:[UIImage imageNamed:@"not_selected_check_box_icon"] forState:UIControlStateNormal];
-    [_saveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_saveButton setImage:[UIImage imageNamed:@"selected_check_box_icon"] forState:UIControlStateSelected];
-    [_saveButton setImage:[UIImage imageNamed:@"selected_check_box_icon"] forState:UIControlStateSelected|UIControlStateHighlighted];
+    _saveButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f);
+    _saveButton.titleLabel.numberOfLines = 0;
+    _saveButton.titleLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:15.0f];
+    _saveButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     _saveButton.titleLabel.minimumScaleFactor = 0.1f;
+    [_saveButton setTitleColor:[UIColor colorWithWhite:120.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
     [_saveButton setTitle:NSLocalizedString(@"Сохранить данные для следующих платежей", nil) forState:UIControlStateNormal];
+    [_saveButton setImage:[UIImage imageNamed:@"checkbox"] forState:UIControlStateNormal];
+    [_saveButton setImage:[UIImage imageNamed:@"checkbox_galka"] forState:UIControlStateSelected];
+    [_saveButton setImage:[UIImage imageNamed:@"checkbox_galka"] forState:UIControlStateSelected|UIControlStateHighlighted];
+    _saveButton.selected = YES;
     [self addSubview:_saveButton];
-    */
-    self.clipsToBounds = YES;
-    
-    _views =
+
+    NSDictionary *views =
     @{
+      @"bgIV" : bgIV,
+      @"cameraButton" : cameraButton,
       @"panTF" : _panTF,
       @"cvvTF" : _cvvTF,
       @"expireTF" : _expireTF,
+      @"saveButton" : _saveButton,
       };
     
-    _metrics =
+    NSDictionary *metrics =
     [@{
-       @"height" : @(50.0f),
-       @"width" : @(100.0f),
-       @"offset" : @(28.0f),
+       @"height" : @(40.0f),
+       @"width" : @(80.0f),
+       @"textFieldsOffset" : @(25.0f),
+       @"cameraButtonSize" : @(44.0f),
        } mutableCopy];
     
-    NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[panTF]|" options:0 metrics:nil views:_views];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bgIV]-(10)-[saveButton(cameraButtonSize)]-(4)-|" options:kNilOptions metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bgIV]|" options:kNilOptions metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[saveButton]|" options:kNilOptions metrics:metrics views:views]];
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cameraButton(cameraButtonSize)]-4-|" options:kNilOptions metrics:metrics views:views]];
+    
+    NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[panTF]-(textFieldsOffset)-|" options:kNilOptions metrics:metrics views:views];
     [self addConstraints:panH];
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[expireTF(width)]-(offset)-[cvvTF(width)]" options:0 metrics:_metrics views:_views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-(20)-[expireTF]|" options:0 metrics:_metrics views:_views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[expireTF(width)]-(textFieldsOffset)-[cvvTF(width)]" options:kNilOptions metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[cameraButton(cameraButtonSize)][panTF(height)]-(8)-[expireTF(height)]" options:kNilOptions metrics:metrics views:views]];
 
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
-    _heightConstraint = [NSLayoutConstraint constraintWithItem:_expireTF attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
-    [self addConstraint:_heightConstraint];
-    _expireCCVTFHidden = YES;
+
+    [self setSaveButtonHidden:YES];
+    
   }
   return self;
 }
@@ -139,58 +149,22 @@ CGFloat kTextFieldsOffset = 20.0f;
 }
 
 - (void)saveTap {
+  
+  _saveButton.selected = !_saveButton.selected;
+  [self.delegate cardEnterControlSaveButtonStateDidChange:self];
+  
 }
 
 - (BOOL)saveButtonSelected {
-  return NO;
+  
+  return _saveButton.selected;
+  
 }
 
 - (void)setSaveButtonHidden:(BOOL)hidden {
-//  _metrics[@"saveButtonHeight"] = (hidden) ? (@(0.0f)) : (@(50.0f));
-//  _saveButton.hidden = hidden;
-  [self updateConstraintsAnimated:NO completion:nil];
-}
-
-- (void)setExpireCCVTFHidden:(BOOL)hidden animated:(BOOL)animated completion:(dispatch_block_t)completion {
-//  _metrics[@"expireTFHeight"] = (hidden) ? (@(1.0f)) : (@(50.0f));
   
-  _heightConstraint.constant = (hidden) ? (1.0f) : (50.0f);
+  _saveButton.hidden = hidden;
   
-  [self updateConstraintsAnimated:animated completion:completion];
-  _expireCCVTFHidden = hidden;
-}
-
-- (void)updateConstraintsAnimated:(BOOL)animated completion:(dispatch_block_t)completion {
-
-  
-  //  NSMutableArray *dynamycConstraints = [NSMutableArray array];
-//  NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]-(20)-[expireTF(expireTFHeight)]|" options:0 metrics:_metrics views:_views];
-//  NSArray *constraintsV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[panTF(height)]|" options:0 metrics:_metrics views:_views];
-
-//  [dynamycConstraints addObjectsFromArray:constraintsV];
-//  [self removeConstraints:_dynamycConstraints];
-//  _dynamycConstraints = dynamycConstraints;
-//  [self addConstraints:_dynamycConstraints];
-  
-  if (animated) {
-    
-    [UIView animateWithDuration:0.3f animations:^{
-      [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-      
-      if (completion) {
-        completion();
-      }
-      
-    }];
-    
-  }
-  else {
-    [self layoutIfNeeded];
-    if (completion) {
-      completion();
-    }
-  }
 }
 
 - (void)showExpireTF {
@@ -199,19 +173,7 @@ CGFloat kTextFieldsOffset = 20.0f;
     return;
   }
   
-  if (_expireCCVTFHidden) {
-    
-    [self setExpireCCVTFHidden:NO animated:YES completion:^{
-
-      [_cvvTF setNeedsDisplay];
-      [_expireTF becomeFirstResponder];
-      
-    }];
-    
-  }
-  else {
-    [_expireTF becomeFirstResponder];
-  }
+  [_expireTF becomeFirstResponder];
   
 }
 
@@ -230,15 +192,12 @@ CGFloat kTextFieldsOffset = 20.0f;
       0 == _expireTF.text.length &&
       _panTF.text.length < kDesiredPanLength) {
 
-    [self setExpireCCVTFHidden:YES animated:YES completion:^{
-      [_panTF becomeFirstResponder];
-    }];
+    [_panTF becomeFirstResponder];
     
   }
   else {
     [_panTF becomeFirstResponder];
   }
-  
   
 }
 
