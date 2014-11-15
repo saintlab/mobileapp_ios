@@ -157,8 +157,8 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 //  beacon.minor = @"2005";
 
 //  iico
-  beacon.major = @"1";
-  beacon.minor = @"VIP";
+//  beacon.major = @"1";
+//  beacon.minor = @"VIP";
 
 //table-9-at-shashlikoff
 //  beacon.UUIDString = @"F93C1AF8-FFB2-488A-A952-A250DB61DEC4";

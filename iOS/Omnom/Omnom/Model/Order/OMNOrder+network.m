@@ -94,3 +94,21 @@
 }
 
 @end
+
+@implementation NSArray (omn_restaurants)
+
+- (NSArray *)omn_decodeOrdersWithError:(NSError **)error {
+  
+  NSMutableArray *orders = [NSMutableArray arrayWithCapacity:[self count]];
+  for (id orderData in self) {
+    
+    OMNOrder *order = [[OMNOrder alloc] initWithJsonData:orderData];
+    [orders addObject:order];
+    
+  }
+  
+  return [orders copy];
+  
+}
+
+@end

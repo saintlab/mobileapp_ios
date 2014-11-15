@@ -26,5 +26,4 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 - (BOOL)readyForPush;
 - (void)showGreetingPush;
 
-
 @end

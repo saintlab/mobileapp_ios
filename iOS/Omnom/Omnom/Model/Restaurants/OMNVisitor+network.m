@@ -9,14 +9,9 @@
 #import "OMNVisitor+network.h"
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
+#import "OMNOrder+network.h"
 
 NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunchKey";
-
-@interface NSArray (omn_restaurants)
-
-- (NSArray *)decodeOrdersWithError:(NSError **)error;
-
-@end
 
 @implementation  OMNVisitor (omn_network)
 
@@ -45,7 +40,7 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
     NSString *path = [[NSBundle mainBundle] pathForResource:@"orders" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSArray *ordersData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    NSArray *orders = [ordersData decodeOrdersWithError:nil];
+    NSArray *orders = [ordersData omn_decodeOrdersWithError:nil];
     self.orders = orders;
     ordersBlock(orders);
     return;
@@ -58,7 +53,7 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
     if ([response isKindOfClass:[NSArray class]]) {
       
       NSArray *ordersData = response;
-      NSArray *orders = [ordersData decodeOrdersWithError:nil];
+      NSArray *orders = [ordersData omn_decodeOrdersWithError:nil];
       if (0 == orders.count) {
         [[OMNAnalitics analitics] logDebugEvent:@"NO_ORDERS" jsonRequest:path jsonResponse:response];
       }
@@ -192,24 +187,6 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
     OMNVisitorNotificationLaunchKey : [NSKeyedArchiver archivedDataWithRootObject:self],
     };
   [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-  
-}
-
-@end
-
-@implementation NSArray (omn_restaurants)
-
-- (NSArray *)decodeOrdersWithError:(NSError **)error {
-  
-  NSMutableArray *orders = [NSMutableArray arrayWithCapacity:[self count]];
-  for (id orderData in self) {
-    
-    OMNOrder *order = [[OMNOrder alloc] initWithJsonData:orderData];
-    [orders addObject:order];
-    
-  }
-  
-  return [orders copy];
   
 }
 

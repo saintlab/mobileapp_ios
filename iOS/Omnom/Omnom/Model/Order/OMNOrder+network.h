@@ -19,3 +19,9 @@ https://github.com/saintlab/backend/tree/master/applications/omnom#bill
 - (void)billCallStop:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock;
 
 @end
+
+@interface NSArray (omn_restaurants)
+
+- (NSArray *)omn_decodeOrdersWithError:(NSError **)error;
+
+@end

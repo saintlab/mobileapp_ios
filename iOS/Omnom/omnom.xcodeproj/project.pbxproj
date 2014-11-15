@@ -84,6 +84,7 @@
 		932B186F19AF3C80009E440E /* pay_done.caf in Resources */ = {isa = PBXBuildFile; fileRef = 932B186B19AF3C80009E440E /* pay_done.caf */; };
 		9332CAFF1A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */; };
 		9332CB001A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */; };
+		9332CB021A1653E000885017 /* mexico_orders_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 9332CB011A1653E000885017 /* mexico_orders_stub.json */; };
 		933A2E8A19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */; };
 		933A2E8B19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */; };
 		933AB0D619C1D4D8004D8F55 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 933AB0D919C1D4D8004D8F55 /* Localizable.strings */; };
@@ -505,6 +506,7 @@
 		932B186B19AF3C80009E440E /* pay_done.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pay_done.caf; sourceTree = "<group>"; };
 		9332CAFD1A15ECC800885017 /* OMNOrderTansactionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderTansactionInfo.h; sourceTree = "<group>"; };
 		9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTansactionInfo.m; sourceTree = "<group>"; };
+		9332CB011A1653E000885017 /* mexico_orders_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mexico_orders_stub.json; sourceTree = "<group>"; };
 		933A2E8819861CA5000055AB /* OMNOrderToRestaurantTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderToRestaurantTransition.h; sourceTree = "<group>"; };
 		933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderToRestaurantTransition.m; sourceTree = "<group>"; };
 		933D48E619E6445C004E591C /* OMNInteractiveTransitioningProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OMNInteractiveTransitioningProtocol.h; sourceTree = "<group>"; };
@@ -1312,6 +1314,7 @@
 		93676E1518D1E4FC00FC55F1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9332CB011A1653E000885017 /* mexico_orders_stub.json */,
 				93676E1618D1E4FC00FC55F1 /* omnomTests-Info.plist */,
 				93676E1718D1E4FC00FC55F1 /* InfoPlist.strings */,
 			);
@@ -1992,6 +1995,7 @@
 				939689C1195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
 				938F3A50198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
 				938F3A48198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */,
+				9332CB021A1653E000885017 /* mexico_orders_stub.json in Resources */,
 				937A37851981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
 				9389456C19B5957100C37C82 /* config.json in Resources */,
 				93D17D6519D260970066DCE7 /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
