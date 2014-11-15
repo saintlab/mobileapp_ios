@@ -22,6 +22,8 @@
 @implementation OMNAnalitics {
   Mixpanel *_mixpanel;
   Mixpanel *_mixpanelDebug;
+  
+  OMNUser *_user;
 }
 
 + (instancetype)analitics {
@@ -50,6 +52,8 @@
 }
 
 - (void)setUser:(OMNUser *)user {
+  
+  _user = user;
   
   if (nil == user) {
     [_mixpanel flush];
@@ -88,6 +92,7 @@
   }
   [_mixpanel.people set:userInfo];
   [_mixpanel registerSuperProperties:@{@"omn_user" : userInfo}];
+  [self updateUserDeviceTokenIfNeeded];
   [_mixpanel flush];
   
   [_mixpanelDebug.people set:userInfo];
@@ -213,6 +218,24 @@
     @"errorCode" : @(responseOperation.error.code),
     @"responseString" : (responseOperation.responseString) ? (responseOperation.responseString) : (@""),
     }];
+  
+}
+
+- (void)setDeviceToken:(NSData *)deviceToken {
+  
+  _deviceToken = deviceToken;
+  [self updateUserDeviceTokenIfNeeded];
+  
+}
+
+- (void)updateUserDeviceTokenIfNeeded {
+  
+  if (_user &&
+      _deviceToken) {
+    
+    [_mixpanel.people addPushDeviceToken:_deviceToken];
+    
+  }
   
 }
 

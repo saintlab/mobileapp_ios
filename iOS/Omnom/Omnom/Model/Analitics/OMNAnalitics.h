@@ -17,6 +17,8 @@
 
 + (instancetype)analitics;
 
+@property (nonatomic, strong) NSData *deviceToken;
+
 - (void)setUser:(OMNUser *)user;
 
 - (void)logRegister;

@@ -120,11 +120,28 @@ static NSString * const kPushNotificationsRequestedKey = @"pushNotificationsRequ
     else {
       _remoteNotificationRegisterCompletionBlock = [completion copy];
     }
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    [self registerForRemoteNotifications];
 
   }
   else {
+    
     completion(YES);
+    
+  }
+  
+}
+
+- (void)registerForRemoteNotifications {
+  
+  if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)]) {
+    
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+    
+  }
+  else {
+
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    
   }
   
 }

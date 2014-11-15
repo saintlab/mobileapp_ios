@@ -16,7 +16,7 @@
 #import <OMNMailRuAcquiring.h>
 #import "NSURL+omn_query.h"
 #import <OMNStyler.h>
-
+#import "OMNAnalitics.h"
 #import "OMNViewController.h"
 #import "OMNMailRUCardConfirmVC.h"
 
@@ -51,7 +51,11 @@
 #endif
   
   NSLog(@"%@", launchOptions);
-  [OMNAuthorisation authorisation];
+  if ([[OMNAuthorisation authorisation] pushNotificationsRequested]) {
+   
+    [[OMNAuthorisation authorisation] registerForRemoteNotifications];
+    
+  }
   
   if ([OMNConstants useBackgroundNotifications]) {
     [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
@@ -127,6 +131,7 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
   [[OMNAuthorisation authorisation] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  [OMNAnalitics analitics].deviceToken = deviceToken;
   NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken>%@", deviceToken);
 }
 
@@ -163,13 +168,19 @@
   completionHandler();
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+  
+  NSLog(@"%@", userInfo);
+  completionHandler(UIBackgroundFetchResultNoData);
+  
+}
+
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
   
   NSLog(@"didReceiveLocalNotification>%@", notification);
   if (notification.userInfo[OMNVisitorNotificationLaunchKey]) {
     [self startApplication:notification.userInfo];
   }
-  
   
 }
 
