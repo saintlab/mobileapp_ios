@@ -58,6 +58,7 @@ UITextFieldDelegate>
   
   _amountTF.adjustsFontSizeToFitWidth = YES;
   _amountTF.tintColor = [UIColor whiteColor];
+  _percentTF.tintColor = [UIColor whiteColor];
   [self setPercentValue:_amountPercentValue.percent];
   
 }
@@ -117,6 +118,7 @@ UITextFieldDelegate>
 }
 
 - (void)setPercentValue:(double)percentValue {
+  
   _percentTF.text = [NSString stringWithFormat:@"%.0f%%", percentValue];
   _amountPercentValue.percent = percentValue = MAX(0.0, percentValue);
   

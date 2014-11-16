@@ -81,7 +81,18 @@
 }
 
 - (void)finishLoading:(dispatch_block_t)completionBlock {
-  [_loaderView completeAnimation:completionBlock];
+  
+  if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+  
+    [_loaderView completeAnimation:completionBlock];
+    
+  }
+  else {
+
+    completionBlock();
+    
+  }
+  
 }
 
 - (void)showRetryMessageWithBlock:(dispatch_block_t)retryBlock {
