@@ -6,23 +6,23 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNLoginVC.h"
-#import "OMNUser.h"
-#import "OMNPhoneNumberTextFieldDelegate.h"
-#import "OMNConfirmCodeVC.h"
 #import "OMNAnalitics.h"
-#import "OMNNavigationBarProgressView.h"
-#import "OMNErrorTextField.h"
-#import <OMNStyler.h>
-#import "OMNRegisterUserVC.h"
-#import "OMNNonSelectableTextView.h"
-#import "UIBarButtonItem+omn_custom.h"
 #import "OMNChangePhoneVC.h"
+#import "OMNConfirmCodeVC.h"
+#import "OMNErrorTextField.h"
+#import "OMNLoginVC.h"
+#import "OMNNavigationBarProgressView.h"
+#import "OMNPhoneNumberTextFieldDelegate.h"
+#import "OMNRegisterUserVC.h"
+#import "OMNUser.h"
+#import "UIBarButtonItem+omn_custom.h"
+#import <OMNStyler.h>
+#import <TTTAttributedLabel.h>
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate,
 OMNChangePhoneVCDelegate,
-UITextViewDelegate> {
+TTTAttributedLabelDelegate> {
 }
 
 @end
@@ -30,7 +30,7 @@ UITextViewDelegate> {
 @implementation OMNLoginVC {
   
   OMNErrorTextField *_loginTF;
-  UITextView *_hintTextView;
+  TTTAttributedLabel *_hintLabel;
   OMNPhoneNumberTextFieldDelegate *_phoneNumberTextFieldDelegate;
   
   NSURL *_createUserUrl;
@@ -94,23 +94,31 @@ UITextViewDelegate> {
   _loginTF = [[OMNErrorTextField alloc] init];
   [self.view addSubview:_loginTF];
   
-  _hintTextView = [[OMNNonSelectableTextView alloc] init];
-  _hintTextView.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
-  _hintTextView.translatesAutoresizingMaskIntoConstraints = NO;
-  _hintTextView.textColor = colorWithHexString(@"D0021B");
-  _hintTextView.delegate = self;
-  _hintTextView.linkTextAttributes =
+  _hintLabel = [[TTTAttributedLabel alloc] init];
+  _hintLabel.font = FuturaOSFOmnomRegular(18.0f);
+  _hintLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _hintLabel.textColor = colorWithHexString(@"D0021B");
+  _hintLabel.numberOfLines = 0;
+  _hintLabel.delegate = self;
+  _hintLabel.linkAttributes =
   @{
+    (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
     NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
     NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
     };
-
-  [self.view addSubview:_hintTextView];
+  _hintLabel.activeLinkAttributes =
+  @{
+    (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
+    NSForegroundColorAttributeName : [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f],
+    NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
+    };
+  
+  [self.view addSubview:_hintLabel];
   
   NSDictionary *views =
   @{
     @"loginTF" : _loginTF,
-    @"hintTextView" : _hintTextView,
+    @"hintLabel" : _hintLabel,
     @"topLayoutGuide" : self.topLayoutGuide,
     };
   
@@ -120,16 +128,13 @@ UITextViewDelegate> {
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[loginTF]-|" options:0 metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintTextView]-|" options:0 metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]-[hintTextView]" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintLabel]-|" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]-[hintLabel]" options:0 metrics:nil views:views]];
   
   _loginTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
   _loginTF.textField.keyboardType = UIKeyboardTypePhonePad;
 
   [self setResetPhoneHint];
-//  [_vkButton setBackgroundImage:[UIImage imageNamed:@"vk_login_icon"] forState:UIControlStateNormal];
-//  [_fbButton setBackgroundImage:[UIImage imageNamed:@"fb_login_icon"] forState:UIControlStateNormal];
-//  [_twitterButton setBackgroundImage:[UIImage imageNamed:@"twitter_login_icon"] forState:UIControlStateNormal];
   
 }
 
@@ -145,22 +150,18 @@ UITextViewDelegate> {
      NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
      } range:NSMakeRange(0, text.length)];
   
-  [attributedString addAttribute:NSLinkAttributeName value:_createUserUrl range:[text rangeOfString:buttonText]];
-
-  _hintTextView.attributedText = attributedString;
-  _hintTextView.textAlignment = NSTextAlignmentCenter;
-  _hintTextView.hidden = NO;
+  _hintLabel.attributedText = attributedString;
+  [_hintLabel addLinkToURL:_createUserUrl withRange:[text rangeOfString:buttonText]];
+  _hintLabel.hidden = NO;
   
 }
 
 - (void)setResetPhoneHint {
   
   NSString *text = NSLocalizedString(@"LOGIN_RESET_PHONE_HINT", @"У меня сменился номер телефона");
-  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
-  [attributedString addAttribute:NSLinkAttributeName value:_resetPhoneUrl range:NSMakeRange(0, text.length)];
-  _hintTextView.attributedText = attributedString;
-  _hintTextView.textAlignment = NSTextAlignmentLeft;
-  _hintTextView.hidden = NO;
+  _hintLabel.text = text;
+  [_hintLabel addLinkToURL:_resetPhoneUrl withRange:NSMakeRange(0, text.length)];
+  _hintLabel.hidden = NO;
   
 }
 
@@ -168,16 +169,6 @@ UITextViewDelegate> {
   
   [self.delegate authorizationVCDidCancel:self];
   
-}
-
-- (IBAction)vkLoginTap:(id)sender {
-  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"тут должен быть логин через VK", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
-}
-- (IBAction)twitterLoginTap:(id)sender {
-  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"тут должен быть логин через twitter", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
-}
-- (IBAction)fbLoginTap:(id)sender {
-  [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"тут должен быть логин через facebook", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Ok", nil) otherButtonTitles:nil] show];
 }
 
 - (void)loginTap {
@@ -211,10 +202,11 @@ UITextViewDelegate> {
   [self setNextButtonLoading:NO];
   
   if (error) {
-    
-    //no such user error code
+
     if (OMNErrorNoSuchUser == error.code) {
+      
       [self setCreateUserHint];
+      
     }
     [_loginTF setErrorText:error.localizedDescription];
     
@@ -226,7 +218,9 @@ UITextViewDelegate> {
   }
   
   [UIView animateWithDuration:0.3 animations:^{
+    
     [self.view layoutIfNeeded];
+    
   }];
   
 }
@@ -253,18 +247,6 @@ UITextViewDelegate> {
   changePhoneVC.delegate = self;
   [self.navigationController pushViewController:changePhoneVC animated:YES];
   
-}
-
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange {
-  
-  if ([url isEqual:_createUserUrl]) {
-    [self createUser];
-  }
-  else if ([url isEqual:_resetPhoneUrl]) {
-    [self resetPhone];
-  }
-  
-  return NO;
 }
 
 - (void)requestAuthorizationCode {
@@ -324,6 +306,20 @@ UITextViewDelegate> {
   [self.delegate authorizationVC:self didReceiveToken:token fromRegstration:NO];
   
 }
+
+#pragma mark - TTTAttributedLabelDelegate
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+  
+  if ([url isEqual:_createUserUrl]) {
+    [self createUser];
+  }
+  else if ([url isEqual:_resetPhoneUrl]) {
+    [self resetPhone];
+  }
+  
+}
+
 
 - (void)didReceiveMemoryWarning {
   [super didReceiveMemoryWarning];

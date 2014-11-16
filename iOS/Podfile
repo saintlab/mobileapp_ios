@@ -23,6 +23,7 @@ def import_all
   pod 'CardIO'
   pod 'BlocksKit'
   pod 'Mixpanel'
+  pod 'TTTAttributedLabel'
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"

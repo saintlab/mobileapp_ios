@@ -79,6 +79,10 @@
   
 }
 
+- (void)cardEnterControlSaveButtonStateDidChange:(OMNCardEnterControl *)control {
+  
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
