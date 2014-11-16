@@ -30,8 +30,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  
-  
   _refreshControl = [[UIRefreshControl alloc] init];
   [_refreshControl addTarget:self action:@selector(refreshOrders) forControlEvents:UIControlEventValueChanged];
   
@@ -93,13 +91,7 @@
  
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-//  OMNRestaurant *restaurant = self.restaurants[indexPath.row];
-//  OMNRestaurantMenuVC *restaurantMenuVC = [[OMNRestaurantMenuVC alloc] initWithRestaurant:restaurant table:nil];
-//  restaurantMenuVC.navigationItem.title = restaurant.title;
-//  [self.navigationController pushViewController:restaurantMenuVC animated:YES];
-  
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {  
 }
 
 @end

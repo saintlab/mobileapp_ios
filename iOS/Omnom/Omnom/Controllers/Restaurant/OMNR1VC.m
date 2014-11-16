@@ -78,20 +78,6 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
   _isViewVisible = YES;
   self.navigationItem.title = @"";
   
-  if (_visitor.restaurant.is_demo) {
-    
-    OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
-    [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
-    [cancelButton addTarget:_restaurantMediator action:@selector(exitRestaurant) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
-    
-  }
-  else {
-
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor whiteColor] target:self action:@selector(showUserProfile)];
-    
-  }
-  
   UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
   [self.view addGestureRecognizer:panGR];
   
@@ -109,6 +95,23 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
   
   [super viewWillAppear:animated];
   _viewDidAppear = YES;
+  
+  if (_visitor.restaurant.is_demo) {
+    
+    OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
+    [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
+    [cancelButton addTarget:_restaurantMediator action:@selector(exitRestaurant) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+    self.navigationItem.rightBarButtonItem = nil;
+    
+  }
+  else {
+    
+    self.navigationItem.leftBarButtonItem = nil;
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor whiteColor] target:self action:@selector(showUserProfile)];
+    
+  }
+  
   [self beginCircleAnimationIfNeeded];
   
 }

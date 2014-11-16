@@ -130,6 +130,7 @@ UIGestureRecognizerDelegate>
   [UIView animateWithDuration:0.3 animations:^{
     navigationBarLayer.opacity = 1.0f;
   }];
+  
 }
 
 - (void)loadRestaurantInfoIfNeeded {
@@ -217,8 +218,10 @@ UIGestureRecognizerDelegate>
 }
 
 - (void)closeTap {
+  
   _disableSwipeTransition = YES;
   [self.delegate restaurantInfoVCDidFinish:self];
+  
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
