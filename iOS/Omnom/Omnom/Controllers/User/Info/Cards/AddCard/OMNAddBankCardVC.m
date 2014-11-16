@@ -47,6 +47,9 @@ OMNCardEnterControlDelegate>
   [self updateSubmitButton];
   [self setRightButtonEnabled:NO];
   
+  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(bgTap)];
+  [self.view addGestureRecognizer:tapGR];
+  
 }
 
 - (void)setup {
@@ -76,6 +79,12 @@ OMNCardEnterControlDelegate>
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:bankCardDescriptionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-(>=0)-[bankCardDescriptionView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
 
+}
+
+- (void)bgTap {
+  
+  [self.view endEditing:YES];
+  
 }
 
 - (void)setRightButtonEnabled:(BOOL)enabled {

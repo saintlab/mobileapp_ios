@@ -137,6 +137,8 @@
 		93535F13198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535F11198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m */; };
 		935C284219066755003B4881 /* fill-form in Resources */ = {isa = PBXBuildFile; fileRef = 935C283C19066737003B4881 /* fill-form */; };
 		935C284319066755003B4881 /* jquery-2.0.3.min in Resources */ = {isa = PBXBuildFile; fileRef = 935C283D19066737003B4881 /* jquery-2.0.3.min */; };
+		935C35571A188BF0006C8550 /* new_guest_loud.caf in Resources */ = {isa = PBXBuildFile; fileRef = 935C35561A188BF0006C8550 /* new_guest_loud.caf */; };
+		935C35581A188BF0006C8550 /* new_guest_loud.caf in Resources */ = {isa = PBXBuildFile; fileRef = 935C35561A188BF0006C8550 /* new_guest_loud.caf */; };
 		9366557C19DA5DED00EF7098 /* OMNQR.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366557B19DA5DED00EF7098 /* OMNQR.m */; };
 		9366557D19DA5DED00EF7098 /* OMNQR.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366557B19DA5DED00EF7098 /* OMNQR.m */; };
 		9366558119DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */; };
@@ -556,6 +558,7 @@
 		93535F11198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchBeaconToPayOrderTransition.m; sourceTree = "<group>"; };
 		935C283C19066737003B4881 /* fill-form */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fill-form"; sourceTree = "<group>"; };
 		935C283D19066737003B4881 /* jquery-2.0.3.min */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "jquery-2.0.3.min"; sourceTree = "<group>"; };
+		935C35561A188BF0006C8550 /* new_guest_loud.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = new_guest_loud.caf; sourceTree = "<group>"; };
 		9366557A19DA5DED00EF7098 /* OMNQR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNQR.h; sourceTree = "<group>"; };
 		9366557B19DA5DED00EF7098 /* OMNQR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNQR.m; sourceTree = "<group>"; };
 		9366557F19DA7F0600EF7098 /* OMNRestaurantActionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantActionsVC.h; sourceTree = "<group>"; };
@@ -1161,6 +1164,7 @@
 			children = (
 				932B186A19AF3C80009E440E /* new_guest.caf */,
 				932B186B19AF3C80009E440E /* pay_done.caf */,
+				935C35561A188BF0006C8550 /* new_guest_loud.caf */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -1952,6 +1956,7 @@
 				938F3A4F198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				932B186E19AF3C80009E440E /* pay_done.caf in Resources */,
+				935C35571A188BF0006C8550 /* new_guest_loud.caf in Resources */,
 				9389456B19B5957100C37C82 /* config.json in Resources */,
 				939F991619752BE90051822E /* OMNBankCardsVC.xib in Resources */,
 				93676E0818D1E4FC00FC55F1 /* Images.xcassets in Resources */,
@@ -1979,6 +1984,7 @@
 				93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
 				939689BA195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				9390D2621966E559007E13AB /* OMNOrderCell.json in Resources */,
+				935C35581A188BF0006C8550 /* new_guest_loud.caf in Resources */,
 				93EDD46E19B86D9F0017B6ED /* config_prod.json in Resources */,
 				9390D2651966E945007E13AB /* UINavigationBar.json in Resources */,
 				938F3A53198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
