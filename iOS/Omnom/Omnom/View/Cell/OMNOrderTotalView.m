@@ -13,7 +13,7 @@
 #import "OMNToolbarButton.h"
 #import <BlocksKit+UIKit.h>
 
-NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
+NSString * const kSetOrderIdentifier = @"kSetOrderIdentifier";
 
 @implementation OMNOrderTotalView {
   
@@ -60,11 +60,7 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
   [self addSubview:_editButton];
   
   _cancelButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"cancel_split_icon"] title:NSLocalizedString(@"SPLIT_CANCEL_TITLE", @"Отменить") color:colorWithHexString(@"888888")];
-  [_cancelButton bk_addEventHandler:^(id sender) {
-    
-    [weakSelf.delegate orderTotalViewDidCancel:weakSelf];
-    
-  } forControlEvents:UIControlEventTouchUpInside];
+  [_cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
   _cancelButton.alpha = 0.0f;
   _cancelButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self addSubview:_cancelButton];
@@ -92,14 +88,34 @@ NSString * const OMNOrderTotalViewIdentifier = @"OMNOrderTotalViewIdentifier";
   
 }
 
-- (void)setOrder:(OMNOrder *)order {
+- (void)cancelTap {
   
+  [_order deselectAllItems];
+  [self.delegate orderTotalViewDidCancel:self];
+  
+}
+
+- (void)setOrder:(OMNOrder *)order {
+
+  [_order bk_removeObserversWithIdentifier:kSetOrderIdentifier];
   _order = order;
+  __weak typeof(self)weakSelf = self;
+  [_order bk_addObserverForKeyPath:NSStringFromSelector(@selector(hasSelectedItems)) identifier:kSetOrderIdentifier options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial task:^(id obj, NSDictionary *change) {
+    
+    [weakSelf updateButtons];
+    
+  }];
+  
+}
+
+- (void)updateButtons {
   
   BOOL hasSelectedItems = _order.hasSelectedItems;
-  _splitButton.alpha = (hasSelectedItems) ? (0.0f) : (1.0f);
-  _editButton.alpha = (hasSelectedItems) ? (1.0f) : (0.0f);
-  _cancelButton.alpha = (hasSelectedItems) ? (1.0f) : (0.0f);
+  [UIView transitionWithView:self duration:0.3 options:kNilOptions animations:^{
+    _splitButton.alpha = (hasSelectedItems) ? (0.0f) : (1.0f);
+    _editButton.alpha = (hasSelectedItems) ? (1.0f) : (0.0f);
+    _cancelButton.alpha = (hasSelectedItems) ? (1.0f) : (0.0f);
+  } completion:nil];
   
 }
 

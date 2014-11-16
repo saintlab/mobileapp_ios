@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, SplitType) {
   kSplitTypeNone = 0,
   kSplitTypePercent,
   kSplitTypeOrders,
-  kSplitTypeNumberOfGuersts,
+  kSplitTypeNumberOfGuests,
 };
 
 extern NSString *stringFromTipType(TipType tipType);
@@ -76,6 +76,7 @@ extern NSString *stringFromSplitType(SplitType splitType);
 - (long long)totalAmount;
 - (long long)selectedItemsTotal;
 
+- (void)selectionDidChange;
 - (void)deselectAllItems;
 
 @end

@@ -34,7 +34,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     case kSplitTypePercent: {
       string = @"by_percentages";
     } break;
-    case kSplitTypeNumberOfGuersts: {
+    case kSplitTypeNumberOfGuests: {
       string = @"by_guests";
     } break;
     case kSplitTypeOrders: {
@@ -153,8 +153,10 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 }
 
 - (void)setEnteredAmount:(long long)enteredAmount {
+  
   _enteredAmount = enteredAmount;
   _enteredAmountChanged = YES;
+  
 }
 
 - (long long)totalAmount {
@@ -284,10 +286,13 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 }
 
 - (OMNTip *)customTip {
+  
   return _tips[3];
+  
 }
 
 - (void)setCustomTip:(OMNTip *)customTip {
+  
   if (customTip.amount) {
     self.tipType = kTipTypeCustomAmount;
   }
@@ -295,15 +300,25 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     self.tipType = kTipTypeCustomPercent;
   }
   _tips[3] = customTip;
+  
+}
+
+- (void)selectionDidChange {
+  
+  [self willChangeValueForKey:@"hasSelectedItems"];
+  [self didChangeValueForKey:@"hasSelectedItems"];
+  
 }
 
 - (void)deselectAllItems {
   
+  [self willChangeValueForKey:@"hasSelectedItems"];
   [_guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
     
     [guest deselectAllItems];
     
   }];
+  [self didChangeValueForKey:@"hasSelectedItems"];
   
 }
 

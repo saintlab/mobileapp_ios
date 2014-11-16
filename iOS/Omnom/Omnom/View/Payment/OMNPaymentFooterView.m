@@ -274,6 +274,7 @@
     
     _order.splitType = kSplitTypePercent;
     _order.enteredAmount = _amountPercentControl.amountPercentValue.amount;
+    [_order deselectAllItems];
     
   }
   

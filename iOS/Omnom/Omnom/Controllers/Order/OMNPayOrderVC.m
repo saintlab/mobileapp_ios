@@ -92,7 +92,8 @@ OMNOrderTotalViewDelegate>
   }
   
   _paymentView.order = _order;
-
+  _orderTotalView.order = _order;
+  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
@@ -103,7 +104,6 @@ OMNOrderTotalViewDelegate>
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  _orderTotalView.order = _order;
   [self.navigationController setNavigationBarHidden:NO animated:animated];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"nav_gray_bg"] forBarMetrics:UIBarMetricsDefault];
   self.navigationController.navigationBar.shadowImage = nil;
@@ -178,6 +178,7 @@ OMNOrderTotalViewDelegate>
 - (void)orderDidChange:(NSNotification *)n {
 
   _paymentView.order = _order;
+  _orderTotalView.order = _order;
   [self.tableView reloadData];
   [self layoutTableView];
   
@@ -251,7 +252,7 @@ OMNOrderTotalViewDelegate>
 
 - (IBAction)payTap:(id)sender {
   
-  if (_paymentView.order.paymentValueIsTooHigh) {
+  if (_order.paymentValueIsTooHigh) {
     
     __weak typeof(self)weakSelf = self;
     [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -298,7 +299,17 @@ OMNOrderTotalViewDelegate>
   
   _order.enteredAmount = total;
   _order.splitType = splitType;
-  _paymentView.order = _order;
+  if (kSplitTypeNumberOfGuests == splitType) {
+    
+    [_order deselectAllItems];
+    
+  }
+  else {
+    
+    [_order selectionDidChange];
+    
+  }
+  
   [self.navigationController popToViewController:self animated:YES];
   
 }
@@ -383,11 +394,6 @@ OMNOrderTotalViewDelegate>
 }
 
 - (void)orderTotalViewDidCancel:(OMNOrderTotalView *)orderTotalView {
-  
-  [_order deselectAllItems];
-  [UIView transitionWithView:_orderTotalView duration:0.3 options:kNilOptions animations:^{
-    _orderTotalView.order = _order;
-  } completion:nil];
   
 }
 

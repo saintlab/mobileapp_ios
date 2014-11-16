@@ -134,7 +134,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
     splitType = kSplitTypeOrders;
   }
   else if ([[self.childViewControllers objectAtIndex:0] isEqual:self.secondViewController]) {
-    splitType = kSplitTypeNumberOfGuersts;
+    splitType = kSplitTypeNumberOfGuests;
   }
   
   [self.delegate calculatorVC:self splitType:splitType didFinishWithTotal:_total];
