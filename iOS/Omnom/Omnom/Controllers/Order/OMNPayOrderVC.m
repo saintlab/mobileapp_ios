@@ -6,30 +6,29 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNPayOrderVC.h"
-#import "OMNOrderDataSource.h"
-#import "OMNPaymentFooterView.h"
-#import <BlocksKit+UIKit.h>
 #import "GRateAlertView.h"
-#import "OMNCalculatorVC.h"
-#import "OMNOrder.h"
 #import "OMNAmountPercentControl.h"
-#import "UIView+frame.h"
-#import <BlocksKit/UIAlertView+BlocksKit.h>
 #import "OMNAnalitics.h"
-#import "OMNOrdersVC.h"
-#import "OMNRatingVC.h"
-#import <BlocksKit+UIKit.h>
-#import "OMNVisitor.h"
+#import "OMNCalculatorVC.h"
 #import "OMNMailRUPayVC.h"
-#import "OMNNavigationController.h"
 #import "OMNMailRuBankCardsModel.h"
-#import <OMNStyler.h>
+#import "OMNNavigationController.h"
+#import "OMNOrder.h"
+#import "OMNOrderDataSource.h"
 #import "OMNOrderTableView.h"
-#import "UIImage+omn_helper.h"
-#import "UIBarButtonItem+omn_custom.h"
 #import "OMNOrderTotalView.h"
+#import "OMNOrdersVC.h"
+#import "OMNPayOrderVC.h"
+#import "OMNPaymentFooterView.h"
+#import "OMNRatingVC.h"
 #import "OMNSelectOrderButton.h"
+#import "OMNVisitor.h"
+#import "UIBarButtonItem+omn_custom.h"
+#import "UIImage+omn_helper.h"
+#import "UIView+frame.h"
+#import <BlocksKit+UIKit.h>
+#import <BlocksKit/UIAlertView+BlocksKit.h>
+#import <OMNStyler.h>
 
 @interface OMNPayOrderVC ()
 <OMNCalculatorVCDelegate,
@@ -309,7 +308,7 @@ OMNOrderTotalViewDelegate>
     [_order selectionDidChange];
     
   }
-  
+  _paymentView.order = _order;
   [self.navigationController popToViewController:self animated:YES];
   
 }
