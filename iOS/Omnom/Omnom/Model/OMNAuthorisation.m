@@ -15,7 +15,8 @@
 #import "OMNAnalitics.h"
 
 static NSString * const kAccountName = @"test_account6";
-static NSString * const kPushNotificationsRequestedKey = @"pushNotificationsRequested";
+static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";
+static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotificationsRequestedKey";
 
 @interface OMNAuthorisation ()
 
@@ -62,17 +63,31 @@ static NSString * const kPushNotificationsRequestedKey = @"pushNotificationsRequ
 }
 
 -(void)setUser:(OMNUser *)user {
+  
   _user = user;
   [[OMNAnalitics analitics] setUser:user];
   [Crashlytics setUserEmail:user.email];
   [Crashlytics setUserName:user.id];
   [Crashlytics setUserIdentifier:[OMNConstants baseUrlString]];
+  
 }
 
 - (BOOL)pushNotificationsRequested {
   
-  BOOL pushNotificationsRequested = [[SSKeychain passwordForService:kPushNotificationsRequestedKey account:kAccountName] boolValue];
+  BOOL pushNotificationsRequested = NO;
+  if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+    
+    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS8PushNotificationsRequestedKey account:kAccountName] boolValue];
+    
+  }
+  else {
+    
+    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS7PushNotificationsRequestedKey account:kAccountName] boolValue];
+    
+  }
+
   return pushNotificationsRequested;
+  
 }
 
 #ifdef __IPHONE_8_0
@@ -100,34 +115,36 @@ static NSString * const kPushNotificationsRequestedKey = @"pushNotificationsRequ
 
 - (void)requestPushNotifications:(void(^)(BOOL))completion {
   
-  if (NO == self.pushNotificationsRequested) {
-    [SSKeychain setPassword:@"YES" forService:kPushNotificationsRequestedKey account:kAccountName];
-
-    UIApplication *application = [UIApplication sharedApplication];
-
+  if (self.pushNotificationsRequested) {
+    
+    completion(YES);
+    return;
+    
+  }
+  
+  UIApplication *application = [UIApplication sharedApplication];
+  
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
+  
+  if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
     
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-      [application performSelector:@selector(registerForRemoteNotifications) withObject:nil];
-#ifdef __IPHONE_8_0
-      _userNotificationRegisterCompletionBlock = [completion copy];
-      [[UIApplication sharedApplication] registerUserNotificationSettings:[self notificationSettings]];
-#endif
-      
+    [SSKeychain setPassword:@"YES" forService:kIOS8PushNotificationsRequestedKey account:kAccountName];
+    _userNotificationRegisterCompletionBlock = [completion copy];
+    [application registerUserNotificationSettings:[self notificationSettings]];
+    
 #pragma clang diagnostic pop
-    }
-    else {
-      _remoteNotificationRegisterCompletionBlock = [completion copy];
-    }
-    [self registerForRemoteNotifications];
-
+    
   }
   else {
     
-    completion(YES);
+    [SSKeychain setPassword:@"YES" forService:kIOS7PushNotificationsRequestedKey account:kAccountName];
+    _remoteNotificationRegisterCompletionBlock = [completion copy];
     
   }
+  
+  //anyway we need to register for remote notifications to obtain device token
+  [self registerForRemoteNotifications];
   
 }
 

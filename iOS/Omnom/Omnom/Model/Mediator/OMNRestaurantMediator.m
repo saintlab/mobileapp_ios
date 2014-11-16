@@ -154,12 +154,16 @@ OMNPayOrderVCDelegate>
       if (searchBeaconVC) {
 
         [searchBeaconVC finishLoading:^{
+          
           [weakSelf checkPushNotificationForVisitor:visitor];
+          
         }];
         
       }
       else {
+        
         [weakSelf checkPushNotificationForVisitor:visitor];
+        
       }
       button.enabled = YES;
 
