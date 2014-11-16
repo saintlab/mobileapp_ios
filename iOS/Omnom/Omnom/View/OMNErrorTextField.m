@@ -9,7 +9,6 @@
 #import "OMNErrorTextField.h"
 #import <OMNStyler.h>
 #import "OMNConstants.h"
-#import "OMNNonSelectableTextView.h"
 
 @interface OMNErrorTextField ()
 

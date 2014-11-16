@@ -19,12 +19,12 @@
 #import "OMNDotTextField.h"
 #import "OMNLabeledTextField.h"
 #import <OMNStyler.h>
-#import "OMNCardEnterErrorView.h"
+#import "OMNCardEnterErrorLabel.h"
 #import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate,
-UITextViewDelegate>
+TTTAttributedLabelDelegate>
 
 @end
 
@@ -32,7 +32,7 @@ UITextViewDelegate>
   UIScrollView *_scrollView;
   OMNBankCardInfo *_bankCardInfo;
   OMNErrorTextField *_cardHoldValueTF;
-  OMNCardEnterErrorView *_errorTextView;
+  OMNCardEnterErrorLabel *_errorLabel;
   NSString *_detailedText;
 }
 
@@ -56,10 +56,7 @@ UITextViewDelegate>
   self.automaticallyAdjustsScrollViewInsets = NO;
   
   [self setupView];
-  
-  _errorTextView.textColor = colorWithHexString(@"D0021B");
-  _errorTextView.font = FuturaOSFOmnomRegular(15.0f);
-  
+    
   _detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
   [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:_detailedText];
   _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00 %@", omnCommaString(), kRubleSign];
@@ -74,10 +71,14 @@ UITextViewDelegate>
   [super viewDidAppear:animated];
 
   if (_bankCardInfo.card_id) {
+    
     [self setCard_id:_bankCardInfo.card_id];
+    
   }
   else {
+    
     [self registerCard];
+    
   }
   
 //  _cardHoldValueTF.textField.enabled = YES;
@@ -122,12 +123,12 @@ UITextViewDelegate>
   _cardHoldValueTF.textField.delegate = self;
   [contentView addSubview:_cardHoldValueTF];
   
-  _errorTextView = [[OMNCardEnterErrorView alloc] init];
-  _errorTextView.delegate = self;
-  _errorTextView.translatesAutoresizingMaskIntoConstraints = NO;
-  _errorTextView.backgroundColor = backgroundColor;
-  _errorTextView.opaque = YES;
-  [contentView addSubview:_errorTextView];
+  _errorLabel = [[OMNCardEnterErrorLabel alloc] init];
+  _errorLabel.delegate = self;
+  _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _errorLabel.backgroundColor = backgroundColor;
+  _errorLabel.opaque = YES;
+  [contentView addSubview:_errorLabel];
   
   NSDictionary *views =
   @{
@@ -135,7 +136,7 @@ UITextViewDelegate>
     @"topLayoutGuide" : self.topLayoutGuide,
     @"scroll" : _scrollView,
     @"contentView" : contentView,
-    @"errorTextView" : _errorTextView,
+    @"errorLabel" : _errorLabel,
     };
   
   NSDictionary *metrics =
@@ -146,9 +147,9 @@ UITextViewDelegate>
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:metrics views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[errorTextView]-|" options:0 metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[errorLabel]-|" options:0 metrics:metrics views:views]];
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardHoldValueTF]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorTextView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeft relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
@@ -182,9 +183,9 @@ UITextViewDelegate>
     [_cardHoldValueTF.textField becomeFirstResponder];
     [self addDoneButton];
     
-    [UIView transitionWithView:_errorTextView duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    [UIView transitionWithView:_errorLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
-      [_errorTextView setHelpText];
+      [_errorLabel setHelpText];
       
     } completion:nil];
     
@@ -216,7 +217,7 @@ UITextViewDelegate>
 - (void)cardDidVerify {
 
   [_cardHoldValueTF setError:NO];
-  _errorTextView.attributedText = nil;
+  _errorLabel.attributedText = nil;
   [_bankCardInfo logCardRegister];
   if (self.didFinishBlock) {
     self.didFinishBlock();
@@ -229,22 +230,22 @@ UITextViewDelegate>
   [self addDoneButton];
   [_cardHoldValueTF setError:YES];
   
-  [UIView transitionWithView:_errorTextView duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+  [UIView transitionWithView:_errorLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
     if (kOMNMailRuErrorCodeUnknown == error.code) {
       
-      [_errorTextView setUnknownError];
+      [_errorLabel setUnknownError];
       
     }
     else if (kOMNMailRuErrorCodeCardAmount == error.code) {
       
-      [_errorTextView setWrongAmountError];
+      [_errorLabel setWrongAmountError];
       
     }
     else {
       
       NSError *internetError = [error omn_internetError];
-      [_errorTextView setErrorText:internetError.localizedDescription];
+      [_errorLabel setErrorText:internetError.localizedDescription];
       
     }
     
@@ -297,7 +298,7 @@ UITextViewDelegate>
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_REGISTER" parametrs:response];
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"repeat_icon_small"] color:[UIColor blackColor] target:self action:@selector(registerCard)];
-    [_errorTextView setUnknownError];
+    [_errorLabel setUnknownError];
     
   }
 
@@ -380,15 +381,14 @@ UITextViewDelegate>
   [_cardHoldValueTF.textField setSelectedTextRange:[_cardHoldValueTF.textField textRangeFromPosition:start toPosition:end]];
 }
 
-#pragma mark - UITextViewDelegate
+#pragma mark - TTTAttributedLabelDelegate
 
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
   
   if (self.noSMSBlock) {
     self.noSMSBlock();
   }
   
-  return NO;
 }
 
 @end

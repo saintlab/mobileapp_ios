@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OMNNonSelectableTextView.h"
+#import <TTTAttributedLabel.h>
 
-@interface OMNDisclamerView : OMNNonSelectableTextView
+@interface OMNDisclamerView : TTTAttributedLabel
 
 @end

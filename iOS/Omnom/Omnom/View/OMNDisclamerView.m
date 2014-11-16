@@ -11,7 +11,7 @@
 #import "OMNConstants.h"
 
 @interface OMNDisclamerView ()
-<UITextViewDelegate>
+<TTTAttributedLabelDelegate>
 
 @end
 
@@ -33,7 +33,7 @@
   
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.delegate = self;
-  
+  self.numberOfLines = 0;
   NSString *buttonText = NSLocalizedString(@"Пользовательское соглашение", nil);
   NSString *text = [NSString stringWithFormat:@"%@\n%@", NSLocalizedString(@"Нажимая «Далее», вы принимаете", nil), buttonText];
   
@@ -44,19 +44,31 @@
     NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
     } range:NSMakeRange(0, text.length)];
   
-  [attributedString addAttribute:NSLinkAttributeName value:[NSURL URLWithString:@"http://legal.saintlab.com/omnom/user-agreement/"] range:[text rangeOfString:buttonText]];
-  
-  self.linkTextAttributes =
+  self.linkAttributes =
   @{
+    (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
     NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
     NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
     };
+  self.activeLinkAttributes =
+  @{
+    (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
+    NSForegroundColorAttributeName : [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f],
+    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
+    };
+
+  [self addLinkToURL:[NSURL URLWithString:@"http://legal.saintlab.com/omnom/user-agreement/"] withRange:[text rangeOfString:buttonText]];
+  
   self.attributedText = attributedString;
 
 }
 
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)url inRange:(NSRange)characterRange {
-  return YES;
+#pragma mark - TTTAttributedLabelDelegate
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+  
+  [[UIApplication sharedApplication] openURL:url];
+
 }
 
 @end

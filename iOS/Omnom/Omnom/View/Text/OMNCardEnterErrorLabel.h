@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNNonSelectableTextView.h"
+#import <TTTAttributedLabel.h>
 
-@interface OMNCardEnterErrorView : OMNNonSelectableTextView
+@interface OMNCardEnterErrorLabel : TTTAttributedLabel
 
 - (void)setHelpText;
 - (void)setWrongAmountError;
