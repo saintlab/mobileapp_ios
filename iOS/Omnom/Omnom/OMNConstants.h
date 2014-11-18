@@ -29,6 +29,8 @@ enum {
   
 };
 
+extern const CGFloat kOrderTableFooterHeight;
+
 @interface OMNConstants : NSObject
 
 + (void)setCustomConfigName:(NSString *)name;

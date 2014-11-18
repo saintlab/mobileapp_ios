@@ -60,13 +60,24 @@
     moveView.frame = finalFrame;
 
   } completion:^(BOOL finished) {
-    // Clean up
-    [moveView removeFromSuperview];
-    fromViewController.tableView.hidden = NO;
+    
     cell.hidden = NO;
     
-    // Declare that we've finished
-    [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+    [UIView animateWithDuration:0.3 animations:^{
+      
+      moveView.alpha = 0.0f;
+      
+    } completion:^(BOOL finished) {
+    
+      // Clean up
+      [moveView removeFromSuperview];
+      fromViewController.tableView.hidden = NO;
+
+      // Declare that we've finished
+      [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+
+    }];
+    
   }];
   
 }

@@ -9,9 +9,11 @@
 #import "OMNOrderViewCell.h"
 #import "OMNOrderDataSource.h"
 #import "OMNOrderTableView.h"
+#import "OMNOrderTotalView.h"
 
 @implementation OMNOrderViewCell {
   OMNOrderDataSource *_orderDataSource;
+  OMNOrderTotalView *_orderTotalView;
   UILabel *_label;
 }
 
@@ -44,6 +46,9 @@
     _tableView.allowsSelection = NO;
     _tableView.transform = CGAffineTransformMakeScale(scale, scale);
     [self addSubview:_tableView];
+    
+    _orderTotalView = [[OMNOrderTotalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_tableView.frame), kOrderTableFooterHeight)];
+    _tableView.tableFooterView = _orderTotalView;
     
     [_orderDataSource registerCellsForTableView:_tableView];
   }
@@ -86,6 +91,8 @@
     _tableView.layer.shouldRasterize = YES;
     
   }
+  
+  _orderTotalView.order = order;
 
 }
 

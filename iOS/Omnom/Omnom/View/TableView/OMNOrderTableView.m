@@ -36,7 +36,6 @@
   tableHeaderView.backgroundColor = [UIColor whiteColor];
   self.tableHeaderView = tableHeaderView;
   
-  self.tableFooterView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bill_zubchiki"]];
 }
 
 @end

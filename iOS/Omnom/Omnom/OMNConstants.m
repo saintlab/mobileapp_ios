@@ -23,6 +23,8 @@ static NSDictionary *_defaultConfig = nil;
 static NSDictionary *_customConfig = nil;
 static NSDictionary *_tokens = nil;
 
+const CGFloat kOrderTableFooterHeight = 56.0f;
+
 @implementation OMNConstants
 
 + (void)loadConfigWithCompletion:(dispatch_block_t)completionBlock {

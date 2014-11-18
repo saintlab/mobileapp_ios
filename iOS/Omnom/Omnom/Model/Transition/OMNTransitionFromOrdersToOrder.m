@@ -53,13 +53,21 @@
     cellImageSnapshot.frame = toFrame;
     
   } completion:^(BOOL finished) {
-    // Clean up
-    toViewController.tableView.hidden = NO;
-    cell.hidden = NO;
-    [cellImageSnapshot removeFromSuperview];
     
-    // Declare that we've finished
-    [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+    [UIView animateWithDuration:0.3 animations:^{
+      
+      toViewController.tableView.hidden = NO;
+      cellImageSnapshot.alpha = 0.0f;
+      
+    } completion:^(BOOL finished) {
+    
+      // Clean up
+      cell.hidden = NO;
+      [cellImageSnapshot removeFromSuperview];
+      [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+      
+    }];
+    
   }];
   
 }

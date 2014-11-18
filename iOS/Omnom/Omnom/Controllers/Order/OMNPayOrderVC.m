@@ -16,7 +16,7 @@
 #import "OMNOrder.h"
 #import "OMNOrderDataSource.h"
 #import "OMNOrderTableView.h"
-#import "OMNOrderTotalView.h"
+#import "OMNOrderActionView.h"
 #import "OMNOrdersVC.h"
 #import "OMNPayOrderVC.h"
 #import "OMNPaymentFooterView.h"
@@ -50,7 +50,7 @@ OMNOrderTotalViewDelegate>
   BOOL _keyboardShown;
   OMNOrder *_order;
   OMNVisitor *_visitor;
-  OMNOrderTotalView *_orderTotalView;
+  OMNOrderActionView *_orderTotalView;
   UIView *_tableFadeView;
 }
 
@@ -197,17 +197,10 @@ OMNOrderTotalViewDelegate>
   _tableView.allowsSelection = NO;
   [_scrollView addSubview:_tableView];
 
-  _orderTotalView = [[OMNOrderTotalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), 50.0f)];
+  _orderTotalView = [[OMNOrderActionView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kOrderTableFooterHeight)];
   _orderTotalView.delegate = self;
-
-  UIImageView *endBillIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bill_zubchiki"]];
-  endBillIV.top = CGRectGetHeight(_orderTotalView.frame);
   
-  UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), CGRectGetHeight(endBillIV.frame) + CGRectGetHeight(_orderTotalView.frame))];
-  [footerView addSubview:endBillIV];
-  [footerView addSubview:_orderTotalView];
-  
-  _tableView.tableFooterView = footerView;
+  _tableView.tableFooterView = _orderTotalView;
   _tableView.dataSource = _dataSource;
   _tableView.delegate = _dataSource;
   [_dataSource registerCellsForTableView:_tableView];
@@ -386,13 +379,13 @@ OMNOrderTotalViewDelegate>
 
 #pragma mark - OMNOrderTotalViewDelegate
 
-- (void)orderTotalViewDidSplit:(OMNOrderTotalView *)orderTotalView {
+- (void)orderTotalViewDidSplit:(OMNOrderActionView *)orderTotalView {
   
   [self calculatorTap];
   
 }
 
-- (void)orderTotalViewDidCancel:(OMNOrderTotalView *)orderTotalView {
+- (void)orderTotalViewDidCancel:(OMNOrderActionView *)orderTotalView {
   
 }
 
