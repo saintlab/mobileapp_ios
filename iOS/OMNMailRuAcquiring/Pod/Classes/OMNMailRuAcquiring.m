@@ -290,7 +290,9 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     NSString *status = responseObject[@"status"];
     if ([status isEqualToString:@"OK_CONTINUE"]) {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
         [weakSelf pollUrl:url withCompletion:completionBlock];
+        
       });
     }
     else {
@@ -307,11 +309,11 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
   
 }
 
-- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock {
+- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock {
   
   NSString *extratext = paymentInfo.extra.extra_text;
   if (0 == extratext.length) {
-    completionBlock(nil);
+    failureBlock(errorWithCode(kOMNMailRuErrorCodeUnknown), nil);
     return;
   }
   
@@ -343,25 +345,40 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     if (responseObject[@"url"] &&
         nil == responseObject[@"error"]) {
       
-      [weakSelf pollUrl:responseObject[@"url"] withCompletion:completionBlock];
+      [weakSelf pollUrl:responseObject[@"url"] withCompletion:^(id response) {
+        
+        NSString *status = response[@"status"];
+        NSString *order_status = response[@"order_status"];
+        if ([status isEqualToString:@"OK_FINISH"] &&
+            [order_status isEqualToString:@"PAID"]) {
+          
+          completionBlock(responseObject);
+          
+        }
+        else {
+          
+          failureBlock(errorWithCode(kOMNMailRuErrorCodeUnknown), parameters);
+          
+        }
+        
+      }];
       
     }
     else {
-      
-      completionBlock(responseObject);
+
+      failureBlock(errorWithCode(kOMNMailRuErrorCodeUnknown), parameters);
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    completionBlock([operation omn_errorResponse]);
+    failureBlock(error, parameters);
     
   }];
   
 }
 
 - (void)cardDelete:(NSString *)card_id user_login:(NSString *)user_login completion:(void(^)(id response))completionBlock {
-  
   
   NSDictionary *reqiredSignatureParams =
   @{

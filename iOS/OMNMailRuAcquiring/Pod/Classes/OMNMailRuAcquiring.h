@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, OMNMailRuErrorCode) {
 
 - (void)cardVerify:(double)amount user_login:(NSString *)user_login card_id:(NSString *)card_id completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock;
 
-- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock;
+- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock;
 
 - (void)cardDelete:(NSString *)card_id user_login:(NSString *)user_login completion:(void(^)(id response))completionBlock;
 

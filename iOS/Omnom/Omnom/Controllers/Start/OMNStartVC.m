@@ -90,9 +90,10 @@ OMNSearchRestaurantVCDelegate>
   
 #warning http://omnom.menu/qr/zxcvbnm-61
 //  searchRestaurantVC.qr = @"http://m.2gis.ru/os/";
-//  searchRestaurantVC.qr = @"qwertyuiop";
+//  searchRestaurantVC.qr = @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";
 //  searchRestaurantVC.qr = @"qr-code-3-at-saintlab-iiko";
-  
+//  searchRestaurantVC.qr = @"http://omnom.menu/qr/special-and-vip";
+
   NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
   if (decodeBeaconData) {
     OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];

@@ -1,11 +1,11 @@
 {
   "baseUrlString" : "http://omnom.stand.saintlab.com",
   "authorizationUrlString" : "http://wicket.stand.saintlab.com",
+  "notifierUrlString" : "https://notifier.saintlab.com",
 
   "MixpanelToken" : "e9386a1100754e8f62565a1b8cda8d8c",
   "CrashlyticsAPIKey" : "1ea87b52b1d0946ed506dcc3bd5b586f422bf03a",
-  
-  "beaconUUID" : "E2C56DB5-DFFB-48D2-B060-D0F5A71096E0",
+
   "UseStubBeacon" : "false",
   "UseStubBeaconDecodeData" : "false",
   "UseStubOrdersData" : "false",

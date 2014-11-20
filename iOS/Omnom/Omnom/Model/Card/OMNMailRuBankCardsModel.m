@@ -8,26 +8,41 @@
 
 #import "OMNMailRuBankCardsModel.h"
 #import <SSKeychain.h>
+#import "OMNMailRUCardConfirmVC.h"
+#import "OMNPaymentAlertVC.h"
+#import "OMNMailRuBankCardMediator.h"
+#import "OMNBankCard.h"
+#import "OMNAuthorisation.h"
+#import "OMNOrder+omn_mailru.h"
+#import <OMNMailRuAcquiring.h>
+#import "OMNOperationManager.h"
+#import "OMNOrderTansactionInfo.h"
+#import "OMNAnalitics.h"
+#import "OMNUtils.h"
 
-NSString * const kAccountName = @"mail.ru";
-NSString * const kCardIdServiceName = @"card_id";
+@interface OMNBankCardInfo (omn_mailRuBankCardInfo)
+
+- (OMNMailRuCardInfo *)omn_mailRuCardInfo;
+
+@end
+
+@interface NSError (omn_mailru)
+
+- (NSError *)omn_omnomError;
+
+@end
 
 @implementation OMNMailRuBankCardsModel {
 }
 
-@synthesize cards=_cards;
-
-- (NSString *)card_id {
-  return [SSKeychain passwordForService:kCardIdServiceName account:kAccountName];
-}
-
-- (void)setCard_id:(NSString *)card_id {
-  if (nil == card_id) {
-    [SSKeychain deletePasswordForService:kCardIdServiceName account:kAccountName];
+- (instancetype)initWithRootVC:(UIViewController *)vc {
+  self = [super init];
+  if (self) {
+    
+    self.bankCardMediator = [[OMNMailRuBankCardMediator alloc] initWithRootVC:vc];
+    
   }
-  else {
-    [SSKeychain setPassword:card_id forService:kCardIdServiceName account:kAccountName];
-  }
+  return self;
 }
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock {
@@ -37,12 +52,11 @@ NSString * const kCardIdServiceName = @"card_id";
   [OMNBankCard getCardsWithCompletion:^(NSArray *cards) {
     
     [weakSelf didLoadCards:cards];
-    weakSelf.loading = NO;
     completionBlock();
     
   } failure:^(NSError *error) {
     
-    weakSelf.loading = NO;
+    [weakSelf didLoadCards:nil];
     completionBlock();
     
   }];
@@ -51,8 +65,98 @@ NSString * const kCardIdServiceName = @"card_id";
 
 - (void)didLoadCards:(NSArray *)cards {
   
-  _cards = [cards mutableCopy];
+  if (cards) {
+    self.cards = [cards mutableCopy];
+  }
+  
   [self updateCardSelection];
+  self.loading = NO;
+  
+}
+
+- (void)payForOrder:(OMNOrder *)order cardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock {
+  
+  [self.bankCardMediator beginPaymentProcessWithPresentBlock:^(OMNPaymentFinishBlock paymentFinishBlock) {
+    
+    OMNMailRuCardInfo *mailRuCardInfo = [bankCardInfo omn_mailRuCardInfo];
+    OMNOrderTansactionInfo *orderTansactionInfo = [[OMNOrderTansactionInfo alloc] initWithOrder:order];
+    
+    [order getPaymentInfoForUser:[OMNAuthorisation authorisation].user cardInfo:mailRuCardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
+      
+      [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
+        
+        [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
+        [[OMNAnalitics analitics] logPayment:orderTansactionInfo bill_id:order.bill.id];
+        paymentFinishBlock(nil, completionBlock);
+        
+      } failure:^(NSError *mailError, NSDictionary *debugInfo) {
+
+        NSError *omnomError = [mailError omn_omnomError];
+
+        paymentFinishBlock(omnomError, ^{
+          
+          failureBlock(omnomError, debugInfo);
+          
+        });
+        
+      }];
+      
+    } failure:^(NSError *error) {
+      
+      paymentFinishBlock(error, ^{
+        
+        failureBlock(error, nil);
+        
+      });
+      
+    }];
+    
+  }];
+  
+}
+
+@end
+
+@implementation OMNBankCardInfo (omn_mailRuBankCardInfo)
+
+- (OMNMailRuCardInfo *)omn_mailRuCardInfo {
+  
+  OMNMailRuCardInfo *mailRuCardInfo = nil;
+  if (self.card_id) {
+    
+    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.card_id];
+    
+  }
+  else if (self.expiryMonth &&
+           self.expiryYear &&
+           self.cvv &&
+           self.pan){
+    
+    NSString *exp_date = [OMNMailRuCardInfo exp_dateFromMonth:self.expiryMonth year:self.expiryYear];
+    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardPan:self.pan exp_date:exp_date cvv:self.cvv];
+    
+  }
+  
+  return mailRuCardInfo;
+  
+}
+
+@end
+
+@implementation NSError (omn_mailru)
+
+- (NSError *)omn_omnomError {
+  
+  if (kOMNMailRuErrorCodeUnknown == self.code) {
+    
+    return [OMNUtils errorFromCode:OMNErrorPaymentError];
+    
+  }
+  else {
+    
+    return [self omn_internetError];
+    
+  }
   
 }
 

@@ -7,18 +7,18 @@
 //
 
 #import "GAppDelegate.h"
+#import "NSURL+omn_query.h"
+#import "OMNAnalitics.h"
 #import "OMNAuthorisation.h"
-#import "OMNStartVC.h"
 #import "OMNBeaconBackgroundManager.h"
-#import "OMNVisitorManager.h"
+#import "OMNMailRUCardConfirmVC.h"
 #import "OMNOperationManager.h"
+#import "OMNStartVC.h"
+#import "OMNViewController.h"
+#import "OMNVisitorManager.h"
 #import <Crashlytics/Crashlytics.h>
 #import <OMNMailRuAcquiring.h>
-#import "NSURL+omn_query.h"
 #import <OMNStyler.h>
-#import "OMNAnalitics.h"
-#import "OMNViewController.h"
-#import "OMNMailRUCardConfirmVC.h"
 
 @implementation GAppDelegate {
   BOOL _applicationStartedForeground;
@@ -26,20 +26,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   
-//  static NSDateFormatter *dateFormatter = nil;
-//  if (nil == dateFormatter) {
-//    dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZZ"];
-//  }
-//NSLog(@"%@", [dateFormatter stringFromDate:[NSDate date]]);
-  
 #if OMN_TEST
   return YES;
 #endif
-  
-#if defined (APP_STORE)
-  [OMNConstants setCustomConfigName:@"config_prod"];
-#else
   
   NSDictionary *parametrs = [launchOptions[UIApplicationLaunchOptionsURLKey] omn_query];
   if (parametrs[@"omnom_config"]) {
@@ -48,9 +37,7 @@
   else {
     [OMNConstants setCustomConfigName:@"config_prod"];
   }
-#endif
   
-  NSLog(@"%@", launchOptions);
   if ([[OMNAuthorisation authorisation] pushNotificationsRequested]) {
    
     [[OMNAuthorisation authorisation] registerForRemoteNotifications];
@@ -93,10 +80,6 @@
 
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   startVC.info = info;
-  
-//  OMNViewController *startVC = [[OMNViewController alloc] init];
-//  OMNMailRUCardConfirmVC*startVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:nil];
-  
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
   [self.window makeKeyAndVisible];
   

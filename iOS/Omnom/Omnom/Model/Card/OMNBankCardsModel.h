@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNBankCard.h"
-#import "OMNBankCardInfo.h"
-#import <OMNMailRuPaymentInfo.h>
+@class OMNBankCard;
+@class OMNBankCardInfo;
+@class OMNBankCardMediator;
 
 typedef UIViewController *(^OMNSelectCardBlock)(OMNBankCard *bankCard);
-typedef void(^OMNBankCardInfoBlock)(OMNBankCardInfo *bankCardInfo);
 
 @class OMNOrder;
 
@@ -20,13 +19,18 @@ typedef void(^OMNBankCardInfoBlock)(OMNBankCardInfo *bankCardInfo);
 UITableViewDelegate>
 
 @property (nonatomic, copy) OMNSelectCardBlock didSelectCardBlock;
-@property (nonatomic, assign, readonly) BOOL hasRegisterdCards;
-@property (nonatomic, assign) BOOL loading;
-@property (nonatomic, strong, readonly) NSMutableArray *cards;
-@property (nonatomic, strong, readonly) OMNBankCard *selectedCard;
 
+@property (nonatomic, assign, readonly) BOOL hasRegisterdCards;
+@property (nonatomic, assign, readonly) BOOL canAddCards;
+@property (nonatomic, assign) BOOL loading;
+@property (nonatomic, strong) NSMutableArray *cards;
+@property (nonatomic, strong, readonly) OMNBankCard *selectedCard;
+@property (nonatomic, strong) OMNBankCardMediator *bankCardMediator;
+
+- (instancetype)initWithRootVC:(UIViewController *)vc;
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;
 - (void)updateCardSelection;
-- (void)addCardFromViewController:(__weak UIViewController *)viewController forOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)paymentWithCardBlock;
+
+- (void)payForOrder:(OMNOrder *)order cardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock;
 
 @end

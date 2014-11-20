@@ -6,13 +6,14 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNAuthorisation.h"
-#import "OMNOperationManager.h"
-#import "OMNAuthorizationManager.h"
-#import "OMNUser.h"
-#import <SSKeychain.h>
-#import <Crashlytics/Crashlytics.h>
 #import "OMNAnalitics.h"
+#import "OMNAuthorisation.h"
+#import "OMNAuthorizationManager.h"
+#import "OMNNotifierManager.h"
+#import "OMNOperationManager.h"
+#import "OMNUser.h"
+#import <Crashlytics/Crashlytics.h>
+#import <SSKeychain.h>
 
 static NSString * const kAccountName = @"test_account6";
 static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";
@@ -65,7 +66,11 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 -(void)setUser:(OMNUser *)user {
   
   _user = user;
+  
+  [OMNNotifierManager sharedManager].userID = user.id;
+  
   [[OMNAnalitics analitics] setUser:user];
+  
   [Crashlytics setUserEmail:user.email];
   [Crashlytics setUserName:user.id];
   [Crashlytics setUserIdentifier:[OMNConstants baseUrlString]];
@@ -173,6 +178,8 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  
+  [OMNNotifierManager sharedManager].deviceToken = deviceToken;
   
   if (_remoteNotificationRegisterCompletionBlock) {
     _remoteNotificationRegisterCompletionBlock(YES);

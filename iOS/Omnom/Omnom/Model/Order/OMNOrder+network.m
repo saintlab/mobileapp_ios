@@ -29,15 +29,21 @@
       
       NSString *status = responseObject[@"status"];
       if ([status isEqualToString:@"new"]) {
+        
         OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
         completionBlock(bill);
+        
       }
       else if ([status isEqualToString:@"paid"] ||
                [status isEqualToString:@"order_closed"]) {
+        
         failureBlock([OMNUtils errorFromCode:OMNErrorOrderClosed]);
+        
       }
       else {
+        
         failureBlock([OMNUtils errorFromCode:OMNErrorUnknoun]);
+        
       }
 
     }

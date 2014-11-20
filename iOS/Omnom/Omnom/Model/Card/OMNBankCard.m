@@ -53,34 +53,6 @@
   
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-  self = [super init];
-  if (self) {
-    self.cardNumber = [aDecoder decodeObjectForKey:@"cardNumber"];
-    self.expiryMonth = [[aDecoder decodeObjectForKey:@"expiryMonth"] unsignedIntegerValue];
-    self.expiryYear = [[aDecoder decodeObjectForKey:@"expiryYear"] unsignedIntegerValue];
-    //    self.cvv = [aDecoder decodeObjectForKey:@"cardNumber"];
-  }
-  return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-  [aCoder encodeObject:self.cardNumber forKey:@"cardNumber"];
-  [aCoder encodeObject:@(self.expiryMonth) forKey:@"expiryMonth"];
-  [aCoder encodeObject:@(self.expiryYear) forKey:@"expiryYear"];
-}
-
-- (NSString *)redactedCardNumber {
-  
-  if (self.cardNumber.length == 16) {
-    return [self.cardNumber stringByReplacingCharactersInRange:NSMakeRange(2, self.cardNumber.length - 6) withString:@"** **** **** "];
-  }
-  else {
-    return self.cardNumber;
-  }
-
-}
-
 + (void)getCardsWithCompletion:(void(^)(NSArray *cards))completionBlock failure:(void(^)(NSError *error))failureBlock {
   
   NSAssert(completionBlock != nil, @"completionBlock is nil");

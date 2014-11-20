@@ -14,10 +14,10 @@
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNMailRUPayVC.h"
 #import "OMNMailRuBankCardsModel.h"
+#import "OMNTestBankCardsModel.h"
 #import "OMNOperationManager.h"
 #import "OMNOrder+network.h"
 #import "OMNOrder+omn_mailru.h"
-#import "OMNOrderTansactionInfo.h"
 #import "OMNSocketManager.h"
 #import "OMNUtils.h"
 #import "UIImage+omn_helper.h"
@@ -26,6 +26,8 @@
 #import <OMNDeletedTextField.h>
 #import <OMNMailRuAcquiring.h>
 #import <OMNStyler.h>
+#import "OMNBankCard.h"
+#import "OMNBankCardMediator.h"
 
 NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdentifier";
 
@@ -45,7 +47,6 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   
   OMNOrder *_order;
   OMNBill *_bill;
-  OMNOrderTansactionInfo *_orderTansactionInfo;
   OMNBankCardsModel *_bankCardsModel;
   UIView *_contentView;
   OMNLoadingCircleVC *_loadingCircleVC;
@@ -58,13 +59,13 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   if (self) {
     
     _order = order;
-    _orderTansactionInfo = [[OMNOrderTansactionInfo alloc] initWithOrder:order];
 
   }
   return self;
 }
 
 - (void)viewDidLoad {
+  
   [super viewDidLoad];
   self.view.backgroundColor = [UIColor whiteColor];
   
@@ -73,19 +74,21 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   
   __weak typeof(self)weakSelf = self;
   if (self.demo) {
-    _bankCardsModel = [[OMNBankCardsModel alloc] init];
+    
+    _bankCardsModel = [[OMNTestBankCardsModel alloc] initWithRootVC:self];
+    
   }
   else {
     
-    _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
-    [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) identifier:OMNMailRUPayVCLoadingIdentifier options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
-      
-      [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([weakSelf loadingButton]) : ([weakSelf addCardButton]) animated:YES];
-      
-    }];
+    _bankCardsModel = [[OMNMailRuBankCardsModel alloc] initWithRootVC:self];
     
   }
 
+  [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) identifier:OMNMailRUPayVCLoadingIdentifier options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
+    
+    [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([weakSelf loadingButton]) : ([weakSelf addCardButton]) animated:YES];
+    
+  }];
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
     return weakSelf;
@@ -98,7 +101,7 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   
   _errorLabel.text = nil;
   _offerLabel.text = nil;
-  _offerLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:18.0f];
+  _offerLabel.font = FuturaOSFOmnomRegular(18.0f);
   
   _payButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
@@ -188,99 +191,32 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   
   button.enabled = NO;
   
-  if (self.demo) {
-    [self demoPay];
-  }
-  else {
-    
-    OMNBankCard *bankCard = [_bankCardsModel selectedCard];
-    OMNMailRuCardInfo *cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:bankCard.external_card_id];
-    [self payWithCardInfo:cardInfo];
-    
-  }
+  OMNBankCard *bankCard = [_bankCardsModel selectedCard];
+  OMNBankCardInfo *bankCardInfo = [[OMNBankCardInfo alloc] init];
+  bankCardInfo.card_id = bankCard.external_card_id;
+  [self payWithCardInfo:bankCardInfo];
   
 }
 
-- (void)payWithCardInfo:(OMNMailRuCardInfo *)mailRuCardInfo {
-  
-  _loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
-  _loadingCircleVC.circleIcon = [UIImage imageNamed:@"flying_credit_card_icon"];
-  _loadingCircleVC.estimateAnimationDuration = 15.0;
-  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"000000")];
-  _loadingCircleVC.circleBackground = circleBackground;
-  __weak typeof(self)weakSelf = self;
-  
-  [self.navigationController omn_pushViewController:_loadingCircleVC animated:YES completion:^{
-    
-    [weakSelf createOrderPaymentInfoWithCardInfo:mailRuCardInfo];
-    
-  }];
-  
-}
-
-- (void)createOrderPaymentInfoWithCardInfo:(OMNMailRuCardInfo *)mailRuCardInfo {
-  
-  [_loadingCircleVC.loaderView setLoaderColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
-  [_loadingCircleVC.loaderView startAnimating:15.0];
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
   
   __weak typeof(self)weakSelf = self;
-  [_order getPaymentInfoForUser:[OMNAuthorisation authorisation].user cardInfo:mailRuCardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
+  [_bankCardsModel payForOrder:_order cardInfo:bankCardInfo completion:^{
     
-    [weakSelf orderPaymentInfoDidCreated:paymentInfo];
+    [weakSelf mailRuDidFinish];
     
-  } failure:^(NSError *error) {
+  } failure:^(NSError *error, NSDictionary *debugInfo) {
     
-    [weakSelf didFailCreateOrderWithError:error];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_PAY" parametrs:debugInfo];
     
-  }];
-  
-}
-
-- (void)orderPaymentInfoDidCreated:(OMNMailRuPaymentInfo *)paymentInfo {
-  
-  __weak typeof(self)weakSelf = self;
-  _bill = _order.bill;
-  [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
-    
-    [weakSelf paymentInfo:paymentInfo didPayWithResponse:response];
-    
-  }];
-
-}
-
-- (void)didFailCreateOrderWithError:(NSError *)error {
-  
-  if (_order.id) {
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" parametrs:@{@"order_id" : _order.id}];
-  }
-  
-  __weak typeof(self)weakSelf = self;
-  [_loadingCircleVC finishLoading:^{
-    
-    [weakSelf didFailWithError:error];
-    
-  }];
-  
-}
-
-- (void)paymentInfo:(OMNMailRuPaymentInfo *)paymentInfo didPayWithResponse:(id)response {
-  
-  __weak typeof(self)weakSelf = self;
-  [_loadingCircleVC finishLoading:^{
-    
-    NSString *status = response[@"status"];
-    NSString *order_status = response[@"order_status"];
-    if ([status isEqualToString:@"OK_FINISH"] &&
-        [order_status isEqualToString:@"PAID"]) {
-
-      [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
-      [weakSelf mailRuDidFinish];
+    if (OMNErrorOrderClosed == error.code) {
+      
+      [weakSelf orderDidClosed];
       
     }
     else {
       
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_PAY" parametrs:response];
-      [weakSelf didFailWithError:[OMNUtils errorFromCode:OMNErrorPaymentError]];
+      [weakSelf popViewController];
       
     }
 
@@ -290,30 +226,7 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
 
 - (void)mailRuDidFinish {
 
-  [[OMNAnalitics analitics] logPayment:_orderTansactionInfo bill_id:_order.bill.id];
   [self.delegate mailRUPayVCDidFinish:self withBill:_bill];
-  
-}
-
-- (void)didFailWithError:(NSError *)error {
-  
-  [_loadingCircleVC setText:error.localizedDescription];
-  __weak typeof(self)weakSelf = self;
-  _loadingCircleVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
-      
-      if (OMNErrorOrderClosed == error.code) {
-        [weakSelf orderDidClosed];
-      }
-      else {
-        [weakSelf popViewController];
-      }
-      
-    }]
-    ];
-  [_loadingCircleVC updateActionBoard];
-  [_loadingCircleVC.view layoutIfNeeded];
   
 }
 
@@ -344,11 +257,9 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
 - (void)addCardTap {
   
   __weak typeof(self)weakSelf = self;
-  [_bankCardsModel addCardFromViewController:self forOrder:_order requestPaymentWithCard:^(OMNBankCardInfo *bankCardInfo) {
-    
-    NSString *exp_date = [OMNMailRuCardInfo exp_dateFromMonth:bankCardInfo.expiryMonth year:bankCardInfo.expiryYear];
-    OMNMailRuCardInfo *mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardPan:bankCardInfo.pan exp_date:exp_date cvv:bankCardInfo.cvv];
-    [weakSelf payWithCardInfo:mailRuCardInfo];
+  [_bankCardsModel.bankCardMediator addCardForOrder:_order requestPaymentWithCard:^(OMNBankCardInfo *bankCardInfo) {
+
+    [weakSelf payWithCardInfo:bankCardInfo];
     
   }];
   

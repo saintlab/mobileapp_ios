@@ -10,6 +10,7 @@
 #import <OMNMailRuPaymentInfo.h>
 #import "OMNUser.h"
 #import "OMNOrder+network.h"
+#import "OMNAnalitics.h"
 
 @interface OMNMailRuPaymentInfo (omn_order)
 
@@ -31,8 +32,10 @@
   paymentInfo.order_amount = @(self.enteredAmountWithTips/100.);
   
   if (self.bill) {
+    
     [paymentInfo omn_updateWithBill:self.bill];
     completionBlock(paymentInfo);
+    
   }
   else {
     
@@ -43,7 +46,12 @@
       [paymentInfo omn_updateWithBill:bill];
       completionBlock(paymentInfo);
       
-    } failure:failureBlock];
+    } failure:^(NSError *error) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" parametrs:@{@"order_id" : self.id}];
+      failureBlock(error);
+      
+    }];
     
   }
   
@@ -54,8 +62,10 @@
 @implementation OMNMailRuPaymentInfo (omn_order)
 
 - (void)omn_updateWithBill:(OMNBill *)bill {
+  
   self.order_id = bill.id;
   self.extra.restaurant_id = bill.mail_restaurant_id;
+  
 }
 
 @end

@@ -4,7 +4,6 @@
   
   "MixpanelToken" : "e9386a1100754e8f62565a1b8cda8d8c",
   
-  "beaconUUID" : "E2C56DB5-DFFB-48D2-B060-D0F5A71096E0",
   "UseStubBeacon" : "false",
   "UseStubBeaconDecodeData" : "false",
   "UseStubOrdersData" : "false"

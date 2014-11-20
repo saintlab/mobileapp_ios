@@ -5,9 +5,10 @@
 	<key>active</key>
 	<array>
 		<string>F93C1AF8-FFB2-488A-A952-A250DB61DEC4</string>
-		<string>E2C56DB5-DFFB-48D2-B060-D0F5A71096E0</string>
 	</array>
 	<key>deprecated</key>
 	<array/>
+	<key>New item</key>
+	<string>E2C56DB5-DFFB-48D2-B060-D0F5A71096E0</string>
 </dict>
 </plist>

@@ -13,6 +13,7 @@
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNMailRuBankCardsModel.h"
 #import <BlocksKit.h>
+#import "OMNBankCardMediator.h"
 
 NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdentifier";
 
@@ -26,7 +27,9 @@ NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdenti
 }
 
 - (void)dealloc {
+  
   [_bankCardsModel bk_removeObserversWithIdentifier:OMNBankCardsVCLoadingIdentifier];
+  
 }
 
 - (void)viewDidLoad {
@@ -80,7 +83,7 @@ NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdenti
 
 - (IBAction)addCardTap:(id)sender {
   
-  [_bankCardsModel addCardFromViewController:self forOrder:nil requestPaymentWithCard:nil];
+  [_bankCardsModel.bankCardMediator addCardForOrder:nil requestPaymentWithCard:nil];
   
 }
 

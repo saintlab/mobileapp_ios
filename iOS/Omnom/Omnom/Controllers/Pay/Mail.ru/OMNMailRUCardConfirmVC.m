@@ -373,12 +373,12 @@ TTTAttributedLabelDelegate>
 }
 
 - (void)setSelectionRange:(NSRange)range {
-  UITextPosition *start = [_cardHoldValueTF.textField positionFromPosition:[_cardHoldValueTF.textField beginningOfDocument]
-                                                                    offset:range.location];
-  UITextPosition *end = [_cardHoldValueTF.textField positionFromPosition:start
-                                                                  offset:range.length];
+  
+  UITextPosition *start = [_cardHoldValueTF.textField positionFromPosition:[_cardHoldValueTF.textField beginningOfDocument] offset:range.location];
+  UITextPosition *end = [_cardHoldValueTF.textField positionFromPosition:start offset:range.length];
   
   [_cardHoldValueTF.textField setSelectedTextRange:[_cardHoldValueTF.textField textRangeFromPosition:start toPosition:end]];
+  
 }
 
 #pragma mark - TTTAttributedLabelDelegate

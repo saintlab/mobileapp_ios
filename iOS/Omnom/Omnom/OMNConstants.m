@@ -91,6 +91,10 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   return [self stringForKey:@"authorizationUrlString"];
 }
 
++ (NSString *)notifierUrlString {
+  return [self stringForKey:@"notifierUrlString"];
+}
+
 + (NSString *)tokenForKey:(NSString *)key {
  
   if (NO == [key isKindOfClass:[NSString class]]) {

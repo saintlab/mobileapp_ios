@@ -6,17 +6,19 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNAddBankCardVC.h"
+#import "OMNBankCard.h"
+#import "OMNBankCardCell.h"
+#import "OMNBankCardInfo.h"
+#import "OMNBankCardMediator.h"
 #import "OMNBankCardsModel.h"
 #import "OMNConstants.h"
-#import <SSKeychain.h>
-#import "OMNAuthorisation.h"
-#import <OMNStyler.h>
-#import "OMNBankCardCell.h"
-#import "OMNMailRUCardConfirmVC.h"
-#import "OMNAddBankCardVC.h"
 #import "OMNOrder.h"
-#import "OMNPaymentAlertVC.h"
 #import "UINavigationController+omn_replace.h"
+#import <OMNStyler.h>
+#import <SSKeychain.h>
+
+NSString * const kCardIdServiceName = @"card_id";
 
 @interface OMNBankCardsModel ()
 
@@ -25,15 +27,16 @@
 @end
 
 @implementation OMNBankCardsModel {
-  OMNOrder *_order;
-  OMNBankCardInfoBlock _paymentWithCardBlock;
 }
 
 @dynamic card_id;
 
-- (instancetype)init {
+- (instancetype)initWithRootVC:(UIViewController *)vc {
   self = [super init];
   if (self) {
+    
+    _bankCardMediator = [[OMNBankCardMediator alloc] initWithRootVC:vc];
+    
   }
   return self;
 }
@@ -56,28 +59,22 @@
 }
 
 - (NSString *)card_id {
-  return [SSKeychain passwordForService:@"card_id" account:@"demo"];
+  return [SSKeychain passwordForService:kCardIdServiceName account:NSStringFromClass(self.class)];
 }
 
 - (void)setCard_id:(NSString *)card_id {
   
   if (card_id) {
-    [SSKeychain setPassword:card_id forService:@"card_id" account:@"demo"];
+    [SSKeychain setPassword:card_id forService:kCardIdServiceName account:NSStringFromClass(self.class)];
   }
   else {
-    [SSKeychain deletePasswordForService:@"card_id" account:@"demo"];
+    [SSKeychain deletePasswordForService:kCardIdServiceName account:NSStringFromClass(self.class)];
   }
   
 }
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock {
   
-  OMNBankCard *bankCard = [[OMNBankCard alloc] init];
-  bankCard.id = @"1";
-  bankCard.association = @"visa";
-  bankCard.masked_pan = @"4111 .... .... 1111";
-  _cards = [NSMutableArray arrayWithObject:bankCard];
-  [self updateCardSelection];
   completionBlock();
   
 }
@@ -100,11 +97,14 @@
 }
 
 - (void)removeCard:(OMNBankCard *)bankCard {
+  
   if ([self.card_id isEqualToString:bankCard.id]) {
     self.card_id = nil;
   }
+  
   [self.cards removeObject:bankCard];
   [self updateCardSelection];
+  
 }
 
 - (BOOL)hasRegisterdCards {
@@ -123,42 +123,15 @@
   
 }
 
-- (void)payWithBankCardInfo:(OMNBankCardInfo *)bankCardInfo {
+- (BOOL)canAddCards {
   
-  if (_paymentWithCardBlock) {
-    _paymentWithCardBlock(bankCardInfo);
-  }
+  return NO;
   
 }
 
-- (void)addCardFromViewController:(__weak UIViewController *)viewController forOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)paymentWithCardBlock {
+- (void)payForOrder:(OMNOrder *)order cardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock {
   
-  _order = order;
-  _paymentWithCardBlock = [paymentWithCardBlock copy];
-  
-  OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
-  addBankCardVC.hideSaveButton = (order == nil);
-  __weak typeof(self)weakSelf = self;
-  [addBankCardVC setAddCardBlock:^(OMNBankCardInfo *bankCardInfo) {
-    
-    if (bankCardInfo.saveCard) {
-
-      [weakSelf confirmCard:bankCardInfo sourceVC:viewController];
-      
-    }
-    else {
-    
-      [weakSelf payWithBankCardInfo:bankCardInfo];
-      
-    }
-    
-  }];
-  [addBankCardVC setCancelBlock:^{
-    
-    [viewController.navigationController popToViewController:viewController animated:YES];
-    
-  }];
-  [viewController.navigationController pushViewController:addBankCardVC animated:YES];
+  //do nothing
   
 }
 
@@ -257,55 +230,15 @@
       NO == self.loading &&
       NO == selectedCard.deleting) {
     
-    UIViewController *vc = self.didSelectCardBlock(selectedCard);
-    if (vc &&
-        kOMNBankCardStatusHeld == selectedCard.status) {
+    if (kOMNBankCardStatusHeld == selectedCard.status) {
       
       OMNBankCardInfo *bankCardInfo = [[OMNBankCardInfo alloc] init];
       bankCardInfo.card_id = selectedCard.external_card_id;
-      [self confirmCard:bankCardInfo sourceVC:vc];
+      [_bankCardMediator confirmCard:bankCardInfo];
       
     }
     
   }
-  
-}
-
-- (void)confirmCard:(OMNBankCardInfo *)bankCardInfo sourceVC:(__weak UIViewController *)sourceVC {
-  
-  OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
-  mailRUCardConfirmVC.didFinishBlock = ^{
-    
-    [sourceVC.navigationController popToViewController:sourceVC animated:YES];
-    
-  };
-
-  long long enteredAmountWithTips = _order.enteredAmountWithTips;
-  NSString *alertText = NSLocalizedString(@"NO_SMS_ALERT_TEXT", @"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму.");
-  NSString *alertConfirmText = (_order) ? (NSLocalizedString(@"NO_SMS_ALERT_ACTION_TEXT", @"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты.")) : (nil);
-  
-  __weak typeof(self)weakSelf = self;
-  mailRUCardConfirmVC.noSMSBlock = ^{
-    
-    OMNPaymentAlertVC *paymentAlertVC = [[OMNPaymentAlertVC alloc] initWithText:alertText detailedText:alertConfirmText amount:enteredAmountWithTips];
-    [sourceVC.navigationController presentViewController:paymentAlertVC animated:YES completion:nil];
-    
-    paymentAlertVC.didCloseBlock = ^{
-      
-      [sourceVC.navigationController dismissViewControllerAnimated:YES completion:nil];
-      
-    };
-    
-    paymentAlertVC.didPayBlock = ^{
-      
-      [sourceVC.navigationController dismissViewControllerAnimated:YES completion:nil];
-      [weakSelf payWithBankCardInfo:bankCardInfo];
-      
-    };
-    
-  };
-  
-  [sourceVC.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
   
 }
 

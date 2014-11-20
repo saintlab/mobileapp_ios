@@ -40,6 +40,7 @@ extern const CGFloat kOrderTableFooterHeight;
 
 + (NSString *)baseUrlString;
 + (NSString *)authorizationUrlString;
++ (NSString *)notifierUrlString;
 
 + (NSString *)mixpanelToken;
 + (NSString *)mixpanelDebugToken;

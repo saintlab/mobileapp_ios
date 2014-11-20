@@ -2,18 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "ico-divide.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "ico-divide@2x.png"
+      "filename" : "ico-edit-split@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "ico-divide@3x.png"
+      "filename" : "ico-edit-split@3x.png"
     }
   ],
   "info" : {

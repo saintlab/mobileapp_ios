@@ -60,7 +60,7 @@ NSString * const kSetOrderIdentifier = @"kSetOrderIdentifier";
   _splitButton.translatesAutoresizingMaskIntoConstraints = NO;
   [bgView addSubview:_splitButton];
   
-  _editButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_EDIT_TITLE", @"Изменить") color:colorWithHexString(@"D0021B")];
+  _editButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"edit_split_icon"] title:NSLocalizedString(@"SPLIT_EDIT_TITLE", @"Изменить") color:colorWithHexString(@"D0021B")];
   [_editButton bk_addEventHandler:^(id sender) {
     
     [weakSelf.delegate orderTotalViewDidSplit:weakSelf];
