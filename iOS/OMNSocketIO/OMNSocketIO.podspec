@@ -29,7 +29,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Pod/Classes'
   s.resources = 'Pod/Assets/*.png', 'Pod/Classes/*.js'
-  s.dependency "Emitter"
+  s.dependency 'Emitter', '0.0.8'
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'

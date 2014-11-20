@@ -20,12 +20,15 @@
 
 @implementation OMNRatingVC {
   
-  OMNBorderedButton *_chequeButton;
   UIScrollView *_scroll;
   UIView *_contentView;
+  
+  UILabel *_l1;
+  UILabel *_l2;
+  UILabel *_l3;
+  UILabel *_l4;
+  
   UILabel *_ratingLabel;
-  UILabel *_thankLabel;
-  UILabel *_thankTextLabel;
   TQStarRatingView *_starRatingView;
 }
 
@@ -39,19 +42,29 @@
   [self setup];
   
   self.view.backgroundColor = [UIColor clearColor];
-
+  self.navigationItem.title = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE", @"Счёт");
+  
   [_starRatingView setScore:0.0f withAnimation:NO];
 
-  _ratingLabel.text = NSLocalizedString(@"RATINGSCREEN_RATE_CONTROL_TITLE", @"Вам здесь понравилось?");
-  _ratingLabel.textColor = colorWithHexString(@"FBF7F7");
-  _ratingLabel.font = FuturaOSFOmnomRegular(20.0f);
-  _chequeButton.hidden = YES;
-  [_chequeButton addTarget:self action:@selector(chequeTap:) forControlEvents:UIControlEventTouchUpInside];
-  [_chequeButton setTitle:NSLocalizedString(@"RATINGSCREEN_BILL_BUTTON_TITLE", @"Бумажный чек") selectedTitle:nil image:[UIImage imageNamed:@"bill_icon_small"]];
+  _l1.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE1", @"Спасибо");
+  _l1.textColor = colorWithHexString(@"000000");
+  _l1.font = FuturaOSFOmnomRegular(30.0f);
   
-  _thankLabel.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE", @"Спасибо");
-  _thankTextLabel.text = NSLocalizedString(@"RATINGSCREEN_THANK_SUBTITLE", @"Оплата прошла успешно\nСчет отправлен на почту");
-
+  _l2.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE2", @"Оплата прошла успешно");
+  _l2.textColor = colorWithHexString(@"000000");
+  _l2.font = FuturaOSFOmnomRegular(20.0f);
+  
+  _l3.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE3", @"Счёт отправлен на почту");
+  _l3.textColor = colorWithHexString(@"000000");
+  _l3.font = FuturaOSFOmnomRegular(20.0f);
+  
+  _l4.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE4", @"Подтверждение оплаты вы сможете найти на экране профиля в оплаченных счетах.");
+  _l4.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  _l4.font = FuturaOSFOmnomRegular(15.0f);
+  
+  _ratingLabel.text = NSLocalizedString(@"RATINGSCREEN_RATE_CONTROL_TITLE", @"Вам здесь понравилось?");
+  _ratingLabel.textColor = colorWithHexString(@"FFFFFF");
+  _ratingLabel.font = FuturaOSFOmnomRegular(20.0f);
   
   self.automaticallyAdjustsScrollViewInsets = NO;
   
@@ -61,9 +74,21 @@
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
+  
   CGSize size = _scroll.frame.size;
   size.height += 1.0f;
   _scroll.contentSize = size;
+  
+}
+
+- (UILabel *)label {
+  
+  UILabel *label = [[UILabel alloc] init];
+  label.translatesAutoresizingMaskIntoConstraints = NO;
+  label.textColor = colorWithHexString(@"000000");
+  label.textAlignment = NSTextAlignmentCenter;
+  label.numberOfLines = 0;
+  return label;
   
 }
 
@@ -102,27 +127,26 @@
   whiteBGView.translatesAutoresizingMaskIntoConstraints = NO;
   [_contentView addSubview:whiteBGView];
   
-  UIImageView *logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"success_icon_green"]];
+  UIImageView *logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"payment_success_icon"]];
   logoView.translatesAutoresizingMaskIntoConstraints = NO;
   [_contentView addSubview:logoView];
-  
-  _thankLabel = [[UILabel alloc] init];
-  _thankLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _thankLabel.textAlignment = NSTextAlignmentCenter;
-  _thankLabel.numberOfLines = 0;
-  _thankLabel.font = FuturaOSFOmnomRegular(24.0f);
-  [_contentView addSubview:_thankLabel];
-  
-  _thankTextLabel = [[UILabel alloc] init];
-  _thankTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _thankTextLabel.textAlignment = NSTextAlignmentCenter;
-  _thankTextLabel.numberOfLines = 0;
-  _thankTextLabel.font = FuturaOSFOmnomRegular(18.0f);
-  [_contentView addSubview:_thankTextLabel];
 
-  _chequeButton = [[OMNBorderedButton alloc] init];
-  _chequeButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_contentView addSubview:_chequeButton];
+  _l1 = [self label];
+  [_contentView addSubview:_l1];
+  
+  _l2 = [self label];
+  [_contentView addSubview:_l2];
+  
+  UIImageView *dividerIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"payment_divider"]];
+  dividerIV.translatesAutoresizingMaskIntoConstraints = NO;
+  [_contentView addSubview:dividerIV];
+  
+  _l3 = [self label];
+  [_contentView addSubview:_l3];
+  
+  _l4 = [self label];
+  [_contentView addSubview:_l4];
+  
   
   UIImageView *chequeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bill_zubchiki"]];
   chequeImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -136,62 +160,63 @@
     @"ratingLabel" : _ratingLabel,
     @"starRatingView" : _starRatingView,
     @"logoView" : logoView,
-    @"thankLabel" : _thankLabel,
-    @"thankTextLabel" : _thankTextLabel,
-    @"chequeButton" : _chequeButton,
+    @"l1" : _l1,
+    @"l2" : _l2,
+    @"dividerIV" : dividerIV,
+    @"l3" : _l3,
+    @"l4" : _l4,
     @"chequeImageView" : chequeImageView,
     @"contentView" : _contentView,
     @"topLayoutGuide" : self.topLayoutGuide,
     @"scroll" : _scroll,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:nil views:views]];
-  [bottomContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:0 metrics:nil views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomContentView]|" options:0 metrics:nil views:views]];
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : @(30.0f),
+    @"labelOffset" : @(10.0f),
+    };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll][bottomContentView]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:kNilOptions metrics:nil views:views]];
+  [bottomContentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:kNilOptions metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomContentView]|" options:kNilOptions metrics:nil views:views]];
   
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[thankLabel]-|" options:0 metrics:nil views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[whiteBGView]|" options:0 metrics:nil views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[whiteBGView(2000)]" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll][bottomContentView]|" options:kNilOptions metrics:nil views:views]];
+
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[whiteBGView]|" options:kNilOptions metrics:nil views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[whiteBGView(2000)]" options:kNilOptions metrics:nil views:views]];
   [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:whiteBGView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:chequeImageView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
 
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[thankTextLabel]-|" options:0 metrics:nil views:views]];
-  
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[chequeImageView]|" options:0 metrics:nil views:views]];
-  
   [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:logoView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[l1]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[l2]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:dividerIV attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[l3]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[l4]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[chequeImageView]|" options:kNilOptions metrics:nil views:views]];
   
-  [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_chequeButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[logoView]-[thankLabel][thankTextLabel]-20-[chequeButton]-27-[chequeImageView]|" options:0 metrics:nil views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(40)-[logoView]-(25)-[l1]-(labelOffset)-[l2]-(labelOffset)-[dividerIV]-(labelOffset)-[l3]-(labelOffset)-[l4]-(20)-[chequeImageView]|" options:kNilOptions metrics:metrics views:views]];
   
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeading relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
   
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeTrailing relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
   
-  [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
+  [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:kNilOptions metrics:nil views:views]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scroll attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:bottomView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:bottomContentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   
   [bottomView addConstraint:[NSLayoutConstraint constraintWithItem:_starRatingView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:bottomView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[ratingLabel][starRatingView(50)]|" options:0 metrics:nil views:views]];
-  [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[starRatingView(225)]" options:0 metrics:nil views:views]];
-  [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[ratingLabel]|" options:0 metrics:nil views:views]];
+  [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[ratingLabel][starRatingView(50)]|" options:kNilOptions metrics:nil views:views]];
+  [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[starRatingView(225)]" options:kNilOptions metrics:nil views:views]];
+  [bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[ratingLabel]|" options:kNilOptions metrics:nil views:views]];
   
-}
-
-- (void)billCallDone:(NSNotification *)n {
-  _chequeButton.selected = NO;
 }
 
 - (IBAction)chequeTap:(id)sender {
   
   [_order billCall:^{
-    
-    _chequeButton.enabled = NO;
     
   } failure:^(NSError *error) {
     
