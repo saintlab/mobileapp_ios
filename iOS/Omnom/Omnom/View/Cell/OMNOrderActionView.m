@@ -13,13 +13,28 @@
 #import "OMNToolbarButton.h"
 #import <BlocksKit+UIKit.h>
 
-NSString * const kSetOrderIdentifier = @"kSetOrderIdentifier";
-
 @implementation OMNOrderActionView {
   
   OMNToolbarButton *_splitButton;
   OMNToolbarButton *_editButton;
   OMNToolbarButton *_cancelButton;
+  NSString *_setOrderIdentifier;
+  
+}
+
+- (void)removeSetOrderObserver {
+  
+  if (_setOrderIdentifier) {
+    [_order bk_removeObserversWithIdentifier:_setOrderIdentifier];
+    _setOrderIdentifier = nil;
+  }
+  
+}
+
+- (void)dealloc {
+  
+  [self removeSetOrderObserver];
+  
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -115,10 +130,10 @@ NSString * const kSetOrderIdentifier = @"kSetOrderIdentifier";
 
 - (void)setOrder:(OMNOrder *)order {
 
-  [_order bk_removeObserversWithIdentifier:kSetOrderIdentifier];
+  [self removeSetOrderObserver];
   _order = order;
   __weak typeof(self)weakSelf = self;
-  [_order bk_addObserverForKeyPath:NSStringFromSelector(@selector(hasSelectedItems)) identifier:kSetOrderIdentifier options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial task:^(id obj, NSDictionary *change) {
+  _setOrderIdentifier = [_order bk_addObserverForKeyPath:NSStringFromSelector(@selector(hasSelectedItems)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
     
     [weakSelf updateButtons];
     
@@ -130,9 +145,11 @@ NSString * const kSetOrderIdentifier = @"kSetOrderIdentifier";
   
   BOOL hasSelectedItems = _order.hasSelectedItems;
   [UIView transitionWithView:self duration:0.3 options:kNilOptions animations:^{
+    
     _splitButton.alpha = (hasSelectedItems) ? (0.0f) : (1.0f);
     _editButton.alpha = (hasSelectedItems) ? (1.0f) : (0.0f);
     _cancelButton.alpha = (hasSelectedItems) ? (1.0f) : (0.0f);
+    
   } completion:nil];
   
 }

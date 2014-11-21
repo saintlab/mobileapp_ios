@@ -15,20 +15,32 @@
 #import <BlocksKit.h>
 #import "OMNBankCardMediator.h"
 
-NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdentifier";
+NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
 
 @interface OMNBankCardsVC ()
 
 @end
 
 @implementation OMNBankCardsVC {
+  
   OMNBankCardsModel *_bankCardsModel;
   __weak IBOutlet UIButton *_addCardButton;
+  NSString *_bankCardsLoadingIdentifier;
+  
+}
+
+- (void)removeBankCardsObserver {
+  
+  if (_bankCardsLoadingIdentifier) {
+    [_bankCardsModel bk_removeObserversWithIdentifier:_bankCardsLoadingIdentifier];
+    _bankCardsLoadingIdentifier = nil;
+  }
+  
 }
 
 - (void)dealloc {
   
-  [_bankCardsModel bk_removeObserversWithIdentifier:OMNBankCardsVCLoadingIdentifier];
+  [self removeBankCardsObserver];
   
 }
 
@@ -48,7 +60,7 @@ NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdenti
   UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
   
-  [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) identifier:OMNBankCardsVCLoadingIdentifier options:NSKeyValueObservingOptionNew task:^(OMNMailRuBankCardsModel *obj, NSDictionary *change) {
+  _bankCardsLoadingIdentifier = [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) options:NSKeyValueObservingOptionNew task:^(OMNMailRuBankCardsModel *obj, NSDictionary *change) {
     
     (obj.loading) ? ([spinner startAnimating]) : ([spinner stopAnimating]);
     

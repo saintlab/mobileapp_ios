@@ -27,8 +27,6 @@
 #import "OMNRestaurantMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 
-NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdentifier";
-
 @interface OMNR1VC ()
 <OMNRestaurantInfoVCDelegate>
 
@@ -41,13 +39,23 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
   __weak OMNRestaurantMediator *_restaurantMediator;
   UIPercentDrivenInteractiveTransition *_interactiveTransition;
   BOOL _viewDidAppear;
+  NSString *_restaurantWaiterCallIdentifier;
+  
+}
+
+- (void)removeRestaurantWaiterCallObserver {
+  
+  if (_restaurantWaiterCallIdentifier) {
+    [_visitor bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
+    _restaurantWaiterCallIdentifier = nil;
+  }
   
 }
 
 - (void)dealloc {
   
   _circleAnimation = nil;
-  [_visitor bk_removeObserversWithIdentifier:kRestaurantWaiterCallIdentifier];
+  [self removeRestaurantWaiterCallObserver];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
   
@@ -68,7 +76,9 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)interactiveTransitioning {
+  
   return _interactiveTransition;
+  
 }
 
 - (void)viewDidLoad {
@@ -118,12 +128,16 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
+  
   _viewDidAppear = NO;
   [_circleAnimation finishCircleAnimation];
+  
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+  
   return UIStatusBarStyleLightContent;
+  
 }
 
 - (void)pan:(UIPanGestureRecognizer *)panGR {
@@ -171,10 +185,10 @@ NSString * const kRestaurantWaiterCallIdentifier = @"kRestaurantWaiterCallIdenti
 
 - (void)setVisitor:(OMNVisitor *)visitor {
   
-  [_visitor bk_removeObserversWithIdentifier:kRestaurantWaiterCallIdentifier];
+  [self removeRestaurantWaiterCallObserver];
   _visitor = visitor;
   __weak typeof(self)weakSelf = self;
-  [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) identifier:kRestaurantWaiterCallIdentifier options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+  _restaurantWaiterCallIdentifier = [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
     
     if (weakSelf.visitor.waiterIsCalled) {
       [weakSelf callWaiterDidStart];

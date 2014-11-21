@@ -94,7 +94,7 @@
   
   UIImageView *iv = [[UIImageView alloc] initWithFrame:_backgroundView.bounds];
   iv.opaque = YES;
-  iv.contentMode = UIViewContentModeCenter;
+  iv.contentMode = _backgroundView.contentMode;
   iv.alpha = 0.0f;
   iv.image = backgroundImage;
   [_backgroundView insertSubview:iv atIndex:0];

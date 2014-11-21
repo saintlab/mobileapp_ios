@@ -12,17 +12,28 @@
 #import <OMNStyler.h>
 #import <BlocksKit.h>
 
-NSString * const OMNBankCardCellDeleteIdentifier = @"OMNBankCardCellDeleteIdentifier";
-
 @implementation OMNBankCardCell {
   UILabel *_label;
   UIImageView *_iconView;
   OMNBankCard *_bankCard;
   UIView *_bottomLine;
+  
+  NSString *_bankCardCellDeleteIdentifier;
+}
+
+- (void)removeBankCardObserver {
+  
+  if (_bankCardCellDeleteIdentifier) {
+    [_bankCard bk_removeObserversWithIdentifier:_bankCardCellDeleteIdentifier];
+    _bankCardCellDeleteIdentifier = nil;
+  }
+  
 }
 
 - (void)dealloc {
-  [_bankCard bk_removeObserversWithIdentifier:OMNBankCardCellDeleteIdentifier];
+  
+  [self removeBankCardObserver];
+  
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -98,11 +109,11 @@ NSString * const OMNBankCardCellDeleteIdentifier = @"OMNBankCardCellDeleteIdenti
 
 - (void)setBankCard:(OMNBankCard *)bankCard selected:(BOOL)selected {
 
-  [_bankCard bk_removeObserversWithIdentifier:OMNBankCardCellDeleteIdentifier];
+  [self removeBankCardObserver];
   _bankCard = bankCard;
   __weak typeof(self)weakSelf = self;
 
-  [_bankCard bk_addObserverForKeyPath:NSStringFromSelector(@selector(deleting)) identifier:OMNBankCardCellDeleteIdentifier options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial task:^(OMNBankCard *bc, NSDictionary *change) {
+  _bankCardCellDeleteIdentifier = [_bankCard bk_addObserverForKeyPath:NSStringFromSelector(@selector(deleting)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNBankCard *bc, NSDictionary *change) {
     
     if (bc.deleting) {
       weakSelf.accessoryView = [weakSelf spinner];

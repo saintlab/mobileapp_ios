@@ -14,9 +14,6 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNVisitor+network.h"
 
-NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
-
-
 @interface OMNRestaurantActionsVC()
 
 @property (nonatomic, strong) OMNVisitor *visitor;
@@ -24,12 +21,26 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
 @end
 
 @implementation OMNRestaurantActionsVC {
+  
   OMNRestaurantMediator *_restaurantMediator;
   OMNNavigationController *_navigationController;
+  NSString *_waiterCallIdentifier;
+  
 }
 
-- (void)dealloc{
-  [_visitor bk_removeObserversWithIdentifier:kWaiterCallIdentifier];
+- (void)removeWaiterCallObserver {
+  
+  if (_waiterCallIdentifier) {
+    [_visitor bk_removeObserversWithIdentifier:_waiterCallIdentifier];
+    _waiterCallIdentifier = nil;
+  }
+  
+}
+
+- (void)dealloc {
+  
+  [self removeWaiterCallObserver];
+  
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
@@ -87,16 +98,20 @@ NSString * const kWaiterCallIdentifier = @"kWaiterCallIdentifier";
 
 - (void)setVisitor:(OMNVisitor *)visitor {
   
-  [_visitor bk_removeObserversWithIdentifier:kWaiterCallIdentifier];
+  [self removeWaiterCallObserver];
   _visitor = visitor;
   __weak typeof(self)weakSelf = self;
-  [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) identifier:kWaiterCallIdentifier options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+  _waiterCallIdentifier = [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
     
     if (weakSelf.visitor.waiterIsCalled) {
+      
       [weakSelf callWaiterDidStart];
+      
     }
     else {
+      
       [weakSelf setWaiterCallButtons];
+      
     }
     
   }];

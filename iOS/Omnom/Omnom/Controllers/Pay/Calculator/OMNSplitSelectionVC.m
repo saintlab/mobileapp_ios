@@ -7,6 +7,7 @@
 //
 
 #import "OMNSplitSelectionVC.h"
+#import <OMNStyler.h>
 
 @interface OMNSplitSelectionVC ()
 <UIPickerViewDataSource,
@@ -16,6 +17,7 @@ UIPickerViewDelegate>
 
 @implementation OMNSplitSelectionVC {
   
+  __weak IBOutlet UILabel *_hintLabel;
   __weak IBOutlet UILabel *_numberOfGuestsLabel;
   __weak IBOutlet UIPickerView *_numberOfGuestsPicker;
   
@@ -39,6 +41,14 @@ UIPickerViewDelegate>
 - (void)viewDidLoad {
   
   [super viewDidLoad];
+  
+  _hintLabel.text = NSLocalizedString(@"SPLIT_NUMBER_OF_GUESTS_HINT", @"На скольких гостей делить?");
+  _hintLabel.font = FuturaOSFOmnomRegular(18.0f);
+  _hintLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  
+  _numberOfGuestsLabel.font = FuturaLSFOmnomLERegular(40.0f);
+  _numberOfGuestsLabel.textColor = colorWithHexString(@"000000");
+  
   _numberOfGuestsPicker.backgroundColor = [UIColor whiteColor];
   [self setNumberOfGuests:1];
   
@@ -46,7 +56,9 @@ UIPickerViewDelegate>
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  
   [self updateTotalValue];
+  
 }
 
 - (void)updateTotalValue {
@@ -71,9 +83,15 @@ UIPickerViewDelegate>
 
 #pragma mark - UIPickerView
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+
+  NSDictionary *attributes =
+  @{
+    NSFontAttributeName : FuturaLSFOmnomLERegular(22.0f),
+    };
   
-  return [NSString stringWithFormat:@"%ld", (long)row + 1];
+  NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", (long)row + 1] attributes:attributes];
+  return attributedTitle;
   
 }
 
