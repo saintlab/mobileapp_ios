@@ -13,12 +13,14 @@
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
+    
     self.id = ([data[@"id"] isKindOfClass:[NSString class]]) ? (data[@"id"]) : (@"");
     self.name = data[@"title"];
     self.price_per_item = [data[@"price_per_item"] doubleValue]*100ll;
     self.price_total = [data[@"price_total"] doubleValue]*100ll;
-    self.quantity = [data[@"quantity"] integerValue];
+    self.quantity = [data[@"quantity"] doubleValue];
     self.guest_id = (data[@"guest_id"]) ? (data[@"guest_id"]) : (@"");
+    
   }
   return self;
 }
@@ -33,18 +35,25 @@
   orderItem.quantity = self.quantity;
   orderItem.price_total = self.price_total;
   return orderItem;
+  
 }
 
 - (UIImage *)icon {
+  
   return [UIImage imageNamed:@"test_icon"];
+  
 }
 
 - (void)changeSelection {
-  _selected = !_selected;
+  
+  self.selected = !self.selected;
+  
 }
 
 - (void)deselect {
-  _selected = NO;
+  
+  self.selected = NO;
+  
 }
 
 @end

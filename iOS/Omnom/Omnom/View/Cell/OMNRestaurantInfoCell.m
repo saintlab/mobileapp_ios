@@ -60,9 +60,11 @@
 }
 
 - (void)setItem:(OMNRestaurantInfoItem *)item {
+  
   _restaurantInfoItem = item;
   _iconView.image = [item icon];
   _label.text = item.title;
+  
 }
 
 @end

@@ -11,18 +11,41 @@
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
+#import <BlocksKit.h>
 
 @implementation OMNOrderItemCell {
   UILabel *_nameLabel;
   UILabel *_priceLabel;
   
   UIImageView *_iconView;
+  OMNOrderItem *_orderItem;
+  NSString *_cellOrderItemIdentifier;
+}
+
+- (void)dealloc {
+  
+  [self removeOrderObserver];
+  
+}
+
+- (void)removeOrderObserver {
+  
+  if (_cellOrderItemIdentifier) {
+    
+    [_orderItem bk_removeObserversWithIdentifier:_cellOrderItemIdentifier];
+    _cellOrderItemIdentifier = nil;
+    
+  }
+  
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+  
   self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
   if (self) {
+    
     [self setup];
+    
   }
   return self;
 }
@@ -31,9 +54,17 @@
   [self setup];
 }
 
-- (void)setup {
+- (UILabel *)label {
   
-  OMNStyle *style = [[OMNStyler styler] styleForClass:self.class];
+  UILabel *label = [[UILabel alloc] init];
+  label.opaque = YES;
+  label.translatesAutoresizingMaskIntoConstraints = NO;
+  label.highlightedTextColor = [UIColor whiteColor];
+  return label;
+  
+}
+
+- (void)setup {
   
   UIColor *backgroundColor = [UIColor whiteColor];
   
@@ -50,22 +81,14 @@
   seporatorView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
   [self.contentView addSubview:seporatorView];
   
-  _nameLabel = [[UILabel alloc] init];
-  _nameLabel.opaque = YES;
+  _nameLabel = [self label];
   _nameLabel.backgroundColor = backgroundColor;
-  _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _nameLabel.textColor = [style colorForKey:@"nameLabelColor"];
-  _nameLabel.highlightedTextColor = [UIColor whiteColor];
   _nameLabel.font = FuturaLSFOmnomLERegular(18.0f);
   [_nameLabel setContentCompressionResistancePriority:749 forAxis:UILayoutConstraintAxisHorizontal];
   [self.contentView addSubview:_nameLabel];
   
-  _priceLabel = [[UILabel alloc] init];
-  _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _priceLabel.opaque = YES;
+  _priceLabel = [self label];
   _priceLabel.backgroundColor = backgroundColor;
-  UIColor *priceLabelColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f];
-  _priceLabel.textColor = priceLabelColor;
   _priceLabel.font = FuturaLSFOmnomLERegular(17.0f);
   _priceLabel.textAlignment = NSTextAlignmentRight;
   [self.contentView addSubview:_priceLabel];
@@ -93,28 +116,45 @@
 
 - (void)setOrderItem:(OMNOrderItem *)orderItem {
   
+  [self removeOrderObserver];
+  _orderItem = orderItem;
+  __weak typeof(self)weakSelf = self;
+  _cellOrderItemIdentifier = [_orderItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
+
+    [weakSelf updateLabelsColor];
+    
+  }];
+  
   _iconView.image = orderItem.icon;
   
-  NSMutableAttributedString *priceQuantityString = nil;
+  NSString *priceQuantityString = nil;
   NSString *priceString = [OMNUtils commaStringFromKop:orderItem.price_per_item];
-  if (orderItem.quantity > 1) {
-    priceQuantityString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld x %@", (long)orderItem.quantity, priceString]];
+  if (orderItem.quantity != 1.0l) {
+    
+    priceQuantityString = [NSString stringWithFormat:@"%@ x %@", [OMNUtils unitStringFromDouble:orderItem.quantity], priceString];
+    
   }
   else {
-    priceQuantityString = [[NSMutableAttributedString alloc] initWithString:priceString];
+    
+    priceQuantityString = priceString;
+    
   }
-  
-  UIColor *priceColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
-  [priceQuantityString setAttributes:@{NSForegroundColorAttributeName : priceColor} range:[priceQuantityString.string rangeOfString:priceString]];
-  
+
   _nameLabel.text = orderItem.name;
-  _priceLabel.attributedText = priceQuantityString;
+  _priceLabel.text = priceQuantityString;
+  [self updateLabelsColor];
   
 }
 
-- (void)setTitle:(NSString *)title subtitle:(NSString *)subtitle {
-  _nameLabel.text = title;
-  _priceLabel.text = subtitle;
+- (void)updateLabelsColor {
+  
+  BOOL fadeLabels = (self.fadeNonSelectedItems && !_orderItem.selected);
+  
+  UIColor *nameColor = [colorWithHexString(@"000000") colorWithAlphaComponent:(fadeLabels) ? (0.2f) : (1.0f)];
+  UIColor *priceColor = [colorWithHexString(@"000000") colorWithAlphaComponent:(fadeLabels) ? (0.2f) : (0.8f)];
+  
+  _nameLabel.textColor = nameColor;
+  _priceLabel.textColor = priceColor;
   
 }
 

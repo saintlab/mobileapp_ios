@@ -15,6 +15,8 @@
 UITableViewDelegate>
 
 @property (nonatomic, strong) OMNOrder *order;
+@property (nonatomic, assign) BOOL fadeNonSelectedItems;
+
 @property (nonatomic, copy) void(^didSelectBlock)(UITableView *tableView, NSIndexPath *indexPath);
 
 - (instancetype)initWithOrder:(OMNOrder *)order;

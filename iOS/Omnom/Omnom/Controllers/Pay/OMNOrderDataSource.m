@@ -58,7 +58,9 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  
   return _order.guests.count;
+  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -66,21 +68,29 @@
   OMNGuest *guest = _order.guests[section];
   NSInteger numberOfRows = guest.items.count;
   return numberOfRows;
+  
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNOrderItemCell *orderItemCell = [tableView dequeueReusableCellWithIdentifier:@"OMNOrderItemCell"];
+  orderItemCell.fadeNonSelectedItems = self.fadeNonSelectedItems;
   
   OMNGuest *guest = _order.guests[indexPath.section];
   OMNOrderItem *orderItem = guest.items[indexPath.row];
   orderItemCell.orderItem = orderItem;
+  
   if (orderItem.selected) {
+    
     [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    
   }
   else {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
   }
+  
   return orderItemCell;
   
 }
@@ -115,8 +125,10 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
   CGFloat heightForRow = 45.0f;
   return heightForRow;
+  
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -139,7 +151,9 @@
   [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
   
   if (self.didSelectBlock) {
+    
     self.didSelectBlock(tableView, indexPath);
+    
   }
   
 }

@@ -9,14 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface OMNOrderItem : NSObject
-//<NSCopying>
 
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *guest_id;
 @property (nonatomic, assign) long long price_per_item;
 @property (nonatomic, assign) long long price_total;
-@property (nonatomic, assign) NSInteger quantity;
+@property (nonatomic, assign) double quantity;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, strong) UIImage *icon;
 

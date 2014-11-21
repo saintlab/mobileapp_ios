@@ -22,7 +22,7 @@ extern NSString *omnCommaString();
 + (NSString *)moneyStringFromKop:(long long)kop;
 + (NSString *)commaStringFromKop:(long long)kop;
 + (NSString *)formatedStringFromRub:(long long)rub;
-
++ (NSString *)unitStringFromDouble:(double)value;
 + (NSError *)errorFromCode:(NSInteger)code;
 
 @end

@@ -11,7 +11,6 @@
 @interface OMNOrderItemCell : UITableViewCell
 
 @property (nonatomic, strong) OMNOrderItem *orderItem;
-
-- (void)setTitle:(NSString *)title subtitle:(NSString *)subtitle;
+@property (nonatomic, assign) BOOL fadeNonSelectedItems;
 
 @end

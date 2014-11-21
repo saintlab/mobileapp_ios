@@ -33,6 +33,17 @@ NSString *omnCommaString() {
   return manager;
 }
 
++ (NSString *)unitStringFromDouble:(double)value {
+  
+  static NSNumberFormatter *unitNumberFormatter = nil;
+  if (nil == unitNumberFormatter) {
+    unitNumberFormatter = [[NSNumberFormatter alloc] init];
+    [unitNumberFormatter setPositiveFormat:@"###0.###"];
+  }
+  return [unitNumberFormatter stringFromNumber:@(value)];
+  
+}
+
 + (NSString *)moneyStringFromKop:(long long)kop {
   
   static NSNumberFormatter *currencyNumberFormatter = nil;

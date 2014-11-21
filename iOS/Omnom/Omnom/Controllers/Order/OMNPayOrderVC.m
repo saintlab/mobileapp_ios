@@ -55,7 +55,9 @@ OMNOrderTotalViewDelegate>
 }
 
 - (void)dealloc {
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
@@ -193,6 +195,8 @@ OMNOrderTotalViewDelegate>
   [self.view addSubview:_scrollView];
   
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
+  _dataSource.fadeNonSelectedItems = YES;
+  
   _tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
   _tableView.allowsSelection = NO;
   [_scrollView addSubview:_tableView];
