@@ -37,7 +37,7 @@ NSString * const OMNBankCardsVCLoadingIdentifier = @"OMNBankCardsVCLoadingIdenti
   
   [self setupInterface];
   
-  _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
+  _bankCardsModel = [[OMNMailRuBankCardsModel alloc] initWithRootVC:self];
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     

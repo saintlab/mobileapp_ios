@@ -75,7 +75,7 @@ OMNCardEnterControlDelegate>
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardEnterControl]-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[cardEnterControl]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:bankCardDescriptionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]-(>=0)-[bankCardDescriptionView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
 

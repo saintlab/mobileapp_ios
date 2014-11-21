@@ -64,6 +64,7 @@ NSInteger kCVVLength = 3;
     self.backgroundColor = [UIColor clearColor];
     
     UIImageView *bgIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"card_area"]];
+    bgIV.userInteractionEnabled = YES;
     bgIV.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:bgIV];
     
@@ -71,21 +72,29 @@ NSInteger kCVVLength = 3;
     cameraButton.translatesAutoresizingMaskIntoConstraints = NO;
     [cameraButton setImage:[UIImage imageNamed:@"camera_icon_white"] forState:UIControlStateNormal];
     [cameraButton addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:cameraButton];
+    [bgIV addSubview:cameraButton];
     
     _panTF = [self numberTextField];
     _panTF.attributedPlaceholder = [self attributedPlaceholderWithText:NSLocalizedString(@"Номер банковской карты", nil)];
-    [self addSubview:_panTF];
+    [bgIV addSubview:_panTF];
     
     _expireTF = [self numberTextField];
     _expireTF.attributedPlaceholder = [self attributedPlaceholderWithText:[NSString stringWithFormat:@"MM%@YY", kMM_YYSeporator]];
-    [self addSubview:_expireTF];
+    [bgIV addSubview:_expireTF];
     
     _cvvTF = [self numberTextField];
     _cvvTF.attributedPlaceholder = [self attributedPlaceholderWithText:@"CVV"];
-    [self addSubview:_cvvTF];
+    [bgIV addSubview:_cvvTF];
     
-  
+    NSDictionary *metrics =
+    [@{
+       @"height" : @(40.0f),
+       @"width" : @(80.0f),
+       @"textFieldsOffset" : @(25.0f),
+       @"cameraButtonSize" : @(44.0f),
+       @"leftOffset" : @(20.0f),
+       } mutableCopy];
+    
     _saveButton = [[UIButton alloc] init];
     [_saveButton addTarget:self action:@selector(saveTap) forControlEvents:UIControlEventTouchUpInside];
     _saveButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -93,6 +102,7 @@ NSInteger kCVVLength = 3;
     _saveButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     _saveButton.tintColor = [UIColor blackColor];
     _saveButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f);
+    _saveButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, [metrics[@"leftOffset"] floatValue], 0.0f, 0.0f);
     _saveButton.titleLabel.numberOfLines = 0;
     _saveButton.titleLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:15.0f];
     _saveButton.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -104,7 +114,7 @@ NSInteger kCVVLength = 3;
     [_saveButton setImage:[UIImage imageNamed:@"checkbox_icon"] forState:UIControlStateSelected|UIControlStateHighlighted];
     _saveButton.selected = YES;
     [self addSubview:_saveButton];
-
+    
     NSDictionary *views =
     @{
       @"bgIV" : bgIV,
@@ -115,28 +125,19 @@ NSInteger kCVVLength = 3;
       @"saveButton" : _saveButton,
       };
     
-    NSDictionary *metrics =
-    [@{
-       @"height" : @(40.0f),
-       @"width" : @(80.0f),
-       @"textFieldsOffset" : @(25.0f),
-       @"cameraButtonSize" : @(44.0f),
-       } mutableCopy];
-    
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bgIV]-(10)-[saveButton(cameraButtonSize)]-(4)-|" options:kNilOptions metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bgIV]|" options:kNilOptions metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[bgIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[saveButton]|" options:kNilOptions metrics:metrics views:views]];
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cameraButton(cameraButtonSize)]-4-|" options:kNilOptions metrics:metrics views:views]];
+    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cameraButton(cameraButtonSize)]-4-|" options:kNilOptions metrics:metrics views:views]];
     
-    NSArray *panH = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[panTF]-(textFieldsOffset)-|" options:kNilOptions metrics:metrics views:views];
-    [self addConstraints:panH];
+    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[panTF]-(textFieldsOffset)-|" options:kNilOptions metrics:metrics views:views]];
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[expireTF(width)]-(textFieldsOffset)-[cvvTF(width)]" options:kNilOptions metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[cameraButton(cameraButtonSize)][panTF(height)]-(8)-[expireTF(height)]" options:kNilOptions metrics:metrics views:views]];
+    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[expireTF(width)]-(textFieldsOffset)-[cvvTF(width)]" options:kNilOptions metrics:metrics views:views]];
+    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[cameraButton(cameraButtonSize)][panTF(height)]-(8)-[expireTF(height)]" options:kNilOptions metrics:metrics views:views]];
 
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
+    [bgIV addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    [bgIV addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
 
     [self setSaveButtonHidden:YES];
     

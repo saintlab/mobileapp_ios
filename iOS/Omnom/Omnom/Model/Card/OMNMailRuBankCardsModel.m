@@ -36,7 +36,7 @@
 }
 
 - (instancetype)initWithRootVC:(UIViewController *)vc {
-  self = [super init];
+  self = [super initWithRootVC:vc];
   if (self) {
     
     self.bankCardMediator = [[OMNMailRuBankCardMediator alloc] initWithRootVC:vc];
