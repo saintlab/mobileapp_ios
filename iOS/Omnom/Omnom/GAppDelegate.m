@@ -25,7 +25,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  
+    
 #if OMN_TEST
   return YES;
 #endif

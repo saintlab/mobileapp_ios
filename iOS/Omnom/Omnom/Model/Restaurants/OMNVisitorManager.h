@@ -18,7 +18,7 @@
  @param failure error callback, contains NSError object
  */
 - (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure;
-//- (void)decodeBeacons:(NSArray *)beacons success:(OMNBeaconsBlock)success failure:(void (^)(NSError *error))failure;
+
 - (void)decodeQRCode:(NSString *)qrCode success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure;
 
 - (void)demoVisitor:(OMNVisitorBlock)completionBlock failure:(void (^)(NSError *error))failureBlock;

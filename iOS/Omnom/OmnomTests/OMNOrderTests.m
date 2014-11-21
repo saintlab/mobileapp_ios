@@ -2,61 +2,62 @@
 //  OMNCallBillTests.m
 //  omnom
 //
-//  Created by tea on 26.08.14.
+//  Created by tea on 20.11.14.
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
 #import <Kiwi.h>
 #import "OMNVisitorManager.h"
 #import "OMNAuthorisation.h"
 #import "OMNOrder+network.h"
+#import "NSString+omn_json.h"
 
-SPEC_BEGIN(OMNDemoCallBillTests)
+SPEC_BEGIN(OMNOrderTests)
 
-describe(@"call bill test", ^{
+describe(@"visitor test", ^{
   
+//  __block OMNOrder *_order = nil;
   __block OMNVisitor *_visitor = nil;
-  __block OMNOrder *_order = nil;
-  
   beforeAll(^{
     
-    [[[OMNAuthorisation authorisation].token should] beNonNil];
+    [OMNAuthorisation authorisation];
     
-    OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
-    
-    [[OMNVisitorManager manager] stub:@selector(decodeBeacon:success:failure:) withBlock:^id(NSArray *params) {
+    _visitor = [OMNVisitor mock];
+
+    [_visitor stub:@selector(getOrders:error:) withBlock:^id(NSArray *params) {
       
-      OMNVisitorBlock visitorBlock = params[1];
-      void (^errorBlock)(NSError *) = params[2];
-      
-      NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:@"mexico_orders_stub" ofType:@"json"];
-      NSData *data = [NSData dataWithContentsOfFile:path];
-      id response = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-      NSArray *orders = [response omn_decodeOrdersWithError:nil];
-      
-      visitorBlock(nil);
-      errorBlock([NSError mock]);
-      
+      id orderData = [@"orders_stub.json" omn_jsonObjectNamedForClass:self.class];
+      NSArray *orders = [orderData omn_decodeOrdersWithError:nil];
+      OMNOrdersBlock ordersBlock = params[1];
+      ordersBlock(orders);
       return nil;
       
     }];
     
-    [[OMNVisitorManager manager] decodeBeacon:demoBeacon success:^(OMNVisitor *visitor) {
+  });
+  
+  it(@"should check initial conditions", ^{
+    
+    [[_visitor should] beNonNil];
+    [[[OMNAuthorisation authorisation].token should] beNonNil];
+    
+  });
+  
+  it(@"should get orders", ^{
+    
+    [_visitor getOrders:^(NSArray *orders) {
       
-      _visitor = visitor;
+      [[orders should] beNonNil];
+      [[@(orders.count) should] beGreaterThan:@(0)];
       
-    } failure:^(NSError *error) {
-      
-      [[error should] beKindOfClass:[NSError class]];
+    } error:^(NSError *error) {
       
     }];
     
-#warning    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
-    
-#warning    [[_visitor should] beNonNil];
-    
-#warning    [[_visitor.beacon.UUIDString should] equal:demoBeacon.UUIDString];
+  });
+  
+/*
+  it(@"should get orders", ^{
     
     __block NSArray *_oredrs = nil;
     [_visitor getOrders:^(NSArray *orders) {
@@ -66,9 +67,6 @@ describe(@"call bill test", ^{
     } error:^(NSError *error) {
       
     }];
-    
-#warning    [[expectFutureValue(_oredrs) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
-    _order = [_oredrs firstObject];
     
   });
   
@@ -89,7 +87,7 @@ describe(@"call bill test", ^{
   });
   
   it(@"should call bill", ^{
-
+    
 #warning    [[_order should] beNonNil];
     
     __block NSNumber *is_billCall = nil;
@@ -126,7 +124,7 @@ describe(@"call bill test", ^{
 #warning    [[expectFutureValue(_error) shouldEventuallyBeforeTimingOutAfter(10.0)] beNil];
     
   });
-  
+  */
   
 });
 

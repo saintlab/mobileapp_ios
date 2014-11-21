@@ -107,7 +107,9 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
 }
 
 - (void)subscribeForTableEvents {
+  
   [[OMNSocketManager manager] join:self.table.id];
+  
 }
 
 - (void)setTable:(OMNTable *)table {

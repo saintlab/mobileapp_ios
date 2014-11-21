@@ -169,10 +169,6 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 //  beacon.major = @"101";
 //  beacon.minor = @"9";
   
-//  a-cafe
-//  beacon.major = @"A";
-//  beacon.minor = @"1";
-  
   return beacon;
 }
 @end
