@@ -391,13 +391,13 @@ OMNUserInfoVCDelegate>
       
     case kSearchManagerInternetUnavaliable: {
       
-      [self showNoInternetErrorWithText:NSLocalizedString(@"Нет соединения с интернетом.", nil)];
+      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Нет соединения с интернетом.")];
       
     } break;
     case kSearchManagerOmnomServerUnavaliable: {
       
       [[OMNAnalitics analitics] logDebugEvent:@"no_server_connection" parametrs:nil];
-      [self showNoInternetErrorWithText:NSLocalizedString(@"нет доступа к серверам omnom.", nil)];
+      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Нет доступа к серверам Omnom.")];
       
     } break;
     case kSearchManagerRequestReload: {
