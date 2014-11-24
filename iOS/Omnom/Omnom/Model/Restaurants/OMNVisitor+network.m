@@ -55,7 +55,9 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
       NSArray *ordersData = response;
       NSArray *orders = [ordersData omn_decodeOrdersWithError:nil];
       if (0 == orders.count) {
+        
         [[OMNAnalitics analitics] logDebugEvent:@"NO_ORDERS" jsonRequest:path jsonResponse:response];
+        
       }
       weakSelf.orders = orders;
       ordersBlock(orders);

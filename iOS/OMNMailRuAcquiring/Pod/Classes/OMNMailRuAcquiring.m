@@ -214,7 +214,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     failureBlock(errorWithCode(kOMNMailRuErrorCodeCardAmount), nil);
     return;
   }
-  
+
   NSDictionary *reqiredSignatureParams =
   @{
     @"merch_id" : _config[@"OMNMailRu_merch_id"],

@@ -23,7 +23,9 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
 }
 
 - (void)dealloc {
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
 }
 
 - (instancetype)initWithJsonData:(id)data {
@@ -61,7 +63,9 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
 }
 
 - (void)waiterCallDone:(NSNotification *)n {
+  
   self.waiterIsCalled = NO;
+  
 }
 
 - (void)orderDidChange:(NSNotification *)n {

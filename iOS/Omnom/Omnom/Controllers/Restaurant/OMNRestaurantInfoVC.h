@@ -27,6 +27,5 @@
 @protocol OMNRestaurantInfoVCDelegate <NSObject>
 
 - (void)restaurantInfoVCDidFinish:(OMNRestaurantInfoVC *)restaurantInfoVC;
-- (void)restaurantInfoVCShowUserInfo:(OMNRestaurantInfoVC *)restaurantInfoVC;
 
 @end

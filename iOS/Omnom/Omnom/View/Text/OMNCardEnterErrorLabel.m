@@ -63,8 +63,10 @@
 }
 
 - (void)setAttributedText:(NSAttributedString *)attributedText {
+
   super.attributedText = attributedText;
   self.textAlignment = NSTextAlignmentCenter;
+  
 }
 
 - (void)setErrorText:(NSString *)text {

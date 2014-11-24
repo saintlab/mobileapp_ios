@@ -215,7 +215,7 @@ UITextFieldDelegate>
     _errorLabel.text = error.localizedDescription;
   }
   else {
-    _errorLabel.text = NSLocalizedString(@"REGISTER_USER_ERROR_COMMON", @"Что-то пошло не так. Повторите попытку");
+    _errorLabel.text = NSLocalizedString(@"REGISTER_USER_ERROR_COMMON", @"Что-то пошло не так. Повторите попытку.");
   }
   
 }

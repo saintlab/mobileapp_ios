@@ -125,7 +125,7 @@ NSString *omnCommaString() {
     } break;
     case OMNErrorUnknoun:
     default: {
-      description = NSLocalizedString(@"ERROR_MESSAGE_UNKNOWN_ERROR", @"Что-то пошло не так. Повторите попытку");
+      description = NSLocalizedString(@"ERROR_MESSAGE_UNKNOWN_ERROR", @"Что-то пошло не так. Повторите попытку.");
     } break;
   }
   

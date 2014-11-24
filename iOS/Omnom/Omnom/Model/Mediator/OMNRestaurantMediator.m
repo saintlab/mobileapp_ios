@@ -26,19 +26,25 @@ OMNPayOrderVCDelegate>
 @end
 
 @implementation OMNRestaurantMediator {
+  
   __weak OMNOrdersVC *_ordersVC;
+  
 }
 
 - (instancetype)initWithRootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC {
   self = [super init];
   if (self) {
+    
     _restaurantActionsVC = restaurantActionsVC;
+    
   }
   return self;
 }
 
 - (OMNVisitor *)visitor {
+  
   return _restaurantActionsVC.visitor;
+  
 }
 
 - (void)popToRootViewControllerAnimated:(BOOL)animated {
@@ -48,7 +54,9 @@ OMNPayOrderVCDelegate>
 }
 
 - (void)pushViewController:(UIViewController *)vc {
+  
   [self.restaurantActionsVC.navigationController pushViewController:vc animated:YES];
+  
 }
 
 - (void)showUserProfile {
@@ -77,17 +85,23 @@ OMNPayOrderVCDelegate>
   OMNSearchVisitorVC *searchBeaconVC = [[OMNSearchVisitorVC alloc] initWithParent:self.restaurantActionsVC.r1VC completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
     
     if ([weakSelf checkVisitor:visitor]) {
+      
       completionBlock(searchBeaconVC, visitor);
+      
     }
     else {
+      
       [weakSelf visitorDidChange:visitor];
+      
     }
     
   } cancelBlock:cancelBlock];
   searchBeaconVC.estimateAnimationDuration = 10.0;
   searchBeaconVC.circleIcon = icon;
   if (self.visitor.restaurant.is_demo) {
+    
     searchBeaconVC.visitor = self.visitor;
+    
   }
   [self pushViewController:searchBeaconVC];
   
@@ -96,11 +110,15 @@ OMNPayOrderVCDelegate>
 - (BOOL)checkVisitor:(OMNVisitor *)visitor {
   
   if ([self.visitor isSameRestaurant:visitor]) {
+    
     [self.visitor updateWithVisitor:visitor];
     return YES;
+    
   }
   else {
+    
     return NO;
+    
   }
 
 }
@@ -184,7 +202,7 @@ OMNPayOrderVCDelegate>
 }
 
 - (void)checkPushNotificationForVisitor:(OMNVisitor *)visitor {
-  
+#warning 123
   if ([OMNAuthorisation authorisation].pushNotificationsRequested) {
     
     [self processOrdersForVisitor:visitor];
@@ -195,16 +213,21 @@ OMNPayOrderVCDelegate>
     if (!self.visitor.restaurant.is_demo &&
         visitor.orders.count &&
         !TARGET_IPHONE_SIMULATOR) {
+      
       OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:self.restaurantActionsVC.r1VC];
       __weak typeof(self)weakSelf = self;
       pushPermissionVC.completionBlock = ^{
+        
         [weakSelf processOrdersForVisitor:visitor];
+        
       };
       [self pushViewController:pushPermissionVC];
       
     }
     else {
+      
       [self processOrdersForVisitor:visitor];
+      
     }
     
   }
@@ -286,7 +309,9 @@ OMNPayOrderVCDelegate>
 }
 
 - (void)ordersVCDidCancel:(OMNOrdersVC *)ordersVC {
+  
   [self popToRootViewControllerAnimated:YES];
+  
 }
 
 #pragma mark - OMNPayOrderVCDelegate
@@ -294,10 +319,14 @@ OMNPayOrderVCDelegate>
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
   
   if (self.visitor.restaurant.is_demo) {
+    
     [self.restaurantActionsVC.delegate restaurantActionsVCDidFinish:self.restaurantActionsVC];
+    
   }
   else {
+    
     [self popToRootViewControllerAnimated:YES];
+    
   }
   
 }
@@ -305,13 +334,17 @@ OMNPayOrderVCDelegate>
 - (void)payOrderVCRequestOrders:(OMNPayOrderVC *)ordersVC {
   
   if (_ordersVC) {
+    
     [self.restaurantActionsVC.navigationController popToViewController:_ordersVC animated:YES];
+    
   }
   
 }
 
 - (void)payOrderVCDidCancel:(OMNPayOrderVC *)payOrderVC {
+  
   [self popToRootViewControllerAnimated:YES];
+  
 }
 
 @end

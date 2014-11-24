@@ -65,7 +65,6 @@ UIGestureRecognizerDelegate>
   if (NO == _visitor.restaurant.is_demo) {
     
     [[OMNAnalitics analitics] logTargetEvent:@"promolist_view" parametrs:nil];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:self action:@selector(userProfileTap)];
 
   }
   self.automaticallyAdjustsScrollViewInsets = NO;
@@ -211,10 +210,6 @@ UIGestureRecognizerDelegate>
 
 - (void)didFail {
   [self startAnimating:NO];
-}
-
-- (void)userProfileTap {
-  [self.delegate restaurantInfoVCShowUserInfo:self];
 }
 
 - (void)closeTap {

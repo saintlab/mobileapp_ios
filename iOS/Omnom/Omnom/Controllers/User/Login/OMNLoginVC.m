@@ -213,7 +213,7 @@ TTTAttributedLabelDelegate> {
   }
   else {
     
-    [_loginTF setErrorText:NSLocalizedString(@"Что-то пошло не так. Повторите попытку", nil)];
+    [_loginTF setErrorText:NSLocalizedString(@"Что-то пошло не так. Повторите попытку.", nil)];
     
   }
   

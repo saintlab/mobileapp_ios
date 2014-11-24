@@ -64,6 +64,7 @@
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super initWithParent:nil];
   if (self) {
+    
     _restaurantMediator = restaurantMediator;
     self.visitor = _restaurantMediator.visitor;
     [[OMNAnalitics analitics] logEnterRestaurant:self.visitor];
@@ -163,10 +164,14 @@
       
       if (percentage > 0.3f ||
           velocity < -100.0f) {
+        
         [_interactiveTransition finishInteractiveTransition];
+        
       }
       else {
+        
         [_interactiveTransition cancelInteractiveTransition];
+        
       }
       _interactiveTransition = nil;
       
@@ -191,10 +196,14 @@
   _restaurantWaiterCallIdentifier = [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
     
     if (weakSelf.visitor.waiterIsCalled) {
+      
       [weakSelf callWaiterDidStart];
+      
     }
     else {
+      
       [weakSelf callWaiterDidStop];
+      
     }
     
   }];
@@ -292,7 +301,9 @@
   
   if (_visitor.waiterIsCalled &&
       _viewDidAppear) {
+    
     [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
+    
   }
   
 }
@@ -309,22 +320,12 @@
 
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-}
-
 #pragma mark - OMNRestaurantInfoVCDelegate
 
 - (void)restaurantInfoVCDidFinish:(OMNRestaurantInfoVC *)restaurantInfoVC {
   
   [self.navigationController popToViewController:self animated:YES];
   _isViewVisible = YES;
-  
-}
-
-- (void)restaurantInfoVCShowUserInfo:(OMNRestaurantInfoVC *)restaurantInfoVC {
-  
-  [self showUserProfile];
   
 }
 
