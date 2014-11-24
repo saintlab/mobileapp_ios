@@ -95,6 +95,8 @@ OMNOrderTotalViewDelegate>
   _paymentView.order = _order;
   _orderTotalView.order = _order;
   
+  [[OMNAnalitics analitics] logBillView:_order];
+  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];

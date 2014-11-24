@@ -136,6 +136,20 @@
 
 }
 
+- (void)logBillView:(OMNOrder *)order {
+  
+  NSMutableDictionary *properties = [NSMutableDictionary dictionary];
+  properties[@"timestamp"] = [self dateString];
+  properties[@"restaurant_id"] = (order.restaurant_id) ? (order.restaurant_id) : (@"");
+  properties[@"table_id"] = (order.table_id) ? (order.table_id) : (@"");
+  properties[@"order_id"] = (order.id) ? (order.id) : (@"");
+  properties[@"amount"] = @(order.totalAmount);
+  properties[@"paid_amount"] = @(order.paid.total_amount);
+  properties[@"paid_tip_amount"] = @(order.paid.tip_amount);
+  [_mixpanel track:@"bill_view" properties:properties];
+  
+}
+
 - (void)logRegister {
   
   [_mixpanel track:@"user_registered" properties:nil];
