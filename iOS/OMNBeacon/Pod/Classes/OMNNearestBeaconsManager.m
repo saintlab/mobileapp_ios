@@ -18,7 +18,7 @@
 @implementation OMNNearestBeaconsManager {
   
   dispatch_semaphore_t _addBeaconLock;
-  void (^_foundNearestBeaconsBlock)(NSArray *foundBeacons);
+  OMNNearestBeaconsBlock _foundNearestBeaconsBlock;
   OMNFoundBeacons *_foundBeacons;
   OMNBeaconRangingManager *_beaconRangingManager;
   CLAuthorizationStatusBlock _statusBlock;
@@ -50,13 +50,13 @@
   return self;
 }
 
-- (void)rangeNearestBeacons:(void (^)(NSArray *foundBeacons))block {
+- (void)rangeNearestBeacons:(OMNNearestBeaconsBlock)nearestBeaconsBlock {
   
-  NSAssert(block != nil, @"rangeNearestBeacons block shouldn't be nil");
+  NSAssert(nearestBeaconsBlock != nil, @"rangeNearestBeacons block shouldn't be nil");
   
   [self stop];
   _isRanging = YES;
-  _foundNearestBeaconsBlock = block;
+  _foundNearestBeaconsBlock = [nearestBeaconsBlock copy];
   
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
@@ -89,9 +89,9 @@
   
   if (nearestBeacons.count) {
     NSLog(@"nearestBeacons>%@", nearestBeacons);
-    
-    _foundNearestBeaconsBlock(nearestBeacons);
+    _foundNearestBeaconsBlock(nearestBeacons, _foundBeacons.allBeacons);
     _foundBeacons = [[OMNFoundBeacons alloc] init];
+    
   }
   
   dispatch_semaphore_signal(_addBeaconLock);

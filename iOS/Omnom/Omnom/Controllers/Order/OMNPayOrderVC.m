@@ -195,7 +195,6 @@ OMNOrderTotalViewDelegate>
   [self.view addSubview:_scrollView];
   
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
-  _dataSource.fadeNonSelectedItems = YES;
   
   _tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
   _tableView.allowsSelection = NO;
@@ -275,10 +274,15 @@ OMNOrderTotalViewDelegate>
   mailRUPayVC.delegate = self;
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:mailRUPayVC];
   navigationController.delegate = self.navigationController.delegate;
-  [self.navigationController presentViewController:navigationController animated:YES completion:^{
-    
-  }];
+  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 
+}
+
+- (void)setNonSelectedOrderItemsFaded:(BOOL)faded {
+  
+  _dataSource.fadeNonSelectedItems = faded;
+  [_tableView reloadData];
+  
 }
 
 #pragma mark - OMNRatingVCDelegate
@@ -295,6 +299,7 @@ OMNOrderTotalViewDelegate>
   
   _order.enteredAmount = total;
   _order.splitType = splitType;
+  
   if (kSplitTypeNumberOfGuests == splitType) {
     
     [_order deselectAllItems];
@@ -305,6 +310,10 @@ OMNOrderTotalViewDelegate>
     [_order selectionDidChange];
     
   }
+
+  BOOL fadeNonSelectedItems = (kSplitTypeOrders == splitType);
+  [self setNonSelectedOrderItemsFaded:fadeNonSelectedItems];
+
   _paymentView.order = _order;
   [self.navigationController popToViewController:self animated:YES];
   
@@ -318,23 +327,24 @@ OMNOrderTotalViewDelegate>
 
 - (void)keyboardWillShow:(NSNotification *)n {
   
-  [self setupViewsWithNotification:n keyboardShown:YES];
+  [self setupViewsWithKeyboardNotification:n keyboardShown:YES];
   
 }
 
 - (void)keyboardWillHide:(NSNotification *)n {
 
-  [self setupViewsWithNotification:n keyboardShown:NO];
+  [self setupViewsWithKeyboardNotification:n keyboardShown:NO];
   
 }
 
-- (void)setupViewsWithNotification:(NSNotification *)n keyboardShown:(BOOL)keyboardShown {
+- (void)setupViewsWithKeyboardNotification:(NSNotification *)n keyboardShown:(BOOL)keyboardShown {
   
   CGRect keyboardFrame = [n.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
   _keyboardShown = keyboardShown;
   
   [self.navigationController setNavigationBarHidden:keyboardShown animated:YES];
   [_paymentView setKeyboardShown:keyboardShown];
+  
   [UIView animateWithDuration:0.5 delay:0.0f usingSpringWithDamping:500.0f initialSpringVelocity:0.0f options:UIViewAnimationOptionCurveLinear animations:^{
     
     _paymentView.bottom = MIN(keyboardFrame.origin.y, self.view.height);
@@ -351,7 +361,9 @@ OMNOrderTotalViewDelegate>
 
   const CGFloat kDeltaOffset = 40.0f;
   if ((scrollView.contentOffset.y + scrollView.contentInset.top) < -kDeltaOffset) {
+    
     [self calculatorTap];
+    
   }
   
 }
@@ -391,6 +403,8 @@ OMNOrderTotalViewDelegate>
 
 - (void)orderTotalViewDidCancel:(OMNOrderActionView *)orderTotalView {
   
+  [self setNonSelectedOrderItemsFaded:NO];
+
 }
 
 @end

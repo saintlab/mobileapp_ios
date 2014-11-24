@@ -55,13 +55,6 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
   
 }
 
-- (void)beaconSearchTimeout {
-  
-  [self stopRangingNearestBeacons:NO];
-  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerNotFoundBeacons];
-  
-}
-
 - (void)stop:(BOOL)didFind {
   
   [self stopRangingNearestBeacons:didFind];
@@ -74,7 +67,8 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
   if (TARGET_IPHONE_SIMULATOR ||
       [OMNConstants useStubBeacon]) {
     
-    [self checkNearestBeacons:@[[OMNBeacon demoBeacon]]];
+    NSArray *beacons = @[[OMNBeacon demoBeacon]];
+    [self checkNearestBeacons:beacons foundBeacons:beacons];
     
   }
   else {
@@ -203,15 +197,22 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
   _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconSearchTimeout) userInfo:nil repeats:NO];
   
   __weak typeof(self)weakSelf = self;
-  [_nearestBeaconsManager rangeNearestBeacons:^(NSArray *foundBeacons) {
+  [_nearestBeaconsManager rangeNearestBeacons:^(NSArray *nearestBeacons, NSArray *foundBeacons) {
     
-    [weakSelf checkNearestBeacons:foundBeacons];
+    [weakSelf checkNearestBeacons:foundBeacons foundBeacons:foundBeacons];
     
   }];
   
 }
 
-- (void)checkNearestBeacons:(NSArray *)nearestBeacons {
+- (void)beaconSearchTimeout {
+  
+  [self stopRangingNearestBeacons:NO];
+  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerNotFoundBeacons];
+  
+}
+
+- (void)checkNearestBeacons:(NSArray *)nearestBeacons foundBeacons:(NSArray *)foundBeacons {
   
   if (0 == nearestBeacons.count) {
     return;
@@ -219,14 +220,16 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
 
   BOOL beaconDidFound = (nearestBeacons.count == 1);
   [self stopRangingNearestBeacons:beaconDidFound];
-  [self.delegate beaconSearchManager:self didFindBeacons:nearestBeacons];
+  [self.delegate beaconSearchManager:self didFindNearestBeacons:nearestBeacons allBeacons:foundBeacons];
   
 }
 
 - (void)processCoreLocationDenySituation:(OMNSearchManagerState)state {
+  
   _coreLocationDenied = YES;
   [self stopRangingNearestBeacons:NO];
   [self.delegate beaconSearchManager:self didChangeState:state];
+  
 }
 
 - (void)processCoreLocationAuthorizationStatus:(CLAuthorizationStatus)status {
@@ -249,8 +252,10 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
     default: {
       
       if (_coreLocationDenied) {
+        
         _coreLocationDenied = NO;
         [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestReload];
+        
       }
       else {
         

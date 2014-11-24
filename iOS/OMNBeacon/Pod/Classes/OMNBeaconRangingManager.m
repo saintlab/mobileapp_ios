@@ -109,6 +109,7 @@
   }];
   
   _ranging = NO;
+  
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -116,10 +117,9 @@
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
   
   if (_statusBlock) {
+    
     _statusBlock(status);
-  }
-  else {
-    NSLog(@"didChangeAuthorizationStatus>%d", status);
+    
   }
   
 }
@@ -128,10 +128,9 @@
   
   if (_didRangeBeaconsBlock &&
       beacons.count) {
+    
     _didRangeBeaconsBlock(beacons);
-  }
-  else {
-
+    
   }
     
 }

@@ -47,7 +47,9 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 }
 
 + (void)setBaeconUUID:(OMNBeaconUUID *)beaconUUID {
+  
   _beaconUUID = beaconUUID;
+  
 }
 
 + (OMNBeaconUUID *)beaconUUID {
@@ -104,8 +106,10 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 }
 
 - (NSString *)key {
+  
   NSString *uuid = [NSString stringWithFormat:@"%@+%@+%@", self.UUIDString, self.major, self.minor];
   return uuid;
+  
 }
 
 - (NSDictionary *)JSONObject {
@@ -154,7 +158,7 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
   beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
   beacon.major = @"1";
   beacon.minor = @"4";
-//  beacon.minor = @"2005";
+  beacon.minor = @"1002";
 
 //  b
 //  beacon.major = @"B";

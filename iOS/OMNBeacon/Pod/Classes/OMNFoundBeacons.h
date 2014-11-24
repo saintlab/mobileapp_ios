@@ -11,6 +11,7 @@
 @interface OMNFoundBeacons : NSObject
 
 @property (nonatomic, strong, readonly) NSMutableArray *atTheTableBeacons;
+@property (nonatomic, strong, readonly) NSArray *allBeacons;
 
 - (BOOL)updateWithBeacons:(NSArray *)foundBeacons;
 

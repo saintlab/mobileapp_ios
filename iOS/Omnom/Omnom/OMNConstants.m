@@ -10,6 +10,7 @@
 #import "OMNOperationManager.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNAnalitics.h"
+#import <OMNBeacon.h>
 
 NSString * const kPushSoundName = @"new_guest.caf";
 
@@ -52,12 +53,23 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
   NSDictionary *mailRuConfig = config[@"mail_ru"];
   [OMNMailRuAcquiring setConfig:mailRuConfig];
+  
+  NSDictionary *beaconUUID = config[@"uuid"];
+  if (beaconUUID) {
+    
+    [OMNBeacon setBaeconUUID:[[OMNBeaconUUID alloc] initWithJsonData:beaconUUID]];
+    
+  }
+  
+  
   _tokens = config[@"tokens"];
   
 }
 
 + (void)setCustomConfigName:(NSString *)name {
+  
   _customConfig = [self configWithName:name];
+  
 }
 
 + (NSDictionary *)configWithName:(NSString *)name {

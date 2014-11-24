@@ -12,7 +12,9 @@
 #import "CLBeacon+GBeaconAdditions.h"
 
 @implementation OMNFoundBeacons {
+  
   NSMutableDictionary *_existingBeaconsDictionary;
+  
 }
 
 @dynamic atTheTableBeacons;
@@ -20,7 +22,9 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
+    
     _existingBeaconsDictionary = [NSMutableDictionary dictionary];
+    
   }
   return self;
 }
@@ -52,6 +56,12 @@
     }
     
   }];
+  
+}
+
+- (NSArray *)allBeacons {
+  
+  return [_existingBeaconsDictionary allValues];
   
 }
 

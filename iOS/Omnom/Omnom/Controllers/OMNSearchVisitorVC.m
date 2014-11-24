@@ -22,6 +22,7 @@
 #import "OMNAnalitics.h"
 #import "OMNUserInfoVC.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNBeacon+omn_debug.h"
 
 @interface OMNSearchVisitorVC ()
 <OMNBeaconSearchManagerDelegate,
@@ -156,10 +157,14 @@ OMNUserInfoVCDelegate>
 
   [self stopBeaconManager:YES];
   if (visitor) {
+    
     _didFindBlock(self, visitor);
+    
   }
   else {
+    
     [self beaconsNotFound];
+    
   }
   
 }
@@ -196,8 +201,10 @@ OMNUserInfoVCDelegate>
 }
 
 - (void)stopBeaconManager:(BOOL)didFind {
+  
   [_beaconSearchManager stop:didFind];
   _beaconSearchManager.delegate = nil;
+  
 }
 
 - (void)requestQRCode {
@@ -283,22 +290,20 @@ OMNUserInfoVCDelegate>
 
 #pragma mark - OMNBeaconSearchManagerDelegate
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindBeacons:(NSArray *)beacons {
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindNearestBeacons:(NSArray *)nearsetBeacons allBeacons:(NSArray *)allBeacons {
   
-  if (1 == beacons.count) {
-    OMNBeacon *beacon = [beacons firstObject];
+  NSDictionary *debugData = [OMNBeacon omn_debugDataFromNearestBeacons:nearsetBeacons allBeacons:allBeacons];
+  
+  if (1 == nearsetBeacons.count) {
+
+    [[OMNAnalitics analitics] logDebugEvent:@"DID_FIND_BEACONS" parametrs:debugData];
+    OMNBeacon *beacon = [nearsetBeacons firstObject];
     [self decodeBeacon:beacon];
+    
   }
   else {
     
-    NSMutableDictionary *beaconsRSSIData = [NSMutableDictionary dictionaryWithCapacity:beacons.count];
-    [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
-      
-      beaconsRSSIData[beacon.key] = @(beacon.averageRSSI);
-      
-    }];
-    
-    [[OMNAnalitics analitics] logTargetEvent:@"low_signal" parametrs:@{@"beacons" : beaconsRSSIData}];
+    [[OMNAnalitics analitics] logTargetEvent:@"low_signal" parametrs:debugData];
     [self determineFaceUpPosition];
     
   }
@@ -308,7 +313,9 @@ OMNUserInfoVCDelegate>
 - (void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager found:(BOOL)foundBeacon {
   
   if (NO == foundBeacon) {
+    
     [self.loaderView stop];
+    
   }
   
 }
