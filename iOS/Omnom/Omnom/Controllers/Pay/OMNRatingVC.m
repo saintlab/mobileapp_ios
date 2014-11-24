@@ -145,8 +145,7 @@
   [_contentView addSubview:_l3];
   
   _l4 = [self label];
-  [_contentView addSubview:_l4];
-  
+//  [_contentView addSubview:_l4];
   
   UIImageView *chequeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bill_zubchiki"]];
   chequeImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -164,7 +163,7 @@
     @"l2" : _l2,
     @"dividerIV" : dividerIV,
     @"l3" : _l3,
-    @"l4" : _l4,
+//    @"l4" : _l4,
     @"chequeImageView" : chequeImageView,
     @"contentView" : _contentView,
     @"topLayoutGuide" : self.topLayoutGuide,
@@ -192,11 +191,12 @@
   [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[l2]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:dividerIV attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[l3]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[l4]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+//  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[l4]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[chequeImageView]|" options:kNilOptions metrics:nil views:views]];
   
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(40)-[logoView]-(25)-[l1]-(labelOffset)-[l2]-(labelOffset)-[dividerIV]-(labelOffset)-[l3]-(labelOffset)-[l4]-(20)-[chequeImageView]|" options:kNilOptions metrics:metrics views:views]];
-  
+//  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(40)-[logoView]-(25)-[l1]-(labelOffset)-[l2]-(labelOffset)-[dividerIV]-(labelOffset)-[l3]-(labelOffset)-[l4]-(20)-[chequeImageView]|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(40)-[logoView]-(25)-[l1]-(labelOffset)-[l2]-(labelOffset)-[dividerIV]-(labelOffset)-[l3]-(20)-[chequeImageView]|" options:kNilOptions metrics:metrics views:views]];
+
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
