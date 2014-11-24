@@ -17,7 +17,7 @@
     
     _order_id = [(order.id) ? (order.id) : (@"") copy];
     _restaurant_id = [(order.restaurant_id) ? (order.restaurant_id) : (@"") copy];
-    
+    _table_id = (order.table_id) ? ([order.table_id copy]) : @"";
     _bill_amount = order.enteredAmount;
     _tips_amount = order.tipAmount;
     _total_amount = order.enteredAmountWithTips;

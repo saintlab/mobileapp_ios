@@ -11,6 +11,7 @@
 @interface OMNOrderTansactionInfo : NSObject
 
 @property (nonatomic, strong, readonly) NSString *order_id;
+@property (nonatomic, strong, readonly) NSString *table_id;
 @property (nonatomic, strong, readonly) NSString *restaurant_id;
 @property (nonatomic, assign, readonly) long long bill_amount;
 @property (nonatomic, assign, readonly) long long tips_amount;

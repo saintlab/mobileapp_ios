@@ -114,6 +114,11 @@
     properties[@"method_used"] = @"QR";
   }
   properties[@"timestamp"] = [self dateString];
+
+  if (visitor.table.id) {
+    properties[@"table_id"] = visitor.table.id;
+  }
+  
   [_mixpanel track:@"restaurant_enter" properties:properties];
   [_mixpanel.people set:@"last_visited" to:[NSDate date]];
   [_mixpanel.people increment:@"total_visits" by:@(1)];
@@ -165,6 +170,7 @@
      @"timestamp" : [self dateString],
      @"order_id" : orderTansactionInfo.order_id,
      @"restaurant_id" : orderTansactionInfo.restaurant_id,
+     @"table_id" : orderTansactionInfo.table_id,
      @"bill_id" : (bill_id) ? (bill_id) : (@""),
      }];
   [_mixpanel flush];
