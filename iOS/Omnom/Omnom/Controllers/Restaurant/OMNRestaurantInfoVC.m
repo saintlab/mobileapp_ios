@@ -43,7 +43,8 @@ UIGestureRecognizerDelegate>
   BOOL _disableNavigationBarAnimation;
   BOOL _disableSwipeTransition;
   UIPercentDrivenInteractiveTransition *_percentDrivenInteractiveTransition;
-
+  UIButton *_arrowButton;
+  
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
@@ -60,7 +61,8 @@ UIGestureRecognizerDelegate>
   _disableSwipeTransition = YES;
   _disableNavigationBarAnimation = YES;
   
-  self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"back_button_icon"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
+  _arrowButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"back_button_icon"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
+  self.navigationItem.titleView = _arrowButton;
   
   if (NO == _visitor.restaurant.is_demo) {
     
@@ -448,14 +450,17 @@ UIGestureRecognizerDelegate>
   }
   CALayer *navigationBarLayer = self.navigationController.navigationBar.layer;
   CGFloat deltaOffset = self.tableView.contentOffset.y;
-  
-  if (deltaOffset > 0.0f) {
 
+  if (deltaOffset > 0.0f) {
+    
+    const CGFloat kDistanceToHide = 30.0f;
+    _arrowButton.alpha = MAX(0.0f, (kDistanceToHide - deltaOffset)/kDistanceToHide);
     navigationBarLayer.transform = CATransform3DMakeTranslation(0.0f, -deltaOffset - self.tableView.contentInset.top, 0.0f);
 
   }
   else {
     
+    _arrowButton.alpha = 1.0f;
     navigationBarLayer.transform = CATransform3DIdentity;
     
   }
@@ -465,7 +470,9 @@ UIGestureRecognizerDelegate>
 #pragma mark - OMNInteractiveTransitioningProtocol
 
 - (id<UIViewControllerInteractiveTransitioning>)interactiveTransitioning {
+  
   return _percentDrivenInteractiveTransition;
+  
 }
 
 @end
