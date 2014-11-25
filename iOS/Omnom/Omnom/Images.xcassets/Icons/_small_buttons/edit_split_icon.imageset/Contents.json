@@ -2,8 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "ic_edit.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

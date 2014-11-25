@@ -2,8 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "cancel_editing_button.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

@@ -140,7 +140,7 @@
     }
     [_contentView addSubview:iv];
     
-    NSString *viewKey = [NSString stringWithFormat:@"iv%d", idx];
+    NSString *viewKey = [NSString stringWithFormat:@"iv%lu", (unsigned long)idx];
     [viewKeys addObject:viewKey];
     views[viewKey] = iv;
     

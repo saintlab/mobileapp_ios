@@ -2,8 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "roundy_button_white_light_grey_border.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

@@ -2,8 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "start_circle_icon_small_white.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

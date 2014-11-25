@@ -2,8 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "bill_tips_divider.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

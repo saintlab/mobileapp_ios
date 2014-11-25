@@ -2,8 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "mail_ru_icon.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

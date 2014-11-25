@@ -2,8 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "star_not_selected_white.png"
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
