@@ -7,17 +7,17 @@
 //
 
 #import "OMNBeaconRangingManager.h"
+#import "OMNFoundBeacons.h"
 
-typedef void(^OMNNearestBeaconsBlock)(NSArray *nearestBeacons, NSArray *foundBeacons);
+typedef void(^OMNNearestBeaconsBlock)(OMNFoundBeacons *foundBeacons);
 
 @interface OMNNearestBeaconsManager : NSObject 
 
 @property (nonatomic, assign, readonly) BOOL isRanging;
 
-- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock;
+- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)authorizationStatusBlock;
 
-- (void)rangeNearestBeacons:(OMNNearestBeaconsBlock)nearestBeaconsBlock;
-
-- (void)stop;
+- (void)findNearestBeacons:(OMNNearestBeaconsBlock)didFindNearestBeaconsBlock;
+- (void)stopRanging;
 
 @end

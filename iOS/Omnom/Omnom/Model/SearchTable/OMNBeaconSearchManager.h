@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
 
 @protocol OMNBeaconSearchManagerDelegate <NSObject>
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindNearestBeacons:(NSArray *)nearsetBeacons allBeacons:(NSArray *)allBeacons;
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindAtTheTableBeacons:(NSArray *)atTheTableBeacons allBeacons:(NSArray *)allBeacons;
 - (void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager found:(BOOL)foundBeacon;
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state;
 

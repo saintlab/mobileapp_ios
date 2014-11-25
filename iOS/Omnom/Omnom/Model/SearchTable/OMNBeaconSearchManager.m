@@ -49,8 +49,10 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
   [self stopRangingTimer];
   
   if (_nearestBeaconsManager) {
+    
     [self.delegate beaconSearchManagerDidStop:self found:beaconFound];
-    [_nearestBeaconsManager stop];
+    [_nearestBeaconsManager stopRanging];
+    
   }
   
 }
@@ -68,7 +70,7 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
       [OMNConstants useStubBeacon]) {
     
     NSArray *beacons = @[[OMNBeacon demoBeacon]];
-    [self checkNearestBeacons:beacons foundBeacons:beacons];
+    [self processAtTheTableBeacons:beacons allBeacons:beacons];
     
   }
   else {
@@ -197,9 +199,9 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
   _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconSearchTimeout) userInfo:nil repeats:NO];
   
   __weak typeof(self)weakSelf = self;
-  [_nearestBeaconsManager rangeNearestBeacons:^(NSArray *nearestBeacons, NSArray *foundBeacons) {
-    
-    [weakSelf checkNearestBeacons:foundBeacons foundBeacons:foundBeacons];
+  [_nearestBeaconsManager findNearestBeacons:^(OMNFoundBeacons *foundBeacons) {
+   
+    [weakSelf processAtTheTableBeacons:foundBeacons.atTheTableBeacons allBeacons:foundBeacons.allBeacons];
     
   }];
   
@@ -212,15 +214,11 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
   
 }
 
-- (void)checkNearestBeacons:(NSArray *)nearestBeacons foundBeacons:(NSArray *)foundBeacons {
+- (void)processAtTheTableBeacons:(NSArray *)atTheTableBeacons allBeacons:(NSArray *)allBeacons {
   
-  if (0 == nearestBeacons.count) {
-    return;
-  }
-
-  BOOL beaconDidFound = (nearestBeacons.count == 1);
+  BOOL beaconDidFound = (atTheTableBeacons.count == 1);
   [self stopRangingNearestBeacons:beaconDidFound];
-  [self.delegate beaconSearchManager:self didFindNearestBeacons:nearestBeacons allBeacons:foundBeacons];
+  [self.delegate beaconSearchManager:self didFindAtTheTableBeacons:atTheTableBeacons allBeacons:allBeacons];
   
 }
 

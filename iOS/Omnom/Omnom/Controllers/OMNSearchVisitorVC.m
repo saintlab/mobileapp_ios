@@ -290,15 +290,15 @@ OMNUserInfoVCDelegate>
 
 #pragma mark - OMNBeaconSearchManagerDelegate
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindNearestBeacons:(NSArray *)nearsetBeacons allBeacons:(NSArray *)allBeacons {
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindAtTheTableBeacons:(NSArray *)atTheTableBeacons allBeacons:(NSArray *)allBeacons {
   
-  NSDictionary *debugData = [OMNBeacon omn_debugDataFromNearestBeacons:nearsetBeacons allBeacons:allBeacons];
+  NSDictionary *debugData = [OMNBeacon omn_debugDataFromNearestBeacons:atTheTableBeacons allBeacons:allBeacons];
   
-  if (1 == nearsetBeacons.count) {
+  if (1 == atTheTableBeacons.count) {
 
     [[OMNAnalitics analitics] logDebugEvent:@"DID_FIND_BEACONS" parametrs:debugData];
-    OMNBeacon *beacon = [nearsetBeacons firstObject];
-    [self decodeBeacon:beacon];
+    OMNBeacon *atTheTableBeacon = [atTheTableBeacons firstObject];
+    [self decodeBeacon:atTheTableBeacon];
     
   }
   else {

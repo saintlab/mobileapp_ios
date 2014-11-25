@@ -56,7 +56,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
   NSDictionary *beaconUUID = config[@"uuid"];
   if (beaconUUID) {
-    
+
     [OMNBeacon setBaeconUUID:[[OMNBeaconUUID alloc] initWithJsonData:beaconUUID]];
     
   }
