@@ -143,6 +143,7 @@ OMNPayOrderVCDelegate>
         button.enabled = YES;
         [searchBeaconVC finishLoading:^{
           
+          [weakSelf.restaurantActionsVC showRestaurantAnimated:NO];
           [weakSelf popToRootViewControllerAnimated:YES];
           
         }];
@@ -202,7 +203,7 @@ OMNPayOrderVCDelegate>
 }
 
 - (void)checkPushNotificationForVisitor:(OMNVisitor *)visitor {
-#warning 123
+
   if ([OMNAuthorisation authorisation].pushNotificationsRequested) {
     
     [self processOrdersForVisitor:visitor];

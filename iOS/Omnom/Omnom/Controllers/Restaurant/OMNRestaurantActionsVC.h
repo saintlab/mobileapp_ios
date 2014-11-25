@@ -19,6 +19,7 @@
 @property (nonatomic, weak) id<OMNRestaurantActionsVCDelegate> delegate;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;
+- (void)showRestaurantAnimated:(BOOL)animated;
 
 @end
 

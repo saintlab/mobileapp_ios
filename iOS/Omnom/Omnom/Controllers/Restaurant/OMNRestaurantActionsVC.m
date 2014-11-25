@@ -78,6 +78,12 @@
   
 }
 
+- (void)showRestaurantAnimated:(BOOL)animated {
+  
+  [_navigationController popToViewController:_r1VC animated:animated];
+  
+}
+
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
