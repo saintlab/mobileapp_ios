@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNBackgroundVC.h"
+#import "OMNPermissionHelpVC.h"
 
-@interface OMNCLPermissionsHelpVC : OMNBackgroundVC
+@interface OMNCLPermissionsHelpVC : OMNPermissionHelpVC
 
 @end

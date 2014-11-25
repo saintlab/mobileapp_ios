@@ -61,7 +61,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
     
   }
   
-  
   _tokens = config[@"tokens"];
   
 }

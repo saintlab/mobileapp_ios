@@ -17,10 +17,9 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 <CLLocationManagerDelegate> {
   
   OMNNearestBeaconSearchManager *_beaconSearchManager;
-  
   UIBackgroundTaskIdentifier _searchBeaconTask;
-  
   BOOL _monitoring;
+  
 }
 
 @property (nonatomic, strong) NSArray *backgroundBeaconRegions;
@@ -158,8 +157,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     
   }];
   
-  NSLog(@"%@", self.locationManager.monitoredRegions);
-  
 }
 
 - (void)handlePush:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
@@ -193,8 +190,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 }
 
 - (void)stopBeaconRegionMonitoring {
-  
-  NSLog(@"stopBeaconRegionMonitoring");
   
   if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
     _monitoring = NO;

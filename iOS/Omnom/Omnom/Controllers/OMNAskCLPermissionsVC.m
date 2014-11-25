@@ -96,7 +96,6 @@
   }
 #pragma clang diagnostic pop
   
-  
 }
 
 - (void)denyPermissionTap {

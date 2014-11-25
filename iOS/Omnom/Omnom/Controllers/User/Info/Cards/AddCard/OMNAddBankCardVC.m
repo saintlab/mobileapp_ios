@@ -14,10 +14,14 @@
 #import "OMNCardBrandView.h"
 #import "OMNBorderedButton.h"
 #import <OMNStyler.h>
+#import "OMNCameraPermission.h"
+#import "OMNCameraPermissionHelpVC.h"
+#import "UINavigationController+omn_replace.h"
 
 @interface OMNAddBankCardVC ()
 <CardIOPaymentViewControllerDelegate,
-OMNCardEnterControlDelegate>
+OMNCardEnterControlDelegate,
+OMNCameraPermissionHelpVCDelegate>
 
 @end
 
@@ -118,7 +122,28 @@ OMNCardEnterControlDelegate>
   
 }
 
+- (void)cardEnterControlSaveButtonStateDidChange:(OMNCardEnterControl *)control {
+  
+  [self updateSubmitButton];
+  
+}
+
 - (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {
+  
+  __weak typeof(self)weakSelf = self;
+  [OMNCameraPermission requestPermission:^{
+    
+    [weakSelf scanCard];
+    
+  } restricted:^{
+    
+    [weakSelf showCameraPermissionHelp];
+    
+  }];
+  
+}
+
+- (void)scanCard {
   
   CardIOPaymentViewController *scanViewController = [[CardIOPaymentViewController alloc] initWithPaymentDelegate:self];
   scanViewController.collectCVV = NO;
@@ -130,9 +155,17 @@ OMNCardEnterControlDelegate>
   
 }
 
-- (void)cardEnterControlSaveButtonStateDidChange:(OMNCardEnterControl *)control {
+- (void)showCameraPermissionHelp {
   
-  [self updateSubmitButton];
+  OMNCameraPermissionHelpVC *cameraPermissionHelpVC = [[OMNCameraPermissionHelpVC alloc] init];
+  __weak typeof(self)weakSelf = self;
+  cameraPermissionHelpVC.didCloseBlock = ^{
+    
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    
+  };
+  cameraPermissionHelpVC.delegate = self;
+  [self.navigationController pushViewController:cameraPermissionHelpVC animated:YES];
   
 }
 
@@ -167,6 +200,19 @@ OMNCardEnterControlDelegate>
   if (self.cancelBlock) {
     self.cancelBlock();
   }
+  
+}
+
+#pragma mark - OMNCameraPermissionHelpVCDelegate
+
+- (void)cameraPermissionHelpVCDidReceivePermission:(OMNCameraPermissionHelpVC *)cameraPermissionHelpVC {
+  
+  __weak typeof(self)weakSelf = self;
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
+    
+    [weakSelf scanCard];
+    
+  }];
   
 }
 

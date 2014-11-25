@@ -48,7 +48,9 @@
 }
 
 - (void)didFinish {
+  
   _completionBlock();
+  
 }
 
 - (void)requestPermissionTap {
@@ -60,11 +62,6 @@
     
   }];
   
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 @end

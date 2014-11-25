@@ -52,8 +52,11 @@
     }];
   }
   
-  if (nil == launchOptions[UIApplicationLaunchOptionsLocationKey]) {
+  BOOL applicationWasOpenedByBeacon = (launchOptions[UIApplicationLaunchOptionsLocationKey] != nil);
+  if (NO == applicationWasOpenedByBeacon) {
+    
     [self startApplication:launchOptions];
+    
   }
   
   return YES;
