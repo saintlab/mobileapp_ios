@@ -14,6 +14,7 @@
 #import "OMNVisitor.h"
 #import <AFNetworking.h>
 #import <Mixpanel.h>
+#import "OMNAuthorisation.h"
 
 @interface OMNAnalitics ()
 
@@ -73,8 +74,10 @@
     [_mixpanel identify:user.id];
     [_mixpanelDebug identify:user.id];
     userInfo[@"ID"] = user.id;
-    
   }
+  
+  userInfo[@"push_notifications_requested"] = @([OMNAuthorisation authorisation].pushNotificationsRequested);
+  
   if (user.name) {
     userInfo[@"name"] = user.name;
   }
@@ -98,13 +101,17 @@
   [_mixpanelDebug.people set:userInfo];
   [_mixpanelDebug registerSuperProperties:@{@"omn_user" : userInfo}];
   [_mixpanelDebug flush];
+  
 }
 
-- (void)logEnterRestaurant:(OMNVisitor *)visitor {
+- (void)logEnterRestaurant:(OMNVisitor *)visitor foreground:(BOOL)foreground {
   
   NSMutableDictionary *properties = [NSMutableDictionary dictionary];
   if (visitor.restaurant.title) {
     properties[@"restaurant_name"] = visitor.restaurant.title;
+  }
+  if (visitor.restaurant.id) {
+    properties[@"restaurant_id"] = visitor.restaurant.id;
   }
   if (visitor.beacon) {
     properties[@"method_used"] = @"Bluetooth";
@@ -119,9 +126,12 @@
     properties[@"table_id"] = visitor.table.id;
   }
   
-  [_mixpanel track:@"restaurant_enter" properties:properties];
+  NSString *eventName = (foreground) ? (@"application_launch") : (@"restaurant_enter");
+  
+  [_mixpanel track:eventName properties:properties];
   [_mixpanel.people set:@"last_visited" to:[NSDate date]];
   [_mixpanel.people increment:@"total_visits" by:@(1)];
+  [_mixpanel flush];
   
 }
 

@@ -67,7 +67,8 @@
     
     _restaurantMediator = restaurantMediator;
     self.visitor = _restaurantMediator.visitor;
-    [[OMNAnalitics analitics] logEnterRestaurant:self.visitor];
+    
+    [[OMNAnalitics analitics] logEnterRestaurant:self.visitor foreground:YES];
     
     _restaurant = self.visitor.restaurant;
     self.circleIcon = _restaurant.decoration.logo;

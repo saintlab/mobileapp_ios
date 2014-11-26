@@ -45,8 +45,8 @@
 
 - (void)findNearestBeacon:(void(^)(OMNBeacon *beacon))didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock {
   
-  _didFindNearestBeaconBlock = didFindNearestBeaconBlock;
-  _failureBlock = failureBlock;
+  _didFindNearestBeaconBlock = [didFindNearestBeaconBlock copy];
+  _failureBlock = [failureBlock copy];
 
   _devicePositionManager = [[OMNDevicePositionManager alloc] init];
   
@@ -89,7 +89,6 @@
   
   [_beaconRangingManager stop];
   _beaconRangingManager = nil;
-  
   
   [beacons enumerateObjectsUsingBlock:^(CLBeacon *foundBeacon, NSUInteger idx, BOOL *stop) {
     NSLog(@"%@  %@  %@", foundBeacon.proximityUUID.UUIDString, foundBeacon.major, foundBeacon.minor);

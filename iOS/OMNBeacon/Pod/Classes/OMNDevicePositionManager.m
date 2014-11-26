@@ -86,7 +86,7 @@ static double const kDesiredAccelerometerAccuracy = 0.05;
   
   [self stop];
 
-  dispatch_block_t completitionPositionBlock = _completitionPositionBlock;
+  dispatch_block_t completitionPositionBlock = [_completitionPositionBlock copy];
   _completitionPositionBlock = nil;
   NSLog(@"device is face up");
   if (completitionPositionBlock) {

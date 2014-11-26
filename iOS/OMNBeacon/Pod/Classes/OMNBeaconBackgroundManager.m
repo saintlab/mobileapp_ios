@@ -66,10 +66,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 
 - (void)beaconDidFind:(OMNBeacon *)beacon {
   
-  if (nil == beacon) {
-    return;
-  }
-  
   [_beaconSearchManager stop];
   _beaconSearchManager = nil;
   

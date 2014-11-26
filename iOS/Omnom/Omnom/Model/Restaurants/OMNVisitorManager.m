@@ -232,6 +232,7 @@
     if (visitor) {
       
       [visitor showGreetingPush];
+      [[OMNAnalitics analitics] logEnterRestaurant:visitor foreground:NO];
       
       [visitor newGuestWithCompletion:^{
         completion();
