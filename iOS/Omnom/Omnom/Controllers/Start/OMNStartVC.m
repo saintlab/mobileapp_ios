@@ -89,10 +89,9 @@ OMNSearchRestaurantVCDelegate>
   }
   
 #warning run with custom qr codes
-//  searchRestaurantVC.qr = @"http://m.2gis.ru/os/";
 //  searchRestaurantVC.qr = @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";
 //  searchRestaurantVC.qr = @"qr-code-3-at-saintlab-iiko";
-  searchRestaurantVC.qr = @"http://omnom.menu/qr/special-and-vip";
+//  searchRestaurantVC.qr = @"http://omnom.menu/qr/special-and-vip";
 
   NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
   if (decodeBeaconData) {

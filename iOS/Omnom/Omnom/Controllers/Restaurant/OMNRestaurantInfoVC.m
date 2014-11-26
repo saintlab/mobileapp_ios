@@ -24,8 +24,8 @@
 
 typedef NS_ENUM(NSInteger, RestaurantInfoSection) {
   kRestaurantInfoSectionName = 0,
+  kRestaurantInfoSectionDescription,
   kRestaurantInfoSectionAbout,
-  kRestaurantInfoSectionMore,
   kRestaurantInfoSectionFeed,
   kRestaurantInfoSectionMax,
 };
@@ -75,6 +75,7 @@ UIGestureRecognizerDelegate>
   [self.tableView registerClass:[OMNRestaurantInfoCell class] forCellReuseIdentifier:@"InfoCell"];
   [self.tableView registerClass:[OMNLabelCell class] forCellReuseIdentifier:@"MoreCell"];
   [self.tableView registerClass:[OMNLabelCell class] forCellReuseIdentifier:@"DefaultCell"];
+  [self.tableView registerClass:[OMNLabelCell class] forCellReuseIdentifier:@"DescriptionCell"];
   [self.tableView registerClass:[OMNRestaurantFeedItemCell class] forCellReuseIdentifier:@"FeedItemCell"];
 
   self.tableView.separatorInset = UIEdgeInsetsMake(0.0f, [[[OMNStyler styler] leftOffset] floatValue], 0.0f, 0.0f);
@@ -247,11 +248,11 @@ UIGestureRecognizerDelegate>
     case kRestaurantInfoSectionName: {
       numberOfRows = 1;
     } break;
-    case kRestaurantInfoSectionAbout: {
-      numberOfRows = (_visitor.restaurant.info.selected) ? (_visitor.restaurant.info.fullItems.count) : (_visitor.restaurant.info.shortItems.count);
+    case kRestaurantInfoSectionDescription: {
+      numberOfRows = (_visitor.restaurant.Description.length) ? (1) : (0);
     } break;
-    case kRestaurantInfoSectionMore: {
-      numberOfRows = (nil == _visitor.restaurant.info || _visitor.restaurant.info.selected) ? (0) : (1);
+    case kRestaurantInfoSectionAbout: {
+      numberOfRows = _visitor.restaurant.info.fullItems.count;
     } break;
     case kRestaurantInfoSectionFeed: {
       numberOfRows = _visitor.restaurant.info.feedItems.count;
@@ -263,17 +264,58 @@ UIGestureRecognizerDelegate>
   return numberOfRows;
 }
 
+- (CGFloat)heightForDescriprionCell {
+  
+  static OMNLabelCell *cell = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    cell = [[OMNLabelCell alloc] init];
+  });
+  [self configureDescriptionCell:cell];
+  
+  [cell setNeedsUpdateConstraints];
+  [cell updateConstraintsIfNeeded];
+  
+  cell.bounds = CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.tableView.bounds), CGRectGetHeight(cell.bounds));
+  
+  [cell setNeedsLayout];
+  [cell layoutIfNeeded];
+  
+  CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+  
+  // Add an extra point to the height to account for the cell separator, which is added between the bottom
+  // of the cell's contentView and the bottom of the table view cell.
+  height += 21.0f;
+  return height;
+  
+}
+
+- (void)configureDescriptionCell:(OMNLabelCell *)cell {
+  
+  cell.separatorInset = UIEdgeInsetsMake(0.0f, CGRectGetWidth(self.view.frame), 0.0f, 0.0f);
+  cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  cell.label.font = FuturaOSFOmnomRegular(18.0f);
+  cell.label.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  cell.label.numberOfLines = 0;
+  cell.label.text = _visitor.restaurant.Description;
+  
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return 44.0f;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   CGFloat heightForRow = 44.0f;
   switch ((RestaurantInfoSection)indexPath.section) {
     case kRestaurantInfoSectionName: {
       heightForRow = 50.0f;
     } break;
+    case kRestaurantInfoSectionDescription: {
+      heightForRow = [self heightForDescriprionCell];
+    } break;
     case kRestaurantInfoSectionAbout: {
       heightForRow = 40.0f;
-    } break;
-    case kRestaurantInfoSectionMore: {
-      heightForRow = 30.0f;
     } break;
     case kRestaurantInfoSectionFeed: {
       heightForRow = 237.0f;
@@ -299,22 +341,19 @@ UIGestureRecognizerDelegate>
       cell = defaultCell;
       
     } break;
+    case kRestaurantInfoSectionDescription: {
+      
+      OMNLabelCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:@"DescriptionCell" forIndexPath:indexPath];
+      [self configureDescriptionCell:descriptionCell];
+      cell = descriptionCell;
+      
+    } break;
     case kRestaurantInfoSectionAbout: {
       
       OMNRestaurantInfoCell *restaurantInfoCell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell" forIndexPath:indexPath];
-      NSArray *items = (_visitor.restaurant.info.selected) ? (_visitor.restaurant.info.fullItems) : (_visitor.restaurant.info.shortItems);
-      OMNRestaurantInfoItem *item = items[indexPath.row];
+      OMNRestaurantInfoItem *item = _visitor.restaurant.info.fullItems[indexPath.row];
       [restaurantInfoCell setItem:item];
       cell = restaurantInfoCell;
-      
-    } break;
-    case kRestaurantInfoSectionMore: {
-      
-      OMNLabelCell *labelCell = [tableView dequeueReusableCellWithIdentifier:@"MoreCell" forIndexPath:indexPath];
-      labelCell.label.text = NSLocalizedString(@"подробнее о заведении...", nil);
-      labelCell.separatorInset = UIEdgeInsetsMake(0.0f, CGRectGetWidth(self.view.frame), 0.0f, 0.0f);
-      labelCell.label.textColor = [UIColor colorWithWhite:127.0f/255.0f alpha:1.0f];
-      cell = labelCell;
       
     } break;
     case kRestaurantInfoSectionFeed: {
@@ -336,21 +375,9 @@ UIGestureRecognizerDelegate>
   switch ((RestaurantInfoSection)indexPath.section) {
     case kRestaurantInfoSectionAbout: {
       
-      NSArray *items = (_visitor.restaurant.info.selected) ? (_visitor.restaurant.info.fullItems) : (_visitor.restaurant.info.shortItems);
-      OMNRestaurantInfoItem *item = items[indexPath.row];
+      OMNRestaurantInfoItem *item = _visitor.restaurant.info.fullItems[indexPath.row];
       [item open];
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
-      
-    } break;
-    case kRestaurantInfoSectionMore: {
-
-      if (_visitor.restaurant.info) {
-        _visitor.restaurant.info.selected = !_visitor.restaurant.info.selected;
-        [tableView beginUpdates];
-        [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:kRestaurantInfoSectionMore]] withRowAnimation:UITableViewRowAnimationFade];
-        [tableView reloadSections:[NSIndexSet indexSetWithIndex:kRestaurantInfoSectionAbout] withRowAnimation:UITableViewRowAnimationFade];
-        [tableView endUpdates];
-      }
       
     } break;
     case kRestaurantInfoSectionFeed: {
@@ -362,6 +389,7 @@ UIGestureRecognizerDelegate>
       
     } break;
     case kRestaurantInfoSectionName:
+    case kRestaurantInfoSectionDescription:
     case kRestaurantInfoSectionMax: {
     } break;
   }
