@@ -97,7 +97,6 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
-  self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
   
   _errorLabel.text = nil;
   _offerLabel.text = nil;

@@ -16,7 +16,6 @@
   UILabel *_label;
   UIImageView *_iconView;
   OMNBankCard *_bankCard;
-  UIView *_bottomLine;
   
   NSString *_bankCardCellDeleteIdentifier;
 }
@@ -65,16 +64,10 @@
   _iconView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentView addSubview:_iconView];
   
-  _bottomLine = [[UIView alloc] init];
-  _bottomLine.translatesAutoresizingMaskIntoConstraints = NO;
-  _bottomLine.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.1f];;
-  [self addSubview:_bottomLine];
-  
   NSDictionary *views =
   @{
     @"label" : _label,
     @"iconView" : _iconView,
-    @"bottomLine" : _bottomLine,
     };
   
   NSDictionary *metrics =
@@ -82,11 +75,9 @@
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomLine(1)]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomLine]|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-[iconView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-[iconView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
 }
 

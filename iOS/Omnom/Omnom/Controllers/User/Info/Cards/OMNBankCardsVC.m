@@ -66,7 +66,6 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
     
   }];
   
-  self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
   

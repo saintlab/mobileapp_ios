@@ -232,6 +232,7 @@
   static NSDateFormatter *dateFormatter = nil;
   if (nil == dateFormatter) {
     dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"ru"]];
     [dateFormatter setDateFormat:@"{yyyy-MM-dd'T'HH:mm:ssZZZZZ}"];
   }
   return [dateFormatter stringFromDate:[NSDate date]];

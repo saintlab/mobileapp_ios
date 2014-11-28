@@ -170,6 +170,10 @@ NSString * const kCardIdServiceName = @"card_id";
   
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return UITableViewCellEditingStyleDelete;
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 
   OMNBankCard *card = self.cards[indexPath.row];
@@ -211,7 +215,7 @@ NSString * const kCardIdServiceName = @"card_id";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-  
+
   OMNBankCard *selectedCard = self.cards[indexPath.row];
 
   if (kOMNBankCardStatusRegistered == selectedCard.status) {
