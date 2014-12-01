@@ -41,18 +41,23 @@
   OMNAmountPercentValue *_tipAmountPercentValue;
   
   BOOL _keyboardShown;
+  
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    
     [self setup];
+    
   }
   return self;
 }
 
 - (void)awakeFromNib {
+  
   [self setup];
+  
 }
 
 - (void)setup {
@@ -133,14 +138,18 @@
   
   self.tipsMode = YES;
   if (_tipAmountPercentValue) {
+    
     _tipAmountPercentValue.amount = _order.enteredAmount;
     _amountPercentControl.amountPercentValue = _tipAmountPercentValue;
+    
   }
   else {
+    
     OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
     amountPercentValue.amount = _order.customTip.amount;
     amountPercentValue.percent = _order.customTip.percent;
     _amountPercentControl.amountPercentValue = amountPercentValue;
+    
   }
   
   [_amountPercentControl beginPercentEditing];
@@ -151,11 +160,16 @@
   
   OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
   amountPercentValue.amount = _order.enteredAmount;
+  
   if (_order.expectedValue) {
+    
     amountPercentValue.percent = 100.*(double)_order.enteredAmount/_order.expectedValue;
+    
   }
+  
   amountPercentValue.amount = _order.enteredAmount;
   _amountPercentControl.amountPercentValue = amountPercentValue;
+  
   if (_order.paid.net_amount > 0) {
     
     _payAmountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_PAID_AMOUNT %@", @"Уже оплачено: {amount}"), [OMNUtils formattedMoneyStringFromKop:_order.paid.net_amount]];
@@ -192,7 +206,7 @@
 
 - (void)updateAmountForPercentLabel {
 
-  long long amount = _order.enteredAmount*_amountPercentControl.amountPercentValue.percent/100.0L;
+  long long amount = _order.enteredAmount*_amountPercentControl.amountPercentValue.percent/100.0l;
   _amountForPercentLabel.text = [NSString stringWithFormat:@"или %@%@", [OMNUtils evenCommaStringFromKop:amount], kRubleSign];
   
 }
@@ -213,12 +227,16 @@
   
   if (self.tipsMode &&
       keyboardShown) {
+    
     _payAmountLabel.alpha = 0.0f;
     _amountForPercentLabel.alpha = 1.0f;
+    
   }
   else {
+    
     _payAmountLabel.alpha = 1.0f;
     _amountForPercentLabel.alpha = 0.0f;
+    
   }
 
   if (self.tipsMode) {
@@ -272,9 +290,7 @@
   }
   else {
     
-    _order.splitType = kSplitTypePercent;
-    _order.enteredAmount = _amountPercentControl.amountPercentValue.amount;
-    [_order deselectAllItems];
+    [self.delegate paymentFooterView:self didSelectAmount:_amountPercentControl.amountPercentValue.amount];
     
   }
   

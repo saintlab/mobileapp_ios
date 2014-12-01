@@ -123,7 +123,6 @@
 
 - (void)cancelTap {
   
-  [_order deselectAllItems];
   [self.delegate orderTotalViewDidCancel:self];
   
 }

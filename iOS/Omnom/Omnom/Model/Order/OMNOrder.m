@@ -121,8 +121,6 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     }
     _tips = tips;
     
-    _enteredAmount = self.expectedValue;
-    
     if (self.totalAmount == 0 &&
         self.paid.net_amount == 0) {
       
@@ -134,6 +132,8 @@ inline NSString *stringFromSplitType(SplitType splitType) {
       self.selectedTipIndex = 1;
       
     }
+    
+    [self resetEnteredAmount];
     
   }
   return self;
@@ -319,6 +319,12 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     
   }];
   [self didChangeValueForKey:@"hasSelectedItems"];
+  
+}
+
+- (void)resetEnteredAmount {
+  
+  _enteredAmount = self.expectedValue;
   
 }
 

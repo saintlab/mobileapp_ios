@@ -78,5 +78,6 @@ extern NSString *stringFromSplitType(SplitType splitType);
 
 - (void)selectionDidChange;
 - (void)deselectAllItems;
+- (void)resetEnteredAmount;
 
 @end

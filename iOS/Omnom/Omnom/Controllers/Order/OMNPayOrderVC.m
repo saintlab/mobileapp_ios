@@ -36,7 +36,8 @@
 OMNRatingVCDelegate,
 UITableViewDelegate,
 OMNMailRUPayVCDelegate,
-OMNOrderTotalViewDelegate>
+OMNOrderTotalViewDelegate,
+OMNPaymentFooterViewDelegate>
 
 @end
 
@@ -84,6 +85,8 @@ OMNOrderTotalViewDelegate>
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
+  
+  _paymentView.delegate = self;
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
 
@@ -377,6 +380,33 @@ OMNOrderTotalViewDelegate>
   
 }
 
+- (void)setOrderEnteredAmount:(long long)enteredAmount splitType:(SplitType)splitType {
+  
+  _order.enteredAmount = enteredAmount;
+  _order.splitType = splitType;
+  
+  switch (splitType) {
+    case kSplitTypeOrders: {
+      
+      [_order selectionDidChange];
+      
+    } break;
+    case kSplitTypeNone:
+    case kSplitTypeNumberOfGuests:
+    case kSplitTypePercent: {
+      
+      [_order deselectAllItems];
+      
+    } break;
+  }
+  
+  BOOL fadeNonSelectedItems = (kSplitTypeOrders == splitType);
+  [self setNonSelectedOrderItemsFaded:fadeNonSelectedItems];
+  
+  _paymentView.order = _order;
+  
+}
+
 #pragma mark - OMNRatingVCDelegate
 
 - (void)ratingVCDidFinish:(OMNRatingVC *)ratingVC {
@@ -389,24 +419,7 @@ OMNOrderTotalViewDelegate>
 
 - (void)calculatorVC:(OMNCalculatorVC *)calculatorVC splitType:(SplitType)splitType didFinishWithTotal:(long long)total {
   
-  _order.enteredAmount = total;
-  _order.splitType = splitType;
-  
-  if (kSplitTypeNumberOfGuests == splitType) {
-    
-    [_order deselectAllItems];
-    
-  }
-  else {
-    
-    [_order selectionDidChange];
-    
-  }
-
-  BOOL fadeNonSelectedItems = (kSplitTypeOrders == splitType);
-  [self setNonSelectedOrderItemsFaded:fadeNonSelectedItems];
-
-  _paymentView.order = _order;
+  [self setOrderEnteredAmount:total splitType:splitType];
   [self.navigationController popToViewController:self animated:YES];
   
 }
@@ -495,8 +508,16 @@ OMNOrderTotalViewDelegate>
 
 - (void)orderTotalViewDidCancel:(OMNOrderActionView *)orderTotalView {
   
-  [self setNonSelectedOrderItemsFaded:NO];
+  [self setOrderEnteredAmount:_order.expectedValue splitType:kSplitTypeNone];
 
+}
+
+#pragma mark - OMNPaymentFooterViewDelegate
+
+- (void)paymentFooterView:(OMNPaymentFooterView *)paymentFooterView didSelectAmount:(long long)amount {
+
+  [self setOrderEnteredAmount:amount splitType:kSplitTypePercent];
+  
 }
 
 @end
