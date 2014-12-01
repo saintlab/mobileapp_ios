@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		264521757CEC4850BAD13764 /* libPods-omnom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 868F39BCBC9B4D12AB862926 /* libPods-omnom.a */; };
+		93040A4C1A2C36B700D87CBD /* user_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93040A4B1A2C36B700D87CBD /* user_stub.json */; };
 		930554E11934978400E6F4EC /* OMNAuthorisation.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E01934978400E6F4EC /* OMNAuthorisation.m */; };
 		930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E31934A1AC00E6F4EC /* OMNUser.m */; };
 		930554FC1935DA7C00E6F4EC /* OMNProductSelectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554EC1935DA7C00E6F4EC /* OMNProductSelectionVC.m */; };
@@ -442,6 +443,7 @@
 		35B13F134E2D3FE94F5C2980 /* Pods-omnom.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnom.test.xcconfig"; path = "../Pods/Target Support Files/Pods-omnom/Pods-omnom.test.xcconfig"; sourceTree = "<group>"; };
 		79C1CE5E4E1243D5AFFD1065 /* libPods-omnomTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-omnomTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		868F39BCBC9B4D12AB862926 /* libPods-omnom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-omnom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		93040A4B1A2C36B700D87CBD /* user_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_stub.json; sourceTree = "<group>"; };
 		930554DC1934914F00E6F4EC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		930554DF1934978400E6F4EC /* OMNAuthorisation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorisation.h; sourceTree = "<group>"; };
 		930554E01934978400E6F4EC /* OMNAuthorisation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorisation.m; sourceTree = "<group>"; };
@@ -1413,6 +1415,7 @@
 		93676E1518D1E4FC00FC55F1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				93040A4B1A2C36B700D87CBD /* user_stub.json */,
 				9325BA531A1E225D003557BD /* visitors_stub.json */,
 				9332CB011A1653E000885017 /* orders_stub.json */,
 				93676E1618D1E4FC00FC55F1 /* omnomTests-Info.plist */,
@@ -2128,6 +2131,7 @@
 				938F3A48198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				9332CB021A1653E000885017 /* orders_stub.json in Resources */,
 				937A37851981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
+				93040A4C1A2C36B700D87CBD /* user_stub.json in Resources */,
 				9389456C19B5957100C37C82 /* config.json in Resources */,
 				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
 				93363FFA1A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
