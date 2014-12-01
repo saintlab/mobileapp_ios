@@ -76,7 +76,7 @@
     userInfo[@"ID"] = user.id;
   }
   
-  userInfo[@"push_notifications_requested"] = @([OMNAuthorisation authorisation].pushNotificationsRequested);
+  userInfo[@"push_activated"] = @([OMNAuthorisation authorisation].pushNotificationsRequested);
   
   if (user.name) {
     userInfo[@"name"] = user.name;
@@ -101,6 +101,21 @@
   [_mixpanelDebug.people set:userInfo];
   [_mixpanelDebug registerSuperProperties:@{@"omn_user" : userInfo}];
   [_mixpanelDebug flush];
+  
+}
+
+- (void)logUserLocation:(CLLocationCoordinate2D)coordinate {
+  
+  NSString *coordinateString = [NSString stringWithFormat:@"{lat=%lf,lon=%lf}", coordinate.latitude, coordinate.longitude];
+  [_mixpanel.people set:@"last_coordinate" to:coordinateString];
+  
+  NSDictionary *coordinates =
+  @{
+    @"latitude" : @(coordinate.latitude),
+    @"longitude" : @(coordinate.longitude),
+    @"timestamp" : [self dateString],
+    };
+  [_mixpanel track:@"get_user_location" properties:coordinates];
   
 }
 
@@ -240,6 +255,8 @@
 }
 
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation {
+
+  NSString *requestID = responseOperation.response.allHeaderFields[@"X-Request-ID"];
   
   [_mixpanelDebug track:eventName properties:
   @{
@@ -247,6 +264,7 @@
     @"jsonRequest" : (jsonRequest) ? (jsonRequest) : (@""),
     @"error" : (responseOperation.error.localizedDescription) ? (responseOperation.error.localizedDescription) : (@""),
     @"errorCode" : @(responseOperation.error.code),
+    @"requestID" : (requestID) ? (requestID) : (@"unknown"),
     @"responseString" : (responseOperation.responseString) ? (responseOperation.responseString) : (@""),
     }];
   

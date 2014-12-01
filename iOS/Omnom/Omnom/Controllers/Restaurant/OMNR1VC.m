@@ -94,6 +94,7 @@
   [self.view addGestureRecognizer:panGR];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
   
   self.circleBackground = _restaurant.decoration.circleBackground;
   
@@ -259,6 +260,12 @@
   id paymentData = n.userInfo[OMNPaymentDataKey];
   [OMNPaymentNotificationControl showWithPaymentData:paymentData];
 
+}
+
+- (void)applicationDidBecomeActive {
+  
+  [_visitor updateOrdersIfNeeded];
+  
 }
 
 - (void)omn_setup {

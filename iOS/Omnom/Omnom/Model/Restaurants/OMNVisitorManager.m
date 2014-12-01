@@ -86,7 +86,7 @@
       successBlock(visitor);
     }
     else {
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters jsonResponse:responseObject];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters responseOperation:operation];
       failureBlock([OMNUtils errorFromCode:OMNErrorQrDecode]);
     }
     
@@ -138,7 +138,7 @@
     
     if ([responseObject isKindOfClass:[NSDictionary class]]) {
       
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path jsonResponse:responseObject];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
       failureBlock(nil);
       
     }
@@ -193,7 +193,7 @@
     
     if ([responseObject isKindOfClass:[NSDictionary class]]) {
       
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
       failure(nil);
       
     }
@@ -203,7 +203,7 @@
       NSArray *visitors = [responseObject omn_visitors];
       
       if (0 == visitors.count) {
-        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
+        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
       }
       
       [weakSelf addVisitors:visitors];

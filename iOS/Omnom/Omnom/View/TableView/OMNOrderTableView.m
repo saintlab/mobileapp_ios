@@ -38,4 +38,11 @@
   
 }
 
+- (void)setOrderActionView:(OMNOrderActionView *)orderActionView {
+  
+  _orderActionView = orderActionView;
+  self.tableFooterView = orderActionView;
+  
+}
+
 @end

@@ -276,7 +276,7 @@ TTTAttributedLabelDelegate>
 }
 
 - (void)didFinishPostWithResponse:(id)response cardId:(NSString *)cardId {
-
+#warning 123
   NSString *status = response[@"status"];
   if ([status isEqualToString:@"OK_FINISH"] &&
       cardId.length) {

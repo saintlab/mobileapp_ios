@@ -7,6 +7,7 @@
 //
 
 #import "OMNBackgroundVC.h"
+#import "OMNOrderTableView.h"
 
 @class OMNOrder;
 @class OMNVisitor;
@@ -14,7 +15,7 @@
 
 @interface OMNPayOrderVC : OMNBackgroundVC
 
-@property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) OMNOrderTableView *tableView;
 @property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;

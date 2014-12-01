@@ -16,7 +16,6 @@
 
 extern NSString * const OMNOrderDidChangeNotification;
 extern NSString * const OMNOrderDidCloseNotification;
-//extern NSString * const OMNOrderDidPayNotification;
 
 extern NSString * const OMNOrderKey;
 extern NSString * const OMNOrderIndexKey;

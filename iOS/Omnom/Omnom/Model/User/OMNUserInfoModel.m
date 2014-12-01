@@ -13,6 +13,7 @@
 #import "OMNAuthorisation.h"
 #import "OMNBankCardUserInfoItem.h"
 #import <OMNStyler.h>
+#import "OMNUser+network.h"
 #import <MessageUI/MessageUI.h>
 
 @interface OMNUserInfoModel ()

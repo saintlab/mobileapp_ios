@@ -11,6 +11,7 @@
 #import <OMNStyler.h>
 #import "OMNConstants.h"
 #import "OMNUser.h"
+#import "OMNUser+network.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNResetPasswordVC.h"
 

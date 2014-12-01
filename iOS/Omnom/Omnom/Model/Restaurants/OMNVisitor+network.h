@@ -9,6 +9,7 @@
 #import "OMNVisitor.h"
 
 extern NSString * const OMNVisitorNotificationLaunchKey;
+extern NSString * const OMNVisitorOrdersDidChangeNotification;
 
 typedef void(^OMNVisitorBlock)(OMNVisitor *visitor);
 typedef void(^OMNVisitorsBlock)(NSArray *visitors);
@@ -25,5 +26,6 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 - (void)stopWaiterCall;
 - (BOOL)readyForPush;
 - (void)showGreetingPush;
+- (void)updateOrdersIfNeeded;
 
 @end

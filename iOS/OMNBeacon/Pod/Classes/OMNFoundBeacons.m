@@ -71,8 +71,6 @@
   NSMutableArray *atTheTableBeacons = [NSMutableArray array];
   __block NSInteger maxRSSI = NSIntegerMin;
   
-  NSLog(@"existingBeaconsDictionary>%@", existingBeaconsDictionary);
-  
   [existingBeaconsDictionary enumerateKeysAndObjectsUsingBlock:^(id key, OMNBeacon *beacon, BOOL *stop) {
     
     if (beacon.atTheTable) {

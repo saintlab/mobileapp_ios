@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNOrderActionView.h"
 
 @interface OMNOrderTableView : UITableView
+
+@property (nonatomic, strong) OMNOrderActionView *orderActionView;
 
 @end

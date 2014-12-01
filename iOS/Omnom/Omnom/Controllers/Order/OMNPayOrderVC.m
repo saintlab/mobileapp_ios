@@ -23,6 +23,7 @@
 #import "OMNRatingVC.h"
 #import "OMNSelectOrderButton.h"
 #import "OMNVisitor.h"
+#import "OMNVisitor+network.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIImage+omn_helper.h"
 #import "UIView+frame.h"
@@ -50,7 +51,6 @@ OMNOrderTotalViewDelegate>
   BOOL _keyboardShown;
   OMNOrder *_order;
   OMNVisitor *_visitor;
-  OMNOrderActionView *_orderTotalView;
   UIView *_tableFadeView;
 }
 
@@ -63,8 +63,10 @@ OMNOrderTotalViewDelegate>
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super init];
   if (self) {
+    
     _order = visitor.selectedOrder;
     _visitor = visitor;
+    
   }
   return self;
 }
@@ -77,29 +79,15 @@ OMNOrderTotalViewDelegate>
   self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
   
   [self omn_setup];
-
-  if (_visitor.orders.count > 1) {
-    
-    NSUInteger index = [_visitor.orders indexOfObject:_visitor.selectedOrder];
-    if (index != NSNotFound) {
-      UIButton *button = [[OMNSelectOrderButton alloc] init];
-      NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_TITLE %ld", @"Счёт {number}"), (long)index + 1];
-      [button setTitle:title forState:UIControlStateNormal];
-      [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
-      [button sizeToFit];
-      self.navigationItem.titleView = button;
-    }
-
-  }
-  
-  _paymentView.order = _order;
-  _orderTotalView.order = _order;
   
   [[OMNAnalitics analitics] logBillView:_order];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+
+  [self updateWithOrder:_visitor.selectedOrder];
   
 }
 
@@ -174,15 +162,72 @@ OMNOrderTotalViewDelegate>
 }
 
 - (void)cancelTap {
+  
   [self.delegate payOrderVCDidCancel:self];
+  
 }
 
 - (void)orderDidChange:(NSNotification *)n {
 
-  _paymentView.order = _order;
-  _orderTotalView.order = _order;
+  [self updateWithOrder:_order];
+  
+}
+
+- (void)visitorOrdersDidChange:(NSNotification *)n {
+  
+  [self updateWithOrder:_visitor.selectedOrder];
+  
+}
+
+- (void)updateWithOrder:(OMNOrder *)order {
+  
+  _order = order;
+  _paymentView.order = order;
+  _dataSource.order = order;
+  self.tableView.orderActionView.order = order;
   [self.tableView reloadData];
   [self layoutTableView];
+  [self updateTitle];
+  
+}
+
+- (void)updateTitle {
+  
+  if (_visitor.orders.count > 1) {
+    
+    NSUInteger index = [_visitor.orders indexOfObject:_visitor.selectedOrder];
+    if (index != NSNotFound) {
+      UIButton *button = [[OMNSelectOrderButton alloc] init];
+      NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_TITLE %ld", @"Счёт {number}"), (long)index + 1];
+      [button setTitle:title forState:UIControlStateNormal];
+      [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
+      [button sizeToFit];
+      self.navigationItem.titleView = button;
+    }
+    
+  }
+  else {
+    
+    self.navigationItem.titleView = nil;
+    
+  }
+  
+}
+
+- (OMNOrderTableView *)orderTableView {
+  
+  OMNOrderTableView *tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  tableView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.tableView.bounds].CGPath;
+  tableView.layer.shadowColor = [UIColor blackColor].CGColor;
+  tableView.layer.shadowRadius = 30.0f;
+  tableView.layer.masksToBounds = NO;
+  tableView.allowsSelection = NO;
+  
+  OMNOrderActionView *orderActionView = [[OMNOrderActionView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kOrderTableFooterHeight)];
+  orderActionView.delegate = self;
+  tableView.orderActionView = orderActionView;
+  
+  return tableView;
   
 }
 
@@ -195,20 +240,14 @@ OMNOrderTotalViewDelegate>
   _scrollView.showsVerticalScrollIndicator = NO;
   [self.view addSubview:_scrollView];
   
-  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
+  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:nil];
   
-  _tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-  _tableView.allowsSelection = NO;
+  _tableView = [self orderTableView];
   [_scrollView addSubview:_tableView];
 
-  _orderTotalView = [[OMNOrderActionView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kOrderTableFooterHeight)];
-  _orderTotalView.delegate = self;
-  
-  _tableView.tableFooterView = _orderTotalView;
   _tableView.dataSource = _dataSource;
   _tableView.delegate = _dataSource;
   [_dataSource registerCellsForTableView:_tableView];
-  [_tableView reloadData];
   
   _tableFadeView = [[UIView alloc] init];
   _tableFadeView.userInteractionEnabled = YES;
@@ -228,8 +267,8 @@ OMNOrderTotalViewDelegate>
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]" options:0 metrics:nil views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scrollView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_paymentView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
   
-  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(calculatorTap)];
-  [_tableView addGestureRecognizer:tapGR];
+  UIPanGestureRecognizer *tapGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+  [self.view addGestureRecognizer:tapGR];
   
   [self.view layoutIfNeeded];
   
@@ -283,6 +322,58 @@ OMNOrderTotalViewDelegate>
   
   _dataSource.fadeNonSelectedItems = faded;
   [_tableView reloadData];
+  
+}
+
+- (void)handlePan:(UIPanGestureRecognizer *)panGR {
+  
+  CGAffineTransform scaleTransform = CGAffineTransformMakeScale(0.95f, 0.95f);
+  
+  NSTimeInterval duration = 0.3;
+  CGFloat shadowOpacity = 0.8f;
+  
+  switch (panGR.state) {
+    case UIGestureRecognizerStateBegan: {
+
+      CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
+      anim.fromValue = @(0.0f);
+      anim.toValue = @(shadowOpacity);
+      anim.duration = duration;
+      [self.tableView.layer addAnimation:anim forKey:@"shadowOpacity"];
+      self.tableView.layer.shadowOpacity = shadowOpacity;
+      
+      [UIView animateWithDuration:0.3 animations:^{
+        
+        self.tableView.transform = scaleTransform;
+        
+      }];
+      
+    } break;
+    case UIGestureRecognizerStateEnded:
+    case UIGestureRecognizerStateCancelled: {
+      
+      CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
+      anim.fromValue = @(self.tableView.layer.shadowOpacity);
+      anim.toValue = @(0.0f);
+      anim.duration = duration;
+      [self.tableView.layer addAnimation:anim forKey:@"shadowOpacity"];
+      self.tableView.layer.shadowOpacity = 0.0;
+      
+      [UIView animateWithDuration:duration animations:^{
+        
+        self.tableView.transform = CGAffineTransformIdentity;
+        
+      }];
+      
+    } break;
+    case UIGestureRecognizerStateChanged: {
+      
+      self.tableView.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation([panGR translationInView:panGR.view].x, 0.0f), scaleTransform);
+      
+    } break;
+    default:
+      break;
+  }
   
 }
 

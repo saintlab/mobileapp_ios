@@ -12,8 +12,10 @@
 #import "OMNNotifierManager.h"
 #import "OMNOperationManager.h"
 #import "OMNUser.h"
+#import "OMNUser+network.h"
 #import <Crashlytics/Crashlytics.h>
 #import <SSKeychain.h>
+#import "OMNLocationManager.h"
 
 static NSString * const kAccountName = @"test_account6";
 static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";
@@ -63,7 +65,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   return self;
 }
 
--(void)setUser:(OMNUser *)user {
+- (void)setUser:(OMNUser *)user {
   
   _user = user;
   
@@ -74,6 +76,12 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   [Crashlytics setUserEmail:user.email];
   [Crashlytics setUserName:user.id];
   [Crashlytics setUserIdentifier:[OMNConstants baseUrlString]];
+  
+  [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
+    
+//    [[OMNAnalitics analitics] logUserLocation:coordinate];
+    
+  }];
   
 }
 

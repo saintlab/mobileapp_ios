@@ -13,7 +13,6 @@
 @property (nonatomic, readonly) BOOL running;
 
 - (void)handleDeviceFaceUpPosition:(dispatch_block_t)block;
-
 - (void)stop;
 
 @end

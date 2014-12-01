@@ -15,6 +15,7 @@
 #import "OMNPhoneNumberTextFieldDelegate.h"
 #import "OMNRegisterUserVC.h"
 #import "OMNUser.h"
+#import "OMNUser+network.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
 #import <TTTAttributedLabel.h>

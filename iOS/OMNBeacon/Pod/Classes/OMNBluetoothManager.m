@@ -51,7 +51,7 @@ NSString * const OMNBluetoothManagerUnspported = @"OMNBluetoothManagerUnspported
     return;
   }
   
-  _centralManagerStateBlock = block;
+  _centralManagerStateBlock = [block copy];
   if (nil == _centralManager) {
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue() options:@{CBCentralManagerOptionShowPowerAlertKey:@(NO)}];
   }

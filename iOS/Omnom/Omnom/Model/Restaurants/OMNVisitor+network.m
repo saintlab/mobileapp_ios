@@ -12,6 +12,7 @@
 #import "OMNOrder+network.h"
 
 NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunchKey";
+NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidChangeNotification";
 
 @implementation  OMNVisitor (omn_network)
 
@@ -22,6 +23,9 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
   }
   
   if (NO == [self.table.id isEqualToString:visitor.table.id]) {
+    
+    self.orders = nil;
+    
     self.table = visitor.table;
     
     [self newGuestWithCompletion:^{
@@ -31,6 +35,40 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
     }];
     
   }
+  
+}
+
+- (void)updateOrdersIfNeeded {
+  
+  if (nil == self.orders) {
+    return;
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  [self getOrders:^(NSArray *orders) {
+    
+    [weakSelf updateOrdersWithOrders:orders];
+    
+  } error:^(NSError *error) {
+  }];
+  
+}
+
+- (void)updateOrdersWithOrders:(NSArray *)orders {
+  
+  NSString *selectedOrderId = self.selectedOrder.id;
+  __weak typeof(self)weakSelf = self;
+  [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+    
+    if ([order.id isEqualToString:selectedOrderId]) {
+      weakSelf.selectedOrder = order;
+      *stop = YES;
+    }
+    
+  }];
+  
+  self.orders = orders;
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNVisitorOrdersDidChangeNotification object:self];
   
 }
 
@@ -56,7 +94,7 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
       NSArray *orders = [ordersData omn_decodeOrdersWithError:nil];
       if (0 == orders.count) {
         
-        [[OMNAnalitics analitics] logDebugEvent:@"NO_ORDERS" jsonRequest:path jsonResponse:response];
+        [[OMNAnalitics analitics] logDebugEvent:@"NO_ORDERS" jsonRequest:path responseOperation:operation];
         
       }
       weakSelf.orders = orders;
@@ -65,7 +103,7 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
     }
     else {
       
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path jsonResponse:response];
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
       errorBlock(nil);
       
     }

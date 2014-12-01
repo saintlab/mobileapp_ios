@@ -8,6 +8,7 @@
 
 #import "OMNRegisterUserVC.h"
 #import "OMNUser.h"
+#import "OMNUser+network.h"
 #import "OMNConfirmCodeVC.h"
 #import "OMNAnalitics.h"
 #import "OMNErrorTextField.h"

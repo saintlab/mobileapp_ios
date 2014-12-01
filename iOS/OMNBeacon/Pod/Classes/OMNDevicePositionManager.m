@@ -9,8 +9,6 @@
 #import "OMNDevicePositionManager.h"
 #import <CoreMotion/CoreMotion.h>
 
-
-
 static double const kDesiredDurationOfStillPosition = 1.0;
 static double const kAccelerometerUpdateInterval = 0.5;
 static double const kDesiredAccelerometerAccuracy = 0.05;
@@ -43,11 +41,11 @@ static double const kDesiredAccelerometerAccuracy = 0.05;
   
   NSInteger numberOfDesiredStillPositions = kDesiredDurationOfStillPosition / kAccelerometerUpdateInterval;
   
-  _completitionPositionBlock = block;
+  _completitionPositionBlock = [block copy];
   
   _motionManager = [[CMMotionManager alloc] init];
   _motionManager.accelerometerUpdateInterval = kAccelerometerUpdateInterval;
-  
+
   [_motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
     
     if (nil == error &&

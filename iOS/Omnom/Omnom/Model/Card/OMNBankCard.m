@@ -77,7 +77,6 @@
   NSAssert(completionBlock != nil, @"completionBlock is nil");
   NSAssert(failureBlock != nil, @"complitionBlock is nil");
 
-  
   self.deleting = YES;
   __weak typeof(self)weakSelf = self;
   [[OMNMailRuAcquiring acquiring] cardDelete:self.external_card_id user_login:self.user_id completion:^(id response) {

@@ -218,6 +218,10 @@
 		937A37831981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37801981152300EF5C31 /* OMNSearchRestaurantVC.m */; };
 		937A37841981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 937A37811981152300EF5C31 /* OMNSearchRestaurantVC.xib */; };
 		937A37851981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 937A37811981152300EF5C31 /* OMNSearchRestaurantVC.xib */; };
+		937C3E711A2824E9006525A9 /* OMNLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C3E701A2824E9006525A9 /* OMNLocationManager.m */; };
+		937C3E721A2824E9006525A9 /* OMNLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C3E701A2824E9006525A9 /* OMNLocationManager.m */; };
+		937C3E751A2859C9006525A9 /* OMNUser+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C3E741A2859C9006525A9 /* OMNUser+network.m */; };
+		937C3E761A2859C9006525A9 /* OMNUser+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C3E741A2859C9006525A9 /* OMNUser+network.m */; };
 		937E0B5F18F04EC20058A249 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 937E0B5E18F04EC20058A249 /* OMNConstants.m */; };
 		937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 937E0B5E18F04EC20058A249 /* OMNConstants.m */; };
 		937EF7EF19DFB47300BD9090 /* OMNCardEnterErrorLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorLabel.m */; };
@@ -665,6 +669,10 @@
 		937A377F1981152300EF5C31 /* OMNSearchRestaurantVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchRestaurantVC.h; sourceTree = "<group>"; };
 		937A37801981152300EF5C31 /* OMNSearchRestaurantVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchRestaurantVC.m; sourceTree = "<group>"; };
 		937A37811981152300EF5C31 /* OMNSearchRestaurantVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OMNSearchRestaurantVC.xib; sourceTree = "<group>"; };
+		937C3E6F1A2824E9006525A9 /* OMNLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLocationManager.h; sourceTree = "<group>"; };
+		937C3E701A2824E9006525A9 /* OMNLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLocationManager.m; sourceTree = "<group>"; };
+		937C3E731A2859C9006525A9 /* OMNUser+network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNUser+network.h"; sourceTree = "<group>"; };
+		937C3E741A2859C9006525A9 /* OMNUser+network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNUser+network.m"; sourceTree = "<group>"; };
 		937E0B5D18F04EC20058A249 /* OMNConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNConstants.h; sourceTree = "<group>"; };
 		937E0B5E18F04EC20058A249 /* OMNConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNConstants.m; sourceTree = "<group>"; };
 		937EF7ED19DFB47300BD9090 /* OMNCardEnterErrorLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardEnterErrorLabel.h; sourceTree = "<group>"; };
@@ -940,6 +948,8 @@
 				930554E01934978400E6F4EC /* OMNAuthorisation.m */,
 				930554E21934A1AC00E6F4EC /* OMNUser.h */,
 				930554E31934A1AC00E6F4EC /* OMNUser.m */,
+				937C3E731A2859C9006525A9 /* OMNUser+network.h */,
+				937C3E741A2859C9006525A9 /* OMNUser+network.m */,
 			);
 			name = Auth;
 			sourceTree = "<group>";
@@ -1452,6 +1462,15 @@
 			path = Order;
 			sourceTree = "<group>";
 		};
+		937C3E6E1A2824D7006525A9 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				937C3E6F1A2824E9006525A9 /* OMNLocationManager.h */,
+				937C3E701A2824E9006525A9 /* OMNLocationManager.m */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		937EF7EC19DFB45000BD9090 /* Text */ = {
 			isa = PBXGroup;
 			children = (
@@ -1477,6 +1496,7 @@
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				937C3E6E1A2824D7006525A9 /* Location */,
 				93E58CA91A2455DF008064F9 /* Permission */,
 				93A8C1A419D9189500CB4F09 /* Animation */,
 				932B185819ADE655009E440E /* Layout */,
@@ -2252,6 +2272,7 @@
 				938E8F5E192F3A200088EF38 /* OMNTip.m in Sources */,
 				934CDF5019D4078900D73FC4 /* OMNLabelCell.m in Sources */,
 				93E435AF19989ED600EDC488 /* OMNLoadingCircleVC.m in Sources */,
+				937C3E751A2859C9006525A9 /* OMNUser+network.m in Sources */,
 				9307A6DF19D53F7E00101B81 /* OMNLabeledTextField.m in Sources */,
 				932118121962D8A700183729 /* OMNProductsModel.m in Sources */,
 				938F3A5A198E081500AB288E /* OMNPushPermissionVC.m in Sources */,
@@ -2337,6 +2358,7 @@
 				932B185B19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
 				9332CAFF1A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */,
 				939F994B197544820051822E /* OMNUserInfoModel.m in Sources */,
+				937C3E711A2824E9006525A9 /* OMNLocationManager.m in Sources */,
 				9366557C19DA5DED00EF7098 /* OMNQR.m in Sources */,
 				93535EFF198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
 				937822A01963E65F00CE6661 /* OMNOrderViewCell.m in Sources */,
@@ -2420,6 +2442,7 @@
 				93E58CB61A246AA1008064F9 /* OMNHelpPage.m in Sources */,
 				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				937A37341980F68200EF5C31 /* OMNLoaderView.m in Sources */,
+				937C3E721A2824E9006525A9 /* OMNLocationManager.m in Sources */,
 				9308FE7C196E815600B482AA /* OMNVisitorManager.m in Sources */,
 				9317C07119DE922B0071E42B /* UIButton+omn_helper.m in Sources */,
 				93750B22196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
@@ -2507,6 +2530,7 @@
 				9317C06D19DE85BB0071E42B /* OMNPaymentAlertVC.m in Sources */,
 				9389457019B5B01600C37C82 /* OMNDisclamerView.m in Sources */,
 				932B186119ADEE91009E440E /* OMNOrderTableView.m in Sources */,
+				937C3E761A2859C9006525A9 /* OMNUser+network.m in Sources */,
 				937A37831981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
 				93B368B319A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
 				937822A51963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,

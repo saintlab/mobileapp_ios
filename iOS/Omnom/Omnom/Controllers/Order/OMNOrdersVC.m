@@ -9,6 +9,7 @@
 #import "OMNOrdersVC.h"
 #import "OMNOrderViewCell.h"
 #import "OMNVisitor.h"
+#import "OMNVisitor+network.h"
 #import "OMNOrderItemsFlowLayout.h"
 #import "UIImage+omn_helper.h"
 #import "OMNToolbarButton.h"
@@ -63,6 +64,7 @@ UICollectionViewDelegate>
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:_visitor];
   
 }
@@ -158,8 +160,7 @@ UICollectionViewDelegate>
 
 - (void)orderDidChange:(NSNotification *)n {
   
-  [_collectionView reloadData];
-  [self updateOrders];
+  [self reloadData];
   
 }
 
@@ -175,12 +176,27 @@ UICollectionViewDelegate>
     
     if ([order.id isEqualToString:closeOrder.id]) {
       [_orders removeObjectAtIndex:idx];
-      [_collectionView reloadData];
-//      [_collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:idx inSection:0]]];
       *stop = YES;
     }
     
   }];
+  
+  if (orders.count != _orders.count) {
+    [self reloadData];
+  }
+  
+}
+
+- (void)visitorOrdersDidChange:(NSNotification *)n {
+  
+  _orders = [_visitor.orders mutableCopy];
+  [self reloadData];
+  
+}
+
+- (void)reloadData {
+  
+  [_collectionView reloadData];
   [self updateOrders];
   
 }
