@@ -93,7 +93,13 @@
   
 }
 
-+ (void)showWithPaymentData:(NSDictionary *)paymentData {
++ (void)showWithPaymentDetails:(OMNPaymentDetails *)paymentDetails {
+  
+  if (![paymentDetails.userID isEqualToString:[OMNAuthorisation authorisation].user.id] &&
+      0ll == paymentDetails.netAmount) {
+    //don't show notificationControl for tips only payment 
+    return;
+  }
   
   OMNPaymentNotificationControl *control = [[OMNPaymentNotificationControl alloc] init];
   
@@ -104,25 +110,26 @@
     
   }];
   
-  NSDictionary *user = paymentData[@"user"];
-  NSDictionary *transaction = paymentData[@"transaction"];
-  
-  long long totalAmount = [transaction[@"amount"] longLongValue];
-  long long tipAmount = [transaction[@"tip"] longLongValue];
-  long long netAmount = totalAmount - tipAmount;
-  
   NSString *title = @"";
-  NSString *userID = [user[@"id"] description];
   
-  if ([userID isEqualToString:[OMNAuthorisation authorisation].user.id] &&
-      tipAmount > 0) {
-    
-    title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено по счету %@ + чай %@", nil), user[@"name"], [OMNUtils moneyStringFromKop:netAmount], [OMNUtils moneyStringFromKop:tipAmount]];
+  if ([paymentDetails.userID isEqualToString:[OMNAuthorisation authorisation].user.id] &&
+      paymentDetails.tipAmount > 0) {
+
+    if (paymentDetails.netAmount) {
+      
+      title = [NSString stringWithFormat:NSLocalizedString(@"PAYMENT_NOTIFICATION_AMOUNT_TITLE %@ %@ %@", @"{userName}: оплачено по счету {amount} + чай {tipAmount}"), paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.netAmount], [OMNUtils moneyStringFromKop:paymentDetails.tipAmount]];
+      
+    }
+    else {
+
+      title = [NSString stringWithFormat:NSLocalizedString(@"PAYMENT_NOTIFICATION_TIPS_ONLY_TITLE %@ %@", @"{userName}: чаевые {tipAmount}"), paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.tipAmount]];
+      
+    }
     
   }
   else {
-    
-    title = [NSString stringWithFormat:NSLocalizedString(@"%@: оплачено по счету %@", nil), user[@"name"], [OMNUtils moneyStringFromKop:netAmount]];
+
+    title = [NSString stringWithFormat:NSLocalizedString(@"PAYMENT_NOTIFICATION_AMOUNT_TITLE %@ %@", @"{userName}: оплачено по счету {amount}"), paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.netAmount]];
     
   }
   [control.closeButton setTitle:title forState:UIControlStateNormal];
@@ -139,12 +146,53 @@
 }
 
 + (void)playPaySound {
+  
+  static dispatch_once_t onceToken;
   static SystemSoundID paySoundID = 0;
-  if (0 == paySoundID) {
+  dispatch_once(&onceToken, ^{
     NSString *path = [[NSBundle mainBundle] pathForResource:@"pay_done" ofType:@"caf"];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &paySoundID);
-  }
+  });
+  
   AudioServicesPlaySystemSound(paySoundID);
+  
+}
+
+@end
+
+@implementation OMNPaymentDetails
+
+- (instancetype)initWithJsonData:(id)jsonData {
+  self = [super init];
+  if (self) {
+    
+    NSDictionary *user = jsonData[@"user"];
+    self.userID = [user[@"id"] description];
+    self.userName = user[@"name"];
+    
+    NSDictionary *transaction = jsonData[@"transaction"];
+    self.totalAmount = [transaction[@"amount"] longLongValue];
+    self.tipAmount = [transaction[@"tip"] longLongValue];
+    
+  }
+  return self;
+}
+
++ (instancetype)paymentDetailsWithTotalAmount:(long long)totalAmount tipAmount:(long long)tipAmount userID:(NSString *)userID userName:(NSString *)userName {
+  
+  OMNPaymentDetails *paymentDetails = [[OMNPaymentDetails alloc] init];
+  paymentDetails.userID = userID;
+  paymentDetails.userName = userName;
+  paymentDetails.totalAmount = totalAmount;
+  paymentDetails.tipAmount = tipAmount;
+  return paymentDetails;
+  
+}
+
+- (long long)netAmount {
+  
+  return self.totalAmount - self.tipAmount;
+  
 }
 
 @end

@@ -258,7 +258,8 @@
 - (void)orderDidPay:(NSNotification *)n {
   
   id paymentData = n.userInfo[OMNPaymentDataKey];
-  [OMNPaymentNotificationControl showWithPaymentData:paymentData];
+  OMNPaymentDetails *paymentDetails = [[OMNPaymentDetails alloc] initWithJsonData:paymentData];
+  [OMNPaymentNotificationControl showWithPaymentDetails:paymentDetails];
 
 }
 

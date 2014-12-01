@@ -100,6 +100,21 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     
   }];
   
+  [_socket on:@"order_create" listener:^(id data) {
+    
+    NSLog(@"order_create %@, %@", data, [data class]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+//      if (data) {
+//        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidChangeNotification
+//                                                            object:self
+//                                                          userInfo:@{OMNOrderDataKey : data}];
+//      }
+      
+    });
+    
+  }];
+  
   [_socket on:@"order_update" listener:^(id data) {
     
     NSLog(@"order_update %@, %@", data, [data class]);

@@ -34,23 +34,8 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       
-      NSDictionary *user =
-      @{
-        @"id" : [OMNAuthorisation authorisation].user.id,
-        @"name" : [OMNAuthorisation authorisation].user.name,
-        };
-      
-      NSDictionary *transaction =
-      @{
-        @"amount" : @(order.enteredAmountWithTips),
-        @"tip" : @(order.tipAmount),
-        };
-      
-      [OMNPaymentNotificationControl showWithPaymentData:
-       @{
-         @"user" : user,
-         @"transaction" : transaction,
-         }];
+      OMNPaymentDetails *paymentDetails = [OMNPaymentDetails paymentDetailsWithTotalAmount:order.enteredAmountWithTips tipAmount:order.tipAmount userID:[OMNAuthorisation authorisation].user.id userName:[OMNAuthorisation authorisation].user.name];
+      [OMNPaymentNotificationControl showWithPaymentDetails:paymentDetails];
       paymentFinishBlock(nil, completionBlock);
       
     });
