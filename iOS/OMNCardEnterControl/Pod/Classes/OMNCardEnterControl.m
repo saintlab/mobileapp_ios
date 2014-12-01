@@ -30,14 +30,21 @@ NSInteger kCVVLength = 3;
   OMNDeletedTextField *_expireTF;
   OMNDeletedTextField *_cvvTF;
   
+  UIView *_scanActionView;
+  UIButton *_smallCameraButton;
+  
   UIButton *_saveButton;
 
+}
+
+- (UIFont *)fontWithSize:(CGFloat)size {
+  return [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:size];
 }
 
 - (OMNDeletedTextField *)numberTextField {
   
   OMNDeletedTextField *numberTextField = [[OMNDeletedTextField alloc] init];
-  numberTextField.font = [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:20.0f];
+  numberTextField.font = [self fontWithSize:20.0f];
   numberTextField.tintColor = [UIColor whiteColor];
   numberTextField.textAlignment = NSTextAlignmentLeft;
   numberTextField.translatesAutoresizingMaskIntoConstraints = NO;
@@ -54,6 +61,10 @@ NSInteger kCVVLength = 3;
   
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (instancetype)init {
   
   self = [super init];
@@ -68,11 +79,35 @@ NSInteger kCVVLength = 3;
     bgIV.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:bgIV];
     
-    UIButton *cameraButton = [[UIButton alloc] init];
-    cameraButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [cameraButton setImage:[UIImage imageNamed:@"camera_icon_white"] forState:UIControlStateNormal];
-    [cameraButton addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
-    [bgIV addSubview:cameraButton];
+    _smallCameraButton = [[UIButton alloc] init];
+    _smallCameraButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_smallCameraButton setImage:[UIImage imageNamed:@"camera_icon_white"] forState:UIControlStateNormal];
+    [_smallCameraButton addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    [bgIV addSubview:_smallCameraButton];
+    
+    UIButton *scanFrame = [[UIButton alloc] init];
+    [scanFrame addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
+    scanFrame.translatesAutoresizingMaskIntoConstraints = NO;
+    [scanFrame setBackgroundImage:[UIImage imageNamed:@"scan_frame"] forState:UIControlStateNormal];
+    [scanFrame setImage:[UIImage imageNamed:@"camera_icon_white"] forState:UIControlStateNormal];
+    
+    UILabel *scanLabel = [[UILabel alloc] init];
+    scanLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    scanLabel.numberOfLines = 0;
+    scanLabel.text = NSLocalizedString(@"— Отсканируйте\nвашу карту", nil);
+    scanLabel.font = [self fontWithSize:15.0f];
+    scanLabel.textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+    
+    _scanActionView = [[UIButton alloc] init];
+    _scanActionView.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [bgIV addSubview:_scanActionView];
+    
+    [_scanActionView addSubview:scanFrame];
+    [_scanActionView addSubview:scanLabel];
+    
+#warning 123
+//    scan_frame
     
     _panTF = [self numberTextField];
     _panTF.attributedPlaceholder = [self attributedPlaceholderWithText:NSLocalizedString(@"Номер банковской карты", nil)];
@@ -87,13 +122,13 @@ NSInteger kCVVLength = 3;
     [bgIV addSubview:_cvvTF];
     
     NSDictionary *metrics =
-    [@{
-       @"height" : @(40.0f),
-       @"width" : @(80.0f),
+    @{
+       @"textFieldHeight" : @(40.0f),
+       @"textFieldWidth" : @(80.0f),
        @"textFieldsOffset" : @(25.0f),
        @"cameraButtonSize" : @(44.0f),
-       @"leftOffset" : @(20.0f),
-       } mutableCopy];
+       @"cornerOffset" : @(20.0f),
+       };
     
     _saveButton = [[UIButton alloc] init];
     [_saveButton addTarget:self action:@selector(saveTap) forControlEvents:UIControlEventTouchUpInside];
@@ -102,9 +137,9 @@ NSInteger kCVVLength = 3;
     _saveButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     _saveButton.tintColor = [UIColor blackColor];
     _saveButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f);
-    _saveButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, [metrics[@"leftOffset"] floatValue], 0.0f, 0.0f);
+    _saveButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, [metrics[@"cornerOffset"] floatValue], 0.0f, 0.0f);
     _saveButton.titleLabel.numberOfLines = 0;
-    _saveButton.titleLabel.font = [UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:15.0f];
+    _saveButton.titleLabel.font = [self fontWithSize:15.0f];
     _saveButton.titleLabel.adjustsFontSizeToFitWidth = YES;
     _saveButton.titleLabel.minimumScaleFactor = 0.1f;
     [_saveButton setTitleColor:[UIColor colorWithWhite:120.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
@@ -118,35 +153,84 @@ NSInteger kCVVLength = 3;
     NSDictionary *views =
     @{
       @"bgIV" : bgIV,
-      @"cameraButton" : cameraButton,
+      @"cameraButton" : _smallCameraButton,
       @"panTF" : _panTF,
       @"cvvTF" : _cvvTF,
       @"expireTF" : _expireTF,
       @"saveButton" : _saveButton,
+      @"scanActionButton" : _scanActionView,
+      @"scanFrame" : scanFrame,
+      @"scanLabel" : scanLabel,
       };
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bgIV]-(10)-[saveButton(cameraButtonSize)]-(4)-|" options:kNilOptions metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[bgIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(cornerOffset)-[bgIV]-(cornerOffset)-|" options:kNilOptions metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[saveButton]|" options:kNilOptions metrics:metrics views:views]];
+    
+    [bgIV addConstraint:[NSLayoutConstraint constraintWithItem:_scanActionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:bgIV attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [_scanActionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scanFrame]-(14)-[scanLabel]|" options:kNilOptions metrics:metrics views:views]];
+    [_scanActionView addConstraint:[NSLayoutConstraint constraintWithItem:scanFrame attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_scanActionView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    [_scanActionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scanLabel]|" options:kNilOptions metrics:metrics views:views]];
+    
+    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(cornerOffset)-[scanActionButton]" options:kNilOptions metrics:metrics views:views]];
     
     [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cameraButton(cameraButtonSize)]-4-|" options:kNilOptions metrics:metrics views:views]];
     
     [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[panTF]-(textFieldsOffset)-|" options:kNilOptions metrics:metrics views:views]];
     
-    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[expireTF(width)]-(textFieldsOffset)-[cvvTF(width)]" options:kNilOptions metrics:metrics views:views]];
-    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[cameraButton(cameraButtonSize)][panTF(height)]-(8)-[expireTF(height)]" options:kNilOptions metrics:metrics views:views]];
+    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(textFieldsOffset)-[expireTF(textFieldWidth)]-(textFieldsOffset)-[cvvTF(textFieldWidth)]" options:kNilOptions metrics:metrics views:views]];
+    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[cameraButton(cameraButtonSize)]" options:kNilOptions metrics:metrics views:views]];
+    [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[panTF(textFieldHeight)]-(8)-[expireTF(textFieldHeight)]-(cornerOffset)-|" options:kNilOptions metrics:metrics views:views]];
 
     [bgIV addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     [bgIV addConstraint:[NSLayoutConstraint constraintWithItem:_cvvTF attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_expireTF attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
 
+    [self addKeyboardObservers];
+    [self updateCameraButton];
     [self setSaveButtonHidden:YES];
     
   }
   return self;
 }
 
+- (void)addKeyboardObservers {
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+  
+}
+
+- (void)updateCameraButton {
+  
+  BOOL keyboardShown = (_panTF.editing ||
+                        _cvvTF.editing ||
+                        _expireTF.editing);
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    
+    _scanActionView.alpha = (keyboardShown) ? (0.0f) : (1.0f);
+    _smallCameraButton.alpha = (keyboardShown) ? (1.0f) : (0.0f);
+    
+  }];
+  
+}
+
+- (void)keyboardWillShow:(NSNotification *)n {
+  
+  [self updateCameraButton];
+  
+}
+
+- (void)keyboardDidHide:(NSNotification *)n {
+  
+  [self updateCameraButton];
+  
+}
+
 - (void)cameraButtonTap {
+  
   [self.delegate cardEnterControlDidRequestScan:self];
+  
 }
 
 - (void)saveTap {
