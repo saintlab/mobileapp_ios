@@ -14,11 +14,14 @@ typedef void(^OMNUserInfoItemBlock)(UIViewController *vc, UITableView *tv, NSInd
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, strong) UIColor *titleColor;
+@property (nonatomic, assign) NSTextAlignment textAlignment;
 @property (nonatomic, assign) UITableViewCellAccessoryType cellAccessoryType;
 @property (nonatomic, copy) OMNUserInfoItemBlock actionBlock;
 
 + (instancetype)itemWithTitle:(NSString *)title actionBlock:(OMNUserInfoItemBlock)actionBlock;
+- (instancetype)initWithTitle:(NSString *)title actionBlock:(OMNUserInfoItemBlock)actionBlock;
 
-- (void)configureCell:(UITableViewCell *)cell;
+- (UITableViewCell *)cellForTableView:(UITableView *)tableView;
+- (CGFloat)height;
 
 @end

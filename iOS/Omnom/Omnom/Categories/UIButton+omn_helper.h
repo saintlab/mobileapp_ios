@@ -11,5 +11,6 @@
 @interface UIButton (omn_helper)
 
 - (void)omn_setImage:(UIImage *)image withColor:(UIColor *)color;
+- (void)omn_centerButtonAndImageWithSpacing:(CGFloat)spacing;
 
 @end

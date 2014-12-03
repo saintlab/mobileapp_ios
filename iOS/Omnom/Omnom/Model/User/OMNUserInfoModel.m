@@ -6,122 +6,102 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNUserInfoModel.h"
-#import "OMNUserInfoItem.h"
-#import "OMNBankCardsVC.h"
-#import <BlocksKit+UIKit.h>
 #import "OMNAuthorisation.h"
 #import "OMNBankCardUserInfoItem.h"
-#import <OMNStyler.h>
+#import "OMNBankCardsVC.h"
 #import "OMNUser+network.h"
-#import <MessageUI/MessageUI.h>
+#import "OMNUserInfoSection.h"
+#import "OMNUserInfoModel.h"
+#import <BlocksKit+UIKit.h>
+#import <OMNStyler.h>
+#import "OMNUserMailFeedbackItem.h"
+#import "OMNUserInfoHeaderView.h"
+#import "OMNTableUserInfoItem.h"
+#import "OMNVersionUserInfoItem.h"
+#import "OMNLogoutUserInfoItem.h"
 
 @interface OMNUserInfoModel ()
-<MFMailComposeViewControllerDelegate>
 
 @end
 
 @implementation OMNUserInfoModel {
   NSArray *_sectionItems;
+  OMNVisitor *_visitor;
 }
 
-- (instancetype)init {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super init];
   if (self) {
     
+    _visitor = visitor;
     _sectionItems =
     @[
       self.moneyItems,
-//      self.otherItems,
+      [self feedbackItems],
       self.logoutItems,
       ];
-   
-    NSString *token = [OMNAuthorisation authorisation].token;
+    
     self.user = [OMNAuthorisation authorisation].user;
-    if (token.length) {
-      __weak typeof(self)weakSelf = self;
-      [OMNUser userWithToken:token user:^(OMNUser *user) {
-        
-        weakSelf.user = user;
-        
-      } failure:^(NSError *error) {
-        
-//TODO: handle
-        
-      }];
-
-    }
+    [self reloadUserInfo];
     
   }
   return self;
 }
 
-- (NSArray *)moneyItems {
+- (void)reloadUserInfo {
   
-  OMNUserInfoItem *cardItem = [[OMNBankCardUserInfoItem alloc] init];
+  NSString *token = [OMNAuthorisation authorisation].token;
+  if (0 == token.length) {
+    return;
+  }
 
   __weak typeof(self)weakSelf = self;
-  OMNUserInfoItem *feedbackItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Обратная связь", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
+  [OMNUser userWithToken:token user:^(OMNUser *user) {
     
-    if ([MFMailComposeViewController canSendMail]) {
-      MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
-      composeViewController.mailComposeDelegate = weakSelf;
-      [composeViewController setToRecipients:@[@"team@omnom.menu"]];
-      [vc presentViewController:composeViewController animated:YES completion:nil];
-    }
-    else {
-      
-      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mailto:team@omnom.menu"]];
-      [tv deselectRowAtIndexPath:indexPath animated:YES];
-      
-    }
+    weakSelf.user = user;
+    
+  } failure:^(NSError *error) {
+    
+    //TODO: handle
     
   }];
-  return @[cardItem, feedbackItem];
+
+}
+
+- (OMNUserInfoSection *)moneyItems {
+  
+  OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
+  section.items =
+  @[
+    [[OMNBankCardUserInfoItem alloc] init],
+    [[OMNTableUserInfoItem alloc] initWithTable:_visitor.table],
+    ];
+  
+  return section;
   
 }
 
-- (NSArray *)otherItems {
+- (OMNUserInfoSection *)feedbackItems {
   
-  OMNUserInfoItem *friendsItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Пригласть друзей", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
-    
-  }];
-  friendsItem.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-  
-  OMNUserInfoItem *helpItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Помощь", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
-    
-  }];
-  
-  OMNUserInfoItem *aboutItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"О приложении", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
-    
-  }];
-  aboutItem.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-  
-  return @[friendsItem, helpItem, aboutItem];
+  OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
+  section.items =
+  @[
+    [[OMNUserMailFeedbackItem alloc] init],
+    [[OMNVersionUserInfoItem alloc] init],
+    ];
+  section.title = NSLocalizedString(@"USER_INFO_ABOUT_SECTION_TITLE", @"О ПРОГРАММЕ");
+  return section;
   
 }
 
-- (NSArray *)logoutItems {
+- (OMNUserInfoSection *)logoutItems {
   
-  OMNUserInfoItem *logoutItem = [OMNUserInfoItem itemWithTitle:NSLocalizedString(@"Выход из аккаунта", nil) actionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
-    
-    UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
-    [logoutSheet bk_setDestructiveButtonWithTitle:NSLocalizedString(@"Выйти", nil) handler:^{
-      
-      [[OMNAuthorisation authorisation] logout];
-      
-    }];
-    
-    [logoutSheet bk_setCancelButtonWithTitle:NSLocalizedString(@"Отмена", nil) handler:^{
-      
-      [tv deselectRowAtIndexPath:indexPath animated:YES];
-      
-    }];
-    [logoutSheet showInView:vc.view.window];
-    
-  }];
-  logoutItem.titleColor = colorWithHexString(@"D0021B");
-  return @[logoutItem];
+  OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
+  section.items =
+  @[
+    [[OMNLogoutUserInfoItem alloc] init],
+    ];
+  return section;
   
 }
 
@@ -131,53 +111,73 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   
-  NSArray *rowItems = _sectionItems[section];
-  return rowItems.count;
+  OMNUserInfoSection *userInfoSection = _sectionItems[section];
+  return userInfoSection.items.count;
   
 }
 
 - (OMNUserInfoItem *)itemAtIndexPath:(NSIndexPath *)indexPath {
-  NSArray *rowItems = _sectionItems[indexPath.section];
-  OMNUserInfoItem *userInfoItem = rowItems[indexPath.row];
+  
+  OMNUserInfoSection *userInfoSection = _sectionItems[indexPath.section];
+  OMNUserInfoItem *userInfoItem = userInfoSection.items[indexPath.row];
   return userInfoItem;
+  
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  static NSString *CellIdentifier = @"Cell";
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-  
-  if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-    cell.textLabel.textColor = colorWithHexString(@"000000");
-    cell.textLabel.opaque = YES;
-    cell.textLabel.backgroundColor = [UIColor whiteColor];
-    cell.textLabel.font = FuturaOSFOmnomRegular(18.0f);
-  }
   
   OMNUserInfoItem *userInfoItem = [self itemAtIndexPath:indexPath];
-  [userInfoItem configureCell:cell];
-  
-  return cell;
+  return [userInfoItem cellForTableView:tableView];
+
 }
 
-- (void)controller:(UIViewController *)vc tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+  
+  static NSString * const headerFooterViewWithIdentifier = @"headerFooterViewWithIdentifier";
+  OMNUserInfoHeaderView *tableViewHeaderFooterView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerFooterViewWithIdentifier];
+  if (nil == tableViewHeaderFooterView) {
+    
+    tableViewHeaderFooterView = [[OMNUserInfoHeaderView alloc] initWithReuseIdentifier:headerFooterViewWithIdentifier];
+
+  }
+  OMNUserInfoSection *userInfoSection = _sectionItems[section];
+  tableViewHeaderFooterView.label.text = userInfoSection.title;
+  
+  return tableViewHeaderFooterView;
+  
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+  
+  OMNUserInfoSection *userInfoSection = _sectionItems[section];
+  return userInfoSection.height;
+  
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNUserInfoItem *userInfoItem = [self itemAtIndexPath:indexPath];
+  return userInfoItem.height;
   
-  if (userInfoItem.actionBlock) {
+}
+
+#pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
+  
+  OMNUserInfoItem *userInfoItem = [self itemAtIndexPath:indexPath];
+  if (self.didSelectBlock &&
+      userInfoItem.actionBlock) {
+    
+    UIViewController *vc = self.didSelectBlock(tableView, indexPath);
     userInfoItem.actionBlock(vc, tableView, indexPath);
+    
   }
   else {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
   }
-  
-}
-
-#pragma mark - MFMailComposeViewControllerDelegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-  
-  [controller.presentingViewController dismissViewControllerAnimated:YES completion:nil];
   
 }
 

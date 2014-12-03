@@ -41,7 +41,9 @@ UITextFieldDelegate>
 }
 
 - (void)dealloc {
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
 }
 
 - (void)viewDidLoad {
@@ -70,6 +72,7 @@ UITextFieldDelegate>
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidBeginEditing:) name:UITextFieldTextDidBeginEditingNotification object:nil];
+  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -78,7 +81,9 @@ UITextFieldDelegate>
 }
 
 - (UIBarButtonItem *)createUserButton {
+  
   return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_BUTTON_TITLE", @"Далее") style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];
+  
 }
 
 - (void)doneTap {

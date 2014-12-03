@@ -71,7 +71,7 @@ TTTAttributedLabelDelegate> {
   if (0 == _loginTF.textField.text.length) {
     _loginTF.textField.text = @"+7";
   }
-
+  
 }
 
 - (void)setNextButtonLoading:(BOOL)loading {
@@ -79,12 +79,16 @@ TTTAttributedLabelDelegate> {
   UIBarButtonItem *rightBarButtonItem = nil;
   
   if (loading) {
+    
     UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     [spinner startAnimating];
     rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    
   }
   else {
+    
     rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
+    
   }
   [self.navigationItem setRightBarButtonItem:rightBarButtonItem animated:YES];
   
@@ -139,6 +143,12 @@ TTTAttributedLabelDelegate> {
   
 }
 
+- (NSMutableParagraphStyle *)centerParagraphStyle {
+  NSMutableParagraphStyle *attributeStyle = [[NSMutableParagraphStyle alloc] init];
+  attributeStyle.alignment = NSTextAlignmentCenter;
+  return attributeStyle;
+}
+
 - (void)setCreateUserHint {
   
   NSString *buttonText = NSLocalizedString(@"LOGIN_CREATE_USER_ACTION", @"регистрация");
@@ -149,9 +159,10 @@ TTTAttributedLabelDelegate> {
    @{
      NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
      NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
+     NSParagraphStyleAttributeName : [self centerParagraphStyle],
      } range:NSMakeRange(0, text.length)];
   
-  _hintLabel.attributedText = attributedString;
+  [_hintLabel setText:attributedString];
   [_hintLabel addLinkToURL:_createUserUrl withRange:[text rangeOfString:buttonText]];
   _hintLabel.hidden = NO;
   
@@ -160,7 +171,7 @@ TTTAttributedLabelDelegate> {
 - (void)setResetPhoneHint {
   
   NSString *text = NSLocalizedString(@"LOGIN_RESET_PHONE_HINT", @"У меня сменился номер телефона");
-  _hintLabel.text = text;
+  [_hintLabel setText:text];
   [_hintLabel addLinkToURL:_resetPhoneUrl withRange:NSMakeRange(0, text.length)];
   _hintLabel.hidden = NO;
   
@@ -232,13 +243,16 @@ TTTAttributedLabelDelegate> {
   registerUserVC.delegate = self.delegate;
   
   if ([_loginTF.textField.text omn_isValidPhone]) {
+    
     registerUserVC.phone = _loginTF.textField.text;
+    
   }
   else if ([_loginTF.textField.text omn_isValidEmail]) {
+    
     registerUserVC.email = _loginTF.textField.text;
+    
   }
-  
-  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:registerUserVC] animated:YES completion:nil];
+  [self.navigationController pushViewController:registerUserVC animated:YES];
   
 }
 
@@ -313,17 +327,16 @@ TTTAttributedLabelDelegate> {
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
   
   if ([url isEqual:_createUserUrl]) {
+    
     [self createUser];
+    
   }
   else if ([url isEqual:_resetPhoneUrl]) {
+    
     [self resetPhone];
+    
   }
   
-}
-
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
 }
 
 @end

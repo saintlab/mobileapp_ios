@@ -8,6 +8,7 @@
 
 #import "OMNToolbarButton.h"
 #import "UIImage+omn_helper.h"
+#import "UIButton+omn_helper.h"
 
 #define kBarButtonNormalColor ([UIColor blackColor])
 
@@ -35,8 +36,7 @@
       if (title.length) {
         CGFloat space = 8.0f;
         self.titleLabel.textAlignment = NSTextAlignmentRight;
-        self.titleEdgeInsets = UIEdgeInsetsMake(0.0f, space, 0.0f, -space);
-        self.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, space);
+        [self omn_centerButtonAndImageWithSpacing:space];
       }
       
     }
