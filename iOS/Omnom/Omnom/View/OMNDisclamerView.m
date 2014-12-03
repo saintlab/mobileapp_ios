@@ -43,7 +43,8 @@
     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
     NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
     } range:NSMakeRange(0, text.length)];
-  
+  self.text = attributedString;
+
   self.linkAttributes =
   @{
     (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
@@ -58,8 +59,6 @@
     };
 
   [self addLinkToURL:[NSURL URLWithString:@"http://legal.saintlab.com/omnom/user-agreement/"] withRange:[text rangeOfString:buttonText]];
-  
-  self.attributedText = attributedString;
 
 }
 

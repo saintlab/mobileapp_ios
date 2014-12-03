@@ -217,7 +217,7 @@ TTTAttributedLabelDelegate>
 - (void)cardDidVerify {
 
   [_cardHoldValueTF setError:NO];
-  _errorLabel.attributedText = nil;
+  _errorLabel.text = nil;
   [_bankCardInfo logCardRegister];
   if (self.didFinishBlock) {
     self.didFinishBlock();
