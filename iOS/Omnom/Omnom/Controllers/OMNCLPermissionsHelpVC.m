@@ -34,7 +34,7 @@
       [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_3-7", @"Разрешите, наконец, использовать службы геолокации для Omnom:") imageName:@"navigation_help_3-7"],
       ];
     
-  } else {
+  } else if (SYSTEM_VERSION_LESS_THAN(@"8.1")) {
     
     pages =
     @[
@@ -43,6 +43,15 @@
       [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_3-8", @"Разрешите доступ к геопозиции:") imageName:@"navigation_help_3-8"],
       ];
 
+  }
+  else {
+    
+    pages =
+    @[
+      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_1-8.1", @"Выберите меню\n«Геопозиция»:") imageName:@"navigation_help_1-81"],
+      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_2-8.1", @"Разрешите доступ\nк геопозиции:") imageName:@"navigation_help_2-81"],
+      ];
+    
   }
 
   self = [super initWithPages:pages];
