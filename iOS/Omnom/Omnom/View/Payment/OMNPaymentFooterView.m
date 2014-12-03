@@ -84,8 +84,8 @@
   
   [_cancelEditingButton setImage:[UIImage imageNamed:@"cancel_editing_button"] forState:UIControlStateNormal];
   _cancelEditingButton.tintColor = [UIColor whiteColor];
-  
-  [_editButton setImage:[UIImage imageNamed:@"edit_tip_icon"] forState:UIControlStateNormal];
+
+  [_editButton setImage:[UIImage imageNamed:@"edit_bill_sum_icon"] forState:UIControlStateNormal];
   _editButton.tintColor = [UIColor whiteColor];
   [_editButton addTarget:_amountPercentControl action:@selector(becomeFirstResponder) forControlEvents:UIControlEventTouchUpInside];
   
