@@ -12,8 +12,7 @@
 #import "OMNConstants.h"
 #import "OMNQR.h"
 
-@class OMNVisitor;
-
+extern NSString * const OMNVisitorOrdersDidChangeNotification;
 extern NSString * const OMNOrderDidChangeNotification;
 extern NSString * const OMNOrderDidCloseNotification;
 
@@ -39,6 +38,9 @@ extern NSString * const OMNOrderIndexKey;
 - (void)subscribeForTableEvents;
 - (BOOL)expired;
 - (NSString *)id;
+
+- (void)addNewOrder:(OMNOrder *)order;
+- (void)updateOrdersWithOrders:(NSArray *)orders;
 
 @end
 

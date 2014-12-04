@@ -12,7 +12,6 @@
 #import "OMNOrder+network.h"
 
 NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunchKey";
-NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidChangeNotification";
 
 @implementation  OMNVisitor (omn_network)
 
@@ -51,24 +50,6 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
     
   } error:^(NSError *error) {
   }];
-  
-}
-
-- (void)updateOrdersWithOrders:(NSArray *)orders {
-  
-  NSString *selectedOrderId = self.selectedOrder.id;
-  __weak typeof(self)weakSelf = self;
-  [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
-    
-    if ([order.id isEqualToString:selectedOrderId]) {
-      weakSelf.selectedOrder = order;
-      *stop = YES;
-    }
-    
-  }];
-  
-  self.orders = orders;
-  [[NSNotificationCenter defaultCenter] postNotificationName:OMNVisitorOrdersDidChangeNotification object:self];
   
 }
 
@@ -129,6 +110,32 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_NEW_GUEST" jsonRequest:path responseOperation:operation];
+    failureBlock(error);
+    
+  }];
+  
+}
+
+- (void)tableInWithFailure:(void(^)(NSError *error))failureBlock {
+  
+  if (nil == self.table.id) {
+    return;
+  }
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/in", self.restaurant.id, self.table.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if ([responseObject[@"status"] isEqualToString:@"success"]) {
+      failureBlock(nil);
+    }
+    else {
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_TABLE_IN" jsonRequest:path jsonResponse:responseObject];
+      failureBlock(nil);
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_TABLE_IN" jsonRequest:path responseOperation:operation];
     failureBlock(error);
     
   }];
@@ -202,7 +209,7 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
   
 }
 
-- (void)showGreetingPush; {
+- (void)showGreetingPush {
   
   if (NO == self.readyForPush) {
     return;

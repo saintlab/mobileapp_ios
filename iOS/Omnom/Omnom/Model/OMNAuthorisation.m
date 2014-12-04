@@ -17,7 +17,7 @@
 #import <SSKeychain.h>
 #import "OMNLocationManager.h"
 
-static NSString * const kAccountName = @"test_account6";
+static NSString * const kAuthorisationAccountName = @"test_account6";
 static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";
 static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotificationsRequestedKey";
 
@@ -58,7 +58,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 #if OMN_TEST
     NSString *token = @"yeshackvofPigCob";
 #else
-    NSString *token = [SSKeychain passwordForService:[self tokenServiceName] account:kAccountName];
+    NSString *token = [SSKeychain passwordForService:[self tokenServiceName] account:kAuthorisationAccountName];
 #endif
     [self updateAuthenticationToken:token withBlock:nil];
   }
@@ -90,12 +90,12 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   BOOL pushNotificationsRequested = NO;
   if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
     
-    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS8PushNotificationsRequestedKey account:kAccountName] boolValue];
+    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS8PushNotificationsRequestedKey account:kAuthorisationAccountName] boolValue];
     
   }
   else {
     
-    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS7PushNotificationsRequestedKey account:kAccountName] boolValue];
+    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS7PushNotificationsRequestedKey account:kAuthorisationAccountName] boolValue];
     
   }
 
@@ -103,7 +103,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
 }
 
-#ifdef __IPHONE_8_0
 - (UIUserNotificationSettings *)notificationSettings {
   UIMutableUserNotificationAction *declineAction = [[UIMutableUserNotificationAction alloc] init];
   declineAction.identifier = @"declineAction";
@@ -124,7 +123,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:[NSSet setWithObjects:category,nil]];
   return settings;
 }
-#endif
 
 - (void)requestPushNotifications:(void(^)(BOOL))completion {
   
@@ -142,7 +140,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
   if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
     
-    [SSKeychain setPassword:@"YES" forService:kIOS8PushNotificationsRequestedKey account:kAccountName];
+    [SSKeychain setPassword:@"YES" forService:kIOS8PushNotificationsRequestedKey account:kAuthorisationAccountName];
     _userNotificationRegisterCompletionBlock = [completion copy];
     [application registerUserNotificationSettings:[self notificationSettings]];
     
@@ -151,7 +149,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   }
   else {
     
-    [SSKeychain setPassword:@"YES" forService:kIOS7PushNotificationsRequestedKey account:kAccountName];
+    [SSKeychain setPassword:@"YES" forService:kIOS7PushNotificationsRequestedKey account:kAuthorisationAccountName];
     _remoteNotificationRegisterCompletionBlock = [completion copy];
     
   }
@@ -206,26 +204,27 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 }
 
 - (void)logout {
+  
   self.user = nil;
   [self updateAuthenticationToken:nil withBlock:nil];
   if (self.logoutCallback) {
     self.logoutCallback();
   }
+  
 }
 
 - (void)updateAuthenticationToken:(NSString *)token withBlock:(void (^)(BOOL tokenIsValid))block {
 
-  if ([_token isEqualToString:token]) {
-    return;
-  }
-  NSLog(@"updateAuthenticationToken>%@", token);
-
   _token = token;
   if (token) {
-    [SSKeychain setPassword:token forService:[self tokenServiceName] account:kAccountName];
+    
+    [SSKeychain setPassword:token forService:[self tokenServiceName] account:kAuthorisationAccountName];
+    
   }
   else {
-    [SSKeychain deletePasswordForService:[self tokenServiceName] account:kAccountName];
+    
+    [SSKeychain deletePasswordForService:[self tokenServiceName] account:kAuthorisationAccountName];
+    
   }
   
   [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
@@ -261,7 +260,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
   NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
   //Check if we have UUID already
-  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAccountName];
+  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAuthorisationAccountName];
   
   if (nil == retrieveuuid) {
     
@@ -271,7 +270,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     CFRelease(newUniqueId);
     
     //Save key to Keychain
-    [SSKeychain setPassword:retrieveuuid forService:appName account:kAccountName];
+    [SSKeychain setPassword:retrieveuuid forService:appName account:kAuthorisationAccountName];
   }
   
   return retrieveuuid;
@@ -292,13 +291,17 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     
     NSString *message = self[@"error"][@"message"];
     if (message) {
+      
       NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
                                            code:[self[@"error"][@"code"] integerValue]
                                        userInfo:@{NSLocalizedDescriptionKey : message}];
       failureBlock(error);
+      
     }
     else {
+      
       failureBlock(nil);
+      
     }
 
   }

@@ -11,6 +11,7 @@
 extern NSString * const OMNSocketIOOrderDidPayNotification;
 extern NSString * const OMNSocketIOOrderDidChangeNotification;
 extern NSString * const OMNSocketIOOrderDidCloseNotification;
+extern NSString * const OMNSocketIOOrderDidCreateNotification;
 extern NSString * const OMNSocketIOWaiterCallDoneNotification;
 
 extern NSString * const OMNOrderDataKey;

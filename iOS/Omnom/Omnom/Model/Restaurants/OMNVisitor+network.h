@@ -9,7 +9,6 @@
 #import "OMNVisitor.h"
 
 extern NSString * const OMNVisitorNotificationLaunchKey;
-extern NSString * const OMNVisitorOrdersDidChangeNotification;
 
 typedef void(^OMNVisitorBlock)(OMNVisitor *visitor);
 typedef void(^OMNVisitorsBlock)(NSArray *visitors);
@@ -20,7 +19,7 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
-
+- (void)tableInWithFailure:(void(^)(NSError *error))failureBlock;
 - (void)waiterCallWithFailure:(void(^)(NSError *error))failureBlock;
 - (void)waiterCallStopWithFailure:(void(^)(NSError *error))failureBlock;
 - (void)stopWaiterCall;

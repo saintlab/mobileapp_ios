@@ -16,10 +16,11 @@ NSString * const OMNOrderDidPayNotification = @"OMNOrderDidPayNotification";
 NSString * const OMNOrderKey = @"OMNOrderKey";
 NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
 
-
+NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidChangeNotification";
 
 @implementation OMNVisitor {
   id _decodeBeaconData;
+  dispatch_semaphore_t _visitorLock;
 }
 
 - (void)dealloc {
@@ -43,6 +44,9 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidChangeNotification object:[OMNSocketManager manager]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNSocketIOOrderDidCloseNotification object:[OMNSocketManager manager]];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidCreate:) name:OMNSocketIOOrderDidCreateNotification object:[OMNSocketManager manager]];
+    
+    _visitorLock = dispatch_semaphore_create(1);
     
   }
   return self;
@@ -141,22 +145,77 @@ NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
   
 }
 
+
+- (void)orderDidCreate:(NSNotification *)n {
+  
+  OMNOrder *newOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
+  
+  if ([newOrder.restaurant_id isEqualToString:self.restaurant.id]) {
+    
+    [self addNewOrder:newOrder];
+
+  }
+  
+}
+
 - (void)orderDidClose:(NSNotification *)n {
   
   OMNOrder *closeOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
   
+  NSMutableArray *orders = [_orders mutableCopy];
+  
+  __block OMNOrder *realClosedOrder = nil;
   [_orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
     
     if ([closeOrder.id isEqualToString:order.id]) {
-      
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification
-                                                          object:self
-                                                        userInfo:@{OMNOrderKey : order,
-                                                                   OMNOrderIndexKey : @(idx)}];
+      realClosedOrder = order;
+      [orders removeObjectAtIndex:idx];
       *stop = YES;
     }
     
   }];
+  
+  if (realClosedOrder) {
+    
+    [self updateOrdersWithOrders:orders];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification
+                                                        object:self
+                                                      userInfo:@{OMNOrderKey : realClosedOrder}];
+    
+  }
+  
+}
+
+- (void)addNewOrder:(OMNOrder *)order {
+  
+  dispatch_semaphore_wait(_visitorLock, DISPATCH_TIME_FOREVER);
+  
+  self.orders = [self.orders arrayByAddingObject:order];
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNVisitorOrdersDidChangeNotification object:self];
+  
+  dispatch_semaphore_signal(_visitorLock);
+  
+}
+
+- (void)updateOrdersWithOrders:(NSArray *)orders {
+ 
+  dispatch_semaphore_wait(_visitorLock, DISPATCH_TIME_FOREVER);
+  
+  NSString *selectedOrderId = self.selectedOrder.id;
+  __weak typeof(self)weakSelf = self;
+  [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+    
+    if ([order.id isEqualToString:selectedOrderId]) {
+      weakSelf.selectedOrder = order;
+      *stop = YES;
+    }
+    
+  }];
+  
+  self.orders = orders;
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNVisitorOrdersDidChangeNotification object:self];
+  
+  dispatch_semaphore_signal(_visitorLock);
   
 }
 

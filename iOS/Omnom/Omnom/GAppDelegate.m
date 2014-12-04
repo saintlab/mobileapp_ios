@@ -32,10 +32,14 @@
   
   NSDictionary *parametrs = [launchOptions[UIApplicationLaunchOptionsURLKey] omn_query];
   if (parametrs[@"omnom_config"]) {
+    
     [OMNConstants setCustomConfigName:parametrs[@"omnom_config"]];
+    
   }
   else {
+    
     [OMNConstants setCustomConfigName:@"config_prod"];
+    
   }
   
   if ([[OMNAuthorisation authorisation] pushNotificationsRequested]) {

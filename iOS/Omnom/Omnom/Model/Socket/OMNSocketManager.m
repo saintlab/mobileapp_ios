@@ -14,6 +14,7 @@ NSString * const OMNSocketIOWaiterCallDoneNotification = @"OMNSocketIOWaiterCall
 NSString * const OMNSocketIOOrderDidChangeNotification = @"OMNSocketIOOrderDidChangeNotification";
 NSString * const OMNSocketIOOrderDidCloseNotification = @"OMNSocketIOOrderDidCloseNotification";
 NSString * const OMNSocketIOOrderDidPayNotification = @"OMNSocketIOOrderDidPayNotification";
+NSString * const OMNSocketIOOrderDidCreateNotification = @"OMNSocketIOOrderDidCreateNotification";
 
 NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
 NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
@@ -105,11 +106,11 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     NSLog(@"order_create %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
-//      if (data) {
-//        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidChangeNotification
-//                                                            object:self
-//                                                          userInfo:@{OMNOrderDataKey : data}];
-//      }
+      if (data) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOOrderDidCreateNotification
+                                                            object:self
+                                                          userInfo:@{OMNOrderDataKey : data}];
+      }
       
     });
     

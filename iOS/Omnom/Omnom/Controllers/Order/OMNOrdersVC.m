@@ -21,10 +21,11 @@ UICollectionViewDelegate>
 @end
 
 @implementation OMNOrdersVC {
-  NSMutableArray *_orders;
+  
   BOOL _animationPerformed;
   UILabel *_label;
   UIPageControl *_pageControl;
+  
 }
 
 - (void)dealloc {
@@ -35,7 +36,6 @@ UICollectionViewDelegate>
   self = [super init];
   if (self) {
     _visitor = visitor;
-    _orders = [visitor.orders mutableCopy];
   }
   return self;
 }
@@ -65,34 +65,6 @@ UICollectionViewDelegate>
 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:_visitor];
-  
-}
-
-- (void)updateOrders {
-  
-  _label.text = [NSString stringWithFormat:NSLocalizedString(@"На вашем столике\nраздельных счетов: %d", nil), _orders.count];
-  _pageControl.numberOfPages = _orders.count;
-  [self updateSelectedIndex];
-  
-}
-
-- (void)updateSelectedIndex {
-  
-  __block NSInteger index = -1;
-  __block CGFloat minSpacing = 999.0f;
-  CGFloat centerX = _collectionView.contentOffset.x + CGRectGetMidX(_collectionView.frame);
-  [_collectionView.visibleCells enumerateObjectsUsingBlock:^(UICollectionViewCell *cell, NSUInteger idx, BOOL *stop) {
-    
-    CGFloat spacing = fabsf(cell.center.x - centerX);
-    if (spacing < minSpacing) {
-      minSpacing = spacing;
-      index = [_collectionView indexPathForCell:cell].item;
-    }
-    
-  }];
-  
-  _pageControl.currentPage = index;
   
 }
 
@@ -164,32 +136,8 @@ UICollectionViewDelegate>
   
 }
 
-- (void)orderDidClose:(NSNotification *)n {
-  
-  OMNOrder *closeOrder = n.userInfo[OMNOrderKey];
-  if (nil == closeOrder) {
-    return;
-  }
-  
-  NSArray *orders = [_orders copy];
-  [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
-    
-    if ([order.id isEqualToString:closeOrder.id]) {
-      [_orders removeObjectAtIndex:idx];
-      *stop = YES;
-    }
-    
-  }];
-  
-  if (orders.count != _orders.count) {
-    [self reloadData];
-  }
-  
-}
-
 - (void)visitorOrdersDidChange:(NSNotification *)n {
   
-  _orders = [_visitor.orders mutableCopy];
   [self reloadData];
   
 }
@@ -201,6 +149,37 @@ UICollectionViewDelegate>
   
 }
 
+- (void)updateOrders {
+  
+  _label.text = [NSString stringWithFormat:NSLocalizedString(@"На вашем столике\nраздельных счетов: %d", nil), _visitor.orders.count];
+  _pageControl.numberOfPages = _visitor.orders.count;
+  __weak typeof(self)weakSelf = self;
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    [weakSelf updateSelectedIndex];
+  });
+  
+  
+}
+
+- (void)updateSelectedIndex {
+  
+  __block NSInteger index = -1;
+  __block CGFloat minSpacing = 999.0f;
+  CGFloat centerX = _collectionView.contentOffset.x + CGRectGetMidX(_collectionView.frame);
+  [_collectionView.visibleCells enumerateObjectsUsingBlock:^(UICollectionViewCell *cell, NSUInteger idx, BOOL *stop) {
+    
+    CGFloat spacing = fabsf(cell.center.x - centerX);
+    if (spacing < minSpacing) {
+      minSpacing = spacing;
+      index = [_collectionView indexPathForCell:cell].item;
+    }
+    
+  }];
+  
+  _pageControl.currentPage = index;
+  
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -208,13 +187,13 @@ UICollectionViewDelegate>
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return _orders.count;
+  return _visitor.orders.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNOrderViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  OMNOrder *order = _orders[indexPath.item];
+  OMNOrder *order = _visitor.orders[indexPath.item];
   
   if (1 == indexPath.item &&
       NO == _animationPerformed) {
@@ -238,7 +217,7 @@ UICollectionViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-  OMNOrder *order = _orders[indexPath.item];
+  OMNOrder *order = _visitor.orders[indexPath.item];
   _visitor.selectedOrder = order;
   [self.delegate ordersVC:self didSelectOrder:order];
   

@@ -88,6 +88,11 @@
 
   _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
   _isViewVisible = YES;
+  
+  [self.visitor tableInWithFailure:^(NSError *error) {
+    
+  }];
+  
   self.navigationItem.title = @"";
   
   UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];

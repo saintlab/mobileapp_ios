@@ -39,13 +39,16 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
+    
     _mixpanel = [[Mixpanel alloc] initWithToken:[OMNConstants mixpanelToken] launchOptions:nil andFlushInterval:60.0];
     _mixpanel.flushInterval = 60.0;
     
     NSString *mixpanelDebugToken = [OMNConstants mixpanelDebugToken];
     if (mixpanelDebugToken.length) {
+      
       _mixpanelDebug = [[Mixpanel alloc] initWithToken:mixpanelDebugToken andFlushInterval:60.0];
       _mixpanelDebug.flushInterval = 60.0;
+      
     }
     
   }

@@ -31,25 +31,65 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 + (void)loadConfigWithCompletion:(dispatch_block_t)completionBlock {
   
   NSString *path = @"/mobile/config";
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  AFHTTPRequestOperation *operation = [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    [self updateConfig:responseObject];
-    if (completionBlock) {
-      completionBlock();
+    if (responseObject[@"tokens"]) {
+
+      [self cacheConfig:responseObject];
+      [self updateConfig:responseObject];
+      if (completionBlock) {
+        completionBlock();
+      }
+
     }
+    else {
+    
+      [self loadCachedConfig];
+      NSDictionary *parametrs = nil;
+      if (responseObject) {
+        parametrs = @{@"responseObject" : responseObject};
+      }
+      [[OMNAnalitics analitics] logTargetEvent:@"ERROR_CONFIG" parametrs:parametrs];
+      
+    }
+      
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_CONFIG" jsonRequest:path responseOperation:operation];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      [self loadConfigWithCompletion:completionBlock];
-    });
+    [self loadCachedConfig];
+    [[OMNAnalitics analitics] logTargetEvent:@"ERROR_CONFIG" parametrs:nil];
     
   }];
+  
+  NSMutableURLRequest *mRequest = (NSMutableURLRequest *)operation.request;
+  if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
+    [mRequest setValue:@"yeshackvofPigCob" forHTTPHeaderField:@"x-authentication-token"];
+  }
+  
+}
+
++ (void)loadCachedConfig {
+  
+  NSDictionary *cachedConfig = [NSDictionary dictionaryWithContentsOfFile:[self configPath]];
+  [self updateConfig:cachedConfig];
+  
+}
+
++ (NSString *)configPath {
+  return [@"~/Documents/config.dat" stringByExpandingTildeInPath];
+}
+
++ (void)cacheConfig:(NSDictionary *)config {
+  
+  [config writeToFile:[self configPath] atomically:YES];
   
 }
 
 + (void)updateConfig:(NSDictionary *)config {
+  
+  if (nil == config) {
+    return;
+  }
   
   NSDictionary *mailRuConfig = config[@"mail_ru"];
   [OMNMailRuAcquiring setConfig:mailRuConfig];
@@ -62,6 +102,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   }
   
   _tokens = config[@"tokens"];
+  [OMNAnalitics analitics];
   
 }
 
