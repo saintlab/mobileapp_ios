@@ -36,6 +36,42 @@
   return image;
 }
 
+- (UIImage *)omn_circleImageWithDiametr:(CGFloat)diametr {
+  
+  if (diametr <= 0.0f) {
+    return nil;
+  }
+  
+  CGRect drawRect = CGRectZero;
+  drawRect.size = self.size;
+  
+  if (self.size.width > self.size.height) {
+    
+    CGFloat scale = diametr/self.size.width;
+    drawRect.size.width *= scale;
+    drawRect.size.height *= scale;
+    drawRect.origin.y = (diametr - drawRect.size.height)/2.0f;
+    
+  }
+  else {
+
+    CGFloat scale = diametr/self.size.height;
+    drawRect.size.width *= scale;
+    drawRect.size.height *= scale;
+    drawRect.origin.x = (diametr - drawRect.size.width)/2.0f;
+    
+  }
+  
+  CGRect drawFrame = CGRectMake(0.0f, 0.0f, diametr, diametr);
+  UIGraphicsBeginImageContextWithOptions(drawFrame.size, NO, 0.0f);
+  [[UIBezierPath bezierPathWithOvalInRect:drawFrame] addClip];
+  [self drawInRect:drawRect];
+  UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return image;
+  
+}
+
 - (UIImage *)omn_tintWithColor:(UIColor *)tintColor {
 
   UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
@@ -59,7 +95,6 @@
   CGRect drawRect = CGRectMake(0, 0, self.size.width, self.size.height);
   [[tintColor colorWithAlphaComponent:1.0f] set];
   [self drawInRect:drawRect];
-//  [self drawInRect:drawRect blendMode:blendMode alpha:1.0f];
   UIRectFillUsingBlendMode(drawRect, blendMode);
   UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();

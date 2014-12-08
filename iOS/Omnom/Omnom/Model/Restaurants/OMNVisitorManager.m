@@ -147,11 +147,15 @@
       NSArray *visitors = [responseObject omn_visitors];
       OMNVisitor *visitor = [visitors firstObject];
       if (visitor) {
+        
         [weakSelf addVisitors:@[visitor]];
         completionBlock(visitor);
+        
       }
       else {
+        
         [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
+        
       }
       
     }

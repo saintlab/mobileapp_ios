@@ -16,7 +16,6 @@ typedef UIViewController *(^OMNUserInfoDidSelectBlock)(UITableView *tableView, N
 <UITableViewDataSource,
 UITableViewDelegate>
 
-@property (nonatomic, strong) OMNUser *user;
 @property (nonatomic, copy) OMNUserInfoDidSelectBlock didSelectBlock;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;

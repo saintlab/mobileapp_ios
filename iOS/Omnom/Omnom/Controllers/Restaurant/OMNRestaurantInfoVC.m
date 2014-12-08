@@ -223,7 +223,9 @@ UIGestureRecognizerDelegate>
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+  
   return UIStatusBarStyleDefault;
+  
 }
 
 - (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem {

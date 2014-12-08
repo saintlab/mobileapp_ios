@@ -41,7 +41,6 @@
       self.logoutItems,
       ];
     
-    self.user = [OMNAuthorisation authorisation].user;
     [self reloadUserInfo];
     
   }
@@ -50,20 +49,8 @@
 
 - (void)reloadUserInfo {
   
-  NSString *token = [OMNAuthorisation authorisation].token;
-  if (0 == token.length) {
-    return;
-  }
+  [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
 
-  __weak typeof(self)weakSelf = self;
-  [OMNUser userWithToken:token user:^(OMNUser *user) {
-    
-    weakSelf.user = user;
-    
-  } failure:^(NSError *error) {
-    
-    //TODO: handle
-    
   }];
 
 }

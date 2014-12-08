@@ -64,6 +64,7 @@ OMNPayOrderVCDelegate>
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithVisitor:self.visitor];
   userInfoVC.delegate = self;
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
+  navigationController.delegate = self.restaurantActionsVC.navigationController.delegate;
   [self.restaurantActionsVC.navigationController presentViewController:navigationController animated:YES completion:nil];
   
 }

@@ -14,8 +14,6 @@
 
 @property (nonatomic, weak) id <OMNCameraPermissionHelpVCDelegate> delegate;
 
-- (instancetype)init;
-
 @end
 
 @protocol OMNCameraPermissionHelpVCDelegate <NSObject>

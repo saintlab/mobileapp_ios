@@ -90,8 +90,8 @@
   if (user.phone) {
     userInfo[@"phone"] = user.phone;
   }
-  if (user.birthDate) {
-    userInfo[@"phone"] = user.birthDate;
+  if (user.birthDateString.length) {
+    userInfo[@"birth_date"] = user.birthDateString;
   }
   if (user.created_at) {
     userInfo[@"created"] = user.created_at;

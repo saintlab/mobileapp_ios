@@ -8,7 +8,9 @@
 
 #import "OMNUser.h"
 
-@implementation OMNUser
+@implementation OMNUser {
+  
+}
 
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
@@ -19,12 +21,63 @@
     self.phone = [data[@"phone"] description];
     self.status = [data[@"status"] description];
     self.created_at = [data[@"created_at"] description];
-    //    self.birthDate = data[@"birth_date"];
+    self.avatar = data[@"avatar"];
     
+    NSString *birth_date = data[@"birth_date"];
+    if (birth_date.length) {
+      
+      self.birthDate = [[self birthDateFormatter] dateFromString:birth_date];
+      
+    }
     self.phone_validated = [data[@"phone_validated"] boolValue];
     self.email_validated = [data[@"email_validated"] boolValue];
   }
   return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+  
+  OMNUser *user = [[[self class] allocWithZone:zone] init];
+  user.id = [self.id copyWithZone:zone];
+  user.name = [self.name copyWithZone:zone];
+  user.email = [self.email copyWithZone:zone];
+  user.phone = [self.phone copyWithZone:zone];
+  user.status = [self.status copyWithZone:zone];
+  user.created_at = [self.created_at copyWithZone:zone];
+  user.birthDate = [self.birthDate copyWithZone:zone];
+  user.avatar = [self.avatar copyWithZone:zone];
+  user.image = self.image;
+  return user;
+}
+
+- (NSDateFormatter *)birthDateFormatter {
+  
+  static NSDateFormatter *dateFormatter = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    dateFormatter = [[NSDateFormatter alloc] init];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    [dateFormatter setLocale:locale];
+    [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+  });
+  
+  return dateFormatter;
+  
+}
+
+- (NSString *)birthDateString {
+  
+  if (self.birthDate) {
+    
+    return [[self birthDateFormatter] stringFromDate:self.birthDate];
+    
+  }
+  else {
+    
+    return @"";
+    
+  }
+  
 }
 
 + (instancetype)userWithPhone:(NSString *)phone {

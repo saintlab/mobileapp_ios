@@ -20,6 +20,7 @@
 
 - (void)logout;
 
+- (void)updateUserInfoWithUser:(OMNUser *)user;
 - (void)updateAuthenticationToken:(NSString *)token withBlock:(void (^)(BOOL tokenIsValid))block;;
 
 - (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block;

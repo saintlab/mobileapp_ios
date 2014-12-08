@@ -14,9 +14,13 @@
 #import <OMNStyler.h>
 #import "OMNVisitor.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNEditUserVC.h"
+#import "OMNUserIconView.h"
+#import <BlocksKit+UIKit.h>
 
 @interface OMNUserInfoVC ()
-<OMNEditTableVCDelegate>
+<OMNEditTableVCDelegate,
+OMNEditUserVCDelegate>
 
 @end
 
@@ -24,45 +28,47 @@
   OMNUserInfoModel *_userInfoModel;
   
   __weak IBOutlet UILabel *_userNameLabel;
-  __weak IBOutlet UIButton *_iconView;
+  __weak IBOutlet OMNUserIconView *_iconView;
 
   UIView *_tableFooterView;
   OMNVisitor *_visitor;
-  __weak IBOutlet UILabel *_versionLabel;
+
+  NSString *_userObserverIdentifier;
+  NSString *_userImageObserverIdentifier;
 }
 
 - (void)dealloc {
   
-  @try {
-    [_userInfoModel removeObserver:self forKeyPath:NSStringFromSelector(@selector(user))];
+  if (_userObserverIdentifier) {
+    
+    [[OMNAuthorisation authorisation] bk_removeObserversWithIdentifier:_userObserverIdentifier];
+    _userObserverIdentifier = nil;
+    
   }
-  @catch (NSException *exception) {
+  if (_userImageObserverIdentifier) {
+    
+    [[OMNAuthorisation authorisation].user bk_removeObserversWithIdentifier:_userImageObserverIdentifier];
+    _userImageObserverIdentifier = nil;
+    
   }
+  
   
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super initWithNibName:@"OMNUserInfoVC" bundle:nil];
   if (self) {
+    
     _visitor = visitor;
   }
   return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  
-  if ([keyPath isEqualToString:NSStringFromSelector(@selector(user))]) {
-    
-    [self updateUserInfo];
-    
-  }
-  
-}
-
 - (void)updateUserInfo {
   
-  NSString *name = (_userInfoModel.user.name.length) ? (_userInfoModel.user.name) : (@"no name");
-  NSString *emailPhone = [NSString stringWithFormat:@"%@\n%@", _userInfoModel.user.email, _userInfoModel.user.phone];
+  OMNUser *user = [OMNAuthorisation authorisation].user;
+  NSString *name = (user.name.length) ? (user.name) : (@"no name");
+  NSString *emailPhone = [NSString stringWithFormat:@"%@\n%@", user.email, user.phone];
   NSString *text = [NSString stringWithFormat:@"%@\n%@", name, emailPhone];
   
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
@@ -84,6 +90,12 @@
   
 }
 
+- (void)updateUserImage {
+  
+  [_iconView updateWithImage:[OMNAuthorisation authorisation].user.image];
+  
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   
@@ -94,8 +106,21 @@
   self.tableView.delegate = _userInfoModel;
   self.tableView.tableFooterView = [[UIView alloc] init];
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  [_userInfoModel addObserver:self forKeyPath:NSStringFromSelector(@selector(user)) options:NSKeyValueObservingOptionNew context:NULL];
+  
+  OMNAuthorisation *authorisation = [OMNAuthorisation authorisation];
   __weak typeof(self)weakSelf = self;
+  _userObserverIdentifier = [authorisation bk_addObserverForKeyPath:NSStringFromSelector(@selector(user)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
+    
+    [weakSelf updateUserInfo];
+    
+  }];
+
+  _userImageObserverIdentifier = [authorisation.user bk_addObserverForKeyPath:NSStringFromSelector(@selector(image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
+    
+    [weakSelf updateUserImage];
+    
+  }];
+  
   _userInfoModel.didSelectBlock = ^UIViewController *(UITableView *tableView, NSIndexPath *indexPath) {
     
     return weakSelf;
@@ -103,9 +128,6 @@
   };
   
   UIColor *backgroundColor = [UIColor whiteColor];
-  
-  [_iconView setBackgroundImage:[UIImage imageNamed:@"avatar_circle"] forState:UIControlStateNormal];
-  [_iconView setImage:[UIImage imageNamed:@"ic_default_user"] forState:UIControlStateNormal];
   _iconView.userInteractionEnabled = NO;
   
   _userNameLabel.numberOfLines = 3;
@@ -130,7 +152,9 @@
 
 - (void)editUserTap {
   
-  
+  OMNEditUserVC *editUserVC = [[OMNEditUserVC alloc] init];
+  editUserVC.delegate = self;
+  [self.navigationController pushViewController:editUserVC animated:YES];
   
 }
 
@@ -145,16 +169,16 @@
 #pragma mark - OMNEditTableVCDelegate
 
 - (void)editTableVCDidFinish:(OMNEditTableVC *)editTableVC {
+  
   [self.navigationController popToViewController:self animated:YES];
+  
 }
 
-- (void)iconTap {
+#pragma mark - OMNEditUserVCDelegate
+
+- (void)editUserVCDidFinish:(OMNEditUserVC *)editUserVC {
   
-  UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"Отмена", nil) destructiveButtonTitle:nil otherButtonTitles:
-                          NSLocalizedString(@"Сделать снимок", nil),
-                          NSLocalizedString(@"Выбрать из библиотеки", nil),
-                          nil];
-  [sheet showInView:self.view.window];
+  [self.navigationController popToViewController:self animated:YES];
   
 }
 

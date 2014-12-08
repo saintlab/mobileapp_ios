@@ -25,7 +25,7 @@
 
 - (instancetype)initWithJsonData:(id)jsonData {
   
-  if ([jsonData isKindOfClass:[NSNull class]]) {
+  if (![jsonData isKindOfClass:[NSDictionary class]]) {
     return nil;
   }
   

@@ -16,8 +16,10 @@
 #import "OMNResetPasswordVC.h"
 
 @implementation OMNChangePhoneVC {
+  
   OMNErrorTextField *_phoneTF;
   UILabel *_hintLabel;
+  
 }
 
 - (void)viewDidLoad {

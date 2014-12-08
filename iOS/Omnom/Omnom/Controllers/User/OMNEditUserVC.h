@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNUser.h"
+
+@protocol OMNEditUserVCDelegate;
 
 @interface OMNEditUserVC : UIViewController
+
+@property (nonatomic, weak) id<OMNEditUserVCDelegate> delegate;
+
+@end
+
+@protocol OMNEditUserVCDelegate <NSObject>
+
+- (void)editUserVCDidFinish:(OMNEditUserVC *)editUserVC;
 
 @end

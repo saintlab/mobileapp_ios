@@ -66,6 +66,7 @@ OMNUserInfoVCDelegate>
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithVisitor:self.visitor];
   userInfoVC.delegate = self;
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
+  navigationController.delegate = self.navigationController.delegate;
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
   
 }

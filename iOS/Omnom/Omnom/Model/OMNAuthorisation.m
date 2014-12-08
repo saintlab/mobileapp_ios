@@ -23,8 +23,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 @interface OMNAuthorisation ()
 
-@property (nonatomic, strong) OMNUser *user;
-
 @end
 
 @implementation OMNAuthorisation {
@@ -61,13 +59,18 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     NSString *token = [SSKeychain passwordForService:[self tokenServiceName] account:kAuthorisationAccountName];
 #endif
     [self updateAuthenticationToken:token withBlock:nil];
+    
+    _user = [[OMNUser alloc] init];
+    
   }
   return self;
 }
 
-- (void)setUser:(OMNUser *)user {
+- (void)updateUserInfoWithUser:(OMNUser *)user {
   
-  _user = user;
+  [self willChangeValueForKey:@"user"];
+  
+  [_user updateWithUser:user];
   
   [OMNNotifierManager sharedManager].userID = user.id;
   
@@ -77,11 +80,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   [Crashlytics setUserName:user.id];
   [Crashlytics setUserIdentifier:[OMNConstants baseUrlString]];
   
-  [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
-    
-//    [[OMNAnalitics analitics] logUserLocation:coordinate];
-    
-  }];
+  [self didChangeValueForKey:@"user"];
   
 }
 
@@ -205,7 +204,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)logout {
   
-  self.user = nil;
+  [self updateUserInfoWithUser:nil];
   [self updateAuthenticationToken:nil withBlock:nil];
   if (self.logoutCallback) {
     self.logoutCallback();
@@ -245,7 +244,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   __weak typeof(self)weakSelf = self;
   [OMNUser userWithToken:self.token user:^(OMNUser *user) {
     
-    weakSelf.user = user;
+    [weakSelf updateUserInfoWithUser:user];
     block(YES);
     
   } failure:^(NSError *error) {
