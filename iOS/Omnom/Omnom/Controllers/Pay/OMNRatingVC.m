@@ -226,7 +226,10 @@
 - (void)closeTap {
   
   if (_starRatingView.score > 0.0f) {
-    [[OMNAnalitics analitics] logScore:5*_starRatingView.score order:_order];
+    
+    NSInteger score = (NSInteger)roundf(5*_starRatingView.score);
+    [[OMNAnalitics analitics] logScore:score order:_order];
+    
   }
   
   [self.delegate ratingVCDidFinish:self];

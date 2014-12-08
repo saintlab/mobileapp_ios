@@ -232,24 +232,26 @@
   
 }
 
-- (void)updateCoordinates:(CLLocationCoordinate2D)coordinates {
+- (void)logCoordinates:(CLLocationCoordinate2D)coordinates {
   
   NSDictionary *parameters =
   @{
-    @"coordinates" :
-      @{
-        @"longitude" : @(coordinates.longitude),
-        @"latitude" : @(coordinates.latitude),
-        },
+    @"longitude" : @(coordinates.longitude),
+    @"latitude" : @(coordinates.latitude),
+    @"token" : [OMNAuthorisation authorisation].token,
     };
   
-  [[OMNAuthorizationManager sharedManager] PUT:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNAuthorizationManager sharedManager] POST:@"/user/geo" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    
+    if (![responseObject omn_isSuccessResponse]) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"USER_COORDINATES_ERROR" jsonRequest:parameters jsonResponse:responseObject];
+      
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    
+    [[OMNAnalitics analitics] logDebugEvent:@"USER_COORDINATES_ERROR" jsonRequest:parameters responseOperation:operation];
     
   }];
   

@@ -28,7 +28,7 @@
 - (void)logLogin;
 - (void)logEnterRestaurant:(OMNVisitor *)visitor foreground:(BOOL)foreground;
 - (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo bill_id:(NSString *)bill_id;
-- (void)logScore:(CGFloat)score order:(OMNOrder *)order;
+- (void)logScore:(NSInteger)score order:(OMNOrder *)order;
 - (void)logBillView:(OMNOrder *)order;
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;

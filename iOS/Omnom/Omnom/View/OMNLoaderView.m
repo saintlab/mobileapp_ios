@@ -105,15 +105,20 @@
   pathAnimation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:.53 :1.25 :.61 :.89];
   
   if (start) {
+    
     pathAnimation.fromValue = @(0);
+    
   }
   else {
+    
     CALayer *currentLayer = (CALayer *)[_loaderLayer presentationLayer];
     float currentAngle = [(NSNumber *)[currentLayer valueForKeyPath:@"strokeEnd"] floatValue];
     pathAnimation.fromValue = @(currentAngle);
+    
   }
-  pathAnimation.toValue = @(0.99);
-  _loaderLayer.strokeEnd = 0.99;
+  CGFloat endValue = 0.999f;
+  pathAnimation.toValue = @(endValue);
+  _loaderLayer.strokeEnd = endValue;
   [_loaderLayer addAnimation:pathAnimation forKey:@"strokeEnd"];
   
 }
@@ -122,7 +127,9 @@
   if (flag) {
     _loaderLayer.hidden = YES;
     if (_completionBlock) {
+      
       _completionBlock();
+      
     }
   }
 }

@@ -11,10 +11,12 @@
 #import "OMNOrder.h"
 #import "OMNOrderTansactionInfo.h"
 #import "OMNUser.h"
+#import "OMNUser+network.h"
 #import "OMNVisitor.h"
 #import <AFNetworking.h>
 #import <Mixpanel.h>
 #import "OMNAuthorisation.h"
+#import "OMNLocationManager.h"
 
 @interface OMNAnalitics ()
 
@@ -153,7 +155,7 @@
   
 }
 
-- (void)logScore:(CGFloat)score order:(OMNOrder *)order {
+- (void)logScore:(NSInteger)score order:(OMNOrder *)order {
 
   NSMutableDictionary *properties = [NSMutableDictionary dictionary];
   properties[@"timestamp"] = [self dateString];
@@ -187,6 +189,12 @@
 - (void)logLogin {
   
   [_mixpanel track:@"user_login" properties:nil];
+
+  [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
+    
+    [_user logCoordinates:coordinate];
+    
+  }];
   
 }
 

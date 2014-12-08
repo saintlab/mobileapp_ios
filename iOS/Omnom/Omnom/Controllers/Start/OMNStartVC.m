@@ -66,11 +66,15 @@ OMNSearchRestaurantVCDelegate>
   [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
     
     if (tokenIsValid) {
+      
       [[OMNAnalitics analitics] logLogin];
       [weakSelf startSearchingRestaurant];
+      
     }
     else {
+      
       [weakSelf requestAuthorization];
+      
     }
     
   }];

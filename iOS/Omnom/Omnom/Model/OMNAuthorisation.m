@@ -15,7 +15,6 @@
 #import "OMNUser+network.h"
 #import <Crashlytics/Crashlytics.h>
 #import <SSKeychain.h>
-#import "OMNLocationManager.h"
 
 static NSString * const kAuthorisationAccountName = @"test_account6";
 static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";

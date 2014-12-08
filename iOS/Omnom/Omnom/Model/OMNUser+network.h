@@ -27,7 +27,7 @@
 
 - (void)registerWithCompletion:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock;
 
-- (void)updateCoordinates:(CLLocationCoordinate2D)coordinates;
+- (void)logCoordinates:(CLLocationCoordinate2D)coordinates;
 
 - (void)updateUserInfoWithUserAndImage:(OMNUser *)user withCompletion:(dispatch_block_t)completion failure:(void(^)(NSError *))failureBlock;
 

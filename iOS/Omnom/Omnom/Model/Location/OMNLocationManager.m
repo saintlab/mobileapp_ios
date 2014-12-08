@@ -18,6 +18,7 @@
   CLLocationManager *_locationManager;
   CLGeocoder *_geocoder;
   OMNLocationBlock _locationBlock;
+  
 }
 
 + (instancetype)sharedManager {
@@ -33,50 +34,51 @@
   self = [super init];
   if (self) {
     
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.delegate = self;
+    _locationManager.activityType = CLActivityTypeOtherNavigation;
+    _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    _locationManager.pausesLocationUpdatesAutomatically = NO;
+    
   }
   return self;
 }
 
 - (void)getLocation:(OMNLocationBlock)block {
+
+  _locationBlock = [block copy];
+  [self startUpdatingLocationIfNeeded];
+  
+}
+
+- (void)startUpdatingLocationIfNeeded {
   
   CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
-  if (kCLAuthorizationStatusAuthorizedAlways == authorizationStatus ||
-      kCLAuthorizationStatusAuthorizedWhenInUse == authorizationStatus) {
+  BOOL permissionGranted = (kCLAuthorizationStatusAuthorizedAlways == authorizationStatus || kCLAuthorizationStatusAuthorizedWhenInUse == authorizationStatus);
+  
+  if (_locationBlock &&
+      permissionGranted) {
     
-    _locationBlock = [block copy];
-    [self startUpdatingLocation];
+    [_locationManager startUpdatingLocation];
     
   }
-  
-}
-
-- (void)startUpdatingLocation {
-  
-  if (nil == _locationManager) {
-    _locationManager = [[CLLocationManager alloc] init];
-    _locationManager.delegate = self;
+  else {
+    
+    [_locationManager stopUpdatingLocation];
+    
   }
-  
-  _locationManager.activityType = CLActivityTypeOtherNavigation;
-  _locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
-  _locationManager.pausesLocationUpdatesAutomatically = NO;
-  [_locationManager startUpdatingLocation];
-  
-}
-
-- (void)stopUpdatingLocation {
-
-  _locationManager.delegate = nil;
-  [_locationManager stopUpdatingLocation];
-  _locationManager = nil;
   
 }
 
 - (void)didFindLocation:(CLLocation *)location {
   
-  [self stopUpdatingLocation];
-  _locationBlock(location.coordinate);
-  _locationBlock = nil;
+  [_locationManager stopUpdatingLocation];
+  if (_locationBlock) {
+    
+    _locationBlock(location.coordinate);
+    _locationBlock = nil;
+
+  }
   
 }
 
@@ -85,6 +87,18 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
   
   [self didFindLocation:[locations lastObject]];
+  
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+  
+  [self startUpdatingLocationIfNeeded];
+  
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+  
+  NSLog(@"didFailWithError>%@", error);
   
 }
 
