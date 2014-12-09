@@ -21,6 +21,7 @@
 #import <OMNStyler.h>
 #import "OMNCardEnterErrorLabel.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "NSError+omn_mailRu.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate,
@@ -289,7 +290,7 @@ TTTAttributedLabelDelegate>
   } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_REGISTER" error:error request:request response:response];
-    [weakSelf procsessCardRegisterError:error];
+    [weakSelf procsessCardRegisterError:[error omn_mailRuToOmnomError]];
     
   }];
   
@@ -298,8 +299,8 @@ TTTAttributedLabelDelegate>
 - (void)procsessCardRegisterError:(NSError *)error {
   
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"repeat_icon_small"] color:[UIColor blackColor] target:self action:@selector(registerCard)];
-  [_errorLabel setErrorText:[error omn_internetError].localizedDescription];
-  
+  [_errorLabel setErrorText:error.localizedDescription];
+
 }
 
 - (NSString *)currentAmountString {

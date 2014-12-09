@@ -49,9 +49,12 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 
 
 @implementation OMNOrder {
+  
   id _data;
   NSString *_callBillOrderId;
   BOOL _enteredAmountChanged;
+  NSArray *_tipsThresholds;
+  
 }
 
 - (instancetype)initWithJsonData:(id)jsonData {
@@ -103,21 +106,23 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     
     NSDictionary *tipsData = jsonData[@"tips"];
 
-    _tipsThreshold = [tipsData[@"threshold"] longLongValue];
+    _tipsThresholds = tipsData[@"thresholds"];
+    _percentTipsThreshold = [[_tipsThresholds lastObject] longLongValue];
     NSMutableArray *tips = [NSMutableArray arrayWithCapacity:4];
 
     for (id tipData in tipsData[@"values"]) {
-      long long amount = [tipData[@"amount"] longLongValue];
-      double percent = [tipData[@"percent"] omn_doubleValue];
-      OMNTip *tip = [[OMNTip alloc] initWithAmount:amount percent:percent];
+
+      OMNTip *tip = [[OMNTip alloc] initWithJsonData:tipData thresholds:_tipsThresholds];
       [tips addObject:tip];
+      
     }
     
     if (4 == tips.count) {
-      OMNTip *customTip = tips[3];
-      customTip.amount = 0;
-      customTip.percent = 0.0;
-      customTip.custom = YES;
+      
+      _customTip = tips[3];
+      _customTip.percent = 10.0;
+      _customTip.custom = YES;
+      
     }
     _tips = tips;
     
@@ -212,33 +217,9 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 }
 
 - (long long)expectedValue {
+  
   long long expectedValue = MAX(0ll, self.totalAmount - self.paid.net_amount);
   return expectedValue;
-}
-
-- (void)setSelectedTipIndex:(NSInteger)selectedTipIndex {
-  
-  [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
-    
-    tip.selected = (idx == selectedTipIndex);
-    
-  }];
-  
-}
-
-- (NSInteger)selectedTipIndex {
-  
-  __block NSInteger selectedTipIndex = -1;
-  [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
-    
-    if (tip.selected) {
-      selectedTipIndex = idx;
-      *stop = YES;
-    }
-    
-  }];
-  
-  return selectedTipIndex;
   
 }
 
@@ -250,56 +231,33 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 
 - (long long)tipAmount {
   
-  long long tipAmount = 0ll;
   OMNTip *selectedTip = self.selectedTip;
   
-  if (selectedTip.amount &&
-      (selectedTip.custom || self.enteredAmount < self.tipsThreshold)) {
-    
-    tipAmount = selectedTip.amount;
-    
-  }
-  else {
-    tipAmount = self.enteredAmount * selectedTip.percent * 0.01l;
-  }
+  long long selectedTipAmount = [selectedTip amountForValue:self.enteredAmount];
+  long long roundedTipAmount = 100ll*round(selectedTipAmount*0.01l);
   
-  tipAmount = 100ll*round(tipAmount*0.01l);
-  
-  return tipAmount;
+  return roundedTipAmount;
   
 }
 
 - (OMNTip *)selectedTip {
   
-  __block OMNTip *selectedTip = nil;
-  [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
+  if (3 == self.selectedTipIndex) {
     
-    if (tip.selected) {
-      selectedTip = tip;
-      *stop = YES;
-    }
+    return _customTip;
     
-  }];
-  
-  return selectedTip;
-  
-}
-
-- (OMNTip *)customTip {
-  
-  return _tips[3];
-  
-}
-
-- (void)setCustomTip:(OMNTip *)customTip {
-  
-  if (customTip.amount) {
-    self.tipType = kTipTypeCustomAmount;
+  }
+  if (self.selectedTipIndex < 3 &&
+      self.selectedTipIndex >= 0) {
+    
+    return self.tips[self.selectedTipIndex];
+    
   }
   else {
-    self.tipType = kTipTypeCustomPercent;
+    
+    return nil;
+    
   }
-  _tips[3] = customTip;
   
 }
 

@@ -146,7 +146,6 @@
   else {
     
     OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
-    amountPercentValue.amount = _order.customTip.amount;
     amountPercentValue.percent = _order.customTip.percent;
     _amountPercentControl.amountPercentValue = amountPercentValue;
     
@@ -282,10 +281,8 @@
   if (self.tipsMode) {
     
     _tipAmountPercentValue = _amountPercentControl.amountPercentValue;
-    OMNTip *customTip = _order.customTip;
-    customTip.amount = 0;
-    customTip.percent = _tipAmountPercentValue.percent;
-    _order.customTip = customTip;
+    _order.customTip.percent = _tipAmountPercentValue.percent;
+    _order.tipType = kTipTypeCustomPercent;
     
   }
   else {

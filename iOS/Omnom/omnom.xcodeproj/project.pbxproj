@@ -120,6 +120,8 @@
 		933D48F219E7BFD4004E591C /* OMNGuestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D48F019E7BFD4004E591C /* OMNGuestView.m */; };
 		933D48F519E7DFA7004E591C /* OMNOrderActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D48F419E7DFA7004E591C /* OMNOrderActionView.m */; };
 		933D48F619E7DFA7004E591C /* OMNOrderActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D48F419E7DFA7004E591C /* OMNOrderActionView.m */; };
+		933D73611A370358003266DB /* NSError+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D73601A370358003266DB /* NSError+omn_mailRu.m */; };
+		933D73621A370358003266DB /* NSError+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D73601A370358003266DB /* NSError+omn_mailRu.m */; };
 		9345AFAB199A0A1400328F73 /* restaurantInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 9345AFAA199A0A1400328F73 /* restaurantInfo.json */; };
 		9345AFAC199A0A1400328F73 /* restaurantInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 9345AFAA199A0A1400328F73 /* restaurantInfo.json */; };
 		9345AFAF199A253F00328F73 /* OMNBankCardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFAE199A253F00328F73 /* OMNBankCardInfo.m */; };
@@ -597,6 +599,8 @@
 		933D48F019E7BFD4004E591C /* OMNGuestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNGuestView.m; sourceTree = "<group>"; };
 		933D48F319E7DFA7004E591C /* OMNOrderActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderActionView.h; sourceTree = "<group>"; };
 		933D48F419E7DFA7004E591C /* OMNOrderActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderActionView.m; sourceTree = "<group>"; };
+		933D735F1A370358003266DB /* NSError+omn_mailRu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+omn_mailRu.h"; sourceTree = "<group>"; };
+		933D73601A370358003266DB /* NSError+omn_mailRu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+omn_mailRu.m"; sourceTree = "<group>"; };
 		9345AFAA199A0A1400328F73 /* restaurantInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = restaurantInfo.json; sourceTree = "<group>"; };
 		9345AFAD199A253F00328F73 /* OMNBankCardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCardInfo.h; sourceTree = "<group>"; };
 		9345AFAE199A253F00328F73 /* OMNBankCardInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBankCardInfo.m; sourceTree = "<group>"; };
@@ -1204,6 +1208,8 @@
 				9325BA501A1E1FAB003557BD /* NSString+omn_json.m */,
 				931232761A230A8300C27110 /* OMNBeacon+omn_debug.h */,
 				931232771A230A8300C27110 /* OMNBeacon+omn_debug.m */,
+				933D735F1A370358003266DB /* NSError+omn_mailRu.h */,
+				933D73601A370358003266DB /* NSError+omn_mailRu.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2473,6 +2479,7 @@
 				937E0B5F18F04EC20058A249 /* OMNConstants.m in Sources */,
 				939689BE195C010900AAAF9C /* OMNWizardPageVC.m in Sources */,
 				93EE3084198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
+				933D73611A370358003266DB /* NSError+omn_mailRu.m in Sources */,
 				938EE0DE1A31A75100508039 /* OMNUserIconView.m in Sources */,
 				930C481419CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				934CDF5419D4196D00D73FC4 /* OMNBottomLabelView.m in Sources */,
@@ -2587,6 +2594,7 @@
 				930D8BAC1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
 				9345AFCE199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
 				93B3689D19A4CD2D00B6E6CB /* OMNSlideUpTransition.m in Sources */,
+				933D73621A370358003266DB /* NSError+omn_mailRu.m in Sources */,
 				93E58CAD1A245604008064F9 /* OMNCameraPermission.m in Sources */,
 				93E58CBA1A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */,
 				937EF7F019DFB47300BD9090 /* OMNCardEnterErrorLabel.m in Sources */,

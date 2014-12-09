@@ -10,14 +10,16 @@
 
 @interface OMNTip : NSObject
 
-@property (nonatomic, assign) long long amount;
 @property (nonatomic, assign) double percent;
-
 @property (nonatomic, assign) BOOL custom;
 @property (nonatomic, assign) BOOL selected;
 
-+ (instancetype)tipWithPercent:(double)percent;
+@property (nonatomic, strong, readonly) NSArray *amounts;
+@property (nonatomic, strong, readonly) NSArray *thresholds;
 
-- (instancetype)initWithAmount:(long long)amount percent:(double)percent;
++ (instancetype)tipWithPercent:(double)percent;
+- (instancetype)initWithJsonData:(id)jsonData thresholds:(NSArray *)thresholds;
+
+- (long long)amountForValue:(long long)value;
 
 @end

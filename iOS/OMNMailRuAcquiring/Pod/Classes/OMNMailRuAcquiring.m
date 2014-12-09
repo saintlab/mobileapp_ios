@@ -184,7 +184,7 @@ static NSDictionary *_config = nil;
 
 NSError *errorWithCode(OMNMailRuErrorCode code) {
   
-  return [NSError errorWithDomain:@"OMNMailRuError" code:code userInfo:nil];
+  return [NSError errorWithDomain:OMNMailRuErrorDomain code:code userInfo:nil];
   
 }
 
@@ -234,18 +234,16 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
   
 }
 
-- (void)pollUrl:(NSString *)url withCompletion:(void(^)(id response))completionBlock {
+- (void)pollUrl:(NSString *)url withCompletion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error))failureBlock {
   
   __weak typeof(self)weakSelf = self;
   [self GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    NSLog(@"\npollUrl:>\n%@", responseObject);
     
     NSString *status = responseObject[@"status"];
     if ([status isEqualToString:@"OK_CONTINUE"]) {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [weakSelf pollUrl:url withCompletion:completionBlock];
+        [weakSelf pollUrl:url withCompletion:completionBlock failure:failureBlock];
         
       });
     }
@@ -257,7 +255,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    completionBlock([operation omn_errorResponse]);
+    failureBlock(error);
     
   }];
   
@@ -316,8 +314,12 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
           
         }
         
+      } failure:^(NSError *error) {
+        
+        failureBlock(error, responseObject, nil);
+        
       }];
-      
+
     }
     else {
 
@@ -427,7 +429,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
 
 @end
 
-@implementation NSError (omn_mailRu)
+@implementation NSError (mailRuError)
 
 + (NSError *)omn_errorFromResponse:(id)response {
   

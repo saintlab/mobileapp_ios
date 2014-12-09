@@ -9,6 +9,8 @@
 #import <AFNetworking.h>
 #import "OMNMailRuPaymentInfo.h"
 
+extern NSString *const OMNMailRuErrorDomain;
+
 typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
   
   kOMNMailRuErrorCodeUnknown = NSURLErrorUnknown,
@@ -16,8 +18,6 @@ typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
   kOMNMailRuErrorCodeCardAmount,
   
 };
-
-extern NSString *const OMNMailRuErrorDomain;
 
 @interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
 
@@ -37,7 +37,7 @@ extern NSString *const OMNMailRuErrorDomain;
 
 @end
 
-@interface NSError (omn_mailRu)
+@interface NSError (mailRuError)
 
 + (NSError *)omn_errorFromResponse:(id)response;
 

@@ -117,9 +117,6 @@ NSString *omnCommaString() {
     case OMNErrorOrderClosed: {
       description = NSLocalizedString(@"ERROR_MESSAGE_ORDER_CLOSED", @"Оплата по счёту невозможна - стол уже закрыт. Попробуйте запросить счёт заново или позовите официанта.");
     } break;
-    case OMNErrorPaymentError: {
-      description = NSLocalizedString(@"ERROR_MESSAGE_PAYMENT_ERROR", @"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.");
-    } break;
     case OMNErrorQrDecode: {
       description = NSLocalizedString(@"ERROR_MESSAGE_QR_DECODE", @"Неверный QR-код,\nнайдите Omnom");
     } break;

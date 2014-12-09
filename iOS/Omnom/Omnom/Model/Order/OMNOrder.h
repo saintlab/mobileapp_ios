@@ -53,12 +53,12 @@ extern NSString *stringFromSplitType(SplitType splitType);
 @property (nonatomic, strong, readonly) NSArray *guests;
 
 @property (nonatomic, strong, readonly) NSMutableArray *tips;
-@property (nonatomic, assign, readonly) long long tipsThreshold;
+@property (nonatomic, assign, readonly) long long percentTipsThreshold;
 
 @property (nonatomic, strong) OMNOrderPaid *paid;
 @property (nonatomic, strong) OMNBill *bill;
 
-@property (nonatomic, strong) OMNTip *customTip;
+@property (nonatomic, strong, readonly) OMNTip *customTip;
 @property (nonatomic, assign, readonly) long long expectedValue;
 @property (nonatomic, assign, readonly) long long enteredAmountWithTips;
 @property (nonatomic, assign, readonly) long long tipAmount;

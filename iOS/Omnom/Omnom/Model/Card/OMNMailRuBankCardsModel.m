@@ -19,16 +19,11 @@
 #import "OMNOrderTansactionInfo.h"
 #import "OMNAnalitics.h"
 #import "OMNUtils.h"
+#import "NSError+omn_mailRu.h"
 
 @interface OMNBankCardInfo (omn_mailRuBankCardInfo)
 
 - (OMNMailRuCardInfo *)omn_mailRuCardInfo;
-
-@end
-
-@interface NSError (omn_mailru)
-
-- (NSError *)omn_omnomError;
 
 @end
 
@@ -92,8 +87,7 @@
       } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
         
         [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" error:mailError request:request response:response];
-        NSError *omnomError = [mailError omn_omnomError];
-        
+        NSError *omnomError = [mailError omn_mailRuToOmnomError];
         paymentFinishBlock(omnomError, ^{
           
           failureBlock(omnomError, nil);
@@ -144,21 +138,3 @@
 
 @end
 
-@implementation NSError (omn_mailru)
-
-- (NSError *)omn_omnomError {
-  
-  if (kOMNMailRuErrorCodeUnknown == self.code) {
-    
-    return [OMNUtils errorFromCode:OMNErrorPaymentError];
-    
-  }
-  else {
-    
-    return [self omn_internetError];
-    
-  }
-  
-}
-
-@end

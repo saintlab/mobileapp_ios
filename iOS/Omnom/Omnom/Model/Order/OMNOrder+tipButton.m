@@ -40,10 +40,10 @@
   if (tip.custom) {
     
     normalTitle = NSLocalizedString(@"Другой", nil);
-    selectedTitle = (tip.amount) ? ([self titleForAmount:tip.amount]) : ([self titleForPercent:tip.percent]);
+    selectedTitle = [self titleForPercent:tip.percent];
     
   }
-  else if (self.enteredAmount > self.tipsThreshold) {
+  else if (self.enteredAmount > self.percentTipsThreshold) {
 
     normalTitle = [NSString stringWithFormat:@"%.0f%%", tip.percent];
     selectedTitle = [self titleForPercent:tip.percent];
@@ -51,7 +51,7 @@
   }
   else {
     
-    normalTitle = [OMNUtils evenCommaStringFromKop:tip.amount];
+    normalTitle = [OMNUtils evenCommaStringFromKop:[tip amountForValue:self.enteredAmount]];
     selectedTitle = normalTitle;
     
   }

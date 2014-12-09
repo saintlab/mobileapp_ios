@@ -25,7 +25,6 @@ enum {
   OMNErrorNotConnectedToInternet = NSURLErrorNotConnectedToInternet,
   
   OMNErrorOrderClosed = 300,
-  OMNErrorPaymentError,
   OMNErrorQrDecode,
   
 };
