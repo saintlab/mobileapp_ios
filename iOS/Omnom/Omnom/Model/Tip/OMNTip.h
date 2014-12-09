@@ -20,6 +20,13 @@
 + (instancetype)tipWithPercent:(double)percent;
 - (instancetype)initWithJsonData:(id)jsonData thresholds:(NSArray *)thresholds;
 
+/**
+ *  Calculate tip amount for given value
+ *
+ *  @param value total entered amount
+ *
+ *  @return amount of tip
+ */
 - (long long)amountForValue:(long long)value;
 
 @end

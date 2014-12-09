@@ -34,15 +34,6 @@
   return self;
 }
 
-- (instancetype)initWithAmount:(long long)amount percent:(double)percent {
-  self = [super init];
-  if (self) {
-    
-    _percent = percent;
-  }
-  return self;
-}
-
 - (long long)amountForValue:(long long)value {
   
   __block long long tipAmount = 0ll;
