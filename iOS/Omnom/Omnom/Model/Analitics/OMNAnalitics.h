@@ -12,8 +12,6 @@
 @class OMNUser;
 @class OMNVisitor;
 
-#import <CoreLocation/CoreLocation.h>
-
 //https://docs.google.com/document/d/1qCgjmjynrECxBm5tY934WzkvPo_3AoRpC0bpz-nfVc8/edit
 @interface OMNAnalitics : NSObject
 
@@ -22,8 +20,7 @@
 @property (nonatomic, strong) NSData *deviceToken;
 
 - (void)setUser:(OMNUser *)user;
-
-- (void)logUserLocation:(CLLocationCoordinate2D)coordinate;
+- (void)setup;
 - (void)logRegister;
 - (void)logLogin;
 - (void)logEnterRestaurant:(OMNVisitor *)visitor foreground:(BOOL)foreground;
@@ -33,6 +30,7 @@
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
 
+- (void)logMailEvent:(NSString *)eventName error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response;
 - (void)logDebugEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse;
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation;

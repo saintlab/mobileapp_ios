@@ -18,6 +18,7 @@ extern NSString * const kPushSoundName;
 enum {
   
   OMNErrorUnknoun = -1,
+  OMNErrorDefault = 0,
   OMNErrorNoSuchUser = 101,
 
   OMNErrorTimedOut = NSURLErrorTimedOut,
@@ -33,8 +34,7 @@ extern const CGFloat kOrderTableFooterHeight;
 
 @interface OMNConstants : NSObject
 
-+ (void)setCustomConfigName:(NSString *)name;
-+ (void)loadConfigWithCompletion:(dispatch_block_t)completionBlock;
++ (void)setupWithLaunchOptions:(NSDictionary *)launchOptions completion:(dispatch_block_t)completionBlock;
 + (NSString *)stringForKey:(NSString *)key;
 + (BOOL)boolForKey:(NSString *)key;
 
@@ -51,6 +51,5 @@ extern const CGFloat kOrderTableFooterHeight;
 + (BOOL)useStubBeacon;
 + (BOOL)useStubBeaconDecodeData;
 + (BOOL)useStubOrdersData;
-+ (BOOL)useBackgroundNotifications;
 
 @end

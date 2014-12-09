@@ -26,7 +26,7 @@ OMNSearchRestaurantVCDelegate>
 
 @implementation OMNStartVC {
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
-  BOOL _tokenIsChecked;
+  BOOL _initialCheckPerformed;
 }
 
 - (void)viewDidLoad {
@@ -54,14 +54,17 @@ OMNSearchRestaurantVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  if (NO == _tokenIsChecked) {
+  if (!_initialCheckPerformed) {
+    
     [self checkToken];
+    
   }
   
 }
 
 - (void)checkToken {
-  _tokenIsChecked = YES;
+  
+  _initialCheckPerformed = YES;
   __weak typeof(self)weakSelf = self;
   [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
     
@@ -139,10 +142,6 @@ OMNSearchRestaurantVCDelegate>
 
   }];
   
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
 }
 
 @end

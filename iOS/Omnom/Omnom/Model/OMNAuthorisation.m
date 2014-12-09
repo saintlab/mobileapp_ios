@@ -157,6 +157,16 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
 }
 
+- (void)registerForRemoteNotificationsIfPossible {
+  
+  if (self.pushNotificationsRequested) {
+    
+    [self registerForRemoteNotifications];
+    
+  }
+  
+}
+
 - (void)registerForRemoteNotifications {
   
   if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)]) {

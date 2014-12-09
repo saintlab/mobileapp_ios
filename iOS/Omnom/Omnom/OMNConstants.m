@@ -11,6 +11,7 @@
 #import <OMNMailRuAcquiring.h>
 #import "OMNAnalitics.h"
 #import <OMNBeacon.h>
+#import "OMNLaunchOptions.h"
 
 NSString * const kPushSoundName = @"new_guest.caf";
 
@@ -28,15 +29,30 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 
 @implementation OMNConstants
 
-+ (void)loadConfigWithCompletion:(dispatch_block_t)completionBlock {
++ (void)setupWithLaunchOptions:(NSDictionary *)launchOptions completion:(dispatch_block_t)completionBlock {
+  
+  OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
+  _customConfig = [self configWithName:lo.customConfigName];
+  
+  [self loadRemoteConfigWithCompletion:^{
+    
+    if (completionBlock) {
+      completionBlock();
+    }
+    
+  }];
+  
+}
+
++ (void)loadRemoteConfigWithCompletion:(dispatch_block_t)completionBlock {
   
   NSString *path = @"/mobile/config";
   AFHTTPRequestOperation *operation = [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if (responseObject[@"tokens"]) {
 
-      [self cacheConfig:responseObject];
-      [self updateConfig:responseObject];
+      [self cacheAndUpdateConfig:responseObject];
+      
       if (completionBlock) {
         completionBlock();
       }
@@ -44,7 +60,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
     }
     else {
     
-      [self loadCachedConfig];
+      [self loadCachedConfigWithCompletion:completionBlock];
       NSDictionary *parametrs = nil;
       if (responseObject) {
         parametrs = @{@"responseObject" : responseObject};
@@ -56,7 +72,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-    [self loadCachedConfig];
+    [self loadCachedConfigWithCompletion:completionBlock];
     [[OMNAnalitics analitics] logTargetEvent:@"ERROR_CONFIG" parametrs:nil];
     
   }];
@@ -68,20 +84,29 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
 }
 
-+ (void)loadCachedConfig {
++ (void)loadCachedConfigWithCompletion:(dispatch_block_t)completionBlock {
   
   NSDictionary *cachedConfig = [NSDictionary dictionaryWithContentsOfFile:[self configPath]];
   [self updateConfig:cachedConfig];
   
+  if (completionBlock) {
+    completionBlock();
+  }
+  
 }
 
 + (NSString *)configPath {
+#if OMN_TEST
+  return [@"~/Documents/config-test.dat" stringByExpandingTildeInPath];
+#else
   return [@"~/Documents/config.dat" stringByExpandingTildeInPath];
+#endif
 }
 
-+ (void)cacheConfig:(NSDictionary *)config {
++ (void)cacheAndUpdateConfig:(NSDictionary *)config {
   
   [config writeToFile:[self configPath] atomically:YES];
+  [self updateConfig:config];
   
 }
 
@@ -103,12 +128,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
   _tokens = config[@"tokens"];
   [OMNAnalitics analitics];
-  
-}
-
-+ (void)setCustomConfigName:(NSString *)name {
-  
-  _customConfig = [self configWithName:name];
   
 }
 
@@ -184,9 +203,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 }
 + (BOOL)useStubOrdersData {
   return [self boolForKey:@"UseStubOrdersData"];
-}
-+ (BOOL)useBackgroundNotifications {
-  return [self boolForKey:@"UseBackgroundNotifications"];
 }
 
 @end

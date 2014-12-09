@@ -41,3 +41,10 @@ extern NSString *omnCommaString();
 - (NSString *)omn_moneyFormattedStringWithMaxValue:(long long)maxValue;
 
 @end
+
+@interface NSObject (omn_userError)
+
+- (NSError *)omn_userError;
+- (BOOL)omn_isSuccessResponse;
+
+@end

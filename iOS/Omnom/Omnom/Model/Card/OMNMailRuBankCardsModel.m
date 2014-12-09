@@ -89,13 +89,14 @@
         [[OMNAnalitics analitics] logPayment:orderTansactionInfo bill_id:order.bill.id];
         paymentFinishBlock(nil, completionBlock);
         
-      } failure:^(NSError *mailError, NSDictionary *debugInfo) {
-
+      } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
+        
+        [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" error:mailError request:request response:response];
         NSError *omnomError = [mailError omn_omnomError];
-
+        
         paymentFinishBlock(omnomError, ^{
           
-          failureBlock(omnomError, debugInfo);
+          failureBlock(omnomError, nil);
           
         });
         

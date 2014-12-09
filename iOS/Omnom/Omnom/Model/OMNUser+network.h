@@ -40,10 +40,3 @@
 - (void)recoverWithCompletion:(void (^)(NSURL *url))completion failure:(void (^)(NSError *error))failureBlock;
 
 @end
-
-@interface NSObject (omn_userError)
-
-- (NSError *)omn_userError;
-- (BOOL)omn_isSuccessResponse;
-
-@end

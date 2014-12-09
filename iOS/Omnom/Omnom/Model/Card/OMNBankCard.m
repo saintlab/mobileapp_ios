@@ -61,12 +61,10 @@
   NSString *path = [NSString stringWithFormat:@"/cards"];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
-    NSLog(@"/cards>%@", response);
     [response decodeCardData:completionBlock failure:failureBlock];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"/cards>%@", error);
     failureBlock(error);
     
   }];
@@ -79,35 +77,37 @@
 
   self.deleting = YES;
   __weak typeof(self)weakSelf = self;
-  [[OMNMailRuAcquiring acquiring] cardDelete:self.external_card_id user_login:self.user_id completion:^(id response) {
+  [[OMNMailRuAcquiring acquiring] deleteCard:self.external_card_id user_login:self.user_id сompletion:^{
     
-    if ([response[@"status"] isEqualToString:@"OK"]) {
+    NSString *path = [NSString stringWithFormat:@"/cards/%@", weakSelf.id];
+    [[OMNOperationManager sharedManager] DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
-      NSString *path = [NSString stringWithFormat:@"/cards/%@", self.id];
-      [[OMNOperationManager sharedManager] DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      if ([responseObject omn_isSuccessResponse]) {
         
-        if ([responseObject[@"status"] isEqualToString:@"success"]) {
-          [[OMNAnalitics analitics] logTargetEvent:@"card_deleted" parametrs:@{@"card_id" : self.external_card_id}];
-          completionBlock();
-        }
-        else {
-          [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path jsonResponse:responseObject];
-          failureBlock(nil);
-        }
+        [[OMNAnalitics analitics] logTargetEvent:@"card_deleted" parametrs:@{@"card_id" : self.external_card_id}];
+        completionBlock();
         
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      }
+      else {
         
-        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path responseOperation:operation];
-        weakSelf.deleting = NO;
-        failureBlock(error);
-      }];
+        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path jsonResponse:responseObject];
+        failureBlock(nil);
+        
+      }
       
-    }
-    else {
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" parametrs:response];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path responseOperation:operation];
       weakSelf.deleting = NO;
-      failureBlock(nil);
-    }
+      failureBlock(error);
+      
+    }];
+    
+  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+    
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_DELETE" error:error request:request response:response];
+    weakSelf.deleting = NO;
+    failureBlock(nil);
     
   }];
   

@@ -8,6 +8,8 @@
 
 #import "OMNNotifierManager.h"
 #import "OMNConstants.h"
+#import "OMNAnalitics.h"
+#import "OMNUtils.h"
 
 @interface NSData (omn_deviceToken)
 
@@ -68,13 +70,17 @@
     @"device_type" : @(1),
     };
   
-  NSLog(@"parameters>%@", parameters);
-  
   [self POST:@"/push/register_device" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"registerUserDeviceIfPossible>>%@", responseObject);
+    if (![responseObject omn_isSuccessResponse]) {
+    
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_DEVICE" jsonRequest:parameters jsonResponse:responseObject];
+      
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_DEVICE" jsonRequest:parameters responseOperation:operation];
     
   }];
   

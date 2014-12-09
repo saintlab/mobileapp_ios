@@ -200,10 +200,6 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
     return NO;
   }
   
-  if (NO == [OMNConstants useBackgroundNotifications]) {
-    return NO;
-  }
-  
   BOOL readyForPush = ([[NSDate date] timeIntervalSinceDate:self.foundDate] > 4*60*60);
   return readyForPush;
   

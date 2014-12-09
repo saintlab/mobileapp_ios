@@ -139,7 +139,8 @@ OMNEditUserVCDelegate>
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"USER_INFO_CHANGE_BUTTON_TITLE", @"Изменить") style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
+#warning USER_INFO_CHANGE_BUTTON_TITLE
+//  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"USER_INFO_CHANGE_BUTTON_TITLE", @"Изменить") style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
   [self updateUserInfo];
   
 }

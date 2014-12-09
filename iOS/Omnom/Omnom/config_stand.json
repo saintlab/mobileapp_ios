@@ -6,7 +6,5 @@
   
   "UseStubBeacon" : "false",
   "UseStubBeaconDecodeData" : "false",
-  "UseStubOrdersData" : "false",
-  
-  "UseBackgroundNotifications" : "true"
+  "UseStubOrdersData" : "false"
 }

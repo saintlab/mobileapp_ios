@@ -197,21 +197,22 @@ TTTAttributedLabelDelegate>
   
   _bankCardInfo.numberOfRegisterAttempts++;
 
-  double value = [self.currentAmountString omn_doubleValue];
+  double amount = [self.currentAmountString omn_doubleValue];
   [self startLoader];
   OMNUser *user = [OMNAuthorisation authorisation].user;
   __weak typeof(self)weakSelf = self;
-  [[OMNMailRuAcquiring acquiring] cardVerify:value user_login:user.id card_id:_bankCardInfo.card_id completion:^{
+
+  [[OMNMailRuAcquiring acquiring] verifyCard:_bankCardInfo.card_id user_login:user.id amount:amount completion:^{
     
     [weakSelf cardDidVerify];
     
-  } failure:^(NSError *error, NSDictionary *debugInfo) {
+  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
     
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_VERIFY" parametrs:debugInfo];
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_VERIFY" error:error request:request response:response];
     [weakSelf processError:error];
     
   }];
-
+  
 }
 
 - (void)cardDidVerify {
@@ -232,14 +233,24 @@ TTTAttributedLabelDelegate>
   
   [UIView transitionWithView:_errorLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
-    if (kOMNMailRuErrorCodeUnknown == error.code) {
+    if ([error.domain isEqualToString:OMNMailRuErrorDomain]) {
       
-      [_errorLabel setUnknownError];
-      
-    }
-    else if (kOMNMailRuErrorCodeCardAmount == error.code) {
-      
-      [_errorLabel setWrongAmountError];
+      if (kOMNMailRuErrorCodeCardAmount == error.code) {
+        
+        [_errorLabel setWrongAmountError];
+        
+      }
+      else if (kOMNMailRuErrorCodeDefault == error.code) {
+        
+        NSError *internetError = [error omn_internetError];
+        [_errorLabel setErrorText:internetError.localizedDescription];
+        
+      }
+      else {
+        
+        [_errorLabel setUnknownError];
+        
+      }
       
     }
     else {
@@ -264,52 +275,37 @@ TTTAttributedLabelDelegate>
     @"cvv" : _bankCardInfo.cvv,
     };
   
-  __weak typeof(self)weakSelf = self;
   OMNUser *user = [OMNAuthorisation authorisation].user;
   [self startLoader];
-  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(id response, NSString *cardId) {
+  
+  __weak typeof(self)weakSelf = self;
+  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(NSString *cardId) {
+  
+    NSDictionary *parameters = @{@"card_id" : cardId};
+    [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:parameters];
+    [[OMNOperationManager sharedManager] POST:@"/report/mail/register" parameters:parameters success:nil failure:nil];
+    weakSelf.card_id = cardId;
     
-    [weakSelf didFinishPostWithResponse:response cardId:cardId];
+  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+    
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_REGISTER" error:error request:request response:response];
+    [weakSelf procsessCardRegisterError:error];
     
   }];
   
 }
 
-- (void)didFinishPostWithResponse:(id)response cardId:(NSString *)cardId {
-#warning 123
-  NSString *status = response[@"status"];
-  if ([status isEqualToString:@"OK_FINISH"] &&
-      cardId.length) {
-    
-    NSDictionary *parameters = @{@"card_id" : cardId};
-    [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:parameters];
-    [[OMNOperationManager sharedManager] POST:@"/report/mail/register" parameters:parameters success:nil failure:nil];
-    self.card_id = cardId;
-    
-  }
-  else {
-    
-    if (cardId) {
-      NSMutableDictionary *r = [NSMutableDictionary dictionaryWithDictionary:response];
-      r[@"card_id"] = cardId;
-      response = r;
-    }
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_REGISTER" parametrs:response];
-    
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"repeat_icon_small"] color:[UIColor blackColor] target:self action:@selector(registerCard)];
-    [_errorLabel setUnknownError];
-    
-  }
-
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
+- (void)procsessCardRegisterError:(NSError *)error {
+  
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"repeat_icon_small"] color:[UIColor blackColor] target:self action:@selector(registerCard)];
+  [_errorLabel setErrorText:[error omn_internetError].localizedDescription];
+  
 }
 
 - (NSString *)currentAmountString {
+  
   return [_cardHoldValueTF.textField.text stringByReplacingOccurrencesOfString:kRubleSign withString:@""];
+  
 }
 
 #pragma mark - UITextFieldDelegate

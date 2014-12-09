@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNAnalitics.h"
 #import "OMNAuthorisation.h"
 #import "OMNBankCardInfo.h"
 #import "OMNCardBrandView.h"
@@ -205,8 +204,6 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
     [weakSelf mailRuDidFinish];
     
   } failure:^(NSError *error, NSDictionary *debugInfo) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_PAY" parametrs:debugInfo];
     
     if (OMNErrorOrderClosed == error.code) {
       

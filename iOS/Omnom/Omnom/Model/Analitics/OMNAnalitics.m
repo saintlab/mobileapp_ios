@@ -7,7 +7,6 @@
 //
 
 #import "OMNAnalitics.h"
-#import "OMNConstants.h"
 #import "OMNOrder.h"
 #import "OMNOrderTansactionInfo.h"
 #import "OMNUser.h"
@@ -17,6 +16,8 @@
 #import <Mixpanel.h>
 #import "OMNAuthorisation.h"
 #import "OMNLocationManager.h"
+
+NSString * const OMNAnaliticsUserKey = @"omn_user";
 
 @interface OMNAnalitics ()
 
@@ -41,86 +42,84 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    
-    _mixpanel = [[Mixpanel alloc] initWithToken:[OMNConstants mixpanelToken] launchOptions:nil andFlushInterval:60.0];
-    _mixpanel.flushInterval = 60.0;
-    
-    NSString *mixpanelDebugToken = [OMNConstants mixpanelDebugToken];
-    if (mixpanelDebugToken.length) {
-      
-      _mixpanelDebug = [[Mixpanel alloc] initWithToken:mixpanelDebugToken andFlushInterval:60.0];
-      _mixpanelDebug.flushInterval = 60.0;
-      
-    }
-    
   }
   return self;
+}
+
+- (void)setup {
+  
+  [_mixpanel flush];
+  _mixpanel = [[Mixpanel alloc] initWithToken:[OMNConstants mixpanelToken] andFlushInterval:60.0];
+  _mixpanel.flushInterval = 60.0;
+
+  [_mixpanelDebug flush];
+  _mixpanelDebug = nil;
+  
+  NSString *mixpanelDebugToken = [OMNConstants mixpanelDebugToken];
+  if (mixpanelDebugToken.length) {
+    
+    _mixpanelDebug = [[Mixpanel alloc] initWithToken:mixpanelDebugToken andFlushInterval:60.0];
+    _mixpanelDebug.flushInterval = 60.0;
+    
+  }
+  [self updateUserInfo];
+  
+}
+
+- (void)updateUserInfo {
+  
+  if (nil == _user) {
+    [_mixpanel flush];
+    [_mixpanel.people deleteUser];
+    [_mixpanel unregisterSuperProperty:OMNAnaliticsUserKey];
+    
+    [_mixpanelDebug flush];
+    [_mixpanelDebug.people deleteUser];
+    [_mixpanelDebug unregisterSuperProperty:OMNAnaliticsUserKey];
+    return;
+  }
+  
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+  if (_user.id) {
+    // mixpanel identify: must be called before
+    // people properties can be set
+    [_mixpanel identify:_user.id];
+    [_mixpanelDebug identify:_user.id];
+    userInfo[@"ID"] = _user.id;
+  }
+  
+  userInfo[@"push_activated"] = @([OMNAuthorisation authorisation].pushNotificationsRequested);
+  
+  if (_user.name) {
+    userInfo[@"name"] = _user.name;
+  }
+  if (_user.email) {
+    userInfo[@"email"] = _user.email;
+  }
+  if (_user.phone) {
+    userInfo[@"phone"] = _user.phone;
+  }
+  if (_user.birthDateString.length) {
+    userInfo[@"birth_date"] = _user.birthDateString;
+  }
+  if (_user.created_at) {
+    userInfo[@"created"] = _user.created_at;
+  }
+  [_mixpanel.people set:userInfo];
+  [_mixpanel registerSuperProperties:@{OMNAnaliticsUserKey : userInfo}];
+  [self updateUserDeviceTokenIfNeeded];
+  [_mixpanel flush];
+  
+  [_mixpanelDebug.people set:userInfo];
+  [_mixpanelDebug registerSuperProperties:@{OMNAnaliticsUserKey : userInfo}];
+  [_mixpanelDebug flush];
+  
 }
 
 - (void)setUser:(OMNUser *)user {
   
   _user = user;
-  
-  if (nil == user) {
-    [_mixpanel flush];
-    [_mixpanel.people deleteUser];
-    [_mixpanel unregisterSuperProperty:@"omn_user"];
-    
-    [_mixpanelDebug flush];
-    [_mixpanelDebug.people deleteUser];
-    [_mixpanelDebug unregisterSuperProperty:@"omn_user"];
-    return;
-  }
-  
-  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-  if (user.id) {
-    // mixpanel identify: must be called before
-    // people properties can be set
-    [_mixpanel identify:user.id];
-    [_mixpanelDebug identify:user.id];
-    userInfo[@"ID"] = user.id;
-  }
-  
-  userInfo[@"push_activated"] = @([OMNAuthorisation authorisation].pushNotificationsRequested);
-  
-  if (user.name) {
-    userInfo[@"name"] = user.name;
-  }
-  if (user.email) {
-    userInfo[@"email"] = user.email;
-  }
-  if (user.phone) {
-    userInfo[@"phone"] = user.phone;
-  }
-  if (user.birthDateString.length) {
-    userInfo[@"birth_date"] = user.birthDateString;
-  }
-  if (user.created_at) {
-    userInfo[@"created"] = user.created_at;
-  }
-  [_mixpanel.people set:userInfo];
-  [_mixpanel registerSuperProperties:@{@"omn_user" : userInfo}];
-  [self updateUserDeviceTokenIfNeeded];
-  [_mixpanel flush];
-  
-  [_mixpanelDebug.people set:userInfo];
-  [_mixpanelDebug registerSuperProperties:@{@"omn_user" : userInfo}];
-  [_mixpanelDebug flush];
-  
-}
-
-- (void)logUserLocation:(CLLocationCoordinate2D)coordinate {
-  
-  NSString *coordinateString = [NSString stringWithFormat:@"{lat=%lf,lon=%lf}", coordinate.latitude, coordinate.longitude];
-  [_mixpanel.people set:@"last_coordinate" to:coordinateString];
-  
-  NSDictionary *coordinates =
-  @{
-    @"latitude" : @(coordinate.latitude),
-    @"longitude" : @(coordinate.longitude),
-    @"timestamp" : [self dateString],
-    };
-  [_mixpanel track:@"get_user_location" properties:coordinates];
+  [self updateUserInfo];
   
 }
 
@@ -233,6 +232,26 @@
   newParamentrs[@"timestamp"] = [self dateString];
   [_mixpanel track:eventName properties:newParamentrs];
   
+}
+
+- (void)logMailEvent:(NSString *)eventName error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response {
+  
+  NSMutableDictionary *debugInfo = [NSMutableDictionary dictionary];
+  if (error.localizedDescription) {
+    debugInfo[@"error"] = error.localizedDescription;
+  }
+  debugInfo[@"errorCode"] = @(error.code);
+  
+  if (request) {
+    debugInfo[@"request"] = request;
+  }
+  
+  if (response) {
+    debugInfo[@"response"] = response;
+  }
+  debugInfo[@"timestamp"] = [self dateString];
+  [_mixpanel track:eventName properties:debugInfo];
+
 }
 
 - (void)logDebugEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {

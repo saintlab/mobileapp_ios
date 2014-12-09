@@ -139,7 +139,27 @@ NSString *omnCommaString() {
 
 - (NSError *)omn_internetError {
   
-  return [OMNUtils errorFromCode:self.code];
+  NSError *error = nil;
+  
+  switch (self.code) {
+    case NSURLErrorNotConnectedToInternet: {
+      
+      error = [OMNUtils errorFromCode:self.code];
+      
+    } break;
+    case OMNErrorDefault: {
+      
+      error = self;
+      
+    } break;
+    default: {
+      
+      error = [OMNUtils errorFromCode:OMNErrorUnknoun];
+      
+    } break;
+  }
+  
+  return error;
   
 }
 
@@ -218,6 +238,43 @@ NSString *omnCommaString() {
   }
   
   return [priceString copy];
+  
+}
+
+@end
+
+@implementation NSObject (omn_userError)
+
+- (BOOL)omn_isSuccessResponse {
+  
+  if (NO == [self isKindOfClass:[NSDictionary class]]) {
+    return NO;
+  }
+  NSDictionary *dictionary = (NSDictionary *)self;
+  BOOL status = [dictionary[@"status"] isEqualToString:@"success"];
+  return status;
+  
+}
+
+- (NSError *)omn_userError {
+  
+  NSError *error = [OMNUtils errorFromCode:OMNErrorUnknoun];
+  
+  if (NO == [self isKindOfClass:[NSDictionary class]]) {
+    return error;
+  }
+  
+  NSDictionary *dictionary = (NSDictionary *)self;
+  NSString *message = dictionary[@"error"][@"message"];
+  if (message) {
+    
+    error = [NSError errorWithDomain:NSStringFromClass(self.class)
+                                code:[dictionary[@"error"][@"code"] integerValue]
+                            userInfo:@{NSLocalizedDescriptionKey : message}];
+    
+  }
+  
+  return error;
   
 }
 

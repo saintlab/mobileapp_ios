@@ -7,21 +7,21 @@
 //
 
 #import "GAppDelegate.h"
-#import "NSURL+omn_query.h"
 #import "OMNAnalitics.h"
 #import "OMNAuthorisation.h"
 #import "OMNBeaconBackgroundManager.h"
-#import "OMNMailRUCardConfirmVC.h"
 #import "OMNOperationManager.h"
 #import "OMNStartVC.h"
-#import "OMNViewController.h"
 #import "OMNVisitorManager.h"
 #import <Crashlytics/Crashlytics.h>
-#import <OMNMailRuAcquiring.h>
 #import <OMNStyler.h>
+#import "UIImage+omn_helper.h"
+#import "OMNBackgroundVC.h"
 
 @implementation GAppDelegate {
+  
   BOOL _applicationStartedForeground;
+  
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -30,40 +30,46 @@
   return YES;
 #endif
   
-  NSDictionary *parametrs = [launchOptions[UIApplicationLaunchOptionsURLKey] omn_query];
-  if (parametrs[@"omnom_config"]) {
-    
-    [OMNConstants setCustomConfigName:parametrs[@"omnom_config"]];
-    
-  }
-  else {
-    
-    [OMNConstants setCustomConfigName:@"config_prod"];
-    
-  }
+  [self setupWindow];
   
-  if ([[OMNAuthorisation authorisation] pushNotificationsRequested]) {
-   
-    [[OMNAuthorisation authorisation] registerForRemoteNotifications];
+  __weak typeof(self)weakSelf = self;
+  [OMNConstants setupWithLaunchOptions:launchOptions completion:^{
     
-  }
-  
-  if ([OMNConstants useBackgroundNotifications]) {
+    [[OMNAnalitics analitics] setup];
+    
+    [[OMNAuthorisation authorisation] registerForRemoteNotificationsIfPossible];
+    
     [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
       
       [[OMNVisitorManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
       
     }];
-  }
-  
-  BOOL applicationWasOpenedByBeacon = (launchOptions[UIApplicationLaunchOptionsLocationKey] != nil);
-  if (NO == applicationWasOpenedByBeacon) {
     
-    [self startApplication:launchOptions];
+    BOOL applicationWasOpenedByBeacon = (launchOptions[UIApplicationLaunchOptionsLocationKey] != nil);
+    if (NO == applicationWasOpenedByBeacon) {
+      
+      [weakSelf startApplication:launchOptions];
+      
+    }
     
-  }
+  }];
   
   return YES;
+  
+}
+
+- (void)setupWindow {
+  
+  [self setupAppearance];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  self.window.backgroundColor = [UIColor whiteColor];
+  self.window.tintColor = [UIColor blackColor];
+  
+  OMNBackgroundVC *backgroundVC = [[OMNBackgroundVC alloc] init];
+  backgroundVC.backgroundImage = [UIImage omn_imageNamed:@"LaunchImage-700"];
+  self.window.rootViewController = backgroundVC;
+  [self.window makeKeyAndVisible];
   
 }
 
@@ -74,21 +80,14 @@
   }
   _applicationStartedForeground = YES;
 
-  [OMNConstants loadConfigWithCompletion:nil];
   [OMNOperationManager sharedManager];
   
   [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
   
-  [self setupAppearance];
-  
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  self.window.backgroundColor = [UIColor whiteColor];
-  self.window.tintColor = [UIColor blackColor];
-
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   startVC.info = info;
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
-  [self.window makeKeyAndVisible];
+  
   
 }
 

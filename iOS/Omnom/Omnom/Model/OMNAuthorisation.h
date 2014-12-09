@@ -27,6 +27,7 @@
 
 - (BOOL)pushNotificationsRequested;
 - (void)requestPushNotifications:(void(^)(BOOL))completion;
+- (void)registerForRemoteNotificationsIfPossible;
 - (void)registerForRemoteNotifications;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;

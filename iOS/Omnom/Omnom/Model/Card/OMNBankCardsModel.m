@@ -205,13 +205,17 @@ NSString * const kCardIdServiceName = @"card_id";
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
   return NSLocalizedString(@"CARD_DELETE_BUTTON_TITLE", @"Удалить");
+  
 }
 
 #pragma mark - Table view delegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
   return 44.0f;
+  
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

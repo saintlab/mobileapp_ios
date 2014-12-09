@@ -51,8 +51,10 @@ describe(@"check initial state", ^{
     [[[OMNAuthorisation authorisation].token should] beNonNil];
     
     __block NSNumber *isConfigLoaded = nil;
-    [OMNConstants loadConfigWithCompletion:^{
+    [OMNConstants setupWithLaunchOptions:nil completion:^{
+      
       isConfigLoaded = @(YES);
+      
     }];
     [[expectFutureValue(isConfigLoaded) shouldEventuallyBeforeTimingOutAfter(10.0)] equal:@(YES)];
     

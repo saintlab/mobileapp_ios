@@ -74,7 +74,6 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   __weak typeof(self)weakSelf = self;
   [_socket on:@"handshake" listener:^(id data) {
     
-    NSLog(@"handshake response %@, %@", data, [data class]);
     if (completionBlock &&
         [data isKindOfClass:[NSString class]] &&
         [data isEqualToString:@"authentication success"]) {
