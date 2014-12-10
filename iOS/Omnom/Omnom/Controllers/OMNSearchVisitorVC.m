@@ -392,13 +392,15 @@ OMNUserInfoVCDelegate>
       
     case kSearchManagerInternetUnavaliable: {
       
-      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Нет соединения с интернетом.")];
+      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Вы видите интернет? Мы нет.")
+                             actionText:NSLocalizedString(@"REPEAT_NO_INTERNET_BUTTON_TITLE", @"Попробуйте ещё раз")];
       
     } break;
     case kSearchManagerOmnomServerUnavaliable: {
       
       [[OMNAnalitics analitics] logDebugEvent:@"no_server_connection" parametrs:nil];
-      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Нет доступа к серверам Omnom.")];
+      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Помехи на линии.")
+                             actionText:NSLocalizedString(@"REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE", @"Давайте ещё раз.")];
       
     } break;
     case kSearchManagerRequestReload: {
@@ -421,7 +423,7 @@ OMNUserInfoVCDelegate>
   
 }
 
-- (void)showNoInternetErrorWithText:(NSString *)text {
+- (void)showNoInternetErrorWithText:(NSString *)text actionText:(NSString *)actionText {
   
   OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:self];
   noInternetVC.text = text;
@@ -430,7 +432,7 @@ OMNUserInfoVCDelegate>
   __weak typeof(self)weakSelf = self;
   noInternetVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:actionText image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
       [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
         
