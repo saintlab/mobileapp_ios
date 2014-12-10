@@ -9,6 +9,7 @@
 #import "OMNCircleRootVC.h"
 #import "UILabel+numberOfLines.h"
 #import "OMNConstants.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNCircleRootVC ()
 
@@ -157,11 +158,28 @@
   [super viewWillAppear:animated];
   self.text = _text;
   
+  if (self.didCloseBlock) {
+    
+    self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeBlockAction)];
+    
+  }
+  else {
+    
+    self.navigationItem.titleView = nil;
+    
+  }
+  
   [self.navigationItem setHidesBackButton:YES animated:NO];
   [self.navigationController setNavigationBarHidden:NO animated:NO];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   [self.navigationController.navigationBar setShadowImage:[UIImage new]];
 
+}
+
+- (void)closeBlockAction {
+  
+  self.didCloseBlock();
+  
 }
 
 - (void)setFaded:(BOOL)faded {

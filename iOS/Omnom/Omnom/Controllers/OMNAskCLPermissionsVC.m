@@ -116,15 +116,17 @@
 
 - (void)showDenyPermissonOffHelp {
   
-  OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
-  [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
+  OMNCLPermissionsHelpVC *clPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
+  [self.navigationController pushViewController:clPermissionsHelpVC animated:YES];
   
 }
 
 #pragma mark - UINavigationControllerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
+  
   [manager stopMonitoringForRegion:_beaconRegion];
+  
 }
 
 @end

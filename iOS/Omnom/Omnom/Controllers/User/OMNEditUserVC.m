@@ -15,8 +15,8 @@
 #import "OMNCameraPermission.h"
 #import "OMNCameraRollPermission.h"
 #import "UINavigationController+omn_replace.h"
-#import "OMNCameraPermissionHelpVC.h"
-#import "OMNCameraRollPermissionHelpVC.h"
+#import "OMNCameraPermissionDescriptionVC.h"
+#import "OMNCameraRollPermissionDescriptionVC.h"
 #import "OMNUser+network.h"
 #import "OMNUserIconView.h"
 #import "OMNWebVC.h"
@@ -26,8 +26,8 @@
 UIActionSheetDelegate,
 UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
-OMNCameraPermissionHelpVCDelegate,
-OMNCameraRollPermissionHelpVCDelegate>
+OMNCameraPermissionDescriptionVCDelegate,
+OMNCameraRollPermissionDescriptionVCDelegate>
 
 @end
 
@@ -156,7 +156,7 @@ OMNCameraRollPermissionHelpVCDelegate>
     
   } restricted:^{
     
-    [weakSelf showCameraPermissionHelp];
+    [weakSelf showCameraRollPermissionHelp];
     
   }];
   
@@ -178,28 +178,28 @@ OMNCameraRollPermissionHelpVCDelegate>
 
 - (void)showCameraPermissionHelp {
   
-  OMNCameraPermissionHelpVC *cameraPermissionHelpVC = [[OMNCameraPermissionHelpVC alloc] init];
+  OMNCameraPermissionDescriptionVC *cameraPermissionDescriptionVC = [[OMNCameraPermissionDescriptionVC alloc] init];
+  cameraPermissionDescriptionVC.text = NSLocalizedString(@"CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение\nна доступ к камере.");
   __weak typeof(self)weakSelf = self;
-  cameraPermissionHelpVC.didCloseBlock = ^{
+  cameraPermissionDescriptionVC.didCloseBlock = ^{
     
     [weakSelf.navigationController popToViewController:weakSelf animated:YES];
     
   };
-  cameraPermissionHelpVC.delegate = self;
-  [self.navigationController pushViewController:cameraPermissionHelpVC animated:YES];
+  cameraPermissionDescriptionVC.delegate = self;
+  [self.navigationController pushViewController:cameraPermissionDescriptionVC animated:YES];
   
 }
 
 - (void)showCameraRollPermissionHelp {
   
-  OMNCameraRollPermissionHelpVC *cameraPermissionHelpVC = [[OMNCameraRollPermissionHelpVC alloc] init];
+  OMNCameraRollPermissionDescriptionVC *cameraPermissionHelpVC = [[OMNCameraRollPermissionDescriptionVC alloc] init];
   __weak typeof(self)weakSelf = self;
   cameraPermissionHelpVC.didCloseBlock = ^{
     
     [weakSelf.navigationController popToViewController:weakSelf animated:YES];
     
   };
-  cameraPermissionHelpVC.delegate = self;
   [self.navigationController pushViewController:cameraPermissionHelpVC animated:YES];
   
 }
@@ -408,9 +408,9 @@ OMNCameraRollPermissionHelpVCDelegate>
   
 }
 
-#pragma mark - OMNCameraPermissionHelpVCDelegate
+#pragma mark - OMNCameraPermissionDescriptionVCDelegate
 
-- (void)cameraPermissionHelpVCDidReceivePermission:(OMNCameraPermissionHelpVC *)cameraPermissionHelpVC {
+- (void)cameraPermissionDescriptionVCDidReceivePermission:(OMNCameraPermissionDescriptionVC *)cameraPermissionDescriptionVC {
 
   __weak typeof(self)weakSelf = self;
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
@@ -421,10 +421,10 @@ OMNCameraRollPermissionHelpVCDelegate>
 
 }
 
-#pragma mark - OMNCameraRollPermissionHelpVCDelegate
+#pragma mark - OMNCameraRollPermissionDescriptionVCDelegate
 
-- (void)cameraRollPermissionHelpVCDidReceivePermission:(OMNCameraRollPermissionHelpVC *)cameraRollPermissionHelpVC {
-  
+- (void)cameraRollPermissionDescriptionVCDidReceivePermission:(OMNCameraRollPermissionDescriptionVC *)cameraRollPermissionDescriptionVC {
+
   __weak typeof(self)weakSelf = self;
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
@@ -433,5 +433,4 @@ OMNCameraRollPermissionHelpVCDelegate>
   }];
   
 }
-
 @end

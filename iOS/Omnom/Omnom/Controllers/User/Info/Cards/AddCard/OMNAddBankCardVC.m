@@ -15,13 +15,13 @@
 #import "OMNBorderedButton.h"
 #import <OMNStyler.h>
 #import "OMNCameraPermission.h"
-#import "OMNCameraPermissionHelpVC.h"
+#import "OMNCameraPermissionDescriptionVC.h"
 #import "UINavigationController+omn_replace.h"
 
 @interface OMNAddBankCardVC ()
 <CardIOPaymentViewControllerDelegate,
 OMNCardEnterControlDelegate,
-OMNCameraPermissionHelpVCDelegate>
+OMNCameraPermissionDescriptionVCDelegate>
 
 @end
 
@@ -157,15 +157,17 @@ OMNCameraPermissionHelpVCDelegate>
 
 - (void)showCameraPermissionHelp {
   
-  OMNCameraPermissionHelpVC *cameraPermissionHelpVC = [[OMNCameraPermissionHelpVC alloc] init];
+  OMNCameraPermissionDescriptionVC *cameraPermissionDescriptionVC = [[OMNCameraPermissionDescriptionVC alloc] init];
+  cameraPermissionDescriptionVC.text = NSLocalizedString(@"CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT", @"Для сканирования карты\nнеобходимо разрешение\nна доступ к камере.");
+
   __weak typeof(self)weakSelf = self;
-  cameraPermissionHelpVC.didCloseBlock = ^{
+  cameraPermissionDescriptionVC.didCloseBlock = ^{
     
     [weakSelf.navigationController popToViewController:weakSelf animated:YES];
     
   };
-  cameraPermissionHelpVC.delegate = self;
-  [self.navigationController pushViewController:cameraPermissionHelpVC animated:YES];
+  cameraPermissionDescriptionVC.delegate = self;
+  [self.navigationController pushViewController:cameraPermissionDescriptionVC animated:YES];
   
 }
 
@@ -203,9 +205,9 @@ OMNCameraPermissionHelpVCDelegate>
   
 }
 
-#pragma mark - OMNCameraPermissionHelpVCDelegate
+#pragma mark - OMNCameraPermissionDescriptionVCDelegate
 
-- (void)cameraPermissionHelpVCDidReceivePermission:(OMNCameraPermissionHelpVC *)cameraPermissionHelpVC {
+- (void)cameraPermissionDescriptionVCDidReceivePermission:(OMNCameraPermissionDescriptionVC *)cameraPermissionDescriptionVC {
   
   __weak typeof(self)weakSelf = self;
   [self.navigationController omn_popToViewController:self animated:YES completion:^{

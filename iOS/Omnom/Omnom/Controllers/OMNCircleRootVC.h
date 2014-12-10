@@ -10,14 +10,16 @@
 
 @interface OMNCircleRootVC : OMNBackgroundVC
 
-@property (strong, nonatomic) IBOutlet UILabel *label;
-@property (strong, nonatomic) IBOutlet UIButton *circleButton;
-@property (weak, nonatomic) IBOutlet UIView *foregroundView;
+@property (strong, nonatomic) UILabel *label;
+@property (strong, nonatomic) UIButton *circleButton;
+@property (nonatomic, weak) UIView *foregroundView;
 @property (nonatomic, assign) BOOL faded;
 
 @property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) UIImage *circleIcon;
 @property (nonatomic, strong) UIImage *circleBackground;
+
+@property (nonatomic, strong) dispatch_block_t didCloseBlock;
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent;
 
