@@ -9,7 +9,7 @@
 #import "OMNUtils.h"
 #import "OMNConstants.h"
 
-NSString * const kRubleSign = @"\uf5fc";
+NSString * const kRubleSign = @"\u20BD";
 NSString * const kGroupingSeparator = @" ";
 
 NSString *omnCommaString() {
@@ -23,15 +23,6 @@ NSString *omnCommaString() {
 }
 
 @implementation OMNUtils
-
-+(instancetype)manager{
-  static id manager = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    manager = [[[self class] alloc] init];
-  });
-  return manager;
-}
 
 + (NSString *)unitStringFromDouble:(double)value {
   

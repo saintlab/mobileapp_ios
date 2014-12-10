@@ -104,8 +104,6 @@
 		9332CB021A1653E000885017 /* orders_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 9332CB011A1653E000885017 /* orders_stub.json */; };
 		93363FF61A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */; };
 		93363FF71A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */; };
-		93363FF91A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93363FF81A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf */; };
-		93363FFA1A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93363FF81A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf */; };
 		93363FFD1A1B709D009D16CE /* OMNNotifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FFC1A1B709D009D16CE /* OMNNotifierManager.m */; };
 		93363FFE1A1B709D009D16CE /* OMNNotifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FFC1A1B709D009D16CE /* OMNNotifierManager.m */; };
 		933A2E8A19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */; };
@@ -168,6 +166,12 @@
 		935D8C831A3807F400877C02 /* OMNCameraRollPermissionDescriptionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D8C811A3807F400877C02 /* OMNCameraRollPermissionDescriptionVC.m */; };
 		935D8C8E1A381CE400877C02 /* OMNCameraPermissionDescriptionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D8C8D1A381CE400877C02 /* OMNCameraPermissionDescriptionVC.m */; };
 		935D8C8F1A381CE400877C02 /* OMNCameraPermissionDescriptionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D8C8D1A381CE400877C02 /* OMNCameraPermissionDescriptionVC.m */; };
+		935D8C941A38293B00877C02 /* Futura-LSF-Omnom-LE-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 935D8C911A38293B00877C02 /* Futura-LSF-Omnom-LE-Regular.otf */; };
+		935D8C951A38293B00877C02 /* Futura-LSF-Omnom-LE-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 935D8C911A38293B00877C02 /* Futura-LSF-Omnom-LE-Regular.otf */; };
+		935D8C961A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 935D8C921A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf */; };
+		935D8C971A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 935D8C921A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf */; };
+		935D8C981A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 935D8C931A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf */; };
+		935D8C991A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 935D8C931A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf */; };
 		9366557C19DA5DED00EF7098 /* OMNQR.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366557B19DA5DED00EF7098 /* OMNQR.m */; };
 		9366557D19DA5DED00EF7098 /* OMNQR.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366557B19DA5DED00EF7098 /* OMNQR.m */; };
 		9366558119DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */; };
@@ -267,10 +271,6 @@
 		938EE0DF1A31A75100508039 /* OMNUserIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = 938EE0DD1A31A75100508039 /* OMNUserIconView.m */; };
 		938F3A43198B859100AB288E /* timings.json in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A42198B859100AB288E /* timings.json */; };
 		938F3A44198B859100AB288E /* timings.json in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A42198B859100AB288E /* timings.json */; };
-		938F3A47198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A45198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf */; };
-		938F3A48198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A45198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf */; };
-		938F3A49198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A46198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf */; };
-		938F3A4A198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A46198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf */; };
 		938F3A4C198BECD100AB288E /* OMNWizardVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A4B198BECD100AB288E /* OMNWizardVC.json */; };
 		938F3A4D198BECD100AB288E /* OMNWizardVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A4B198BECD100AB288E /* OMNWizardVC.json */; };
 		938F3A4F198BECF300AB288E /* OMNWizardPageVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A4E198BECF300AB288E /* OMNWizardPageVC.json */; };
@@ -585,7 +585,6 @@
 		9332CB011A1653E000885017 /* orders_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orders_stub.json; sourceTree = "<group>"; };
 		93363FF41A1B5EA2009D16CE /* OMNOrderTotalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderTotalView.h; sourceTree = "<group>"; };
 		93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTotalView.m; sourceTree = "<group>"; };
-		93363FF81A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-LSF-Omnom-LE-Regular.otf"; sourceTree = "<group>"; };
 		93363FFB1A1B709D009D16CE /* OMNNotifierManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNotifierManager.h; sourceTree = "<group>"; };
 		93363FFC1A1B709D009D16CE /* OMNNotifierManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNotifierManager.m; sourceTree = "<group>"; };
 		933A2E8819861CA5000055AB /* OMNOrderToRestaurantTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderToRestaurantTransition.h; sourceTree = "<group>"; };
@@ -645,6 +644,9 @@
 		935D8C811A3807F400877C02 /* OMNCameraRollPermissionDescriptionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCameraRollPermissionDescriptionVC.m; sourceTree = "<group>"; };
 		935D8C8C1A381CE400877C02 /* OMNCameraPermissionDescriptionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCameraPermissionDescriptionVC.h; sourceTree = "<group>"; };
 		935D8C8D1A381CE400877C02 /* OMNCameraPermissionDescriptionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCameraPermissionDescriptionVC.m; sourceTree = "<group>"; };
+		935D8C911A38293B00877C02 /* Futura-LSF-Omnom-LE-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-LSF-Omnom-LE-Regular.otf"; sourceTree = "<group>"; };
+		935D8C921A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-OSF-Omnom-Medium.otf"; sourceTree = "<group>"; };
+		935D8C931A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-OSF-Omnom-Regular.otf"; sourceTree = "<group>"; };
 		9366557A19DA5DED00EF7098 /* OMNQR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNQR.h; sourceTree = "<group>"; };
 		9366557B19DA5DED00EF7098 /* OMNQR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNQR.m; sourceTree = "<group>"; };
 		9366557F19DA7F0600EF7098 /* OMNRestaurantActionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantActionsVC.h; sourceTree = "<group>"; };
@@ -756,8 +758,6 @@
 		938EE0DC1A31A75100508039 /* OMNUserIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserIconView.h; sourceTree = "<group>"; };
 		938EE0DD1A31A75100508039 /* OMNUserIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserIconView.m; sourceTree = "<group>"; };
 		938F3A42198B859100AB288E /* timings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = timings.json; sourceTree = "<group>"; };
-		938F3A45198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-OSF-Omnom-Medium.otf"; sourceTree = "<group>"; };
-		938F3A46198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-OSF-Omnom-Regular.otf"; sourceTree = "<group>"; };
 		938F3A4B198BECD100AB288E /* OMNWizardVC.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNWizardVC.json; sourceTree = "<group>"; };
 		938F3A4E198BECF300AB288E /* OMNWizardPageVC.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNWizardPageVC.json; sourceTree = "<group>"; };
 		938F3A51198BF01C00AB288E /* OMNDefaultStyle.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNDefaultStyle.json; sourceTree = "<group>"; };
@@ -1408,6 +1408,16 @@
 			name = Camera;
 			sourceTree = "<group>";
 		};
+		935D8C901A38292100877C02 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				935D8C911A38293B00877C02 /* Futura-LSF-Omnom-LE-Regular.otf */,
+				935D8C921A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf */,
+				935D8C931A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		93676DE018D1E4FC00FC55F1 = {
 			isa = PBXGroup;
 			children = (
@@ -1723,21 +1733,11 @@
 		938E8F65192F5C030088EF38 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				935D8C901A38292100877C02 /* Fonts */,
 				932B186919AF3C01009E440E /* Sound */,
 				939F98E9197526C70051822E /* AirshipConfig.plist */,
-				938E8F66192F5C030088EF38 /* Fonts */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		938E8F66192F5C030088EF38 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				93363FF81A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf */,
-				938F3A45198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf */,
-				938F3A46198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 		938F3A57198E07EB00AB288E /* Push Permission */ = {
@@ -2178,7 +2178,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				93A59B151933193400AE1A6F /* menu.data in Resources */,
-				938F3A47198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				937A37841981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
 				93F21BED19B6284B00D5F78A /* config_stand.json in Resources */,
 				9378228F1963E29900CE6661 /* OMNPayOrderVC.xib in Resources */,
@@ -2186,14 +2185,15 @@
 				938F3A55198BF25300AB288E /* OMNAuthorizationVC.json in Resources */,
 				935C284219066755003B4881 /* fill-form in Resources */,
 				93750B2F196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
+				935D8C981A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf in Resources */,
 				93F21BEA19B6283300D5F78A /* config_laaaab.json in Resources */,
 				938F3A4C198BECD100AB288E /* OMNWizardVC.json in Resources */,
 				932B186419AF1B99009E440E /* ibeaconsdecode.json in Resources */,
 				93A59B131933181000AE1A6F /* restaurants.data in Resources */,
-				938F3A49198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf in Resources */,
-				93363FF91A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
+				935D8C941A38293B00877C02 /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
 				93EDD46D19B86D9F0017B6ED /* config_prod.json in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
+				935D8C961A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				938F3A43198B859100AB288E /* timings.json in Resources */,
 				93676E4B18D1F10300FC55F1 /* menu.json in Resources */,
 				93B09C3D18F3F5400027B19F /* orders.json in Resources */,
@@ -2236,19 +2236,19 @@
 				93EDD46E19B86D9F0017B6ED /* config_prod.json in Resources */,
 				9390D2651966E945007E13AB /* UINavigationBar.json in Resources */,
 				938F3A53198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
-				938F3A4A198BEC0100AB288E /* Futura-OSF-Omnom-Regular.otf in Resources */,
 				9390D25919668A3A007E13AB /* OMNEditTableVC.json in Resources */,
 				9390D2681966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
 				933AB0D719C1D4D8004D8F55 /* Localizable.strings in Resources */,
 				939689C1195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
 				938F3A50198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
-				938F3A48198BEC0100AB288E /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				9332CB021A1653E000885017 /* orders_stub.json in Resources */,
+				935D8C991A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf in Resources */,
+				935D8C951A38293B00877C02 /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
 				937A37851981152300EF5C31 /* OMNSearchRestaurantVC.xib in Resources */,
 				93040A4C1A2C36B700D87CBD /* user_stub.json in Resources */,
+				935D8C971A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				9389456C19B5957100C37C82 /* config.json in Resources */,
 				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
-				93363FFA1A1B6BAA009D16CE /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
 				9345AFAC199A0A1400328F73 /* restaurantInfo.json in Resources */,
 				938F3A44198B859100AB288E /* timings.json in Resources */,
 				9325BA541A1E225D003557BD /* visitors_stub.json in Resources */,
