@@ -7,6 +7,7 @@
 //
 
 #import "OMNLightBackgroundButton.h"
+#import "OMNConstants.h"
 
 @implementation OMNLightBackgroundButton
 
@@ -15,6 +16,7 @@
   if (self) {
     [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];
+    self.titleLabel.font = FuturaOSFOmnomRegular(20.0f);
     self.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
     self.contentEdgeInsets = UIEdgeInsetsMake(3.0f, 10.0f, 3.0f, 10.0f);
     self.layer.cornerRadius = 5.0f;

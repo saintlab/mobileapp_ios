@@ -15,6 +15,7 @@ typedef void(^CLAuthorizationStatusBlock)(CLAuthorizationStatus status);
 
 @property (nonatomic, assign, readonly) BOOL ranging;
 @property (nonatomic, copy, readonly) CLAuthorizationStatusBlock statusBlock;
+@property (nonatomic, assign, readonly) CLAuthorizationStatus authorizationStatus;
 
 - (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock;
 

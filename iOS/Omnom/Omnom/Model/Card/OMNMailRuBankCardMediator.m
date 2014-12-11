@@ -38,7 +38,7 @@
 - (void)addCardForOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)requestPaymentWithCardBlock {
   
   _order = order;
-  _requestPaymentWithCardBlock = requestPaymentWithCardBlock;
+  _requestPaymentWithCardBlock = [requestPaymentWithCardBlock copy];
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
   addBankCardVC.hideSaveButton = (order == nil);

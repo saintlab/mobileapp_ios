@@ -128,11 +128,15 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
       case CBCentralManagerStatePoweredOn: {
         
         if (CBCentralManagerStatePoweredOff == weakSelf.previousBluetoothState) {
+          
           [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerRequestReload];
+          
         }
         else {
+          
           [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerBLEDidOn];
           [weakSelf startRangeNearestBeacons];
+          
         }
         
       } break;
@@ -183,7 +187,9 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
   if (nil == _nearestBeaconsManager) {
     __weak typeof(self)weakSelf = self;
     _nearestBeaconsManager = [[OMNNearestBeaconsManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
+      
       [weakSelf processCoreLocationAuthorizationStatus:status];
+      
     }];
   }
   

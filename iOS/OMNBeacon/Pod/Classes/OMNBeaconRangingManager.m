@@ -21,7 +21,6 @@
   
   NSArray *_rangingBeaconRegions;
   
-  
   CLBeaconsBlock _didRangeBeaconsBlock;
   
   void(^_didFailRangeBeaconsBlock)(NSError *);
@@ -39,8 +38,10 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
+    
     NSString *identifier = [NSString stringWithFormat:@"%@.rangingTask", [[NSBundle mainBundle] bundleIdentifier]];
     _rangingBeaconRegions = [[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:identifier];
+    _authorizationStatus = [CLLocationManager authorizationStatus];
     
   }
   return self;
@@ -50,8 +51,9 @@
   self = [self init];
   if (self) {
 
-    _statusBlock = statusBlock;
+    _statusBlock = [statusBlock copy];
     [self rangingLocationManager];
+    
   }
   return self;
 }
@@ -79,8 +81,8 @@
     return;
   }
   
-  _didRangeBeaconsBlock = didRangeBeaconsBlock;
-  _didFailRangeBeaconsBlock = failureBlock;
+  _didRangeBeaconsBlock = [didRangeBeaconsBlock copy];
+  _didFailRangeBeaconsBlock = [failureBlock copy];
   
   if (_ranging) {
     return;
@@ -116,11 +118,13 @@
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
   
-  if (_statusBlock) {
+  if (_statusBlock &&
+      status != _authorizationStatus) {
     
     _statusBlock(status);
     
   }
+  _authorizationStatus = status;
   
 }
 
@@ -139,9 +143,6 @@
   NSLog(@"rangingBeaconsDidFailForRegion>%@", error);
   if (_didFailRangeBeaconsBlock) {
     _didFailRangeBeaconsBlock(error);
-  }
-  else {
-    NSLog(@"rangingBeaconsDidFailForRegion>%@", error);
   }
 }
 
