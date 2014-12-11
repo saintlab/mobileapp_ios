@@ -38,5 +38,6 @@ extern NSString *omnCommaString();
 @interface NSObject (omn_response)
 
 - (BOOL)omn_isSuccessResponse;
+- (NSTimeInterval)omn_timeStamp;
 
 @end

@@ -181,12 +181,25 @@ NSString *omnCommaString() {
 
 - (BOOL)omn_isSuccessResponse {
   
-  if (NO == [self isKindOfClass:[NSDictionary class]]) {
+  if (![self isKindOfClass:[NSDictionary class]]) {
     return NO;
   }
   NSDictionary *dictionary = (NSDictionary *)self;
   BOOL status = [dictionary[@"status"] isEqualToString:@"success"];
   return status;
+  
+}
+
+- (NSTimeInterval)omn_timeStamp {
+  
+  if (![self isKindOfClass:[NSDictionary class]]) {
+    return 0.0l;
+  }
+  
+  NSDictionary *dictionary = (NSDictionary *)self;
+  NSTimeInterval timeStamp = [dictionary[@"time"] doubleValue];
+  
+  return timeStamp;
   
 }
 

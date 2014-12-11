@@ -26,7 +26,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 @implementation OMNAnalitics {
   Mixpanel *_mixpanel;
   Mixpanel *_mixpanelDebug;
-  
+  NSTimeInterval _serverTimeDelta;
   OMNUser *_user;
 }
 
@@ -63,6 +63,13 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     
   }
   [self updateUserInfo];
+  
+}
+
+- (void)setServerTimeStamp:(NSTimeInterval)serverTimeStamp {
+  
+  NSTimeInterval currentTime = [[NSDate date] timeIntervalSince1970];
+  _serverTimeDelta = (currentTime - serverTimeStamp);
   
 }
 
@@ -280,7 +287,9 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"ru"]];
     [dateFormatter setDateFormat:@"{yyyy-MM-dd'T'HH:mm:ssZZZZZ}"];
   }
-  return [dateFormatter stringFromDate:[NSDate date]];
+  
+  NSDate *actualDate = [NSDate dateWithTimeIntervalSinceNow:-_serverTimeDelta];
+  return [dateFormatter stringFromDate:actualDate];
   
 }
 

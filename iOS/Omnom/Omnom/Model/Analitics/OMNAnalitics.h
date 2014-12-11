@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSData *deviceToken;
 
 - (void)setUser:(OMNUser *)user;
+- (void)setServerTimeStamp:(NSTimeInterval)serverTimeStamp;
 - (void)setup;
 - (void)logRegister;
 - (void)logLogin;
