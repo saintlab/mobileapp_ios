@@ -18,7 +18,6 @@
   
   dispatch_semaphore_t _addBeaconLock;
   OMNNearestBeaconsBlock _didFindNearestBeaconsBlock;
-  OMNFoundBeacons *_foundBeacons;
   OMNBeaconRangingManager *_beaconRangingManager;
   CLAuthorizationStatusBlock _authorizationStatusBlock;
   
@@ -59,7 +58,7 @@
   
   [self stopRanging];
   _didFindNearestBeaconsBlock = [didFindNearestBeaconsBlock copy];
-  
+  _startDate = [NSDate date];
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     

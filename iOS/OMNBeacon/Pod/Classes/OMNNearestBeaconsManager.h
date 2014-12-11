@@ -13,6 +13,8 @@ typedef void(^OMNNearestBeaconsBlock)(OMNFoundBeacons *foundBeacons);
 
 @interface OMNNearestBeaconsManager : NSObject 
 
+@property (nonatomic, strong, readonly) OMNFoundBeacons *foundBeacons;
+@property (nonatomic, strong, readonly) NSDate *startDate;
 @property (nonatomic, assign, readonly) BOOL isRanging;
 
 - (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)authorizationStatusBlock;

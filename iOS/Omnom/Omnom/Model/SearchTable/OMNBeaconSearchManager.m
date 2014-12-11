@@ -12,8 +12,10 @@
 #import "OMNVisitorManager.h"
 #import "OMNNearestBeaconsManager.h"
 #import <OMNBeaconBackgroundManager.h>
+#import "OMNBeacon+omn_debug.h"
+#import "OMNAnalitics.h"
 
-NSTimeInterval kBeaconSearchTimeout = 6.0;
+NSTimeInterval kBeaconSearchTimeout = 7.0;
 
 @interface OMNBeaconSearchManager ()
 
@@ -22,9 +24,11 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
 @end
 
 @implementation OMNBeaconSearchManager {
+  
   OMNNearestBeaconsManager *_nearestBeaconsManager;
   NSTimer *_nearestBeaconsRangingTimer;
   BOOL _coreLocationDenied;
+  
 }
 
 - (void)dealloc {
@@ -40,8 +44,10 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
 }
 
 - (void)stopRangingTimer {
+  
   [_nearestBeaconsRangingTimer invalidate];
   _nearestBeaconsRangingTimer = nil;
+  
 }
 
 - (void)stopRangingNearestBeacons:(BOOL)beaconFound {
@@ -200,7 +206,7 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
   
   __weak typeof(self)weakSelf = self;
   [_nearestBeaconsManager findNearestBeacons:^(OMNFoundBeacons *foundBeacons) {
-   
+
     [weakSelf processAtTheTableBeacons:foundBeacons.atTheTableBeacons allBeacons:foundBeacons.allBeacons];
     
   }];
@@ -208,6 +214,12 @@ NSTimeInterval kBeaconSearchTimeout = 6.0;
 }
 
 - (void)beaconSearchTimeout {
+  
+  NSTimeInterval timeInterval = [[NSDate date] timeIntervalSinceDate:_nearestBeaconsManager.startDate];
+  OMNFoundBeacons *foundBeacons = _nearestBeaconsManager.foundBeacons;
+  NSMutableDictionary *debugData = [[OMNBeacon omn_debugDataFromNearestBeacons:foundBeacons.atTheTableBeacons allBeacons:foundBeacons.allBeacons] mutableCopy];
+  debugData[@"duration"] = @(timeInterval);
+  [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACONS_FOUND_TIMEOUT" parametrs:debugData];
   
   [self stopRangingNearestBeacons:NO];
   [self.delegate beaconSearchManager:self didChangeState:kSearchManagerNotFoundBeacons];
