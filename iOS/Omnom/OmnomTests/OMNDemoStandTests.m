@@ -65,12 +65,8 @@ describe(@"demo stand test", ^{
   });
   
   it(@"should check initial conditions", ^{
-
-    
     
     [[_visitor should] beNonNil];
-
-    [[_order should] beNonNil];
 
     [OMNUser userWithToken:[OMNAuthorization authorisation].token user:^(OMNUser *user) {
       
