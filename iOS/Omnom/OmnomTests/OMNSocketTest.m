@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "OMNSocketManager.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import <Kiwi.h>
 
 SPEC_BEGIN(OMNSocketTests)
@@ -18,7 +18,7 @@ describe(@"check initial state", ^{
   beforeEach(^{
 
     __block NSNumber *_didConnect = nil;
-    [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token completion:^{
+    [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
       _didConnect = @(YES);
     }];
     [[expectFutureValue(_didConnect) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(YES)];
@@ -73,7 +73,7 @@ describe(@"check initial state", ^{
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
 
     __block NSNumber *_didConnect = nil;
-    [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token completion:^{
+    [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
       _didConnect = @(YES);
     }];
     [[expectFutureValue(_didConnect) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(YES)];

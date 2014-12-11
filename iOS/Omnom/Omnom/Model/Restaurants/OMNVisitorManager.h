@@ -7,6 +7,7 @@
 //
 
 #import "OMNVisitor+network.h"
+#import "OMNError.h"
 
 @interface OMNVisitorManager : NSObject
 
@@ -17,11 +18,11 @@
  @param success success callback, contains OMNVisitor object
  @param failure error callback, contains NSError object
  */
-- (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure;
+- (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(OMNError *error))failure;
 
 - (void)decodeQRCode:(NSString *)qrCode success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure;
 
-- (void)demoVisitor:(OMNVisitorBlock)completionBlock failure:(void (^)(NSError *error))failureBlock;
+- (void)demoVisitor:(OMNVisitorBlock)completionBlock failure:(void (^)(OMNError *error))failureBlock;
 
 - (void)handleBackgroundBeacon:(OMNBeacon *)beacon completion:(dispatch_block_t)completion;
 

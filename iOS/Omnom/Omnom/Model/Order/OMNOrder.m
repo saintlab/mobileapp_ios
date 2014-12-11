@@ -240,6 +240,17 @@ inline NSString *stringFromSplitType(SplitType splitType) {
   
 }
 
+- (void)setSelectedTipIndex:(NSInteger)selectedTipIndex {
+  
+  _selectedTipIndex = selectedTipIndex;
+  [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
+    
+    tip.selected = (selectedTipIndex == idx);
+    
+  }];
+  
+}
+
 - (OMNTip *)selectedTip {
   
   if (3 == self.selectedTipIndex) {

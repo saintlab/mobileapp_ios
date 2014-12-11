@@ -146,9 +146,9 @@ OMNUserInfoVCDelegate>
     
     [weakSelf didFindVisitor:visitor];
     
-  } failure:^(NSError *error) {
-    
-    [weakSelf didFailOmnom];
+  } failure:^(OMNError *error) {
+
+    [weakSelf didFailOmnom:error];
     
   }];
   
@@ -252,18 +252,18 @@ OMNUserInfoVCDelegate>
 
 - (void)didFailQRCode:(NSError *)error {
   
-  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
-  didFailOmnomVC.faded = YES;
-  didFailOmnomVC.text = error.localizedDescription;
-  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  OMNCircleRootVC *repeatVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  repeatVC.faded = YES;
+  repeatVC.text = error.localizedDescription;
+  repeatVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
   __weak typeof(self)weakSelf = self;
-  didFailOmnomVC.buttonInfo =
+  repeatVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       [weakSelf startSearchingBeacon];
     }]
     ];
-  [self.navigationController pushViewController:didFailOmnomVC animated:YES];
+  [self.navigationController pushViewController:repeatVC animated:YES];
   
 }
 
@@ -276,14 +276,18 @@ OMNUserInfoVCDelegate>
   
 }
 
-- (void)didFailOmnom {
+- (void)didFailOmnom:(OMNError *)error {
   
   [[OMNAnalitics analitics] logTargetEvent:@"no_table" parametrs:nil];
 
   __weak typeof(self)weakSelf = self;
-  [self showRetryMessageWithBlock:^{
+  [self showRetryMessageWithError:error retryBlock:^{
     
     [weakSelf startSearchingBeacon];
+    
+  } cancelBlock:^{
+    
+    [weakSelf beaconsNotFound];
     
   }];
   
@@ -462,7 +466,7 @@ OMNUserInfoVCDelegate>
   __weak typeof(self)weakSelf = self;
   notFoundBeaconVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Повторить", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       [weakSelf startSearchingBeacon];
     }],
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Демо-режим", nil) image:[UIImage imageNamed:@"demo_mode_icon_small"] block:^{
@@ -482,7 +486,7 @@ OMNUserInfoVCDelegate>
   __weak typeof(self)weakSelf = self;
   tablePositionVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Повторить", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       [weakSelf startSearchingBeacon];
     }]
     ];
@@ -506,23 +510,16 @@ OMNUserInfoVCDelegate>
 
 #pragma mark - OMNDemoRestaurantVCDelegate
 
-- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC {
+- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC withError:(OMNError *)error {
   
-  [self didFailOmnom];
+  [self didFailOmnom:error];
   
 }
 
 - (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC {
-  __weak typeof(self)weakSelf = self;
-  [self.navigationController omn_popToViewController:self animated:YES completion:^{
-    
-    [weakSelf startSearchingBeacon];
-    
-  }];
-}
+  
+  [self startSearchingBeacon];
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
 }
 
 #pragma mark - OMNUserInfoVCDelegate

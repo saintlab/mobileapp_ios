@@ -14,7 +14,7 @@
 #import "OMNVisitor.h"
 #import <AFNetworking.h>
 #import <Mixpanel.h>
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNLocationManager.h"
 
 NSString * const OMNAnaliticsUserKey = @"omn_user";
@@ -88,7 +88,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     userInfo[@"ID"] = _user.id;
   }
   
-  userInfo[@"push_activated"] = @([OMNAuthorisation authorisation].pushNotificationsRequested);
+  userInfo[@"push_activated"] = @([OMNAuthorization authorisation].pushNotificationsRequested);
   
   if (_user.name) {
     userInfo[@"name"] = _user.name;

@@ -10,7 +10,7 @@
 #import "OMNBankCard.h"
 #import "OMNBankCardMediator.h"
 #import "OMNPaymentNotificationControl.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 
 @implementation OMNTestBankCardsModel
 
@@ -34,7 +34,7 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       
-      OMNPaymentDetails *paymentDetails = [OMNPaymentDetails paymentDetailsWithTotalAmount:order.enteredAmountWithTips tipAmount:order.tipAmount userID:[OMNAuthorisation authorisation].user.id userName:[OMNAuthorisation authorisation].user.name];
+      OMNPaymentDetails *paymentDetails = [OMNPaymentDetails paymentDetailsWithTotalAmount:order.enteredAmountWithTips tipAmount:order.tipAmount userID:[OMNAuthorization authorisation].user.id userName:[OMNAuthorization authorisation].user.name];
       [OMNPaymentNotificationControl showWithPaymentDetails:paymentDetails];
       paymentFinishBlock(nil, completionBlock);
       

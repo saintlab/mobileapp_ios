@@ -11,7 +11,7 @@
 #import "OMNPayOrderVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNOperationManager.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import <BlocksKit+UIKit.h>
 #import "UIImage+omn_helper.h"
 #import "OMNPushPermissionVC.h"
@@ -251,7 +251,7 @@
   if (NO == _visitor.restaurant.is_demo) {
     
     __weak OMNVisitor *visitor = _visitor;
-    [[OMNSocketManager manager] connectWithToken:[OMNAuthorisation authorisation].token completion:^{
+    [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
       
       [visitor subscribeForTableEvents];
       

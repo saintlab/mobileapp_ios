@@ -7,7 +7,7 @@
 //
 
 #import "OMNUserInfoVC.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNUser.h"
 #import "OMNUserInfoModel.h"
 #import "OMNEditTableVC.h"
@@ -41,13 +41,13 @@ OMNEditUserVCDelegate>
   
   if (_userObserverIdentifier) {
     
-    [[OMNAuthorisation authorisation] bk_removeObserversWithIdentifier:_userObserverIdentifier];
+    [[OMNAuthorization authorisation] bk_removeObserversWithIdentifier:_userObserverIdentifier];
     _userObserverIdentifier = nil;
     
   }
   if (_userImageObserverIdentifier) {
     
-    [[OMNAuthorisation authorisation].user bk_removeObserversWithIdentifier:_userImageObserverIdentifier];
+    [[OMNAuthorization authorisation].user bk_removeObserversWithIdentifier:_userImageObserverIdentifier];
     _userImageObserverIdentifier = nil;
     
   }
@@ -66,7 +66,7 @@ OMNEditUserVCDelegate>
 
 - (void)updateUserInfo {
   
-  OMNUser *user = [OMNAuthorisation authorisation].user;
+  OMNUser *user = [OMNAuthorization authorisation].user;
   NSString *name = (user.name.length) ? (user.name) : (@"no name");
   NSString *emailPhone = [NSString stringWithFormat:@"%@\n%@", user.email, user.phone];
   NSString *text = [NSString stringWithFormat:@"%@\n%@", name, emailPhone];
@@ -92,7 +92,7 @@ OMNEditUserVCDelegate>
 
 - (void)updateUserImage {
   
-  [_iconView updateWithImage:[OMNAuthorisation authorisation].user.image];
+  [_iconView updateWithImage:[OMNAuthorization authorisation].user.image];
   
 }
 
@@ -107,7 +107,7 @@ OMNEditUserVCDelegate>
   self.tableView.tableFooterView = [[UIView alloc] init];
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
-  OMNAuthorisation *authorisation = [OMNAuthorisation authorisation];
+  OMNAuthorization *authorisation = [OMNAuthorization authorisation];
   __weak typeof(self)weakSelf = self;
   _userObserverIdentifier = [authorisation bk_addObserverForKeyPath:NSStringFromSelector(@selector(user)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
     

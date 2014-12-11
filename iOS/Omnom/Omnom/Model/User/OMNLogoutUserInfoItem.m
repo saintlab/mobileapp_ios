@@ -8,7 +8,7 @@
 
 #import "OMNLogoutUserInfoItem.h"
 #import <BlocksKit+UIKit.h>
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import <OMNStyler.h>
 
 @implementation OMNLogoutUserInfoItem
@@ -23,7 +23,7 @@
       UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
       [logoutSheet bk_setDestructiveButtonWithTitle:NSLocalizedString(@"Выйти", nil) handler:^{
         
-        [[OMNAuthorisation authorisation] logout];
+        [[OMNAuthorization authorisation] logout];
         
       }];
       

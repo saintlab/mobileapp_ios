@@ -11,7 +11,7 @@
 #import "OMNBankCardInfo.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNSocketManager.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNErrorTextField.h"
 #import "OMNUtils.h"
 #import "OMNAnalitics.h"
@@ -21,7 +21,7 @@
 #import <OMNStyler.h>
 #import "OMNCardEnterErrorLabel.h"
 #import "UIBarButtonItem+omn_custom.h"
-#import "NSError+omn_mailRu.h"
+#import "OMNError.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate,
@@ -38,13 +38,17 @@ TTTAttributedLabelDelegate>
 }
 
 - (void)dealloc {
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
 }
 
 - (instancetype)initWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
   self = [super init];
   if (self) {
+    
     _bankCardInfo = bankCardInfo;
+    
   }
   return self;
 }
@@ -200,7 +204,7 @@ TTTAttributedLabelDelegate>
 
   double amount = [self.currentAmountString omn_doubleValue];
   [self startLoader];
-  OMNUser *user = [OMNAuthorisation authorisation].user;
+  OMNUser *user = [OMNAuthorization authorisation].user;
   __weak typeof(self)weakSelf = self;
 
   [[OMNMailRuAcquiring acquiring] verifyCard:_bankCardInfo.card_id user_login:user.id amount:amount completion:^{
@@ -210,7 +214,8 @@ TTTAttributedLabelDelegate>
   } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_VERIFY" error:error request:request response:response];
-    [weakSelf processError:error];
+    NSError *omnomError = [OMNError omnnomErrorFromError:error];
+    [weakSelf processError:omnomError];
     
   }];
   
@@ -234,30 +239,19 @@ TTTAttributedLabelDelegate>
   
   [UIView transitionWithView:_errorLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
-    if ([error.domain isEqualToString:OMNMailRuErrorDomain]) {
+    if (OMNErrorWrongAmount == error.code) {
       
-      if (kOMNMailRuErrorCodeCardAmount == error.code) {
-        
-        [_errorLabel setWrongAmountError];
-        
-      }
-      else if (kOMNMailRuErrorCodeDefault == error.code) {
-        
-        NSError *internetError = [error omn_internetError];
-        [_errorLabel setErrorText:internetError.localizedDescription];
-        
-      }
-      else {
-        
-        [_errorLabel setUnknownError];
-        
-      }
+      [_errorLabel setWrongAmountError];
+      
+    }
+    else if (kOMNErrorCodeUnknoun == error.code) {
+      
+      [_errorLabel setUnknownError];
       
     }
     else {
-      
-      NSError *internetError = [error omn_internetError];
-      [_errorLabel setErrorText:internetError.localizedDescription];
+
+      [_errorLabel setErrorText:error.localizedDescription];
       
     }
     
@@ -276,7 +270,7 @@ TTTAttributedLabelDelegate>
     @"cvv" : _bankCardInfo.cvv,
     };
   
-  OMNUser *user = [OMNAuthorisation authorisation].user;
+  OMNUser *user = [OMNAuthorization authorisation].user;
   [self startLoader];
   
   __weak typeof(self)weakSelf = self;
@@ -290,7 +284,7 @@ TTTAttributedLabelDelegate>
   } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_REGISTER" error:error request:request response:response];
-    [weakSelf procsessCardRegisterError:[error omn_mailRuToOmnomError]];
+    [weakSelf procsessCardRegisterError:[OMNError omnnomErrorFromError:error]];
     
   }];
   

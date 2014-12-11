@@ -97,60 +97,6 @@ NSString *omnCommaString() {
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
 }
 
-+ (NSError *)errorFromCode:(NSInteger)code {
-  
-  NSString *description = @"";
-  
-  switch (code) {
-    case OMNErrorNotConnectedToInternet: {
-      description = NSLocalizedString(@"ERROR_MESSAGE_NO_INTERNET", @"Нет доступа в интернет");
-    } break;
-    case OMNErrorOrderClosed: {
-      description = NSLocalizedString(@"ERROR_MESSAGE_ORDER_CLOSED", @"Оплата по счёту невозможна - стол уже закрыт. Попробуйте запросить счёт заново или позовите официанта.");
-    } break;
-    case OMNErrorQrDecode: {
-      description = NSLocalizedString(@"ERROR_MESSAGE_QR_DECODE", @"Неверный QR-код,\nнайдите Omnom");
-    } break;
-    case OMNErrorUnknoun:
-    default: {
-      description = NSLocalizedString(@"ERROR_MESSAGE_UNKNOWN_ERROR", @"Что-то пошло не так. Повторите попытку.");
-    } break;
-  }
-  
-  return [NSError errorWithDomain:@"OMNError" code:code userInfo:@{NSLocalizedDescriptionKey : description}];
-  
-}
-
-@end
-
-@implementation NSError (omn_internet)
-
-- (NSError *)omn_internetError {
-  
-  NSError *error = nil;
-  
-  switch (self.code) {
-    case NSURLErrorNotConnectedToInternet: {
-      
-      error = [OMNUtils errorFromCode:self.code];
-      
-    } break;
-    case OMNErrorDefault: {
-      
-      error = self;
-      
-    } break;
-    default: {
-      
-      error = [OMNUtils errorFromCode:OMNErrorUnknoun];
-      
-    } break;
-  }
-  
-  return error;
-  
-}
-
 @end
 
 @implementation NSString (omn_money)
@@ -231,7 +177,7 @@ NSString *omnCommaString() {
 
 @end
 
-@implementation NSObject (omn_userError)
+@implementation NSObject (omn_response)
 
 - (BOOL)omn_isSuccessResponse {
   
@@ -241,28 +187,6 @@ NSString *omnCommaString() {
   NSDictionary *dictionary = (NSDictionary *)self;
   BOOL status = [dictionary[@"status"] isEqualToString:@"success"];
   return status;
-  
-}
-
-- (NSError *)omn_userError {
-  
-  NSError *error = [OMNUtils errorFromCode:OMNErrorUnknoun];
-  
-  if (NO == [self isKindOfClass:[NSDictionary class]]) {
-    return error;
-  }
-  
-  NSDictionary *dictionary = (NSDictionary *)self;
-  NSString *message = dictionary[@"error"][@"message"];
-  if (message) {
-    
-    error = [NSError errorWithDomain:NSStringFromClass(self.class)
-                                code:[dictionary[@"error"][@"code"] integerValue]
-                            userInfo:@{NSLocalizedDescriptionKey : message}];
-    
-  }
-  
-  return error;
   
 }
 

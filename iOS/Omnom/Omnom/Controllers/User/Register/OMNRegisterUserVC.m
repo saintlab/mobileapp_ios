@@ -84,7 +84,7 @@ OMNUserInfoViewDelegate>
   
   [_user confirmPhoneResend:^{
     
-  } failure:^(NSError *error) {
+  } failure:^(OMNError *error) {
     
   }];
   
@@ -94,30 +94,32 @@ OMNUserInfoViewDelegate>
   
   _user = [_userInfoView getUser];
   
+  if (_user) {
+    
+    [self.view endEditing:YES];
+    _errorLabel.text = nil;
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
+    __weak typeof(self)weakSelf = self;
+    [_user registerWithCompletion:^{
+      
+      [weakSelf requestAuthorizationCode];
+      
+    } failure:^(OMNError *error) {
+      
+      [weakSelf processError:error];
+      
+    }];
+    
+  }
+  
   [UIView animateWithDuration:0.3 animations:^{
     [self.view layoutIfNeeded];
   }];
   
-  if (nil == _user) {
-    return;
-  }
-  
-  [self.view endEditing:YES];
-  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
-  __weak typeof(self)weakSelf = self;
-  [_user registerWithCompletion:^{
-    
-    [weakSelf requestAuthorizationCode];
-    
-  } failure:^(NSError *error) {
-    
-    [weakSelf processError:error];
-    
-  }];
-  
 }
 
-- (void)processError:(NSError *)error {
+- (void)processError:(OMNError *)error {
 
   self.navigationItem.rightBarButtonItem = [self createUserButton];
   if (error) {
@@ -130,6 +132,11 @@ OMNUserInfoViewDelegate>
     _errorLabel.text = NSLocalizedString(@"REGISTER_USER_ERROR_COMMON", @"Что-то пошло не так. Повторите попытку.");
     
   }
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    [self.view layoutIfNeeded];
+  }];
+  
 }
 
 - (void)requestAuthorizationCode {
@@ -151,7 +158,7 @@ OMNUserInfoViewDelegate>
     
     [weakSelf didRegisterWithToken:token];
     
-  } failure:^(NSError *error) {
+  } failure:^(OMNError *error) {
     
     [confirmCodeVC resetAnimated:YES];
     [weakSelf processError:error];
@@ -164,7 +171,7 @@ OMNUserInfoViewDelegate>
   
   [_user verifyPhoneCode:nil completion:^(NSString *token) {
     
-  } failure:^(NSError *error) {
+  } failure:^(OMNError *error) {
     
   }];
   

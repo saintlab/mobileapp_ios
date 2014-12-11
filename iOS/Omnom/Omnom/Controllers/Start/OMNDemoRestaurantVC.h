@@ -7,6 +7,7 @@
 //
 
 #import "OMNLoadingCircleVC.h"
+#import "OMNError.h"
 
 @class OMNVisitor;
 @protocol OMNDemoRestaurantVCDelegate;
@@ -21,6 +22,6 @@
 @protocol OMNDemoRestaurantVCDelegate <NSObject>
 
 - (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC;
-- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC;
+- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC withError:(OMNError *)error;
 
 @end

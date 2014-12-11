@@ -34,7 +34,7 @@
     if (image) {
       _image = image;
       if (title.length) {
-        CGFloat space = 8.0f;
+        CGFloat space = 4.0f;
         self.titleLabel.textAlignment = NSTextAlignmentRight;
         [self omn_centerButtonAndImageWithSpacing:space];
       }

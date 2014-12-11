@@ -120,16 +120,26 @@
   [self.visitor.restaurant.decoration loadLogo:^(UIImage *image) {
 
     if (image) {
+      
       [weakSelf didLoadLogo];
+      
     }
     else {
-      [loadingCircleVC showRetryMessageWithBlock:^{
+      
+      [loadingCircleVC showRetryMessageWithError:nil retryBlock:^{
         
         dispatch_async(dispatch_get_main_queue(), ^{
+          
           [weakSelf loadLogo];
+          
         });
         
+      } cancelBlock:^{
+        
+        [weakSelf didFinish];
+        
       }];
+      
     }
     
   }];
@@ -166,6 +176,12 @@
   
 }
 
+- (void)didFinish {
+  
+  [self.delegate searchRestaurantVCDidFinish:self];
+  
+}
+
 #pragma mark - OMNRestaurantActionsVCDelegate
 
 - (void)restaurantActionsVC:(OMNRestaurantActionsVC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
@@ -177,7 +193,7 @@
 
 - (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
   
-  [self.delegate searchRestaurantVCDidFinish:self];
+  [self didFinish];
   
 }
 

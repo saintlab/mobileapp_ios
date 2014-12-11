@@ -8,7 +8,7 @@
 
 #import "OMNOrder+network.h"
 #import "OMNOperationManager.h"
-#import "OMNUtils.h"
+#import "OMNError.h"
 
 @implementation OMNOrder (network)
 
@@ -37,19 +37,19 @@
       else if ([status isEqualToString:@"paid"] ||
                [status isEqualToString:@"order_closed"]) {
         
-        failureBlock([OMNUtils errorFromCode:OMNErrorOrderClosed]);
+        failureBlock([OMNError omnomErrorFromCode:OMNErrorOrderClosed]);
         
       }
       else {
         
-        failureBlock([OMNUtils errorFromCode:OMNErrorUnknoun]);
+        failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
         
       }
 
     }
     else {
       
-      failureBlock([OMNUtils errorFromCode:OMNErrorUnknoun]);
+      failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
       
     }
     
@@ -94,7 +94,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
 }

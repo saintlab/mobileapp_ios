@@ -8,7 +8,7 @@
 
 #import "OMNPushPermissionVC.h"
 #import <BlocksKit+UIKit.h>
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNToolbarButton.h"
 
 @interface OMNPushPermissionVC ()
@@ -56,7 +56,7 @@
 - (void)requestPermissionTap {
   
   __weak typeof(self)weakSelf = self;
-  [[OMNAuthorisation authorisation] requestPushNotifications:^(BOOL success) {
+  [[OMNAuthorization authorisation] requestPushNotifications:^(BOOL success) {
     
     [weakSelf didFinish];
     

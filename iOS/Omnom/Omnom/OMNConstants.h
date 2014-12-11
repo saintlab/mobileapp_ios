@@ -15,20 +15,6 @@ extern NSString * const kPushSoundName;
 #define CURRENT_VERSION ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"])
 #define CURRENT_BUILD ([[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey])
 
-enum {
-  
-  OMNErrorUnknoun = -1,
-  OMNErrorDefault = 0,
-  OMNErrorNoSuchUser = 101,
-
-  OMNErrorTimedOut = NSURLErrorTimedOut,
-  OMNErrorNotConnectedToInternet = NSURLErrorNotConnectedToInternet,
-  
-  OMNErrorOrderClosed = 300,
-  OMNErrorQrDecode,
-  
-};
-
 extern const CGFloat kOrderTableFooterHeight;
 
 @interface OMNConstants : NSObject

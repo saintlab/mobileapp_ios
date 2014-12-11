@@ -10,7 +10,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNUserInfoView.h"
 #import <OMNStyler.h>
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import <MobileCoreServices/UTCoreTypes.h>
 #import "OMNCameraPermission.h"
 #import "OMNCameraRollPermission.h"
@@ -45,7 +45,7 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   
   [super viewDidLoad];
   
-  _user = [[OMNAuthorisation authorisation].user copy];
+  _user = [[OMNAuthorization authorisation].user copy];
   
   self.automaticallyAdjustsScrollViewInsets = NO;
   self.view.backgroundColor = [UIColor whiteColor];

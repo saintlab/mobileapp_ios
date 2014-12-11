@@ -10,7 +10,6 @@
 #import <CardIO.h>
 #import "OMNConstants.h"
 #import <OMNCardEnterControl.h>
-#import "OMNAuthorisation.h"
 #import "OMNCardBrandView.h"
 #import "OMNBorderedButton.h"
 #import <OMNStyler.h>

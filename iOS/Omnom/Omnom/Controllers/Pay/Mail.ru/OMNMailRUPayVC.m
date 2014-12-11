@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNBankCardInfo.h"
 #import "OMNCardBrandView.h"
 #import "OMNLoadingCircleVC.h"
@@ -18,7 +18,7 @@
 #import "OMNOrder+network.h"
 #import "OMNOrder+omn_mailru.h"
 #import "OMNSocketManager.h"
-#import "OMNUtils.h"
+#import "OMNError.h"
 #import "UIImage+omn_helper.h"
 #import "UINavigationController+omn_replace.h"
 #import <BlocksKit.h>

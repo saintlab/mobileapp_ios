@@ -17,7 +17,6 @@
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
 #import <OMNMailRuPaymentInfo.h>
-#import "OMNAuthorisation.h"
 #import "OMNOrder+omn_mailru.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNOperationManager.h"

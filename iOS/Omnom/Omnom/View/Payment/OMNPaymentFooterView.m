@@ -187,7 +187,7 @@
   _order = order;
   [_tipsSelector setOrder:order];
   [self updatePercentAmountControl];
-  [self updateView];
+  [self updateToPayButton];
   
 }
 
@@ -258,13 +258,6 @@
     self.tipsMode = NO;
   }
   
-  [self updateView];
-  
-}
-
-- (void)updateView {
-  
-  [_tipsSelector update];
   [self updateToPayButton];
   
 }

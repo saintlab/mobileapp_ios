@@ -9,7 +9,7 @@
 #import "OMNVisitorManager.h"
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
-#import "OMNUtils.h"
+#import "OMNError.h"
 
 @implementation OMNVisitorManager {
   NSMutableDictionary *_visitors;
@@ -82,12 +82,16 @@
   [[OMNOperationManager sharedManager] PUT:@"/qr/decode" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if (responseObject[@"restaurant"]) {
+      
       OMNVisitor *visitor = [[OMNVisitor alloc] initWithJsonData:responseObject];
       successBlock(visitor);
+      
     }
     else {
+      
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters responseOperation:operation];
-      failureBlock([OMNUtils errorFromCode:OMNErrorQrDecode]);
+      failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeQrDecode]);
+      
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -115,7 +119,7 @@
   return cachedVisitor;
 }
 
-- (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(NSError *error))failure; {
+- (void)decodeBeacon:(OMNBeacon *)beacon success:(OMNVisitorBlock)success failure:(void (^)(OMNError *error))failure; {
 
   OMNVisitor *visitor = [self cachedVisitorForKey:beacon.key];
   if (visitor) {
@@ -130,19 +134,13 @@
   } failure:failure];
 }
 
-- (void)demoVisitor:(OMNVisitorBlock)completionBlock failure:(void (^)(NSError *error))failureBlock {
+- (void)demoVisitor:(OMNVisitorBlock)completionBlock failure:(void (^)(OMNError *error))failureBlock {
   
   __weak typeof(self)weakSelf = self;
-  NSString *path = @"ibeacons/demo";
+  NSString *path = @"/ibeacons/demo";
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    if ([responseObject isKindOfClass:[NSDictionary class]]) {
-      
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
-      failureBlock(nil);
-      
-    }
-    else {
+    if ([responseObject isKindOfClass:[NSArray class]]) {
       
       NSArray *visitors = [responseObject omn_visitors];
       OMNVisitor *visitor = [visitors firstObject];
@@ -155,21 +153,28 @@
       else {
         
         [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
+        failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
         
       }
+      
+    }
+    else {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path jsonResponse:responseObject];
+      failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
-    failureBlock(nil);
+    failureBlock([error omn_internetError]);
     
   }];
   
 }
 
-- (void)decodeBeacons:(NSArray *)beacons success:(OMNVisitorsBlock)success failure:(void (^)(NSError *error))failure {
+- (void)decodeBeacons:(NSArray *)beacons success:(OMNVisitorsBlock)success failure:(void (^)(OMNError *error))failure {
   
   if ([OMNConstants useStubBeaconDecodeData]) {
     
@@ -188,37 +193,37 @@
   }];
   
   if (![NSJSONSerialization isValidJSONObject:jsonBeacons]) {
-    failure(nil);
+    failure([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
     return;
   }
   
   __weak typeof(self)weakSelf = self;
   [[OMNOperationManager sharedManager] PUT:@"ibeacons/decode" parameters:jsonBeacons success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    if ([responseObject isKindOfClass:[NSDictionary class]]) {
-      
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
-      failure(nil);
-      
-    }
-    else {
+    if ([responseObject isKindOfClass:[NSArray class]]) {
       
       NSLog(@"ibeacons/decode>%lu", (unsigned long)beacons.count);
       NSArray *visitors = [responseObject omn_visitors];
       
       if (0 == visitors.count) {
-        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
+        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons jsonResponse:responseObject];
       }
       
       [weakSelf addVisitors:visitors];
       success(visitors);
       
     }
+    else {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
+      failure([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+      
+    }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
-    failure(error);
+    failure([error omn_internetError]);
     
   }];
   
@@ -239,14 +244,20 @@
       [[OMNAnalitics analitics] logEnterRestaurant:visitor foreground:NO];
       
       [visitor newGuestWithCompletion:^{
+        
         completion();
+        
       } failure:^(NSError *error) {
+        
         completion();
+        
       }];
       
     }
     else {
+      
       completion();
+      
     }
     
   } failure:^(NSError *error) {

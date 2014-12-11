@@ -95,15 +95,25 @@
   
 }
 
-- (void)showRetryMessageWithBlock:(dispatch_block_t)retryBlock {
+- (void)showRetryMessageWithError:(OMNError *)error retryBlock:(dispatch_block_t)retryBlock cancelBlock:(dispatch_block_t)cancelBlock {
+
+  OMNCircleRootVC *repeatVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  repeatVC.faded = YES;
+  if (error) {
+    
+    repeatVC.text = error.localizedDescription;
+    
+  }
+  else {
+    
+    repeatVC.text = NSLocalizedString(@"NO_OMNOM_CONNECTION_ERROR_TEXT", @"Нет связи с заведением.\nОфициант в помощь.");
+    
+  }
   
-  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self];
-  didFailOmnomVC.faded = YES;
-  didFailOmnomVC.text = NSLocalizedString(@"NO_OMNOM_CONNECTION_ERROR_TEXT", @"Нет связи с заведением.\nОфициант в помощь.");
-  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
-  
+  repeatVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  repeatVC.didCloseBlock = cancelBlock;
   __weak typeof(self)weakSelf = self;
-  didFailOmnomVC.buttonInfo =
+  repeatVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
 
@@ -119,7 +129,7 @@
     }]
     ];
   
-  [self.navigationController pushViewController:didFailOmnomVC animated:YES];
+  [self.navigationController pushViewController:repeatVC animated:YES];
   
 }
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNBankCardUserInfoItem.h"
 #import "OMNBankCardsVC.h"
 #import "OMNUser+network.h"
@@ -49,7 +49,7 @@
 
 - (void)reloadUserInfo {
   
-  [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
+  [[OMNAuthorization authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
 
   }];
 

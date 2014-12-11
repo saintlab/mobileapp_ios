@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import <Kiwi.h>
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNVisitorManager.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNOrder+omn_mailru.h"
@@ -28,7 +28,7 @@ describe(@"demo stand test", ^{
   
   beforeAll(^{
     
-    [[[OMNAuthorisation authorisation].token should] beNonNil];
+    [[[OMNAuthorization authorisation].token should] beNonNil];
     
     [[OMNVisitorManager manager] decodeBeacon:demoBeacon success:^(OMNVisitor *visitor) {
       
@@ -72,7 +72,7 @@ describe(@"demo stand test", ^{
 
     [[_order should] beNonNil];
 
-    [OMNUser userWithToken:[OMNAuthorisation authorisation].token user:^(OMNUser *user) {
+    [OMNUser userWithToken:[OMNAuthorization authorisation].token user:^(OMNUser *user) {
       
       [[user should] beNonNil];
       [[user.id should] equal:@"12"];

@@ -17,6 +17,4 @@
 
 @property (nonatomic, strong) OMNOrder *order;
 
-- (void)update;
-
 @end

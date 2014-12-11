@@ -8,7 +8,7 @@
 
 #import <Kiwi.h>
 #import "OMNVisitorManager.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNOrder+network.h"
 #import "NSString+omn_json.h"
 
@@ -20,7 +20,7 @@ describe(@"visitor test", ^{
   __block OMNVisitor *_visitor = nil;
   beforeAll(^{
     
-    [OMNAuthorisation authorisation];
+    [OMNAuthorization authorisation];
     
     _visitor = [OMNVisitor mock];
 
@@ -39,7 +39,7 @@ describe(@"visitor test", ^{
   it(@"should check initial conditions", ^{
     
     [[_visitor should] beNonNil];
-    [[[OMNAuthorisation authorisation].token should] beNonNil];
+    [[[OMNAuthorization authorisation].token should] beNonNil];
     
   });
   

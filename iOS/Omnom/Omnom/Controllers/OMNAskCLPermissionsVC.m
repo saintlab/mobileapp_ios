@@ -104,7 +104,7 @@
   __weak typeof(self)weakSelf = self;
   denyCLPermissionVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Повторить", nil) image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
       [weakSelf.navigationController popToViewController:weakSelf animated:YES];
       

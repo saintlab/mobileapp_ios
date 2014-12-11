@@ -18,7 +18,9 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
+    
     [self setup];
+    
   }
   return self;
 }
@@ -26,18 +28,23 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
   self = [super initWithCoder:coder];
   if (self) {
+    
     [self setup];
+    
   }
   return self;
 }
 
 - (void)setup {
+  
   _previousSelectedIndex = -1;
   [self setupButtons];
   self.backgroundColor = [UIColor clearColor];
+  
 }
 
 - (OMNTipButton *)tipButtonWithTag:(NSInteger)tag {
+  
   OMNTipButton *tipButton = [[OMNTipButton alloc] init];
   tipButton.translatesAutoresizingMaskIntoConstraints = NO;
   tipButton.tag = tag;
@@ -46,13 +53,16 @@
   [_contentView addSubview:tipButton];
   [_buttons addObject:tipButton];
   return tipButton;
+  
 }
 
 - (UIImageView *)seporatorView {
+  
   UIImageView *seporatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bill_tips_divider"]];
   seporatorView.translatesAutoresizingMaskIntoConstraints = NO;
   [_contentView addSubview:seporatorView];
   return seporatorView;
+  
 }
 
 - (void)setupButtons {
@@ -119,9 +129,14 @@
     _order.tipType = kTipTypeCustom;
   }
   
-  _previousSelectedIndex = _selectedIndex;
-  _selectedIndex = selectedIndex;
+  _previousSelectedIndex = self.selectedIndex;
   _order.selectedTipIndex = selectedIndex;
+  
+}
+
+- (NSInteger)selectedIndex {
+  
+  return _order.selectedTipIndex;
   
 }
 
@@ -132,8 +147,6 @@
     
     tipButton.tip = order.tips[idx];
     [order configureTipButton:tipButton];
-    BOOL selected = (idx == order.selectedTipIndex);
-    tipButton.selected = selected;
     
   }];
   
@@ -142,7 +155,6 @@
 - (void)setOrder:(OMNOrder *)order {
   
   _order = order;
-  _selectedIndex = order.selectedTipIndex;
   [self update];
   
 }

@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import <Kiwi.h>
 #import "OMNVisitorManager.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 
 SPEC_BEGIN(OMNDemoStandWaiterTests)
 
@@ -19,7 +19,7 @@ describe(@"waiter call tests", ^{
   
   beforeAll(^{
     
-    [[[OMNAuthorisation authorisation].token should] beNonNil];
+    [[[OMNAuthorization authorisation].token should] beNonNil];
     
     OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
     

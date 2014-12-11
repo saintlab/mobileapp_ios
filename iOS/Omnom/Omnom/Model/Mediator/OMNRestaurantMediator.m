@@ -11,10 +11,11 @@
 #import "OMNRestaurantActionsVC.h"
 #import "OMNVisitor+network.h"
 #import "OMNSearchVisitorVC.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNPushPermissionVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNPayOrderVC.h"
+#import "OMNError.h"
 
 @interface OMNRestaurantMediator ()
 <OMNUserInfoVCDelegate,
@@ -163,36 +164,14 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)callBillAction:(UIButton *)button {
+- (void)callBillAction:(__weak UIButton *)button {
   
   __weak typeof(self)weakSelf = self;
   button.enabled = NO;
-  [self searchVisitorWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
+  [self searchVisitorWithIcon:[UIImage imageNamed:@"bill_icon_white_big"] completion:^(OMNSearchVisitorVC *searchVisitorVC, OMNVisitor *visitor) {
     
-    [visitor getOrders:^(NSArray *orders) {
-      
-      if (searchBeaconVC) {
-
-        [searchBeaconVC finishLoading:^{
-          
-          [weakSelf checkPushNotificationForVisitor:visitor];
-          
-        }];
-        
-      }
-      else {
-        
-        [weakSelf checkPushNotificationForVisitor:visitor];
-        
-      }
-      button.enabled = YES;
-
-    } error:^(NSError *error) {
-      
-      [weakSelf processNoOrders];
-      button.enabled = YES;
-      
-    }];
+    [weakSelf getOrdersForVisitor:visitor searchVisitorVC:searchVisitorVC];
+    button.enabled = YES;
     
   } cancelBlock:^{
     
@@ -203,9 +182,37 @@ OMNPayOrderVCDelegate>
   
 }
 
+- (void)getOrdersForVisitor:(OMNVisitor *)visitor searchVisitorVC:(OMNSearchVisitorVC *)searchVisitorVC {
+  
+  __weak typeof(self)weakSelf = self;
+  [visitor getOrders:^(NSArray *orders) {
+    
+    if (searchVisitorVC) {
+      
+      [searchVisitorVC finishLoading:^{
+        
+        [weakSelf checkPushNotificationForVisitor:visitor];
+        
+      }];
+      
+    }
+    else {
+      
+      [weakSelf checkPushNotificationForVisitor:visitor];
+      
+    }
+    
+  } error:^(NSError *error) {
+    
+    [weakSelf processOrderError:error forVisitor:visitor];
+    
+  }];
+  
+}
+
 - (void)checkPushNotificationForVisitor:(OMNVisitor *)visitor {
 
-  if ([OMNAuthorisation authorisation].pushNotificationsRequested) {
+  if ([OMNAuthorization authorisation].pushNotificationsRequested) {
     
     [self processOrdersForVisitor:visitor];
     
@@ -267,13 +274,13 @@ OMNPayOrderVCDelegate>
 
 - (void)processNoOrders {
   
-  OMNCircleRootVC *didFailOmnomVC = [[OMNCircleRootVC alloc] initWithParent:self.restaurantActionsVC.r1VC];
-  didFailOmnomVC.faded = YES;
-  didFailOmnomVC.text = NSLocalizedString(@"На этом столике нет заказов", nil);
-  didFailOmnomVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
+  OMNCircleRootVC *noOrdersVC = [[OMNCircleRootVC alloc] initWithParent:self.restaurantActionsVC.r1VC];
+  noOrdersVC.faded = YES;
+  noOrdersVC.text = NSLocalizedString(@"На этом столике нет заказов", nil);
+  noOrdersVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
   
   __weak typeof(self)weakSelf = self;
-  didFailOmnomVC.buttonInfo =
+  noOrdersVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
       
@@ -281,7 +288,34 @@ OMNPayOrderVCDelegate>
       
     }]
     ];
-  [self pushViewController:didFailOmnomVC];
+  [self pushViewController:noOrdersVC];
+  
+}
+
+- (void)processOrderError:(NSError *)error forVisitor:(OMNVisitor *)visitor {
+  
+  OMNError *omnomError = [OMNError omnnomErrorFromError:error];
+  
+  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:self.restaurantActionsVC.r1VC];
+  noInternetVC.text = omnomError.localizedDescription;
+  noInternetVC.faded = YES;
+  noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  __weak typeof(self)weakSelf = self;
+  noInternetVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      
+      [weakSelf callBillAction:nil];
+      
+    }]
+    ];
+  noInternetVC.didCloseBlock = ^{
+    
+    [weakSelf popToRootViewControllerAnimated:YES];
+    
+  };
+  [self popToRootViewControllerAnimated:NO];
+  [self pushViewController:noInternetVC];
   
 }
 

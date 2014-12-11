@@ -25,13 +25,17 @@
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    
     [self setup];
+    
   }
   return self;
 }
 
 - (void)awakeFromNib {
+  
   [self setup];
+  
 }
 
 - (void)setup {
@@ -48,20 +52,16 @@
 
   [_tip removeObserver:self forKeyPath:NSStringFromSelector(@selector(selected))];
   _tip = tip;
-  [_tip addObserver:self forKeyPath:NSStringFromSelector(@selector(selected)) options:NSKeyValueObservingOptionNew context:NULL];
+  [_tip addObserver:self forKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
 
 }
 
 - (void)setSelected:(BOOL)selected {
   
-  if (selected) {
-    self.titleLabel.font = FuturaLSFOmnomLERegular(25.0f);
-  }
-  else {
-    self.titleLabel.font = FuturaLSFOmnomLERegular(17.0f);
-  }
-  
+  CGFloat fontSize = (selected) ? (25.0f) : (17.0f);
+  self.titleLabel.font = FuturaLSFOmnomLERegular(fontSize);
   [super setSelected:selected];
+  
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import <Kiwi.h>
 #import "OMNVisitorManager.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNOrder+network.h"
 #import "NSString+omn_json.h"
 

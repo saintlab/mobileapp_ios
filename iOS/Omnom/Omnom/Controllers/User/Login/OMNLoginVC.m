@@ -19,6 +19,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
 #import <TTTAttributedLabel.h>
+#import "OMNError.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate,
@@ -212,10 +213,10 @@ TTTAttributedLabelDelegate> {
 
 - (void)processLoginError:(NSError *)error {
   [self setNextButtonLoading:NO];
-  
+
   if (error) {
 
-    if (OMNErrorNoSuchUser == error.code) {
+    if (kOMNUserErrorCodeNoSuchUser == error.code) {
       
       [self setCreateUserHint];
       
@@ -265,11 +266,13 @@ TTTAttributedLabelDelegate> {
 }
 
 - (void)requestAuthorizationCode {
+  
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:self.decimalPhoneNumber];
   confirmCodeVC.allowChangePhoneNumber = YES;
   confirmCodeVC.delegate = self;
   [self.navigationController pushViewController:confirmCodeVC animated:YES];
   [self setNextButtonLoading:NO];
+  
 }
 
 #pragma mark - OMNConfirmCodeVCDelegate

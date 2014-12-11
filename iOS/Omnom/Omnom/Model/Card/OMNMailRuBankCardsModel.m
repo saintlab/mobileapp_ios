@@ -12,14 +12,14 @@
 #import "OMNPaymentAlertVC.h"
 #import "OMNMailRuBankCardMediator.h"
 #import "OMNBankCard.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNOrder+omn_mailru.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNOperationManager.h"
 #import "OMNOrderTansactionInfo.h"
 #import "OMNAnalitics.h"
 #import "OMNUtils.h"
-#import "NSError+omn_mailRu.h"
+#import "OMNError.h"
 
 @interface OMNBankCardInfo (omn_mailRuBankCardInfo)
 
@@ -76,7 +76,7 @@
     OMNMailRuCardInfo *mailRuCardInfo = [bankCardInfo omn_mailRuCardInfo];
     OMNOrderTansactionInfo *orderTansactionInfo = [[OMNOrderTansactionInfo alloc] initWithOrder:order];
     
-    [order getPaymentInfoForUser:[OMNAuthorisation authorisation].user cardInfo:mailRuCardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
+    [order getPaymentInfoForUser:[OMNAuthorization authorisation].user cardInfo:mailRuCardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
       
       [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
         
@@ -87,7 +87,7 @@
       } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
         
         [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" error:mailError request:request response:response];
-        NSError *omnomError = [mailError omn_mailRuToOmnomError];
+        NSError *omnomError = [OMNError omnnomErrorFromError:mailError];
         paymentFinishBlock(omnomError, ^{
           
           failureBlock(omnomError, nil);

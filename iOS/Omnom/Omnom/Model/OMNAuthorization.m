@@ -7,7 +7,7 @@
 //
 
 #import "OMNAnalitics.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNAuthorizationManager.h"
 #import "OMNNotifierManager.h"
 #import "OMNOperationManager.h"
@@ -20,11 +20,11 @@ static NSString * const kAuthorisationAccountName = @"test_account6";
 static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";
 static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotificationsRequestedKey";
 
-@interface OMNAuthorisation ()
+@interface OMNAuthorization ()
 
 @end
 
-@implementation OMNAuthorisation {
+@implementation OMNAuthorization {
   void(^_userNotificationRegisterCompletionBlock)(BOOL completion);
   void(^_remoteNotificationRegisterCompletionBlock)(BOOL completion);
 }
@@ -256,7 +256,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     [weakSelf updateUserInfoWithUser:user];
     block(YES);
     
-  } failure:^(NSError *error) {
+  } failure:^(OMNError *error) {
     
     block(NO);
     
@@ -288,7 +288,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 @implementation NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(void (^)(NSString *token))completion failure:(void(^)(NSError *))failureBlock {
+- (void)decodeToken:(void (^)(NSString *token))completion failure:(void(^)(OMNError *))failureBlock {
   
   if ([self[@"status"] isEqualToString:@"success"]) {
     
@@ -297,21 +297,24 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   }
   else {
     
+    OMNError *error = nil;
     NSString *message = self[@"error"][@"message"];
     if (message) {
       
-      NSError *error = [NSError errorWithDomain:NSStringFromClass(self.class)
-                                           code:[self[@"error"][@"code"] integerValue]
-                                       userInfo:@{NSLocalizedDescriptionKey : message}];
-      failureBlock(error);
+      error = [OMNError errorWithDomain:OMNUserErrorDomain
+                                   code:[self[@"error"][@"code"] integerValue]
+                               userInfo:@{NSLocalizedDescriptionKey : message}];
+      
       
     }
     else {
       
-      failureBlock(nil);
+      error = [OMNError userErrorFromCode:kOMNUserErrorCodeUnknoun];
       
     }
-
+    
+    failureBlock(error);
+    
   }
   
 }

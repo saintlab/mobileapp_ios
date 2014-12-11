@@ -10,7 +10,7 @@
 #import "OMNUtils.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <OMNStyler.h>
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 
 @interface OMNPaymentNotificationControl()
 
@@ -95,7 +95,7 @@
 
 + (void)showWithPaymentDetails:(OMNPaymentDetails *)paymentDetails {
   
-  if (![paymentDetails.userID isEqualToString:[OMNAuthorisation authorisation].user.id] &&
+  if (![paymentDetails.userID isEqualToString:[OMNAuthorization authorisation].user.id] &&
       0ll == paymentDetails.netAmount) {
     //don't show notificationControl for tips only payment 
     return;
@@ -112,7 +112,7 @@
   
   NSString *title = @"";
   
-  if ([paymentDetails.userID isEqualToString:[OMNAuthorisation authorisation].user.id] &&
+  if ([paymentDetails.userID isEqualToString:[OMNAuthorization authorisation].user.id] &&
       paymentDetails.tipAmount > 0) {
 
     if (paymentDetails.netAmount) {

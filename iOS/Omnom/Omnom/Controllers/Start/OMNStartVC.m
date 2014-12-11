@@ -9,7 +9,7 @@
 #import "OMNStartVC.h"
 #import "UIImage+omn_helper.h"
 #import "OMNNavigationControllerDelegate.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNAuthorizationVC.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNNavigationController.h"
@@ -40,7 +40,7 @@ OMNSearchRestaurantVCDelegate>
   self.backgroundView.image = [UIImage omn_imageNamed:@"LaunchImage-700"];
   
   __weak typeof(self)weakSelf = self;
-  [OMNAuthorisation authorisation].logoutCallback = ^{
+  [OMNAuthorization authorisation].logoutCallback = ^{
     
     [weakSelf dismissViewControllerAnimated:YES completion:^{
       
@@ -66,7 +66,7 @@ OMNSearchRestaurantVCDelegate>
   
   _initialCheckPerformed = YES;
   __weak typeof(self)weakSelf = self;
-  [[OMNAuthorisation authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
+  [[OMNAuthorization authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
     
     if (tokenIsValid) {
       

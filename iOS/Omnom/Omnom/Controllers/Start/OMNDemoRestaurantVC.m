@@ -44,17 +44,17 @@
     
     [weakSelf didFindVisitor:visitor];
     
-  } failure:^(NSError *error) {
+  } failure:^(OMNError *error) {
     
-    [weakSelf didFailOmnom];
+    [weakSelf didFailOmnom:error];
     
   }];
   
 }
 
-- (void)didFailOmnom {
+- (void)didFailOmnom:(OMNError *)error {
   
-  [self.delegate demoRestaurantVCDidFail:self];
+  [self.delegate demoRestaurantVCDidFail:self withError:error];
   
 }
 
@@ -65,10 +65,14 @@
   [_visitor.restaurant.decoration loadLogo:^(UIImage *image) {
     
     if (image) {
+      
       [weakSelf didLoadLogo];
+      
     }
     else {
-      [weakSelf didFailOmnom];
+      
+      [weakSelf didFailOmnom:[OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]];
+      
     }
     
   }];

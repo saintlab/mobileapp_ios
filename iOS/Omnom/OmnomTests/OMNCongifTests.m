@@ -11,7 +11,7 @@
 #import "OMNConstants.h"
 #import <OMNMailRuAcquiring.h>
 #import <OMNBeacon.h>
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 
 SPEC_BEGIN(OMNConfigTests)
 
@@ -48,7 +48,7 @@ describe(@"check initial state", ^{
   
   it(@"should check mail.ru config", ^{
     
-    [[[OMNAuthorisation authorisation].token should] beNonNil];
+    [[[OMNAuthorization authorisation].token should] beNonNil];
     
     __block NSNumber *isConfigLoaded = nil;
     [OMNConstants setupWithLaunchOptions:nil completion:^{

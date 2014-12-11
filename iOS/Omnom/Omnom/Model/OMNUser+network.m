@@ -8,30 +8,27 @@
 
 #import "OMNUser+network.h"
 #import "OMNAuthorizationManager.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNAnalitics.h"
 #import "OMNUtils.h"
 #import "OMNImageManager.h"
 
 @implementation OMNUser (network)
 
-- (void)registerWithCompletion:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock {
+- (void)registerWithCompletion:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock {
   
   NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
   
   if (0 == self.email.length ||
       0 == self.phone.length) {
-    
-    failureBlock([NSError errorWithDomain:NSStringFromClass(self.class)
-                                     code:0
-                                 userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Введите почту и телефон", nil)}]);
+    failureBlock([OMNError userErrorFromCode:kOMNUserErrorCodeNoEmailAndPhone]);
     return;
   }
   
   NSMutableDictionary *parameters =
   [@{
-     @"installId" : [OMNAuthorisation authorisation].installId,
+     @"installId" : [OMNAuthorization authorisation].installId,
      @"email" : self.email,
      @"phone" : self.phone,
      } mutableCopy];
@@ -42,7 +39,7 @@
   
   parameters[@"birth_date"] = self.birthDateString;
   
-  [[OMNAuthorizationManager sharedManager] POST:@"register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNAuthorizationManager sharedManager] POST:@"/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject omn_isSuccessResponse]) {
       
@@ -51,7 +48,7 @@
     }
     else {
       
-      failureBlock([responseObject omn_internetError]);
+      failureBlock([responseObject omn_userError]);
       
     }
     
@@ -64,7 +61,7 @@
   
 }
 
-- (void)verifyPhoneCode:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
+- (void)verifyPhoneCode:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(OMNError *error))failureBlock {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithObject:self.phone forKey:@"phone"];
   if (code.length) {
@@ -84,7 +81,7 @@
   
 }
 
-- (void)confirmPhone:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
+- (void)confirmPhone:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(OMNError *error))failureBlock {
   
   NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
@@ -108,7 +105,7 @@
   
 }
 
-- (void)confirmPhoneResend:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock {
+- (void)confirmPhoneResend:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock {
   
   NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
@@ -132,7 +129,7 @@
   
 }
 
-+ (void)loginUsingData:(NSString *)data code:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
++ (void)loginUsingData:(NSString *)data code:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(OMNError *error))failureBlock {
   
   NSAssert(completion != nil, @"completion block is nil");
   NSAssert(failureBlock != nil, @"failureBlock block is nil");
@@ -147,9 +144,7 @@
   }
   else {
     
-    failureBlock([NSError errorWithDomain:NSStringFromClass(self.class)
-                                     code:0
-                                 userInfo:@{NSLocalizedDescriptionKey : NSLocalizedString(@"Неправильная почта или телефон", nil)}]);
+    failureBlock([OMNError userErrorFromCode:kOMNUserErrorCodeNoEmailAndPhone]);
     return;
     
   }
@@ -158,14 +153,14 @@
   
 }
 
-+ (void)recoverUsingData:(NSString *)data completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *error))failureBlock {
++ (void)recoverUsingData:(NSString *)data completion:(dispatch_block_t)completionBlock failure:(void (^)(OMNError *error))failureBlock {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
   if ([data omn_isValidPhone]) {
     parameters[@"phone"] = data;
   }
   
-  [[OMNAuthorizationManager sharedManager] POST:@"recover" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNAuthorizationManager sharedManager] POST:@"/recover" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject omn_isSuccessResponse]) {
       
@@ -186,9 +181,9 @@
   
 }
 
-+ (void)loginWithParameters:(NSDictionary *)parameters completion:(void (^)(NSString *token))completion failure:(void (^)(NSError *error))failureBlock {
++ (void)loginWithParameters:(NSDictionary *)parameters completion:(void (^)(NSString *token))completion failure:(void (^)(OMNError *error))failureBlock {
   
-  [[OMNAuthorizationManager sharedManager] POST:@"authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNAuthorizationManager sharedManager] POST:@"/authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     [responseObject decodeToken:completion failure:failureBlock];
     
@@ -201,7 +196,7 @@
   
 }
 
-+ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(void (^)(NSError *error))failureBlock {
++ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(void (^)(OMNError *error))failureBlock {
   
   NSDictionary *parameters =
   @{
@@ -238,7 +233,7 @@
   @{
     @"longitude" : @(coordinates.longitude),
     @"latitude" : @(coordinates.latitude),
-    @"token" : [OMNAuthorisation authorisation].token,
+    @"token" : [OMNAuthorization authorisation].token,
     };
   
   [[OMNAuthorizationManager sharedManager] POST:@"/user/geo" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -257,7 +252,7 @@
   
 }
 
-- (void)loadImageWithCompletion:(dispatch_block_t)completion failure:(void (^)(NSError *error))failureBlock {
+- (void)loadImageWithCompletion:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock {
   
   if (nil == self.avatar) {
     failureBlock(nil);
@@ -283,9 +278,9 @@
   
 }
 
-- (void)uploadImage:(UIImage *)image withCompletion:(dispatch_block_t)completion progress:(void (^)(CGFloat percent))progressBlock failure:(void (^)(NSError *error))failureBlock {
+- (void)uploadImage:(UIImage *)image withCompletion:(dispatch_block_t)completion progress:(void (^)(CGFloat percent))progressBlock failure:(void (^)(OMNError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorisation authorisation].token];
+  NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorization authorisation].token];
   AFHTTPRequestOperation *operation = [[OMNAuthorizationManager sharedManager] POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     
     [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.9f) name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
@@ -305,7 +300,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
   
@@ -322,7 +317,7 @@
   
 }
 
-- (void)updateUserInfoWithUserAndImage:(OMNUser *)user withCompletion:(dispatch_block_t)completion failure:(void(^)(NSError *))failureBlock {
+- (void)updateUserInfoWithUserAndImage:(OMNUser *)user withCompletion:(dispatch_block_t)completion failure:(void(^)(OMNError *))failureBlock {
   
   if (user.image) {
     
@@ -350,14 +345,14 @@
   
 }
 
-- (void)updateUserInfoWithUser:(OMNUser *)user withCompletion:(dispatch_block_t)completion failure:(void(^)(NSError *))failureBlock {
+- (void)updateUserInfoWithUser:(OMNUser *)user withCompletion:(dispatch_block_t)completion failure:(void(^)(OMNError *))failureBlock {
   
   if (nil == user) {
     failureBlock(nil);
     return;
   }
   
-  NSString *token = [OMNAuthorisation authorisation].token;
+  NSString *token = [OMNAuthorization authorisation].token;
   NSDictionary *parameters =
   @{
     @"token" : token,
@@ -371,7 +366,7 @@
     if ([responseObject omn_isSuccessResponse]) {
     
       OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-      [[OMNAuthorisation authorisation] updateUserInfoWithUser:user];
+      [[OMNAuthorization authorisation] updateUserInfoWithUser:user];
       completion();
       
     }
@@ -390,11 +385,11 @@
   
 }
 
-- (void)recoverWithCompletion:(void (^)(NSURL *url))completion failure:(void (^)(NSError *error))failureBlock {
+- (void)recoverWithCompletion:(void (^)(NSURL *url))completion failure:(void (^)(OMNError *error))failureBlock {
   
   NSDictionary *parameters =
   @{
-    @"token" : [OMNAuthorisation authorisation].token,
+    @"token" : [OMNAuthorization authorisation].token,
     };
   [[OMNAuthorizationManager sharedManager] GET:@"/recover" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     

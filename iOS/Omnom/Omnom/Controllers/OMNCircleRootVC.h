@@ -19,7 +19,7 @@
 @property (nonatomic, strong) UIImage *circleIcon;
 @property (nonatomic, strong) UIImage *circleBackground;
 
-@property (nonatomic, strong) dispatch_block_t didCloseBlock;
+@property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent;
 

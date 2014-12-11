@@ -9,7 +9,7 @@
 #import "OMNAuthorizationVC.h"
 #import "OMNLoginVC.h"
 #import "OMNRegisterUserVC.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNWizardPageVC.h"
 #import "OMNConstants.h"
 #import "OMNToolbarButton.h"
@@ -123,13 +123,17 @@
 - (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token fromRegstration:(BOOL)fromRegstration {
   
   __weak typeof(self)weakSelf = self;
-  [[OMNAuthorisation authorisation] updateAuthenticationToken:token withBlock:^(BOOL tokenIsValid) {
+  [[OMNAuthorization authorisation] updateAuthenticationToken:token withBlock:^(BOOL tokenIsValid) {
     
     if (fromRegstration) {
+      
       [[OMNAnalitics analitics] logRegister];
+      
     }
     else {
+      
       [[OMNAnalitics analitics] logLogin];
+      
     }
     [weakSelf processAuthorisation];
     

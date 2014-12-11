@@ -23,13 +23,6 @@ extern NSString *omnCommaString();
 + (NSString *)commaStringFromKop:(long long)kop;
 + (NSString *)formatedStringFromRub:(long long)rub;
 + (NSString *)unitStringFromDouble:(double)value;
-+ (NSError *)errorFromCode:(NSInteger)code;
-
-@end
-
-@interface NSError (omn_internet)
-
-- (NSError *)omn_internetError;
 
 @end
 
@@ -42,9 +35,8 @@ extern NSString *omnCommaString();
 
 @end
 
-@interface NSObject (omn_userError)
+@interface NSObject (omn_response)
 
-- (NSError *)omn_userError;
 - (BOOL)omn_isSuccessResponse;
 
 @end

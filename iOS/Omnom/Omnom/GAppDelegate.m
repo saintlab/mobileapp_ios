@@ -8,7 +8,7 @@
 
 #import "GAppDelegate.h"
 #import "OMNAnalitics.h"
-#import "OMNAuthorisation.h"
+#import "OMNAuthorization.h"
 #import "OMNBeaconBackgroundManager.h"
 #import "OMNOperationManager.h"
 #import "OMNStartVC.h"
@@ -37,7 +37,7 @@
     
     [[OMNAnalitics analitics] setup];
     
-    [[OMNAuthorisation authorisation] registerForRemoteNotificationsIfPossible];
+    [[OMNAuthorization authorisation] registerForRemoteNotificationsIfPossible];
     
     [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
       
@@ -119,21 +119,21 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
-  [[OMNAuthorisation authorisation] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  [[OMNAuthorization authorisation] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
   [OMNAnalitics analitics].deviceToken = deviceToken;
   NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken>%@", deviceToken);
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   
-  [[OMNAuthorisation authorisation] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+  [[OMNAuthorization authorisation] application:application didFailToRegisterForRemoteNotificationsWithError:error];
   
 }
 
 #ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
 
-  [[OMNAuthorisation authorisation] application:application didRegisterUserNotificationSettings:notificationSettings];
+  [[OMNAuthorization authorisation] application:application didRegisterUserNotificationSettings:notificationSettings];
   
 }
 #endif

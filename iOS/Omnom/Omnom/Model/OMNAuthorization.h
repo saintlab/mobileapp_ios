@@ -7,8 +7,9 @@
 //
 
 #import "OMNUser.h"
+#import "OMNError.h"
 
-@interface OMNAuthorisation : NSObject
+@interface OMNAuthorization : NSObject
 
 @property (nonatomic, copy, readonly) NSString *token;
 @property (nonatomic, strong, readonly) OMNUser *user;
@@ -38,6 +39,6 @@
 
 @interface NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(void (^)(NSString *token))completion failure:(void(^)(NSError *))failureBlock;
+- (void)decodeToken:(void (^)(NSString *token))completion failure:(void(^)(OMNError *))failureBlock;
 
 @end

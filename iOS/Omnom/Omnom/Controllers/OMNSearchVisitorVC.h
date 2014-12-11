@@ -21,6 +21,4 @@ typedef void(^OMNSearchBeaconVCBlock)(OMNSearchVisitorVC *searchBeaconVC, OMNVis
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
 
-- (void)didFailOmnom;
-
 @end
