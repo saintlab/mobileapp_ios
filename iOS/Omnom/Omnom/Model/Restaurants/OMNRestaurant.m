@@ -31,12 +31,15 @@
   
   self = [super init];
   if (self) {
+
     self.id = [jsonData[@"id"] description];
     self.is_demo = [jsonData[@"is_demo"] boolValue];
     self.title = jsonData[@"title"];
     self.Description = jsonData[@"description"];
     self.decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
     self.mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
+    self.settings = [[OMNRestaurantSettings alloc] initWithJsonData:jsonData[@"settings"]];
+
   }
   return self;
 }

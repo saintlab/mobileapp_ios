@@ -11,6 +11,7 @@
 #import "OMNRestaurantInfo.h"
 #import "OMNPushTexts.h"
 #import "OMNRestaurantDecoration.h"
+#import "OMNRestaurantSettings.h"
 
 typedef void(^GRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
@@ -24,6 +25,7 @@ typedef void(^GMenuBlock)(OMNMenu *menu);
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, strong) OMNRestaurantDecoration *decoration;
 @property (nonatomic, strong) OMNPushTexts *mobile_texts;
+@property (nonatomic, strong) OMNRestaurantSettings *settings;
 
 @property (nonatomic, strong) OMNRestaurantInfo *info;
 

@@ -74,7 +74,7 @@
   
   [_navigationController didMoveToParentViewController:self];
   
-  [self setWaiterCallButtons];
+  [self setRestaurantActionButtons];
   
 }
 
@@ -93,13 +93,17 @@
 }
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
+  
   UIViewController *visibleViewController = _navigationController.childViewControllerForStatusBarHidden;
   return visibleViewController;
+  
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
+  
   UIViewController *visibleViewController = _navigationController.childViewControllerForStatusBarStyle;
   return visibleViewController;
+  
 }
 
 - (void)setVisitor:(OMNVisitor *)visitor {
@@ -116,7 +120,7 @@
     }
     else {
       
-      [weakSelf setWaiterCallButtons];
+      [weakSelf setRestaurantActionButtons];
       
     }
     
@@ -124,24 +128,28 @@
   
 }
 
-- (void)setWaiterCallButtons {
+- (void)setRestaurantActionButtons {
   
   [self addActionBoardIfNeeded];
-  UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
-  OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")];
-  [callWaiterButton addTarget:_restaurantMediator action:@selector(callWaiterAction:) forControlEvents:UIControlEventTouchUpInside];
-  [callWaiterButton sizeToFit];
 
   UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт")];
   [callBillButton addTarget:_restaurantMediator action:@selector(callBillAction:) forControlEvents:UIControlEventTouchUpInside];
   
   self.bottomToolbar.hidden = NO;
+  
+  UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
+  OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")];
+  [callWaiterButton addTarget:_restaurantMediator action:@selector(callWaiterAction:) forControlEvents:UIControlEventTouchUpInside];
+  [callWaiterButton sizeToFit];
+  
   self.bottomToolbar.items =
   @[
     [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
     [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
     ];
+
+  callWaiterButton.hidden = !self.visitor.restaurant.settings.has_waiter_call;
   
 }
 
