@@ -17,6 +17,7 @@ typedef void(^OMNNearestBeaconsBlock)(OMNFoundBeacons *foundBeacons);
 @property (nonatomic, strong, readonly) NSDate *startDate;
 @property (nonatomic, assign, readonly) BOOL isRanging;
 
+- (instancetype)init __attribute__((unavailable("init not available")));
 - (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)authorizationStatusBlock;
 
 - (void)findNearestBeacons:(OMNNearestBeaconsBlock)didFindNearestBeaconsBlock;

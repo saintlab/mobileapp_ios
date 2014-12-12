@@ -276,6 +276,7 @@
     _tipAmountPercentValue = _amountPercentControl.amountPercentValue;
     _order.customTip.percent = _tipAmountPercentValue.percent;
     _order.tipType = kTipTypeCustomPercent;
+    _tipsSelector.order = _order;
     
   }
   else {

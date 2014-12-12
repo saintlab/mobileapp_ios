@@ -31,14 +31,6 @@
   
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    NSAssert(YES, @"call initWithStatusBlock: instead");
-  }
-  return self;
-}
-
 - (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)authorizationStatusBlock {
   self = [super init];
   if (self) {

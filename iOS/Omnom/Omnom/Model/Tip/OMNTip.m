@@ -38,7 +38,7 @@
   
   __block long long tipAmount = 0ll;
   if (self.custom ||
-      value > _maxThreshold) {
+      value >= _maxThreshold) {
     
     tipAmount = value * self.percent * 0.01l;
     
