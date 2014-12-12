@@ -28,7 +28,7 @@
 
 - (void)omn_setup {
   
-  UIImageView *endBillIV = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"bill_zubchiki"] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeTile]];
+  UIImageView *endBillIV = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"zub"] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeTile]];
   endBillIV.translatesAutoresizingMaskIntoConstraints = NO;
   [endBillIV setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
   [self addSubview:endBillIV];
@@ -61,7 +61,7 @@
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bgView]|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[endBillIV]|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bgView][endBillIV]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bgView]-(-0.5)-[endBillIV]|" options:kNilOptions metrics:metrics views:views]];
   
   [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[totalLabel]|" options:kNilOptions metrics:metrics views:views]];
   [bgView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[totalLabel]|" options:kNilOptions metrics:metrics views:views]];

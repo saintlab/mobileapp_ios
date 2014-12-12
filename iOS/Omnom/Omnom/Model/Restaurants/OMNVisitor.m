@@ -33,6 +33,10 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
   self = [super init];
   if (self) {
     
+//    NSData *data1 = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
+//    NSLog(@"%@", [[NSString alloc] initWithData:data1 encoding:NSUTF8StringEncoding]);
+
+    
     _foundDate = [NSDate date];
     _decodeBeaconData = data;
     _beacon = [[OMNBeacon alloc] initWithJsonData:data[@"beacon"]];

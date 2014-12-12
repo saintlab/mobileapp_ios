@@ -39,16 +39,16 @@
     
     CGRect tableFrame = CGRectMake(0.0f,0.0f, tableWidth, tableHeight);
     _tableView = [[OMNOrderTableView alloc] initWithFrame:tableFrame style:UITableViewStylePlain];
-    _tableView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
     _tableView.dataSource = _orderDataSource;
     _tableView.delegate = _orderDataSource;
     _tableView.userInteractionEnabled = NO;
     _tableView.allowsSelection = NO;
-    _tableView.transform = CGAffineTransformMakeScale(scale, scale);
     [self addSubview:_tableView];
     
     _orderTotalView = [[OMNOrderTotalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_tableView.frame), kOrderTableFooterHeight)];
     _tableView.tableFooterView = _orderTotalView;
+    _tableView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
+    _tableView.transform = CGAffineTransformMakeScale(scale, scale);
     
     [_orderDataSource registerCellsForTableView:_tableView];
   }

@@ -147,7 +147,7 @@
   _l4 = [self label];
 //  [_contentView addSubview:_l4];
   
-  UIImageView *chequeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bill_zubchiki"]];
+  UIImageView *chequeImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"zub"] resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeTile]];
   chequeImageView.translatesAutoresizingMaskIntoConstraints = NO;
   [_contentView addSubview:chequeImageView];
   
