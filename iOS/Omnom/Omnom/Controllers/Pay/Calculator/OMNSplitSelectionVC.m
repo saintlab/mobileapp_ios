@@ -63,7 +63,7 @@ UIPickerViewDelegate>
 
 - (void)updateTotalValue {
   
-  [self.delegate totalDidChange:ceil((double)_total / _numberOfGuests)];
+  [self.delegate totalDidChange:ceil((double)_total / _numberOfGuests) showPaymentButton:YES];
   
 }
 

@@ -101,7 +101,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [_containerView addSubview:self.firstViewController.view];
   [self.firstViewController didMoveToParentViewController:self];
   [self.view bringSubviewToFront:_fadeView];
-  [self totalDidChange:_order.selectedItemsTotal];
+  [self totalDidChange:_order.selectedItemsTotal showPaymentButton:_order.hasSelectedItems];
   
 }
 
@@ -252,13 +252,13 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 #pragma mark - GCalculatorVCDelegate
 
-- (void)totalDidChange:(long long)total {
+- (void)totalDidChange:(long long)total showPaymentButton:(BOOL)showPaymentButton {
   
   _total = total;
   [UIView animateWithDuration:0.3 animations:^{
     
     UIEdgeInsets insets = UIEdgeInsetsZero;
-    if (_total > 0) {
+    if (showPaymentButton) {
       
       insets = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_fadeView.frame), 0.0f);
       _fadeView.alpha = 1.0f;
@@ -267,7 +267,9 @@ const CGFloat kCalculatorTopOffset = 40.0f;
       
     }
     else {
+      
       _fadeView.alpha = 0.0f;
+      
     }
     _firstViewController.tableView.scrollIndicatorInsets = insets;
     _firstViewController.tableView.contentInset = insets;

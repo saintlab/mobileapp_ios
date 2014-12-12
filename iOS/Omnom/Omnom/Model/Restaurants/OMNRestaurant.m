@@ -29,6 +29,9 @@
     return nil;
   }
   
+//  NSData *data = [NSJSONSerialization dataWithJSONObject:jsonData options:NSJSONWritingPrettyPrinted error:nil];
+//  NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+//  
   self = [super init];
   if (self) {
 

@@ -101,6 +101,7 @@ OMNSearchRestaurantVCDelegate>
 //  searchRestaurantVC.qr = @"qr-code-for-2-saintlab-iiko";
 //  searchRestaurantVC.qr = @"qr-code-3-at-saintlab-iiko";
 //  searchRestaurantVC.qr = @"http://omnom.menu/qr/special-and-vip";
+//  searchRestaurantVC.qr = @"http://m.2gis.ru/os/";
 
   NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
   if (decodeBeaconData) {

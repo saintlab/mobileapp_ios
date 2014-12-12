@@ -123,10 +123,9 @@
 
 - (void)updateTotalValue {
 
-  if ([self.delegate respondsToSelector:@selector(totalDidChange:)]) {
+  if ([self.delegate respondsToSelector:@selector(totalDidChange:showPaymentButton:)]) {
     
-    double selectedItemsTotal = [_order selectedItemsTotal];
-    [self.delegate totalDidChange:selectedItemsTotal];
+    [self.delegate totalDidChange:_order.selectedItemsTotal showPaymentButton:_order.hasSelectedItems];
     
   }
   

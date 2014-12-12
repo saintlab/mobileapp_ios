@@ -14,6 +14,6 @@
 - (void)calculatorVC:(OMNCalculatorVC *)calculatorVC splitType:(SplitType)splitType didFinishWithTotal:(long long)total;
 - (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC;
 @optional
-- (void)totalDidChange:(long long)total;
+- (void)totalDidChange:(long long)total showPaymentButton:(BOOL)showPaymentButton;
 
 @end
