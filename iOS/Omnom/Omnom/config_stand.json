@@ -1,10 +1,4 @@
 {
   "baseUrlString" : "http://omnom.stand.saintlab.com",
-  "authorizationUrlString" : "http://wicket.stand.saintlab.com",
-  
-  "MixpanelToken" : "e9386a1100754e8f62565a1b8cda8d8c",
-  
-  "UseStubBeacon" : "false",
-  "UseStubBeaconDecodeData" : "false",
-  "UseStubOrdersData" : "false"
+  "authorizationUrlString" : "http://wicket.stand.saintlab.com"
 }

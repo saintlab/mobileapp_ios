@@ -23,10 +23,14 @@
     _total_amount = order.enteredAmountWithTips;
     
     if (_bill_amount) {
+      
       _tips_percent = (double)_tips_amount/_bill_amount;
+      
     }
     else {
-      _tips_percent = 0.0l;
+      
+      _tips_percent = 0.0;
+      
     }
     
     _tips_way = stringFromTipType(order.tipType);

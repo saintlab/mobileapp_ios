@@ -20,8 +20,10 @@
 }
 
 - (long long)net_amount {
+  
   long long net_amount = MAX(0ll, self.total_amount - self.tip_amount);
   return net_amount;
+  
 }
 
 @end

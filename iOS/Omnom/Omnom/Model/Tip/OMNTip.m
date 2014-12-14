@@ -40,7 +40,7 @@
   if (self.custom ||
       value >= _maxThreshold) {
     
-    tipAmount = value * self.percent * 0.01l;
+    tipAmount = value * self.percent * 0.01;
     
   }
   else {

@@ -193,7 +193,7 @@ NSString *omnCommaString() {
 - (NSTimeInterval)omn_timeStamp {
   
   if (![self isKindOfClass:[NSDictionary class]]) {
-    return 0.0l;
+    return 0.0;
   }
   
   NSDictionary *dictionary = (NSDictionary *)self;

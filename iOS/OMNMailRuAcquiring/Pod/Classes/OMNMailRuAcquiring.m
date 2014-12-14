@@ -193,7 +193,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
   NSAssert(completionBlock != nil, @"cardVerify completionBlock is nil");
   NSAssert(failureBlock != nil, @"cardVerify failureBlock is nil");
   
-  if (amount <= 0.0l) {
+  if (amount <= 0.0) {
     failureBlock(errorWithCode(kOMNMailRuErrorCodeCardAmount), nil, nil);
     return;
   }

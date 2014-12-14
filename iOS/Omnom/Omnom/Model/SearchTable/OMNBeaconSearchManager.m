@@ -72,8 +72,7 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
 
 - (void)startSearching {
   
-  if (TARGET_IPHONE_SIMULATOR ||
-      [OMNConstants useStubBeacon]) {
+  if (TARGET_IPHONE_SIMULATOR) {
     
     NSArray *beacons = @[[OMNBeacon demoBeacon]];
     [self processAtTheTableBeacons:beacons allBeacons:beacons];

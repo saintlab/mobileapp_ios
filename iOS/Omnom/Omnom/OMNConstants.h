@@ -33,8 +33,4 @@ extern const CGFloat kOrderTableFooterHeight;
 
 + (NSString *)pushSoundName;
 
-+ (BOOL)useStubBeacon;
-+ (BOOL)useStubBeaconDecodeData;
-+ (BOOL)useStubOrdersData;
-
 @end

@@ -129,7 +129,7 @@
   
   NSString *priceQuantityString = nil;
   NSString *priceString = [OMNUtils commaStringFromKop:orderItem.price_per_item];
-  if (orderItem.quantity != 1.0l) {
+  if (orderItem.quantity != 1.0) {
     
     priceQuantityString = [NSString stringWithFormat:@"%@ x %@", [OMNUtils unitStringFromDouble:orderItem.quantity], priceString];
     

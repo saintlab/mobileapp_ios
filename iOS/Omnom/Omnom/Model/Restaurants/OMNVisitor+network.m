@@ -55,16 +55,6 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
 
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
   
-  if ([OMNConstants useStubOrdersData]) {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"orders" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    NSArray *ordersData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    NSArray *orders = [ordersData omn_decodeOrdersWithError:nil];
-    self.orders = orders;
-    ordersBlock(orders);
-    return;
-  }
-  
   __weak typeof(self)weakSelf = self;
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant.id, self.table.id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {

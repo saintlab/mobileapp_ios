@@ -205,7 +205,7 @@
 
 - (void)updateAmountForPercentLabel {
 
-  long long amount = _order.enteredAmount*_amountPercentControl.amountPercentValue.percent/100.0l;
+  long long amount = _order.enteredAmount*_amountPercentControl.amountPercentValue.percent/100.0;
   _amountForPercentLabel.text = [NSString stringWithFormat:@"или %@%@", [OMNUtils evenCommaStringFromKop:amount], kRubleSign];
   
 }

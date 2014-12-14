@@ -14,20 +14,21 @@
 
 SPEC_BEGIN(OMNOrderTests)
 
-describe(@"visitor test", ^{
+describe(@"order test", ^{
   
-//  __block OMNOrder *_order = nil;
+  __block OMNOrder *_order = nil;
   __block OMNVisitor *_visitor = nil;
   beforeAll(^{
     
     [OMNAuthorization authorisation];
-    
+
+    id orderData = [@"orders_stub.json" omn_jsonObjectNamedForClass:self.class];
+    NSArray *orders = [orderData omn_decodeOrdersWithError:nil];
+    _order = [orders firstObject];
     _visitor = [OMNVisitor mock];
 
     [_visitor stub:@selector(getOrders:error:) withBlock:^id(NSArray *params) {
       
-      id orderData = [@"orders_stub.json" omn_jsonObjectNamedForClass:self.class];
-      NSArray *orders = [orderData omn_decodeOrdersWithError:nil];
       OMNOrdersBlock ordersBlock = params[1];
       ordersBlock(orders);
       return nil;
@@ -39,7 +40,46 @@ describe(@"visitor test", ^{
   it(@"should check initial conditions", ^{
     
     [[_visitor should] beNonNil];
-    [[[OMNAuthorization authorisation].token should] beNonNil];
+    [[_order should] beNonNil];
+    
+  });
+  
+  it(@"should check tips initial conditions", ^{
+    
+    [[_order.tips should] beNonNil];
+    [[@(_order.tips.count) should] equal:@(4)];
+    [[@(_order.selectedTipIndex) should] equal:@(1)];
+    [[_order.customTip should] beNonNil];
+    [[@(_order.customTip.custom) should] equal:@(YES)];
+    
+  });
+  
+  it(@"should check initial entered amount", ^{
+    
+    [[@(_order.enteredAmount) should] equal:@(_order.totalAmount - _order.paid.net_amount)];
+    
+  });
+  
+  it(@"should check tips border values", ^{
+    
+    long long enterdAmount = 100ll;
+    _order.enteredAmount = enterdAmount;
+    [[@(_order.enteredAmount) should] equal:@(enterdAmount)];
+    
+    OMNTip *tip = _order.tips[_order.selectedTipIndex];
+    [[@(_order.enteredAmountWithTips) should] equal:@([tip amountForValue:enterdAmount] + enterdAmount)];
+    
+    [tip.thresholds enumerateObjectsUsingBlock:^(NSNumber *threshold, NSUInteger idx, BOOL *stop) {
+      
+      NSNumber *tipAmount = tip.amounts[idx];
+      [[@([tip amountForValue:threshold.longLongValue - 1ll]) should] equal:tipAmount];
+      
+    }];
+    
+    long long maxTheshold = [tip.thresholds.lastObject longLongValue];
+    [[@([tip amountForValue:maxTheshold]) should] equal:@(maxTheshold*tip.percent*0.01)];
+    
+    [[@([tip amountForValue:maxTheshold - 1ll]) should] equal:[tip.amounts lastObject]];
     
   });
   
@@ -55,76 +95,6 @@ describe(@"visitor test", ^{
     }];
     
   });
-  
-/*
-  it(@"should get orders", ^{
-    
-    __block NSArray *_oredrs = nil;
-    [_visitor getOrders:^(NSArray *orders) {
-      
-      _oredrs = orders;
-      
-    } error:^(NSError *error) {
-      
-    }];
-    
-  });
-  
-  it(@"should create bill", ^{
-    
-    __block OMNBill *_bill = nil;
-    [_order createBill:^(OMNBill *bill) {
-      
-      _bill = bill;
-      
-    } failure:^(NSError *error) {
-      
-    }];
-    
-#warning    [[expectFutureValue(_bill) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
-#warning    [[_bill.table_id should] equal:_order.table_id];
-    
-  });
-  
-  it(@"should call bill", ^{
-    
-#warning    [[_order should] beNonNil];
-    
-    __block NSNumber *is_billCall = nil;
-    [_order billCall:^{
-      
-      is_billCall = @(YES);
-      
-    } failure:^(NSError *error) {
-      
-    }];
-    
-#warning    [[expectFutureValue(is_billCall) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
-    
-  });
-  
-  it(@"should stop call bill", ^{
-    
-#warning    [[_order should] beNonNil];
-    
-    __block NSNumber *is_billCallStop = nil;
-    __block NSError *_error = nil;
-    [_order billCallStop:^{
-      
-      is_billCallStop = @(YES);
-      
-    } failure:^(NSError *error) {
-      
-      _error = error;
-      NSLog(@"should stop call bill error> %@", error);
-    }];
-    
-    
-#warning    [[expectFutureValue(is_billCallStop) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
-#warning    [[expectFutureValue(_error) shouldEventuallyBeforeTimingOutAfter(10.0)] beNil];
-    
-  });
-  */
   
 });
 

@@ -195,14 +195,4 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   return nil;
 }
 
-+ (BOOL)useStubBeacon {
-  return [self boolForKey:@"UseStubBeacon"];
-}
-+ (BOOL)useStubBeaconDecodeData {
-  return [self boolForKey:@"UseStubBeaconDecodeData"];
-}
-+ (BOOL)useStubOrdersData {
-  return [self boolForKey:@"UseStubOrdersData"];
-}
-
 @end

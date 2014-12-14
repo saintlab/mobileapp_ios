@@ -176,15 +176,6 @@
 
 - (void)decodeBeacons:(NSArray *)beacons success:(OMNVisitorsBlock)success failure:(void (^)(OMNError *error))failure {
   
-  if ([OMNConstants useStubBeaconDecodeData]) {
-    
-    id responseObject = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ibeaconsdecode" ofType:@"json"]] options:0 error:nil];
-    NSArray *visitors = [responseObject omn_visitors];
-    [self addVisitors:visitors];
-    success(visitors);
-    return;
-  }
-  
   NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
   [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
     

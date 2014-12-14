@@ -60,6 +60,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 - (instancetype)initWithJsonData:(id)jsonData {
   self = [super init];
   if (self) {
+    
     _data = jsonData;
     self.id = [jsonData[@"id"] description];
     self.created = jsonData[@"created"];
@@ -234,7 +235,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
   OMNTip *selectedTip = self.selectedTip;
   
   long long selectedTipAmount = [selectedTip amountForValue:self.enteredAmount];
-  long long roundedTipAmount = 100ll*round(selectedTipAmount*0.01l);
+  long long roundedTipAmount = 100ll*round(selectedTipAmount*0.01);
   
   return roundedTipAmount;
   
