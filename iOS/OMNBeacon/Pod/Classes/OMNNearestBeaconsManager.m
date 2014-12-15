@@ -20,7 +20,7 @@
   OMNNearestBeaconsBlock _didFindNearestBeaconsBlock;
   OMNBeaconRangingManager *_beaconRangingManager;
   CLAuthorizationStatusBlock _authorizationStatusBlock;
-  
+  void (^_failureBlock)(NSError *error);
 }
 
 - (void)dealloc {
@@ -44,12 +44,13 @@
   return self;
 }
 
-- (void)findNearestBeacons:(OMNNearestBeaconsBlock)didFindNearestBeaconsBlock {
+- (void)findNearestBeacons:(OMNNearestBeaconsBlock)didFindNearestBeaconsBlock failure:(void (^)(NSError *error))failureBlock {
   
   NSAssert(didFindNearestBeaconsBlock != nil, @"rangeNearestBeacons block shouldn't be nil");
   
   [self stopRanging];
   _didFindNearestBeaconsBlock = [didFindNearestBeaconsBlock copy];
+  _failureBlock = [failureBlock copy];
   _startDate = [NSDate date];
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
@@ -92,7 +93,11 @@
 }
 
 - (void)processError:(NSError *)error {
-//TODO:
+  
+  if (_failureBlock) {
+    _failureBlock(error);
+  }
+
 }
 
 @end

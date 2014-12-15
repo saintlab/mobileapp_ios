@@ -214,8 +214,28 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
 
     [weakSelf processAtTheTableBeacons:foundBeacons.atTheTableBeacons allBeacons:foundBeacons.allBeacons];
     
+  } failure:^(NSError *error) {
+    
+    [weakSelf beaconsSearchDidFailWithError:error];
+    
   }];
   
+}
+
+- (void)beaconsSearchDidFailWithError:(NSError *)error {
+
+  NSMutableDictionary *debugData = [NSMutableDictionary dictionary];
+  if (error.localizedDescription) {
+    
+    debugData[@"error"] = error.localizedDescription;
+    debugData[@"code"] = @(error.code);
+    
+  }
+  
+  [[OMNAnalitics analitics] logTargetEvent:@"ble_did_stuck" parametrs:debugData];
+  [self stopRangingNearestBeacons:NO];
+  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerNotFoundBeacons];
+
 }
 
 - (void)beaconSearchTimeout {

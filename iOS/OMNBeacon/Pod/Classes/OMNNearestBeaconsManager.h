@@ -20,7 +20,7 @@ typedef void(^OMNNearestBeaconsBlock)(OMNFoundBeacons *foundBeacons);
 - (instancetype)init __attribute__((unavailable("init not available")));
 - (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)authorizationStatusBlock;
 
-- (void)findNearestBeacons:(OMNNearestBeaconsBlock)didFindNearestBeaconsBlock;
+- (void)findNearestBeacons:(OMNNearestBeaconsBlock)didFindNearestBeaconsBlock failure:(void (^)(NSError *error))failureBlock;
 - (void)stopRanging;
 
 @end
