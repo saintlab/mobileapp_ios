@@ -77,9 +77,12 @@ OMNPaymentFooterViewDelegate>
   [super viewDidLoad];
 
   self.view.backgroundColor = [UIColor clearColor];
-  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
   
   [self omn_setup];
+  
+  OMNRestaurantDecoration *decoration = _visitor.restaurant.decoration;
+  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:decoration.background_color];
+  [_paymentView configureWithColor:decoration.background_color antogonistColor:decoration.antagonist_color];
   
   [[OMNAnalitics analitics] logBillView:_order];
   

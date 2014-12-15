@@ -16,6 +16,7 @@
 @property (nonatomic, weak) id <OMNPaymentFooterViewDelegate> delegate;
 
 - (void)setKeyboardShown:(BOOL)keyboardShown;
+- (void)configureWithColor:(UIColor *)color antogonistColor:(UIColor *)antogonistColor;
 
 @end
 

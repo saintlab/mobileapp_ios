@@ -49,17 +49,24 @@ UITextFieldDelegate>
 }
 
 - (void)setAmountPercentValue:(OMNAmountPercentValue *)amountPercentValue {
+  
   _amountPercentValue = amountPercentValue;
   _amountTF.text = [[OMNUtils commaStringFromKop:_amountPercentValue.amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
   [self update];
+  
 }
 
 - (void)update {
   
   _amountTF.adjustsFontSizeToFitWidth = YES;
-  _amountTF.tintColor = [UIColor whiteColor];
-  _percentTF.tintColor = [UIColor whiteColor];
   [self setPercentValue:_amountPercentValue.percent];
+  
+}
+
+- (void)configureWithColor:(UIColor *)color antogonistColor:(UIColor *)antogonistColor {
+  
+  _amountTF.tintColor = antogonistColor;
+  _percentTF.tintColor = antogonistColor;
   
 }
 
@@ -70,14 +77,19 @@ UITextFieldDelegate>
 }
 
 - (void)beginPercentEditing {
+  
   _percentEditing = YES;
   [UIView animateWithDuration:0.3 animations:^{
+    
     _percentTF.alpha = 1.0f;
+    
   }];
   [_percentTF becomeFirstResponder];
+  
 }
 
 - (BOOL)resignFirstResponder {
+  
   _percentEditing = NO;
   BOOL result =
   [_amountTF resignFirstResponder] ||
@@ -109,8 +121,10 @@ UITextFieldDelegate>
   _amountPercentValue.amount = amount;
   
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
     [_amountTF invalidateIntrinsicContentSize];
     [self layoutIfNeeded];
+    
   });
   
   [self sendActionsForControlEvents:UIControlEventValueChanged];
@@ -154,11 +168,15 @@ UITextFieldDelegate>
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+  
   return 201;
+  
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+  
   return 1;
+  
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {

@@ -126,7 +126,7 @@
   else {
     
     self.navigationItem.leftBarButtonItem = nil;
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor whiteColor] target:self action:@selector(showUserProfile)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:_restaurant.decoration.antagonist_color target:self action:@selector(showUserProfile)];
     
   }
   

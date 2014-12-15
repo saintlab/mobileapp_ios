@@ -15,6 +15,7 @@
 #import "OMNUtils.h"
 #import <OMNStyler.h>
 #import "OMNAmountPercentValue.h"
+#import "UIImage+omn_helper.h"
 
 @interface OMNPaymentFooterView ()
 
@@ -131,6 +132,15 @@
     [weakSelf updateAmountForPercentLabel];
     
   } forControlEvents:UIControlEventValueChanged];
+  
+}
+
+- (void)configureWithColor:(UIColor *)color antogonistColor:(UIColor *)antogonistColor {
+  
+  UIImage *image = [[UIImage imageNamed:@"red_roundy_button"] omn_tintWithColor:antogonistColor];
+  [_payButton setBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
+  [_payButton setTitleColor:color forState:UIControlStateNormal];
+  [_amountPercentControl configureWithColor:color antogonistColor:antogonistColor];
   
 }
 

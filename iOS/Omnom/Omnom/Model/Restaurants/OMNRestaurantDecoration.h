@@ -13,7 +13,7 @@ typedef void(^OMNImageBlock)(UIImage *image);
 @interface OMNRestaurantDecoration : NSObject
 
 @property (nonatomic, strong) UIColor *background_color;
-
+@property (nonatomic, strong) UIColor *antagonist_color;
 @property (nonatomic, strong) UIImage *logo;
 @property (nonatomic, strong) UIImage *background_image;
 @property (nonatomic, strong) UIImage *blurred_background_image;
