@@ -53,12 +53,11 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   self = [super init];
   if (self) {
 #if OMN_TEST
-    NSString *token = @"yeshackvofPigCob";
+    _token = @"yeshackvofPigCob";
 #else
-    NSString *token = [SSKeychain passwordForService:[self tokenServiceName] account:kAuthorisationAccountName];
+    _token = [SSKeychain passwordForService:[self tokenServiceName] account:kAuthorisationAccountName];
 #endif
-    [self updateAuthenticationToken:token withBlock:nil];
-    
+    [self updateAuthenticationToken];
     _user = [[OMNUser alloc] init];
     
   }
@@ -141,7 +140,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     [SSKeychain setPassword:@"YES" forService:kIOS8PushNotificationsRequestedKey account:kAuthorisationAccountName];
     _userNotificationRegisterCompletionBlock = [completion copy];
     [application registerUserNotificationSettings:[self notificationSettings]];
-    
 #pragma clang diagnostic pop
     
   }
@@ -214,15 +212,15 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)logout {
   
   [self updateUserInfoWithUser:nil];
-  [self updateAuthenticationToken:nil withBlock:nil];
+  self.token = nil;
   if (self.logoutCallback) {
     self.logoutCallback();
   }
   
 }
 
-- (void)updateAuthenticationToken:(NSString *)token withBlock:(void (^)(BOOL tokenIsValid))block {
-
+- (void)setToken:(NSString *)token {
+  
   _token = token;
   if (token) {
     
@@ -234,12 +232,13 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     [SSKeychain deletePasswordForService:[self tokenServiceName] account:kAuthorisationAccountName];
     
   }
+  [self updateAuthenticationToken];
   
-  [[OMNOperationManager sharedManager].requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
+}
+
+- (void)updateAuthenticationToken {
   
-  if (block) {
-    [self checkTokenWithBlock:block];
-  }
+  [[OMNOperationManager sharedManager].requestSerializer setValue:self.token forHTTPHeaderField:@"x-authentication-token"];
 
 }
 
@@ -269,7 +268,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
   //Check if we have UUID already
   NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAuthorisationAccountName];
-  
+  NSLog(@"installId>%@", retrieveuuid);
   if (nil == retrieveuuid) {
     
     //Create new key for this app/device

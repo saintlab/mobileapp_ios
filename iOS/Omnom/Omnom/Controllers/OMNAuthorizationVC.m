@@ -122,8 +122,10 @@
 
 - (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token fromRegstration:(BOOL)fromRegstration {
   
+  [OMNAuthorization authorisation].token = token;
+
   __weak typeof(self)weakSelf = self;
-  [[OMNAuthorization authorisation] updateAuthenticationToken:token withBlock:^(BOOL tokenIsValid) {
+  [[OMNAuthorization authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
     
     if (fromRegstration) {
       
@@ -136,6 +138,7 @@
       
     }
     [weakSelf processAuthorisation];
+
     
   }];
   
@@ -147,11 +150,6 @@
     [self.delegate authorizationVCDidReceiveToken:self];
   }];
   
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
 }
 
 @end

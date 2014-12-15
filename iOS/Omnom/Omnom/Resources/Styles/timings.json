@@ -8,6 +8,7 @@
   "CircleChangeLogoAnimationDuration": 0.6,
   "OrderSlideAnimationDuration": 0.5,
   "OrderCircleChangeSizeAnimationDuration": 0.5,
-  "OrderCircleFadeAnimationDuration": 0.3
+  "OrderCircleFadeAnimationDuration": 0.3,
   
+  "SplashToSearchScreenTransitionDuration" : 0.5
 }

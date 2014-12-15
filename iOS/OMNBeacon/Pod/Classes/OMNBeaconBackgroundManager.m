@@ -69,10 +69,10 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   [_beaconSearchManager stop];
   _beaconSearchManager = nil;
   
-  if (_didFindBeaconBlock) {
+  if (self.didFindBeaconBlock) {
     
     __weak typeof(self)weakSelf = self;
-    _didFindBeaconBlock(beacon, ^{
+    self.didFindBeaconBlock(beacon, ^{
       
       [weakSelf stopBeaconSearchManagerTask];
       
@@ -80,7 +80,9 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     
   }
   else {
+    
     [self stopBeaconSearchManagerTask];
+    
   }
   
 }
@@ -200,15 +202,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
 }
 
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-  NSLog(@"didEnterRegion>%@", region);
-  
-}
-
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-  NSLog(@"didExitRegion>%@", region);
-}
-
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
 
   // check if we found exactly our region
@@ -245,8 +238,13 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 }
 
 - (void)handleDidEnterShopBeaconRegion {
+
+  //TODO: send information to the server according device did enter to restaurant
+  NSLog(@"===send information to the server according device did enter to restaurant");
+
   
   if (_beaconSearchManager) {
+    NSLog(@"_beaconSearchManager already started");
     return;
   }
   
@@ -267,9 +265,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     [weakSelf stopBeaconSearchManagerTask];
     
   }];
-  
-  //TODO: send information to the server according device did enter to restaurant
-  NSLog(@"===send information to the server according device did enter to restaurant");
   
 }
 

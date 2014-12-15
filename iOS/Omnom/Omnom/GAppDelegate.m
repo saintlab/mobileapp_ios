@@ -29,9 +29,7 @@
 #if OMN_TEST
   return YES;
 #endif
-  
-  [self setupWindow];
-  
+
   __weak typeof(self)weakSelf = self;
   [OMNConstants setupWithLaunchOptions:launchOptions completion:^{
     
@@ -48,12 +46,14 @@
     BOOL applicationWasOpenedByBeacon = (launchOptions[UIApplicationLaunchOptionsLocationKey] != nil);
     if (NO == applicationWasOpenedByBeacon) {
       
-      [weakSelf startApplication:launchOptions];
+      [weakSelf startApplicationIfNeededWithInfo:launchOptions];
       
     }
     
   }];
   
+  [self setupWindow];
+
   return YES;
   
 }
@@ -73,7 +73,7 @@
   
 }
 
-- (void)startApplication:(NSDictionary *)info {
+- (void)startApplicationIfNeededWithInfo:(NSDictionary *)info {
 
   if (_applicationStartedForeground) {
     return;
@@ -161,9 +161,12 @@
   
   NSLog(@"didReceiveRemoteNotification>%@", userInfo);
   completionHandler(UIBackgroundFetchResultNoData);
-  if (userInfo[@"open_url"]) {
+  NSString *open_url = userInfo[@"open_url"];
+  if (open_url) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:userInfo[@"open_url"]]];
+      
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:open_url]];
+      
     });
     
   }
@@ -174,7 +177,9 @@
   
   NSLog(@"didReceiveLocalNotification>%@", notification);
   if (notification.userInfo[OMNVisitorNotificationLaunchKey]) {
-    [self startApplication:notification.userInfo];
+    
+    [self startApplicationIfNeededWithInfo:notification.userInfo];
+    
   }
   
 }
@@ -182,7 +187,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   
   NSLog(@"applicationWillEnterForeground");
-  [self startApplication:nil];
+  [self startApplicationIfNeededWithInfo:nil];
   
 }
 

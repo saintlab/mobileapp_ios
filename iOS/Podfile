@@ -24,6 +24,7 @@ def import_all
   pod 'BlocksKit'
   pod 'Mixpanel'
   pod 'TTTAttributedLabel'
+  pod 'uidevice-extension'
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"

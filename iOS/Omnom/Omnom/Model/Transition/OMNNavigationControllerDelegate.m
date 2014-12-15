@@ -40,13 +40,14 @@
     [self addTansitionForClass:[OMNTransitionFromOrdersToOrder class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToCalculator class]];
     [self addTansitionForClass:[OMNTransitionFromOrderToOrders class]];
-    [self addTansitionForClass:[OMNSplashToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNRestaurantToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNSearchBeaconToPayOrderTransition class]];
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
     [self addTansitionForClass:[OMNOrderToRestaurantTransition class]];
     [self addTansitionForClass:[OMNSlideUpTransition class]];
     [self addTansitionForClass:[OMNSlideDownTransition class]];
+    [self addTansitionForClass:[OMNSplashToSearchBeaconTransition class]];
+    
 //    [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
     
   }

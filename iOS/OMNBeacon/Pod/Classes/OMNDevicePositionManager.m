@@ -11,7 +11,7 @@
 
 static double const kDesiredDurationOfStillPosition = 1.0;
 static double const kAccelerometerUpdateInterval = 0.5;
-static double const kDesiredAccelerometerAccuracy = 0.05;
+static double const kDesiredAccelerometerAccuracy = 0.08;
 
 @implementation OMNDevicePositionManager {
   

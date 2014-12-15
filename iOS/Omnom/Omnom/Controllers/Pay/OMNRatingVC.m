@@ -46,11 +46,11 @@
   
   [_starRatingView setScore:0.0f withAnimation:NO];
 
-  _l1.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE1", @"Спасибо");
+  _l1.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE1", @"Платёж принят");
   _l1.textColor = colorWithHexString(@"000000");
   _l1.font = FuturaOSFOmnomRegular(30.0f);
   
-  _l2.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE2", @"Оплата прошла успешно");
+  _l2.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE2", @"Официант получил sms с суммой чаевых.");
   _l2.textColor = colorWithHexString(@"000000");
   _l2.font = FuturaOSFOmnomRegular(20.0f);
   

@@ -25,8 +25,10 @@ OMNSearchRestaurantVCDelegate>
 @end
 
 @implementation OMNStartVC {
+  
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
   BOOL _initialCheckPerformed;
+  
 }
 
 - (void)viewDidLoad {
@@ -54,15 +56,15 @@ OMNSearchRestaurantVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  if (!_initialCheckPerformed) {
-    
-    [self checkToken];
-    
-  }
+  [self checkTokenIfNeeded];
   
 }
 
-- (void)checkToken {
+- (void)checkTokenIfNeeded {
+  
+  if (_initialCheckPerformed) {
+    return;
+  }
   
   _initialCheckPerformed = YES;
   __weak typeof(self)weakSelf = self;

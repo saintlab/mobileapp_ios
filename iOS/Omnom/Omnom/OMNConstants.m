@@ -12,6 +12,8 @@
 #import "OMNAnalitics.h"
 #import <OMNBeacon.h>
 #import "OMNLaunchOptions.h"
+#import <SSKeychain.h>
+#import "OMNAuthorization.h"
 
 NSString * const kPushSoundName = @"new_guest.caf";
 
@@ -33,6 +35,12 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   _customConfig = [self configWithName:lo.customConfigName];
+  
+  //setup keychain for background usage
+  [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];
+  
+  //initialize saved token
+  [OMNAuthorization authorisation];
   
   [self loadRemoteConfigWithCompletion:^{
     

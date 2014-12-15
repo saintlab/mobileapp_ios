@@ -11,7 +11,7 @@
 
 @interface OMNAuthorization : NSObject
 
-@property (nonatomic, copy, readonly) NSString *token;
+@property (nonatomic, copy) NSString *token;
 @property (nonatomic, strong, readonly) OMNUser *user;
 @property (nonatomic, copy, readonly) NSString *installId;
 
@@ -22,8 +22,6 @@
 - (void)logout;
 
 - (void)updateUserInfoWithUser:(OMNUser *)user;
-- (void)updateAuthenticationToken:(NSString *)token withBlock:(void (^)(BOOL tokenIsValid))block;;
-
 - (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block;
 
 - (BOOL)pushNotificationsRequested;

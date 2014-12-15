@@ -104,6 +104,7 @@
   } completion:^(BOOL finished) {
     
     [iconsIV removeFromSuperview];
+    
   }];
   
   [UIView animateWithDuration:duration delay:delay options:0 animations:^{
@@ -116,6 +117,7 @@
     oldLogoIV.transform = CGAffineTransformMakeScale(1.0f/scale, 1.0f/scale);;
     
   } completion:^(BOOL finished) {
+    
     fromViewSnapshot.alpha = 0.0f;
     [fromViewSnapshot removeFromSuperview];
     fromViewController.view.hidden = NO;
@@ -126,7 +128,9 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.5;
+
+  return [[OMNStyler styler] animationDurationForKey:@"SplashToSearchScreenTransitionDuration"];
+  
 }
 
 + (NSArray *)keys {
