@@ -37,9 +37,11 @@
     
     [[OMNAuthorization authorisation] registerForRemoteNotificationsIfPossible];
     
-    [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, dispatch_block_t comletionBlock) {
+    [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, BOOL athTheTable, dispatch_block_t comletionBlock) {
       
-      [[OMNVisitorManager manager] handleBackgroundBeacon:beacon completion:comletionBlock];
+      [[OMNVisitorManager manager] handleBackgroundBeacon:beacon
+                                              athTheTable:athTheTable
+                                           withCompletion:(athTheTable)?(comletionBlock):(nil)];
       
     }];
     

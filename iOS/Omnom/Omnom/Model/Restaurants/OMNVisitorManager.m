@@ -220,40 +220,43 @@
   
 }
 
-- (void)handleBackgroundBeacon:(OMNBeacon *)beacon completion:(dispatch_block_t)completion {
+- (void)handleBackgroundBeacon:(OMNBeacon *)beacon athTheTable:(BOOL)athTheTable withCompletion:(dispatch_block_t)completionBlock {
   
   if (nil == beacon) {
-    completion();
+    completionBlock();
     return;
   }
   
   [self decodeBeacon:beacon success:^(OMNVisitor *visitor) {
-    
-    if (visitor) {
+
+    if (nil == visitor) {
       
-      [visitor showGreetingPush];
-      [[OMNAnalitics analitics] logEnterRestaurant:visitor foreground:NO];
+      if (completionBlock) {
+        
+        completionBlock();
+        
+      }
       
-      [visitor newGuestWithCompletion:^{
-        
-        completion();
-        
-      } failure:^(NSError *error) {
-        
-        completion();
-        
-      }];
+    }
+    else if (athTheTable) {
+      
+      [visitor handleAtTheTableEventWithCompletion:completionBlock];
       
     }
     else {
       
-      completion();
+      [visitor handleRestaurantEnterEventWithCompletion:completionBlock];
       
     }
     
   } failure:^(NSError *error) {
     
-    completion();
+    if (athTheTable &&
+        completionBlock) {
+      
+      completionBlock();
+      
+    }
     
   }];
   

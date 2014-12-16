@@ -24,6 +24,6 @@
 
 - (void)demoVisitor:(OMNVisitorBlock)completionBlock failure:(void (^)(OMNError *error))failureBlock;
 
-- (void)handleBackgroundBeacon:(OMNBeacon *)beacon completion:(dispatch_block_t)completion;
+- (void)handleBackgroundBeacon:(OMNBeacon *)beacon athTheTable:(BOOL)athTheTable withCompletion:(dispatch_block_t)completion;
 
 @end

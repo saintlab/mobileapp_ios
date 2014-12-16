@@ -88,6 +88,30 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
   
 }
 
+- (void)handleRestaurantEnterEventWithCompletion:(dispatch_block_t)completionBlock {
+  
+  [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackground];
+  if (completionBlock) {
+    completionBlock();
+  }
+  
+}
+
+- (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock {
+  
+  [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackgroundTable];
+  [self showGreetingPush];
+  [self newGuestWithCompletion:^{
+    
+    completionBlock();
+    
+  } failure:^(NSError *error) {
+    
+    completionBlock();
+    
+  }];
+  
+}
 
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock {
   

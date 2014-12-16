@@ -26,5 +26,7 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 - (BOOL)readyForPush;
 - (void)showGreetingPush;
 - (void)updateOrdersIfNeeded;
+- (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock;
+- (void)handleRestaurantEnterEventWithCompletion:(dispatch_block_t)completionBlock;
 
 @end

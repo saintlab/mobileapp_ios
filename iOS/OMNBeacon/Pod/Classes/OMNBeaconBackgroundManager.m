@@ -16,7 +16,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 @interface OMNBeaconBackgroundManager()
 <CLLocationManagerDelegate> {
   
-  OMNNearestBeaconSearchManager *_beaconSearchManager;
+  OMNNearestBeaconSearchManager *_nearestBeaconSearchManager;
   UIBackgroundTaskIdentifier _searchBeaconTask;
   BOOL _monitoring;
   
@@ -62,29 +62,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     [self startBeaconRegionMonitoring];
   }
   return self;
-}
-
-- (void)beaconDidFind:(OMNBeacon *)beacon {
-  
-  [_beaconSearchManager stop];
-  _beaconSearchManager = nil;
-  
-  if (self.didFindBeaconBlock) {
-    
-    __weak typeof(self)weakSelf = self;
-    self.didFindBeaconBlock(beacon, ^{
-      
-      [weakSelf stopBeaconSearchManagerTask];
-      
-    });
-    
-  }
-  else {
-    
-    [self stopBeaconSearchManagerTask];
-    
-  }
-  
 }
 
 - (CLLocationManager *)locationManager {
@@ -243,7 +220,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   NSLog(@"===send information to the server according device did enter to restaurant");
 
   
-  if (_beaconSearchManager) {
+  if (_nearestBeaconSearchManager) {
     NSLog(@"_beaconSearchManager already started");
     return;
   }
@@ -255,10 +232,10 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     
   }];
   
-  _beaconSearchManager = [[OMNNearestBeaconSearchManager alloc] init];
-  [_beaconSearchManager findNearestBeacon:^(OMNBeacon *beacon) {
+  _nearestBeaconSearchManager = [[OMNNearestBeaconSearchManager alloc] init];
+  [_nearestBeaconSearchManager findNearestBeacon:^(OMNBeacon *beacon, BOOL atTheTable) {
     
-    [weakSelf beaconDidFind:beacon];
+    [weakSelf beaconDidFind:beacon atTheTable:atTheTable];
     
   } failure:^{
     
@@ -268,10 +245,31 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
 }
 
+
+- (void)beaconDidFind:(OMNBeacon *)beacon atTheTable:(BOOL)atTheTable {
+  
+  if (self.didFindBeaconBlock) {
+    
+    __weak typeof(self)weakSelf = self;
+    self.didFindBeaconBlock(beacon, atTheTable, ^{
+      
+      [weakSelf stopBeaconSearchManagerTask];
+      
+    });
+    
+  }
+  else {
+    
+    [self stopBeaconSearchManagerTask];
+    
+  }
+  
+}
+
 - (void)stopBeaconSearchManagerTask {
   
-  [_beaconSearchManager stop];
-  _beaconSearchManager = nil;
+  [_nearestBeaconSearchManager stop];
+  _nearestBeaconSearchManager = nil;
   
   if (UIBackgroundTaskInvalid != _searchBeaconTask) {
     

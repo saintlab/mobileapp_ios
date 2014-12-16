@@ -130,7 +130,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logEnterRestaurant:(OMNVisitor *)visitor foreground:(BOOL)foreground {
+- (void)logEnterRestaurant:(OMNVisitor *)visitor mode:(RestaurantEnterMode)mode {
   
   NSMutableDictionary *properties = [NSMutableDictionary dictionary];
   if (visitor.restaurant.title) {
@@ -152,11 +152,21 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     properties[@"table_id"] = visitor.table.id;
   }
   
-  NSString *eventName = (foreground) ? (@"application_launch") : (@"restaurant_enter");
+  NSString *eventName = @"";
+  switch (mode) {
+    case kRestaurantEnterModeBackground: {
+      eventName = @"restaurant_enter";
+    } break;
+    case kRestaurantEnterModeBackgroundTable: {
+      eventName = @"on_table";
+    } break;
+    case kRestaurantEnterModeApplicationLaunch: {
+      eventName = @"application_launch";
+    } break;
+  }
   
   [_mixpanel track:eventName properties:properties];
   [_mixpanel.people set:@"last_visited" to:[NSDate date]];
-  [_mixpanel.people increment:@"total_visits" by:@(1)];
   [_mixpanel flush];
   
 }

@@ -12,6 +12,12 @@
 @class OMNUser;
 @class OMNVisitor;
 
+typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
+  kRestaurantEnterModeBackground = 0,
+  kRestaurantEnterModeBackgroundTable,
+  kRestaurantEnterModeApplicationLaunch,
+};
+
 //https://docs.google.com/document/d/1qCgjmjynrECxBm5tY934WzkvPo_3AoRpC0bpz-nfVc8/edit
 @interface OMNAnalitics : NSObject
 
@@ -24,7 +30,7 @@
 - (void)setup;
 - (void)logRegister;
 - (void)logLogin;
-- (void)logEnterRestaurant:(OMNVisitor *)visitor foreground:(BOOL)foreground;
+- (void)logEnterRestaurant:(OMNVisitor *)visitor mode:(RestaurantEnterMode)mode;
 - (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo bill_id:(NSString *)bill_id;
 - (void)logScore:(NSInteger)score order:(OMNOrder *)order;
 - (void)logBillView:(OMNOrder *)order;
