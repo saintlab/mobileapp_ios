@@ -51,8 +51,8 @@
   _l1.font = FuturaOSFOmnomRegular(30.0f);
   
   _l2.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE2", @"Официант получил sms с суммой чаевых.");
-  _l2.textColor = colorWithHexString(@"000000");
-  _l2.font = FuturaOSFOmnomRegular(20.0f);
+  _l2.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  _l2.font = FuturaOSFOmnomRegular(15.0f);
   
   _l3.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE3", @"Счёт отправлен на почту");
   _l3.textColor = colorWithHexString(@"000000");
