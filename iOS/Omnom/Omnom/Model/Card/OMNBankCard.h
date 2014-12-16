@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, OMNBankCardStatus) {
 @property(nonatomic, assign) OMNBankCardStatus status;
 @property(nonatomic, copy) NSString *updated_at;
 @property(nonatomic, copy) NSString *user_id;
+@property(nonatomic, copy) NSString *issuer;
 
 @property(nonatomic, assign) BOOL demo;
 @property(nonatomic, assign, readonly) BOOL deleting;

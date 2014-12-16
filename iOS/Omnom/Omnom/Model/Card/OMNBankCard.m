@@ -31,6 +31,9 @@
     self.status = [self statusFromString:jsonData[@"status"]];
     self.updated_at = jsonData[@"updated_at"];
     self.user_id = jsonData[@"user_id"];
+    if ([jsonData[@"issuer"] isKindOfClass:[NSString class]]) {
+      self.issuer = jsonData[@"issuer"];
+    }
     
   }
   return self;

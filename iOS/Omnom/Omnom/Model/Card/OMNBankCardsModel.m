@@ -214,7 +214,7 @@ NSString * const kCardIdServiceName = @"card_id";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  return 44.0f;
+  return 50.0f;
   
 }
 

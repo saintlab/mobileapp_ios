@@ -16,7 +16,7 @@
   UILabel *_label;
   UIImageView *_iconView;
   OMNBankCard *_bankCard;
-  
+  UILabel *_cardIssuerLabel;
   NSString *_bankCardCellDeleteIdentifier;
 }
 
@@ -57,6 +57,14 @@
   [_label setContentCompressionResistancePriority:751 forAxis:UILayoutConstraintAxisHorizontal];
   [self.contentView addSubview:_label];
 
+  _cardIssuerLabel = [[UILabel alloc] init];
+  _cardIssuerLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _cardIssuerLabel.font = FuturaLSFOmnomLERegular(9.0f);
+  _cardIssuerLabel.backgroundColor = [UIColor clearColor];
+  _cardIssuerLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.5f];
+  [_cardIssuerLabel setContentCompressionResistancePriority:751 forAxis:UILayoutConstraintAxisHorizontal];
+  [self.contentView addSubview:_cardIssuerLabel];
+
   _iconView = [[UIImageView alloc] init];
   [_iconView setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
   _iconView.backgroundColor = [UIColor clearColor];
@@ -64,10 +72,12 @@
   _iconView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentView addSubview:_iconView];
   
+  
   NSDictionary *views =
   @{
     @"label" : _label,
     @"iconView" : _iconView,
+    @"cardIssuerLabel" : _cardIssuerLabel,
     };
   
   NSDictionary *metrics =
@@ -75,10 +85,10 @@
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label][cardIssuerLabel(10)]-(5)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-[iconView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardIssuerLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
 }
 
 - (UIActivityIndicatorView *)spinner {
@@ -149,6 +159,8 @@
   [attributedString setAttributes:@{NSForegroundColorAttributeName : masked_panColor} range:[attributedString.string rangeOfString:bankCard.masked_pan]];
   [attributedString setAttributes:@{NSForegroundColorAttributeName : associationColor} range:[attributedString.string rangeOfString:bankCard.association]];
   _label.attributedText = attributedString;
+  _cardIssuerLabel.text = _bankCard.issuer;
+  _cardIssuerLabel.textColor = associationColor;
   
 }
 
