@@ -83,9 +83,10 @@
   NSDictionary *metrics =
   @{
     @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"borderOffset" : @(6.0f),
     };
   
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label][cardIssuerLabel(10)]-(5)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(borderOffset)-[label]-(>=0)-[cardIssuerLabel]-(borderOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-[iconView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardIssuerLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

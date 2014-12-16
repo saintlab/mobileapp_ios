@@ -6,18 +6,31 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNWebVC.h"
+#import "OMNChangePhoneWebVC.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNUser+network.h"
+#import "NSURL+omn_query.h"
 
-@interface OMNWebVC ()
+@interface OMNChangePhoneWebVC ()
 <UIWebViewDelegate>
 
 @end
 
-@implementation OMNWebVC {
+@implementation OMNChangePhoneWebVC {
   
   UIWebView *_webView;
+  OMNUser *_user;
   
+}
+
+- (instancetype)initWithUser:(OMNUser *)user {
+  self = [super init];
+  if (self) {
+    
+    _user = user;
+    
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -25,6 +38,28 @@
   
   [self omn_setup];
   [self reloadPage];
+  
+}
+
+- (void)reloadPage {
+  
+  __weak typeof(self)weakSelf = self;
+  [self setLoading:YES];
+  [_user recoverWithCompletion:^(NSURL *url) {
+    
+    [weakSelf showURL:url];
+    
+  } failure:^(NSError *error) {
+    
+    [weakSelf setLoading:NO];
+    
+  }];
+  
+}
+
+- (void)showURL:(NSURL *)url {
+  
+  [_webView loadRequest:[NSURLRequest requestWithURL:url]];
   
 }
 
@@ -56,9 +91,18 @@
   
 }
 
-- (void)reloadPage {
+- (void)setLoading:(BOOL)loading {
   
-  [_webView loadRequest:[NSURLRequest requestWithURL:self.url]];
+  if (loading) {
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
+    
+  }
+  else {
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"ico-refresh"] color:[UIColor blackColor] target:self action:@selector(reloadPage)];
+    
+  }
   
 }
 
@@ -66,26 +110,37 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
   
-  NSLog(@"shouldStartLoadWithRequest>%@", request);
-  return YES;
+  NSDictionary *query = [request.URL omn_query];
+  
+  if ([query[@"status"] isEqualToString:@"success"]) {
+
+    [self.delegate changePhoneWebVCDidChangePhone:self];
+    return NO;
+    
+  }
+  else {
+    
+    return YES;
+    
+  }
   
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
   
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Повторить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(reloadPage)];
+  [self setLoading:NO];
   
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
   
-  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
+  [self setLoading:YES];
   
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
   
-  self.navigationItem.rightBarButtonItem = nil;
+  [self setLoading:NO];
   
 }
 

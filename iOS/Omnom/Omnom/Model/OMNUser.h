@@ -26,7 +26,6 @@ typedef void(^OMNUserBlock)(OMNUser *user);
 @property (nonatomic, copy) NSString *avatar;
 
 @property (nonatomic, strong) UIImage *image;
-@property (nonatomic, strong, readonly) UIImage *circleImage;
 
 @property (nonatomic, assign) BOOL phone_validated;
 @property (nonatomic, assign) BOOL email_validated;

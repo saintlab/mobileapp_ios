@@ -181,7 +181,26 @@
 
 - (void)updateBirthDate {
   
-  _birthdayTF.textField.text = _user.birthDateString;
+  static NSDateFormatter *dateFormatter = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    [dateFormatter setLocale:[NSLocale currentLocale]];
+  });
+  
+  if (_user.birthDate) {
+    
+    _birthdayTF.textField.text = [dateFormatter stringFromDate:_user.birthDate];
+    
+  }
+  else {
+    
+    _birthdayTF.textField.text = @"";
+    
+  }
+  
   
 }
 

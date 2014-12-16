@@ -41,8 +41,6 @@
       self.logoutItems,
       ];
     
-    [self reloadUserInfo];
-    
   }
   return self;
 }

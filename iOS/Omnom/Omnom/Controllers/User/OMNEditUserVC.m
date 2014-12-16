@@ -19,7 +19,7 @@
 #import "OMNCameraRollPermissionDescriptionVC.h"
 #import "OMNUser+network.h"
 #import "OMNUserIconView.h"
-#import "OMNWebVC.h"
+#import "OMNChangePhoneWebVC.h"
 
 @interface OMNEditUserVC ()
 <OMNUserInfoViewDelegate,
@@ -27,7 +27,8 @@ UIActionSheetDelegate,
 UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
 OMNCameraPermissionDescriptionVCDelegate,
-OMNCameraRollPermissionDescriptionVCDelegate>
+OMNCameraRollPermissionDescriptionVCDelegate,
+OMNChangePhoneWebVCDelegate>
 
 @end
 
@@ -94,25 +95,8 @@ OMNCameraRollPermissionDescriptionVCDelegate>
 
 - (void)changePhoneTap:(__weak UIButton *)b {
   
-  b.enabled = NO;
-  __weak typeof(self)weakSelf = self;
-  [_user recoverWithCompletion:^(NSURL *url) {
-    
-    [weakSelf showUrl:url];
-    b.enabled = YES;
-
-  } failure:^(NSError *error) {
-    
-    b.enabled = YES;
-
-  }];
-  
-}
-
-- (void)showUrl:(NSURL *)url {
-  
-  OMNWebVC *webVC = [[OMNWebVC alloc] init];
-  webVC.url = url;
+  OMNChangePhoneWebVC *webVC = [[OMNChangePhoneWebVC alloc] initWithUser:_user];
+  webVC.delegate = self;
   [self.navigationController pushViewController:webVC animated:YES];
   
 }
@@ -166,6 +150,7 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   
   _userImage = image;
   _user.image = image;
+  _user.avatar = @"";
   [self updateUserImage];
 
 }
@@ -253,7 +238,7 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   else {
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"EDIT_USER_DONE_BUTTON_TITLE", @"Готово") style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"EDIT_USER_DONE_BUTTON_TITLE", @"Сохранить") style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
     
   }
   
@@ -433,4 +418,13 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   }];
   
 }
+
+#pragma mark - OMNChangePhoneWebVCDelegate
+
+- (void)changePhoneWebVCDidChangePhone:(OMNChangePhoneWebVC *)changePhoneWebVC {
+  
+  [self.delegate editUserVCDidFinish:self];
+  
+}
+
 @end

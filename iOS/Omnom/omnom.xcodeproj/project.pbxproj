@@ -376,8 +376,8 @@
 		93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085719AA33D100615F43 /* UITableView+screenshot.m */; };
 		93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
 		93CA085D19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
-		93CB66CF1A35A63D00C5B10E /* OMNWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNWebVC.m */; };
-		93CB66D01A35A63D00C5B10E /* OMNWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNWebVC.m */; };
+		93CB66CF1A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
+		93CB66D01A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
 		93CB66D31A35FD8100C5B10E /* OMNLaunchOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */; };
 		93CB66D41A35FD8100C5B10E /* OMNLaunchOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */; };
 		93D117741A2ED3C7000131C4 /* OMNUserInfoSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D117731A2ED3C7000131C4 /* OMNUserInfoSection.m */; };
@@ -849,8 +849,8 @@
 		93CA085719AA33D100615F43 /* UITableView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+screenshot.m"; sourceTree = "<group>"; };
 		93CA085A19AA34FA00615F43 /* UIView+screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+screenshot.h"; sourceTree = "<group>"; };
 		93CA085B19AA34FA00615F43 /* UIView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+screenshot.m"; sourceTree = "<group>"; };
-		93CB66CD1A35A63D00C5B10E /* OMNWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWebVC.h; sourceTree = "<group>"; };
-		93CB66CE1A35A63D00C5B10E /* OMNWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWebVC.m; sourceTree = "<group>"; };
+		93CB66CD1A35A63D00C5B10E /* OMNChangePhoneWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangePhoneWebVC.h; sourceTree = "<group>"; };
+		93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangePhoneWebVC.m; sourceTree = "<group>"; };
 		93CB66D11A35FD8100C5B10E /* OMNLaunchOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLaunchOptions.h; sourceTree = "<group>"; };
 		93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLaunchOptions.m; sourceTree = "<group>"; };
 		93D117721A2ED3C7000131C4 /* OMNUserInfoSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoSection.h; sourceTree = "<group>"; };
@@ -1151,8 +1151,8 @@
 				936BAD9419A77F5E0029873B /* OMNNavigationController.h */,
 				936BAD9519A77F5E0029873B /* OMNNavigationController.m */,
 				933D48E619E6445C004E591C /* OMNInteractiveTransitioningProtocol.h */,
-				93CB66CD1A35A63D00C5B10E /* OMNWebVC.h */,
-				93CB66CE1A35A63D00C5B10E /* OMNWebVC.m */,
+				93CB66CD1A35A63D00C5B10E /* OMNChangePhoneWebVC.h */,
+				93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2501,7 +2501,7 @@
 				934EB93D1A0B716B00E5CB53 /* OMNSelectOrderButton.m in Sources */,
 				93676DF918D1E4FC00FC55F1 /* main.m in Sources */,
 				938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */,
-				93CB66CF1A35A63D00C5B10E /* OMNWebVC.m in Sources */,
+				93CB66CF1A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */,
 				93CA085819AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				937822881963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
 				9345AFC5199B7DCC00328F73 /* OMNRestaurantInfo.m in Sources */,
@@ -2565,7 +2565,7 @@
 				93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,
 				936E71DB1991FEFF008FF864 /* OMNViewController.m in Sources */,
-				93CB66D01A35A63D00C5B10E /* OMNWebVC.m in Sources */,
+				93CB66D01A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */,
 				9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */,
 				93D1177E1A2F0401000131C4 /* OMNUserInfoHeaderView.m in Sources */,
 				9345AFB4199A291C00328F73 /* OMNBankCardUserInfoItem.m in Sources */,

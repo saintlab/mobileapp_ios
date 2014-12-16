@@ -255,7 +255,7 @@
 
 - (void)loadImageWithCompletion:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock {
   
-  if (nil == self.avatar) {
+  if (0 == self.avatar.length) {
     failureBlock(nil);
     return;
   }
@@ -279,7 +279,7 @@
   
 }
 
-- (void)uploadImage:(UIImage *)image withCompletion:(dispatch_block_t)completion progress:(void (^)(CGFloat percent))progressBlock failure:(void (^)(OMNError *error))failureBlock {
+- (void)uploadImage:(UIImage *)image withCompletion:(void (^)(OMNUser *user))completion progress:(void (^)(CGFloat percent))progressBlock failure:(void (^)(OMNError *error))failureBlock {
   
   NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorization authorisation].token];
   AFHTTPRequestOperation *operation = [[OMNAuthorizationManager sharedManager] POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -290,7 +290,8 @@
     
     if ([responseObject omn_isSuccessResponse]) {
       
-      completion();
+      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+      completion(user);
       
     }
     else {
@@ -323,20 +324,18 @@
   if (user.image) {
     
     __weak typeof(self)weakSelf = self;
-    [self uploadImage:user.image withCompletion:^{
+    [self uploadImage:user.image withCompletion:^(OMNUser *editUser) {
       
-      [weakSelf updateUserInfoWithUser:user withCompletion:completion failure:failureBlock];
+      [weakSelf updateUserInfoWithUser:editUser withCompletion:completion failure:failureBlock];
       
     } progress:^(CGFloat percent) {
       
-      NSLog(@"%f", percent);
-      
-    } failure:^(NSError *error) {
+    } failure:^(OMNError *error) {
       
       failureBlock([error omn_internetError]);
       
     }];
-    
+
   }
   else {
     
@@ -354,13 +353,17 @@
   }
   
   NSString *token = [OMNAuthorization authorisation].token;
-  NSDictionary *parameters =
-  @{
+  NSMutableDictionary *parameters =
+  [@{
     @"token" : token,
     @"name" : user.name,
     @"email" : user.email,
     @"birth_date" : user.birthDateString,
-    };
+    } mutableCopy];
+  
+  if (user.avatar) {
+    parameters[@"avatar"] = user.avatar;
+  }
   
   [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -423,23 +426,24 @@
   self.status = user.status;
   self.created_at = user.created_at;
   self.birthDate = user.birthDate;
-
-  if (nil == self.image ||
-      ![self.avatar isEqualToString:user.avatar]) {
-    
-    [self loadImageWithCompletion:^{
-      
-    } failure:^(NSError *error) {
-      
-    }];
-    
-  }
-
+  NSString *oldAvatar = self.avatar;
   self.avatar = user.avatar;
 
+  if (self.avatar.length) {
+    
+    if (![oldAvatar isEqualToString:self.avatar]) {
+      
+      [self loadImageWithCompletion:^{} failure:^(NSError *error) {}];
+      
+    }
+    
+  }
+  else {
+    
+    self.image = nil;
+    
+  }
   
 }
-
-
 
 @end
