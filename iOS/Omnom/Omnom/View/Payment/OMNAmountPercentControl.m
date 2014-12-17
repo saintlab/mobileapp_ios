@@ -52,13 +52,6 @@ UITextFieldDelegate>
   
   _amountPercentValue = amountPercentValue;
   _amountTF.text = [[OMNUtils commaStringFromKop:_amountPercentValue.amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
-  [self update];
-  
-}
-
-- (void)update {
-  
-  _amountTF.adjustsFontSizeToFitWidth = YES;
   [self setPercentValue:_amountPercentValue.percent];
   
 }
@@ -212,13 +205,15 @@ UITextFieldDelegate>
   self.backgroundColor = [UIColor clearColor];
   
   _amountTF = [[OMNLabeledTextField alloc] init];
-  _amountTF.keyboardType = UIKeyboardTypeDecimalPad;
   _amountTF.translatesAutoresizingMaskIntoConstraints = NO;
+  _amountTF.textAlignment = NSTextAlignmentCenter;
+  _amountTF.keyboardType = UIKeyboardTypeDecimalPad;
+  _amountTF.textColor = colorWithHexString(@"FFFFFF");
+  _amountTF.adjustsFontSizeToFitWidth = YES;
   _amountTF.minimumFontSize = 10.0f;
   _amountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-  _amountTF.textColor = colorWithHexString(@"FFFFFF");
+  _amountTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   _amountTF.font = FuturaLSFOmnomLERegular(50.0f);
-  _amountTF.textAlignment = NSTextAlignmentCenter;
   _amountTF.delegate = self;
   [_amountTF setDetailedText:[NSString stringWithFormat:@" %@", kRubleSign]];
   [self addSubview:_amountTF];
@@ -229,11 +224,11 @@ UITextFieldDelegate>
   _percentPicker.dataSource = self;
   
   _percentTF = [[UITextField alloc] init];
+  _percentTF.translatesAutoresizingMaskIntoConstraints = NO;
   _percentTF.textAlignment = NSTextAlignmentCenter;
   _percentTF.inputView = _percentPicker;
   _percentTF.adjustsFontSizeToFitWidth = YES;
   _percentTF.minimumFontSize = 10.0f;
-  _percentTF.translatesAutoresizingMaskIntoConstraints = NO;
   _percentTF.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
   _percentTF.font = FuturaLSFOmnomLERegular(50.0f);
   _percentTF.textColor = [UIColor whiteColor];

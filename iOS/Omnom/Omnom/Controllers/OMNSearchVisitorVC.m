@@ -438,15 +438,11 @@ OMNUserInfoVCDelegate>
   @[
     [OMNBarButtonInfo infoWithTitle:actionText image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
-      [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
+      if (kOMNReachableStateIsReachable == [[OMNOperationManager sharedManager] reachableState]) {
         
-        if (kOMNReachableStateIsReachable == reachableState) {
-          
-          [weakSelf startSearchingBeacon];
-          
-        }
+        [weakSelf startSearchingBeacon];
         
-      }];
+      }
       
     }]
     ];

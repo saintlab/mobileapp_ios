@@ -15,7 +15,6 @@
 
 - (void)beginPercentEditing;
 - (void)configureWithColor:(UIColor *)color antogonistColor:(UIColor *)antogonistColor;
-- (void)update;
 
 @end
 

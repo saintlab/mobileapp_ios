@@ -88,33 +88,31 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
 
 - (void)checkNetworkState {
   
-  __weak typeof(self)weakSelf = self;
-  [[OMNOperationManager sharedManager] getReachableState:^(OMNReachableState reachableState) {
+  OMNReachableState reachableState = [[OMNOperationManager sharedManager] reachableState];
+  if (kOMNReachableStateIsReachable != reachableState) {
     
-    switch (reachableState) {
-      case kOMNReachableStateIsReachable: {
-        
-        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerInternetFound];
-        [weakSelf checkBluetoothState];
-        
-      } break;
-      case kOMNReachableStateNoOmnom: {
-        
-        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerOmnomServerUnavaliable];
-        
-      } break;
-      case kOMNReachableStateNoInternet: {
-        
-        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerInternetUnavaliable];
-        
-      } break;
-    }
+    [self.delegate beaconSearchManagerDidStop:self found:NO];
     
-    if (reachableState != kOMNReachableStateIsReachable) {
-      [weakSelf.delegate beaconSearchManagerDidStop:weakSelf found:NO];
-    }
-    
-  }];
+  }
+  
+  switch (reachableState) {
+    case kOMNReachableStateNoInternet: {
+      
+      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerInternetUnavaliable];
+      
+    } break;
+    case kOMNReachableStateNoOmnom: {
+      
+      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerOmnomServerUnavaliable];
+      
+    } break;
+    case kOMNReachableStateIsReachable: {
+
+      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerInternetFound];
+      [self checkBluetoothState];
+      
+    } break;
+  }
   
 }
 

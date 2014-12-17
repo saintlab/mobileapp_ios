@@ -28,14 +28,16 @@
 }
 
 - (void)setup {
+  
   _detailedText = @"";
+  
 }
 
 - (void)setDetailedText:(NSString *)text {
-  if (text) {
-    _detailedText = text;
-    self.text = self.text;
-  }
+
+  _detailedText = text;
+  self.text = self.text;
+  
 }
 
 - (BOOL)becomeFirstResponder {
@@ -47,28 +49,23 @@
 - (void)setText:(NSString *)text {
   
   NSString *editingText = [text stringByReplacingOccurrencesOfString:_detailedText withString:@""];
-  if (editingText.length) {
+  if (editingText.length &&
+      _detailedText.length) {
     editingText = [editingText stringByAppendingString:_detailedText];
   }
-  [super setText:editingText];
+  super.text = editingText;
   [self updateSelectedRange];
-  
-}
 
-- (NSString *)text {
-  return super.text;
-  NSString *text = super.text;
-  if (_detailedText.length) {
-    text = [text stringByReplacingOccurrencesOfString:_detailedText withString:@""];
-  }
-  return text;
-  
 }
 
 - (void)updateSelectedRange {
 
-  UITextPosition *endPosition = [self positionFromPosition:self.endOfDocument offset:-_detailedText.length];
-  self.selectedTextRange = [self textRangeFromPosition:endPosition toPosition:endPosition];
+  if (self.editing) {
+    
+    UITextPosition *endPosition = [self positionFromPosition:self.endOfDocument offset:-_detailedText.length];
+    self.selectedTextRange = [self textRangeFromPosition:endPosition toPosition:endPosition];
+    
+  }
   
 }
 

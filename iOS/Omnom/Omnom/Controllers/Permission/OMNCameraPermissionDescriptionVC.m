@@ -24,7 +24,7 @@
     
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     self.circleIcon = [UIImage imageNamed:@"camera_icon_big"];
-    
+
     __weak typeof(self)weakSelf = self;
     self.buttonInfo =
     @[

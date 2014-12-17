@@ -47,6 +47,7 @@
   self.label.alpha = 0.0f;
   self.text = _text;
   [self.view layoutIfNeeded];
+  
 }
 
 - (UIView *)fadeView {

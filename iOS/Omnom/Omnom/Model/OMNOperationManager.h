@@ -19,6 +19,6 @@ typedef NS_ENUM(NSInteger, OMNReachableState) {
 
 + (instancetype)sharedManager;
 
-- (void)getReachableState:(void(^)(OMNReachableState reachableState))isReachableBlock;
+- (OMNReachableState)reachableState;
 
 @end

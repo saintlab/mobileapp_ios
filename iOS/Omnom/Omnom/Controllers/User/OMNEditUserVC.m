@@ -150,7 +150,9 @@ OMNChangePhoneWebVCDelegate>
   
   _userImage = image;
   _user.image = image;
-  _user.avatar = @"";
+  if (!image) {
+    _user.avatar = @"";
+  }
   [self updateUserImage];
 
 }
@@ -208,7 +210,7 @@ OMNChangePhoneWebVCDelegate>
   if (nil == editUser) {
     return;
   }
-
+  editUser.avatar = _user.avatar;
   editUser.image = _userImage;
 
   [self setLoading:YES];
