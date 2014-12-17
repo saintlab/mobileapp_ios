@@ -30,11 +30,13 @@ NSInteger kCVVLength = 3;
   OMNDeletedTextField *_expireTF;
   OMNDeletedTextField *_cvvTF;
   
-  UIView *_scanActionView;
+  UIButton *_scanActionView;
   UIButton *_smallCameraButton;
   
   UIButton *_saveButton;
 
+  UIButton *_scanFrame;
+  UILabel *_scanLabel;
 }
 
 - (UIFont *)fontWithSize:(CGFloat)size {
@@ -85,29 +87,31 @@ NSInteger kCVVLength = 3;
     [_smallCameraButton addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
     [bgIV addSubview:_smallCameraButton];
     
-    UIButton *scanFrame = [[UIButton alloc] init];
-    [scanFrame addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
-    scanFrame.translatesAutoresizingMaskIntoConstraints = NO;
-    [scanFrame setBackgroundImage:[UIImage imageNamed:@"scan_frame"] forState:UIControlStateNormal];
-    [scanFrame setImage:[UIImage imageNamed:@"camera_icon_white"] forState:UIControlStateNormal];
+    _scanFrame = [[UIButton alloc] init];
+    _scanFrame.userInteractionEnabled = NO;
+    _scanFrame.translatesAutoresizingMaskIntoConstraints = NO;
+    [_scanFrame setBackgroundImage:[UIImage imageNamed:@"scan_frame"] forState:UIControlStateNormal];
+    [_scanFrame setImage:[UIImage imageNamed:@"camera_icon_white"] forState:UIControlStateNormal];
     
-    UILabel *scanLabel = [[UILabel alloc] init];
-    scanLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    scanLabel.numberOfLines = 0;
-    scanLabel.text = NSLocalizedString(@"— Отсканируйте\nвашу карту", nil);
-    scanLabel.font = [self fontWithSize:15.0f];
-    scanLabel.textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
-    
+    _scanLabel = [[UILabel alloc] init];
+    _scanLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _scanLabel.numberOfLines = 0;
+    _scanLabel.text = NSLocalizedString(@"— Отсканируйте\nвашу карту", nil);
+    _scanLabel.font = [self fontWithSize:15.0f];
+    _scanLabel.textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+    _scanLabel.highlightedTextColor = [UIColor colorWithWhite:0.5f alpha:0.5f];
     _scanActionView = [[UIButton alloc] init];
+    [_scanActionView addTarget:self action:@selector(cameraButtonTap) forControlEvents:UIControlEventTouchUpInside];
     _scanActionView.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [_scanActionView addTarget:self action:@selector(cameraButtonDown) forControlEvents:UIControlEventTouchDown];
+    [_scanActionView addTarget:self action:@selector(cameraButtonUp) forControlEvents:UIControlEventTouchUpInside];
+    [_scanActionView addTarget:self action:@selector(cameraButtonUp) forControlEvents:UIControlEventTouchUpOutside];
     
     [bgIV addSubview:_scanActionView];
     
-    [_scanActionView addSubview:scanFrame];
-    [_scanActionView addSubview:scanLabel];
-    
-#warning 123
-//    scan_frame
+    [_scanActionView addSubview:_scanFrame];
+    [_scanActionView addSubview:_scanLabel];
     
     _panTF = [self numberTextField];
     _panTF.attributedPlaceholder = [self attributedPlaceholderWithText:NSLocalizedString(@"Номер банковской карты", nil)];
@@ -159,8 +163,8 @@ NSInteger kCVVLength = 3;
       @"expireTF" : _expireTF,
       @"saveButton" : _saveButton,
       @"scanActionButton" : _scanActionView,
-      @"scanFrame" : scanFrame,
-      @"scanLabel" : scanLabel,
+      @"scanFrame" : _scanFrame,
+      @"scanLabel" : _scanLabel,
       };
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[bgIV]-(10)-[saveButton(cameraButtonSize)]-(4)-|" options:kNilOptions metrics:metrics views:views]];
@@ -169,7 +173,7 @@ NSInteger kCVVLength = 3;
     
     [bgIV addConstraint:[NSLayoutConstraint constraintWithItem:_scanActionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:bgIV attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
     [_scanActionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scanFrame]-(14)-[scanLabel]|" options:kNilOptions metrics:metrics views:views]];
-    [_scanActionView addConstraint:[NSLayoutConstraint constraintWithItem:scanFrame attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_scanActionView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    [_scanActionView addConstraint:[NSLayoutConstraint constraintWithItem:_scanFrame attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_scanActionView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     [_scanActionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scanLabel]|" options:kNilOptions metrics:metrics views:views]];
     
     [bgIV addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(cornerOffset)-[scanActionButton]" options:kNilOptions metrics:metrics views:views]];
@@ -224,6 +228,20 @@ NSInteger kCVVLength = 3;
 - (void)keyboardDidHide:(NSNotification *)n {
   
   [self updateCameraButton];
+  
+}
+
+- (void)cameraButtonDown {
+  
+  _scanFrame.highlighted = YES;
+  _scanLabel.highlighted = YES;
+  
+}
+
+- (void)cameraButtonUp {
+  
+  _scanFrame.highlighted = NO;
+  _scanLabel.highlighted = NO;
   
 }
 
