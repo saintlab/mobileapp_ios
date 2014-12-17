@@ -273,8 +273,8 @@ OMNPaymentFooterViewDelegate>
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]" options:0 metrics:nil views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scrollView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_paymentView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
   
-  UIPanGestureRecognizer *tapGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-  [self.view addGestureRecognizer:tapGR];
+//  UIPanGestureRecognizer *tapGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+//  [self.view addGestureRecognizer:tapGR];
   
   [self.view layoutIfNeeded];
   

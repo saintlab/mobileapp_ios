@@ -52,7 +52,6 @@ inline NSString *stringFromSplitType(SplitType splitType) {
   
   id _data;
   NSString *_callBillOrderId;
-  BOOL _enteredAmountChanged;
   NSArray *_tipsThresholds;
   
 }
@@ -152,7 +151,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     self.paid = order.paid;
   }
 
-  if (NO == _enteredAmountChanged) {
+  if (!_enteredAmountChanged) {
     _enteredAmount = MAX(0ll, self.expectedValue);
   }
   
@@ -294,6 +293,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 
 - (void)resetEnteredAmount {
   
+  _enteredAmountChanged = NO;
   _enteredAmount = self.expectedValue;
   
 }

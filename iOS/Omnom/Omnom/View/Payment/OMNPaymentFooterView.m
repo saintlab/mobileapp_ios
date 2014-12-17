@@ -70,7 +70,6 @@
   _tipsLabel.font = FuturaOSFOmnomRegular(18.0f);
   _tipsLabel.textColor = colorWithHexString(@"FFFFFF");
 
-  _payLabel.text = NSLocalizedString(@"PAYMENT_TO_PAY_LABEL", @"я оплачу");
   _payLabel.font = FuturaOSFOmnomRegular(18.0f);
   _payLabel.textColor = colorWithHexString(@"FFFFFF");
 
@@ -125,14 +124,14 @@
     
   } forControlEvents:UIControlEventEditingDidEnd];
   
-  [self setKeyboardShown:NO];
-  
   [_amountPercentControl bk_addEventHandler:^(OMNAmountPercentControl *sender) {
     
     [weakSelf updateAmountForPercentLabel];
     
   } forControlEvents:UIControlEventValueChanged];
-  
+
+  [self setKeyboardShown:NO];
+
 }
 
 - (void)configureWithColor:(UIColor *)color antogonistColor:(UIColor *)antogonistColor {
@@ -266,6 +265,20 @@
   
   if (NO == keyboardShown) {
     self.tipsMode = NO;
+  }
+  
+  
+  BOOL amountEnteredOrEditing = (keyboardShown || _order.enteredAmountChanged);
+  
+  if (amountEnteredOrEditing) {
+
+    _payLabel.text = NSLocalizedString(@"PAYMENT_DID_PAY_LABEL_TEXT", @"Я оплачу");
+    
+  }
+  else {
+
+    _payLabel.text = NSLocalizedString(@"PAYMENT_TO_PAY_LABEL_TEXT", @"к оплате");
+    
   }
   
   [self updateToPayButton];

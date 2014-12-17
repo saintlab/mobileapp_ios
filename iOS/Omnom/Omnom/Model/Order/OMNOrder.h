@@ -63,6 +63,7 @@ extern NSString *stringFromSplitType(SplitType splitType);
 @property (nonatomic, assign, readonly) long long enteredAmountWithTips;
 @property (nonatomic, assign, readonly) long long tipAmount;
 @property (nonatomic, assign) long long enteredAmount;
+@property (nonatomic, assign, readonly) BOOL enteredAmountChanged;
 
 @property (nonatomic, assign) TipType tipType;
 @property (nonatomic, assign) SplitType splitType;
