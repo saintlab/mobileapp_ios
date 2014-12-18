@@ -129,7 +129,6 @@ OMNEditUserVCDelegate>
   };
   
   UIColor *backgroundColor = [UIColor whiteColor];
-  _iconView.userInteractionEnabled = NO;
   
   _userNameLabel.numberOfLines = 3;
   _userNameLabel.backgroundColor = backgroundColor;
@@ -144,6 +143,8 @@ OMNEditUserVCDelegate>
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"USER_INFO_CHANGE_BUTTON_TITLE", @"Изменить") style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
   [self updateUserInfo];
   
+  [_iconView addTarget:self action:@selector(editPhotoTap) forControlEvents:UIControlEventTouchUpInside];
+  
 }
 
 - (void)closeTap {
@@ -152,10 +153,23 @@ OMNEditUserVCDelegate>
   
 }
 
+- (void)editPhotoTap {
+  
+  [self editUserWithPhoto:YES];
+  
+}
+
 - (void)editUserTap {
+  
+  [self editUserWithPhoto:NO];
+  
+}
+
+- (void)editUserWithPhoto:(BOOL)editPhoto {
   
   OMNEditUserVC *editUserVC = [[OMNEditUserVC alloc] init];
   editUserVC.delegate = self;
+  editUserVC.editPhoto = editPhoto;
   [self.navigationController pushViewController:editUserVC animated:YES];
   
 }

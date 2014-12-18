@@ -138,11 +138,12 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
   
   switch (status) {
-    case kCLAuthorizationStatusAuthorized:
-    case kCLAuthorizationStatusNotDetermined: {
+    case kCLAuthorizationStatusAuthorizedAlways: {
       
       [self startBeaconRegionMonitoring];
       
+    } break;
+    case kCLAuthorizationStatusNotDetermined: {
       //do nothig
     } break;
     default: {
@@ -273,6 +274,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
   if (UIBackgroundTaskInvalid != _searchBeaconTask) {
     
+    NSLog(@"BeaconSearchManagerTask did finish");
     [[UIApplication sharedApplication] endBackgroundTask:_searchBeaconTask];
     _searchBeaconTask = UIBackgroundTaskInvalid;
     

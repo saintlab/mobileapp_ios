@@ -57,7 +57,7 @@ OMNChangePhoneWebVCDelegate>
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
 
-  [_iconButton addTarget:self action:@selector(iconTap) forControlEvents:UIControlEventTouchUpInside];
+  [_iconButton addTarget:self action:@selector(editPhotoTap) forControlEvents:UIControlEventTouchUpInside];
   
   [self setLoading:NO];
   
@@ -75,6 +75,12 @@ OMNChangePhoneWebVCDelegate>
   
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+  
+  if (self.editPhoto) {
+    
+    [self editPhotoTap];
+    
+  }
   
 }
 
@@ -101,8 +107,9 @@ OMNChangePhoneWebVCDelegate>
   
 }
 
-- (void)iconTap {
+- (void)editPhotoTap {
   
+  self.editPhoto = NO;
   UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                      delegate:nil
                                             cancelButtonTitle:NSLocalizedString(@"USER_PHOTO_CANCEL_BUTTON_TITLE", @"Отмена")

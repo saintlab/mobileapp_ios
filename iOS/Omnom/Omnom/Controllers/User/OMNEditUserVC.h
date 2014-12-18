@@ -14,6 +14,7 @@
 @interface OMNEditUserVC : UIViewController
 
 @property (nonatomic, weak) id<OMNEditUserVCDelegate> delegate;
+@property (nonatomic, assign) BOOL editPhoto;
 
 @end
 
