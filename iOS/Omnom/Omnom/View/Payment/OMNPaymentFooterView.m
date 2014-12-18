@@ -18,6 +18,7 @@
 #import "UIImage+omn_helper.h"
 
 @interface OMNPaymentFooterView ()
+<OMNTipSelectorDelegate>
 
 @property (nonatomic, assign) BOOL tipsMode;
 
@@ -42,6 +43,17 @@
   OMNAmountPercentValue *_tipAmountPercentValue;
   
   BOOL _keyboardShown;
+  
+}
+
+- (void)dealloc {
+  
+  @try {
+    
+    [_order removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex))];
+    
+  }
+  @catch (NSException *exception) {}
   
 }
 
@@ -100,24 +112,9 @@
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_payButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_payButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-10.0f]];
   
-  _tipsSelector.selectedIndex = 1;
+  _tipsSelector.delegate = self;
   
   __weak typeof(self)weakSelf = self;
-  [_tipsSelector bk_addEventHandler:^(OMNTipSelector *sender) {
-    
-    if (3 == sender.selectedIndex) {
-      
-      [weakSelf startTipEditing];
-      
-    }
-    else {
-      
-      [weakSelf updateToPayButton];
-      
-    }
-    
-  } forControlEvents:UIControlEventValueChanged];
-  
   [_amountPercentControl bk_addEventHandler:^(id sender) {
     
     [weakSelf updatePercentAmountControl];
@@ -140,27 +137,6 @@
   [_payButton setBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_payButton setTitleColor:color forState:UIControlStateNormal];
   [_amountPercentControl configureWithColor:color antogonistColor:antogonistColor];
-  
-}
-
-- (void)startTipEditing {
-  
-  self.tipsMode = YES;
-  if (_tipAmountPercentValue) {
-    
-    _tipAmountPercentValue.amount = _order.enteredAmount;
-    _amountPercentControl.amountPercentValue = _tipAmountPercentValue;
-    
-  }
-  else {
-    
-    OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
-    amountPercentValue.percent = _order.customTip.percent;
-    _amountPercentControl.amountPercentValue = amountPercentValue;
-    
-  }
-  
-  [_amountPercentControl beginPercentEditing];
   
 }
 
@@ -193,11 +169,29 @@
 
 - (void)setOrder:(OMNOrder *)order {
   
+
+  [_order removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex))];
   _order = order;
+  [_order addObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
+  
   [_tipsSelector setOrder:order];
   [self updatePercentAmountControl];
-  [self updateToPayButton];
   
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  
+  if ([object isEqual:_order] &&
+      [keyPath isEqualToString:NSStringFromSelector(@selector(selectedTipIndex))]) {
+    
+    [self updateToPayButton];
+    
+  }
+  else {
+    
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    
+  }
 }
 
 - (void)updateToPayButton {
@@ -287,7 +281,7 @@
 
 - (IBAction)cancelEditingTap:(id)sender {
   
-  _tipsSelector.selectedIndex = _tipsSelector.previousSelectedIndex;
+  _order.selectedTipIndex = _tipsSelector.previousSelectedIndex;
   [_amountPercentControl resignFirstResponder];
   
 }
@@ -300,7 +294,7 @@
     _order.customTip.percent = _tipAmountPercentValue.percent;
     _order.tipType = kTipTypeCustomPercent;
     _tipsSelector.order = _order;
-    
+#warning 123
   }
   else {
     
@@ -309,6 +303,29 @@
   }
   
   [_amountPercentControl resignFirstResponder];
+  
+}
+
+#pragma mark - OMNTipSelectorDelegate
+
+- (void)tipSelectorStartCustomTipEditing:(OMNTipSelector *)tipSelector {
+  
+  self.tipsMode = YES;
+  if (_tipAmountPercentValue) {
+    
+    _tipAmountPercentValue.amount = _order.enteredAmount;
+    _amountPercentControl.amountPercentValue = _tipAmountPercentValue;
+    
+  }
+  else {
+    
+    OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
+    amountPercentValue.percent = _order.customTip.percent;
+    _amountPercentControl.amountPercentValue = amountPercentValue;
+    
+  }
+  
+  [_amountPercentControl beginPercentEditing];
   
 }
 

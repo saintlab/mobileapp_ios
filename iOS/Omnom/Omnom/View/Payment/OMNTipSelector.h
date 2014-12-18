@@ -8,13 +8,18 @@
 
 #import "OMNOrder.h"
 
-#define kDefaultTipSelectedIndex 1
+@protocol OMNTipSelectorDelegate;
 
 @interface OMNTipSelector : UIControl
 
-@property (nonatomic, assign) NSInteger selectedIndex;
 @property (nonatomic, assign, readonly) NSInteger previousSelectedIndex;
-
 @property (nonatomic, strong) OMNOrder *order;
+@property (nonatomic, weak) id<OMNTipSelectorDelegate> delegate;
+
+@end
+
+@protocol OMNTipSelectorDelegate <NSObject>
+
+- (void)tipSelectorStartCustomTipEditing:(OMNTipSelector *)tipSelector;
 
 @end

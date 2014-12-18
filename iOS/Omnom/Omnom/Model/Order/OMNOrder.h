@@ -36,6 +36,9 @@ typedef NS_ENUM(NSInteger, SplitType) {
 extern NSString *stringFromTipType(TipType tipType);
 extern NSString *stringFromSplitType(SplitType splitType);
 
+extern NSInteger const kDefaultSelectedTipIndex;
+extern NSInteger const kCustomTipIndex;
+
 @interface OMNOrder : NSObject
 
 @property (nonatomic, copy) NSString *id;

@@ -13,13 +13,10 @@ NSString * const kRubleSign = @"\u20BD";
 NSString * const kGroupingSeparator = @" ";
 
 NSString *omnCommaString() {
-  static NSString *commaString = nil;
   
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    commaString = [[NSLocale currentLocale] objectForKey:NSLocaleDecimalSeparator];
-  });
+  NSString *commaString = [[NSLocale currentLocale] objectForKey:NSLocaleDecimalSeparator];;
   return commaString;
+
 }
 
 @implementation OMNUtils

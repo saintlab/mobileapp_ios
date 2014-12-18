@@ -116,19 +116,17 @@
 - (void)tipButtonTap:(OMNTipButton *)tipButton {
   
   self.selectedIndex = tipButton.tag;
+  if (kCustomTipIndex == self.selectedIndex) {
+    
+    [self.delegate tipSelectorStartCustomTipEditing:self];
+    
+  }
   [self sendActionsForControlEvents:UIControlEventValueChanged];
   
 }
 
 - (void)setSelectedIndex:(NSInteger)selectedIndex {
 
-  if (selectedIndex == kDefaultTipSelectedIndex) {
-    _order.tipType = kTipTypeDefault;
-  }
-  else {
-    _order.tipType = kTipTypeCustom;
-  }
-  
   _previousSelectedIndex = self.selectedIndex;
   _order.selectedTipIndex = selectedIndex;
   

@@ -47,6 +47,8 @@ inline NSString *stringFromSplitType(SplitType splitType) {
   return string;
 }
 
+NSInteger const kDefaultSelectedTipIndex = 1;
+NSInteger const kCustomTipIndex = 3;
 
 @implementation OMNOrder {
   
@@ -134,7 +136,7 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     }
     else {
       
-      self.selectedTipIndex = 1;
+      self.selectedTipIndex = kDefaultSelectedTipIndex;
       
     }
     
@@ -249,16 +251,18 @@ inline NSString *stringFromSplitType(SplitType splitType) {
     
   }];
   
+  self.tipType = (kDefaultSelectedTipIndex == selectedTipIndex) ? (kTipTypeDefault) : (kTipTypeCustom);
+  
 }
 
 - (OMNTip *)selectedTip {
   
-  if (3 == self.selectedTipIndex) {
+  if (kCustomTipIndex == self.selectedTipIndex) {
     
     return _customTip;
     
   }
-  if (self.selectedTipIndex < 3 &&
+  if (self.selectedTipIndex < kCustomTipIndex &&
       self.selectedTipIndex >= 0) {
     
     return self.tips[self.selectedTipIndex];

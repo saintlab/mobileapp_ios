@@ -28,7 +28,6 @@ UITextFieldDelegate>
   
   OMNLabeledTextField *_amountTF;
   UITextField *_percentTF;
-  
   UIPickerView *_percentPicker;
   UIView *_flexibleBottomView;
   
@@ -54,6 +53,12 @@ UITextFieldDelegate>
   _amountTF.text = [[OMNUtils commaStringFromKop:_amountPercentValue.amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
   [self setPercentValue:_amountPercentValue.percent];
   
+}
+
+- (NSMutableParagraphStyle *)centerParagraphStyle {
+  NSMutableParagraphStyle *attributeStyle = [[NSMutableParagraphStyle alloc] init];
+  attributeStyle.alignment = NSTextAlignmentCenter;
+  return attributeStyle;
 }
 
 - (void)configureWithColor:(UIColor *)color antogonistColor:(UIColor *)antogonistColor {
@@ -215,7 +220,7 @@ UITextFieldDelegate>
   _amountTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   _amountTF.font = FuturaLSFOmnomLERegular(50.0f);
   _amountTF.delegate = self;
-  [_amountTF setDetailedText:[NSString stringWithFormat:@" %@", kRubleSign]];
+  [_amountTF setDetailedText:[NSString stringWithFormat:@" %@\uFEFF", kRubleSign]];
   [self addSubview:_amountTF];
   
   _percentPicker = [[UIPickerView alloc] init];
@@ -248,7 +253,6 @@ UITextFieldDelegate>
   
   NSDictionary *metrics =
   @{
-    @"seporatorViewHeight" : @(11.0f),
     };
   
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_amountTF attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
@@ -259,8 +263,8 @@ UITextFieldDelegate>
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_flexibleBottomView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:180.0f]];
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[percentTF]-3-|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[amountTF]-2-[flexibleBottomView(1)]|" options:0 metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[percentTF]|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[amountTF]-2-[flexibleBottomView(1)]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[percentTF]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 

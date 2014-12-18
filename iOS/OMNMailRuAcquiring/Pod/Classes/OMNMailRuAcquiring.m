@@ -45,7 +45,7 @@ static NSDictionary *_config = nil;
        @"OMNMailRu_merch_id" : @"DGIS",
        @"OMNMailRu_vterm_id" : @"DGISMobile",
        @"OMNMailRu_cardholder" : @"Omnom",
-       @"OMNMailRu_secret_key" : @"qmluSZ1HkWQRWkUtcDOM",
+       @"OMNMailRu_secret_key" : @"5FEgXKDjuaegndwVJugNVUTMov8AXR7kY6CFLdivveDpxn5XmF",
        @"OMNMailRuAcquiringBaseURL" : @"https://cpg.money.mail.ru/api/",
        @"OMNMailRuTestCVV" : @"",
        }];
