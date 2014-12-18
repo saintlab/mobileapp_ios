@@ -17,14 +17,14 @@
 @end
 
 @implementation OMNBankCardUserInfoItem
-
+#warning TODO: remove delegate
 - (instancetype)init {
   self = [super init];
   if (self) {
     self.title = NSLocalizedString(@"Мои привязанные карты", nil);
     self.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     __weak typeof(self)weakSelf = self;
-    [self setActionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
+    [self setActionBlock:^(__weak UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath) {
       
       weakSelf.rootViewController = vc;
       

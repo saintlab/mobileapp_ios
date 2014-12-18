@@ -8,9 +8,9 @@
 
 #import "OMNUserMailFeedbackItem.h"
 #import <MessageUI/MessageUI.h>
+#import <MFMailComposeViewController+BlocksKit.h>
 
 @interface OMNUserMailFeedbackItem ()
-<MFMailComposeViewControllerDelegate>
 
 @end
 
@@ -20,16 +20,21 @@
   self = [super init];
   if (self) {
 
-    self.title = NSLocalizedString(@"Обратная связь", nil);
+    self.title = NSLocalizedString(@"FEEDBACK_MAIL_ITEM_TITLE", @"Обратная связь");
     
-    __weak typeof(self)weakSelf = self;
-    [self setActionBlock:^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
+    [self setActionBlock:^(__weak UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath) {
       
       if ([MFMailComposeViewController canSendMail]) {
         
         MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
-        composeViewController.mailComposeDelegate = weakSelf;
         [composeViewController setToRecipients:@[@"team@omnom.menu"]];
+        [composeViewController setSubject:NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT", @"Всё, что я думаю про Омном")];
+        
+        [composeViewController bk_setCompletionBlock:^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
+          
+          [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+          
+        }];
         [vc presentViewController:composeViewController animated:YES completion:nil];
         
       }
@@ -44,14 +49,6 @@
 
   }
   return self;
-}
-
-#pragma mark - MFMailComposeViewControllerDelegate
-
-- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
-  
-  [controller.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  
 }
 
 @end

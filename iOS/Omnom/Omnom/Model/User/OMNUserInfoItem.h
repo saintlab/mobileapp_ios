@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^OMNUserInfoItemBlock)(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath);
+typedef void(^OMNUserInfoItemBlock)(__weak UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath);
 
 @interface OMNUserInfoItem : NSObject
 
