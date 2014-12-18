@@ -107,6 +107,7 @@
   _datePicker = [[UIDatePicker alloc] init];
   _datePicker.backgroundColor = [UIColor whiteColor];
   _datePicker.datePickerMode = UIDatePickerModeDate;
+  [_datePicker addTarget:self action:@selector(dateDidChange:) forControlEvents:UIControlEventValueChanged];
   NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
   NSDateComponents *components = [calendar components:(NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:[NSDate date]];
   components.year -= 30;
@@ -121,6 +122,12 @@
   [self addSubview:_birthdayTF];
   
   _textFields = @[_nameTF, _emailTF, _phoneTF, _birthdayTF];
+  
+}
+
+- (void)dateDidChange:(UIDatePicker *)datePicker {
+  
+  [self setBirthDate:datePicker.date];
   
 }
 
@@ -162,20 +169,17 @@
 }
 
 - (void)doneTap {
+
+  [self setBirthDate:_datePicker.date];
+  [self endEditing:YES];
   
-  if ([[NSDate date] timeIntervalSinceDate:_datePicker.date] > 18 * 365 * 24 * 60 * 60) {
-    
-    _user.birthDate = _datePicker.date;
-    [self updateBirthDate];
-    [_birthdayTF setErrorText:nil];
-    [self endEditing:YES];
-    
-  }
-  else {
-    
-    [_birthdayTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_AGE", @"Слишком мало лет =(")];
-    
-  }
+}
+
+- (void)setBirthDate:(NSDate *)birthDate {
+  
+  _user.birthDate = birthDate;
+  [self updateBirthDate];
+  [_birthdayTF setErrorText:nil];
   
 }
 
@@ -276,7 +280,9 @@
   user.phone = _phoneTF.textField.text;
   user.name = _nameTF.textField.text;
   if (_birthdayTF.textField.text) {
+    
     user.birthDate = _datePicker.date;
+    
   }
   
   [self endEditing:YES];
@@ -294,7 +300,9 @@
   
   if ([textField isEqual:_phoneTF.textField] &&
       0 == _phoneTF.textField.text.length) {
+    
     _phoneTF.textField.text = @"+7";
+    
   }
 
   [self.delegate userInfoView:self didbeginEditingTextField:textField];
