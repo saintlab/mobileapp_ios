@@ -13,6 +13,7 @@
 #import "OMNNavigationController.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNVisitor+network.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNRestaurantActionsVC()
 
@@ -137,19 +138,31 @@
   
   self.bottomToolbar.hidden = NO;
   
-  UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
-  OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")];
-  [callWaiterButton addTarget:_restaurantMediator action:@selector(callWaiterAction:) forControlEvents:UIControlEventTouchUpInside];
-  [callWaiterButton sizeToFit];
-  
-  self.bottomToolbar.items =
-  @[
-    [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-    ];
+  if (self.visitor.restaurant.settings.has_waiter_call) {
+    
+    UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
+    OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")];
+    [callWaiterButton addTarget:_restaurantMediator action:@selector(callWaiterAction:) forControlEvents:UIControlEventTouchUpInside];
+    [callWaiterButton sizeToFit];
+    
+    self.bottomToolbar.items =
+    @[
+      [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
+      [UIBarButtonItem omn_flexibleItem],
+      [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+      ];
 
-  callWaiterButton.hidden = !self.visitor.restaurant.settings.has_waiter_call;
+  }
+  else {
+  
+    self.bottomToolbar.items =
+    @[
+      [UIBarButtonItem omn_flexibleItem],
+      [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+      [UIBarButtonItem omn_flexibleItem],
+      ];
+    
+  }
   
 }
 
@@ -160,9 +173,9 @@
   [cancelWaiterButton sizeToFit];
   self.bottomToolbar.items =
   @[
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [UIBarButtonItem omn_flexibleItem],
     [[UIBarButtonItem alloc] initWithCustomView:cancelWaiterButton],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [UIBarButtonItem omn_flexibleItem],
     ];
   
 }
@@ -175,19 +188,16 @@
 
 - (void)cancelWaiterCallTap {
   
-  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-  [spinner startAnimating];
   self.bottomToolbar.items =
   @[
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithCustomView:spinner],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [UIBarButtonItem omn_flexibleItem],
+    [UIBarButtonItem omn_loadingItem],
+    [UIBarButtonItem omn_flexibleItem],
     ];
 
   __weak typeof(self)weakSelf = self;
   [_visitor waiterCallStopWithFailure:^(NSError *error) {
     
-    NSLog(@"waiterCallStopError>%@", error);
     if (error) {
       [weakSelf setWaiterCancelButtons];
     }
