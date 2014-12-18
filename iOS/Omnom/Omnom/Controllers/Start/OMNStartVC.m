@@ -72,7 +72,6 @@ OMNSearchRestaurantVCDelegate>
     
     if (tokenIsValid) {
       
-      [[OMNAnalitics analitics] logLogin];
       [weakSelf startSearchingRestaurant];
       
     }

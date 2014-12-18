@@ -116,7 +116,9 @@ OMNUserInfoVCDelegate>
     
     [self.loaderView startAnimating:self.estimateAnimationDuration];
     dispatch_async(dispatch_get_main_queue(), ^{
+      
       [weakSelf didFindVisitor:weakSelf.visitor];
+      
     });
     
   }

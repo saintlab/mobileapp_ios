@@ -190,8 +190,10 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
     }];
   }
   
+  CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
+  
   if (TARGET_OS_IPHONE &&
-      kCLAuthorizationStatusNotDetermined == [CLLocationManager authorizationStatus]) {
+      kCLAuthorizationStatusNotDetermined == authorizationStatus) {
     
     [self.delegate beaconSearchManagerDidStop:self found:NO];
     [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestLocationManagerPermission];
@@ -201,6 +203,14 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
   
   if (_nearestBeaconsManager.isRanging) {
     return;
+  }
+  
+  
+  if (kCLAuthorizationStatusAuthorizedAlways != authorizationStatus) {
+    
+    [self processCoreLocationAuthorizationStatus:authorizationStatus];
+    return;
+    
   }
   
   [self.delegate beaconSearchManager:self didChangeState:kSearchManagerStartSearchingBeacons];
@@ -275,6 +285,7 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
       
     } break;
     case kCLAuthorizationStatusNotDetermined: {
+      
       
     } break;
     case kCLAuthorizationStatusRestricted: {

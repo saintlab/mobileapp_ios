@@ -306,7 +306,7 @@
   }
 
   [self.delegate userInfoView:self didbeginEditingTextField:textField];
-    
+
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
