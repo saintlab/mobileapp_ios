@@ -136,9 +136,10 @@
 
 - (void)setOrder:(OMNOrder *)order {
   
-  [_order removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex))];
+  NSString *keyPath = NSStringFromSelector(@selector(selectedTipIndex));
+  [_order removeObserver:self forKeyPath:keyPath];
   _order = order;
-  [_order addObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
+  [_order addObserver:self forKeyPath:keyPath options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
   
   [_tipsSelector setOrder:order];
   _payAmountLabel.text = (_order.paid.net_amount) ? ([NSString stringWithFormat:NSLocalizedString(@"ALREADY_PAID_AMOUNT %@", @"Уже оплачено: {amount}"), [OMNUtils formattedMoneyStringFromKop:_order.paid.net_amount]]) : (@"");

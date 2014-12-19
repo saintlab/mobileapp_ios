@@ -15,6 +15,15 @@
   UIView *_contentView;
 }
 
+- (void)dealloc {
+  
+  @try {
+    [_order removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex))];
+  }
+  @catch (NSException *exception) {}
+  
+}
+
 - (instancetype)init {
   self = [super init];
   if (self) {

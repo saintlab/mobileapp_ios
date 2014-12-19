@@ -25,6 +25,7 @@ OMNEditUserVCDelegate>
 @end
 
 @implementation OMNUserInfoVC {
+  
   OMNUserInfoModel *_userInfoModel;
   
   __weak IBOutlet UILabel *_userNameLabel;
@@ -35,6 +36,7 @@ OMNEditUserVCDelegate>
 
   NSString *_userObserverIdentifier;
   NSString *_userImageObserverIdentifier;
+  
 }
 
 - (void)dealloc {
@@ -51,7 +53,6 @@ OMNEditUserVCDelegate>
     _userImageObserverIdentifier = nil;
     
   }
-  
   
 }
 

@@ -28,8 +28,6 @@
 #import "OMNBankCard.h"
 #import "OMNBankCardMediator.h"
 
-NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdentifier";
-
 @interface OMNMailRUPayVC()
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
@@ -49,8 +47,19 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
   OMNBankCardsModel *_bankCardsModel;
   UIView *_contentView;
   OMNLoadingCircleVC *_loadingCircleVC;
-  
+  NSString *_mailRUPayVCLoadingIdentifier;
   BOOL _addBankCardRequested;
+}
+
+- (void)dealloc {
+  
+  if (_mailRUPayVCLoadingIdentifier) {
+    
+    [self bk_removeObserversWithIdentifier:_mailRUPayVCLoadingIdentifier];
+    _mailRUPayVCLoadingIdentifier = nil;
+    
+  }
+  
 }
 
 - (instancetype)initWithOrder:(OMNOrder *)order {
@@ -83,11 +92,12 @@ NSString * const OMNMailRUPayVCLoadingIdentifier = @"OMNMailRUPayVCLoadingIdenti
     
   }
 
-  [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) identifier:OMNMailRUPayVCLoadingIdentifier options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
+  _mailRUPayVCLoadingIdentifier = [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
     
     [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([weakSelf loadingButton]) : ([weakSelf addCardButton]) animated:YES];
     
   }];
+
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
     return weakSelf;
