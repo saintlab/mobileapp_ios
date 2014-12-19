@@ -244,6 +244,7 @@ NSInteger const kCustomTipIndex = 3;
 
 - (void)setSelectedTipIndex:(NSInteger)selectedTipIndex {
   
+  [self willChangeValueForKey:@"selectedTipIndex"];
   _selectedTipIndex = selectedTipIndex;
   [self.tips enumerateObjectsUsingBlock:^(OMNTip *tip, NSUInteger idx, BOOL *stop) {
     
@@ -251,8 +252,25 @@ NSInteger const kCustomTipIndex = 3;
     
   }];
   
-  self.tipType = (kDefaultSelectedTipIndex == selectedTipIndex) ? (kTipTypeDefault) : (kTipTypeCustom);
-  
+  switch (selectedTipIndex) {
+    case kDefaultSelectedTipIndex: {
+      
+      self.tipType = kTipTypeDefault;
+      
+    } break;
+    case kCustomTipIndex: {
+      
+      self.tipType = kTipTypeCustomPercent;
+      
+    } break;
+    default: {
+      
+      self.tipType = kTipTypeCustom;
+      
+    } break;
+  }
+  [self didChangeValueForKey:@"selectedTipIndex"];
+
 }
 
 - (OMNTip *)selectedTip {
@@ -299,6 +317,13 @@ NSInteger const kCustomTipIndex = 3;
   
   _enteredAmountChanged = NO;
   _enteredAmount = self.expectedValue;
+  
+}
+
+- (void)setCustomTipPercent:(double)percent {
+  
+  self.customTip.percent = percent;
+  self.selectedTipIndex = kCustomTipIndex;
   
 }
 

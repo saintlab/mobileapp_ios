@@ -41,7 +41,7 @@
 		9317C07119DE922B0071E42B /* UIButton+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9317C06F19DE922B0071E42B /* UIButton+omn_helper.m */; };
 		9317C07619DE95DD0071E42B /* OMNAlertTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9317C07519DE95DD0071E42B /* OMNAlertTransitionAnimator.m */; };
 		9317C07719DE95DD0071E42B /* OMNAlertTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9317C07519DE95DD0071E42B /* OMNAlertTransitionAnimator.m */; };
-		9319FD62192F33B90053F3A4 /* OMNAmountPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD58192F33B90053F3A4 /* OMNAmountPercentControl.m */; };
+		9319FD62192F33B90053F3A4 /* OMNEditAmountControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD58192F33B90053F3A4 /* OMNEditAmountControl.m */; };
 		9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5A192F33B90053F3A4 /* OMNNavigationBarSelector.m */; };
 		9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5C192F33B90053F3A4 /* OMNPaymentFooterView.m */; };
 		9319FD65192F33B90053F3A4 /* OMNTipSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5E192F33B90053F3A4 /* OMNTipSelector.m */; };
@@ -51,8 +51,6 @@
 		9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE1192F365B0053F3A4 /* NSString+jquery.m */; };
 		9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */; };
 		9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
-		931B15CE19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */; };
-		931B15CF19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */; };
 		931B2DF219BC710C0071883C /* OMNOrder+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF119BC710C0071883C /* OMNOrder+network.m */; };
 		931B2DF319BC710C0071883C /* OMNOrder+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF119BC710C0071883C /* OMNOrder+network.m */; };
 		931B2DF619BC83910071883C /* OMNOrder+tipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF519BC83910071883C /* OMNOrder+tipButton.m */; };
@@ -442,6 +440,8 @@
 		93F21BEE19B6284B00D5F78A /* config_stand.json in Resources */ = {isa = PBXBuildFile; fileRef = 93F21BEC19B6284B00D5F78A /* config_stand.json */; };
 		93F4DBDE1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */; };
 		93F4DBDF1978F0EA00D06E32 /* OMNBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */; };
+		93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
+		93FEEB321A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		C6C76590351C4176B35ECE19 /* libPods-omnomTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C1CE5E4E1243D5AFFD1065 /* libPods-omnomTests.a */; };
 /* End PBXBuildFile section */
 
@@ -505,8 +505,8 @@
 		9317C06F19DE922B0071E42B /* UIButton+omn_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+omn_helper.m"; sourceTree = "<group>"; };
 		9317C07419DE95DD0071E42B /* OMNAlertTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAlertTransitionAnimator.h; sourceTree = "<group>"; };
 		9317C07519DE95DD0071E42B /* OMNAlertTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAlertTransitionAnimator.m; sourceTree = "<group>"; };
-		9319FD57192F33B90053F3A4 /* OMNAmountPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAmountPercentControl.h; sourceTree = "<group>"; };
-		9319FD58192F33B90053F3A4 /* OMNAmountPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAmountPercentControl.m; sourceTree = "<group>"; };
+		9319FD57192F33B90053F3A4 /* OMNEditAmountControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditAmountControl.h; sourceTree = "<group>"; };
+		9319FD58192F33B90053F3A4 /* OMNEditAmountControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditAmountControl.m; sourceTree = "<group>"; };
 		9319FD59192F33B90053F3A4 /* OMNNavigationBarSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationBarSelector.h; sourceTree = "<group>"; };
 		9319FD5A192F33B90053F3A4 /* OMNNavigationBarSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationBarSelector.m; sourceTree = "<group>"; };
 		9319FD5B192F33B90053F3A4 /* OMNPaymentFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPaymentFooterView.h; sourceTree = "<group>"; };
@@ -525,8 +525,6 @@
 		9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+OMNQuery.m"; sourceTree = "<group>"; };
 		9319FDE6192F36910053F3A4 /* UIView+frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frame.h"; sourceTree = "<group>"; };
 		9319FDE7192F36910053F3A4 /* UIView+frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frame.m"; sourceTree = "<group>"; };
-		931B15CC19B75BB900A774E4 /* OMNAmountPercentValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAmountPercentValue.h; sourceTree = "<group>"; };
-		931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAmountPercentValue.m; sourceTree = "<group>"; };
 		931B2DF019BC710C0071883C /* OMNOrder+network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+network.h"; sourceTree = "<group>"; };
 		931B2DF119BC710C0071883C /* OMNOrder+network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+network.m"; sourceTree = "<group>"; };
 		931B2DF419BC83910071883C /* OMNOrder+tipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+tipButton.h"; sourceTree = "<group>"; };
@@ -911,6 +909,8 @@
 		93F21BEC19B6284B00D5F78A /* config_stand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_stand.json; sourceTree = "<group>"; };
 		93F4DBDC1978F0EA00D06E32 /* OMNBeaconSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBeaconSearchManager.h; sourceTree = "<group>"; };
 		93F4DBDD1978F0EA00D06E32 /* OMNBeaconSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconSearchManager.m; sourceTree = "<group>"; };
+		93FEEB2F1A43E166002ED717 /* OMNEditPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditPercentControl.h; sourceTree = "<group>"; };
+		93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditPercentControl.m; sourceTree = "<group>"; };
 		9BCE6415AF2807DAACF8AC44 /* Pods-omnomTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnomTests.appstore.xcconfig"; path = "../Pods/Target Support Files/Pods-omnomTests/Pods-omnomTests.appstore.xcconfig"; sourceTree = "<group>"; };
 		A19D74D52740E47D1825531D /* Pods-omnomTests.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnomTests.test.xcconfig"; path = "../Pods/Target Support Files/Pods-omnomTests/Pods-omnomTests.test.xcconfig"; sourceTree = "<group>"; };
 		C84C5F78AA014FB544239CCE /* Pods-omnom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnom.release.xcconfig"; path = "../Pods/Target Support Files/Pods-omnom/Pods-omnom.release.xcconfig"; sourceTree = "<group>"; };
@@ -1113,15 +1113,12 @@
 		9319FD56192F33B90053F3A4 /* Payment */ = {
 			isa = PBXGroup;
 			children = (
-				9319FD57192F33B90053F3A4 /* OMNAmountPercentControl.h */,
-				9319FD58192F33B90053F3A4 /* OMNAmountPercentControl.m */,
 				9319FD59192F33B90053F3A4 /* OMNNavigationBarSelector.h */,
 				9319FD5A192F33B90053F3A4 /* OMNNavigationBarSelector.m */,
-				9319FD5B192F33B90053F3A4 /* OMNPaymentFooterView.h */,
-				9319FD5C192F33B90053F3A4 /* OMNPaymentFooterView.m */,
 				931456B5193CA823003E2CD6 /* Tip */,
 				9307A6DD19D53F7E00101B81 /* OMNLabeledTextField.h */,
 				9307A6DE19D53F7E00101B81 /* OMNLabeledTextField.m */,
+				93FEEB331A43F180002ED717 /* PaymentFooterView */,
 			);
 			path = Payment;
 			sourceTree = "<group>";
@@ -1662,8 +1659,6 @@
 			children = (
 				938E8F4C192F3A200088EF38 /* OMNTip.h */,
 				938E8F4D192F3A200088EF38 /* OMNTip.m */,
-				931B15CC19B75BB900A774E4 /* OMNAmountPercentValue.h */,
-				931B15CD19B75BB900A774E4 /* OMNAmountPercentValue.m */,
 			);
 			path = Tip;
 			sourceTree = "<group>";
@@ -2072,6 +2067,19 @@
 			path = ../../../../iOS/Omnom/Omnom/Model/SearchTable;
 			sourceTree = "<group>";
 		};
+		93FEEB331A43F180002ED717 /* PaymentFooterView */ = {
+			isa = PBXGroup;
+			children = (
+				93FEEB2F1A43E166002ED717 /* OMNEditPercentControl.h */,
+				93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */,
+				9319FD57192F33B90053F3A4 /* OMNEditAmountControl.h */,
+				9319FD58192F33B90053F3A4 /* OMNEditAmountControl.m */,
+				9319FD5B192F33B90053F3A4 /* OMNPaymentFooterView.h */,
+				9319FD5C192F33B90053F3A4 /* OMNPaymentFooterView.m */,
+			);
+			name = PaymentFooterView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2345,8 +2353,9 @@
 				938E8F58192F3A200088EF38 /* OMNMenu.m in Sources */,
 				932118361962E88000183729 /* OMNTransitionFromProductToList.m in Sources */,
 				939DA1761958226B0063AB23 /* OMNAnalitics.m in Sources */,
+				93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */,
 				93C99092193DBBE40028F76C /* OMNTablePositionVC.m in Sources */,
-				9319FD62192F33B90053F3A4 /* OMNAmountPercentControl.m in Sources */,
+				9319FD62192F33B90053F3A4 /* OMNEditAmountControl.m in Sources */,
 				932118161962DA2800183729 /* OMNStubProductCell.m in Sources */,
 				9389456419B0622900C37C82 /* OMNPushText.m in Sources */,
 				9307C5731937022800408519 /* OMNOrderItemCell.m in Sources */,
@@ -2452,7 +2461,6 @@
 				9325BA4D1A1DDE81003557BD /* OMNTestBankCardMediator.m in Sources */,
 				930554FF1935DA7C00E6F4EC /* OMNCalculatorVC.m in Sources */,
 				93E58CB91A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */,
-				931B15CE19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */,
 				93D34DB019D2689800B7BDBE /* NSString+omnScanner.m in Sources */,
 				932B185B19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
 				9332CAFF1A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */,
@@ -2551,6 +2559,7 @@
 				937A37341980F68200EF5C31 /* OMNLoaderView.m in Sources */,
 				937C3E721A2824E9006525A9 /* OMNLocationManager.m in Sources */,
 				9308FE7C196E815600B482AA /* OMNVisitorManager.m in Sources */,
+				93FEEB321A43E166002ED717 /* OMNEditPercentControl.m in Sources */,
 				9317C07119DE922B0071E42B /* UIButton+omn_helper.m in Sources */,
 				93750B22196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
 				93CA085D19AA34FA00615F43 /* UIView+screenshot.m in Sources */,
@@ -2653,7 +2662,6 @@
 				9345AFCA199B7E1A00328F73 /* OMNRestaurantInfoItem.m in Sources */,
 				93EDCC9519C2D296006BC364 /* OMNSocketTest.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
-				931B15CF19B75BB900A774E4 /* OMNAmountPercentValue.m in Sources */,
 				93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
 				93E2998A197CE0FD00051B04 /* OMNSearchVisitorVC.m in Sources */,

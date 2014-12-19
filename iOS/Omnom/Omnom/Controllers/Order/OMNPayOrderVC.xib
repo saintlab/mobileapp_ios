@@ -59,7 +59,12 @@
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <view contentMode="scaleToFill" id="Tb5-dQ-gtn" customClass="OMNAmountPercentControl">
+                                <view contentMode="scaleToFill" id="Tb5-dQ-gtn" customClass="OMNEditAmountControl">
+                                    <rect key="frame" x="70" y="29" width="180" height="62"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </view>
+                                <view contentMode="scaleToFill" id="mmL-A4-2ho" userLabel="Edit Percent Control" customClass="OMNEditPercentControl">
                                     <rect key="frame" x="70" y="29" width="180" height="62"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -104,14 +109,15 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <connections>
+                        <outlet property="_amountControl" destination="Tb5-dQ-gtn" id="x7b-cP-9i9"/>
                         <outlet property="_amountForPercentLabel" destination="pZA-Fx-wDs" id="Iua-bi-odI"/>
-                        <outlet property="_amountPercentControl" destination="Tb5-dQ-gtn" id="okL-2r-jan"/>
                         <outlet property="_cancelEditingButton" destination="WRv-Fa-1go" id="uBz-ij-Nkc"/>
                         <outlet property="_doneEditingButton" destination="sKG-WE-pbo" id="rA1-hv-Sn7"/>
                         <outlet property="_editButton" destination="aae-CV-Q4T" id="sNE-pO-wR4"/>
                         <outlet property="_payAmountLabel" destination="yyp-ZI-kLV" id="JPU-I2-lvo"/>
                         <outlet property="_payButton" destination="ULB-uT-bQT" id="7YN-Ld-cBN"/>
                         <outlet property="_payLabel" destination="X8K-Z6-5qo" id="E9I-9k-2qu"/>
+                        <outlet property="_percentControl" destination="mmL-A4-2ho" id="DS7-Ts-pih"/>
                         <outlet property="_sumEditingContainer" destination="q3q-aL-DRC" id="Tqv-nP-wb4"/>
                         <outlet property="_tipsLabel" destination="jfw-6Z-OH0" id="NLB-kM-LzS"/>
                         <outlet property="_tipsSelector" destination="Dks-C5-mZD" id="5XH-fb-Gcu"/>

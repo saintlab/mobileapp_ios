@@ -7,7 +7,6 @@
 //
 
 #import "GRateAlertView.h"
-#import "OMNAmountPercentControl.h"
 #import "OMNAnalitics.h"
 #import "OMNCalculatorVC.h"
 #import "OMNMailRUPayVC.h"

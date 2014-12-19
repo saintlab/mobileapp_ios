@@ -152,8 +152,26 @@
 
 - (void)setOrder:(OMNOrder *)order {
   
+  NSString *keyPath = NSStringFromSelector(@selector(selectedTipIndex));
+  [_order removeObserver:self forKeyPath:keyPath];
   _order = order;
-  [self update];
+  [_order addObserver:self forKeyPath:keyPath options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
+  
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  
+  if ([object isEqual:_order] &&
+      [keyPath isEqualToString:NSStringFromSelector(@selector(selectedTipIndex))]) {
+    
+    [self update];
+    
+  }
+  else {
+    
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    
+  }
   
 }
 

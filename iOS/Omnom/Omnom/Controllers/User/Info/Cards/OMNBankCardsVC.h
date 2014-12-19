@@ -9,17 +9,13 @@
 #import "OMNBankCard.h"
 #import "OMNBankCardInfo.h"
 
-@protocol OMNBankCardsVCDelegate;
+@class OMNBankCardsVC;
+
+typedef void(^OMNBankCardsVCDidSelectBlock)(__weak OMNBankCardsVC *bankCardsVC, OMNBankCard *bankCard);
+typedef void(^OMNBankCardsVCDidCancelBlock)(__weak OMNBankCardsVC *bankCardsVC);
 
 @interface OMNBankCardsVC : UITableViewController
 
-@property (nonatomic, weak) id<OMNBankCardsVCDelegate> delegate;
-
-@end
-
-@protocol OMNBankCardsVCDelegate <NSObject>
-
-- (void)bankCardsVC:(OMNBankCardsVC *)bankCardsVC didSelectCard:(OMNBankCard *)bankCard;
-- (void)bankCardsVCDidCancel:(OMNBankCardsVC *)bankCardsVC;
+- (instancetype)initWithDidSelectCardBlock:(OMNBankCardsVCDidSelectBlock)didSelectCardBlock cancelBlock:(OMNBankCardsVCDidCancelBlock)cancelBlock;
 
 @end

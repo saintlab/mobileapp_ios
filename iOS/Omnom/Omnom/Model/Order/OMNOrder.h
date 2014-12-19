@@ -84,4 +84,6 @@ extern NSInteger const kCustomTipIndex;
 - (void)deselectAllItems;
 - (void)resetEnteredAmount;
 
+- (void)setCustomTipPercent:(double)percent;
+
 @end

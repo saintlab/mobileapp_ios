@@ -27,6 +27,9 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
   __weak IBOutlet UIButton *_addCardButton;
   NSString *_bankCardsLoadingIdentifier;
   
+  OMNBankCardsVCDidSelectBlock _didSelectCardBlock;
+  OMNBankCardsVCDidCancelBlock _didCancelBlock;
+  
 }
 
 - (void)removeBankCardsObserver {
@@ -42,6 +45,17 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
   
   [self removeBankCardsObserver];
   
+}
+
+- (instancetype)initWithDidSelectCardBlock:(OMNBankCardsVCDidSelectBlock)didSelectCardBlock cancelBlock:(OMNBankCardsVCDidCancelBlock)cancelBlock {
+  self = [super init];
+  if (self) {
+    
+    _didSelectCardBlock = [didSelectCardBlock copy];
+    _didCancelBlock = [cancelBlock copy];
+    
+  }
+  return self;
 }
 
 - (void)viewDidLoad {

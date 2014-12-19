@@ -9,12 +9,12 @@
 #import "OMNPaymentFooterView.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNTipSelector.h"
-#import "OMNAmountPercentControl.h"
+#import "OMNEditAmountControl.h"
+#import "OMNEditPercentControl.h"
 #import "UIView+frame.h"
 #import "OMNConstants.h"
 #import "OMNUtils.h"
 #import <OMNStyler.h>
-#import "OMNAmountPercentValue.h"
 #import "UIImage+omn_helper.h"
 
 @interface OMNPaymentFooterView ()
@@ -39,8 +39,8 @@
   __weak IBOutlet UIButton *_editButton;
   __weak IBOutlet UIView *_sumEditingContainer;
   
-  __weak IBOutlet OMNAmountPercentControl *_amountPercentControl;
-  OMNAmountPercentValue *_tipAmountPercentValue;
+  __weak IBOutlet OMNEditAmountControl *_amountControl;
+  __weak IBOutlet OMNEditPercentControl *_percentControl;
   
   BOOL _keyboardShown;
   
@@ -99,7 +99,7 @@
 
   [_editButton setImage:[UIImage imageNamed:@"edit_bill_sum_icon"] forState:UIControlStateNormal];
   _editButton.tintColor = [UIColor whiteColor];
-  [_editButton addTarget:_amountPercentControl action:@selector(becomeFirstResponder) forControlEvents:UIControlEventTouchUpInside];
+  [_editButton addTarget:_amountControl action:@selector(becomeFirstResponder) forControlEvents:UIControlEventTouchUpInside];
   
   _payButton.translatesAutoresizingMaskIntoConstraints = NO;
   _payButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
@@ -115,17 +115,11 @@
   _tipsSelector.delegate = self;
   
   __weak typeof(self)weakSelf = self;
-  [_amountPercentControl bk_addEventHandler:^(id sender) {
-    
-    [weakSelf updatePercentAmountControl];
-    
-  } forControlEvents:UIControlEventEditingDidEnd];
-  
-  [_amountPercentControl bk_addEventHandler:^(OMNAmountPercentControl *sender) {
+  [_percentControl bk_addEventHandler:^(OMNEditAmountControl *sender) {
     
     [weakSelf updateAmountForPercentLabel];
     
-  } forControlEvents:UIControlEventValueChanged];
+  } forControlEvents:UIControlEventValueChanged|UIControlEventEditingDidBegin];
 
   [self setKeyboardShown:NO];
 
@@ -136,46 +130,21 @@
   UIImage *image = [[UIImage imageNamed:@"red_roundy_button"] omn_tintWithColor:antogonistColor];
   [_payButton setBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_payButton setTitleColor:color forState:UIControlStateNormal];
-  [_amountPercentControl configureWithColor:color antogonistColor:antogonistColor];
-  
-}
-
-- (void)updatePercentAmountControl {
-  
-  OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
-  amountPercentValue.amount = _order.enteredAmount;
-  
-  if (_order.expectedValue) {
-    
-    amountPercentValue.percent = 100.*(double)_order.enteredAmount/_order.expectedValue;
-    
-  }
-  
-  amountPercentValue.amount = _order.enteredAmount;
-  _amountPercentControl.amountPercentValue = amountPercentValue;
-  
-  if (_order.paid.net_amount > 0) {
-    
-    _payAmountLabel.text = [NSString stringWithFormat:NSLocalizedString(@"ALREADY_PAID_AMOUNT %@", @"Уже оплачено: {amount}"), [OMNUtils formattedMoneyStringFromKop:_order.paid.net_amount]];
-    
-  }
-  else {
-    
-    _payAmountLabel.text = @"";
-    
-  }
+  [_amountControl configureWithColor:color antogonistColor:antogonistColor];
   
 }
 
 - (void)setOrder:(OMNOrder *)order {
   
-
   [_order removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex))];
   _order = order;
   [_order addObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
   
   [_tipsSelector setOrder:order];
-  [self updatePercentAmountControl];
+  _payAmountLabel.text = (_order.paid.net_amount) ? ([NSString stringWithFormat:NSLocalizedString(@"ALREADY_PAID_AMOUNT %@", @"Уже оплачено: {amount}"), [OMNUtils formattedMoneyStringFromKop:_order.paid.net_amount]]) : (@"");
+  
+  _amountControl.amount = _order.enteredAmount;
+  _percentControl.percent = _order.customTip.percent;
   
 }
 
@@ -208,7 +177,7 @@
 
 - (void)updateAmountForPercentLabel {
 
-  long long amount = _order.enteredAmount*_amountPercentControl.amountPercentValue.percent/100.0;
+  long long amount = _order.enteredAmount*_percentControl.percent/100.0;
   _amountForPercentLabel.text = [NSString stringWithFormat:@"или %@%@", [OMNUtils evenCommaStringFromKop:amount], kRubleSign];
   
 }
@@ -231,11 +200,15 @@
       keyboardShown) {
     
     _payAmountLabel.alpha = 0.0f;
+    _amountControl.alpha = 0.0f;
+    _percentControl.alpha = 1.0f;
     _amountForPercentLabel.alpha = 1.0f;
     
   }
   else {
     
+    _amountControl.alpha = 1.0f;
+    _percentControl.alpha = 0.0f;
     _payAmountLabel.alpha = 1.0f;
     _amountForPercentLabel.alpha = 0.0f;
     
@@ -255,12 +228,11 @@
     
   }
   
-  [_amountPercentControl layoutIfNeeded];
+  [_amountControl layoutIfNeeded];
   
-  if (NO == keyboardShown) {
+  if (!keyboardShown) {
     self.tipsMode = NO;
   }
-  
   
   BOOL amountEnteredOrEditing = (keyboardShown || _order.enteredAmountChanged);
   
@@ -282,27 +254,25 @@
 - (IBAction)cancelEditingTap:(id)sender {
   
   _order.selectedTipIndex = _tipsSelector.previousSelectedIndex;
-  [_amountPercentControl resignFirstResponder];
+  [_amountControl resignFirstResponder];
+  [_percentControl resignFirstResponder];
   
 }
 
 - (IBAction)doneEdidtingTap:(id)sender {
   
   if (self.tipsMode) {
-    
-    _tipAmountPercentValue = _amountPercentControl.amountPercentValue;
-    _order.customTip.percent = _tipAmountPercentValue.percent;
-    _order.tipType = kTipTypeCustomPercent;
-    _tipsSelector.order = _order;
-#warning 123
+
+    [_order setCustomTipPercent:_percentControl.percent];
+    [_percentControl resignFirstResponder];
+
   }
   else {
     
-    [self.delegate paymentFooterView:self didSelectAmount:_amountPercentControl.amountPercentValue.amount];
+    [self.delegate paymentFooterView:self didSelectAmount:_amountControl.amount];
+    [_amountControl resignFirstResponder];
     
   }
-  
-  [_amountPercentControl resignFirstResponder];
   
 }
 
@@ -311,21 +281,8 @@
 - (void)tipSelectorStartCustomTipEditing:(OMNTipSelector *)tipSelector {
   
   self.tipsMode = YES;
-  if (_tipAmountPercentValue) {
-    
-    _tipAmountPercentValue.amount = _order.enteredAmount;
-    _amountPercentControl.amountPercentValue = _tipAmountPercentValue;
-    
-  }
-  else {
-    
-    OMNAmountPercentValue *amountPercentValue = [[OMNAmountPercentValue alloc] init];
-    amountPercentValue.percent = _order.customTip.percent;
-    _amountPercentControl.amountPercentValue = amountPercentValue;
-    
-  }
-  
-  [_amountPercentControl beginPercentEditing];
+  _percentControl.percent = _order.customTip.percent;
+  [_percentControl becomeFirstResponder];
   
 }
 

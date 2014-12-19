@@ -97,6 +97,7 @@ OMNSearchRestaurantVCDelegate>
   }
   
 #warning run with custom qr codes
+//  searchRestaurantVC.qr = @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";
 //  searchRestaurantVC.qr = @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7";
 //  searchRestaurantVC.qr = @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";
 //  searchRestaurantVC.qr = @"qr-code-for-2-saintlab-iiko";

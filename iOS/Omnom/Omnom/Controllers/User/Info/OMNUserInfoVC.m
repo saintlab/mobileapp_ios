@@ -87,7 +87,6 @@ OMNEditUserVCDelegate>
      } range:[text rangeOfString:emailPhone]];
   
   _userNameLabel.attributedText = attributedString;
-  [self.tableView reloadData];
   
 }
 
