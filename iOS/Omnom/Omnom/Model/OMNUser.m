@@ -50,15 +50,43 @@
   return user;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+  self = [super init];
+  if (self) {
+    self.id = [aDecoder decodeObjectForKey:@"id"];
+    self.name = [aDecoder decodeObjectForKey:@"name"];
+    self.email = [aDecoder decodeObjectForKey:@"email"];
+    self.phone = [aDecoder decodeObjectForKey:@"phone"];
+    self.status = [aDecoder decodeObjectForKey:@"status"];
+    self.birthDate = [aDecoder decodeObjectForKey:@"birthDate"];
+    self.avatar = [aDecoder decodeObjectForKey:@"avatar"];
+  }
+  return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+  
+  [aCoder encodeObject:self.id forKey:@"id"];
+  [aCoder encodeObject:self.name forKey:@"name"];
+  [aCoder encodeObject:self.email forKey:@"email"];
+  [aCoder encodeObject:self.phone forKey:@"phone"];
+  [aCoder encodeObject:self.status forKey:@"status"];
+  [aCoder encodeObject:self.birthDate forKey:@"birthDate"];
+  [aCoder encodeObject:self.avatar forKey:@"avatar"];
+  
+}
+
 - (NSDateFormatter *)birthDateFormatter {
   
   static NSDateFormatter *dateFormatter = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
+    
     dateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setLocale:locale];
     [dateFormatter setDateFormat:@"dd-MM-yyyy"];
+    
   });
   
   return dateFormatter;

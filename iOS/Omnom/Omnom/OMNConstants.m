@@ -43,7 +43,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];
   
   //initialize saved token
-  [OMNAuthorization authorisation];
+  [[OMNAuthorization authorisation] setup];
   
   [self loadRemoteConfigWithCompletion:^{
     

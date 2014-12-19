@@ -13,7 +13,8 @@
 typedef void(^OMNUserBlock)(OMNUser *user);
 
 @interface OMNUser : NSObject
-<NSCopying>
+<NSCopying,
+NSCoding>
 
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, copy) NSString *name;

@@ -19,9 +19,10 @@
 
 + (instancetype)authorisation;
 
+- (void)setup;
+- (void)updateUserInfoWithUser:(OMNUser *)user;
 - (void)logout;
 
-- (void)updateUserInfoWithUser:(OMNUser *)user;
 - (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block;
 
 - (BOOL)pushNotificationsRequested;

@@ -58,13 +58,35 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     _token = [SSKeychain passwordForService:[self tokenServiceName] account:kAuthorisationAccountName];
 #endif
     [self updateAuthenticationToken];
-    _user = [[OMNUser alloc] init];
     
+    _user = [[OMNUser alloc] init];
+
   }
   return self;
 }
 
+- (void)setup {
+  
+  @try {
+    
+    OMNUser *savedUser = [NSKeyedUnarchiver unarchiveObjectWithFile:[self savedUserPath]];
+    [self updateUserInfoWithUser:savedUser];
+    
+  }
+  @catch (NSException *exception) {}
+  
+}
+
+- (NSString *)savedUserPath {
+  
+  NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+  return [documentsDirectory stringByAppendingPathComponent:@"user.dat"];
+  
+}
+
 - (void)updateUserInfoWithUser:(OMNUser *)user {
+  
+  [NSKeyedArchiver archiveRootObject:user toFile:[self savedUserPath]];
   
   [self willChangeValueForKey:@"user"];
   
@@ -79,6 +101,19 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   [Crashlytics setUserIdentifier:[OMNConstants baseUrlString]];
   
   [self didChangeValueForKey:@"user"];
+  
+}
+
+
+- (void)logout {
+  
+  [self updateUserInfoWithUser:nil];
+  self.token = nil;
+  if (self.logoutCallback) {
+    
+    self.logoutCallback();
+    
+  }
   
 }
 
@@ -205,16 +240,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   if (_remoteNotificationRegisterCompletionBlock) {
     _remoteNotificationRegisterCompletionBlock(NO);
     _remoteNotificationRegisterCompletionBlock = nil;
-  }
-  
-}
-
-- (void)logout {
-  
-  [self updateUserInfoWithUser:nil];
-  self.token = nil;
-  if (self.logoutCallback) {
-    self.logoutCallback();
   }
   
 }
