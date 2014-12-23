@@ -8,8 +8,6 @@
 
 #import "OMNBluetoothManager.h"
 
-NSString * const OMNBluetoothManagerUnspported = @"OMNBluetoothManagerUnspported";
-
 @interface OMNBluetoothManager ()
 <CBCentralManagerDelegate>
 
@@ -33,32 +31,27 @@ NSString * const OMNBluetoothManagerUnspported = @"OMNBluetoothManagerUnspported
 - (instancetype)init {
   self = [super init];
   if (self) {
-    _unsupported = [[NSUserDefaults standardUserDefaults] boolForKey:OMNBluetoothManagerUnspported];
-    if (_unsupported) {
-      _state = CBCentralManagerStateUnsupported;
-    }
-    else {
-      _state = CBCentralManagerStateUnknown;
-    }
+    
+    _state = CBCentralManagerStateUnknown;
+    
   }
   return self;
 }
 
 - (void)getBluetoothState:(CBCentralManagerStateBlock)block {
   
-  if (_unsupported) {
-    block(CBCentralManagerStateUnsupported);
-    return;
-  }
-  
   _centralManagerStateBlock = [block copy];
   if (nil == _centralManager) {
+    
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue() options:@{CBCentralManagerOptionShowPowerAlertKey:@(NO)}];
+    
   }
 
   if (_centralManager &&
       CBCentralManagerStateUnknown != _centralManager.state) {
+    
     block(_centralManager.state);
+    
   }
   
 }
@@ -77,14 +70,16 @@ NSString * const OMNBluetoothManagerUnspported = @"OMNBluetoothManagerUnspported
   
   _state = central.state;
   if (_centralManagerStateBlock) {
+    
     _centralManagerStateBlock(central.state);
+    
   }
 
   if (CBCentralManagerStateUnsupported == central.state) {
+    
     _unsupported = YES;
     [self stop];
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:OMNBluetoothManagerUnspported];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    
   }
   
 }
