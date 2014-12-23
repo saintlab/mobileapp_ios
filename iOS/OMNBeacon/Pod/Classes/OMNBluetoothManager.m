@@ -14,9 +14,10 @@
 @end
 
 @implementation OMNBluetoothManager {
+  
   CBCentralManagerStateBlock _centralManagerStateBlock;
   CBCentralManager *_centralManager;
-  BOOL _unsupported;
+  
 }
 
 + (instancetype)manager {
@@ -77,7 +78,6 @@
 
   if (CBCentralManagerStateUnsupported == central.state) {
     
-    _unsupported = YES;
     [self stop];
     
   }
