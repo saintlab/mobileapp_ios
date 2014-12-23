@@ -19,6 +19,7 @@
 #import "OMNTableUserInfoItem.h"
 #import "OMNVersionUserInfoItem.h"
 #import "OMNLogoutUserInfoItem.h"
+#import "OMNFBUserInfoItem.h"
 
 @interface OMNUserInfoModel ()
 
@@ -72,6 +73,7 @@
   section.items =
   @[
     [[OMNUserMailFeedbackItem alloc] init],
+    [[OMNFBUserInfoItem alloc] init],
     [[OMNVersionUserInfoItem alloc] init],
     ];
   section.title = NSLocalizedString(@"USER_INFO_ABOUT_SECTION_TITLE", @"О ПРОГРАММЕ");

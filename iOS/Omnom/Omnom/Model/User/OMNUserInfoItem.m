@@ -21,7 +21,7 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.textAlignment = NSTextAlignmentLeft;
+    self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.titleColor = [UIColor blackColor];
   }
   return self;
@@ -47,26 +47,17 @@
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   NSString *reuseIdentifier = NSStringFromClass(self.class);
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  OMNUserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   if (nil == cell) {
     
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    cell.textLabel.textColor = colorWithHexString(@"000000");
-    cell.textLabel.opaque = YES;
-    cell.textLabel.backgroundColor = [UIColor whiteColor];
-    cell.textLabel.font = FuturaOSFOmnomRegular(18.0f);
-        
-    UIView *downSeporator = [[UIView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetHeight(cell.frame)-0.5f, CGRectGetWidth(cell.frame), 0.5f)];
-    downSeporator.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
-    downSeporator.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin);
-    [cell addSubview:downSeporator];
+    cell = [[OMNUserInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     
   }
 
   cell.accessoryType = self.cellAccessoryType;
-  cell.textLabel.text = self.title;
-  cell.textLabel.textAlignment = self.textAlignment;
-  cell.textLabel.textColor = self.titleColor;
+  [cell.button setTitle:self.title forState:UIControlStateNormal];
+  cell.button.contentHorizontalAlignment = self.contentHorizontalAlignment;
+  [cell.button setTitleColor:self.titleColor forState:UIControlStateNormal];
   
   return cell;
   

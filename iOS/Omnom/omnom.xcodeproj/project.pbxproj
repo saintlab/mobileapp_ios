@@ -421,6 +421,10 @@
 		93E435B41998CA6400EDC488 /* OMNRestaurantInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B21998CA6400EDC488 /* OMNRestaurantInfoVC.m */; };
 		93E435B71998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */; };
 		93E435B81998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */; };
+		93E4856B1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E4856A1A49104900DCDB0F /* OMNFBUserInfoItem.m */; };
+		93E4856C1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E4856A1A49104900DCDB0F /* OMNFBUserInfoItem.m */; };
+		93E4856F1A49136700DCDB0F /* OMNUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E4856E1A49136700DCDB0F /* OMNUserInfoCell.m */; };
+		93E485701A49136700DCDB0F /* OMNUserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E4856E1A49136700DCDB0F /* OMNUserInfoCell.m */; };
 		93E58CAC1A245604008064F9 /* OMNCameraPermission.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CAB1A245604008064F9 /* OMNCameraPermission.m */; };
 		93E58CAD1A245604008064F9 /* OMNCameraPermission.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CAB1A245604008064F9 /* OMNCameraPermission.m */; };
 		93E58CB51A246AA1008064F9 /* OMNHelpPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CB41A246AA1008064F9 /* OMNHelpPage.m */; };
@@ -893,6 +897,10 @@
 		93E435B21998CA6400EDC488 /* OMNRestaurantInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantInfoVC.m; sourceTree = "<group>"; };
 		93E435B51998CF4900EDC488 /* OMNRestaurantInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantInfoCell.h; sourceTree = "<group>"; };
 		93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantInfoCell.m; sourceTree = "<group>"; };
+		93E485691A49104900DCDB0F /* OMNFBUserInfoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFBUserInfoItem.h; sourceTree = "<group>"; };
+		93E4856A1A49104900DCDB0F /* OMNFBUserInfoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFBUserInfoItem.m; sourceTree = "<group>"; };
+		93E4856D1A49136700DCDB0F /* OMNUserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoCell.h; sourceTree = "<group>"; };
+		93E4856E1A49136700DCDB0F /* OMNUserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoCell.m; sourceTree = "<group>"; };
 		93E58CAA1A245604008064F9 /* OMNCameraPermission.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCameraPermission.h; sourceTree = "<group>"; };
 		93E58CAB1A245604008064F9 /* OMNCameraPermission.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCameraPermission.m; sourceTree = "<group>"; };
 		93E58CB31A246AA1008064F9 /* OMNHelpPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNHelpPage.h; sourceTree = "<group>"; };
@@ -1106,6 +1114,8 @@
 				933D48F419E7DFA7004E591C /* OMNOrderActionView.m */,
 				93363FF41A1B5EA2009D16CE /* OMNOrderTotalView.h */,
 				93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */,
+				93E4856D1A49136700DCDB0F /* OMNUserInfoCell.h */,
+				93E4856E1A49136700DCDB0F /* OMNUserInfoCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1855,12 +1865,12 @@
 		939F9944197544730051822E /* User */ = {
 			isa = PBXGroup;
 			children = (
+				939F9947197544820051822E /* OMNUserInfoModel.h */,
+				939F9948197544820051822E /* OMNUserInfoModel.m */,
 				939F9945197544820051822E /* OMNUserInfoItem.h */,
 				939F9946197544820051822E /* OMNUserInfoItem.m */,
 				93D117721A2ED3C7000131C4 /* OMNUserInfoSection.h */,
 				93D117731A2ED3C7000131C4 /* OMNUserInfoSection.m */,
-				939F9947197544820051822E /* OMNUserInfoModel.h */,
-				939F9948197544820051822E /* OMNUserInfoModel.m */,
 				9345AFB1199A291C00328F73 /* OMNBankCardUserInfoItem.h */,
 				9345AFB2199A291C00328F73 /* OMNBankCardUserInfoItem.m */,
 				93D117761A2F00DB000131C4 /* OMNUserMailFeedbackItem.h */,
@@ -1871,6 +1881,8 @@
 				93D117841A2F1ABF000131C4 /* OMNVersionUserInfoItem.m */,
 				93D117871A2F20BA000131C4 /* OMNLogoutUserInfoItem.h */,
 				93D117881A2F20BA000131C4 /* OMNLogoutUserInfoItem.m */,
+				93E485691A49104900DCDB0F /* OMNFBUserInfoItem.h */,
+				93E4856A1A49104900DCDB0F /* OMNFBUserInfoItem.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2467,6 +2479,7 @@
 				939F994B197544820051822E /* OMNUserInfoModel.m in Sources */,
 				937C3E711A2824E9006525A9 /* OMNLocationManager.m in Sources */,
 				9366557C19DA5DED00EF7098 /* OMNQR.m in Sources */,
+				93E4856B1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */,
 				93535EFF198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
 				93D1178D1A2F2C56000131C4 /* OMNEditUserVC.m in Sources */,
 				937822A01963E65F00CE6661 /* OMNOrderViewCell.m in Sources */,
@@ -2532,6 +2545,7 @@
 				936E71F119921B5C008FF864 /* OMNErrorTextField.m in Sources */,
 				936BAD9619A77F5E0029873B /* OMNNavigationController.m in Sources */,
 				9389456019B0620D00C37C82 /* OMNPushTexts.m in Sources */,
+				93E4856F1A49136700DCDB0F /* OMNUserInfoCell.m in Sources */,
 				931456B8193CA84D003E2CD6 /* OMNTipButton.m in Sources */,
 				938E8F5A192F3A200088EF38 /* OMNVisitor.m in Sources */,
 				9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */,
@@ -2613,6 +2627,7 @@
 				933D48EA19E67AFD004E591C /* UIBarButtonItem+omn_custom.m in Sources */,
 				939F991119752BE90051822E /* OMNAddBankCardVC.m in Sources */,
 				934FC72B19D03CED008AC4B0 /* OMNRestaurantDecoration.m in Sources */,
+				93E4856C1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */,
 				937A37381980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				9345AFB8199A2EC200328F73 /* OMNMailRUPayVC.m in Sources */,
 				93E29998197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
@@ -2705,6 +2720,7 @@
 				9389456519B0622900C37C82 /* OMNPushText.m in Sources */,
 				9345AFB0199A253F00328F73 /* OMNBankCardInfo.m in Sources */,
 				939689B3195BD76E00AAAF9C /* OMNWizardVC.m in Sources */,
+				93E485701A49136700DCDB0F /* OMNUserInfoCell.m in Sources */,
 				9332CB001A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */,
 				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,
 				939DA1771958226B0063AB23 /* OMNAnalitics.m in Sources */,
@@ -2812,7 +2828,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "90f70e06-93d1-4d89-aa5d-d695e23490b1";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

@@ -31,6 +31,8 @@ extern NSString * const kPushSoundName;
 
 extern const CGFloat kOrderTableFooterHeight;
 
+extern NSString * const OMNFacebookPageUrlString;
+
 @interface OMNConstants : NSObject
 
 + (void)setupWithLaunchOptions:(NSDictionary *)launchOptions completion:(dispatch_block_t)completionBlock;

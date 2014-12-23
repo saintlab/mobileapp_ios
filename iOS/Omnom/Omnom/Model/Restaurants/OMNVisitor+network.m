@@ -213,7 +213,6 @@ NSString * const OMNVisitorNotificationLaunchKey = @"OMNVisitorNotificationLaunc
   if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
     return NO;
   }
-  
   BOOL readyForPush = ([[NSDate date] timeIntervalSinceDate:self.foundDate] > 4*60*60);
   return readyForPush;
   

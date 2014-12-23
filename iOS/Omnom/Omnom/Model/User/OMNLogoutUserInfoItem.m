@@ -37,7 +37,7 @@
     };
     
     self.titleColor = colorWithHexString(@"D0021B");
-    self.textAlignment = NSTextAlignmentCenter;
+    self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     
   }
   return self;
