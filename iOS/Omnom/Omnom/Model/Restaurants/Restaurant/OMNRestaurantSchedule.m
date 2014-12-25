@@ -32,7 +32,7 @@
     
     _days = [days copy];
     _title = jsonData[@"title"];
-    NSLog(@"%@", self.title);
+
   }
   return self;
 }

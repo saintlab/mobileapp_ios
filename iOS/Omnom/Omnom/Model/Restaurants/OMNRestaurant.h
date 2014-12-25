@@ -25,10 +25,11 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 @property (nonatomic, assign) BOOL is_demo;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
+@property (nonatomic, copy, readonly) NSString *phone;
 @property (nonatomic, strong) OMNRestaurantDecoration *decoration;
 @property (nonatomic, strong, readonly) OMNRestaurantAddress *address;
 @property (nonatomic, strong) OMNPushTexts *mobile_texts;
-@property (nonatomic, strong) OMNRestaurantSettings *settings;
+@property (nonatomic, strong, readonly) OMNRestaurantSettings *settings;
 @property (nonatomic, strong, readonly) OMNRestaurantSchedules *schedules;
 @property (nonatomic, strong) OMNRestaurantInfo *info;
 

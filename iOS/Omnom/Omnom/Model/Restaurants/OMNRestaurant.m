@@ -48,7 +48,9 @@
     self.Description = jsonData[@"description"];
     self.decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
     self.mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
-    self.settings = [[OMNRestaurantSettings alloc] initWithJsonData:jsonData[@"settings"]];
+    
+    _settings = [[OMNRestaurantSettings alloc] initWithJsonData:jsonData[@"settings"]];
+    _phone = jsonData[@"phone"];
     _address = [[OMNRestaurantAddress alloc] initWithJsonData:jsonData[@"address"]];
     _schedules = [[OMNRestaurantSchedules alloc] initWithJsonData:jsonData[@"schedules"]];
     
