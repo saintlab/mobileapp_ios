@@ -10,9 +10,12 @@
 
 @interface OMNRestaurantSettings : NSObject
 
-@property (nonatomic, assign) BOOL has_menu;
-@property (nonatomic, assign) BOOL has_promo;
-@property (nonatomic, assign) BOOL has_waiter_call;
+@property (nonatomic, assign, readonly) BOOL has_menu;
+@property (nonatomic, assign, readonly) BOOL has_promo;
+@property (nonatomic, assign, readonly) BOOL has_waiter_call;
+@property (nonatomic, assign, readonly) BOOL has_bar;
+@property (nonatomic, assign, readonly) BOOL has_pre_order;
+@property (nonatomic, assign, readonly) BOOL has_table_order;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 

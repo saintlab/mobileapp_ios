@@ -7,6 +7,7 @@
 //
 
 #import "OMNCardBrandView.h"
+#import "UIView+omn_autolayout.h"
 
 @implementation OMNCardBrandView
 
@@ -25,8 +26,8 @@
 
 - (UIImageView *)addImageViewWithImageName:(NSString *)imageName {
   
-  UIImageView *iv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
-  iv.translatesAutoresizingMaskIntoConstraints = NO;
+  UIImageView *iv = [UIImageView omn_autolayoutView];
+  iv.image = [UIImage imageNamed:imageName];
   iv.contentMode = UIViewContentModeCenter;
   [self addSubview:iv];
   return iv;
@@ -35,8 +36,7 @@
 
 - (UIView *)seporatorView {
   
-  UIView *view = [[UIView alloc] init];
-  view.translatesAutoresizingMaskIntoConstraints = NO;
+  UIView *view = [UIView omn_autolayoutView];
   view.hidden = YES;
   [self addSubview:view];
   return view;

@@ -7,16 +7,12 @@
 //
 
 #import "OMNRestaurantCell.h"
-#import "OMNConstants.h"
-#import <OMNStyler.h>
-#import "UIButton+omn_helper.h"
+#import "OMNRestaurantDetailsView.h"
 
 @implementation OMNRestaurantCell {
   
   UIImageView *_imageView;
-  UIButton *_workdayButton;
-  UILabel *_restaurantInfoLabelName;
-  UILabel *_restaurantInfoLabelAddress;
+  OMNRestaurantDetailsView *_restaurantDetailsView;
   
 }
 
@@ -59,52 +55,24 @@
   _imageView.contentMode = UIViewContentModeScaleAspectFill;
   [self.contentView addSubview:_imageView];
 
-  _restaurantInfoLabelName = [[UILabel alloc] init];
-  _restaurantInfoLabelName.translatesAutoresizingMaskIntoConstraints = NO;
-  _restaurantInfoLabelName.numberOfLines = 1;
-  _restaurantInfoLabelName.textAlignment = NSTextAlignmentCenter;
-  _restaurantInfoLabelName.font = FuturaOSFOmnomRegular(30.0f);
-  _restaurantInfoLabelName.adjustsFontSizeToFitWidth = YES;
-  _restaurantInfoLabelName.textColor = colorWithHexString(@"000000");
-  [self.contentView addSubview:_restaurantInfoLabelName];
-  
-  _restaurantInfoLabelAddress = [[UILabel alloc] init];
-  _restaurantInfoLabelAddress.translatesAutoresizingMaskIntoConstraints = NO;
-  _restaurantInfoLabelAddress.numberOfLines = 1;
-  _restaurantInfoLabelAddress.textAlignment = NSTextAlignmentCenter;
-  _restaurantInfoLabelAddress.font = FuturaOSFOmnomRegular(18.0f);
-  _restaurantInfoLabelAddress.adjustsFontSizeToFitWidth = YES;
-  _restaurantInfoLabelAddress.textColor = colorWithHexString(@"000000");
-  [self.contentView addSubview:_restaurantInfoLabelAddress];
-  
-  _workdayButton = [[UIButton alloc] init];
-  _workdayButton.userInteractionEnabled = NO;
-  _workdayButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [_workdayButton omn_centerButtonAndImageWithSpacing:8.0f];
-  _workdayButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
-  [_workdayButton setTitleColor:colorWithHexString(@"000000") forState:UIControlStateNormal];
-  [_workdayButton setImage:[UIImage imageNamed:@"clock_icon"] forState:UIControlStateNormal];
-  [self.contentView addSubview:_workdayButton];
+  _restaurantDetailsView = [[OMNRestaurantDetailsView alloc] init];
+  _restaurantDetailsView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.contentView addSubview:_restaurantDetailsView];
   
   NSDictionary *views =
   @{
     @"imageView" : _imageView,
-    @"restaurantInfoLabelName" : _restaurantInfoLabelName,
-    @"restaurantInfoLabelAddress" : _restaurantInfoLabelAddress,
-    @"workdayButton" : _workdayButton,
+    @"restaurantDetailsView" : _restaurantDetailsView,
     };
   
   NSDictionary *metrics =
   @{
     @"imageHeight" : @(110),
-    @"leftOffset" : [OMNStyler styler].leftOffset,
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[restaurantInfoLabelName]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[restaurantInfoLabelAddress]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[workdayButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(imageHeight)]-(15)-[restaurantInfoLabelName]-[restaurantInfoLabelAddress]-(10)-[workdayButton]" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[restaurantDetailsView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(imageHeight)]-(15)-[restaurantDetailsView]" options:kNilOptions metrics:metrics views:views]];
   
 }
 
@@ -140,10 +108,7 @@
   [_restaurant.decoration loadBackgroundBlurred:NO completion:^(UIImage *image) {
   }];
   
-  _restaurantInfoLabelName.text = _restaurant.title;
-  _restaurantInfoLabelAddress.text = _restaurant.address.street;
-  
-  [_workdayButton setTitle:_restaurant.schedules.work.fromToText forState:UIControlStateNormal];
+  _restaurantDetailsView.restaurant = restaurant;
   
 }
 
@@ -159,4 +124,5 @@
     
   }
 }
+
 @end

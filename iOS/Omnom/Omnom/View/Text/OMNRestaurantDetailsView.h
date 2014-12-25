@@ -1,5 +1,5 @@
 //
-//  OMNRestaurantCardVC.h
+//  OMNRestaurantDetailsView.h
 //  omnom
 //
 //  Created by tea on 25.12.14.
@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "OMNRestaurant.h"
 
-@interface OMNRestaurantCardVC : UIViewController
+@interface OMNRestaurantDetailsView : UIView
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
+@property (nonatomic, strong) OMNRestaurant *restaurant;
 
 @end

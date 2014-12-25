@@ -6,21 +6,22 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNRestaurantsVC.h"
+#import "OMNRestaurantListVC.h"
 #import "OMNRestaurant.h"
 #import "OMNMenu.h"
 #import "OMNToolbarButton.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurantCell.h"
 #import "OMNRestaurantListFeedbackCell.h"
+#import "OMNRestaurantCardVC.h"
 
-@interface OMNRestaurantsVC ()
+@interface OMNRestaurantListVC ()
 
 @property (nonatomic, strong) NSArray *restaurants;
 
 @end
 
-@implementation OMNRestaurantsVC {
+@implementation OMNRestaurantListVC {
   
 }
 
@@ -53,6 +54,15 @@
   
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  
+  [self.navigationController setNavigationBarHidden:NO animated:NO];
+  [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+  [self.navigationController.navigationBar setShadowImage:nil];
+  
+}
+
 - (void)qrTap {
   
 }
@@ -62,6 +72,13 @@
 }
 
 - (void)userFeedbackTap {
+  
+}
+
+- (void)showCardForRestaurant:(OMNRestaurant *)restaurant {
+  
+  OMNRestaurantCardVC *restaurantCardVC = [[OMNRestaurantCardVC alloc] initWithRestaurant:restaurant];
+  [self.navigationController pushViewController:restaurantCardVC animated:YES];
   
 }
 
@@ -169,8 +186,9 @@
   
   switch (indexPath.section) {
     case 0: {
-      
-      [self.navigationController pushViewController:[UIViewController new] animated:YES];
+
+      OMNRestaurant *restaurant = self.restaurants[indexPath.row];
+      [self showCardForRestaurant:restaurant];
       
     } break;
     case 1: {

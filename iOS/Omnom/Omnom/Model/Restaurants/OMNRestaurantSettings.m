@@ -19,10 +19,13 @@
   self = [super init];
   if (self) {
     
-    self.has_menu = [jsonData[@"has_menu"] boolValue];
-    self.has_promo = [jsonData[@"has_promo"] boolValue];
-    self.has_waiter_call = [jsonData[@"has_waiter_call"] boolValue];
-
+    _has_menu = [jsonData[@"has_menu"] boolValue];
+    _has_promo = [jsonData[@"has_promo"] boolValue];
+    _has_waiter_call = [jsonData[@"has_waiter_call"] boolValue];
+    _has_bar = [jsonData[@"has_bar"] boolValue];
+    _has_pre_order = [jsonData[@"has_pre_order"] boolValue];
+    _has_table_order = [jsonData[@"has_table_order"] boolValue];
+    
   }
   return self;
 }
