@@ -19,7 +19,17 @@
 
 @end
 
+@interface NSObject (omn_restaurants)
 
+- (void)omn_decodeWithRestaurantsBlock:(OMNRestaurantsBlock)restaurantsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
+
+@end
+
+@interface OMNRestaurant ()
+
+//@property (nonatomic)
+
+@end
 
 @implementation OMNRestaurant
 
@@ -39,46 +49,31 @@
     self.decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
     self.mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
     self.settings = [[OMNRestaurantSettings alloc] initWithJsonData:jsonData[@"settings"]];
-
+    _address = [[OMNRestaurantAddress alloc] initWithJsonData:jsonData[@"address"]];
+    _schedules = [[OMNRestaurantSchedules alloc] initWithJsonData:jsonData[@"schedules"]];
+    
   }
   return self;
 }
 
-+ (void)getRestaurantList:(GRestaurantsBlock)restaurantsBlock error:(void(^)(NSError *error))errorBlock {
++ (void)getRestaurants:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock {
   
   [[OMNOperationManager sharedManager] GET:@"restaurants" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    restaurantsBlock([self restaurantsFromJsonObject:responseObject]);
+    [responseObject omn_decodeWithRestaurantsBlock:restaurantsBlock failureBlock:failureBlock];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    errorBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
   
 }
 
-+ (NSArray *)restaurantsFromJsonObject:(id)object {
-  
-  NSArray *restaurantsObjects = object[@"items"];
-  
-  NSMutableArray *restaurants = [NSMutableArray arrayWithCapacity:restaurantsObjects.count];
-  
-  for (id restaurantsObject in restaurantsObjects) {
-    
-    OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:restaurantsObject];
-    [restaurants addObject:restaurant];
-    
-  }
-  
-  return [restaurants copy];
-  
-}
-
-- (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block error:(void(^)(NSError *error))errorBlock {
+- (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(NSError *error))failureBlock {
 
   if (0 == tableID.length) {
-    errorBlock(nil);
+    failureBlock(nil);
     return;
   }
   
@@ -180,6 +175,34 @@
     return menu;
     
   }
+  
+}
+
+@end
+
+@implementation NSObject (omn_restaurants)
+
+- (void)omn_decodeWithRestaurantsBlock:(OMNRestaurantsBlock)restaurantsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+  
+  if (![self isKindOfClass:[NSDictionary class]]) {
+    failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+    return;
+  }
+  
+  NSDictionary *dictionary = (NSDictionary *)self;
+  
+  NSArray *restaurantsObjects = dictionary[@"items"];
+  
+  NSMutableArray *restaurants = [NSMutableArray arrayWithCapacity:restaurantsObjects.count];
+  
+  for (id restaurantsObject in restaurantsObjects) {
+    
+    OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:restaurantsObject];
+    [restaurants addObject:restaurant];
+    
+  }
+  
+  restaurantsBlock([restaurants copy]);
   
 }
 

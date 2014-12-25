@@ -12,10 +12,12 @@
 #import "OMNPushTexts.h"
 #import "OMNRestaurantDecoration.h"
 #import "OMNRestaurantSettings.h"
+#import "OMNError.h"
+#import "OMNRestaurantAddress.h"
+#import "OMNRestaurantSchedules.h"
 
-typedef void(^GRestaurantsBlock)(NSArray *restaurants);
+typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
-typedef void(^GMenuBlock)(OMNMenu *menu);
 
 @interface OMNRestaurant : NSObject
 
@@ -24,17 +26,18 @@ typedef void(^GMenuBlock)(OMNMenu *menu);
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, strong) OMNRestaurantDecoration *decoration;
+@property (nonatomic, strong, readonly) OMNRestaurantAddress *address;
 @property (nonatomic, strong) OMNPushTexts *mobile_texts;
 @property (nonatomic, strong) OMNRestaurantSettings *settings;
-
+@property (nonatomic, strong, readonly) OMNRestaurantSchedules *schedules;
 @property (nonatomic, strong) OMNRestaurantInfo *info;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
-+ (void)getRestaurantList:(GRestaurantsBlock)restaurantsBlock error:(void(^)(NSError *error))errorBlock;
++ (void)getRestaurants:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock;
 
-- (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block error:(void(^)(NSError *error))errorBlock;
+- (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(NSError *error))failureBlock;
 
-- (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock;
+- (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
 
 @end

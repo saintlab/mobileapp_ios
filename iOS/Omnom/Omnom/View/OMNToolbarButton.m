@@ -9,11 +9,14 @@
 #import "OMNToolbarButton.h"
 #import "UIImage+omn_helper.h"
 #import "UIButton+omn_helper.h"
+#import "OMNConstants.h"
 
 #define kBarButtonNormalColor ([UIColor blackColor])
 
 @implementation OMNToolbarButton {
+  
   UIImage *_image;
+  
 }
 
 - (instancetype)initWithImage:(UIImage *)image title:(NSString *)title {
@@ -106,7 +109,7 @@
   if (self) {
 
     self.tintColor = [UIColor blackColor];
-    self.titleLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+    self.titleLabel.font = FuturaOSFOmnomRegular(20.0f);
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
 
   }

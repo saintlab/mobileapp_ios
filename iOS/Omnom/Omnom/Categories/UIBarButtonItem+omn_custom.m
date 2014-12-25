@@ -42,6 +42,14 @@
   
 }
 
++ (UIBarButtonItem *)omn_fixedItemWithSpace:(CGFloat)space {
+  
+  UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+  barButtonItem.width = space;
+  return barButtonItem;
+  
+}
+
 + (UIBarButtonItem *)omn_barButtonWithImage:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action {
   
   UIButton *button = [self omn_buttonWithImage:image color:color target:target action:action];

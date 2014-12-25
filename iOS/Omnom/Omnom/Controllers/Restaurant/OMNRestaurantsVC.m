@@ -9,6 +9,10 @@
 #import "OMNRestaurantsVC.h"
 #import "OMNRestaurant.h"
 #import "OMNMenu.h"
+#import "OMNToolbarButton.h"
+#import "UIBarButtonItem+omn_custom.h"
+#import "OMNRestaurantCell.h"
+#import "OMNRestaurantListFeedbackCell.h"
 
 @interface OMNRestaurantsVC ()
 
@@ -17,7 +21,7 @@
 @end
 
 @implementation OMNRestaurantsVC {
-  UIRefreshControl *_refreshControl;
+  
 }
 
 - (instancetype)init {
@@ -30,68 +34,152 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _refreshControl = [[UIRefreshControl alloc] init];
-  [_refreshControl addTarget:self action:@selector(refreshOrders) forControlEvents:UIControlEventValueChanged];
+  OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:NSLocalizedString(@"Демо-режим", nil)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:demoButton];
   
-  self.refreshControl = _refreshControl;
+  self.navigationItem.rightBarButtonItems =
+  @[
+    [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:self action:@selector(showUserProfile)],
+    [UIBarButtonItem omn_fixedItemWithSpace:20.0f],
+    [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"qr-icon-small"] color:[UIColor blackColor] target:self action:@selector(qrTap)],
+    ];
+  
+  self.refreshControl = [[UIRefreshControl alloc] init];
+  [self.refreshControl addTarget:self action:@selector(refreshOrders) forControlEvents:UIControlEventValueChanged];
+  
+  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  
   [self refreshOrders];
+  
+}
+
+- (void)qrTap {
+  
+}
+
+- (void)showUserProfile {
+  
+}
+
+- (void)userFeedbackTap {
   
 }
 
 - (void)refreshOrders {
   
-  if (!_refreshControl.refreshing) {
-    [_refreshControl beginRefreshing];
+  if (!self.refreshControl.refreshing) {
+    [self.refreshControl beginRefreshing];
   }
   
   __weak typeof(self)weakSelf = self;
-  [OMNRestaurant getRestaurantList:^(NSArray *restaurants) {
+  [OMNRestaurant getRestaurants:^(NSArray *restaurants) {
     
     [weakSelf finishLoadingRestaurants:restaurants];
     
-  } error:^(NSError *error) {
+  } failure:^(OMNError *error) {
     
-    [_refreshControl endRefreshing];
+    [self.refreshControl endRefreshing];
     
   }];
   
 }
 
 - (void)finishLoadingRestaurants:(NSArray *)restaurants {
-  [_refreshControl endRefreshing];
+  
+  [self.refreshControl endRefreshing];
   self.restaurants = restaurants;
   [self.tableView reloadData];
+  
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
+  
+  return 2;
+  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return self.restaurants.count;
+  
+  NSInteger numberOfRows = 0;
+  switch (section) {
+    case 0: {
+      
+      numberOfRows = self.restaurants.count;
+      
+    } break;
+    case 1: {
+
+      numberOfRows = 1;
+      
+    } break;
+  }
+  
+  return numberOfRows;
+  
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  static NSString *reuseIdentifier = @"reuseIdentifier";
+
+  UITableViewCell *cell = nil;
   
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-  if (nil == cell) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+  switch (indexPath.section) {
+    case 0: {
+      
+      OMNRestaurantCell *restaurantCell = [OMNRestaurantCell cellForTableView:tableView];
+      OMNRestaurant *restaurant = self.restaurants[indexPath.row];
+      restaurantCell.restaurant = restaurant;
+      cell = restaurantCell;
+      
+    } break;
+    case 1: {
+      
+      cell = [OMNRestaurantListFeedbackCell cellForTableView:tableView];
+      
+    } break;
   }
-  
-  OMNRestaurant *restaurant = self.restaurants[indexPath.row];
-  cell.textLabel.text = restaurant.title;
-  cell.detailTextLabel.text = restaurant.Description;
   
   return cell;
 }
- 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  CGFloat heightForRow = 44.0f;
+  switch (indexPath.section) {
+    case 0: {
+      
+      heightForRow = 242.0f;
+      
+    } break;
+    case 1: {
+      
+      heightForRow = 114.0f;
+      
+    } break;
+  }
+  
+  return heightForRow;
+  
+}
+
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {  
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  switch (indexPath.section) {
+    case 0: {
+      
+      [self.navigationController pushViewController:[UIViewController new] animated:YES];
+      
+    } break;
+    case 1: {
+      
+      [self userFeedbackTap];
+      
+    } break;
+  }
+  
 }
 
 @end
