@@ -81,15 +81,12 @@
     return;
   }
   _applicationStartedForeground = YES;
-
-  [OMNOperationManager sharedManager];
   
   [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
   
   OMNStartVC *startVC = [[OMNStartVC alloc] init];
   startVC.info = info;
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
-  
   
 }
 

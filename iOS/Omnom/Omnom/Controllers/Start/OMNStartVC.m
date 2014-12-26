@@ -70,21 +70,58 @@ OMNSearchRestaurantVCDelegate>
   }
   
   _initialCheckPerformed = YES;
+  [self startSearchingRestaurant];
+
+}
+
+- (void)checkUserToken {
+  
   __weak typeof(self)weakSelf = self;
-  [[OMNAuthorization authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
-    
-    if (tokenIsValid) {
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
+
+    [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
       
-      [weakSelf startSearchingRestaurant];
+      if (user) {
+        
+        [weakSelf startSearchingRestaurant];
+        
+      }
+      else {
+        
+        [weakSelf requestAuthorization];
+        
+      }
       
-    }
-    else {
+    } failure:^(OMNError *error) {
       
-      [weakSelf requestAuthorization];
+      [weakSelf handleUserTokenError:error];
       
-    }
+    }];
     
   }];
+  
+}
+
+- (void)handleUserTokenError:(OMNError *)error {
+  
+  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:nil];
+  noInternetVC.text = error.localizedDescription;
+  noInternetVC.faded = YES;
+  noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  __weak typeof(self)weakSelf = self;
+  noInternetVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      
+      [weakSelf checkUserToken];
+      
+    }],
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Отменить", nil) image:nil block:^{
+      
+    }]
+    ];
+  [self.navigationController pushViewController:noInternetVC animated:YES];
+  
 }
 
 - (void)startSearchingRestaurant {

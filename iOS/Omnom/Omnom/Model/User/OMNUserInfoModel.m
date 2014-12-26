@@ -48,9 +48,7 @@
 
 - (void)reloadUserInfo {
   
-  [[OMNAuthorization authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
-
-  }];
+  [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {} failure:^(OMNError *error) {}];
 
 }
 

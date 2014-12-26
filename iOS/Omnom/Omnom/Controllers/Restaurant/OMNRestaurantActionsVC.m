@@ -186,7 +186,7 @@
   
 }
 
-- (void)cancelWaiterCallTap {
+- (void)setLoadingState {
   
   self.bottomToolbar.items =
   @[
@@ -194,6 +194,12 @@
     [UIBarButtonItem omn_loadingItem],
     [UIBarButtonItem omn_flexibleItem],
     ];
+  
+}
+
+- (void)cancelWaiterCallTap {
+  
+  [self setLoadingState];
 
   __weak typeof(self)weakSelf = self;
   [_visitor waiterCallStopWithFailure:^(NSError *error) {

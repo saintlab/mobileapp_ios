@@ -23,6 +23,7 @@
 #import "OMNUserInfoVC.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNBeacon+omn_debug.h"
+#import "OMNAuthorization.h"
 
 @interface OMNSearchVisitorVC ()
 <OMNBeaconSearchManagerDelegate,
@@ -34,14 +35,18 @@ OMNUserInfoVCDelegate>
 @end
 
 @implementation OMNSearchVisitorVC {
+  
   OMNBeaconSearchManager *_beaconSearchManager;
   OMNSearchBeaconVCBlock _didFindBlock;
   dispatch_block_t _cancelBlock;
   UIButton *_cancelButton;
+  
 }
 
 - (void)dealloc {
+  
   [self stopBeaconManager:NO];
+  
 }
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
@@ -99,10 +104,14 @@ OMNUserInfoVCDelegate>
 - (void)finishLoading:(dispatch_block_t)completionBlock {
   
   [UIView animateWithDuration:0.3 animations:^{
+    
     _cancelButton.alpha = 0.0f;
+    
   } completion:^(BOOL finished) {
+    
     _cancelButton.hidden = YES;
     _cancelButton.alpha = 1.0f;
+    
   }];
   
   [super finishLoading:completionBlock];
@@ -125,7 +134,9 @@ OMNUserInfoVCDelegate>
   else if (self.qr) {
     
     dispatch_async(dispatch_get_main_queue(), ^{
+      
       [weakSelf scanQRCodeVC:nil didScanCode:weakSelf.qr];
+      
     });
     
   }
@@ -134,7 +145,9 @@ OMNUserInfoVCDelegate>
     _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
     _beaconSearchManager.delegate = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-      [weakSelf startSearchingBeacon];
+      
+      [weakSelf startSearchingBeacons];
+      
     });
     
   }
@@ -173,10 +186,12 @@ OMNUserInfoVCDelegate>
 }
 
 - (void)cancelTap {
+  
   [self stopBeaconManager:YES];
   if (_cancelBlock) {
     _cancelBlock();
   }
+  
 }
 
 - (void)demoModeTap {
@@ -187,19 +202,75 @@ OMNUserInfoVCDelegate>
   
 }
 
-- (void)startSearchingBeacon {
+- (void)startSearchingBeacons {
   
   [self.loaderView stop];
+  _beaconSearchManager.delegate = nil;
+  [_beaconSearchManager stop:NO];
   
+  __weak typeof(self)weakSelf = self;
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
-    [self.loaderView startAnimating:self.estimateAnimationDuration];
-    self.label.text = @"";
-    [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
-    _beaconSearchManager.delegate = self;
-    [_beaconSearchManager startSearching];
-
+    [weakSelf checkUserToken];
+    
   }];
+  
+}
+
+- (void)checkUserToken {
+  
+  [self.loaderView startAnimating:self.estimateAnimationDuration];
+  self.label.text = @"";
+  [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
+
+  __weak typeof(self)weakSelf = self;
+  [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
+    
+    if (user) {
+      
+      [weakSelf startBeaconSearchManager];
+      
+    }
+    else {
+      
+      
+      
+    }
+    
+  } failure:^(OMNError *error) {
+    
+    [weakSelf handleInternetError:error];
+    
+  }];
+  
+}
+
+- (void)startBeaconSearchManager {
+  
+  [self.loaderView setProgress:0.1];
+  _beaconSearchManager.delegate = self;
+  [_beaconSearchManager startSearching];
+  
+}
+
+- (void)handleInternetError:(OMNError *)error {
+
+  switch (error.code) {
+    case kOMNErrorCodeTimedOut: {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"no_server_connection" parametrs:nil];
+      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Помехи на линии.")
+                             actionText:NSLocalizedString(@"REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE", @"Давайте ещё раз.")];
+
+    } break;
+    case kOMNErrorCodeNotConnectedToInternet: {
+      
+      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Вы видите интернет? Мы нет.")
+                             actionText:NSLocalizedString(@"REPEAT_NO_INTERNET_BUTTON_TITLE", @"Попробуйте ещё раз")];
+
+    } break;
+  }
+
   
 }
 
@@ -262,7 +333,7 @@ OMNUserInfoVCDelegate>
   repeatVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      [weakSelf startSearchingBeacon];
+      [weakSelf startSearchingBeacons];
     }]
     ];
   [self.navigationController pushViewController:repeatVC animated:YES];
@@ -285,7 +356,7 @@ OMNUserInfoVCDelegate>
   __weak typeof(self)weakSelf = self;
   [self showRetryMessageWithError:error retryBlock:^{
     
-    [weakSelf startSearchingBeacon];
+    [weakSelf startSearchingBeacons];
     
   } cancelBlock:^{
     
@@ -330,14 +401,8 @@ OMNUserInfoVCDelegate>
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state {
   
   switch (state) {
-    case kSearchManagerInternetFound: {
-      
-      [self.loaderView setProgress:0.1];
-      
-    } break;
     case kSearchManagerStartSearchingBeacons: {
       
-      NSLog(@"Определение вашего столика");
       [self.loaderView setProgress:0.3];
       
     } break;
@@ -346,72 +411,63 @@ OMNUserInfoVCDelegate>
       [self beaconsNotFound];
       
     } break;
+    case kSearchManagerRequestReload: {
       
-    case kSearchManagerRequestTurnBLEOn: {
+      [self startSearchingBeacons];
+      
+    } break;
+  }
+  
+}
+
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didDetermineBLEState:(OMNBLESearchManagerState)bleState {
+  
+  switch (bleState) {
+    case kBLESearchManagerBLEDidOn: {
+      
+      [self.loaderView setProgress:0.25];
+      
+    } break;
+    case kBLESearchManagerBLEUnsupported: {
+      
+      [self requestQRCode];
+      
+    } break;
+    case kBLESearchManagerRequestTurnBLEOn: {
       
       [[OMNAnalitics analitics] logTargetEvent:@"bluetooth_turned_off" parametrs:nil];
       OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] initWithParent:self];
       [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
       
     } break;
-    case kSearchManagerBLEUnsupported: {
-      
-      [self requestQRCode];
-      
-    } break;
-    case kSearchManagerBLEDidOn: {
-      
-      [self.loaderView setProgress:0.2];
-      
-    } break;
-      
-    case kSearchManagerRequestCoreLocationRestrictedPermission: {
-      
-      NSLog(@"kSearchManagerRequestCoreLocationRestrictedPermission");
-      [[OMNAnalitics analitics] logDebugEvent:@"no_geolocation_permission" parametrs:nil];
-      OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
-      [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
-      
-    } break;
-    case kSearchManagerRequestCoreLocationDeniedPermission: {
-      
-      NSLog(@"kSearchManagerRequestCoreLocationDeniedPermission");
-      [[OMNAnalitics analitics] logDebugEvent:@"no_geolocation_permission" parametrs:nil];
-      __weak typeof(self)weakSelf = self;
-      [self showDenyLocationPermissionDescriptionWithBlock:^{
+  }
+  
+}
 
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didDetermineCLState:(OMNCLSearchManagerState)clState {
+  
+  __weak typeof(self)weakSelf = self;
+  switch (clState) {
+    case kCLSearchManagerRequestRestrictedPermission:
+    case kCLSearchManagerRequestDeniedPermission: {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"no_geolocation_permission" parametrs:nil];
+      [self showDenyLocationPermissionDescriptionWithBlock:^{
+        
         OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
         [weakSelf.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
         
       }];
       
     } break;
-    case kSearchManagerRequestLocationManagerPermission: {
+    case kCLSearchManagerRequestPermission: {
       
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:self];
-        [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
+        
+        OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:weakSelf];
+        [weakSelf.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
         
       });
-      
-    } break;
-      
-    case kSearchManagerInternetUnavaliable: {
-      
-      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Вы видите интернет? Мы нет.")
-                             actionText:NSLocalizedString(@"REPEAT_NO_INTERNET_BUTTON_TITLE", @"Попробуйте ещё раз")];
-      
-    } break;
-    case kSearchManagerOmnomServerUnavaliable: {
-      
-      [[OMNAnalitics analitics] logDebugEvent:@"no_server_connection" parametrs:nil];
-      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Помехи на линии.")
-                             actionText:NSLocalizedString(@"REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE", @"Давайте ещё раз.")];
-      
-    } break;
-    case kSearchManagerRequestReload: {
-      
-      [self startSearchingBeacon];
       
     } break;
   }
@@ -440,11 +496,7 @@ OMNUserInfoVCDelegate>
   @[
     [OMNBarButtonInfo infoWithTitle:actionText image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
-      if (kOMNReachableStateIsReachable == [[OMNOperationManager sharedManager] reachableState]) {
-        
-        [weakSelf startSearchingBeacon];
-        
-      }
+      [weakSelf startSearchingBeacons];
       
     }]
     ];
@@ -465,7 +517,7 @@ OMNUserInfoVCDelegate>
   notFoundBeaconVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      [weakSelf startSearchingBeacon];
+      [weakSelf startSearchingBeacons];
     }],
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Демо-режим", nil) image:[UIImage imageNamed:@"demo_mode_icon_small"] block:^{
       [weakSelf demoModeTap];
@@ -485,7 +537,7 @@ OMNUserInfoVCDelegate>
   tablePositionVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      [weakSelf startSearchingBeacon];
+      [weakSelf startSearchingBeacons];
     }]
     ];
   [self.navigationController pushViewController:tablePositionVC animated:YES];
@@ -496,13 +548,13 @@ OMNUserInfoVCDelegate>
 
 - (void)tablePositionVCDidPlaceOnTable:(OMNTablePositionVC *)tablePositionVC {
   
-  [self startSearchingBeacon];
+  [self startSearchingBeacons];
   
 }
 
 - (void)tablePositionVCDidCancel:(OMNTablePositionVC *)tablePositionVC {
   
-  [self startSearchingBeacon];
+  [self startSearchingBeacons];
   
 }
 
@@ -516,7 +568,7 @@ OMNUserInfoVCDelegate>
 
 - (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC {
   
-  [self startSearchingBeacon];
+  [self startSearchingBeacons];
 
 }
 

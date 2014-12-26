@@ -28,8 +28,7 @@ typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
 - (void)setUser:(OMNUser *)user;
 - (void)setServerTimeStamp:(NSTimeInterval)serverTimeStamp;
 - (void)setup;
-- (void)logRegister;
-- (void)logLogin;
+- (void)logUserLoginWithRegistration:(BOOL)withRegistration;
 - (void)logEnterRestaurant:(OMNVisitor *)visitor mode:(RestaurantEnterMode)mode;
 - (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo bill_id:(NSString *)bill_id;
 - (void)logScore:(NSInteger)score order:(OMNOrder *)order;

@@ -10,21 +10,26 @@
 @class OMNBeacon;
 
 typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
-  kSearchManagerInternetFound = 0,
-  kSearchManagerOmnomServerUnavaliable,
-  kSearchManagerInternetUnavaliable,
-  kSearchManagerStartSearchingBeacons,
-  
+
+  kSearchManagerStartSearchingBeacons = 0,
   kSearchManagerNotFoundBeacons,
   kSearchManagerRequestReload,
   
-  kSearchManagerRequestLocationManagerPermission,
-  kSearchManagerRequestCoreLocationDeniedPermission,
-  kSearchManagerRequestCoreLocationRestrictedPermission,
+};
+
+typedef NS_ENUM(NSInteger, OMNBLESearchManagerState) {
   
-  kSearchManagerBLEDidOn,
-  kSearchManagerBLEUnsupported,
-  kSearchManagerRequestTurnBLEOn,
+  kBLESearchManagerBLEDidOn = 0,
+  kBLESearchManagerBLEUnsupported,
+  kBLESearchManagerRequestTurnBLEOn,
+  
+};
+
+typedef NS_ENUM(NSInteger, OMNCLSearchManagerState) {
+  
+  kCLSearchManagerRequestPermission,
+  kCLSearchManagerRequestDeniedPermission,
+  kCLSearchManagerRequestRestrictedPermission,
   
 };
 
@@ -41,7 +46,10 @@ typedef NS_ENUM(NSInteger, OMNSearchManagerState) {
 
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindAtTheTableBeacons:(NSArray *)atTheTableBeacons allBeacons:(NSArray *)allBeacons;
 - (void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager found:(BOOL)foundBeacon;
+
 - (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state;
 
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didDetermineBLEState:(OMNBLESearchManagerState)bleState;
+- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didDetermineCLState:(OMNCLSearchManagerState)clState;
 
 @end

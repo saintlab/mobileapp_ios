@@ -31,32 +31,28 @@
     self.requestSerializer = [AFJSONRequestSerializer serializer];
     [self.requestSerializer setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];
     [self.requestSerializer setValue:CURRENT_VERSION forHTTPHeaderField:@"current-app-version"];
-    self.requestSerializer.timeoutInterval = 15.0;
+    [self.requestSerializer setValue:CURRENT_BUILD forHTTPHeaderField:@"x-current-app-build"];
+    [self.requestSerializer setValue:CURRENT_VERSION forHTTPHeaderField:@"x-current-app-version"];
+    self.requestSerializer.timeoutInterval = 10.0;
 
   }
   return self;
 }
 
 - (OMNReachableState)reachableState {
-
-  OMNReachableState reachableState = kOMNReachableStateNoInternet;
-  NSString *host = self.baseURL.host;
-  if (![[UIDevice currentDevice] networkAvailable]) {
-    
-    reachableState = kOMNReachableStateNoInternet;
-    
-  }
-  else if (![[UIDevice currentDevice] hostAvailable:host]) {
   
-    reachableState = kOMNReachableStateNoOmnom;
-    
-  }
-  else {
+  OMNReachableState reachableState = kOMNReachableStateNoInternet;
+  if ([[UIDevice currentDevice] networkAvailable]) {
     
     reachableState = kOMNReachableStateIsReachable;
     
   }
-  
+  else {
+    
+    reachableState = kOMNReachableStateNoInternet;
+    
+  }
+
   return reachableState;
   
 }

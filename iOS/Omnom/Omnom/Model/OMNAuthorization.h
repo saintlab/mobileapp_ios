@@ -23,7 +23,7 @@
 - (void)updateUserInfoWithUser:(OMNUser *)user;
 - (void)logout;
 
-- (void)checkTokenWithBlock:(void (^)(BOOL tokenIsValid))block;
+- (void)checkUserWithBlock:(void (^)(OMNUser *user))userBlock failure:(void (^)(OMNError *error))failureBlock;
 
 - (BOOL)pushNotificationsRequested;
 - (void)requestPushNotifications:(void(^)(BOOL))completion;

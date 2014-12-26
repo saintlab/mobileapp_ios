@@ -196,15 +196,9 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logRegister {
+- (void)logUserLoginWithRegistration:(BOOL)withRegistration {
   
-  [_mixpanel track:@"user_registered" properties:nil];
-  
-}
-
-- (void)logLogin {
-  
-  [_mixpanel track:@"user_login" properties:nil];
+  [_mixpanel track:(withRegistration) ? (@"user_registered") : (@"user_login") properties:nil];
 
   [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
     

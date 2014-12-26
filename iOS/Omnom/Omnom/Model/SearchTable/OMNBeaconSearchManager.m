@@ -80,40 +80,10 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
   }
   else {
     
-    [self checkNetworkState];
+    [self checkBluetoothState];
     
   }
 
-}
-
-- (void)checkNetworkState {
-  
-  OMNReachableState reachableState = [[OMNOperationManager sharedManager] reachableState];
-  if (kOMNReachableStateIsReachable != reachableState) {
-    
-    [self.delegate beaconSearchManagerDidStop:self found:NO];
-    
-  }
-  
-  switch (reachableState) {
-    case kOMNReachableStateNoInternet: {
-      
-      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerInternetUnavaliable];
-      
-    } break;
-    case kOMNReachableStateNoOmnom: {
-      
-      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerOmnomServerUnavaliable];
-      
-    } break;
-    case kOMNReachableStateIsReachable: {
-
-      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerInternetFound];
-      [self checkBluetoothState];
-      
-    } break;
-  }
-  
 }
 
 - (void)checkBluetoothState {
@@ -131,7 +101,7 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
         }
         else {
           
-          [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerBLEDidOn];
+          [weakSelf.delegate beaconSearchManager:weakSelf didDetermineBLEState:kBLESearchManagerBLEDidOn];
           [weakSelf startRangeNearestBeacons];
           
         }
@@ -139,12 +109,13 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
       } break;
       case CBCentralManagerStateUnsupported: {
         
-        [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerBLEUnsupported];
+        [weakSelf.delegate beaconSearchManager:weakSelf didDetermineBLEState:kBLESearchManagerBLEUnsupported];
         
       } break;
       case CBCentralManagerStatePoweredOff: {
         
-        [weakSelf processBLEOffSituation];
+        [weakSelf stopRangingNearestBeacons:NO];
+        [weakSelf.delegate beaconSearchManager:self didDetermineBLEState:kBLESearchManagerRequestTurnBLEOn];
         
       } break;
       case CBCentralManagerStateUnauthorized: {
@@ -160,17 +131,12 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
     
     weakSelf.previousBluetoothState = state;
     if (state != CBCentralManagerStatePoweredOn) {
+      
       [weakSelf.delegate beaconSearchManagerDidStop:weakSelf found:NO];
+      
     }
     
   }];
-  
-}
-
-- (void)processBLEOffSituation {
-  
-  [self stopRangingNearestBeacons:NO];
-  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestTurnBLEOn];
   
 }
 
@@ -196,7 +162,7 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
       kCLAuthorizationStatusNotDetermined == authorizationStatus) {
     
     [self.delegate beaconSearchManagerDidStop:self found:NO];
-    [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestLocationManagerPermission];
+    [self.delegate beaconSearchManager:self didDetermineCLState:kCLSearchManagerRequestPermission];
     
     return;
   }
@@ -267,11 +233,11 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
   
 }
 
-- (void)processCoreLocationDenySituation:(OMNSearchManagerState)state {
+- (void)processCoreLocationDenySituation:(OMNCLSearchManagerState)state {
   
   _coreLocationDenied = YES;
   [self stopRangingNearestBeacons:NO];
-  [self.delegate beaconSearchManager:self didChangeState:state];
+  [self.delegate beaconSearchManager:self didDetermineCLState:state];
   
 }
 
@@ -281,7 +247,7 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
       
     case kCLAuthorizationStatusDenied: {
       
-      [self processCoreLocationDenySituation:kSearchManagerRequestCoreLocationDeniedPermission];
+      [self processCoreLocationDenySituation:kCLSearchManagerRequestDeniedPermission];
       
     } break;
     case kCLAuthorizationStatusNotDetermined: {
@@ -290,7 +256,7 @@ NSTimeInterval kBeaconSearchTimeout = 7.0;
     } break;
     case kCLAuthorizationStatusRestricted: {
       
-      [self processCoreLocationDenySituation:kSearchManagerRequestCoreLocationRestrictedPermission];
+      [self processCoreLocationDenySituation:kCLSearchManagerRequestRestrictedPermission];
       
     } break;
     default: {
