@@ -206,6 +206,12 @@ OMNChangePhoneWebVCDelegate>
   imagePickerController.mediaTypes = [NSArray arrayWithObject:(NSString *)kUTTypeImage];
   imagePickerController.allowsEditing = YES;
   imagePickerController.delegate = self;
+  if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
+    
+    imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    
+  }
+
   [self presentViewController:imagePickerController animated:YES completion:nil];
   
 }
