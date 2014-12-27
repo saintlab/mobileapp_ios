@@ -50,6 +50,10 @@ inline NSString *stringFromSplitType(SplitType splitType) {
 NSInteger const kDefaultSelectedTipIndex = 1;
 NSInteger const kCustomTipIndex = 3;
 
+NSString * const OMNOrderDidChangeNotification = @"OMNOrderDidChangeNotification";
+NSString * const OMNOrderDidCloseNotification = @"OMNOrderDidCloseNotification";
+NSString * const OMNOrderKey = @"OMNOrderKey";
+
 @implementation OMNOrder {
   
   id _data;
@@ -77,13 +81,17 @@ NSInteger const kCustomTipIndex = 3;
       self.paid = [[OMNOrderPaid alloc] initWithTotal:[jsonData[@"paid_amount"] longLongValue] tip:[jsonData[@"paid_tip"] longLongValue]];
     }
     
-    _guests = [NSMutableArray array];
     NSArray *itemsData = jsonData[@"items"];
+    NSMutableDictionary *orderItemIDs = [NSMutableDictionary dictionary];
 
     NSMutableDictionary *guestsInfo = [NSMutableDictionary dictionary];
     [itemsData enumerateObjectsUsingBlock:^(id itemData, NSUInteger idx, BOOL *stop) {
       
       OMNOrderItem *orderItem = [[OMNOrderItem alloc] initWithJsonData:itemData];
+      NSString *orderItemGuestID = [NSString stringWithFormat:@"%@+%@", orderItem.id, orderItem.guest_id];
+      orderItemIDs[orderItemGuestID] = @([orderItemIDs[orderItemGuestID] integerValue] + 1);
+      orderItem.uid = [NSString stringWithFormat:@"%@+%@+%@", orderItem.id, orderItem.guest_id, orderItemIDs[orderItemGuestID]];
+      
       NSMutableArray *guestItems = guestsInfo[orderItem.guest_id];
       if (nil == guestItems) {
         guestItems = [NSMutableArray array];
@@ -139,7 +147,7 @@ NSInteger const kCustomTipIndex = 3;
       self.selectedTipIndex = kDefaultSelectedTipIndex;
       
     }
-    
+    _selectedOrderItemsIDs = [NSMutableSet set];
     [self resetEnteredAmount];
     
   }
@@ -149,12 +157,17 @@ NSInteger const kCustomTipIndex = 3;
 - (void)updateWithOrder:(OMNOrder *)order {
   
   _guests = order.guests;
+  
   if (order.paid) {
+    
     self.paid = order.paid;
+    
   }
 
   if (!_enteredAmountChanged) {
+    
     _enteredAmount = MAX(0ll, self.expectedValue);
+    
   }
   
 }
@@ -292,6 +305,23 @@ NSInteger const kCustomTipIndex = 3;
     
   }
   
+}
+
+- (void)changeOrderItemSelection:(OMNOrderItem *)orderItem {
+  
+  orderItem.selected = !orderItem.selected;
+  
+  if (orderItem.selected) {
+    
+    [self.selectedOrderItemsIDs addObject:orderItem.uid];
+    
+  }
+  else {
+    
+    [self.selectedOrderItemsIDs removeObject:orderItem.uid];
+    
+  }
+
 }
 
 - (void)selectionDidChange {

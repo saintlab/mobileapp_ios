@@ -10,7 +10,8 @@
 
 @interface OMNOrderItem : NSObject
 
-@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy, readonly) NSString *id;
+@property (nonatomic, copy) NSString *uid;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *guest_id;
 @property (nonatomic, assign) long long price_per_item;
@@ -20,8 +21,6 @@
 @property (nonatomic, strong) UIImage *icon;
 
 - (instancetype)initWithJsonData:(id)data;
-
-- (void)changeSelection;
 
 - (void)deselect;
 

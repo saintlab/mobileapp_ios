@@ -9,13 +9,7 @@
 #import "OMNVisitor.h"
 #import "OMNSocketManager.h"
 
-NSString * const OMNOrderDidChangeNotification = @"OMNOrderDidChangeNotification";
-NSString * const OMNOrderDidCloseNotification = @"OMNOrderDidCloseNotification";
-NSString * const OMNOrderDidPayNotification = @"OMNOrderDidPayNotification";
-
-NSString * const OMNOrderKey = @"OMNOrderKey";
 NSString * const OMNOrderIndexKey = @"OMNOrderIndexKey";
-
 NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidChangeNotification";
 
 @implementation OMNVisitor {
@@ -32,9 +26,6 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
-    
-//    NSData *data1 = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted error:nil];
-//    NSLog(@"%@", [[NSString alloc] initWithData:data1 encoding:NSUTF8StringEncoding]);
     
     _foundDate = [NSDate date];
     _decodeBeaconData = data;
@@ -181,9 +172,6 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
   if (realClosedOrder) {
     
     [self updateOrdersWithOrders:orders];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification
-                                                        object:self
-                                                      userInfo:@{OMNOrderKey : realClosedOrder}];
     
   }
   
@@ -205,13 +193,47 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
   dispatch_semaphore_wait(_visitorLock, DISPATCH_TIME_FOREVER);
   
   NSString *selectedOrderId = self.selectedOrder.id;
-  __weak typeof(self)weakSelf = self;
+  __block OMNOrder *selectedOrder = nil;
+  NSMutableSet *existingOrdersIDs = [NSMutableSet setWithCapacity:orders.count];
   [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
     
+    [existingOrdersIDs addObject:order.id];
     if ([order.id isEqualToString:selectedOrderId]) {
-      weakSelf.selectedOrder = order;
-      *stop = YES;
+      
+      selectedOrder = order;
+      
     }
+    
+  }];
+
+  if (selectedOrder) {
+    
+    self.selectedOrder = selectedOrder;
+    
+  }
+  else {
+    
+    self.selectedOrder = [orders firstObject];
+    
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  [self.orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      if ([existingOrdersIDs containsObject:order.id]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
+        
+      }
+      else {
+      
+        [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
+        
+      }
+      
+    });
     
   }];
   

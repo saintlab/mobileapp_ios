@@ -125,6 +125,8 @@
 		933A9EB31A4C33DA001C0909 /* OMNBottomTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9EB11A4C33DA001C0909 /* OMNBottomTextButton.m */; };
 		933A9EB61A4C46BC001C0909 /* UIView+omn_autolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9EB51A4C46BC001C0909 /* UIView+omn_autolayout.m */; };
 		933A9EB71A4C46BC001C0909 /* UIView+omn_autolayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9EB51A4C46BC001C0909 /* UIView+omn_autolayout.m */; };
+		933A9EBA1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9EB91A4DB9FF001C0909 /* NSString+omn_uuid.m */; };
+		933A9EBB1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9EB91A4DB9FF001C0909 /* NSString+omn_uuid.m */; };
 		933AB0D619C1D4D8004D8F55 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 933AB0D919C1D4D8004D8F55 /* Localizable.strings */; };
 		933AB0D719C1D4D8004D8F55 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 933AB0D919C1D4D8004D8F55 /* Localizable.strings */; };
 		933D48E919E67AFD004E591C /* UIBarButtonItem+omn_custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D48E819E67AFD004E591C /* UIBarButtonItem+omn_custom.m */; };
@@ -623,6 +625,8 @@
 		933A9EB11A4C33DA001C0909 /* OMNBottomTextButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBottomTextButton.m; sourceTree = "<group>"; };
 		933A9EB41A4C46BC001C0909 /* UIView+omn_autolayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+omn_autolayout.h"; sourceTree = "<group>"; };
 		933A9EB51A4C46BC001C0909 /* UIView+omn_autolayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+omn_autolayout.m"; sourceTree = "<group>"; };
+		933A9EB81A4DB9FF001C0909 /* NSString+omn_uuid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+omn_uuid.h"; sourceTree = "<group>"; };
+		933A9EB91A4DB9FF001C0909 /* NSString+omn_uuid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+omn_uuid.m"; sourceTree = "<group>"; };
 		933D48E619E6445C004E591C /* OMNInteractiveTransitioningProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OMNInteractiveTransitioningProtocol.h; sourceTree = "<group>"; };
 		933D48E719E67AFD004E591C /* UIBarButtonItem+omn_custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+omn_custom.h"; sourceTree = "<group>"; };
 		933D48E819E67AFD004E591C /* UIBarButtonItem+omn_custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+omn_custom.m"; sourceTree = "<group>"; };
@@ -1239,6 +1243,8 @@
 				933A9E991A4B23ED001C0909 /* NSDate+omn_custom.m */,
 				933A9EB41A4C46BC001C0909 /* UIView+omn_autolayout.h */,
 				933A9EB51A4C46BC001C0909 /* UIView+omn_autolayout.m */,
+				933A9EB81A4DB9FF001C0909 /* NSString+omn_uuid.h */,
+				933A9EB91A4DB9FF001C0909 /* NSString+omn_uuid.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2448,6 +2454,7 @@
 				9389456419B0622900C37C82 /* OMNPushText.m in Sources */,
 				9307C5731937022800408519 /* OMNOrderItemCell.m in Sources */,
 				93D117851A2F1ABF000131C4 /* OMNVersionUserInfoItem.m in Sources */,
+				933A9EBA1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */,
 				934FC72E19D054F8008AC4B0 /* OMNOrderPaid.m in Sources */,
 				9351677119BFF7460071DA57 /* OMNImageManager.m in Sources */,
 				937A37331980F68200EF5C31 /* OMNLoaderView.m in Sources */,
@@ -2773,6 +2780,7 @@
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				933A9EAF1A4C0915001C0909 /* OMNRestaurantDetailsView.m in Sources */,
 				93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */,
+				933A9EBB1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
 				93E2998A197CE0FD00051B04 /* OMNSearchVisitorVC.m in Sources */,
 				933A9EB71A4C46BC001C0909 /* UIView+omn_autolayout.m in Sources */,

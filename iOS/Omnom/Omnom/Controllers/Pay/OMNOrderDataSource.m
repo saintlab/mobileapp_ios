@@ -21,12 +21,34 @@
 
 @implementation OMNOrderDataSource
 
+- (void)dealloc {
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
+}
+
 - (instancetype)initWithOrder:(OMNOrder *)order {
   self = [super init];
   if (self) {
+    
     _order = order;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
+    
   }
   return self;
+}
+
+- (void)orderDidChange:(NSNotification *)n {
+  
+  OMNOrder *changedOrder = n.userInfo[OMNOrderKey];
+  
+  if ([changedOrder.id isEqualToString:changedOrder.id]) {
+    
+    [_order updateWithOrder:changedOrder];
+    
+  }
+  
 }
 
 - (void)registerCellsForTableView:(UITableView *)tableView {
@@ -118,6 +140,7 @@
     OMNGuest *guest = _order.guests[section];
     guestView.guest = guest;
     viewForHeader = guestView;
+    
   }
   
   return viewForHeader;
@@ -147,7 +170,9 @@
   
   OMNGuest *guest = _order.guests[indexPath.section];
   OMNOrderItem *orderItem = guest.items[indexPath.row];
-  [orderItem changeSelection];
+  
+  [_order changeOrderItemSelection:orderItem];
+  
   [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
   
   if (self.didSelectBlock) {

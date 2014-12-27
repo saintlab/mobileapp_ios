@@ -8,6 +8,12 @@
 
 #import "OMNOrderItem.h"
 
+@interface OMNOrderItem ()
+
+@property (nonatomic, copy) NSString *id;
+
+@end
+
 @implementation OMNOrderItem
 
 - (instancetype)initWithJsonData:(id)data {
@@ -28,6 +34,7 @@
 - (instancetype)copyWithZone:(NSZone *)zone {
   
   OMNOrderItem *orderItem = [[[self class] allocWithZone:zone] init];
+  orderItem.id = self.id;
   orderItem.name = self.name;
   orderItem.price_per_item = self.price_per_item;
   orderItem.selected = self.selected;
@@ -35,18 +42,12 @@
   orderItem.quantity = self.quantity;
   orderItem.price_total = self.price_total;
   return orderItem;
-  
+
 }
 
 - (UIImage *)icon {
   
   return [UIImage imageNamed:@"test_icon"];
-  
-}
-
-- (void)changeSelection {
-  
-  self.selected = !self.selected;
   
 }
 

@@ -29,7 +29,9 @@ UICollectionViewDelegate>
 }
 
 - (void)dealloc {
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
 }
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor {
