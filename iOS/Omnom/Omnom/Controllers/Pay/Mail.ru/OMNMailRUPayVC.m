@@ -27,6 +27,7 @@
 #import <OMNStyler.h>
 #import "OMNBankCard.h"
 #import "OMNBankCardMediator.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNMailRUPayVC()
 
@@ -49,10 +50,12 @@
   OMNLoadingCircleVC *_loadingCircleVC;
   NSString *_mailRUPayVCLoadingIdentifier;
   BOOL _addBankCardRequested;
+  
 }
 
 - (void)dealloc {
   
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   if (_mailRUPayVCLoadingIdentifier) {
     
     [self bk_removeObserversWithIdentifier:_mailRUPayVCLoadingIdentifier];
@@ -94,7 +97,7 @@
 
   _mailRUPayVCLoadingIdentifier = [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
     
-    [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([weakSelf loadingButton]) : ([weakSelf addCardButton]) animated:YES];
+    [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([UIBarButtonItem omn_loadingItem]) : ([weakSelf addCardButton]) animated:YES];
     
   }];
 
@@ -122,16 +125,13 @@
 
   [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
   _payButton.enabled = NO;
-}
-
-- (UIBarButtonItem *)loadingButton {
-  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-  [spinner startAnimating];
-  return [[UIBarButtonItem alloc] initWithCustomView:spinner];
+  
 }
 
 - (UIBarButtonItem *)addCardButton {
+  
   return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -264,7 +264,10 @@
   
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel.bankCardMediator addCardForOrder:_order requestPaymentWithCard:^(OMNBankCardInfo *bankCardInfo) {
-
+    
+    //clear card_id for payment
+    bankCardInfo.card_id = nil;
+    bankCardInfo.saveCard = NO;
     [weakSelf payWithCardInfo:bankCardInfo];
     
   }];

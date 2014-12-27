@@ -87,7 +87,8 @@ OMNPaymentFooterViewDelegate>
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
-  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:nil];
+
   _paymentView.delegate = self;
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
@@ -122,7 +123,9 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
+  
   return UIStatusBarStyleDefault;
+  
 }
 
 - (void)viewDidLayoutSubviews {
@@ -181,6 +184,22 @@ OMNPaymentFooterViewDelegate>
 - (void)visitorOrdersDidChange:(NSNotification *)n {
   
   [self updateWithOrder:_visitor.selectedOrder];
+  
+}
+
+- (void)orderDidClose:(NSNotification *)n {
+  
+  OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
+  if ([closedOrder.id isEqualToString:_order.id]) {
+    
+    __weak typeof(self)weakSelf = self;
+    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_CLOSE_ALERT_TITLE", @"Этот счёт закрыт заведением для просмотра и оплаты") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_CLOSE_ALERT_BUTTON_TITLE", @"Выйти") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+      
+      [weakSelf.delegate payOrderVCDidCancel:weakSelf];
+      
+    }];
+    
+  }
   
 }
 

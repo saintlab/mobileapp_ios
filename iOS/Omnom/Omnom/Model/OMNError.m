@@ -40,9 +40,14 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
       omnomError = [self omnomErrorFromCode:OMNErrorWrongAmount];
       
     }
+    else if (kOMNMailRuErrorCodeDefault == error.code) {
+      
+      omnomError = [OMNError errorWithDomain:OMNErrorDomain code:error.code userInfo:error.userInfo];
+      
+    }
     else {
 
-      omnomError = [OMNError errorWithDomain:OMNErrorDomain code:error.code userInfo:error.userInfo];
+      omnomError = [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun];
       
     }
     

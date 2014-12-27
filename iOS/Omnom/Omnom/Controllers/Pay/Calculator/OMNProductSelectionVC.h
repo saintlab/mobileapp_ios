@@ -12,7 +12,7 @@
 
 @interface OMNProductSelectionVC : UITableViewController
 
-@property (nonatomic, strong) NSMutableSet *changedItems;
+@property (nonatomic, strong, readonly) NSMutableSet *changedOrderItemsIDs;
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
 - (instancetype)initWithOrder:(OMNOrder *)order;

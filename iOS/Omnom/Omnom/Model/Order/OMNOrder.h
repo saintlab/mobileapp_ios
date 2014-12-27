@@ -15,6 +15,10 @@
 
 @class OMNOrder;
 
+extern NSString * const OMNOrderDidChangeNotification;
+extern NSString * const OMNOrderDidCloseNotification;
+extern NSString * const OMNOrderKey;
+
 typedef void(^OMNOrdersBlock)(NSArray *orders);
 typedef void(^OMNOrderBlock)(OMNOrder *order);
 typedef void(^OMNBillBlock)(OMNBill *bill);
@@ -54,7 +58,7 @@ extern NSInteger const kCustomTipIndex;
 @property (nonatomic, copy) NSString *restarateurOrderId;
 
 @property (nonatomic, strong, readonly) NSArray *guests;
-
+@property (nonatomic, strong, readonly) NSMutableSet *selectedOrderItemsIDs;
 @property (nonatomic, strong, readonly) NSMutableArray *tips;
 @property (nonatomic, assign, readonly) long long percentTipsThreshold;
 
@@ -80,6 +84,7 @@ extern NSInteger const kCustomTipIndex;
 - (long long)totalAmount;
 - (long long)selectedItemsTotal;
 
+- (void)changeOrderItemSelection:(OMNOrderItem *)orderItem;
 - (void)selectionDidChange;
 - (void)deselectAllItems;
 - (void)resetEnteredAmount;

@@ -33,10 +33,12 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 @end
 
 @implementation OMNCalculatorVC {
+  
   OMNOrder *_order;
   UIView *_fadeView;
   UIButton *_totalButton;
   long long _total;
+  
 }
 
 - (instancetype)initWithOrder:(OMNOrder *)order {
@@ -107,9 +109,18 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 - (void)closeTap {
   
-  [self.firstViewController.changedItems enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, BOOL *stop) {
+  NSSet *changedOrderItemsIDs = [self.firstViewController.changedOrderItemsIDs copy];
+  [_order.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
     
-    orderItem.selected = !orderItem.selected;
+    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+      
+      if ([changedOrderItemsIDs containsObject:orderItem.uid]) {
+        
+        orderItem.selected = !orderItem.selected;
+        
+      }
+      
+    }];
     
   }];
   
@@ -118,23 +129,31 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 }
 
 - (UITableView *)splitTableView {
+  
   return self.firstViewController.tableView;
+  
 }
 
 - (void)totalTap {
   
   if (0ll == _total) {
+    
     [self.delegate calculatorVCDidCancel:self];
     return;
+    
   }
   
   SplitType splitType = kSplitTypeNone;
   
   if ([[self.childViewControllers objectAtIndex:0] isEqual:self.firstViewController]) {
+    
     splitType = kSplitTypeOrders;
+    
   }
   else if ([[self.childViewControllers objectAtIndex:0] isEqual:self.secondViewController]) {
+    
     splitType = kSplitTypeNumberOfGuests;
+    
   }
   
   [self.delegate calculatorVC:self splitType:splitType didFinishWithTotal:_total];
