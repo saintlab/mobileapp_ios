@@ -13,10 +13,6 @@
 #import "OMNQR.h"
 
 extern NSString * const OMNVisitorOrdersDidChangeNotification;
-extern NSString * const OMNOrderDidChangeNotification;
-extern NSString * const OMNOrderDidCloseNotification;
-
-extern NSString * const OMNOrderKey;
 extern NSString * const OMNOrderIndexKey;
 
 @interface OMNVisitor : NSObject

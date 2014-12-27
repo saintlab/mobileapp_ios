@@ -36,9 +36,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   _customConfig = [self configWithName:lo.customConfigName];
   
-#warning _customConfig
-//  _customConfig = [self configWithName:@"config_laaaab"];
-  
   //setup keychain for background usage
   [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];
   

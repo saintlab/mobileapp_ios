@@ -13,7 +13,7 @@ extern NSString *const OMNMailRuErrorDomain;
 
 typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
   
-  kOMNMailRuErrorCodeUnknown = NSURLErrorUnknown,
+  kOMNMailRuErrorCodeUnknown = -1,
   kOMNMailRuErrorCodeDefault = 0,
   kOMNMailRuErrorCodeCardAmount,
   

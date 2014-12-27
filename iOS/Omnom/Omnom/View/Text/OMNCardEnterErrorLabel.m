@@ -43,9 +43,11 @@
 }
 
 - (NSMutableParagraphStyle *)centerParagraphStyle {
+  
   NSMutableParagraphStyle *attributeStyle = [[NSMutableParagraphStyle alloc] init];
   attributeStyle.alignment = NSTextAlignmentCenter;
   return attributeStyle;
+  
 }
 
 - (void)setWrongAmountError {
@@ -60,13 +62,9 @@
    @{
      NSForegroundColorAttributeName : colorWithHexString(@"D0021B"),
      NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
+     NSParagraphStyleAttributeName : [self centerParagraphStyle],
      } range:[text rangeOfString:errorText]];
 
-  [attributedString setAttributes:
-   @{
-     NSParagraphStyleAttributeName : [self centerParagraphStyle],
-     } range:NSMakeRange(0, text.length)];
-  
   self.text = attributedString;
   [self addLinkToURL:[NSURL URLWithString:@""] withRange:[text rangeOfString:actionText]];
   

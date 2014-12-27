@@ -10,18 +10,27 @@
 #import "OMNOrderDataSource.h"
 #import "OMNOrder.h"
 #import <BlocksKit+UIKit.h>
+#import "OMNVisitor.h"
 
 @interface OMNProductSelectionVC ()
+<UIAlertViewDelegate>
 
 @property (nonatomic, strong) OMNOrderDataSource *dataSource;
 
 @end
 
 @implementation OMNProductSelectionVC {
+  
   OMNOrder *_order;
+  UIAlertView *_updateAlertView;
   
 }
 
+- (void)dealloc {
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
+}
 
 - (instancetype)initWithOrder:(OMNOrder *)order {
   self = [super initWithStyle:UITableViewStylePlain];
@@ -34,25 +43,26 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.changedItems = [NSMutableSet set];
-  
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
   [_dataSource registerCellsForTableView:self.tableView];
+  
+  _changedOrderItemsIDs = [NSMutableSet set];
   
   __weak typeof(self)weakSelf = self;
   [_dataSource setDidSelectBlock:^(UITableView *tv, NSIndexPath *indexPath) {
     
     OMNOrderItem *orderItem = [weakSelf.dataSource orderItemAtIndexPath:indexPath];
-    if (orderItem) {
-    
-      if ([weakSelf.changedItems containsObject:orderItem]) {
+    NSString *orderItemID = orderItem.uid;
+    if (orderItemID) {
+
+      if ([weakSelf.changedOrderItemsIDs containsObject:orderItemID]) {
         
-        [weakSelf.changedItems removeObject:orderItem];
+        [weakSelf.changedOrderItemsIDs removeObject:orderItemID];
         
       }
       else {
 
-        [weakSelf.changedItems addObject:orderItem];
+        [weakSelf.changedOrderItemsIDs addObject:orderItemID];
         
       }
       
@@ -68,6 +78,19 @@
   self.tableView.allowsMultipleSelection = YES;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
+  
+}
+
+- (void)orderDidChange:(NSNotification *)n {
+  
+  if (_updateAlertView) {
+    return;
+  }
+  
+  _updateAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ORDER_DID_UPDATE_ALERT_TITLE", @"Этот счёт обновлён заведением") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"ORDER_UPDATE_ALERT_BUTTON_TITLE", @"Обновить") otherButtonTitles:nil];
+  [_updateAlertView show];
+  
 }
 
 - (void)checkConditionAndSelectProducts {
@@ -115,8 +138,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+
   [self updateTotalValue];
-  
   [self checkConditionAndSelectProducts];
   
 }
@@ -131,8 +154,14 @@
   
 }
 
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+  
+  [self.tableView reloadData];
+  [self updateTotalValue];
+  _updateAlertView = nil;
+  
 }
 
 @end

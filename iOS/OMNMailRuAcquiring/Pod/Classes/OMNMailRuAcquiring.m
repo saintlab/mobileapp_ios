@@ -323,7 +323,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     }
     else {
 
-      failureBlock(errorWithCode(kOMNMailRuErrorCodeUnknown), parameters, responseObject);
+      failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
       
     }
     
@@ -366,7 +366,6 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     failureBlock(error, parameters, nil);
     
   }];
-
   
 }
 
@@ -434,7 +433,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
 + (NSError *)omn_errorFromResponse:(id)response {
   
   if (![response isKindOfClass:[NSDictionary class]]) {
-    return [NSError errorWithDomain:OMNMailRuErrorDomain code:NSURLErrorUnknown userInfo:nil];
+    return [NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:nil];
   }
   
   NSError *error = nil;
