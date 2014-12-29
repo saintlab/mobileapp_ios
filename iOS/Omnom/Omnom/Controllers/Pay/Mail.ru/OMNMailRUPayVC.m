@@ -48,7 +48,6 @@
   OMNBankCardsModel *_bankCardsModel;
   UIView *_contentView;
   OMNLoadingCircleVC *_loadingCircleVC;
-  NSString *_mailRUPayVCLoadingIdentifier;
   BOOL _addBankCardRequested;
   
 }
@@ -56,12 +55,12 @@
 - (void)dealloc {
   
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  if (_mailRUPayVCLoadingIdentifier) {
+  @try {
     
-    [self bk_removeObserversWithIdentifier:_mailRUPayVCLoadingIdentifier];
-    _mailRUPayVCLoadingIdentifier = nil;
+    [_bankCardsModel removeObserver:self forKeyPath:NSStringFromSelector(@selector(loading))];
     
   }
+  @catch (NSException *exception) {}
   
 }
 
@@ -95,11 +94,7 @@
     
   }
 
-  _mailRUPayVCLoadingIdentifier = [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
-    
-    [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([UIBarButtonItem omn_loadingItem]) : ([weakSelf addCardButton]) animated:YES];
-    
-  }];
+  [_bankCardsModel addObserver:self forKeyPath:NSStringFromSelector(@selector(loading)) options:(NSKeyValueObservingOptionNew) context:NULL];
 
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
@@ -126,6 +121,18 @@
   [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
   _payButton.enabled = NO;
   
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+  
+  if ([object isEqual:_bankCardsModel] &&
+      [keyPath isEqualToString:NSStringFromSelector(@selector(loading))]) {
+    
+    [self.navigationItem setRightBarButtonItem:(_bankCardsModel.loading) ? ([UIBarButtonItem omn_loadingItem]) : ([self addCardButton]) animated:YES];
+    
+  } else {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+  }
 }
 
 - (UIBarButtonItem *)addCardButton {
@@ -155,7 +162,7 @@
 
 - (void)didLoadCards {
   
-  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
   
   if (_bankCardsModel.hasRegisterdCards) {
     

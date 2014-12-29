@@ -1,4 +1,5 @@
 {
   "baseUrlString" : "http://omnom.laaaab.com",
-  "authorizationUrlString" : "http://wicket.laaaab.com"
+  "authorizationUrlString" : "http://wicket.laaaab.com",
+  "notifierUrlString" : "https://notifier.saintlab.com"
 }

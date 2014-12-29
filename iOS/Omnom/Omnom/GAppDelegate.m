@@ -129,13 +129,11 @@
   
 }
 
-#ifdef __IPHONE_8_0
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
 
   [[OMNAuthorization authorisation] application:application didRegisterUserNotificationSettings:notificationSettings];
   
 }
-#endif
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   NSLog(@"url recieved: %@", url);

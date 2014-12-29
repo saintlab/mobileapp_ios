@@ -14,7 +14,7 @@
   
 }
 
-- (instancetype)initWithRootVC:(UIViewController *)vc {
+- (instancetype)initWithRootVC:(__weak UIViewController *)vc {
   self = [super init];
   if (self) {
     _rootVC = vc;
