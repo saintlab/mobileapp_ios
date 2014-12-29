@@ -15,9 +15,9 @@ typedef void(^OMNPaymentPresentBlock)(OMNPaymentFinishBlock paymentFinishBlock);
 
 @interface OMNBankCardMediator : NSObject
 
-@property (nonatomic, strong, readonly) UIViewController *rootVC;
+@property (nonatomic, weak, readonly) UIViewController *rootVC;
 
-- (instancetype)initWithRootVC:(UIViewController *)vc;
+- (instancetype)initWithRootVC:(__weak UIViewController *)vc;
 
 - (void)addCardForOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)requestPaymentWithCardBlock;
 - (void)confirmCard:(OMNBankCardInfo *)bankCardInfo;

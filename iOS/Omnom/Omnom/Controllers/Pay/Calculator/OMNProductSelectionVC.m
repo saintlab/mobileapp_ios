@@ -79,6 +79,20 @@
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:nil];
+
+}
+
+- (void)orderDidClose:(NSNotification *)n {
+  
+  OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
+  if ([_order.id isEqualToString:closedOrder.id]) {
+    
+    _updateAlertView.delegate = nil;
+    [_updateAlertView dismissWithClickedButtonIndex:_updateAlertView.cancelButtonIndex animated:NO];
+    _updateAlertView = nil;
+    
+  }
   
 }
 

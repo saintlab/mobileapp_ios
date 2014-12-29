@@ -71,7 +71,7 @@
     };
   
   [self POST:@"/push/register_device" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
+
     if (![responseObject omn_isSuccessResponse]) {
     
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_DEVICE" jsonRequest:parameters jsonResponse:responseObject];

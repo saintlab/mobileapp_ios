@@ -52,6 +52,8 @@ OMNPaymentFooterViewDelegate>
   OMNOrder *_order;
   OMNVisitor *_visitor;
   UIView *_tableFadeView;
+  __weak OMNMailRUPayVC *_mailRUPayVC;
+  
 }
 
 - (void)dealloc {
@@ -112,6 +114,13 @@ OMNPaymentFooterViewDelegate>
   _beginSplitAnimation = NO;
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+  
+  if (!_order) {
+    
+    [self showCloseOrderAlert];
+    
+  }
+  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -153,7 +162,9 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (void)selectedOrderTap {
+  
   [self.delegate payOrderVCRequestOrders:self];
+  
 }
 
 - (void)calculatorTap {
@@ -190,16 +201,25 @@ OMNPaymentFooterViewDelegate>
 - (void)orderDidClose:(NSNotification *)n {
   
   OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
-  if ([closedOrder.id isEqualToString:_order.id]) {
-    
-    __weak typeof(self)weakSelf = self;
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_CLOSE_ALERT_TITLE", @"Этот счёт закрыт заведением для просмотра и оплаты") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_CLOSE_ALERT_BUTTON_TITLE", @"Выйти") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-      
-      [weakSelf.delegate payOrderVCDidCancel:weakSelf];
-      
-    }];
+  BOOL orderIsClosed = ([closedOrder.id isEqualToString:_order.id]) || (!_order);
+
+  if (orderIsClosed &&
+      !_mailRUPayVC) {
+
+    [self showCloseOrderAlert];
     
   }
+  
+}
+
+- (void)showCloseOrderAlert {
+  
+  __weak typeof(self)weakSelf = self;
+  [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_CLOSE_ALERT_TITLE", @"Этот счёт закрыт заведением для просмотра и оплаты") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_CLOSE_ALERT_BUTTON_TITLE", @"Выйти") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    
+    [weakSelf.delegate payOrderVCDidCancel:weakSelf];
+    
+  }];
   
 }
 
@@ -336,6 +356,9 @@ OMNPaymentFooterViewDelegate>
   OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
   mailRUPayVC.demo = _visitor.restaurant.is_demo;
   mailRUPayVC.delegate = self;
+  
+  _mailRUPayVC = mailRUPayVC;
+  
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:mailRUPayVC];
   navigationController.delegate = self.navigationController.delegate;
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];

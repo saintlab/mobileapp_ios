@@ -31,7 +31,8 @@ NSString * const kCardIdServiceName = @"card_id";
 
 @dynamic card_id;
 
-- (instancetype)initWithRootVC:(UIViewController *)vc {
+- (instancetype)initWithRootVC:(__weak UIViewController *)vc {
+
   self = [super init];
   if (self) {
     
@@ -171,7 +172,9 @@ NSString * const kCardIdServiceName = @"card_id";
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
   return UITableViewCellEditingStyleDelete;
+  
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

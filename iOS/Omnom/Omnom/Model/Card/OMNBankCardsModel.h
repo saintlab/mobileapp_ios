@@ -28,7 +28,7 @@ UITableViewDelegate>
 @property (nonatomic, strong) OMNBankCardMediator *bankCardMediator;
 
 - (instancetype)init __attribute__((unavailable("init not available")));
-- (instancetype)initWithRootVC:(UIViewController *)vc;
+- (instancetype)initWithRootVC:(__weak UIViewController *)vc;
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;
 - (void)updateCardSelection;
 
