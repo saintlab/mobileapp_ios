@@ -45,8 +45,7 @@
 - (void)removeRestaurantWaiterCallObserver {
 
   @try {
-    [[OMNRestaurantManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(restaurant))];
-    [[OMNRestaurantManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled))];
+    [_restaurantMediator removeObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled))];
   }
   @catch (NSException *exception) {}
   
@@ -66,16 +65,6 @@
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-#warning logEnterRestaurant
-//    [[OMNRestaurantManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew context:NULL];
-    
-    
-//    [[OMNRestaurantManager sharedManager] bk_addObserverForKeyPath:NSStringFromSelector(@selector(restaurant)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
-//      
-//    }];
-    
-//    [[OMNAnalitics analitics] logEnterRestaurant:self.visitor mode:kRestaurantEnterModeApplicationLaunch];
-//    self.circleIcon = _restaurantMediator.restaurant.decoration.logo;
 
   }
   return self;
@@ -97,7 +86,7 @@
 //  [_restaurantMediator.restaurant tableInWithFailure:^(NSError *error) {
 //    
 //  }];
-//  self.circleBackground = _restaurantMediator.restaurant.decoration.circleBackground;
+  
   
   self.navigationItem.title = @"";
   
@@ -106,11 +95,18 @@
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
-  
+
+#warning logEnterRestaurant
+  //    [[OMNAnalitics analitics] logEnterRestaurant:self.visitor mode:kRestaurantEnterModeApplicationLaunch];
+
   
   [self omn_setup];
   [self loadBackgroundIfNeeded];
   [self loadIconIfNeeded];
+
+  [_restaurantMediator addObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew context:NULL];
+
+  self.circleBackground = _restaurantMediator.restaurant.decoration.circleBackground;
   
 }
 
@@ -202,10 +198,10 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
   
-  if ([object isEqual:[OMNRestaurantManager sharedManager]] &&
+  if ([object isEqual:_restaurantMediator] &&
       [keyPath isEqualToString:NSStringFromSelector(@selector(waiterIsCalled))]) {
-#warning [OMNRestaurantManager sharedManager].waiterIsCalled
-    if (YES) {
+
+    if (_restaurantMediator.waiterIsCalled) {
       
       [self callWaiterDidStart];
       
@@ -222,63 +218,62 @@
 }
 
 - (void)loadIconIfNeeded {
-#warning loadIconIfNeeded
-//  if (_restaurantMediator.restaurant.decoration.logo) {
-//    self.circleIcon = _restaurantMediator.restaurant.decoration.logo;
-//    return;
-//  }
-//  
-//  __weak typeof(self)weakSelf = self;
-//  [_restaurantMediator.restaurant.decoration loadLogo:^(UIImage *image) {
-//    
-//    if (image) {
-//      
-//      weakSelf.circleIcon = image;
-//      
-//    }
-//    else {
-//      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        
-//        [weakSelf loadIconIfNeeded];
-//        
-//      });
-//    }
-//    
-//  }];
+
+  UIImage *logo = _restaurantMediator.restaurant.decoration.logo;
+  if (logo) {
+    self.circleIcon = logo;
+    return;
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  [_restaurantMediator.restaurant.decoration loadLogo:^(UIImage *image) {
+    
+    if (image) {
+      
+      weakSelf.circleIcon = image;
+      
+    }
+    else {
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [weakSelf loadIconIfNeeded];
+        
+      });
+    }
+    
+  }];
   
 }
 
 - (void)loadBackgroundIfNeeded {
-#warning loadBackgroundIfNeeded
-//  UIImage *background_image = _restaurantMediator.restaurant.decoration.background_image;
-//  if (background_image) {
-//    
-//    self.backgroundImage = background_image;
-//    
-//  }
-//  else {
-//    
-//    [self setBackgroundImage:[UIImage imageNamed:@"wood_bg"] animated:NO];
-//    __weak typeof(self)weakSelf = self;
-//    [_restaurantMediator.restaurant.decoration loadBackground:^(UIImage *image) {
-//      
-//      if (image) {
-//        
-//        [weakSelf setBackgroundImage:image animated:YES];
-//        
-//      }
-//      else {
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//          
-//          [weakSelf loadBackgroundIfNeeded];
-//          
-//        });
-//      }
-//      
-//    }];
-//    
-//  }
-  
+
+  UIImage *background_image = _restaurantMediator.restaurant.decoration.background_image;
+  if (background_image) {
+    
+    self.backgroundImage = background_image;
+    return;
+    
+  }
+
+  [self setBackgroundImage:[UIImage imageNamed:@"wood_bg"] animated:NO];
+  __weak typeof(self)weakSelf = self;
+  [_restaurantMediator.restaurant.decoration loadBackground:^(UIImage *image) {
+    
+    if (image) {
+      
+      [weakSelf setBackgroundImage:image animated:YES];
+      
+    }
+    else {
+      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [weakSelf loadBackgroundIfNeeded];
+        
+      });
+    }
+    
+  }];
+
 }
 
 - (void)showUserProfile {
