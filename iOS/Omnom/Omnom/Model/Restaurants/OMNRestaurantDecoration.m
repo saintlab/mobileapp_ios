@@ -55,6 +55,12 @@
   
 }
 
+- (UIImage *)woodBackgroundImage {
+  
+   return [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:self.background_color];
+  
+}
+
 - (void)loadLogo:(OMNImageBlock)imageBlock {
   
   __weak typeof(self)weakSelf = self;

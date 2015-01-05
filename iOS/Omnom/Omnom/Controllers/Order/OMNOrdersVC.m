@@ -61,7 +61,7 @@ UICollectionViewDelegate>
   _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
   
   _collectionView.backgroundColor = [UIColor clearColor];
-//  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_restaurant.decoration.background_color];
+  self.backgroundImage = _restaurantMediator.restaurant.decoration.woodBackgroundImage;
   
   OMNToolbarButton *cancelButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Закрыть", nil)];
   [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
