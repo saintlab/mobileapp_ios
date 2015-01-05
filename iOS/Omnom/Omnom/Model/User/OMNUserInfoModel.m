@@ -28,13 +28,15 @@
 @implementation OMNUserInfoModel {
   
   NSArray *_sectionItems;
+  OMNRestaurantMediator *_restaurantMediator;
   
 }
 
-- (instancetype)init {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super init];
   if (self) {
     
+    _restaurantMediator = restaurantMediator;
     _sectionItems =
     @[
       self.moneyItems,
@@ -58,7 +60,7 @@
   section.items =
   @[
     [[OMNBankCardUserInfoItem alloc] init],
-    [[OMNTableUserInfoItem alloc] init],
+    [[OMNTableUserInfoItem alloc] initWithTable:_restaurantMediator.table],
     ];
   
   return section;
@@ -91,7 +93,9 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  
   return _sectionItems.count;
+  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

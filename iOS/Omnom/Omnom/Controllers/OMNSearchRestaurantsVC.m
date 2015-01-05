@@ -69,7 +69,7 @@ OMNBeaconsSearchManagerDelegate>
 
 - (void)showUserProfile {
   
-  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] init];
+  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:nil];
   userInfoVC.delegate = self;
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
   navigationController.delegate = self.navigationController.delegate;

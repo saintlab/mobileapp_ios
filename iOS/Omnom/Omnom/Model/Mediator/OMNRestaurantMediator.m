@@ -117,19 +117,17 @@ OMNPayOrderVCDelegate>
 
 - (void)showUserProfile {
 
-#warning showUserProfile
-//  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] init];
-//  userInfoVC.delegate = self;
-//  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
-//  navigationController.delegate = self.restaurantActionsVC.navigationController.delegate;
-//  [self.restaurantActionsVC.navigationController presentViewController:navigationController animated:YES completion:nil];
+  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:self];
+  userInfoVC.delegate = self;
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
+  navigationController.delegate = _restaurantActionsVC.navigationController.delegate;
+  [_restaurantActionsVC.navigationController presentViewController:navigationController animated:YES completion:nil];
   
 }
 
 - (void)exitRestaurant {
   
-#warning 123
-//  [self.restaurantActionsVC.delegate restaurantActionsVCDidFinish:self.restaurantActionsVC];
+  [_restaurantActionsVC.delegate restaurantActionsVCDidFinish:_restaurantActionsVC];
   
 }
 
@@ -261,22 +259,21 @@ OMNPayOrderVCDelegate>
 
 - (void)processNoOrders {
   
-#warning processNoOrders
-//  OMNCircleRootVC *noOrdersVC = [[OMNCircleRootVC alloc] initWithParent:self.restaurantActionsVC.r1VC];
-//  noOrdersVC.faded = YES;
-//  noOrdersVC.text = NSLocalizedString(@"На этом столике нет заказов", nil);
-//  noOrdersVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
-//  
-//  __weak typeof(self)weakSelf = self;
-//  noOrdersVC.buttonInfo =
-//  @[
-//    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
-//      
-//      [weakSelf popToRootViewControllerAnimated:YES];
-//      
-//    }]
-//    ];
-//  [self pushViewController:noOrdersVC];
+  OMNCircleRootVC *noOrdersVC = [[OMNCircleRootVC alloc] initWithParent:_restaurantActionsVC.r1VC];
+  noOrdersVC.faded = YES;
+  noOrdersVC.text = NSLocalizedString(@"На этом столике нет заказов", nil);
+  noOrdersVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
+  
+  __weak typeof(self)weakSelf = self;
+  noOrdersVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
+      
+      [weakSelf popToRootViewControllerAnimated:YES];
+      
+    }]
+    ];
+  [self pushViewController:noOrdersVC];
   
 }
 
@@ -347,17 +344,16 @@ OMNPayOrderVCDelegate>
 
 - (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
 
-#warning 123
-//  if (self.visitor.restaurant.is_demo) {
-//    
-//    [self.restaurantActionsVC.delegate restaurantActionsVCDidFinish:self.restaurantActionsVC];
-//    
-//  }
-//  else {
-//    
-//    [self popToRootViewControllerAnimated:YES];
-//    
-//  }
+  if (_restaurant.is_demo) {
+    
+    [self exitRestaurant];
+    
+  }
+  else {
+    
+    [self popToRootViewControllerAnimated:YES];
+    
+  }
   
 }
 

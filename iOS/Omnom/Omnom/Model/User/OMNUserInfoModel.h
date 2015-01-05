@@ -8,6 +8,7 @@
 
 #import "OMNUser.h"
 #import "OMNUserInfoItem.h"
+#import "OMNRestaurantMediator.h"
 
 typedef UIViewController *(^OMNUserInfoDidSelectBlock)(UITableView *tableView, NSIndexPath *indexPath);
 
@@ -17,7 +18,7 @@ UITableViewDelegate>
 
 @property (nonatomic, copy) OMNUserInfoDidSelectBlock didSelectBlock;
 
-- (instancetype)init;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 - (void)reloadUserInfo;
 
 @end

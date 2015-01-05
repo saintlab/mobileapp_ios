@@ -11,6 +11,6 @@
 
 @interface OMNTableUserInfoItem : OMNUserInfoItem
 
-- (instancetype)init;
+- (instancetype)initWithTable:(OMNTable *)table;
 
 @end

@@ -12,7 +12,6 @@
 #import "OMNUserInfoModel.h"
 #import "OMNEditTableVC.h"
 #import <OMNStyler.h>
-#import "OMNRestaurant.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNEditUserVC.h"
 #import "OMNUserIconView.h"
@@ -35,6 +34,7 @@ OMNEditUserVCDelegate>
 
   NSString *_userObserverIdentifier;
   NSString *_userImageObserverIdentifier;
+  OMNRestaurantMediator *_restaurantMediator;
   
 }
 
@@ -55,9 +55,11 @@ OMNEditUserVCDelegate>
   
 }
 
-- (instancetype)init {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super initWithNibName:@"OMNUserInfoVC" bundle:nil];
   if (self) {
+    
+    _restaurantMediator = restaurantMediator;
     
   }
   return self;
@@ -99,7 +101,7 @@ OMNEditUserVCDelegate>
   
   self.navigationItem.title = @"";
   
-  _userInfoModel = [[OMNUserInfoModel alloc] init];
+  _userInfoModel = [[OMNUserInfoModel alloc] initWithMediator:_restaurantMediator];
   self.tableView.dataSource = _userInfoModel;
   self.tableView.delegate = _userInfoModel;
   self.tableView.tableFooterView = [[UIView alloc] init];
