@@ -19,12 +19,6 @@
 
 @end
 
-@interface NSObject (omn_restaurants)
-
-- (void)omn_decodeWithRestaurantsBlock:(OMNRestaurantsBlock)restaurantsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
-
-@end
-
 @interface OMNRestaurant ()
 
 //@property (nonatomic)
@@ -46,13 +40,16 @@
     self.is_demo = [jsonData[@"is_demo"] boolValue];
     self.title = jsonData[@"title"];
     self.Description = jsonData[@"description"];
-    self.decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
-    self.mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
-    
+
+    _decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
+    _mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
     _settings = [[OMNRestaurantSettings alloc] initWithJsonData:jsonData[@"settings"]];
     _phone = jsonData[@"phone"];
     _address = [[OMNRestaurantAddress alloc] initWithJsonData:jsonData[@"address"]];
     _schedules = [[OMNRestaurantSchedules alloc] initWithJsonData:jsonData[@"schedules"]];
+    
+    _tables = [jsonData[@"tables"] omn_tables];
+    _orders = [jsonData[@"orders"] omn_orders];;
     
   }
   return self;
@@ -208,7 +205,25 @@
   
 }
 
-@end
+- (NSArray *)omn_restaurants {
+  
+  if (![self isKindOfClass:[NSArray class]]) {
+    return @[];
+  }
+  
+  NSArray *restaurantsData = (NSArray *)self;
+  NSMutableArray *restaurants = [NSMutableArray arrayWithCapacity:restaurantsData.count];
+  [restaurantsData enumerateObjectsUsingBlock:^(id restaurantData, NSUInteger idx, BOOL *stop) {
+    
+    OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:restaurantData];
+    [restaurants addObject:restaurant];
+    
+  }];
+  
+  return [restaurants copy];
+  
+}
 
+@end
 
 

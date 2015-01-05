@@ -8,14 +8,14 @@
 
 #import "OMNRestaurantToSearchBeaconTransition.h"
 #import "OMNR1VC.h"
-#import "OMNSearchVisitorVC.h"
+#import "OMNSearchRestaurantsVC.h"
 
 @implementation OMNRestaurantToSearchBeaconTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNR1VC *fromViewController = (OMNR1VC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-  OMNSearchVisitorVC *toViewController = (OMNSearchVisitorVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+  OMNSearchRestaurantsVC *toViewController = (OMNSearchRestaurantsVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
@@ -54,7 +54,7 @@
 + (NSArray *)keys {
   return
   @[
-    [self keyFromClass:[OMNR1VC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNR1VC class] toClass:[OMNSearchRestaurantsVC class]],
     ];
 }
 

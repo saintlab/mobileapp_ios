@@ -8,11 +8,13 @@
 
 #import "OMNUser.h"
 #import "OMNError.h"
+#import "OMNRestaurant.h"
 
 @interface OMNAuthorization : NSObject
 
 @property (nonatomic, copy) NSString *token;
 @property (nonatomic, strong, readonly) OMNUser *user;
+
 @property (nonatomic, copy, readonly) NSString *installId;
 
 @property (nonatomic, copy) dispatch_block_t logoutCallback;

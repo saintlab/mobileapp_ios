@@ -18,6 +18,8 @@
 #import "UIImage+omn_helper.h"
 #import "OMNBackgroundVC.h"
 
+#import <BlocksKit.h>
+
 @implementation GAppDelegate {
   
   BOOL _applicationStartedForeground;
@@ -25,6 +27,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
   
 #if OMN_TEST
   return YES;

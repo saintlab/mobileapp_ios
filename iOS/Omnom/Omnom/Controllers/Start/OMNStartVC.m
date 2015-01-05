@@ -70,7 +70,7 @@ OMNSearchRestaurantVCDelegate>
   }
   
   _initialCheckPerformed = YES;
-  [self startSearchingRestaurant];
+  [self checkUserToken];
 
 }
 
@@ -79,24 +79,16 @@ OMNSearchRestaurantVCDelegate>
   __weak typeof(self)weakSelf = self;
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
 
-    [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
+    if ([OMNAuthorization authorisation].token) {
       
-      if (user) {
-        
-        [weakSelf startSearchingRestaurant];
-        
-      }
-      else {
-        
-        [weakSelf requestAuthorization];
-        
-      }
+      [weakSelf startSearchingRestaurant];
       
-    } failure:^(OMNError *error) {
+    }
+    else {
       
-      [weakSelf handleUserTokenError:error];
+      [weakSelf requestAuthorization];
       
-    }];
+    }
     
   }];
   

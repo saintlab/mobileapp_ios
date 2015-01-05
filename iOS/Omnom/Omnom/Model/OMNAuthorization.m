@@ -57,6 +57,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 #else
     _token = [SSKeychain passwordForService:[self tokenServiceName] account:kAuthorisationAccountName];
 #endif
+
     [self updateAuthenticationToken];
     
     _user = [[OMNUser alloc] init];

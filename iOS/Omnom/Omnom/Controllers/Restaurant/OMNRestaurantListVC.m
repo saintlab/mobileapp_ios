@@ -7,7 +7,6 @@
 //
 
 #import "OMNRestaurantListVC.h"
-#import "OMNRestaurant.h"
 #import "OMNMenu.h"
 #import "OMNToolbarButton.h"
 #import "UIBarButtonItem+omn_custom.h"
@@ -16,8 +15,6 @@
 #import "OMNRestaurantCardVC.h"
 
 @interface OMNRestaurantListVC ()
-
-@property (nonatomic, strong) NSArray *restaurants;
 
 @end
 
@@ -50,7 +47,11 @@
   
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
-  [self refreshOrders];
+  if (0 == self.restaurants.count) {
+    
+    [self refreshOrders];
+    
+  }
   
 }
 

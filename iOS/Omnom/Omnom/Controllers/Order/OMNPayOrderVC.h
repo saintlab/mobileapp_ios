@@ -8,9 +8,8 @@
 
 #import "OMNBackgroundVC.h"
 #import "OMNOrderTableView.h"
+#import "OMNRestaurantMediator.h"
 
-@class OMNOrder;
-@class OMNVisitor;
 @protocol OMNPayOrderVCDelegate;
 
 @interface OMNPayOrderVC : OMNBackgroundVC
@@ -18,7 +17,7 @@
 @property (nonatomic, strong) OMNOrderTableView *tableView;
 @property (nonatomic, weak) id<OMNPayOrderVCDelegate> delegate;
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end
 

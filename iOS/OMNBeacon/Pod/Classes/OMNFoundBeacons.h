@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OMNBeacon.h"
 
 @interface OMNFoundBeacons : NSObject
 
-@property (nonatomic, strong, readonly) NSMutableArray *atTheTableBeacons;
 @property (nonatomic, strong, readonly) NSArray *allBeacons;
+@property (nonatomic, assign, readonly) BOOL readyForProcessing;
 
 - (BOOL)updateWithBeacons:(NSArray *)foundBeacons;
 

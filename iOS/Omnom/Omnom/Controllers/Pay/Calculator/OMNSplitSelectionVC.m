@@ -22,18 +22,22 @@ UIPickerViewDelegate>
   __weak IBOutlet UIPickerView *_numberOfGuestsPicker;
   
   NSInteger _numberOfGuests;
-  
+  OMNRestaurantMediator *_restaurantMediator;
   long long _total;
+  
 }
 
 - (void)dealloc {
   
 }
 
-- (instancetype)initWIthTotal:(long long)total {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super init];
   if (self) {
-    _total = total;
+    
+    _restaurantMediator = restaurantMediator;
+#warning total
+//    _total = total;
   }
   return self;
 }

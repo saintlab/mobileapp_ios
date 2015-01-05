@@ -84,23 +84,6 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
   
 }
 
-- (void)subscribeForTableEvents {
-  
-  [[OMNSocketManager manager] join:self.table.id];
-  
-}
-
-- (void)setTable:(OMNTable *)table {
-  
-  if (NO == [_table.id isEqualToString:table.id]) {
-    [[OMNSocketManager manager] leave:_table.id];
-    [[OMNSocketManager manager] join:table.id];
-  }
-  
-  _table = table;
-  
-}
-
 - (BOOL)expired {
   
   if (self.foundDate) {

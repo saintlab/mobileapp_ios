@@ -26,7 +26,7 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 @property (nonatomic, assign) NSInteger rssi;
 
 @property (nonatomic, assign) BeaconDistance beaconDistance;
-@property (nonatomic, assign, readonly) BOOL atTheTable;
+@property (nonatomic, assign, readonly) BOOL nearTheTable;
 @property (nonatomic, assign, readonly) NSInteger totalRSSI;
 
 + (void)setBaeconUUID:(OMNBeaconUUID *)beaconUUID;
@@ -34,12 +34,7 @@ extern NSTimeInterval const kTimeToDeleteMarkSec;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
-- (NSTimeInterval)atTheTableTime;
-
 - (void)updateWithBeacon:(CLBeacon *)beacon;
-
-- (double)averageRSSI;
-
 
 - (NSString *)key;
 

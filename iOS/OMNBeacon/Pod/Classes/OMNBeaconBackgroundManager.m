@@ -60,6 +60,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     _deprecatedBeaconRegions = [[OMNBeacon beaconUUID] deprecatedBeaconsRegionsWithIdentifier:device_id];
     
     [self startBeaconRegionMonitoring];
+    
   }
   return self;
 }
@@ -72,7 +73,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     _locationManager.pausesLocationUpdatesAutomatically = NO;
     _locationManager.delegate = self;
   }
-  
+#warning handle change state
   return _locationManager;
   
 }

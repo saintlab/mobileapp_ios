@@ -10,28 +10,15 @@
 
 @implementation OMNBeacon (omn_debug)
 
-+ (NSDictionary *)omn_debugDataFromNearestBeacons:(NSArray *)nearsetBeacons allBeacons:(NSArray *)allBeacons {
-  
-  NSDictionary *nearstBeaconsRSSIData = [self debugDataFromBeacons:nearsetBeacons];
-  NSDictionary *allBeaconsBeaconsRSSIData = [self debugDataFromBeacons:allBeacons];
-  return @{@"nearstBeacons" : nearstBeaconsRSSIData,
-           @"allBeacons" : allBeaconsBeaconsRSSIData};
-  
-}
-
 + (NSDictionary *)debugDataFromBeacons:(NSArray *)beacons {
   
-  NSMutableDictionary *beaconsRSSIData = [NSMutableDictionary dictionaryWithCapacity:beacons.count];
+  NSMutableDictionary *beaconsDebugData = [NSMutableDictionary dictionaryWithCapacity:beacons.count];
   [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
     
-    if ([beacon isKindOfClass:[OMNBeacon class]]) {
-    
-      beaconsRSSIData[beacon.key] = @(beacon.averageRSSI);
-      
-    }
+    beaconsDebugData[beacon.key] = beacon.JSONObject;
     
   }];
-  return beaconsRSSIData;
+  return beaconsDebugData;
   
 }
 

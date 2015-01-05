@@ -34,17 +34,19 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 @implementation OMNCalculatorVC {
   
-  OMNOrder *_order;
+  OMNRestaurantMediator *_restaurantMediator;
   UIView *_fadeView;
   UIButton *_totalButton;
   long long _total;
   
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super init];
   if (self) {
-    _order = order;
+    
+    _restaurantMediator = restaurantMediator;
+    
   }
   return self;
 }
@@ -103,26 +105,29 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [_containerView addSubview:self.firstViewController.view];
   [self.firstViewController didMoveToParentViewController:self];
   [self.view bringSubviewToFront:_fadeView];
-  [self totalDidChange:_order.selectedItemsTotal showPaymentButton:_order.hasSelectedItems];
+  
+#warning totalDidChange
+//  [self totalDidChange:_order.selectedItemsTotal showPaymentButton:_order.hasSelectedItems];
   
 }
 
 - (void)closeTap {
   
-  NSSet *changedOrderItemsIDs = [self.firstViewController.changedOrderItemsIDs copy];
-  [_order.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
-    
-    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
-      
-      if ([changedOrderItemsIDs containsObject:orderItem.uid]) {
-        
-        orderItem.selected = !orderItem.selected;
-        
-      }
-      
-    }];
-    
-  }];
+#warning closeTap
+//  NSSet *changedOrderItemsIDs = [self.firstViewController.changedOrderItemsIDs copy];
+//  [_order.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
+//    
+//    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+//      
+//      if ([changedOrderItemsIDs containsObject:orderItem.uid]) {
+//        
+//        orderItem.selected = !orderItem.selected;
+//        
+//      }
+//      
+//    }];
+//    
+//  }];
   
   [self.delegate calculatorVCDidCancel:self];
   
@@ -191,7 +196,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
   if (nil == _firstViewController) {
     
-    _firstViewController = [[OMNProductSelectionVC alloc] initWithOrder:_order];
+    _firstViewController = [[OMNProductSelectionVC alloc] initWithMediator:_restaurantMediator];
     UIEdgeInsets insets = UIEdgeInsetsMake(0, 0, 60.0f, 0);
     _firstViewController.tableView.contentInset = insets;
     _firstViewController.tableView.scrollIndicatorInsets = insets;
@@ -205,9 +210,9 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
   if (nil == _secondViewController) {
     
-    long long total = [_order totalAmount];
-    _secondViewController = [[OMNSplitSelectionVC alloc] initWIthTotal:total];
+    _secondViewController = [[OMNSplitSelectionVC alloc] initWithMediator:_restaurantMediator];
     _secondViewController.delegate = self;
+    
   }
   return _secondViewController;
   

@@ -10,6 +10,6 @@
 
 @interface OMNBeacon (omn_debug)
 
-+ (NSDictionary *)omn_debugDataFromNearestBeacons:(NSArray *)nearsetBeacons allBeacons:(NSArray *)allBeacons;
++ (NSDictionary *)debugDataFromBeacons:(NSArray *)beacons;
 
 @end

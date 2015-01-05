@@ -17,7 +17,7 @@
   
 }
 
-@dynamic atTheTableBeacons;
+@dynamic readyForProcessing;
 
 - (instancetype)init {
   self = [super init];
@@ -65,34 +65,21 @@
   
 }
 
-- (NSArray *)atTheTableBeacons {
+- (BOOL)readyForProcessing {
   
   NSDictionary *existingBeaconsDictionary = [_existingBeaconsDictionary copy];
-  NSMutableArray *atTheTableBeacons = [NSMutableArray array];
-  __block NSInteger maxRSSI = NSIntegerMin;
-  
+  __block BOOL hasNearTheTableBeacons = NO;
   [existingBeaconsDictionary enumerateKeysAndObjectsUsingBlock:^(id key, OMNBeacon *beacon, BOOL *stop) {
     
-    if (beacon.atTheTable) {
-      maxRSSI = MAX(maxRSSI, beacon.totalRSSI);
-      [atTheTableBeacons addObject:beacon];
-    }
-    
-  }];
-
-  const NSInteger kboardingRSSI = 50;
-  NSMutableArray *conditionalBeacons = [NSMutableArray array];
-  [atTheTableBeacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
-    
-    if (beacon.totalRSSI > (maxRSSI - kboardingRSSI)) {
-      [conditionalBeacons addObject:beacon];
+    if (beacon.nearTheTable) {
+      hasNearTheTableBeacons = YES;
+      *stop = YES;
     }
     
   }];
   
+  return hasNearTheTableBeacons;
   
-  return [conditionalBeacons copy];
-
 }
 
 @end

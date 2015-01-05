@@ -10,6 +10,7 @@
 #import "OMNConstants.h"
 #import "OMNAnalitics.h"
 #import "OMNUtils.h"
+#import "AFHTTPResponseSerializer+omn_headers.h"
 
 @interface NSData (omn_deviceToken)
 
@@ -34,8 +35,7 @@
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     
     self.requestSerializer = [AFJSONRequestSerializer serializer];
-    [self.requestSerializer setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];
-    [self.requestSerializer setValue:CURRENT_VERSION forHTTPHeaderField:@"current-app-version"];
+    [self.requestSerializer omn_addCustomHeaders];
     self.requestSerializer.timeoutInterval = 10.0;
     
   }

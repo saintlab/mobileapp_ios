@@ -7,13 +7,11 @@
 //
 
 @protocol OMNUserInfoVCDelegate;
-@class OMNVisitor;
+@class OMNRestaurant;
 
 @interface OMNUserInfoVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNUserInfoVCDelegate> delegate;
-
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
 @end
 

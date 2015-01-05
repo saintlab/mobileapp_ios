@@ -9,6 +9,7 @@
 #import "OMNOperationManager.h"
 #import "OMNConstants.h"
 #import <UIDevice-Reachability.h>
+#import "AFHTTPResponseSerializer+omn_headers.h"
 
 @implementation OMNOperationManager {
 }
@@ -27,12 +28,8 @@
   if (self) {
     
     self.responseSerializer = [AFJSONResponseSerializer serializer];
-    
     self.requestSerializer = [AFJSONRequestSerializer serializer];
-    [self.requestSerializer setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];
-    [self.requestSerializer setValue:CURRENT_VERSION forHTTPHeaderField:@"current-app-version"];
-    [self.requestSerializer setValue:CURRENT_BUILD forHTTPHeaderField:@"x-current-app-build"];
-    [self.requestSerializer setValue:CURRENT_VERSION forHTTPHeaderField:@"x-current-app-version"];
+    [self.requestSerializer omn_addCustomHeaders];
     self.requestSerializer.timeoutInterval = 10.0;
 
   }

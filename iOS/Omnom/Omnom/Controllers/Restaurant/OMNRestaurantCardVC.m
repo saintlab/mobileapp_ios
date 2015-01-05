@@ -14,6 +14,7 @@
 #import "OMNBottomTextButton.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
+#import "OMNRestaurantActionsVC.h"
 
 @implementation OMNRestaurantCardVC {
   
@@ -60,7 +61,7 @@
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:demoButton];
 
   [_restaurant.decoration addObserver:self forKeyPath:NSStringFromSelector(@selector(background_image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
-  [_restaurant.decoration loadBackgroundBlurred:NO completion:^(UIImage *image) {
+  [_restaurant.decoration loadBackground:^(UIImage *image) {
   }];
   _restaurantDetailsView.restaurant = _restaurant;
 
@@ -71,6 +72,7 @@
   _reserveButton.enabled = _restaurant.settings.has_table_order;
   
   [_insideButton setTitle:@"Я внутри" image:[UIImage imageNamed:@"ic_im_inside"] color:colorWithHexString(@"157EFB")];
+  [_insideButton addTarget:self action:@selector(insideRestaurantTap) forControlEvents:UIControlEventTouchUpInside];
   _insideButton.enabled = YES;
 
   [_preorderButton setTitle:@"Сделать\nпредзаказ" image:[UIImage imageNamed:@"ic_make_order"] color:colorWithHexString(@"157EFB")];
@@ -92,6 +94,13 @@
   NSString *cleanedString = [[_restaurant.phone componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789-+()"] invertedSet]] componentsJoinedByString:@""];
   NSString *phoneNumber = [@"telprompt://" stringByAppendingString:cleanedString];
   [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+  
+}
+
+- (void)insideRestaurantTap {
+  
+  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:_restaurant];
+  [self.navigationController pushViewController:restaurantActionsVC animated:YES];
   
 }
 

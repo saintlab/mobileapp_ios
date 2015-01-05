@@ -26,15 +26,15 @@
 @end
 
 @implementation OMNUserInfoModel {
+  
   NSArray *_sectionItems;
-  OMNVisitor *_visitor;
+  
 }
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
+- (instancetype)init {
   self = [super init];
   if (self) {
     
-    _visitor = visitor;
     _sectionItems =
     @[
       self.moneyItems,
@@ -58,7 +58,7 @@
   section.items =
   @[
     [[OMNBankCardUserInfoItem alloc] init],
-    [[OMNTableUserInfoItem alloc] initWithTable:_visitor.table],
+    [[OMNTableUserInfoItem alloc] init],
     ];
   
   return section;

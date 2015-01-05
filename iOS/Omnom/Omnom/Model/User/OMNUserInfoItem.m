@@ -19,20 +19,20 @@
 }
 
 - (instancetype)init {
-  self = [super init];
+  self = [self initWithTitle:nil actionBlock:nil];
   if (self) {
-    self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    self.titleColor = [UIColor blackColor];
   }
   return self;
 }
 
 - (instancetype)initWithTitle:(NSString *)title actionBlock:(OMNUserInfoItemBlock)actionBlock {
-  self = [self init];
+  self = [super init];
   if (self) {
     
     self.title = title;
     self.actionBlock = actionBlock;
+    self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    self.titleColor = [UIColor blackColor];
     
   }
   return self;

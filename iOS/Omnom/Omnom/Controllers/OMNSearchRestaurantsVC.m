@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchVisitorVC.h"
+#import "OMNSearchRestaurantsVC.h"
 #import "OMNOperationManager.h"
-#import "OMNBeaconSearchManager.h"
 #import "OMNAskCLPermissionsVC.h"
 #import "OMNTablePositionVC.h"
 #import "OMNCLPermissionsHelpVC.h"
@@ -24,20 +23,22 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNBeacon+omn_debug.h"
 #import "OMNAuthorization.h"
+#import "OMNRestaurantManager.h"
+#import <OMNBeaconsSearchManager.h>
 
-@interface OMNSearchVisitorVC ()
-<OMNBeaconSearchManagerDelegate,
-OMNTablePositionVCDelegate,
+@interface OMNSearchRestaurantsVC ()
+<OMNTablePositionVCDelegate,
 OMNScanQRCodeVCDelegate,
 OMNDemoRestaurantVCDelegate,
-OMNUserInfoVCDelegate>
+OMNUserInfoVCDelegate,
+OMNBeaconsSearchManagerDelegate>
 
 @end
 
-@implementation OMNSearchVisitorVC {
+@implementation OMNSearchRestaurantsVC {
   
-  OMNBeaconSearchManager *_beaconSearchManager;
-  OMNSearchBeaconVCBlock _didFindBlock;
+  OMNBeaconsSearchManager *_beaconsSearchManager;
+  OMNSearchRestaurantsBlock _didFindRstaurantsBlock;
   dispatch_block_t _cancelBlock;
   UIButton *_cancelButton;
   
@@ -45,15 +46,15 @@ OMNUserInfoVCDelegate>
 
 - (void)dealloc {
   
-  [self stopBeaconManager:NO];
+  [self stopBeaconManager];
   
 }
 
-- (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchBeaconVCBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
+- (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchRestaurantsBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
   self = [super initWithParent:parent];
   if (self) {
     
-    _didFindBlock = [completionBlock copy];
+    _didFindRstaurantsBlock = [completionBlock copy];
     _cancelBlock = [cancelBlock copy];
     
   }
@@ -68,7 +69,7 @@ OMNUserInfoVCDelegate>
 
 - (void)showUserProfile {
   
-  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithVisitor:self.visitor];
+  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] init];
   userInfoVC.delegate = self;
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
   navigationController.delegate = self.navigationController.delegate;
@@ -140,10 +141,10 @@ OMNUserInfoVCDelegate>
     });
     
   }
-  else if (nil == _beaconSearchManager) {
+  else if (nil == _beaconsSearchManager) {
     
-    _beaconSearchManager = [[OMNBeaconSearchManager alloc] init];
-    _beaconSearchManager.delegate = self;
+    _beaconsSearchManager = [[OMNBeaconsSearchManager alloc] init];
+    _beaconsSearchManager.delegate = self;
     dispatch_async(dispatch_get_main_queue(), ^{
       
       [weakSelf startSearchingBeacons];
@@ -154,27 +155,34 @@ OMNUserInfoVCDelegate>
   
 }
 
-- (void)decodeBeacon:(OMNBeacon *)beacon {
+- (void)decodeBeacons:(NSArray *)beacons {
   
   __weak typeof(self)weakSelf = self;
-  [[OMNVisitorManager manager] decodeBeacon:beacon success:^(OMNVisitor *visitor) {
+  [OMNRestaurantManager decodeBeacons:beacons withCompletion:^(NSArray *restaurants) {
     
-    [weakSelf didFindVisitor:visitor];
+    [weakSelf didDecodeRestaurants:restaurants];
     
-  } failure:^(OMNError *error) {
-
+  } failureBlock:^(OMNError *error) {
+    
     [weakSelf didFailOmnom:error];
     
   }];
   
 }
 
+- (void)didDecodeRestaurants:(NSArray *)restaurants {
+  
+  [self stopBeaconManager];
+  _didFindRstaurantsBlock(self, restaurants);
+  
+}
+
 - (void)didFindVisitor:(OMNVisitor *)visitor {
 
-  [self stopBeaconManager:YES];
+#warning 123
   if (visitor) {
     
-    _didFindBlock(self, visitor);
+    _didFindRstaurantsBlock(self, nil);
     
   }
   else {
@@ -187,7 +195,7 @@ OMNUserInfoVCDelegate>
 
 - (void)cancelTap {
   
-  [self stopBeaconManager:YES];
+  [self stopBeaconManager];
   if (_cancelBlock) {
     _cancelBlock();
   }
@@ -205,8 +213,8 @@ OMNUserInfoVCDelegate>
 - (void)startSearchingBeacons {
   
   [self.loaderView stop];
-  _beaconSearchManager.delegate = nil;
-  [_beaconSearchManager stop:NO];
+  _beaconsSearchManager.delegate = nil;
+  [_beaconsSearchManager stop];
   
   __weak typeof(self)weakSelf = self;
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
@@ -233,7 +241,7 @@ OMNUserInfoVCDelegate>
     }
     else {
       
-      
+#warning handle expired token
       
     }
     
@@ -248,8 +256,15 @@ OMNUserInfoVCDelegate>
 - (void)startBeaconSearchManager {
   
   [self.loaderView setProgress:0.1];
-  _beaconSearchManager.delegate = self;
-  [_beaconSearchManager startSearching];
+  _beaconsSearchManager.delegate = self;
+  [_beaconsSearchManager startSearching];
+  
+}
+
+- (void)stopBeaconManager {
+  
+  _beaconsSearchManager.delegate = nil;
+  [_beaconsSearchManager stop];
   
 }
 
@@ -271,13 +286,6 @@ OMNUserInfoVCDelegate>
     } break;
   }
 
-  
-}
-
-- (void)stopBeaconManager:(BOOL)didFind {
-  
-  [_beaconSearchManager stop:didFind];
-  _beaconSearchManager.delegate = nil;
   
 }
 
@@ -366,39 +374,24 @@ OMNUserInfoVCDelegate>
   
 }
 
-#pragma mark - OMNBeaconSearchManagerDelegate
+#pragma mark - OMNBeaconsSearchManagerDelegate
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didFindAtTheTableBeacons:(NSArray *)atTheTableBeacons allBeacons:(NSArray *)allBeacons {
+- (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didFindBeacons:(NSArray *)beacons {
   
-  NSDictionary *debugData = [OMNBeacon omn_debugDataFromNearestBeacons:atTheTableBeacons allBeacons:allBeacons];
-  
-  if (1 == atTheTableBeacons.count) {
-
-    [[OMNAnalitics analitics] logDebugEvent:@"DID_FIND_BEACONS" parametrs:debugData];
-    OMNBeacon *atTheTableBeacon = [atTheTableBeacons firstObject];
-    [self decodeBeacon:atTheTableBeacon];
-    
-  }
-  else {
-    
-    [[OMNAnalitics analitics] logTargetEvent:@"low_signal" parametrs:debugData];
-    [self determineFaceUpPosition];
-    
-  }
+  NSDictionary *debugData = [OMNBeacon debugDataFromBeacons:beacons];
+  [[OMNAnalitics analitics] logDebugEvent:@"DID_FIND_BEACONS" parametrs:debugData];
+  [beaconsSearchManager stop];
+  [self decodeBeacons:beacons];
   
 }
 
-- (void)beaconSearchManagerDidStop:(OMNBeaconSearchManager *)beaconSearchManager found:(BOOL)foundBeacon {
+- (void)beaconSearchManagerDidFail:(OMNBeaconsSearchManager *)beaconsSearchManager {
   
-  if (NO == foundBeacon) {
-    
-    [self.loaderView stop];
-    
-  }
+  [self.loaderView stop];
   
 }
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didChangeState:(OMNSearchManagerState)state {
+- (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didChangeState:(OMNSearchManagerState)state {
   
   switch (state) {
     case kSearchManagerStartSearchingBeacons: {
@@ -420,7 +413,7 @@ OMNUserInfoVCDelegate>
   
 }
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didDetermineBLEState:(OMNBLESearchManagerState)bleState {
+- (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didDetermineBLEState:(OMNBLESearchManagerState)bleState {
   
   switch (bleState) {
     case kBLESearchManagerBLEDidOn: {
@@ -444,7 +437,7 @@ OMNUserInfoVCDelegate>
   
 }
 
-- (void)beaconSearchManager:(OMNBeaconSearchManager *)beaconSearchManager didDetermineCLState:(OMNCLSearchManagerState)clState {
+- (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didDetermineCLState:(OMNCLSearchManagerState)clState {
   
   __weak typeof(self)weakSelf = self;
   switch (clState) {
@@ -507,6 +500,8 @@ OMNUserInfoVCDelegate>
 
 - (void)beaconsNotFound {
   
+  _didFindRstaurantsBlock(self, nil);
+  return;
   OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
   notFoundBeaconVC.faded = YES;
   notFoundBeaconVC.text = NSLocalizedString(@"Телефон в центре стола?\nЗаведение подключено\nк Omnom?", nil);

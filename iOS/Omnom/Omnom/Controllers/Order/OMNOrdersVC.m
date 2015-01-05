@@ -8,11 +8,11 @@
 
 #import "OMNOrdersVC.h"
 #import "OMNOrderViewCell.h"
-#import "OMNVisitor.h"
-#import "OMNVisitor+network.h"
 #import "OMNOrderItemsFlowLayout.h"
 #import "UIImage+omn_helper.h"
 #import "OMNToolbarButton.h"
+#import "OMNVisitor+network.h"
+#import "OMNRestaurantManager.h"
 
 @interface OMNOrdersVC ()
 <UICollectionViewDataSource,
@@ -25,6 +25,7 @@ UICollectionViewDelegate>
   BOOL _animationPerformed;
   UILabel *_label;
   UIPageControl *_pageControl;
+  OMNRestaurantMediator *_restaurantMediator;
   
 }
 
@@ -34,10 +35,12 @@ UICollectionViewDelegate>
   
 }
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super init];
   if (self) {
-    _visitor = visitor;
+    
+    _restaurantMediator = restaurantMediator;
+    
   }
   return self;
 }
@@ -58,15 +61,16 @@ UICollectionViewDelegate>
   _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
   
   _collectionView.backgroundColor = [UIColor clearColor];
-  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_visitor.restaurant.decoration.background_color];
+//  self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:_restaurant.decoration.background_color];
   
   OMNToolbarButton *cancelButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"Закрыть", nil)];
   [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
+#warning orderDidChange
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
   
 }
 
@@ -153,13 +157,13 @@ UICollectionViewDelegate>
 
 - (void)updateOrders {
   
-  _label.text = [NSString stringWithFormat:NSLocalizedString(@"На вашем столике\nраздельных счетов: %d", nil), _visitor.orders.count];
-  _pageControl.numberOfPages = _visitor.orders.count;
+  NSInteger ordersCount = _restaurantMediator.restaurant.orders.count;
+  _label.text = [NSString stringWithFormat:NSLocalizedString(@"На вашем столике\nраздельных счетов: %d", nil), ordersCount];
+  _pageControl.numberOfPages = ordersCount;
   __weak typeof(self)weakSelf = self;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     [weakSelf updateSelectedIndex];
   });
-  
   
 }
 
@@ -189,13 +193,15 @@ UICollectionViewDelegate>
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-  return _visitor.orders.count;
+  
+  return _restaurantMediator.restaurant.orders.count;
+  
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNOrderViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  OMNOrder *order = _visitor.orders[indexPath.item];
+  OMNOrder *order = _restaurantMediator.restaurant.orders[indexPath.item];
   
   if (1 == indexPath.item &&
       NO == _animationPerformed) {
@@ -219,8 +225,7 @@ UICollectionViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-  OMNOrder *order = _visitor.orders[indexPath.item];
-  _visitor.selectedOrder = order;
+  OMNOrder *order = _restaurantMediator.restaurant.orders[indexPath.item];
   [self.delegate ordersVC:self didSelectOrder:order];
   
 }
@@ -230,6 +235,5 @@ UICollectionViewDelegate>
   [self updateSelectedIndex];
   
 }
-
 
 @end

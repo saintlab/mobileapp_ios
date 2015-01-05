@@ -7,7 +7,6 @@
 //
 
 #import "OMNUser.h"
-#import "OMNVisitor.h"
 #import "OMNUserInfoItem.h"
 
 typedef UIViewController *(^OMNUserInfoDidSelectBlock)(UITableView *tableView, NSIndexPath *indexPath);
@@ -18,7 +17,7 @@ UITableViewDelegate>
 
 @property (nonatomic, copy) OMNUserInfoDidSelectBlock didSelectBlock;
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
+- (instancetype)init;
 - (void)reloadUserInfo;
 
 @end

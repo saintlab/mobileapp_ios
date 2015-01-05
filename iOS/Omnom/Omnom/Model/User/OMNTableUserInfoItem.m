@@ -11,27 +11,27 @@
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 #import "UIButton+omn_helper.h"
+#import "OMNRestaurantManager.h"
 
 @implementation OMNTableUserInfoItem {
-  OMNTable *_table;
 }
 
-- (instancetype)initWithTable:(OMNTable *)table {
+- (instancetype)init {
   
   self = [super initWithTitle:NSLocalizedString(@"USER_INFO_TABLE_TITLE", @"Столик") actionBlock:nil];
   if (self) {
-    
-    _table = table;
-    
   }
   return self;
+  
 }
 
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   UITableViewCell *cell = [super cellForTableView:tableView];
+#warning table
+//  OMNTable *table = [OMNRestaurantManager sharedManager].table;
   
-  if (_table) {
+  if (NO) {
     
     UIButton *pinButton = [[UIButton alloc] init];
     UIColor *color = colorWithHexString(@"157EFB");
@@ -39,7 +39,7 @@
     [pinButton setTitleColor:color forState:UIControlStateNormal];
     [pinButton setImage:[[UIImage imageNamed:@"table_marker_icon"] omn_tintWithColor:color] forState:UIControlStateNormal];
     [pinButton omn_centerButtonAndImageWithSpacing:2.0f];
-    [pinButton setTitle:_table.internal_id forState:UIControlStateNormal];
+//    [pinButton setTitle:table.internal_id forState:UIControlStateNormal];
     [pinButton sizeToFit];
     cell.accessoryView = pinButton;
     

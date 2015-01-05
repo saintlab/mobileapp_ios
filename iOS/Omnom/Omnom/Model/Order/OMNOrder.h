@@ -92,3 +92,9 @@ extern NSInteger const kCustomTipIndex;
 - (void)setCustomTipPercent:(double)percent;
 
 @end
+
+@interface NSObject (omn_orders)
+
+- (NSArray *)omn_orders;
+
+@end

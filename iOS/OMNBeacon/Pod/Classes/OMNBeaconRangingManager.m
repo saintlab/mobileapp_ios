@@ -144,6 +144,8 @@
   if (_didFailRangeBeaconsBlock) {
     _didFailRangeBeaconsBlock(error);
   }
+  [self stop];
+  
 }
 
 @end

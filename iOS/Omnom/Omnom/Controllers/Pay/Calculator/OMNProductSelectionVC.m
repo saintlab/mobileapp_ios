@@ -21,7 +21,7 @@
 
 @implementation OMNProductSelectionVC {
   
-  OMNOrder *_order;
+  OMNRestaurantMediator *_restaurantMediator;
   UIAlertView *_updateAlertView;
   
 }
@@ -32,10 +32,12 @@
   
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
-    _order = order;
+    
+    _restaurantMediator = restaurantMediator;
+    
   }
   return self;
 }
@@ -43,7 +45,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
+  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_restaurantMediator.selectedOrder];
   [_dataSource registerCellsForTableView:self.tableView];
   
   _changedOrderItemsIDs = [NSMutableSet set];
@@ -85,14 +87,15 @@
 
 - (void)orderDidClose:(NSNotification *)n {
   
-  OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
-  if ([_order.id isEqualToString:closedOrder.id]) {
-    
-    _updateAlertView.delegate = nil;
-    [_updateAlertView dismissWithClickedButtonIndex:_updateAlertView.cancelButtonIndex animated:NO];
-    _updateAlertView = nil;
-    
-  }
+#warning orderDidClose
+//  OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
+//  if ([_order.id isEqualToString:closedOrder.id]) {
+//    
+//    _updateAlertView.delegate = nil;
+//    [_updateAlertView dismissWithClickedButtonIndex:_updateAlertView.cancelButtonIndex animated:NO];
+//    _updateAlertView = nil;
+//    
+//  }
   
 }
 
@@ -118,24 +121,24 @@
   [[NSUserDefaults standardUserDefaults] synchronize];
   
   NSIndexPath *demoIndexPath = nil;
-  
-  OMNGuest *guest = [_order.guests firstObject];
-  if (guest.items.count) {
-    demoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-  }
-
-  __weak typeof(self)weakSelf = self;
-  UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"CALCULATOR_ALERT_TEXT", @"Отметьте ваши блюда в чеке и платите только за себя") message:nil cancelButtonTitle:NSLocalizedString(@"OK", @"OK") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-    
-    [weakSelf updateIndexPath:demoIndexPath];
-
-  }];
-  
-  [alert bk_setDidShowBlock:^(UIAlertView *a) {
-    
-    [weakSelf updateIndexPath:demoIndexPath];
-    
-  }];
+#warning checkConditionAndSelectProducts
+//  OMNGuest *guest = [_order.guests firstObject];
+//  if (guest.items.count) {
+//    demoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//  }
+//
+//  __weak typeof(self)weakSelf = self;
+//  UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"CALCULATOR_ALERT_TEXT", @"Отметьте ваши блюда в чеке и платите только за себя") message:nil cancelButtonTitle:NSLocalizedString(@"OK", @"OK") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+//    
+//    [weakSelf updateIndexPath:demoIndexPath];
+//
+//  }];
+//  
+//  [alert bk_setDidShowBlock:^(UIAlertView *a) {
+//    
+//    [weakSelf updateIndexPath:demoIndexPath];
+//    
+//  }];
   
 }
 
@@ -161,8 +164,8 @@
 - (void)updateTotalValue {
 
   if ([self.delegate respondsToSelector:@selector(totalDidChange:showPaymentButton:)]) {
-    
-    [self.delegate totalDidChange:_order.selectedItemsTotal showPaymentButton:_order.hasSelectedItems];
+#warning updateTotalValue
+//    [self.delegate totalDidChange:_order.selectedItemsTotal showPaymentButton:_order.hasSelectedItems];
     
   }
   

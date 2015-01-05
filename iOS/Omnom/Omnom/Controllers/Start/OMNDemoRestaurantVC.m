@@ -85,14 +85,14 @@
   __weak typeof(self)weakSelf = self;
   [self setLogo:decoration.logo withColor:decoration.background_color completion:^{
     
-    [decoration loadBackgroundBlurred:YES completion:^(UIImage *image) {
+    [decoration loadBackground:^(UIImage *image) {
       
       [weakSelf finishLoading:^{
         
         [weakSelf didLoadBackground];
         
       }];
-      
+
     }];
     
   }];
@@ -100,10 +100,11 @@
 }
 
 - (void)didLoadBackground {
-  
-  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithVisitor:_visitor];
-  restaurantActionsVC.delegate = self;
-  [self.navigationController pushViewController:restaurantActionsVC animated:YES];
+
+#warning 123
+//  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithVisitor:_visitor];
+//  restaurantActionsVC.delegate = self;
+//  [self.navigationController pushViewController:restaurantActionsVC animated:YES];
   
 }
 

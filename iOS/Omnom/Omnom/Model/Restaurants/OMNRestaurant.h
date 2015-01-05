@@ -15,6 +15,8 @@
 #import "OMNError.h"
 #import "OMNRestaurantAddress.h"
 #import "OMNRestaurantSchedules.h"
+#import "OMNTable.h"
+#import "OMNOrder.h"
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
@@ -26,9 +28,11 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, copy, readonly) NSString *phone;
-@property (nonatomic, strong) OMNRestaurantDecoration *decoration;
+@property (nonatomic, strong, readonly) NSArray *tables;
+@property (nonatomic, strong) NSArray *orders;
+@property (nonatomic, strong, readonly) OMNRestaurantDecoration *decoration;
 @property (nonatomic, strong, readonly) OMNRestaurantAddress *address;
-@property (nonatomic, strong) OMNPushTexts *mobile_texts;
+@property (nonatomic, strong, readonly) OMNPushTexts *mobile_texts;
 @property (nonatomic, strong, readonly) OMNRestaurantSettings *settings;
 @property (nonatomic, strong, readonly) OMNRestaurantSchedules *schedules;
 @property (nonatomic, strong) OMNRestaurantInfo *info;
@@ -40,5 +44,12 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 - (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(NSError *error))failureBlock;
 
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
+
+@end
+
+@interface NSObject (omn_restaurants)
+
+- (NSArray *)omn_restaurants;
+- (void)omn_decodeWithRestaurantsBlock:(OMNRestaurantsBlock)restaurantsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "OMNCircleFadeTransition.h"
-#import "OMNSearchVisitorVC.h"
+#import "OMNSearchRestaurantsVC.h"
 #import "OMNCircleRootVC.h"
 #import "OMNTablePositionVC.h"
 #import "OMNR1VC.h"
@@ -65,39 +65,39 @@
 + (NSArray *)keys {
   return
   @[
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNAskCLPermissionsVC class]],
-    [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNAskCLPermissionsVC class]],
+    [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNSearchRestaurantsVC class]],
     
-    [self keyFromClass:[OMNScanQRCodeVC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNScanQRCodeVC class] toClass:[OMNSearchRestaurantsVC class]],
     
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNCircleRootVC class]],
-    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNCircleRootVC class]],
+    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchRestaurantsVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNCircleRootVC class]],
     
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNTablePositionVC class]],
-    [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNTablePositionVC class]],
+    [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchRestaurantsVC class]],
     
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNPushPermissionVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNPushPermissionVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNPushPermissionVC class]],
 
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNTurnOnBluetoothVC class]],
-    [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNTurnOnBluetoothVC class]],
+    [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchRestaurantsVC class]],
 
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNRestaurantActionsVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNRestaurantActionsVC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNRestaurantActionsVC class]],
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNRestaurantActionsVC class]],
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNRestaurantActionsVC class]],
-    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNSearchRestaurantsVC class]],
     
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNDenyCLPermissionVC class]],
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNSearchRestaurantVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNDenyCLPermissionVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNSearchRestaurantVC class]],
     
-    [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNSearchVisitorVC class]],
+    [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNSearchRestaurantsVC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNCircleRootVC class]],
 
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNDemoRestaurantVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNDemoRestaurantVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNDemoRestaurantVC class]],
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNDenyCLPermissionVC class]],
     [self keyFromClass:[OMNDenyCLPermissionVC class] toClass:[OMNAskCLPermissionsVC class]],

@@ -16,4 +16,7 @@
 
 - (instancetype)initWithBeacon:(CLBeacon *)beacon;
 
+- (NSDictionary *)JSONObject;
+- (NSString *)timeStampString;
+
 @end

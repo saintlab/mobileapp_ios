@@ -24,6 +24,6 @@ typedef void(^OMNImageBlock)(UIImage *image);
 
 - (instancetype)initWithJsonData:(id)jsonData;
 - (void)loadLogo:(OMNImageBlock)imageBlock;
-- (void)loadBackgroundBlurred:(BOOL)blurred completion:(OMNImageBlock)imageBlock;
+- (void)loadBackground:(OMNImageBlock)imageBlock;
 
 @end

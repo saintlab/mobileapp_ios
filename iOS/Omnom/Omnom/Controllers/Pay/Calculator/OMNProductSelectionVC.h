@@ -7,6 +7,7 @@
 //
 
 #import "OMNCalculatorVCDelegate.h"
+#import "OMNRestaurantMediator.h"
 
 @class OMNOrder;
 
@@ -15,6 +16,6 @@
 @property (nonatomic, strong, readonly) NSMutableSet *changedOrderItemsIDs;
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
-- (instancetype)initWithOrder:(OMNOrder *)order;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end

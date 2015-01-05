@@ -7,7 +7,6 @@
 //
 
 #import "OMNR1VC.h"
-#import "OMNSearchVisitorVC.h"
 #import "OMNPayOrderVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNOperationManager.h"
@@ -16,7 +15,6 @@
 #import "UIImage+omn_helper.h"
 #import "OMNPushPermissionVC.h"
 #import "OMNSocketManager.h"
-#import "OMNVisitor+network.h"
 #import "OMNLightBackgroundButton.h"
 #import "OMNImageManager.h"
 #import "OMNAnalitics.h"
@@ -26,6 +24,8 @@
 #import <OMNStyler.h>
 #import "OMNRestaurantMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNRestaurant+omn_network.h"
+#import "OMNRestaurantManager.h"
 
 @interface OMNR1VC ()
 <OMNRestaurantInfoVCDelegate>
@@ -34,7 +34,6 @@
 
 @implementation OMNR1VC {
   
-  OMNRestaurant *_restaurant;
   OMNCircleAnimation *_circleAnimation;
   __weak OMNRestaurantMediator *_restaurantMediator;
   UIPercentDrivenInteractiveTransition *_interactiveTransition;
@@ -44,11 +43,12 @@
 }
 
 - (void)removeRestaurantWaiterCallObserver {
-  
-  if (_restaurantWaiterCallIdentifier) {
-    [_visitor bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
-    _restaurantWaiterCallIdentifier = nil;
+
+  @try {
+    [[OMNRestaurantManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(restaurant))];
+    [[OMNRestaurantManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled))];
   }
+  @catch (NSException *exception) {}
   
 }
 
@@ -66,12 +66,16 @@
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-    self.visitor = _restaurantMediator.visitor;
+#warning logEnterRestaurant
+//    [[OMNRestaurantManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew context:NULL];
     
-    [[OMNAnalitics analitics] logEnterRestaurant:self.visitor mode:kRestaurantEnterModeApplicationLaunch];
     
-    _restaurant = self.visitor.restaurant;
-    self.circleIcon = _restaurant.decoration.logo;
+//    [[OMNRestaurantManager sharedManager] bk_addObserverForKeyPath:NSStringFromSelector(@selector(restaurant)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
+//      
+//    }];
+    
+//    [[OMNAnalitics analitics] logEnterRestaurant:self.visitor mode:kRestaurantEnterModeApplicationLaunch];
+//    self.circleIcon = _restaurantMediator.restaurant.decoration.logo;
 
   }
   return self;
@@ -88,10 +92,12 @@
 
   _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
   _isViewVisible = YES;
-  
-  [self.visitor tableInWithFailure:^(NSError *error) {
-    
-  }];
+
+#warning tableInWithFailure
+//  [_restaurantMediator.restaurant tableInWithFailure:^(NSError *error) {
+//    
+//  }];
+//  self.circleBackground = _restaurantMediator.restaurant.decoration.circleBackground;
   
   self.navigationItem.title = @"";
   
@@ -101,11 +107,10 @@
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
   
-  self.circleBackground = _restaurant.decoration.circleBackground;
   
   [self omn_setup];
-  [self socketConnect];
   [self loadBackgroundIfNeeded];
+  [self loadIconIfNeeded];
   
 }
 
@@ -114,7 +119,7 @@
   [super viewWillAppear:animated];
   _viewDidAppear = YES;
   
-  if (_visitor.restaurant.is_demo) {
+  if (_restaurantMediator.restaurant.is_demo) {
     
     OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
     [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
@@ -126,7 +131,7 @@
   else {
     
     self.navigationItem.leftBarButtonItem = nil;
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:_restaurant.decoration.antagonist_color target:self action:@selector(showUserProfile)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:_restaurantMediator.restaurant.decoration.antagonist_color target:self action:@selector(showUserProfile)];
     
   }
   
@@ -195,68 +200,90 @@
   
 }
 
-- (void)setVisitor:(OMNVisitor *)visitor {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
   
-  [self removeRestaurantWaiterCallObserver];
-  _visitor = visitor;
-  __weak typeof(self)weakSelf = self;
-  _restaurantWaiterCallIdentifier = [_visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
-    
-    if (weakSelf.visitor.waiterIsCalled) {
+  if ([object isEqual:[OMNRestaurantManager sharedManager]] &&
+      [keyPath isEqualToString:NSStringFromSelector(@selector(waiterIsCalled))]) {
+#warning [OMNRestaurantManager sharedManager].waiterIsCalled
+    if (YES) {
       
-      [weakSelf callWaiterDidStart];
+      [self callWaiterDidStart];
       
     }
     else {
       
-      [weakSelf callWaiterDidStop];
+      [self callWaiterDidStop];
       
     }
     
-  }];
+  } else {
+    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+  }
+}
+
+- (void)loadIconIfNeeded {
+#warning loadIconIfNeeded
+//  if (_restaurantMediator.restaurant.decoration.logo) {
+//    self.circleIcon = _restaurantMediator.restaurant.decoration.logo;
+//    return;
+//  }
+//  
+//  __weak typeof(self)weakSelf = self;
+//  [_restaurantMediator.restaurant.decoration loadLogo:^(UIImage *image) {
+//    
+//    if (image) {
+//      
+//      weakSelf.circleIcon = image;
+//      
+//    }
+//    else {
+//      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        
+//        [weakSelf loadIconIfNeeded];
+//        
+//      });
+//    }
+//    
+//  }];
   
 }
 
 - (void)loadBackgroundIfNeeded {
+#warning loadBackgroundIfNeeded
+//  UIImage *background_image = _restaurantMediator.restaurant.decoration.background_image;
+//  if (background_image) {
+//    
+//    self.backgroundImage = background_image;
+//    
+//  }
+//  else {
+//    
+//    [self setBackgroundImage:[UIImage imageNamed:@"wood_bg"] animated:NO];
+//    __weak typeof(self)weakSelf = self;
+//    [_restaurantMediator.restaurant.decoration loadBackground:^(UIImage *image) {
+//      
+//      if (image) {
+//        
+//        [weakSelf setBackgroundImage:image animated:YES];
+//        
+//      }
+//      else {
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//          
+//          [weakSelf loadBackgroundIfNeeded];
+//          
+//        });
+//      }
+//      
+//    }];
+//    
+//  }
   
-  if (_restaurant.decoration.background_image) {
-    self.backgroundImage = _restaurant.decoration.background_image;
-    return;
-  }
-  
-  self.backgroundImage = _restaurant.decoration.blurred_background_image;
-  __weak typeof(self)weakSelf = self;
-  [_restaurant.decoration loadBackgroundBlurred:NO completion:^(UIImage *image) {
-    
-    if (image) {
-      [weakSelf setBackgroundImage:image animated:YES];
-    }
-    else {
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf loadBackgroundIfNeeded];
-      });
-    }
-    
-  }];
 }
 
 - (void)showUserProfile {
   
   [_restaurantMediator showUserProfile];
-  
-}
-
-- (void)socketConnect {
-  
-  if (NO == _visitor.restaurant.is_demo) {
-    
-    __weak OMNVisitor *visitor = _visitor;
-    [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
-      
-      [visitor subscribeForTableEvents];
-      
-    }];
-  }
   
 }
 
@@ -270,7 +297,8 @@
 
 - (void)applicationDidBecomeActive {
   
-  [_visitor updateOrdersIfNeeded];
+#warning updateOrdersIfNeeded
+//  [_visitor updateOrdersIfNeeded];
   
 }
 
@@ -304,21 +332,23 @@
 
 - (void)showRestaurantInfo {
   
+#warning showRestaurantInfo
   _isViewVisible = NO;
-  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithVisitor:self.visitor];
-  restaurantInfoVC.delegate = self;
-  [self.navigationController pushViewController:restaurantInfoVC animated:YES];
+//  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithVisitor:self.visitor];
+//  restaurantInfoVC.delegate = self;
+//  [self.navigationController pushViewController:restaurantInfoVC animated:YES];
   
 }
 
 - (void)beginCircleAnimationIfNeeded {
-  
-  if (_visitor.waiterIsCalled &&
-      _viewDidAppear) {
-    
-    [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
-    
-  }
+
+#warning beginCircleAnimationIfNeeded
+//  if (_visitor.waiterIsCalled &&
+//      _viewDidAppear) {
+//    
+//    [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
+//    
+//  }
   
 }
 

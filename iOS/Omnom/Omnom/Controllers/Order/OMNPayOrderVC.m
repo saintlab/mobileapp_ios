@@ -49,10 +49,11 @@ OMNPaymentFooterViewDelegate>
   
   BOOL _beginSplitAnimation;
   BOOL _keyboardShown;
-  OMNOrder *_order;
-  OMNVisitor *_visitor;
+
   UIView *_tableFadeView;
   __weak OMNMailRUPayVC *_mailRUPayVC;
+  
+  OMNRestaurantMediator *_restaurantMediator;
   
 }
 
@@ -62,12 +63,11 @@ OMNPaymentFooterViewDelegate>
   
 }
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super init];
   if (self) {
-    
-    _order = visitor.selectedOrder;
-    _visitor = visitor;
+
+    _restaurantMediator = restaurantMediator;
     
   }
   return self;
@@ -81,21 +81,23 @@ OMNPaymentFooterViewDelegate>
   
   [self omn_setup];
   
-  OMNRestaurantDecoration *decoration = _visitor.restaurant.decoration;
+  OMNRestaurantDecoration *decoration = _restaurantMediator.restaurant.decoration;
   self.backgroundImage = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:decoration.background_color];
   [_paymentView configureWithColor:decoration.background_color antogonistColor:decoration.antagonist_color];
   
-  [[OMNAnalitics analitics] logBillView:_order];
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:nil];
+  [[OMNAnalitics analitics] logBillView:_restaurantMediator.selectedOrder];
+
+#warning orderDidChange
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:nil];
 
   _paymentView.delegate = self;
   
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
 
-  [self updateWithOrder:_visitor.selectedOrder];
+#warning add observer for order
+//  [self updateWithOrder:_order];
   
 }
 
@@ -114,12 +116,13 @@ OMNPaymentFooterViewDelegate>
   _beginSplitAnimation = NO;
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-  
-  if (!_order) {
-    
-    [self showCloseOrderAlert];
-    
-  }
+
+#warning 123
+//  if (!_order) {
+//    
+//    [self showCloseOrderAlert];
+//    
+//  }
   
 }
 
@@ -174,7 +177,7 @@ OMNPaymentFooterViewDelegate>
     return;
   }
   _beginSplitAnimation = YES;
-  OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithOrder:_order];
+  OMNCalculatorVC *calculatorVC = [[OMNCalculatorVC alloc] initWithMediator:_restaurantMediator];
   calculatorVC.delegate = self;
   [self.navigationController pushViewController:calculatorVC animated:YES];
   
@@ -188,27 +191,30 @@ OMNPaymentFooterViewDelegate>
 
 - (void)orderDidChange:(NSNotification *)n {
 
-  [self updateWithOrder:_order];
+#warning orderDidChange
+//  [self updateWithOrder:_order];
   
 }
 
 - (void)visitorOrdersDidChange:(NSNotification *)n {
   
-  [self updateWithOrder:_visitor.selectedOrder];
+#warning visitorOrdersDidChange
+//  [self updateWithOrder:_order];
   
 }
 
 - (void)orderDidClose:(NSNotification *)n {
   
-  OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
-  BOOL orderIsClosed = ([closedOrder.id isEqualToString:_order.id]) || (!_order);
-
-  if (orderIsClosed &&
-      !_mailRUPayVC) {
-
-    [self showCloseOrderAlert];
-    
-  }
+#warning orderDidClose
+//  OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
+//  BOOL orderIsClosed = ([closedOrder.id isEqualToString:_order.id]) || (!_order);
+//
+//  if (orderIsClosed &&
+//      !_mailRUPayVC) {
+//
+//    [self showCloseOrderAlert];
+//    
+//  }
   
 }
 
@@ -225,7 +231,8 @@ OMNPaymentFooterViewDelegate>
 
 - (void)updateWithOrder:(OMNOrder *)order {
   
-  _order = order;
+#warning updateWithOrder
+//  _order = order;
   _paymentView.order = order;
   _dataSource.order = order;
   self.tableView.orderActionView.order = order;
@@ -236,25 +243,25 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (void)updateTitle {
-  
-  if (_visitor.orders.count > 1) {
-    
-    NSUInteger index = [_visitor.orders indexOfObject:_visitor.selectedOrder];
-    if (index != NSNotFound) {
-      UIButton *button = [[OMNSelectOrderButton alloc] init];
-      NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_TITLE %ld", @"Счёт {number}"), (long)index + 1];
-      [button setTitle:title forState:UIControlStateNormal];
-      [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
-      [button sizeToFit];
-      self.navigationItem.titleView = button;
-    }
-    
-  }
-  else {
-    
-    self.navigationItem.titleView = nil;
-    
-  }
+#warning updateTitle
+//  if (_restaurant.orders.count > 1) {
+//    
+//    NSUInteger index = [_restaurant.orders indexOfObject:_visitor.selectedOrder];
+//    if (index != NSNotFound) {
+//      UIButton *button = [[OMNSelectOrderButton alloc] init];
+//      NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_TITLE %ld", @"Счёт {number}"), (long)index + 1];
+//      [button setTitle:title forState:UIControlStateNormal];
+//      [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
+//      [button sizeToFit];
+//      self.navigationItem.titleView = button;
+//    }
+//    
+//  }
+//  else {
+//    
+//    self.navigationItem.titleView = nil;
+//    
+//  }
   
 }
 
@@ -322,8 +329,6 @@ OMNPaymentFooterViewDelegate>
   
   OMNRatingVC *ratingVC = [[OMNRatingVC alloc] init];
   ratingVC.backgroundImage = self.backgroundImage;
-  ratingVC.order = _order;
-  ratingVC.visitor = _visitor;
   ratingVC.delegate = self;
   [self.navigationController pushViewController:ratingVC animated:YES];
   
@@ -331,37 +336,39 @@ OMNPaymentFooterViewDelegate>
 
 - (IBAction)payTap:(id)sender {
   
-  if (_order.paymentValueIsTooHigh) {
-    
-    __weak typeof(self)weakSelf = self;
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-
-      if (buttonIndex != alertView.cancelButtonIndex) {
-        [weakSelf processCardPayment];
-      }
-      
-    }];
-    
-  }
-  else {
-
-    [self processCardPayment];
-    
-  }
+#warning payTap
+//  if (_order.paymentValueIsTooHigh) {
+//    
+//    __weak typeof(self)weakSelf = self;
+//    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+//
+//      if (buttonIndex != alertView.cancelButtonIndex) {
+//        [weakSelf processCardPayment];
+//      }
+//      
+//    }];
+//    
+//  }
+//  else {
+//
+//    [self processCardPayment];
+//    
+//  }
   
 }
 
 - (void)processCardPayment {
 
-  OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
-  mailRUPayVC.demo = _visitor.restaurant.is_demo;
-  mailRUPayVC.delegate = self;
-  
-  _mailRUPayVC = mailRUPayVC;
-  
-  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:mailRUPayVC];
-  navigationController.delegate = self.navigationController.delegate;
-  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+#warning processCardPayment
+//  OMNMailRUPayVC *mailRUPayVC = [[OMNMailRUPayVC alloc] initWithOrder:_order];
+//  mailRUPayVC.demo = _visitor.restaurant.is_demo;
+//  mailRUPayVC.delegate = self;
+//  
+//  _mailRUPayVC = mailRUPayVC;
+//  
+//  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:mailRUPayVC];
+//  navigationController.delegate = self.navigationController.delegate;
+//  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
 
 }
 
@@ -426,28 +433,29 @@ OMNPaymentFooterViewDelegate>
 
 - (void)setOrderEnteredAmount:(long long)enteredAmount splitType:(SplitType)splitType {
   
-  _order.enteredAmount = enteredAmount;
-  _order.splitType = splitType;
-  
-  switch (splitType) {
-    case kSplitTypeOrders: {
-      
-      [_order selectionDidChange];
-      
-    } break;
-    case kSplitTypeNone:
-    case kSplitTypeNumberOfGuests:
-    case kSplitTypePercent: {
-      
-      [_order deselectAllItems];
-      
-    } break;
-  }
-  
-  BOOL fadeNonSelectedItems = (kSplitTypeOrders == splitType);
-  [self setNonSelectedOrderItemsFaded:fadeNonSelectedItems];
-  
-  _paymentView.order = _order;
+#warning setOrderEnteredAmount
+//  _order.enteredAmount = enteredAmount;
+//  _order.splitType = splitType;
+//  
+//  switch (splitType) {
+//    case kSplitTypeOrders: {
+//      
+//      [_order selectionDidChange];
+//      
+//    } break;
+//    case kSplitTypeNone:
+//    case kSplitTypeNumberOfGuests:
+//    case kSplitTypePercent: {
+//      
+//      [_order deselectAllItems];
+//      
+//    } break;
+//  }
+//  
+//  BOOL fadeNonSelectedItems = (kSplitTypeOrders == splitType);
+//  [self setNonSelectedOrderItemsFaded:fadeNonSelectedItems];
+//  
+//  _paymentView.order = _order;
   
 }
 
@@ -552,7 +560,8 @@ OMNPaymentFooterViewDelegate>
 
 - (void)orderTotalViewDidCancel:(OMNOrderActionView *)orderTotalView {
   
-  [self setOrderEnteredAmount:_order.expectedValue splitType:kSplitTypeNone];
+#warning orderTotalViewDidCancel
+//  [self setOrderEnteredAmount:_order.expectedValue splitType:kSplitTypeNone];
 
 }
 

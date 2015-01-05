@@ -31,7 +31,6 @@ extern NSString * const OMNOrderIndexKey;
 - (instancetype)initWithJsonData:(id)data;
 
 - (BOOL)isSameRestaurant:(OMNVisitor *)visitor;
-- (void)subscribeForTableEvents;
 - (BOOL)expired;
 - (NSString *)id;
 

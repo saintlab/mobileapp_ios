@@ -8,6 +8,7 @@
 
 #import "OMNAuthorizationManager.h"
 #import "OMNConstants.h"
+#import "AFHTTPResponseSerializer+omn_headers.h"
 
 @implementation OMNAuthorizationManager
 
@@ -26,10 +27,9 @@
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     
     self.requestSerializer = [AFJSONRequestSerializer serializer];
-    [self.requestSerializer setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];
-    [self.requestSerializer setValue:CURRENT_VERSION forHTTPHeaderField:@"current-app-version"];
     self.requestSerializer.timeoutInterval = 10.0;
-
+    [self.requestSerializer omn_addCustomHeaders];
+    
   }
   return self;
 }

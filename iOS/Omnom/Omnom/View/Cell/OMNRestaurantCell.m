@@ -105,7 +105,7 @@
   _restaurant = restaurant;
   [_restaurant.decoration addObserver:self forKeyPath:keyPath options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
 
-  [_restaurant.decoration loadBackgroundBlurred:NO completion:^(UIImage *image) {
+  [_restaurant.decoration loadBackground:^(UIImage *image) {
   }];
   
   _restaurantDetailsView.restaurant = restaurant;

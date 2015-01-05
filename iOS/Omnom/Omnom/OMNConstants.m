@@ -34,6 +34,8 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 + (void)setupWithLaunchOptions:(NSDictionary *)launchOptions completion:(dispatch_block_t)completionBlock {
   
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
+//#warning _customConfig
+//  _customConfig = [self configWithName:@"config_laaaab"];
   _customConfig = [self configWithName:lo.customConfigName];
   
   //setup keychain for background usage

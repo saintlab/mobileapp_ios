@@ -25,6 +25,7 @@ def import_all
   pod 'Mixpanel'
   pod 'TTTAttributedLabel'
   pod 'uidevice-extension'
+  pod 'UIDevice-Hardware'
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"
