@@ -106,28 +106,28 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [self.firstViewController didMoveToParentViewController:self];
   [self.view bringSubviewToFront:_fadeView];
   
-#warning totalDidChange
-//  [self totalDidChange:_order.selectedItemsTotal showPaymentButton:_order.hasSelectedItems];
+  OMNOrder *order = _restaurantMediator.selectedOrder;
+  [self totalDidChange:order.selectedItemsTotal showPaymentButton:order.hasSelectedItems];
   
 }
 
 - (void)closeTap {
   
-#warning closeTap
-//  NSSet *changedOrderItemsIDs = [self.firstViewController.changedOrderItemsIDs copy];
-//  [_order.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
-//    
-//    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
-//      
-//      if ([changedOrderItemsIDs containsObject:orderItem.uid]) {
-//        
-//        orderItem.selected = !orderItem.selected;
-//        
-//      }
-//      
-//    }];
-//    
-//  }];
+  NSSet *changedOrderItemsIDs = [self.firstViewController.changedOrderItemsIDs copy];
+  OMNOrder *order = _restaurantMediator.selectedOrder;
+  [order.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
+    
+    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+      
+      if ([changedOrderItemsIDs containsObject:orderItem.uid]) {
+        
+        orderItem.selected = !orderItem.selected;
+        
+      }
+      
+    }];
+    
+  }];
   
   [self.delegate calculatorVCDidCancel:self];
   
@@ -279,15 +279,14 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 - (void)totalDidChange:(long long)total showPaymentButton:(BOOL)showPaymentButton {
   
   _total = total;
-  [UIView animateWithDuration:0.3 animations:^{
+  NSTimeInterval duration = 0.3;
+  [UIView animateWithDuration:duration animations:^{
     
     UIEdgeInsets insets = UIEdgeInsetsZero;
     if (showPaymentButton) {
       
       insets = UIEdgeInsetsMake(0.0f, 0.0f, CGRectGetHeight(_fadeView.frame), 0.0f);
       _fadeView.alpha = 1.0f;
-      NSString *title = [NSString stringWithFormat:@"= %@", [OMNUtils formattedMoneyStringFromKop:total]];
-      [_totalButton setTitle:title forState:UIControlStateNormal];
       
     }
     else {
@@ -299,6 +298,13 @@ const CGFloat kCalculatorTopOffset = 40.0f;
     _firstViewController.tableView.contentInset = insets;
     
   }];
+  
+  [UIView transitionWithView:_totalButton duration:duration options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    
+    NSString *title = [NSString stringWithFormat:@"= %@", [OMNUtils formattedMoneyStringFromKop:total]];
+    [_totalButton setTitle:title forState:UIControlStateNormal];
+    
+  } completion:nil];
   
 }
 

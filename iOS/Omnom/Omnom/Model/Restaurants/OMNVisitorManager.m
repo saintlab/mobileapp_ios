@@ -239,13 +239,13 @@
       
     }
     else if (athTheTable) {
-      
-      [visitor handleAtTheTableEventWithCompletion:completionBlock];
+#warning handleAtTheTableEventWithCompletion
+//      [visitor handleAtTheTableEventWithCompletion:completionBlock];
       
     }
     else {
-      
-      [visitor handleRestaurantEnterEventWithCompletion:completionBlock];
+#warning handleRestaurantEnterEventWithCompletion:completionBlock
+//      [visitor handleRestaurantEnterEventWithCompletion:completionBlock];
       
     }
     

@@ -65,7 +65,7 @@ UIPickerViewDelegate>
 
 - (long long)total {
   
-  return _restaurantMediator.selectedOrder.enteredAmount;
+  return _restaurantMediator.selectedOrder.totalAmount;
   
 }
 

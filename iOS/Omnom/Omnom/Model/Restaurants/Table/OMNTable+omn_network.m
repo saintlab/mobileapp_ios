@@ -13,36 +13,29 @@
 
 @implementation OMNTable (omn_network)
 
-#warning tableInWithFailure
-//- (void)tableInWithFailure:(void(^)(NSError *error))failureBlock {
-//
-//  if (nil == self.table.id) {
-//    return;
-//  }
-//
-//  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/in", self.id, self.table.id];
-//  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//
-//    if ([responseObject[@"status"] isEqualToString:@"success"]) {
-//
-//      failureBlock(nil);
-//
-//    }
-//    else {
-//
-//      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_TABLE_IN" jsonRequest:path jsonResponse:responseObject];
-//      failureBlock(nil);
-//
-//    }
-//
-//  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//
-//    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_TABLE_IN" jsonRequest:path responseOperation:operation];
-//    failureBlock(error);
-//
-//  }];
-//
-//}
+- (void)tableIn {
+
+  if (self.id &&
+      self.restaurant_id) {
+
+    NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/in", self.restaurant_id, self.id];
+    [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      if (![responseObject omn_isSuccessResponse]) {
+        
+        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_TABLE_IN" jsonRequest:path jsonResponse:responseObject];
+        
+      }
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_TABLE_IN" jsonRequest:path responseOperation:operation];
+      
+    }];
+    
+  }
+
+}
 
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
   
@@ -102,8 +95,7 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.restaurant_id, self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
-#warning stopWaiterCall
-//    [[OMNAnalitics analitics] logDebugEvent:@"WAITER_CALL_DONE" parametrs:response];
+    [[OMNAnalitics analitics] logDebugEvent:@"WAITER_CALL_DONE" parametrs:response];
     failureBlock(nil);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

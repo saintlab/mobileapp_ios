@@ -17,7 +17,8 @@
 #import "OMNRestaurantMediator.h"
 
 @interface OMNSearchRestaurantVC ()
-<OMNRestaurantActionsVCDelegate>
+<OMNRestaurantActionsVCDelegate,
+OMNSearchRestaurantsVCDelegate>
 
 @end
 
@@ -58,12 +59,8 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  __weak typeof(self)weakSelf = self;
-  OMNSearchRestaurantsVC *searchRestaurantsVC = [[OMNSearchRestaurantsVC alloc] initWithParent:nil completion:^(OMNSearchRestaurantsVC *searchBeaconVC, NSArray *restaurants) {
-    
-    [weakSelf didFindRestaurants:restaurants];
-    
-  } cancelBlock:nil];
+  OMNSearchRestaurantsVC *searchRestaurantsVC = [[OMNSearchRestaurantsVC alloc] init];
+  searchRestaurantsVC.delegate = self;
   searchRestaurantsVC.qr = self.qr;
 
   UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
@@ -127,6 +124,20 @@
 }
 
 - (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
+  
+  [self didFinish];
+  
+}
+
+#pragma mark - OMNSearchRestaurantsVCDelegate
+
+- (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants {
+  
+  [self didFindRestaurants:restaurants];
+  
+}
+
+- (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {
   
   [self didFinish];
   

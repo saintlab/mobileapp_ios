@@ -12,7 +12,7 @@
 
 @interface OMNTable (omn_network)
 
-- (void)tableInWithFailure:(void(^)(NSError *error))failureBlock;
+- (void)tableIn;
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
 - (void)waiterCallWithCompletion:(void(^)(OMNError *error))completionBlock;
 - (void)waiterCallStopWithFailure:(void(^)(OMNError *error))failureBlock;

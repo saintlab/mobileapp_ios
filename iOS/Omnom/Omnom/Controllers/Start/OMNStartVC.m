@@ -27,7 +27,6 @@ OMNSearchRestaurantVCDelegate>
 @implementation OMNStartVC {
   
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
-  BOOL _initialCheckPerformed;
   
 }
 
@@ -56,19 +55,8 @@ OMNSearchRestaurantVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [self checkTokenIfNeeded];
-  
-}
-
-- (void)checkTokenIfNeeded {
-  
-  if (_initialCheckPerformed) {
-    return;
-  }
-  
-  _initialCheckPerformed = YES;
   [self checkUserToken];
-
+  
 }
 
 - (void)checkUserToken {

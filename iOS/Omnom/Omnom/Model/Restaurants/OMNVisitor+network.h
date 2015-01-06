@@ -15,8 +15,8 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 
 @interface OMNVisitor (omn_network)
 
+/*
 - (void)updateWithVisitor:(OMNVisitor *)visitor;
-
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 - (void)tableInWithFailure:(void(^)(NSError *error))failureBlock;
@@ -28,5 +28,6 @@ typedef void(^OMNVisitorsBlock)(NSArray *visitors);
 - (void)updateOrdersIfNeeded;
 - (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock;
 - (void)handleRestaurantEnterEventWithCompletion:(dispatch_block_t)completionBlock;
+*/
 
 @end

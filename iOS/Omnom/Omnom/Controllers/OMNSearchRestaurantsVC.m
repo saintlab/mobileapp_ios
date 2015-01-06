@@ -38,8 +38,6 @@ OMNBeaconsSearchManagerDelegate>
 @implementation OMNSearchRestaurantsVC {
   
   OMNBeaconsSearchManager *_beaconsSearchManager;
-  OMNSearchRestaurantsBlock _didFindRstaurantsBlock;
-  dispatch_block_t _cancelBlock;
   UIButton *_cancelButton;
   
 }
@@ -50,13 +48,9 @@ OMNBeaconsSearchManagerDelegate>
   
 }
 
-- (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchRestaurantsBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock {
-  self = [super initWithParent:parent];
+- (instancetype)init {
+  self = [super initWithParent:nil];
   if (self) {
-    
-    _didFindRstaurantsBlock = [completionBlock copy];
-    _cancelBlock = [cancelBlock copy];
-    
   }
   return self;
 }
@@ -81,7 +75,7 @@ OMNBeaconsSearchManagerDelegate>
   [super viewDidLoad];
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
-  if (_cancelBlock) {
+  if (NO) {
     _cancelButton = [[UIButton alloc] init];
     [_cancelButton setImage:[UIImage imageNamed:@"cross_icon_white"] forState:UIControlStateNormal];
     [_cancelButton sizeToFit];
@@ -173,16 +167,14 @@ OMNBeaconsSearchManagerDelegate>
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
   [self stopBeaconManager];
-  _didFindRstaurantsBlock(self, restaurants);
+  [self.delegate searchRestaurantsVC:self didFindRestaurants:restaurants];
   
 }
 
 - (void)cancelTap {
   
   [self stopBeaconManager];
-  if (_cancelBlock) {
-    _cancelBlock();
-  }
+  [self.delegate searchRestaurantsVCDidCancel:self];
   
 }
 
@@ -225,7 +217,7 @@ OMNBeaconsSearchManagerDelegate>
     }
     else {
       
-#warning handle expired token
+      [weakSelf cancelTap];
       
     }
     
@@ -484,7 +476,7 @@ OMNBeaconsSearchManagerDelegate>
 
 - (void)beaconsNotFound {
   
-  _didFindRstaurantsBlock(self, nil);
+  [self.delegate searchRestaurantsVC:self didFindRestaurants:@[]];
   return;
   OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
   notFoundBeaconVC.faded = YES;

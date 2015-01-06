@@ -133,7 +133,7 @@
     
   } failure:^(OMNError *error) {
     
-#warning handle
+    [weakSelf processAuthorisation];
     
   }];
   

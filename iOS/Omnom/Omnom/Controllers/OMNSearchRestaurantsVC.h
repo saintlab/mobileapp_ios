@@ -10,15 +10,19 @@
 #import "OMNLoadingCircleVC.h"
 #import "OMNLoaderView.h"
 
-@class OMNSearchRestaurantsVC;
-
-typedef void(^OMNSearchRestaurantsBlock)(OMNSearchRestaurantsVC *searchBeaconVC, NSArray *restaurants);
+@protocol OMNSearchRestaurantsVCDelegate;
 
 @interface OMNSearchRestaurantsVC : OMNLoadingCircleVC
 
 @property (nonatomic, strong) NSArray *restaurants;
 @property (nonatomic, copy) NSString *qr;
+@property (nonatomic, weak) id<OMNSearchRestaurantsVCDelegate> delegate;
 
-- (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchRestaurantsBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;
+@end
+
+@protocol OMNSearchRestaurantsVCDelegate <NSObject>
+
+- (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants;
+- (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC;
 
 @end
