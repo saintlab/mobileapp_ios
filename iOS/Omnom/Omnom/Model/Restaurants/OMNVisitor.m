@@ -220,20 +220,11 @@ NSString * const OMNVisitorOrdersDidChangeNotification = @"OMNVisitorOrdersDidCh
   __weak typeof(self)weakSelf = self;
   [self.orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    if (![existingOrdersIDs containsObject:order.id]) {
       
-      if ([existingOrdersIDs containsObject:order.id]) {
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
-        
-      }
-      else {
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
       
-        [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
-        
-      }
-      
-    });
+    }
     
   }];
   
