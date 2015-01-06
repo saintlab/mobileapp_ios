@@ -12,7 +12,8 @@
 
 - (instancetype)initWithJsonData:(id)jsonData {
   
-  if (![jsonData isKindOfClass:[NSDictionary class]]) {
+  if (jsonData &&
+      ![jsonData isKindOfClass:[NSDictionary class]]) {
     return nil;
   }
   
@@ -25,7 +26,9 @@
     _has_bar = [jsonData[@"has_bar"] boolValue];
     _has_pre_order = [jsonData[@"has_pre_order"] boolValue];
     _has_table_order = [jsonData[@"has_table_order"] boolValue];
-    
+   
+#warning _has_waiter_call
+    _has_waiter_call = YES;
   }
   return self;
 }

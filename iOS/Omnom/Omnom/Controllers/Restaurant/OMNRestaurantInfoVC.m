@@ -9,7 +9,6 @@
 #import "OMNRestaurantInfoVC.h"
 #import <AFNetworking.h>
 #import "OMNRestaurantInfo.h"
-#import "OMNVisitor.h"
 #import "OMNFeedItem.h"
 #import "OMNAnalitics.h"
 #import <OMNStyler.h>
@@ -39,7 +38,7 @@ UIGestureRecognizerDelegate>
 
 @implementation OMNRestaurantInfoVC {
 
-  OMNVisitor *_visitor;
+  OMNRestaurant *_restaurant;
   BOOL _disableNavigationBarAnimation;
   BOOL _disableSwipeTransition;
   UIPercentDrivenInteractiveTransition *_percentDrivenInteractiveTransition;
@@ -47,10 +46,10 @@ UIGestureRecognizerDelegate>
   
 }
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
   self = [super init];
   if (self) {
-    _visitor = visitor;
+    _restaurant = restaurant;
   }
   return self;
 }
@@ -64,7 +63,7 @@ UIGestureRecognizerDelegate>
   _arrowButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"back_button_icon"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   self.navigationItem.titleView = _arrowButton;
   
-  if (NO == _visitor.restaurant.is_demo) {
+  if (!_restaurant.is_demo) {
     
     [[OMNAnalitics analitics] logTargetEvent:@"promolist_view" parametrs:nil];
 
@@ -137,13 +136,13 @@ UIGestureRecognizerDelegate>
 
 - (void)loadRestaurantInfoIfNeeded {
  
-  if (_visitor.restaurant.info) {
+  if (_restaurant.info) {
     return;
   }
   
   [self startAnimating:YES];
   __weak typeof(self)weakSelf = self;
-  [_visitor.restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
+  [_restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
     
     [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
     
@@ -230,7 +229,7 @@ UIGestureRecognizerDelegate>
 
 - (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem {
   UITableViewCell *cell = nil;
-  NSUInteger index = [_visitor.restaurant.info.feedItems indexOfObject:feedItem];
+  NSUInteger index = [_restaurant.info.feedItems indexOfObject:feedItem];
   if (index != NSNotFound) {
     cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:kRestaurantInfoSectionFeed]];
   }
@@ -251,13 +250,13 @@ UIGestureRecognizerDelegate>
       numberOfRows = 1;
     } break;
     case kRestaurantInfoSectionDescription: {
-      numberOfRows = (_visitor.restaurant.Description.length) ? (1) : (0);
+      numberOfRows = (_restaurant.Description.length) ? (1) : (0);
     } break;
     case kRestaurantInfoSectionAbout: {
-      numberOfRows = _visitor.restaurant.info.fullItems.count;
+      numberOfRows = _restaurant.info.fullItems.count;
     } break;
     case kRestaurantInfoSectionFeed: {
-      numberOfRows = _visitor.restaurant.info.feedItems.count;
+      numberOfRows = _restaurant.info.feedItems.count;
     } break;
     case kRestaurantInfoSectionMax: {
     } break;
@@ -299,7 +298,7 @@ UIGestureRecognizerDelegate>
   cell.label.font = FuturaOSFOmnomRegular(18.0f);
   cell.label.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   cell.label.numberOfLines = 0;
-  cell.label.text = _visitor.restaurant.Description;
+  cell.label.text = _restaurant.Description;
   
 }
 
@@ -339,7 +338,7 @@ UIGestureRecognizerDelegate>
       defaultCell.separatorInset = UIEdgeInsetsMake(0.0f, CGRectGetWidth(self.view.frame), 0.0f, 0.0f);
       defaultCell.selectionStyle = UITableViewCellSelectionStyleNone;
       defaultCell.label.font = FuturaOSFOmnomRegular(30.0f);
-      defaultCell.label.text = _visitor.restaurant.info.title;
+      defaultCell.label.text = _restaurant.info.title;
       cell = defaultCell;
       
     } break;
@@ -353,7 +352,7 @@ UIGestureRecognizerDelegate>
     case kRestaurantInfoSectionAbout: {
       
       OMNRestaurantInfoCell *restaurantInfoCell = [tableView dequeueReusableCellWithIdentifier:@"InfoCell" forIndexPath:indexPath];
-      OMNRestaurantInfoItem *item = _visitor.restaurant.info.fullItems[indexPath.row];
+      OMNRestaurantInfoItem *item = _restaurant.info.fullItems[indexPath.row];
       [restaurantInfoCell setItem:item];
       cell = restaurantInfoCell;
       
@@ -361,7 +360,7 @@ UIGestureRecognizerDelegate>
     case kRestaurantInfoSectionFeed: {
       
       OMNRestaurantFeedItemCell *restaurantFeedInfoCell = [tableView dequeueReusableCellWithIdentifier:@"FeedItemCell" forIndexPath:indexPath];
-      OMNFeedItem *feedItem = _visitor.restaurant.info.feedItems[indexPath.row];
+      OMNFeedItem *feedItem = _restaurant.info.feedItems[indexPath.row];
       [restaurantFeedInfoCell setFeedItem:feedItem];
       cell = restaurantFeedInfoCell;
       
@@ -377,14 +376,14 @@ UIGestureRecognizerDelegate>
   switch ((RestaurantInfoSection)indexPath.section) {
     case kRestaurantInfoSectionAbout: {
       
-      OMNRestaurantInfoItem *item = _visitor.restaurant.info.fullItems[indexPath.row];
+      OMNRestaurantInfoItem *item = _restaurant.info.fullItems[indexPath.row];
       [item open];
       [tableView deselectRowAtIndexPath:indexPath animated:YES];
       
     } break;
     case kRestaurantInfoSectionFeed: {
       
-      OMNFeedItem *feedItem = _visitor.restaurant.info.feedItems[indexPath.row];
+      OMNFeedItem *feedItem = _restaurant.info.feedItems[indexPath.row];
       OMNProductDetailsVC *productDetailsVC = [[OMNProductDetailsVC alloc] initFeedItem:feedItem];
       productDetailsVC.delegate = self;
       [self.navigationController pushViewController:productDetailsVC animated:YES];
@@ -420,7 +419,7 @@ UIGestureRecognizerDelegate>
   switch ((RestaurantInfoSection)section) {
     case kRestaurantInfoSectionFeed: {
       
-      if (_visitor.restaurant.info.feedItems.count) {
+      if (_restaurant.info.feedItems.count) {
         OMNBottomLabelView *bottomLabelView = [[OMNBottomLabelView alloc] init];
         bottomLabelView.label.text = NSLocalizedString(@"Стоит попробовать", nil);
         viewForHeader = bottomLabelView;

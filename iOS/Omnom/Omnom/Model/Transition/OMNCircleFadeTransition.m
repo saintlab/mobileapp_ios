@@ -18,7 +18,7 @@
 #import "OMNTurnOnBluetoothVC.h"
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNDemoRestaurantVC.h"
-#import "OMNMailRUPayVC.h"
+#import "OMNOrderPaymentVC.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNRestaurantActionsVC.h"
 #import "OMNAuthorizationVC.h"
@@ -103,8 +103,8 @@
     [self keyFromClass:[OMNDenyCLPermissionVC class] toClass:[OMNAskCLPermissionsVC class]],
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNCLPermissionsHelpVC class]],
     
-    [self keyFromClass:[OMNMailRUPayVC class] toClass:[OMNLoadingCircleVC class]],
-    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNMailRUPayVC class]],
+    [self keyFromClass:[OMNOrderPaymentVC class] toClass:[OMNLoadingCircleVC class]],
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNOrderPaymentVC class]],
     [self keyFromClass:[OMNStartVC class] toClass:[OMNAuthorizationVC class]],
     
     ];

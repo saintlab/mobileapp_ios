@@ -77,4 +77,41 @@
   
 }
 
+- (void)waiterCallWithCompletion:(void(^)(OMNError *error))completionBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.restaurant_id, self.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+    
+    if ([response omn_isSuccessResponse]) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"WAITER_CALL" parametrs:response];
+      
+    }
+    completionBlock(nil);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    completionBlock([error omn_internetError]);
+    
+  }];
+  
+}
+
+- (void)waiterCallStopWithFailure:(void(^)(OMNError *error))failureBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.restaurant_id, self.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+    
+#warning stopWaiterCall
+//    [[OMNAnalitics analitics] logDebugEvent:@"WAITER_CALL_DONE" parametrs:response];
+    failureBlock(nil);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock([error omn_internetError]);
+    
+  }];
+
+}
+
 @end

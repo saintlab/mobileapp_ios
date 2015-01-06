@@ -8,10 +8,13 @@
 
 #import "OMNTable.h"
 #import "OMNOrder.h"
+#import "OMNError.h"
 
 @interface OMNTable (omn_network)
 
 - (void)tableInWithFailure:(void(^)(NSError *error))failureBlock;
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
+- (void)waiterCallWithCompletion:(void(^)(OMNError *error))completionBlock;
+- (void)waiterCallStopWithFailure:(void(^)(OMNError *error))failureBlock;
 
 @end

@@ -68,9 +68,9 @@ UICollectionViewDelegate>
   [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 
-#warning orderDidChange
-//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
-//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
+#warning name:OMNOrderDidChangeNotification
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:OMNOrderDidChangeNotification object:_visitor];
+//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
   
 }
 
@@ -133,18 +133,6 @@ UICollectionViewDelegate>
 - (void)cancelTap {
   
   [self.delegate ordersVCDidCancel:self];
-  
-}
-
-- (void)orderDidChange:(NSNotification *)n {
-  
-  [self reloadData];
-  
-}
-
-- (void)visitorOrdersDidChange:(NSNotification *)n {
-  
-  [self reloadData];
   
 }
 

@@ -15,10 +15,7 @@ typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 
 @interface OMNRestaurantManager : NSString
 
-+ (instancetype)sharedManager;
 + (void)decodeBeacons:(NSArray *)beacons withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock;
-
-- (void)waiterCallWithFailure:(void(^)(NSError *error))failureBlock;
-- (void)waiterCallStopWithFailure:(void(^)(NSError *error))failureBlock;
++ (void)demoRestaurantWithCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 
 @end

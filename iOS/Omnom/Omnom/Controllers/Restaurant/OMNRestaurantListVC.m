@@ -13,8 +13,10 @@
 #import "OMNRestaurantCell.h"
 #import "OMNRestaurantListFeedbackCell.h"
 #import "OMNRestaurantCardVC.h"
+#import "OMNDemoRestaurantVC.h"
 
 @interface OMNRestaurantListVC ()
+<OMNDemoRestaurantVCDelegate>
 
 @end
 
@@ -33,6 +35,7 @@
   [super viewDidLoad];
   
   OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:NSLocalizedString(@"Демо-режим", nil)];
+  [demoButton addTarget:self action:@selector(demoModeTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:demoButton];
   
   self.navigationItem.rightBarButtonItems =
@@ -61,6 +64,14 @@
   [self.navigationController setNavigationBarHidden:NO animated:NO];
   [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
   [self.navigationController.navigationBar setShadowImage:nil];
+  
+}
+
+- (void)demoModeTap {
+  
+  OMNDemoRestaurantVC *demoRestaurantVC = [[OMNDemoRestaurantVC alloc] initWithParent:nil];
+  demoRestaurantVC.delegate = self;
+  [self.navigationController pushViewController:demoRestaurantVC animated:YES];
   
 }
 
@@ -198,6 +209,20 @@
       
     } break;
   }
+  
+}
+
+#pragma mark - OMNDemoRestaurantVCDelegate
+
+- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC withError:(OMNError *)error {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+- (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
   
 }
 

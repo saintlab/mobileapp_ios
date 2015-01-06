@@ -18,9 +18,6 @@
 #import "OMNVisitorManager.h"
 #import "NSURL+omn_query.h"
 
-#warning OMNRestaurantsVC
-#import "OMNRestaurantListVC.h"
-
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
 OMNSearchRestaurantVCDelegate>
@@ -117,14 +114,6 @@ OMNSearchRestaurantVCDelegate>
 }
 
 - (void)startSearchingRestaurant {
-  
-  #warning OMNRestaurantsVC
-//  OMNRestaurantListVC *restaurantsVC = [[OMNRestaurantListVC alloc] init];
-//  UINavigationController *navC = [[OMNNavigationController alloc] initWithRootViewController:restaurantsVC];
-//  navC.navigationBar.barStyle = UIBarStyleDefault;
-//  navC.delegate = _navigationControllerDelegate;
-//  [self presentViewController:navC animated:NO completion:nil];
-//  return;
 
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
   searchRestaurantVC.delegate = self;

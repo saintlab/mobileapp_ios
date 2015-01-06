@@ -20,8 +20,9 @@
 - (void)checkTableAndOrders;
 - (void)showUserProfile;
 
-- (void)callBillAction:(__weak UIButton *)button;
-- (void)callWaiterAction:(__weak UIButton *)button;
+- (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock;
+- (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock;
+- (void)callBillWithCompletion:(dispatch_block_t)completionBlock;
 
 - (void)exitRestaurant;
 

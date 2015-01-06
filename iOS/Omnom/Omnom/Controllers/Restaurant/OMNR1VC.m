@@ -7,7 +7,6 @@
 //
 
 #import "OMNR1VC.h"
-#import "OMNPayOrderVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNOperationManager.h"
 #import "OMNAuthorization.h"
@@ -35,28 +34,22 @@
 @implementation OMNR1VC {
   
   OMNCircleAnimation *_circleAnimation;
-  __weak OMNRestaurantMediator *_restaurantMediator;
+  OMNRestaurantMediator *_restaurantMediator;
   UIPercentDrivenInteractiveTransition *_interactiveTransition;
-  BOOL _viewDidAppear;
   NSString *_restaurantWaiterCallIdentifier;
-  
-}
-
-- (void)removeRestaurantWaiterCallObserver {
-
-  @try {
-    [_restaurantMediator removeObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled))];
-  }
-  @catch (NSException *exception) {}
   
 }
 
 - (void)dealloc {
   
   _circleAnimation = nil;
-  [self removeRestaurantWaiterCallObserver];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+#warning disconnectAndLeaveAllRooms
   [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
+  @try {
+    [_restaurantMediator removeObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled))];
+  }
+  @catch (NSException *exception) {}
   
 }
 
@@ -76,17 +69,21 @@
   
 }
 
+- (BOOL)isViewVisible {
+  
+  return [self.navigationController.topViewController isEqual:self];
+  
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
 
   _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
-  _isViewVisible = YES;
 
 #warning tableInWithFailure
 //  [_restaurantMediator.restaurant tableInWithFailure:^(NSError *error) {
 //    
 //  }];
-  
   
   self.navigationItem.title = @"";
   
@@ -96,9 +93,7 @@
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
 
-#warning logEnterRestaurant
-  //    [[OMNAnalitics analitics] logEnterRestaurant:self.visitor mode:kRestaurantEnterModeApplicationLaunch];
-
+  [[OMNAnalitics analitics] logEnterRestaurant:_restaurantMediator.restaurant mode:kRestaurantEnterModeApplicationLaunch];
   
   [self omn_setup];
   [self loadBackgroundIfNeeded];
@@ -113,7 +108,6 @@
 - (void)viewWillAppear:(BOOL)animated {
   
   [super viewWillAppear:animated];
-  _viewDidAppear = YES;
   
   if (_restaurantMediator.restaurant.is_demo) {
     
@@ -130,15 +124,19 @@
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:_restaurantMediator.restaurant.decoration.antagonist_color target:self action:@selector(showUserProfile)];
     
   }
+
+  __weak typeof(self)weakSelf = self;
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
   
-  [self beginCircleAnimationIfNeeded];
+    [weakSelf beginCircleAnimationIfNeeded];
+    
+  });
   
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   
-  _viewDidAppear = NO;
   [_circleAnimation finishCircleAnimation];
   
 }
@@ -327,23 +325,20 @@
 
 - (void)showRestaurantInfo {
   
-#warning showRestaurantInfo
-  _isViewVisible = NO;
-//  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithVisitor:self.visitor];
-//  restaurantInfoVC.delegate = self;
-//  [self.navigationController pushViewController:restaurantInfoVC animated:YES];
+  OMNRestaurantInfoVC *restaurantInfoVC = [[OMNRestaurantInfoVC alloc] initWithRestaurant:_restaurantMediator.restaurant];
+  restaurantInfoVC.delegate = self;
+  [self.navigationController pushViewController:restaurantInfoVC animated:YES];
   
 }
 
 - (void)beginCircleAnimationIfNeeded {
 
-#warning beginCircleAnimationIfNeeded
-//  if (_visitor.waiterIsCalled &&
-//      _viewDidAppear) {
-//    
-//    [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
-//    
-//  }
+  if (_restaurantMediator.waiterIsCalled &&
+      [self.navigationController.topViewController isEqual:self]) {
+    
+    [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];
+    
+  }
   
 }
 
@@ -364,7 +359,6 @@
 - (void)restaurantInfoVCDidFinish:(OMNRestaurantInfoVC *)restaurantInfoVC {
   
   [self.navigationController popToViewController:self animated:YES];
-  _isViewVisible = YES;
   
 }
 

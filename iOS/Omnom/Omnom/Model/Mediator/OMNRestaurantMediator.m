@@ -9,23 +9,23 @@
 #import "OMNRestaurantMediator.h"
 #import "OMNUserInfoVC.h"
 #import "OMNRestaurantActionsVC.h"
-#import "OMNVisitor+network.h"
 #import "OMNSearchRestaurantsVC.h"
 #import "OMNAuthorization.h"
 #import "OMNPushPermissionVC.h"
 #import "OMNOrdersVC.h"
-#import "OMNPayOrderVC.h"
+#import "OMNOrderCalculationVC.h"
 #import "OMNError.h"
 #import "OMNRestaurantManager.h"
 #import "OMNTable+omn_network.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNSocketManager.h"
 #import "OMNScanTableQRCodeVC.h"
+#import "OMNOperationManager.h"
 
 @interface OMNRestaurantMediator ()
 <OMNUserInfoVCDelegate,
 OMNOrdersVCDelegate,
-OMNPayOrderVCDelegate>
+OMNOrderCalculationVCDelegate>
 
 @end
 
@@ -131,62 +131,57 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (BOOL)checkVisitor:(OMNVisitor *)visitor {
-
-#warning 123
-  return YES;
-//  if ([self.visitor isSameRestaurant:visitor]) {
-//    
-//    [self.visitor updateWithVisitor:visitor];
-//    return YES;
-//    
-//  }
-//  else {
-//    
-//    return NO;
-//    
-//  }
-
-}
-
-- (void)visitorDidChange:(OMNVisitor *)visitor {
+- (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock {
   
-#warning visitorDidChange
-//  [self.restaurantActionsVC.delegate restaurantActionsVC:self.restaurantActionsVC didChangeVisitor:visitor];
+  if (!self.table) {
+    completionBlock();
+    return;
+  }
   
-}
-
-- (void)callWaiterAction:(__weak UIButton *)button {
-  
-  button.enabled = NO;
-  [[OMNRestaurantManager sharedManager] waiterCallWithFailure:^(NSError *error) {
+  __weak typeof(self)weakSelf = self;
+  [self.table waiterCallWithCompletion:^(OMNError *error) {
     
-    button.enabled = YES;
+    weakSelf.waiterIsCalled = (nil == error);
+    completionBlock();
     
   }];
-
-#warning addd loading
-//  [self searchVisitorWithIcon:[UIImage imageNamed:@"bell_ringing_icon_white_big"] completion:^(OMNSearchRestaurantsVC *searchBeaconVC, NSArray *restaurants) {
-
+  
 }
 
-- (void)callBillAction:(__weak UIButton *)button {
+- (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock {
+  
+  if (!self.table) {
+    completionBlock();
+    return;
+  }
+
+  __weak typeof(self)weakSelf = self;
+  [self.table waiterCallStopWithFailure:^(OMNError *error) {
+    
+    weakSelf.waiterIsCalled = (nil != error);
+    completionBlock();
+    
+  }];
+  
+}
+
+
+- (void)callBillWithCompletion:(dispatch_block_t)completionBlock {
   
   if (!self.table) {
     return;
   }
   
-  button.enabled = NO;
   __weak typeof(self)weakSelf = self;
   [self.table getOrders:^(NSArray *orders) {
     
-    button.enabled = YES;
     [weakSelf checkPushNotificationAndProcessOrders:orders];
+    completionBlock();
     
   } error:^(NSError *error) {
     
-    [weakSelf popToRootViewControllerAnimated:YES];
-    button.enabled = YES;
+    [weakSelf processOrderError:error];
+    completionBlock();
     
   }];
   
@@ -239,7 +234,8 @@ OMNPayOrderVCDelegate>
     
     if (1 == ordersCount) {
       
-      OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithMediator:self];
+      self.selectedOrder = [_restaurant.orders firstObject];
+      OMNOrderCalculationVC *paymentVC = [[OMNOrderCalculationVC alloc] initWithMediator:self];
       paymentVC.delegate = self;
       [pushedControllers addObject:paymentVC];
       
@@ -277,7 +273,7 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)processOrderError:(NSError *)error forVisitor:(OMNVisitor *)visitor {
+- (void)processOrderError:(NSError *)error {
   
   OMNError *omnomError = [OMNError omnnomErrorFromError:error];
   
@@ -290,7 +286,7 @@ OMNPayOrderVCDelegate>
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
-      [weakSelf callBillAction:nil];
+      [weakSelf callBillWithCompletion:^{}];
       
     }]
     ];
@@ -328,7 +324,7 @@ OMNPayOrderVCDelegate>
 - (void)showOrder:(OMNOrder *)order {
   
   self.selectedOrder = order;
-  OMNPayOrderVC *paymentVC = [[OMNPayOrderVC alloc] initWithMediator:self];
+  OMNOrderCalculationVC *paymentVC = [[OMNOrderCalculationVC alloc] initWithMediator:self];
   paymentVC.delegate = self;
   [self pushViewController:paymentVC];
   
@@ -340,9 +336,9 @@ OMNPayOrderVCDelegate>
   
 }
 
-#pragma mark - OMNPayOrderVCDelegate
+#pragma mark - OMNOrderCalculationVCDelegate
 
-- (void)payOrderVCDidFinish:(OMNPayOrderVC *)payOrderVC {
+- (void)orderCalculationVCDidFinish:(OMNOrderCalculationVC *)orderCalculationVC {
 
   if (_restaurant.is_demo) {
     
@@ -357,7 +353,7 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)payOrderVCRequestOrders:(OMNPayOrderVC *)ordersVC {
+- (void)orderCalculationVCRequestOrders:(OMNOrderCalculationVC *)orderCalculationVC {
   
   if (_ordersVC) {
     
@@ -367,7 +363,7 @@ OMNPayOrderVCDelegate>
   
 }
 
-- (void)payOrderVCDidCancel:(OMNPayOrderVC *)payOrderVC {
+- (void)orderCalculationVCDidCancel:(OMNOrderCalculationVC *)orderCalculationVC {
   
   [self popToRootViewControllerAnimated:YES];
   

@@ -127,8 +127,9 @@
 
 - (void)configureWithColor:(UIColor *)color antogonistColor:(UIColor *)antogonistColor {
   
-  UIImage *image = [[UIImage imageNamed:@"red_roundy_button"] omn_tintWithColor:antogonistColor];
-  [_payButton setBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
+  UIImage *image = [UIImage imageNamed:@"red_roundy_button"];
+  [_payButton setBackgroundImage:[[image omn_tintWithColor:antogonistColor] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
+  [_payButton setBackgroundImage:[[image omn_tintWithColor:[antogonistColor colorWithAlphaComponent:0.5f]] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateHighlighted];
   [_payButton setTitleColor:color forState:UIControlStateNormal];
   [_amountControl configureWithColor:color antogonistColor:antogonistColor];
   
@@ -146,6 +147,7 @@
   
   _amountControl.amount = _order.enteredAmount;
   _percentControl.percent = _order.customTip.percent;
+  [self updateToPayButton];
   
 }
 
@@ -166,7 +168,8 @@
 
 - (void)updateToPayButton {
   
-  _payButton.enabled = (_order.enteredAmountWithTips > 0) ? (YES) : (NO);
+  BOOL payButtonEnabled = (_order.enteredAmountWithTips > 0) ? (YES) : (NO);
+  _payButton.enabled = payButtonEnabled;
 
   [UIView performWithoutAnimation:^{
     

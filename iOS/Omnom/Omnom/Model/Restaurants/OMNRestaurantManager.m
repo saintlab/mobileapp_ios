@@ -62,6 +62,21 @@
   
 }
 
++ (void)demoRestaurantWithCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+  
+  [[OMNOperationManager sharedManager] POST:@"/v2/decode/demo" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
+    completionBlock(restaurants);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock([error omn_internetError]);
+    
+  }];
+  
+}
+
 #pragma mark - waiter call
 
 - (void)waiterCallWithFailure:(void(^)(NSError *error))failureBlock {

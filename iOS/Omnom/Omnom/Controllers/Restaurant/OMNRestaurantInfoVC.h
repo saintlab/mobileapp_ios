@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "OMNInteractiveTransitioningProtocol.h"
+#import "OMNRestaurant.h"
 
 @protocol OMNRestaurantInfoVCDelegate;
 @class OMNFeedItem;
-@class OMNVisitor;
 
 @interface OMNRestaurantInfoVC : UITableViewController
 <OMNInteractiveTransitioningProtocol>
 
 @property (nonatomic, weak) id<OMNRestaurantInfoVCDelegate> delegate;
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
 
 - (UITableViewCell *)cellForFeedItem:(OMNFeedItem *)feedItem;
 
