@@ -122,12 +122,12 @@ OMNBeaconsSearchManagerDelegate>
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  if (self.visitor) {
+  if (self.restaurants) {
     
     [self.loaderView startAnimating:self.estimateAnimationDuration];
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf didFindVisitor:weakSelf.visitor];
+      [weakSelf didFindRestaurants:weakSelf.restaurants];
       
     });
     
@@ -160,7 +160,7 @@ OMNBeaconsSearchManagerDelegate>
   __weak typeof(self)weakSelf = self;
   [OMNRestaurantManager decodeBeacons:beacons withCompletion:^(NSArray *restaurants) {
     
-    [weakSelf didDecodeRestaurants:restaurants];
+    [weakSelf didFindRestaurants:restaurants];
     
   } failureBlock:^(OMNError *error) {
     
@@ -170,26 +170,10 @@ OMNBeaconsSearchManagerDelegate>
   
 }
 
-- (void)didDecodeRestaurants:(NSArray *)restaurants {
+- (void)didFindRestaurants:(NSArray *)restaurants {
   
   [self stopBeaconManager];
   _didFindRstaurantsBlock(self, restaurants);
-  
-}
-
-- (void)didFindVisitor:(OMNVisitor *)visitor {
-
-#warning 123
-  if (visitor) {
-    
-    _didFindRstaurantsBlock(self, nil);
-    
-  }
-  else {
-    
-    [self beaconsNotFound];
-    
-  }
   
 }
 
@@ -316,15 +300,15 @@ OMNBeaconsSearchManagerDelegate>
   [self.loaderView startAnimating:10.0f];
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
-    [[OMNVisitorManager manager] decodeQRCode:code success:^(OMNVisitor *visitor) {
+    [OMNRestaurantManager decodeQR:code withCompletion:^(NSArray *restaurants) {
       
-      [weakSelf didFindVisitor:visitor];
+      [weakSelf didFindRestaurants:restaurants];
       
-    } failure:^(NSError *error) {
+    } failureBlock:^(OMNError *error) {
       
       [scanQRCodeVC setText:NSLocalizedString(@"SCAN_QR_ERROR_TEXT", @"Неверный QR-код,\nнайдите Omnom.") error:YES];
       [weakSelf didFailQRCode:error];
-      
+
     }];
     
   }];

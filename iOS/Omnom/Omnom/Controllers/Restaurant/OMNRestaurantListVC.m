@@ -140,7 +140,7 @@
     } break;
     case 1: {
 
-      numberOfRows = 1;
+      numberOfRows = (self.restaurants) ? (1) : (0);
       
     } break;
   }

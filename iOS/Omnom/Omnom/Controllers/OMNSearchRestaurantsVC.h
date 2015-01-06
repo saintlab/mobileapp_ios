@@ -16,7 +16,7 @@ typedef void(^OMNSearchRestaurantsBlock)(OMNSearchRestaurantsVC *searchBeaconVC,
 
 @interface OMNSearchRestaurantsVC : OMNLoadingCircleVC
 
-@property (nonatomic, strong) OMNVisitor *visitor;
+@property (nonatomic, strong) NSArray *restaurants;
 @property (nonatomic, copy) NSString *qr;
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent completion:(OMNSearchRestaurantsBlock)completionBlock cancelBlock:(dispatch_block_t)cancelBlock;

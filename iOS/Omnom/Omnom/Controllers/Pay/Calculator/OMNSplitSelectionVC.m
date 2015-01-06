@@ -23,7 +23,6 @@ UIPickerViewDelegate>
   
   NSInteger _numberOfGuests;
   OMNRestaurantMediator *_restaurantMediator;
-  long long _total;
   
 }
 
@@ -36,8 +35,7 @@ UIPickerViewDelegate>
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-#warning total
-//    _total = total;
+
   }
   return self;
 }
@@ -65,9 +63,15 @@ UIPickerViewDelegate>
   
 }
 
+- (long long)total {
+  
+  return _restaurantMediator.selectedOrder.enteredAmount;
+  
+}
+
 - (void)updateTotalValue {
   
-  [self.delegate totalDidChange:ceil((double)_total / _numberOfGuests) showPaymentButton:YES];
+  [self.delegate totalDidChange:ceil((double)self.total / _numberOfGuests) showPaymentButton:YES];
   
 }
 

@@ -137,7 +137,7 @@ OMNSearchRestaurantVCDelegate>
   NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
   if (decodeBeaconData) {
     OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
-    searchRestaurantVC.visitor = visitor;
+//    searchRestaurantVC.visitor = visitor;
   }
 
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];

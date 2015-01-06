@@ -9,6 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "OMNScanQRCodeVC.h"
 
+@protocol OMNScanTableQRCodeVCDelegate;
+
 @interface OMNScanTableQRCodeVC : OMNScanQRCodeVC
+
+@property (nonatomic, weak) id<OMNScanTableQRCodeVCDelegate> tableDelegate;
+
+@end
+
+@protocol OMNScanTableQRCodeVCDelegate <NSObject>
+
+- (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurants:(NSArray *)restaurants;
+- (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC;
 
 @end

@@ -77,57 +77,45 @@
   
 }
 
-#pragma mark - waiter call
-
-- (void)waiterCallWithFailure:(void(^)(NSError *error))failureBlock {
-  /*
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call", self.restaurant.id, self.table.id];
-  __weak typeof(self)weakSelf = self;
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
++ (void)decodeQR:(NSString *)qrCode withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void (^)(OMNError *))failureBlock {
+  
+  NSDictionary *parameters =
+  @{
+    @"qr": qrCode
+    };
+  
+  [[OMNOperationManager sharedManager] PUT:@"/v2/decode/qr" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    if ([response omn_isSuccessResponse]) {
-      
-      [[OMNAnalitics analitics] logDebugEvent:@"WAITER_CALL" parametrs:response];
-      [weakSelf waiterDidCalled];
-      
-    }
-    failureBlock(nil);
+    NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
+    completionBlock(restaurants);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
-  */
-}
-
-- (void)waiterDidCalled {
-  
-//  self.waiterIsCalled = YES;
-}
-
-- (void)stopWaiterCall {
-  
-//  self.waiterIsCalled = NO;
   
 }
 
-- (void)waiterCallStopWithFailure:(void(^)(NSError *error))failureBlock {
-  /*
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/waiter/call/stop", self.restaurant.id, self.table.id];
-  __weak typeof(self)weakSelf = self;
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
++ (void)decodeHash:(NSString *)hash withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void (^)(OMNError *))failureBlock {
+  
+  NSDictionary *parameters =
+  @{
+    @"hash": hash
+    };
+  
+  [[OMNOperationManager sharedManager] PUT:@"/v2/decode/hash" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    [weakSelf stopWaiterCall];
-    [[OMNAnalitics analitics] logDebugEvent:@"WAITER_CALL_DONE" parametrs:response];
-    failureBlock(nil);
+    NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
+    completionBlock(restaurants);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock(error);
+    failureBlock([error omn_internetError]);
     
   }];
-  */
+  
 }
+
 
 @end
