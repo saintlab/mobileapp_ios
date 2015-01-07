@@ -87,7 +87,7 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [_restaurantMediator checkTableAndOrders];
+  [_restaurantMediator checkOrders];
   
 }
 

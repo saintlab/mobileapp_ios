@@ -10,6 +10,7 @@
 #import "OMNVisitorManager.h"
 #import "OMNAuthorization.h"
 #import "OMNOrder+network.h"
+#import "OMNTable+omn_network.h"
 #import "NSString+omn_json.h"
 
 SPEC_BEGIN(OMNOrderTests)
@@ -17,7 +18,7 @@ SPEC_BEGIN(OMNOrderTests)
 describe(@"order test", ^{
   
   __block OMNOrder *_order = nil;
-  __block OMNVisitor *_visitor = nil;
+  __block OMNTable *_table = nil;
   beforeAll(^{
     
     [OMNAuthorization authorisation];
@@ -25,9 +26,9 @@ describe(@"order test", ^{
     id orderData = [@"orders_stub.json" omn_jsonObjectNamedForClass:self.class];
     NSArray *orders = [orderData omn_decodeOrdersWithError:nil];
     _order = [orders firstObject];
-    _visitor = [OMNVisitor mock];
+    _table = [OMNTable mock];
 
-    [_visitor stub:@selector(getOrders:error:) withBlock:^id(NSArray *params) {
+    [_table stub:@selector(getOrders:error:) withBlock:^id(NSArray *params) {
       
       OMNOrdersBlock ordersBlock = params[1];
       ordersBlock(orders);
@@ -39,7 +40,7 @@ describe(@"order test", ^{
   
   it(@"should check initial conditions", ^{
     
-    [[_visitor should] beNonNil];
+    [[_table should] beNonNil];
     [[_order should] beNonNil];
     
   });
@@ -85,7 +86,7 @@ describe(@"order test", ^{
   
   it(@"should get orders", ^{
     
-    [_visitor getOrders:^(NSArray *orders) {
+    [_table getOrders:^(NSArray *orders) {
       
       [[orders should] beNonNil];
       [[@(orders.count) should] beGreaterThan:@(0)];

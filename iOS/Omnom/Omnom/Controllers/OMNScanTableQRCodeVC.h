@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNScanQRCodeVC.h"
+#import "OMNRestaurant.h"
 
 @protocol OMNScanTableQRCodeVCDelegate;
 
@@ -19,7 +20,7 @@
 
 @protocol OMNScanTableQRCodeVCDelegate <NSObject>
 
-- (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurants:(NSArray *)restaurants;
+- (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant;
 - (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC;
 
 @end

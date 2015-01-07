@@ -10,7 +10,6 @@
 #import "OMNOrderDataSource.h"
 #import "OMNOrder.h"
 #import <BlocksKit+UIKit.h>
-#import "OMNVisitor.h"
 
 @interface OMNProductSelectionVC ()
 <UIAlertViewDelegate>

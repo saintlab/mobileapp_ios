@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNVisitor.h"
 #import "OMNLoadingCircleVC.h"
 #import "OMNLoaderView.h"
 

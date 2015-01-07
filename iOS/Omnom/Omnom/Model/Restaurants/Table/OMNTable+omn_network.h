@@ -16,5 +16,6 @@
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock;
 - (void)waiterCallWithCompletion:(void(^)(OMNError *error))completionBlock;
 - (void)waiterCallStopWithFailure:(void(^)(OMNError *error))failureBlock;
+- (void)newGuestWithCompletion:(dispatch_block_t)completionBlock;
 
 @end

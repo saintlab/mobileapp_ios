@@ -14,10 +14,11 @@
 @property (nonatomic, assign) BOOL waiterIsCalled;
 @property (nonatomic, strong, readonly) OMNTable *table;
 @property (nonatomic, strong) OMNOrder *selectedOrder;
+@property (nonatomic, strong) NSArray *orders;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC;
 
-- (void)checkTableAndOrders;
+- (void)checkOrders;
 - (void)showUserProfile;
 
 - (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock;

@@ -106,4 +106,21 @@
 
 }
 
+- (void)newGuestWithCompletion:(dispatch_block_t)completionBlock {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/new/guest", self.restaurant_id, self.id];
+  
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *ordersData) {
+    
+    completionBlock();
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_NEW_GUEST" jsonRequest:path responseOperation:operation];
+    completionBlock();
+    
+  }];
+  
+}
+
 @end

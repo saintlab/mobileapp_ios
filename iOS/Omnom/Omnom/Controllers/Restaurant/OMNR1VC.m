@@ -44,8 +44,6 @@
   
   _circleAnimation = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-#warning disconnectAndLeaveAllRooms
-  [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
   @try {
     [_restaurantMediator removeObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled))];
   }
@@ -80,18 +78,12 @@
 
   _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
 
-#warning tableInWithFailure
-//  [_restaurantMediator.restaurant tableInWithFailure:^(NSError *error) {
-//    
-//  }];
-  
   self.navigationItem.title = @"";
   
   UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
   [self.view addGestureRecognizer:panGR];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
 
   [[OMNAnalitics analitics] logEnterRestaurant:_restaurantMediator.restaurant mode:kRestaurantEnterModeApplicationLaunch];
   
@@ -286,13 +278,6 @@
   OMNPaymentDetails *paymentDetails = [[OMNPaymentDetails alloc] initWithJsonData:paymentData];
   [OMNPaymentNotificationControl showWithPaymentDetails:paymentDetails];
 
-}
-
-- (void)applicationDidBecomeActive {
-  
-#warning updateOrdersIfNeeded
-//  [_visitor updateOrdersIfNeeded];
-  
 }
 
 - (void)omn_setup {

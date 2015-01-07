@@ -24,6 +24,13 @@
   
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  
+  [self.navigationItem setHidesBackButton:NO animated:NO];
+  
+}
+
 - (void)decodeQR:(NSString *)qr {
   
   __weak typeof(self)weakSelf = self;
@@ -41,7 +48,17 @@
 
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
-  [self.tableDelegate scanTableQRCodeVC:self didFindRestaurants:restaurants];
+  if (1 == restaurants.count) {
+  
+    [self.tableDelegate scanTableQRCodeVC:self didFindRestaurant:restaurants[0]];
+    
+  }
+  else {
+    
+#warning didFindRestaurants
+    [self processError:nil];
+    
+  }
   
 }
 

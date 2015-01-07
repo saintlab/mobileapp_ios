@@ -18,10 +18,11 @@
 #import "OMNTable.h"
 #import "OMNOrder.h"
 
-typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
-typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
+extern NSString * const OMNRestaurantOrdersDidChangeNotification;
+extern NSString * const OMNRestaurantNotificationLaunchKey;
 
 @interface OMNRestaurant : NSObject
+<NSCoding>
 
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, assign) BOOL is_demo;
@@ -29,7 +30,7 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, copy, readonly) NSString *phone;
 @property (nonatomic, strong, readonly) NSArray *tables;
-@property (nonatomic, strong) NSArray *orders;
+@property (nonatomic, strong, readonly) NSArray *orders;
 @property (nonatomic, strong, readonly) OMNRestaurantDecoration *decoration;
 @property (nonatomic, strong, readonly) OMNRestaurantAddress *address;
 @property (nonatomic, strong, readonly) OMNPushTexts *mobile_texts;
@@ -39,17 +40,5 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
-+ (void)getRestaurants:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock;
-
-- (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(NSError *error))failureBlock;
-
-- (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
-
 @end
 
-@interface NSObject (omn_restaurants)
-
-- (NSArray *)omn_restaurants;
-- (void)omn_decodeWithRestaurantsBlock:(OMNRestaurantsBlock)restaurantsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
-
-@end

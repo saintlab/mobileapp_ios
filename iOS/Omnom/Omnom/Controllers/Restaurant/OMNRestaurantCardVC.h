@@ -9,8 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "OMNRestaurant.h"
 
+@protocol OMNRestaurantCardVCDelegate;
+
 @interface OMNRestaurantCardVC : UIViewController
 
+@property (nonatomic, weak) id<OMNRestaurantCardVCDelegate> delegate;
+
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
+
+@end
+
+@protocol OMNRestaurantCardVCDelegate <NSObject>
+
+- (void)restaurantCardVC:(OMNRestaurantCardVC *)restaurantCardVC didSelectRestaurant:(OMNRestaurant *)restaurant;
+- (void)restaurantCardVCDidFinish:(OMNRestaurantCardVC *)restaurantCardVC;
 
 @end

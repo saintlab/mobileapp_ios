@@ -60,7 +60,6 @@ OMNPaymentFooterViewDelegate>
     [_restaurantMediator removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedOrder))];
   }
   @catch (NSException *exception) {}
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
   
 }
 
@@ -90,11 +89,6 @@ OMNPaymentFooterViewDelegate>
   
   [[OMNAnalitics analitics] logBillView:_restaurantMediator.selectedOrder];
 
-#warning orderDidChange
-//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:_visitor];
-//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(visitorOrdersDidChange:) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
-//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:nil];
-  
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
 
   [_restaurantMediator addObserver:self forKeyPath:NSStringFromSelector(@selector(selectedOrder)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
@@ -117,12 +111,7 @@ OMNPaymentFooterViewDelegate>
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
-#warning 123
-//  if (!_order) {
-//    
-//    [self showCloseOrderAlert];
-//    
-//  }
+  [self updateOrder];
   
 }
 
@@ -200,36 +189,11 @@ OMNPaymentFooterViewDelegate>
   
 }
 
-- (void)orderDidChange:(NSNotification *)n {
-
-#warning orderDidChange
-//  [self updateWithOrder:_order];
+- (void)showCloseOrderAlertIfNeeded {
   
-}
-
-- (void)visitorOrdersDidChange:(NSNotification *)n {
-  
-#warning visitorOrdersDidChange
-//  [self updateWithOrder:_order];
-  
-}
-
-- (void)orderDidClose:(NSNotification *)n {
-  
-#warning orderDidClose
-//  OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
-//  BOOL orderIsClosed = ([closedOrder.id isEqualToString:_order.id]) || (!_order);
-//
-//  if (orderIsClosed &&
-//      !_mailRUPayVC) {
-//
-//    [self showCloseOrderAlert];
-//    
-//  }
-  
-}
-
-- (void)showCloseOrderAlert {
+  if (_orderPaymentVC) {
+    return;
+  }
   
   __weak typeof(self)weakSelf = self;
   [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_CLOSE_ALERT_TITLE", @"Этот счёт закрыт заведением для просмотра и оплаты") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_CLOSE_ALERT_BUTTON_TITLE", @"Выйти") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -243,21 +207,30 @@ OMNPaymentFooterViewDelegate>
 - (void)updateOrder {
   
   OMNOrder *order = _restaurantMediator.selectedOrder;
-  _paymentView.order = order;
-  _dataSource.order = order;
-  self.tableView.orderActionView.order = order;
-  [self.tableView reloadData];
-  [self layoutTableView];
-  [self updateTitle];
+  if (order) {
+    
+    _paymentView.order = order;
+    _dataSource.order = order;
+    self.tableView.orderActionView.order = order;
+    [self.tableView reloadData];
+    [self layoutTableView];
+    [self updateTitle];
+
+  }
+  else {
+    
+    [self showCloseOrderAlertIfNeeded];
+    
+  }
   
 }
 
 - (void)updateTitle {
 
   self.navigationItem.titleView = nil;
-  if (_restaurantMediator.restaurant.orders.count > 1) {
+  if (_restaurantMediator.orders.count > 1) {
     
-    NSUInteger index = [_restaurantMediator.restaurant.orders indexOfObject:_restaurantMediator.selectedOrder];
+    NSUInteger index = [_restaurantMediator.orders indexOfObject:_restaurantMediator.selectedOrder];
     if (NSNotFound != index) {
       
       UIButton *button = [[OMNSelectOrderButton alloc] init];
@@ -335,7 +308,8 @@ OMNPaymentFooterViewDelegate>
 
 - (void)showRatingForBill:(OMNBill *)bill {
   
-  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] init];
+#warning showRatingForBill
+  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithMediator:_restaurantMediator];
   ratingVC.backgroundImage = self.backgroundImage;
   ratingVC.delegate = self;
   [self.navigationController pushViewController:ratingVC animated:YES];

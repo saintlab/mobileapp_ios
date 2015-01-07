@@ -30,6 +30,12 @@
   
 }
 
++ (CGFloat)height {
+  
+  return 114.0f;
+  
+}
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -84,8 +90,6 @@
 
 - (void)setup {
 
-  
-  
   UIColor *color = [UIColor whiteColor];
 
   self.selectedBackgroundView = [[UIView alloc] init];

@@ -13,6 +13,7 @@
 #import "OMNAnalitics.h"
 #import <OMNStyler.h>
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNRestaurant+omn_network.h"
 
 #import "OMNLabelCell.h"
 #import "OMNRestaurantFeedItemCell.h"

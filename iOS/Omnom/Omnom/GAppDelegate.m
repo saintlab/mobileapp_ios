@@ -10,9 +10,7 @@
 #import "OMNAnalitics.h"
 #import "OMNAuthorization.h"
 #import "OMNBeaconBackgroundManager.h"
-#import "OMNOperationManager.h"
 #import "OMNStartVC.h"
-#import "OMNVisitorManager.h"
 #import <Crashlytics/Crashlytics.h>
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
@@ -28,7 +26,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-  
 #if OMN_TEST
   return YES;
 #endif
@@ -42,9 +39,11 @@
     
     [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, BOOL athTheTable, dispatch_block_t comletionBlock) {
       
-      [[OMNVisitorManager manager] handleBackgroundBeacon:beacon
-                                              athTheTable:athTheTable
-                                           withCompletion:(athTheTable)?(comletionBlock):(nil)];
+#warning handleBackgroundBeacon
+      
+//      [[OMNVisitorManager manager] handleBackgroundBeacon:beacon
+//                                              athTheTable:athTheTable
+//                                           withCompletion:(athTheTable)?(comletionBlock):(nil)];
       
     }];
     
@@ -176,11 +175,12 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
   
   NSLog(@"didReceiveLocalNotification>%@", notification);
-  if (notification.userInfo[OMNVisitorNotificationLaunchKey]) {
-    
-    [self startApplicationIfNeededWithInfo:notification.userInfo];
-    
-  }
+#warning OMNVisitorNotificationLaunchKey
+//  if (notification.userInfo[OMNVisitorNotificationLaunchKey]) {
+//    
+//    [self startApplicationIfNeededWithInfo:notification.userInfo];
+//    
+//  }
   
 }
 

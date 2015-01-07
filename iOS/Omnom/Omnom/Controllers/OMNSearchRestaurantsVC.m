@@ -12,8 +12,6 @@
 #import "OMNTablePositionVC.h"
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNCircleRootVC.h"
-#import "OMNVisitorManager.h"
-#import "OMNScanQRCodeVC.h"
 #import "OMNTurnOnBluetoothVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNDemoRestaurantVC.h"
@@ -28,7 +26,6 @@
 
 @interface OMNSearchRestaurantsVC ()
 <OMNTablePositionVCDelegate,
-OMNScanQRCodeVCDelegate,
 OMNDemoRestaurantVCDelegate,
 OMNUserInfoVCDelegate,
 OMNBeaconsSearchManagerDelegate>
@@ -128,9 +125,10 @@ OMNBeaconsSearchManagerDelegate>
   }
   else if (self.qr) {
     
+    
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf scanQRCodeVC:nil didScanCode:weakSelf.qr];
+      [weakSelf processQrCode:weakSelf.qr];
       
     });
     
@@ -146,6 +144,22 @@ OMNBeaconsSearchManagerDelegate>
     });
     
   }
+  
+}
+
+- (void)processQrCode:(NSString *)code {
+  
+  [self.loaderView startAnimating:10.0f];
+  __weak typeof(self)weakSelf = self;
+  [OMNRestaurantManager decodeQR:code withCompletion:^(NSArray *restaurants) {
+    
+    [weakSelf didFindRestaurants:restaurants];
+    
+  } failureBlock:^(OMNError *error) {
+    
+    [weakSelf beaconsNotFound];
+    
+  }];
   
 }
 
@@ -167,7 +181,12 @@ OMNBeaconsSearchManagerDelegate>
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
   [self stopBeaconManager];
-  [self.delegate searchRestaurantsVC:self didFindRestaurants:restaurants];
+  __weak typeof(self)weakSelf = self;
+  [self finishLoading:^{
+  
+    [weakSelf.delegate searchRestaurantsVC:weakSelf didFindRestaurants:restaurants];
+    
+  }];
   
 }
 
@@ -265,74 +284,6 @@ OMNBeaconsSearchManagerDelegate>
   
 }
 
-- (void)requestQRCode {
-  
-  OMNScanQRCodeVC *scanQRCodeVC = [[OMNScanQRCodeVC alloc] init];
-  scanQRCodeVC.backgroundImage = self.backgroundImage;
-  scanQRCodeVC.navigationItem.rightBarButtonItem = [self userInfoButton];
-  __weak typeof(self)weakSelf = self;
-  scanQRCodeVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:nil image:nil block:nil],
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Демо-режим", nil) image:[UIImage imageNamed:@"demo_mode_icon_small"] block:^{
-      [weakSelf demoModeTap];
-    }]
-    ];
-  scanQRCodeVC.delegate = self;
-  [self.navigationController pushViewController:scanQRCodeVC animated:YES];
-  
-}
-
-#pragma mark - OMNScanQRCodeVCDelegate
-
-- (void)scanQRCodeVC:(OMNScanQRCodeVC *)scanQRCodeVC didScanCode:(NSString *)code {
-
-  [scanQRCodeVC stopScanning];
-  __weak typeof(self)weakSelf = self;
-  [self.loaderView startAnimating:10.0f];
-  [self.navigationController omn_popToViewController:self animated:YES completion:^{
-    
-    [OMNRestaurantManager decodeQR:code withCompletion:^(NSArray *restaurants) {
-      
-      [weakSelf didFindRestaurants:restaurants];
-      
-    } failureBlock:^(OMNError *error) {
-      
-      [scanQRCodeVC setText:NSLocalizedString(@"SCAN_QR_ERROR_TEXT", @"Неверный QR-код,\nнайдите Omnom.") error:YES];
-      [weakSelf didFailQRCode:error];
-
-    }];
-    
-  }];
-  
-}
-
-- (void)didFailQRCode:(NSError *)error {
-  
-  OMNCircleRootVC *repeatVC = [[OMNCircleRootVC alloc] initWithParent:self];
-  repeatVC.faded = YES;
-  repeatVC.text = error.localizedDescription;
-  repeatVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
-  __weak typeof(self)weakSelf = self;
-  repeatVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      [weakSelf startSearchingBeacons];
-    }]
-    ];
-  [self.navigationController pushViewController:repeatVC animated:YES];
-  
-}
-
-- (void)scanQRCodeVCDidCancel:(OMNScanQRCodeVC *)scanQRCodeVC {
-  
-  [scanQRCodeVC stopScanning];
-  [self.navigationController omn_popToViewController:self animated:YES completion:^{
-    
-  }];
-  
-}
-
 - (void)didFailOmnom:(OMNError *)error {
   
   [[OMNAnalitics analitics] logTargetEvent:@"no_table" parametrs:nil];
@@ -399,7 +350,7 @@ OMNBeaconsSearchManagerDelegate>
     } break;
     case kBLESearchManagerBLEUnsupported: {
       
-      [self requestQRCode];
+      [self beaconsNotFound];
       
     } break;
     case kBLESearchManagerRequestTurnBLEOn: {
@@ -476,25 +427,7 @@ OMNBeaconsSearchManagerDelegate>
 
 - (void)beaconsNotFound {
   
-  [self.delegate searchRestaurantsVC:self didFindRestaurants:@[]];
-  return;
-  OMNCircleRootVC *notFoundBeaconVC = [[OMNCircleRootVC alloc] initWithParent:self];
-  notFoundBeaconVC.faded = YES;
-  notFoundBeaconVC.text = NSLocalizedString(@"Телефон в центре стола?\nЗаведение подключено\nк Omnom?", nil);
-  notFoundBeaconVC.circleIcon = [UIImage imageNamed:@"weak_signal_table_icon_big"];
-  notFoundBeaconVC.navigationItem.rightBarButtonItem = [self userInfoButton];
-
-  __weak typeof(self)weakSelf = self;
-  notFoundBeaconVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      [weakSelf startSearchingBeacons];
-    }],
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Демо-режим", nil) image:[UIImage imageNamed:@"demo_mode_icon_small"] block:^{
-      [weakSelf demoModeTap];
-    }]
-    ];
-  [self.navigationController pushViewController:notFoundBeaconVC animated:YES];
+  [self didFindRestaurants:@[]];
   
 }
 

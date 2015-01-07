@@ -9,31 +9,9 @@
 #import "OMNRestaurantManager.h"
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
+#import "OMNRestaurant+omn_network.h"
 
 @implementation OMNRestaurantManager
-
-+ (instancetype)sharedManager {
-  static id manager = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    manager = [[[self class] alloc] init];
-  });
-  return manager;
-}
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(stopWaiterCall) name:OMNSocketIOWaiterCallDoneNotification object:[OMNSocketManager manager]];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidChangeNotification object:[OMNSocketManager manager]];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNSocketIOOrderDidCloseNotification object:[OMNSocketManager manager]];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidCreate:) name:OMNSocketIOOrderDidCreateNotification object:[OMNSocketManager manager]];
-    
-  }
-  return self;
-}
 
 + (void)decodeBeacons:(NSArray *)beacons withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
   
@@ -48,6 +26,8 @@
     failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
     return;
   }
+
+  [[OMNAnalitics analitics] logDebugEvent:@"BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:nil];
   
   [[OMNOperationManager sharedManager] POST:@"/v2/decode/ibeacons/omnom" parameters:@{@"beacons" : jsonBeacons} success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
@@ -56,6 +36,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
@@ -64,13 +45,15 @@
 
 + (void)demoRestaurantWithCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
   
-  [[OMNOperationManager sharedManager] POST:@"/v2/decode/demo" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  NSString *path = @"/v2/decode/demo";
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
     completionBlock(restaurants);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
@@ -91,6 +74,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
@@ -117,5 +101,46 @@
   
 }
 
+- (void)handleBackgroundBeacon:(OMNBeacon *)beacon athTheTable:(BOOL)athTheTable withCompletion:(dispatch_block_t)completionBlock {
+  /*
+   if (nil == beacon) {
+   completionBlock();
+   return;
+   }
+   
+   [self decodeBeacon:beacon success:^(OMNVisitor *visitor) {
+   
+   if (nil == visitor) {
+   
+   if (completionBlock) {
+   
+   completionBlock();
+   
+   }
+   
+   }
+   else if (athTheTable) {
+   #warning handleAtTheTableEventWithCompletion
+   //      [visitor handleAtTheTableEventWithCompletion:completionBlock];
+   
+   }
+   else {
+   #warning handleRestaurantEnterEventWithCompletion:completionBlock
+   //      [visitor handleRestaurantEnterEventWithCompletion:completionBlock];
+   
+   }
+   
+   } failure:^(NSError *error) {
+   
+   if (athTheTable &&
+   completionBlock) {
+   
+   completionBlock();
+   
+   }
+   
+   }];
+   */
+}
 
 @end

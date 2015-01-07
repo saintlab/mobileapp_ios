@@ -11,7 +11,6 @@
 #import "OMNOrderItemsFlowLayout.h"
 #import "UIImage+omn_helper.h"
 #import "OMNToolbarButton.h"
-#import "OMNVisitor+network.h"
 #import "OMNRestaurantManager.h"
 
 @interface OMNOrdersVC ()
@@ -68,9 +67,7 @@ UICollectionViewDelegate>
   [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 
-#warning name:OMNOrderDidChangeNotification
-//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:OMNOrderDidChangeNotification object:_visitor];
-//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:OMNVisitorOrdersDidChangeNotification object:_visitor];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:OMNRestaurantOrdersDidChangeNotification object:nil];
   
 }
 
@@ -145,7 +142,7 @@ UICollectionViewDelegate>
 
 - (void)updateOrders {
   
-  NSInteger ordersCount = _restaurantMediator.restaurant.orders.count;
+  NSInteger ordersCount = _restaurantMediator.orders.count;
   _label.text = [NSString stringWithFormat:NSLocalizedString(@"На вашем столике\nраздельных счетов: %d", nil), ordersCount];
   _pageControl.numberOfPages = ordersCount;
   __weak typeof(self)weakSelf = self;
@@ -182,14 +179,14 @@ UICollectionViewDelegate>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
   
-  return _restaurantMediator.restaurant.orders.count;
+  return _restaurantMediator.orders.count;
   
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNOrderViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  OMNOrder *order = _restaurantMediator.restaurant.orders[indexPath.item];
+  OMNOrder *order = _restaurantMediator.orders[indexPath.item];
   
   if (1 == indexPath.item &&
       NO == _animationPerformed) {
@@ -213,7 +210,7 @@ UICollectionViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-  OMNOrder *order = _restaurantMediator.restaurant.orders[indexPath.item];
+  OMNOrder *order = _restaurantMediator.orders[indexPath.item];
   [self.delegate ordersVC:self didSelectOrder:order];
   
 }

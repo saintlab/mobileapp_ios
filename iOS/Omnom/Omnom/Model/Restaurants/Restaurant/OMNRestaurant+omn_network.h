@@ -8,7 +8,20 @@
 
 #import "OMNRestaurant.h"
 
+typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
+typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
+
 @interface OMNRestaurant (omn_network)
 
++ (void)getRestaurants:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock;
+- (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(NSError *error))failureBlock;
+- (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
+
+@end
+
+@interface NSObject (omn_restaurants)
+
+- (NSArray *)omn_restaurants;
+- (void)omn_decodeWithRestaurantsBlock:(OMNRestaurantsBlock)restaurantsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 
 @end

@@ -24,10 +24,12 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 @end
 
 @implementation OMNAnalitics {
+  
   Mixpanel *_mixpanel;
   Mixpanel *_mixpanelDebug;
   NSTimeInterval _serverTimeDelta;
   OMNUser *_user;
+  
 }
 
 + (instancetype)analitics {

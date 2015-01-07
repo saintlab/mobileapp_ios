@@ -14,13 +14,25 @@
 #import "OMNRestaurantListFeedbackCell.h"
 #import "OMNRestaurantCardVC.h"
 #import "OMNDemoRestaurantVC.h"
+#import "UIView+omn_autolayout.h"
+#import "UIView+frame.h"
+#import <OMNStyler.h>
+#import "OMNRestaurant+omn_network.h"
+#import "OMNUserInfoVC.h"
+#import "OMNScanTableQRCodeVC.h"
 
 @interface OMNRestaurantListVC ()
-<OMNDemoRestaurantVCDelegate>
+<OMNDemoRestaurantVCDelegate,
+OMNRestaurantCardVCDelegate,
+OMNUserInfoVCDelegate,
+OMNRestaurantActionsVCDelegate,
+OMNScanTableQRCodeVCDelegate>
 
 @end
 
 @implementation OMNRestaurantListVC {
+  
+  UIToolbar *_bottomToolbar;
   
 }
 
@@ -34,16 +46,22 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:NSLocalizedString(@"Демо-режим", nil)];
-  [demoButton addTarget:self action:@selector(demoModeTap) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:demoButton];
+  [self omn_setup];
   
-  self.navigationItem.rightBarButtonItems =
+  OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:NSLocalizedString(@"DEMO_MODE_BUTTON_TITLE", @"Демо-режим")];
+  [demoButton addTarget:self action:@selector(demoModeTap) forControlEvents:UIControlEventTouchUpInside];
+  
+  _bottomToolbar.items =
   @[
-    [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:self action:@selector(showUserProfile)],
-    [UIBarButtonItem omn_fixedItemWithSpace:20.0f],
-    [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"qr-icon-small"] color:[UIColor blackColor] target:self action:@selector(qrTap)],
+    [UIBarButtonItem omn_flexibleItem],
+    [[UIBarButtonItem alloc] initWithCustomView:demoButton],
+    [UIBarButtonItem omn_flexibleItem],
     ];
+  
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:self action:@selector(showUserProfile)];
+  OMNToolbarButton *qrButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"qr-icon-small"] title:NSLocalizedString(@"SCAN_QR_BUTTON_TITLE", @"Сканировать QR")];
+  [qrButton addTarget:self action:@selector(qrTap) forControlEvents:UIControlEventTouchUpInside];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:qrButton];
   
   self.refreshControl = [[UIRefreshControl alloc] init];
   [self.refreshControl addTarget:self action:@selector(refreshOrders) forControlEvents:UIControlEventValueChanged];
@@ -77,19 +95,38 @@
 
 - (void)qrTap {
   
+  OMNScanTableQRCodeVC *scanTableQRCodeVC = [[OMNScanTableQRCodeVC alloc] init];
+  scanTableQRCodeVC.tableDelegate = self;
+  [self.navigationController pushViewController:scanTableQRCodeVC animated:YES];
+  
 }
 
 - (void)showUserProfile {
   
+  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:nil];
+  userInfoVC.delegate = self;
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
+  navigationController.delegate = self.navigationController.delegate;
+  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+  
 }
 
 - (void)userFeedbackTap {
-  
+#warning userFeedbackTap
 }
 
 - (void)showCardForRestaurant:(OMNRestaurant *)restaurant {
   
   OMNRestaurantCardVC *restaurantCardVC = [[OMNRestaurantCardVC alloc] initWithRestaurant:restaurant];
+  restaurantCardVC.delegate = self;
+  [self.navigationController pushViewController:restaurantCardVC animated:YES];
+  
+}
+
+- (void)showRestaurant:(OMNRestaurant *)restaurant {
+  
+  OMNRestaurantActionsVC *restaurantCardVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
+  restaurantCardVC.delegate = self;
   [self.navigationController pushViewController:restaurantCardVC animated:YES];
   
 }
@@ -174,16 +211,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  CGFloat heightForRow = 44.0f;
+  CGFloat heightForRow = 0.0f;
   switch (indexPath.section) {
     case 0: {
       
-      heightForRow = 242.0f;
+      heightForRow = [OMNRestaurantCell height];
       
     } break;
     case 1: {
       
-      heightForRow = 114.0f;
+      heightForRow = [OMNRestaurantListFeedbackCell height];
       
     } break;
   }
@@ -212,6 +249,12 @@
   
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  
+  _bottomToolbar.transform = CGAffineTransformMakeTranslation(0.0f, scrollView.contentOffset.y + CGRectGetHeight(scrollView.frame) - CGRectGetHeight(_bottomToolbar.frame));
+
+}
+
 #pragma mark - OMNDemoRestaurantVCDelegate
 
 - (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC withError:(OMNError *)error {
@@ -223,6 +266,69 @@
 - (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC {
   
   [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+#pragma mark - OMNRestaurantCardVCDelegate
+
+- (void)restaurantCardVC:(OMNRestaurantCardVC *)restaurantCardVC didSelectRestaurant:(OMNRestaurant *)restaurant {
+  
+  [self showRestaurant:restaurant];
+  
+}
+
+- (void)restaurantCardVCDidFinish:(OMNRestaurantCardVC *)restaurantCardVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+
+#pragma mark - OMNUserInfoVCDelegate
+
+- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
+  
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+  
+}
+
+#pragma mark - OMNRestaurantActionsVCDelegate
+
+- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+#pragma mark - OMNScanTableQRCodeVCDelegate
+
+- (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant {
+  
+  [self showRestaurant:restaurant];
+  
+}
+
+- (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
+  
+}
+
+- (void)omn_setup {
+  
+  _bottomToolbar = [UIToolbar omn_autolayoutView];
+  [_bottomToolbar setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionAny];
+  [_bottomToolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
+  _bottomToolbar.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
+  [self.view addSubview:_bottomToolbar];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:[OMNStyler styler].bottomToolbarHeight.floatValue]];
+  
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  self.tableView.contentInset = insets;
+  self.tableView.scrollIndicatorInsets = insets;
   
 }
 

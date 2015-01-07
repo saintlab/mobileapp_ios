@@ -32,6 +32,7 @@ extern NSString * const kPushSoundName;
 extern const CGFloat kOrderTableFooterHeight;
 
 extern NSString * const OMNFacebookPageUrlString;
+extern NSString * const OMNFacebookAppUrlString;
 
 @interface OMNConstants : NSObject
 

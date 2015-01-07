@@ -117,12 +117,6 @@ OMNSearchRestaurantsVCDelegate>
 
 #pragma mark - OMNRestaurantActionsVCDelegate
 
-- (void)restaurantActionsVC:(OMNRestaurantActionsVC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
-#warning didChangeVisitor
-  [self.navigationController popToViewController:self animated:YES];
-  
-}
-
 - (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
   
   [self didFinish];

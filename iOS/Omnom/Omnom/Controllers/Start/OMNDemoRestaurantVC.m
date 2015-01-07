@@ -9,6 +9,8 @@
 #import "OMNDemoRestaurantVC.h"
 #import "OMNRestaurantActionsVC.h"
 #import "OMNRestaurantManager.h"
+#import "UIImage+omn_helper.h"
+#import <OMNStyler.h>
 
 @interface OMNDemoRestaurantVC ()
 <OMNRestaurantActionsVCDelegate>
@@ -24,6 +26,7 @@
   if (self) {
     
     self.circleIcon = [UIImage imageNamed:@"logo_icon"];
+    self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     
   }
@@ -86,10 +89,6 @@
   
   [self.delegate demoRestaurantVCDidFinish:self];
   
-}
-
-- (void)restaurantActionsVC:(OMNRestaurantActionsVC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
-  //do nothing
 }
 
 @end

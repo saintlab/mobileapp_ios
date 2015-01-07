@@ -234,12 +234,12 @@
   if (_starRatingView.score > 0.0f) {
     
     NSInteger score = (NSInteger)roundf(5*_starRatingView.score);
-#warning rating
-//    [[OMNAnalitics analitics] logScore:score order:_order];
+    [[OMNAnalitics analitics] logScore:score order:_restaurantMediator.selectedOrder];
     
   }
   
   [self.delegate ratingVCDidFinish:self];
+  
 }
 
 @end

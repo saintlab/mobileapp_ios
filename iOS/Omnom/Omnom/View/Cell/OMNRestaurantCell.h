@@ -14,5 +14,6 @@
 @property (nonatomic, strong) OMNRestaurant *restaurant;
 
 + (instancetype)cellForTableView:(UITableView *)tableView;
++ (CGFloat)height;
 
 @end

@@ -14,7 +14,6 @@
 @implementation OMNRestaurantDetailsView {
   
   UIButton *_workdayButton;
-  UILabel *_restaurantInfoLabelName;
   UILabel *_restaurantInfoLabelAddress;
   
 }
@@ -30,15 +29,6 @@
 }
 
 - (void)setup {
-  
-  _restaurantInfoLabelName = [[UILabel alloc] init];
-  _restaurantInfoLabelName.translatesAutoresizingMaskIntoConstraints = NO;
-  _restaurantInfoLabelName.numberOfLines = 1;
-  _restaurantInfoLabelName.textAlignment = NSTextAlignmentCenter;
-  _restaurantInfoLabelName.font = FuturaOSFOmnomRegular(30.0f);
-  _restaurantInfoLabelName.adjustsFontSizeToFitWidth = YES;
-  _restaurantInfoLabelName.textColor = colorWithHexString(@"000000");
-  [self addSubview:_restaurantInfoLabelName];
   
   _restaurantInfoLabelAddress = [[UILabel alloc] init];
   _restaurantInfoLabelAddress.translatesAutoresizingMaskIntoConstraints = NO;
@@ -58,10 +48,8 @@
   [_workdayButton setImage:[UIImage imageNamed:@"clock_icon"] forState:UIControlStateNormal];
   [self addSubview:_workdayButton];
   
-  
   NSDictionary *views =
   @{
-    @"restaurantInfoLabelName" : _restaurantInfoLabelName,
     @"restaurantInfoLabelAddress" : _restaurantInfoLabelAddress,
     @"workdayButton" : _workdayButton,
     };
@@ -72,17 +60,15 @@
     @"imageHeight" : @(110),
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[restaurantInfoLabelName]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[restaurantInfoLabelAddress]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[workdayButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[restaurantInfoLabelName]-[restaurantInfoLabelAddress]-[workdayButton]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[restaurantInfoLabelAddress]-[workdayButton]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
 - (void)setRestaurant:(OMNRestaurant *)restaurant {
   
   _restaurant = restaurant;
-  _restaurantInfoLabelName.text = _restaurant.title;
   _restaurantInfoLabelAddress.text = _restaurant.address.street;
   [_workdayButton setTitle:_restaurant.schedules.work.fromToText forState:UIControlStateNormal];
 

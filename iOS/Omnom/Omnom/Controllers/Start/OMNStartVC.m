@@ -15,7 +15,6 @@
 #import "OMNNavigationController.h"
 #import "OMNAnalitics.h"
 #import "UINavigationController+omn_replace.h"
-#import "OMNVisitorManager.h"
 #import "NSURL+omn_query.h"
 
 @interface OMNStartVC ()
@@ -122,11 +121,12 @@ OMNSearchRestaurantVCDelegate>
 //  searchRestaurantVC.qr = @"http://omnom.menu/qr/special-and-vip";
 //  searchRestaurantVC.qr = @"http://m.2gis.ru/os/";
 
-  NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
-  if (decodeBeaconData) {
-    OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
+#warning decodeBeaconData
+//  NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
+//  if (decodeBeaconData) {
+//    OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
 //    searchRestaurantVC.visitor = visitor;
-  }
+//  }
 
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];
   navigationController.navigationBar.barStyle = UIBarStyleDefault;

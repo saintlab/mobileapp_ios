@@ -24,7 +24,6 @@
 
 @protocol OMNRestaurantActionsVCDelegate <NSObject>
 
-//- (void)restaurantActionsVC:(OMNRestaurantActionsVC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor;
 - (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC;
 
 @end
