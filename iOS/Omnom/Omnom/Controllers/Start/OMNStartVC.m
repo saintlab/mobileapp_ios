@@ -26,6 +26,7 @@ OMNSearchRestaurantVCDelegate>
 @implementation OMNStartVC {
   
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
+  BOOL _authorizationPresented;
   
 }
 
@@ -44,7 +45,7 @@ OMNSearchRestaurantVCDelegate>
     
     [weakSelf dismissViewControllerAnimated:YES completion:^{
       
-      [weakSelf requestAuthorization];
+      [weakSelf requestAuthorizationIfNeeded];
       
     }];
   };
@@ -70,33 +71,11 @@ OMNSearchRestaurantVCDelegate>
     }
     else {
       
-      [weakSelf requestAuthorization];
+      [weakSelf requestAuthorizationIfNeeded];
       
     }
     
   }];
-  
-}
-
-- (void)handleUserTokenError:(OMNError *)error {
-  
-  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:nil];
-  noInternetVC.text = error.localizedDescription;
-  noInternetVC.faded = YES;
-  noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
-  __weak typeof(self)weakSelf = self;
-  noInternetVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      
-      [weakSelf checkUserToken];
-      
-    }],
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Отменить", nil) image:nil block:^{
-      
-    }]
-    ];
-  [self.navigationController pushViewController:noInternetVC animated:YES];
   
 }
 
@@ -137,8 +116,12 @@ OMNSearchRestaurantVCDelegate>
 
 }
 
-- (void)requestAuthorization {
+- (void)requestAuthorizationIfNeeded {
   
+  if (_authorizationPresented) {
+    return;
+  }
+  _authorizationPresented = YES;
   OMNAuthorizationVC *authorizationVC = [[OMNAuthorizationVC alloc] init];
   authorizationVC.delegate = self;
   [self.navigationController pushViewController:authorizationVC animated:YES];
@@ -158,6 +141,7 @@ OMNSearchRestaurantVCDelegate>
 - (void)authorizationVCDidReceiveToken:(OMNAuthorizationVC *)startVC {
   
   __weak typeof(self)weakSelf = self;
+  _authorizationPresented = NO;
   [self.navigationController omn_popToViewController:self animated:NO completion:^{
   
     [weakSelf startSearchingRestaurant];

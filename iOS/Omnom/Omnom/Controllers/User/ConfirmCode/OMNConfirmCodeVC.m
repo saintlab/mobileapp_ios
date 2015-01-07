@@ -33,7 +33,9 @@
 - (instancetype)initWithPhone:(NSString *)phone {
   self = [super init];
   if (self) {
+    
     _phone = phone;
+    
   }
   return self;
 }
@@ -93,6 +95,7 @@
 }
 
 - (void)startTimer {
+  
   [_timer invalidate];
   _resendButton.enabled = NO;
   __weak UIButton *resendButton = _resendButton;
@@ -103,11 +106,14 @@
     } completion:nil];
     
   } repeats:NO];
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  
   [_codeView becomeFirstResponder];
+  
 }
 
 - (void)resentTap {
@@ -120,7 +126,9 @@
 - (void)didFinishReset {
 
   if ([self.delegate respondsToSelector:@selector(confirmCodeVCDidResetPhone:)]) {
+    
     [self.delegate confirmCodeVCDidResetPhone:self];
+    
   }
   
 }
@@ -128,6 +136,7 @@
 - (void)didEnterCode {
   
   _codeView.enabled = NO;
+  _resendButton.enabled = NO;
   UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   [spinner startAnimating];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
@@ -156,11 +165,8 @@
   
   _codeView.code = @"";
   _codeView.enabled = YES;
+  _resendButton.enabled = YES;
+  
 }
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-}
-
 
 @end

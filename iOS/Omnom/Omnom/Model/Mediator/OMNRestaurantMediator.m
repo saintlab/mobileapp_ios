@@ -38,6 +38,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)dealloc {
   
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   if (!_restaurant.is_demo) {
     
     [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];

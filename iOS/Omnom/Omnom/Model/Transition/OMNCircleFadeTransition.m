@@ -105,7 +105,6 @@
     
     [self keyFromClass:[OMNOrderPaymentVC class] toClass:[OMNLoadingCircleVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNOrderPaymentVC class]],
-    [self keyFromClass:[OMNStartVC class] toClass:[OMNAuthorizationVC class]],
     
     ];
 }
