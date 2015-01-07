@@ -7,8 +7,8 @@
 //
 
 #import "OMNSearchBeaconToPayOrderTransition.h"
-#import "OMNSearchVisitorVC.h"
-#import "OMNPayOrderVC.h"
+#import "OMNSearchRestaurantsVC.h"
+#import "OMNOrderCalculationVC.h"
 #import "OMNOrdersVC.h"
 #import <OMNStyler.h>
 #import "OMNPushPermissionVC.h"
@@ -111,12 +111,12 @@
 + (NSArray *)keys {
   return
   @[
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNPayOrderVC class]],
-    [self keyFromClass:[OMNSearchVisitorVC class] toClass:[OMNOrdersVC class]],
-    [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNPayOrderVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNOrderCalculationVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNOrdersVC class]],
+    [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNOrderCalculationVC class]],
     [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNOrdersVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrdersVC class]],
-    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNPayOrderVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrderCalculationVC class]],
     ];
 }
 

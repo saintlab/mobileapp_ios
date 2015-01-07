@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNRestaurant.h"
 
 @interface OMNRestaurantListVC : UITableViewController
+
+@property (nonatomic, strong) NSArray *restaurants;
 
 @end

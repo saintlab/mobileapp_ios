@@ -8,17 +8,17 @@
 
 #import "OMNTransitionFromOrderToOrders.h"
 #import "OMNOrdersVC.h"
-#import "OMNPayOrderVC.h"
+#import "OMNOrderCalculationVC.h"
 #import "OMNOrderViewCell.h"
 @implementation OMNTransitionFromOrderToOrders
 
 + (NSArray *)keys {
-  return @[[self keyFromClass:[OMNPayOrderVC class] toClass:[OMNOrdersVC class]]];
+  return @[[self keyFromClass:[OMNOrderCalculationVC class] toClass:[OMNOrdersVC class]]];
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  OMNPayOrderVC *fromViewController = (OMNPayOrderVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  OMNOrderCalculationVC *fromViewController = (OMNOrderCalculationVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNOrdersVC *toViewController = (OMNOrdersVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   // Get a snapshot of the thing cell we're transitioning from

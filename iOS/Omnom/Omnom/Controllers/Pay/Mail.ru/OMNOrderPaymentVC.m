@@ -11,9 +11,7 @@
 #import "OMNCardBrandView.h"
 #import "OMNLoadingCircleVC.h"
 #import "OMNMailRUCardConfirmVC.h"
-#import "OMNMailRUPayVC.h"
-#import "OMNMailRuBankCardsModel.h"
-#import "OMNTestBankCardsModel.h"
+#import "OMNOrderPaymentVC.h"
 #import "OMNOperationManager.h"
 #import "OMNOrder+network.h"
 #import "OMNOrder+omn_mailru.h"
@@ -28,14 +26,15 @@
 #import "OMNBankCard.h"
 #import "OMNBankCardMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNRestaurant+omn_payment.h"
 
-@interface OMNMailRUPayVC()
+@interface OMNOrderPaymentVC()
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
 
 @end
 
-@implementation OMNMailRUPayVC {
+@implementation OMNOrderPaymentVC {
 
   UILabel *_errorLabel;
   
@@ -43,6 +42,7 @@
   UIButton *_payButton;
   UIView *_bottomView;
   
+  OMNRestaurant *_restaurant;
   OMNOrder *_order;
   OMNBill *_bill;
   OMNBankCardsModel *_bankCardsModel;
@@ -64,12 +64,13 @@
   
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (instancetype)initWithOrder:(OMNOrder *)order restaurant:(OMNRestaurant *)restaurant {
   self = [super init];
   if (self) {
     
     _order = order;
-
+    _restaurant = restaurant;
+    
   }
   return self;
 }
@@ -77,25 +78,16 @@
 - (void)viewDidLoad {
   
   [super viewDidLoad];
-  self.view.backgroundColor = [UIColor whiteColor];
-  
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-  [self setup];
-  
-  __weak typeof(self)weakSelf = self;
-  if (self.demo) {
-    
-    _bankCardsModel = [[OMNTestBankCardsModel alloc] initWithRootVC:self];
-    
-  }
-  else {
-    
-    _bankCardsModel = [[OMNMailRuBankCardsModel alloc] initWithRootVC:self];
-    
-  }
 
+  [self omn_setup];
+  
+  self.view.backgroundColor = [UIColor whiteColor];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+  
+  _bankCardsModel = [_restaurant bankCardsModelWithRootVC:self];
   [_bankCardsModel addObserver:self forKeyPath:NSStringFromSelector(@selector(loading)) options:(NSKeyValueObservingOptionNew) context:NULL];
 
+  __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
     return weakSelf;
@@ -239,7 +231,7 @@
 
 - (void)mailRuDidFinish {
 
-  [self.delegate mailRUPayVCDidFinish:self withBill:_bill];
+  [self.delegate orderPaymentVCDidFinish:self withBill:_bill];
   
 }
 
@@ -251,19 +243,19 @@
 
 - (void)orderDidClosed {
   
-  [self.delegate mailRUPayVCOrderDidClosed:self];
+  [self.delegate orderPaymentVCOrderDidClosed:self];
   
 }
 
 - (void)demoPay {
   
-  [self.delegate mailRUPayVCDidFinish:self withBill:nil];
+  [self.delegate orderPaymentVCDidFinish:self withBill:nil];
   
 }
 
 - (void)cancelTap {
   
-  [self.delegate mailRUPayVCDidCancel:self];
+  [self.delegate orderPaymentVCDidCancel:self];
   
 }
 
@@ -281,7 +273,7 @@
   
 }
 
-- (void)setup {
+- (void)omn_setup {
   
   _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
   _tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;

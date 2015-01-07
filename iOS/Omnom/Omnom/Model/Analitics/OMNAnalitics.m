@@ -11,7 +11,7 @@
 #import "OMNOrderTansactionInfo.h"
 #import "OMNUser.h"
 #import "OMNUser+network.h"
-#import "OMNVisitor.h"
+#import "OMNRestaurant.h"
 #import <AFNetworking.h>
 #import <Mixpanel.h>
 #import "OMNAuthorization.h"
@@ -24,10 +24,12 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 @end
 
 @implementation OMNAnalitics {
+  
   Mixpanel *_mixpanel;
   Mixpanel *_mixpanelDebug;
   NSTimeInterval _serverTimeDelta;
   OMNUser *_user;
+  
 }
 
 + (instancetype)analitics {
@@ -130,26 +132,28 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logEnterRestaurant:(OMNVisitor *)visitor mode:(RestaurantEnterMode)mode {
+- (void)logEnterRestaurant:(OMNRestaurant *)restaurant mode:(RestaurantEnterMode)mode {
   
   NSMutableDictionary *properties = [NSMutableDictionary dictionary];
-  if (visitor.restaurant.title) {
-    properties[@"restaurant_name"] = visitor.restaurant.title;
+  if (restaurant.title) {
+    properties[@"restaurant_name"] = restaurant.title;
   }
-  if (visitor.restaurant.id) {
-    properties[@"restaurant_id"] = visitor.restaurant.id;
+  if (restaurant.id) {
+    properties[@"restaurant_id"] = restaurant.id;
   }
-  if (visitor.beacon) {
-    properties[@"method_used"] = @"Bluetooth";
-    properties[@"id"] = [visitor.beacon key];
-  }
-  else {
-    properties[@"method_used"] = @"QR";
-  }
+#warning logEnterRestaurant
+//  if (visitor.beacon) {
+//    properties[@"method_used"] = @"Bluetooth";
+//    properties[@"id"] = [visitor.beacon key];
+//  }
+//  else {
+//    properties[@"method_used"] = @"QR";
+//  }
   properties[@"timestamp"] = [self dateString];
 
-  if (visitor.table.id) {
-    properties[@"table_id"] = visitor.table.id;
+  if (1 == restaurant.tables.count) {
+    OMNTable *table = restaurant.tables[0];
+    properties[@"table_id"] = table.id;
   }
   
   NSString *eventName = @"";
@@ -196,15 +200,9 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logRegister {
+- (void)logUserLoginWithRegistration:(BOOL)withRegistration {
   
-  [_mixpanel track:@"user_registered" properties:nil];
-  
-}
-
-- (void)logLogin {
-  
-  [_mixpanel track:@"user_login" properties:nil];
+  [_mixpanel track:(withRegistration) ? (@"user_registered") : (@"user_login") properties:nil];
 
   [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
     

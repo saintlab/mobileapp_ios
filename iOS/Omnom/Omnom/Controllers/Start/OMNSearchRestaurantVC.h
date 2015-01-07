@@ -6,14 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchVisitorVC.h"
+#import "OMNSearchRestaurantsVC.h"
 #import "OMNRestaurant.h"
 
 @protocol OMNSearchRestaurantVCDelegate;
 
 @interface OMNSearchRestaurantVC : UIViewController
 
-@property (nonatomic, strong) OMNVisitor *visitor;
 @property (nonatomic, copy) NSString *qr;
 @property (nonatomic, strong) UIImageView *logoIV;
 @property (weak, nonatomic) IBOutlet UIImageView *logoIconsIV;

@@ -215,7 +215,7 @@
     else {
       
       [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-      failureBlock(nil);
+      userBlock(nil);
       
     }
     

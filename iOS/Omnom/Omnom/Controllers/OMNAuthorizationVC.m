@@ -125,20 +125,15 @@
   [OMNAuthorization authorisation].token = token;
 
   __weak typeof(self)weakSelf = self;
-  [[OMNAuthorization authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
-    
-    if (fromRegstration) {
-      
-      [[OMNAnalitics analitics] logRegister];
-      
-    }
-    else {
-      
-      [[OMNAnalitics analitics] logLogin];
-      
-    }
-    [weakSelf processAuthorisation];
 
+  [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
+    
+    [[OMNAnalitics analitics] logUserLoginWithRegistration:fromRegstration];
+    [weakSelf processAuthorisation];
+    
+  } failure:^(OMNError *error) {
+    
+    [weakSelf processAuthorisation];
     
   }];
   
@@ -147,7 +142,9 @@
 - (void)processAuthorisation {
   
   [self dismissViewControllerAnimated:NO completion:^{
+    
     [self.delegate authorizationVCDidReceiveToken:self];
+    
   }];
   
 }

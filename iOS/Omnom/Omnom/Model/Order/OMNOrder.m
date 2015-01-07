@@ -358,3 +358,26 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 }
 
 @end
+
+@implementation NSObject (omn_orders)
+
+- (NSArray *)omn_orders {
+  
+  if (![self isKindOfClass:[NSArray class]]) {
+    return @[];
+  }
+  
+  NSArray *ordersData = (NSArray *)self;
+  NSMutableArray *orders = [NSMutableArray arrayWithCapacity:ordersData.count];
+  [ordersData enumerateObjectsUsingBlock:^(id orderData, NSUInteger idx, BOOL *stop) {
+    
+    OMNOrder *order = [[OMNOrder alloc] initWithJsonData:orderData];
+    [orders addObject:order];
+    
+  }];
+  
+  return [orders copy];
+  
+}
+
+@end

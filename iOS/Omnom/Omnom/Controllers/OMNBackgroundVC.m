@@ -87,8 +87,14 @@
 }
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage animated:(BOOL)animated {
+  
   _backgroundImage = backgroundImage;
   if (NO == self.isViewLoaded) {
+    return;
+  }
+  
+  if (!animated) {
+    _backgroundView.image = backgroundImage;
     return;
   }
   
@@ -99,11 +105,15 @@
   iv.image = backgroundImage;
   [_backgroundView insertSubview:iv atIndex:0];
   
-  [UIView animateWithDuration:0.5 animations:^{
+  [UIView animateWithDuration:0.8 animations:^{
+    
     iv.alpha = 1.0f;
+    
   } completion:^(BOOL finished) {
+    
     _backgroundView.image = backgroundImage;
     [iv removeFromSuperview];
+    
   }];
   
 }

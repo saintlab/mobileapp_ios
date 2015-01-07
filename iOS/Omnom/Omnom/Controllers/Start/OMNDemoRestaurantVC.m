@@ -7,8 +7,10 @@
 //
 
 #import "OMNDemoRestaurantVC.h"
-#import "OMNVisitorManager.h"
 #import "OMNRestaurantActionsVC.h"
+#import "OMNRestaurantManager.h"
+#import "UIImage+omn_helper.h"
+#import <OMNStyler.h>
 
 @interface OMNDemoRestaurantVC ()
 <OMNRestaurantActionsVCDelegate>
@@ -24,6 +26,7 @@
   if (self) {
     
     self.circleIcon = [UIImage imageNamed:@"logo_icon"];
+    self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     
   }
@@ -40,11 +43,25 @@
   [self.loaderView startAnimating:10.0];
   _decodeBeaconsStarted = YES;
   __weak typeof(self)weakSelf = self;
-  [[OMNVisitorManager manager] demoVisitor:^(OMNVisitor *visitor) {
+  
+  [OMNRestaurantManager demoRestaurantWithCompletion:^(NSArray *restaurants) {
     
-    [weakSelf didFindVisitor:visitor];
+    if (restaurants.count) {
+      
+      [weakSelf finishLoading:^{
+        
+        [weakSelf didFindRestaurant:restaurants[0]];
+        
+      }];
+
+    }
+    else {
     
-  } failure:^(OMNError *error) {
+      [weakSelf didFailOmnom:nil];
+      
+    }
+    
+  } failureBlock:^(OMNError *error) {
     
     [weakSelf didFailOmnom:error];
     
@@ -58,50 +75,9 @@
   
 }
 
-- (void)didFindVisitor:(OMNVisitor *)visitor {
-  _visitor = visitor;
-  
-  __weak typeof(self)weakSelf = self;
-  [_visitor.restaurant.decoration loadLogo:^(UIImage *image) {
-    
-    if (image) {
-      
-      [weakSelf didLoadLogo];
-      
-    }
-    else {
-      
-      [weakSelf didFailOmnom:[OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]];
-      
-    }
-    
-  }];
-  
-}
+- (void)didFindRestaurant:(OMNRestaurant *)restaurant {
 
-- (void)didLoadLogo {
-  
-  OMNRestaurantDecoration *decoration = _visitor.restaurant.decoration;
-  __weak typeof(self)weakSelf = self;
-  [self setLogo:decoration.logo withColor:decoration.background_color completion:^{
-    
-    [decoration loadBackgroundBlurred:YES completion:^(UIImage *image) {
-      
-      [weakSelf finishLoading:^{
-        
-        [weakSelf didLoadBackground];
-        
-      }];
-      
-    }];
-    
-  }];
-  
-}
-
-- (void)didLoadBackground {
-  
-  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithVisitor:_visitor];
+  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
   restaurantActionsVC.delegate = self;
   [self.navigationController pushViewController:restaurantActionsVC animated:YES];
   
@@ -114,14 +90,5 @@
   [self.delegate demoRestaurantVCDidFinish:self];
   
 }
-
-- (void)restaurantActionsVC:(OMNRestaurantActionsVC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
-  //do nothing
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
-}
-
 
 @end

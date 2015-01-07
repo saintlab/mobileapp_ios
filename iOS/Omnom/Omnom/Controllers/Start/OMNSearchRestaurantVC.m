@@ -12,17 +12,19 @@
 #import "UINavigationController+omn_replace.h"
 #import <OMNStyler.h>
 #import "OMNAnalitics.h"
-#import "OMNVisitor+network.h"
 #import "OMNRestaurantActionsVC.h"
+#import "OMNRestaurantListVC.h"
+#import "OMNRestaurantMediator.h"
 
 @interface OMNSearchRestaurantVC ()
-<OMNRestaurantActionsVCDelegate>
+<OMNRestaurantActionsVCDelegate,
+OMNSearchRestaurantsVCDelegate>
 
 @end
 
 @implementation OMNSearchRestaurantVC {
 
-  OMNLoadingCircleVC *_loadingCircleVC;
+  OMNSearchRestaurantsVC *_searchRestaurantsVC;
   
 }
 
@@ -57,116 +59,53 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  __weak typeof(self)weakSelf = self;
-  OMNLoadingCircleVC *loadingCircleVC = nil;
-  if (self.visitor) {
+  OMNSearchRestaurantsVC *searchRestaurantsVC = [[OMNSearchRestaurantsVC alloc] init];
+  searchRestaurantsVC.delegate = self;
+  searchRestaurantsVC.qr = self.qr;
+
+  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
+  searchRestaurantsVC.circleBackground = circleBackground;
+  searchRestaurantsVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
+  searchRestaurantsVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
+
+  dispatch_async(dispatch_get_main_queue(), ^{
     
-    loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:nil];
+    [self.navigationController pushViewController:searchRestaurantsVC animated:YES];
+
+  });
+  
+  _searchRestaurantsVC = searchRestaurantsVC;
+  
+}
+
+- (void)didFindRestaurants:(NSArray *)restaurants {
+  
+  if (1 == restaurants.count) {
+    
+    OMNRestaurant *restaurant = [restaurants firstObject];
+    [self showRestaurant:restaurant];
     
   }
   else {
     
-    OMNSearchVisitorVC *searchVisitorVC = [[OMNSearchVisitorVC alloc] initWithParent:nil completion:^(OMNSearchVisitorVC *searchBeaconVC, OMNVisitor *visitor) {
-      
-      [weakSelf didFindVisitor:visitor];
-      
-    } cancelBlock:nil];
-    searchVisitorVC.qr = self.qr;
-    loadingCircleVC = searchVisitorVC;
+    [self chooseRestaurantFromRestaurants:restaurants];
     
   }
-  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
-  loadingCircleVC.circleBackground = circleBackground;
-  loadingCircleVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
-  loadingCircleVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-
-  dispatch_async(dispatch_get_main_queue(), ^{
-    
-    [self.navigationController omn_pushViewController:loadingCircleVC animated:YES completion:^{
-    
-      if (weakSelf.visitor) {
-        [loadingCircleVC.loaderView startAnimating:10.0f];
-        [weakSelf loadLogo];
-      }
-      
-    }];
-
-  });
-  
-  _loadingCircleVC = loadingCircleVC;
   
 }
 
-- (void)didFindVisitor:(OMNVisitor *)visitor {
+- (void)showRestaurant:(OMNRestaurant *)restaurant {
   
-  [visitor newGuestWithCompletion:^{
-  } failure:^(NSError *error) {
-  }];
-  self.visitor = visitor;
-  [self loadLogo];
-
-}
-
-- (void)loadLogo {
-  
-  __weak typeof(self)weakSelf = self;
-  __weak OMNLoadingCircleVC *loadingCircleVC = _loadingCircleVC;
-  [self.visitor.restaurant.decoration loadLogo:^(UIImage *image) {
-
-    if (image) {
-      
-      [weakSelf didLoadLogo];
-      
-    }
-    else {
-      
-      [loadingCircleVC showRetryMessageWithError:nil retryBlock:^{
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-          
-          [weakSelf loadLogo];
-          
-        });
-        
-      } cancelBlock:^{
-        
-        [weakSelf didFinish];
-        
-      }];
-      
-    }
-    
-  }];
-  
-}
-
-- (void)didLoadLogo {
-  
-  __weak typeof(_loadingCircleVC)weakBeaconSearch = _loadingCircleVC;
-  OMNRestaurantDecoration *decoration = self.visitor.restaurant.decoration;
-
-  __weak typeof(self)weakSelf = self;
-  [_loadingCircleVC setLogo:decoration.logo withColor:decoration.background_color completion:^{
-    
-    [decoration loadBackgroundBlurred:YES completion:^(UIImage *image) {
-      
-      [weakBeaconSearch finishLoading:^{
-        
-        [weakSelf didLoadBackground];
-        
-      }];
-
-    }];
-    
-  }];
-  
-}
-
-- (void)didLoadBackground {
-  
-  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithVisitor:self.visitor];
-  restaurantActionsVC.delegate = self;
+  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
   [self.navigationController pushViewController:restaurantActionsVC animated:YES];
+  
+}
+
+- (void)chooseRestaurantFromRestaurants:(NSArray *)restaurants {
+  
+  OMNRestaurantListVC *restaurantListVC = [[OMNRestaurantListVC alloc] init];
+  restaurantListVC.restaurants = restaurants;
+  [self.navigationController pushViewController:restaurantListVC animated:YES];
   
 }
 
@@ -178,14 +117,21 @@
 
 #pragma mark - OMNRestaurantActionsVCDelegate
 
-- (void)restaurantActionsVC:(OMNRestaurantActionsVC *)restaurantVC didChangeVisitor:(OMNVisitor *)visitor {
+- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
   
-  self.visitor = visitor;
-  [self.navigationController popToViewController:self animated:YES];
+  [self didFinish];
   
 }
 
-- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
+#pragma mark - OMNSearchRestaurantsVCDelegate
+
+- (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants {
+  
+  [self didFindRestaurants:restaurants];
+  
+}
+
+- (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {
   
   [self didFinish];
   

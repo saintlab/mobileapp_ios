@@ -7,7 +7,6 @@
 //
 
 #import "OMNBackgroundVC.h"
-#import "OMNVisitor.h"
 
 @interface OMNStartVC : OMNBackgroundVC
 

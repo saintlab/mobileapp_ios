@@ -30,10 +30,25 @@
   
   UILabel *_ratingLabel;
   TQStarRatingView *_starRatingView;
+  
+  OMNRestaurantMediator *_restaurantMediator;
+  
 }
 
 - (void)dealloc {
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
+}
+
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
+  self = [super init];
+  if (self) {
+    
+    _restaurantMediator = restaurantMediator;
+    
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -214,29 +229,17 @@
   
 }
 
-- (IBAction)chequeTap:(id)sender {
-  
-  [_order billCall:^{
-    
-  } failure:^(NSError *error) {
-    
-  }];
-}
-
 - (void)closeTap {
   
   if (_starRatingView.score > 0.0f) {
     
     NSInteger score = (NSInteger)roundf(5*_starRatingView.score);
-    [[OMNAnalitics analitics] logScore:score order:_order];
+    [[OMNAnalitics analitics] logScore:score order:_restaurantMediator.selectedOrder];
     
   }
   
   [self.delegate ratingVCDidFinish:self];
-}
-
-- (void)didReceiveMemoryWarning {
-  [super didReceiveMemoryWarning];
+  
 }
 
 @end

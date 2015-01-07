@@ -17,6 +17,8 @@
 
 NSString * const kPushSoundName = @"new_guest.caf";
 NSString * const OMNFacebookPageUrlString = @"https://www.facebook.com/omnom.menu/";
+NSString * const OMNFacebookAppUrlString = @"fb://profile/1548920272002383";
+
 //#define kEstimoteBeaconUUIDString @"B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 //#define kRadBeaconUSBUUIDString  @"2F234454-CF6D-4A0F-ADF2-F4911BA9FFA6"
 //old
@@ -35,6 +37,9 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   _customConfig = [self configWithName:lo.customConfigName];
+
+//#warning _customConfig
+//  _customConfig = [self configWithName:@"config_laaaab"];
   
   //setup keychain for background usage
   [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];

@@ -9,11 +9,9 @@
 #import "OMNCircleRootVC.h"
 
 @class OMNRestaurantMediator;
-@class OMNVisitor;
 
 @interface OMNR1VC : OMNCircleRootVC
 
-@property (nonatomic, strong, readonly) OMNVisitor *visitor;
 @property (nonatomic, assign, readonly) BOOL isViewVisible;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;

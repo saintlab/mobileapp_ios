@@ -6,21 +6,24 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchVisitorVC.h"
-
-@class OMNProduct;
-@class OMNRestaurantActionsVC;
+#import "OMNRestaurantActionsVC.h"
 
 @interface OMNRestaurantMediator : NSObject
 
-@property (nonatomic, strong, readonly) OMNVisitor *visitor;
+@property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
+@property (nonatomic, assign) BOOL waiterIsCalled;
+@property (nonatomic, strong, readonly) OMNTable *table;
+@property (nonatomic, strong) OMNOrder *selectedOrder;
+@property (nonatomic, strong) NSArray *orders;
 
-- (instancetype)initWithRootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC;
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC;
 
+- (void)checkOrders;
 - (void)showUserProfile;
 
-- (void)callBillAction:(UIButton *)button;
-- (void)callWaiterAction:(UIButton *)button;
+- (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock;
+- (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock;
+- (void)callBillWithCompletion:(dispatch_block_t)completionBlock;
 
 - (void)exitRestaurant;
 

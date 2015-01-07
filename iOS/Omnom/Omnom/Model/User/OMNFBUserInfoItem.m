@@ -22,7 +22,16 @@
     self.actionBlock = ^(__weak UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath) {
       
       [tv deselectRowAtIndexPath:indexPath animated:YES];
-      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:OMNFacebookPageUrlString]];
+      NSURL *facebookAppURL = [NSURL URLWithString:OMNFacebookAppUrlString];
+      if ([[UIApplication sharedApplication] canOpenURL:facebookAppURL]) {
+        
+        [[UIApplication sharedApplication] openURL:facebookAppURL];
+        
+      } else {
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:OMNFacebookPageUrlString]];
+        
+      }
       
     };
 

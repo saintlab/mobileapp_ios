@@ -22,18 +22,20 @@ UIPickerViewDelegate>
   __weak IBOutlet UIPickerView *_numberOfGuestsPicker;
   
   NSInteger _numberOfGuests;
+  OMNRestaurantMediator *_restaurantMediator;
   
-  long long _total;
 }
 
 - (void)dealloc {
   
 }
 
-- (instancetype)initWIthTotal:(long long)total {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super init];
   if (self) {
-    _total = total;
+    
+    _restaurantMediator = restaurantMediator;
+
   }
   return self;
 }
@@ -61,9 +63,15 @@ UIPickerViewDelegate>
   
 }
 
+- (long long)total {
+  
+  return _restaurantMediator.selectedOrder.totalAmount;
+  
+}
+
 - (void)updateTotalValue {
   
-  [self.delegate totalDidChange:ceil((double)_total / _numberOfGuests) showPaymentButton:YES];
+  [self.delegate totalDidChange:ceil((double)self.total / _numberOfGuests) showPaymentButton:YES];
   
 }
 

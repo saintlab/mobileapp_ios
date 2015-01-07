@@ -9,7 +9,7 @@
 #import "OMNOrderToRestaurantTransition.h"
 #import "OMNRestaurantActionsVC.h"
 #import "OMNOrdersVC.h"
-#import "OMNPayOrderVC.h"
+#import "OMNOrderCalculationVC.h"
 #import <OMNStyler.h>
 #import "OMNRatingVC.h"
 
@@ -102,7 +102,7 @@
   @[
     [self keyFromClass:[OMNRatingVC class] toClass:[OMNRestaurantActionsVC class]],
     [self keyFromClass:[OMNOrdersVC class] toClass:[OMNRestaurantActionsVC class]],
-    [self keyFromClass:[OMNPayOrderVC class] toClass:[OMNRestaurantActionsVC class]],
+    [self keyFromClass:[OMNOrderCalculationVC class] toClass:[OMNRestaurantActionsVC class]],
     ];
 }
 

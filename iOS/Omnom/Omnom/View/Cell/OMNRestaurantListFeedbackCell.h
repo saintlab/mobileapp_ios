@@ -11,5 +11,6 @@
 @interface OMNRestaurantListFeedbackCell : UITableViewCell
 
 + (instancetype)cellForTableView:(UITableView *)tableView;
++ (CGFloat)height;
 
 @end

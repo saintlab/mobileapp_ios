@@ -10,7 +10,7 @@
 @class OMNOrder;
 @class OMNOrderTansactionInfo;
 @class OMNUser;
-@class OMNVisitor;
+@class OMNRestaurant;
 
 typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
   kRestaurantEnterModeBackground = 0,
@@ -28,9 +28,8 @@ typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
 - (void)setUser:(OMNUser *)user;
 - (void)setServerTimeStamp:(NSTimeInterval)serverTimeStamp;
 - (void)setup;
-- (void)logRegister;
-- (void)logLogin;
-- (void)logEnterRestaurant:(OMNVisitor *)visitor mode:(RestaurantEnterMode)mode;
+- (void)logUserLoginWithRegistration:(BOOL)withRegistration;
+- (void)logEnterRestaurant:(OMNRestaurant *)restaurant mode:(RestaurantEnterMode)mode;
 - (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo bill_id:(NSString *)bill_id;
 - (void)logScore:(NSInteger)score order:(OMNOrder *)order;
 - (void)logBillView:(OMNOrder *)order;

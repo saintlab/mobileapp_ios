@@ -13,7 +13,9 @@
 #import "UIButton+omn_helper.h"
 
 @implementation OMNTableUserInfoItem {
+  
   OMNTable *_table;
+  
 }
 
 - (instancetype)initWithTable:(OMNTable *)table {
@@ -25,6 +27,7 @@
     
   }
   return self;
+  
 }
 
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {

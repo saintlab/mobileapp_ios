@@ -7,12 +7,13 @@
 //
 
 #import "OMNCalculatorVCDelegate.h"
+#import "OMNRestaurantMediator.h"
 
 @interface OMNSplitSelectionVC : UIViewController
 
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
-- (instancetype)initWIthTotal:(long long)total;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end
 

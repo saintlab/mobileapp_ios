@@ -67,7 +67,7 @@
   CGFloat animationRepeatCount = 3.0f;
   
   NSTimeInterval duration = 2.5;
-  NSTimeInterval delay = 0.0f;
+  NSTimeInterval delay = 0.0;
   NSTimeInterval animationPause = 1.5;
   NSTimeInterval totalAnimationCicleDuration = duration*animationRepeatCount + animationPause;
   _circleAnimationTimer = [NSTimer bk_scheduledTimerWithTimeInterval:totalAnimationCicleDuration block:^(NSTimer *timer) {
@@ -85,7 +85,7 @@
       
     }];
     
-    [UIView animateWithDuration:duration delay:delay options:0 animations:^{
+    [UIView animateWithDuration:duration delay:delay options:kNilOptions animations:^{
       [UIView setAnimationRepeatCount:animationRepeatCount];
       
       _iv2.transform = CGAffineTransformMakeScale(2.0f, 2.0f);
@@ -104,6 +104,7 @@
     
   } repeats:YES];
   [_circleAnimationTimer fire];
+  
 }
 
 - (void)stopTimer {

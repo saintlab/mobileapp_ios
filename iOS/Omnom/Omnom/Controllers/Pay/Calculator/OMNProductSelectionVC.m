@@ -10,7 +10,6 @@
 #import "OMNOrderDataSource.h"
 #import "OMNOrder.h"
 #import <BlocksKit+UIKit.h>
-#import "OMNVisitor.h"
 
 @interface OMNProductSelectionVC ()
 <UIAlertViewDelegate>
@@ -21,7 +20,7 @@
 
 @implementation OMNProductSelectionVC {
   
-  OMNOrder *_order;
+  OMNRestaurantMediator *_restaurantMediator;
   UIAlertView *_updateAlertView;
   
 }
@@ -32,10 +31,12 @@
   
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
-    _order = order;
+    
+    _restaurantMediator = restaurantMediator;
+    
   }
   return self;
 }
@@ -43,7 +44,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_order];
+  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_restaurantMediator.selectedOrder];
   [_dataSource registerCellsForTableView:self.tableView];
   
   _changedOrderItemsIDs = [NSMutableSet set];
@@ -85,8 +86,7 @@
 
 - (void)orderDidClose:(NSNotification *)n {
   
-  OMNOrder *closedOrder = n.userInfo[OMNOrderKey];
-  if ([_order.id isEqualToString:closedOrder.id]) {
+  if (!_restaurantMediator.selectedOrder) {
     
     _updateAlertView.delegate = nil;
     [_updateAlertView dismissWithClickedButtonIndex:_updateAlertView.cancelButtonIndex animated:NO];
@@ -118,8 +118,7 @@
   [[NSUserDefaults standardUserDefaults] synchronize];
   
   NSIndexPath *demoIndexPath = nil;
-  
-  OMNGuest *guest = [_order.guests firstObject];
+  OMNGuest *guest = [_restaurantMediator.selectedOrder.guests firstObject];
   if (guest.items.count) {
     demoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
   }
@@ -141,7 +140,7 @@
 
 - (void)updateIndexPath:(NSIndexPath *)indexPath {
   
-  if (nil == indexPath) {
+  if (!indexPath) {
     return;
   }
   
@@ -162,7 +161,8 @@
 
   if ([self.delegate respondsToSelector:@selector(totalDidChange:showPaymentButton:)]) {
     
-    [self.delegate totalDidChange:_order.selectedItemsTotal showPaymentButton:_order.hasSelectedItems];
+    OMNOrder *order = _restaurantMediator.selectedOrder;
+    [self.delegate totalDidChange:order.selectedItemsTotal showPaymentButton:order.hasSelectedItems];
     
   }
   

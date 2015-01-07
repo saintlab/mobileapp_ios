@@ -17,16 +17,11 @@
 @end
 
 @implementation OMNScanQRCodeVC {
+  
   AVCaptureSession *_captureSession;
   AVCaptureVideoPreviewLayer *_videoPreviewLayer;
   UILabel *_label;
-}
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-  }
-  return self;
+  
 }
 
 - (void)viewDidLoad {
@@ -190,6 +185,7 @@
 }
 
 - (void)stopScanning {
+  
   // Stop video capture and make the capture session object nil.
   [_captureSession stopRunning];
   _captureSession = nil;
@@ -198,12 +194,7 @@
   [_videoPreviewLayer removeFromSuperlayer];
   _videoPreviewLayer.delegate = nil;
   _videoPreviewLayer = nil;
-}
-
-- (void)didReceiveMemoryWarning
-{
-  [super didReceiveMemoryWarning];
-  // Dispose of any resources that can be recreated.
+  
 }
 
 @end

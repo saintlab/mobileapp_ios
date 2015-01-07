@@ -39,6 +39,7 @@
   self = [super init];
   if (self) {
   
+//@"https://www.dropbox.com/s/lnen3lflf295fov/IMG_1353.JPG?dl=1";//
     self.logoUrl = jsonData[@"logo"];
     self.background_imageUrl = jsonData[@"background_image"];
     self.background_color = [self colorFromString:jsonData[@"background_color"]];
@@ -54,6 +55,12 @@
   
 }
 
+- (UIImage *)woodBackgroundImage {
+  
+   return [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:self.background_color];
+  
+}
+
 - (void)loadLogo:(OMNImageBlock)imageBlock {
   
   __weak typeof(self)weakSelf = self;
@@ -66,29 +73,15 @@
   
 }
 
-- (void)loadBackgroundBlurred:(BOOL)blurred completion:(OMNImageBlock)imageBlock {
+- (void)loadBackground:(OMNImageBlock)imageBlock {
   
   __weak typeof(self)weakSelf = self;
-  if (blurred) {
+  [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl completion:^(UIImage *image) {
     
-    [[OMNImageManager manager] downloadBlurredImageWithURL:self.background_imageUrl expectedSize:CGSizeMake(320.0f, 568.0f) completion:^(UIImage *image) {
-      
-      weakSelf.blurred_background_image = image;
-      imageBlock(image);
-      
-    }];
+    weakSelf.background_image = image;
+    imageBlock(image);
     
-  }
-  else {
-    
-    [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl completion:^(UIImage *image) {
-    
-      weakSelf.background_image = image;
-      imageBlock(image);
-      
-    }];
-    
-  }
+  }];
   
 }
 

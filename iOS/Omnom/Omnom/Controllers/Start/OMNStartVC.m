@@ -15,11 +15,7 @@
 #import "OMNNavigationController.h"
 #import "OMNAnalitics.h"
 #import "UINavigationController+omn_replace.h"
-#import "OMNVisitorManager.h"
 #import "NSURL+omn_query.h"
-
-#warning OMNRestaurantsVC
-#import "OMNRestaurantListVC.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
@@ -30,7 +26,6 @@ OMNSearchRestaurantVCDelegate>
 @implementation OMNStartVC {
   
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
-  BOOL _initialCheckPerformed;
   
 }
 
@@ -59,21 +54,16 @@ OMNSearchRestaurantVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [self checkTokenIfNeeded];
+  [self checkUserToken];
   
 }
 
-- (void)checkTokenIfNeeded {
+- (void)checkUserToken {
   
-  if (_initialCheckPerformed) {
-    return;
-  }
-  
-  _initialCheckPerformed = YES;
   __weak typeof(self)weakSelf = self;
-  [[OMNAuthorization authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
-    
-    if (tokenIsValid) {
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
+
+    if ([OMNAuthorization authorisation].token) {
       
       [weakSelf startSearchingRestaurant];
       
@@ -85,17 +75,32 @@ OMNSearchRestaurantVCDelegate>
     }
     
   }];
+  
+}
+
+- (void)handleUserTokenError:(OMNError *)error {
+  
+  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:nil];
+  noInternetVC.text = error.localizedDescription;
+  noInternetVC.faded = YES;
+  noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  __weak typeof(self)weakSelf = self;
+  noInternetVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      
+      [weakSelf checkUserToken];
+      
+    }],
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Отменить", nil) image:nil block:^{
+      
+    }]
+    ];
+  [self.navigationController pushViewController:noInternetVC animated:YES];
+  
 }
 
 - (void)startSearchingRestaurant {
-  
-  #warning OMNRestaurantsVC
-//  OMNRestaurantListVC *restaurantsVC = [[OMNRestaurantListVC alloc] init];
-//  UINavigationController *navC = [[OMNNavigationController alloc] initWithRootViewController:restaurantsVC];
-//  navC.navigationBar.barStyle = UIBarStyleDefault;
-//  navC.delegate = _navigationControllerDelegate;
-//  [self presentViewController:navC animated:NO completion:nil];
-//  return;
 
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
   searchRestaurantVC.delegate = self;
@@ -116,11 +121,12 @@ OMNSearchRestaurantVCDelegate>
 //  searchRestaurantVC.qr = @"http://omnom.menu/qr/special-and-vip";
 //  searchRestaurantVC.qr = @"http://m.2gis.ru/os/";
 
-  NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
-  if (decodeBeaconData) {
-    OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
-    searchRestaurantVC.visitor = visitor;
-  }
+#warning decodeBeaconData
+//  NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
+//  if (decodeBeaconData) {
+//    OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
+//    searchRestaurantVC.visitor = visitor;
+//  }
 
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];
   navigationController.navigationBar.barStyle = UIBarStyleDefault;

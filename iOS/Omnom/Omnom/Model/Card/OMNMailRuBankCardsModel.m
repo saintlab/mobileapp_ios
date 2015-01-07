@@ -30,7 +30,7 @@
 @implementation OMNMailRuBankCardsModel {
 }
 
-- (instancetype)initWithRootVC:(UIViewController *)vc {
+- (instancetype)initWithRootVC:(__weak UIViewController *)vc {
   self = [super initWithRootVC:vc];
   if (self) {
     

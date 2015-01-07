@@ -18,10 +18,15 @@ static OMNBeaconUUID *_beaconUUID = nil;
 static NSUInteger const kMaxBeaconCount = 7;
 static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 
+@interface OMNBeacon ()
+
+@property (nonatomic, strong) NSMutableArray *beaconSessionInfo;
+
+@end
+
 @implementation OMNBeacon {
-  NSMutableArray *_beaconSessionInfo;
+  
   dispatch_semaphore_t _updateBeaconLock;
-  NSDate *_firstImmediateDate;
   
 }
 
@@ -69,10 +74,9 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
   
   OMNBeaconSessionInfo *sessionInfo = [[OMNBeaconSessionInfo alloc] initWithBeacon:beacon];
   if (sessionInfo.rssi != 0) {
-    if (kBeaconDesiredTimesAccuracy == _beaconSessionInfo.count) {
-      [_beaconSessionInfo removeObjectAtIndex:0];
-    }
+    
     [_beaconSessionInfo addObject:sessionInfo];
+    
   }
   
   self.accuracy = beacon.accuracy;
@@ -83,23 +87,7 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
   
 }
 
-- (double)averageRSSI {
-  
-  if (_beaconSessionInfo.count < 2) {
-    return -100;
-  }
-  
-  __block double totalRSSI = 0;
-  [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *sessionInfo, NSUInteger idx, BOOL *stop) {
-    
-    totalRSSI += sessionInfo.rssi;
-    
-  }];
-  return totalRSSI/_beaconSessionInfo.count;
-
-}
-
-- (BOOL)atTheTable {
+- (BOOL)nearTheTable {
   
   return (_beaconSessionInfo.count >= kBeaconDesiredTimesAccuracy);
   
@@ -114,26 +102,20 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 
 - (NSDictionary *)JSONObject {
   
-  return @{
-           @"uuid" : self.UUIDString,
-           @"major" : self.major,
-           @"minor" : self.minor,
-           };
-  
-}
-
-- (NSTimeInterval)atTheTableTime {
-  
-  NSTimeInterval atTheTableTime = 0.0;
-  
-  OMNBeaconSessionInfo *lastSessionInfo = [_beaconSessionInfo lastObject];
-  
-  if (lastSessionInfo &&
-      _firstImmediateDate) {
-    atTheTableTime = [lastSessionInfo.timeStamp timeIntervalSinceDate:_firstImmediateDate];
-  }
-  
-  return atTheTableTime;
+  NSMutableDictionary *json =
+  [@{
+    @"uuid" : self.UUIDString,
+    @"major" : self.major,
+    @"minor" : self.minor,
+    } mutableCopy];
+  NSMutableArray *rssi = [NSMutableArray arrayWithCapacity:_beaconSessionInfo.count];
+  [_beaconSessionInfo enumerateObjectsUsingBlock:^(OMNBeaconSessionInfo *beaconSessionInfo, NSUInteger idx, BOOL *stop) {
+    
+    [rssi addObject:beaconSessionInfo.JSONObject];
+    
+  }];
+  json[@"rssi"] = rssi;
+  return json;
   
 }
 
@@ -149,17 +131,27 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 
 - (NSString *)description {
 
-  return [NSString stringWithFormat:@"%@, %ld, %d %f, %ld", self.key, (long)self.rssi, self.atTheTable, self.atTheTableTime, self.totalRSSI];
+  return [NSString stringWithFormat:@"%@, %ld, %d, %ld", self.key, (long)self.rssi, self.nearTheTable, self.totalRSSI];
   
 }
 
 + (OMNBeacon *)demoBeacon {
+  
   OMNBeacon *beacon = [[OMNBeacon alloc] init];
   beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
   beacon.major = @"1";
-  beacon.minor = @"4";
   beacon.minor = @"1002";
 
+  NSDate *date = [NSDate date];
+  beacon.beaconSessionInfo =
+  @[
+    [OMNBeaconSessionInfo infoWithRSSI:-78 timeStamp:date],
+    [OMNBeaconSessionInfo infoWithRSSI:-77 timeStamp:date],
+    [OMNBeaconSessionInfo infoWithRSSI:-77 timeStamp:date],
+    [OMNBeaconSessionInfo infoWithRSSI:-77 timeStamp:date],
+    [OMNBeaconSessionInfo infoWithRSSI:-76 timeStamp:date],
+    ];
+  
 //  b
 //  beacon.major = @"B";
 //  beacon.minor = @"VIP";

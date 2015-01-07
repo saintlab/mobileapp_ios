@@ -14,6 +14,12 @@
 #import "OMNBottomTextButton.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
+#import "OMNScanTableQRCodeVC.h"
+
+@interface OMNRestaurantCardVC ()
+<OMNScanTableQRCodeVCDelegate>
+
+@end
 
 @implementation OMNRestaurantCardVC {
   
@@ -53,14 +59,11 @@
   [self setup];
   
   UIColor *titleColor = _restaurant.decoration.antagonist_color;
-  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:titleColor target:self action:@selector(closeTap)];
-
-  OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:NSLocalizedString(@"Демо-режим", nil) color:titleColor];
-  [demoButton addTarget:self action:@selector(demoTap) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:demoButton];
-
+  self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:titleColor target:self action:@selector(closeTap)];
+  [self.navigationItem setHidesBackButton:YES animated:NO];
+  
   [_restaurant.decoration addObserver:self forKeyPath:NSStringFromSelector(@selector(background_image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
-  [_restaurant.decoration loadBackgroundBlurred:NO completion:^(UIImage *image) {
+  [_restaurant.decoration loadBackground:^(UIImage *image) {
   }];
   _restaurantDetailsView.restaurant = _restaurant;
 
@@ -71,6 +74,7 @@
   _reserveButton.enabled = _restaurant.settings.has_table_order;
   
   [_insideButton setTitle:@"Я внутри" image:[UIImage imageNamed:@"ic_im_inside"] color:colorWithHexString(@"157EFB")];
+  [_insideButton addTarget:self action:@selector(insideRestaurantTap) forControlEvents:UIControlEventTouchUpInside];
   _insideButton.enabled = YES;
 
   [_preorderButton setTitle:@"Сделать\nпредзаказ" image:[UIImage imageNamed:@"ic_make_order"] color:colorWithHexString(@"157EFB")];
@@ -95,13 +99,38 @@
   
 }
 
-- (void)demoTap {
+- (void)insideRestaurantTap {
+  
+  if (1 == _restaurant.tables.count) {
+    
+    [self showRestaurant:_restaurant];
+    
+  }
+  else {
+    
+    [self selectTable];
+    
+  }
+  
+}
+
+- (void)showRestaurant:(OMNRestaurant *)restaurant {
+  
+  [self.delegate restaurantCardVC:self didSelectRestaurant:restaurant];
+  
+}
+
+- (void)selectTable {
+  
+  OMNScanTableQRCodeVC *scanTableQRCodeVC = [[OMNScanTableQRCodeVC alloc] init];
+  scanTableQRCodeVC.tableDelegate = self;
+  [self.navigationController pushViewController:scanTableQRCodeVC animated:YES];
   
 }
 
 - (void)closeTap {
   
-  [self.navigationController popViewControllerAnimated:YES];
+  [self.delegate restaurantCardVCDidFinish:self];
   
 }
 
@@ -206,6 +235,20 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[restaurantDetailsView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(<=imageHeight)]-(20)-[restaurantDetailsView]-(10)-[phoneButton]-(10)-[fillView3(>=0)][bottonsView][fillView4(==fillView3)]-(10)-|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_phoneButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  
+}
+
+#pragma mark - OMNScanTableQRCodeVCDelegate
+
+- (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant {
+  
+  [self showRestaurant:restaurant];
+  
+}
+
+- (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC {
+  
+  [self.navigationController popToViewController:self animated:YES];
   
 }
 

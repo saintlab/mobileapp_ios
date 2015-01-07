@@ -6,14 +6,15 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNRestaurantMediator.h"
+
 @protocol OMNUserInfoVCDelegate;
-@class OMNVisitor;
 
 @interface OMNUserInfoVC : UITableViewController
 
 @property (nonatomic, weak) id<OMNUserInfoVCDelegate> delegate;
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end
 

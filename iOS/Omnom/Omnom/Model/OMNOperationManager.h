@@ -11,7 +11,7 @@
 
 typedef NS_ENUM(NSInteger, OMNReachableState) {
   kOMNReachableStateNoInternet = 0,
-  kOMNReachableStateNoOmnom,
+//  kOMNReachableStateNoOmnom,
   kOMNReachableStateIsReachable,
 };
 

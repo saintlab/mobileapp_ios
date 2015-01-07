@@ -7,26 +7,23 @@
 //
 
 #import "OMNOrderVCDelegate.h"
-#import "OMNOrder.h"
+#import "OMNRestaurantMediator.h"
 #import "OMNBackgroundVC.h"
 
-@class OMNVisitor;
 @protocol OMNOrdersVCDelegate;
 
 @interface OMNOrdersVC : OMNBackgroundVC
 
 @property (nonatomic, weak) id<OMNOrdersVCDelegate> delegate;
-@property (nonatomic, strong, readonly) OMNVisitor *visitor;
 @property (nonatomic, strong, readonly) UICollectionView *collectionView;
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end
 
 @protocol OMNOrdersVCDelegate <NSObject>
 
 - (void)ordersVC:(OMNOrdersVC *)ordersVC didSelectOrder:(OMNOrder *)order;
-
 - (void)ordersVCDidCancel:(OMNOrdersVC *)ordersVC;
 
 @end

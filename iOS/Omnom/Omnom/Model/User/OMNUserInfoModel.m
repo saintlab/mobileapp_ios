@@ -26,15 +26,17 @@
 @end
 
 @implementation OMNUserInfoModel {
+  
   NSArray *_sectionItems;
-  OMNVisitor *_visitor;
+  OMNRestaurantMediator *_restaurantMediator;
+  
 }
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super init];
   if (self) {
     
-    _visitor = visitor;
+    _restaurantMediator = restaurantMediator;
     _sectionItems =
     @[
       self.moneyItems,
@@ -48,9 +50,7 @@
 
 - (void)reloadUserInfo {
   
-  [[OMNAuthorization authorisation] checkTokenWithBlock:^(BOOL tokenIsValid) {
-
-  }];
+  [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {} failure:^(OMNError *error) {}];
 
 }
 
@@ -60,7 +60,7 @@
   section.items =
   @[
     [[OMNBankCardUserInfoItem alloc] init],
-    [[OMNTableUserInfoItem alloc] initWithTable:_visitor.table],
+    [[OMNTableUserInfoItem alloc] initWithTable:_restaurantMediator.table],
     ];
   
   return section;
@@ -93,7 +93,9 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  
   return _sectionItems.count;
+  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

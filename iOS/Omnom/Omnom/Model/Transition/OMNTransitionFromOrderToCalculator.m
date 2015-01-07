@@ -8,7 +8,7 @@
 
 #import "OMNTransitionFromOrderToCalculator.h"
 #import "OMNCalculatorVC.h"
-#import "OMNPayOrderVC.h"
+#import "OMNOrderCalculationVC.h"
 #import "UITableView+screenshot.h"
 #import "UIView+screenshot.h"
 
@@ -23,7 +23,7 @@
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  OMNPayOrderVC *fromViewController = (OMNPayOrderVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  OMNOrderCalculationVC *fromViewController = (OMNOrderCalculationVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNCalculatorVC *toViewController = (OMNCalculatorVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
@@ -109,7 +109,7 @@
 
 + (NSArray *)keys {
   return @[
-           [self keyFromClass:[OMNPayOrderVC class] toClass:[OMNCalculatorVC class]]
+           [self keyFromClass:[OMNOrderCalculationVC class] toClass:[OMNCalculatorVC class]]
            ];
 }
 

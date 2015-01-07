@@ -7,6 +7,7 @@
 //
 
 #import "OMNCalculatorVCDelegate.h"
+#import "OMNRestaurantMediator.h"
 
 extern const CGFloat kCalculatorTopOffset;
 
@@ -16,7 +17,7 @@ extern const CGFloat kCalculatorTopOffset;
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong, readonly) UITableView *splitTableView;
 
-- (instancetype)initWithOrder:(OMNOrder *)order;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end
 

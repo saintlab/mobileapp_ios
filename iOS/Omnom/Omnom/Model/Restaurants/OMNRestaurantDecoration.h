@@ -21,9 +21,10 @@ typedef void(^OMNImageBlock)(UIImage *image);
 @property (nonatomic, copy) NSString *logoUrl;
 @property (nonatomic, copy) NSString *background_imageUrl;
 @property (nonatomic, strong, readonly) UIImage *circleBackground;
+@property (nonatomic, strong, readonly) UIImage *woodBackgroundImage;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 - (void)loadLogo:(OMNImageBlock)imageBlock;
-- (void)loadBackgroundBlurred:(BOOL)blurred completion:(OMNImageBlock)imageBlock;
+- (void)loadBackground:(OMNImageBlock)imageBlock;
 
 @end
