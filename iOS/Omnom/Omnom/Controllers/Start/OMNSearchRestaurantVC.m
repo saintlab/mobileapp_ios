@@ -62,7 +62,7 @@ OMNSearchRestaurantsVCDelegate>
   OMNSearchRestaurantsVC *searchRestaurantsVC = [[OMNSearchRestaurantsVC alloc] init];
   searchRestaurantsVC.delegate = self;
   searchRestaurantsVC.qr = self.qr;
-
+  searchRestaurantsVC.hashString = self.hashString;
   UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
   searchRestaurantsVC.circleBackground = circleBackground;
   searchRestaurantsVC.circleIcon = [UIImage imageNamed:@"logo_icon"];

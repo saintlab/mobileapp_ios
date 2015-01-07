@@ -22,6 +22,7 @@
   
   OMNRestaurantMediator *_restaurantMediator;
   UIAlertView *_updateAlertView;
+  BOOL _didClose;
   
 }
 
@@ -73,6 +74,12 @@
     
   }];
   
+  _dataSource.didScrollToTopBlock = ^{
+    
+    [weakSelf handleClose];
+    
+  };
+  
   self.tableView.tableFooterView = [[UIView alloc] init];
   self.tableView.dataSource = _dataSource;
   self.tableView.delegate = _dataSource;
@@ -82,6 +89,16 @@
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:nil];
 
+}
+
+- (void)handleClose {
+  
+  if (_didClose) {
+    return;
+  }
+  _didClose = YES;
+  [self.delegate calculatorVCDidCancel:nil];
+  
 }
 
 - (void)orderDidClose:(NSNotification *)n {

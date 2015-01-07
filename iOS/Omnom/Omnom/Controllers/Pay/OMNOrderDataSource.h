@@ -18,6 +18,7 @@ UITableViewDelegate>
 @property (nonatomic, assign) BOOL fadeNonSelectedItems;
 
 @property (nonatomic, copy) void(^didSelectBlock)(UITableView *tableView, NSIndexPath *indexPath);
+@property (nonatomic, copy) dispatch_block_t didScrollToTopBlock;
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
 

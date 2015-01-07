@@ -123,6 +123,16 @@ OMNBeaconsSearchManagerDelegate>
     });
     
   }
+  else if (self.hashString) {
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      [weakSelf processHash:weakSelf.hashString];
+      
+    });
+    
+  }
   else if (self.qr) {
     
     
@@ -144,6 +154,22 @@ OMNBeaconsSearchManagerDelegate>
     });
     
   }
+  
+}
+
+- (void)processHash:(NSString *)hash {
+  
+  [self.loaderView startAnimating:10.0f];
+  __weak typeof(self)weakSelf = self;
+  [OMNRestaurantManager decodeHash:hash withCompletion:^(NSArray *restaurants) {
+    
+    [weakSelf didFindRestaurants:restaurants];
+    
+  } failureBlock:^(OMNError *error) {
+    
+    [weakSelf beaconsNotFound];
+    
+  }];
   
 }
 

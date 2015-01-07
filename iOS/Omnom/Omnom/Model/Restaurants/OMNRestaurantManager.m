@@ -67,7 +67,7 @@
     @"qr": qrCode
     };
   
-  [[OMNOperationManager sharedManager] PUT:@"/v2/decode/qr" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNOperationManager sharedManager] POST:@"/v2/decode/qr" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
     completionBlock(restaurants);
@@ -88,7 +88,7 @@
     @"hash": hash
     };
   
-  [[OMNOperationManager sharedManager] PUT:@"/v2/decode/hash" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNOperationManager sharedManager] POST:@"/v2/decode/hash" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
     completionBlock(restaurants);

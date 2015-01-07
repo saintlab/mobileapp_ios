@@ -1,0 +1,10 @@
+{
+  "threshold":25000,
+  "thresholds":[25000,40000,60000],
+  "values":[
+            {"amount":3000,"percent":5,"amounts":[3000,4000,5000]},
+            {"amount":5000,"percent":10,"amounts":[5000,6000,7500]},
+            {"amount":10000,"percent":15,"amounts":[7500,9000,10000]},
+            {"amount":15000,"percent":20}
+            ]
+}

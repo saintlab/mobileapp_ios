@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) NSArray *restaurants;
 @property (nonatomic, copy) NSString *qr;
+@property (nonatomic, copy) NSString *hashString;
 @property (nonatomic, weak) id<OMNSearchRestaurantsVCDelegate> delegate;
 
 @end

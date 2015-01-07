@@ -312,6 +312,9 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 }
 
 - (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {
+  
+  [self.delegate calculatorVCDidCancel:self];
+  
 }
 
 @end

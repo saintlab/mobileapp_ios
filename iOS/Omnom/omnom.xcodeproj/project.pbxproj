@@ -306,6 +306,8 @@
 		9390D2681966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */ = {isa = PBXBuildFile; fileRef = 9390D2661966EAF7007E13AB /* OMNNavigationBarSelector.json */; };
 		9390D2D1196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9390D2CF196BD70E007E13AB /* OMNAskCLPermissionsVC.m */; };
 		9390D2D2196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9390D2CF196BD70E007E13AB /* OMNAskCLPermissionsVC.m */; };
+		9391F65A1A5D5DAA00594CD5 /* tips.json in Resources */ = {isa = PBXBuildFile; fileRef = 9391F6591A5D5DAA00594CD5 /* tips.json */; };
+		9391F65B1A5D5DAA00594CD5 /* tips.json in Resources */ = {isa = PBXBuildFile; fileRef = 9391F6591A5D5DAA00594CD5 /* tips.json */; };
 		93958B5D198747E1009BB2ED /* OMNBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 93958B5C198747E1009BB2ED /* OMNBill.m */; };
 		93958B5E198747E1009BB2ED /* OMNBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 93958B5C198747E1009BB2ED /* OMNBill.m */; };
 		939689B2195BD76E00AAAF9C /* OMNWizardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939689B1195BD76E00AAAF9C /* OMNWizardVC.m */; };
@@ -811,6 +813,7 @@
 		9390D2661966EAF7007E13AB /* OMNNavigationBarSelector.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNNavigationBarSelector.json; sourceTree = "<group>"; };
 		9390D2CE196BD70E007E13AB /* OMNAskCLPermissionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNAskCLPermissionsVC.h; path = ../OMNAskCLPermissionsVC.h; sourceTree = "<group>"; };
 		9390D2CF196BD70E007E13AB /* OMNAskCLPermissionsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNAskCLPermissionsVC.m; path = ../OMNAskCLPermissionsVC.m; sourceTree = "<group>"; };
+		9391F6591A5D5DAA00594CD5 /* tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tips.json; sourceTree = "<group>"; };
 		93958B5B198747E1009BB2ED /* OMNBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBill.h; sourceTree = "<group>"; };
 		93958B5C198747E1009BB2ED /* OMNBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBill.m; sourceTree = "<group>"; };
 		939689B0195BD76E00AAAF9C /* OMNWizardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWizardVC.h; sourceTree = "<group>"; };
@@ -1770,6 +1773,7 @@
 				935D8C901A38292100877C02 /* Fonts */,
 				932B186919AF3C01009E440E /* Sound */,
 				939F98E9197526C70051822E /* AirshipConfig.plist */,
+				9391F6591A5D5DAA00594CD5 /* tips.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2287,6 +2291,7 @@
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
 				935D8C961A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				938F3A43198B859100AB288E /* timings.json in Resources */,
+				9391F65A1A5D5DAA00594CD5 /* tips.json in Resources */,
 				932B186C19AF3C80009E440E /* new_guest.caf in Resources */,
 				9390D2611966E559007E13AB /* OMNOrderCell.json in Resources */,
 				939F991E19752BE90051822E /* OMNUserInfoVC.xib in Resources */,
@@ -2323,6 +2328,7 @@
 				9390D2651966E945007E13AB /* UINavigationBar.json in Resources */,
 				938F3A53198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
 				9390D25919668A3A007E13AB /* OMNEditTableVC.json in Resources */,
+				9391F65B1A5D5DAA00594CD5 /* tips.json in Resources */,
 				9390D2681966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
 				933AB0D719C1D4D8004D8F55 /* Localizable.strings in Resources */,
 				939689C1195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,

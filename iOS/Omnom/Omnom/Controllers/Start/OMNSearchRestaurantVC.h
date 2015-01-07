@@ -14,6 +14,7 @@
 @interface OMNSearchRestaurantVC : UIViewController
 
 @property (nonatomic, copy) NSString *qr;
+@property (nonatomic, copy) NSString *hashString;
 @property (nonatomic, strong) UIImageView *logoIV;
 @property (weak, nonatomic) IBOutlet UIImageView *logoIconsIV;
 @property (weak, nonatomic) IBOutlet UIImageView *bgIV;

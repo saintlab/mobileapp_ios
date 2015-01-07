@@ -183,4 +183,16 @@
   
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+  
+  const CGFloat triggerDistance = 60.0f;
+  if (self.didScrollToTopBlock &&
+      scrollView.contentOffset.y > triggerDistance) {
+    
+    self.didScrollToTopBlock();
+    
+  }
+  
+}
+
 @end

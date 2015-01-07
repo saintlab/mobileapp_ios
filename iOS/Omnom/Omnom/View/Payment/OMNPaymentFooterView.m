@@ -132,6 +132,7 @@
   [_payButton setBackgroundImage:[[image omn_tintWithColor:[antogonistColor colorWithAlphaComponent:0.5f]] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateHighlighted];
   [_payButton setTitleColor:color forState:UIControlStateNormal];
   [_amountControl configureWithColor:color antogonistColor:antogonistColor];
+  [_percentControl configureWithColor:color antogonistColor:antogonistColor];
   
 }
 

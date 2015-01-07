@@ -116,6 +116,13 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
     
     NSDictionary *tipsData = jsonData[@"tips"];
 
+    if (!tipsData) {
+      
+      NSString *path = [[NSBundle mainBundle] pathForResource:@"tips" ofType:@"json"];
+      tipsData = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:path] options:kNilOptions error:nil];
+      
+    }
+    
     _tipsThresholds = tipsData[@"thresholds"];
     _percentTipsThreshold = [[_tipsThresholds lastObject] longLongValue];
     NSMutableArray *tips = [NSMutableArray arrayWithCapacity:4];
