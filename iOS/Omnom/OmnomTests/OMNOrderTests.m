@@ -7,7 +7,6 @@
 //
 
 #import <Kiwi.h>
-#import "OMNVisitorManager.h"
 #import "OMNAuthorization.h"
 #import "OMNOrder+network.h"
 #import "OMNTable+omn_network.h"

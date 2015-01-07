@@ -15,6 +15,7 @@
 @property (nonatomic, assign) NSInteger rssi;
 
 - (instancetype)initWithBeacon:(CLBeacon *)beacon;
++ (instancetype)infoWithRSSI:(NSInteger)RSSI timeStamp:(NSDate *)timeStamp;
 
 - (NSDictionary *)JSONObject;
 - (NSString *)timeStampString;

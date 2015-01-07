@@ -20,6 +20,15 @@
   return self;
 }
 
++ (instancetype)infoWithRSSI:(NSInteger)RSSI timeStamp:(NSDate *)timeStamp {
+  
+  OMNBeaconSessionInfo *beaconSessionInfo = [[OMNBeaconSessionInfo alloc] init];
+  beaconSessionInfo.rssi = RSSI;
+  beaconSessionInfo.timeStamp = timeStamp;
+  return beaconSessionInfo;
+  
+}
+
 - (NSDictionary *)JSONObject {
   
   return

@@ -9,19 +9,20 @@
 #import <XCTest/XCTest.h>
 #import <Kiwi.h>
 #import "OMNAuthorization.h"
-#import "OMNVisitorManager.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNOrder+omn_mailru.h"
 #import "OMNBankCard.h"
 #import "OMNUser.h"
 #import "OMNUser+network.h"
 #import "NSString+omn_json.h"
+#import "OMNRestaurantManager.h"
+#import "OMNTable+omn_network.h"
 
 SPEC_BEGIN(OMNDemoStandTest)
 
 describe(@"demo stand test", ^{
 
-  __block OMNVisitor *_visitor = nil;
+  __block OMNRestaurant *_restaurant = nil;
   __block OMNOrder *_order = nil;
   
   OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
@@ -30,18 +31,21 @@ describe(@"demo stand test", ^{
     
     [[[OMNAuthorization authorisation].token should] beNonNil];
     
-    [[OMNVisitorManager manager] decodeBeacon:demoBeacon success:^(OMNVisitor *visitor) {
+    [OMNRestaurantManager decodeBeacons:@[demoBeacon] withCompletion:^(NSArray *restaurants) {
       
-      _visitor = visitor;
+      _restaurant = [restaurants firstObject];
       
-    } failure:^(NSError *error) {
+    } failureBlock:^(OMNError *error) {
       
     }];
     
-    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
+    [[expectFutureValue(_restaurant) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
 
     __block NSArray *_orders = nil;
-    [_visitor getOrders:^(NSArray *orders) {
+    [[@(_restaurant.tables.count) should] equal:@(1)];
+    OMNTable *table = [_restaurant.tables firstObject];
+    
+    [table getOrders:^(NSArray *orders) {
       
       _orders = orders;
       
@@ -66,7 +70,7 @@ describe(@"demo stand test", ^{
   
   it(@"should check initial conditions", ^{
     
-    [[_visitor should] beNonNil];
+    [[_restaurant should] beNonNil];
 
     [OMNUser userWithToken:[OMNAuthorization authorisation].token user:^(OMNUser *user) {
       

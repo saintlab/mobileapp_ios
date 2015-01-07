@@ -18,9 +18,14 @@ static OMNBeaconUUID *_beaconUUID = nil;
 static NSUInteger const kMaxBeaconCount = 7;
 static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 
+@interface OMNBeacon ()
+
+@property (nonatomic, strong) NSMutableArray *beaconSessionInfo;
+
+@end
+
 @implementation OMNBeacon {
   
-  NSMutableArray *_beaconSessionInfo;
   dispatch_semaphore_t _updateBeaconLock;
   
 }
@@ -135,9 +140,18 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
   OMNBeacon *beacon = [[OMNBeacon alloc] init];
   beacon.UUIDString = @"E2C56DB5-DFFB-48D2-B060-D0F5A71096E0";
   beacon.major = @"1";
-  beacon.minor = @"4";
   beacon.minor = @"1002";
 
+  NSDate *date = [NSDate date];
+  beacon.beaconSessionInfo =
+  @[
+    [OMNBeaconSessionInfo infoWithRSSI:-78 timeStamp:date],
+    [OMNBeaconSessionInfo infoWithRSSI:-77 timeStamp:date],
+    [OMNBeaconSessionInfo infoWithRSSI:-77 timeStamp:date],
+    [OMNBeaconSessionInfo infoWithRSSI:-77 timeStamp:date],
+    [OMNBeaconSessionInfo infoWithRSSI:-76 timeStamp:date],
+    ];
+  
 //  b
 //  beacon.major = @"B";
 //  beacon.minor = @"VIP";
