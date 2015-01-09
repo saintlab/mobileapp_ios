@@ -15,6 +15,8 @@
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
 #import "OMNScanTableQRCodeVC.h"
+#import "UIImage+omn_helper.h"
+#import "UINavigationBar+omn_custom.h"
 
 @interface OMNRestaurantCardVC ()
 <OMNScanTableQRCodeVCDelegate>
@@ -24,7 +26,7 @@
 @implementation OMNRestaurantCardVC {
   
   OMNRestaurantDetailsView *_restaurantDetailsView;
-  UIImageView *_imageView;
+  UIButton *_logoIcon;
   OMNRestaurant *_restaurant;
   OMNBorderedButton *_phoneButton;
   
@@ -37,7 +39,7 @@
 - (void)dealloc {
   
   @try {
-    [_restaurant.decoration removeObserver:self forKeyPath:NSStringFromSelector(@selector(background_image))];
+    [_restaurant.decoration removeObserver:self forKeyPath:NSStringFromSelector(@selector(logo))];
   }
   @catch (NSException *exception) {}
   
@@ -58,13 +60,11 @@
   
   [self setup];
   
-  UIColor *titleColor = _restaurant.decoration.antagonist_color;
-  self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:titleColor target:self action:@selector(closeTap)];
+  self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   [self.navigationItem setHidesBackButton:YES animated:NO];
   
-  [_restaurant.decoration addObserver:self forKeyPath:NSStringFromSelector(@selector(background_image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
-  [_restaurant.decoration loadBackground:^(UIImage *image) {
-  }];
+  [_restaurant.decoration addObserver:self forKeyPath:NSStringFromSelector(@selector(logo)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
+  [_restaurant.decoration loadLogo:^(UIImage *image) {}];
   _restaurantDetailsView.restaurant = _restaurant;
 
   [_phoneButton setTitle:_restaurant.phone forState:UIControlStateNormal];
@@ -80,14 +80,15 @@
   [_preorderButton setTitle:@"Сделать\nпредзаказ" image:[UIImage imageNamed:@"ic_make_order"] color:colorWithHexString(@"157EFB")];
   _preorderButton.enabled = _restaurant.settings.has_pre_order;
   
+  [_logoIcon setBackgroundImage:[[UIImage imageNamed:@"restaurant_card_circle_bg"] omn_tintWithColor:_restaurant.decoration.background_color] forState:UIControlStateNormal];
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
  
   [self.navigationController setNavigationBarHidden:NO animated:NO];
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-  [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+  [self.navigationController.navigationBar omn_setTransparentBackground];
   
 }
 
@@ -123,7 +124,7 @@
 - (void)selectTable {
   
   OMNScanTableQRCodeVC *scanTableQRCodeVC = [[OMNScanTableQRCodeVC alloc] init];
-  scanTableQRCodeVC.tableDelegate = self;
+  scanTableQRCodeVC.delegate = self;
   [self.navigationController pushViewController:scanTableQRCodeVC animated:YES];
   
 }
@@ -137,9 +138,18 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
   
   if ([object isEqual:_restaurant.decoration] &&
-      [keyPath isEqualToString:NSStringFromSelector(@selector(background_image))]) {
+      [keyPath isEqualToString:NSStringFromSelector(@selector(logo))]) {
     
-    _imageView.image = _restaurant.decoration.background_image;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+      
+      UIImage *circleImage = [_restaurant.decoration.logo omn_circleImageWithDiametr:175.0f];
+      dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [_logoIcon setImage:circleImage forState:UIControlStateNormal];
+        
+      });
+      
+    });
     
   } else {
     
@@ -157,12 +167,10 @@
 
 - (void)setup {
   
-  _imageView = [UIImageView omn_autolayoutView];
-  _imageView.clipsToBounds = YES;
-  _imageView.opaque = YES;
-  _imageView.backgroundColor = [UIColor whiteColor];
-  _imageView.contentMode = UIViewContentModeScaleAspectFill;
-  [self.view addSubview:_imageView];
+  _logoIcon = [UIButton omn_autolayoutView];
+  _logoIcon.userInteractionEnabled = NO;
+  [_logoIcon setBackgroundImage:[UIImage imageNamed:@"restaurant_card_circle_bg"] forState:UIControlStateNormal];
+  [self.view addSubview:_logoIcon];
   
   _phoneButton = [OMNBorderedButton omn_autolayoutView];
   _phoneButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
@@ -204,7 +212,7 @@
   
   NSDictionary *views =
   @{
-    @"imageView" : _imageView,
+    @"logoIcon" : _logoIcon,
     @"phoneButton" : _phoneButton,
     @"restaurantDetailsView" : _restaurantDetailsView,
     @"bottonsView" : bottonsView,
@@ -215,11 +223,11 @@
     @"fillView2" : fillView2,
     @"fillView3" : fillView3,
     @"fillView4" : fillView4,
+    @"topLayoutGuide" : self.topLayoutGuide,
     };
   
   NSDictionary *metrics =
   @{
-    @"imageHeight" : @(200),
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
   
@@ -231,10 +239,10 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[bottonsView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
 
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[restaurantDetailsView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(<=imageHeight)]-(20)-[restaurantDetailsView]-(10)-[phoneButton]-(10)-[fillView3(>=0)][bottonsView][fillView4(==fillView3)]-(10)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-(20)-[logoIcon]-(20)-[restaurantDetailsView]-(10)-[phoneButton]-(10)-[fillView3(>=0)][bottonsView][fillView4(==fillView3)]-(10)-|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_phoneButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_logoIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   
 }
 

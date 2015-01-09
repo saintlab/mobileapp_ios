@@ -97,6 +97,7 @@ OMNSearchRestaurantsVCDelegate>
 - (void)showRestaurant:(OMNRestaurant *)restaurant {
   
   OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
+  restaurantActionsVC.delegate = self;
   [self.navigationController pushViewController:restaurantActionsVC animated:YES];
   
 }

@@ -10,6 +10,7 @@
 #import "UILabel+numberOfLines.h"
 #import "OMNConstants.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "UINavigationBar+omn_custom.h"
 
 @interface OMNCircleRootVC ()
 
@@ -172,8 +173,7 @@
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
   [self.navigationController setNavigationBarHidden:NO animated:NO];
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-  [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+  [self.navigationController.navigationBar omn_setTransparentBackground];
 
 }
 

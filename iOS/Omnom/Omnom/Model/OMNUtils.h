@@ -23,6 +23,8 @@ extern NSString *omnCommaString();
 + (NSString *)formatedStringFromRub:(long long)rub;
 + (NSString *)unitStringFromDouble:(double)value;
 
++ (NSMutableDictionary *)textAttributesWithFont:(UIFont *)font textColor:(UIColor *)textColot textAlignment:(NSTextAlignment)textAlignment;
+
 @end
 
 @interface NSString (omn_money)

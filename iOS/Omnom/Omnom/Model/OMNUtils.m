@@ -94,6 +94,22 @@ NSString *omnCommaString() {
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
 }
 
++ (NSMutableDictionary *)textAttributesWithFont:(UIFont *)font textColor:(UIColor *)textColot textAlignment:(NSTextAlignment)textAlignment {
+  
+  NSMutableParagraphStyle *attributeStyle = [[NSMutableParagraphStyle alloc] init];
+  attributeStyle.alignment = textAlignment;
+  
+  NSMutableDictionary *textAttributes =
+  [@{
+     NSFontAttributeName : font,
+     NSForegroundColorAttributeName : textColot,
+     NSParagraphStyleAttributeName : attributeStyle,
+     } mutableCopy];
+  
+  return textAttributes;
+  
+}
+
 @end
 
 @implementation NSString (omn_money)

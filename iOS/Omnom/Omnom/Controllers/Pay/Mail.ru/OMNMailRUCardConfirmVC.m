@@ -85,11 +85,6 @@ TTTAttributedLabelDelegate>
     [self registerCard];
     
   }
-  
-//  _cardHoldValueTF.textField.enabled = YES;
-//  [_cardHoldValueTF.textField becomeFirstResponder];
-//  [_errorTextView setWrongAmountError];
-//  self.card_id = @"123";
 
 }
 

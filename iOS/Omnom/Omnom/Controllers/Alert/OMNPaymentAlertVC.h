@@ -7,14 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNModalAlertVC.h"
 
-@interface OMNPaymentAlertVC : UIViewController
-
-@property (nonatomic, strong) UIView *fadeView;
-@property (nonatomic, strong) UIView *contentView;
+@interface OMNPaymentAlertVC : OMNModalAlertVC
 
 @property (nonatomic, copy) dispatch_block_t didPayBlock;
-@property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
 - (instancetype)initWithText:(NSString *)text detailedText:(NSString *)detailedText amount:(long long)amount;
 

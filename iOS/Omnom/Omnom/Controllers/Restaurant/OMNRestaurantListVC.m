@@ -20,6 +20,7 @@
 #import "OMNRestaurant+omn_network.h"
 #import "OMNUserInfoVC.h"
 #import "OMNScanTableQRCodeVC.h"
+#import "UINavigationBar+omn_custom.h"
 
 @interface OMNRestaurantListVC ()
 <OMNDemoRestaurantVCDelegate,
@@ -80,8 +81,8 @@ OMNScanTableQRCodeVCDelegate>
   [super viewWillAppear:animated];
   
   [self.navigationController setNavigationBarHidden:NO animated:NO];
-  [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-  [self.navigationController.navigationBar setShadowImage:nil];
+  [self.navigationController.navigationBar omn_setDefaultBackground];
+  [self updateBottomToolbar];
   
 }
 
@@ -96,7 +97,7 @@ OMNScanTableQRCodeVCDelegate>
 - (void)qrTap {
   
   OMNScanTableQRCodeVC *scanTableQRCodeVC = [[OMNScanTableQRCodeVC alloc] init];
-  scanTableQRCodeVC.tableDelegate = self;
+  scanTableQRCodeVC.delegate = self;
   [self.navigationController pushViewController:scanTableQRCodeVC animated:YES];
   
 }
@@ -154,7 +155,8 @@ OMNScanTableQRCodeVCDelegate>
   
   [self.refreshControl endRefreshing];
   self.restaurants = restaurants;
-  [self.tableView reloadData];
+  [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationFade];
+  [self updateBottomToolbar];
   
 }
 
@@ -251,8 +253,14 @@ OMNScanTableQRCodeVCDelegate>
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   
-  _bottomToolbar.transform = CGAffineTransformMakeTranslation(0.0f, scrollView.contentOffset.y + CGRectGetHeight(scrollView.frame) - CGRectGetHeight(_bottomToolbar.frame));
+  [self updateBottomToolbar];
 
+}
+
+- (void)updateBottomToolbar {
+  
+  _bottomToolbar.transform = CGAffineTransformMakeTranslation(0.0f, self.tableView.contentOffset.y + CGRectGetHeight(self.tableView.frame) - CGRectGetHeight(_bottomToolbar.frame));
+  
 }
 
 #pragma mark - OMNDemoRestaurantVCDelegate

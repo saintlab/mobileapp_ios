@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNScanQRCodeVC.h"
 #import "OMNRestaurant.h"
+#import "OMNBackgroundVC.h"
 
 @protocol OMNScanTableQRCodeVCDelegate;
 
-@interface OMNScanTableQRCodeVC : OMNScanQRCodeVC
+@interface OMNScanTableQRCodeVC : OMNBackgroundVC
 
-@property (nonatomic, weak) id<OMNScanTableQRCodeVCDelegate> tableDelegate;
+@property (nonatomic, weak) id<OMNScanTableQRCodeVCDelegate> delegate;
 
 @end
 

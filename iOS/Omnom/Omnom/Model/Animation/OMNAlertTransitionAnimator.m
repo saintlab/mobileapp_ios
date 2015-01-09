@@ -7,17 +7,14 @@
 //
 
 #import "OMNAlertTransitionAnimator.h"
-#import "OMNPaymentAlertVC.h"
+#import "OMNModalAlertVC.h"
 
 @implementation OMNAlertTransitionAnimator
 
-- (void)dealloc
-{
-  
-}
-
 - (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
-  return 0.5f;
+  
+  return 0.5;
+  
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
@@ -31,22 +28,29 @@
   
   if (self.presenting) {
     
-    OMNPaymentAlertVC *paymentAlertVC = (OMNPaymentAlertVC *)toVC;
+    OMNModalAlertVC *paymentAlertVC = (OMNModalAlertVC *)toVC;
     
     fromView.userInteractionEnabled = NO;
+    
+    UIView *snapshotView = [fromView snapshotViewAfterScreenUpdates:NO];
+    snapshotView.frame = [transitionContext finalFrameForViewController:toVC];
+    [containerView addSubview:snapshotView];
+    
+    toView.frame = [transitionContext finalFrameForViewController:toVC];
     [containerView addSubview:toView];
     
-    paymentAlertVC.contentView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toView.frame));
+    paymentAlertVC.alertView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toView.frame));
     paymentAlertVC.fadeView.alpha = 0.0f;
     
     [UIView animateWithDuration:duration animations:^{
       
       fromView.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
-      paymentAlertVC.contentView.transform = CGAffineTransformIdentity;
+      paymentAlertVC.alertView.transform = CGAffineTransformIdentity;
       paymentAlertVC.fadeView.alpha = 1.0f;
       
     } completion:^(BOOL finished) {
       
+      [snapshotView removeFromSuperview];
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
       
     }];
@@ -54,12 +58,12 @@
   }
   else {
     
-    OMNPaymentAlertVC *paymentAlertVC = (OMNPaymentAlertVC *)fromVC;
+    OMNModalAlertVC *paymentAlertVC = (OMNModalAlertVC *)fromVC;
     
     [UIView animateWithDuration:duration animations:^{
       
       toView.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
-      paymentAlertVC.contentView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toView.frame));
+      paymentAlertVC.alertView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toView.frame));
       paymentAlertVC.fadeView.alpha = 0.0f;
       
     } completion:^(BOOL finished) {

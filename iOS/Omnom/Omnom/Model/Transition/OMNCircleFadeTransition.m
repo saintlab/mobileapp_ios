@@ -23,6 +23,8 @@
 #import "OMNRestaurantActionsVC.h"
 #import "OMNAuthorizationVC.h"
 #import "OMNScanQRCodeVC.h"
+#import "OMNRestaurantListVC.h"
+#import "OMNRestaurantCardVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -65,6 +67,10 @@
 + (NSArray *)keys {
   return
   @[
+    
+    [self keyFromClass:[OMNRestaurantListVC class] toClass:[OMNRestaurantCardVC class]],
+    [self keyFromClass:[OMNRestaurantCardVC class] toClass:[OMNRestaurantListVC class]],
+    
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNAskCLPermissionsVC class]],
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNSearchRestaurantsVC class]],
     

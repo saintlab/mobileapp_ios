@@ -308,6 +308,12 @@
 		9390D2D2196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9390D2CF196BD70E007E13AB /* OMNAskCLPermissionsVC.m */; };
 		9391F65A1A5D5DAA00594CD5 /* tips.json in Resources */ = {isa = PBXBuildFile; fileRef = 9391F6591A5D5DAA00594CD5 /* tips.json */; };
 		9391F65B1A5D5DAA00594CD5 /* tips.json in Resources */ = {isa = PBXBuildFile; fileRef = 9391F6591A5D5DAA00594CD5 /* tips.json */; };
+		9391F65E1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F65D1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m */; };
+		9391F65F1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F65D1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m */; };
+		9391F6621A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */; };
+		9391F6631A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */; };
+		9391F6661A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6651A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m */; };
+		9391F6671A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6651A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m */; };
 		93958B5D198747E1009BB2ED /* OMNBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 93958B5C198747E1009BB2ED /* OMNBill.m */; };
 		93958B5E198747E1009BB2ED /* OMNBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 93958B5C198747E1009BB2ED /* OMNBill.m */; };
 		939689B2195BD76E00AAAF9C /* OMNWizardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939689B1195BD76E00AAAF9C /* OMNWizardVC.m */; };
@@ -814,6 +820,12 @@
 		9390D2CE196BD70E007E13AB /* OMNAskCLPermissionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNAskCLPermissionsVC.h; path = ../OMNAskCLPermissionsVC.h; sourceTree = "<group>"; };
 		9390D2CF196BD70E007E13AB /* OMNAskCLPermissionsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNAskCLPermissionsVC.m; path = ../OMNAskCLPermissionsVC.m; sourceTree = "<group>"; };
 		9391F6591A5D5DAA00594CD5 /* tips.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tips.json; sourceTree = "<group>"; };
+		9391F65C1A5E3E4800594CD5 /* UINavigationBar+omn_custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+omn_custom.h"; sourceTree = "<group>"; };
+		9391F65D1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+omn_custom.m"; sourceTree = "<group>"; };
+		9391F6601A5E477B00594CD5 /* OMNModalAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNModalAlertVC.h; sourceTree = "<group>"; };
+		9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNModalAlertVC.m; sourceTree = "<group>"; };
+		9391F6641A5E4D5D00594CD5 /* OMNQRHelpAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNQRHelpAlertVC.h; sourceTree = "<group>"; };
+		9391F6651A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNQRHelpAlertVC.m; sourceTree = "<group>"; };
 		93958B5B198747E1009BB2ED /* OMNBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBill.h; sourceTree = "<group>"; };
 		93958B5C198747E1009BB2ED /* OMNBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBill.m; sourceTree = "<group>"; };
 		939689B0195BD76E00AAAF9C /* OMNWizardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWizardVC.h; sourceTree = "<group>"; };
@@ -1105,6 +1117,10 @@
 			children = (
 				9317C06A19DE85BB0071E42B /* OMNPaymentAlertVC.h */,
 				9317C06B19DE85BB0071E42B /* OMNPaymentAlertVC.m */,
+				9391F6601A5E477B00594CD5 /* OMNModalAlertVC.h */,
+				9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */,
+				9391F6641A5E4D5D00594CD5 /* OMNQRHelpAlertVC.h */,
+				9391F6651A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -1255,6 +1271,8 @@
 				933A9EB91A4DB9FF001C0909 /* NSString+omn_uuid.m */,
 				933A9F0D1A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.h */,
 				933A9F0E1A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.m */,
+				9391F65C1A5E3E4800594CD5 /* UINavigationBar+omn_custom.h */,
+				9391F65D1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2490,6 +2508,7 @@
 				939F9949197544820051822E /* OMNUserInfoItem.m in Sources */,
 				939F991C19752BE90051822E /* OMNUserInfoVC.m in Sources */,
 				93D9EB231A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */,
+				9391F6621A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */,
 				936E71DA1991FEFF008FF864 /* OMNViewController.m in Sources */,
 				939F992619752BE90051822E /* OMNRegisterUserVC.m in Sources */,
 				93E435B71998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */,
@@ -2502,6 +2521,7 @@
 				93363FFD1A1B709D009D16CE /* OMNNotifierManager.m in Sources */,
 				939F992419752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				9390D25E1966DA68007E13AB /* OMNRestaurantMediator.m in Sources */,
+				9391F6661A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */,
 				93E2997A197CD24F00051B04 /* OMNStartVC.m in Sources */,
 				93E299A2197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */,
 				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
@@ -2586,6 +2606,7 @@
 				933A9EA61A4BC657001C0909 /* OMNRestaurantScheduleDay.m in Sources */,
 				93D104191A59856A00BC2E12 /* OMNScanTableQRCodeVC.m in Sources */,
 				93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */,
+				9391F65E1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m in Sources */,
 				93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */,
 				935D8C821A3807F400877C02 /* OMNCameraRollPermissionDescriptionVC.m in Sources */,
 				930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */,
@@ -2706,6 +2727,7 @@
 				93B9048E19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
 				9389456919B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */,
 				93535F0F19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
+				9391F65F1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m in Sources */,
 				937822A11963E65F00CE6661 /* OMNOrderViewCell.m in Sources */,
 				93B368A719A5BB0E00B6E6CB /* OMNDemoStandTests.m in Sources */,
 				933A9EA71A4BC657001C0909 /* OMNRestaurantScheduleDay.m in Sources */,
@@ -2758,6 +2780,7 @@
 				9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */,
 				93245DB71A1C60520065D4EC /* OMNMailRuBankCardMediator.m in Sources */,
 				933D48F619E7DFA7004E591C /* OMNOrderActionView.m in Sources */,
+				9391F6671A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */,
 				93D1178A1A2F20BA000131C4 /* OMNLogoutUserInfoItem.m in Sources */,
 				93363FF71A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */,
 				933A2E8B19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */,
@@ -2846,6 +2869,7 @@
 				9332CB001A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */,
 				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,
 				939DA1771958226B0063AB23 /* OMNAnalitics.m in Sources */,
+				9391F6631A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */,
 				93C99093193DBBE40028F76C /* OMNTablePositionVC.m in Sources */,
 				93535F13198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m in Sources */,
 				93D1178E1A2F2C56000131C4 /* OMNEditUserVC.m in Sources */,
