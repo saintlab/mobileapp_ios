@@ -60,11 +60,12 @@
   [super viewDidLoad];
  
   self.view.backgroundColor = [UIColor whiteColor];
+  [self.navigationItem setHidesBackButton:YES animated:NO];
+  [self.navigationController setNavigationBarHidden:NO animated:NO];
   
   [self setup];
   
   self.navigationItem.titleView = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-  [self.navigationItem setHidesBackButton:YES animated:NO];
   
   [_restaurant.decoration addObserver:self forKeyPath:NSStringFromSelector(@selector(logo)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
   [_restaurant.decoration loadLogo:^(UIImage *image) {}];
@@ -90,6 +91,7 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
  
+
   [self.navigationController setNavigationBarHidden:NO animated:NO];
   [self.navigationController.navigationBar omn_setTransparentBackground];
   
@@ -216,9 +218,8 @@
     @"fillView2" : fillView2,
     @"fillView3" : fillView3,
     @"fillView4" : fillView4,
-    @"topLayoutGuide" : self.topLayoutGuide,
     };
-  
+
   NSDictionary *metrics =
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
@@ -233,7 +234,7 @@
 
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[restaurantDetailsView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-(10)-[logoIcon]-(<=20)-[restaurantDetailsView]-(10)-[phoneButton]-(10)-[fillView3(>=0)][bottonsView][fillView4(==fillView3)]-(10)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(74)-[logoIcon]-(<=20)-[restaurantDetailsView]-(10)-[phoneButton]-(10)-[fillView3(>=0)][bottonsView][fillView4(==fillView3)]-(10)-|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_phoneButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_logoIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   

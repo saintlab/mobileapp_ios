@@ -96,7 +96,7 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[alertView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[alertView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_alertView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
 
   [_alertView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[closeButton(buttonSize)]-[contentView]|" options:kNilOptions metrics:metrics views:views]];
   [_alertView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:kNilOptions metrics:metrics views:views]];

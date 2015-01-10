@@ -830,8 +830,8 @@
 		9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNModalAlertVC.m; sourceTree = "<group>"; };
 		9391F6641A5E4D5D00594CD5 /* OMNQRHelpAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNQRHelpAlertVC.h; sourceTree = "<group>"; };
 		9391F6651A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNQRHelpAlertVC.m; sourceTree = "<group>"; };
-		9391F6681A60EBC500594CD5 /* OMNSearchRestaurantMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchRestaurantMediator.h; sourceTree = "<group>"; };
-		9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchRestaurantMediator.m; sourceTree = "<group>"; };
+		9391F6681A60EBC500594CD5 /* OMNSearchRestaurantMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNSearchRestaurantMediator.h; path = ../Card/OMNSearchRestaurantMediator.h; sourceTree = "<group>"; };
+		9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNSearchRestaurantMediator.m; path = ../Card/OMNSearchRestaurantMediator.m; sourceTree = "<group>"; };
 		93958B5B198747E1009BB2ED /* OMNBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBill.h; sourceTree = "<group>"; };
 		93958B5C198747E1009BB2ED /* OMNBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBill.m; sourceTree = "<group>"; };
 		939689B0195BD76E00AAAF9C /* OMNWizardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWizardVC.h; sourceTree = "<group>"; };
@@ -1346,8 +1346,6 @@
 				93245DB51A1C60520065D4EC /* OMNMailRuBankCardMediator.m */,
 				9325BA4B1A1DDE81003557BD /* OMNTestBankCardMediator.h */,
 				9325BA4C1A1DDE81003557BD /* OMNTestBankCardMediator.m */,
-				9391F6681A60EBC500594CD5 /* OMNSearchRestaurantMediator.h */,
-				9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */,
 			);
 			name = Mediator;
 			sourceTree = "<group>";
@@ -1840,6 +1838,8 @@
 			children = (
 				9390D25C1966DA68007E13AB /* OMNRestaurantMediator.h */,
 				9390D25D1966DA68007E13AB /* OMNRestaurantMediator.m */,
+				9391F6681A60EBC500594CD5 /* OMNSearchRestaurantMediator.h */,
+				9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */,
 			);
 			path = Mediator;
 			sourceTree = "<group>";

@@ -31,8 +31,6 @@
     OMNModalAlertVC *paymentAlertVC = (OMNModalAlertVC *)toVC;
     
     fromView.userInteractionEnabled = NO;
-    
-    toView.frame = [transitionContext finalFrameForViewController:toVC];
     [containerView addSubview:toView];
     
     paymentAlertVC.alertView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toView.frame));

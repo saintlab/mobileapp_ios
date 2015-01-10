@@ -76,7 +76,7 @@
   
   _dataSource.didScrollToTopBlock = ^{
     
-    [weakSelf handleClose];
+//    [weakSelf handleClose];
     
   };
   

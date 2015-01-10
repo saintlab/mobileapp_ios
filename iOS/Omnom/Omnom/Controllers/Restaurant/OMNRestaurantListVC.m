@@ -223,15 +223,11 @@
 
 - (void)omn_setup {
   
-  _bottomToolbar = [UIToolbar omn_autolayoutView];
+  _bottomToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.width, [OMNStyler styler].bottomToolbarHeight.floatValue)];
   [_bottomToolbar setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionAny];
   [_bottomToolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
   _bottomToolbar.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
-  [self.view addSubview:_bottomToolbar];
-  
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_bottomToolbar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:[OMNStyler styler].bottomToolbarHeight.floatValue]];
+  [self.tableView addSubview:_bottomToolbar];
   
   UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   self.tableView.contentInset = insets;

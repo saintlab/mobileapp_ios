@@ -122,6 +122,7 @@ OMNLaunchHandlerDelegate>
 
 - (void)searchRestaurantVCDidFinish:(OMNSearchRestaurantVC *)searchRestaurantVC {
   
+  _launchOptions = nil;
   [self dismissViewControllerAnimated:YES completion:nil];
   
 }
