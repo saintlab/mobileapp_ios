@@ -9,26 +9,24 @@
 #import "OMNSearchRestaurantsVC.h"
 #import "OMNOperationManager.h"
 #import "OMNAskCLPermissionsVC.h"
-#import "OMNTablePositionVC.h"
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNCircleRootVC.h"
 #import "OMNTurnOnBluetoothVC.h"
 #import "UINavigationController+omn_replace.h"
-#import "OMNDemoRestaurantVC.h"
 #import "OMNDenyCLPermissionVC.h"
 #import "OMNAnalitics.h"
-#import "OMNUserInfoVC.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNBeacon+omn_debug.h"
 #import "OMNAuthorization.h"
 #import "OMNRestaurantManager.h"
 #import <OMNBeaconsSearchManager.h>
+#import "UIImage+omn_helper.h"
+#import <OMNStyler.h>
 
 @interface OMNSearchRestaurantsVC ()
-<OMNTablePositionVCDelegate,
-OMNDemoRestaurantVCDelegate,
-OMNUserInfoVCDelegate,
-OMNBeaconsSearchManagerDelegate>
+<OMNBeaconsSearchManagerDelegate>
+
+@property (nonatomic, strong) OMNSearchRestaurantMediator *searchRestaurantMediator;
 
 @end
 
@@ -45,31 +43,23 @@ OMNBeaconsSearchManagerDelegate>
   
 }
 
-- (instancetype)init {
+- (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator {
   self = [super initWithParent:nil];
   if (self) {
+    
+    _searchRestaurantMediator = searchRestaurantMediator;
+    
   }
   return self;
 }
 
-- (UIBarButtonItem *)userInfoButton {
-  
-  return [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:self action:@selector(showUserProfile)];
-  
-}
-
-- (void)showUserProfile {
-  
-  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:nil];
-  userInfoVC.delegate = self;
-  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
-  navigationController.delegate = self.navigationController.delegate;
-  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
-  
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
+  self.circleBackground = circleBackground;
+  self.circleIcon = [UIImage imageNamed:@"logo_icon"];
+  self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
   if (NO) {
@@ -113,32 +103,32 @@ OMNBeaconsSearchManagerDelegate>
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  if (self.restaurants) {
+  if (_searchRestaurantMediator.restaurants) {
     
     [self.loaderView startAnimating:self.estimateAnimationDuration];
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf didFindRestaurants:weakSelf.restaurants];
+      [weakSelf didFindRestaurants:_searchRestaurantMediator.restaurants];
       
     });
     
   }
-  else if (self.hashString) {
+  else if (_searchRestaurantMediator.hashString) {
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf processHash:weakSelf.hashString];
+      [weakSelf processHash:_searchRestaurantMediator.hashString];
       
     });
     
   }
-  else if (self.qr) {
+  else if (_searchRestaurantMediator.qr) {
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf processQrCode:weakSelf.qr];
+      [weakSelf processQrCode:_searchRestaurantMediator.qr];
       
     });
     
@@ -210,7 +200,7 @@ OMNBeaconsSearchManagerDelegate>
   __weak typeof(self)weakSelf = self;
   [self finishLoading:^{
   
-    [weakSelf.delegate searchRestaurantsVC:weakSelf didFindRestaurants:restaurants];
+    [weakSelf.searchRestaurantMediator showRestaurants:restaurants];
     
   }];
   
@@ -220,14 +210,6 @@ OMNBeaconsSearchManagerDelegate>
   
   [self stopBeaconManager];
   [self.delegate searchRestaurantsVCDidCancel:self];
-  
-}
-
-- (void)demoModeTap {
-  
-  OMNDemoRestaurantVC *demoRestaurantVC = [[OMNDemoRestaurantVC alloc] initWithParent:self];
-  demoRestaurantVC.delegate = self;
-  [self.navigationController pushViewController:demoRestaurantVC animated:YES];
   
 }
 
@@ -454,59 +436,6 @@ OMNBeaconsSearchManagerDelegate>
 - (void)beaconsNotFound {
   
   [self didFindRestaurants:@[]];
-  
-}
-
-- (void)determineFaceUpPosition {
-  
-  OMNTablePositionVC *tablePositionVC = [[OMNTablePositionVC alloc] initWithParent:self];
-  tablePositionVC.text = NSLocalizedString(@"Слабый сигнал.\nПоложите телефон\nв центр стола,\nпожалуйста.", nil);
-  tablePositionVC.circleIcon = [UIImage imageNamed:@"weak_signal_table_icon_big"];
-  tablePositionVC.tablePositionDelegate = self;
-  __weak typeof(self)weakSelf = self;
-  tablePositionVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      [weakSelf startSearchingBeacons];
-    }]
-    ];
-  [self.navigationController pushViewController:tablePositionVC animated:YES];
-  
-}
-
-#pragma mark - OMNTablePositionVCDelegate
-
-- (void)tablePositionVCDidPlaceOnTable:(OMNTablePositionVC *)tablePositionVC {
-  
-  [self startSearchingBeacons];
-  
-}
-
-- (void)tablePositionVCDidCancel:(OMNTablePositionVC *)tablePositionVC {
-  
-  [self startSearchingBeacons];
-  
-}
-
-#pragma mark - OMNDemoRestaurantVCDelegate
-
-- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC withError:(OMNError *)error {
-  
-  [self didFailOmnom:error];
-  
-}
-
-- (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC {
-  
-  [self startSearchingBeacons];
-
-}
-
-#pragma mark - OMNUserInfoVCDelegate
-
-- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
-  
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
   
 }
 

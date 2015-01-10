@@ -7,22 +7,20 @@
 //
 
 #import "OMNLoadingCircleVC.h"
-#import "OMNLoaderView.h"
+#import "OMNSearchRestaurantMediator.h"
 
 @protocol OMNSearchRestaurantsVCDelegate;
 
 @interface OMNSearchRestaurantsVC : OMNLoadingCircleVC
 
-@property (nonatomic, strong) NSArray *restaurants;
-@property (nonatomic, copy) NSString *qr;
-@property (nonatomic, copy) NSString *hashString;
 @property (nonatomic, weak) id<OMNSearchRestaurantsVCDelegate> delegate;
+
+- (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator;
 
 @end
 
 @protocol OMNSearchRestaurantsVCDelegate <NSObject>
 
-- (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants;
 - (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC;
 
 @end

@@ -63,8 +63,16 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
   
 }
 
+- (BOOL)hasTable {
+  
+  return (1 == self.tables.count);
+  
+}
+
 - (NSString *)description {
+  
   return [NSString stringWithFormat:@"%@, %@", _title, _id];
+  
 }
 
 @end

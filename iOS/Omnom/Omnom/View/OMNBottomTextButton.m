@@ -49,7 +49,7 @@
     @"label" : _label,
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]-(15)-[label]-(>=0)-|" options:kNilOptions metrics:nil views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]-(8)-[label]-(>=0)-|" options:kNilOptions metrics:nil views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[label]|" options:kNilOptions metrics:nil views:views]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_iconView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   

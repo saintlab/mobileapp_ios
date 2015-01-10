@@ -314,6 +314,8 @@
 		9391F6631A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */; };
 		9391F6661A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6651A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m */; };
 		9391F6671A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6651A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m */; };
+		9391F66A1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */; };
+		9391F66B1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */; };
 		93958B5D198747E1009BB2ED /* OMNBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 93958B5C198747E1009BB2ED /* OMNBill.m */; };
 		93958B5E198747E1009BB2ED /* OMNBill.m in Sources */ = {isa = PBXBuildFile; fileRef = 93958B5C198747E1009BB2ED /* OMNBill.m */; };
 		939689B2195BD76E00AAAF9C /* OMNWizardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939689B1195BD76E00AAAF9C /* OMNWizardVC.m */; };
@@ -826,6 +828,8 @@
 		9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNModalAlertVC.m; sourceTree = "<group>"; };
 		9391F6641A5E4D5D00594CD5 /* OMNQRHelpAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNQRHelpAlertVC.h; sourceTree = "<group>"; };
 		9391F6651A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNQRHelpAlertVC.m; sourceTree = "<group>"; };
+		9391F6681A60EBC500594CD5 /* OMNSearchRestaurantMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchRestaurantMediator.h; sourceTree = "<group>"; };
+		9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchRestaurantMediator.m; sourceTree = "<group>"; };
 		93958B5B198747E1009BB2ED /* OMNBill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBill.h; sourceTree = "<group>"; };
 		93958B5C198747E1009BB2ED /* OMNBill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBill.m; sourceTree = "<group>"; };
 		939689B0195BD76E00AAAF9C /* OMNWizardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWizardVC.h; sourceTree = "<group>"; };
@@ -1338,6 +1342,8 @@
 				93245DB51A1C60520065D4EC /* OMNMailRuBankCardMediator.m */,
 				9325BA4B1A1DDE81003557BD /* OMNTestBankCardMediator.h */,
 				9325BA4C1A1DDE81003557BD /* OMNTestBankCardMediator.m */,
+				9391F6681A60EBC500594CD5 /* OMNSearchRestaurantMediator.h */,
+				9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */,
 			);
 			name = Mediator;
 			sourceTree = "<group>";
@@ -2471,6 +2477,7 @@
 			files = (
 				9389456819B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */,
 				938E8F64192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m in Sources */,
+				9391F66A1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */,
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
 				93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
 				938EE0D61A317F1400508039 /* OMNCameraRollPermission.m in Sources */,
@@ -2699,6 +2706,7 @@
 				936BAD9719A77F5E0029873B /* OMNNavigationController.m in Sources */,
 				932B185C19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
 				93E58CB61A246AA1008064F9 /* OMNHelpPage.m in Sources */,
+				9391F66B1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */,
 				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				937A37341980F68200EF5C31 /* OMNLoaderView.m in Sources */,
 				937C3E721A2824E9006525A9 /* OMNLocationManager.m in Sources */,

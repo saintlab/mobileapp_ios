@@ -40,5 +40,7 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 
+- (BOOL)hasTable;
+
 @end
 

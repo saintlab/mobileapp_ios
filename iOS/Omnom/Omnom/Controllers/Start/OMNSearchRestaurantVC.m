@@ -12,31 +12,40 @@
 #import "UINavigationController+omn_replace.h"
 #import <OMNStyler.h>
 #import "OMNAnalitics.h"
-#import "OMNRestaurantActionsVC.h"
-#import "OMNRestaurantListVC.h"
-#import "OMNRestaurantMediator.h"
+#import "OMNSearchRestaurantMediator.h"
 
 @interface OMNSearchRestaurantVC ()
-<OMNRestaurantActionsVCDelegate,
-OMNSearchRestaurantsVCDelegate>
+
+@property (nonatomic, strong) OMNSearchRestaurantMediator *searchRestaurantMediator;
 
 @end
 
 @implementation OMNSearchRestaurantVC {
-
-  OMNSearchRestaurantsVC *_searchRestaurantsVC;
   
 }
 
 - (instancetype)init {
   self = [super initWithNibName:@"OMNSearchRestaurantVC" bundle:nil];
   if (self) {
+    
+    _searchRestaurantMediator = [[OMNSearchRestaurantMediator alloc] initWithRootVC:self];
+    
   }
   return self;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _searchRestaurantMediator.qr = self.qr;
+  _searchRestaurantMediator.hashString = self.hashString;
+  
+  __weak typeof(self)weakSelf = self;
+  _searchRestaurantMediator.didFinishBlock = ^{
+    
+    [weakSelf didFinish];
+    
+  };
   
   self.bgIV.image = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:colorWithHexString(@"CE1200")];
   [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -59,82 +68,18 @@ OMNSearchRestaurantsVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  OMNSearchRestaurantsVC *searchRestaurantsVC = [[OMNSearchRestaurantsVC alloc] init];
-  searchRestaurantsVC.delegate = self;
-  searchRestaurantsVC.qr = self.qr;
-  searchRestaurantsVC.hashString = self.hashString;
-  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
-  searchRestaurantsVC.circleBackground = circleBackground;
-  searchRestaurantsVC.circleIcon = [UIImage imageNamed:@"logo_icon"];
-  searchRestaurantsVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-
+  __weak typeof(self)weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
-    
-    [self.navigationController pushViewController:searchRestaurantsVC animated:YES];
+  
+    [weakSelf.searchRestaurantMediator searchRestarants];
 
   });
-  
-  _searchRestaurantsVC = searchRestaurantsVC;
-  
-}
-
-- (void)didFindRestaurants:(NSArray *)restaurants {
-  
-  if (1 == restaurants.count) {
-    
-    OMNRestaurant *restaurant = [restaurants firstObject];
-    [self showRestaurant:restaurant];
-    
-  }
-  else {
-    
-    [self chooseRestaurantFromRestaurants:restaurants];
-    
-  }
-  
-}
-
-- (void)showRestaurant:(OMNRestaurant *)restaurant {
-  
-  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
-  restaurantActionsVC.delegate = self;
-  [self.navigationController pushViewController:restaurantActionsVC animated:YES];
-  
-}
-
-- (void)chooseRestaurantFromRestaurants:(NSArray *)restaurants {
-  
-  OMNRestaurantListVC *restaurantListVC = [[OMNRestaurantListVC alloc] init];
-  restaurantListVC.restaurants = restaurants;
-  [self.navigationController pushViewController:restaurantListVC animated:YES];
   
 }
 
 - (void)didFinish {
   
   [self.delegate searchRestaurantVCDidFinish:self];
-  
-}
-
-#pragma mark - OMNRestaurantActionsVCDelegate
-
-- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
-  
-  [self didFinish];
-  
-}
-
-#pragma mark - OMNSearchRestaurantsVCDelegate
-
-- (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants {
-  
-  [self didFindRestaurants:restaurants];
-  
-}
-
-- (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {
-  
-  [self didFinish];
   
 }
 

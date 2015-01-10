@@ -7,21 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OMNRestaurant.h"
-
-@protocol OMNRestaurantCardVCDelegate;
+#import "OMNSearchRestaurantMediator.h"
 
 @interface OMNRestaurantCardVC : UIViewController
 
-@property (nonatomic, weak) id<OMNRestaurantCardVCDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
-
-@end
-
-@protocol OMNRestaurantCardVCDelegate <NSObject>
-
-- (void)restaurantCardVC:(OMNRestaurantCardVC *)restaurantCardVC didSelectRestaurant:(OMNRestaurant *)restaurant;
-- (void)restaurantCardVCDidFinish:(OMNRestaurantCardVC *)restaurantCardVC;
+- (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator restaurant:(OMNRestaurant *)restaurant;
 
 @end

@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "OMNConstants.h"
 #import <OMNStyler.h>
+#import "OMNCameraPermission.h"
 
 @interface OMNScanQRCodeVC ()
 <AVCaptureMetadataOutputObjectsDelegate>
@@ -71,7 +72,16 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [self initiateScan];
+  __weak typeof(self)weakSelf = self;
+  [OMNCameraPermission requestPermission:^{
+    
+    [weakSelf startScanning];
+    
+  } restricted:^{
+    
+    [weakSelf showCameraPermissionHelp];
+    
+  }];
   
 }
 
@@ -82,39 +92,9 @@
   
 }
 
-- (void)initiateScan {
+- (void)showCameraPermissionHelp {
   
-  NSString *mediaType = AVMediaTypeVideo;
-  AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
-  switch (authStatus) {
-    case AVAuthorizationStatusAuthorized: {
-      
-      [self startScanning];
-      
-    } break;
-    case AVAuthorizationStatusDenied: {
-      
-    } break;
-    case AVAuthorizationStatusNotDetermined: {
-      
-      __weak typeof(self)weakSelf = self;
-      [AVCaptureDevice requestAccessForMediaType:mediaType completionHandler:^(BOOL granted) {
-        if(granted) {
-          NSLog(@"Granted access to %@", mediaType);
-          dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf startScanning];
-          });
-          
-        } else {
-          NSLog(@"Not granted access to %@", mediaType);
-        }
-      }];
-      
-    } break;
-    case AVAuthorizationStatusRestricted: {
-      
-    } break;
-  }
+  
   
 }
 

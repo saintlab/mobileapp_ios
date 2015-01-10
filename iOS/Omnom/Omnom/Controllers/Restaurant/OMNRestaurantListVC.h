@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "OMNRestaurant.h"
+#import "OMNSearchRestaurantMediator.h"
 
 @interface OMNRestaurantListVC : UITableViewController
 
 @property (nonatomic, strong) NSArray *restaurants;
+
+- (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator;
 
 @end

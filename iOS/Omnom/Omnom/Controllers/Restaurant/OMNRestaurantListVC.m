@@ -12,34 +12,29 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurantCell.h"
 #import "OMNRestaurantListFeedbackCell.h"
-#import "OMNRestaurantCardVC.h"
-#import "OMNDemoRestaurantVC.h"
 #import "UIView+omn_autolayout.h"
 #import "UIView+frame.h"
 #import <OMNStyler.h>
 #import "OMNRestaurant+omn_network.h"
-#import "OMNUserInfoVC.h"
-#import "OMNScanTableQRCodeVC.h"
 #import "UINavigationBar+omn_custom.h"
 
 @interface OMNRestaurantListVC ()
-<OMNDemoRestaurantVCDelegate,
-OMNRestaurantCardVCDelegate,
-OMNUserInfoVCDelegate,
-OMNRestaurantActionsVCDelegate,
-OMNScanTableQRCodeVCDelegate>
 
 @end
 
 @implementation OMNRestaurantListVC {
   
   UIToolbar *_bottomToolbar;
+  OMNSearchRestaurantMediator *_searchRestaurantMediator;
   
 }
 
-- (instancetype)init {
+- (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
+    
+    _searchRestaurantMediator = searchRestaurantMediator;
+    
   }
   return self;
 }
@@ -50,7 +45,7 @@ OMNScanTableQRCodeVCDelegate>
   [self omn_setup];
   
   OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:NSLocalizedString(@"DEMO_MODE_BUTTON_TITLE", @"Демо-режим")];
-  [demoButton addTarget:self action:@selector(demoModeTap) forControlEvents:UIControlEventTouchUpInside];
+  [demoButton addTarget:_searchRestaurantMediator action:@selector(demoModeTap) forControlEvents:UIControlEventTouchUpInside];
   
   _bottomToolbar.items =
   @[
@@ -59,9 +54,9 @@ OMNScanTableQRCodeVCDelegate>
     [UIBarButtonItem omn_flexibleItem],
     ];
   
-  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:self action:@selector(showUserProfile)];
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:_searchRestaurantMediator action:@selector(showUserProfile)];
   OMNToolbarButton *qrButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"qr-icon-small"] title:NSLocalizedString(@"SCAN_QR_BUTTON_TITLE", @"Сканировать QR")];
-  [qrButton addTarget:self action:@selector(qrTap) forControlEvents:UIControlEventTouchUpInside];
+  [qrButton addTarget:_searchRestaurantMediator action:@selector(scanTableQrTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:qrButton];
   
   self.refreshControl = [[UIRefreshControl alloc] init];
@@ -82,54 +77,17 @@ OMNScanTableQRCodeVCDelegate>
   
   [self.navigationController setNavigationBarHidden:NO animated:NO];
   [self.navigationController.navigationBar omn_setDefaultBackground];
-  [self updateBottomToolbar];
+  __weak typeof(self)weakSelf = self;
+  dispatch_async(dispatch_get_main_queue(), ^{
   
-}
-
-- (void)demoModeTap {
-  
-  OMNDemoRestaurantVC *demoRestaurantVC = [[OMNDemoRestaurantVC alloc] initWithParent:nil];
-  demoRestaurantVC.delegate = self;
-  [self.navigationController pushViewController:demoRestaurantVC animated:YES];
-  
-}
-
-- (void)qrTap {
-  
-  OMNScanTableQRCodeVC *scanTableQRCodeVC = [[OMNScanTableQRCodeVC alloc] init];
-  scanTableQRCodeVC.delegate = self;
-  [self.navigationController pushViewController:scanTableQRCodeVC animated:YES];
-  
-}
-
-- (void)showUserProfile {
-  
-  OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:nil];
-  userInfoVC.delegate = self;
-  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
-  navigationController.delegate = self.navigationController.delegate;
-  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+    [weakSelf updateBottomToolbar];
+    
+  });
   
 }
 
 - (void)userFeedbackTap {
 #warning userFeedbackTap
-}
-
-- (void)showCardForRestaurant:(OMNRestaurant *)restaurant {
-  
-  OMNRestaurantCardVC *restaurantCardVC = [[OMNRestaurantCardVC alloc] initWithRestaurant:restaurant];
-  restaurantCardVC.delegate = self;
-  [self.navigationController pushViewController:restaurantCardVC animated:YES];
-  
-}
-
-- (void)showRestaurant:(OMNRestaurant *)restaurant {
-  
-  OMNRestaurantActionsVC *restaurantCardVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
-  restaurantCardVC.delegate = self;
-  [self.navigationController pushViewController:restaurantCardVC animated:YES];
-  
 }
 
 - (void)refreshOrders {
@@ -239,7 +197,7 @@ OMNScanTableQRCodeVCDelegate>
     case 0: {
 
       OMNRestaurant *restaurant = self.restaurants[indexPath.row];
-      [self showCardForRestaurant:restaurant];
+      [_searchRestaurantMediator showCardForRestaurant:restaurant];
       
     } break;
     case 1: {
@@ -260,65 +218,6 @@ OMNScanTableQRCodeVCDelegate>
 - (void)updateBottomToolbar {
   
   _bottomToolbar.transform = CGAffineTransformMakeTranslation(0.0f, self.tableView.contentOffset.y + CGRectGetHeight(self.tableView.frame) - CGRectGetHeight(_bottomToolbar.frame));
-  
-}
-
-#pragma mark - OMNDemoRestaurantVCDelegate
-
-- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC withError:(OMNError *)error {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
-}
-
-- (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
-}
-
-#pragma mark - OMNRestaurantCardVCDelegate
-
-- (void)restaurantCardVC:(OMNRestaurantCardVC *)restaurantCardVC didSelectRestaurant:(OMNRestaurant *)restaurant {
-  
-  [self showRestaurant:restaurant];
-  
-}
-
-- (void)restaurantCardVCDidFinish:(OMNRestaurantCardVC *)restaurantCardVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
-}
-
-
-#pragma mark - OMNUserInfoVCDelegate
-
-- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
-  
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-  
-}
-
-#pragma mark - OMNRestaurantActionsVCDelegate
-
-- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
-}
-
-#pragma mark - OMNScanTableQRCodeVCDelegate
-
-- (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant {
-  
-  [self showRestaurant:restaurant];
-  
-}
-
-- (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 

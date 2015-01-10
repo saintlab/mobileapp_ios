@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "qr-code-scanner-frame@2x.png"
+      "filename" : "scan_frame_new@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "scan_frame_new@3x.png"
     }
   ],
   "info" : {

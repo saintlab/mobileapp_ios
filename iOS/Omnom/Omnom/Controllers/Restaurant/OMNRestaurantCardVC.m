@@ -14,12 +14,10 @@
 #import "OMNBottomTextButton.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNScanTableQRCodeVC.h"
 #import "UIImage+omn_helper.h"
 #import "UINavigationBar+omn_custom.h"
 
 @interface OMNRestaurantCardVC ()
-<OMNScanTableQRCodeVCDelegate>
 
 @end
 
@@ -34,6 +32,8 @@
   OMNBottomTextButton *_insideButton;
   OMNBottomTextButton *_preorderButton;
   
+  OMNSearchRestaurantMediator *_searchRestaurantMediator;
+  
 }
 
 - (void)dealloc {
@@ -45,10 +45,13 @@
   
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
+- (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator restaurant:(OMNRestaurant *)restaurant {
   self = [super init];
   if (self) {
+    
+    _searchRestaurantMediator = searchRestaurantMediator;
     _restaurant = restaurant;
+    
   }
   return self;
 }
@@ -102,36 +105,26 @@
 
 - (void)insideRestaurantTap {
   
-  if (1 == _restaurant.tables.count) {
-    
-    [self showRestaurant:_restaurant];
+  if ([_restaurant hasTable]) {
+
+    [_searchRestaurantMediator showRestaurant:_restaurant];
     
   }
   else {
     
-    [self selectTable];
+    [_searchRestaurantMediator scanTableQrTap];
     
   }
-  
-}
-
-- (void)showRestaurant:(OMNRestaurant *)restaurant {
-  
-  [self.delegate restaurantCardVC:self didSelectRestaurant:restaurant];
-  
-}
-
-- (void)selectTable {
-  
-  OMNScanTableQRCodeVC *scanTableQRCodeVC = [[OMNScanTableQRCodeVC alloc] init];
-  scanTableQRCodeVC.delegate = self;
-  [self.navigationController pushViewController:scanTableQRCodeVC animated:YES];
   
 }
 
 - (void)closeTap {
   
-  [self.delegate restaurantCardVCDidFinish:self];
+  if (self.didCloseBlock) {
+    
+    self.didCloseBlock();
+    
+  }
   
 }
 
@@ -161,7 +154,7 @@
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
   
-  return UIStatusBarStyleLightContent;
+  return UIStatusBarStyleDefault;
   
 }
 
@@ -240,23 +233,9 @@
 
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[restaurantDetailsView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-(20)-[logoIcon]-(20)-[restaurantDetailsView]-(10)-[phoneButton]-(10)-[fillView3(>=0)][bottonsView][fillView4(==fillView3)]-(10)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-(10)-[logoIcon]-(<=20)-[restaurantDetailsView]-(10)-[phoneButton]-(10)-[fillView3(>=0)][bottonsView][fillView4(==fillView3)]-(10)-|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_phoneButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_logoIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  
-}
-
-#pragma mark - OMNScanTableQRCodeVCDelegate
-
-- (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant {
-  
-  [self showRestaurant:restaurant];
-  
-}
-
-- (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 

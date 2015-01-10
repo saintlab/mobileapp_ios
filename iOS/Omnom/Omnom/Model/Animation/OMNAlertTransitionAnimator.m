@@ -32,10 +32,6 @@
     
     fromView.userInteractionEnabled = NO;
     
-    UIView *snapshotView = [fromView snapshotViewAfterScreenUpdates:NO];
-    snapshotView.frame = [transitionContext finalFrameForViewController:toVC];
-    [containerView addSubview:snapshotView];
-    
     toView.frame = [transitionContext finalFrameForViewController:toVC];
     [containerView addSubview:toView];
     
@@ -44,13 +40,11 @@
     
     [UIView animateWithDuration:duration animations:^{
       
-      fromView.tintAdjustmentMode = UIViewTintAdjustmentModeDimmed;
       paymentAlertVC.alertView.transform = CGAffineTransformIdentity;
       paymentAlertVC.fadeView.alpha = 1.0f;
       
     } completion:^(BOOL finished) {
       
-      [snapshotView removeFromSuperview];
       [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
       
     }];
@@ -62,7 +56,6 @@
     
     [UIView animateWithDuration:duration animations:^{
       
-      toView.tintAdjustmentMode = UIViewTintAdjustmentModeAutomatic;
       paymentAlertVC.alertView.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(toView.frame));
       paymentAlertVC.fadeView.alpha = 0.0f;
       

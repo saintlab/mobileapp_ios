@@ -10,4 +10,6 @@
 
 @interface OMNQRHelpAlertVC : OMNModalAlertVC
 
+@property (nonatomic, copy) dispatch_block_t didRequestDemoModeBlock;
+
 @end
