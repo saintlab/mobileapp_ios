@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
+#import "OMNLaunchOptions.h"
+
 extern NSString * const kPushSoundName;
 
 #define FuturaOSFOmnomMedium(__FONTSIZE__) ([UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:__FONTSIZE__])
@@ -36,7 +38,7 @@ extern NSString * const OMNFacebookAppUrlString;
 
 @interface OMNConstants : NSObject
 
-+ (void)setupWithLaunchOptions:(NSDictionary *)launchOptions completion:(dispatch_block_t)completionBlock;
++ (void)setupWithLaunchOptions:(OMNLaunchOptions *)launchOptions completion:(dispatch_block_t)completionBlock;
 + (NSString *)stringForKey:(NSString *)key;
 + (BOOL)boolForKey:(NSString *)key;
 

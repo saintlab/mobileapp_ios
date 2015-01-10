@@ -7,9 +7,10 @@
 //
 
 #import "OMNBackgroundVC.h"
+#import "OMNLaunchOptions.h"
 
 @interface OMNStartVC : OMNBackgroundVC
 
-@property (nonatomic, strong) NSDictionary *info;
+- (instancetype)initWithLaunchOptions:(OMNLaunchOptions *)launchOptions;
 
 @end

@@ -103,32 +103,32 @@
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  if (_searchRestaurantMediator.restaurants) {
+  if (_searchRestaurantMediator.launchOptions.restaurants) {
     
     [self.loaderView startAnimating:self.estimateAnimationDuration];
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf didFindRestaurants:_searchRestaurantMediator.restaurants];
+      [weakSelf didFindRestaurants:_searchRestaurantMediator.launchOptions.restaurants];
       
     });
     
   }
-  else if (_searchRestaurantMediator.hashString) {
+  else if (_searchRestaurantMediator.launchOptions.hashString) {
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf processHash:_searchRestaurantMediator.hashString];
+      [weakSelf processHash:_searchRestaurantMediator.launchOptions.hashString];
       
     });
     
   }
-  else if (_searchRestaurantMediator.qr) {
+  else if (_searchRestaurantMediator.launchOptions.qr) {
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf processQrCode:_searchRestaurantMediator.qr];
+      [weakSelf processQrCode:_searchRestaurantMediator.launchOptions.qr];
       
     });
     

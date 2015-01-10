@@ -20,15 +20,14 @@
 
 @end
 
-@implementation OMNSearchRestaurantVC {
-  
-}
+@implementation OMNSearchRestaurantVC
 
-- (instancetype)init {
+- (instancetype)initWithLaunchOptions:(OMNLaunchOptions *)launchOptions {
   self = [super initWithNibName:@"OMNSearchRestaurantVC" bundle:nil];
   if (self) {
     
     _searchRestaurantMediator = [[OMNSearchRestaurantMediator alloc] initWithRootVC:self];
+    _searchRestaurantMediator.launchOptions = launchOptions;
     
   }
   return self;
@@ -36,10 +35,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
-  _searchRestaurantMediator.qr = self.qr;
-  _searchRestaurantMediator.hashString = self.hashString;
-  
+
   __weak typeof(self)weakSelf = self;
   _searchRestaurantMediator.didFinishBlock = ^{
     

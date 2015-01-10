@@ -16,10 +16,12 @@
 #import "OMNAnalitics.h"
 #import "UINavigationController+omn_replace.h"
 #import "NSURL+omn_query.h"
+#import "OMNLaunchHandler.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
-OMNSearchRestaurantVCDelegate>
+OMNSearchRestaurantVCDelegate,
+OMNLaunchHandlerDelegate>
 
 @end
 
@@ -27,7 +29,18 @@ OMNSearchRestaurantVCDelegate>
   
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
   BOOL _authorizationPresented;
+  OMNLaunchOptions *_launchOptions;
   
+}
+
+- (instancetype)initWithLaunchOptions:(OMNLaunchOptions *)launchOptions {
+  self = [super init];
+  if (self) {
+    
+    _launchOptions = launchOptions;
+    
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -50,6 +63,8 @@ OMNSearchRestaurantVCDelegate>
     }];
   };
 
+  [OMNLaunchHandler sharedHandler].delegate = self;
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -81,33 +96,8 @@ OMNSearchRestaurantVCDelegate>
 
 - (void)startSearchingRestaurant {
 
-  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
+  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithLaunchOptions:_launchOptions];
   searchRestaurantVC.delegate = self;
-  
-  if (self.info[UIApplicationLaunchOptionsURLKey]) {
-    
-    NSDictionary *parametrs = [self.info[UIApplicationLaunchOptionsURLKey] omn_query];
-    searchRestaurantVC.qr = parametrs[@"qr"];
-    
-  }
-  
-#warning run with custom qr codes
-//  searchRestaurantVC.qr = @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";
-//  searchRestaurantVC.qr = @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7";
-//  searchRestaurantVC.qr = @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";
-//  searchRestaurantVC.qr = @"qr-code-for-2-saintlab-iiko";
-//  searchRestaurantVC.qr = @"qr-code-3-at-saintlab-iiko";
-//  searchRestaurantVC.qr = @"http://omnom.menu/qr/special-and-vip";
-//  searchRestaurantVC.qr = @"http://m.2gis.ru/os/";
-  
-//  searchRestaurantVC.hashString = @"hash-QWERTY-restaurant-B";
-
-#warning decodeBeaconData
-//  NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
-//  if (decodeBeaconData) {
-//    OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
-//    searchRestaurantVC.visitor = visitor;
-//  }
 
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];
   navigationController.navigationBar.barStyle = UIBarStyleDefault;
@@ -146,6 +136,24 @@ OMNSearchRestaurantVCDelegate>
   
     [weakSelf startSearchingRestaurant];
 
+  }];
+  
+}
+
+#pragma mark - OMNLaunchHandlerDelegate 
+
+- (void)launchHandler:(OMNLaunchHandler *)launchHandler didReceiveLaunchOptions:(OMNLaunchOptions *)launchOptions {
+  
+  if (![OMNAuthorization authorisation].token) {
+    return;
+  }
+  
+  _launchOptions = launchOptions;
+  __weak typeof(self)weakSelf = self;
+  [self dismissViewControllerAnimated:YES completion:^{
+    
+    [weakSelf startSearchingRestaurant];
+    
   }];
   
 }

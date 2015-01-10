@@ -433,6 +433,8 @@
 		93D17D6219D163570066DCE7 /* OMNDotTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D17D6019D163570066DCE7 /* OMNDotTextField.m */; };
 		93D34DB019D2689800B7BDBE /* NSString+omnScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D34DAF19D2689800B7BDBE /* NSString+omnScanner.m */; };
 		93D34DB119D2689800B7BDBE /* NSString+omnScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D34DAF19D2689800B7BDBE /* NSString+omnScanner.m */; };
+		93D4ABD61A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D4ABD51A61144900E7C7A5 /* OMNLaunchHandler.m */; };
+		93D4ABD71A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D4ABD51A61144900E7C7A5 /* OMNLaunchHandler.m */; };
 		93D59A371A3D6A4400C3491F /* orders_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93D59A361A3D6A4300C3491F /* orders_stub.json */; };
 		93D59A891A41F7C600C3491F /* Futura-LSF-Omnom-LE-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93D59A881A41F7C600C3491F /* Futura-LSF-Omnom-LE-Regular.otf */; };
 		93D59A8A1A41F7C600C3491F /* Futura-LSF-Omnom-LE-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 93D59A881A41F7C600C3491F /* Futura-LSF-Omnom-LE-Regular.otf */; };
@@ -945,6 +947,8 @@
 		93D17D6019D163570066DCE7 /* OMNDotTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNDotTextField.m; path = ../OMNDotTextField.m; sourceTree = "<group>"; };
 		93D34DAE19D2689800B7BDBE /* NSString+omnScanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+omnScanner.h"; sourceTree = "<group>"; };
 		93D34DAF19D2689800B7BDBE /* NSString+omnScanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+omnScanner.m"; sourceTree = "<group>"; };
+		93D4ABD41A61144900E7C7A5 /* OMNLaunchHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLaunchHandler.h; sourceTree = "<group>"; };
+		93D4ABD51A61144900E7C7A5 /* OMNLaunchHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLaunchHandler.m; sourceTree = "<group>"; };
 		93D59A361A3D6A4300C3491F /* orders_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = orders_stub.json; sourceTree = "<group>"; };
 		93D59A881A41F7C600C3491F /* Futura-LSF-Omnom-LE-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-LSF-Omnom-LE-Regular.otf"; sourceTree = "<group>"; };
 		93D9D8421A5306B400824AD0 /* OMNTable+omn_network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNTable+omn_network.h"; sourceTree = "<group>"; };
@@ -1713,6 +1717,8 @@
 				93363FFC1A1B709D009D16CE /* OMNNotifierManager.m */,
 				935D8C9A1A38693B00877C02 /* OMNError.h */,
 				935D8C9B1A38693B00877C02 /* OMNError.m */,
+				93D4ABD41A61144900E7C7A5 /* OMNLaunchHandler.h */,
+				93D4ABD51A61144900E7C7A5 /* OMNLaunchHandler.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2571,6 +2577,7 @@
 				93998C1219ACB0F800FEE940 /* UILabel+numberOfLines.m in Sources */,
 				9321181A1962DF7C00183729 /* OMNProduct.m in Sources */,
 				939F991819752BE90051822E /* OMNEditTableVC.m in Sources */,
+				93D4ABD61A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */,
 				939F991419752BE90051822E /* OMNBankCardsVC.m in Sources */,
 				9325BA511A1E1FAB003557BD /* NSString+omn_json.m in Sources */,
 				939F990C19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
@@ -2873,6 +2880,7 @@
 				933A9E9B1A4B23ED001C0909 /* NSDate+omn_custom.m in Sources */,
 				9345AFB0199A253F00328F73 /* OMNBankCardInfo.m in Sources */,
 				939689B3195BD76E00AAAF9C /* OMNWizardVC.m in Sources */,
+				93D4ABD71A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */,
 				93E485701A49136700DCDB0F /* OMNUserInfoCell.m in Sources */,
 				9332CB001A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */,
 				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,

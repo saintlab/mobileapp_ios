@@ -33,10 +33,9 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 
 @implementation OMNConstants
 
-+ (void)setupWithLaunchOptions:(NSDictionary *)launchOptions completion:(dispatch_block_t)completionBlock {
++ (void)setupWithLaunchOptions:(OMNLaunchOptions *)launchOptions completion:(dispatch_block_t)completionBlock {
   
-  OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
-  _customConfig = [self configWithName:lo.customConfigName];
+  _customConfig = [self configWithName:launchOptions.customConfigName];
 
 //#warning _customConfig
 //  _customConfig = [self configWithName:@"config_laaaab"];

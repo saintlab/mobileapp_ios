@@ -15,8 +15,8 @@
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 #import "OMNBackgroundVC.h"
-
 #import <BlocksKit.h>
+#import "OMNLaunchHandler.h"
 
 @implementation GAppDelegate {
   
@@ -30,8 +30,10 @@
   return YES;
 #endif
 
+  OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
+  
   __weak typeof(self)weakSelf = self;
-  [OMNConstants setupWithLaunchOptions:launchOptions completion:^{
+  [OMNConstants setupWithLaunchOptions:lo completion:^{
     
     [[OMNAnalitics analitics] setup];
     
@@ -47,10 +49,9 @@
       
     }];
     
-    BOOL applicationWasOpenedByBeacon = (launchOptions[UIApplicationLaunchOptionsLocationKey] != nil);
-    if (NO == applicationWasOpenedByBeacon) {
+    if (!lo.applicationWasOpenedByBeacon) {
       
-      [weakSelf startApplicationIfNeededWithInfo:launchOptions];
+      [weakSelf startApplicationIfNeededWithInfo:lo];
       
     }
     
@@ -77,7 +78,7 @@
   
 }
 
-- (void)startApplicationIfNeededWithInfo:(NSDictionary *)info {
+- (void)startApplicationIfNeededWithInfo:(OMNLaunchOptions *)launchOptions {
 
   if (_applicationStartedForeground) {
     return;
@@ -86,8 +87,7 @@
   
   [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
   
-  OMNStartVC *startVC = [[OMNStartVC alloc] init];
-  startVC.info = info;
+  OMNStartVC *startVC = [[OMNStartVC alloc] initWithLaunchOptions:launchOptions];
   self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
   
 }
@@ -138,11 +138,10 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-  NSLog(@"url recieved: %@", url);
-  NSLog(@"url recieved: %@", [url query]);
-  NSLog(@"sourceApplication: %@", sourceApplication);
-  NSLog(@"annotation: %@", annotation);
+  
+  [[OMNLaunchHandler sharedHandler] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
   return YES;
+  
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
