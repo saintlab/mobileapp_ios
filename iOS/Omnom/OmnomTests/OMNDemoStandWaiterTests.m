@@ -63,8 +63,7 @@ describe(@"waiter call tests", ^{
   it(@"should call waiter", ^{
     
     _restaurantMediator.waiterIsCalled = NO;
-    [_restaurantMediator waiterCallWithCompletion:^{
-    }];
+    [_restaurantMediator waiterCallWithCompletion:^{}];
     [[expectFutureValue(@(_restaurantMediator.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
     
   });
@@ -72,24 +71,9 @@ describe(@"waiter call tests", ^{
   it(@"should stop waiter", ^{
     
     _restaurantMediator.waiterIsCalled = YES;
-    [_restaurantMediator waiterCallStopWithCompletion:^{
-      
-    }];
+    [_restaurantMediator waiterCallStopWithCompletion:^{}];
     [[expectFutureValue(@(_restaurantMediator.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(NO)];
 
-  });
-  
-  it(@"should get orders", ^{
-    
-    [[@(_restaurantMediator.orders.count) should] equal:@(0)];
-    __block NSNumber *ordersDidCalled = nil;
-    [_restaurantMediator callBillWithCompletion:^{
-      
-      ordersDidCalled = @(YES);
-      
-    }];
-    [[expectFutureValue(ordersDidCalled) shouldEventuallyBeforeTimingOutAfter(10.0)] equal:@(YES)];
-    
   });
   
 });

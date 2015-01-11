@@ -117,6 +117,8 @@
     [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNOrdersVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrdersVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrderCalculationVC class]],
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNOrderCalculationVC class]],
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNOrdersVC class]],
     ];
 }
 

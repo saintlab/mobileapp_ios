@@ -317,22 +317,60 @@ OMNOrderCalculationVCDelegate>
 }
 
 
-- (void)callBillWithCompletion:(dispatch_block_t)completionBlock {
+- (void)callBill {
   
   if (!self.table) {
     return;
   }
   
+  OMNLoadingCircleVC *loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:_restaurantActionsVC.r1VC];
   __weak typeof(self)weakSelf = self;
-  [self.table getOrders:^(NSArray *orders) {
+  loadingCircleVC.didCloseBlock = ^{
     
-    [weakSelf checkPushNotificationAndProcessOrders:orders];
-    completionBlock();
+    [weakSelf popToRootViewControllerAnimated:YES];
     
-  } error:^(OMNError *error) {
+  };
+  loadingCircleVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
+  
+  [_restaurantActionsVC.navigationController omn_pushViewController:loadingCircleVC animated:YES completion:^{
     
-    [weakSelf processOrderError:error];
-    completionBlock();
+    [weakSelf getOrdersWithLoadingVC:loadingCircleVC];
+    
+  }];
+  
+}
+
+- (void)getOrdersWithLoadingVC:(OMNLoadingCircleVC *)loadingCircleVC {
+  
+  __weak typeof(self)weakSelf = self;
+  [_restaurantActionsVC.navigationController omn_popToViewController:loadingCircleVC animated:YES completion:^{
+    
+    [loadingCircleVC.loaderView startAnimating:10.0];
+    [weakSelf.table getOrders:^(NSArray *orders) {
+      
+      [loadingCircleVC finishLoading:^{
+        
+        [weakSelf checkPushNotificationAndProcessOrders:orders];
+        
+      }];
+      
+    } error:^(OMNError *error) {
+      
+      [loadingCircleVC finishLoading:^{
+        
+        [loadingCircleVC showRetryMessageWithError:error retryBlock:^{
+          
+          [weakSelf getOrdersWithLoadingVC:loadingCircleVC];
+          
+        } cancelBlock:^{
+          
+          [weakSelf popToRootViewControllerAnimated:YES];
+          
+        }];
+        
+      }];
+      
+    }];
     
   }];
   
@@ -422,31 +460,6 @@ OMNOrderCalculationVCDelegate>
     }]
     ];
   [self pushViewController:noOrdersVC];
-  
-}
-
-- (void)processOrderError:(OMNError *)error {
-  
-  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:_restaurantActionsVC.r1VC];
-  noInternetVC.text = error.localizedDescription;
-  noInternetVC.faded = YES;
-  noInternetVC.circleIcon = error.circleImage;
-  __weak typeof(self)weakSelf = self;
-  noInternetVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      
-      [weakSelf callBillWithCompletion:^{}];
-      
-    }]
-    ];
-  noInternetVC.didCloseBlock = ^{
-    
-    [weakSelf popToRootViewControllerAnimated:YES];
-    
-  };
-  [self popToRootViewControllerAnimated:NO];
-  [self pushViewController:noInternetVC];
   
 }
 

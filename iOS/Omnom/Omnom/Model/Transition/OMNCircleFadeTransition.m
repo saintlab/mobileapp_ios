@@ -79,12 +79,14 @@
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchRestaurantsVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNCircleRootVC class]],
+    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNLoadingCircleVC class]],
     
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNTablePositionVC class]],
     [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchRestaurantsVC class]],
     
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNPushPermissionVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNPushPermissionVC class]],
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNPushPermissionVC class]],
 
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNTurnOnBluetoothVC class]],
     [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchRestaurantsVC class]],
@@ -95,6 +97,7 @@
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNRestaurantActionsVC class]],
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNRestaurantActionsVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNSearchRestaurantsVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNLoadingCircleVC class]],
     
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNDenyCLPermissionVC class]],
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNSearchRestaurantVC class]],
@@ -111,6 +114,7 @@
     
     [self keyFromClass:[OMNOrderPaymentVC class] toClass:[OMNLoadingCircleVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNOrderPaymentVC class]],
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNCircleRootVC class]],
     
     ];
 }

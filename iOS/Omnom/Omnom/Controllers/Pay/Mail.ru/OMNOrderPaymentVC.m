@@ -48,7 +48,6 @@
   OMNBill *_bill;
   OMNBankCardsModel *_bankCardsModel;
   UIView *_contentView;
-  OMNLoadingCircleVC *_loadingCircleVC;
   BOOL _addBankCardRequested;
   
 }

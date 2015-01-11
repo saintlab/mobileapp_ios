@@ -23,7 +23,7 @@
 
 - (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock;
 - (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock;
-- (void)callBillWithCompletion:(dispatch_block_t)completionBlock;
+- (void)callBill;
 
 - (void)exitRestaurant;
 
