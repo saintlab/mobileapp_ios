@@ -118,6 +118,23 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
   
 }
 
+- (UIImage *)circleImage {
+  
+  UIImage *circleImage = nil;
+  
+  switch (self.code) {
+    case kOMNErrorCodeTimedOut: {
+      circleImage = [UIImage imageNamed:@"noise_icon_big"];
+    } break;
+    case kOMNErrorCodeNotConnectedToInternet: {
+      circleImage = [UIImage imageNamed:@"unlinked_icon_big"];
+    } break;
+  }
+  
+  return circleImage;
+  
+}
+
 @end
 
 @implementation NSObject (omn_userError)

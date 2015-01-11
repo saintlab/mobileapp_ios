@@ -37,7 +37,7 @@
 
 }
 
-- (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(NSError *error))errorBlock {
+- (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(OMNError *error))errorBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant_id, self.id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
@@ -57,14 +57,14 @@
     else {
       
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
-      errorBlock(nil);
+      errorBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
-    errorBlock(error);
+    errorBlock([error omn_internetError]);
     
   }];
   

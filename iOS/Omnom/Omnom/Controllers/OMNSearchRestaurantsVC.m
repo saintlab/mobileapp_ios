@@ -194,6 +194,21 @@
   
 }
 
+- (void)didFailOmnom:(OMNError *)error {
+  
+  __weak typeof(self)weakSelf = self;
+  [self showRetryMessageWithError:error retryBlock:^{
+    
+    [weakSelf startSearchingBeacons];
+    
+  } cancelBlock:^{
+    
+    [weakSelf beaconsNotFound];
+    
+  }];
+  
+}
+
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
   [self stopBeaconManager];
@@ -273,39 +288,39 @@
 
 - (void)handleInternetError:(OMNError *)error {
 
+  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:self];
+  
+  NSString *text = error.localizedDescription;
+  NSString *actionText = NSLocalizedString(@"REPEAT_NO_INTERNET_BUTTON_TITLE", @"Попробуйте ещё раз");
+  
   switch (error.code) {
     case kOMNErrorCodeTimedOut: {
       
-      [[OMNAnalitics analitics] logDebugEvent:@"no_server_connection" parametrs:nil];
-      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Помехи на линии.")
-                             actionText:NSLocalizedString(@"REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE", @"Давайте ещё раз.")];
-
+      text = NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Помехи на линии.");
+      actionText = NSLocalizedString(@"REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE", @"Давайте ещё раз.");
+      
     } break;
     case kOMNErrorCodeNotConnectedToInternet: {
       
-      [self showNoInternetErrorWithText:NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Вы видите интернет? Мы нет.")
-                             actionText:NSLocalizedString(@"REPEAT_NO_INTERNET_BUTTON_TITLE", @"Попробуйте ещё раз")];
-
+      text = NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Вы видите интернет? Мы нет.");
+      
     } break;
   }
-
   
-}
-
-- (void)didFailOmnom:(OMNError *)error {
-  
-  [[OMNAnalitics analitics] logTargetEvent:@"no_table" parametrs:nil];
-
+  noInternetVC.text = text;
+  noInternetVC.faded = YES;
+  noInternetVC.circleIcon = error.circleImage;
   __weak typeof(self)weakSelf = self;
-  [self showRetryMessageWithError:error retryBlock:^{
-    
-    [weakSelf startSearchingBeacons];
-    
-  } cancelBlock:^{
-    
-    [weakSelf beaconsNotFound];
-    
-  }];
+  noInternetVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:actionText image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      
+      [weakSelf startSearchingBeacons];
+      
+    }]
+    ];
+  
+  [self.navigationController pushViewController:noInternetVC animated:YES];
   
 }
 
@@ -410,26 +425,6 @@
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Включить", nil) image:nil block:block]
     ];
   [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
-  
-}
-
-- (void)showNoInternetErrorWithText:(NSString *)text actionText:(NSString *)actionText {
-  
-  OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:self];
-  noInternetVC.text = text;
-  noInternetVC.faded = YES;
-  noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
-  __weak typeof(self)weakSelf = self;
-  noInternetVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:actionText image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      
-      [weakSelf startSearchingBeacons];
-      
-    }]
-    ];
-
-  [self.navigationController pushViewController:noInternetVC animated:YES];
   
 }
 

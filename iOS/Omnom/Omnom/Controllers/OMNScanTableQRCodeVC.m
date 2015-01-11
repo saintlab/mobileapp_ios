@@ -288,7 +288,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   OMNCircleRootVC *repeatVC = [[OMNCircleRootVC alloc] initWithParent:nil];
   repeatVC.faded = YES;
   repeatVC.text = error.localizedDescription;
-  repeatVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  repeatVC.circleIcon = error.circleImage;
   __weak typeof(self)weakSelf = self;
   repeatVC.buttonInfo =
   @[

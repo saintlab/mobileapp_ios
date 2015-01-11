@@ -90,7 +90,7 @@ describe(@"order test", ^{
       [[orders should] beNonNil];
       [[@(orders.count) should] beGreaterThan:@(0)];
       
-    } error:^(NSError *error) {
+    } error:^(OMNError *error) {
       
     }];
     

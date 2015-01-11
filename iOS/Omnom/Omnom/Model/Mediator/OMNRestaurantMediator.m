@@ -100,7 +100,7 @@ OMNOrderCalculationVCDelegate>
 
     [weakSelf updateOrdersWithOrders:orders];
     
-  } error:^(NSError *error) {
+  } error:^(OMNError *error) {
   }];
 
 }
@@ -329,7 +329,7 @@ OMNOrderCalculationVCDelegate>
     [weakSelf checkPushNotificationAndProcessOrders:orders];
     completionBlock();
     
-  } error:^(NSError *error) {
+  } error:^(OMNError *error) {
     
     [weakSelf processOrderError:error];
     completionBlock();
@@ -425,14 +425,12 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (void)processOrderError:(NSError *)error {
-  
-  OMNError *omnomError = [OMNError omnnomErrorFromError:error];
+- (void)processOrderError:(OMNError *)error {
   
   OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:_restaurantActionsVC.r1VC];
-  noInternetVC.text = omnomError.localizedDescription;
+  noInternetVC.text = error.localizedDescription;
   noInternetVC.faded = YES;
-  noInternetVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
+  noInternetVC.circleIcon = error.circleImage;
   __weak typeof(self)weakSelf = self;
   noInternetVC.buttonInfo =
   @[

@@ -49,7 +49,7 @@ describe(@"demo stand test", ^{
       
       _orders = orders;
       
-    } error:^(NSError *error) {
+    } error:^(OMNError *error) {
       
     }];
     

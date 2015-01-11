@@ -102,15 +102,16 @@
   if (error) {
     
     repeatVC.text = error.localizedDescription;
+    repeatVC.circleIcon = error.circleImage;
     
   }
   else {
     
     repeatVC.text = NSLocalizedString(@"NO_OMNOM_CONNECTION_ERROR_TEXT", @"Нет связи с заведением.\nОфициант в помощь.");
+    repeatVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
     
   }
   
-  repeatVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
   repeatVC.didCloseBlock = cancelBlock;
   __weak typeof(self)weakSelf = self;
   repeatVC.buttonInfo =

@@ -39,6 +39,8 @@ extern NSString * const OMNUserErrorDomain;
 + (OMNError *)omnomErrorFromCode:(NSInteger)code;
 + (OMNError *)userErrorFromCode:(OMNUserErrorCode)code;
 
+- (UIImage *)circleImage;
+
 @end
 
 @interface NSObject (omn_userError)
