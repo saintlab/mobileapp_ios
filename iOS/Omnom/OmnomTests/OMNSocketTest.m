@@ -18,6 +18,7 @@ describe(@"check initial state", ^{
   beforeEach(^{
 
     __block NSNumber *_didConnect = nil;
+    [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
     [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
       _didConnect = @(YES);
     }];

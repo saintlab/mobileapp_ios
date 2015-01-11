@@ -11,12 +11,14 @@
 #import "OMNRestaurantManager.h"
 #import "OMNAuthorization.h"
 #import "OMNTable+omn_network.h"
+#import "OMNRestaurantMediator.h"
 
 SPEC_BEGIN(OMNDemoStandWaiterTests)
 
 describe(@"waiter call tests", ^{
   
   __block OMNRestaurant *_restaurant = nil;
+  __block OMNRestaurantMediator *_restaurantMediator = nil;
   
   beforeAll(^{
     
@@ -34,13 +36,22 @@ describe(@"waiter call tests", ^{
     
     [[expectFutureValue(_restaurant) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
 
+    _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRestaurant:_restaurant rootViewController:nil];
+    
+  });
+  
+  it(@"should check initial conditions", ^{
+    
+    [[_restaurant should] beNonNil];
+    [[_restaurantMediator should] beNonNil];
+    [[_restaurantMediator.table should] beNonNil];
+    
   });
   
   it(@"should new guest", ^{
     
-    OMNTable *table = [_restaurant.tables firstObject];
     __block NSNumber *is_new_guest = nil;
-    [table newGuestWithCompletion:^{
+    [_restaurantMediator.table newGuestWithCompletion:^{
       
       is_new_guest = @(YES);
       
@@ -50,23 +61,35 @@ describe(@"waiter call tests", ^{
   });
   
   it(@"should call waiter", ^{
-#warning should call waiter
-//    _visitor.waiterIsCalled = NO;
-//    [_visitor waiterCallWithFailure:^(NSError *error) {
-//    }];
-//    [[expectFutureValue(@(_visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
+    
+    _restaurantMediator.waiterIsCalled = NO;
+    [_restaurantMediator waiterCallWithCompletion:^{
+    }];
+    [[expectFutureValue(@(_restaurantMediator.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
     
   });
   
   it(@"should stop waiter", ^{
     
-#warning should stop waiter
-//    _visitor.waiterIsCalled = YES;
-//    [_visitor waiterCallStopWithFailure:^(NSError *error) {
-//      
-//    }];
-//    [[expectFutureValue(@(_visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(NO)];
+    _restaurantMediator.waiterIsCalled = YES;
+    [_restaurantMediator waiterCallStopWithCompletion:^{
+      
+    }];
+    [[expectFutureValue(@(_restaurantMediator.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(NO)];
 
+  });
+  
+  it(@"should get orders", ^{
+    
+    [[@(_restaurantMediator.orders.count) should] equal:@(0)];
+    __block NSNumber *ordersDidCalled = nil;
+    [_restaurantMediator callBillWithCompletion:^{
+      
+      ordersDidCalled = @(YES);
+      
+    }];
+    [[expectFutureValue(ordersDidCalled) shouldEventuallyBeforeTimingOutAfter(10.0)] equal:@(YES)];
+    
   });
   
 });

@@ -30,7 +30,7 @@
   [[OMNAnalitics analitics] logDebugEvent:@"BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:nil];
   
   [[OMNOperationManager sharedManager] POST:@"/v2/decode/ibeacons/omnom" parameters:@{@"beacons" : jsonBeacons} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+    
     NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
     completionBlock(restaurants);
     
