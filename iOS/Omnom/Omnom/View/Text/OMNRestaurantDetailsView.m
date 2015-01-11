@@ -69,7 +69,7 @@
 - (void)setRestaurant:(OMNRestaurant *)restaurant {
   
   _restaurant = restaurant;
-  _restaurantInfoLabelAddress.text = _restaurant.address.street;
+  _restaurantInfoLabelAddress.text = _restaurant.address.text;
   [_workdayButton setTitle:_restaurant.schedules.work.fromToText forState:UIControlStateNormal];
 
 }

@@ -22,9 +22,37 @@
     self.building = [jsonData[@"building"] description];
     self.city = jsonData[@"city"];
     self.street = jsonData[@"street"];
-
+    self.floor = (jsonData[@"floor"]) ? ([jsonData[@"floor"] description]) : (@"");
+    
   }
   return self;
+}
+
+- (NSString *)text {
+  
+  NSMutableArray *components = [NSMutableArray array];
+  if (self.street.length) {
+    
+    [components addObject:self.street];
+    
+  }
+  
+  if (self.building.length) {
+    
+    [components addObject:self.building];
+    
+  }
+
+  NSString *address = [components componentsJoinedByString:@" "];
+  
+  if (self.floor.length) {
+    
+    address = [address stringByAppendingFormat:NSLocalizedString(@"RESTAURANT_ADDRESS_FLOOR %@", @", {NUMBER} этаж"), self.floor];
+    
+  }
+  
+  return address;
+  
 }
 
 @end

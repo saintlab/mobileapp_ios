@@ -18,6 +18,12 @@
 #import "OMNTable.h"
 #import "OMNOrder.h"
 
+typedef NS_ENUM(NSInteger, OMNRestaurantMode) {
+  kRestaurantModeInside = 0,
+  kRestaurantModePreorder,
+  kRestaurantModeBookTable
+};
+
 extern NSString * const OMNRestaurantOrdersDidChangeNotification;
 extern NSString * const OMNRestaurantNotificationLaunchKey;
 
@@ -28,6 +34,7 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 @property (nonatomic, assign) BOOL is_demo;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
+@property (nonatomic, assign) OMNRestaurantMode mode;
 @property (nonatomic, copy, readonly) NSString *phone;
 @property (nonatomic, strong, readonly) NSArray *tables;
 @property (nonatomic, strong, readonly) NSArray *orders;

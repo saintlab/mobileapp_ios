@@ -13,7 +13,10 @@
 @property (nonatomic, copy) NSString *building;
 @property (nonatomic, copy) NSString *city;
 @property (nonatomic, copy) NSString *street;
+@property (nonatomic, copy) NSString *floor;
 
 - (instancetype)initWithJsonData:(id)jsonData;
+
+- (NSString *)text;
 
 @end
