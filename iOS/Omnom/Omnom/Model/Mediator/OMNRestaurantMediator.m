@@ -64,6 +64,8 @@ OMNOrderCalculationVCDelegate>
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNSocketIOOrderDidCloseNotification object:[OMNSocketManager manager]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidCreate:) name:OMNSocketIOOrderDidCreateNotification object:[OMNSocketManager manager]];
     
+    [self startListeningRestaurantEvents];
+    
   }
   return self;
 }
@@ -73,6 +75,21 @@ OMNOrderCalculationVCDelegate>
 - (void)applicationDidBecomeActive:(NSNotification *)n {
   
   [self updateOrdersIfNeeded];
+  
+}
+
+- (void)startListeningRestaurantEvents {
+  
+  if (!_restaurant.is_demo) {
+    
+    __weak typeof(self)weakSelf = self;
+    [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
+      
+      [[OMNSocketManager manager] join:weakSelf.table.id];
+      
+    }];
+    
+  }
   
 }
 
@@ -220,22 +237,8 @@ OMNOrderCalculationVCDelegate>
 }
 
 - (void)setTable:(OMNTable *)table {
-  
-  if (_table.id) {
-    
-    [[OMNSocketManager manager] leave:_table.id];
-    
-  }
-  
-  _table = table;
-  
-  if (_table.id) {
-    
-    [[OMNSocketManager manager] join:_table.id];
-    
-  }
-  
 
+  _table = table;
   [_table tableIn];
   
 }
