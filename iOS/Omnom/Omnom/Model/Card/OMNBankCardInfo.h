@@ -11,6 +11,7 @@
 @interface OMNBankCardInfo : NSObject
 
 @property (nonatomic, copy) NSString *pan;
+@property (nonatomic, copy) NSString *masked_pan;
 @property (nonatomic, assign) NSInteger expiryMonth;
 @property (nonatomic, assign) NSInteger expiryYear;
 @property (nonatomic, copy) NSString *cvv;
@@ -21,5 +22,6 @@
 @property (nonatomic, assign) NSInteger numberOfRegisterAttempts;
 
 - (void)logCardRegister;
+- (NSDictionary *)debugInfo;
 
 @end

@@ -24,6 +24,7 @@
 #import <OMNMailRuAcquiring.h>
 #import <OMNStyler.h>
 #import "OMNBankCard.h"
+#import "OMNBankCard+omn_info.h"
 #import "OMNBankCardMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurant+omn_payment.h"
@@ -199,10 +200,9 @@
   button.enabled = NO;
   
   OMNBankCard *bankCard = [_bankCardsModel selectedCard];
-  OMNBankCardInfo *bankCardInfo = [[OMNBankCardInfo alloc] init];
-  bankCardInfo.card_id = bankCard.external_card_id;
+  OMNBankCardInfo *bankCardInfo = [bankCard bankCardInfo];
   [self payWithCardInfo:bankCardInfo];
-  
+
 }
 
 - (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {

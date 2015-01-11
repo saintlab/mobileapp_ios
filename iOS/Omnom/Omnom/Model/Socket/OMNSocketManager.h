@@ -29,8 +29,4 @@ extern NSString * const OMNPaymentDataKey;
 - (void)leave:(NSString *)roomId;
 - (void)join:(NSString *)roomId;
 
-- (void)subscribe:(NSString *)event block:(void (^)(id data))block;
-- (void)unsubscribe:(NSString *)event;
-- (void)echo:(NSString *)message;
-
 @end

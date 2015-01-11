@@ -81,12 +81,12 @@
       [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
         
         [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
-        [[OMNAnalitics analitics] logPayment:orderTansactionInfo bill_id:order.bill.id];
+        [[OMNAnalitics analitics] logPayment:orderTansactionInfo cardInfo:bankCardInfo bill_id:order.bill.id];
         paymentFinishBlock(nil, completionBlock);
-        
+
       } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
         
-        [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" error:mailError request:request response:response];
+        [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:mailError request:request response:response];
         NSError *omnomError = [OMNError omnnomErrorFromError:mailError];
         paymentFinishBlock(omnomError, ^{
           

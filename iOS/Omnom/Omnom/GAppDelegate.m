@@ -29,7 +29,7 @@
 #if OMN_TEST
   return YES;
 #endif
-
+  
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   
   __weak typeof(self)weakSelf = self;

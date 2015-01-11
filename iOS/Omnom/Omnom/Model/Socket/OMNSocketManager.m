@@ -38,6 +38,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 - (instancetype)init {
   self = [super init];
   if (self) {
+    
     _rooms = [NSMutableSet set];
     _listners = [NSMutableDictionary dictionary];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive) name:UIApplicationWillResignActiveNotification object:nil];
@@ -48,7 +49,9 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 }
 
 - (void)willResignActive {
+  
   [self disconnectAndLeaveAllRooms:NO];
+  
 }
 
 - (void)resumeConnection {
@@ -161,53 +164,15 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     
   }];
   
-  [_socket on:@"bill_call_done" listener:^(id data) {
-    NSLog(@"bill_call_done response %@, %@", data, [data class]);
-  }];
-  
-  /*
-  [_socket on:@"card_register" listener:^(id data) {
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIODidReceiveCardIdNotification
-                                                        object:self
-                                                      userInfo:data];
-    NSLog(@"card_register response %@, %@", data, [data class]);
-    
-  }];
-   */
-  
 }
 
 - (void)socketDidAuthenticate {
   
   [_rooms enumerateObjectsUsingBlock:^(id roomId, BOOL *stop) {
+    
     [self join:roomId];
+    
   }];
-  
-}
-
-- (void)subscribe:(NSString *)event block:(void (^)(id data))block {
-  
-  if (!_listners[event]) {
-    _listners[event] = [NSMutableSet set];
-  }
-  [_listners[event] addObject:block];
-  [_socket on:event listener:block];
-  
-}
-
-- (void)unsubscribe:(NSString *)event {
-  
-  NSSet *listners = _listners[event];
-  [listners enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
-    [_socket removeListener:event listener:obj];
-  }];
-  
-}
-
-- (void)echo:(NSString *)message {
-  
-  [_socket emit:@"echo", message, nil];
   
 }
 
@@ -224,14 +189,18 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 - (void)leave:(NSString *)roomId {
   
   if (roomId) {
+    
     [_rooms removeObject:roomId];
     [_socket emit:@"leave", roomId, nil];
+    
   }
   
 }
 
 - (void)connectWithToken:(NSString *)token {
+  
   [self connectWithToken:token completion:nil];
+  
 }
 
 - (void)connectWithToken:(NSString *)token completion:(dispatch_block_t)completionBlock {
@@ -242,13 +211,18 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
   _token = token;
   if (_io) {
+    
     [self establishConnecttionWithToken:token completion:completionBlock];
+    
   }
   else {
+    
     _io = [[OMNSocketIO alloc] init];
     __weak typeof(self)weakSelf = self;
     [_io once:@"ready" listener:^{
+      
       [weakSelf establishConnecttionWithToken:token completion:completionBlock];
+      
     }];
   }
   
@@ -257,9 +231,12 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 - (void)disconnectAndLeaveAllRooms:(BOOL)leave {
 
   if (leave) {
+    
     _token = nil;
     [_rooms removeAllObjects];
+    
   }
+  
   [_socket emit:@"disconnect", nil];
   _socket = nil;
   _io = nil;

@@ -16,6 +16,7 @@
 #import <Mixpanel.h>
 #import "OMNAuthorization.h"
 #import "OMNLocationManager.h"
+#import "OMNBankCardInfo.h"
 
 NSString * const OMNAnaliticsUserKey = @"omn_user";
 
@@ -212,7 +213,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo bill_id:(NSString *)bill_id {
+- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo cardInfo:(OMNBankCardInfo *)bankCardInfo bill_id:(NSString *)bill_id {
   
   [_mixpanel.people increment:
    @{
@@ -236,20 +237,21 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"restaurant_id" : orderTansactionInfo.restaurant_id,
      @"table_id" : orderTansactionInfo.table_id,
      @"bill_id" : (bill_id) ? (bill_id) : (@""),
+     @"card_info" : (bankCardInfo) ? (bankCardInfo.debugInfo) : (@""),
      }];
   [_mixpanel flush];
   
 }
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
-  
+
   NSMutableDictionary *newParamentrs = [NSMutableDictionary dictionaryWithDictionary:parametrs];
   newParamentrs[@"timestamp"] = [self dateString];
   [_mixpanel track:eventName properties:newParamentrs];
   
 }
 
-- (void)logMailEvent:(NSString *)eventName error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response {
+- (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response {
   
   NSMutableDictionary *debugInfo = [NSMutableDictionary dictionary];
   if (error.localizedDescription) {
@@ -264,6 +266,11 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   if (response) {
     debugInfo[@"response"] = response;
   }
+  
+  if (bankCardInfo) {
+    debugInfo[@"card_info"] = bankCardInfo.debugInfo;
+  }
+
   debugInfo[@"timestamp"] = [self dateString];
   [_mixpanel track:eventName properties:debugInfo];
 

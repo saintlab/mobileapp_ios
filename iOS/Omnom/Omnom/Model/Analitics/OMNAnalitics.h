@@ -11,6 +11,7 @@
 @class OMNOrderTansactionInfo;
 @class OMNUser;
 @class OMNRestaurant;
+@class OMNBankCardInfo;
 
 typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
   kRestaurantEnterModeBackground = 0,
@@ -30,13 +31,13 @@ typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
 - (void)setup;
 - (void)logUserLoginWithRegistration:(BOOL)withRegistration;
 - (void)logEnterRestaurant:(OMNRestaurant *)restaurant mode:(RestaurantEnterMode)mode;
-- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo bill_id:(NSString *)bill_id;
+- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo cardInfo:(OMNBankCardInfo *)bankCardInfo bill_id:(NSString *)bill_id;
 - (void)logScore:(NSInteger)score order:(OMNOrder *)order;
 - (void)logBillView:(OMNOrder *)order;
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
 
-- (void)logMailEvent:(NSString *)eventName error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response;
+- (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response;
 - (void)logDebugEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse;
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation;
