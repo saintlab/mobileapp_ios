@@ -19,6 +19,7 @@
 #import "OMNTable+omn_network.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNSocketManager.h"
+#import "OMNNoOrdersVC.h"
 
 @interface OMNRestaurantMediator ()
 <OMNUserInfoVCDelegate,
@@ -29,7 +30,6 @@ OMNOrderCalculationVCDelegate>
 
 @implementation OMNRestaurantMediator {
   
-  __weak OMNRestaurantActionsVC *_restaurantActionsVC;
   __weak OMNOrdersVC *_ordersVC;
   BOOL _ordersDidShow;
   dispatch_semaphore_t _ordersLock;
@@ -82,11 +82,7 @@ OMNOrderCalculationVCDelegate>
   
   if (!_restaurant.is_demo) {
     
-    __weak typeof(self)weakSelf = self;
     [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
-      
-      [[OMNSocketManager manager] join:weakSelf.table.id];
-      
     }];
     
   }
@@ -238,7 +234,9 @@ OMNOrderCalculationVCDelegate>
 
 - (void)setTable:(OMNTable *)table {
 
+  [[OMNSocketManager manager] leave:_table.id];
   _table = table;
+  [[OMNSocketManager manager] join:_table.id];
   [_table tableIn];
   
 }
@@ -415,6 +413,9 @@ OMNOrderCalculationVCDelegate>
   _ordersDidShow = YES;
   NSInteger ordersCount = self.orders.count;
   NSMutableArray *pushedControllers = [NSMutableArray array];
+  
+#warning ordersCount
+//  ordersCount = 0;
   if (ordersCount) {
     
     OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithMediator:self];
@@ -445,20 +446,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)processNoOrders {
   
-  OMNCircleRootVC *noOrdersVC = [[OMNCircleRootVC alloc] initWithParent:_restaurantActionsVC.r1VC];
-  noOrdersVC.faded = YES;
-  noOrdersVC.text = NSLocalizedString(@"На этом столике нет заказов", nil);
-  noOrdersVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
-  
-  __weak typeof(self)weakSelf = self;
-  noOrdersVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
-      
-      [weakSelf popToRootViewControllerAnimated:YES];
-      
-    }]
-    ];
+  OMNNoOrdersVC *noOrdersVC = [[OMNNoOrdersVC alloc] initWithMediator:self];
   [self pushViewController:noOrdersVC];
   
 }

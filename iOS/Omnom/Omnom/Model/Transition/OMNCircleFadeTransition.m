@@ -25,6 +25,7 @@
 #import "OMNScanQRCodeVC.h"
 #import "OMNRestaurantListVC.h"
 #import "OMNRestaurantCardVC.h"
+#import "OMNNoOrdersVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -115,6 +116,9 @@
     [self keyFromClass:[OMNOrderPaymentVC class] toClass:[OMNLoadingCircleVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNOrderPaymentVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNCircleRootVC class]],
+    
+    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNNoOrdersVC class]],
+    [self keyFromClass:[OMNNoOrdersVC class] toClass:[OMNRestaurantActionsVC class]],
     
     ];
 }

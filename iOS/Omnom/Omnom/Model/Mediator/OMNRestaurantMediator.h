@@ -10,9 +10,10 @@
 
 @interface OMNRestaurantMediator : NSObject
 
+@property (nonatomic, weak, readonly) OMNRestaurantActionsVC *restaurantActionsVC;
 @property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
 @property (nonatomic, assign) BOOL waiterIsCalled;
-@property (nonatomic, strong, readonly) OMNTable *table;
+@property (nonatomic, strong) OMNTable *table;
 @property (nonatomic, strong) OMNOrder *selectedOrder;
 @property (nonatomic, strong) NSArray *orders;
 
@@ -24,6 +25,8 @@
 - (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock;
 - (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock;
 - (void)callBill;
+
+- (void)popToRootViewControllerAnimated:(BOOL)animated;
 
 - (void)exitRestaurant;
 

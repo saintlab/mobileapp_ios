@@ -51,7 +51,7 @@ UICollectionViewDelegate>
   
   self.automaticallyAdjustsScrollViewInsets = YES;
   self.view.backgroundColor = [UIColor clearColor];
-  _label.font = FuturaOSFOmnomRegular(15);
+  _label.font = FuturaLSFOmnomLERegular(15.0f);
   _label.textAlignment = NSTextAlignmentCenter;
   _label.textColor = [UIColor colorWithWhite:146.0f/255.0f alpha:1.0f];
   [self updateOrders];

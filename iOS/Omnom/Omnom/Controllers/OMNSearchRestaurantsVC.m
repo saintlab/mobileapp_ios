@@ -389,22 +389,17 @@
 
 - (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didDetermineCLState:(OMNCLSearchManagerState)clState {
   
-  __weak typeof(self)weakSelf = self;
   switch (clState) {
     case kCLSearchManagerRequestRestrictedPermission:
     case kCLSearchManagerRequestDeniedPermission: {
       
       [[OMNAnalitics analitics] logDebugEvent:@"no_geolocation_permission" parametrs:nil];
-      [self showDenyLocationPermissionDescriptionWithBlock:^{
-        
-        OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
-        [weakSelf.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
-        
-      }];
+      [self showDenyLocationPermissionDescription];
       
     } break;
     case kCLSearchManagerRequestPermission: {
       
+      __weak typeof(self)weakSelf = self;
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:weakSelf];
@@ -417,12 +412,18 @@
   
 }
 
-- (void)showDenyLocationPermissionDescriptionWithBlock:(dispatch_block_t)block {
+- (void)showDenyLocationPermissionDescription {
   
   OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
+  __weak typeof(self)weakSelf = self;
   denyCLPermissionVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Включить", nil) image:nil block:block]
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Включить", nil) image:nil block:^{
+      
+      OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
+      [weakSelf.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
+      
+    }]
     ];
   [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
   

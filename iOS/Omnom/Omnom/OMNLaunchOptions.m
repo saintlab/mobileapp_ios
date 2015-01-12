@@ -34,7 +34,6 @@
     
     //  searchRestaurantVC.hashString = @"hash-QWERTY-restaurant-B";
     
-#warning decodeBeaconData
     //  NSData *decodeBeaconData = self.info[OMNVisitorNotificationLaunchKey];
     //  if (decodeBeaconData) {
     //    OMNVisitor *visitor = [NSKeyedUnarchiver unarchiveObjectWithData:decodeBeaconData];
