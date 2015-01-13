@@ -11,6 +11,22 @@
 
 @implementation OMNBankCardInfo
 
+- (id)copyWithZone:(NSZone *)zone {
+  
+  OMNBankCardInfo *bankCardInfo = [[[self class] allocWithZone:zone] init];
+  bankCardInfo.pan = [self.pan copyWithZone:zone];
+  bankCardInfo.masked_pan = [self.masked_pan copyWithZone:zone];
+  bankCardInfo.expiryMonth = self.expiryMonth;
+  bankCardInfo.expiryYear = self.expiryYear;
+  bankCardInfo.cvv = [self.cvv copyWithZone:zone];
+  bankCardInfo.card_id = [self.card_id copyWithZone:zone];
+  bankCardInfo.saveCard = self.saveCard;
+  bankCardInfo.scanUsed = self.scanUsed;
+  bankCardInfo.numberOfRegisterAttempts = self.numberOfRegisterAttempts;
+  return bankCardInfo;
+  
+}
+
 - (void)logCardRegister {
   
   NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
@@ -53,6 +69,14 @@
     };
   
   return cardInfo;
+  
+}
+
+- (BOOL)readyForPayment {
+  
+  BOOL hasPANMMYYCVV = (self.pan.length && self.expiryMonth && self.expiryYear && self.cvv.length);
+  BOOL hasCardId = (self.card_id.length > 0);
+  return (hasPANMMYYCVV || hasCardId);
   
 }
 

@@ -8,25 +8,26 @@
 
 #import "OMNOrder.h"
 #import "OMNBankCardInfo.h"
+#import "OMNError.h"
 
 typedef void(^OMNBankCardInfoBlock)(OMNBankCardInfo *bankCardInfo);
-typedef void(^OMNPaymentFinishBlock)(NSError *error, dispatch_block_t completionBlock);
-typedef void(^OMNPaymentPresentBlock)(OMNPaymentFinishBlock paymentFinishBlock);
+typedef void(^OMNPaymentDidFinishBlock)(OMNError *error);
+typedef void(^OMNPaymentVCDidPresentBlock)(OMNPaymentDidFinishBlock paymentDidFinishBlock);
 
 @interface OMNBankCardMediator : NSObject
 
 @property (nonatomic, weak, readonly) UIViewController *rootVC;
 @property (nonatomic, strong, readonly) OMNOrder *order;
 
-@property (nonatomic, copy) dispatch_block_t didPayBlock;
-@property (nonatomic, copy) dispatch_block_t didFailPayBlock;
+@property (nonatomic, copy) OMNPaymentDidFinishBlock didPayBlock;
 
 - (instancetype)initWithOrder:(OMNOrder *)order rootVC:(__weak UIViewController *)rootVC;
 
-- (void)addCard;
+- (void)addCardForPayment;
+- (void)registerCard;
 - (void)confirmCard:(OMNBankCardInfo *)bankCardInfo;
 
-- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock;
-- (void)beginPaymentProcessWithPresentBlock:(OMNPaymentPresentBlock)presentBlock;
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo;
+- (void)showPaymentVCWithDidPresentBlock:(OMNPaymentVCDidPresentBlock)paymentVCDidPresentBlock;
 
 @end

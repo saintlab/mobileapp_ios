@@ -25,17 +25,34 @@
 
 @implementation OMNMailRuBankCardMediator {
   
-  OMNBankCardInfoBlock _requestPaymentWithCardBlock;
-
   dispatch_block_t _didPayBlock;
   dispatch_block_t _didCloseBlock;
   
 }
 
-- (void)addCard {
+- (void)registerCard {
+  
+  OMNAddBankPurpose purpose = kAddBankPurposeRegister;
+  if (self.order != nil) {
+    
+    purpose |= kAddBankPurposePayment;
+    
+  }
+
+  [self addCardWithPurpose:purpose];
+  
+}
+
+- (void)addCardForPayment {
+  
+  [self addCardWithPurpose:kAddBankPurposePayment];
+  
+}
+
+- (void)addCardWithPurpose:(OMNAddBankPurpose)addBankPurpose {
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
-  addBankCardVC.hideSaveButton = (self.order == nil);
+  addBankCardVC.purpose = addBankPurpose;
   __weak typeof(self)weakSelf = self;
   __weak UIViewController *rootVC = self.rootVC;
   
@@ -48,7 +65,7 @@
     }
     else {
       
-      [weakSelf requestPaymentWithCard:bankCardInfo];
+      [weakSelf payWithCardInfo:bankCardInfo];
       
     }
     
@@ -61,17 +78,6 @@
   }];
   
   [rootVC.navigationController pushViewController:addBankCardVC animated:YES];
-  
-}
-
-- (void)requestPaymentWithCard:(OMNBankCardInfo *)bankCardInfo {
-  
-#warning self.requestPaymentWithCardBlock
-//  if (self.requestPaymentWithCardBlock) {
-//    
-//    self.requestPaymentWithCardBlock(bankCardInfo);
-//    
-//  }
   
 }
 
@@ -101,7 +107,9 @@
     paymentAlertVC.didPayBlock = ^{
       
       [rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
-      [weakSelf requestPaymentWithCard:bankCardInfo];
+      bankCardInfo.card_id = nil;
+      bankCardInfo.saveCard =  NO;
+      [weakSelf payWithCardInfo:bankCardInfo];
       
     };
     
@@ -111,10 +119,18 @@
   
 }
 
-- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock {
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
 
+  if (nil == bankCardInfo ||
+      !bankCardInfo.readyForPayment) {
+    
+    [self addCardForPayment];
+    
+    return;
+  }
+  
   OMNOrder *order = self.order;
-  [self beginPaymentProcessWithPresentBlock:^(OMNPaymentFinishBlock paymentFinishBlock) {
+  [self showPaymentVCWithDidPresentBlock:^(OMNPaymentDidFinishBlock paymentDidFinishBlock) {
     
     OMNMailRuCardInfo *mailRuCardInfo = [bankCardInfo omn_mailRuCardInfo];
     OMNOrderTansactionInfo *orderTansactionInfo = [[OMNOrderTansactionInfo alloc] initWithOrder:order];
@@ -125,27 +141,19 @@
         
         [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
         [[OMNAnalitics analitics] logPayment:orderTansactionInfo cardInfo:bankCardInfo bill_id:order.bill.id];
-        paymentFinishBlock(nil, completionBlock);
+        paymentDidFinishBlock(nil);
         
       } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
         
         [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:mailError request:request response:response];
-        NSError *omnomError = [OMNError omnnomErrorFromError:mailError];
-        paymentFinishBlock(omnomError, ^{
-          
-          failureBlock(omnomError, nil);
-          
-        });
+        OMNError *omnomError = [OMNError omnnomErrorFromError:mailError];
+        paymentDidFinishBlock(omnomError);
         
       }];
       
-    } failure:^(NSError *error) {
+    } failure:^(OMNError *error) {
       
-      paymentFinishBlock(error, ^{
-        
-        failureBlock(error, nil);
-        
-      });
+      paymentDidFinishBlock(error);
       
     }];
     

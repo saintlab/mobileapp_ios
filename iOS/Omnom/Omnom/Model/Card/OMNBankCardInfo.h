@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface OMNBankCardInfo : NSObject
-
+<NSCopying>
 @property (nonatomic, copy) NSString *pan;
 @property (nonatomic, copy) NSString *masked_pan;
 @property (nonatomic, assign) NSInteger expiryMonth;
@@ -21,6 +21,7 @@
 @property (nonatomic, assign) BOOL scanUsed;
 @property (nonatomic, assign) NSInteger numberOfRegisterAttempts;
 
+- (BOOL)readyForPayment;
 - (void)logCardRegister;
 - (NSDictionary *)debugInfo;
 

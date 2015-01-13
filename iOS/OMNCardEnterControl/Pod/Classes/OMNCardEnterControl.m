@@ -264,6 +264,12 @@ NSInteger kCVVLength = 3;
   
 }
 
+- (void)setSaveButtonSelected:(BOOL)saveButtonSelected {
+  
+  _saveButton.selected = saveButtonSelected;
+  
+}
+
 - (void)setSaveButtonHidden:(BOOL)hidden {
   
   _saveButton.hidden = hidden;

@@ -428,8 +428,6 @@ OMNOrderCalculationVCDelegate>
   NSInteger ordersCount = self.orders.count;
   NSMutableArray *pushedControllers = [NSMutableArray array];
   
-#warning ordersCount
-//  ordersCount = 0;
   if (ordersCount) {
     
     OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithMediator:self];

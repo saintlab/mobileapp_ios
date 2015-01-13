@@ -25,7 +25,11 @@
   return self;
 }
 
-- (void)addCard {
+- (void)addCardForPayment {
+  //do nothing
+}
+
+- (void)registerCard {
   //do nothing
 }
 
@@ -33,32 +37,39 @@
   //do nothing
 }
 
-- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock {
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
   //do nothing
 }
 
-- (void)beginPaymentProcessWithPresentBlock:(OMNPaymentPresentBlock)presentBlock {
+- (void)showPaymentVCWithDidPresentBlock:(OMNPaymentVCDidPresentBlock)paymentVCDidPresentBlock {
   
   OMNPaymentLoadingVC *paymentLoadingVC = [[OMNPaymentLoadingVC alloc] init];
-  OMNPaymentFinishBlock paymentFinishBlock = ^(NSError *error, dispatch_block_t completionBlock) {
-    
-    if (error) {
-      
-      [paymentLoadingVC didFailWithError:error action:completionBlock];
-      
-    }
-    else {
-      
-      [paymentLoadingVC finishLoading:completionBlock];
-      
-    }
-    
-  };
-  
+  __weak typeof(self)weakSelf = self;
   [_rootVC.navigationController omn_pushViewController:paymentLoadingVC animated:YES completion:^{
     
     [paymentLoadingVC startLoading];
-    presentBlock(paymentFinishBlock);
+    paymentVCDidPresentBlock(^(OMNError *error) {
+      
+      if (error) {
+        
+        [paymentLoadingVC didFailWithError:error action:^{
+          
+          weakSelf.didPayBlock(error);
+          
+        }];
+        
+      }
+      else {
+        
+        [paymentLoadingVC finishLoading:^{
+          
+          weakSelf.didPayBlock(error);
+          
+        }];
+        
+      }
+      
+    });
     
   }];
   

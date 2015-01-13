@@ -117,7 +117,7 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
 
 - (IBAction)addCardTap:(id)sender {
   
-  [_bankCardMediator addCard];
+  [_bankCardMediator registerCard];
   
 }
 

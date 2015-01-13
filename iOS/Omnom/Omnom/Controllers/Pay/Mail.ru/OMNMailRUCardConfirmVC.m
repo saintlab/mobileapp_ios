@@ -47,7 +47,7 @@ TTTAttributedLabelDelegate>
   self = [super init];
   if (self) {
     
-    _bankCardInfo = bankCardInfo;
+    _bankCardInfo = [bankCardInfo copy];
     
   }
   return self;
@@ -90,9 +90,7 @@ TTTAttributedLabelDelegate>
 
 - (void)startLoader {
   
-  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-  [spinner startAnimating];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
   
 }
 

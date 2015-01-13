@@ -7,7 +7,7 @@
 //
 
 #import "OMNOrder.h"
-
+#import "OMNError.h"
 @class OMNUser;
 @class OMNMailRuCardInfo;
 @class OMNMailRuPaymentInfo;
@@ -16,6 +16,6 @@ typedef void(^OMNMailRuPaymentInfoBlock)(OMNMailRuPaymentInfo *paymentInfo);
 
 @interface OMNOrder (omn_mailru)
 
-- (void)getPaymentInfoForUser:(OMNUser *)user cardInfo:(OMNMailRuCardInfo *)cardInfo copmletion:(OMNMailRuPaymentInfoBlock)completionBlock failure:(void (^)(NSError *error))failureBlock;
+- (void)getPaymentInfoForUser:(OMNUser *)user cardInfo:(OMNMailRuCardInfo *)cardInfo copmletion:(OMNMailRuPaymentInfoBlock)completionBlock failure:(void (^)(OMNError *error))failureBlock;
 
 @end
