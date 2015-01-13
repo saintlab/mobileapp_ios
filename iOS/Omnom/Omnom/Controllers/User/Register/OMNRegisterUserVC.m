@@ -16,10 +16,14 @@
 #import "OMNUserInfoView.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNDisclamerView.h"
+#import "UIView+omn_autolayout.h"
+#import "OMNUtils.h"
+#import "OMNLoginVC.h"
 
 @interface OMNRegisterUserVC ()
 <OMNConfirmCodeVCDelegate,
-OMNUserInfoViewDelegate>
+OMNUserInfoViewDelegate,
+TTTAttributedLabelDelegate>
 
 @end
 
@@ -28,7 +32,7 @@ OMNUserInfoViewDelegate>
   OMNUserInfoView *_userInfoView;
   UIScrollView *_scroll;
   OMNUser *_user;
-  UILabel *_errorLabel;
+  TTTAttributedLabel *_errorLabel;
 
 }
 
@@ -122,7 +126,16 @@ OMNUserInfoViewDelegate>
 - (void)processError:(OMNError *)error {
 
   self.navigationItem.rightBarButtonItem = [self createUserButton];
-  if (error) {
+  if (kOMNUserErrorCodeUserExist == error.code) {
+    
+    NSString *actionText = NSLocalizedString(@"REGISTER_USER_NO_USER_ACTION_TEXT", @"Можно входить");
+    NSString *text = [NSString stringWithFormat:NSLocalizedString(@"REGISTER_USER_NO_USER_TEXT %@", @"{REGISTER_USER_NO_USER_ACTION_TEXT}. Пользователь с таким номером телефона уже зарегистрирован"), actionText];
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:colorWithHexString(@"d0021b") textAlignment:NSTextAlignmentCenter]];
+    _errorLabel.text = attributedText;
+    [_errorLabel addLinkToURL:[NSURL URLWithString:@""] withRange:[text rangeOfString:actionText]];
+    
+  }
+  else if (error) {
     
     _errorLabel.text = error.localizedDescription;
     
@@ -218,12 +231,10 @@ OMNUserInfoViewDelegate>
 
 - (void)omn_setup {
 
-  _scroll = [[UIScrollView alloc] init];
-  _scroll.translatesAutoresizingMaskIntoConstraints = NO;
+  _scroll = [UIScrollView omn_autolayoutView];
   [self.view addSubview:_scroll];
   
-  UIView *contentView = [[UIView alloc] init];
-  contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  UIView *contentView = [UIView omn_autolayoutView];
   [_scroll addSubview:contentView];
   
   OMNUser *user = [[OMNUser alloc] init];
@@ -233,11 +244,23 @@ OMNUserInfoViewDelegate>
   _userInfoView.delegate = self;
   [contentView addSubview:_userInfoView];
   
-  _errorLabel = [[UILabel alloc] init];
-  _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
+  _errorLabel = [TTTAttributedLabel omn_autolayoutView];
+  _errorLabel.linkAttributes =
+  @{
+    (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
+    NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
+    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
+    };
+  _errorLabel.activeLinkAttributes =
+  @{
+    (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
+    NSForegroundColorAttributeName : [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f],
+    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
+    };
+  _errorLabel.delegate = self;
+  _errorLabel.text = nil;
   _errorLabel.font = FuturaOSFOmnomRegular(18.0f);
   _errorLabel.textColor = colorWithHexString(@"d0021b");
-  _errorLabel.text = nil;
   _errorLabel.textAlignment = NSTextAlignmentCenter;
   _errorLabel.numberOfLines = 0;
   [contentView addSubview:_errorLabel];
@@ -285,6 +308,17 @@ OMNUserInfoViewDelegate>
     [_scroll setContentOffset:contentOffset];
     
   } completion:nil];
+  
+}
+
+#pragma mark - TTTAttributedLabelDelegate
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+  
+  OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
+  loginVC.phone = _userInfoView.phoneTF.textField.text;
+  loginVC.delegate = self.delegate;
+  [self.navigationController pushViewController:loginVC animated:YES];
   
 }
 

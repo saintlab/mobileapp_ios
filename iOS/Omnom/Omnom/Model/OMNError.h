@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, OMNUserErrorCode) {
   kOMNUserErrorCodeUnknoun = -1,
   kOMNUserErrorCodeNoEmailAndPhone = 1,
   kOMNUserErrorCodeNoSuchUser = 101,
+  kOMNUserErrorCodeUserExist = 107,
   
 };
 

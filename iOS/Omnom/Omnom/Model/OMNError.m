@@ -99,12 +99,6 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
     case kOMNUserErrorCodeNoEmailAndPhone: {
       description = NSLocalizedString(@"Введите почту и телефон", nil);
     } break;
-    case kOMNUserErrorCodeNoSuchUser: {
-      
-    } break;
-    case kOMNUserErrorCodeUnknoun: {
-      
-    } break;
     default:
       break;
   }

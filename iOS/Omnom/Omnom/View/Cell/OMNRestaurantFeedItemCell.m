@@ -11,6 +11,8 @@
 #import "OMNFeedItem.h"
 #import "OMNImageManager.h"
 #import <OMNStyler.h>
+#import "UIView+omn_autolayout.h"
+#import "OMNConstants.h"
 
 @implementation OMNRestaurantFeedItemCell {
   OMNFeedItem *_feedItem;
@@ -38,12 +40,11 @@
     self.contentView.backgroundColor = backgroundColor;
     self.contentView.opaque = YES;
 
-    _iconView = [[UIImageView alloc] init];
+    _iconView = [UIImageView omn_autolayoutView];
     _iconView.backgroundColor = backgroundColor;
     _iconView.opaque = YES;
     _iconView.clipsToBounds = YES;
     _iconView.contentMode = UIViewContentModeScaleAspectFill;
-    _iconView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_iconView];
     
     _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -51,19 +52,17 @@
     _spinner.hidesWhenStopped = YES;
     [_iconView addSubview:_spinner];
     
-    _textLabel = [[UILabel alloc] init];
+    _textLabel = [UILabel omn_autolayoutView];
     _textLabel.backgroundColor = backgroundColor;
     _textLabel.opaque = YES;
-    _textLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
-    _textLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _textLabel.font = FuturaOSFOmnomRegular(20.0f);
     [self.contentView addSubview:_textLabel];
     
-    _priceLabel = [[UILabel alloc] init];
+    _priceLabel = [UILabel omn_autolayoutView];
     _priceLabel.backgroundColor = backgroundColor;
     _priceLabel.opaque = YES;
-    _priceLabel.font = [UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:20.0f];
+    _priceLabel.font = FuturaOSFOmnomRegular(20.0f);
     _priceLabel.textAlignment = NSTextAlignmentRight;
-    _priceLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_priceLabel];
     
     NSDictionary *views =
@@ -161,10 +160,14 @@
   [_iconView addSubview:iv];
   
   [UIView animateWithDuration:0.6 animations:^{
+    
     iv.alpha = 1.0f;
+    
   } completion:^(BOOL finished) {
+    
     _iconView.image = image;
     [iv removeFromSuperview];
+    
   }];
   
 }

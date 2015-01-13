@@ -20,6 +20,7 @@
 #import <OMNStyler.h>
 #import <TTTAttributedLabel.h>
 #import "OMNError.h"
+#import "UIView+omn_autolayout.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate,
@@ -52,6 +53,8 @@ TTTAttributedLabelDelegate> {
   
   [self setup];
   
+  _loginTF.textField.text = self.phone;
+  
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,9 +84,7 @@ TTTAttributedLabelDelegate> {
   
   if (loading) {
     
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [spinner startAnimating];
-    rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
     
   }
   else {
@@ -100,9 +101,8 @@ TTTAttributedLabelDelegate> {
   _loginTF = [[OMNErrorTextField alloc] init];
   [self.view addSubview:_loginTF];
   
-  _hintLabel = [[TTTAttributedLabel alloc] init];
+  _hintLabel = [TTTAttributedLabel omn_autolayoutView];
   _hintLabel.font = FuturaOSFOmnomRegular(18.0f);
-  _hintLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _hintLabel.textColor = colorWithHexString(@"D0021B");
   _hintLabel.numberOfLines = 0;
   _hintLabel.delegate = self;

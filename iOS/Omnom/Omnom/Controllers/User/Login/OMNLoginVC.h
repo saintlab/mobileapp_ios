@@ -11,6 +11,7 @@
 @interface OMNLoginVC : UIViewController
 
 @property (nonatomic, weak) id<OMNAuthorizationDelegate> delegate;
+@property (nonatomic, copy) NSString *phone;
 
 @end
 
