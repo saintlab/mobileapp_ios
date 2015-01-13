@@ -12,13 +12,10 @@
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
 
-@interface OMNDemoRestaurantVC ()
-<OMNRestaurantActionsVCDelegate>
-
-@end
-
 @implementation OMNDemoRestaurantVC {
+  
   BOOL _decodeBeaconsStarted;
+  
 }
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
@@ -71,23 +68,19 @@
 
 - (void)didFailOmnom:(OMNError *)error {
   
-  [self.delegate demoRestaurantVCDidFail:self withError:error];
+  if (self.didCloseBlock) {
+    
+    self.didCloseBlock();
+    
+  }
   
 }
 
 - (void)didFindRestaurant:(OMNRestaurant *)restaurant {
 
   OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
-  restaurantActionsVC.delegate = self;
+  restaurantActionsVC.didCloseBlock = self.didCloseBlock;
   [self.navigationController pushViewController:restaurantActionsVC animated:YES];
-  
-}
-
-#pragma mark - OMNRestaurantActionsVCDelegate
-
-- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
-  
-  [self.delegate demoRestaurantVCDidFinish:self];
   
 }
 

@@ -28,10 +28,12 @@
 #import "OMNBankCardMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurant+omn_payment.h"
+#import "OMNBankCardMediator.h"
 
 @interface OMNOrderPaymentVC()
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
+@property (nonatomic, strong) OMNBankCardMediator *bankCardMediator;
 
 @end
 
@@ -84,15 +86,30 @@
   self.view.backgroundColor = [UIColor whiteColor];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
-  _bankCardsModel = [_restaurant bankCardsModelWithRootVC:self];
+  self.bankCardMediator = [_restaurant bankCardMediatorWithOrder:_order rootVC:self];
+  _bankCardsModel = [_restaurant bankCardsModel];
   [_bankCardsModel addObserver:self forKeyPath:NSStringFromSelector(@selector(loading)) options:(NSKeyValueObservingOptionNew) context:NULL];
 
   __weak typeof(self)weakSelf = self;
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
-    return weakSelf;
+    if (kOMNBankCardStatusHeld == bankCard.status) {
+      
+      [weakSelf.bankCardMediator confirmCard:[bankCard bankCardInfo]];
+      
+    }
     
   }];
+  
+#warning setRequestPaymentWithCardBlock
+//  [self.bankCardMediator setRequestPaymentWithCardBlock:^(OMNBankCardInfo *bankCardInfo) {
+//    
+//    //clear card_id for payment
+//    bankCardInfo.card_id = nil;
+//    bankCardInfo.saveCard = NO;
+//    [weakSelf payWithCardInfo:bankCardInfo];
+//    
+//  }];
   
   self.tableView.dataSource = _bankCardsModel;
   self.tableView.delegate = _bankCardsModel;
@@ -207,7 +224,7 @@
 - (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
   
   __weak typeof(self)weakSelf = self;
-  [_bankCardsModel payForOrder:_order cardInfo:bankCardInfo completion:^{
+  [_bankCardMediator payWithCardInfo:bankCardInfo completion:^{
     
     [weakSelf mailRuDidFinish];
     
@@ -220,10 +237,10 @@
     }
     else {
       
-      [weakSelf popViewController];
+      [weakSelf.navigationController popToViewController:weakSelf animated:YES];
       
     }
-
+    
   }];
   
 }
@@ -231,12 +248,6 @@
 - (void)mailRuDidFinish {
 
   [self.delegate orderPaymentVCDidFinish:self withBill:_bill];
-  
-}
-
-- (void)popViewController {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 
@@ -260,15 +271,7 @@
 
 - (void)addCardTap {
   
-  __weak typeof(self)weakSelf = self;
-  [_bankCardsModel.bankCardMediator addCardForOrder:_order requestPaymentWithCard:^(OMNBankCardInfo *bankCardInfo) {
-    
-    //clear card_id for payment
-    bankCardInfo.card_id = nil;
-    bankCardInfo.saveCard = NO;
-    [weakSelf payWithCardInfo:bankCardInfo];
-    
-  }];
+  [_bankCardMediator addCard];
   
 }
 

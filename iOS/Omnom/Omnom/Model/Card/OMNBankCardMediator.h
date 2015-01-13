@@ -16,12 +16,17 @@ typedef void(^OMNPaymentPresentBlock)(OMNPaymentFinishBlock paymentFinishBlock);
 @interface OMNBankCardMediator : NSObject
 
 @property (nonatomic, weak, readonly) UIViewController *rootVC;
+@property (nonatomic, strong, readonly) OMNOrder *order;
 
-- (instancetype)initWithRootVC:(__weak UIViewController *)vc;
+@property (nonatomic, copy) dispatch_block_t didPayBlock;
+@property (nonatomic, copy) dispatch_block_t didFailPayBlock;
 
-- (void)addCardForOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)requestPaymentWithCardBlock;
+- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(__weak UIViewController *)rootVC;
+
+- (void)addCard;
 - (void)confirmCard:(OMNBankCardInfo *)bankCardInfo;
 
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock;
 - (void)beginPaymentProcessWithPresentBlock:(OMNPaymentPresentBlock)presentBlock;
 
 @end

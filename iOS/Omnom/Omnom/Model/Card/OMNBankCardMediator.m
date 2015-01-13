@@ -14,21 +14,26 @@
   
 }
 
-- (instancetype)initWithRootVC:(__weak UIViewController *)vc {
+- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(__weak UIViewController *)rootVC {
   self = [super init];
   if (self) {
     
-    _rootVC = vc;
+    _rootVC = rootVC;
+    _order = order;
     
   }
   return self;
 }
 
-- (void)addCardForOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)requestPaymentWithCardBlock {
+- (void)addCard {
   //do nothing
 }
 
 - (void)confirmCard:(OMNBankCardInfo *)bankCardInfo {
+  //do nothing
+}
+
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock {
   //do nothing
 }
 

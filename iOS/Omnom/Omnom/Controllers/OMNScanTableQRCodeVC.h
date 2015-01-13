@@ -15,6 +15,7 @@
 @interface OMNScanTableQRCodeVC : OMNBackgroundVC
 
 @property (nonatomic, weak) id<OMNScanTableQRCodeVCDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
 @end
 
@@ -22,6 +23,5 @@
 
 - (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant;
 - (void)scanTableQRCodeVCRequestDemoMode:(OMNScanTableQRCodeVC *)scanTableQRCodeVC;
-- (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC;
 
 @end

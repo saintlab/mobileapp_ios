@@ -374,7 +374,9 @@ TTTAttributedLabelDelegate>
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
   
   if (self.noSMSBlock) {
+    
     self.noSMSBlock();
+    
   }
   
 }

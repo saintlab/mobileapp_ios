@@ -8,40 +8,34 @@
 
 #import "OMNMailRuBankCardMediator.h"
 #import "OMNAddBankCardVC.h"
-#import "OMNMailRUCardConfirmVC.h"
 #import "OMNPaymentAlertVC.h"
-#import "OMNOrder.h"
-#import "OMNBankCardInfo.h"
-#import "UINavigationController+omn_replace.h"
-#import "OMNLoadingCircleVC.h"
-#import "UIImage+omn_helper.h"
-#import <OMNStyler.h>
-#import <OMNMailRuPaymentInfo.h>
-#import "OMNOrder+omn_mailru.h"
-#import <OMNMailRuAcquiring.h>
 #import "OMNOperationManager.h"
-#import "OMNAnalitics.h"
-#import "OMNUtils.h"
 #import "OMNOrderTansactionInfo.h"
+#import "OMNOrder+omn_mailru.h"
+#import "OMNMailRUCardConfirmVC.h"
+#import "OMNAnalitics.h"
+#import <OMNMailRuAcquiring.h>
+#import "OMNAuthorization.h"
+
+@interface OMNBankCardInfo (omn_mailRuBankCardInfo)
+
+- (OMNMailRuCardInfo *)omn_mailRuCardInfo;
+
+@end
 
 @implementation OMNMailRuBankCardMediator {
   
-  OMNOrder *_order;
   OMNBankCardInfoBlock _requestPaymentWithCardBlock;
 
   dispatch_block_t _didPayBlock;
   dispatch_block_t _didCloseBlock;
-  OMNBill *_bill;
-  OMNOrderTansactionInfo *_orderTansactionInfo;
+  
 }
 
-- (void)addCardForOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)requestPaymentWithCardBlock {
-  
-  _order = order;
-  _requestPaymentWithCardBlock = [requestPaymentWithCardBlock copy];
+- (void)addCard {
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
-  addBankCardVC.hideSaveButton = (order == nil);
+  addBankCardVC.hideSaveButton = (self.order == nil);
   __weak typeof(self)weakSelf = self;
   __weak UIViewController *rootVC = self.rootVC;
   
@@ -72,9 +66,12 @@
 
 - (void)requestPaymentWithCard:(OMNBankCardInfo *)bankCardInfo {
   
-  if (_requestPaymentWithCardBlock) {
-    _requestPaymentWithCardBlock(bankCardInfo);
-  }
+#warning self.requestPaymentWithCardBlock
+//  if (self.requestPaymentWithCardBlock) {
+//    
+//    self.requestPaymentWithCardBlock(bankCardInfo);
+//    
+//  }
   
 }
 
@@ -88,14 +85,11 @@
     
   };
   
-  long long enteredAmountWithTips = _order.enteredAmountWithTips;
-  NSString *alertText = NSLocalizedString(@"NO_SMS_ALERT_TEXT", @"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму.");
-  NSString *alertConfirmText = (_order) ? (NSLocalizedString(@"NO_SMS_ALERT_ACTION_TEXT", @"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты.")) : (nil);
-  
+  long long enteredAmountWithTips = self.order.enteredAmountWithTips;
   __weak typeof(self)weakSelf = self;
   mailRUCardConfirmVC.noSMSBlock = ^{
     
-    OMNPaymentAlertVC *paymentAlertVC = [[OMNPaymentAlertVC alloc] initWithText:alertText detailedText:alertConfirmText amount:enteredAmountWithTips];
+    OMNPaymentAlertVC *paymentAlertVC = [[OMNPaymentAlertVC alloc] initWithAmount:enteredAmountWithTips];
     [rootVC.navigationController presentViewController:paymentAlertVC animated:YES completion:nil];
     
     paymentAlertVC.didCloseBlock = ^{
@@ -114,6 +108,74 @@
   };
   
   [rootVC.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
+  
+}
+
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock {
+
+  OMNOrder *order = self.order;
+  [self beginPaymentProcessWithPresentBlock:^(OMNPaymentFinishBlock paymentFinishBlock) {
+    
+    OMNMailRuCardInfo *mailRuCardInfo = [bankCardInfo omn_mailRuCardInfo];
+    OMNOrderTansactionInfo *orderTansactionInfo = [[OMNOrderTansactionInfo alloc] initWithOrder:order];
+    
+    [order getPaymentInfoForUser:[OMNAuthorization authorisation].user cardInfo:mailRuCardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
+      
+      [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
+        
+        [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
+        [[OMNAnalitics analitics] logPayment:orderTansactionInfo cardInfo:bankCardInfo bill_id:order.bill.id];
+        paymentFinishBlock(nil, completionBlock);
+        
+      } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
+        
+        [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:mailError request:request response:response];
+        NSError *omnomError = [OMNError omnnomErrorFromError:mailError];
+        paymentFinishBlock(omnomError, ^{
+          
+          failureBlock(omnomError, nil);
+          
+        });
+        
+      }];
+      
+    } failure:^(NSError *error) {
+      
+      paymentFinishBlock(error, ^{
+        
+        failureBlock(error, nil);
+        
+      });
+      
+    }];
+    
+  }];
+  
+}
+
+@end
+
+@implementation OMNBankCardInfo (omn_mailRuBankCardInfo)
+
+- (OMNMailRuCardInfo *)omn_mailRuCardInfo {
+  
+  OMNMailRuCardInfo *mailRuCardInfo = nil;
+  if (self.card_id) {
+    
+    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.card_id];
+    
+  }
+  else if (self.expiryMonth &&
+           self.expiryYear &&
+           self.cvv &&
+           self.pan){
+    
+    NSString *exp_date = [OMNMailRuCardInfo exp_dateFromMonth:self.expiryMonth year:self.expiryYear];
+    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardPan:self.pan exp_date:exp_date cvv:self.cvv];
+    
+  }
+  
+  return mailRuCardInfo;
   
 }
 

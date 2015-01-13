@@ -9,19 +9,9 @@
 #import "OMNLoadingCircleVC.h"
 #import "OMNError.h"
 
-@class OMNVisitor;
-@protocol OMNDemoRestaurantVCDelegate;
-
 @interface OMNDemoRestaurantVC : OMNLoadingCircleVC
 
-@property (nonatomic, strong) OMNVisitor *visitor;
-@property (nonatomic, weak) id<OMNDemoRestaurantVCDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
 @end
 
-@protocol OMNDemoRestaurantVCDelegate <NSObject>
-
-- (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC;
-- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC withError:(OMNError *)error;
-
-@end

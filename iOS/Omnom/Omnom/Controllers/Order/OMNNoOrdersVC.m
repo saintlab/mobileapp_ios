@@ -12,12 +12,10 @@
 #import "UIView+omn_autolayout.h"
 #import "OMNUtils.h"
 #import "OMNConstants.h"
-#import "OMNScanTableQRCodeVC.h"
 #import "OMNNoOrdersAlertVC.h"
 
 @interface OMNNoOrdersVC ()
-<TTTAttributedLabelDelegate,
-OMNScanTableQRCodeVCDelegate>
+<TTTAttributedLabelDelegate>
 
 @end
 
@@ -130,7 +128,7 @@ OMNScanTableQRCodeVCDelegate>
 
 - (void)rescanTable {
   
-  [_restaurantMediator exitRestaurant];
+  [_restaurantMediator rescanTable];
   
 }
 
@@ -139,28 +137,6 @@ OMNScanTableQRCodeVCDelegate>
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
   
   [self showChangeTableAlert];
-  
-}
-
-#pragma mark - OMNScanTableQRCodeVCDelegate
-
-- (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant {
-  
-  _restaurantMediator.table = [restaurant.tables firstObject];
-  [_restaurantMediator popToRootViewControllerAnimated:NO];
-  [_restaurantMediator callBill];
-  
-}
-
-- (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC {
-  
-  [_restaurantMediator.restaurantActionsVC.navigationController popToViewController:self animated:YES];
-  
-}
-
-- (void)scanTableQRCodeVCRequestDemoMode:(OMNScanTableQRCodeVC *)scanTableQRCodeVC {
-
-  
   
 }
 

@@ -28,20 +28,4 @@
   
 }
 
-- (void)payForOrder:(OMNOrder *)order cardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock {
-  
-  [self.bankCardMediator beginPaymentProcessWithPresentBlock:^(OMNPaymentFinishBlock paymentFinishBlock) {
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      
-      OMNPaymentDetails *paymentDetails = [OMNPaymentDetails paymentDetailsWithTotalAmount:order.enteredAmountWithTips tipAmount:order.tipAmount userID:[OMNAuthorization authorisation].user.id userName:[OMNAuthorization authorisation].user.name];
-      [OMNPaymentNotificationControl showWithPaymentDetails:paymentDetails];
-      paymentFinishBlock(nil, completionBlock);
-      
-    });
-    
-  }];
-  
-}
-
 @end

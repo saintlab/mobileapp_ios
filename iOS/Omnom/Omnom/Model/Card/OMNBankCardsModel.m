@@ -26,17 +26,16 @@ NSString * const kCardIdServiceName = @"card_id";
 
 @end
 
-@implementation OMNBankCardsModel {
-}
+@implementation OMNBankCardsModel
 
 @dynamic card_id;
 
-- (instancetype)initWithRootVC:(__weak UIViewController *)vc {
+- (instancetype)init {
 
   self = [super init];
   if (self) {
     
-    _bankCardMediator = [[OMNBankCardMediator alloc] initWithRootVC:vc];
+
     
   }
   return self;
@@ -60,7 +59,9 @@ NSString * const kCardIdServiceName = @"card_id";
 }
 
 - (NSString *)card_id {
+  
   return [SSKeychain passwordForService:kCardIdServiceName account:NSStringFromClass(self.class)];
+  
 }
 
 - (void)setCard_id:(NSString *)card_id {
@@ -114,8 +115,10 @@ NSString * const kCardIdServiceName = @"card_id";
   [self.cards enumerateObjectsUsingBlock:^(OMNBankCard *card, NSUInteger idx, BOOL *stop) {
     
     if (kOMNBankCardStatusRegistered == card.status) {
+      
       hasRegisterdCards = YES;
       *stop = YES;
+      
     }
     
   }];
@@ -130,16 +133,12 @@ NSString * const kCardIdServiceName = @"card_id";
   
 }
 
-- (void)payForOrder:(OMNOrder *)order cardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock {
-  
-  //do nothing
-  
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  
   return 1;
+  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -147,7 +146,9 @@ NSString * const kCardIdServiceName = @"card_id";
   
   switch (section) {
     case 0: {
+      
       numberOfRows = self.cards.count;
+      
     } break;
   }
   
@@ -238,16 +239,10 @@ NSString * const kCardIdServiceName = @"card_id";
   }
   
   if (self.didSelectCardBlock &&
-      NO == self.loading &&
-      NO == selectedCard.deleting) {
+      !self.loading &&
+      !selectedCard.deleting) {
     
-    if (kOMNBankCardStatusHeld == selectedCard.status) {
-      
-      OMNBankCardInfo *bankCardInfo = [[OMNBankCardInfo alloc] init];
-      bankCardInfo.card_id = selectedCard.external_card_id;
-      [_bankCardMediator confirmCard:bankCardInfo];
-      
-    }
+    self.didSelectCardBlock(selectedCard);
     
   }
   

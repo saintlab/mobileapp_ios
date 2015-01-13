@@ -276,7 +276,21 @@ OMNOrderCalculationVCDelegate>
 
 - (void)exitRestaurant {
   
-  [_restaurantActionsVC.delegate restaurantActionsVCDidFinish:_restaurantActionsVC];
+  if (_restaurantActionsVC.didCloseBlock) {
+    
+    _restaurantActionsVC.didCloseBlock();
+    
+  }
+  
+}
+
+- (void)rescanTable {
+  
+  if (_restaurantActionsVC.rescanTableBlock) {
+    
+    _restaurantActionsVC.rescanTableBlock();
+    
+  }
   
 }
 

@@ -24,7 +24,6 @@
 - (void)scanTableQrTap;
 - (void)demoModeTap;
 - (void)showRestaurants:(NSArray *)restaurants;
-- (void)showRestaurant:(OMNRestaurant *)restaurant;
 - (void)showCardForRestaurant:(OMNRestaurant *)restaurant;
 
 @end
