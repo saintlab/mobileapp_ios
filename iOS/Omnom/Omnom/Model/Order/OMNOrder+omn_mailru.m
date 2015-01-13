@@ -20,7 +20,7 @@
 
 @implementation OMNOrder (omn_mailru)
 
-- (void)getPaymentInfoForUser:(OMNUser *)user cardInfo:(OMNMailRuCardInfo *)cardInfo copmletion:(OMNMailRuPaymentInfoBlock)completionBlock failure:(void (^)(NSError *error))failureBlock {
+- (void)getPaymentInfoForUser:(OMNUser *)user cardInfo:(OMNMailRuCardInfo *)cardInfo copmletion:(OMNMailRuPaymentInfoBlock)completionBlock failure:(void (^)(OMNError *error))failureBlock {
   
   OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
   paymentInfo.cardInfo = cardInfo;
@@ -46,7 +46,7 @@
       [paymentInfo omn_updateWithBill:bill];
       completionBlock(paymentInfo);
       
-    } failure:^(NSError *error) {
+    } failure:^(OMNError *error) {
       
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" parametrs:@{@"order_id" : self.id}];
       failureBlock(error);

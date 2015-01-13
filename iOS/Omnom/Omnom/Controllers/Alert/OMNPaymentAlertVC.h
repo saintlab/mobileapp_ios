@@ -13,6 +13,6 @@
 
 @property (nonatomic, copy) dispatch_block_t didPayBlock;
 
-- (instancetype)initWithText:(NSString *)text detailedText:(NSString *)detailedText amount:(long long)amount;
+- (instancetype)initWithAmount:(long long)amount;
 
 @end

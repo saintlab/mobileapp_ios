@@ -18,16 +18,13 @@
 
 @interface OMNSearchRestaurantMediator ()
 <OMNSearchRestaurantsVCDelegate,
-OMNRestaurantActionsVCDelegate,
 OMNScanTableQRCodeVCDelegate,
-OMNUserInfoVCDelegate,
-OMNDemoRestaurantVCDelegate>
+OMNUserInfoVCDelegate>
 
 @end
 
 @implementation OMNSearchRestaurantMediator {
   
-  __weak UIViewController *_demoPresentingVC;
   __weak UIViewController *_scanQRPresentingVC;
   
 }
@@ -62,26 +59,46 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)scanTableQrTap {
   
-  _scanQRPresentingVC = _rootVC.navigationController.topViewController;
   OMNScanTableQRCodeVC *scanTableQRCodeVC = [[OMNScanTableQRCodeVC alloc] init];
   scanTableQRCodeVC.delegate = self;
+  __weak UIViewController *presentingVC = _rootVC.navigationController.topViewController;
+  __weak typeof(self)weakSelf = self;
+  scanTableQRCodeVC.didCloseBlock = ^{
+    
+    [weakSelf.rootVC.navigationController popToViewController:presentingVC animated:YES];
+    
+  };
   [_rootVC.navigationController pushViewController:scanTableQRCodeVC animated:YES];
   
 }
 
 - (void)showRestaurants:(NSArray *)restaurants {
   
+  NSMutableArray *controllers = [NSMutableArray array];
+  OMNRestaurantListVC *restaurantListVC = [[OMNRestaurantListVC alloc] initWithMediator:self];
+  restaurantListVC.restaurants = restaurants;
+  [controllers addObject:restaurantListVC];
+  
   if (1 == restaurants.count) {
     
     OMNRestaurant *restaurant = [restaurants firstObject];
-    [self showRestaurant:restaurant];
+    OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
+    __weak typeof(self)weakSelf = self;
+    restaurantActionsVC.didCloseBlock = ^{
+
+      [restaurantListVC.navigationController popToViewController:restaurantListVC animated:YES];
+      
+    };
+    restaurantActionsVC.rescanTableBlock = ^{
+      
+      [weakSelf didFinish];
+      
+    };
+    [controllers addObject:restaurantActionsVC];
     
   }
-  else {
-    
-    [self chooseRestaurantFromRestaurants:restaurants];
-    
-  }
+  
+  [_rootVC.navigationController setViewControllers:[_rootVC.navigationController.viewControllers arrayByAddingObjectsFromArray:controllers] animated:YES];
   
 }
 
@@ -99,22 +116,6 @@ OMNDemoRestaurantVCDelegate>
   
 }
 
-- (void)showRestaurant:(OMNRestaurant *)restaurant {
-  
-  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
-  restaurantActionsVC.delegate = self;
-  [_rootVC.navigationController pushViewController:restaurantActionsVC animated:YES];
-  
-}
-
-- (void)chooseRestaurantFromRestaurants:(NSArray *)restaurants {
-  
-  OMNRestaurantListVC *restaurantListVC = [[OMNRestaurantListVC alloc] initWithMediator:self];
-  restaurantListVC.restaurants = restaurants;
-  [_rootVC.navigationController pushViewController:restaurantListVC animated:YES];
-  
-}
-
 - (void)didFinish {
   
   if (self.didFinishBlock) {
@@ -127,9 +128,14 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)demoModeTap {
   
-  _demoPresentingVC = _rootVC.navigationController.topViewController;
   OMNDemoRestaurantVC *demoRestaurantVC = [[OMNDemoRestaurantVC alloc] initWithParent:nil];
-  demoRestaurantVC.delegate = self;
+  __weak typeof(self)weakSelf = self;
+  __weak UIViewController *presentingVC = _rootVC.navigationController.topViewController;
+  demoRestaurantVC.didCloseBlock = ^{
+    
+    [weakSelf.rootVC.navigationController popToViewController:presentingVC animated:YES];
+    
+  };
   [_rootVC.navigationController pushViewController:demoRestaurantVC animated:YES];
   
 }
@@ -137,14 +143,6 @@ OMNDemoRestaurantVCDelegate>
 #pragma mark - OMNSearchRestaurantsVCDelegate
 
 - (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {
-  
-  [self didFinish];
-  
-}
-
-#pragma mark - OMNRestaurantActionsVCDelegate
-
-- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC {
   
   [self didFinish];
   
@@ -162,13 +160,7 @@ OMNDemoRestaurantVCDelegate>
 
 - (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant {
   
-  [self showRestaurant:restaurant];
-  
-}
-
-- (void)scanTableQRCodeVCDidCancel:(OMNScanTableQRCodeVC *)scanTableQRCodeVC {
-
-  [_rootVC.navigationController popToViewController:_scanQRPresentingVC animated:YES];
+  [self showRestaurants:@[restaurant]];
   
 }
 
@@ -177,20 +169,5 @@ OMNDemoRestaurantVCDelegate>
   [self demoModeTap];
   
 }
-
-#pragma mark - OMNDemoRestaurantVCDelegate
-
-- (void)demoRestaurantVCDidFail:(OMNDemoRestaurantVC *)demoRestaurantVC withError:(OMNError *)error {
-  
-  [_rootVC.navigationController popToViewController:_demoPresentingVC animated:YES];
-  
-}
-
-- (void)demoRestaurantVCDidFinish:(OMNDemoRestaurantVC *)demoRestaurantVC {
-
-  [_rootVC.navigationController popToViewController:_demoPresentingVC animated:YES];
-  
-}
-
 
 @end

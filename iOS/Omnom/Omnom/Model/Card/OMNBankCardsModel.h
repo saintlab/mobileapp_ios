@@ -8,9 +8,8 @@
 
 @class OMNBankCard;
 @class OMNBankCardInfo;
-@class OMNBankCardMediator;
 
-typedef UIViewController *(^OMNSelectCardBlock)(OMNBankCard *bankCard);
+typedef void (^OMNSelectCardBlock)(OMNBankCard *bankCard);
 
 @class OMNOrder;
 
@@ -25,13 +24,9 @@ UITableViewDelegate>
 @property (nonatomic, assign) BOOL loading;
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, strong, readonly) OMNBankCard *selectedCard;
-@property (nonatomic, strong) OMNBankCardMediator *bankCardMediator;
 
-- (instancetype)init __attribute__((unavailable("init not available")));
-- (instancetype)initWithRootVC:(__weak UIViewController *)vc;
+- (instancetype)init;
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;
 - (void)updateCardSelection;
-
-- (void)payForOrder:(OMNOrder *)order cardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *debugInfo))failureBlock;
 
 @end

@@ -44,10 +44,9 @@
   
   _circleAnimation = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  @try {
-    [_restaurantMediator removeObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled))];
+  if (_restaurantWaiterCallIdentifier) {
+    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
   }
-  @catch (NSException *exception) {}
   
 }
 
@@ -91,7 +90,12 @@
   [self loadBackgroundIfNeeded];
   [self loadIconIfNeeded];
 
-  [_restaurantMediator addObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew context:NULL];
+  __weak typeof(self)weakSelf = self;
+  _restaurantWaiterCallIdentifier = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+    
+    (obj.waiterIsCalled) ? ([weakSelf callWaiterDidStart]) : ([weakSelf callWaiterDidStop]);
+    
+  }];
 
   self.circleBackground = _restaurantMediator.restaurant.decoration.circleBackground;
   
@@ -185,27 +189,6 @@
       break;
   }
   
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  
-  if ([object isEqual:_restaurantMediator] &&
-      [keyPath isEqualToString:NSStringFromSelector(@selector(waiterIsCalled))]) {
-
-    if (_restaurantMediator.waiterIsCalled) {
-      
-      [self callWaiterDidStart];
-      
-    }
-    else {
-      
-      [self callWaiterDidStop];
-      
-    }
-    
-  } else {
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-  }
 }
 
 - (void)loadIconIfNeeded {

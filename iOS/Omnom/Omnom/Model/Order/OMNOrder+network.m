@@ -8,11 +8,10 @@
 
 #import "OMNOrder+network.h"
 #import "OMNOperationManager.h"
-#import "OMNError.h"
 
 @implementation OMNOrder (network)
 
-- (void)createBill:(OMNBillBlock)completionBlock failure:(void (^)(NSError *error))failureBlock {
+- (void)createBill:(OMNBillBlock)completionBlock failure:(void (^)(OMNError *error))failureBlock {
   
   NSDictionary *parameters =
   @{

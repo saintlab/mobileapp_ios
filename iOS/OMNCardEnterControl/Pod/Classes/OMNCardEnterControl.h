@@ -19,7 +19,7 @@ extern NSString * const OMNCardEnterControlCVVString;
 
 @property (nonatomic, weak) id<OMNCardEnterControlDelegate> delegate;
 @property (nonatomic, strong) NSString *pan;
-@property (nonatomic, assign, readonly) BOOL saveButtonSelected;
+@property (nonatomic, assign) BOOL saveButtonSelected;
 
 - (void)setSaveButtonHidden:(BOOL)hidden;
 

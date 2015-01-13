@@ -9,21 +9,10 @@
 #import "OMNAuthorization.h"
 #import "OMNBankCardInfo.h"
 #import "OMNCardBrandView.h"
-#import "OMNLoadingCircleVC.h"
-#import "OMNMailRUCardConfirmVC.h"
 #import "OMNOrderPaymentVC.h"
 #import "OMNOperationManager.h"
-#import "OMNOrder+network.h"
-#import "OMNOrder+omn_mailru.h"
-#import "OMNSocketManager.h"
-#import "OMNError.h"
-#import "UIImage+omn_helper.h"
-#import "UINavigationController+omn_replace.h"
 #import <BlocksKit.h>
-#import <OMNDeletedTextField.h>
-#import <OMNMailRuAcquiring.h>
 #import <OMNStyler.h>
-#import "OMNBankCard.h"
 #import "OMNBankCard+omn_info.h"
 #import "OMNBankCardMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
@@ -32,6 +21,7 @@
 @interface OMNOrderPaymentVC()
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
+@property (nonatomic, strong) OMNBankCardMediator *bankCardMediator;
 
 @end
 
@@ -50,17 +40,16 @@
   UIView *_contentView;
   BOOL _addBankCardRequested;
   
+  NSString *_bankCardsModelLoadingIdentifier;
+  
 }
 
 - (void)dealloc {
   
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  @try {
-    
-    [_bankCardsModel removeObserver:self forKeyPath:NSStringFromSelector(@selector(loading))];
-    
+  if (_bankCardsModelLoadingIdentifier) {
+    [_bankCardMediator bk_removeObserversWithIdentifier:_bankCardsModelLoadingIdentifier];
   }
-  @catch (NSException *exception) {}
   
 }
 
@@ -84,13 +73,46 @@
   self.view.backgroundColor = [UIColor whiteColor];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
-  _bankCardsModel = [_restaurant bankCardsModelWithRootVC:self];
-  [_bankCardsModel addObserver:self forKeyPath:NSStringFromSelector(@selector(loading)) options:(NSKeyValueObservingOptionNew) context:NULL];
-
+  self.bankCardMediator = [_restaurant bankCardMediatorWithOrder:_order rootVC:self];
+  _bankCardsModel = [_restaurant bankCardsModel];
   __weak typeof(self)weakSelf = self;
+  _bankCardsModelLoadingIdentifier = [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
+    
+    [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([UIBarButtonItem omn_loadingItem]) : ([weakSelf addCardButton]) animated:YES];
+    
+  }];
+
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
-    return weakSelf;
+    if (kOMNBankCardStatusHeld == bankCard.status) {
+      
+      [weakSelf.bankCardMediator confirmCard:[bankCard bankCardInfo]];
+      
+    }
+    
+  }];
+  
+  [self.bankCardMediator setDidPayBlock:^(OMNError *error) {
+    
+    if (error) {
+      
+      if (OMNErrorOrderClosed == error.code) {
+        
+        [weakSelf orderDidClosed];
+        
+      }
+      else {
+        
+        [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+        
+      }
+      
+    }
+    else {
+      
+      [weakSelf mailRuDidFinish];
+      
+    }
     
   }];
   
@@ -113,18 +135,6 @@
   [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
   _payButton.enabled = NO;
   
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  
-  if ([object isEqual:_bankCardsModel] &&
-      [keyPath isEqualToString:NSStringFromSelector(@selector(loading))]) {
-    
-    [self.navigationItem setRightBarButtonItem:(_bankCardsModel.loading) ? ([UIBarButtonItem omn_loadingItem]) : ([self addCardButton]) animated:YES];
-    
-  } else {
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-  }
 }
 
 - (UIBarButtonItem *)addCardButton {
@@ -205,38 +215,14 @@
 }
 
 - (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
-  
-  __weak typeof(self)weakSelf = self;
-  [_bankCardsModel payForOrder:_order cardInfo:bankCardInfo completion:^{
-    
-    [weakSelf mailRuDidFinish];
-    
-  } failure:^(NSError *error, NSDictionary *debugInfo) {
-    
-    if (OMNErrorOrderClosed == error.code) {
-      
-      [weakSelf orderDidClosed];
-      
-    }
-    else {
-      
-      [weakSelf popViewController];
-      
-    }
 
-  }];
+  [_bankCardMediator payWithCardInfo:bankCardInfo];
   
 }
 
 - (void)mailRuDidFinish {
 
   [self.delegate orderPaymentVCDidFinish:self withBill:_bill];
-  
-}
-
-- (void)popViewController {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 
@@ -260,15 +246,7 @@
 
 - (void)addCardTap {
   
-  __weak typeof(self)weakSelf = self;
-  [_bankCardsModel.bankCardMediator addCardForOrder:_order requestPaymentWithCard:^(OMNBankCardInfo *bankCardInfo) {
-    
-    //clear card_id for payment
-    bankCardInfo.card_id = nil;
-    bankCardInfo.saveCard = NO;
-    [weakSelf payWithCardInfo:bankCardInfo];
-    
-  }];
+  [_bankCardMediator registerCard];
   
 }
 

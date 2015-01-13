@@ -109,7 +109,7 @@
   
   if ([_restaurant hasTable]) {
 
-    [_searchRestaurantMediator showRestaurant:_restaurant];
+    [_searchRestaurantMediator showRestaurants:@[_restaurant]];
     
   }
   else {

@@ -11,29 +11,27 @@
 #import "OMNConstants.h"
 #import "UIButton+omn_helper.h"
 #import "OMNUtils.h"
+#import "UIView+omn_autolayout.h"
 
 @interface OMNPaymentAlertVC ()
-
-@property (nonatomic, copy) NSString *text;
-@property (nonatomic, copy) NSString *detailedText;
 
 @end
 
 @implementation OMNPaymentAlertVC {
   
-  UIButton *_payButton;
   long long _amount;
+  UILabel *_textLabel;
+  UILabel *_detailedTextLabel;
+  UIButton *_payButton;
   
 }
 
-- (instancetype)initWithText:(NSString *)text detailedText:(NSString *)detailedText amount:(long long)amount {
+- (instancetype)initWithAmount:(long long)amount {
   self = [super init];
   if (self) {
 
     _amount = amount;
-    self.text = text;
-    self.detailedText = detailedText;
-    
+
   }
   return self;
 }
@@ -50,17 +48,19 @@
   [_payButton addTarget:self action:@selector(payTap) forControlEvents:UIControlEventTouchUpInside];
   [_payButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:_amount]] forState:UIControlStateNormal];
   
+  _textLabel.text = NSLocalizedString(@"NO_SMS_ALERT_TEXT", @"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму.");
+  _detailedTextLabel.text = NSLocalizedString(@"NO_SMS_ALERT_ACTION_TEXT", @"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты.");
+  
 }
 
 - (UILabel *)textLabel {
   
-  UILabel *textLabel = [[UILabel alloc] init];
+  UILabel *textLabel = [UILabel omn_autolayoutView];
   textLabel.textColor = colorWithHexString(@"787878");
   textLabel.opaque = YES;
   textLabel.numberOfLines = 0;
   textLabel.textAlignment = NSTextAlignmentCenter;
   textLabel.font = FuturaOSFOmnomRegular(15.0f);
-  textLabel.translatesAutoresizingMaskIntoConstraints = NO;
   return textLabel;
   
 }
@@ -69,25 +69,23 @@
   
   UIColor *backgroundColor = [UIColor whiteColor];
   
-  UILabel *textLabel = [self textLabel];
-  textLabel.text = self.text;
-  textLabel.backgroundColor = backgroundColor;
-  [self.contentView addSubview:textLabel];
+  _textLabel = [self textLabel];
+  _textLabel.backgroundColor = backgroundColor;
+  [self.contentView addSubview:_textLabel];
   
-  UILabel *detailedTextLabel = [self textLabel];
-  detailedTextLabel.text = self.detailedText;
-  detailedTextLabel.backgroundColor = backgroundColor;
-  [self.contentView addSubview:detailedTextLabel];
+  _detailedTextLabel = [self textLabel];
+  _detailedTextLabel.backgroundColor = backgroundColor;
+  _detailedTextLabel.hidden = YES;
+  [self.contentView addSubview:_detailedTextLabel];
   
-  _payButton = [[UIButton alloc] init];
+  _payButton = [UIButton omn_autolayoutView];
   _payButton.hidden = YES;
-  _payButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.contentView addSubview:_payButton];
   
   NSDictionary *views =
   @{
-    @"textLabel" : textLabel,
-    @"detailedTextLabel" : detailedTextLabel,
+    @"textLabel" : _textLabel,
+    @"detailedTextLabel" : _detailedTextLabel,
     @"payButton" : _payButton,
     @"contentView" : self.contentView,
     };
@@ -101,9 +99,10 @@
 
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
-  if (_detailedText.length) {
+  if (_amount > 0ll) {
 
     _payButton.hidden = NO;
+    _detailedTextLabel.hidden = NO;
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[detailedTextLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textLabel]-[detailedTextLabel]-20-[payButton]-(10)-|" options:kNilOptions metrics:metrics views:views]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_payButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];

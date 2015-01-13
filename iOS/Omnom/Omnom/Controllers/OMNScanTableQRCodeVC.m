@@ -242,7 +242,11 @@ OMNCameraPermissionDescriptionVCDelegate>
 
 - (void)closeTap {
   
-  [self.delegate scanTableQRCodeVCDidCancel:self];
+  if (self.didCloseBlock) {
+    
+    self.didCloseBlock();
+    
+  }
   
 }
 

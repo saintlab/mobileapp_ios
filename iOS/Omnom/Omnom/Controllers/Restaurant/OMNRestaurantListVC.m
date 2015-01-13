@@ -93,19 +93,21 @@
 - (void)refreshOrders {
   
   if (!self.refreshControl.refreshing) {
+    
     [self.refreshControl beginRefreshing];
+    
+    __weak typeof(self)weakSelf = self;
+    [OMNRestaurant getRestaurants:^(NSArray *restaurants) {
+      
+      [weakSelf finishLoadingRestaurants:restaurants];
+      
+    } failure:^(OMNError *error) {
+      
+      [weakSelf.refreshControl endRefreshing];
+      
+    }];
+    
   }
-  
-  __weak typeof(self)weakSelf = self;
-  [OMNRestaurant getRestaurants:^(NSArray *restaurants) {
-    
-    [weakSelf finishLoadingRestaurants:restaurants];
-    
-  } failure:^(OMNError *error) {
-    
-    [self.refreshControl endRefreshing];
-    
-  }];
   
 }
 

@@ -9,21 +9,13 @@
 #import "OMNBackgroundVC.h"
 #import "OMNR1VC.h"
 #import "OMNRestaurant.h"
-
-@protocol OMNRestaurantActionsVCDelegate;
-
 @interface OMNRestaurantActionsVC : OMNBackgroundVC
 
 @property (nonatomic, strong, readonly) OMNR1VC *r1VC;
-@property (nonatomic, weak) id<OMNRestaurantActionsVCDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t didCloseBlock;
+@property (nonatomic, copy) dispatch_block_t rescanTableBlock;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
 - (void)showRestaurantAnimated:(BOOL)animated;
-
-@end
-
-@protocol OMNRestaurantActionsVCDelegate <NSObject>
-
-- (void)restaurantActionsVCDidFinish:(OMNRestaurantActionsVC *)restaurantVC;
 
 @end

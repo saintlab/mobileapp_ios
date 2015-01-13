@@ -60,7 +60,8 @@ OMNCameraPermissionDescriptionVCDelegate>
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
   _cardEnterControl.delegate = self;
-  [_cardEnterControl setSaveButtonHidden:self.hideSaveButton];
+  [_cardEnterControl setSaveButtonHidden:(kAddBankPurposeAll != self.purpose)];
+  [_cardEnterControl setSaveButtonSelected:(self.purpose&kAddBankPurposeRegister)];
   [self.view addSubview:_cardEnterControl];
   
   UIView *bankCardDescriptionView = [[OMNCardBrandView alloc] init];

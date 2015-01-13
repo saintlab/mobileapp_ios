@@ -276,7 +276,21 @@ OMNOrderCalculationVCDelegate>
 
 - (void)exitRestaurant {
   
-  [_restaurantActionsVC.delegate restaurantActionsVCDidFinish:_restaurantActionsVC];
+  if (_restaurantActionsVC.didCloseBlock) {
+    
+    _restaurantActionsVC.didCloseBlock();
+    
+  }
+  
+}
+
+- (void)rescanTable {
+  
+  if (_restaurantActionsVC.rescanTableBlock) {
+    
+    _restaurantActionsVC.rescanTableBlock();
+    
+  }
   
 }
 
@@ -414,8 +428,6 @@ OMNOrderCalculationVCDelegate>
   NSInteger ordersCount = self.orders.count;
   NSMutableArray *pushedControllers = [NSMutableArray array];
   
-#warning ordersCount
-//  ordersCount = 0;
   if (ordersCount) {
     
     OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithMediator:self];

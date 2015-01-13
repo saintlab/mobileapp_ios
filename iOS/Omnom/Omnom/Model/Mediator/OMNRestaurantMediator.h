@@ -29,5 +29,6 @@
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
 
 - (void)exitRestaurant;
+- (void)rescanTable;
 
 @end

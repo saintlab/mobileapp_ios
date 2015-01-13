@@ -13,17 +13,21 @@
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNMailRuBankCardsModel.h"
 #import <BlocksKit.h>
-#import "OMNBankCardMediator.h"
+#import "OMNMailRuBankCardMediator.h"
+#import "OMNBankCard+omn_info.h"
 
 NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
 
 @interface OMNBankCardsVC ()
+
+@property (nonatomic, strong) OMNBankCardMediator *bankCardMediator;
 
 @end
 
 @implementation OMNBankCardsVC {
   
   OMNBankCardsModel *_bankCardsModel;
+
   __weak IBOutlet UIButton *_addCardButton;
   NSString *_bankCardsLoadingIdentifier;
   
@@ -36,7 +40,6 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
   
   if (_bankCardsLoadingIdentifier) {
     [_bankCardsModel bk_removeObserversWithIdentifier:_bankCardsLoadingIdentifier];
-    _bankCardsLoadingIdentifier = nil;
   }
   
 }
@@ -63,14 +66,20 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
   
   [self setupInterface];
   
-  _bankCardsModel = [[OMNMailRuBankCardsModel alloc] initWithRootVC:self];
+  self.bankCardMediator = [[OMNMailRuBankCardMediator alloc] initWithOrder:nil rootVC:self];
+  
   __weak typeof(self)weakSelf = self;
+  _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
-    return weakSelf;
+    if (kOMNBankCardStatusHeld == bankCard.status) {
+    
+      [weakSelf.bankCardMediator confirmCard:[bankCard bankCardInfo]];
+      
+    }
     
   }];
-
+  
   UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
   
@@ -108,7 +117,7 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
 
 - (IBAction)addCardTap:(id)sender {
   
-  [_bankCardsModel.bankCardMediator addCardForOrder:nil requestPaymentWithCard:nil];
+  [_bankCardMediator registerCard];
   
 }
 

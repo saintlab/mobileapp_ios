@@ -14,17 +14,22 @@
   
 }
 
-- (instancetype)initWithRootVC:(__weak UIViewController *)vc {
+- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(__weak UIViewController *)rootVC {
   self = [super init];
   if (self) {
     
-    _rootVC = vc;
+    _rootVC = rootVC;
+    _order = order;
     
   }
   return self;
 }
 
-- (void)addCardForOrder:(OMNOrder *)order requestPaymentWithCard:(OMNBankCardInfoBlock)requestPaymentWithCardBlock {
+- (void)addCardForPayment {
+  //do nothing
+}
+
+- (void)registerCard {
   //do nothing
 }
 
@@ -32,28 +37,39 @@
   //do nothing
 }
 
-- (void)beginPaymentProcessWithPresentBlock:(OMNPaymentPresentBlock)presentBlock {
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
+  //do nothing
+}
+
+- (void)showPaymentVCWithDidPresentBlock:(OMNPaymentVCDidPresentBlock)paymentVCDidPresentBlock {
   
   OMNPaymentLoadingVC *paymentLoadingVC = [[OMNPaymentLoadingVC alloc] init];
-  OMNPaymentFinishBlock paymentFinishBlock = ^(NSError *error, dispatch_block_t completionBlock) {
-    
-    if (error) {
-      
-      [paymentLoadingVC didFailWithError:error action:completionBlock];
-      
-    }
-    else {
-      
-      [paymentLoadingVC finishLoading:completionBlock];
-      
-    }
-    
-  };
-  
+  __weak typeof(self)weakSelf = self;
   [_rootVC.navigationController omn_pushViewController:paymentLoadingVC animated:YES completion:^{
     
     [paymentLoadingVC startLoading];
-    presentBlock(paymentFinishBlock);
+    paymentVCDidPresentBlock(^(OMNError *error) {
+      
+      if (error) {
+        
+        [paymentLoadingVC didFailWithError:error action:^{
+          
+          weakSelf.didPayBlock(error);
+          
+        }];
+        
+      }
+      else {
+        
+        [paymentLoadingVC finishLoading:^{
+          
+          weakSelf.didPayBlock(error);
+          
+        }];
+        
+      }
+      
+    });
     
   }];
   
