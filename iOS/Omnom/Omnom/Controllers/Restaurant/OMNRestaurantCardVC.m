@@ -74,14 +74,16 @@
   [_phoneButton setTitle:_restaurant.phone forState:UIControlStateNormal];
   [_phoneButton addTarget:self action:@selector(callTap) forControlEvents:UIControlEventTouchUpInside];
 
-  [_reserveButton setTitle:@"Бронировать\nстолик" image:[UIImage imageNamed:@"ic_reserve_table"] color:colorWithHexString(@"157EFB")];
+  UIColor *defaultColor = colorWithHexString(@"157EFB");
+  UIColor *disabledColor = colorWithHexString(@"A1A1A1");
+  [_reserveButton setTitle:@"Бронировать\nстолик" image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
   _reserveButton.enabled = _restaurant.settings.has_table_order;
   
-  [_insideButton setTitle:@"Я внутри" image:[UIImage imageNamed:@"ic_im_inside"] color:colorWithHexString(@"157EFB")];
+  [_insideButton setTitle:@"Я внутри" image:[UIImage imageNamed:@"ic_im_inside"] color:defaultColor disabledColor:disabledColor];
   [_insideButton addTarget:self action:@selector(insideRestaurantTap) forControlEvents:UIControlEventTouchUpInside];
   _insideButton.enabled = YES;
 
-  [_preorderButton setTitle:@"Сделать\nпредзаказ" image:[UIImage imageNamed:@"ic_make_order"] color:colorWithHexString(@"157EFB")];
+  [_preorderButton setTitle:@"Сделать\nпредзаказ" image:[UIImage imageNamed:@"ic_make_order"] color:defaultColor disabledColor:disabledColor];
   _preorderButton.enabled = _restaurant.settings.has_pre_order;
   
   [_logoIcon setBackgroundImage:[[UIImage imageNamed:@"restaurant_card_circle_bg"] omn_tintWithColor:_restaurant.decoration.background_color] forState:UIControlStateNormal];

@@ -64,18 +64,24 @@
   }
   else {
     
-    [_locationManager stopUpdatingLocation];
+    [self notFoundCoordinate];
     
   }
   
 }
 
-- (void)didFindLocation:(CLLocation *)location {
+- (void)notFoundCoordinate {
+  
+  [self didFindCoordinate:CLLocationCoordinate2DMake(0.0, 0.0)];
+  
+}
+
+- (void)didFindCoordinate:(CLLocationCoordinate2D)coordinate {
   
   [_locationManager stopUpdatingLocation];
   if (_locationBlock) {
     
-    _locationBlock(location.coordinate);
+    _locationBlock(coordinate);
     _locationBlock = nil;
 
   }
@@ -86,7 +92,12 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
   
-  [self didFindLocation:[locations lastObject]];
+  CLLocation *location = [locations lastObject];
+  if (location) {
+    
+    [self didFindCoordinate:location.coordinate];
+    
+  }
   
 }
 
@@ -98,7 +109,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
   
-  NSLog(@"didFailWithError>%@", error);
+  [self notFoundCoordinate];
   
 }
 

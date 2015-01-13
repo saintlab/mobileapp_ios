@@ -82,9 +82,22 @@
   
 }
 
-+ (void)getRestaurants:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock {
++ (void)getRestaurantsForLocation:(CLLocationCoordinate2D)coordinate withCompletion:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock {
   
-  [[OMNOperationManager sharedManager] GET:@"restaurants" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  NSDictionary *parameters = nil;
+  
+  if (fabs(coordinate.latitude) > 0.0001 &&
+      fabs(coordinate.longitude) > 0.0001) {
+    
+    parameters =
+    @{
+      @"latitude" : @(coordinate.latitude),
+      @"longitude" : @(coordinate.longitude),
+      };
+    
+  }
+  
+  [[OMNOperationManager sharedManager] GET:@"restaurants" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     [responseObject omn_decodeWithRestaurantsBlock:restaurantsBlock failureBlock:failureBlock];
     

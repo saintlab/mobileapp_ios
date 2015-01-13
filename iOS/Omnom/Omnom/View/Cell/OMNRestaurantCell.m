@@ -10,21 +10,27 @@
 #import "OMNRestaurantDetailsView.h"
 #import "UIView+omn_autolayout.h"
 #import "UIImage+omn_helper.h"
+#import <BlocksKit.h>
 
 @implementation OMNRestaurantCell {
   
   UIButton *_restaurantIcon;
   OMNRestaurantDetailsView *_restaurantDetailsView;
+  NSString *_restaurantLogoObserverIdentifier;
   
 }
 
 - (void)dealloc {
   
-  @try {
-    NSString *keyPath = NSStringFromSelector(@selector(logo));
-    [_restaurant.decoration removeObserver:self forKeyPath:keyPath];
+  [self removeRestaurantLogoObserver];
+  
+}
+
+- (void)removeRestaurantLogoObserver {
+  
+  if (_restaurantLogoObserverIdentifier) {
+    [_restaurant.decoration bk_removeObserversWithIdentifier:_restaurantLogoObserverIdentifier];
   }
-  @catch (NSException *exception) {}
   
 }
 
@@ -94,49 +100,32 @@
   
 }
 
-- (NSMutableParagraphStyle *)centerParagraphStyle {
-  
-  NSMutableParagraphStyle *attributeStyle = [[NSMutableParagraphStyle alloc] init];
-  attributeStyle.alignment = NSTextAlignmentCenter;
-  return attributeStyle;
-  
-}
-
 - (void)setRestaurant:(OMNRestaurant *)restaurant {
 
-  NSString *keyPath = NSStringFromSelector(@selector(logo));
-  [_restaurant.decoration removeObserver:self forKeyPath:keyPath];
+  [self removeRestaurantLogoObserver];
   _restaurant = restaurant;
-  [_restaurant.decoration addObserver:self forKeyPath:keyPath options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
-
-  [_restaurant.decoration loadLogo:^(UIImage *image) {
-  }];
   
-  _restaurantDetailsView.restaurant = restaurant;
-  [_restaurantIcon setBackgroundImage:[[UIImage imageNamed:@"circle_restaurant_page"] omn_tintWithColor:_restaurant.decoration.background_color] forState:UIControlStateNormal];
-  
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  if ([object isEqual:_restaurant.decoration] &&
-      [keyPath isEqualToString:NSStringFromSelector(@selector(logo))]) {
+  __weak UIButton *restaurantIcon = _restaurantIcon;
+  _restaurantLogoObserverIdentifier = [_restaurant.decoration bk_addObserverForKeyPath:NSStringFromSelector(@selector(logo)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       
       UIImage *circleImage = [_restaurant.decoration.logo omn_circleImageWithDiametr:150.0f];
       dispatch_async(dispatch_get_main_queue(), ^{
-
-        [_restaurantIcon setImage:circleImage forState:UIControlStateNormal];
+        
+        [restaurantIcon setImage:circleImage forState:UIControlStateNormal];
         
       });
       
     });
     
-  } else {
-    
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    
-  }
+  }];
+
+  [_restaurant.decoration loadLogo:^(UIImage *image) {}];
+  
+  _restaurantDetailsView.restaurant = restaurant;
+  [_restaurantIcon setBackgroundImage:[[UIImage imageNamed:@"circle_restaurant_page"] omn_tintWithColor:_restaurant.decoration.background_color] forState:UIControlStateNormal];
+  
 }
 
 @end

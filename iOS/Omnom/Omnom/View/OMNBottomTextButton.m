@@ -26,7 +26,9 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
   self = [super initWithCoder:aDecoder];
   if (self) {
+    
     [self setup];
+    
   }
   return self;
 }
@@ -55,9 +57,10 @@
   
 }
 
-- (void)setTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color {
+- (void)setTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color disabledColor:(UIColor *)disabledColor {
 
   _iconView.image = [image omn_tintWithColor:color];
+  _iconView.highlightedImage = [image omn_tintWithColor:disabledColor];
   
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:(title) ? (title) : (@"")];
   NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
@@ -70,11 +73,11 @@
   @{
     NSParagraphStyleAttributeName : style,
     NSFontAttributeName : (self.font) ? (self.font) : ([UIFont systemFontOfSize:16.0f]),
-    NSForegroundColorAttributeName : (color) ? (color) : ([UIColor blackColor]),
     } range:NSMakeRange(0, title.length)];
-  
+  _label.textColor = color;
+  _label.highlightedTextColor = disabledColor;
   _label.attributedText = attributedText;
-  
+
 }
 
 - (void)fadeControls:(BOOL)fade {
@@ -94,7 +97,8 @@
 - (void)setEnabled:(BOOL)enabled {
   
   [super setEnabled:enabled];
-  [self fadeControls:!enabled];
+  _iconView.highlighted = !enabled;
+  _label.highlighted = !enabled;
 
 }
 

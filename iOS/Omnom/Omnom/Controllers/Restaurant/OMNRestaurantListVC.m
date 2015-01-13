@@ -17,6 +17,7 @@
 #import <OMNStyler.h>
 #import "OMNRestaurant+omn_network.h"
 #import "UINavigationBar+omn_custom.h"
+#import "OMNLocationManager.h"
 
 @interface OMNRestaurantListVC ()
 
@@ -66,7 +67,7 @@
   
   if (0 == self.restaurants.count) {
     
-    [self refreshOrders];
+    [self refreshOrdersIfNeeded];
     
   }
   
@@ -90,14 +91,23 @@
 #warning userFeedbackTap
 }
 
-- (void)refreshOrders {
+- (void)refreshOrdersIfNeeded {
   
   if (!self.refreshControl.refreshing) {
     
     [self.refreshControl beginRefreshing];
+    [self refreshOrders];
     
-    __weak typeof(self)weakSelf = self;
-    [OMNRestaurant getRestaurants:^(NSArray *restaurants) {
+  }
+  
+}
+
+- (void)refreshOrders {
+  
+  __weak typeof(self)weakSelf = self;
+  [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
+    
+    [OMNRestaurant getRestaurantsForLocation:coordinate withCompletion:^(NSArray *restaurants) {
       
       [weakSelf finishLoadingRestaurants:restaurants];
       
@@ -107,7 +117,7 @@
       
     }];
     
-  }
+  }];
   
 }
 

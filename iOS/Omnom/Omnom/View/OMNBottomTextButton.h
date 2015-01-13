@@ -14,6 +14,6 @@
 @property (nonatomic, strong, readonly) UILabel *label;
 @property (nonatomic, strong) UIFont *font;
 
-- (void)setTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color;
+- (void)setTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color disabledColor:(UIColor *)disabledColor;
 
 @end

@@ -35,6 +35,7 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
     self.title = jsonData[@"title"];
     self.Description = jsonData[@"description"];
 
+    _distance = [jsonData[@"distance"] doubleValue];
     _decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
     _mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
     _settings = [[OMNRestaurantSettings alloc] initWithJsonData:jsonData[@"settings"]];

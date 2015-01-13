@@ -35,6 +35,7 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, assign) OMNRestaurantMode mode;
+@property (nonatomic, assign, readonly) double distance;
 @property (nonatomic, copy, readonly) NSString *phone;
 @property (nonatomic, strong, readonly) NSArray *tables;
 @property (nonatomic, strong, readonly) NSArray *orders;
