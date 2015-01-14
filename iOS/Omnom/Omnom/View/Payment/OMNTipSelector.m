@@ -9,18 +9,28 @@
 #import "OMNTipSelector.h"
 #import "OMNTipButton.h"
 #import "OMNOrder+tipButton.h"
+#import <BlocksKit.h>
 
 @implementation OMNTipSelector {
+  
   NSMutableArray *_buttons;
   UIView *_contentView;
+  NSString *_selectedTipIndexObserverIdentifier;
+  
 }
+
 
 - (void)dealloc {
   
-  @try {
-    [_order removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex))];
+  [self removeSelectedTipIndexObserver];
+  
+}
+
+- (void)removeSelectedTipIndexObserver {
+  
+  if (_selectedTipIndexObserverIdentifier) {
+    [_order bk_removeObserversWithIdentifier:_selectedTipIndexObserverIdentifier];
   }
-  @catch (NSException *exception) {}
   
 }
 
@@ -147,7 +157,7 @@
   
 }
 
-- (void)update {
+- (void)updateButtons {
   
   OMNOrder *order = _order;
   [_buttons enumerateObjectsUsingBlock:^(OMNTipButton *tipButton, NSUInteger idx, BOOL *stop) {
@@ -161,26 +171,15 @@
 
 - (void)setOrder:(OMNOrder *)order {
   
-  NSString *keyPath = NSStringFromSelector(@selector(selectedTipIndex));
-  [_order removeObserver:self forKeyPath:keyPath];
+  [self removeSelectedTipIndexObserver];
   _order = order;
-  [_order addObserver:self forKeyPath:keyPath options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
-  
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  
-  if ([object isEqual:_order] &&
-      [keyPath isEqualToString:NSStringFromSelector(@selector(selectedTipIndex))]) {
+  _previousSelectedIndex = _order.selectedTipIndex;
+  __weak typeof(self)weakSelf = self;
+  _selectedTipIndexObserverIdentifier = [_order bk_addObserverForKeyPath:NSStringFromSelector(@selector(selectedTipIndex)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
-    [self update];
+    [weakSelf updateButtons];
     
-  }
-  else {
-    
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    
-  }
+  }];
   
 }
 

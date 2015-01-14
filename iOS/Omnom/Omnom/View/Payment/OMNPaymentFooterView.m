@@ -44,16 +44,21 @@
   
   BOOL _keyboardShown;
   
+  NSString *_selectedTipIndexObserverIdentifier;
+  
 }
 
 - (void)dealloc {
   
-  @try {
-    
-    [_order removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedTipIndex))];
-    
+  [self removeSelectedTipIndexObserver];
+  
+}
+
+- (void)removeSelectedTipIndexObserver {
+  
+  if (_selectedTipIndexObserverIdentifier) {
+    [_order bk_removeObserversWithIdentifier:_selectedTipIndexObserverIdentifier];
   }
-  @catch (NSException *exception) {}
   
 }
 
@@ -137,11 +142,15 @@
 }
 
 - (void)setOrder:(OMNOrder *)order {
-  
-  NSString *keyPath = NSStringFromSelector(@selector(selectedTipIndex));
-  [_order removeObserver:self forKeyPath:keyPath];
+
+  [self removeSelectedTipIndexObserver];
   _order = order;
-  [_order addObserver:self forKeyPath:keyPath options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
+  __weak typeof(self)weakSelf = self;
+  _selectedTipIndexObserverIdentifier = [_order bk_addObserverForKeyPath:NSStringFromSelector(@selector(selectedTipIndex)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+    
+    [weakSelf updateToPayButton];
+    
+  }];
   
   [_tipsSelector setOrder:order];
   _payAmountLabel.text = (_order.paid.net_amount) ? ([NSString stringWithFormat:NSLocalizedString(@"ALREADY_PAID_AMOUNT %@", @"Уже оплачено: {amount}"), [OMNUtils formattedMoneyStringFromKop:_order.paid.net_amount]]) : (@"");
@@ -150,21 +159,6 @@
   _percentControl.percent = _order.customTip.percent;
   [self updateToPayButton];
   
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  
-  if ([object isEqual:_order] &&
-      [keyPath isEqualToString:NSStringFromSelector(@selector(selectedTipIndex))]) {
-    
-    [self updateToPayButton];
-    
-  }
-  else {
-    
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    
-  }
 }
 
 - (void)updateToPayButton {
