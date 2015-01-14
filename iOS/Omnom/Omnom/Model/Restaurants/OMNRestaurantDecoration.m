@@ -39,11 +39,10 @@
   self = [super init];
   if (self) {
   
-//@"https://www.dropbox.com/s/lnen3lflf295fov/IMG_1353.JPG?dl=1";//
     self.logoUrl = jsonData[@"logo"];
     self.background_imageUrl = jsonData[@"background_image"];
     self.background_color = [self colorFromString:jsonData[@"background_color"]];
-    self.antagonist_color = [self colorFromString:jsonData[@"antagonist_color"]];
+    self.antagonist_color = (jsonData[@"antagonist_color"]) ? ([self colorFromString:jsonData[@"antagonist_color"]]) : ([UIColor whiteColor]);
 
   }
   return self;
