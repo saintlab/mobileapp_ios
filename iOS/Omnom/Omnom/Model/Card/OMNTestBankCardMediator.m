@@ -12,7 +12,7 @@
 
 @implementation OMNTestBankCardMediator
 
-- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(NSError *, NSDictionary *))failureBlock {
+- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
   
   OMNOrder *order = self.order;
   [self showPaymentVCWithDidPresentBlock:^(OMNPaymentDidFinishBlock paymentDidFinishBlock) {

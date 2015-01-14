@@ -181,8 +181,7 @@ NSString * const kCardIdServiceName = @"card_id";
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 
   OMNBankCard *card = self.cards[indexPath.row];
-  BOOL canEdit = (NO == card.deleting);
-  
+  BOOL canEdit = !(card.deleting || card.demo);
   return canEdit;
   
 }

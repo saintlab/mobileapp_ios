@@ -235,9 +235,15 @@ OMNOrderCalculationVCDelegate>
 - (void)setTable:(OMNTable *)table {
 
   [[OMNSocketManager manager] leave:_table.id];
+  
   _table = table;
-  [[OMNSocketManager manager] join:_table.id];
-  [_table tableIn];
+  if (!_restaurant.is_demo) {
+    
+    [[OMNSocketManager manager] join:_table.id];
+    [_table tableIn];
+    [_table newGuestWithCompletion:^{}];
+    
+  }
   
 }
 
