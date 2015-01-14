@@ -70,6 +70,8 @@
 
 - (NSString *)qr {
   
+//  return @"qr-code-for-2-saintlab-iiko";
+#warning - (NSString *)qr
   return _launchQuery[@"qr"];
   
 }

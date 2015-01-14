@@ -45,7 +45,7 @@
 
 - (void)configureViews {
   
-  NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(15.0f) textColor:colorWithHexString(@"737478") textAlignment:NSTextAlignmentLeft];
+  NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(15.0f) textColor:colorWithHexString(@"737478") textAlignment:NSTextAlignmentLeft];
   
   NSString *actionText = NSLocalizedString(@"CHANGE_TABLE_HOWTO_ACTION_TEXT", @"измените номер своего стола");
   NSString *text = [NSString stringWithFormat:NSLocalizedString(@"CHANGE_TABLE_HOWTO_TEXT %@ %@",   @"Омном отображает все заказы в соответствии с номером стола в ресторане.\nСейчас на %@ столе открытых заказов нет.\n\nЕсли вы уже сделали заказ, но его ещё не видно, то, вероятно, официант ещё не успел внести его в систему. Дайте ему пару минут.\nЕсли заказ по-прежнему не виден, уточните у официанта, на какой стол заказ записан.\n\nЕсли нужно, {CHANGE_TABLE_HOWTO_ACTION_TEXT}."), _table.internal_id, actionText];

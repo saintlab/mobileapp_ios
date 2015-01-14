@@ -167,6 +167,44 @@
   }];
 }
 
+- (void)nearby {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/nearby", self.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"nearby>%@", responseObject);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+  }];
+  
+}
+
+- (void)entrance {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/entrance", self.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"entrance>%@", responseObject);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+  }];
+  
+}
+
+- (void)leave {
+  
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/leave", self.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"leave>%@", responseObject);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+  }];
+  
+}
 
 @end
 

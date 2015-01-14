@@ -83,7 +83,7 @@
   self.faded = YES;
   self.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
   
-  NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(25.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter];
+  NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(25.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter];
   
   NSString *actionText = NSLocalizedString(@"NO_ORDERS_HOWTO_ACTION_TEXT", @"Почему так может быть");
   NSString *text = [NSString stringWithFormat:NSLocalizedString(@"NO_ORDERS_HOWTO_TEXT %@ %@", @"Стол %@\nНа этом столе\nпока нет заказов.\n{NO_ORDERS_HOWTO_ACTION_TEXT}?"), _restaurantMediator.table.internal_id, actionText];
