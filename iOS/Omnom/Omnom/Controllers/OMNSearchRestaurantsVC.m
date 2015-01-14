@@ -329,7 +329,7 @@
 - (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didFindBeacons:(NSArray *)beacons {
   
   NSDictionary *debugData = [OMNBeacon debugDataFromBeacons:beacons];
-  [[OMNAnalitics analitics] logDebugEvent:@"DID_FIND_BEACONS" parametrs:debugData];
+  [[OMNAnalitics analitics] logDebugEvent:@"DID_FIND_BEACONS" parametrs:@{@"beacons" : debugData}];
   [beaconsSearchManager stop];
   [self decodeBeacons:beacons];
   

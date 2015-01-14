@@ -27,16 +27,17 @@
     return;
   }
 
-  [[OMNAnalitics analitics] logDebugEvent:@"BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:nil];
+  NSDictionary *parameters = @{@"beacons" : jsonBeacons};
   
-  [[OMNOperationManager sharedManager] POST:@"/v2/decode/ibeacons/omnom" parameters:@{@"beacons" : jsonBeacons} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
+  [[OMNOperationManager sharedManager] POST:@"/v2/decode/ibeacons/omnom" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  
+    [[OMNAnalitics analitics] logDebugEvent:@"BEACON_DECODE_RESPONSE" jsonRequest:parameters jsonResponse:responseObject];
     NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
     completionBlock(restaurants);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:jsonBeacons responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
