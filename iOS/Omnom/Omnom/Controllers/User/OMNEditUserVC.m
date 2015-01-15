@@ -76,19 +76,21 @@ OMNChangePhoneWebVCDelegate>
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   
-  if (self.editPhoto) {
-    
-    [self editPhotoTap];
-    
-  }
-  
 }
+
+
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
+  if (self.editPhoto) {
+    
+    [self editPhotoTap];
+    
+  }
   
 }
 

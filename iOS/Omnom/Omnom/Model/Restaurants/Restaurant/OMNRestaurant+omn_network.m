@@ -23,6 +23,18 @@
   
 }
 
+- (void)handleAtTheTableEvent1WithCompletion:(dispatch_block_t)completionBlock {
+  
+  OMNPushText *at_entrance = self.mobile_texts.at_entrance;
+  UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+  localNotification.alertBody = at_entrance.greeting;
+  localNotification.alertAction = at_entrance.open_action;
+  localNotification.soundName = kPushSoundName;
+  [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+  completionBlock();
+  
+}
+
 - (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock {
   
   [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackgroundTable];

@@ -46,6 +46,7 @@
   
   [self omn_setup];
   
+  [self.navigationItem setHidesBackButton:YES animated:NO];
   OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:NSLocalizedString(@"DEMO_MODE_BUTTON_TITLE", @"Демо-режим")];
   [demoButton addTarget:_searchRestaurantMediator action:@selector(demoModeTap) forControlEvents:UIControlEventTouchUpInside];
   
@@ -55,11 +56,6 @@
     [[UIBarButtonItem alloc] initWithCustomView:demoButton],
     [UIBarButtonItem omn_flexibleItem],
     ];
-  
-  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:_searchRestaurantMediator action:@selector(showUserProfile)];
-  OMNToolbarButton *qrButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"qr-icon-small"] title:NSLocalizedString(@"SCAN_QR_BUTTON_TITLE", @"Сканировать QR")];
-  [qrButton addTarget:_searchRestaurantMediator action:@selector(scanTableQrTap) forControlEvents:UIControlEventTouchUpInside];
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:qrButton];
   
   self.refreshControl = [[UIRefreshControl alloc] init];
   [self.refreshControl addTarget:self action:@selector(refreshOrders) forControlEvents:UIControlEventValueChanged];
@@ -77,8 +73,14 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  [self.navigationController setNavigationBarHidden:NO animated:NO];
+  [self.navigationController setNavigationBarHidden:NO animated:YES];
   [self.navigationController.navigationBar omn_setDefaultBackground];
+  
+  [self.navigationItem setRightBarButtonItem:[UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:_searchRestaurantMediator action:@selector(showUserProfile)] animated:YES];
+  OMNToolbarButton *qrButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"qr-icon-small"] title:NSLocalizedString(@"SCAN_QR_BUTTON_TITLE", @"Сканировать QR")];
+  [qrButton addTarget:_searchRestaurantMediator action:@selector(scanTableQrTap) forControlEvents:UIControlEventTouchUpInside];
+  [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:qrButton] animated:YES];
+
   __weak typeof(self)weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
   

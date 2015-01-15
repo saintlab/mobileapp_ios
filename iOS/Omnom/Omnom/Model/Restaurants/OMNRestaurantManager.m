@@ -12,7 +12,11 @@
 #import "OMNRestaurant+omn_network.h"
 #import <OMNDevicePositionManager.h>
 
-@implementation OMNRestaurantManager
+@implementation OMNRestaurantManager {
+  
+  NSMutableDictionary *_tablePushEvents;
+  
+}
 
 + (instancetype)sharedManager {
   static id manager = nil;
@@ -21,6 +25,14 @@
     manager = [[[self class] alloc] init];
   });
   return manager;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    
+  }
+  return self;
 }
 
 + (void)decodeBeacons:(NSArray *)beacons withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
@@ -113,6 +125,15 @@
 }
 
 - (void)handleBackgroundDecodedRestaurant:(OMNRestaurant *)restaurant withCompletion:(dispatch_block_t)completionBlock {
+  
+  [restaurant handleEnterEventWithCompletion:nil];
+  [restaurant handleAtTheTableEvent1WithCompletion:completionBlock];
+  return;
+  
+  NSDate *pushDate = _tablePushEvents[restaurant.id];
+  if (nil == pushDate &&
+      ([[NSDate date] timeIntervalSinceDate:pushDate] > 4*60*60)) {
+  }
   
   if (restaurant.hasTable) {
     

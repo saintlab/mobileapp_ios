@@ -38,7 +38,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
   _customConfig = [self configWithName:launchOptions.customConfigName];
 
-//#warning _customConfig
+#warning _customConfig
 //  _customConfig = [self configWithName:@"config_laaaab"];
   
   //setup keychain for background usage

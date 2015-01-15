@@ -1,20 +1,20 @@
 //
-//  OMNSlideUpTransition.m
+//  OMNPushUpTransition.m
 //  omnom
 //
-//  Created by tea on 20.08.14.
-//  Copyright (c) 2014 tea. All rights reserved.
+//  Created by tea on 15.01.15.
+//  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNSlideUpTransition.h"
-#import "OMNRestaurantInfoVC.h"
-#import "OMNR1VC.h"
+#import "OMNPushUpTransition.h"
+#import "OMNSearchRestaurantsVC.h"
+#import "OMNRestaurantListVC.h"
 
-@implementation OMNSlideUpTransition 
+@implementation OMNPushUpTransition
 
 + (NSArray *)keys {
   return @[
-           [self keyFromClass:[OMNR1VC class] toClass:[OMNRestaurantInfoVC class]],
+           [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNRestaurantListVC class]],
            ];
 }
 
@@ -29,23 +29,24 @@
   
   // Get a snapshot of the image view
   UIView *fromImageSnapshot = [fromViewController.view snapshotViewAfterScreenUpdates:NO];
-  fromImageSnapshot.frame = [containerView convertRect:fromViewController.view.frame fromView:fromViewController.view.superview];
   fromViewController.view.hidden = YES;
   
   // Setup the initial view states
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
-  [containerView insertSubview:toViewController.view belowSubview:fromViewController.view];
   [containerView addSubview:fromImageSnapshot];
+  [containerView addSubview:toViewController.view];
+
   
   toViewController.view.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(fromImageSnapshot.frame));
+  [toViewController.navigationController setNavigationBarHidden:YES animated:NO];
   
   [UIView animateWithDuration:duration animations:^{
-
+    
     toViewController.view.transform = CGAffineTransformIdentity;
-    fromImageSnapshot.transform = CGAffineTransformMakeTranslation(0.0f, -CGRectGetHeight(fromImageSnapshot.frame));
     
   } completion:^(BOOL finished) {
     // Clean up
+    [toViewController.navigationController setNavigationBarHidden:NO animated:YES];
     [fromImageSnapshot removeFromSuperview];
     fromViewController.view.hidden = NO;
     

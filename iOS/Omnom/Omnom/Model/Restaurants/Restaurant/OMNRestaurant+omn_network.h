@@ -20,6 +20,7 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 
 - (void)handleEnterEventWithCompletion:(dispatch_block_t)completionBlock;
 - (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock;
+- (void)handleAtTheTableEvent1WithCompletion:(dispatch_block_t)completionBlock;
 
 - (void)leave;
 - (void)entrance;

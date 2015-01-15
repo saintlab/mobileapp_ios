@@ -23,6 +23,7 @@
 #import "OMNTransitionFromProductToList.h"
 #import "OMNTransitionFromCalculatorToOrder.h"
 #import "OMNInteractiveTransitioningProtocol.h"
+#import "OMNPushUpTransition.h"
 
 @implementation OMNNavigationControllerDelegate {
   NSMutableDictionary *_transitions;
@@ -47,7 +48,7 @@
     [self addTansitionForClass:[OMNSlideUpTransition class]];
     [self addTansitionForClass:[OMNSlideDownTransition class]];
     [self addTansitionForClass:[OMNSplashToSearchBeaconTransition class]];
-    
+    [self addTansitionForClass:[OMNPushUpTransition class]];
 //    [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
     
   }
