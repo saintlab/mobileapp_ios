@@ -536,7 +536,16 @@ OMNOrderCalculationVCDelegate>
 
 - (void)orderCalculationVCDidCancel:(OMNOrderCalculationVC *)orderCalculationVC {
   
-  [self popToRootViewControllerAnimated:YES];
+  if (self.table) {
+    
+    [self popToRootViewControllerAnimated:YES];
+    
+  }
+  else {
+  
+    [self exitRestaurant];
+    
+  }
   
 }
 

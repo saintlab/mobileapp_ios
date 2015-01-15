@@ -99,6 +99,17 @@
   
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  if (self.showQRScan) {
+    
+    [self insideRestaurantTap];
+    
+  }
+  
+}
+
 - (void)callTap {
   
   NSString *cleanedString = [[_restaurant.phone componentsSeparatedByCharactersInSet:[[NSCharacterSet characterSetWithCharactersInString:@"0123456789-+()"] invertedSet]] componentsJoinedByString:@""];
@@ -109,7 +120,8 @@
 
 - (void)insideRestaurantTap {
   
-  if ([_restaurant hasTable]) {
+  self.showQRScan = NO;
+  if (_restaurant.hasTable) {
 
     [_searchRestaurantMediator showRestaurants:@[_restaurant]];
     

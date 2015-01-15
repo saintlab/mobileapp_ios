@@ -123,6 +123,9 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
     case kOMNErrorCodeNotConnectedToInternet: {
       circleImage = [UIImage imageNamed:@"unlinked_icon_big"];
     } break;
+    case kOMNErrorCodeQrDecode: {
+      circleImage = [UIImage imageNamed:@"error_icon_big"];
+    } break;
   }
   
   return circleImage;

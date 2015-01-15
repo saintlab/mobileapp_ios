@@ -10,6 +10,7 @@
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
 #import "OMNRestaurant+omn_network.h"
+#import <OMNDevicePositionManager.h>
 
 @implementation OMNRestaurantManager
 
@@ -113,17 +114,29 @@
 
 - (void)handleBackgroundDecodedRestaurant:(OMNRestaurant *)restaurant withCompletion:(dispatch_block_t)completionBlock {
   
-#warning handleBackgroundRestaurant
-//  if (athTheTable) {
-//    
-//    [restaurant handleAtTheTableEventWithCompletion:completionBlock];
-//    
-//  }
-//  else {
-//    
-//    [restaurant handleEnterEventWithCompletion:completionBlock];
-//    
-//  }
+  if (restaurant.hasTable) {
+    
+    [[OMNDevicePositionManager sharedManager] getDevicePosition:^(BOOL onTable) {
+      
+      if (onTable) {
+        
+        [restaurant handleAtTheTableEventWithCompletion:completionBlock];
+        
+      }
+      else {
+        
+        [restaurant handleEnterEventWithCompletion:completionBlock];
+        
+      }
+      
+    }];
+    
+  }
+  else {
+    
+    [restaurant handleEnterEventWithCompletion:completionBlock];
+    
+  }
   
 }
 

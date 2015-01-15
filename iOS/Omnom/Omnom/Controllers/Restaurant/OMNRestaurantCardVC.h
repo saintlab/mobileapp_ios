@@ -12,6 +12,7 @@
 @interface OMNRestaurantCardVC : UIViewController
 
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
+@property (nonatomic, assign) BOOL showQRScan;
 
 - (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator restaurant:(OMNRestaurant *)restaurant;
 

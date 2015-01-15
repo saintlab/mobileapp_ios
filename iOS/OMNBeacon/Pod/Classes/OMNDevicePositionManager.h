@@ -14,6 +14,7 @@ typedef void(^OMNDevicePositionBlock)(BOOL onTable);
 
 @property (nonatomic, readonly) BOOL running;
 
++ (instancetype)sharedManager;
 - (void)getDevicePosition:(OMNDevicePositionBlock)devicePositionBlock;
 - (void)handleDeviceFaceUpPosition:(dispatch_block_t)block;
 - (void)stop;

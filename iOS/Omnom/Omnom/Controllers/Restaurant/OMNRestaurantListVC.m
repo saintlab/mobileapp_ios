@@ -18,6 +18,7 @@
 #import "OMNRestaurant+omn_network.h"
 #import "UINavigationBar+omn_custom.h"
 #import "OMNLocationManager.h"
+#import <MFMailComposeViewController+BlocksKit.h>
 
 @interface OMNRestaurantListVC ()
 
@@ -88,12 +89,33 @@
 }
 
 - (void)userFeedbackTap {
-#warning userFeedbackTap
+
+  if ([MFMailComposeViewController canSendMail]) {
+    
+    MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
+    [composeViewController setToRecipients:@[@"team@omnom.menu"]];
+    [composeViewController setSubject:NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT_RESTAURANTS", @"Напишите нам")];
+    
+    [composeViewController bk_setCompletionBlock:^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
+      
+      [mailComposeViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+      
+    }];
+    [self presentViewController:composeViewController animated:YES completion:nil];
+    
+  }
+  else {
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"mailto:team@omnom.menu"]];
+    
+  }
+  
 }
 
 - (void)refreshOrdersIfNeeded {
   
-  if (!self.refreshControl.refreshing) {
+  if (self.isViewLoaded &&
+      !self.refreshControl.refreshing) {
     
     [self.refreshControl beginRefreshing];
     [self refreshOrders];

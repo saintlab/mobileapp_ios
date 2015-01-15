@@ -86,7 +86,8 @@
   
   NSDictionary *parameters = nil;
   
-  if (fabs(coordinate.latitude) > 0.0001 &&
+  if (CLLocationCoordinate2DIsValid(coordinate) &&
+      fabs(coordinate.latitude) > 0.0001 &&
       fabs(coordinate.longitude) > 0.0001) {
     
     parameters =

@@ -21,6 +21,15 @@ static double const kDesiredAccelerometerAccuracy = 0.08;
   
 }
 
++ (instancetype)sharedManager {
+  static id manager = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    manager = [[[self class] alloc] init];
+  });
+  return manager;
+}
+
 - (instancetype)init {
   self = [super init];
   if (self) {

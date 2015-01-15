@@ -76,25 +76,46 @@ OMNUserInfoVCDelegate>
   
   NSMutableArray *controllers = [NSMutableArray array];
   OMNRestaurantListVC *restaurantListVC = [[OMNRestaurantListVC alloc] initWithMediator:self];
-  restaurantListVC.restaurants = restaurants;
   [controllers addObject:restaurantListVC];
   
   if (1 == restaurants.count) {
     
     OMNRestaurant *restaurant = [restaurants firstObject];
-    OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
-    __weak typeof(self)weakSelf = self;
-    restaurantActionsVC.didCloseBlock = ^{
+    
+    if (restaurant.hasTable) {
+      
+      OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
+      __weak typeof(self)weakSelf = self;
+      restaurantActionsVC.didCloseBlock = ^{
+        
+        [restaurantListVC.navigationController popToViewController:restaurantListVC animated:YES];
+        
+      };
+      restaurantActionsVC.rescanTableBlock = ^{
+        
+        [weakSelf didFinish];
+        
+      };
+      [controllers addObject:restaurantActionsVC];
+      
+    }
+    else {
 
-      [restaurantListVC.navigationController popToViewController:restaurantListVC animated:YES];
+      OMNRestaurantCardVC *restaurantCardVC = [[OMNRestaurantCardVC alloc] initWithMediator:self restaurant:restaurant];
+      restaurantCardVC.showQRScan = YES;
+      restaurantCardVC.didCloseBlock = ^{
+        
+        [restaurantListVC.navigationController popToViewController:restaurantListVC animated:YES];
+        
+      };
+      [controllers addObject:restaurantCardVC];
       
-    };
-    restaurantActionsVC.rescanTableBlock = ^{
-      
-      [weakSelf didFinish];
-      
-    };
-    [controllers addObject:restaurantActionsVC];
+    }
+    
+  }
+  else {
+    
+    restaurantListVC.restaurants = restaurants;
     
   }
   

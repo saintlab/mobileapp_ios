@@ -280,8 +280,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   }
   else {
     
-#warning didFindRestaurants
-    [self processError:nil];
+    [self processError:[OMNError omnomErrorFromCode:kOMNErrorCodeQrDecode]];
     
   }
   
@@ -290,9 +289,11 @@ OMNCameraPermissionDescriptionVCDelegate>
 - (void)processError:(OMNError *)error {
   
   OMNCircleRootVC *repeatVC = [[OMNCircleRootVC alloc] initWithParent:nil];
-  repeatVC.faded = YES;
+  repeatVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
   repeatVC.text = error.localizedDescription;
   repeatVC.circleIcon = error.circleImage;
+  repeatVC.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
+  
   __weak typeof(self)weakSelf = self;
   repeatVC.buttonInfo =
   @[
