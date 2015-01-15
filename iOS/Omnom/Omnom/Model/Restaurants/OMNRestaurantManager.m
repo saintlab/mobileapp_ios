@@ -13,6 +13,15 @@
 
 @implementation OMNRestaurantManager
 
++ (instancetype)sharedManager {
+  static id manager = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    manager = [[[self class] alloc] init];
+  });
+  return manager;
+}
+
 + (void)decodeBeacons:(NSArray *)beacons withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
   
   NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
@@ -102,46 +111,50 @@
   
 }
 
-- (void)handleBackgroundBeacon:(OMNBeacon *)beacon athTheTable:(BOOL)athTheTable withCompletion:(dispatch_block_t)completionBlock {
-  /*
-   if (nil == beacon) {
-   completionBlock();
-   return;
-   }
-   
-   [self decodeBeacon:beacon success:^(OMNVisitor *visitor) {
-   
-   if (nil == visitor) {
-   
-   if (completionBlock) {
-   
-   completionBlock();
-   
-   }
-   
-   }
-   else if (athTheTable) {
-   #warning handleAtTheTableEventWithCompletion
-   //      [visitor handleAtTheTableEventWithCompletion:completionBlock];
-   
-   }
-   else {
-   #warning handleRestaurantEnterEventWithCompletion:completionBlock
-   //      [visitor handleRestaurantEnterEventWithCompletion:completionBlock];
-   
-   }
-   
-   } failure:^(NSError *error) {
-   
-   if (athTheTable &&
-   completionBlock) {
-   
-   completionBlock();
-   
-   }
-   
-   }];
-   */
+- (void)handleBackgroundRestaurant:(OMNRestaurant *)restaurant {
+  
+#warning handleBackgroundRestaurant
+//  if (athTheTable) {
+//    
+//    [restaurant handleAtTheTableEventWithCompletion:completionBlock];
+//    
+//  }
+//  else {
+//    
+//    [restaurant handleEnterEventWithCompletion:completionBlock];
+//    
+//  }
+  
+}
+
+- (void)handleBackgroundBeacons:(NSArray *)beacons withCompletion:(dispatch_block_t)completionBlock {
+
+  if (!beacons.count) {
+    completionBlock();
+    return;
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  [OMNRestaurantManager decodeBeacons:beacons withCompletion:^(NSArray *restaurants) {
+    
+    if (1 == restaurants.count) {
+      
+      OMNRestaurant *restaurant = [restaurants firstObject];
+      [weakSelf handleBackgroundRestaurant:restaurant];
+      
+    }
+    else {
+      
+      completionBlock();
+      
+    }
+    
+  } failureBlock:^(OMNError *error) {
+
+    completionBlock();
+    
+  }];
+  
 }
 
 @end

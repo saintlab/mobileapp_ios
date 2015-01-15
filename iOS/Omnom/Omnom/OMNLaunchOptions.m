@@ -9,11 +9,27 @@
 #import "OMNLaunchOptions.h"
 #import "NSURL+omn_query.h"
 
+@interface UILocalNotification (omn_restaurants)
+
+- (NSArray *)omn_restaurants;
+
+@end
+
 @implementation OMNLaunchOptions {
   
   NSDictionary *_launchOptions;
   NSDictionary *_launchQuery;
-  
+
+}
+
+- (instancetype)initWithLocanNotification:(UILocalNotification *)localNotification {
+  self = [super init];
+  if (self) {
+    
+    _restaurants = [localNotification omn_restaurants];
+    
+  }
+  return self;
 }
 
 - (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions {
@@ -82,9 +98,25 @@
   
 }
 
-- (NSArray *)restaurants {
+@end
+
+@implementation UILocalNotification (omn_restaurants)
+
+- (NSArray *)omn_restaurants {
   
-  return nil;
+  NSArray *restaurants = nil;
+  NSData *restaurantData = self.userInfo[OMNRestaurantNotificationLaunchKey];
+  if (restaurantData) {
+    
+    OMNRestaurant *restaurant = [NSKeyedUnarchiver unarchiveObjectWithData:restaurantData];
+    if (restaurant) {
+      
+      restaurants = @[restaurant];
+      
+    }
+  }
+
+  return restaurants;
   
 }
 

@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-extern NSTimeInterval const kBeaconSearchTimout;
+typedef void(^OMNDidFindNearestBeaconBlock)(NSArray *beacons);
 
 #import "OMNBeacon.h"
 /**
@@ -16,12 +16,12 @@ extern NSTimeInterval const kBeaconSearchTimout;
 
 
 /**
- *  Метод для поиска ближайшего бикона, при запуске создает новый background task который завершится при нахождении бикона или вызове метода stop
+ *  Метод для поиска ближайших биконов, при запуске создает новый background task который завершится при нахождении биконов или вызове метода stop, после того как будет определен бикон, менеджер завершит свою работу
  *
- *  @param didFindNearestBeaconBlock как правило блок вызовется 2 раза, первый раз когда найдет любой ближайший бикон, второй раз когда, когда телефон положат на стол, после того как будет определен бикон на столе, менеджер завершит свою работу
- *  @param failureBlock              Если в течении kBeaconSearchTimout не будет найдено не одного бикона рядом, или по каким то другим условиям бикон невозможно найти, вызовется этот блок
+ *  @param didFindNearestBeaconBlock @param beacons найденые биконы(OMNBeacon)
+ *  @param failureBlock              Если в течении kBeaconSearchTimeout не будет найдено не одного бикона рядом, или по каким то другим условиям бикон невозможно найти, вызовется этот блок
  */
-- (void)findNearestBeacon:(void(^)(OMNBeacon *beacon, BOOL atTheTable))didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock;
+- (void)findNearestBeacons:(OMNDidFindNearestBeaconBlock)didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock;
 
 - (void)stop;
 

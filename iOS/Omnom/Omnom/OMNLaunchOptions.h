@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OMNRestaurant.h"
 
 @interface OMNLaunchOptions : NSObject
 
@@ -18,5 +19,6 @@
 
 - (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions;
 - (instancetype)initWithURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+- (instancetype)initWithLocanNotification:(UILocalNotification *)localNotification;
 
 @end

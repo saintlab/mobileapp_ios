@@ -13,15 +13,12 @@
 
 @interface OMNLaunchHandler : NSObject
 
-@property (nonatomic, weak) id<OMNLaunchHandlerDelegate> delegate;
+@property (nonatomic, strong) OMNLaunchOptions *launchOptions;
 
 + (instancetype)sharedHandler;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
-
-@end
-
-@protocol OMNLaunchHandlerDelegate <NSObject>
-
-- (void)launchHandler:(OMNLaunchHandler *)launchHandler didReceiveLaunchOptions:(OMNLaunchOptions *)launchOptions;
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification;
+- (void)didFinishLaunchingWithOptions:(OMNLaunchOptions *)lo;
+- (void)applicationWillEnterForeground;
 
 @end

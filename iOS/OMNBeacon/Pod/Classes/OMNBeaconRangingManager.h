@@ -11,6 +11,8 @@
 typedef void(^CLBeaconsBlock)(NSArray *beacons);
 typedef void(^CLAuthorizationStatusBlock)(CLAuthorizationStatus status);
 
+extern NSTimeInterval const kBeaconSearchTimeout;
+
 @interface OMNBeaconRangingManager : NSObject
 
 @property (nonatomic, assign, readonly) BOOL ranging;

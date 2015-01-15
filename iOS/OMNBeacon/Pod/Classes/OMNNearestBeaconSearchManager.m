@@ -9,10 +9,9 @@
 #import "OMNNearestBeaconSearchManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "CLBeacon+GBeaconAdditions.h"
-#import "OMNDevicePositionManager.h"
 #import "OMNBeaconRangingManager.h"
-
-NSTimeInterval const kBeaconSearchTimout = 5.0;
+#import "OMNFoundBeacons.h"
+#import "OMNBluetoothManager.h"
 
 @interface OMNNearestBeaconSearchManager ()
 
@@ -25,11 +24,12 @@ NSTimeInterval const kBeaconSearchTimout = 5.0;
 @implementation OMNNearestBeaconSearchManager {
   
   OMNBeaconRangingManager *_beaconRangingManager;
-  OMNDevicePositionManager *_devicePositionManager;
-  void(^_didFindNearestBeaconBlock)(OMNBeacon *beacon, BOOL atTheTable);
+  OMNDidFindNearestBeaconBlock _didFindNearestBeaconBlock;
   dispatch_block_t _failureBlock;
   UIBackgroundTaskIdentifier _searchBeaconTask;
-  NSTimer *_beaconSearchTimeoutTimer;
+  NSTimer *_beaconRangingTimeoutTimer;
+  OMNFoundBeacons *_foundBeacons;
+  
 }
 
 - (void)dealloc {
@@ -38,16 +38,20 @@ NSTimeInterval const kBeaconSearchTimout = 5.0;
   
 }
 
+- (void)stopRangingBeacons {
+  
+  [_beaconRangingTimeoutTimer invalidate], _beaconRangingTimeoutTimer = nil;
+  [_beaconRangingManager stop], _beaconRangingManager = nil;
+  
+}
+
 - (void)stop {
   
-  [_beaconSearchTimeoutTimer invalidate], _beaconSearchTimeoutTimer = nil;
+  [self stopRangingBeacons];
   
   _didFindNearestBeaconBlock = nil;
   _failureBlock = nil;
 
-  [_devicePositionManager stop], _devicePositionManager = nil;
-  [_beaconRangingManager stop], _beaconRangingManager = nil;
-  
   if (UIBackgroundTaskInvalid != _searchBeaconTask) {
     
     [[UIApplication sharedApplication] endBackgroundTask:_searchBeaconTask];
@@ -57,95 +61,96 @@ NSTimeInterval const kBeaconSearchTimout = 5.0;
   
 }
 
-- (void)findNearestBeacon:(void(^)(OMNBeacon *beacon, BOOL atTheTable))didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock {
+- (void)didFail {
+  
+  if (_failureBlock) {
+    
+    _failureBlock();
+    
+  }
+  [self stop];
+  
+}
+
+- (void)findNearestBeacons:(OMNDidFindNearestBeaconBlock)didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock {
+
+  [self stop];
+  _didFindNearestBeaconBlock = [didFindNearestBeaconBlock copy];
+  _failureBlock = [failureBlock copy];
   
   __weak typeof(self)weakSelf = self;
   _searchBeaconTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
     
-    [weakSelf stop];
+    [weakSelf didFail];
     
   }];
   
-  _didFindNearestBeaconBlock = [didFindNearestBeaconBlock copy];
-  _failureBlock = [failureBlock copy];
-  [self startRangingBeaconsAtTheTable:NO];
+  if (![CLLocationManager isRangingAvailable]) {
+    [self didFail];
+    return;
+  }
   
-  _beaconSearchTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimout target:self selector:@selector(didFailRangeBeacons) userInfo:nil repeats:NO];
+  [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
+
+    if (state == CBCentralManagerStatePoweredOn) {
+      
+      [weakSelf startRangingBeacons];
+      
+    }
+    else {
+      
+      [weakSelf didFail];
+      
+    }
+    
+  }];
+  
   
 }
 
-- (void)startRangingBeaconsAtTheTable:(BOOL)atTheTable {
+- (void)startRangingBeacons {
   
-  [_devicePositionManager stop];
-  _devicePositionManager = nil;
-  
+  _foundBeacons = [[OMNFoundBeacons alloc] init];
+  _beaconRangingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFail) userInfo:nil repeats:NO];
   __weak typeof(self)weakSelf = self;
   _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:nil];
   
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
-    [weakSelf didRangeBeacons:beacons atTheTable:atTheTable];
+    [weakSelf didRangeBeacons:beacons];
     
   } failure:^(NSError *error) {
     
-    [weakSelf didFailRangeBeacons];
+    [weakSelf didFail];
     
   }];
   
 }
 
-- (void)didRangeBeacons:(NSArray *)beacons atTheTable:(BOOL)atTheTable {
+
+- (void)didRangeBeacons:(NSArray *)beacons {
+
+  [_foundBeacons updateWithBeacons:beacons];
   
-  if (0 == beacons.count) {
-    return;
+  if (_foundBeacons.readyForProcessing) {
+    
+    [self didFoundBeacons];
+    
   }
   
-  [_beaconSearchTimeoutTimer invalidate], _beaconSearchTimeoutTimer = nil;
-  [_beaconRangingManager stop];
-  _beaconRangingManager = nil;
+}
+
+- (void)didFoundBeacons {
   
-  [beacons enumerateObjectsUsingBlock:^(CLBeacon *foundBeacon, NSUInteger idx, BOOL *stop) {
-    NSLog(@"%@  %@  %@", foundBeacon.proximityUUID.UUIDString, foundBeacon.major, foundBeacon.minor);
-  }];
-  
-  //according to documentation the nearest beacon is the first CLBeacon object in array
-  CLBeacon *nearestBeacon = [beacons firstObject];
-  OMNBeacon *omnBeacon = [nearestBeacon omn_beacon];
-  
+  [self stopRangingBeacons];
   if (_didFindNearestBeaconBlock) {
-    _didFindNearestBeaconBlock(omnBeacon, atTheTable);
-  }
-  
-  if (!atTheTable) {
     
-    [self findBeaconsAtTheTable];
+    _didFindNearestBeaconBlock(_foundBeacons.allBeacons);
     
   }
   
-}
+  [self stop];
 
-- (void)findBeaconsAtTheTable {
-  
-  _devicePositionManager = [[OMNDevicePositionManager alloc] init];
-  
-  __weak typeof(self)weakSelf = self;
-  [_devicePositionManager handleDeviceFaceUpPosition:^{
-    
-    [weakSelf startRangingBeaconsAtTheTable:YES];
-    
-  }];
-  
-}
-
-- (void)didFailRangeBeacons {
-  
-  [_beaconRangingManager stop];
-  _beaconRangingManager = nil;
-  
-  if (_failureBlock) {
-    _failureBlock();
-  }
-  
 }
 
 @end

@@ -109,7 +109,14 @@ const long long kMaxEnteredValue = 999999ll;
   _amountTF.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
   _amountTF.font = FuturaLSFOmnomLERegular(50.0f);
   _amountTF.delegate = self;
-  [_amountTF setDetailedText:[NSString stringWithFormat:@" %@\uFEFF", kRubleSign]];
+  
+  //https://github.com/saintlab/mobileapp_ios/issues/466
+  if (OMN_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+    
+    [_amountTF setDetailedText:[NSString stringWithFormat:@" %@\uFEFF", kRubleSign]];
+    
+  }
+
   [self addSubview:_amountTF];
   
   _flexibleBottomView = [[UIView alloc] init];

@@ -21,6 +21,16 @@ static double const kDesiredAccelerometerAccuracy = 0.08;
   
 }
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+
+    _motionManager = [[CMMotionManager alloc] init];
+
+  }
+  return self;
+}
+
 - (void)dealloc {
   
   [self stop];
@@ -33,8 +43,44 @@ static double const kDesiredAccelerometerAccuracy = 0.08;
   
 }
 
+- (void)getDevicePosition:(OMNDevicePositionBlock)devicePositionBlock {
+  
+  [self stop];
+  
+  _motionManager.accelerometerUpdateInterval = kAccelerometerUpdateInterval;
+  
+  __weak typeof(self)weakSelf = self;
+  [_motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+    
+    BOOL deviceFaceUp = (accelerometerData.acceleration.z < -(1.0 - kDesiredAccelerometerAccuracy));
+    BOOL deviceFaceDown = (accelerometerData.acceleration.z > (1.0 - kDesiredAccelerometerAccuracy));
+    
+    BOOL onTable = NO;
+    if (!error &&
+        (deviceFaceUp || deviceFaceDown) &&
+        fabsf(accelerometerData.acceleration.x) < kDesiredAccelerometerAccuracy &&
+        fabsf(accelerometerData.acceleration.y) < kDesiredAccelerometerAccuracy) {
+      
+      onTable = YES;
+      
+    }
+    
+    [weakSelf stop];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      devicePositionBlock(onTable);
+      
+    });
+    
+  }];
+  
+}
+
 - (void)handleDeviceFaceUpPosition:(dispatch_block_t)block {
 
+  [self stop];
+  
   __block NSInteger numberOfFaceUpStillPositions = 0;
 
   __weak typeof(self)weakSelf = self;
@@ -43,7 +89,6 @@ static double const kDesiredAccelerometerAccuracy = 0.08;
   
   _completitionPositionBlock = [block copy];
   
-  _motionManager = [[CMMotionManager alloc] init];
   _motionManager.accelerometerUpdateInterval = kAccelerometerUpdateInterval;
 
   [_motionManager startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init] withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
@@ -76,7 +121,6 @@ static double const kDesiredAccelerometerAccuracy = 0.08;
 - (void)stop {
   
   [_motionManager stopAccelerometerUpdates];
-  _motionManager = nil;
   
 }
 

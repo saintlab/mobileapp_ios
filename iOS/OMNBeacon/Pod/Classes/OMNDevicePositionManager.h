@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^OMNDevicePositionBlock)(BOOL onTable);
+
 @interface OMNDevicePositionManager : NSObject
 
 @property (nonatomic, readonly) BOOL running;
 
+- (void)getDevicePosition:(OMNDevicePositionBlock)devicePositionBlock;
 - (void)handleDeviceFaceUpPosition:(dispatch_block_t)block;
 - (void)stop;
 

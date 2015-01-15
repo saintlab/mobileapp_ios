@@ -29,7 +29,7 @@
   return self;
 }
 
-- (BOOL)updateWithBeacons:(NSArray *)foundBeacons {
+- (void)updateWithBeacons:(NSArray *)foundBeacons {
  
   NSMutableDictionary *existingBeaconsDictionary = _existingBeaconsDictionary;
 

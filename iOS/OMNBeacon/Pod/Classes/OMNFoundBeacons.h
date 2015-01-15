@@ -14,6 +14,12 @@
 @property (nonatomic, strong, readonly) NSArray *allBeacons;
 @property (nonatomic, assign, readonly) BOOL readyForProcessing;
 
-- (BOOL)updateWithBeacons:(NSArray *)foundBeacons;
+/**
+ *  Update existing found beacons with newly found beacons
+ *
+ *  @param foundBeacons Array of CLBeacon objects
+ *
+ */
+- (void)updateWithBeacons:(NSArray *)foundBeacons;
 
 @end

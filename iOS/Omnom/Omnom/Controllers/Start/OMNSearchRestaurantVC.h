@@ -7,7 +7,6 @@
 //
 
 #import "OMNSearchRestaurantsVC.h"
-#import "OMNLaunchOptions.h"
 
 @protocol OMNSearchRestaurantVCDelegate;
 
@@ -18,8 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *bgIV;
 @property (weak, nonatomic) IBOutlet UIView *fgView;
 @property (nonatomic, weak) id<OMNSearchRestaurantVCDelegate> delegate;
-
-- (instancetype)initWithLaunchOptions:(OMNLaunchOptions *)launchOptions;
 
 @end
 

@@ -9,7 +9,6 @@
 #import "OMNCircleFadeTransition.h"
 #import "OMNSearchRestaurantsVC.h"
 #import "OMNCircleRootVC.h"
-#import "OMNTablePositionVC.h"
 #import "OMNR1VC.h"
 #import "OMNStartVC.h"
 #import "OMNAskCLPermissionsVC.h"
@@ -81,9 +80,6 @@
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchRestaurantsVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNLoadingCircleVC class]],
-    
-    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNTablePositionVC class]],
-    [self keyFromClass:[OMNTablePositionVC class] toClass:[OMNSearchRestaurantsVC class]],
     
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNPushPermissionVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNPushPermissionVC class]],

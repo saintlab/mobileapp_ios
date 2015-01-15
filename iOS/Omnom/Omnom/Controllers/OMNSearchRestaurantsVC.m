@@ -22,6 +22,7 @@
 #import <OMNBeaconsSearchManager.h>
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
+#import "OMNLaunchHandler.h"
 
 @interface OMNSearchRestaurantsVC ()
 <OMNBeaconsSearchManagerDelegate>
@@ -103,32 +104,33 @@
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  if (_searchRestaurantMediator.launchOptions.restaurants) {
+  OMNLaunchOptions *launchOptions = [OMNLaunchHandler sharedHandler].launchOptions;
+  if (launchOptions.restaurants) {
     
     [self.loaderView startAnimating:self.estimateAnimationDuration];
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf didFindRestaurants:_searchRestaurantMediator.launchOptions.restaurants];
+      [weakSelf didFindRestaurants:launchOptions.restaurants];
       
     });
     
   }
-  else if (_searchRestaurantMediator.launchOptions.hashString) {
+  else if (launchOptions.hashString) {
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf processHash:_searchRestaurantMediator.launchOptions.hashString];
+      [weakSelf processHash:launchOptions.hashString];
       
     });
     
   }
-  else if (_searchRestaurantMediator.launchOptions.qr) {
+  else if (launchOptions.qr) {
     
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
-      [weakSelf processQrCode:_searchRestaurantMediator.launchOptions.qr];
+      [weakSelf processQrCode:launchOptions.qr];
       
     });
     

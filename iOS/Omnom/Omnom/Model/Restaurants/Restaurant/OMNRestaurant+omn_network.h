@@ -18,6 +18,9 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 - (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(NSError *error))failureBlock;
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
 
+- (void)handleEnterEventWithCompletion:(dispatch_block_t)completionBlock;
+- (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock;
+
 - (void)leave;
 - (void)entrance;
 - (void)nearby;

@@ -10,17 +10,14 @@
 #import "OMNAnalitics.h"
 #import "OMNAuthorization.h"
 #import "OMNBeaconBackgroundManager.h"
-#import "OMNStartVC.h"
-#import <Crashlytics/Crashlytics.h>
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 #import "OMNBackgroundVC.h"
 #import <BlocksKit.h>
 #import "OMNLaunchHandler.h"
+#import "OMNRestaurantManager.h"
 
 @implementation GAppDelegate {
-  
-  BOOL _applicationStartedForeground;
   
 }
 
@@ -30,30 +27,22 @@
   return YES;
 #endif
   
-  OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
+  NSLog(@"didFinishLaunchingWithOptions>%@", launchOptions);
   
-  __weak typeof(self)weakSelf = self;
+  OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   [OMNConstants setupWithLaunchOptions:lo completion:^{
     
     [[OMNAnalitics analitics] setup];
     
     [[OMNAuthorization authorisation] registerForRemoteNotificationsIfPossible];
     
-    [[OMNBeaconBackgroundManager manager] setDidFindBeaconBlock:^(OMNBeacon *beacon, BOOL athTheTable, dispatch_block_t comletionBlock) {
+    [[OMNBeaconBackgroundManager manager] setDidFindBeaconsBlock:^(NSArray *beacons, dispatch_block_t comletionBlock) {
       
-#warning handleBackgroundBeacon
-      
-//      [[OMNVisitorManager manager] handleBackgroundBeacon:beacon
-//                                              athTheTable:athTheTable
-//                                           withCompletion:(athTheTable)?(comletionBlock):(nil)];
+      [[OMNRestaurantManager sharedManager] handleBackgroundBeacons:beacons withCompletion:comletionBlock];
       
     }];
     
-    if (!lo.applicationWasOpenedByBeacon) {
-      
-      [weakSelf startApplicationIfNeededWithInfo:lo];
-      
-    }
+    [[OMNLaunchHandler sharedHandler] didFinishLaunchingWithOptions:lo];
     
   }];
   
@@ -75,20 +64,6 @@
   backgroundVC.backgroundImage = [UIImage omn_imageNamed:@"LaunchImage-700"];
   self.window.rootViewController = backgroundVC;
   [self.window makeKeyAndVisible];
-  
-}
-
-- (void)startApplicationIfNeededWithInfo:(OMNLaunchOptions *)launchOptions {
-
-  if (_applicationStartedForeground) {
-    return;
-  }
-  _applicationStartedForeground = YES;
-  
-  [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
-  
-  OMNStartVC *startVC = [[OMNStartVC alloc] initWithLaunchOptions:launchOptions];
-  self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:startVC];
   
 }
 
@@ -173,20 +148,14 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
   
-  NSLog(@"didReceiveLocalNotification>%@", notification);
-#warning OMNVisitorNotificationLaunchKey
-//  if (notification.userInfo[OMNVisitorNotificationLaunchKey]) {
-//    
-//    [self startApplicationIfNeededWithInfo:notification.userInfo];
-//    
-//  }
+  [[OMNLaunchHandler sharedHandler] didReceiveLocalNotification:notification];
   
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   
   NSLog(@"applicationWillEnterForeground");
-  [self startApplicationIfNeededWithInfo:nil];
+  [[OMNLaunchHandler sharedHandler] applicationWillEnterForeground];
   
 }
 

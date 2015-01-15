@@ -59,7 +59,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     _backgroundBeaconRegions = [[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:device_id];
     _deprecatedBeaconRegions = [[OMNBeacon beaconUUID] deprecatedBeaconsRegionsWithIdentifier:device_id];
     
-    [self startBeaconRegionMonitoring];
+    [self locationManager];
     
   }
   return self;
@@ -88,7 +88,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
 }
 
-- (void)startBeaconRegionMonitoring {
+- (void)startBeaconRegionMonitoringIfNeeded {
   
   if (kCLAuthorizationStatusAuthorized != [CLLocationManager authorizationStatus]) {
     return;
@@ -105,9 +105,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
   [_deprecatedBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
     
-    if ([self.locationManager.monitoredRegions containsObject:beaconRegion]) {
-      [self.locationManager stopMonitoringForRegion:beaconRegion];
-    }
+    [self.locationManager stopMonitoringForRegion:beaconRegion];
     
   }];
   
@@ -117,9 +115,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
   [_backgroundBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
     
-    if (NO == [self.locationManager.monitoredRegions containsObject:beaconRegion]) {
-      [self.locationManager startMonitoringForRegion:beaconRegion];
-    }
+    [self.locationManager startMonitoringForRegion:beaconRegion];
     
   }];
   
@@ -141,7 +137,7 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   switch (status) {
     case kCLAuthorizationStatusAuthorizedAlways: {
       
-      [self startBeaconRegionMonitoring];
+      [self startBeaconRegionMonitoringIfNeeded];
       
     } break;
     case kCLAuthorizationStatusNotDetermined: {
@@ -158,26 +154,22 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 
 - (void)stopBeaconRegionMonitoring {
   
-  if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
-    _monitoring = NO;
-    
-    [_backgroundBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
-      
-      if ([self.locationManager.monitoredRegions containsObject:beaconRegion]) {
-        [self.locationManager stopMonitoringForRegion:beaconRegion];
-      }
-      
-    }];
-    
-    [_deprecatedBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
-      
-      if ([self.locationManager.monitoredRegions containsObject:beaconRegion]) {
-        [self.locationManager stopMonitoringForRegion:beaconRegion];
-      }
-      
-    }];
-    
+  _monitoring = NO;
+  if (![CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
+    return;
   }
+  
+  [_backgroundBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+    
+    [self.locationManager stopMonitoringForRegion:beaconRegion];
+    
+  }];
+  
+  [_deprecatedBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+    
+    [self.locationManager stopMonitoringForRegion:beaconRegion];
+    
+  }];
   
 }
 
@@ -235,9 +227,9 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   }];
   
   _nearestBeaconSearchManager = [[OMNNearestBeaconSearchManager alloc] init];
-  [_nearestBeaconSearchManager findNearestBeacon:^(OMNBeacon *beacon, BOOL atTheTable) {
+  [_nearestBeaconSearchManager findNearestBeacons:^(NSArray *beacons) {
     
-    [weakSelf beaconDidFind:beacon atTheTable:atTheTable];
+    [weakSelf beaconsDidFind:beacons];
     
   } failure:^{
     
@@ -248,12 +240,13 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 }
 
 
-- (void)beaconDidFind:(OMNBeacon *)beacon atTheTable:(BOOL)atTheTable {
+- (void)beaconsDidFind:(NSArray *)beacons {
   
-  if (self.didFindBeaconBlock) {
+  [self stopNearestBeaconSearchManager];
+  if (self.didFindBeaconsBlock) {
     
     __weak typeof(self)weakSelf = self;
-    self.didFindBeaconBlock(beacon, atTheTable, ^{
+    self.didFindBeaconsBlock(beacons, ^{
       
       [weakSelf stopBeaconSearchManagerTask];
       
@@ -268,10 +261,16 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
   
 }
 
-- (void)stopBeaconSearchManagerTask {
+- (void)stopNearestBeaconSearchManager {
   
   [_nearestBeaconSearchManager stop];
   _nearestBeaconSearchManager = nil;
+  
+}
+
+- (void)stopBeaconSearchManagerTask {
+  
+  [self stopNearestBeaconSearchManager];
   
   if (UIBackgroundTaskInvalid != _searchBeaconTask) {
     

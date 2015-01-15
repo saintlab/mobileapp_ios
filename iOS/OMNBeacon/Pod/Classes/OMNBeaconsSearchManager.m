@@ -10,8 +10,6 @@
 #import "OMNBluetoothManager.h"
 #import "OMNBeaconRangingManager.h"
 
-NSTimeInterval const kBeaconSearchTimeout = 7.0;
-
 @interface OMNBeaconsSearchManager ()
 
 @property (nonatomic, assign) CBCentralManagerState previousBluetoothState;

@@ -20,8 +20,7 @@
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
-OMNSearchRestaurantVCDelegate,
-OMNLaunchHandlerDelegate>
+OMNSearchRestaurantVCDelegate>
 
 @end
 
@@ -29,15 +28,13 @@ OMNLaunchHandlerDelegate>
   
   OMNNavigationControllerDelegate *_navigationControllerDelegate;
   BOOL _authorizationPresented;
-  OMNLaunchOptions *_launchOptions;
+  OMNSearchRestaurantVC *_searchRestaurantVC;
   
 }
 
-- (instancetype)initWithLaunchOptions:(OMNLaunchOptions *)launchOptions {
+- (instancetype)init {
   self = [super init];
   if (self) {
-    
-    _launchOptions = launchOptions;
     
   }
   return self;
@@ -62,8 +59,6 @@ OMNLaunchHandlerDelegate>
       
     }];
   };
-
-  [OMNLaunchHandler sharedHandler].delegate = self;
   
 }
 
@@ -81,7 +76,7 @@ OMNLaunchHandlerDelegate>
 
     if ([OMNAuthorization authorisation].token) {
       
-      [weakSelf startSearchingRestaurant];
+      [weakSelf reloadSearchingRestaurant];
       
     }
     else {
@@ -94,16 +89,41 @@ OMNLaunchHandlerDelegate>
   
 }
 
-- (void)startSearchingRestaurant {
+- (void)reloadSearchingRestaurant {
 
-  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] initWithLaunchOptions:_launchOptions];
-  searchRestaurantVC.delegate = self;
+  if (_searchRestaurantVC) {
+    
+    __weak typeof(self)weakSelf = self;
+    [self dismissViewControllerAnimated:YES completion:^{
+      
+      [weakSelf startSearchingRestaurant1];
+      
+    }];
+    
+  }
+  else {
+    
+    [self startSearchingRestaurant1];
+    
+  }
+  
+}
 
-  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];
-  navigationController.navigationBar.barStyle = UIBarStyleDefault;
-  navigationController.delegate = _navigationControllerDelegate;
-  [self presentViewController:navigationController animated:NO completion:nil];
+- (void)startSearchingRestaurant1 {
+  
+  if ([OMNAuthorization authorisation].token &&
+      self.isViewLoaded) {
 
+    _searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
+    _searchRestaurantVC.delegate = self;
+    
+    UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:_searchRestaurantVC];
+    navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    navigationController.delegate = _navigationControllerDelegate;
+    [self presentViewController:navigationController animated:NO completion:nil];
+
+  }
+  
 }
 
 - (void)requestAuthorizationIfNeeded {
@@ -122,7 +142,8 @@ OMNLaunchHandlerDelegate>
 
 - (void)searchRestaurantVCDidFinish:(OMNSearchRestaurantVC *)searchRestaurantVC {
   
-  _launchOptions = nil;
+  _searchRestaurantVC = nil;
+  [OMNLaunchHandler sharedHandler].launchOptions = nil;
   [self dismissViewControllerAnimated:YES completion:nil];
   
 }
@@ -135,26 +156,8 @@ OMNLaunchHandlerDelegate>
   _authorizationPresented = NO;
   [self.navigationController omn_popToViewController:self animated:NO completion:^{
   
-    [weakSelf startSearchingRestaurant];
+    [weakSelf startSearchingRestaurant1];
 
-  }];
-  
-}
-
-#pragma mark - OMNLaunchHandlerDelegate 
-
-- (void)launchHandler:(OMNLaunchHandler *)launchHandler didReceiveLaunchOptions:(OMNLaunchOptions *)launchOptions {
-  
-  if (![OMNAuthorization authorisation].token) {
-    return;
-  }
-  
-  _launchOptions = launchOptions;
-  __weak typeof(self)weakSelf = self;
-  [self dismissViewControllerAnimated:YES completion:^{
-    
-    [weakSelf startSearchingRestaurant];
-    
   }];
   
 }

@@ -7,8 +7,14 @@
 //
 
 #import "OMNLaunchHandler.h"
+#import <Crashlytics/Crashlytics.h>
+#import "OMNStartVC.h"
 
-@implementation OMNLaunchHandler
+@implementation OMNLaunchHandler {
+  
+  OMNStartVC *_startVC;
+  
+}
 
 + (instancetype)sharedHandler {
   static id manager = nil;
@@ -27,12 +33,48 @@
   return self;
 }
 
+- (void)didFinishLaunchingWithOptions:(OMNLaunchOptions *)lo {
+  
+  _launchOptions = lo;
+  if (!lo.applicationWasOpenedByBeacon) {
+    
+    [self startApplicationIfNeeded];
+    
+  }
+  
+}
+
+- (void)startApplicationIfNeeded {
+  
+  if (_startVC) {
+    return;
+  }
+  
+  [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
+  
+  _startVC = [[OMNStartVC alloc] init];
+  [[UIApplication sharedApplication].delegate window].rootViewController = [[UINavigationController alloc] initWithRootViewController:_startVC];
+  
+}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   
-  OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithURL:url sourceApplication:sourceApplication annotation:annotation];
-  [self.delegate launchHandler:self didReceiveLaunchOptions:lo];
-  
+  self.launchOptions = [[OMNLaunchOptions alloc] initWithURL:url sourceApplication:sourceApplication annotation:annotation];
+  [_startVC reloadSearchingRestaurant];
   return YES;
+  
+}
+
+- (void)didReceiveLocalNotification:(UILocalNotification *)notification {
+  
+  self.launchOptions = [[OMNLaunchOptions alloc] initWithLocanNotification:notification];
+  [_startVC reloadSearchingRestaurant];
+  
+}
+
+- (void)applicationWillEnterForeground {
+  
+  [self startApplicationIfNeeded];
   
 }
 

@@ -403,8 +403,6 @@
 		93BE2F5B1A63C43000FB2211 /* OMNNoOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BE2F591A63C43000FB2211 /* OMNNoOrdersVC.m */; };
 		93C2F8EA1A3088E3003EF669 /* OMNUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C2F8E91A3088E3003EF669 /* OMNUserInfoView.m */; };
 		93C2F8EB1A3088E3003EF669 /* OMNUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C2F8E91A3088E3003EF669 /* OMNUserInfoView.m */; };
-		93C99092193DBBE40028F76C /* OMNTablePositionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99090193DBBE40028F76C /* OMNTablePositionVC.m */; };
-		93C99093193DBBE40028F76C /* OMNTablePositionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99090193DBBE40028F76C /* OMNTablePositionVC.m */; };
 		93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93C99116193EF6F20028F76C /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99115193EF6F20028F76C /* OMNOrder.m */; };
@@ -923,8 +921,6 @@
 		93BE2F591A63C43000FB2211 /* OMNNoOrdersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNoOrdersVC.m; sourceTree = "<group>"; };
 		93C2F8E81A3088E3003EF669 /* OMNUserInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoView.h; sourceTree = "<group>"; };
 		93C2F8E91A3088E3003EF669 /* OMNUserInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserInfoView.m; sourceTree = "<group>"; };
-		93C9908F193DBBE40028F76C /* OMNTablePositionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTablePositionVC.h; sourceTree = "<group>"; };
-		93C99090193DBBE40028F76C /* OMNTablePositionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTablePositionVC.m; sourceTree = "<group>"; };
 		93C99096193DE5990028F76C /* OMNAuthorizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorizationManager.h; sourceTree = "<group>"; };
 		93C99097193DE5990028F76C /* OMNAuthorizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationManager.m; sourceTree = "<group>"; };
 		93C99114193EF6F20028F76C /* OMNOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrder.h; sourceTree = "<group>"; };
@@ -1067,7 +1063,6 @@
 				93E29986197CE0FD00051B04 /* OMNSearchRestaurantsVC.h */,
 				93E29987197CE0FD00051B04 /* OMNSearchRestaurantsVC.m */,
 				93E2999E197D0A6500051B04 /* QR */,
-				93E2999C197D0A3500051B04 /* Table position */,
 				93E2999B197CEE0900051B04 /* CoreLocation */,
 				93E299AB197D13BF00051B04 /* deprecated */,
 				93E299A4197D0C9700051B04 /* OMNCircleRootVC.h */,
@@ -2139,15 +2134,6 @@
 			name = CoreLocation;
 			sourceTree = "<group>";
 		};
-		93E2999C197D0A3500051B04 /* Table position */ = {
-			isa = PBXGroup;
-			children = (
-				93C9908F193DBBE40028F76C /* OMNTablePositionVC.h */,
-				93C99090193DBBE40028F76C /* OMNTablePositionVC.m */,
-			);
-			name = "Table position";
-			sourceTree = "<group>";
-		};
 		93E2999E197D0A6500051B04 /* QR */ = {
 			isa = PBXGroup;
 			children = (
@@ -2512,7 +2498,6 @@
 				932118361962E88000183729 /* OMNTransitionFromProductToList.m in Sources */,
 				939DA1761958226B0063AB23 /* OMNAnalitics.m in Sources */,
 				93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */,
-				93C99092193DBBE40028F76C /* OMNTablePositionVC.m in Sources */,
 				9319FD62192F33B90053F3A4 /* OMNEditAmountControl.m in Sources */,
 				933A9E9A1A4B23ED001C0909 /* NSDate+omn_custom.m in Sources */,
 				932118161962DA2800183729 /* OMNStubProductCell.m in Sources */,
@@ -2914,7 +2899,6 @@
 				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,
 				939DA1771958226B0063AB23 /* OMNAnalitics.m in Sources */,
 				9391F6631A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */,
-				93C99093193DBBE40028F76C /* OMNTablePositionVC.m in Sources */,
 				93535F13198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m in Sources */,
 				93D1178E1A2F2C56000131C4 /* OMNEditUserVC.m in Sources */,
 				939689BF195C010900AAAF9C /* OMNWizardPageVC.m in Sources */,

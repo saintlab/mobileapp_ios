@@ -11,6 +11,6 @@
 
 @interface OMNStartVC : OMNBackgroundVC
 
-- (instancetype)initWithLaunchOptions:(OMNLaunchOptions *)launchOptions;
+- (void)reloadSearchingRestaurant;
 
 @end

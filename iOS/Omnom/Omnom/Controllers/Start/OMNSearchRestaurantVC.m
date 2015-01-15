@@ -13,6 +13,7 @@
 #import <OMNStyler.h>
 #import "OMNAnalitics.h"
 #import "OMNSearchRestaurantMediator.h"
+#import "OMNLaunchHandler.h"
 
 @interface OMNSearchRestaurantVC ()
 
@@ -22,12 +23,11 @@
 
 @implementation OMNSearchRestaurantVC
 
-- (instancetype)initWithLaunchOptions:(OMNLaunchOptions *)launchOptions {
+- (instancetype)init {
   self = [super initWithNibName:@"OMNSearchRestaurantVC" bundle:nil];
   if (self) {
     
     _searchRestaurantMediator = [[OMNSearchRestaurantMediator alloc] initWithRootVC:self];
-    _searchRestaurantMediator.launchOptions = launchOptions;
     
   }
   return self;

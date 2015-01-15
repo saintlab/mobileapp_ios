@@ -13,7 +13,6 @@
 @interface OMNSearchRestaurantMediator : NSObject
 
 @property (nonatomic, weak, readonly) UIViewController *rootVC;
-@property (nonatomic, strong) OMNLaunchOptions *launchOptions;
 
 @property (nonatomic, copy) dispatch_block_t didFinishBlock;
 

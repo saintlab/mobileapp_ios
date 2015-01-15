@@ -10,6 +10,8 @@
 #import "OMNBeaconRangingManager.h"
 #import "OMNBeacon.h"
 
+NSTimeInterval const kBeaconSearchTimeout = 7.0;
+
 @interface OMNBeaconRangingManager ()
 <CLLocationManagerDelegate>
 

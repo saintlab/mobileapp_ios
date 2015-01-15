@@ -14,6 +14,7 @@
 #import "OMNLaunchOptions.h"
 #import <SSKeychain.h>
 #import "OMNAuthorization.h"
+#import "OMNLaunchOptions.h"
 
 NSString * const kPushSoundName = @"new_guest.caf";
 NSString * const OMNFacebookPageUrlString = @"https://www.facebook.com/omnom.menu/";
