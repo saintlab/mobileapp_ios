@@ -25,14 +25,6 @@
   return manager;
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    
-  }
-  return self;
-}
-
 - (void)didFinishLaunchingWithOptions:(OMNLaunchOptions *)lo {
   
   _launchOptions = lo;

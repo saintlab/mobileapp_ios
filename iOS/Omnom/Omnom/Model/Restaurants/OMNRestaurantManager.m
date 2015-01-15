@@ -111,7 +111,7 @@
   
 }
 
-- (void)handleBackgroundRestaurant:(OMNRestaurant *)restaurant {
+- (void)handleBackgroundDecodedRestaurant:(OMNRestaurant *)restaurant withCompletion:(dispatch_block_t)completionBlock {
   
 #warning handleBackgroundRestaurant
 //  if (athTheTable) {
@@ -140,7 +140,7 @@
     if (1 == restaurants.count) {
       
       OMNRestaurant *restaurant = [restaurants firstObject];
-      [weakSelf handleBackgroundRestaurant:restaurant];
+      [weakSelf handleBackgroundDecodedRestaurant:restaurant withCompletion:completionBlock];
       
     }
     else {

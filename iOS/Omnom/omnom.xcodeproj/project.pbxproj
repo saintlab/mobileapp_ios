@@ -437,7 +437,6 @@
 		93D34DB019D2689800B7BDBE /* NSString+omnScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D34DAF19D2689800B7BDBE /* NSString+omnScanner.m */; };
 		93D34DB119D2689800B7BDBE /* NSString+omnScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D34DAF19D2689800B7BDBE /* NSString+omnScanner.m */; };
 		93D4ABD61A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D4ABD51A61144900E7C7A5 /* OMNLaunchHandler.m */; };
-		93D4ABD71A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D4ABD51A61144900E7C7A5 /* OMNLaunchHandler.m */; };
 		93D4ABDA1A6243BB00E7C7A5 /* OMNBankCard+omn_info.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D4ABD91A6243BA00E7C7A5 /* OMNBankCard+omn_info.m */; };
 		93D4ABDB1A6243BB00E7C7A5 /* OMNBankCard+omn_info.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D4ABD91A6243BA00E7C7A5 /* OMNBankCard+omn_info.m */; };
 		93D59A371A3D6A4400C3491F /* orders_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93D59A361A3D6A4300C3491F /* orders_stub.json */; };
@@ -2893,7 +2892,6 @@
 				933A9E9B1A4B23ED001C0909 /* NSDate+omn_custom.m in Sources */,
 				9345AFB0199A253F00328F73 /* OMNBankCardInfo.m in Sources */,
 				939689B3195BD76E00AAAF9C /* OMNWizardVC.m in Sources */,
-				93D4ABD71A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */,
 				93E485701A49136700DCDB0F /* OMNUserInfoCell.m in Sources */,
 				9332CB001A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */,
 				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,
