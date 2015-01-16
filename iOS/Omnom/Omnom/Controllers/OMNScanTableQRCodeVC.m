@@ -111,7 +111,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   [text appendAttributedString:actionText];
   _textLabel.text = text;
   
-  attributes[(__bridge NSString *)kCTUnderlineStyleAttributeName] = @(YES);
+  attributes[NSUnderlineStyleAttributeName] = @(YES);
   _textLabel.linkAttributes = [attributes copy];
   
   attributes[NSForegroundColorAttributeName] = [color colorWithAlphaComponent:0.5];
@@ -119,10 +119,11 @@ OMNCameraPermissionDescriptionVCDelegate>
   
   [_textLabel addLinkToURL:[NSURL URLWithString:@""] withRange:[text.string rangeOfString:actionText.string]];
   
+  
   _qrFrame.image = [[UIImage imageNamed:@"qr-code-scanner-frame"] omn_tintWithColor:color];
   _qrIcon.image = [[UIImage imageNamed:@"qr-icon-small"] omn_tintWithColor:color];
  
-  _titleLabel.font = FuturaOSFOmnomRegular(20);
+  _titleLabel.font = FuturaOSFOmnomRegular(25);
   _titleLabel.text = NSLocalizedString(@"QR_SCREEN_TITLE", @"Сканирование");
   _titleLabel.textColor = color;
   [_titleLabel sizeToFit];
