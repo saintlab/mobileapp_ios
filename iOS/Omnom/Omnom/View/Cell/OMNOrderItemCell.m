@@ -12,14 +12,17 @@
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import <BlocksKit.h>
+#import "UIView+omn_autolayout.h"
 
 @implementation OMNOrderItemCell {
+  
   UILabel *_nameLabel;
   UILabel *_priceLabel;
   
   UIImageView *_iconView;
   OMNOrderItem *_orderItem;
   NSString *_cellOrderItemIdentifier;
+  
 }
 
 - (void)dealloc {
@@ -33,7 +36,6 @@
   if (_cellOrderItemIdentifier) {
     
     [_orderItem bk_removeObserversWithIdentifier:_cellOrderItemIdentifier];
-    _cellOrderItemIdentifier = nil;
     
   }
   
@@ -51,14 +53,15 @@
 }
 
 - (void)awakeFromNib {
+  
   [self setup];
+  
 }
 
 - (UILabel *)label {
   
-  UILabel *label = [[UILabel alloc] init];
+  UILabel *label = [UILabel omn_autolayoutView];
   label.opaque = YES;
-  label.translatesAutoresizingMaskIntoConstraints = NO;
   label.highlightedTextColor = [UIColor whiteColor];
   return label;
   
@@ -76,10 +79,9 @@
   self.selectedBackgroundView.layer.masksToBounds = YES;
   self.selectedBackgroundView.backgroundColor = ([UIColor colorWithRed:2/255. green:193/255. blue:100/255. alpha:1]);
   
-  UIView *seporatorView = [[UIView alloc] init];
-  seporatorView.translatesAutoresizingMaskIntoConstraints = NO;
-  seporatorView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
-  [self.contentView addSubview:seporatorView];
+  UIView *selectedSeporatorView = [UIView omn_autolayoutView];
+  selectedSeporatorView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
+  [self.selectedBackgroundView addSubview:selectedSeporatorView];
   
   _nameLabel = [self label];
   _nameLabel.backgroundColor = backgroundColor;
@@ -93,11 +95,16 @@
   _priceLabel.textAlignment = NSTextAlignmentRight;
   [self.contentView addSubview:_priceLabel];
   
+  UIView *seporatorView = [UIView omn_autolayoutView];
+  seporatorView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
+  [self.contentView addSubview:seporatorView];
+  
   NSDictionary *views =
   @{
     @"nameLabel" : _nameLabel,
     @"priceLabel" : _priceLabel,
     @"seporatorView" : seporatorView,
+    @"selectedSeporatorView" : selectedSeporatorView,
     };
   
   NSDictionary *metrics =
@@ -107,10 +114,16 @@
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[nameLabel][seporatorView(1)]|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[priceLabel]-1-|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(labelsOffset)-[priceLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[seporatorView]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_nameLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:1.0f]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_priceLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:1.0f]];
+  
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(labelsOffset)-[priceLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[seporatorView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[seporatorView(1)]-(0.5)-|" options:kNilOptions metrics:metrics views:views]];
+  
+  [self.selectedBackgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[selectedSeporatorView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.selectedBackgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[selectedSeporatorView(1)]-(0.5)-|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
@@ -118,13 +131,6 @@
   
   [self removeOrderObserver];
   _orderItem = orderItem;
-  __weak typeof(self)weakSelf = self;
-  _cellOrderItemIdentifier = [_orderItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:NSKeyValueObservingOptionNew task:^(id obj, NSDictionary *change) {
-
-    [weakSelf updateLabelsColor];
-    
-  }];
-  
   _iconView.image = orderItem.icon;
   
   NSString *priceQuantityString = nil;
@@ -142,8 +148,14 @@
 
   _nameLabel.text = orderItem.name;
   _priceLabel.text = priceQuantityString;
-  [self updateLabelsColor];
-  
+
+  __weak typeof(self)weakSelf = self;
+  _cellOrderItemIdentifier = [_orderItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
+    
+    [weakSelf updateLabelsColor];
+    
+  }];
+
 }
 
 - (void)updateLabelsColor {
