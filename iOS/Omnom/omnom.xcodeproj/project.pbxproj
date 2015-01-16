@@ -261,8 +261,6 @@
 		9389456119B0620D00C37C82 /* OMNPushTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389455F19B0620D00C37C82 /* OMNPushTexts.m */; };
 		9389456419B0622900C37C82 /* OMNPushText.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456319B0622900C37C82 /* OMNPushText.m */; };
 		9389456519B0622900C37C82 /* OMNPushText.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456319B0622900C37C82 /* OMNPushText.m */; };
-		9389456819B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456719B2CF1700C37C82 /* OMNOrderTotalCell.m */; };
-		9389456919B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456719B2CF1700C37C82 /* OMNOrderTotalCell.m */; };
 		9389456B19B5957100C37C82 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 9389456A19B5957100C37C82 /* config.json */; };
 		9389456C19B5957100C37C82 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 9389456A19B5957100C37C82 /* config.json */; };
 		9389456F19B5B01600C37C82 /* OMNDisclamerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456E19B5B01600C37C82 /* OMNDisclamerView.m */; };
@@ -782,8 +780,6 @@
 		9389455F19B0620D00C37C82 /* OMNPushTexts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNPushTexts.m; path = ../OMNPushTexts.m; sourceTree = "<group>"; };
 		9389456219B0622900C37C82 /* OMNPushText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNPushText.h; path = ../OMNPushText.h; sourceTree = "<group>"; };
 		9389456319B0622900C37C82 /* OMNPushText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNPushText.m; path = ../OMNPushText.m; sourceTree = "<group>"; };
-		9389456619B2CF1700C37C82 /* OMNOrderTotalCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderTotalCell.h; sourceTree = "<group>"; };
-		9389456719B2CF1700C37C82 /* OMNOrderTotalCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTotalCell.m; sourceTree = "<group>"; };
 		9389456A19B5957100C37C82 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		9389456D19B5B01600C37C82 /* OMNDisclamerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDisclamerView.h; sourceTree = "<group>"; };
 		9389456E19B5B01600C37C82 /* OMNDisclamerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDisclamerView.m; sourceTree = "<group>"; };
@@ -1186,8 +1182,6 @@
 				9378229F1963E65F00CE6661 /* OMNOrderViewCell.m */,
 				93B9049619655168007D21C4 /* OMNRatingProductCell.h */,
 				93B9049719655168007D21C4 /* OMNRatingProductCell.m */,
-				9389456619B2CF1700C37C82 /* OMNOrderTotalCell.h */,
-				9389456719B2CF1700C37C82 /* OMNOrderTotalCell.m */,
 				934CDF4E19D4078900D73FC4 /* OMNLabelCell.h */,
 				934CDF4F19D4078900D73FC4 /* OMNLabelCell.m */,
 				934CDF5219D4196D00D73FC4 /* OMNBottomLabelView.h */,
@@ -2493,7 +2487,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9389456819B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */,
 				938E8F64192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				9391F66A1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */,
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
@@ -2755,7 +2748,6 @@
 				93B3689319A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */,
 				93B3689719A3376100B6E6CB /* OMNResetPasswordVC.m in Sources */,
 				93B9048E19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
-				9389456919B2CF1700C37C82 /* OMNOrderTotalCell.m in Sources */,
 				93535F0F19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				9391F65F1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m in Sources */,
 				937822A11963E65F00CE6661 /* OMNOrderViewCell.m in Sources */,

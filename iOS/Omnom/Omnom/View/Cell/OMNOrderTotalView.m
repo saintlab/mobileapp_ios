@@ -86,7 +86,7 @@
   [text setAttributes:
    @{
      NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f],
-     NSFontAttributeName : FuturaOSFOmnomRegular(17.0f),
+     NSFontAttributeName : FuturaLSFOmnomLERegular(17.0f),
      } range:[text.string rangeOfString:moneyText]];
   
   _totalLabel.attributedText = text;

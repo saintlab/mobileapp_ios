@@ -11,7 +11,6 @@
 #import "OMNOrder.h"
 #import "OMNConstants.h"
 #import "OMNOrderItemCell.h"
-#import "OMNOrderTotalCell.h"
 #import "OMNUtils.h"
 #import "OMNGuestView.h"
 
@@ -54,7 +53,6 @@
 - (void)registerCellsForTableView:(UITableView *)tableView {
   
   [tableView registerClass:[OMNOrderItemCell class] forCellReuseIdentifier:@"OMNOrderItemCell"];
-  [tableView registerClass:[OMNOrderTotalCell class] forCellReuseIdentifier:@"OMNOrderTotalCell"];
   [tableView registerClass:[OMNGuestView class] forHeaderFooterViewReuseIdentifier:OMNGuestViewIdentifier];
   
 }
