@@ -389,6 +389,8 @@
 		93B368B519A708C600B6E6CB /* OMNDemoStandWaiterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368B419A708C600B6E6CB /* OMNDemoStandWaiterTests.m */; };
 		93B65E611A6941510061F1B1 /* OMNChangeTableAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */; };
 		93B65E621A6941510061F1B1 /* OMNChangeTableAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */; };
+		93B65E651A6956C90061F1B1 /* OMNModalWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */; };
+		93B65E661A6956C90061F1B1 /* OMNModalWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */; };
 		93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
 		93B9047819652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
 		93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */; };
@@ -908,6 +910,8 @@
 		93B368B419A708C600B6E6CB /* OMNDemoStandWaiterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoStandWaiterTests.m; sourceTree = "<group>"; };
 		93B65E5F1A6941510061F1B1 /* OMNChangeTableAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangeTableAlertVC.h; sourceTree = "<group>"; };
 		93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangeTableAlertVC.m; sourceTree = "<group>"; };
+		93B65E631A6956C90061F1B1 /* OMNModalWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNModalWebVC.h; sourceTree = "<group>"; };
+		93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNModalWebVC.m; sourceTree = "<group>"; };
 		93B9047519652B93007D21C4 /* OMNNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationControllerDelegate.h; sourceTree = "<group>"; };
 		93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		93B9047E19653393007D21C4 /* OMNTransitionFromOrderToOrders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTransitionFromOrderToOrders.h; sourceTree = "<group>"; };
@@ -1246,6 +1250,8 @@
 				933D48E619E6445C004E591C /* OMNInteractiveTransitioningProtocol.h */,
 				93CB66CD1A35A63D00C5B10E /* OMNChangePhoneWebVC.h */,
 				93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */,
+				93B65E631A6956C90061F1B1 /* OMNModalWebVC.h */,
+				93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -2495,6 +2501,7 @@
 			files = (
 				938E8F64192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				9391F66A1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */,
+				93B65E651A6956C90061F1B1 /* OMNModalWebVC.m in Sources */,
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
 				93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
 				938EE0D61A317F1400508039 /* OMNCameraRollPermission.m in Sources */,
@@ -2887,6 +2894,7 @@
 				9305C6AD1A52E4BD00394292 /* OMNRestaurant+omn_network.m in Sources */,
 				93E435B41998CA6400EDC488 /* OMNRestaurantInfoVC.m in Sources */,
 				93175DC519C6BEFE005EE4C6 /* TQStarRatingView.m in Sources */,
+				93B65E661A6956C90061F1B1 /* OMNModalWebVC.m in Sources */,
 				93E299A8197D0C9700051B04 /* OMNCircleRootVC.m in Sources */,
 				939F991D19752BE90051822E /* OMNUserInfoVC.m in Sources */,
 				93E2997B197CD24F00051B04 /* OMNStartVC.m in Sources */,

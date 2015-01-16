@@ -9,6 +9,7 @@
 #import "OMNLaunchHandler.h"
 #import <Crashlytics/Crashlytics.h>
 #import "OMNStartVC.h"
+#import "OMNModalWebVC.h"
 
 @implementation OMNLaunchHandler {
   
@@ -54,6 +55,48 @@
   self.launchOptions = [[OMNLaunchOptions alloc] initWithURL:url sourceApplication:sourceApplication annotation:annotation];
   [_startVC reloadSearchingRestaurant];
   return YES;
+  
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+  
+  NSLog(@"didReceiveRemoteNotification>%@", userInfo);
+  completionHandler(UIBackgroundFetchResultNoData);
+  NSString *open_url = userInfo[@"open_url"];
+  if (open_url) {
+    __weak typeof(self)weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      
+      [weakSelf openURL:[NSURL URLWithString:open_url]];
+      
+    });
+    
+  }
+//  {"aps":{"sound":"new_guest.caf"}, "open_url" : "http://try.omnom.menu/mango"}
+  
+}
+
+- (void)openURL:(NSURL *)url {
+  
+  OMNModalWebVC *modalWebVC = [[OMNModalWebVC alloc] init];
+  modalWebVC.url = url;
+  UIViewController *topMostController = [self topMostController];
+  modalWebVC.didCloseBlock = ^{
+    
+    [topMostController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [topMostController presentViewController:[[UINavigationController alloc] initWithRootViewController:modalWebVC] animated:YES completion:nil];
+  
+}
+
+- (UIViewController*)topMostController {
+  
+  UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+  while (topController.presentedViewController) {
+    topController = topController.presentedViewController;
+  }
+  return topController;
   
 }
 

@@ -17,6 +17,7 @@
 
 + (instancetype)sharedHandler;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification;
 - (void)didFinishLaunchingWithOptions:(OMNLaunchOptions *)lo;
 - (void)applicationWillEnterForeground;

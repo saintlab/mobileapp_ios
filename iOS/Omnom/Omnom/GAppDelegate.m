@@ -132,17 +132,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
   
-  NSLog(@"didReceiveRemoteNotification>%@", userInfo);
-  completionHandler(UIBackgroundFetchResultNoData);
-  NSString *open_url = userInfo[@"open_url"];
-  if (open_url) {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      
-      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:open_url]];
-      
-    });
-    
-  }
+  [[OMNLaunchHandler sharedHandler] application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
   
 }
 
@@ -154,7 +144,6 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   
-  NSLog(@"applicationWillEnterForeground");
   [[OMNLaunchHandler sharedHandler] applicationWillEnterForeground];
   
 }
