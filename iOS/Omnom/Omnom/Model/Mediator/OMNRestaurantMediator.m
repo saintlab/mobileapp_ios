@@ -22,8 +22,7 @@
 #import "OMNNoOrdersVC.h"
 
 @interface OMNRestaurantMediator ()
-<OMNUserInfoVCDelegate,
-OMNOrdersVCDelegate,
+<OMNOrdersVCDelegate,
 OMNOrderCalculationVCDelegate>
 
 @end
@@ -273,7 +272,12 @@ OMNOrderCalculationVCDelegate>
 - (void)showUserProfile {
 
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:self];
-  userInfoVC.delegate = self;
+  __weak typeof(self)weakSelf = self;
+  userInfoVC.didCloseBlock = ^{
+    
+    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
   navigationController.delegate = _restaurantActionsVC.navigationController.delegate;
   [_restaurantActionsVC.navigationController presentViewController:navigationController animated:YES completion:nil];

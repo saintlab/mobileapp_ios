@@ -8,18 +8,10 @@
 
 #import "OMNRestaurantMediator.h"
 
-@protocol OMNUserInfoVCDelegate;
-
 @interface OMNUserInfoVC : UITableViewController
 
-@property (nonatomic, weak) id<OMNUserInfoVCDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
-
-@end
-
-@protocol OMNUserInfoVCDelegate <NSObject>
-
-- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC;
 
 @end

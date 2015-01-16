@@ -18,8 +18,7 @@
 
 @interface OMNSearchRestaurantMediator ()
 <OMNSearchRestaurantsVCDelegate,
-OMNScanTableQRCodeVCDelegate,
-OMNUserInfoVCDelegate>
+OMNScanTableQRCodeVCDelegate>
 
 @end
 
@@ -50,7 +49,12 @@ OMNUserInfoVCDelegate>
 - (void)showUserProfile {
   
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:nil];
-  userInfoVC.delegate = self;
+  __weak typeof(self)weakSelf = self;
+  userInfoVC.didCloseBlock = ^{
+    
+    [weakSelf.rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
   navigationController.delegate = _rootVC.navigationController.delegate;
   [_rootVC.navigationController presentViewController:navigationController animated:YES completion:nil];
@@ -166,14 +170,6 @@ OMNUserInfoVCDelegate>
 - (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {
   
   [self didFinish];
-  
-}
-
-#pragma mark - OMNUserInfoVCDelegate
-
-- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
-  
-  [_rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
   
 }
 

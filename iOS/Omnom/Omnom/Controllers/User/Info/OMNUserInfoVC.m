@@ -148,7 +148,11 @@ OMNEditUserVCDelegate>
 
 - (void)closeTap {
   
-  [self.delegate userInfoVCDidFinish:self];
+  if (self.didCloseBlock) {
+    
+    self.didCloseBlock();
+    
+  }
   
 }
 

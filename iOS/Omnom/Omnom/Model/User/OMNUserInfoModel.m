@@ -60,7 +60,7 @@
   section.items =
   @[
     [[OMNBankCardUserInfoItem alloc] init],
-    [[OMNTableUserInfoItem alloc] initWithTable:_restaurantMediator.table],
+    [[OMNTableUserInfoItem alloc] initWithMediator:_restaurantMediator],
     ];
   
   return section;

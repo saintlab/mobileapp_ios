@@ -7,10 +7,10 @@
 //
 
 #import "OMNUserInfoItem.h"
-#import "OMNTable.h"
+#import "OMNRestaurantMediator.h"
 
 @interface OMNTableUserInfoItem : OMNUserInfoItem
 
-- (instancetype)initWithTable:(OMNTable *)table;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end
