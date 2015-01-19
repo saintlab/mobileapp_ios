@@ -44,7 +44,7 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
+   
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_restaurantMediator.selectedOrder];
   [_dataSource registerCellsForTableView:self.tableView];
   
