@@ -51,15 +51,15 @@ OMNPaymentFooterViewDelegate>
   __weak OMNOrderPaymentVC *_orderPaymentVC;
   
   OMNRestaurantMediator *_restaurantMediator;
-  
+  NSString *_restaurantMediatorSelectedOrderObererverId;
 }
 
 - (void)dealloc {
   
-  @try {
-    [_restaurantMediator removeObserver:self forKeyPath:NSStringFromSelector(@selector(selectedOrder))];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  if (_restaurantMediatorSelectedOrderObererverId) {
+    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantMediatorSelectedOrderObererverId];
   }
-  @catch (NSException *exception) {}
   
 }
 
@@ -90,8 +90,13 @@ OMNPaymentFooterViewDelegate>
   [[OMNAnalitics analitics] logBillView:_restaurantMediator.selectedOrder];
 
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-
-  [_restaurantMediator addObserver:self forKeyPath:NSStringFromSelector(@selector(selectedOrder)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
+  
+  __weak typeof(self)weakSelf = self;
+  _restaurantMediatorSelectedOrderObererverId = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(selectedOrder)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+    
+    [weakSelf updateOrder];
+    
+  }];
   
 }
 
@@ -151,17 +156,6 @@ OMNPaymentFooterViewDelegate>
   _scrollView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
   _scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
   
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  if ([object isEqual:_restaurantMediator] &&
-      [keyPath isEqualToString:NSStringFromSelector(@selector(selectedOrder))]) {
-    
-    [self updateOrder];
-    
-  } else {
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-  }
 }
 
 - (void)selectedOrderTap {

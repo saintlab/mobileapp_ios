@@ -9,7 +9,9 @@
 #import "OMNRatingProductCell.h"
 
 @implementation OMNRatingProductCell {
+  
   UIImageView *_heartView;
+  
 }
 
 - (void)dealloc

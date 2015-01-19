@@ -189,6 +189,7 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
   
+  [self.changedOrderItemsIDs removeAllObjects];
   [self.tableView reloadData];
   [self updateTotalValue];
   _updateAlertView = nil;

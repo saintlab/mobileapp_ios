@@ -115,6 +115,8 @@ OMNOrderCalculationVCDelegate>
 
 - (void)orderDidClose:(NSNotification *)n {
   
+  OMNOrder *removedOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
+  [self removeOrder:removedOrder];
   
 }
 
@@ -136,10 +138,19 @@ OMNOrderCalculationVCDelegate>
       [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification
                                                           object:self
                                                         userInfo:@{OMNOrderKey : order}];
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification
+                                                          object:self];
+      
       *stop = YES;
     }
     
   }];
+  
+  if ([changedOrder.id isEqualToString:self.selectedOrder.id]) {
+    
+    self.selectedOrder = self.selectedOrder;
+    
+  }
   
   dispatch_semaphore_signal(_ordersLock);
   

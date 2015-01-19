@@ -87,7 +87,6 @@
   if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
     return NO;
   }
-#warning readyForPush
 //  BOOL readyForPush = ([[NSDate date] timeIntervalSinceDate:self.foundDate] > 4*60*60);
   BOOL readyForPush = YES;
   return readyForPush;
