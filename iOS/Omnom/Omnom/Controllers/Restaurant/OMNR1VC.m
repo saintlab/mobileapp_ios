@@ -117,7 +117,7 @@
   else {
     
     UIColor *color = _restaurantMediator.restaurant.decoration.antagonist_color;
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:self action:@selector(showUserProfile)];
     
   }

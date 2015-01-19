@@ -61,7 +61,7 @@ UIGestureRecognizerDelegate>
   _disableSwipeTransition = YES;
   _disableNavigationBarAnimation = YES;
   
-  _arrowButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"back_button_icon"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
+  _arrowButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"back_button_top_icon"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   self.navigationItem.titleView = _arrowButton;
   
   if (!_restaurant.is_demo) {

@@ -24,15 +24,15 @@
   
   OMNRestaurantMediator *_restaurantMediator;
   OMNNavigationController *_navigationController;
+  NSString *_restaurantWaiterCallIdentifier;
   
 }
 
 - (void)dealloc {
   
-  @try {
-    [_restaurantMediator removeObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled))];
+  if (_restaurantWaiterCallIdentifier) {
+    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
   }
-  @catch (NSException *exception) {}
   
 }
 
@@ -54,20 +54,13 @@
   
   [self setupControllers];
   
-  [_restaurantMediator addObserver:self forKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) context:NULL];
-  
-}
+  __weak typeof(self)weakSelf = self;
+  _restaurantWaiterCallIdentifier = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+    
+    [weakSelf updateRestaurantActionButtons];
+    
+  }];
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  
-  if ([object isEqual:_restaurantMediator] &&
-      [keyPath isEqualToString:NSStringFromSelector(@selector(waiterIsCalled))]) {
-    
-    [self updateRestaurantActionButtons];
-    
-  } else {
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-  }
 }
 
 - (void)showRestaurantAnimated:(BOOL)animated {
