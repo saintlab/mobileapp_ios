@@ -23,14 +23,42 @@
   
 }
 
+- (NSString *)path {
+  
+  NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+  return [documentsDirectory stringByAppendingPathComponent:@"restaurant_push_data.dat"];
+  
+}
+
 - (void)handleAtTheTableEvent1WithCompletion:(dispatch_block_t)completionBlock {
   
-  OMNPushText *at_entrance = self.mobile_texts.at_entrance;
-  UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-  localNotification.alertBody = at_entrance.greeting;
-  localNotification.alertAction = at_entrance.open_action;
-  localNotification.soundName = kPushSoundName;
-  [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+  if (!self.id) {
+    return;
+  }
+  
+  NSString *path = [self path];
+  NSMutableDictionary *restaurant_push_data = [NSMutableDictionary dictionaryWithContentsOfFile:path];
+  if (!restaurant_push_data) {
+    
+    restaurant_push_data = [NSMutableDictionary dictionary];
+    
+  }
+  NSDate *date = restaurant_push_data[self.id];
+  if (nil == date ||
+      [[NSDate date] timeIntervalSinceDate:date] > 4*60*60) {
+
+    OMNPushText *at_entrance = self.mobile_texts.at_entrance;
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = at_entrance.greeting;
+    localNotification.alertAction = at_entrance.open_action;
+    localNotification.soundName = kPushSoundName;
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+
+    restaurant_push_data[self.id] = [NSDate date];
+    [restaurant_push_data writeToFile:path atomically:YES];
+    
+  }
+  
   completionBlock();
   
 }
