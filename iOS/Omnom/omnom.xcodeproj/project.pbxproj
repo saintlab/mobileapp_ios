@@ -196,10 +196,10 @@
 		935D8C9D1A38693B00877C02 /* OMNError.m in Sources */ = {isa = PBXBuildFile; fileRef = 935D8C9B1A38693B00877C02 /* OMNError.m */; };
 		935FF1441A6CE2B2004B69A6 /* OMNPreorderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FF1431A6CE2B2004B69A6 /* OMNPreorderConfirmModel.m */; };
 		935FF1451A6CE2B2004B69A6 /* OMNPreorderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FF1431A6CE2B2004B69A6 /* OMNPreorderConfirmModel.m */; };
-		935FF1481A6CE6E4004B69A6 /* OMNPreorderConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FF1471A6CE6E4004B69A6 /* OMNPreorderConfirmVC.m */; };
-		935FF1491A6CE6E4004B69A6 /* OMNPreorderConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FF1471A6CE6E4004B69A6 /* OMNPreorderConfirmVC.m */; };
 		935FF14C1A6CE751004B69A6 /* OMNPreorderConfirmCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FF14B1A6CE751004B69A6 /* OMNPreorderConfirmCell.m */; };
 		935FF14D1A6CE751004B69A6 /* OMNPreorderConfirmCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FF14B1A6CE751004B69A6 /* OMNPreorderConfirmCell.m */; };
+		935FF1551A6D1054004B69A6 /* OMNPreorderConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FF1541A6D1054004B69A6 /* OMNPreorderConfirmVC.m */; };
+		935FF1561A6D1054004B69A6 /* OMNPreorderConfirmVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 935FF1541A6D1054004B69A6 /* OMNPreorderConfirmVC.m */; };
 		9366558119DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */; };
 		9366558219DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */; };
 		9366558519DBAE0800EF7098 /* OMNBankCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9366558419DBAE0800EF7098 /* OMNBankCardCell.m */; };
@@ -721,10 +721,10 @@
 		935D8C9B1A38693B00877C02 /* OMNError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNError.m; sourceTree = "<group>"; };
 		935FF1421A6CE2B2004B69A6 /* OMNPreorderConfirmModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPreorderConfirmModel.h; sourceTree = "<group>"; };
 		935FF1431A6CE2B2004B69A6 /* OMNPreorderConfirmModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderConfirmModel.m; sourceTree = "<group>"; };
-		935FF1461A6CE6E4004B69A6 /* OMNPreorderConfirmVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNPreorderConfirmVC.h; path = ../../../../../../../../OMNPreorderConfirmVC.h; sourceTree = "<group>"; };
-		935FF1471A6CE6E4004B69A6 /* OMNPreorderConfirmVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNPreorderConfirmVC.m; path = ../../../../../../../../OMNPreorderConfirmVC.m; sourceTree = "<group>"; };
 		935FF14A1A6CE751004B69A6 /* OMNPreorderConfirmCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPreorderConfirmCell.h; sourceTree = "<group>"; };
 		935FF14B1A6CE751004B69A6 /* OMNPreorderConfirmCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderConfirmCell.m; sourceTree = "<group>"; };
+		935FF1531A6D1054004B69A6 /* OMNPreorderConfirmVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPreorderConfirmVC.h; sourceTree = "<group>"; };
+		935FF1541A6D1054004B69A6 /* OMNPreorderConfirmVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderConfirmVC.m; sourceTree = "<group>"; };
 		9366557F19DA7F0600EF7098 /* OMNRestaurantActionsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantActionsVC.h; sourceTree = "<group>"; };
 		9366558019DA7F0600EF7098 /* OMNRestaurantActionsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantActionsVC.m; sourceTree = "<group>"; };
 		9366558319DBAE0800EF7098 /* OMNBankCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCardCell.h; sourceTree = "<group>"; };
@@ -1249,7 +1249,7 @@
 		9319FD96192F362F0053F3A4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				935FF13C1A6CE010004B69A6 /* Preorder */,
+				935FF1521A6D1046004B69A6 /* Preorder */,
 				93E58CAE1A246500008064F9 /* Permission */,
 				9317C06919DE858E0071E42B /* Alert */,
 				93E29976197CD23B00051B04 /* Start */,
@@ -1549,20 +1549,20 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		935FF13C1A6CE010004B69A6 /* Preorder */ = {
-			isa = PBXGroup;
-			children = (
-				935FF1461A6CE6E4004B69A6 /* OMNPreorderConfirmVC.h */,
-				935FF1471A6CE6E4004B69A6 /* OMNPreorderConfirmVC.m */,
-			);
-			path = Preorder;
-			sourceTree = "<group>";
-		};
 		935FF1411A6CE29B004B69A6 /* Preorder */ = {
 			isa = PBXGroup;
 			children = (
 				935FF1421A6CE2B2004B69A6 /* OMNPreorderConfirmModel.h */,
 				935FF1431A6CE2B2004B69A6 /* OMNPreorderConfirmModel.m */,
+			);
+			path = Preorder;
+			sourceTree = "<group>";
+		};
+		935FF1521A6D1046004B69A6 /* Preorder */ = {
+			isa = PBXGroup;
+			children = (
+				935FF1531A6D1054004B69A6 /* OMNPreorderConfirmVC.h */,
+				935FF1541A6D1054004B69A6 /* OMNPreorderConfirmVC.m */,
 			);
 			path = Preorder;
 			sourceTree = "<group>";
@@ -2538,7 +2538,6 @@
 				93B65E651A6956C90061F1B1 /* OMNModalWebVC.m in Sources */,
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
 				93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
-				935FF1481A6CE6E4004B69A6 /* OMNPreorderConfirmVC.m in Sources */,
 				938EE0D61A317F1400508039 /* OMNCameraRollPermission.m in Sources */,
 				938E8F58192F3A200088EF38 /* OMNMenu.m in Sources */,
 				932118361962E88000183729 /* OMNTransitionFromProductToList.m in Sources */,
@@ -2625,6 +2624,7 @@
 				9325BA491A1DA15A003557BD /* OMNPaymentLoadingVC.m in Sources */,
 				9345AFB7199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */,
 				9390D2D1196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
+				935FF1551A6D1054004B69A6 /* OMNPreorderConfirmVC.m in Sources */,
 				939F992E19752CFC0051822E /* OMNEnterCodeView.m in Sources */,
 				93E29997197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
 				93958B5D198747E1009BB2ED /* OMNBill.m in Sources */,
@@ -2818,6 +2818,7 @@
 				93B90495196550F4007D21C4 /* OMNRatingModel.m in Sources */,
 				933A9EA31A4BC61D001C0909 /* OMNRestaurantSchedule.m in Sources */,
 				93F21B9119B6031B00D5F78A /* OMNLightBackgroundButton.m in Sources */,
+				935FF1561A6D1054004B69A6 /* OMNPreorderConfirmVC.m in Sources */,
 				93E435B019989ED600EDC488 /* OMNLoadingCircleVC.m in Sources */,
 				930D8BAC1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
 				9345AFCE199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
@@ -2842,7 +2843,6 @@
 				9345AFB8199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */,
 				93E29998197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
 				938EE0DF1A31A75100508039 /* OMNUserIconView.m in Sources */,
-				935FF1491A6CE6E4004B69A6 /* OMNPreorderConfirmVC.m in Sources */,
 				93B368A519A4D24300B6E6CB /* OMNFeedItem.m in Sources */,
 				93D117861A2F1ABF000131C4 /* OMNVersionUserInfoItem.m in Sources */,
 				935D8C9D1A38693B00877C02 /* OMNError.m in Sources */,
