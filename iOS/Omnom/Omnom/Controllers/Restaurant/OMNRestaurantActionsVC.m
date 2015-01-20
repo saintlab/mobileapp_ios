@@ -103,7 +103,10 @@
   [self addActionBoardIfNeeded];
   self.bottomToolbar.hidden = NO;
   
-  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт")];
+//  NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт")
+//  NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")
+  
+  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:nil];
   [callBillButton addTarget:_restaurantMediator action:@selector(callBill) forControlEvents:UIControlEventTouchUpInside];
   
   if (_restaurantMediator.restaurant.settings.has_waiter_call) {
@@ -116,7 +119,7 @@
     else {
       
       UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
-      OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")];
+      OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:nil];
       [callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
       [callWaiterButton sizeToFit];
       

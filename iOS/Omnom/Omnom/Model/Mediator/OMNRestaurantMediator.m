@@ -20,6 +20,8 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNSocketManager.h"
 #import "OMNNoOrdersVC.h"
+#import "OMNPreorderConfirmVC.h"
+#import "OMNNavigationController.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -352,6 +354,10 @@ OMNOrderCalculationVCDelegate>
 
 - (void)callBill {
   
+//  OMNPreorderConfirmVC *preorderConfirmVC = [[OMNPreorderConfirmVC alloc] init];
+//  [_restaurantActionsVC.navigationController presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
+//  return;
+#warning
   if (!self.table) {
     return;
   }

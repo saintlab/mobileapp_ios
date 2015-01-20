@@ -27,6 +27,10 @@
     _has_pre_order = [jsonData[@"has_pre_order"] boolValue];
     _has_table_order = [jsonData[@"has_table_order"] boolValue];
 
+    
+#warning _has_menu
+    _has_menu = YES;
+    
   }
   return self;
 }

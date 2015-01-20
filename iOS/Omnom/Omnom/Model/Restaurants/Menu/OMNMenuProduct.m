@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNMenuItem.h"
+#import "OMNMenuProduct.h"
 
-@implementation OMNMenuItem
+@implementation OMNMenuProduct
 
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];

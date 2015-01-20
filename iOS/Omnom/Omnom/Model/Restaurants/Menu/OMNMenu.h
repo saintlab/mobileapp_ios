@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNMenuItem.h"
+#import "OMNMenuProduct.h"
 
 @interface OMNMenu : NSObject
 

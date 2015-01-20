@@ -25,6 +25,8 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurant+omn_network.h"
 #import "OMNRestaurantManager.h"
+#import "OMNMenuModel.h"
+#import "OMNMenuVC.h"
 
 @interface OMNR1VC ()
 <OMNRestaurantInfoVCDelegate>
@@ -37,6 +39,9 @@
   OMNRestaurantMediator *_restaurantMediator;
   UIPercentDrivenInteractiveTransition *_interactiveTransition;
   NSString *_restaurantWaiterCallIdentifier;
+  
+  UITableView *_menuTable;
+  OMNMenuModel *_menuModel;
   
 }
 
@@ -78,9 +83,6 @@
   _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
 
   self.navigationItem.title = @"";
-  
-  UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-  [self.view addGestureRecognizer:panGR];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
 
@@ -270,25 +272,69 @@
   gradientView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.backgroundView addSubview:gradientView];
   
-  NSDictionary *views =
-  @{
-    @"gradientView" : gradientView,
-    };
+  NSMutableDictionary *views =
+  [@{
+     @"gradientView" : gradientView,
+     } mutableCopy];
   
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:0 metrics:nil views:views]];
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[gradientView]|" options:0 metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:kNilOptions metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[gradientView]|" options:kNilOptions metrics:nil views:views]];
   
-  UIButton *actionButton = [[UIButton alloc] init];
-  actionButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [actionButton addTarget:self action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
-  [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
-  [self.view addSubview:actionButton];
+  if (_restaurantMediator.restaurant.settings.has_menu) {
+    
+    _menuModel = [[OMNMenuModel alloc] init];
+    
+    _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _menuTable.allowsSelection = NO;
+    _menuTable.scrollEnabled = NO;
+    _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
+    [_menuModel configureTableView:_menuTable];
+    [self.backgroundView addSubview:_menuTable];
+    
+    views[@"menuTable"] = _menuTable;
+    
+    self.backgroundView.userInteractionEnabled = YES;
+    [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:nil views:views]];
+    [self.backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:gradientView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
+    [self.backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+    
+    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuTap)];
+    [_menuTable addGestureRecognizer:tapGR];
+    
+  }
+  else {
+
+    UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [self.view addGestureRecognizer:panGR];
+
+    UIButton *actionButton = [[UIButton alloc] init];
+    actionButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [actionButton addTarget:self action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
+    [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
+    [self.view addSubview:actionButton];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-[OMNStyler styler].bottomToolbarHeight.floatValue]];
+    
+    [self.view layoutIfNeeded];
+    
+  }
   
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-[OMNStyler styler].bottomToolbarHeight.floatValue]];
-  [self.view layoutIfNeeded];
+}
+
+- (void)menuTap {
+  
+  OMNMenuVC *menuVC = [[OMNMenuVC alloc] init];
+  __weak typeof(self)weakSelf = self;
+  menuVC.didCloseBlock = ^{
+    
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    
+  };
+  menuVC.backgroundImage = self.backgroundImage;
+  [self.navigationController pushViewController:menuVC animated:YES];
   
 }
 

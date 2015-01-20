@@ -263,6 +263,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)updateAuthenticationToken {
   
+  [[OMNNotifierManager sharedManager].requestSerializer setValue:self.token forHTTPHeaderField:@"x-authentication-token"];
   [[OMNOperationManager sharedManager].requestSerializer setValue:self.token forHTTPHeaderField:@"x-authentication-token"];
 
 }

@@ -1,15 +1,17 @@
 //
-//  OMNPreorderConfirmModel.h
+//  OMNMenuItmeModel.h
 //  omnom
 //
-//  Created by tea on 19.01.15.
+//  Created by tea on 20.01.15.
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface OMNPreorderConfirmModel : NSObject
+@interface OMNMenuItemModel : NSObject
 <UITableViewDataSource,
 UITableViewDelegate>
+
+- (void)configureTableView:(UITableView *)tableView;
 
 @end

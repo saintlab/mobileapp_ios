@@ -19,7 +19,7 @@
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:menuItems.count];
     
     for (id menuItemObject in menuItems) {
-      OMNMenuItem *menuItem = [[OMNMenuItem alloc] initWithJsonData:menuItemObject];
+      OMNMenuProduct *menuItem = [[OMNMenuProduct alloc] initWithJsonData:menuItemObject];
       [items addObject:menuItem];
     }
     

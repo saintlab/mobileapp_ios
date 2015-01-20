@@ -158,7 +158,7 @@
   
   NSMutableArray *items = [NSMutableArray arrayWithCapacity:products.count];
   
-  [products enumerateObjectsUsingBlock:^(OMNMenuItem *menuItem, NSUInteger idx, BOOL *stop) {
+  [products enumerateObjectsUsingBlock:^(OMNMenuProduct *menuItem, NSUInteger idx, BOOL *stop) {
     
     NSDictionary *item =
     @{

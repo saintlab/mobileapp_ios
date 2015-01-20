@@ -79,7 +79,7 @@
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
+
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_DEVICE" jsonRequest:parameters responseOperation:operation];
     
   }];

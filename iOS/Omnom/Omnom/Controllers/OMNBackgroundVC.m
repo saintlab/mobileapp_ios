@@ -10,6 +10,7 @@
 #import "OMNToolbarButton.h"
 #import <BlocksKit+UIKit.h>
 #import <OMNStyler.h>
+#import "UIView+omn_autolayout.h"
 
 @interface OMNBackgroundVC ()
 
@@ -25,10 +26,9 @@
   self.view.backgroundColor = backgroundColor;
   self.view.opaque = YES;
   
-  _backgroundView = [[UIImageView alloc] init];
+  _backgroundView = [UIImageView omn_autolayoutView];
   _backgroundView.opaque = YES;
   _backgroundView.backgroundColor = backgroundColor;
-  _backgroundView.translatesAutoresizingMaskIntoConstraints = NO;
   _backgroundView.contentMode = UIViewContentModeBottom;
   [self.view insertSubview:_backgroundView atIndex:0];
   NSDictionary *views =
@@ -36,8 +36,8 @@
     @"backgroundView" : _backgroundView,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backgroundView]|" options:0 metrics:nil views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[backgroundView]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[backgroundView]|" options:kNilOptions metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[backgroundView]|" options:kNilOptions metrics:nil views:views]];
   
   if (self.backgroundImage) {
     _backgroundView.image = self.backgroundImage;

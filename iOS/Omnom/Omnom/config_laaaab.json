@@ -1,7 +1,7 @@
 {
   "baseUrlString" : "http://omnom.laaaab.com",
   "authorizationUrlString" : "http://wicket.laaaab.com",
-  "notifierUrlString" : "https://notifier.saintlab.com",
+  "notifierUrlString" : "http://notifier.laaaab.com",
   
   "MixpanelToken" : "da0247cf586fac84dadf9fe36754d82a",
   "MixpanelTokenDebug" : "da0247cf586fac84dadf9fe36754d82a"
