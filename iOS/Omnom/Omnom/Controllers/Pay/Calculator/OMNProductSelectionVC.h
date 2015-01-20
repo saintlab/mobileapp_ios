@@ -13,7 +13,6 @@
 
 @interface OMNProductSelectionVC : UITableViewController
 
-@property (nonatomic, strong, readonly) NSMutableSet *changedOrderItemsIDs;
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;

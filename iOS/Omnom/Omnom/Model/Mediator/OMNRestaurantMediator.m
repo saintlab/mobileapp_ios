@@ -229,10 +229,15 @@ OMNOrderCalculationVCDelegate>
   __weak typeof(self)weakSelf = self;
   [self.orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
     
-    if (![existingOrdersIDs containsObject:order.id]) {
+    if ([existingOrdersIDs containsObject:order.id]) {
+      
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
+
+    }
+    else {
       
       [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
-      
+
     }
     
   }];

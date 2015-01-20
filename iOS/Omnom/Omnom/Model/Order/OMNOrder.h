@@ -58,7 +58,6 @@ extern NSInteger const kCustomTipIndex;
 @property (nonatomic, copy) NSString *restarateurOrderId;
 
 @property (nonatomic, strong, readonly) NSArray *guests;
-@property (nonatomic, strong, readonly) NSMutableSet *selectedOrderItemsIDs;
 @property (nonatomic, strong, readonly) NSMutableArray *tips;
 @property (nonatomic, assign, readonly) long long percentTipsThreshold;
 
@@ -71,6 +70,9 @@ extern NSInteger const kCustomTipIndex;
 @property (nonatomic, assign, readonly) long long tipAmount;
 @property (nonatomic, assign) long long enteredAmount;
 @property (nonatomic, assign, readonly) BOOL enteredAmountChanged;
+
+@property (nonatomic, strong, readonly) NSMutableSet *changedItemsIDs;
+@property (nonatomic, strong, readonly) NSMutableSet *selectedItemsIDs;
 
 @property (nonatomic, assign) TipType tipType;
 @property (nonatomic, assign) SplitType splitType;
@@ -87,6 +89,7 @@ extern NSInteger const kCustomTipIndex;
 - (void)changeOrderItemSelection:(OMNOrderItem *)orderItem;
 - (void)selectionDidChange;
 - (void)deselectAllItems;
+- (void)resetSelection;
 - (void)resetEnteredAmount;
 
 - (void)setCustomTipPercent:(double)percent;
