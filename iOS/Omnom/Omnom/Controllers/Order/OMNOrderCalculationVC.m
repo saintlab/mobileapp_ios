@@ -51,15 +51,14 @@ OMNPaymentFooterViewDelegate>
   __weak OMNOrderPaymentVC *_orderPaymentVC;
   
   OMNRestaurantMediator *_restaurantMediator;
-  NSString *_restaurantMediatorSelectedOrderObererverId;
+  
+  __weak UIAlertView *_updateAlertView;
+  
 }
 
 - (void)dealloc {
   
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  if (_restaurantMediatorSelectedOrderObererverId) {
-    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantMediatorSelectedOrderObererverId];
-  }
   
 }
 
@@ -90,13 +89,8 @@ OMNPaymentFooterViewDelegate>
   [[OMNAnalitics analitics] logBillView:_restaurantMediator.selectedOrder];
 
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-  
-  __weak typeof(self)weakSelf = self;
-  _restaurantMediatorSelectedOrderObererverId = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(selectedOrder)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
-    
-    [weakSelf updateOrder];
-    
-  }];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
+  [self updateOrder];
   
 }
 
@@ -136,6 +130,7 @@ OMNPaymentFooterViewDelegate>
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
+  
   [self layoutTableView];
   [self.view layoutIfNeeded];
   
@@ -189,10 +184,40 @@ OMNPaymentFooterViewDelegate>
     return;
   }
   
+  [_updateAlertView dismissWithClickedButtonIndex:_updateAlertView.firstOtherButtonIndex animated:NO];
+  _updateAlertView = nil;
+  
   __weak typeof(self)weakSelf = self;
   [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_CLOSE_ALERT_TITLE", @"Этот счёт закрыт заведением для просмотра и оплаты") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_CLOSE_ALERT_BUTTON_TITLE", @"Выйти") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
     
     [weakSelf.delegate orderCalculationVCDidCancel:weakSelf];
+    
+  }];
+  
+}
+
+- (void)orderDidChange:(NSNotification *)n {
+  
+  OMNOrder *changedOrder = n.userInfo[OMNOrderKey];
+  if ([changedOrder.id isEqualToString:_restaurantMediator.selectedOrder.id]) {
+    
+    [self showUpdateOrderAlertIfNeeded];
+    
+  }
+  
+}
+
+- (void)showUpdateOrderAlertIfNeeded {
+  
+  if (_orderPaymentVC
+      ||_updateAlertView) {
+    return;
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  _updateAlertView = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_UPDATE_ALERT_TITLE", @"Этот счёт обновлён заведением") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_UPDATE_ALERT_BUTTON_TITLE", @"Обновить") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    
+    [weakSelf updateOrder];
     
   }];
   
@@ -205,6 +230,7 @@ OMNPaymentFooterViewDelegate>
     
     _paymentView.order = order;
     _dataSource.order = order;
+    _dataSource.fadeNonSelectedItems = (kSplitTypeOrders == order.splitType);
     self.tableView.orderActionView.order = order;
     [self.tableView reloadData];
     [self layoutTableView];
@@ -344,13 +370,6 @@ OMNPaymentFooterViewDelegate>
 
 }
 
-- (void)setNonSelectedOrderItemsFaded:(BOOL)faded {
-  
-  _dataSource.fadeNonSelectedItems = faded;
-  [_tableView reloadData];
-  
-}
-
 - (void)handlePan:(UIPanGestureRecognizer *)panGR {
   
   CGAffineTransform scaleTransform = CGAffineTransformMakeScale(0.95f, 0.95f);
@@ -424,10 +443,7 @@ OMNPaymentFooterViewDelegate>
     } break;
   }
   
-  BOOL fadeNonSelectedItems = (kSplitTypeOrders == splitType);
-  [self setNonSelectedOrderItemsFaded:fadeNonSelectedItems];
-  
-  _paymentView.order = order;
+  [self updateOrder];
   
 }
 

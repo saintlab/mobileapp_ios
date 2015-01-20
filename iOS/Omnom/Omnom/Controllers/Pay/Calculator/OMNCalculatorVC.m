@@ -113,22 +113,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 - (void)closeTap {
   
-  NSSet *changedOrderItemsIDs = [self.firstViewController.changedOrderItemsIDs copy];
-  OMNOrder *order = _restaurantMediator.selectedOrder;
-  [order.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
-    
-    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
-      
-      if ([changedOrderItemsIDs containsObject:orderItem.uid]) {
-        
-        orderItem.selected = !orderItem.selected;
-        
-      }
-      
-    }];
-    
-  }];
-  
+  [_restaurantMediator.selectedOrder resetSelection];
   [self.delegate calculatorVCDidCancel:self];
   
 }

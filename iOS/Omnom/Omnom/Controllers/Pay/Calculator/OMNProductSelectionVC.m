@@ -12,7 +12,6 @@
 #import <BlocksKit+UIKit.h>
 
 @interface OMNProductSelectionVC ()
-<UIAlertViewDelegate>
 
 @property (nonatomic, strong) OMNOrderDataSource *dataSource;
 
@@ -21,7 +20,6 @@
 @implementation OMNProductSelectionVC {
   
   OMNRestaurantMediator *_restaurantMediator;
-  UIAlertView *_updateAlertView;
   BOOL _didClose;
   
 }
@@ -48,28 +46,9 @@
   _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_restaurantMediator.selectedOrder];
   [_dataSource registerCellsForTableView:self.tableView];
   
-  _changedOrderItemsIDs = [NSMutableSet set];
-  
   __weak typeof(self)weakSelf = self;
   [_dataSource setDidSelectBlock:^(UITableView *tv, NSIndexPath *indexPath) {
     
-    OMNOrderItem *orderItem = [weakSelf.dataSource orderItemAtIndexPath:indexPath];
-    NSString *orderItemID = orderItem.uid;
-    if (orderItemID) {
-
-      if ([weakSelf.changedOrderItemsIDs containsObject:orderItemID]) {
-        
-        [weakSelf.changedOrderItemsIDs removeObject:orderItemID];
-        
-      }
-      else {
-
-        [weakSelf.changedOrderItemsIDs addObject:orderItemID];
-        
-      }
-      
-    }
-
     [weakSelf updateTotalValue];
     
   }];
@@ -87,7 +66,6 @@
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNOrderDidCloseNotification object:nil];
 
 }
 
@@ -101,26 +79,10 @@
   
 }
 
-- (void)orderDidClose:(NSNotification *)n {
-  
-  if (!_restaurantMediator.selectedOrder) {
-    
-    _updateAlertView.delegate = nil;
-    [_updateAlertView dismissWithClickedButtonIndex:_updateAlertView.cancelButtonIndex animated:NO];
-    _updateAlertView = nil;
-    
-  }
-  
-}
-
 - (void)orderDidChange:(NSNotification *)n {
   
-  if (_updateAlertView) {
-    return;
-  }
-  
-  _updateAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"ORDER_DID_UPDATE_ALERT_TITLE", @"Этот счёт обновлён заведением") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"ORDER_UPDATE_ALERT_BUTTON_TITLE", @"Обновить") otherButtonTitles:nil];
-  [_updateAlertView show];
+  [self.tableView reloadData];
+  [self updateTotalValue];
   
 }
 
@@ -182,17 +144,6 @@
     [self.delegate totalDidChange:order.selectedItemsTotal showPaymentButton:order.hasSelectedItems];
     
   }
-  
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-  
-  [self.changedOrderItemsIDs removeAllObjects];
-  [self.tableView reloadData];
-  [self updateTotalValue];
-  _updateAlertView = nil;
   
 }
 

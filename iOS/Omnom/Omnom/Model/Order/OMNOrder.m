@@ -143,19 +143,11 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
     }
     _tips = tips;
     
-    if (self.totalAmount == 0 &&
-        self.paid.net_amount == 0) {
-      
-      self.selectedTipIndex = -1;
-      
-    }
-    else {
-      
-      self.selectedTipIndex = kDefaultSelectedTipIndex;
-      
-    }
-    _selectedOrderItemsIDs = [NSMutableSet set];
+
     [self resetEnteredAmount];
+    [self resetTip];
+    
+    _changedItemsIDs = [NSMutableSet set];
     
   }
   return self;
@@ -163,6 +155,7 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 
 - (void)updateWithOrder:(OMNOrder *)order {
   
+  [self deselectAllItems];
   _guests = order.guests;
   
   if (order.paid) {
@@ -171,9 +164,23 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
     
   }
 
-  if (!_enteredAmountChanged) {
+  _tips = order.tips;
+  [self resetEnteredAmount];
+  [self resetTip];
+  
+}
+
+- (void)resetTip {
+  
+  if (self.totalAmount == 0 &&
+      self.paid.net_amount == 0) {
     
-    _enteredAmount = MAX(0ll, self.expectedValue);
+    self.selectedTipIndex = -1;
+    
+  }
+  else {
+    
+    self.selectedTipIndex = kDefaultSelectedTipIndex;
     
   }
   
@@ -314,18 +321,27 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
   
 }
 
+- (NSMutableSet *)selectedItemsIDs {
+  
+  return [NSMutableSet set];
+  
+}
+
 - (void)changeOrderItemSelection:(OMNOrderItem *)orderItem {
   
   orderItem.selected = !orderItem.selected;
+  if (!orderItem.uid) {
+    return;
+  }
   
-  if (orderItem.selected) {
+  if ([self.changedItemsIDs containsObject:orderItem.uid]) {
     
-    [self.selectedOrderItemsIDs addObject:orderItem.uid];
+    [self.changedItemsIDs removeObject:orderItem.uid];
     
   }
   else {
     
-    [self.selectedOrderItemsIDs removeObject:orderItem.uid];
+    [self.changedItemsIDs addObject:orderItem.uid];
     
   }
 
@@ -341,12 +357,35 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 - (void)deselectAllItems {
   
   [self willChangeValueForKey:@"hasSelectedItems"];
+  [self.changedItemsIDs removeAllObjects];
   [_guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
     
     [guest deselectAllItems];
     
   }];
+  self.splitType = kSplitTypeNone;
   [self didChangeValueForKey:@"hasSelectedItems"];
+  
+}
+
+- (void)resetSelection {
+  
+  NSSet *changedOrderItemsIDs = [self.changedItemsIDs copy];
+  [self.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
+    
+    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+      
+      if ([changedOrderItemsIDs containsObject:orderItem.uid]) {
+        
+        orderItem.selected = !orderItem.selected;
+        
+      }
+      
+    }];
+    
+  }];
+  
+  [self.changedItemsIDs removeAllObjects];
   
 }
 
