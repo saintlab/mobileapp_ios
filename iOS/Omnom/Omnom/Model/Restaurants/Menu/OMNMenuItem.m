@@ -1,14 +1,14 @@
 //
-//  GMenu.m
-//  restaurants
+//  OMNMenuItem.m
+//  omnom
 //
-//  Created by tea on 13.03.14.
-//  Copyright (c) 2014 tea. All rights reserved.
+//  Created by tea on 20.01.15.
+//  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenu.h"
+#import "OMNMenuItem.h"
 
-@implementation OMNMenu
+@implementation OMNMenuItem
 
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];

@@ -515,6 +515,10 @@
 		93F2AEEB1A6E2DFB00CDF3D9 /* OMNMenuProduct+cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEE91A6E2DFB00CDF3D9 /* OMNMenuProduct+cell.m */; };
 		93F2AEEE1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEED1A6E31AA00CDF3D9 /* OMNMenuProductCell.m */; };
 		93F2AEEF1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEED1A6E31AA00CDF3D9 /* OMNMenuProductCell.m */; };
+		93F2AEF11A6E7FCB00CDF3D9 /* menu_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93F2AEF01A6E7FCB00CDF3D9 /* menu_stub.json */; };
+		93F2AEF21A6E7FCB00CDF3D9 /* menu_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93F2AEF01A6E7FCB00CDF3D9 /* menu_stub.json */; };
+		93F2AEF51A6E802100CDF3D9 /* OMNMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */; };
+		93F2AEF61A6E802100CDF3D9 /* OMNMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */; };
 		93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		93FEEB321A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		C6C76590351C4176B35ECE19 /* libPods-omnomTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C1CE5E4E1243D5AFFD1065 /* libPods-omnomTests.a */; };
@@ -1058,6 +1062,9 @@
 		93F2AEE91A6E2DFB00CDF3D9 /* OMNMenuProduct+cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNMenuProduct+cell.m"; sourceTree = "<group>"; };
 		93F2AEEC1A6E31AA00CDF3D9 /* OMNMenuProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductCell.h; sourceTree = "<group>"; };
 		93F2AEED1A6E31AA00CDF3D9 /* OMNMenuProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductCell.m; sourceTree = "<group>"; };
+		93F2AEF01A6E7FCB00CDF3D9 /* menu_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_stub.json; sourceTree = "<group>"; };
+		93F2AEF31A6E802100CDF3D9 /* OMNMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuItem.h; sourceTree = "<group>"; };
+		93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuItem.m; sourceTree = "<group>"; };
 		93FEEB2F1A43E166002ED717 /* OMNEditPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditPercentControl.h; sourceTree = "<group>"; };
 		93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditPercentControl.m; sourceTree = "<group>"; };
 		9BCE6415AF2807DAACF8AC44 /* Pods-omnomTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnomTests.appstore.xcconfig"; path = "../Pods/Target Support Files/Pods-omnomTests/Pods-omnomTests.appstore.xcconfig"; sourceTree = "<group>"; };
@@ -1717,6 +1724,7 @@
 				93676DF818D1E4FC00FC55F1 /* main.m */,
 				93676DFA18D1E4FC00FC55F1 /* omnom-Prefix.pch */,
 				933AB0D919C1D4D8004D8F55 /* Localizable.strings */,
+				93F2AEF01A6E7FCB00CDF3D9 /* menu_stub.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1906,6 +1914,8 @@
 			children = (
 				938E8F3F192F3A200088EF38 /* OMNMenu.h */,
 				938E8F40192F3A200088EF38 /* OMNMenu.m */,
+				93F2AEF31A6E802100CDF3D9 /* OMNMenuItem.h */,
+				93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */,
 				938E8F41192F3A200088EF38 /* OMNMenuProduct.h */,
 				938E8F42192F3A200088EF38 /* OMNMenuProduct.m */,
 				93F2AEE81A6E2DFB00CDF3D9 /* OMNMenuProduct+cell.h */,
@@ -2462,6 +2472,7 @@
 				93750B2F196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
 				935D8C981A38293B00877C02 /* Futura-OSF-Omnom-Regular.otf in Resources */,
 				93F21BEA19B6283300D5F78A /* config_laaaab.json in Resources */,
+				93F2AEF11A6E7FCB00CDF3D9 /* menu_stub.json in Resources */,
 				938F3A4C198BECD100AB288E /* OMNWizardVC.json in Resources */,
 				93EDD46D19B86D9F0017B6ED /* config_prod.json in Resources */,
 				935C284319066755003B4881 /* jquery-2.0.3.min in Resources */,
@@ -2507,6 +2518,7 @@
 				9391F65B1A5D5DAA00594CD5 /* tips.json in Resources */,
 				9390D2681966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
 				933AB0D719C1D4D8004D8F55 /* Localizable.strings in Resources */,
+				93F2AEF21A6E7FCB00CDF3D9 /* menu_stub.json in Resources */,
 				939689C1195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
 				938F3A50198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
 				93D59A371A3D6A4400C3491F /* orders_stub.json in Resources */,
@@ -2731,6 +2743,7 @@
 				9345AFD5199C6F8B00328F73 /* OMNToolbarButton.m in Sources */,
 				93998C1219ACB0F800FEE940 /* UILabel+numberOfLines.m in Sources */,
 				9321181A1962DF7C00183729 /* OMNProduct.m in Sources */,
+				93F2AEF51A6E802100CDF3D9 /* OMNMenuItem.m in Sources */,
 				939F991819752BE90051822E /* OMNEditTableVC.m in Sources */,
 				93D4ABD61A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */,
 				939F991419752BE90051822E /* OMNBankCardsVC.m in Sources */,
@@ -2992,6 +3005,7 @@
 				93B368A119A4CF1100B6E6CB /* OMNSlideDownTransition.m in Sources */,
 				9317C06D19DE85BB0071E42B /* OMNPaymentAlertVC.m in Sources */,
 				9389457019B5B01600C37C82 /* OMNDisclamerView.m in Sources */,
+				93F2AEF61A6E802100CDF3D9 /* OMNMenuItem.m in Sources */,
 				93D9D8451A5306B400824AD0 /* OMNTable+omn_network.m in Sources */,
 				932B186119ADEE91009E440E /* OMNOrderTableView.m in Sources */,
 				93F2AEEB1A6E2DFB00CDF3D9 /* OMNMenuProduct+cell.m in Sources */,
