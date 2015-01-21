@@ -2355,15 +2355,15 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
-    93F2AEF71A6F7A6400CDF3D9 /* Alert */ = {
-      isa = PBXGroup;
-      children = (
-        93F2AEF81A6F7A8200CDF3D9 /* OMNOrderAlertManager.h */,
-        93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */,
-      );
-    name = Alert;
-    sourceTree = "<group>";
-    };
+		93F2AEF71A6F7A6400CDF3D9 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				93F2AEF81A6F7A8200CDF3D9 /* OMNOrderAlertManager.h */,
+				93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */,
+			);
+			name = Alert;
+			sourceTree = "<group>";
+		};
 		93F4DBDB1978F0CF00D06E32 /* SearchTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -3321,7 +3321,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "8a2e5b0a-7b34-4b9c-a325-8f68292549b2";
+				PROVISIONING_PROFILE = "ed707f2e-f817-4800-926f-a838b6e1910f";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

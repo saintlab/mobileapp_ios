@@ -39,7 +39,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   _customConfig = [self configWithName:launchOptions.customConfigName];
 
 #warning _customConfig
-  _customConfig = [self configWithName:@"config_laaaab"];
+//  _customConfig = [self configWithName:@"config_laaaab"];
   
   //setup keychain for background usage
   [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];
