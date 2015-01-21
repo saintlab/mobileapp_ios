@@ -56,7 +56,7 @@
     UIButton *pinButton = [[UIButton alloc] init];
     pinButton.userInteractionEnabled = NO;
     UIColor *color = colorWithHexString(@"157EFB");
-    pinButton.titleLabel.font = FuturaOSFOmnomRegular(20.0f);
+    pinButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
     [pinButton setTitleColor:color forState:UIControlStateNormal];
     [pinButton setImage:[[UIImage imageNamed:@"table_marker_icon"] omn_tintWithColor:color] forState:UIControlStateNormal];
     [pinButton omn_centerButtonAndImageWithSpacing:2.0f];

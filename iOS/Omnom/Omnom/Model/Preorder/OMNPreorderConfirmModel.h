@@ -9,7 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface OMNPreorderConfirmModel : NSObject
-<UITableViewDataSource,
-UITableViewDelegate>
 
 @end

@@ -105,11 +105,13 @@ OMNCameraPermissionDescriptionVCDelegate>
   
   UIColor *color = colorWithHexString(@"D0021B");
   
+  NSString *actionText = NSLocalizedString(@"QR_DESCRIPTION_ACTION_TEXT", @"Что это такое?");
+  NSString *text = [NSString stringWithFormat:NSLocalizedString(@"QR_DESCRIPTION_TEXT %@", @"Наведите камеру\nна QR-код Omnom.\n{QR_DESCRIPTION_ACTION_TEXT}"), actionText];
+  
   NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(25.0f) textColor:color textAlignment:NSTextAlignmentCenter];
-  NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"Наведите камеру\nна QR-код Omnom.\n" attributes:attributes];
-  NSMutableAttributedString *actionText = [[NSMutableAttributedString alloc] initWithString:@"Что это такое?" attributes:attributes];
-  [text appendAttributedString:actionText];
-  _textLabel.text = text;
+  
+  NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+  _textLabel.text = attributedString;
   
   attributes[NSUnderlineStyleAttributeName] = @(YES);
   _textLabel.linkAttributes = [attributes copy];
@@ -117,8 +119,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   attributes[NSForegroundColorAttributeName] = [color colorWithAlphaComponent:0.5];
   _textLabel.activeLinkAttributes = [attributes copy];
   
-  [_textLabel addLinkToURL:[NSURL URLWithString:@""] withRange:[text.string rangeOfString:actionText.string]];
-  
+  [_textLabel addLinkToURL:[NSURL URLWithString:@""] withRange:[text rangeOfString:actionText]];
   
   _qrFrame.image = [[UIImage imageNamed:@"qr-code-scanner-frame"] omn_tintWithColor:color];
   _qrIcon.image = [[UIImage imageNamed:@"qr-icon-small"] omn_tintWithColor:color];
