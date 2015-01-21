@@ -519,6 +519,8 @@
 		93F2AEF21A6E7FCB00CDF3D9 /* menu_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93F2AEF01A6E7FCB00CDF3D9 /* menu_stub.json */; };
 		93F2AEF51A6E802100CDF3D9 /* OMNMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */; };
 		93F2AEF61A6E802100CDF3D9 /* OMNMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */; };
+		93F2AEFA1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */; };
+		93F2AEFB1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */; };
 		93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		93FEEB321A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		C6C76590351C4176B35ECE19 /* libPods-omnomTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C1CE5E4E1243D5AFFD1065 /* libPods-omnomTests.a */; };
@@ -1065,6 +1067,8 @@
 		93F2AEF01A6E7FCB00CDF3D9 /* menu_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_stub.json; sourceTree = "<group>"; };
 		93F2AEF31A6E802100CDF3D9 /* OMNMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuItem.h; sourceTree = "<group>"; };
 		93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuItem.m; sourceTree = "<group>"; };
+		93F2AEF81A6F7A8200CDF3D9 /* OMNOrderAlertManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderAlertManager.h; sourceTree = "<group>"; };
+		93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderAlertManager.m; sourceTree = "<group>"; };
 		93FEEB2F1A43E166002ED717 /* OMNEditPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditPercentControl.h; sourceTree = "<group>"; };
 		93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditPercentControl.m; sourceTree = "<group>"; };
 		9BCE6415AF2807DAACF8AC44 /* Pods-omnomTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnomTests.appstore.xcconfig"; path = "../Pods/Target Support Files/Pods-omnomTests/Pods-omnomTests.appstore.xcconfig"; sourceTree = "<group>"; };
@@ -1830,6 +1834,7 @@
 			isa = PBXGroup;
 			children = (
 				935FF1611A6D3EB3004B69A6 /* Menu */,
+				93F2AEF71A6F7A6400CDF3D9 /* Alert */,
 				935FF1411A6CE29B004B69A6 /* Preorder */,
 				937C3E6E1A2824D7006525A9 /* Location */,
 				93E58CA91A2455DF008064F9 /* Permission */,
@@ -2350,6 +2355,15 @@
 			name = Menu;
 			sourceTree = "<group>";
 		};
+    93F2AEF71A6F7A6400CDF3D9 /* Alert */ = {
+      isa = PBXGroup;
+      children = (
+        93F2AEF81A6F7A8200CDF3D9 /* OMNOrderAlertManager.h */,
+        93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */,
+      );
+    name = Alert;
+    sourceTree = "<group>";
+    };
 		93F4DBDB1978F0CF00D06E32 /* SearchTable */ = {
 			isa = PBXGroup;
 			children = (

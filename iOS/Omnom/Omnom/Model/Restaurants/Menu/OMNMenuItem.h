@@ -10,6 +10,10 @@
 
 @interface OMNMenuItem : NSObject
 
+@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *parent_id;
+@property (nonatomic, copy) NSString *name;
+
 - (instancetype)initWithJsonData:(id)data;
 
 @end

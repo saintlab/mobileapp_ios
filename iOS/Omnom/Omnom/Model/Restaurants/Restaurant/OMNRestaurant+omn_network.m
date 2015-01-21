@@ -164,17 +164,17 @@
   }
   
   NSMutableArray *items = [NSMutableArray arrayWithCapacity:products.count];
-  
-  [products enumerateObjectsUsingBlock:^(OMNMenuProduct *menuItem, NSUInteger idx, BOOL *stop) {
-    
-    NSDictionary *item =
-    @{
-      @"internalId" : menuItem.internalId,
-      @"" : @(menuItem.quantity),
-      };
-    [items addObject:item];
-    
-  }];
+//  
+//  [products enumerateObjectsUsingBlock:^(OMNMenuProduct *menuItem, NSUInteger idx, BOOL *stop) {
+//    
+//    NSDictionary *item =
+//    @{
+//      @"internalId" : menuItem.internalId,
+//      @"" : @(menuItem.quantity),
+//      };
+//    [items addObject:item];
+//    
+//  }];
   
   __unused NSDictionary *info =
   @{

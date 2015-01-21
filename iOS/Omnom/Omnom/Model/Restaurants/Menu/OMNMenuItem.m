@@ -14,6 +14,10 @@
   self = [super init];
   if (self) {
     
+    self.id = [data[@"id"] description];
+    self.parent_id = [data[@"parent_id"] description];
+    self.name = data[@"name"];
+    
     NSArray *menuItems = data[@"menu"];
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:menuItems.count];
     
@@ -22,7 +26,7 @@
       [items addObject:menuItem];
     }
     
-    self.items = [items copy];
+//    self.items = [items copy];
     
   }
   return self;

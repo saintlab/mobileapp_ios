@@ -76,7 +76,7 @@
 //  @"qr-code-for-2-saintlab-iiko";
 //  @"qr-code-3-at-saintlab-iiko";
 //  @"http://omnom.menu/qr/special-and-vip";
-//  return @"http://m.2gis.ru/os/";
+  return @"http://m.2gis.ru/os/";
   return _launchQuery[@"qr"];
   
 }

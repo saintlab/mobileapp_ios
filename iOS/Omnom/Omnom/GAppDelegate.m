@@ -26,7 +26,6 @@
 #if OMN_TEST
   return YES;
 #endif
-  
   NSLog(@"didFinishLaunchingWithOptions>%@", launchOptions);
   
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
