@@ -25,6 +25,7 @@
 #import <BlocksKit+UIKit.h>
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import <OMNStyler.h>
+#import "OMNOrderAlertManager.h"
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -48,16 +49,13 @@ OMNPaymentFooterViewDelegate>
   BOOL _keyboardShown;
 
   UIView *_tableFadeView;
-  __weak OMNOrderPaymentVC *_orderPaymentVC;
-  
   OMNRestaurantMediator *_restaurantMediator;
-  
-  __weak UIAlertView *_updateAlertView;
   
 }
 
 - (void)dealloc {
   
+  [OMNOrderAlertManager sharedManager].order = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
 }
@@ -89,8 +87,10 @@ OMNPaymentFooterViewDelegate>
   [[OMNAnalitics analitics] logBillView:_restaurantMediator.selectedOrder];
 
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
+
   [self updateOrder];
+  [OMNOrderAlertManager sharedManager].order = _restaurantMediator.selectedOrder;
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restaurantOrdersDidChange) name:OMNRestaurantOrdersDidChangeNotification object:nil];
   
 }
 
@@ -110,6 +110,20 @@ OMNPaymentFooterViewDelegate>
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
+  __weak typeof(self)weakSelf = self;
+  [OMNOrderAlertManager sharedManager].didCloseBlock = ^{
+  
+    [weakSelf.delegate orderCalculationVCDidCancel:weakSelf];
+    
+  };
+  
+  [OMNOrderAlertManager sharedManager].didUpdateBlock = ^{
+    
+    [weakSelf updateOrder];
+    
+  };
+  [[OMNOrderAlertManager sharedManager] checkOrderIsClosed];
+  
   [self updateOrder];
   
 }
@@ -153,6 +167,12 @@ OMNPaymentFooterViewDelegate>
   
 }
 
+- (void)restaurantOrdersDidChange {
+  
+  [self updateTitle];
+  
+}
+
 - (void)selectedOrderTap {
   
   [self.delegate orderCalculationVCRequestOrders:self];
@@ -178,51 +198,6 @@ OMNPaymentFooterViewDelegate>
   
 }
 
-- (void)showCloseOrderAlertIfNeeded {
-  
-  if (_orderPaymentVC) {
-    return;
-  }
-  
-  [_updateAlertView dismissWithClickedButtonIndex:_updateAlertView.firstOtherButtonIndex animated:NO];
-  _updateAlertView = nil;
-  
-  __weak typeof(self)weakSelf = self;
-  [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_CLOSE_ALERT_TITLE", @"Этот счёт закрыт заведением для просмотра и оплаты") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_CLOSE_ALERT_BUTTON_TITLE", @"Выйти") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-    
-    [weakSelf.delegate orderCalculationVCDidCancel:weakSelf];
-    
-  }];
-  
-}
-
-- (void)orderDidChange:(NSNotification *)n {
-  
-  OMNOrder *changedOrder = n.userInfo[OMNOrderKey];
-  if ([changedOrder.id isEqualToString:_restaurantMediator.selectedOrder.id]) {
-    
-    [self showUpdateOrderAlertIfNeeded];
-    
-  }
-  
-}
-
-- (void)showUpdateOrderAlertIfNeeded {
-  
-  if (_orderPaymentVC
-      ||_updateAlertView) {
-    return;
-  }
-  
-  __weak typeof(self)weakSelf = self;
-  _updateAlertView = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_UPDATE_ALERT_TITLE", @"Этот счёт обновлён заведением") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_UPDATE_ALERT_BUTTON_TITLE", @"Обновить") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-    
-    [weakSelf updateOrder];
-    
-  }];
-  
-}
-
 - (void)updateOrder {
   
   OMNOrder *order = _restaurantMediator.selectedOrder;
@@ -236,11 +211,6 @@ OMNPaymentFooterViewDelegate>
     [self layoutTableView];
     [self updateTitle];
 
-  }
-  else {
-    
-    [self showCloseOrderAlertIfNeeded];
-    
   }
   
 }
@@ -292,7 +262,7 @@ OMNPaymentFooterViewDelegate>
   _scrollView.showsVerticalScrollIndicator = NO;
   [self.view addSubview:_scrollView];
   
-  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:nil];
+  _dataSource = [[OMNOrderDataSource alloc] init];
   
   _tableView = [self orderTableView];
   [_scrollView addSubview:_tableView];
@@ -360,14 +330,15 @@ OMNPaymentFooterViewDelegate>
 
 - (void)processCardPayment {
 
+  [OMNOrderAlertManager sharedManager].didCloseBlock = nil;
+  [OMNOrderAlertManager sharedManager].didUpdateBlock = nil;
+  
   OMNOrderPaymentVC *orderPaymentVC = [[OMNOrderPaymentVC alloc] initWithOrder:_restaurantMediator.selectedOrder restaurant:_restaurantMediator.restaurant];
   orderPaymentVC.delegate = self;
-  _orderPaymentVC = orderPaymentVC;
-  
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:orderPaymentVC];
   navigationController.delegate = self.navigationController.delegate;
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
-
+  
 }
 
 - (void)handlePan:(UIPanGestureRecognizer *)panGR {

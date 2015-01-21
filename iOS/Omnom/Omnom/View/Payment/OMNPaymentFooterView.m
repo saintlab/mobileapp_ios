@@ -157,18 +157,18 @@
   
   _amountControl.amount = _order.enteredAmount;
   _percentControl.percent = _order.customTip.percent;
-  [self updateToPayButton];
+  [self updatePaymentLabel];
   
 }
 
 - (void)updateToPayButton {
   
-  BOOL payButtonEnabled = (_order.enteredAmountWithTips > 0) ? (YES) : (NO);
+  long long enteredAmountWithTips = _order.enteredAmountWithTips;
+  BOOL payButtonEnabled = (enteredAmountWithTips > 0) ? (YES) : (NO);
   _payButton.enabled = payButtonEnabled;
-
   [UIView performWithoutAnimation:^{
     
-    [_payButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:_order.enteredAmountWithTips]] forState:UIControlStateNormal];
+    [_payButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:enteredAmountWithTips]] forState:UIControlStateNormal];
     
   }];
   
@@ -183,6 +183,7 @@
 
 - (void)setKeyboardShown:(BOOL)keyboardShown {
   
+  _keyboardShown = keyboardShown;
   CGFloat editingAlpha = (keyboardShown) ? (1.0f) : (0.0f);
   CGFloat nonEditingAlpha = (keyboardShown) ? (0.0f) : (1.0f);
   
@@ -233,21 +234,16 @@
     self.tipsMode = NO;
   }
   
-  BOOL amountEnteredOrEditing = (keyboardShown || _order.enteredAmountChanged);
-  
-  if (amountEnteredOrEditing) {
-
-    _payLabel.text = NSLocalizedString(@"PAYMENT_DID_PAY_LABEL_TEXT", @"Я оплачу");
-    
-  }
-  else {
-
-    _payLabel.text = NSLocalizedString(@"PAYMENT_TO_PAY_LABEL_TEXT", @"к оплате");
-    
-  }
-  
+  [self updatePaymentLabel];
   [self updateToPayButton];
   
+}
+
+- (void)updatePaymentLabel {
+  
+  BOOL amountEnteredOrEditing = (_keyboardShown || _order.enteredAmountChanged);
+  _payLabel.text = (amountEnteredOrEditing) ? (NSLocalizedString(@"PAYMENT_DID_PAY_LABEL_TEXT", @"Я оплачу")) : (NSLocalizedString(@"PAYMENT_TO_PAY_LABEL_TEXT", @"к оплате"));
+
 }
 
 - (IBAction)cancelEditingTap:(id)sender {

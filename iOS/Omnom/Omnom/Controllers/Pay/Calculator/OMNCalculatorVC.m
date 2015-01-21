@@ -16,6 +16,7 @@
 #import "UIView+frame.h"
 #import "OMNUtils.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "UIView+omn_autolayout.h"
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
 const CGFloat kCalculatorTopOffset = 40.0f;
@@ -66,13 +67,11 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [navSelector setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"nav_gray_bg"]]];
   [self.view addSubview:navSelector];
   
-  _fadeView = [[UIView alloc] init];
+  _fadeView = [UIView omn_autolayoutView];
   _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
-  _fadeView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_fadeView];
   
-  _totalButton = [[UIButton alloc] init];
-  _totalButton.translatesAutoresizingMaskIntoConstraints = NO;
+  _totalButton = [UIButton omn_autolayoutView];
   [_totalButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
   _totalButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
   [_totalButton setBackgroundImage:[UIImage imageNamed:@"button_green"] forState:UIControlStateNormal];
@@ -84,13 +83,14 @@ const CGFloat kCalculatorTopOffset = 40.0f;
     @"fadeView" : _fadeView,
     @"totalButton" : _totalButton,
     };
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:0 metrics:nil views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[fadeView(60)]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[fadeView(60)]|" options:kNilOptions metrics:nil views:views]];
   [_fadeView addConstraint:[NSLayoutConstraint constraintWithItem:_totalButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:_fadeView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [_fadeView addConstraint:[NSLayoutConstraint constraintWithItem:_totalButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_fadeView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   
   _containerView = [[UIView alloc] init];
   [self.view addSubview:_containerView];
+  [self updateContainerViewFrame];
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
@@ -153,6 +153,12 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 - (void)viewWillLayoutSubviews {
   
   [super viewWillLayoutSubviews];
+  [self updateContainerViewFrame];
+  
+}
+
+- (void)updateContainerViewFrame {
+
   CGRect toFrame = self.view.bounds;
   toFrame.origin.y = kCalculatorTopOffset;
   toFrame.size.height -= kCalculatorTopOffset;
@@ -160,10 +166,10 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
 }
 
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   self.navigationController.navigationBar.shadowImage = [UIImage imageNamed:@"nav_gray_bg"];
+  
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -213,12 +219,12 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   switch (index) {
     case 0: {
       
-      [self swapFromViewController:[self.childViewControllers objectAtIndex:0] toViewController:self.firstViewController right:YES];
+      [self swapFromViewController:[self.childViewControllers firstObject] toViewController:self.firstViewController right:YES];
       
     } break;
     case 1: {
       
-      [self swapFromViewController:[self.childViewControllers objectAtIndex:0] toViewController:self.secondViewController right:NO];
+      [self swapFromViewController:[self.childViewControllers firstObject] toViewController:self.secondViewController right:NO];
       
     } break;
   }

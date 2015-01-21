@@ -20,36 +20,6 @@
 
 @implementation OMNOrderDataSource
 
-- (void)dealloc {
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-}
-
-- (instancetype)initWithOrder:(OMNOrder *)order {
-  self = [super init];
-  if (self) {
-    
-    _order = order;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
-    
-  }
-  return self;
-}
-
-- (void)orderDidChange:(NSNotification *)n {
-  
-  OMNOrder *changedOrder = n.userInfo[OMNOrderKey];
-  
-  if ([changedOrder.id isEqualToString:changedOrder.id]) {
-    
-    [_order updateWithOrder:changedOrder];
-    
-  }
-  
-}
-
 - (void)registerCellsForTableView:(UITableView *)tableView {
   
   [tableView registerClass:[OMNOrderItemCell class] forCellReuseIdentifier:@"OMNOrderItemCell"];

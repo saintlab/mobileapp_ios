@@ -53,5 +53,6 @@ extern NSString * const OMNFacebookAppUrlString;
 + (NSString *)crashlyticsAPIKey;
 
 + (NSString *)pushSoundName;
++ (BOOL)disableOnEntrancePush;
 
 @end

@@ -31,7 +31,7 @@
     _label.font = FuturaOSFOmnomMedium(20.0f);
     [self addSubview:_label];
     
-    _orderDataSource = [[OMNOrderDataSource alloc] initWithOrder:nil];
+    _orderDataSource = [[OMNOrderDataSource alloc] init];
 
     CGFloat tableWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
     CGFloat scale = CGRectGetWidth(self.frame)/tableWidth;

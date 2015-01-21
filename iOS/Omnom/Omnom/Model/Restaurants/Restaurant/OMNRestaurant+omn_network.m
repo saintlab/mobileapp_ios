@@ -32,7 +32,14 @@
 
 - (void)handleAtTheTableEvent1WithCompletion:(dispatch_block_t)completionBlock {
   
-  if (!self.id) {
+  if (!self.id ||
+      [OMNConstants disableOnEntrancePush]) {
+    
+    if (completionBlock) {
+      
+      completionBlock();
+      
+    }
     return;
   }
   
