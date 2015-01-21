@@ -80,7 +80,6 @@ extern NSInteger const kCustomTipIndex;
 @property (nonatomic, assign) NSInteger selectedTipIndex;
 
 - (instancetype)initWithJsonData:(id)jsonData;
-- (void)updateWithOrder:(OMNOrder *)order;
 - (BOOL)paymentValueIsTooHigh;
 - (BOOL)hasSelectedItems;
 - (long long)totalAmount;

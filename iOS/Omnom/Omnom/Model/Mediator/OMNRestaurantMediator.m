@@ -131,27 +131,36 @@ OMNOrderCalculationVCDelegate>
   
   dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
   
+  NSString *selectedOrderID = self.selectedOrder.id;
+  NSMutableArray *orders = [self.orders mutableCopy];
+  __block BOOL ordersDidChange = NO;
   [self.orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
     
     if ([changedOrder.id isEqualToString:order.id]) {
-      [order updateWithOrder:changedOrder];
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification
-                                                          object:self
-                                                        userInfo:@{OMNOrderKey : order}];
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification
-                                                          object:self];
-      
+      [orders replaceObjectAtIndex:idx withObject:changedOrder];
+      ordersDidChange = YES;
       *stop = YES;
     }
     
   }];
   
-  if ([changedOrder.id isEqualToString:self.selectedOrder.id]) {
+  if (ordersDidChange) {
+
+    if ([changedOrder.id isEqualToString:selectedOrderID]) {
+      
+      self.selectedOrder = changedOrder;
+      
+    }
+    self.orders = orders;
     
-    self.selectedOrder = self.selectedOrder;
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification
+                                                        object:self
+                                                      userInfo:@{OMNOrderKey : changedOrder}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification
+                                                        object:self];
+
     
   }
-  
   dispatch_semaphore_signal(_ordersLock);
   
 }

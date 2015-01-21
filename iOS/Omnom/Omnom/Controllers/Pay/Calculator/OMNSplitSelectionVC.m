@@ -8,6 +8,7 @@
 
 #import "OMNSplitSelectionVC.h"
 #import <OMNStyler.h>
+#import "OMNOrderAlertManager.h"
 
 @interface OMNSplitSelectionVC ()
 <UIPickerViewDataSource,
@@ -53,6 +54,18 @@ UIPickerViewDelegate>
   
   _numberOfGuestsPicker.backgroundColor = [UIColor whiteColor];
   [self setNumberOfGuests:1];
+  
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+ 
+  __weak typeof(self)weakSelf = self;
+  [OMNOrderAlertManager sharedManager].didUpdateBlock = ^{
+    
+    [weakSelf updateTotalValue];
+    
+  };
   
 }
 

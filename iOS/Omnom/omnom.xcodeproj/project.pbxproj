@@ -497,6 +497,8 @@
 		93F21BEB19B6283300D5F78A /* config_laaaab.json in Resources */ = {isa = PBXBuildFile; fileRef = 93F21BE919B6283300D5F78A /* config_laaaab.json */; };
 		93F21BED19B6284B00D5F78A /* config_stand.json in Resources */ = {isa = PBXBuildFile; fileRef = 93F21BEC19B6284B00D5F78A /* config_stand.json */; };
 		93F21BEE19B6284B00D5F78A /* config_stand.json in Resources */ = {isa = PBXBuildFile; fileRef = 93F21BEC19B6284B00D5F78A /* config_stand.json */; };
+		93F2AEFA1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */; };
+		93F2AEFB1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */; };
 		93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		93FEEB321A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		C6C76590351C4176B35ECE19 /* libPods-omnomTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C1CE5E4E1243D5AFFD1065 /* libPods-omnomTests.a */; };
@@ -1022,6 +1024,8 @@
 		93F21B8F19B6031B00D5F78A /* OMNLightBackgroundButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLightBackgroundButton.m; sourceTree = "<group>"; };
 		93F21BE919B6283300D5F78A /* config_laaaab.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_laaaab.json; sourceTree = "<group>"; };
 		93F21BEC19B6284B00D5F78A /* config_stand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_stand.json; sourceTree = "<group>"; };
+		93F2AEF81A6F7A8200CDF3D9 /* OMNOrderAlertManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderAlertManager.h; sourceTree = "<group>"; };
+		93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderAlertManager.m; sourceTree = "<group>"; };
 		93FEEB2F1A43E166002ED717 /* OMNEditPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditPercentControl.h; sourceTree = "<group>"; };
 		93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditPercentControl.m; sourceTree = "<group>"; };
 		9BCE6415AF2807DAACF8AC44 /* Pods-omnomTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnomTests.appstore.xcconfig"; path = "../Pods/Target Support Files/Pods-omnomTests/Pods-omnomTests.appstore.xcconfig"; sourceTree = "<group>"; };
@@ -1743,6 +1747,7 @@
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				93F2AEF71A6F7A6400CDF3D9 /* Alert */,
 				935FF1411A6CE29B004B69A6 /* Preorder */,
 				937C3E6E1A2824D7006525A9 /* Location */,
 				93E58CA91A2455DF008064F9 /* Permission */,
@@ -2246,6 +2251,15 @@
 			path = Mail.ru;
 			sourceTree = "<group>";
 		};
+		93F2AEF71A6F7A6400CDF3D9 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				93F2AEF81A6F7A8200CDF3D9 /* OMNOrderAlertManager.h */,
+				93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */,
+			);
+			name = Alert;
+			sourceTree = "<group>";
+		};
 		93F4DBDB1978F0CF00D06E32 /* SearchTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -2551,6 +2565,7 @@
 				93D117851A2F1ABF000131C4 /* OMNVersionUserInfoItem.m in Sources */,
 				933A9EBA1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */,
 				934FC72E19D054F8008AC4B0 /* OMNOrderPaid.m in Sources */,
+				93F2AEFA1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */,
 				9351677119BFF7460071DA57 /* OMNImageManager.m in Sources */,
 				937A37331980F68200EF5C31 /* OMNLoaderView.m in Sources */,
 				93175DC019C2DD2D005EE4C6 /* UIImage+ImageEffects.m in Sources */,
@@ -2851,6 +2866,7 @@
 				937822891963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
 				9328F3991988C6360065DC58 /* OMNSocketManager.m in Sources */,
 				936E71F219921B5C008FF864 /* OMNErrorTextField.m in Sources */,
+				93F2AEFB1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */,
 				93B9049919655168007D21C4 /* OMNRatingProductCell.m in Sources */,
 				9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */,
 				93245DB71A1C60520065D4EC /* OMNMailRuBankCardMediator.m in Sources */,

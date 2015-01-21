@@ -76,7 +76,6 @@
   
   self.selectionStyle = UITableViewCellSelectionStyleDefault;
   self.selectedBackgroundView = [[UIView alloc] init];
-  self.selectedBackgroundView.layer.masksToBounds = YES;
   self.selectedBackgroundView.backgroundColor = ([UIColor colorWithRed:2/255. green:193/255. blue:100/255. alpha:1]);
   
   UIView *selectedSeporatorView = [UIView omn_autolayoutView];
@@ -124,6 +123,8 @@
   
   [self.selectedBackgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[selectedSeporatorView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.selectedBackgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[selectedSeporatorView(1)]-(0.5)-|" options:kNilOptions metrics:metrics views:views]];
+ 
+  [self layoutIfNeeded];
   
 }
 

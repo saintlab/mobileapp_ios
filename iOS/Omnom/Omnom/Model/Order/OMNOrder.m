@@ -153,23 +153,6 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
   return self;
 }
 
-- (void)updateWithOrder:(OMNOrder *)order {
-  
-  [self deselectAllItems];
-  _guests = order.guests;
-  
-  if (order.paid) {
-    
-    self.paid = order.paid;
-    
-  }
-
-  _tips = order.tips;
-  [self resetEnteredAmount];
-  [self resetTip];
-  
-}
-
 - (void)resetTip {
   
   if (self.totalAmount == 0 &&

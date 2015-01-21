@@ -10,6 +10,7 @@
 #import "OMNOrderDataSource.h"
 #import "OMNOrder.h"
 #import <BlocksKit+UIKit.h>
+#import "OMNOrderAlertManager.h"
 
 @interface OMNProductSelectionVC ()
 
@@ -21,12 +22,6 @@
   
   OMNRestaurantMediator *_restaurantMediator;
   BOOL _didClose;
-  
-}
-
-- (void)dealloc {
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
   
 }
 
@@ -43,7 +38,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
    
-  _dataSource = [[OMNOrderDataSource alloc] initWithOrder:_restaurantMediator.selectedOrder];
+  _dataSource = [[OMNOrderDataSource alloc] init];
   [_dataSource registerCellsForTableView:self.tableView];
   
   __weak typeof(self)weakSelf = self;
@@ -64,9 +59,29 @@
   self.tableView.delegate = _dataSource;
   self.tableView.allowsMultipleSelection = YES;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  
+}
 
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNOrderDidChangeNotification object:nil];
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+ 
+  [self updateOrder];
+  
+  __weak typeof(self)weakSelf = self;
+  [OMNOrderAlertManager sharedManager].didUpdateBlock = ^{
+    
+    [weakSelf updateOrder];
+    
+  };
+  
+}
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  [self updateTotalValue];
+  [self checkConditionAndSelectProducts];
+  
 }
 
 - (void)handleClose {
@@ -79,8 +94,9 @@
   
 }
 
-- (void)orderDidChange:(NSNotification *)n {
+- (void)updateOrder {
   
+  _dataSource.order = _restaurantMediator.selectedOrder;
   [self.tableView reloadData];
   [self updateTotalValue];
   
@@ -125,14 +141,6 @@
   
   [_dataSource updateTableView:self.tableView atIndexPath:indexPath];
   [self updateTotalValue];
-  
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
-
-  [self updateTotalValue];
-  [self checkConditionAndSelectProducts];
   
 }
 

@@ -14,7 +14,7 @@
 @property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
 @property (nonatomic, assign) BOOL waiterIsCalled;
 @property (nonatomic, strong) OMNTable *table;
-@property (nonatomic, strong) OMNOrder *selectedOrder;
+@property (nonatomic, weak) OMNOrder *selectedOrder;
 @property (nonatomic, strong) NSArray *orders;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC;
