@@ -1838,6 +1838,7 @@
 			isa = PBXGroup;
 			children = (
 				935FF1611A6D3EB3004B69A6 /* Menu */,
+				93F2AEFC1A6FFFF200CDF3D9 /* Beacon */,
 				93F2AEF71A6F7A6400CDF3D9 /* Alert */,
 				935FF1411A6CE29B004B69A6 /* Preorder */,
 				937C3E6E1A2824D7006525A9 /* Location */,

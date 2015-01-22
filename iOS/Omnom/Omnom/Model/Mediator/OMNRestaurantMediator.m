@@ -22,6 +22,7 @@
 #import "OMNNoOrdersVC.h"
 #import "OMNPreorderConfirmVC.h"
 #import "OMNNavigationController.h"
+#import "OMNLaunchHandler.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
