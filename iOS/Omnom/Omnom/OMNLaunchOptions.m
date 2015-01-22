@@ -39,7 +39,6 @@
     //  return @"http://m.2gis.ru/os/";
     //  _hashString = @"hash-QWERTY-restaurant-B";
 #endif
-    
   }
   return self;
 }

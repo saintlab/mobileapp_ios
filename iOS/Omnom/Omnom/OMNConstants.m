@@ -203,7 +203,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   return [self stringForKey:@"CrashlyticsAPIKey"];
 }
 + (BOOL)disableOnEntrancePush {
-  return [self tokenForKey:@"disableOnEntrancePush"];
+  return [[self tokenForKey:@"disableOnEntrancePush"] boolValue];
 }
 
 + (NSString *)pushSoundName {
