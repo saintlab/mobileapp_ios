@@ -16,6 +16,7 @@
 #import <BlocksKit.h>
 #import "OMNLaunchHandler.h"
 #import "OMNRestaurantManager.h"
+#import "OMNNearestBeaconSearchManager.h"
 
 @implementation GAppDelegate {
   
@@ -31,13 +32,15 @@
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   [OMNConstants setupWithLaunchOptions:lo completion:^{
     
+    NSLog(@"config loaded");
+    
     [[OMNAnalitics analitics] setup];
     
     [[OMNAuthorization authorisation] registerForRemoteNotificationsIfPossible];
     
-    [[OMNBeaconBackgroundManager manager] setDidFindBeaconsBlock:^(NSArray *beacons, dispatch_block_t comletionBlock) {
+    [[OMNBeaconBackgroundManager manager] setDidEnterBeaconsRegionBlock:^{
       
-      [[OMNRestaurantManager sharedManager] handleBackgroundBeacons:beacons withCompletion:comletionBlock];
+      [[OMNNearestBeaconSearchManager sharedManager] findNearestBeaconsWithCompletion:nil];
       
     }];
     

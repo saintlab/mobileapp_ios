@@ -281,6 +281,12 @@ OMNOrderCalculationVCDelegate>
     [self showOrders];
     
   }
+  else if ([OMNLaunchHandler sharedHandler].launchOptions.showTableOrders) {
+    
+    [OMNLaunchHandler sharedHandler].launchOptions.showTableOrders = NO;
+    [self callBill];
+    
+  }
   
 }
 

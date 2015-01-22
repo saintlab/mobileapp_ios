@@ -3,6 +3,8 @@
   "authorizationUrlString" : "http://wicket.laaaab.com",
   "notifierUrlString" : "http://notifier.laaaab.com",
   
+  "AuthToken" : "Ga7Rc1lBabcEIOoqd8MsSejzsroI01En",
+
   "MixpanelToken" : "da0247cf586fac84dadf9fe36754d82a",
   "MixpanelTokenDebug" : "da0247cf586fac84dadf9fe36754d82a"
 }

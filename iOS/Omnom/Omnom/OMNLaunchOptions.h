@@ -14,11 +14,13 @@
 @property (nonatomic, copy, readonly) NSString *customConfigName;
 @property (nonatomic, copy, readonly) NSString *qr;
 @property (nonatomic, copy, readonly) NSString *hashString;
+@property (nonatomic, assign) BOOL showTableOrders;
 @property (nonatomic, strong, readonly) NSArray *restaurants;
 @property (nonatomic, assign, readonly) BOOL applicationWasOpenedByBeacon;
 
 - (instancetype)initWithLaunchOptions:(NSDictionary *)launchOptions;
 - (instancetype)initWithURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 - (instancetype)initWithLocanNotification:(UILocalNotification *)localNotification;
+- (instancetype)initWithRemoteNotification:(NSDictionary *)info;
 
 @end

@@ -70,6 +70,8 @@
     @"device_type" : @(1),
     };
   
+  NSLog(@"register device> %@", parameters);
+  
   [self POST:@"/push/register_device" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
     if (![responseObject omn_isSuccessResponse]) {

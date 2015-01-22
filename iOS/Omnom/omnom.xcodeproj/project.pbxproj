@@ -521,6 +521,8 @@
 		93F2AEF61A6E802100CDF3D9 /* OMNMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */; };
 		93F2AEFA1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */; };
 		93F2AEFB1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */; };
+		93F2AEFF1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */; };
+		93F2AF001A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */; };
 		93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		93FEEB321A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		C6C76590351C4176B35ECE19 /* libPods-omnomTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C1CE5E4E1243D5AFFD1065 /* libPods-omnomTests.a */; };
@@ -1069,6 +1071,8 @@
 		93F2AEF41A6E802100CDF3D9 /* OMNMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuItem.m; sourceTree = "<group>"; };
 		93F2AEF81A6F7A8200CDF3D9 /* OMNOrderAlertManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderAlertManager.h; sourceTree = "<group>"; };
 		93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderAlertManager.m; sourceTree = "<group>"; };
+		93F2AEFD1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNearestBeaconSearchManager.h; sourceTree = "<group>"; };
+		93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNearestBeaconSearchManager.m; sourceTree = "<group>"; };
 		93FEEB2F1A43E166002ED717 /* OMNEditPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditPercentControl.h; sourceTree = "<group>"; };
 		93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditPercentControl.m; sourceTree = "<group>"; };
 		9BCE6415AF2807DAACF8AC44 /* Pods-omnomTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnomTests.appstore.xcconfig"; path = "../Pods/Target Support Files/Pods-omnomTests/Pods-omnomTests.appstore.xcconfig"; sourceTree = "<group>"; };
@@ -2364,6 +2368,15 @@
 			name = Alert;
 			sourceTree = "<group>";
 		};
+		93F2AEFC1A6FFFF200CDF3D9 /* Beacon */ = {
+			isa = PBXGroup;
+			children = (
+				93F2AEFD1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.h */,
+				93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */,
+			);
+			name = Beacon;
+			sourceTree = "<group>";
+		};
 		93F4DBDB1978F0CF00D06E32 /* SearchTable */ = {
 			isa = PBXGroup;
 			children = (
@@ -2697,6 +2710,7 @@
 				939F991C19752BE90051822E /* OMNUserInfoVC.m in Sources */,
 				93D9EB231A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */,
 				9391F6621A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */,
+				93F2AEFF1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */,
 				936E71DA1991FEFF008FF864 /* OMNViewController.m in Sources */,
 				939F992619752BE90051822E /* OMNRegisterUserVC.m in Sources */,
 				93E435B71998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */,
@@ -2920,6 +2934,7 @@
 				933A9E971A4B19A5001C0909 /* OMNRestaurantAddress.m in Sources */,
 				9390D25F1966DA68007E13AB /* OMNRestaurantMediator.m in Sources */,
 				93175DC119C2DD2D005EE4C6 /* UIImage+ImageEffects.m in Sources */,
+				93F2AF001A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */,
 				93363FFE1A1B709D009D16CE /* OMNNotifierManager.m in Sources */,
 				93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,

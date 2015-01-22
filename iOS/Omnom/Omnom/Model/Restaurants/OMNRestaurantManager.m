@@ -126,15 +126,6 @@
 
 - (void)handleBackgroundDecodedRestaurant:(OMNRestaurant *)restaurant withCompletion:(dispatch_block_t)completionBlock {
   
-  [restaurant handleEnterEventWithCompletion:nil];
-  [restaurant handleAtTheTableEvent1WithCompletion:completionBlock];
-  return;
-  
-  NSDate *pushDate = _tablePushEvents[restaurant.id];
-  if (nil == pushDate &&
-      ([[NSDate date] timeIntervalSinceDate:pushDate] > 4*60*60)) {
-  }
-  
   if (restaurant.hasTable) {
     
     [[OMNDevicePositionManager sharedManager] getDevicePosition:^(BOOL onTable) {

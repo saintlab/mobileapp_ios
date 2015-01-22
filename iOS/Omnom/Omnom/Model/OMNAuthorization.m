@@ -80,7 +80,9 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (NSString *)savedUserPath {
   
   NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-  return [documentsDirectory stringByAppendingPathComponent:@"user.dat"];
+  NSURL *baseURL = [NSURL URLWithString:[OMNConstants baseUrlString]];
+  NSString *path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-user.dat", baseURL.resourceSpecifier]];
+  return path;
   
 }
 

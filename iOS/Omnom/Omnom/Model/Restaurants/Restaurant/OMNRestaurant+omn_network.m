@@ -16,69 +16,11 @@
 
 - (void)handleEnterEventWithCompletion:(dispatch_block_t)completionBlock {
   
-  [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackground];
-  if (completionBlock) {
-    completionBlock();
-  }
+  if ([self readyForEnter]) {
   
-}
-
-- (NSString *)path {
-  
-  NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-  return [documentsDirectory stringByAppendingPathComponent:@"restaurant_push_data.dat"];
-  
-}
-
-- (void)handleAtTheTableEvent1WithCompletion:(dispatch_block_t)completionBlock {
-  
-  if (!self.id ||
-      [OMNConstants disableOnEntrancePush]) {
-    
-    if (completionBlock) {
-      
-      completionBlock();
-      
-    }
-    return;
-  }
-  
-  NSString *path = [self path];
-  NSMutableDictionary *restaurant_push_data = [NSMutableDictionary dictionaryWithContentsOfFile:path];
-  if (!restaurant_push_data) {
-    
-    restaurant_push_data = [NSMutableDictionary dictionary];
-    
-  }
-  NSDate *date = restaurant_push_data[self.id];
-  if (nil == date ||
-      [[NSDate date] timeIntervalSinceDate:date] > 4*60*60) {
-
-    OMNPushText *at_entrance = self.mobile_texts.at_entrance;
-    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-    localNotification.alertBody = at_entrance.greeting;
-    localNotification.alertAction = at_entrance.open_action;
-    localNotification.soundName = kPushSoundName;
-    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
-
-    restaurant_push_data[self.id] = [NSDate date];
-    [restaurant_push_data writeToFile:path atomically:YES];
-    
-  }
-  
-  completionBlock();
-  
-}
-
-- (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock {
-  
-  [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackgroundTable];
-  [self showGreetingPush];
-  
-  if (1 == self.tables.count) {
-    
-    OMNTable *table = [self.tables firstObject];
-    [table newGuestWithCompletion:completionBlock];
+    [self setLastEntarDate:[NSDate date]];
+    [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackground];
+    [self nearbyWithCompletion:completionBlock];
     
   }
   else {
@@ -89,42 +31,132 @@
   
 }
 
+- (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock {
+  
+  if (self.hasTable) {
+    
+    [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackgroundTable];
+    [self showGreetingPushIfPossible];
+    OMNTable *table = [self.tables firstObject];
+    [self entranceWithCompletion:^{
+    
+      [table newGuestWithCompletion:completionBlock];
+      
+    }];
+  }
+  else {
+    
+    completionBlock();
+    
+  }
+  
+}
+
+- (NSDate *)lastEnterDate {
+  
+  NSMutableDictionary *lastEnterDates = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEnterDates"];
+  return lastEnterDates[self.id];
+  
+}
+
+- (void)setLastEntarDate:(NSDate *)date {
+  
+  NSMutableDictionary *lastEnterDates = [[[NSUserDefaults standardUserDefaults] objectForKey:@"lastEnterDates"] mutableCopy];
+  if (!lastEnterDates) {
+    lastEnterDates = [NSMutableDictionary dictionary];
+  }
+  lastEnterDates[self.id] = date;
+  [[NSUserDefaults standardUserDefaults] setObject:lastEnterDates forKey:@"lastEnterDates"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+  
+}
+
+- (NSDate *)lastPushDate {
+  
+  NSMutableDictionary *lastPushDates = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastPushDates"];
+  return lastPushDates[self.id];
+  
+}
+
+- (void)setLastPushDate:(NSDate *)date {
+  
+  NSMutableDictionary *lastPushDates = [[[NSUserDefaults standardUserDefaults] objectForKey:@"lastPushDates"] mutableCopy];
+  if (!lastPushDates) {
+    lastPushDates = [NSMutableDictionary dictionary];
+  }
+  lastPushDates[self.id] = date;
+  [[NSUserDefaults standardUserDefaults] setObject:lastPushDates forKey:@"lastPushDates"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+  
+}
+
 - (BOOL)readyForPush {
   
-  if (UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+  if (!self.id) {
     return NO;
   }
-//  BOOL readyForPush = ([[NSDate date] timeIntervalSinceDate:self.foundDate] > 4*60*60);
+  
+  if ([OMNConstants disableOnEntrancePush]) {
+    return NO;
+  }
+  
+  if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+    return NO;
+  }
+
   BOOL readyForPush = YES;
+  const NSTimeInterval timeIntervalForLocalPush = 4.0*60.0*60.0;
+  NSDate *lastPushDate = [self lastPushDate];
+  
+  if (lastPushDate &&
+      [lastPushDate timeIntervalSinceDate:[NSDate date]] < timeIntervalForLocalPush) {
+    
+    readyForPush = NO;
+    
+  }
+  
   return readyForPush;
   
 }
 
-- (void)showGreetingPush {
+- (BOOL)readyForEnter {
   
-  if (!self.readyForPush) {
-    return;
+  BOOL readyForEnter = YES;
+  const NSTimeInterval timeIntervalForEnter = 20.0*60.0;
+  NSDate *lastEnterDate = [self lastEnterDate];
+  if (lastEnterDate &&
+      [lastEnterDate timeIntervalSinceDate:[NSDate date]] < timeIntervalForEnter) {
+    
+    readyForEnter = NO;
+    
   }
   
-  OMNPushText *at_entrance = self.mobile_texts.at_entrance;
-  UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+  return readyForEnter;
   
-  localNotification.alertBody = at_entrance.greeting;
-  localNotification.alertAction = at_entrance.open_action;
-  localNotification.soundName = kPushSoundName;
-  [[OMNAnalitics analitics] logDebugEvent:@"push_sent" parametrs:@{@"text" : (at_entrance.greeting ? (at_entrance.greeting) : (@""))}];
+}
+
+- (void)showGreetingPushIfPossible {
+  
+  if ([self readyForPush]) {
+    
+    [self setLastPushDate:[NSDate date]];
+    
+    OMNPushText *at_entrance = self.mobile_texts.at_entrance;
+    UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+    localNotification.alertBody = at_entrance.greeting;
+    localNotification.alertAction = at_entrance.open_action;
+    localNotification.soundName = kPushSoundName;
+    [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
+
+  }
+
+  
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
   //    if ([localNotification respondsToSelector:@selector(category)]) {
   //      [localNotification performSelector:@selector(setCategory:) withObject:@"incomingCall"];
   //    }
 #pragma clang diagnostic pop
-  
-  localNotification.userInfo =
-  @{
-    OMNRestaurantNotificationLaunchKey : [NSKeyedArchiver archivedDataWithRootObject:self],
-    };
-  [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
   
 }
 
@@ -214,40 +246,49 @@
   }];
 }
 
-- (void)nearby {
+- (void)nearbyWithCompletion:(dispatch_block_t)completionBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/nearby", self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"nearby>%@", responseObject);
+    completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    completionBlock();
     
   }];
   
 }
 
-- (void)entrance {
+- (void)entranceWithCompletion:(dispatch_block_t)completionBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/entrance", self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"entrance>%@", responseObject);
+    completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    completionBlock();
     
   }];
   
 }
 
-- (void)leave {
+- (void)leaveWithCompletion:(dispatch_block_t)completionBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/leave", self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     NSLog(@"leave>%@", responseObject);
+    completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    completionBlock();
     
   }];
   

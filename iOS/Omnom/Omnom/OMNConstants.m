@@ -37,9 +37,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 + (void)setupWithLaunchOptions:(OMNLaunchOptions *)launchOptions completion:(dispatch_block_t)completionBlock {
   
   _customConfig = [self configWithName:launchOptions.customConfigName];
-
-#warning _customConfig
-//  _customConfig = [self configWithName:@"config_laaaab"];
   
   //setup keychain for background usage
   [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];
@@ -81,7 +78,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
       [[OMNAnalitics analitics] logTargetEvent:@"ERROR_CONFIG" parametrs:parametrs];
       
     }
-      
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -206,7 +202,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   return [self stringForKey:@"CrashlyticsAPIKey"];
 }
 + (BOOL)disableOnEntrancePush {
-  return [self boolForKey:@"disableOnEntrancePush"];
+  return [[self tokenForKey:@"disableOnEntrancePush"] boolValue];
 }
 
 + (NSString *)pushSoundName {
