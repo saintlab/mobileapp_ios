@@ -20,6 +20,7 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNSocketManager.h"
 #import "OMNNoOrdersVC.h"
+#import "OMNLaunchHandler.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -277,6 +278,12 @@ OMNOrderCalculationVCDelegate>
       !_ordersDidShow) {
     
     [self showOrders];
+    
+  }
+  else if ([OMNLaunchHandler sharedHandler].launchOptions.showTableOrders) {
+    
+    [OMNLaunchHandler sharedHandler].launchOptions.showTableOrders = NO;
+    [self callBill];
     
   }
   

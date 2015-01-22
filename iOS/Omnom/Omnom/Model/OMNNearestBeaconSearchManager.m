@@ -12,6 +12,7 @@
 #import "OMNBeaconRangingManager.h"
 #import "OMNFoundBeacons.h"
 #import "OMNBluetoothManager.h"
+#import "OMNRestaurantManager.h"
 
 @interface OMNNearestBeaconSearchManager ()
 
@@ -24,24 +25,36 @@
 @implementation OMNNearestBeaconSearchManager {
   
   OMNBeaconRangingManager *_beaconRangingManager;
-  OMNDidFindNearestBeaconBlock _didFindNearestBeaconBlock;
-  dispatch_block_t _failureBlock;
+  dispatch_block_t _didFindNearestBeaconBlock;
   UIBackgroundTaskIdentifier _searchBeaconTask;
   NSTimer *_beaconRangingTimeoutTimer;
   OMNFoundBeacons *_foundBeacons;
   
 }
 
-- (void)dealloc {
-  
-  [self stop];
-  
++ (instancetype)sharedManager {
+  static id manager = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    manager = [[[self class] alloc] init];
+  });
+  return manager;
+}
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    
+    _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:nil];
+    
+  }
+  return self;
 }
 
 - (void)stopRangingBeacons {
   
   [_beaconRangingTimeoutTimer invalidate], _beaconRangingTimeoutTimer = nil;
-  [_beaconRangingManager stop], _beaconRangingManager = nil;
+  [_beaconRangingManager stop];
   
 }
 
@@ -49,11 +62,9 @@
   
   [self stopRangingBeacons];
   
-  _didFindNearestBeaconBlock = nil;
-  _failureBlock = nil;
-
   if (UIBackgroundTaskInvalid != _searchBeaconTask) {
     
+    NSLog(@"did finish background ranging");
     [[UIApplication sharedApplication] endBackgroundTask:_searchBeaconTask];
     _searchBeaconTask = UIBackgroundTaskInvalid;
     
@@ -61,32 +72,43 @@
   
 }
 
-- (void)didFail {
+- (void)didFinish {
   
-  if (_failureBlock) {
+  [self stop];
+  if (_didFindNearestBeaconBlock) {
     
-    _failureBlock();
+    _didFindNearestBeaconBlock();
+    _didFindNearestBeaconBlock = nil;
     
   }
-  [self stop];
   
 }
 
-- (void)findNearestBeacons:(OMNDidFindNearestBeaconBlock)didFindNearestBeaconBlock failure:(dispatch_block_t)failureBlock {
+- (void)findNearestBeaconsWithCompletion:(dispatch_block_t)didFindNearestBeaconBlock {
 
-  [self stop];
-  _didFindNearestBeaconBlock = [didFindNearestBeaconBlock copy];
-  _failureBlock = [failureBlock copy];
+  if (_beaconRangingManager.ranging) {
+    
+    if (didFindNearestBeaconBlock) {
+      didFindNearestBeaconBlock();
+    }
+    return;
+    
+  }
   
   __weak typeof(self)weakSelf = self;
   _searchBeaconTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
     
-    [weakSelf didFail];
+    [weakSelf didFinish];
     
   }];
+
+  [self stopRangingBeacons];
+
+  _didFindNearestBeaconBlock = [didFindNearestBeaconBlock copy];
+  
   
   if (![CLLocationManager isRangingAvailable]) {
-    [self didFail];
+    [self didFinish];
     return;
   }
   
@@ -99,21 +121,19 @@
     }
     else {
       
-      [weakSelf didFail];
+      [weakSelf didFinish];
       
     }
     
   }];
-  
   
 }
 
 - (void)startRangingBeacons {
   
   _foundBeacons = [[OMNFoundBeacons alloc] init];
-  _beaconRangingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFail) userInfo:nil repeats:NO];
+  _beaconRangingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFinish) userInfo:nil repeats:NO];
   __weak typeof(self)weakSelf = self;
-  _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:nil];
   
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
@@ -121,12 +141,11 @@
     
   } failure:^(NSError *error) {
     
-    [weakSelf didFail];
+    [weakSelf didFinish];
     
   }];
   
 }
-
 
 - (void)didRangeBeacons:(NSArray *)beacons {
 
@@ -143,13 +162,13 @@
 - (void)didFoundBeacons {
   
   [self stopRangingBeacons];
-  if (_didFindNearestBeaconBlock) {
+  NSArray *nearestBeacons = _foundBeacons.allBeacons;
+  __weak typeof(self)weakSelf = self;
+  [[OMNRestaurantManager sharedManager] handleBackgroundBeacons:nearestBeacons withCompletion:^{
     
-    _didFindNearestBeaconBlock(_foundBeacons.allBeacons);
+    [weakSelf didFinish];
     
-  }
-  
-  [self stop];
+  }];
 
 }
 

@@ -37,9 +37,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 + (void)setupWithLaunchOptions:(OMNLaunchOptions *)launchOptions completion:(dispatch_block_t)completionBlock {
   
   _customConfig = [self configWithName:launchOptions.customConfigName];
-
-#warning _customConfig
-//  _customConfig = [self configWithName:@"config_laaaab"];
   
   //setup keychain for background usage
   [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];
@@ -94,7 +91,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
     [mRequest setValue:@"yeshackvofPigCob" forHTTPHeaderField:@"x-authentication-token"];
 #warning token
-//    [mRequest setValue:@"Ga7Rc1lBabcEIOoqd8MsSejzsroI01En" forHTTPHeaderField:@"x-authentication-token"];
+    [mRequest setValue:@"Ga7Rc1lBabcEIOoqd8MsSejzsroI01En" forHTTPHeaderField:@"x-authentication-token"];
   }
   
 }

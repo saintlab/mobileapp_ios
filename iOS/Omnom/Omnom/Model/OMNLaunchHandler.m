@@ -10,6 +10,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "OMNStartVC.h"
 #import "OMNModalWebVC.h"
+#import "OMNNearestBeaconSearchManager.h"
 
 @implementation OMNLaunchHandler {
   
@@ -61,7 +62,7 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
   
   NSLog(@"didReceiveRemoteNotification>%@", userInfo);
-  completionHandler(UIBackgroundFetchResultNoData);
+  //  {"aps":{"sound":"new_guest.caf"}, "open_url" : "http://try.omnom.menu/mango"}
   NSString *open_url = userInfo[@"open_url"];
   if (open_url) {
     __weak typeof(self)weakSelf = self;
@@ -72,7 +73,29 @@
     });
     
   }
-//  {"aps":{"sound":"new_guest.caf"}, "open_url" : "http://try.omnom.menu/mango"}
+  
+  NSString *type = userInfo[@"type"];
+  
+  if ([type isEqualToString:@"wake-up"]) {
+    
+    [[OMNNearestBeaconSearchManager sharedManager] findNearestBeaconsWithCompletion:^{
+      
+      completionHandler(UIBackgroundFetchResultNoData);
+      
+    }];
+    
+  }
+  else if ([type isEqualToString:@"show_orders"]) {
+    
+    self.launchOptions = [[OMNLaunchOptions alloc] initWithRemoteNotification:userInfo];
+    [_startVC reloadSearchingRestaurant];
+    
+  }
+  else {
+    
+    completionHandler(UIBackgroundFetchResultNoData);
+    
+  }
   
 }
 

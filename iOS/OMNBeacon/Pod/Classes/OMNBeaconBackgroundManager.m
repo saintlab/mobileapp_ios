@@ -9,15 +9,10 @@
 #import "OMNBeaconBackgroundManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "OMNBeacon.h"
-#import "OMNNearestBeaconSearchManager.h"
-
-static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentifier";
 
 @interface OMNBeaconBackgroundManager()
 <CLLocationManagerDelegate> {
   
-  OMNNearestBeaconSearchManager *_nearestBeaconSearchManager;
-  UIBackgroundTaskIdentifier _searchBeaconTask;
   BOOL _monitoring;
   
 }
@@ -73,15 +68,12 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     _locationManager.pausesLocationUpdatesAutomatically = NO;
     _locationManager.delegate = self;
   }
-#warning handle change state
   return _locationManager;
   
 }
 
 
 - (void)handleDidExitShopBeaconRegion {
-  
-  [self stopBeaconSearchManagerTask];
   
   //TODO: send information to the server according device did exit from restaurant, stop notification
   NSLog(@"send information to the server according device did exit from restaurant");
@@ -118,15 +110,6 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
     [self.locationManager startMonitoringForRegion:beaconRegion];
     
   }];
-  
-}
-
-- (void)handlePush:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-  
-  if (_lookingForNearestBeacon) {
-    completionHandler(UIBackgroundFetchResultNoData);
-    return;
-  }
   
 }
 
@@ -210,81 +193,17 @@ static NSString * const kBackgroundBeaconIdentifier = @"kBackgroundBeaconIdentif
 
 - (void)handleDidEnterShopBeaconRegion {
 
-  //TODO: send information to the server according device did enter to restaurant
-  NSLog(@"===send information to the server according device did enter to restaurant");
-
-  
-  if (_nearestBeaconSearchManager) {
-    NSLog(@"_beaconSearchManager already started");
-    return;
-  }
-  
-  __weak typeof(self)weakSelf = self;
-  _searchBeaconTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-    
-    [weakSelf stopBeaconSearchManagerTask];
+  UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
     
   }];
-  
-  _nearestBeaconSearchManager = [[OMNNearestBeaconSearchManager alloc] init];
-  [_nearestBeaconSearchManager findNearestBeacons:^(NSArray *beacons) {
+  if (self.didEnterBeaconsRegionBlock) {
     
-    [weakSelf beaconsDidFind:beacons];
-    
-  } failure:^{
-    
-    [weakSelf stopBeaconSearchManagerTask];
-    
-  }];
-  
-}
-
-
-- (void)beaconsDidFind:(NSArray *)beacons {
-  
-  [self stopNearestBeaconSearchManager];
-  if (self.didFindBeaconsBlock) {
-    
-    __weak typeof(self)weakSelf = self;
-    self.didFindBeaconsBlock(beacons, ^{
-      
-      [weakSelf stopBeaconSearchManagerTask];
-      
-    });
-    
-  }
-  else {
-    
-    [self stopBeaconSearchManagerTask];
+    self.didEnterBeaconsRegionBlock();
     
   }
   
-}
-
-- (void)stopNearestBeaconSearchManager {
-  
-  [_nearestBeaconSearchManager stop];
-  _nearestBeaconSearchManager = nil;
-  
-}
-
-- (void)stopBeaconSearchManagerTask {
-  
-  [self stopNearestBeaconSearchManager];
-  
-  if (UIBackgroundTaskInvalid != _searchBeaconTask) {
-    
-    NSLog(@"BeaconSearchManagerTask did finish");
-    [[UIApplication sharedApplication] endBackgroundTask:_searchBeaconTask];
-    _searchBeaconTask = UIBackgroundTaskInvalid;
-    
-  }
-  
-}
-
-- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error {
-  
-  NSLog(@"monitoringDidFailForRegion>%@", error);
+  [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskIdentifier];
+  backgroundTaskIdentifier = UIBackgroundTaskInvalid;
   
 }
 

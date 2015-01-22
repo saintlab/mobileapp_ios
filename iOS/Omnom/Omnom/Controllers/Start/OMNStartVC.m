@@ -96,20 +96,20 @@ OMNSearchRestaurantVCDelegate>
     __weak typeof(self)weakSelf = self;
     [self dismissViewControllerAnimated:YES completion:^{
       
-      [weakSelf startSearchingRestaurant1];
+      [weakSelf startSearchingRestaurant];
       
     }];
     
   }
   else {
     
-    [self startSearchingRestaurant1];
+    [self startSearchingRestaurant];
     
   }
   
 }
 
-- (void)startSearchingRestaurant1 {
+- (void)startSearchingRestaurant {
   
   if ([OMNAuthorization authorisation].token &&
       self.isViewLoaded) {
@@ -156,7 +156,7 @@ OMNSearchRestaurantVCDelegate>
   _authorizationPresented = NO;
   [self.navigationController omn_popToViewController:self animated:NO completion:^{
   
-    [weakSelf startSearchingRestaurant1];
+    [weakSelf startSearchingRestaurant];
 
   }];
   

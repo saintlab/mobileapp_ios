@@ -13,7 +13,6 @@
 #import <OMNStyler.h>
 #import "OMNAnalitics.h"
 #import "OMNSearchRestaurantMediator.h"
-#import "OMNLaunchHandler.h"
 
 @interface OMNSearchRestaurantVC ()
 
