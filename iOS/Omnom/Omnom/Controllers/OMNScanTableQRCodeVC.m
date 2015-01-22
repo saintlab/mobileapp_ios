@@ -153,6 +153,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   
   _textLabel = [TTTAttributedLabel omn_autolayoutView];
   _textLabel.numberOfLines = 0;
+  _textLabel.textAlignment = NSTextAlignmentCenter;
   _textLabel.delegate = self;
   [contentView addSubview:_textLabel];
   

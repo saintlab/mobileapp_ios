@@ -55,6 +55,7 @@
 - (void)createViews {
   
   _textLabel = [TTTAttributedLabel omn_autolayoutView];
+  _textLabel.textAlignment = NSTextAlignmentCenter;
   _textLabel.delegate = self;
   _textLabel.numberOfLines = 0;
   [self.view addSubview:_textLabel];
@@ -89,6 +90,7 @@
   NSString *text = [NSString stringWithFormat:NSLocalizedString(@"NO_ORDERS_HOWTO_TEXT %@ %@", @"Стол %@\nНа этом столе\nпока нет заказов.\n{NO_ORDERS_HOWTO_ACTION_TEXT}?"), _restaurantMediator.table.internal_id, actionText];
   
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:[attributes copy]];
+  _textLabel.text = attributedText;
   
   UIColor *linkColor = colorWithHexString(@"000000");
   attributes[(__bridge NSString *)kCTUnderlineStyleAttributeName] = @(YES);
@@ -97,8 +99,6 @@
   
   attributes[NSForegroundColorAttributeName] = [linkColor colorWithAlphaComponent:0.5];
   _textLabel.activeLinkAttributes = [attributes copy];
-  
-  _textLabel.text = attributedText;
   
   [_textLabel addLinkToURL:[NSURL URLWithString:@""] withRange:[text rangeOfString:actionText]];
   
