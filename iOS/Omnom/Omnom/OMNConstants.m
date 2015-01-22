@@ -78,7 +78,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
       [[OMNAnalitics analitics] logTargetEvent:@"ERROR_CONFIG" parametrs:parametrs];
       
     }
-      
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
@@ -89,9 +88,10 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
   NSMutableURLRequest *mRequest = (NSMutableURLRequest *)operation.request;
   if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
-    [mRequest setValue:@"yeshackvofPigCob" forHTTPHeaderField:@"x-authentication-token"];
-#warning token
-//    [mRequest setValue:@"Ga7Rc1lBabcEIOoqd8MsSejzsroI01En" forHTTPHeaderField:@"x-authentication-token"];
+
+    NSString *token = [self stringForKey:@"AuthToken"];
+    [mRequest setValue:token forHTTPHeaderField:@"x-authentication-token"];
+
   }
   
 }
@@ -203,7 +203,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   return [self stringForKey:@"CrashlyticsAPIKey"];
 }
 + (BOOL)disableOnEntrancePush {
-  return [self boolForKey:@"disableOnEntrancePush"];
+  return [self tokenForKey:@"disableOnEntrancePush"];
 }
 
 + (NSString *)pushSoundName {
