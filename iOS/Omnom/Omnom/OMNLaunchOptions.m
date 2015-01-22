@@ -55,8 +55,10 @@
     if (info[@"hash"]) {
       _hashString = info[@"hash"];
     }
-//    _qr = @"http://omnom.menu/qr/c115cee50cf5d67572184c906fe7e2fa";
-#warning qr
+    else if (info[@"qr"]) {
+      _qr = info[@"qr"];
+    }
+
   }
   return self;
   
