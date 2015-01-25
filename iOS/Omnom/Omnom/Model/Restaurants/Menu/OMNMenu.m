@@ -10,19 +10,34 @@
 
 @implementation OMNMenu
 
-- (instancetype)initWithJsonData:(id)data {
+- (instancetype)initWithJsonData:(id)jsonData {
   self = [super init];
   if (self) {
     
-    NSArray *menuItems = data[@"menu"];
-    NSMutableArray *items = [NSMutableArray arrayWithCapacity:menuItems.count];
+    NSDictionary *productsData = jsonData[@"items"];
+    NSMutableDictionary *products = [NSMutableDictionary dictionaryWithCapacity:productsData.count];
+    [productsData enumerateKeysAndObjectsUsingBlock:^(id key, id productData, BOOL *stop) {
+      
+      products[key] = [[OMNMenuProduct alloc] initWithJsonData:productData];
+      
+    }];
+    self.products = products;
+
+    NSArray *categoriesData = jsonData[@"categories"];
+    NSMutableArray *categories = [NSMutableArray arrayWithCapacity:categoriesData.count];
+    [categoriesData enumerateObjectsUsingBlock:^(id categoryData, NSUInteger idx, BOOL *stop) {
+      
+      OMNMenuCategory *menuCategory = [[OMNMenuCategory alloc] initWithJsonData:categoryData menuProducts:products level:0];
+      [categories addObject:menuCategory];
+      
+    }];
+    self.categories = categories;
     
-    for (id menuItemObject in menuItems) {
-      OMNMenuItem *menuItem = [[OMNMenuItem alloc] initWithJsonData:menuItemObject];
-      [items addObject:menuItem];
-    }
     
-    self.items = [items copy];
+//    id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub.json" ofType:nil]] options:kNilOptions error:nil];
+//    OMNMenuCategory *mc = [[OMNMenuCategory alloc] initWithJsonData:[data[@"menu"][@"categories"] firstObject] level:0];
+//    NSLog(@"%@", mc.listItems);
+
     
   }
   return self;

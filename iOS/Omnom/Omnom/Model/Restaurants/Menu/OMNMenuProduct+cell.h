@@ -7,10 +7,9 @@
 //
 
 #import "OMNMenuProduct.h"
+#import "OMNMenuCellItemProtocol.h"
 
 @interface OMNMenuProduct (cell)
-
-- (CGFloat)heightForTableView:(UITableView *)tableView;
-- (UITableViewCell *)cellForTableView:(UITableView *)tableView;
+<OMNMenuCellItemProtocol>
 
 @end

@@ -11,7 +11,7 @@
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
 #import "UIBarButtonItem+omn_custom.h"
-#import "OMNMenuItemVC.h"
+#import "OMNMenuCategoryVC.h"
 
 @interface OMNMenuVC ()
 
@@ -31,18 +31,19 @@
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
   
   __weak typeof(self)weakSelf = self;
-  _menuModel.didSelectBlock = ^(UITableView *tableView, NSIndexPath *indexPath) {
+  _menuModel.didSelectBlock = ^(OMNMenuCategory *menuCategory) {
     
-    [weakSelf showMenuItem];
+    [weakSelf showMenuCategory:menuCategory];
     
   };
   
 }
 
-- (void)showMenuItem {
+- (void)showMenuCategory:(OMNMenuCategory *)menuCategory {
   
-  OMNMenuItemVC *menuItemVC = [[OMNMenuItemVC alloc] init];
-  [self.navigationController pushViewController:menuItemVC animated:YES];
+  OMNMenuCategoryVC *menuCategoryVC = [[OMNMenuCategoryVC alloc] init];
+  menuCategoryVC.menuCategory = menuCategory;
+  [self.navigationController pushViewController:menuCategoryVC animated:YES];
   
 }
 

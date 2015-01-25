@@ -40,6 +40,12 @@
 
 - (void)closeTap {
   
+  if (self.didCloseBlock) {
+    
+    self.didCloseBlock();
+    
+  }
+  
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

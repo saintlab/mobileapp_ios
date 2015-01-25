@@ -12,7 +12,7 @@
 
 @implementation OMNMenuModel {
   
-  NSArray *_menuItems;
+  OMNMenu *_menu;
   
 }
 
@@ -34,7 +34,8 @@
   self = [super init];
   if (self) {
     
-    _menuItems = @[@"Салаты", @"Салаты 2", @"Салаты 3", @"Салаты 4", @"Салаты 5", @"Салаты 5", @"Салаты 1", @"Салаты 2", @"Салаты 3", @"Салаты 4", @"Салаты 5", @"Салаты 5", @"Салаты 1", @"Салаты 2", @"Салаты 3", @"Салаты 4", @"Салаты 5"];
+    id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
+    _menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
     
   }
   return self;
@@ -55,7 +56,7 @@
       numberOfRows = 1;
     } break;
     case 1: {
-      numberOfRows = _menuItems.count;
+      numberOfRows = _menu.categories.count;
     } break;
   }
   
@@ -76,7 +77,8 @@
     case 1: {
 
       OMNMenuItemCell *menuItemCell = [tableView dequeueReusableCellWithIdentifier:@"OMNMenuItemCell" forIndexPath:indexPath];
-      menuItemCell.label.text = _menuItems[indexPath.row];
+      OMNMenuCategory *menuCategory = _menu.categories[indexPath.row];
+      menuItemCell.label.text = menuCategory.name;
       cell = menuItemCell;
       
     } break;
@@ -99,7 +101,8 @@
   
   if (self.didSelectBlock) {
     
-    self.didSelectBlock(tableView, indexPath);
+    OMNMenuCategory *menuCategory = _menu.categories[indexPath.row];
+    self.didSelectBlock(menuCategory);
     
   }
   else {

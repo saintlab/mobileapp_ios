@@ -7,7 +7,10 @@
 //
 
 #import "OMNBackgroundVC.h"
+#import "OMNMenuCategory.h"
 
-@interface OMNMenuItemVC : OMNBackgroundVC
+@interface OMNMenuCategoryVC : OMNBackgroundVC
+
+@property (nonatomic, strong) OMNMenuCategory *menuCategory;
 
 @end

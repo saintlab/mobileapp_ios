@@ -21,7 +21,7 @@
 
 - (void)checkOrders;
 - (void)showUserProfile;
-
+- (void)myOrderTap;
 - (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock;
 - (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock;
 - (void)callBill;

@@ -18,12 +18,14 @@
 #import "OMNRestaurantManager.h"
 #import "OMNNearestBeaconSearchManager.h"
 
+#import "OMNMenuCategory.h"
+
 @implementation GAppDelegate {
   
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+  
 #if OMN_TEST
   return YES;
 #endif

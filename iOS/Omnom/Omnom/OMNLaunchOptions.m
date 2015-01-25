@@ -28,8 +28,9 @@
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
 #if DEBUG
+    //    _customConfigName = @"config_laaaab";
     NSLog(@"not app store");
-//    _customConfigName = @"config_laaaab";
+//    _hashString = @"http://www.omnom.menu/8bcrum";
     //_qr = @"qr-code-for-2-saintlab-iiko";
     //  @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";
     //  @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7";
@@ -100,41 +101,6 @@
     
   }
   return self;
-}
-
-- (BOOL)applicationWasOpenedByBeacon {
-  
-  BOOL applicationWasOpenedByBeacon = (_launchOptions[UIApplicationLaunchOptionsLocationKey] != nil);
-  return applicationWasOpenedByBeacon;
-  
-}
-
-- (NSString *)customConfigName {
-  
-  NSString *launchConfigName = (_launchQuery[@"omnom_config"]) ? (_launchQuery[@"omnom_config"]) : (@"config_prod");
-  return launchConfigName;
-  
-}
-
-- (NSString *)qr {
-#warning @"qr-code-for-2-saintlab-iiko";
-//  return @"qr-code-for-2-saintlab-iiko";
-//  @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";
-//  @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7";
-//  @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";
-//  @"qr-code-for-2-saintlab-iiko";
-//  @"qr-code-3-at-saintlab-iiko";
-//  @"http://omnom.menu/qr/special-and-vip";
-  return @"http://m.2gis.ru/os/";
-  return _launchQuery[@"qr"];
-  
-}
-
-- (NSString *)hashString {
-  
-//  return @"hash-QWERTY-restaurant-B";
-  return _launchQuery[@"hash"];
-  
 }
 
 @end

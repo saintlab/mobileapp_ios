@@ -109,7 +109,26 @@
   UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:nil];
   [callBillButton addTarget:_restaurantMediator action:@selector(callBill) forControlEvents:UIControlEventTouchUpInside];
   
-  if (_restaurantMediator.restaurant.settings.has_waiter_call) {
+  OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] title:nil];
+  [callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
+
+  OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
+  if (settings.has_menu) {
+    
+    callWaiterButton.hidden = !settings.has_waiter_call;
+
+    [self.bottomToolbar setItems:
+     @[
+       [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
+       [UIBarButtonItem omn_flexibleItem],
+       [UIBarButtonItem omn_barButtonWithTitle:@"my order" color:[UIColor blackColor] target:_restaurantMediator action:@selector(myOrderTap)],
+       [UIBarButtonItem omn_flexibleItem],
+       [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+       ]
+                        animated:YES];
+    
+  }
+  else if (_restaurantMediator.restaurant.settings.has_waiter_call) {
     
     if (_restaurantMediator.waiterIsCalled) {
       
@@ -118,9 +137,6 @@
     }
     else {
       
-      UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
-      OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:nil];
-      [callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
       [callWaiterButton sizeToFit];
       
       [self.bottomToolbar setItems:
@@ -145,6 +161,8 @@
                         animated:YES];
     
   }
+  
+  
   
 }
 

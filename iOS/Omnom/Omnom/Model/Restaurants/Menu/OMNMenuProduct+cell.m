@@ -19,7 +19,7 @@
     cell = [[OMNMenuProductCell alloc] init];
   });
   
-  cell.menuItem = self;
+  cell.menuProduct = self;
 
   cell.bounds = tableView.bounds;//CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
   [cell setNeedsLayout];
@@ -37,7 +37,7 @@
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   OMNMenuProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OMNMenuProductCell"];
-  cell.menuItem = self;
+  cell.menuProduct = self;
   return cell;
   
 }

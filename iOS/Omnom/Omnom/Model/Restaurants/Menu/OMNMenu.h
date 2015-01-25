@@ -7,10 +7,13 @@
 //
 
 #import "OMNMenuItem.h"
+#import "OMNMenuCategory.h"
+#import "OMNMenuProduct.h"
 
 @interface OMNMenu : NSObject
 
-@property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong) NSMutableDictionary *products;
+@property (nonatomic, strong) NSArray *categories;
 
 - (instancetype)initWithJsonData:(id)data;
 

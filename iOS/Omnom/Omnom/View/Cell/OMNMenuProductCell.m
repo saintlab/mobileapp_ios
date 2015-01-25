@@ -10,6 +10,9 @@
 #import "UIView+omn_autolayout.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
+#import "OMNUtils.h"
+#import <BlocksKit.h>
+#import "UIImage+omn_helper.h"
 
 @implementation OMNMenuProductCell {
   
@@ -17,7 +20,28 @@
   UILabel *_infoLabel;
   UIButton *_priceButton;
   UIImageView *_productIV;
+  NSString *_productSelectionObserverID;
+  NSString *_productImageObserverID;
+  NSLayoutConstraint *_heightConstraint;
+  
+}
 
+- (void)dealloc {
+  
+  [self removeMenuProductObservers];
+  
+}
+
+- (void)removeMenuProductObservers {
+  
+  if (_productSelectionObserverID) {
+    [_menuProduct bk_removeObserversWithIdentifier:_productSelectionObserverID];
+  }
+  if (_productImageObserverID) {
+    [_menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
+    
+  }
+  
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -68,11 +92,25 @@
   _priceButton = [UIButton omn_autolayoutView];
   _priceButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
   [_priceButton setTitleColor:colorWithHexString(@"157EFB") forState:UIControlStateNormal];
+  [_priceButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateHighlighted];
+  [_priceButton setTitle:@"" forState:UIControlStateSelected];
+  [_priceButton setTitle:@"" forState:UIControlStateSelected|UIControlStateHighlighted];
+  
+  [_priceButton setImage:[UIImage imageNamed:@"ic_in_wish_list_position"] forState:UIControlStateSelected];
+  [_priceButton setImage:[UIImage imageNamed:@"ic_in_wish_list_position"] forState:UIControlStateSelected|UIControlStateHighlighted];
   _priceButton.titleLabel.font = FuturaLSFOmnomLERegular(15.0f);
+  [_priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
   [_priceButton setBackgroundImage:[[UIImage imageNamed:@"rounded_button_light_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
+  UIImage *selectedImage = [[UIImage imageNamed:@"blue_button_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
+  [_priceButton setBackgroundImage:selectedImage forState:UIControlStateSelected];
+  [_priceButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
+  [_priceButton setBackgroundImage:[selectedImage omn_tintWithColor:[colorWithHexString(@"157EFB") colorWithAlphaComponent:0.5f]] forState:UIControlStateSelected|UIControlStateHighlighted];
   [self.contentView addSubview:_priceButton];
   
   _productIV = [UIImageView omn_autolayoutView];
+  _productIV.opaque = YES;
+  _productIV.contentMode = UIViewContentModeScaleAspectFit;
+  _productIV.clipsToBounds = YES;
   [self.contentView addSubview:_productIV];
   
   NSDictionary *views =
@@ -88,23 +126,60 @@
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
 
-  
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[productIV]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[productIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(8)-[nameLabel]-(8)-[productIV]-(>=0)-[infoLabel]-(8)-[priceButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
+  _heightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
+  [self.contentView addConstraint:_heightConstraint];
+  
 }
 
-- (void)setMenuItem:(OMNMenuProduct *)menuItem {
+- (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
   
-  _menuItem = menuItem;
+  [self removeMenuProductObservers];
+  _menuProduct = menuProduct;
   
-  _nameLabel.text = @"123 12 31 3 12 3 123 12 3 123 1 23 123";
-  _infoLabel.text = @"123 123 123 12";
-  [_priceButton setTitle:@"5 x 10 ==" forState:UIControlStateNormal];
+  _heightConstraint.constant = (_menuProduct.photo.length) ? (110.0f) : (0.0f);
+  __weak UIButton *priceButton = _priceButton;
+  _productSelectionObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+   
+    [UIView transitionWithView:priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+      
+      priceButton.selected = mp.selected;
+      
+    } completion:nil];
+    
+  }];
+  
+  __weak UIImageView *productIV = _productIV;
+  _productImageObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
 
+    NSLog(@"%d", [NSThread isMainThread]);
+    [UIView transitionWithView:productIV duration:5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+      
+      productIV.image = mp.photoImage;
+      
+    } completion:nil];
+    
+  }];
+  
+  _productIV.image = _menuProduct.photoImage;
+  _priceButton.selected = _menuProduct.selected;
+  _nameLabel.text = _menuProduct.name;
+  _infoLabel.text = [_menuProduct.details displayText];
+  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:_menuProduct.price*100ll] forState:UIControlStateNormal];
+
+  [_menuProduct loadImage];
+  
+}
+
+- (void)priceTap {
+  
+  [self.delegate menuProductCell:self didSelectProduct:_menuProduct];
+  
 }
 
 @end

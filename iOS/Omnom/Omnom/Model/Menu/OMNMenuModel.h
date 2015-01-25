@@ -7,14 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OMNMenu.h"
 
-typedef void(^OMNMenuItemDidSelectBlock)(UITableView *tableView, NSIndexPath *indexPath);
+typedef void(^OMNMenuCategoryDidSelectBlock)(OMNMenuCategory *menuCategory);
 
 @interface OMNMenuModel : NSObject
 <UITableViewDataSource,
 UITableViewDelegate>
 
-@property (nonatomic, copy) OMNMenuItemDidSelectBlock didSelectBlock;
+@property (nonatomic, copy) OMNMenuCategoryDidSelectBlock didSelectBlock;
 
 - (void)configureTableView:(UITableView *)tableView;
 

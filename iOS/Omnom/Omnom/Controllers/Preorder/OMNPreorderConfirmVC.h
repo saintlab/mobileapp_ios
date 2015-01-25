@@ -10,4 +10,6 @@
 
 @interface OMNPreorderConfirmVC : UITableViewController
 
+@property (nonatomic, copy) dispatch_block_t didCloseBlock;
+
 @end

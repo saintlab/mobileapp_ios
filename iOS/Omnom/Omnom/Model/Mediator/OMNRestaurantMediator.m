@@ -372,13 +372,21 @@ OMNOrderCalculationVCDelegate>
   
 }
 
+- (void)myOrderTap {
+  
+  OMNPreorderConfirmVC *preorderConfirmVC = [[OMNPreorderConfirmVC alloc] init];
+  __weak typeof(self)weakSelf = self;
+  preorderConfirmVC.didCloseBlock = ^{
+    
+    [weakSelf.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [_restaurantActionsVC.navigationController presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
+  
+}
 
 - (void)callBill {
   
-//  OMNPreorderConfirmVC *preorderConfirmVC = [[OMNPreorderConfirmVC alloc] init];
-//  [_restaurantActionsVC.navigationController presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
-//  return;
-#warning
   if (!self.table) {
     return;
   }

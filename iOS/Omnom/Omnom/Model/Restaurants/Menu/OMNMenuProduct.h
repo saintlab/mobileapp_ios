@@ -7,16 +7,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OMNMenuProductDetails.h"
 
 @interface OMNMenuProduct : NSObject
 
-@property (nonatomic, copy) NSString *internalId;
-@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) double price;
 @property (nonatomic, assign) double quantity;
-@property (nonatomic, copy) NSString *parent;
-@property (nonatomic, copy) NSString *image;
+@property (nonatomic, copy) NSString *Description;
+@property (nonatomic, copy) NSString *photo;
+@property (nonatomic, strong) UIImage *photoImage;
+@property (nonatomic, strong) NSArray *modifiers;
+@property (nonatomic, strong) NSArray *recommendations;
+@property (nonatomic, strong) OMNMenuProductDetails *details;
+@property (nonatomic, assign) BOOL selected;
 
 - (instancetype)initWithJsonData:(id)data;
+- (void)loadImage;
 
 @end
