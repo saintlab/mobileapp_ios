@@ -21,7 +21,6 @@
 @property (nonatomic, strong) NSArray *modifiers;
 @property (nonatomic, strong) NSArray *recommendations;
 @property (nonatomic, strong) OMNMenuProductDetails *details;
-@property (nonatomic, assign) BOOL selected;
 
 - (instancetype)initWithJsonData:(id)data;
 - (void)loadImage;

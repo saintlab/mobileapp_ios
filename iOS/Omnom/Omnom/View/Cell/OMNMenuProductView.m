@@ -100,16 +100,16 @@
   
 }
 
-- (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)setMenuProductSelectionItem:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
   
-  _menuProduct = menuProduct;
+  _menuProductSelectionItem = menuProductSelectionItem;
   
-  _heightConstraint.constant = (_menuProduct.photo.length) ? (110.0f) : (0.0f);
-  _productIV.image = _menuProduct.photoImage;
-  _priceButton.selected = _menuProduct.selected;
-  _nameLabel.text = _menuProduct.name;
-  _infoLabel.text = [_menuProduct.details displayText];
-  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:_menuProduct.price*100ll] forState:UIControlStateNormal];
+  _heightConstraint.constant = (menuProductSelectionItem.menuProduct.photo.length) ? (110.0f) : (0.0f);
+  _productIV.image = menuProductSelectionItem.menuProduct.photoImage;
+  _priceButton.selected = (menuProductSelectionItem.menuProduct.quantity > 0.0);
+  _nameLabel.text = menuProductSelectionItem.menuProduct.name;
+  _infoLabel.text = [menuProductSelectionItem.menuProduct.details displayText];
+  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProductSelectionItem.menuProduct.price*100ll] forState:UIControlStateNormal];
   
 }
 

@@ -9,10 +9,12 @@
 #import "OMNMenuCategory.h"
 #import "OMNMenuProductRecommendationsDelimiter.h"
 #import "OMNMenuProductsDelimiter.h"
+#import "OMNMenuProductSelectionItem.h"
 
 @implementation OMNMenuCategory {
   
   __weak NSDictionary *_menuProducts;
+  NSMutableArray *_listItems;
   
 }
 
@@ -48,6 +50,10 @@
 
 - (NSArray *)listItems {
   
+  if (_listItems) {
+    return _listItems;
+  }
+  
   NSMutableArray *listItems = [NSMutableArray array];
   if (self.level > 1) {
     
@@ -58,7 +64,8 @@
   [self.products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     
     OMNMenuProduct *product = _menuProducts[obj];
-    [listItems addObject:product];
+    OMNMenuProductSelectionItem *menuProductSelectionItem = [[OMNMenuProductSelectionItem alloc] initWithMenuProduct:product];
+    [listItems addObject:menuProductSelectionItem];
 
     if (idx < self.products.count - 1) {
       
@@ -72,8 +79,10 @@
       
       [product.recommendations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         
-        OMNMenuProduct *product = _menuProducts[obj];
-        [listItems addObject:product];
+        OMNMenuProduct *subProduct = _menuProducts[obj];
+        OMNMenuProductSelectionItem *menuSubProductSelectionItem = [[OMNMenuProductSelectionItem alloc] initWithMenuProduct:subProduct];
+        menuSubProductSelectionItem.parent = menuProductSelectionItem;
+        [listItems addObject:menuSubProductSelectionItem];
 
         if (idx < product.recommendations.count - 1) {
           
@@ -92,6 +101,8 @@
     [listItems addObjectsFromArray:menuCategory.listItems];
     
   }];
+  
+  _listItems = listItems;
   return listItems;
   
 }

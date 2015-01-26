@@ -1,18 +1,35 @@
 //
-//  OMNMenuItem+OMNMenuItem_cell.m
+//  OMNMenuProductSelectionItem.m
 //  omnom
 //
-//  Created by tea on 20.01.15.
+//  Created by tea on 26.01.15.
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuProduct+cell.h"
+#import "OMNMenuProductSelectionItem.h"
 #import "OMNMenuProductView.h"
 #import "OMNMenuProductCell.h"
 
-@implementation OMNMenuProduct (cell)
+@implementation OMNMenuProductSelectionItem
+
+- (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct {
+  self = [super init];
+  if (self) {
+    
+    _menuProduct = menuProduct;
+    
+  }
+  return self;
+}
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
+  
+  if (self.parent &&
+      self.parent.menuProduct.quantity < 0.01) {
+    
+    return 0.0f;
+    
+  }
   
   static OMNMenuProductView *menuProductView = nil;
   static dispatch_once_t onceToken;
@@ -20,7 +37,7 @@
     menuProductView = [[OMNMenuProductView alloc] init];
   });
   
-  menuProductView.menuProduct = self;
+  menuProductView.menuProductSelectionItem = self;
   menuProductView.bounds = tableView.bounds;
   [menuProductView setNeedsLayout];
   [menuProductView layoutIfNeeded];
@@ -37,7 +54,7 @@
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   OMNMenuProductCell *cell = [tableView dequeueReusableCellWithIdentifier:@"OMNMenuProductCell"];
-  cell.menuProduct = self;
+  cell.menuProductSelectionItem = self;
   return cell;
   
 }

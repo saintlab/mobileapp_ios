@@ -7,7 +7,6 @@
 //
 
 #import "OMNMenuCategoryVC.h"
-#import "OMNMenuProduct+cell.h"
 #import "OMNMenuProductCell.h"
 #import "OMNMenuCategory+cell.h"
 #import "OMNProductModiferAlertVC.h"
@@ -26,6 +25,7 @@ OMNMenuProductCellDelegate>
 @implementation OMNMenuCategoryVC {
   
   UITableView *_tableView;
+  __weak OMNMenuProductSelectionItem *_menuProductSelectionItem;
   
 }
 
@@ -193,20 +193,31 @@ OMNMenuProductCellDelegate>
 
 #pragma mark - OMNMenuProductCellDelegate
 
-- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProduct *)menuProduct {
+- (void)updateTableViewWithSelectedItems:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
   
-  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
+  _menuProductSelectionItem.selected = NO;
+  _menuProductSelectionItem = menuProductSelectionItem;
+  menuProductSelectionItem.selected = YES;
+  [_tableView beginUpdates];
+  [_tableView endUpdates];
+  
+}
+
+- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
+  
+  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProductSelectionItem.menuProduct];
   __weak typeof(self)weakSelf = self;
   productModiferAlertVC.didCloseBlock = ^{
     
     [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
     
   };
+  
   productModiferAlertVC.didSelectOrderBlock = ^{
     
     [weakSelf.navigationController dismissViewControllerAnimated:YES completion:^{
       
-      menuProduct.selected = YES;
+      [weakSelf updateTableViewWithSelectedItems:menuProductSelectionItem];
       
     }];
     

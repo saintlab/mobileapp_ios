@@ -16,6 +16,7 @@
   OMNMenuProductView *_menuProductView;
   NSString *_productSelectionObserverID;
   NSString *_productImageObserverID;
+  NSString *_productParentObserverID;
 
 }
 
@@ -28,11 +29,13 @@
 - (void)removeMenuProductObservers {
   
   if (_productSelectionObserverID) {
-    [_menuProduct bk_removeObserversWithIdentifier:_productSelectionObserverID];
+    [_menuProductSelectionItem.menuProduct bk_removeObserversWithIdentifier:_productSelectionObserverID];
   }
   if (_productImageObserverID) {
-    [_menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
-    
+    [_menuProductSelectionItem.menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
+  }
+  if (_productParentObserverID) {
+    [_menuProductSelectionItem.parent.menuProduct bk_removeObserversWithIdentifier:_productParentObserverID];
   }
   
 }
@@ -61,9 +64,8 @@
   
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   
-  [_menuProductView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
-  
   _menuProductView = [OMNMenuProductView omn_autolayoutView];
+  [_menuProductView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
   [self.contentView addSubview:_menuProductView];
   
   NSDictionary *views =
@@ -76,28 +78,64 @@
     };
 
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuProductView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuProductView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuProductView]" options:kNilOptions metrics:metrics views:views]];
   
 }
 
-- (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)setMenuProductSelectionItem:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
   
   [self removeMenuProductObservers];
-  _menuProduct = menuProduct;
-  _menuProductView.menuProduct = menuProduct;
   
+  _menuProductSelectionItem = menuProductSelectionItem;
+  _menuProductView.menuProductSelectionItem = menuProductSelectionItem;
+
   __weak OMNMenuProductView *menuProductView = _menuProductView;
-  _productSelectionObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+  if (_menuProductSelectionItem.parent) {
+    
+    [_menuProductSelectionItem.parent.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *parentMenuProduct, NSDictionary *change) {
+      
+      BOOL hideMenuProductView = (parentMenuProduct.quantity < 0.01);
+      if (hideMenuProductView) {
+        
+        [UIView animateWithDuration:0.5 animations:^{
+          
+          menuProductView.alpha = 0.0f;
+          
+        } completion:^(BOOL finished) {
+       
+          menuProductView.hidden = YES;
+          
+        }];
+        
+      }
+      else {
+      
+        menuProductView.hidden = NO;
+        menuProductView.alpha = 0.0f;
+        
+        [UIView animateWithDuration:0.3 delay:0.5 options:kNilOptions animations:^{
+          
+          menuProductView.alpha = 1.0f;
+          
+        } completion:nil];
+        
+      }
+      
+    }];
+    
+  }
+  
+  _productSelectionObserverID = [_menuProductSelectionItem.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
    
     [UIView transitionWithView:menuProductView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
-      menuProductView.priceButton.selected = mp.selected;
+      menuProductView.priceButton.selected = (mp.quantity > 0.0);
       
     } completion:nil];
     
   }];
   
-  _productImageObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+  _productImageObserverID = [_menuProductSelectionItem.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
 
     [UIView transitionWithView:menuProductView.productIV duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
@@ -107,13 +145,13 @@
     
   }];
   
-  [_menuProduct loadImage];
+  [_menuProductSelectionItem.menuProduct loadImage];
   
 }
 
 - (void)priceTap {
   
-  [self.delegate menuProductCell:self didSelectProduct:_menuProduct];
+  [self.delegate menuProductCell:self didSelectProduct:_menuProductSelectionItem];
   
 }
 

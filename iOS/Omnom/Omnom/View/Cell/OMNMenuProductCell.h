@@ -7,19 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OMNMenuProduct.h"
+#import "OMNMenuProductSelectionItem.h"
 
 @protocol OMNMenuProductCellDelegate;
 
 @interface OMNMenuProductCell : UITableViewCell
 
 @property (nonatomic, weak) id<OMNMenuProductCellDelegate> delegate;
-@property (nonatomic, strong) OMNMenuProduct *menuProduct;
+@property (nonatomic, strong) OMNMenuProductSelectionItem *menuProductSelectionItem;
 
 @end
 
 @protocol OMNMenuProductCellDelegate <NSObject>
 
-- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProduct *)menuProduct;
+- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProductSelectionItem *)menuProductSelectionItem;
 
 @end
