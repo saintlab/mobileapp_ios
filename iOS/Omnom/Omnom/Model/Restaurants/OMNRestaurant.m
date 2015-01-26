@@ -70,6 +70,12 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
   
 }
 
+- (BOOL)hasOrders {
+  
+  return (self.orders.count > 0);
+  
+}
+
 - (NSString *)description {
   
   return [NSString stringWithFormat:@"%@, %@", _title, _id];
