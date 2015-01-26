@@ -21,11 +21,21 @@
   }
   return self;
 }
+//
+//- (BOOL)showRecommendations {
+//  
+//  BOOL showRecommendations =
+//  (self.selected &&
+//   self.menuProduct.quantity > 0.0);
+//  
+//  return showRecommendations;
+//  
+//}
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
   if (self.parent &&
-      self.parent.menuProduct.quantity < 0.01) {
+      !self.parent.showRecommendations) {
     
     return 0.0f;
     

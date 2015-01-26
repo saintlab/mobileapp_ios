@@ -67,13 +67,7 @@
     OMNMenuProductSelectionItem *menuProductSelectionItem = [[OMNMenuProductSelectionItem alloc] initWithMenuProduct:product];
     [listItems addObject:menuProductSelectionItem];
 
-    if (idx < self.products.count - 1) {
-      
-      [listItems addObject:[[OMNMenuProductsDelimiter alloc] init]];
-      
-    }
-    
-    if (product.recommendations) {
+    if (product.recommendations.count) {
       
       [listItems addObject:[[OMNMenuProductRecommendationsDelimiter alloc] init]];
       
@@ -91,6 +85,11 @@
         }
         
       }];
+      
+    }
+    else if (idx < self.products.count - 1) {
+      
+      [listItems addObject:[[OMNMenuProductsDelimiter alloc] init]];
       
     }
     

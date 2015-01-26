@@ -35,7 +35,7 @@
     [_menuProductSelectionItem.menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
   }
   if (_productParentObserverID) {
-    [_menuProductSelectionItem.parent.menuProduct bk_removeObserversWithIdentifier:_productParentObserverID];
+    [_menuProductSelectionItem.parent bk_removeObserversWithIdentifier:_productParentObserverID];
   }
   
 }
@@ -92,9 +92,9 @@
   __weak OMNMenuProductView *menuProductView = _menuProductView;
   if (_menuProductSelectionItem.parent) {
     
-    [_menuProductSelectionItem.parent.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *parentMenuProduct, NSDictionary *change) {
+    _productParentObserverID = [_menuProductSelectionItem.parent bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(OMNMenuProductSelectionItem *parentSelectionItem, NSDictionary *change) {
       
-      BOOL hideMenuProductView = (parentMenuProduct.quantity < 0.01);
+      BOOL hideMenuProductView = !parentSelectionItem.selected;
       if (hideMenuProductView) {
         
         [UIView animateWithDuration:0.5 animations:^{

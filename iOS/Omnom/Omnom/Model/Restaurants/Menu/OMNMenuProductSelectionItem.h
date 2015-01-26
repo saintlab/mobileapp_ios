@@ -16,6 +16,7 @@
 @property (nonatomic, weak) OMNMenuProductSelectionItem *parent;
 @property (nonatomic, weak) OMNMenuProduct *menuProduct;
 @property (nonatomic, assign) BOOL selected;
+@property (nonatomic, assign, readonly) BOOL showRecommendations;
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct;
 

@@ -8,8 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNMenuCellItemProtocol.h"
+#import "OMNMenuProductSelectionItem.h"
 
 @interface OMNMenuProductRecommendationsDelimiter : NSObject
 <OMNMenuCellItemProtocol>
+
+- (instancetype)initWithMenuProductSelectionItem:(OMNMenuProductSelectionItem *)menuProductSelectionItem;
 
 @end
