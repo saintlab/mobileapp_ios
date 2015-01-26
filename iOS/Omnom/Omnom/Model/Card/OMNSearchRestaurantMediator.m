@@ -86,7 +86,8 @@ OMNScanTableQRCodeVCDelegate>
     
     OMNRestaurant *restaurant = [restaurants firstObject];
     
-    if (restaurant.hasTable) {
+    if (restaurant.hasTable ||
+        restaurant.hasOrders) {
       
       OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
       __weak typeof(self)weakSelf = self;

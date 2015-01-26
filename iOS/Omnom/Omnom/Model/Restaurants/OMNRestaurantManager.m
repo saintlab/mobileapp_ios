@@ -59,7 +59,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BEACON_DECODE" jsonRequest:parameters responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_BEACON" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
@@ -91,13 +91,15 @@
     };
   
   [[OMNOperationManager sharedManager] POST:@"/v2/decode/qr" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
+
+    [[OMNAnalitics analitics] logDebugEvent:@"DECODE_QR_V2_RESPONSE" jsonRequest:parameters responseOperation:operation];
+
     NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
     completionBlock(restaurants);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_QR_DECODE" jsonRequest:parameters responseOperation:operation];
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_QR_V2" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
@@ -113,11 +115,14 @@
   
   [[OMNOperationManager sharedManager] POST:@"/v2/decode/hash" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
+    [[OMNAnalitics analitics] logDebugEvent:@"DECODE_HASH_V2_RESPONSE" jsonRequest:parameters responseOperation:operation];
+
     NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
     completionBlock(restaurants);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_HASH_V2" jsonRequest:parameters responseOperation:operation];
     failureBlock([error omn_internetError]);
     
   }];
