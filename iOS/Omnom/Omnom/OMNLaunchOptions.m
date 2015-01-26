@@ -28,10 +28,10 @@
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
 #if DEBUG
-    //    _customConfigName = @"config_laaaab";
+//        _customConfigName = @"config_laaaab";
     NSLog(@"not app store");
 //    _hashString = @"http://www.omnom.menu/8bcrum";
-    //_qr = @"qr-code-for-2-saintlab-iiko";
+    _qr = @"qr-code-for-2-saintlab-iiko";
     //  @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";
     //  @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7";
     //  @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";

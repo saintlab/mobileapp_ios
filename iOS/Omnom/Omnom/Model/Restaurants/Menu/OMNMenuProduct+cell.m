@@ -7,25 +7,25 @@
 //
 
 #import "OMNMenuProduct+cell.h"
+#import "OMNMenuProductView.h"
 #import "OMNMenuProductCell.h"
 
 @implementation OMNMenuProduct (cell)
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
-  static OMNMenuProductCell *cell = nil;
+  static OMNMenuProductView *menuProductView = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    cell = [[OMNMenuProductCell alloc] init];
+    menuProductView = [[OMNMenuProductView alloc] init];
   });
   
-  cell.menuProduct = self;
-
-  cell.bounds = tableView.bounds;//CGRectMake(0.0f, 0.0f, CGRectGetWidth(tableView.bounds), CGRectGetHeight(cell.bounds));
-  [cell setNeedsLayout];
-  [cell layoutIfNeeded];
+  menuProductView.menuProduct = self;
+  menuProductView.bounds = tableView.bounds;
+  [menuProductView setNeedsLayout];
+  [menuProductView layoutIfNeeded];
   
-  CGFloat height = [cell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+  CGFloat height = [menuProductView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
   
   // Add an extra point to the height to account for the cell separator, which is added between the bottom
   // of the cell's contentView and the bottom of the table view cell.

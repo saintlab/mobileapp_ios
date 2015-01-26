@@ -456,6 +456,8 @@
 		93CB66D41A35FD8100C5B10E /* OMNLaunchOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */; };
 		93CB9E7B1A67EE220062112A /* OMNPushUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB9E7A1A67EE210062112A /* OMNPushUpTransition.m */; };
 		93CB9E7C1A67EE220062112A /* OMNPushUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB9E7A1A67EE210062112A /* OMNPushUpTransition.m */; };
+		93CE47801A763158002D293B /* OMNMenuProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE477F1A763158002D293B /* OMNMenuProductView.m */; };
+		93CE47811A763158002D293B /* OMNMenuProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE477F1A763158002D293B /* OMNMenuProductView.m */; };
 		93CE7CA31A62A8320032D96B /* decodeBeacons.json in Resources */ = {isa = PBXBuildFile; fileRef = 93CE7CA21A62A8320032D96B /* decodeBeacons.json */; };
 		93CE7CA51A62AAEF0032D96B /* OMNRestaurantMediatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE7CA41A62AAEF0032D96B /* OMNRestaurantMediatorTests.m */; };
 		93D104191A59856A00BC2E12 /* OMNScanTableQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D104181A59856A00BC2E12 /* OMNScanTableQRCodeVC.m */; };
@@ -1034,6 +1036,8 @@
 		93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLaunchOptions.m; sourceTree = "<group>"; };
 		93CB9E791A67EE210062112A /* OMNPushUpTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPushUpTransition.h; sourceTree = "<group>"; };
 		93CB9E7A1A67EE210062112A /* OMNPushUpTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPushUpTransition.m; sourceTree = "<group>"; };
+		93CE477E1A763158002D293B /* OMNMenuProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductView.h; sourceTree = "<group>"; };
+		93CE477F1A763158002D293B /* OMNMenuProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductView.m; sourceTree = "<group>"; };
 		93CE7CA21A62A8320032D96B /* decodeBeacons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = decodeBeacons.json; sourceTree = "<group>"; };
 		93CE7CA41A62AAEF0032D96B /* OMNRestaurantMediatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantMediatorTests.m; sourceTree = "<group>"; };
 		93D104171A59856A00BC2E12 /* OMNScanTableQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScanTableQRCodeVC.h; sourceTree = "<group>"; };
@@ -1706,6 +1710,8 @@
 				935FF1681A6D4092004B69A6 /* OMNMenuHeaderItemCell.m */,
 				93F2AEEC1A6E31AA00CDF3D9 /* OMNMenuProductCell.h */,
 				93F2AEED1A6E31AA00CDF3D9 /* OMNMenuProductCell.m */,
+				93CE477E1A763158002D293B /* OMNMenuProductView.h */,
+				93CE477F1A763158002D293B /* OMNMenuProductView.m */,
 				93C126891A7120980019655A /* OMNMenuCategoryDelimiterCell.h */,
 				93C1268A1A7120980019655A /* OMNMenuCategoryDelimiterCell.m */,
 				93C1269E1A7235440019655A /* OMNMenuProductRecommendationsDelimiterCell.h */,
@@ -2809,6 +2815,7 @@
 				935FF1641A6D3ED0004B69A6 /* OMNMenuModel.m in Sources */,
 				93E299A2197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */,
 				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
+				93CE47801A763158002D293B /* OMNMenuProductView.m in Sources */,
 				9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */,
 				93B368B219A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
 				93175DC419C6BEFE005EE4C6 /* TQStarRatingView.m in Sources */,
@@ -3176,6 +3183,7 @@
 				935D8C831A3807F400877C02 /* OMNCameraRollPermissionDescriptionVC.m in Sources */,
 				93C126881A7109010019655A /* OMNMenuCategory.m in Sources */,
 				939F994019752D680051822E /* OMNBankCard.m in Sources */,
+				93CE47811A763158002D293B /* OMNMenuProductView.m in Sources */,
 				93E29970197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
 				9351677219BFF7460071DA57 /* OMNImageManager.m in Sources */,
 				939F992119752BE90051822E /* OMNLoginVC.m in Sources */,
