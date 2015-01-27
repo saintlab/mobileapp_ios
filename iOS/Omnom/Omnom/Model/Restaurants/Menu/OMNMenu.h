@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNMenuItem.h"
 #import "OMNMenuCategory.h"
 #import "OMNMenuProduct.h"
 

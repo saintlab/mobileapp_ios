@@ -9,7 +9,7 @@
 #import "OMNMenuCategory.h"
 #import "OMNMenuProductRecommendationsDelimiter.h"
 #import "OMNMenuProductsDelimiter.h"
-#import "OMNMenuProductSelectionItem.h"
+#import "OMNMenuProductWithRecommedtations.h"
 
 @implementation OMNMenuCategory {
   
@@ -64,30 +64,10 @@
   [self.products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     
     OMNMenuProduct *product = _menuProducts[obj];
-    OMNMenuProductSelectionItem *menuProductSelectionItem = [[OMNMenuProductSelectionItem alloc] initWithMenuProduct:product];
-    [listItems addObject:menuProductSelectionItem];
+    OMNMenuProductWithRecommedtations *menuProductWithRecommedtations = [[OMNMenuProductWithRecommedtations alloc] initWithMenuProduct:product products:_menuProducts];
+    [listItems addObject:menuProductWithRecommedtations];
 
-    if (product.recommendations.count) {
-      
-      [listItems addObject:[[OMNMenuProductRecommendationsDelimiter alloc] init]];
-      
-      [product.recommendations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        
-        OMNMenuProduct *subProduct = _menuProducts[obj];
-        OMNMenuProductSelectionItem *menuSubProductSelectionItem = [[OMNMenuProductSelectionItem alloc] initWithMenuProduct:subProduct];
-        menuSubProductSelectionItem.parent = menuProductSelectionItem;
-        [listItems addObject:menuSubProductSelectionItem];
-
-        if (idx < product.recommendations.count - 1) {
-          
-          [listItems addObject:[[OMNMenuProductsDelimiter alloc] init]];
-          
-        }
-        
-      }];
-      
-    }
-    else if (idx < self.products.count - 1) {
+    if (idx < self.products.count - 1) {
       
       [listItems addObject:[[OMNMenuProductsDelimiter alloc] init]];
       

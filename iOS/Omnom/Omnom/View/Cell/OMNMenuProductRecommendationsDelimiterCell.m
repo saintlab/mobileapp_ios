@@ -15,21 +15,7 @@
 @implementation OMNMenuProductRecommendationsDelimiterCell {
   
   UILabel *_label;
-  NSString *_menuProductSelectionItemOserverID;
-}
 
-- (void)dealloc {
-  
-  [self removeObservers];
-  
-}
-
-- (void)removeObservers {
-  
-  if (_menuProductSelectionItemOserverID) {
-    [_menuProductSelectionItem bk_removeObserversWithIdentifier:_menuProductSelectionItemOserverID];
-  }
-  
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -50,18 +36,6 @@
     
   }
   return self;
-}
-
-- (void)setMenuProductSelectionItem:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
-  
-  [self removeObservers];
-  _menuProductSelectionItem = menuProductSelectionItem;
-  _menuProductSelectionItemOserverID = [_menuProductSelectionItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(showRecommendations)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(OMNMenuProductSelectionItem *selectionItem, NSDictionary *change) {
-    
-    self.hidden = !selectionItem.showRecommendations;
-    
-  }];
-  
 }
 
 - (void)omn_setup {

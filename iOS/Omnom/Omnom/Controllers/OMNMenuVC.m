@@ -41,8 +41,7 @@
 
 - (void)showMenuCategory:(OMNMenuCategory *)menuCategory {
   
-  OMNMenuCategoryVC *menuCategoryVC = [[OMNMenuCategoryVC alloc] init];
-  menuCategoryVC.menuCategory = menuCategory;
+  OMNMenuCategoryVC *menuCategoryVC = [[OMNMenuCategoryVC alloc] initWithMenuCategory:menuCategory];
   [self.navigationController pushViewController:menuCategoryVC animated:YES];
   
 }

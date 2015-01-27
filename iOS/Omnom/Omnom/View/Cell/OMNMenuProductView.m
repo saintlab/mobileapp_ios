@@ -95,21 +95,21 @@
 
 - (void)layoutSubviews {
   
-  [super layoutSubviews];
   _nameLabel.preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  [super layoutSubviews];
   
 }
 
-- (void)setMenuProductSelectionItem:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
+- (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
   
-  _menuProductSelectionItem = menuProductSelectionItem;
+  _menuProduct = menuProduct;
   
-  _heightConstraint.constant = (menuProductSelectionItem.menuProduct.photo.length) ? (110.0f) : (0.0f);
-  _productIV.image = menuProductSelectionItem.menuProduct.photoImage;
-  _priceButton.selected = (menuProductSelectionItem.menuProduct.quantity > 0.0);
-  _nameLabel.text = menuProductSelectionItem.menuProduct.name;
-  _infoLabel.text = [menuProductSelectionItem.menuProduct.details displayText];
-  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProductSelectionItem.menuProduct.price*100ll] forState:UIControlStateNormal];
+  _heightConstraint.constant = (menuProduct.photo.length) ? (110.0f) : (0.0f);
+  _productIV.image = menuProduct.photoImage;
+  _priceButton.selected = (menuProduct.quantity > 0.0);
+  _nameLabel.text = menuProduct.name;
+  _infoLabel.text = [menuProduct.details displayText];
+  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProduct.price*100ll] forState:UIControlStateNormal];
   
 }
 

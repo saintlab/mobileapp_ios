@@ -11,6 +11,8 @@
 
 @interface OMNMenuCategoryVC : OMNBackgroundVC
 
-@property (nonatomic, strong) OMNMenuCategory *menuCategory;
+@property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
+
+- (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory;
 
 @end

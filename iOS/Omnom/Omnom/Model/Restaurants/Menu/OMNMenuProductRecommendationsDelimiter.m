@@ -11,40 +11,24 @@
 
 @implementation OMNMenuProductRecommendationsDelimiter {
   
-  OMNMenuProductSelectionItem *_menuProductSelectionItem;
-  
-}
-
-- (instancetype)initWithMenuProductSelectionItem:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
-  self = [super init];
-  if (self) {
-    
-    _menuProductSelectionItem = menuProductSelectionItem;
-    
-  }
-  return self;
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
-  if (_menuProductSelectionItem.showRecommendations) {
-    
-    return 40.0f;
-    
-  }
-  else {
-    
-    return 0.0f;
-    
-  }
+  return 40.0f;
   
 }
 
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   OMNMenuProductRecommendationsDelimiterCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuProductRecommendationsDelimiterCell class])];
-  cell.menuProductSelectionItem = _menuProductSelectionItem;
   return cell;
+  
+}
+
++ (void)registerCellForTableView:(UITableView *)tableView {
+  
+  [tableView registerClass:[OMNMenuProductRecommendationsDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductRecommendationsDelimiterCell class])];
   
 }
 

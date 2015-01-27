@@ -24,4 +24,10 @@
   
 }
 
++ (void)registerCellForTableView:(UITableView *)tableView {
+  
+  [tableView registerClass:[OMNMenuCategoryDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuCategoryDelimiterCell class])];
+  
+}
+
 @end

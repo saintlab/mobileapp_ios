@@ -12,5 +12,6 @@
 
 - (CGFloat)heightForTableView:(UITableView *)tableView;
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView;
++ (void)registerCellForTableView:(UITableView *)tableView;
 
 @end

@@ -22,7 +22,6 @@
   UITableView *_modiferTableView;
   OMNMenuProduct *_menuProduct;
   NSLayoutConstraint *_tableHeightConstraint;
-  
   NSInteger _quantity;
   
 }

@@ -7,10 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNMenuProductSelectionItem.h"
 
 @interface OMNMenuProductRecommendationsDelimiterCell : UITableViewCell
-
-@property (nonatomic, strong) OMNMenuProductSelectionItem *menuProductSelectionItem;
 
 @end

@@ -7,26 +7,33 @@
 //
 
 #import "OMNMenuCategoryVC.h"
-#import "OMNMenuProductCell.h"
-#import "OMNMenuCategory+cell.h"
 #import "OMNProductModiferAlertVC.h"
-#import "OMNMenuProductRecommendationsDelimiterCell.h"
 #import <OMNStyler.h>
-#import "OMNMenuProductsDelimiterCell.h"
-#import "OMNMenuCategoryHeaderView.h"
+
+#import "OMNMenuCategoryModel.h"
 
 @interface OMNMenuCategoryVC ()
-<UITableViewDataSource,
-UITableViewDelegate,
-OMNMenuProductCellDelegate>
+<OMNMenuProductWithRecommedtationsCellDelegate>
 
 @end
 
 @implementation OMNMenuCategoryVC {
   
   UITableView *_tableView;
-  __weak OMNMenuProductSelectionItem *_menuProductSelectionItem;
+  OMNMenuCategoryModel *_model;
+  __weak OMNMenuProduct *_menuProductSelectionItem;
   
+}
+
+- (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory {
+  self = [super init];
+  if (self) {
+    
+    _menuCategory = menuCategory;
+    _model = [[OMNMenuCategoryModel alloc] initWithMenuCategory:menuCategory];
+    
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -34,8 +41,10 @@ OMNMenuProductCellDelegate>
   
   [self omn_setup];
   [self.view layoutIfNeeded];
-  _tableView.delegate = self;
-  _tableView.dataSource = self;
+  _tableView.delegate = _model;
+  _tableView.dataSource = _model;
+  
+  _model.delegate = self;
   
 }
 
@@ -44,14 +53,10 @@ OMNMenuProductCellDelegate>
   _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   _tableView.translatesAutoresizingMaskIntoConstraints = NO;
   _tableView.tableFooterView = [[UIView alloc] init];
-  [_tableView registerClass:[OMNMenuProductCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductCell class])];
-  [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
-  [_tableView registerClass:[OMNMenuCategoryDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuCategoryDelimiterCell class])];
-  [_tableView registerClass:[OMNMenuProductsDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductsDelimiterCell class])];
-  [_tableView registerClass:[OMNMenuProductRecommendationsDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductRecommendationsDelimiterCell class])];
-  [_tableView registerClass:[OMNMenuCategoryHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   [self.view addSubview:_tableView];
+
+  [OMNMenuCategoryModel registerCellsForTableView:_tableView];
   
   UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   _tableView.contentInset = insets;
@@ -72,140 +77,17 @@ OMNMenuProductCellDelegate>
   
 }
 
-#pragma mark - Table view data source
+#pragma mark - OMNMenuProductWithRecommedtationsCellDelegate
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectMenuProduct:(OMNMenuProduct *)menuProduct {
   
-  return _menuCategory.children.count;
-  
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
-  OMNMenuCategory *menuCategory = _menuCategory.children[section];
-  return menuCategory.listItems.count;
-  
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  OMNMenuCategory *menuCategory = _menuCategory.children[indexPath.section];
-  id listItem = menuCategory.listItems[indexPath.row];
-  if ([listItem conformsToProtocol:@protocol(OMNMenuCellItemProtocol)]) {
+  if ([menuProductWithRecommedtationsCell.model.menuProduct isEqual:menuProduct]) {
     
-    UITableViewCell *cell = [listItem cellForTableView:tableView];
-    
-    if ([cell isKindOfClass:[OMNMenuProductCell class]]) {
-      
-      OMNMenuProductCell *menuProductCell = (OMNMenuProductCell *)cell;
-      menuProductCell.delegate = self;
-      
-    }
-    
-    return cell;
+    [self updateTableViewWithSelectedItems:menuProduct andScrollToCell:menuProductWithRecommedtationsCell];
     
   }
-  else {
-    
-    return [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
-    
-  }
-
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  OMNMenuCategory *menuCategory = _menuCategory.children[indexPath.section];
-  id listItem = menuCategory.listItems[indexPath.row];
-  if ([listItem conformsToProtocol:@protocol(OMNMenuCellItemProtocol)]) {
-    
-    return [listItem heightForTableView:tableView];
-    
-  }
-  return 100.0f;
-  
-}
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  return 110.0f;
-  
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-  
-  OMNMenuCategoryHeaderView *menuCategoryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];
-  OMNMenuCategory *menuCategory = _menuCategory.children[section];
-  menuCategoryHeaderView.menuCategory = menuCategory;
-  return menuCategoryHeaderView;
-  
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-  
-  return 45.0f;
-  
-}
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be re-orderable.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
-
-#pragma mark - OMNMenuProductCellDelegate
-
-- (void)updateTableViewWithSelectedItems:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
-  
-  _menuProductSelectionItem.selected = NO;
-  _menuProductSelectionItem = menuProductSelectionItem;
-  menuProductSelectionItem.selected = YES;
-  [_tableView beginUpdates];
-  [_tableView endUpdates];
-  
-}
-
-- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProductSelectionItem *)menuProductSelectionItem {
-  
-  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProductSelectionItem.menuProduct];
+  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
   __weak typeof(self)weakSelf = self;
   productModiferAlertVC.didCloseBlock = ^{
     
@@ -215,15 +97,25 @@ OMNMenuProductCellDelegate>
   
   productModiferAlertVC.didSelectOrderBlock = ^{
     
-    [weakSelf.navigationController dismissViewControllerAnimated:YES completion:^{
-      
-      [weakSelf updateTableViewWithSelectedItems:menuProductSelectionItem];
-      
-    }];
+    [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
     
   };
   [self.navigationController presentViewController:productModiferAlertVC animated:YES completion:nil];
   
 }
+
+- (void)updateTableViewWithSelectedItems:(OMNMenuProduct *)menuProduct andScrollToCell:(UITableViewCell *)cell {
+  
+  _menuProductSelectionItem.selected = NO;
+  _menuProductSelectionItem = menuProduct;
+  _menuProductSelectionItem.selected = YES;
+  
+  NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+  [_tableView beginUpdates];
+  [_tableView endUpdates];
+  [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+  
+}
+
 
 @end
