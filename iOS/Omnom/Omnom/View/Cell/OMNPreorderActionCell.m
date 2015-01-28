@@ -11,6 +11,7 @@
 #import <OMNStyler.h>
 #import "OMNConstants.h"
 #import "UIButton+omn_helper.h"
+#import "UIImage+omn_helper.h"
 
 @implementation OMNPreorderActionCell {
   
@@ -55,11 +56,16 @@
   
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   
+  UIColor *highlitedColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
   _clearButton = [UIButton omn_autolayoutView];
   _clearButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f);
   [_clearButton setTitleColor:[colorWithHexString(@"000000") colorWithAlphaComponent:0.4f] forState:UIControlStateNormal];
+  [_clearButton setTitleColor:highlitedColor forState:UIControlStateHighlighted];
   _clearButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
-  [_clearButton setBackgroundImage:[[UIImage imageNamed:@"button_clear_wish"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
+  
+  UIImage *image = [[UIImage imageNamed:@"button_clear_wish"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
+  [_clearButton setBackgroundImage:image forState:UIControlStateNormal];
+  [_clearButton setBackgroundImage:[[[UIImage imageNamed:@"button_clear_wish"] omn_tintWithColor:highlitedColor] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateHighlighted];
   [self.contentView addSubview:_clearButton];
   
   _actionButton = [UIButton omn_autolayoutView];

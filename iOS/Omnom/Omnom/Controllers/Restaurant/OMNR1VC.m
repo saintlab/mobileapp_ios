@@ -282,8 +282,7 @@
   
   if (_restaurantMediator.restaurant.settings.has_menu) {
     
-    _menuModel = [[OMNMenuModel alloc] init];
-    
+    _menuModel = [[OMNMenuModel alloc] initWithMenu:_restaurantMediator.menu];
     _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _menuTable.allowsSelection = NO;
     _menuTable.scrollEnabled = NO;
@@ -326,7 +325,7 @@
 
 - (void)menuTap {
   
-  OMNMenuVC *menuVC = [[OMNMenuVC alloc] init];
+  OMNMenuVC *menuVC = [[OMNMenuVC alloc] initWithMediator:_restaurantMediator];
   __weak typeof(self)weakSelf = self;
   menuVC.didCloseBlock = ^{
     

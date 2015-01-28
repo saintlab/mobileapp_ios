@@ -20,7 +20,18 @@
 @implementation OMNMenuVC {
   
   OMNMenuModel *_menuModel;
+  OMNRestaurantMediator *_restaurantMediator;
   
+}
+
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
+  self = [super init];
+  if (self) {
+    
+    _restaurantMediator = restaurantMediator;
+    
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -97,7 +108,7 @@
   _tableView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_tableView];
   
-  _menuModel = [[OMNMenuModel alloc] init];
+  _menuModel = [[OMNMenuModel alloc] initWithMenu:_restaurantMediator.menu];
   [_menuModel configureTableView:_tableView];
   
   NSDictionary *views =

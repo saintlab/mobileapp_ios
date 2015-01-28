@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "OMNMenuProductDetails.h"
 
+extern NSString * const OMNMenuProductDidChangeNotification;
+
 @interface OMNMenuProduct : NSObject
 
 @property (nonatomic, copy) NSString *id;

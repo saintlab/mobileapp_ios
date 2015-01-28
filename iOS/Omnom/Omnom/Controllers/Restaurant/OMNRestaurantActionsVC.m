@@ -15,6 +15,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurantManager.h"
 #import "OMNTable+omn_network.h"
+#import "OMNMyOrderButton.h"
 
 @interface OMNRestaurantActionsVC()
 
@@ -117,11 +118,13 @@
     
     callWaiterButton.hidden = !settings.has_waiter_call;
 
+    OMNMyOrderButton *myOrderButton = [[OMNMyOrderButton alloc] initWithRestaurantMediator:_restaurantMediator];
+    
     [self.bottomToolbar setItems:
      @[
        [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
        [UIBarButtonItem omn_flexibleItem],
-       [UIBarButtonItem omn_barButtonWithTitle:@"my order" color:[UIColor blackColor] target:_restaurantMediator action:@selector(myOrderTap)],
+       [[UIBarButtonItem alloc] initWithCustomView:myOrderButton],
        [UIBarButtonItem omn_flexibleItem],
        [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
        ]

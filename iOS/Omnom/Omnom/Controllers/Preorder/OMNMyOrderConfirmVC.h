@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNRestaurantMediator.h"
 
-@interface OMNPreorderConfirmVC : UITableViewController
+@interface OMNMyOrderConfirmVC : UITableViewController
 
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
+
+- (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator;
 
 @end

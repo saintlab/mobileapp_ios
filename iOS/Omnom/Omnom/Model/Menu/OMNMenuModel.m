@@ -30,12 +30,11 @@
   
 }
 
-- (instancetype)init {
+- (instancetype)initWithMenu:(OMNMenu *)menu {
   self = [super init];
   if (self) {
     
-    id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
-    _menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
+    _menu = menu;
     
   }
   return self;

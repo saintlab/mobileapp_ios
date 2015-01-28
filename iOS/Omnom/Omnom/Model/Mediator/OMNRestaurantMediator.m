@@ -20,7 +20,7 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNSocketManager.h"
 #import "OMNNoOrdersVC.h"
-#import "OMNPreorderConfirmVC.h"
+#import "OMNMyOrderConfirmVC.h"
 #import "OMNNavigationController.h"
 #import "OMNLaunchHandler.h"
 
@@ -53,6 +53,9 @@ OMNOrderCalculationVCDelegate>
   self = [super init];
   if (self) {
     
+    id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
+    _menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
+
     _restaurantActionsVC = restaurantActionsVC;
     _restaurant = restaurant;
     self.table = [_restaurant.tables firstObject];
@@ -374,7 +377,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)myOrderTap {
   
-  OMNPreorderConfirmVC *preorderConfirmVC = [[OMNPreorderConfirmVC alloc] init];
+  OMNMyOrderConfirmVC *preorderConfirmVC = [[OMNMyOrderConfirmVC alloc] init];
   __weak typeof(self)weakSelf = self;
   preorderConfirmVC.didCloseBlock = ^{
     

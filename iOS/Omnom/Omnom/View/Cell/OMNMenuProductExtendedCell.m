@@ -38,26 +38,6 @@
   
 }
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-  self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-  if (self) {
-    
-    [self omn_setup];
-    
-  }
-  return self;
-}
-
-- (instancetype)initWithCoder:(NSCoder *)coder {
-  self = [super initWithCoder:coder];
-  if (self) {
-    
-    [self omn_setup];
-    
-  }
-  return self;
-}
-
 - (void)omn_setup {
   
   self.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -17,6 +17,7 @@ UITableViewDelegate>
 
 @property (nonatomic, copy) OMNMenuCategoryDidSelectBlock didSelectBlock;
 
+- (instancetype)initWithMenu:(OMNMenu *)menu;
 - (void)configureTableView:(UITableView *)tableView;
 
 @end

@@ -9,6 +9,8 @@
 #import "OMNMenuProduct.h"
 #import "OMNImageManager.h"
 
+NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChangeNotification";
+
 @implementation OMNMenuProduct
 
 - (instancetype)initWithJsonData:(id)data {
@@ -28,6 +30,12 @@
   return self;
 }
 
+- (void)setQuantity:(double)quantity {
+  
+  _quantity = quantity;
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNMenuProductDidChangeNotification object:self];
+  
+}
 
 - (NSString *)description {
   

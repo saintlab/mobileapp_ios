@@ -38,6 +38,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  self.view.backgroundColor = [UIColor whiteColor];
+  
   [OMNMenuProductExtendedWithRecommedtationsModel registerCellsForTableView:self.tableView];
   
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

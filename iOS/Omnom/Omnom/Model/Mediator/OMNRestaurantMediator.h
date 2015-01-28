@@ -7,6 +7,7 @@
 //
 
 #import "OMNRestaurantActionsVC.h"
+#import "OMNMenu.h"
 
 @interface OMNRestaurantMediator : NSObject
 
@@ -16,6 +17,7 @@
 @property (nonatomic, strong) OMNTable *table;
 @property (nonatomic, weak) OMNOrder *selectedOrder;
 @property (nonatomic, strong) NSArray *orders;
+@property (nonatomic, strong) OMNMenu *menu;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC;
 
