@@ -256,6 +256,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    NSLog(@"nearby>%@", error);
     completionBlock();
     
   }];

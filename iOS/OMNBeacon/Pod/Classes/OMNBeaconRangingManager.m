@@ -48,6 +48,9 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
   self = [super init];
   if (self) {
     
+    _rangingLocationManager = [[CLLocationManager alloc] init];
+    _rangingLocationManager.pausesLocationUpdatesAutomatically = NO;
+
     NSString *identifier = [OMNBeaconRangingManager generateIdentifier];
     _rangingBeaconRegions = [[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:identifier];
     _authorizationStatus = [CLLocationManager authorizationStatus];
@@ -65,16 +68,6 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
     
   }
   return self;
-}
-
-- (CLLocationManager *)rangingLocationManager {
-  if (nil == _rangingLocationManager) {
-    
-    _rangingLocationManager = [[CLLocationManager alloc] init];
-    _rangingLocationManager.pausesLocationUpdatesAutomatically = NO;
-
-  }
-  return _rangingLocationManager;
 }
 
 - (void)rangeBeacons:(CLBeaconsBlock)didRangeBeaconsBlock failure:(void (^)(NSError *error))failureBlock {
@@ -99,7 +92,7 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
   _rangingLocationManager.delegate = self;
   [_rangingBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
 
-    [self.rangingLocationManager startRangingBeaconsInRegion:beaconRegion];
+    [_rangingLocationManager startRangingBeaconsInRegion:beaconRegion];
     
   }];
   _ranging = YES;
@@ -116,7 +109,6 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
     [_rangingLocationManager stopRangingBeaconsInRegion:beaconRegion];
     
   }];
-  _rangingLocationManager = nil;
   _ranging = NO;
   
 }
@@ -137,7 +129,8 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
   
-  if (_didRangeBeaconsBlock &&
+  if ([_rangingBeaconRegions containsObject:region] &&
+      _didRangeBeaconsBlock &&
       beacons.count) {
     
     _didRangeBeaconsBlock(beacons);
@@ -148,6 +141,10 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
 
 - (void)locationManager:(CLLocationManager *)manager rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region withError:(NSError *)error {
 
+  if (![_rangingBeaconRegions containsObject:region]) {
+    return;
+  }
+  
   if (_didFailRangeBeaconsBlock) {
     _didFailRangeBeaconsBlock(error);
   }

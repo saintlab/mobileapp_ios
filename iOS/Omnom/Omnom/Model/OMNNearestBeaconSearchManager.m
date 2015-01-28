@@ -132,9 +132,9 @@
 - (void)startRangingBeacons {
   
   _foundBeacons = [[OMNFoundBeacons alloc] init];
-  _beaconRangingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFinish) userInfo:nil repeats:NO];
   __weak typeof(self)weakSelf = self;
   
+  _beaconRangingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFinish) userInfo:nil repeats:NO];
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
     [weakSelf didRangeBeacons:beacons];
@@ -148,6 +148,7 @@
 }
 
 - (void)didRangeBeacons:(NSArray *)beacons {
+
 
   [_foundBeacons updateWithBeacons:beacons];
   
