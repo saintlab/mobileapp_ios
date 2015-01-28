@@ -12,6 +12,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNPreorderDoneVC.h"
 #import "UIView+screenshot.h"
+#import "OMNRestaurant+omn_network.h"
 
 @interface OMNMyOrderConfirmVC ()
 
@@ -70,6 +71,19 @@
 
 - (void)preorderTap {
   
+  NSArray *products =
+  @[
+    @{@"id":@"2084-in-riba-ris-nsk-at-aura", @"quantity":@(1)},
+    @{@"id":@"2092-in-riba-ris-nsk-at-aura", @"quantity":@(1)},
+    ];
+  
+  [_restaurantMediator.restaurant createWishForTableID:_restaurantMediator.table.id products:products block:^(OMNOrder *order) {
+    
+  } failureBlock:^(OMNError *error) {
+    
+  }];
+  
+  return;
   OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] init];
   preorderDoneVC.backgroundImage = [self.view omn_screenshot];
   __weak typeof(self)weakSelf = self;

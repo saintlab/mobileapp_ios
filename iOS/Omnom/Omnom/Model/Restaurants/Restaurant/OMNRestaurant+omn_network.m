@@ -188,32 +188,30 @@
   
 }
 
-- (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(NSError *error))failureBlock {
+- (void)createWishForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(OMNError *error))failureBlock {
   
-  if (0 == tableID.length) {
-    failureBlock(nil);
-    return;
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+  if (tableID) {
+    parameters[@"internal_table_id"] = tableID;
+  }
+  if (products) {
+    parameters[@"items"] = products;
   }
   
-  NSMutableArray *items = [NSMutableArray arrayWithCapacity:products.count];
-//  
-//  [products enumerateObjectsUsingBlock:^(OMNMenuProduct *menuItem, NSUInteger idx, BOOL *stop) {
-//    
-//    NSDictionary *item =
-//    @{
-//      @"internalId" : menuItem.internalId,
-//      @"" : @(menuItem.quantity),
-//      };
-//    [items addObject:item];
-//    
-//  }];
+#warning 123
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", @"saintlab-iiko"];
   
-  __unused NSDictionary *info =
-  @{
-    @"restaurantId" : self.id,
-    @"tableId" : tableID,
-    @"items" : items,
-    };
+//  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"%@", responseObject);
+    block(nil);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock([error omn_internetError]);
+    
+  }];
   
 }
 

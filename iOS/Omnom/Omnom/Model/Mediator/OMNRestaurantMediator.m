@@ -377,7 +377,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)myOrderTap {
   
-  OMNMyOrderConfirmVC *preorderConfirmVC = [[OMNMyOrderConfirmVC alloc] init];
+  OMNMyOrderConfirmVC *preorderConfirmVC = [[OMNMyOrderConfirmVC alloc] initWithRestaurantMediator:self];
   __weak typeof(self)weakSelf = self;
   preorderConfirmVC.didCloseBlock = ^{
     

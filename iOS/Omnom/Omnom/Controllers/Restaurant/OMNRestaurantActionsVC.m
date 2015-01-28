@@ -107,12 +107,11 @@
 //  NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт")
 //  NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")
   
-  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:nil];
-  [callBillButton addTarget:_restaurantMediator action:@selector(callBill) forControlEvents:UIControlEventTouchUpInside];
   
-  OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] title:nil];
-  [callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
-
+  
+  UIButton *callBillButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"bill_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callBill)];
+  UIButton *callWaiterButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callWaiterTap)];
+  
   OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
   if (settings.has_menu) {
     

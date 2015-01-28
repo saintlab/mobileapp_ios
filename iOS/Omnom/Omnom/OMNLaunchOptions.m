@@ -37,7 +37,7 @@
     //  @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";
     //  @"qr-code-3-at-saintlab-iiko";
     //  @"http://omnom.menu/qr/special-and-vip";
-      _qr = @"http://m.2gis.ru/os/";
+//      _qr = @"http://m.2gis.ru/os/";
     //  _hashString = @"hash-QWERTY-restaurant-B";
 #endif
   }

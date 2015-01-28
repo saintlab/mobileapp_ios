@@ -486,6 +486,8 @@
 		93CE47C71A78C141002D293B /* OMNCategoryToMenuTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47C51A78C141002D293B /* OMNCategoryToMenuTransition.m */; };
 		93CE47CA1A78C9A4002D293B /* OMNMyOrderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47C91A78C9A4002D293B /* OMNMyOrderButton.m */; };
 		93CE47CB1A78C9A4002D293B /* OMNMyOrderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47C91A78C9A4002D293B /* OMNMyOrderButton.m */; };
+		93CE47CF1A790409002D293B /* OMNWith.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47CE1A790409002D293B /* OMNWith.m */; };
+		93CE47D01A790409002D293B /* OMNWith.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47CE1A790409002D293B /* OMNWith.m */; };
 		93CE7CA31A62A8320032D96B /* decodeBeacons.json in Resources */ = {isa = PBXBuildFile; fileRef = 93CE7CA21A62A8320032D96B /* decodeBeacons.json */; };
 		93CE7CA51A62AAEF0032D96B /* OMNRestaurantMediatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE7CA41A62AAEF0032D96B /* OMNRestaurantMediatorTests.m */; };
 		93D104191A59856A00BC2E12 /* OMNScanTableQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D104181A59856A00BC2E12 /* OMNScanTableQRCodeVC.m */; };
@@ -1091,6 +1093,8 @@
 		93CE47C51A78C141002D293B /* OMNCategoryToMenuTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCategoryToMenuTransition.m; sourceTree = "<group>"; };
 		93CE47C81A78C9A4002D293B /* OMNMyOrderButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMyOrderButton.h; sourceTree = "<group>"; };
 		93CE47C91A78C9A4002D293B /* OMNMyOrderButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMyOrderButton.m; sourceTree = "<group>"; };
+		93CE47CD1A790409002D293B /* OMNWith.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWith.h; sourceTree = "<group>"; };
+		93CE47CE1A790409002D293B /* OMNWith.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWith.m; sourceTree = "<group>"; };
 		93CE7CA21A62A8320032D96B /* decodeBeacons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = decodeBeacons.json; sourceTree = "<group>"; };
 		93CE7CA41A62AAEF0032D96B /* OMNRestaurantMediatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantMediatorTests.m; sourceTree = "<group>"; };
 		93D104171A59856A00BC2E12 /* OMNScanTableQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScanTableQRCodeVC.h; sourceTree = "<group>"; };
@@ -1954,6 +1958,7 @@
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				93CE47CC1A7903F6002D293B /* With */,
 				935FF1611A6D3EB3004B69A6 /* Menu */,
 				93F2AEFC1A6FFFF200CDF3D9 /* Beacon */,
 				93F2AEF71A6F7A6400CDF3D9 /* Alert */,
@@ -2392,6 +2397,15 @@
 				93CE47C51A78C141002D293B /* OMNCategoryToMenuTransition.m */,
 			);
 			name = Menu;
+			sourceTree = "<group>";
+		};
+		93CE47CC1A7903F6002D293B /* With */ = {
+			isa = PBXGroup;
+			children = (
+				93CE47CD1A790409002D293B /* OMNWith.h */,
+				93CE47CE1A790409002D293B /* OMNWith.m */,
+			);
+			name = With;
 			sourceTree = "<group>";
 		};
 		93D1177A1A2F03DF000131C4 /* User */ = {
@@ -3071,6 +3085,7 @@
 				937EF7EF19DFB47300BD9090 /* OMNCardEnterErrorLabel.m in Sources */,
 				9345AFAF199A253F00328F73 /* OMNBankCardInfo.m in Sources */,
 				930554E11934978400E6F4EC /* OMNAuthorization.m in Sources */,
+				93CE47CF1A790409002D293B /* OMNWith.m in Sources */,
 				9389455C19B0531C00C37C82 /* OMNUtils.m in Sources */,
 				93CB66D31A35FD8100C5B10E /* OMNLaunchOptions.m in Sources */,
 				939FD05E1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
@@ -3335,6 +3350,7 @@
 				93E435B41998CA6400EDC488 /* OMNRestaurantInfoVC.m in Sources */,
 				93175DC519C6BEFE005EE4C6 /* TQStarRatingView.m in Sources */,
 				93B65E661A6956C90061F1B1 /* OMNModalWebVC.m in Sources */,
+				93CE47D01A790409002D293B /* OMNWith.m in Sources */,
 				93E299A8197D0C9700051B04 /* OMNCircleRootVC.m in Sources */,
 				939F991D19752BE90051822E /* OMNUserInfoVC.m in Sources */,
 				93E2997B197CD24F00051B04 /* OMNStartVC.m in Sources */,
