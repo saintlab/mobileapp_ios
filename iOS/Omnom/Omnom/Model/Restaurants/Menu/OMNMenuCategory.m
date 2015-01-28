@@ -13,7 +13,6 @@
 
 @implementation OMNMenuCategory {
   
-  __weak NSDictionary *_menuProducts;
   NSMutableArray *_listItems;
   
 }
@@ -22,7 +21,7 @@
   self = [super init];
   if (self) {
     
-    _menuProducts = menuProducts;
+    _allProducts = menuProducts;
     self.id = [jsonData[@"id"] description];
     self.parent_id = [jsonData[@"parent_id"] description];
     self.name = jsonData[@"name"];
@@ -63,8 +62,8 @@
   
   [self.products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     
-    OMNMenuProduct *product = _menuProducts[obj];
-    OMNMenuProductWithRecommedtations *menuProductWithRecommedtations = [[OMNMenuProductWithRecommedtations alloc] initWithMenuProduct:product products:_menuProducts];
+    OMNMenuProduct *product = _allProducts[obj];
+    OMNMenuProductWithRecommedtations *menuProductWithRecommedtations = [[OMNMenuProductWithRecommedtations alloc] initWithMenuProduct:product products:_allProducts];
     [listItems addObject:menuProductWithRecommedtations];
 
     if (idx < self.products.count - 1) {

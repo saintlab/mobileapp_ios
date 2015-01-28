@@ -52,7 +52,7 @@
   if (self) {
     
     [self omn_setup];
-    
+
   }
   return self;
 }
@@ -80,6 +80,7 @@
 
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
+  [self layoutIfNeeded];
   
 }
 
@@ -87,13 +88,6 @@
   
   [self removeMenuProductSelectionObserver];
   _model = model;
-  __weak typeof(self)weakSelf = self;
-  _menuProductSelectionObserverID = [_model.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *menuProduct, NSDictionary *change) {
-    
-    [weakSelf updateTableView];
-    
-  }];
-  
   _model.delegate = self;
   _tableView.delegate = model;
   _tableView.dataSource = model;
@@ -101,14 +95,13 @@
   
 }
 
-- (void)updateTableView {
+#pragma mark - OMNMenuProductCellDelegate
+
+- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell editProduct:(OMNMenuProduct *)menuProduct {
   
-  [_tableView beginUpdates];
-  [_tableView endUpdates];
+  [self.delegate menuProductWithRecommedtationsCell:self editMenuProduct:menuProduct];
   
 }
-
-#pragma mark - OMNMenuProductCellDelegate
 
 - (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProduct *)menuProduct {
   

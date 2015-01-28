@@ -1,23 +1,25 @@
 //
-//  OMNMenuProductCell.m
+//  OMNMenuProductDetailsCell.m
 //  omnom
 //
-//  Created by tea on 20.01.15.
+//  Created by tea on 27.01.15.
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuProductCell.h"
+#import "OMNMenuProductExtendedCell.h"
+#import "OMNMenuProductExtendedView.h"
 #import <BlocksKit.h>
 #import "UIView+omn_autolayout.h"
-#import "OMNMenuProductView.h"
 
-@implementation OMNMenuProductCell {
+@implementation OMNMenuProductExtendedCell {
   
   NSString *_productSelectionObserverID;
   NSString *_productImageObserverID;
-  OMNMenuProductView *_menuProductView;
+  OMNMenuProductExtendedView *_menuProductDetailsView;
   
 }
+
+@synthesize menuProduct=_menuProduct;
 
 - (void)dealloc {
   
@@ -61,21 +63,21 @@
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.contentView.clipsToBounds = YES;
   
-  _menuProductView = [OMNMenuProductView omn_autolayoutView];
-  [_menuProductView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
-  [self.contentView addSubview:_menuProductView];
+  _menuProductDetailsView = [OMNMenuProductExtendedView omn_autolayoutView];
+  [_menuProductDetailsView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
+  [self.contentView addSubview:_menuProductDetailsView];
   
   NSDictionary *views =
   @{
-    @"menuProductView" : _menuProductView,
+    @"menuProductDetailsView" : _menuProductDetailsView,
     };
   
   NSDictionary *metrics =
   @{
     };
-
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuProductView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuProductView]" options:kNilOptions metrics:metrics views:views]];
+  
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuProductDetailsView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuProductDetailsView]" options:kNilOptions metrics:metrics views:views]];
   
 }
 
@@ -84,24 +86,24 @@
   [self removeMenuProductObservers];
   
   _menuProduct = menuProduct;
-  _menuProductView.menuProduct = menuProduct;
-
-  __weak OMNMenuProductView *menuProductView = _menuProductView;
+  _menuProductDetailsView.menuProduct = menuProduct;
+  
+  __weak OMNMenuProductExtendedView *menuProductDetailsView = _menuProductDetailsView;
   _productSelectionObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
-   
-    [UIView transitionWithView:menuProductView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    
+    [UIView transitionWithView:menuProductDetailsView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
-      menuProductView.priceButton.selected = (mp.quantity > 0.0);
+      menuProductDetailsView.priceButton.selected = (mp.quantity > 0.0);
       
     } completion:nil];
     
   }];
   
   _productImageObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
-
-    [UIView transitionWithView:menuProductView.productIV duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    
+    [UIView transitionWithView:menuProductDetailsView.productIV duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
-      menuProductView.productIV.image = mp.photoImage;
+      menuProductDetailsView.productIV.image = mp.photoImage;
       
     } completion:nil];
     

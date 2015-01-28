@@ -13,18 +13,18 @@
 #import "OMNMenuProductsDelimiterCell.h"
 #import "OMNMenuCategoryHeaderView.h"
 
-@interface OMNMenuCategoryModel ()
-<OMNMenuProductWithRecommedtationsCellDelegate>
+@implementation OMNMenuCategoryModel {
+  
+  __weak id<OMNMenuProductWithRecommedtationsCellDelegate> _delegate;
+  
+}
 
-@end
-
-@implementation OMNMenuCategoryModel
-
-- (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory {
+- (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory delegate:(__weak id<OMNMenuProductWithRecommedtationsCellDelegate>)delegate {
   self = [super init];
   if (self) {
     
     _menuCategory = menuCategory;
+    _delegate = delegate;
     
   }
   return self;
@@ -66,7 +66,7 @@
     if ([cell isKindOfClass:[OMNMenuProductWithRecommedtationsCell class]]) {
       
       OMNMenuProductWithRecommedtationsCell *productWithRecommedtationsCell = (OMNMenuProductWithRecommedtationsCell *)cell;
-      productWithRecommedtationsCell.delegate = self;
+      productWithRecommedtationsCell.delegate = _delegate;
       
     }
     
@@ -106,14 +106,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   
   return 45.0f;
-  
-}
-
-#pragma mark - OMNMenuProductWithRecommedtationsCellDelegate
-
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectMenuProduct:(OMNMenuProduct *)menuProduct {
- 
-  [self.delegate menuProductWithRecommedtationsCell:menuProductWithRecommedtationsCell didSelectMenuProduct:menuProduct];
   
 }
 

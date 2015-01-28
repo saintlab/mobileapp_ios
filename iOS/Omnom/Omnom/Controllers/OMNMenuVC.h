@@ -12,5 +12,6 @@
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
+@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 
 @end

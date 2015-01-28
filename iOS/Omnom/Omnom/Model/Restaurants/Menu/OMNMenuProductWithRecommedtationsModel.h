@@ -15,6 +15,7 @@
 UITableViewDelegate>
 
 @property (nonatomic, strong, readonly) OMNMenuProduct *menuProduct;
+@property (nonatomic, strong) NSMutableArray *model;
 @property (nonatomic, weak) id<OMNMenuProductCellDelegate> delegate;
 
 + (void)registerCellsForTableView:(UITableView *)tableView;

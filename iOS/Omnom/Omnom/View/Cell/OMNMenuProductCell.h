@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "OMNMenuProduct.h"
-
-@protocol OMNMenuProductCellDelegate;
+#import "OMNMenuProductCellDelegate.h"
 
 @interface OMNMenuProductCell : UITableViewCell
 
@@ -18,8 +17,3 @@
 
 @end
 
-@protocol OMNMenuProductCellDelegate <NSObject>
-
-- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProduct *)menuProduct;
-
-@end

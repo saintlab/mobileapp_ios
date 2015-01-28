@@ -12,6 +12,4 @@
 @interface OMNMenuProductRecommendationsDelimiter : NSObject
 <OMNMenuCellItemProtocol>
 
-- (instancetype)init;
-
 @end

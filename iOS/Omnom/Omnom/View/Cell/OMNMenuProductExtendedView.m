@@ -1,25 +1,27 @@
 //
-//  OMNMenuProductView.m
+//  OMNMenuProductDetailsView.m
 //  omnom
 //
-//  Created by tea on 26.01.15.
+//  Created by tea on 27.01.15.
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuProductView.h"
+#import "OMNMenuProductExtendedView.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import "UIImage+omn_helper.h"
 
-@implementation OMNMenuProductView {
+@implementation OMNMenuProductExtendedView {
   
   UILabel *_nameLabel;
   UILabel *_infoLabel;
+  UILabel *_descriptionLabel;
   NSLayoutConstraint *_heightConstraint;
   
 }
+
 
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
@@ -65,6 +67,13 @@
   [_priceButton setBackgroundImage:[selectedImage omn_tintWithColor:[colorWithHexString(@"157EFB") colorWithAlphaComponent:0.5f]] forState:UIControlStateSelected|UIControlStateHighlighted];
   [self addSubview:_priceButton];
   
+  _descriptionLabel = [UILabel omn_autolayoutView];
+  _descriptionLabel.textAlignment = NSTextAlignmentCenter;
+  _descriptionLabel.textColor = colorWithHexString(@"000000");
+  _descriptionLabel.numberOfLines = 0;
+  _descriptionLabel.font = FuturaOSFOmnomRegular(15.0f);
+  [self addSubview:_descriptionLabel];
+  
   _productIV = [UIImageView omn_autolayoutView];
   _productIV.opaque = YES;
   _productIV.contentMode = UIViewContentModeScaleAspectFit;
@@ -77,6 +86,7 @@
     @"infoLabel" : _infoLabel,
     @"priceButton" : _priceButton,
     @"productIV" : _productIV,
+    @"descriptionLabel" : _descriptionLabel,
     };
   
   NSDictionary *metrics =
@@ -86,9 +96,10 @@
   
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[descriptionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[productIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(8)-[nameLabel]-(8)-[productIV]-(>=0)-[infoLabel]-(8)-[priceButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[productIV]-(8)-[nameLabel]-(8)-[infoLabel]-(8)-[priceButton]-(8)-[descriptionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
   _heightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
   [self addConstraint:_heightConstraint];
@@ -100,6 +111,7 @@
   CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
   _nameLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   _infoLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
+  _descriptionLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
   
 }
@@ -107,10 +119,10 @@
 - (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
   
   _menuProduct = menuProduct;
-  
-  _heightConstraint.constant = (menuProduct.photo.length) ? (110.0f) : (0.0f);
+  _heightConstraint.constant = (menuProduct.photo.length) ? (150.0f) : (0.0f);
   _productIV.image = menuProduct.photoImage;
   _priceButton.selected = (menuProduct.quantity > 0.0);
+  _descriptionLabel.text = menuProduct.Description;
   _nameLabel.text = menuProduct.name;
   _infoLabel.text = [menuProduct.details displayText];
   [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProduct.price*100ll] forState:UIControlStateNormal];

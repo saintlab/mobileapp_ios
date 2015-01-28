@@ -21,11 +21,11 @@
   static OMNMenuProductView *menuProductView = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    menuProductView = [[OMNMenuProductView alloc] init];
+    menuProductView = [[OMNMenuProductView alloc] initWithFrame:tableView.bounds];
   });
   
-  menuProductView.menuProduct = self;
   menuProductView.bounds = tableView.bounds;
+  menuProductView.menuProduct = self;
   [menuProductView setNeedsLayout];
   [menuProductView layoutIfNeeded];
   

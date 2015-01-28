@@ -15,11 +15,7 @@
 
 @end
 
-@implementation OMNMenuProductWithRecommedtationsModel {
- 
-  NSArray *_model;
-  
-}
+@implementation OMNMenuProductWithRecommedtationsModel
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products {
   self = [super init];
@@ -27,20 +23,23 @@
     
     _menuProduct = menuProduct;
     
-    NSMutableArray *recommendations = [NSMutableArray arrayWithCapacity:menuProduct.recommendations.count];
-    [menuProduct.recommendations enumerateObjectsUsingBlock:^(id productID, NSUInteger idx, BOOL *stop) {
-      
-      OMNMenuProduct *recommendationProduct = products[productID];
-      [recommendations addObject:recommendationProduct];
-      
-    }];
+    _model = [NSMutableArray arrayWithObject:@[_menuProduct]];
     
-    _model =
-    @[
-      @[menuProduct],
-      @[[[OMNMenuProductRecommendationsDelimiter alloc] init]],
-      recommendations,
-      ];
+    if (_menuProduct.recommendations.count) {
+      
+      [_model addObject:@[[[OMNMenuProductRecommendationsDelimiter alloc] init]]];
+      
+      NSMutableArray *recommendations = [NSMutableArray arrayWithCapacity:menuProduct.recommendations.count];
+      [menuProduct.recommendations enumerateObjectsUsingBlock:^(id productID, NSUInteger idx, BOOL *stop) {
+        
+        OMNMenuProduct *recommendationProduct = products[productID];
+        [recommendations addObject:recommendationProduct];
+        
+      }];
+
+      [_model addObject:recommendations];
+    
+    }
     
   }
   return self;
@@ -133,12 +132,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  if (!_menuProduct.selected &&
-      indexPath.section != 0) {
-    
-    return 0.0f;
-    
-  }
   id item = [self itemAtIndexPath:indexPath];
   if ([item conformsToProtocol:@protocol(OMNMenuCellItemProtocol)]) {
     
@@ -150,11 +143,30 @@
   
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  id item = [self itemAtIndexPath:indexPath];
+  if ([item isKindOfClass:[OMNMenuProduct class]]) {
+    
+    OMNMenuProduct *menuProduct = (OMNMenuProduct *)item;
+    OMNMenuProductCell *cell = (OMNMenuProductCell *)[tableView cellForRowAtIndexPath:indexPath];
+    [self.delegate menuProductCell:cell didSelectProduct:menuProduct];
+    
+  }
+  
+}
+
 #pragma mark - OMNMenuProductCellDelegate
+
+- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell editProduct:(OMNMenuProduct *)menuProduct {
+  
+  [self.delegate menuProductCell:menuProductCell editProduct:menuProduct];
+  
+}
 
 - (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProduct *)menuProduct {
   
-  [self.delegate menuProductCell:menuProductCell didSelectProduct:menuProduct];
+  
   
 }
 

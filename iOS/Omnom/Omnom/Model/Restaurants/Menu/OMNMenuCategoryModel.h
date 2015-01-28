@@ -15,9 +15,8 @@
 UITableViewDelegate>
 
 @property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
-@property (nonatomic, weak) id<OMNMenuProductWithRecommedtationsCellDelegate> delegate;
 
-- (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory;
+- (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory delegate:(__weak id<OMNMenuProductWithRecommedtationsCellDelegate>)delegate;
 + (void)registerCellsForTableView:(UITableView *)tableView;
 
 @end

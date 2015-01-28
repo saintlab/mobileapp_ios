@@ -20,6 +20,8 @@
 @property (nonatomic, strong) NSArray *children;
 @property (nonatomic, strong) NSArray *products;
 
+@property (nonatomic, weak) NSDictionary *allProducts;
+
 - (instancetype)initWithJsonData:(id)jsonData menuProducts:(__weak NSDictionary *)menuProducts level:(NSInteger)level;
 - (NSArray *)listItems;
 

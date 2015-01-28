@@ -37,11 +37,24 @@
     
   };
   
+  UIEdgeInsets insets = UIEdgeInsetsMake(100.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  _tableView.contentInset = insets;
+  _tableView.scrollIndicatorInsets = insets;
+  [self.view layoutIfNeeded];
+  
 }
 
 - (void)showMenuCategory:(OMNMenuCategory *)menuCategory {
   
+  self.selectedIndexPath = [_tableView indexPathForSelectedRow];
   OMNMenuCategoryVC *menuCategoryVC = [[OMNMenuCategoryVC alloc] initWithMenuCategory:menuCategory];
+  __weak typeof(self)weakSelf = self;
+  menuCategoryVC.didCloseBlock = ^{
+    
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    
+  };
+  menuCategoryVC.backgroundImage = self.backgroundImage;
   [self.navigationController pushViewController:menuCategoryVC animated:YES];
   
 }
@@ -49,10 +62,12 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  UIEdgeInsets insets = UIEdgeInsetsMake(100.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
-  _tableView.contentInset = insets;
-  _tableView.scrollIndicatorInsets = insets;
-  [self.view layoutIfNeeded];
+ 
+  if (_tableView.indexPathForSelectedRow) {
+    
+    [_tableView deselectRowAtIndexPath:_tableView.indexPathForSelectedRow animated:YES];
+    
+  }
   
 }
 
