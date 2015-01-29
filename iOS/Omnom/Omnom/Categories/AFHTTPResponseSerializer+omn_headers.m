@@ -14,10 +14,19 @@
 
 - (void)omn_addCustomHeaders {
   
+#ifdef APP_STORE
+  NSString *configuration = @"appstore";
+#elif defined (AD_HOC)
+  NSString *configuration = @"ad-hoc";
+#else
+  NSString *configuration = @"debug";
+#endif
+  
   [self setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];
   [self setValue:CURRENT_VERSION forHTTPHeaderField:@"current-app-version"];
   [self setValue:CURRENT_BUILD forHTTPHeaderField:@"x-current-app-build"];
   [self setValue:CURRENT_VERSION forHTTPHeaderField:@"x-current-app-version"];
+  [self setValue:configuration forHTTPHeaderField:@"x-app-configuration"];
   [self setValue:@"Apple" forHTTPHeaderField:@"x-mobile-vendor"];
   [self setValue:@"iOs" forHTTPHeaderField:@"x-mobile-platform"];
   [self setValue:[[UIDevice currentDevice] systemVersion] forHTTPHeaderField:@"x-mobile-os-version"];

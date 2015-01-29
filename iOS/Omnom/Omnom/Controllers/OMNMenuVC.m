@@ -58,7 +58,7 @@
 - (void)showMenuCategory:(OMNMenuCategory *)menuCategory {
   
   self.selectedIndexPath = [_tableView indexPathForSelectedRow];
-  OMNMenuCategoryVC *menuCategoryVC = [[OMNMenuCategoryVC alloc] initWithMenuCategory:menuCategory];
+  OMNMenuCategoryVC *menuCategoryVC = [[OMNMenuCategoryVC alloc] initWithMediator:_restaurantMediator category:menuCategory];
   __weak typeof(self)weakSelf = self;
   menuCategoryVC.didCloseBlock = ^{
     

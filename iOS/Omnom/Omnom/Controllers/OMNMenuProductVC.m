@@ -20,14 +20,16 @@
   
   OMNMenuProduct *_menuProduct;
   OMNMenuProductExtendedWithRecommedtationsModel *_model;
+  OMNRestaurantMediator *_restaurantMediator;
   
 }
 
-- (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator menuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
     
     _menuProduct = menuProduct;
+    _restaurantMediator = restaurantMediator;
     _model = [[OMNMenuProductExtendedWithRecommedtationsModel alloc] initWithMenuProduct:menuProduct products:products];
     
   }
@@ -69,11 +71,13 @@
 
 - (void)menuProductCell:(OMNMenuProductCell *)menuProductCell editProduct:(OMNMenuProduct *)menuProduct {
   
-  
+  [_restaurantMediator editMenuProduct:menuProduct];
   
 }
 
 - (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProduct *)menuProduct {
+  
+  
   
 }
 

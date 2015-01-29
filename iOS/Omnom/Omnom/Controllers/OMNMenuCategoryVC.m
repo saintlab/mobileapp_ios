@@ -7,7 +7,6 @@
 //
 
 #import "OMNMenuCategoryVC.h"
-#import "OMNProductModiferAlertVC.h"
 #import <OMNStyler.h>
 #import "OMNMenuProductVC.h"
 #import "OMNMenuCategoryModel.h"
@@ -23,15 +22,17 @@
 @implementation OMNMenuCategoryVC {
   
   OMNMenuCategoryModel *_model;
+  OMNRestaurantMediator *_restaurantMediator;
   __weak OMNMenuProduct *_menuProductSelectionItem;
   
 }
 
-- (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator category:(OMNMenuCategory *)menuCategory {
   self = [super init];
   if (self) {
     
     _menuCategory = menuCategory;
+    _restaurantMediator = restaurantMediator;
     _model = [[OMNMenuCategoryModel alloc] initWithMenuCategory:menuCategory delegate:self];
     
   }
@@ -58,6 +59,12 @@
   OMNCategoryNavigationView *categoryNavigationView = [[OMNCategoryNavigationView alloc] init];
   categoryNavigationView.category = _menuCategory;
   self.navigationItem.titleView = categoryNavigationView;
+  
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  
+  return UIStatusBarStyleLightContent;
   
 }
 
@@ -112,7 +119,7 @@
 
 - (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectMenuProduct:(OMNMenuProduct *)menuProduct {
   
-  OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMenuProduct:menuProduct products:_menuCategory.allProducts];
+  OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMediator:_restaurantMediator menuProduct:menuProduct products:_menuCategory.allProducts];
   __weak typeof(self)weakSelf = self;
   menuProductVC.didCloseBlock = ^{
     
@@ -131,20 +138,7 @@
     
   }
   
-  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
-  __weak typeof(self)weakSelf = self;
-  productModiferAlertVC.didCloseBlock = ^{
-    
-    [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  
-  productModiferAlertVC.didSelectOrderBlock = ^{
-    
-    [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  [self.navigationController presentViewController:productModiferAlertVC animated:YES completion:nil];
+  [_restaurantMediator editMenuProduct:menuProduct];
   
 }
 

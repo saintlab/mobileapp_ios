@@ -23,6 +23,7 @@
 #import "OMNMyOrderConfirmVC.h"
 #import "OMNNavigationController.h"
 #import "OMNLaunchHandler.h"
+#import "OMNProductModiferAlertVC.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -408,6 +409,25 @@ OMNOrderCalculationVCDelegate>
     [weakSelf getOrdersWithLoadingVC:loadingCircleVC];
     
   }];
+  
+}
+
+- (void)editMenuProduct:(OMNMenuProduct *)menuProduct {
+  
+  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
+  __weak typeof(self)weakSelf = self;
+  productModiferAlertVC.didCloseBlock = ^{
+    
+    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  
+  productModiferAlertVC.didSelectOrderBlock = ^{
+    
+    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [self.restaurantActionsVC.navigationController presentViewController:productModiferAlertVC animated:YES completion:nil];
   
 }
 

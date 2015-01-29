@@ -8,6 +8,7 @@
 
 #import "OMNBackgroundVC.h"
 #import "OMNMenuCategory.h"
+#import "OMNRestaurantMediator.h"
 
 @interface OMNMenuCategoryVC : OMNBackgroundVC
 
@@ -15,6 +16,6 @@
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 @property (nonatomic, strong, readonly) UITableView *tableView;
 
-- (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator category:(OMNMenuCategory *)menuCategory;
 
 @end
