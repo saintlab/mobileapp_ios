@@ -102,7 +102,7 @@
       } break;
       case CBCentralManagerStateUnsupported: {
         
-        [weakSelf.delegate beaconSearchManager:weakSelf didDetermineBLEState:kBLESearchManagerBLEUnsupported];
+        [weakSelf startRangingBeacons];
         
       } break;
       case CBCentralManagerStatePoweredOff: {
@@ -132,7 +132,6 @@
   }];
   
 }
-
 
 - (void)startRangingBeacons {
   
@@ -165,6 +164,11 @@
     [self processCoreLocationAuthorizationStatus:authorizationStatus];
     return;
     
+  }
+  
+  if (!_beaconRangingManager.isRangingAvaliable) {
+    [self.delegate beaconSearchManager:self didDetermineBLEState:kBLESearchManagerBLEUnsupported];
+    return;
   }
   
   _foundBeacons = [[OMNFoundBeacons alloc] init];

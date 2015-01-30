@@ -30,6 +30,7 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
 - (void)dealloc {
   
   [self stop];
+  _rangingLocationManager.delegate = nil, _rangingLocationManager = nil;
   _statusBlock = nil;
 
 }
@@ -50,7 +51,7 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
     
     _rangingLocationManager = [[CLLocationManager alloc] init];
     _rangingLocationManager.pausesLocationUpdatesAutomatically = NO;
-
+    
     NSString *identifier = [OMNBeaconRangingManager generateIdentifier];
     _rangingBeaconRegions = [[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:identifier];
     _authorizationStatus = [CLLocationManager authorizationStatus];
@@ -64,10 +65,16 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
   if (self) {
 
     _statusBlock = [statusBlock copy];
-    [self rangingLocationManager];
+    _rangingLocationManager.delegate = self;
     
   }
   return self;
+}
+
+- (BOOL)isRangingAvaliable {
+  
+  return [CLLocationManager isRangingAvailable];
+  
 }
 
 - (void)rangeBeacons:(CLBeaconsBlock)didRangeBeaconsBlock failure:(void (^)(NSError *error))failureBlock {
@@ -103,13 +110,11 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
   
   _didRangeBeaconsBlock = nil;
   _didFailRangeBeaconsBlock = nil;
-  _rangingLocationManager.delegate = nil;
   [_rangingBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
     
     [_rangingLocationManager stopRangingBeaconsInRegion:beaconRegion];
     
   }];
-  _rangingLocationManager = nil;
   _ranging = NO;
   
 }

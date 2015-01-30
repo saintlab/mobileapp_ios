@@ -13,6 +13,7 @@
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 #import "OMNAnalitics.h"
+#import "OMNOperationManager.h"
 
 @interface OMNRatingVC ()
 
@@ -234,7 +235,16 @@
   if (_starRatingView.score > 0.0f) {
     
     NSInteger score = (NSInteger)roundf(5*_starRatingView.score);
-    [[OMNAnalitics analitics] logScore:score order:_restaurantMediator.selectedOrder];
+    NSString *path = [NSString stringWithFormat:@"/rating/mobile/iphone/%ld/%@", (long)score, _restaurantMediator.selectedOrder.id];
+    [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+      [[OMNAnalitics analitics] logScore:score order:_restaurantMediator.selectedOrder];
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      [[OMNAnalitics analitics] logScore:score order:_restaurantMediator.selectedOrder];
+      
+    }];
     
   }
   

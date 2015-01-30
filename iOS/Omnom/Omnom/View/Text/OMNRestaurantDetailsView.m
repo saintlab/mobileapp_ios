@@ -71,12 +71,12 @@
   
   NSMutableString *address = [NSMutableString stringWithString:_restaurant.address.text];
   NSString *distance = @"";
-  if (fabs(restaurant.distance) > 1000) {
+  if (fabs(restaurant.distance) > 1000.0) {
   
     distance = [NSString stringWithFormat:@" ~%.2fкм", restaurant.distance/1000.0];
     
   }
-  else {
+  else if (fabs(restaurant.distance) > 0.0) {
     
     distance = [NSString stringWithFormat:@" ~%.0fм", restaurant.distance];
     

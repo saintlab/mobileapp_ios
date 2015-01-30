@@ -298,7 +298,6 @@ OMNPaymentFooterViewDelegate>
 
 - (void)showRatingForBill:(OMNBill *)bill {
   
-#warning showRatingForBill
   OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithMediator:_restaurantMediator];
   ratingVC.backgroundImage = self.backgroundImage;
   ratingVC.delegate = self;

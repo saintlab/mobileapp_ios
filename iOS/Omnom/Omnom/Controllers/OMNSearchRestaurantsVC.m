@@ -34,7 +34,6 @@
 @implementation OMNSearchRestaurantsVC {
   
   OMNBeaconsSearchManager *_beaconsSearchManager;
-  UIButton *_cancelButton;
   
 }
 
@@ -61,43 +60,8 @@
   self.circleBackground = circleBackground;
   self.circleIcon = [UIImage imageNamed:@"logo_icon"];
   self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-  
   [self.navigationItem setHidesBackButton:YES animated:NO];
-  if (NO) {
-    _cancelButton = [[UIButton alloc] init];
-    [_cancelButton setImage:[UIImage imageNamed:@"cross_icon_white"] forState:UIControlStateNormal];
-    [_cancelButton sizeToFit];
-    [_cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
-    _cancelButton.center = CGPointMake(CGRectGetWidth(self.view.frame)/2.0f, 42.0f);
-    [self.view addSubview:_cancelButton];
-  }
   
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  _cancelButton.hidden = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  _cancelButton.hidden = YES;
-}
-
-- (void)finishLoading:(dispatch_block_t)completionBlock {
-  
-  [UIView animateWithDuration:0.3 animations:^{
-    
-    _cancelButton.alpha = 0.0f;
-    
-  } completion:^(BOOL finished) {
-    
-    _cancelButton.hidden = YES;
-    _cancelButton.alpha = 1.0f;
-    
-  }];
-  
-  [super finishLoading:completionBlock];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
