@@ -19,7 +19,7 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
     
     self.id = data[@"id"];
     self.name = data[@"name"];
-    self.price = [data[@"price"] doubleValue];
+    self.price = [data[@"price"] doubleValue]*100ll;
     self.Description = data[@"description"];
     self.photo = data[@"photo"];
     self.modifiers = data[@"modifiers"];
@@ -34,6 +34,12 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   
   _quantity = quantity;
   [[NSNotificationCenter defaultCenter] postNotificationName:OMNMenuProductDidChangeNotification object:self];
+  
+}
+
+- (long long)total {
+  
+  return (self.price*self.quantity);
   
 }
 
@@ -59,6 +65,13 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
     weakSelf.photoImage = image;
     
   }];
+  
+}
+
+- (void)resetSelection {
+  
+  _selected = NO;
+  self.quantity = 0.0;
   
 }
 

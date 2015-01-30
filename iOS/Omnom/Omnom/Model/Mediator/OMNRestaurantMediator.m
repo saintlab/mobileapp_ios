@@ -412,7 +412,7 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (void)editMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)editMenuProduct:(OMNMenuProduct *)menuProduct withCompletion:(dispatch_block_t)completionBlock {
   
   OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
   __weak typeof(self)weakSelf = self;
@@ -424,7 +424,7 @@ OMNOrderCalculationVCDelegate>
   
   productModiferAlertVC.didSelectOrderBlock = ^{
     
-    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:completionBlock];
     
   };
   [self.restaurantActionsVC.navigationController presentViewController:productModiferAlertVC animated:YES completion:nil];

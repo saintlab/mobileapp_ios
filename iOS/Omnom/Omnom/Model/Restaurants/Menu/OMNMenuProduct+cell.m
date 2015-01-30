@@ -9,6 +9,7 @@
 #import "OMNMenuProduct+cell.h"
 #import "OMNMenuProductView.h"
 #import "OMNMenuProductCell.h"
+#import "OMNPreorderConfirmCell.h"
 
 @implementation OMNMenuProduct (cell)
 
@@ -51,6 +52,29 @@
 + (void)registerCellForTableView:(UITableView *)tableView {
   
   [tableView registerClass:[OMNMenuProductCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductCell class])];
+  
+}
+
+- (CGFloat)preorderHeightForTableView:(UITableView *)tableView {
+  
+  static OMNPreorderConfirmView *preorderConfirmView = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    preorderConfirmView = [[OMNPreorderConfirmView alloc] initWithFrame:tableView.bounds];
+  });
+  
+  preorderConfirmView.bounds = tableView.bounds;
+  preorderConfirmView.menuProduct = self;
+  [preorderConfirmView setNeedsLayout];
+  [preorderConfirmView layoutIfNeeded];
+  
+  CGFloat height = [preorderConfirmView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+  
+  // Add an extra point to the height to account for the cell separator, which is added between the bottom
+  // of the cell's contentView and the bottom of the table view cell.
+  height += 1.0f;
+  
+  return height;
   
 }
 

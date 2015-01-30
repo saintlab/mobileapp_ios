@@ -16,7 +16,6 @@
 @implementation OMNPreorderActionCell {
   
   UIButton *_clearButton;
-  UIButton *_actionButton;
   UILabel *_refreshLabel;
   UIButton *_refreshButton;
   
@@ -52,6 +51,16 @@
   
 }
 
+- (void)clearTap {
+  
+  if (self.didClearBlock) {
+    
+    self.didClearBlock();
+    
+  }
+  
+}
+
 - (void)omn_setup {
   
   self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -62,6 +71,7 @@
   [_clearButton setTitleColor:[colorWithHexString(@"000000") colorWithAlphaComponent:0.4f] forState:UIControlStateNormal];
   [_clearButton setTitleColor:highlitedColor forState:UIControlStateHighlighted];
   _clearButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
+  [_clearButton addTarget:self action:@selector(clearTap) forControlEvents:UIControlEventTouchUpInside];
   
   UIImage *image = [[UIImage imageNamed:@"button_clear_wish"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
   [_clearButton setBackgroundImage:image forState:UIControlStateNormal];

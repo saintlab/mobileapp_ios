@@ -12,4 +12,6 @@
 @interface OMNMenuProduct (cell)
 <OMNMenuCellItemProtocol>
 
+- (CGFloat)preorderHeightForTableView:(UITableView *)tableView;
+
 @end

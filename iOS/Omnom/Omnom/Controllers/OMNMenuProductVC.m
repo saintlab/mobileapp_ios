@@ -71,7 +71,7 @@
 
 - (void)menuProductCell:(OMNMenuProductCell *)menuProductCell editProduct:(OMNMenuProduct *)menuProduct {
   
-  [_restaurantMediator editMenuProduct:menuProduct];
+  [_restaurantMediator editMenuProduct:menuProduct withCompletion:nil];
   
 }
 

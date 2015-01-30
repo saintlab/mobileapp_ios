@@ -15,7 +15,7 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, copy) NSString *name;
-@property (nonatomic, assign) double price;
+@property (nonatomic, assign) long long price;
 @property (nonatomic, assign) double quantity;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, copy) NSString *photo;
@@ -25,9 +25,12 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 @property (nonatomic, strong) OMNMenuProductDetails *details;
 @property (nonatomic, assign) BOOL selected;
 
+@property (nonatomic, assign, readonly) long long total;
+
 @property (nonatomic, assign) CGFloat calculationHeight;
 
 - (instancetype)initWithJsonData:(id)data;
 - (void)loadImage;
+- (void)resetSelection;
 
 @end

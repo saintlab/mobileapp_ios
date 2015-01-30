@@ -13,6 +13,7 @@
 #import "OMNPreorderDoneVC.h"
 #import "UIView+screenshot.h"
 #import "OMNRestaurant+omn_network.h"
+#import "OMNMenuProduct+cell.h"
 
 @interface OMNMyOrderConfirmVC ()
 
@@ -21,7 +22,7 @@
 @implementation OMNMyOrderConfirmVC {
   
   OMNRestaurantMediator *_restaurantMediator;
-  
+  NSMutableArray *_products;
 }
 
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator {
@@ -37,8 +38,21 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  _products = [NSMutableArray array];
+  [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
+    
+    if (product.quantity > 0.0) {
+    
+      [_products addObject:product];
+      
+    }
+    
+  }];
+  
+  
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"upper_bar_wish"] forBarMetrics:UIBarMetricsDefault];
   
+  self.tableView.tableFooterView = [[UIView alloc] init];
   [self.tableView registerClass:[OMNPreorderConfirmCell class] forCellReuseIdentifier:@"OMNPreorderConfirmCell"];
   [self.tableView registerClass:[OMNPreorderActionCell class] forCellReuseIdentifier:@"OMNPreorderActionCell"];
   
@@ -69,8 +83,27 @@
   
 }
 
+- (void)clearOrders {
+  
+  [_restaurantMediator.menu resetSelection];
+
+  NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:_products.count];
+  for (NSInteger row = 0; row < _products.count; row++) {
+    
+    [indexPaths addObject:[NSIndexPath indexPathForRow:row inSection:0]];
+    
+  }
+  [_products removeAllObjects];
+  [self.tableView beginUpdates];
+  [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+  [self.tableView endUpdates];
+
+}
+
 - (void)preorderTap {
   
+  return;
   NSArray *products =
   @[
     @{@"id":@"2084-in-riba-ris-nsk-at-aura", @"quantity":@(1)},
@@ -110,13 +143,12 @@
   NSInteger numberOfRows = 0;
   switch (section) {
     case 0: {
-      numberOfRows = 2;
+      numberOfRows = _products.count;
     } break;
     case 1: {
       numberOfRows = 1;
     } break;
     case 2: {
-      numberOfRows = 2;
     } break;
   }
   
@@ -124,23 +156,30 @@
   
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = nil;
   
   switch (indexPath.section) {
     case 0: {
       
-      cell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderConfirmCell" forIndexPath:indexPath];
+      OMNPreorderConfirmCell *preorderConfirmCell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderConfirmCell" forIndexPath:indexPath];
+      preorderConfirmCell.menuProduct = _products[indexPath.row];
+      cell = preorderConfirmCell;
       
     } break;
     case 1: {
       
       __weak typeof(self)weakSelf = self;
       OMNPreorderActionCell *preorderActionCell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderActionCell" forIndexPath:indexPath];
+      preorderActionCell.actionButton.enabled = (_products.count > 0);
       preorderActionCell.didOrderBlock = ^{
       
         [weakSelf preorderTap];
+        
+      };
+      preorderActionCell.didClearBlock = ^{
+        
+        [weakSelf clearOrders];
         
       };
       cell = preorderActionCell;
@@ -162,7 +201,10 @@
   CGFloat heightForRow = 0.0f;
   switch (indexPath.section) {
     case 0: {
-      heightForRow = 86.0f;
+      
+      OMNMenuProduct *menuProduct = _products[indexPath.row];
+      heightForRow = [menuProduct preorderHeightForTableView:tableView];
+
     } break;
     case 1: {
       heightForRow = 140.0f;

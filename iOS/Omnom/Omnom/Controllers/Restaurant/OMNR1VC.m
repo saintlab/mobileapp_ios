@@ -44,6 +44,7 @@
   UITableView *_menuTable;
   OMNMenuModel *_menuModel;
   
+  OMNTableButton *_tableButton;
   BOOL showTableButtonAnimation;
   
 }
@@ -124,6 +125,7 @@
   [super viewWillDisappear:animated];
   
   [_circleAnimation finishCircleAnimation];
+  [_tableButton removeFromSuperview] ,_tableButton = nil;
   
 }
 
@@ -155,38 +157,36 @@
     if (!showTableButtonAnimation) {
       
       showTableButtonAnimation = YES;
-      OMNTableButton *tableButton = [OMNTableButton buttonWithColor:color];
-      [tableButton addTarget:self action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
-      [tableButton setText:_restaurantMediator.table.internal_id];
-      
-      
-      tableButton.center = userButton.center;
-      [userButton.superview addSubview:tableButton];
+      _tableButton = [OMNTableButton buttonWithColor:color];
+      [_tableButton addTarget:self action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
+      [_tableButton setText:_restaurantMediator.table.internal_id];
+      _tableButton.center = userButton.center;
+      [userButton.superview addSubview:_tableButton];
       CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;
-      tableButton.transform = CGAffineTransformMakeTranslation(centerX - tableButton.center.x, 0.0f);
-      tableButton.alpha = 0.0f;
+      _tableButton.transform = CGAffineTransformMakeTranslation(centerX - _tableButton.center.x, 0.0f);
+      _tableButton.alpha = 0.0f;
       
       [UIView animateWithDuration:0.8 delay:1.0 options:0 animations:^{
         
-        tableButton.alpha = 1.0f;
+        _tableButton.alpha = 1.0f;
         
       } completion:^(BOOL finished) {
         
         [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
           
-          tableButton.transform = CGAffineTransformIdentity;
+          _tableButton.transform = CGAffineTransformIdentity;
           userButton.alpha = 0.0f;
           
         } completion:^(BOOL finished) {
           
           [UIView animateWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
             
-            tableButton.alpha = 0.0f;
+            _tableButton.alpha = 0.0f;
             userButton.alpha = 1.0f;
             
           } completion:^(BOOL finished) {
             
-            [tableButton removeFromSuperview];
+            [_tableButton removeFromSuperview], _tableButton = nil;
             
           }];
           

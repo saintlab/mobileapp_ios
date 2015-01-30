@@ -132,26 +132,33 @@
 
 - (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editMenuProduct:(OMNMenuProduct *)menuProduct {
   
-  if ([menuProductWithRecommedtationsCell.model.menuProduct isEqual:menuProduct]) {
+  __weak typeof(self)weakSelf = self;
+  [_restaurantMediator editMenuProduct:menuProduct withCompletion:^{
+
+    if ([menuProductWithRecommedtationsCell.model.menuProduct isEqual:menuProduct]) {
+      
+      [weakSelf updateTableViewWithSelectedItems:menuProduct andScrollToCell:menuProductWithRecommedtationsCell];
+      
+    }
     
-    [self updateTableViewWithSelectedItems:menuProduct andScrollToCell:menuProductWithRecommedtationsCell];
-    
-  }
-  
-  [_restaurantMediator editMenuProduct:menuProduct];
+  }];
   
 }
 
 - (void)updateTableViewWithSelectedItems:(OMNMenuProduct *)menuProduct andScrollToCell:(UITableViewCell *)cell {
   
-  _menuProductSelectionItem.selected = NO;
-  _menuProductSelectionItem = menuProduct;
-  _menuProductSelectionItem.selected = YES;
-  
-  NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
-  [_tableView beginUpdates];
-  [_tableView endUpdates];
-  [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+  if (menuProduct.quantity > 0.0) {
+    
+    _menuProductSelectionItem.selected = NO;
+    _menuProductSelectionItem = menuProduct;
+    _menuProductSelectionItem.selected = YES;
+    
+    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+    [_tableView beginUpdates];
+    [_tableView endUpdates];
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    
+  }
   
 }
 

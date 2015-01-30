@@ -125,7 +125,7 @@
   _descriptionLabel.text = menuProduct.Description;
   _nameLabel.text = menuProduct.name;
   _infoLabel.text = [menuProduct.details displayText];
-  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProduct.price*100ll] forState:UIControlStateNormal];
+  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProduct.price] forState:UIControlStateNormal];
   
 }
 

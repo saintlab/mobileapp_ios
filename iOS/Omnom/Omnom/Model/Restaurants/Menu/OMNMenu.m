@@ -43,4 +43,31 @@
   return self;
 }
 
+- (void)resetSelection {
+  
+  [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
+    
+    [menuProduct resetSelection];
+    
+  }];
+  
+}
+
+- (long long)total {
+  
+  __block long long total = 0ll;
+  [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
+    
+    if (menuProduct.quantity) {
+      
+      total += menuProduct.total;
+      
+    }
+    
+  }];
+  
+  return total;
+  
+}
+
 @end

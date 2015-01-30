@@ -70,7 +70,7 @@
     if (menuProduct.quantity) {
       
       selected = YES;
-      sum += 100ll*(menuProduct.price*menuProduct.quantity);
+      sum += menuProduct.total;
       
     }
     

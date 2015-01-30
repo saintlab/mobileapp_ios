@@ -27,7 +27,7 @@
 - (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock;
 - (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock;
 - (void)callBill;
-- (void)editMenuProduct:(OMNMenuProduct *)menuProduct;
+- (void)editMenuProduct:(OMNMenuProduct *)menuProduct withCompletion:(dispatch_block_t)completionBlock;
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
 
 - (void)exitRestaurant;

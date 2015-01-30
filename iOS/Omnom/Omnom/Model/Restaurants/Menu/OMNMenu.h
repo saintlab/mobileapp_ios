@@ -15,5 +15,7 @@
 @property (nonatomic, strong) NSArray *categories;
 
 - (instancetype)initWithJsonData:(id)data;
+- (void)resetSelection;
+- (long long)total;
 
 @end
