@@ -29,11 +29,19 @@
 
 - (void)logCardRegister {
   
+  if (!self.pan) {
+    return;
+  }
+  
   NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
   parametrs[@"scanner_used"] = @(self.scanUsed);
+  if (self.masked_pan) {
+    parametrs[@"masked_pan"] = self.masked_pan;
+  }
   if (self.card_id) {
     parametrs[@"card_id"] = self.card_id;
   }
+  parametrs[@"card_saved"] = (self.saveCard) ? (@"yes") : (@"no");
   parametrs[@"number_of_register_attempts"] = @(self.numberOfRegisterAttempts);
   [[OMNAnalitics analitics] logTargetEvent:@"card_added" parametrs:parametrs];
   

@@ -139,6 +139,7 @@
       
       [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
         
+        [bankCardInfo logCardRegister];
         [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
         [[OMNAnalitics analitics] logPayment:orderTansactionInfo cardInfo:bankCardInfo bill_id:order.bill.id];
         paymentDidFinishBlock(nil);
