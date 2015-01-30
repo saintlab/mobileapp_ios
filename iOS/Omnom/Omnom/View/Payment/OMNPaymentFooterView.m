@@ -249,8 +249,10 @@
 
 - (IBAction)cancelEditingTap:(id)sender {
   
-  _order.selectedTipIndex = _tipsSelector.previousSelectedIndex;
+  _amountControl.amount = _order.enteredAmount;
   [_amountControl resignFirstResponder];
+
+  _order.selectedTipIndex = _tipsSelector.previousSelectedIndex;
   [_percentControl resignFirstResponder];
   
 }
