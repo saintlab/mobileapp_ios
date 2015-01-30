@@ -21,6 +21,7 @@
   bankCard.demo = YES;
   bankCard.association = @"visa";
   bankCard.masked_pan = @"4111 .... .... 1111";
+  bankCard.issuer = @"JPMORGAN CHASE BANK, N.A.";
   bankCard.status = kOMNBankCardStatusRegistered;
   self.cards = [NSMutableArray arrayWithObject:bankCard];
   [self updateCardSelection];

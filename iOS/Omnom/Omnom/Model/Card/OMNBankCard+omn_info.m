@@ -14,7 +14,7 @@
   
   OMNBankCardInfo *bankCardInfo = [[OMNBankCardInfo alloc] init];
   bankCardInfo.card_id = self.external_card_id;
-  bankCardInfo.masked_pan = self.masked_pan;
+  bankCardInfo.masked_pan = (self.masked_pan_6_4) ? (self.masked_pan_6_4) : (self.masked_pan);
   return bankCardInfo;
   
 }
