@@ -21,18 +21,7 @@
     _bill_amount = order.enteredAmount;
     _tips_amount = order.tipAmount;
     _total_amount = order.enteredAmountWithTips;
-    
-    if (_bill_amount) {
-      
-      _tips_percent = (double)_tips_amount/_bill_amount;
-      
-    }
-    else {
-      
-      _tips_percent = 0.0;
-      
-    }
-    
+    _tips_percent = (_bill_amount) ? (100.0*((double)_tips_amount/_bill_amount)) : (0.0);
     _tips_way = stringFromTipType(order.tipType);
     _split = stringFromSplitType(order.splitType);
     
