@@ -27,7 +27,8 @@
     self.confirmed_by = jsonData[@"confirmed_by"];
     self.created_at = jsonData[@"created_at"];
     self.external_card_id = jsonData[@"external_card_id"];
-    self.masked_pan = jsonData[@"masked_pan"];
+    self.masked_pan = ([jsonData[@"masked_pan"] isKindOfClass:[NSString class]]) ? (jsonData[@"masked_pan"]) : (@"");
+    self.masked_pan_6_4 = ([jsonData[@"masked_pan_6_4"] isKindOfClass:[NSString class]]) ? (jsonData[@"masked_pan_6_4"]) : (@"");
     self.status = [self statusFromString:jsonData[@"status"]];
     self.updated_at = jsonData[@"updated_at"];
     self.user_id = jsonData[@"user_id"];

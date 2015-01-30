@@ -41,9 +41,6 @@ typedef NS_ENUM(NSInteger, OMNCLSearchManagerState) {
 @property (nonatomic, strong, readonly) NSDate *startDate;
 @property (nonatomic, weak) id<OMNBeaconsSearchManagerDelegate> delegate;
 
-- (instancetype)init;
-//- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)authorizationStatusBlock;
-
 - (void)startSearching;
 - (void)stop;
 

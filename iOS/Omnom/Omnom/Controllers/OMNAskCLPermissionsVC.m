@@ -20,8 +20,10 @@
 @end
 
 @implementation OMNAskCLPermissionsVC {
+  
   CLLocationManager *_permissionLocationManager;
   CLBeaconRegion *_beaconRegion;
+  
 }
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
@@ -51,9 +53,15 @@
 }
 
 - (void)dealloc {
+
+  [self stop];
   
-  [_permissionLocationManager stopRangingBeaconsInRegion:_beaconRegion];
+}
+
+- (void)stop {
+  
   _permissionLocationManager.delegate = nil;
+  [_permissionLocationManager stopUpdatingLocation];
   _permissionLocationManager = nil;
   
 }
@@ -62,10 +70,7 @@
   [super viewDidLoad];
 
   [self.circleButton setImage:[UIImage imageNamed:@"allow_geolocation_icon_big"] forState:UIControlStateNormal];
-  
-  _permissionLocationManager = [[CLLocationManager alloc] init];
-  _permissionLocationManager.pausesLocationUpdatesAutomatically = NO;
-  
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -85,17 +90,25 @@
 
 - (IBAction)askPermissionTap {
   
+  _permissionLocationManager = [[CLLocationManager alloc] init];
+  _permissionLocationManager.pausesLocationUpdatesAutomatically = NO;
+
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
   if ([_permissionLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+    
     [_permissionLocationManager performSelector:@selector(requestAlwaysAuthorization) withObject:nil];
+    
   }
   else {
-    [_permissionLocationManager startRangingBeaconsInRegion:_beaconRegion];
+    
     _permissionLocationManager.delegate = self;
+    _permissionLocationManager.activityType = CLActivityTypeOtherNavigation;
+    _permissionLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+    [_permissionLocationManager startUpdatingLocation];
+    
   }
 #pragma clang diagnostic pop
-  
 }
 
 - (void)denyPermissionTap {
@@ -122,10 +135,15 @@
 }
 
 #pragma mark - UINavigationControllerDelegate
-
-- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
   
-  [manager stopMonitoringForRegion:_beaconRegion];
+  [self stop];
+  
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+  
+  [self stop];
   
 }
 

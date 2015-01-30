@@ -158,6 +158,7 @@
   _amountControl.amount = _order.enteredAmount;
   _percentControl.percent = _order.customTip.percent;
   [self updatePaymentLabel];
+  [self updateAmountForPercentLabel];
   
 }
 
@@ -176,7 +177,7 @@
 
 - (void)updateAmountForPercentLabel {
 
-  long long amount = _order.enteredAmount*_percentControl.percent/100.0;
+  long long amount = _order.enteredAmount*(_percentControl.percent/100.0);
   _amountForPercentLabel.text = [NSString stringWithFormat:@"или %@%@", [OMNUtils evenCommaStringFromKop:amount], kRubleSign];
   
 }
@@ -248,8 +249,10 @@
 
 - (IBAction)cancelEditingTap:(id)sender {
   
-  _order.selectedTipIndex = _tipsSelector.previousSelectedIndex;
+  _amountControl.amount = _order.enteredAmount;
   [_amountControl resignFirstResponder];
+
+  _order.selectedTipIndex = _tipsSelector.previousSelectedIndex;
   [_percentControl resignFirstResponder];
   
 }
