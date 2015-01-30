@@ -158,6 +158,7 @@
   _amountControl.amount = _order.enteredAmount;
   _percentControl.percent = _order.customTip.percent;
   [self updatePaymentLabel];
+  [self updateAmountForPercentLabel];
   
 }
 
@@ -176,7 +177,7 @@
 
 - (void)updateAmountForPercentLabel {
 
-  long long amount = _order.enteredAmount*_percentControl.percent/100.0;
+  long long amount = _order.enteredAmount*(_percentControl.percent/100.0);
   _amountForPercentLabel.text = [NSString stringWithFormat:@"или %@%@", [OMNUtils evenCommaStringFromKop:amount], kRubleSign];
   
 }
