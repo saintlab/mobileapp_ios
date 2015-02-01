@@ -224,7 +224,7 @@ OMNPaymentFooterViewDelegate>
     if (NSNotFound != index) {
       
       UIButton *button = [[OMNSelectOrderButton alloc] init];
-      NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_TITLE %ld", @"Счёт {number}"), (long)index + 1];
+      NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_HEADER_TITLE %ld", @"Счёт {number} \u25BC"), (long)index + 1];
       [button setTitle:title forState:UIControlStateNormal];
       [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
       [button sizeToFit];
