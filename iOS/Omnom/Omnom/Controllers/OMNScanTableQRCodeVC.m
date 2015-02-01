@@ -123,7 +123,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   
   _qrFrame.image = [[UIImage imageNamed:@"qr-code-scanner-frame"] omn_tintWithColor:color];
   _qrIcon.image = [[UIImage imageNamed:@"qr-icon-small"] omn_tintWithColor:color];
- 
+  
   [_flashButton setImage:[UIImage imageNamed:@"ico-flash"] forState:UIControlStateNormal];
   [_flashButton setImage:[UIImage imageNamed:@"ico-no-flash"] forState:UIControlStateSelected];
   [_flashButton setImage:[UIImage imageNamed:@"ico-no-flash"] forState:UIControlStateSelected|UIControlStateHighlighted];
@@ -142,7 +142,7 @@ OMNCameraPermissionDescriptionVCDelegate>
     
   }
   else {
-  
+    
     _flashButton.hidden = YES;
     
   }
@@ -154,7 +154,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   self.navigationItem.titleView = _titleLabel;
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:color target:self action:@selector(closeTap)];
-
+  
 }
 
 - (void)createViews {
@@ -193,7 +193,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
-
+  
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   
@@ -202,7 +202,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_flashButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_qrIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[flashButton]-(18)-[qrFrame]-(80)-[qrIcon]-[textLabel]|" options:kNilOptions metrics:metrics views:views]];
-
+  
 }
 
 - (void)startScanning {
@@ -294,7 +294,7 @@ OMNCameraPermissionDescriptionVCDelegate>
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
   if (1 == restaurants.count) {
-  
+    
     [self.delegate scanTableQRCodeVC:self didFindRestaurant:restaurants[0]];
     
   }
