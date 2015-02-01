@@ -86,7 +86,7 @@ extern NSInteger const kCustomTipIndex;
 - (long long)selectedItemsTotal;
 
 - (void)changeOrderItemSelection:(OMNOrderItem *)orderItem;
-- (void)selectionDidChange;
+- (void)selectionDidFinish;
 - (void)deselectAllItems;
 - (void)resetSelection;
 - (void)resetEnteredAmount;

@@ -16,6 +16,7 @@ extern const CGFloat kCalculatorTopOffset;
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong, readonly) UITableView *splitTableView;
+@property (nonatomic, assign, readonly) BOOL productSelectionShown;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 

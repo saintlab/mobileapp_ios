@@ -21,33 +21,73 @@
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
- // OMNCalculatorVC *fromViewController = (OMNCalculatorVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  OMNCalculatorVC *fromViewController = (OMNCalculatorVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNOrderCalculationVC *toViewController = (OMNOrderCalculationVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
 
-  UIView *fromTableView = [toViewController.tableView snapshotViewAfterScreenUpdates:YES];
-  
   UIView *containerView = [transitionContext containerView];
-  [containerView addSubview:toViewController.view];
-  [containerView addSubview:fromTableView];
-  
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
-  [UIView animateWithDuration:duration delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+  if (fromViewController.productSelectionShown) {
+
+    [containerView addSubview:toViewController.view];
+    fromViewController.view.frame = [transitionContext initialFrameForViewController:fromViewController];
+    [containerView addSubview:fromViewController.view];
+
+    UITableView *fromSplitTableView = fromViewController.splitTableView;
     
-    fromTableView.alpha = 0.0f;
+    CGRect frame = [fromSplitTableView convertRect:fromSplitTableView.bounds toView:containerView];
+    fromSplitTableView.frame = frame;
+    [containerView addSubview:fromSplitTableView];
+
+    UIView *toFooterView = toViewController.tableView.tableFooterView;
+    CGRect toFooterViewFrame = [toFooterView convertRect:toFooterView.bounds toView:containerView];
+
+    CGFloat fromTableContentViewBottom = CGRectGetMinY(fromSplitTableView.frame) + fromSplitTableView.contentOffset.y + MIN(fromSplitTableView.contentSize.height, CGRectGetHeight(fromSplitTableView.frame));
     
-  } completion:^(BOOL finished) {
+    CGFloat fromTableToDestimnationTableOffset = fromTableContentViewBottom - CGRectGetMinY(toFooterViewFrame);
     
-    // Declare that we've finished
-    [fromTableView removeFromSuperview];
-    [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+    toViewController.tableView.transform = CGAffineTransformMakeTranslation(0.0f, fromTableToDestimnationTableOffset);
     
-  }];
+    [UIView animateWithDuration:duration animations:^{
+
+      fromSplitTableView.transform = CGAffineTransformMakeTranslation(0.0f, -fromTableToDestimnationTableOffset);
+      fromSplitTableView.alpha = 0.0f;
+      fromViewController.view.alpha = 0.0f;
+      toViewController.tableView.transform = CGAffineTransformIdentity;
+      
+    } completion:^(BOOL finished) {
+      
+      [fromSplitTableView removeFromSuperview];
+      [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+      
+    }];
+    
+  }
+  else {
+    
+    UIView *fromSnapshotView = [fromViewController.view snapshotViewAfterScreenUpdates:NO];
+    fromSnapshotView.frame = [transitionContext initialFrameForViewController:fromViewController];
+    fromViewController.view.hidden = YES;
+    [containerView addSubview:toViewController.view];
+    [containerView addSubview:fromSnapshotView];
+    [UIView animateWithDuration:duration animations:^{
+      
+      fromSnapshotView.alpha = 0.0f;
+      
+    } completion:^(BOOL finished) {
+      
+      [fromSnapshotView removeFromSuperview];
+      fromViewController.view.hidden = NO;
+      [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
+      
+    }];
+    
+  }
   
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 5.8;
+  return 0.8;
 }
 
 + (NSArray *)keys {
