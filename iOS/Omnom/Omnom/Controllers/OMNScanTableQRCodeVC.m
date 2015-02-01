@@ -362,7 +362,7 @@ OMNCameraPermissionDescriptionVCDelegate>
       [weakSelf requestDemoMode];
       
     }];
-    `
+    
   };
   [self presentViewController:qrHelpAlertVC animated:YES completion:nil];
   
