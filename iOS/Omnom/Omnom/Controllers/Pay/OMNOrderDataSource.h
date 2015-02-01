@@ -23,5 +23,6 @@ UITableViewDelegate>
 - (OMNOrderItem *)orderItemAtIndexPath:(NSIndexPath *)indexPath;
 - (void)registerCellsForTableView:(UITableView *)tableView;
 - (void)updateTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)lastIndexPath;
 
 @end

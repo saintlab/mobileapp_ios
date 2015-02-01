@@ -16,5 +16,6 @@
 @property (nonatomic, weak) id<OMNCalculatorVCDelegate>delegate;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
+- (void)scrollToBottomWithCompletion:(dispatch_block_t)completionBlock;
 
 @end

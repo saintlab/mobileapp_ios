@@ -59,6 +59,7 @@
   self.tableView.delegate = _dataSource;
   self.tableView.allowsMultipleSelection = YES;
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  self.tableView.backgroundColor = [UIColor clearColor];
   
 }
 
@@ -81,6 +82,25 @@
   
   [self updateTotalValue];
   [self checkConditionAndSelectProducts];
+  
+}
+
+- (void)scrollToBottomWithCompletion:(dispatch_block_t)completionBlock {
+  
+  NSIndexPath *indexPath = _dataSource.lastIndexPath;
+  if (indexPath) {
+
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:completionBlock];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [CATransaction commit];
+    
+  }
+  else {
+    
+    completionBlock();
+    
+  }
   
 }
 

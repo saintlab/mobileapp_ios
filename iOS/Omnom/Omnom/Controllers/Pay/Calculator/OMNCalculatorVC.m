@@ -7,7 +7,6 @@
 //
 
 #import "OMNCalculatorVC.h"
-#import "OMNProductSelectionVC.h"
 #import "OMNSplitSelectionVC.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNOrder.h"
@@ -17,6 +16,7 @@
 #import "OMNUtils.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
+#import "OMNProductSelectionVC.h"
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
 const CGFloat kCalculatorTopOffset = 40.0f;
@@ -24,8 +24,8 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 @interface OMNCalculatorVC ()
 <OMNCalculatorVCDelegate>
 
-@property (strong, nonatomic) OMNProductSelectionVC *firstViewController;
 @property (strong, nonatomic) OMNSplitSelectionVC *secondViewController;
+@property (strong, nonatomic) OMNProductSelectionVC *firstViewController;
 
 @property (nonatomic, weak) UIViewController *currentController;
 
@@ -113,8 +113,16 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 - (void)closeTap {
   
-  [_restaurantMediator.selectedOrder resetSelection];
-  [self.delegate calculatorVCDidCancel:self];
+  __weak typeof(self)weakSelf = self;
+  [self showViewControllerAtIndex:0 withCompletion:^{
+    
+    [weakSelf.firstViewController scrollToBottomWithCompletion:^{
+  
+      [weakSelf.delegate calculatorVCDidCancel:weakSelf];
+      
+    }];
+    
+  }];
   
 }
 
@@ -145,7 +153,6 @@ const CGFloat kCalculatorTopOffset = 40.0f;
     splitType = kSplitTypeNumberOfGuests;
     
   }
-  
   [self.delegate calculatorVC:self splitType:splitType didFinishWithTotal:_total];
   
 }
@@ -179,7 +186,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 - (void)navSelectorDidChange:(OMNNavigationBarSelector *)navSelector {
   
-  [self showViewControllerAtIndex:navSelector.selectedIndex];
+  [self showViewControllerAtIndex:navSelector.selectedIndex withCompletion:nil];
   
 }
 
@@ -209,29 +216,40 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
 }
 
-- (void)showViewControllerAtIndex:(NSInteger)index {
+- (BOOL)productSelectionShown {
+  
+  return [self.firstViewController isEqual:self.childViewControllers.firstObject];
+  
+}
+
+- (void)showViewControllerAtIndex:(NSInteger)index withCompletion:(dispatch_block_t)completionBlock {
   
   if (self.transitionInProgress) {
     return;
   }
-  
+
+  if ((0 == index && [self.firstViewController isEqual:self.childViewControllers.firstObject]) ||
+      (1 == index && [self.secondViewController isEqual:self.childViewControllers.firstObject])) {
+    completionBlock();
+    return;
+  }
   
   switch (index) {
     case 0: {
       
-      [self swapFromViewController:[self.childViewControllers firstObject] toViewController:self.firstViewController right:YES];
+      [self swapFromViewController:[self.childViewControllers firstObject] toViewController:self.firstViewController right:YES withCompletion:completionBlock];
       
     } break;
     case 1: {
       
-      [self swapFromViewController:[self.childViewControllers firstObject] toViewController:self.secondViewController right:NO];
+      [self swapFromViewController:[self.childViewControllers firstObject] toViewController:self.secondViewController right:NO withCompletion:completionBlock];
       
     } break;
   }
   
 }
 
-- (void)swapFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController right:(BOOL)right {
+- (void)swapFromViewController:(UIViewController *)fromViewController toViewController:(UIViewController *)toViewController right:(BOOL)right withCompletion:(dispatch_block_t)completionBlock {
   
   self.transitionInProgress = YES;
   
@@ -261,6 +279,10 @@ const CGFloat kCalculatorTopOffset = 40.0f;
     [_containerView addSubview:toViewController.view];
     self.transitionInProgress = NO;
     self.currentController = toViewController;
+    
+    if (completionBlock) {
+      completionBlock();
+    }
     
   }];
 }

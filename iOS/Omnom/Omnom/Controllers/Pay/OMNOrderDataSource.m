@@ -47,6 +47,26 @@
   
 }
 
+- (NSIndexPath *)lastIndexPath {
+  
+  NSIndexPath *lastIndexPath = nil;
+  if (_order.guests.count) {
+    
+    NSInteger section = _order.guests.count - 1;
+    OMNGuest *guest = _order.guests[section];
+    if (guest.items.count) {
+      
+      NSInteger row = guest.items.count - 1;
+      return [NSIndexPath indexPathForRow:row inSection:section];
+      
+    }
+    
+  }
+  
+  return lastIndexPath;
+  
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
   return _order.guests.count;

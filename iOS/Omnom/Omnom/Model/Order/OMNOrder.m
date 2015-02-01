@@ -330,9 +330,10 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 
 }
 
-- (void)selectionDidChange {
+- (void)selectionDidFinish {
   
   [self willChangeValueForKey:@"hasSelectedItems"];
+  [self.changedItemsIDs removeAllObjects];
   [self didChangeValueForKey:@"hasSelectedItems"];
   
 }

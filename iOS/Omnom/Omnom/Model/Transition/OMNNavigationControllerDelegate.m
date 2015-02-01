@@ -49,7 +49,7 @@
     [self addTansitionForClass:[OMNSlideDownTransition class]];
     [self addTansitionForClass:[OMNSplashToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNPushUpTransition class]];
-//    [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
+    [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
     
   }
   return self;

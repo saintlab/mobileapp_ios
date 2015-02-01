@@ -26,6 +26,7 @@
 #import <BlocksKit/UIAlertView+BlocksKit.h>
 #import <OMNStyler.h>
 #import "OMNOrderAlertManager.h"
+#import "UIView+omn_autolayout.h"
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -255,8 +256,7 @@ OMNPaymentFooterViewDelegate>
 
 - (void)omn_setup {
     
-  _scrollView = [[UIScrollView alloc] init];
-  _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+  _scrollView = [UIScrollView omn_autolayoutView];
   _scrollView.clipsToBounds = NO;
   _scrollView.delegate = self;
   _scrollView.showsVerticalScrollIndicator = NO;
@@ -271,8 +271,7 @@ OMNPaymentFooterViewDelegate>
   _tableView.delegate = _dataSource;
   [_dataSource registerCellsForTableView:_tableView];
   
-  _tableFadeView = [[UIView alloc] init];
-  _tableFadeView.userInteractionEnabled = YES;
+  _tableFadeView = [UIView omn_autolayoutView];
   _tableFadeView.backgroundColor = [UIColor whiteColor];
   _tableFadeView.alpha = 0.0f;
   [_scrollView addSubview:_tableFadeView];
@@ -401,7 +400,7 @@ OMNPaymentFooterViewDelegate>
   switch (splitType) {
     case kSplitTypeOrders: {
       
-      [order selectionDidChange];
+      [order selectionDidFinish];
       
     } break;
     case kSplitTypeNone:
@@ -436,6 +435,7 @@ OMNPaymentFooterViewDelegate>
 
 - (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {
   
+  [_restaurantMediator.selectedOrder resetSelection];
   [self.navigationController popToViewController:self animated:YES];
   
 }
