@@ -53,7 +53,7 @@
     [self addTansitionForClass:[OMNPushUpTransition class]];
     [self addTansitionForClass:[OMNMenuToCategoryTransition class]];
     [self addTansitionForClass:[OMNCategoryToMenuTransition class]];
-//    [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
+    [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
     
   }
   return self;
