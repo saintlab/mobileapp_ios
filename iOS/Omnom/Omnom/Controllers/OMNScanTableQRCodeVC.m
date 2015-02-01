@@ -23,6 +23,7 @@
 #import "UIView+frame.h"
 #import "OMNCameraPermission.h"
 #import "OMNCameraPermissionDescriptionVC.h"
+#import <BlocksKit+UIKit.h>
 
 @interface OMNScanTableQRCodeVC ()
 <AVCaptureMetadataOutputObjectsDelegate,
@@ -39,8 +40,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   UIImageView *_qrFrame;
   UIImageView *_qrIcon;
   UILabel *_titleLabel;
-  UIImageView *_titleIcon;
-  UIView *_titleView;
+  UIButton *_flashButton;
   
 }
 
@@ -123,32 +123,44 @@ OMNCameraPermissionDescriptionVCDelegate>
   
   _qrFrame.image = [[UIImage imageNamed:@"qr-code-scanner-frame"] omn_tintWithColor:color];
   _qrIcon.image = [[UIImage imageNamed:@"qr-icon-small"] omn_tintWithColor:color];
- 
-  _titleLabel.font = FuturaOSFOmnomRegular(25);
+  
+  [_flashButton setImage:[UIImage imageNamed:@"ico-flash"] forState:UIControlStateNormal];
+  [_flashButton setImage:[UIImage imageNamed:@"ico-no-flash"] forState:UIControlStateSelected];
+  [_flashButton setImage:[UIImage imageNamed:@"ico-no-flash"] forState:UIControlStateSelected|UIControlStateHighlighted];
+  
+  AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+  if ([captureDevice hasTorch]) {
+    
+    [_flashButton bk_addEventHandler:^(UIButton *button) {
+      
+      button.selected = !button.selected;
+      [captureDevice lockForConfiguration:nil];
+      [captureDevice setTorchMode:(button.selected) ? (AVCaptureTorchModeOn) : (AVCaptureTorchModeOff)];
+      [captureDevice unlockForConfiguration];
+      
+    } forControlEvents:UIControlEventTouchUpInside];
+    
+  }
+  else {
+    
+    _flashButton.hidden = YES;
+    
+  }
+  
+  _titleLabel.font = FuturaOSFOmnomRegular(25.0f);
   _titleLabel.text = NSLocalizedString(@"QR_SCREEN_TITLE", @"Сканирование");
   _titleLabel.textColor = color;
   [_titleLabel sizeToFit];
-  
-  _titleIcon.image = [[UIImage imageNamed:@"camera_red"] omn_tintWithColor:color];
-  [_titleIcon sizeToFit];
-  
-  _titleLabel.left = 0.0f;
-  _titleIcon.left = _titleLabel.right + 9.0f;
-  _titleView.width = _titleIcon.right;
-  
-  _titleView.height = MAX(_titleLabel.height, _titleIcon.height);
-  _titleLabel.y = _titleLabel.height/2.0f;
-  _titleIcon.y = _titleLabel.height/2.0f;
-  
-  self.navigationItem.titleView = _titleView;
+  self.navigationItem.titleView = _titleLabel;
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:color target:self action:@selector(closeTap)];
-
+  
 }
 
 - (void)createViews {
   
   UIView *contentView = [UIView omn_autolayoutView];
+  contentView.userInteractionEnabled = YES;
   [self.view addSubview:contentView];
   
   _textLabel = [TTTAttributedLabel omn_autolayoutView];
@@ -157,26 +169,23 @@ OMNCameraPermissionDescriptionVCDelegate>
   _textLabel.delegate = self;
   [contentView addSubview:_textLabel];
   
+  _flashButton = [UIButton omn_autolayoutView];
+  [contentView addSubview:_flashButton];
+  
   _qrFrame = [UIImageView omn_autolayoutView];
   [contentView addSubview:_qrFrame];
   
   _qrIcon = [UIImageView omn_autolayoutView];
   [contentView addSubview:_qrIcon];
   
-  _titleView = [[UIView alloc] init];
-  
   _titleLabel = [[UILabel alloc] init];
-  [_titleView addSubview:_titleLabel];
-  
-  _titleIcon = [[UIImageView alloc] init];
-  _titleIcon.contentMode = UIViewContentModeCenter;
-  [_titleView addSubview:_titleIcon];
   
   NSDictionary *views =
   @{
     @"textLabel" : _textLabel,
     @"qrFrame" : _qrFrame,
     @"qrIcon" : _qrIcon,
+    @"flashButton" : _flashButton,
     @"contentView" : contentView,
     };
   
@@ -184,15 +193,16 @@ OMNCameraPermissionDescriptionVCDelegate>
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
-
+  
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_qrFrame attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_flashButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_qrIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[qrFrame]-(80)-[qrIcon]-[textLabel]|" options:kNilOptions metrics:metrics views:views]];
-
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[flashButton]-(18)-[qrFrame]-(80)-[qrIcon]-[textLabel]|" options:kNilOptions metrics:metrics views:views]];
+  
 }
 
 - (void)startScanning {
@@ -202,6 +212,14 @@ OMNCameraPermissionDescriptionVCDelegate>
   // Get an instance of the AVCaptureDevice class to initialize a device object and provide the video
   // as the media type parameter.
   AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+  
+  if ([captureDevice hasTorch]) {
+    
+    [captureDevice lockForConfiguration:nil];
+    [captureDevice setTorchMode:AVCaptureTorchModeAuto];
+    [captureDevice unlockForConfiguration];
+    
+  }
   
   AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
   
@@ -213,7 +231,6 @@ OMNCameraPermissionDescriptionVCDelegate>
   
   _captureSession = [[AVCaptureSession alloc] init];
   [_captureSession addInput:input];
-  
   
   AVCaptureMetadataOutput *captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
   [_captureSession addOutput:captureMetadataOutput];
@@ -277,7 +294,7 @@ OMNCameraPermissionDescriptionVCDelegate>
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
   if (1 == restaurants.count) {
-  
+    
     [self.delegate scanTableQRCodeVC:self didFindRestaurant:restaurants[0]];
     
   }
@@ -345,7 +362,7 @@ OMNCameraPermissionDescriptionVCDelegate>
       [weakSelf requestDemoMode];
       
     }];
-    
+    `
   };
   [self presentViewController:qrHelpAlertVC animated:YES completion:nil];
   
