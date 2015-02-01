@@ -126,6 +126,9 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
     case kOMNErrorCodeQrDecode: {
       circleImage = [UIImage imageNamed:@"error_icon_big"];
     } break;
+    case kOMNErrorCodeUnknoun: {
+      circleImage = [UIImage imageNamed:@"error_icon_big"];
+    } break;
   }
   
   return circleImage;
