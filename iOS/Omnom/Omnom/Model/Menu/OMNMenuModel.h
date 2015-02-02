@@ -16,8 +16,8 @@ typedef void(^OMNMenuCategoryDidSelectBlock)(OMNMenuCategory *menuCategory);
 UITableViewDelegate>
 
 @property (nonatomic, copy) OMNMenuCategoryDidSelectBlock didSelectBlock;
+@property (nonatomic, strong) OMNMenu *menu;
 
-- (instancetype)initWithMenu:(OMNMenu *)menu;
 - (void)configureTableView:(UITableView *)tableView;
 
 @end

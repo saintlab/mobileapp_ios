@@ -40,6 +40,7 @@
   OMNRestaurantMediator *_restaurantMediator;
   UIPercentDrivenInteractiveTransition *_interactiveTransition;
   NSString *_restaurantWaiterCallIdentifier;
+  NSString *_restaurantMenuOserverID;
   
   UITableView *_menuTable;
   OMNMenuModel *_menuModel;
@@ -55,6 +56,9 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   if (_restaurantWaiterCallIdentifier) {
     [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
+  }
+  if (_restaurantMenuOserverID) {
+    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantMenuOserverID];
   }
   
 }
@@ -100,6 +104,12 @@
   _restaurantWaiterCallIdentifier = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
     
     (obj.waiterIsCalled) ? ([weakSelf callWaiterDidStart]) : ([weakSelf callWaiterDidStop]);
+    
+  }];
+  
+  _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+    
+    [weakSelf menuDidChange:obj.menu];
     
   }];
 
@@ -312,6 +322,13 @@
   
 }
 
+- (void)menuDidChange:(OMNMenu *)menu {
+  
+  _menuModel.menu = menu;
+  [_menuTable reloadData];
+  
+}
+
 - (void)orderDidPay:(NSNotification *)n {
   
   id paymentData = n.userInfo[OMNPaymentDataKey];
@@ -336,7 +353,7 @@
   
   if (_restaurantMediator.restaurant.settings.has_menu) {
     
-    _menuModel = [[OMNMenuModel alloc] initWithMenu:_restaurantMediator.menu];
+    _menuModel = [[OMNMenuModel alloc] init];
     _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _menuTable.allowsSelection = NO;
     _menuTable.scrollEnabled = NO;

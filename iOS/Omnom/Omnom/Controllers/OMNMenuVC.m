@@ -100,6 +100,8 @@
 
 - (void)omn_setup {
   
+  self.view.backgroundColor = [UIColor whiteColor];
+  
   UIView *fadeView = [UIView omn_autolayoutView];
   fadeView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
   [self.view addSubview:fadeView];
@@ -108,7 +110,8 @@
   _tableView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_tableView];
   
-  _menuModel = [[OMNMenuModel alloc] initWithMenu:_restaurantMediator.menu];
+  _menuModel = [[OMNMenuModel alloc] init];
+  _menuModel.menu = _restaurantMediator.menu;
   [_menuModel configureTableView:_tableView];
   
   NSDictionary *views =

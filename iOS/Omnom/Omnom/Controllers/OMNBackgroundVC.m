@@ -28,6 +28,7 @@
   
   _backgroundView = [UIImageView omn_autolayoutView];
   _backgroundView.opaque = YES;
+  _backgroundView.clipsToBounds = YES;
   _backgroundView.backgroundColor = backgroundColor;
   _backgroundView.contentMode = UIViewContentModeBottom;
   [self.view insertSubview:_backgroundView atIndex:0];

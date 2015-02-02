@@ -24,6 +24,7 @@
 #import "OMNNavigationController.h"
 #import "OMNLaunchHandler.h"
 #import "OMNProductModiferAlertVC.h"
+#import "OMNRestaurant+omn_network.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -53,9 +54,6 @@ OMNOrderCalculationVCDelegate>
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC {
   self = [super init];
   if (self) {
-    
-    id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
-    _menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
 
     _restaurantActionsVC = restaurantActionsVC;
     _restaurant = restaurant;
@@ -71,6 +69,13 @@ OMNOrderCalculationVCDelegate>
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidCreate:) name:OMNSocketIOOrderDidCreateNotification object:[OMNSocketManager manager]];
     
     [self startListeningRestaurantEvents];
+    
+    __weak typeof(self)weakSelf = self;
+    [_restaurant getMenuWithCompletion:^(OMNMenu *menu) {
+      
+      weakSelf.menu = menu;
+      
+    }];
     
   }
   return self;

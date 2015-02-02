@@ -10,11 +10,7 @@
 #import "OMNMenuHeaderItemCell.h"
 #import "OMNMenuItemCell.h"
 
-@implementation OMNMenuModel {
-  
-  OMNMenu *_menu;
-  
-}
+@implementation OMNMenuModel
 
 - (void)configureTableView:(UITableView *)tableView {
   
@@ -28,16 +24,6 @@
   tableView.delegate = self;
   tableView.dataSource = self;
   
-}
-
-- (instancetype)initWithMenu:(OMNMenu *)menu {
-  self = [super init];
-  if (self) {
-    
-    _menu = menu;
-    
-  }
-  return self;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

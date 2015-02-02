@@ -293,6 +293,33 @@
   
 }
 
+- (void)getMenuWithCompletion:(OMNMenuBlock)completion {
+  
+  id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
+  OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
+  
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
+    completion(menu);
+    
+  });
+
+  return;
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/menu", self.id];
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+#warning handleMenu
+    completion(nil);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MENU" jsonRequest:path responseOperation:operation];
+    completion(nil);
+    
+  }];
+  
+}
+
 @end
 
 

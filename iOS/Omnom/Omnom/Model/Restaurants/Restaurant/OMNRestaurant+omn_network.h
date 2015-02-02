@@ -11,6 +11,7 @@
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
+typedef void(^OMNMenuBlock)(OMNMenu *menu);
 
 @interface OMNRestaurant (omn_network)
 
@@ -30,6 +31,8 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 - (void)leaveWithCompletion:(dispatch_block_t)completionBlock;;
 - (void)entranceWithCompletion:(dispatch_block_t)completionBlock;;
 - (void)nearbyWithCompletion:(dispatch_block_t)completionBlock;;
+
+- (void)getMenuWithCompletion:(OMNMenuBlock)completion;
 
 @end
 
