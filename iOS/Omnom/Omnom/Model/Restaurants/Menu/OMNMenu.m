@@ -7,6 +7,7 @@
 //
 
 #import "OMNMenu.h"
+#import <BlocksKit.h>
 
 @implementation OMNMenu
 
@@ -14,24 +15,28 @@
   self = [super init];
   if (self) {
     
-    NSDictionary *productsData = jsonData[@"items"];
-    NSMutableDictionary *products = [NSMutableDictionary dictionaryWithCapacity:productsData.count];
-    [productsData enumerateKeysAndObjectsUsingBlock:^(id key, id productData, BOOL *stop) {
+    NSDictionary *modifiersData = jsonData[@"modifiers"];
+    self.modifiers = [modifiersData bk_map:^id(id key, id modifierData) {
       
-      products[key] = [[OMNMenuProduct alloc] initWithJsonData:productData];
+      return [[OMNMenuModifer alloc] initWithJsonData:modifierData];
       
     }];
-    self.products = products;
+    
+    NSDictionary *productsData = jsonData[@"items"];
+    __weak typeof(self)weakSelf = self;
+    self.products = [productsData bk_map:^id(id key, id productData) {
+      
+      return [[OMNMenuProduct alloc] initWithJsonData:productData allModifers:weakSelf.modifiers];
+      
+    }];
 
     NSArray *categoriesData = jsonData[@"categories"];
-    NSMutableArray *categories = [NSMutableArray arrayWithCapacity:categoriesData.count];
-    [categoriesData enumerateObjectsUsingBlock:^(id categoryData, NSUInteger idx, BOOL *stop) {
+    __weak NSDictionary *products = self.products;
+    self.categories = [categoriesData bk_map:^id(id categoryData) {
       
-      OMNMenuCategory *menuCategory = [[OMNMenuCategory alloc] initWithJsonData:categoryData menuProducts:products level:0];
-      [categories addObject:menuCategory];
+      return [[OMNMenuCategory alloc] initWithJsonData:categoryData menuProducts:products level:0];
       
     }];
-    self.categories = categories;
     
   }
   return self;

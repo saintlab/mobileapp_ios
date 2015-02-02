@@ -13,6 +13,10 @@
 #import "OMNUtils.h"
 #import "UIView+omn_autolayout.h"
 
+@interface OMNProductModiferAlertVC ()
+
+@end
+
 @implementation OMNProductModiferAlertVC {
   
   UILabel *_quantityLabel;

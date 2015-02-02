@@ -12,12 +12,17 @@
 
 NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChangeNotification";
 
-@implementation OMNMenuProduct
+@implementation OMNMenuProduct {
+  
+  NSDictionary *_allModifers;
+  
+}
 
-- (instancetype)initWithJsonData:(id)data {
+- (instancetype)initWithJsonData:(id)data allModifers:(NSDictionary *)allModifers {
   self = [super init];
   if (self) {
     
+    _allModifers = allModifers;
     self.id = data[@"id"];
     self.name = data[@"name"];
     self.price = [data[@"price"] doubleValue]*100ll;
@@ -28,7 +33,7 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
     
     self.modifiers = [data[@"modifiers"] bk_map:^id(id modiferData) {
     
-      return [[OMNMenuProductModifer alloc] initWithJsonData:modiferData];
+      return [[OMNMenuProductModiferCategory alloc] initWithJsonData:modiferData allModifers:allModifers];
       
     }];
     

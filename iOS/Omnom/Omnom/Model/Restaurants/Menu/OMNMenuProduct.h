@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNMenuProductDetails.h"
-#import "OMNMenuProductModifer.h"
+#import "OMNMenuProductModiferCategory.h"
 
 extern NSString * const OMNMenuProductDidChangeNotification;
 
@@ -30,7 +30,7 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 
 @property (nonatomic, assign) CGFloat calculationHeight;
 
-- (instancetype)initWithJsonData:(id)data;
+- (instancetype)initWithJsonData:(id)data allModifers:(NSDictionary *)allModifers;
 - (void)loadImage;
 - (void)resetSelection;
 

@@ -10,6 +10,7 @@
 #import "OMNMenuProductRecommendationsDelimiter.h"
 #import "OMNMenuProductsDelimiter.h"
 #import "OMNMenuProductWithRecommedtations.h"
+#import <BlocksKit.h>
 
 @implementation OMNMenuCategory {
   
@@ -33,15 +34,12 @@
     self.products = jsonData[@"items"];
 
     NSArray *childrenData = jsonData[@"children"];
-    NSMutableArray *children = [NSMutableArray arrayWithCapacity:childrenData.count];
     NSInteger nextLevel = level + 1;
-    [childrenData enumerateObjectsUsingBlock:^(NSArray *childData, NSUInteger idx, BOOL *stop) {
+    self.children = [childrenData bk_map:^id(id childData) {
       
-      OMNMenuCategory *menuCategory = [[OMNMenuCategory alloc] initWithJsonData:childData menuProducts:menuProducts level:nextLevel];
-      [children addObject:menuCategory];
+      return [[OMNMenuCategory alloc] initWithJsonData:childData menuProducts:menuProducts level:nextLevel];
       
     }];
-    self.children = children;
     
   }
   return self;

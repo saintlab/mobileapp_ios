@@ -6,14 +6,19 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuProductModifer.h"
+#import "OMNMenuProductModiferCategory.h"
 
-@implementation OMNMenuProductModifer
+@implementation OMNMenuProductModiferCategory {
+  
+  
+  
+}
 
-- (instancetype)initWithJsonData:(id)jsonData {
+- (instancetype)initWithJsonData:(id)jsonData allModifers:(NSDictionary *)allModifers {
   self = [super init];
   if (self) {
     
+    _allModifers = allModifers;
     self.id = jsonData[@"id"];
     self.type = [self modiferTypeFromString:jsonData[@"type"]];
     self.name = jsonData[@"name"];
@@ -23,17 +28,17 @@
   return self;
 }
 
-- (OMNMenuProductModiferType)modiferTypeFromString:(NSString *)modiferTypeString {
+- (OMNMenuProductModiferCategoryType)modiferTypeFromString:(NSString *)modiferTypeString {
   
-  OMNMenuProductModiferType modiferType = kMenuProductModiferTypeNone;
+  OMNMenuProductModiferCategoryType modiferType = kMenuProductModiferCategoryTypeNone;
   if ([modiferTypeString isEqualToString:@"checkbox"]) {
-    modiferType = kMenuProductModiferTypeCheckbox;
+    modiferType = kMenuProductModiferCategoryTypeCheckbox;
   }
   else if ([modiferTypeString isEqualToString:@"select"]) {
-    modiferType = kMenuProductModiferTypeSelect;
+    modiferType = kMenuProductModiferCategoryTypeSelect;
   }
   else if ([modiferTypeString isEqualToString:@"multiselect"]) {
-    modiferType = kMenuProductModiferTypeMultiselect;
+    modiferType = kMenuProductModiferCategoryTypeMultiselect;
   }
 
   return modiferType;
