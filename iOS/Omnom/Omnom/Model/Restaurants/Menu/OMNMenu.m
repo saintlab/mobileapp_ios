@@ -33,12 +33,6 @@
     }];
     self.categories = categories;
     
-    
-//    id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub.json" ofType:nil]] options:kNilOptions error:nil];
-//    OMNMenuCategory *mc = [[OMNMenuCategory alloc] initWithJsonData:[data[@"menu"][@"categories"] firstObject] level:0];
-//    NSLog(@"%@", mc.listItems);
-
-    
   }
   return self;
 }

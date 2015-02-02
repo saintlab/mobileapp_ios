@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNMenuProductDetails.h"
+#import "OMNMenuProductModifer.h"
 
 extern NSString * const OMNMenuProductDidChangeNotification;
 

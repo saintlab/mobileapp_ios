@@ -8,6 +8,7 @@
 
 #import "OMNMenuProduct.h"
 #import "OMNImageManager.h"
+#import <BlocksKit.h>
 
 NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChangeNotification";
 
@@ -22,9 +23,14 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
     self.price = [data[@"price"] doubleValue]*100ll;
     self.Description = data[@"description"];
     self.photo = data[@"photo"];
-    self.modifiers = data[@"modifiers"];
     self.recommendations = data[@"recommendations"];
     self.details = [[OMNMenuProductDetails alloc] initWithJsonData:data[@"details"]];
+    
+    self.modifiers = [data[@"modifiers"] bk_map:^id(id modiferData) {
+    
+      return [[OMNMenuProductModifer alloc] initWithJsonData:modiferData];
+      
+    }];
     
   }
   return self;
