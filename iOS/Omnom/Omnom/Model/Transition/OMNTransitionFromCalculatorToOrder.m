@@ -34,18 +34,22 @@
     [containerView addSubview:fromViewController.view];
 
     UITableView *fromSplitTableView = fromViewController.splitTableView;
-    
+    CGPoint fromSplitTableViewContentOffset = fromSplitTableView.contentOffset;
     CGRect frame = [fromSplitTableView convertRect:fromSplitTableView.bounds toView:containerView];
     fromSplitTableView.frame = frame;
     [containerView addSubview:fromSplitTableView];
+    
+    //reset scroll view offset
+    fromSplitTableView.scrollEnabled = NO;
+    fromSplitTableView.contentOffset = fromSplitTableViewContentOffset;
 
     UIView *toFooterView = toViewController.tableView.tableFooterView;
     CGRect toFooterViewFrame = [toFooterView convertRect:toFooterView.bounds toView:containerView];
 
-    CGFloat fromTableContentViewBottom = CGRectGetMinY(fromSplitTableView.frame) + fromSplitTableView.contentOffset.y + MIN(fromSplitTableView.contentSize.height, CGRectGetHeight(fromSplitTableView.frame));
+    CGFloat fromTableContentViewBottom = CGRectGetMinY(fromSplitTableView.frame) - fromSplitTableView.contentOffset.y + MIN(fromSplitTableView.contentSize.height, CGRectGetHeight(fromSplitTableView.frame));
     
     CGFloat fromTableToDestimnationTableOffset = fromTableContentViewBottom - CGRectGetMinY(toFooterViewFrame);
-    
+
     toViewController.tableView.transform = CGAffineTransformMakeTranslation(0.0f, fromTableToDestimnationTableOffset);
     
     [UIView animateWithDuration:duration animations:^{
@@ -87,7 +91,9 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+  
   return 0.8;
+  
 }
 
 + (NSArray *)keys {

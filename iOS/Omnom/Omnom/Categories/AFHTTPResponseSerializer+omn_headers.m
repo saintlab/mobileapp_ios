@@ -28,7 +28,7 @@
   [self setValue:CURRENT_VERSION forHTTPHeaderField:@"x-current-app-version"];
   [self setValue:configuration forHTTPHeaderField:@"x-app-configuration"];
   [self setValue:@"Apple" forHTTPHeaderField:@"x-mobile-vendor"];
-  [self setValue:@"iOs" forHTTPHeaderField:@"x-mobile-platform"];
+  [self setValue:@"iOS" forHTTPHeaderField:@"x-mobile-platform"];
   [self setValue:[[UIDevice currentDevice] systemVersion] forHTTPHeaderField:@"x-mobile-os-version"];
   [self setValue:[[UIDevice currentDevice] modelName] forHTTPHeaderField:@"x-mobile-model"];
   

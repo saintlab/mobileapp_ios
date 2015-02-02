@@ -50,7 +50,7 @@
   
   _dataSource.didScrollToTopBlock = ^{
     
-//    [weakSelf handleClose];
+    [weakSelf handleClose];
     
   };
   
@@ -88,7 +88,8 @@
 - (void)scrollToBottomWithCompletion:(dispatch_block_t)completionBlock {
   
   NSIndexPath *indexPath = _dataSource.lastIndexPath;
-  if (indexPath) {
+  if (indexPath &&
+      ![self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
 
     [CATransaction begin];
     [CATransaction setCompletionBlock:completionBlock];
@@ -109,6 +110,8 @@
   if (_didClose) {
     return;
   }
+  //prevent table view scrolling back to fix animaion
+  self.tableView.bounces = NO;
   _didClose = YES;
   [self.delegate calculatorVCDidCancel:nil];
   
