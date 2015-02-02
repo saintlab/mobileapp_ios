@@ -17,6 +17,7 @@
 #import "OMNAuthorization.h"
 #import "OMNLocationManager.h"
 #import "OMNBankCardInfo.h"
+#import "OMNBankCard.h"
 
 NSString * const OMNAnaliticsUserKey = @"omn_user";
 
@@ -104,7 +105,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     userInfo[@"name"] = _user.name;
   }
   if (_user.email) {
-    userInfo[@"email"] = _user.email;
+    userInfo[@"$email"] = _user.email;
   }
   if (_user.phone) {
     userInfo[@"phone"] = _user.phone;
@@ -240,6 +241,31 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"card_info" : (bankCardInfo) ? (bankCardInfo.debugInfo) : (@""),
      }];
   [_mixpanel flush];
+  
+}
+
+- (void)logRegisterCards:(NSArray *)bankCards {
+  
+  __block NSInteger heldCardsCount = 0;
+  __block NSInteger registerCardsCount = 0;
+  [bankCards enumerateObjectsUsingBlock:^(OMNBankCard *bankCard, NSUInteger idx, BOOL *stop) {
+    
+    switch (bankCard.status) {
+      case kOMNBankCardStatusUnknown: {
+        
+      } break;
+      case kOMNBankCardStatusHeld: {
+        heldCardsCount++;
+      } break;
+      case kOMNBankCardStatusRegistered: {
+        registerCardsCount++;
+      } break;
+    }
+    
+  }];
+  
+  [_mixpanel.people set:@"held_cards_count" to:@(heldCardsCount)];
+  [_mixpanel.people set:@"register_cards_count" to:@(registerCardsCount)];
   
 }
 

@@ -9,6 +9,7 @@
 #import "OMNMailRuBankCardsModel.h"
 #import "OMNMailRuBankCardMediator.h"
 #import "OMNBankCard.h"
+#import "OMNAnalitics.h"
 
 @implementation OMNMailRuBankCardsModel
 
@@ -35,6 +36,7 @@
   if (cards) {
     
     self.cards = [cards mutableCopy];
+    [[OMNAnalitics analitics] logRegisterCards:cards];
     
   }
   
