@@ -64,7 +64,8 @@
   NSLog(@"didReceiveRemoteNotification>%@", userInfo);
   //  {"aps":{"sound":"new_guest.caf"}, "open_url" : "http://try.omnom.menu/mango"}
   NSString *open_url = userInfo[@"open_url"];
-  if (open_url) {
+  if (open_url &&
+      UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
     __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       
@@ -89,6 +90,7 @@
     
     self.launchOptions = [[OMNLaunchOptions alloc] initWithRemoteNotification:userInfo];
     [_startVC reloadSearchingRestaurant];
+    completionHandler(UIBackgroundFetchResultNoData);
     
   }
   else {

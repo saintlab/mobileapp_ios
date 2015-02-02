@@ -54,6 +54,26 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
 }
 
++ (NSString *)installID {
+  
+  NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+  //Check if we have UUID already
+  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:@"constants"];
+  if (nil == retrieveuuid) {
+    
+    //Create new key for this app/device
+    CFUUIDRef newUniqueId = CFUUIDCreate(kCFAllocatorDefault);
+    retrieveuuid = (__bridge_transfer NSString*)CFUUIDCreateString(kCFAllocatorDefault, newUniqueId);
+    CFRelease(newUniqueId);
+    
+    //Save key to Keychain
+    [SSKeychain setPassword:retrieveuuid forService:appName account:@"constants"];
+  }
+  
+  return retrieveuuid;
+  
+}
+
 + (void)loadRemoteConfigWithCompletion:(dispatch_block_t)completionBlock {
   
   NSString *path = @"/mobile/config";
