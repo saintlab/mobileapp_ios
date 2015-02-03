@@ -143,7 +143,22 @@ UICollectionViewDelegate>
 - (void)updateOrders {
   
   NSInteger ordersCount = _restaurantMediator.orders.count;
-  _label.text = [NSString stringWithFormat:NSLocalizedString(@"На вашем столике\nраздельных счетов: %d", nil), ordersCount];
+  if (0 == ordersCount) {
+    
+    _label.text = NSLocalizedString(@"ORDERS_0_ORDER_ON_TABLE_TEXT", @"На вашем столике нет счетов");
+    
+  }
+  else if (1 == ordersCount) {
+    
+    _label.text = NSLocalizedString(@"ORDERS_1_ORDER_ON_TABLE_TEXT", @"На вашем столике 1 счет");
+    
+  }
+  else {
+  
+    _label.text = [NSString stringWithFormat:NSLocalizedString(@"ORDERS_N_ORDERs_ON_TABLE_TEXT %d", @"На вашем столике\nраздельных счетов: {orders_count}"), ordersCount];
+    
+  }
+  
   _pageControl.numberOfPages = ordersCount;
   __weak typeof(self)weakSelf = self;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
