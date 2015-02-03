@@ -60,6 +60,37 @@
   [self setupButtons];
   self.backgroundColor = [UIColor clearColor];
   
+  UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
+  swipeGR.delaysTouchesBegan = YES;
+  swipeGR.direction = UISwipeGestureRecognizerDirectionRight;
+  [self addGestureRecognizer:swipeGR];
+  
+  swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
+  swipeGR.delaysTouchesBegan = YES;
+  swipeGR.direction = UISwipeGestureRecognizerDirectionLeft;
+  [self addGestureRecognizer:swipeGR];
+  
+}
+
+- (void)swipe:(UISwipeGestureRecognizer *)swipeGR {
+  
+  switch (swipeGR.direction) {
+    case UISwipeGestureRecognizerDirectionRight: {
+      
+      self.selectedIndex = MIN(self.selectedIndex + 1, kCustomTipIndex);
+      
+    } break;
+    case UISwipeGestureRecognizerDirectionLeft: {
+      
+      self.selectedIndex = MAX(self.selectedIndex - 1, 0);
+      
+    } break;
+    case UISwipeGestureRecognizerDirectionUp:
+    case UISwipeGestureRecognizerDirectionDown:
+    default: {
+    } break;
+  }
+  
 }
 
 - (OMNTipButton *)tipButtonWithTag:(NSInteger)tag {
@@ -133,14 +164,8 @@
 }
 
 - (void)tipButtonTap:(OMNTipButton *)tipButton {
-  
+
   self.selectedIndex = tipButton.tag;
-  if (kCustomTipIndex == self.selectedIndex) {
-    
-    [self.delegate tipSelectorStartCustomTipEditing:self];
-    
-  }
-  [self sendActionsForControlEvents:UIControlEventValueChanged];
   
 }
 
@@ -148,6 +173,11 @@
 
   _previousSelectedIndex = self.selectedIndex;
   _order.selectedTipIndex = selectedIndex;
+  if (kCustomTipIndex == selectedIndex) {
+    
+    [self.delegate tipSelectorStartCustomTipEditing:self];
+    
+  }
   
 }
 
