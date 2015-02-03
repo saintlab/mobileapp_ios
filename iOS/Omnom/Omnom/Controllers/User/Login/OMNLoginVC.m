@@ -160,7 +160,6 @@ TTTAttributedLabelDelegate> {
    @{
      NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
      NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
-     NSParagraphStyleAttributeName : [self centerParagraphStyle],
      } range:NSMakeRange(0, text.length)];
   
   [_hintLabel setText:attributedString];
