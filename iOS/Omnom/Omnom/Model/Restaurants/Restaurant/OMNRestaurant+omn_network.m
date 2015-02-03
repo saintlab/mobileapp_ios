@@ -295,7 +295,8 @@
 
 - (void)getMenuWithCompletion:(OMNMenuBlock)completion {
 
-  if (NO) {
+#warning stub menu
+  if (YES) {
     id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
     OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
     completion(menu);

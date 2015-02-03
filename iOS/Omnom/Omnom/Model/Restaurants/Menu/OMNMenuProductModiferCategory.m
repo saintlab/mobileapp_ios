@@ -20,7 +20,7 @@
     
     _allModifers = allModifers;
     self.id = jsonData[@"id"];
-    self.type = [self modiferTypeFromString:jsonData[@"type"]];
+    _type = [self modiferTypeFromString:jsonData[@"type"]];
     self.name = jsonData[@"name"];
     self.list = jsonData[@"list"];
     

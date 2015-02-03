@@ -190,6 +190,10 @@
 		93535F0F19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535F0D19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m */; };
 		93535F12198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535F11198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m */; };
 		93535F13198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93535F11198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m */; };
+		935A1E2A1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E291A80CADB00704086 /* OMNMenuModiferCategoryCell.m */; };
+		935A1E2B1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E291A80CADB00704086 /* OMNMenuModiferCategoryCell.m */; };
+		935A1E2E1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E2D1A80CAEE00704086 /* OMNMenuModiferCell.m */; };
+		935A1E2F1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E2D1A80CAEE00704086 /* OMNMenuModiferCell.m */; };
 		935C284219066755003B4881 /* fill-form in Resources */ = {isa = PBXBuildFile; fileRef = 935C283C19066737003B4881 /* fill-form */; };
 		935C284319066755003B4881 /* jquery-2.0.3.min in Resources */ = {isa = PBXBuildFile; fileRef = 935C283D19066737003B4881 /* jquery-2.0.3.min */; };
 		935C35571A188BF0006C8550 /* new_guest_loud.caf in Resources */ = {isa = PBXBuildFile; fileRef = 935C35561A188BF0006C8550 /* new_guest_loud.caf */; };
@@ -801,6 +805,10 @@
 		93535F0D19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantToSearchBeaconTransition.m; sourceTree = "<group>"; };
 		93535F10198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSearchBeaconToPayOrderTransition.h; sourceTree = "<group>"; };
 		93535F11198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSearchBeaconToPayOrderTransition.m; sourceTree = "<group>"; };
+		935A1E281A80CADB00704086 /* OMNMenuModiferCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuModiferCategoryCell.h; sourceTree = "<group>"; };
+		935A1E291A80CADB00704086 /* OMNMenuModiferCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuModiferCategoryCell.m; sourceTree = "<group>"; };
+		935A1E2C1A80CAEE00704086 /* OMNMenuModiferCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuModiferCell.h; sourceTree = "<group>"; };
+		935A1E2D1A80CAEE00704086 /* OMNMenuModiferCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuModiferCell.m; sourceTree = "<group>"; };
 		935C283C19066737003B4881 /* fill-form */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fill-form"; sourceTree = "<group>"; };
 		935C283D19066737003B4881 /* jquery-2.0.3.min */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "jquery-2.0.3.min"; sourceTree = "<group>"; };
 		935C35561A188BF0006C8550 /* new_guest_loud.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = new_guest_loud.caf; sourceTree = "<group>"; };
@@ -1362,6 +1370,7 @@
 		9319FD53192F33B90053F3A4 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				935A1E271A80CAB900704086 /* Modifer */,
 				935FF1661A6D4062004B69A6 /* Menu */,
 				935FF1581A6D238E004B69A6 /* Order */,
 				935FF1571A6D236B004B69A6 /* Preorder */,
@@ -1674,6 +1683,17 @@
 				933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */,
 			);
 			name = Restaurant;
+			sourceTree = "<group>";
+		};
+		935A1E271A80CAB900704086 /* Modifer */ = {
+			isa = PBXGroup;
+			children = (
+				935A1E281A80CADB00704086 /* OMNMenuModiferCategoryCell.h */,
+				935A1E291A80CADB00704086 /* OMNMenuModiferCategoryCell.m */,
+				935A1E2C1A80CAEE00704086 /* OMNMenuModiferCell.h */,
+				935A1E2D1A80CAEE00704086 /* OMNMenuModiferCell.m */,
+			);
+			name = Modifer;
 			sourceTree = "<group>";
 		};
 		935D8C841A3809A600877C02 /* CoreLocation */ = {
@@ -2933,8 +2953,10 @@
 				93C1269C1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m in Sources */,
 				934CDF5019D4078900D73FC4 /* OMNLabelCell.m in Sources */,
 				93F2AEEE1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */,
+				935A1E2A1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */,
 				9373254C1A7F9EBF00A73673 /* OMNMenuModifer.m in Sources */,
 				93E435AF19989ED600EDC488 /* OMNLoadingCircleVC.m in Sources */,
+				935A1E2E1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */,
 				937C3E751A2859C9006525A9 /* OMNUser+network.m in Sources */,
 				9307A6DF19D53F7E00101B81 /* OMNLabeledTextField.m in Sources */,
 				932118121962D8A700183729 /* OMNProductsModel.m in Sources */,
@@ -3239,6 +3261,7 @@
 				93B3689D19A4CD2D00B6E6CB /* OMNSlideUpTransition.m in Sources */,
 				93CE48021A7A4B19002D293B /* OMNTableButton.m in Sources */,
 				93CE47911A775729002D293B /* OMNMenuProductWithRecommedtations.m in Sources */,
+				935A1E2B1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */,
 				93E58CAD1A245604008064F9 /* OMNCameraPermission.m in Sources */,
 				93E58CBA1A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */,
 				93CE47BE1A78A04D002D293B /* OMNCategoryNavigationView.m in Sources */,
@@ -3315,6 +3338,7 @@
 				932B186119ADEE91009E440E /* OMNOrderTableView.m in Sources */,
 				93C2F8EB1A3088E3003EF669 /* OMNUserInfoView.m in Sources */,
 				937C3E761A2859C9006525A9 /* OMNUser+network.m in Sources */,
+				935A1E2F1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */,
 				937A37831981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
 				933A9EAB1A4C0851001C0909 /* OMNRestaurantCardVC.m in Sources */,
 				93B368B319A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,

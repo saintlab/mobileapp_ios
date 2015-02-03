@@ -12,6 +12,7 @@
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import "UIView+omn_autolayout.h"
+#import "OMNMenuProductModifersModel.h"
 
 @interface OMNProductModiferAlertVC ()
 
@@ -25,8 +26,9 @@
   UIButton *_okButton;
   UITableView *_modiferTableView;
   OMNMenuProduct *_menuProduct;
-  NSLayoutConstraint *_tableHeightConstraint;
   NSInteger _quantity;
+  OMNMenuProductModifersModel *_model;
+  NSLayoutConstraint *_tableViewHeightConstraint;
   
 }
 
@@ -36,6 +38,8 @@
     
     _menuProduct = menuProduct;
     _quantity = _menuProduct.quantity;
+    _model = [[OMNMenuProductModifersModel alloc] init];
+    _model.menuProduct = menuProduct;
     
   }
   return self;
@@ -46,6 +50,24 @@
   
   [self createViews];
   [self configureViews];
+ 
+  __weak typeof(self)weakSelf = self;
+  _model.didSelectBlock = ^{
+    
+    [weakSelf updateTableViewHeight];
+    
+  };
+  
+}
+
+- (void)updateTableViewHeight {
+  
+  _tableViewHeightConstraint.constant = _model.tableViewHeight;
+  [UIView animateWithDuration:0.3 animations:^{
+    
+    [self.view layoutIfNeeded];
+    
+  }];
   
 }
 
@@ -96,6 +118,11 @@
   [_okButton setBackgroundImage:[[UIImage imageNamed:@"button_order"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_okButton addTarget:self action:@selector(orderTap) forControlEvents:UIControlEventTouchUpInside];
   
+  [OMNMenuProductModifersModel registerCellsForTableView:_modiferTableView];
+  _modiferTableView.delegate = _model;
+  _modiferTableView.dataSource = _model;
+  _tableViewHeightConstraint.constant = _model.tableViewHeight;
+  
   [_minusButton setImage:[UIImage imageNamed:@"ic_decrease_qty"] forState:UIControlStateNormal];
   [_plusButton setImage:[UIImage imageNamed:@"ic_increase_qty"] forState:UIControlStateNormal];
   
@@ -139,8 +166,6 @@
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
   
-  CGFloat modifersHeight = _menuProduct.modifiers.count * 50.0f;
-  
   [qtControlView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[minusButton]-(5)-[quantityLabel(50)]-(5)-[plusButton]|" options:kNilOptions metrics:metrics views:views]];
   [qtControlView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[minusButton]|" options:kNilOptions metrics:metrics views:views]];
   [qtControlView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[quantityLabel]|" options:kNilOptions metrics:metrics views:views]];
@@ -150,7 +175,8 @@
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:qtControlView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_modiferTableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:modifersHeight]];
+  _tableViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_modiferTableView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
+  [self.contentView addConstraint:_tableViewHeightConstraint];
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_okButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[okButton(>=130)]" options:kNilOptions metrics:metrics views:views]];

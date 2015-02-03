@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNMenuProductDetails.h"
+#import "OMNMenuModifer.h"
 #import "OMNMenuProductModiferCategory.h"
 
 extern NSString * const OMNMenuProductDidChangeNotification;
@@ -24,7 +25,9 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 @property (nonatomic, strong) NSArray *modifiers;
 @property (nonatomic, strong) NSArray *recommendations;
 @property (nonatomic, strong) OMNMenuProductDetails *details;
+@property (nonatomic, strong, readonly) NSDictionary *allModifers;
 @property (nonatomic, assign) BOOL selected;
+@property (nonatomic, strong, readonly) NSMutableSet *selectedModifers;
 
 @property (nonatomic, assign, readonly) long long total;
 

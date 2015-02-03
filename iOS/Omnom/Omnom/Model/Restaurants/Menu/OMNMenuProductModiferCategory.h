@@ -19,10 +19,11 @@ typedef NS_ENUM(NSInteger, OMNMenuProductModiferCategoryType) {
 
 @interface OMNMenuProductModiferCategory : NSObject
 
-@property (nonatomic, assign) OMNMenuProductModiferCategoryType type;
+@property (nonatomic, assign, readonly) OMNMenuProductModiferCategoryType type;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, strong) NSArray *list;
+@property (nonatomic, assign) BOOL selected;
 @property (nonatomic, strong, readonly) NSDictionary *allModifers;
 
 - (instancetype)initWithJsonData:(id)jsonData allModifers:(NSDictionary *)allModifers;

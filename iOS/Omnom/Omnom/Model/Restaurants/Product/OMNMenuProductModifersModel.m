@@ -7,6 +7,10 @@
 //
 
 #import "OMNMenuProductModifersModel.h"
+#import "OMNMenuModiferCategoryCell.h"
+#import "OMNMenuModiferCell.h"
+
+CGFloat kRowHeight = 44.0f;
 
 @implementation OMNMenuProductModifersModel
 
@@ -14,15 +18,35 @@
   
   _menuProduct = menuProduct;
   
+  [_menuProduct.modifiers enumerateObjectsUsingBlock:^(OMNMenuProductModiferCategory *category, NSUInteger idx, BOOL *stop) {
+    
+    category.selected = NO;
+    
+  }];
+  
+}
+
+- (CGFloat)tableViewHeight {
+  
+  __block NSInteger itemsCount = 0;
+  [_menuProduct.modifiers enumerateObjectsUsingBlock:^(OMNMenuProductModiferCategory *category, NSUInteger idx, BOOL *stop) {
+
+    itemsCount++;
+    if (category.selected) {
+      itemsCount += category.list.count;
+    }
+    
+  }];
+
+  return kRowHeight*MIN(itemsCount, 6);
+  
 }
 
 + (void)registerCellsForTableView:(UITableView *)tableView {
   
   [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
-//  [tableView registerClass:[OMNMenuCategoryDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuCategoryDelimiterCell class])];
-//  [tableView registerClass:[OMNMenuProductsDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductsDelimiterCell class])];
-//  [tableView registerClass:[OMNMenuProductWithRecommedtationsCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductWithRecommedtationsCell class])];
-//  [tableView registerClass:[OMNMenuCategoryHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];
+  [tableView registerClass:[OMNMenuModiferCategoryCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuModiferCategoryCell class])];
+  [tableView registerClass:[OMNMenuModiferCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuModiferCell class])];
   
 }
 
@@ -43,9 +67,118 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  return [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+  OMNMenuProductModiferCategory *category = _menuProduct.modifiers[indexPath.section];
+  UITableViewCell *cell = nil;
+  
+  if (0 == indexPath.row) {
+    
+    if (kMenuProductModiferCategoryTypeCheckbox == category.type) {
+      
+      OMNMenuModiferCell *menuModiferCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuModiferCell class]) forIndexPath:indexPath];
+      OMNMenuModifer *modifer = _menuProduct.allModifers[category.id];
+      menuModiferCell.textLabel.text = modifer.name;
+      menuModiferCell.accessoryType = ([_menuProduct.selectedModifers containsObject:modifer.id]) ? (UITableViewCellAccessoryCheckmark) : (UITableViewCellAccessoryNone);
+      cell = menuModiferCell;
+      
+    }
+    else {
+
+      OMNMenuModiferCategoryCell *menuModiferCategoryCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuModiferCategoryCell class]) forIndexPath:indexPath];
+      [menuModiferCategoryCell setCategory:category];
+      cell = menuModiferCategoryCell;
+      
+    }
+    
+  }
+  else {
+    
+    OMNMenuModiferCell *menuModiferCell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuModiferCell class]) forIndexPath:indexPath];
+    NSString *modiferID = category.list[indexPath.row - 1];
+    OMNMenuModifer *modifer = _menuProduct.allModifers[modiferID];
+    menuModiferCell.textLabel.text = modifer.name;
+    menuModiferCell.accessoryType = ([_menuProduct.selectedModifers containsObject:modifer.id]) ? (UITableViewCellAccessoryCheckmark) : (UITableViewCellAccessoryNone);
+    cell = menuModiferCell;
+    
+  }
+  cell.clipsToBounds = YES;
+
+  return cell;
   
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  CGFloat heightForRow = kRowHeight;
+  
+  OMNMenuProductModiferCategory *category = _menuProduct.modifiers[indexPath.section];
+  
+  if (0 != indexPath.row) {
+    
+    if (kMenuProductModiferCategoryTypeCheckbox != category.type &&
+        !category.selected) {
+      heightForRow = 0.0f;
+    }
+
+  }
+  
+  return heightForRow;
+  
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  [tableView beginUpdates];
+  OMNMenuProductModiferCategory *category = _menuProduct.modifiers[indexPath.section];
+  if (0 == indexPath.row) {
+    
+    if (kMenuProductModiferCategoryTypeCheckbox == category.type) {
+      
+      if ([_menuProduct.selectedModifers containsObject:category.id]) {
+        [_menuProduct.selectedModifers removeObject:category.id];
+      }
+      else {
+        [_menuProduct.selectedModifers addObject:category.id];
+      }
+      
+      
+    }
+    else {
+      
+      category.selected = !category.selected;
+
+    }
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+  }
+  else {
+
+    NSString *modiferID = category.list[indexPath.row - 1];
+    if (kMenuProductModiferCategoryTypeSelect == category.type) {
+      
+      [_menuProduct.selectedModifers minusSet:[NSSet setWithArray:category.list]];
+      [_menuProduct.selectedModifers addObject:modiferID];
+      
+    }
+    else if (kMenuProductModiferCategoryTypeMultiselect == category.type) {
+    
+      if ([_menuProduct.selectedModifers containsObject:modiferID]) {
+        [_menuProduct.selectedModifers removeObject:modiferID];
+      }
+      else {
+        [_menuProduct.selectedModifers addObject:modiferID];
+      }
+      
+    }
+    [tableView reloadSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+    
+  }
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  [tableView endUpdates];
+  
+  if (self.didSelectBlock) {
+    self.didSelectBlock();
+  }
+  
+}
 
 @end

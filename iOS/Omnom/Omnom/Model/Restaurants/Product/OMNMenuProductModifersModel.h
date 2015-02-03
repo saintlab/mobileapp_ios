@@ -14,5 +14,9 @@
 UITableViewDataSource>
 
 @property (nonatomic, strong) OMNMenuProduct *menuProduct;
+@property (nonatomic, copy) dispatch_block_t didSelectBlock;
+
++ (void)registerCellsForTableView:(UITableView *)tableView;
+- (CGFloat)tableViewHeight;
 
 @end

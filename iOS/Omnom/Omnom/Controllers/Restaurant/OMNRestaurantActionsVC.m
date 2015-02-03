@@ -16,10 +16,7 @@
 #import "OMNRestaurantManager.h"
 #import "OMNTable+omn_network.h"
 #import "OMNMyOrderButton.h"
-
-@interface OMNRestaurantActionsVC()
-
-@end
+#import "UIButton+omn_helper.h"
 
 @implementation OMNRestaurantActionsVC {
   
@@ -104,11 +101,6 @@
   [self addActionBoardIfNeeded];
   self.bottomToolbar.hidden = NO;
   
-//  NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт")
-//  NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")
-  
-  
-  
   UIButton *callBillButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"bill_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callBill)];
   UIButton *callWaiterButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callWaiterTap)];
   
@@ -132,14 +124,20 @@
   }
   else if (_restaurantMediator.restaurant.settings.has_waiter_call) {
     
+    [callBillButton setTitle:NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт") forState:UIControlStateNormal];
+    [callBillButton omn_centerButtonAndImageWithSpacing:4.0f];
+    [callBillButton sizeToFit];
+    
+    [callWaiterButton setTitle:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант") forState:UIControlStateNormal];
+    [callWaiterButton omn_centerButtonAndImageWithSpacing:4.0f];
+    [callWaiterButton sizeToFit];
+    
     if (_restaurantMediator.waiterIsCalled) {
       
       [self setWaiterCancelButtons];
       
     }
     else {
-      
-      [callWaiterButton sizeToFit];
       
       [self.bottomToolbar setItems:
        @[
@@ -153,6 +151,10 @@
     
   }
   else {
+    
+    [callBillButton setTitle:NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт") forState:UIControlStateNormal];
+    [callBillButton omn_centerButtonAndImageWithSpacing:4.0f];
+    [callBillButton sizeToFit];
     
     [self.bottomToolbar setItems:
      @[
