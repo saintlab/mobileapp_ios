@@ -19,6 +19,8 @@
 NSString * const kPushSoundName = @"new_guest.caf";
 NSString * const OMNFacebookPageUrlString = @"https://www.facebook.com/omnom.menu/";
 NSString * const OMNFacebookAppUrlString = @"fb://profile/1548920272002383";
+NSString * const kOMNStaticTokenString = @"uv5zoaRsh9uff1yiSh8Dub4oc0hum3";
+
 
 //#define kEstimoteBeaconUUIDString @"B9407F30-F5F8-466E-AFF9-25556B57FE6D"
 //#define kRadBeaconUSBUUIDString  @"2F234454-CF6D-4A0F-ADF2-F4911BA9FFA6"
@@ -109,8 +111,8 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   NSMutableURLRequest *mRequest = (NSMutableURLRequest *)operation.request;
   if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
 
-    NSString *token = [self stringForKey:@"AuthToken"];
-    [mRequest setValue:token forHTTPHeaderField:@"x-authentication-token"];
+    //https://github.com/saintlab/mobileapp_ios/issues/548
+    [mRequest setValue:kOMNStaticTokenString forHTTPHeaderField:@"x-authentication-token"];
 
   }
   
