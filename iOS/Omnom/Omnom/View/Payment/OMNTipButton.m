@@ -74,10 +74,7 @@
 - (void)setSelected:(BOOL)selected {
   
   CGFloat fontSize = (selected) ? (25.0f) : (17.0f);
-  [UIView transitionWithView:self duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-    
-    self.titleLabel.font = FuturaLSFOmnomLERegular(fontSize);
-  } completion:nil];
+  self.titleLabel.font = FuturaLSFOmnomLERegular(fontSize);
   [super setSelected:selected];
   
 }
