@@ -58,7 +58,7 @@ extern NSInteger const kCustomTipIndex;
 @property (nonatomic, copy) NSString *restarateurOrderId;
 
 @property (nonatomic, strong, readonly) NSArray *guests;
-@property (nonatomic, strong, readonly) NSMutableArray *tips;
+@property (nonatomic, strong, readonly) NSArray *tips;
 @property (nonatomic, assign, readonly) long long percentTipsThreshold;
 
 @property (nonatomic, strong) OMNOrderPaid *paid;
@@ -82,6 +82,7 @@ extern NSInteger const kCustomTipIndex;
 - (instancetype)initWithJsonData:(id)jsonData;
 - (BOOL)paymentValueIsTooHigh;
 - (BOOL)hasSelectedItems;
+- (BOOL)hasProducts;
 - (long long)totalAmount;
 - (long long)selectedItemsTotal;
 

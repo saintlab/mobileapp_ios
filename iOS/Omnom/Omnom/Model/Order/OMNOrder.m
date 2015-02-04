@@ -7,6 +7,7 @@
 //
 
 #import "OMNOrder.h"
+#import <BlocksKit.h>
 
 inline NSString *stringFromTipType(TipType tipType) {
   
@@ -125,14 +126,12 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
     
     _tipsThresholds = tipsData[@"thresholds"];
     _percentTipsThreshold = [[_tipsThresholds lastObject] longLongValue];
-    NSMutableArray *tips = [NSMutableArray arrayWithCapacity:4];
-
-    for (id tipData in tipsData[@"values"]) {
-
-      OMNTip *tip = [[OMNTip alloc] initWithJsonData:tipData thresholds:_tipsThresholds];
-      [tips addObject:tip];
+    NSArray *tipsValueData = tipsData[@"values"];
+    NSArray *tips = [tipsValueData bk_map:^id(id tipData) {
       
-    }
+      return [[OMNTip alloc] initWithJsonData:tipData thresholds:_tipsThresholds];
+      
+    }];
     
     if (4 == tips.count) {
       
@@ -142,7 +141,6 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
       
     }
     _tips = tips;
-    
 
     [self resetEnteredAmount];
     [self resetTip];
@@ -214,17 +212,25 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 
 - (BOOL)hasSelectedItems {
   
-  __block BOOL hasSelectedItems = NO;
-  [_guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
-
-    if (guest.hasSelectedItems) {
-      hasSelectedItems = YES;
-      *stop = YES;
-    }
+  BOOL hasSelectedItems = [_guests bk_any:^BOOL(OMNGuest *guest) {
+    
+    return guest.hasSelectedItems;
     
   }];
   
   return hasSelectedItems;
+  
+}
+
+- (BOOL)hasProducts {
+  
+  BOOL hasProducts = [_guests bk_any:^BOOL(OMNGuest *guest) {
+    
+    return guest.hasProducts;
+    
+  }];
+  
+  return hasProducts;
   
 }
 

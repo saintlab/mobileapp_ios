@@ -19,6 +19,7 @@
 
 - (instancetype)initWithID:(NSString *)id index:(NSInteger)index orderItems:(NSArray *)orderItems;
 - (BOOL)hasSelectedItems;
+- (BOOL)hasProducts;
 - (void)deselectAllItems;
 
 @end

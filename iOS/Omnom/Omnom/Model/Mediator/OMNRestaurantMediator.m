@@ -21,6 +21,7 @@
 #import "OMNSocketManager.h"
 #import "OMNNoOrdersVC.h"
 #import "OMNLaunchHandler.h"
+#import <BlocksKit.h>
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -467,11 +468,22 @@ OMNOrderCalculationVCDelegate>
 - (void)showOrders {
   
   _ordersDidShow = YES;
+  
+  BOOL ordersHasProducts = [self.orders bk_all:^BOOL(OMNOrder *order) {
+    
+    return order.hasProducts;
+    
+  }];
+
+//  https://github.com/saintlab/mobileapp_ios/issues/336
+  if (!ordersHasProducts) {
+    [self processNoOrders];
+    return;
+  }
+  
   NSInteger ordersCount = self.orders.count;
   NSMutableArray *pushedControllers = [NSMutableArray array];
   
-//#warning ordersCount
-//  ordersCount = 0;
   if (ordersCount) {
     
     OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithMediator:self];
