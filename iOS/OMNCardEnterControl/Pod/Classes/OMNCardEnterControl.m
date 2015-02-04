@@ -276,21 +276,31 @@ NSInteger kCVVLength = 3;
   
 }
 
-- (void)showExpireTF {
+- (void)showExpireTFWithText:(NSString *)text {
   
-  if (_panTF.text.length < kDesiredPanLength) {
-    return;
+  if (0 == _expireTF.text.length) {
+    
+    _expireTF.text = text;
+    
   }
-  
+
   [_expireTF becomeFirstResponder];
   
 }
 
 - (void)setPan:(NSString *)pan {
+
+  NSString *left = @"";
+  const NSInteger kPurePanLength = 16;
+  if (pan.length > kPurePanLength) {
+    left = [pan substringFromIndex:kPurePanLength];
+  }
+
   _panTF.text = [pan omn_panFormatedString];
+  
   if (_panTF.text.length >= kDesiredPanLength) {
     [self checkPanTF:YES];
-    [self showExpireTF];
+    [self showExpireTFWithText:left];
   }
   
 }
@@ -400,11 +410,6 @@ NSInteger kCVVLength = 3;
   if ([textField isEqual:_panTF]) {
     
     NSString *pan = [finalString omn_decimalString];
-    
-    if (pan.length > kDesiredPanLength) {
-      pan = [pan substringToIndex:kDesiredPanLength];
-    }
-    
     UITextRange *selectedTextRange = [textField selectedTextRange];
     UITextRange *startPosition = [textField positionFromPosition:selectedTextRange.start offset:(string.length) ? (string.length) : (-1)];
     [self setPan:pan];
@@ -500,7 +505,7 @@ NSInteger kCVVLength = 3;
     }
     else {
       if (0 == cvv.length) {
-        [self showExpireTF];
+        [self showExpireTFWithText:@""];
       }
       [self didFinishEnterCardDetails:NO];
     }

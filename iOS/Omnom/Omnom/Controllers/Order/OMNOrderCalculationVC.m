@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "GRateAlertView.h"
 #import "OMNAnalitics.h"
 #import "OMNCalculatorVC.h"
 #import "OMNOrderPaymentVC.h"

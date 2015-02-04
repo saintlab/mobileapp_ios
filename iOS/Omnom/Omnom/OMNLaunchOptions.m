@@ -30,6 +30,7 @@
 #if DEBUG
     NSLog(@"not app store");
 //    _customConfigName = @"config_laaaab";
+//    _customConfigName = @"config_staging";
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";
 //    _qr = @"qr-code-for-2-saintlab-iiko";
 //    @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";

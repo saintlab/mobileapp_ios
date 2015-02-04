@@ -9,6 +9,7 @@
 #import "OMNErrorTextField.h"
 #import <OMNStyler.h>
 #import "OMNConstants.h"
+#import "OMNClearButton.h"
 
 @interface OMNErrorTextField ()
 
@@ -61,7 +62,6 @@
   }
   
   _textField = [[[_textFieldClass class] alloc] init];
-  _textField.clearButtonMode = UITextFieldViewModeWhileEditing;
   _textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
   _textField.textColor = [UIColor blackColor];
   _textField.font = FuturaLSFOmnomLERegular(22.0f);
@@ -69,6 +69,9 @@
   _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
   _textField.autocorrectionType = UITextAutocorrectionTypeNo;
   [self addSubview:_textField];
+  
+  _textField.rightView = [OMNClearButton omn_clearButtonWithTargett:self action:@selector(clearTextField)];
+  _textField.rightViewMode = UITextFieldViewModeWhileEditing;
   
   _colorView = [[UIView alloc] init];
   _colorView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -112,6 +115,12 @@
   [_textField addTarget:self action:@selector(updateColorView) forControlEvents:UIControlEventEditingDidBegin];
   [_textField addTarget:self action:@selector(updateColorView) forControlEvents:UIControlEventEditingDidEnd];
   [_textField addTarget:self action:@selector(valueChanged) forControlEvents:UIControlEventEditingChanged];
+  
+}
+
+- (void)clearTextField {
+  
+  _textField.text = @"";
   
 }
 

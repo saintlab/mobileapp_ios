@@ -10,14 +10,24 @@
 #import "OMNTip.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
+#import <BlocksKit.h>
 
-@implementation OMNTipButton
+@implementation OMNTipButton {
+  
+  NSString *_selectedTipObserverID;
+  
+}
 
 - (void)dealloc {
-  @try {
-    [_tip removeObserver:self forKeyPath:NSStringFromSelector(@selector(selected))];
-  }
-  @catch (NSException *exception) {
+
+  [self removeObservers];
+  
+}
+
+- (void)removeObservers {
+  
+  if (_selectedTipObserverID) {
+    [_tip bk_removeObserversWithIdentifier:_selectedTipObserverID];
   }
   
 }
@@ -40,8 +50,8 @@
 
 - (void)setup {
   
-  [self setTitleColor:[colorWithHexString(@"ffffff") colorWithAlphaComponent:0.6] forState:UIControlStateNormal];
-  [self setTitleColor:colorWithHexString(@"ffffff") forState:UIControlStateSelected];
+  [self setTitleColor:[colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.6] forState:UIControlStateNormal];
+  [self setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateSelected];
   self.titleLabel.numberOfLines = 0;
   self.titleLabel.textAlignment = NSTextAlignmentCenter;
   self.titleLabel.font = FuturaLSFOmnomLERegular(17.0f);
@@ -50,9 +60,14 @@
 
 - (void)setTip:(OMNTip *)tip {
 
-  [_tip removeObserver:self forKeyPath:NSStringFromSelector(@selector(selected))];
+  [self removeObservers];
   _tip = tip;
-  [_tip addObserver:self forKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) context:NULL];
+  __weak typeof(self)weakSelf = self;
+  [_tip bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNTip *t, NSDictionary *change) {
+    
+    weakSelf.selected = t.selected;
+    
+  }];
 
 }
 
@@ -62,16 +77,6 @@
   self.titleLabel.font = FuturaLSFOmnomLERegular(fontSize);
   [super setSelected:selected];
   
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-
-  if ([keyPath isEqualToString:NSStringFromSelector(@selector(selected))]) {
-    
-    self.selected = _tip.selected;
-    
-  }
-
 }
 
 @end

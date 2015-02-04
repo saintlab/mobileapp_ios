@@ -7,6 +7,7 @@
 //
 
 #import "OMNGuest.h"
+#import <BlocksKit.h>
 
 @implementation OMNGuest
 
@@ -23,18 +24,18 @@
 
 - (BOOL)hasSelectedItems {
   
-  __block BOOL hasSelectedItems = NO;
-  
-  [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+  BOOL hasSelectedItems = [_items bk_any:^BOOL(OMNOrderItem *orderItem) {
     
-    if (orderItem.selected) {
-      hasSelectedItems = YES;
-      *stop = YES;
-    }
+    return orderItem.selected;
     
   }];
-  
   return hasSelectedItems;
+  
+}
+
+- (BOOL)hasProducts {
+  
+  return (self.items.count > 0);
   
 }
 

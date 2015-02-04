@@ -88,8 +88,12 @@
   }
   else if ([type isEqualToString:@"show_orders"]) {
     
-    self.launchOptions = [[OMNLaunchOptions alloc] initWithRemoteNotification:userInfo];
-    [_startVC reloadSearchingRestaurant];
+    if (UIApplicationStateActive != [UIApplication sharedApplication].applicationState) {
+      
+      self.launchOptions = [[OMNLaunchOptions alloc] initWithRemoteNotification:userInfo];
+      [_startVC reloadSearchingRestaurant];
+      
+    }
     completionHandler(UIBackgroundFetchResultNoData);
     
   }

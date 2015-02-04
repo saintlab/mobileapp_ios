@@ -101,7 +101,8 @@
   
   [[OMNAuthorization authorisation] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
   [OMNAnalitics analitics].deviceToken = deviceToken;
-
+  [OMNAuthorization authorisation].deviceToken = deviceToken;
+  
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {

@@ -17,6 +17,7 @@
   
   UIButton *_workdayButton;
   UILabel *_restaurantInfoLabelAddress;
+  UILabel *_cityLabel;
   
 }
 
@@ -32,10 +33,19 @@
 
 - (void)setup {
   
+  _cityLabel = [UILabel omn_autolayoutView];
+  _cityLabel.numberOfLines = 1;
+  _cityLabel.textAlignment = NSTextAlignmentCenter;
+  _cityLabel.adjustsFontSizeToFitWidth = YES;
+  _cityLabel.font = FuturaOSFOmnomRegular(18.0f);
+  _cityLabel.textColor = colorWithHexString(@"000000");
+  [self addSubview:_cityLabel];
+  
+  
   _restaurantInfoLabelAddress = [UILabel omn_autolayoutView];
+  _restaurantInfoLabelAddress.contentMode = UIViewContentModeCenter;
   _restaurantInfoLabelAddress.numberOfLines = 1;
   _restaurantInfoLabelAddress.textAlignment = NSTextAlignmentCenter;
-  _restaurantInfoLabelAddress.font = FuturaOSFOmnomRegular(18.0f);
   _restaurantInfoLabelAddress.adjustsFontSizeToFitWidth = YES;
   _restaurantInfoLabelAddress.textColor = colorWithHexString(@"000000");
   [self addSubview:_restaurantInfoLabelAddress];
@@ -50,6 +60,7 @@
   
   NSDictionary *views =
   @{
+    @"cityLabel" : _cityLabel,
     @"restaurantInfoLabelAddress" : _restaurantInfoLabelAddress,
     @"workdayButton" : _workdayButton,
     };
@@ -59,9 +70,10 @@
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
   
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cityLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[restaurantInfoLabelAddress]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[workdayButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[restaurantInfoLabelAddress]-[workdayButton]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[cityLabel]-(2)-[restaurantInfoLabelAddress(25)]-[workdayButton]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
@@ -69,6 +81,7 @@
   
   _restaurant = restaurant;
   
+  _cityLabel.text = restaurant.address.city;
   NSMutableString *address = [NSMutableString stringWithString:_restaurant.address.text];
   NSString *distance = @"";
   if (fabs(restaurant.distance) > 1000.0) {
@@ -83,8 +96,6 @@
   }
   
   [address appendString:distance];
-  
-  
   
   NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:address attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
   

@@ -45,9 +45,7 @@
 		9319FD63192F33B90053F3A4 /* OMNNavigationBarSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5A192F33B90053F3A4 /* OMNNavigationBarSelector.m */; };
 		9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5C192F33B90053F3A4 /* OMNPaymentFooterView.m */; };
 		9319FD65192F33B90053F3A4 /* OMNTipSelector.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD5E192F33B90053F3A4 /* OMNTipSelector.m */; };
-		9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD6B192F34250053F3A4 /* OMNEditCell.m */; };
 		9319FD6F192F34510053F3A4 /* OMNCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD6E192F34510053F3A4 /* OMNCardView.m */; };
-		9319FD73192F34710053F3A4 /* GRateAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FD72192F34710053F3A4 /* GRateAlertView.m */; };
 		9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE1192F365B0053F3A4 /* NSString+jquery.m */; };
 		9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */; };
 		9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
@@ -658,12 +656,8 @@
 		9319FD5C192F33B90053F3A4 /* OMNPaymentFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPaymentFooterView.m; sourceTree = "<group>"; };
 		9319FD5D192F33B90053F3A4 /* OMNTipSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTipSelector.h; sourceTree = "<group>"; };
 		9319FD5E192F33B90053F3A4 /* OMNTipSelector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTipSelector.m; sourceTree = "<group>"; };
-		9319FD6A192F34250053F3A4 /* OMNEditCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditCell.h; sourceTree = "<group>"; };
-		9319FD6B192F34250053F3A4 /* OMNEditCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditCell.m; sourceTree = "<group>"; };
 		9319FD6D192F34510053F3A4 /* OMNCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardView.h; sourceTree = "<group>"; };
 		9319FD6E192F34510053F3A4 /* OMNCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardView.m; sourceTree = "<group>"; };
-		9319FD71192F34710053F3A4 /* GRateAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRateAlertView.h; sourceTree = "<group>"; };
-		9319FD72192F34710053F3A4 /* GRateAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRateAlertView.m; sourceTree = "<group>"; };
 		9319FDE0192F365B0053F3A4 /* NSString+jquery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+jquery.h"; sourceTree = "<group>"; };
 		9319FDE1192F365B0053F3A4 /* NSString+jquery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+jquery.m"; sourceTree = "<group>"; };
 		9319FDE2192F365B0053F3A4 /* NSURL+OMNQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+OMNQuery.h"; sourceTree = "<group>"; };
@@ -1376,8 +1370,6 @@
 				935FF1571A6D236B004B69A6 /* Preorder */,
 				933A9E8B1A499064001C0909 /* Restaurant */,
 				93D1177A1A2F03DF000131C4 /* User */,
-				9319FD6A192F34250053F3A4 /* OMNEditCell.h */,
-				9319FD6B192F34250053F3A4 /* OMNEditCell.m */,
 				9307C5711937022800408519 /* OMNOrderItemCell.h */,
 				9307C5721937022800408519 /* OMNOrderItemCell.m */,
 				932118141962DA2800183729 /* OMNStubProductCell.h */,
@@ -1410,8 +1402,6 @@
 		9319FD70192F34710053F3A4 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
-				9319FD71192F34710053F3A4 /* GRateAlertView.h */,
-				9319FD72192F34710053F3A4 /* GRateAlertView.m */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -1487,6 +1477,8 @@
 				933A9F0E1A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.m */,
 				9391F65C1A5E3E4800594CD5 /* UINavigationBar+omn_custom.h */,
 				9391F65D1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m */,
+				935A1E371A8238B700704086 /* NSData+omn_deviceToken.h */,
+				935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1859,6 +1851,7 @@
 				93CB66D11A35FD8100C5B10E /* OMNLaunchOptions.h */,
 				93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */,
 				9389456A19B5957100C37C82 /* config.json */,
+				935A1E301A80DF0300704086 /* config_staging.json */,
 				93F21BE919B6283300D5F78A /* config_laaaab.json */,
 				93F21BEC19B6284B00D5F78A /* config_stand.json */,
 				93EDD46C19B86D9F0017B6ED /* config_prod.json */,
@@ -2768,6 +2761,7 @@
 				9390D2641966E945007E13AB /* UINavigationBar.json in Resources */,
 				933AB0D619C1D4D8004D8F55 /* Localizable.strings in Resources */,
 				9390D25819668A3A007E13AB /* OMNEditTableVC.json in Resources */,
+				935A1E311A80DF0300704086 /* config_staging.json in Resources */,
 				939689C0195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
 				9390D2671966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
 			);
@@ -2785,6 +2779,7 @@
 				939689BA195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				9390D2621966E559007E13AB /* OMNOrderCell.json in Resources */,
 				935C35581A188BF0006C8550 /* new_guest_loud.caf in Resources */,
+				935A1E321A80DF0300704086 /* config_staging.json in Resources */,
 				93EDD46E19B86D9F0017B6ED /* config_prod.json in Resources */,
 				9390D2651966E945007E13AB /* UINavigationBar.json in Resources */,
 				938F3A53198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
@@ -2940,6 +2935,7 @@
 				93175DC019C2DD2D005EE4C6 /* UIImage+ImageEffects.m in Sources */,
 				93CB9E7B1A67EE220062112A /* OMNPushUpTransition.m in Sources */,
 				9366558519DBAE0800EF7098 /* OMNBankCardCell.m in Sources */,
+				935A1E351A81D5D100704086 /* OMNClearButton.m in Sources */,
 				93B9048D19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
 				93E29989197CE0FD00051B04 /* OMNSearchRestaurantsVC.m in Sources */,
 				93BE2F5A1A63C43000FB2211 /* OMNNoOrdersVC.m in Sources */,
@@ -2974,6 +2970,7 @@
 				93C126981A7212500019655A /* OMNMenuProductModiferCategory.m in Sources */,
 				931232781A230A8300C27110 /* OMNBeacon+omn_debug.m in Sources */,
 				930554FD1935DA7C00E6F4EC /* OMNSplitSelectionVC.m in Sources */,
+				935A1E391A8238B700704086 /* NSData+omn_deviceToken.m in Sources */,
 				93D117811A2F0766000131C4 /* OMNTableUserInfoItem.m in Sources */,
 				938E8F5B192F3A200088EF38 /* OMNRestaurant.m in Sources */,
 				93245DB61A1C60520065D4EC /* OMNMailRuBankCardMediator.m in Sources */,
@@ -3175,7 +3172,6 @@
 				93CE47B01A77ABC5002D293B /* OMNMenuProductExtendedCell.m in Sources */,
 				935D8C9C1A38693B00877C02 /* OMNError.m in Sources */,
 				933D48F119E7BFD4004E591C /* OMNGuestView.m in Sources */,
-				9319FD73192F34710053F3A4 /* GRateAlertView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3348,6 +3344,7 @@
 				93D1041A1A59856A00BC2E12 /* OMNScanTableQRCodeVC.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				933A9EAF1A4C0915001C0909 /* OMNRestaurantDetailsView.m in Sources */,
+				935A1E361A81D5D100704086 /* OMNClearButton.m in Sources */,
 				9342AD2B1A5ACD5500CDE7ED /* OMNRestaurant+omn_payment.m in Sources */,
 				93CE47981A775A86002D293B /* OMNMenuProduct+cell.m in Sources */,
 				93CE7CA51A62AAEF0032D96B /* OMNRestaurantMediatorTests.m in Sources */,

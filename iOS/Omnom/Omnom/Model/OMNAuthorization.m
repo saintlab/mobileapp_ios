@@ -15,6 +15,7 @@
 #import "OMNUser+network.h"
 #import <Crashlytics/Crashlytics.h>
 #import <SSKeychain.h>
+#import "NSData+omn_deviceToken.h"
 
 static NSString * const kAuthorisationAccountName = @"test_account6";
 static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";
@@ -217,6 +218,27 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
 }
 
+- (void)registerDeviceIfPossible {
+  
+  if (self.deviceToken &&
+      self.token) {
+    
+    NSDictionary *parameters =
+    @{
+      @"push_token" : [self.deviceToken omn_deviceTokenString],
+      };
+    [[OMNOperationManager sharedManager] POST:@"/notifier/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_NOTIFIER" jsonRequest:parameters responseOperation:operation];
+      
+    }];
+    
+  }
+  
+}
+
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
 
   if (_userNotificationRegisterCompletionBlock) {
@@ -229,6 +251,8 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
   [OMNNotifierManager sharedManager].deviceToken = deviceToken;
+  self.deviceToken = deviceToken;
+  [self registerDeviceIfPossible];
   
   if (_remoteNotificationRegisterCompletionBlock) {
     _remoteNotificationRegisterCompletionBlock(YES);
@@ -267,7 +291,8 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
   [[OMNNotifierManager sharedManager].requestSerializer setValue:self.token forHTTPHeaderField:@"x-authentication-token"];
   [[OMNOperationManager sharedManager].requestSerializer setValue:self.token forHTTPHeaderField:@"x-authentication-token"];
-
+  [self registerDeviceIfPossible];
+  
 }
 
 - (void)checkUserWithBlock:(void (^)(OMNUser *user))userBlock failure:(void (^)(OMNError *error))failureBlock {

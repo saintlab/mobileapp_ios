@@ -13,6 +13,7 @@
 @interface OMNAuthorization : NSObject
 
 @property (nonatomic, copy) NSString *token;
+@property (nonatomic, strong) NSData *deviceToken;
 @property (nonatomic, strong, readonly) OMNUser *user;
 
 @property (nonatomic, copy, readonly) NSString *installId;
