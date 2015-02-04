@@ -183,6 +183,8 @@
 		935A1E321A80DF0300704086 /* config_staging.json in Resources */ = {isa = PBXBuildFile; fileRef = 935A1E301A80DF0300704086 /* config_staging.json */; };
 		935A1E351A81D5D100704086 /* OMNClearButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E341A81D5D100704086 /* OMNClearButton.m */; };
 		935A1E361A81D5D100704086 /* OMNClearButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E341A81D5D100704086 /* OMNClearButton.m */; };
+		935A1E391A8238B700704086 /* NSData+omn_deviceToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */; };
+		935A1E3A1A8238B700704086 /* NSData+omn_deviceToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */; };
 		935C284219066755003B4881 /* fill-form in Resources */ = {isa = PBXBuildFile; fileRef = 935C283C19066737003B4881 /* fill-form */; };
 		935C284319066755003B4881 /* jquery-2.0.3.min in Resources */ = {isa = PBXBuildFile; fileRef = 935C283D19066737003B4881 /* jquery-2.0.3.min */; };
 		935C35571A188BF0006C8550 /* new_guest_loud.caf in Resources */ = {isa = PBXBuildFile; fileRef = 935C35561A188BF0006C8550 /* new_guest_loud.caf */; };
@@ -716,6 +718,8 @@
 		935A1E301A80DF0300704086 /* config_staging.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_staging.json; sourceTree = "<group>"; };
 		935A1E331A81D5D100704086 /* OMNClearButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNClearButton.h; sourceTree = "<group>"; };
 		935A1E341A81D5D100704086 /* OMNClearButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNClearButton.m; sourceTree = "<group>"; };
+		935A1E371A8238B700704086 /* NSData+omn_deviceToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+omn_deviceToken.h"; sourceTree = "<group>"; };
+		935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+omn_deviceToken.m"; sourceTree = "<group>"; };
 		935C283C19066737003B4881 /* fill-form */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fill-form"; sourceTree = "<group>"; };
 		935C283D19066737003B4881 /* jquery-2.0.3.min */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "jquery-2.0.3.min"; sourceTree = "<group>"; };
 		935C35561A188BF0006C8550 /* new_guest_loud.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = new_guest_loud.caf; sourceTree = "<group>"; };
@@ -1326,6 +1330,8 @@
 				933A9F0E1A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.m */,
 				9391F65C1A5E3E4800594CD5 /* UINavigationBar+omn_custom.h */,
 				9391F65D1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m */,
+				935A1E371A8238B700704086 /* NSData+omn_deviceToken.h */,
+				935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2619,6 +2625,7 @@
 				9378228D1963E29900CE6661 /* OMNOrderCalculationVC.m in Sources */,
 				931232781A230A8300C27110 /* OMNBeacon+omn_debug.m in Sources */,
 				930554FD1935DA7C00E6F4EC /* OMNSplitSelectionVC.m in Sources */,
+				935A1E391A8238B700704086 /* NSData+omn_deviceToken.m in Sources */,
 				93D117811A2F0766000131C4 /* OMNTableUserInfoItem.m in Sources */,
 				938E8F5B192F3A200088EF38 /* OMNRestaurant.m in Sources */,
 				93245DB61A1C60520065D4EC /* OMNMailRuBankCardMediator.m in Sources */,
@@ -2854,6 +2861,7 @@
 				934EB93E1A0B716B00E5CB53 /* OMNSelectOrderButton.m in Sources */,
 				934CDF5119D4078900D73FC4 /* OMNLabelCell.m in Sources */,
 				93B90495196550F4007D21C4 /* OMNRatingModel.m in Sources */,
+				935A1E3A1A8238B700704086 /* NSData+omn_deviceToken.m in Sources */,
 				933A9EA31A4BC61D001C0909 /* OMNRestaurantSchedule.m in Sources */,
 				93F21B9119B6031B00D5F78A /* OMNLightBackgroundButton.m in Sources */,
 				935FF1561A6D1054004B69A6 /* OMNPreorderConfirmVC.m in Sources */,
