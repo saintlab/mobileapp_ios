@@ -30,24 +30,20 @@
 
 - (NSString *)text {
   
-  NSMutableArray *components = [NSMutableArray array];
+  NSMutableString *address = [NSMutableString stringWithString:@""];
+  NSMutableArray *streetComponents = [NSMutableArray arrayWithCapacity:2];
   if (self.street.length) {
-    
-    [components addObject:self.street];
-    
+    [streetComponents addObject:self.street];
   }
-  
   if (self.building.length) {
-    
-    [components addObject:self.building];
-    
+    [streetComponents addObject:self.building];
   }
 
-  NSString *address = [components componentsJoinedByString:@" "];
+  [address appendString:[streetComponents componentsJoinedByString:@", "]];
   
   if (self.floor.length) {
     
-    address = [address stringByAppendingFormat:NSLocalizedString(@"RESTAURANT_ADDRESS_FLOOR %@", @", {NUMBER} этаж"), self.floor];
+    [address appendFormat:NSLocalizedString(@"RESTAURANT_ADDRESS_FLOOR %@", @", {NUMBER} этаж"), self.floor];
     
   }
   
