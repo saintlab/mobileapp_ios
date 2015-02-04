@@ -174,7 +174,7 @@ OMNOrderCalculationVCDelegate>
   if (newOrder &&
       [newOrder.restaurant_id isEqualToString:self.restaurant.id]) {
     
-    self.orders = [self.orders arrayByAddingObject:newOrder];
+    self.orders = [_orders arrayByAddingObject:newOrder];
     [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification object:self];
     
   }
@@ -191,21 +191,15 @@ OMNOrderCalculationVCDelegate>
     dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
     
     NSMutableArray *orders = [_orders mutableCopy];
-    
-    __block OMNOrder *realClosedOrder = nil;
-    [_orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+    [orders bk_performReject:^BOOL(OMNOrder *order) {
       
-      if ([removedOrder.id isEqualToString:order.id]) {
-        realClosedOrder = order;
-        [orders removeObjectAtIndex:idx];
-        *stop = YES;
-      }
+      return [order.id isEqualToString:removedOrder.id];
       
     }];
     
     dispatch_semaphore_signal(_ordersLock);
     
-    if (realClosedOrder) {
+    if (orders.count != _orders.count) {
       
       [self updateOrdersWithOrders:orders];
       
@@ -219,39 +213,55 @@ OMNOrderCalculationVCDelegate>
   
   dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
   
-  NSString *selectedOrderId = self.selectedOrder.id;
-  __block OMNOrder *selectedOrder = nil;
-  NSMutableSet *existingOrdersIDs = [NSMutableSet setWithCapacity:orders.count];
-  [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+  NSArray *existingOrders = [self.orders copy];
+  
+  NSMutableDictionary *existingOrdersDictionary = [NSMutableDictionary dictionaryWithCapacity:existingOrders.count];
+  [existingOrders enumerateObjectsUsingBlock:^(OMNOrder *existingOrder, NSUInteger idx, BOOL *stop) {
     
-    [existingOrdersIDs addObject:order.id];
-    if ([order.id isEqualToString:selectedOrderId]) {
-      
-      selectedOrder = order;
-      
-    }
+    existingOrdersDictionary[existingOrder.id] = existingOrder;
     
   }];
   
-  self.selectedOrder = selectedOrder;
+  NSString *selectedOrderId = self.selectedOrder.id;
+  NSMutableArray *newOrders = [NSMutableArray arrayWithCapacity:orders.count];
+  NSMutableSet *newOrdersIDs = [NSMutableSet setWithCapacity:orders.count];
   
   __weak typeof(self)weakSelf = self;
-  [self.orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+  [orders enumerateObjectsUsingBlock:^(OMNOrder *newOrder, NSUInteger idx, BOOL *stop) {
     
-    if ([existingOrdersIDs containsObject:order.id]) {
+    OMNOrder *existingOrder = existingOrdersDictionary[newOrder.id];
+    [newOrdersIDs addObject:newOrder.id];
+    if (existingOrder &&
+        [existingOrder.modifiedTime isEqualToString:newOrder.modifiedTime]) {
       
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
-
+      [newOrders addObject:existingOrder];
+      
     }
     else {
       
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:weakSelf userInfo:@{OMNOrderKey : order}];
-
+      if ([newOrder.id isEqualToString:selectedOrderId]) {
+        
+        weakSelf.selectedOrder = newOrder;
+        
+      }
+      [newOrders addObject:newOrder];
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification object:weakSelf userInfo:@{OMNOrderKey : newOrder}];
+      
     }
     
   }];
   
-  self.orders = orders;
+  [existingOrders enumerateObjectsUsingBlock:^(OMNOrder *existingOrder, NSUInteger idx, BOOL *stop) {
+    
+    if (![newOrdersIDs containsObject:existingOrder.id]) {
+      
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:weakSelf userInfo:@{OMNOrderKey : existingOrder}];
+      
+    }
+    
+  }];
+  
+  self.orders = newOrders;
   [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification object:self];
   
   dispatch_semaphore_signal(_ordersLock);
@@ -275,7 +285,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)checkOrders {
   
-  if (self.orders.count &&
+  if (_orders.count &&
       !_ordersDidShow) {
     
     [self showOrders];
