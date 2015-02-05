@@ -52,6 +52,7 @@
   }
   
   NSMutableArray *listItems = [NSMutableArray array];
+  
   if (self.level > 1) {
     
     [listItems addObject:self];
@@ -72,11 +73,15 @@
     
   }];
 
-  [self.children enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
+  if (self.level > 0) {
     
-    [listItems addObjectsFromArray:menuCategory.listItems];
-    
-  }];
+    [self.children enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
+      
+      [listItems addObjectsFromArray:menuCategory.listItems];
+      
+    }];
+
+  }
   
   _listItems = listItems;
   return listItems;

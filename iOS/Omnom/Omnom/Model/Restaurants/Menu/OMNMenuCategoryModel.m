@@ -44,21 +44,51 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
-  return _menuCategory.children.count;
+  return _menuCategory.children.count + 1;
   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   
-  OMNMenuCategory *menuCategory = _menuCategory.children[section];
-  return menuCategory.listItems.count;
+  NSInteger numberOfRows = 0;
+  if (0 == section) {
+    
+    numberOfRows = _menuCategory.listItems.count;
+    
+  }
+  else {
+    
+    OMNMenuCategory *menuCategory = _menuCategory.children[section - 1];
+    numberOfRows = menuCategory.listItems.count;
+    
+  }
+  
+  return numberOfRows;
+  
+}
+
+- (id)listItemAtIndexPath:(NSIndexPath *)indexPath {
+  
+  id listItem = nil;
+  if (0 == indexPath.section) {
+    
+    listItem = _menuCategory.listItems[indexPath.row];
+    
+  }
+  else {
+    
+    OMNMenuCategory *menuCategory = _menuCategory.children[indexPath.section - 1];
+    listItem = menuCategory.listItems[indexPath.row];
+    
+  }
+  
+  return listItem;
   
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  OMNMenuCategory *menuCategory = _menuCategory.children[indexPath.section];
-  id listItem = menuCategory.listItems[indexPath.row];
+  id listItem = [self listItemAtIndexPath:indexPath];
   if ([listItem conformsToProtocol:@protocol(OMNMenuCellItemProtocol)]) {
     
     UITableViewCell *cell = [listItem cellForTableView:tableView];
@@ -83,8 +113,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  OMNMenuCategory *menuCategory = _menuCategory.children[indexPath.section];
-  id listItem = menuCategory.listItems[indexPath.row];
+  id listItem = [self listItemAtIndexPath:indexPath];
   if ([listItem conformsToProtocol:@protocol(OMNMenuCellItemProtocol)]) {
     
     return [listItem heightForTableView:tableView];
@@ -96,16 +125,30 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   
-  OMNMenuCategoryHeaderView *menuCategoryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];
-  OMNMenuCategory *menuCategory = _menuCategory.children[section];
-  menuCategoryHeaderView.menuCategory = menuCategory;
-  return menuCategoryHeaderView;
+  UIView *viewForHeader = nil;
+  if (section > 0) {
+
+    OMNMenuCategoryHeaderView *menuCategoryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];
+    OMNMenuCategory *menuCategory = _menuCategory.children[section];
+    menuCategoryHeaderView.menuCategory = menuCategory;
+    viewForHeader = menuCategoryHeaderView;
+    
+  }
+  
+  return viewForHeader;
   
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   
-  return 45.0f;
+  CGFloat heightForHeader = 0.0f;
+  if (section > 0) {
+    
+    heightForHeader = 45.0f;
+    
+  }
+  
+  return heightForHeader;
   
 }
 

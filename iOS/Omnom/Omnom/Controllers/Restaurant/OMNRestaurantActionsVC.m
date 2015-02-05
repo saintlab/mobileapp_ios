@@ -17,6 +17,7 @@
 #import "OMNTable+omn_network.h"
 #import "OMNMyOrderButton.h"
 #import "UIButton+omn_helper.h"
+#import "OMNNavigationControllerDelegate.h"
 
 @implementation OMNRestaurantActionsVC {
   

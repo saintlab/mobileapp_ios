@@ -33,7 +33,7 @@
 //    _customConfigName = @"config_staging";
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";
 //    _qr = @"qr-code-for-2-saintlab-iiko";
-//    _qr = @"http://omnom.menu/qr/8eab9af3006a4fb0cd0bd92836e90130";
+//    _qr = @"http://omnom.menu/qr/8eab9af3006a4fb0cd0bd92836e90130"; //мехико
 //    @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";
 //    @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7";
 //    @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";

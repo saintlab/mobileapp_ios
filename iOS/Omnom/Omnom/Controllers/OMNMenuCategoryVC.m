@@ -46,9 +46,7 @@
   [self.view layoutIfNeeded];
   _tableView.delegate = _model;
   _tableView.dataSource = _model;
-  
-//  [self.navigationController.navigationBar setBackgroundImage:self.backgroundImage forBarMetrics:UIBarMetricsDefault];
-  
+
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
 
 }
