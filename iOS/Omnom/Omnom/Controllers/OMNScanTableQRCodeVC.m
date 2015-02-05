@@ -124,9 +124,9 @@ OMNCameraPermissionDescriptionVCDelegate>
   _qrFrame.image = [[UIImage imageNamed:@"qr-code-scanner-frame"] omn_tintWithColor:color];
   _qrIcon.image = [[UIImage imageNamed:@"qr-icon-small"] omn_tintWithColor:color];
   
-  [_flashButton setImage:[UIImage imageNamed:@"ico-flash"] forState:UIControlStateNormal];
-  [_flashButton setImage:[UIImage imageNamed:@"ico-no-flash"] forState:UIControlStateSelected];
-  [_flashButton setImage:[UIImage imageNamed:@"ico-no-flash"] forState:UIControlStateSelected|UIControlStateHighlighted];
+  [_flashButton setImage:[UIImage imageNamed:@"ico-no-flash"] forState:UIControlStateNormal];
+  [_flashButton setImage:[UIImage imageNamed:@"ico-flash"] forState:UIControlStateSelected];
+  [_flashButton setImage:[UIImage imageNamed:@"ico-flash"] forState:UIControlStateSelected|UIControlStateHighlighted];
   
   AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
   if ([captureDevice hasTorch]) {
