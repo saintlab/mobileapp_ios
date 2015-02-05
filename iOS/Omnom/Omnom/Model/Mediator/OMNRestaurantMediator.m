@@ -26,6 +26,7 @@
 #import "OMNProductModiferAlertVC.h"
 #import "OMNRestaurant+omn_network.h"
 #import <BlocksKit.h>
+#import "OMNNavigationControllerDelegate.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -333,7 +334,7 @@ OMNOrderCalculationVCDelegate>
     
   };
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
-  navigationController.delegate = _restaurantActionsVC.navigationController.delegate;
+  navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
   [_restaurantActionsVC.navigationController presentViewController:navigationController animated:YES completion:nil];
   
 }

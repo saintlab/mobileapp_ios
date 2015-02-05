@@ -220,7 +220,7 @@
   _r1VC = [[OMNR1VC alloc] initWithMediator:_restaurantMediator];
   
   _navigationController = [[OMNNavigationController alloc] initWithRootViewController:_r1VC];
-  _navigationController.delegate = self.navigationController.delegate;
+  _navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
   [self addChildViewController:_navigationController];
   [self.view addSubview:_navigationController.view];
   _navigationController.view.translatesAutoresizingMaskIntoConstraints = NO;

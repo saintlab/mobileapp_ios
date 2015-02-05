@@ -11,6 +11,7 @@
 #import "OMNStartVC.h"
 #import "OMNModalWebVC.h"
 #import "OMNNearestBeaconSearchManager.h"
+#import "OMNNavigationControllerDelegate.h"
 
 @implementation OMNLaunchHandler {
   
@@ -47,7 +48,9 @@
   [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
   
   _startVC = [[OMNStartVC alloc] init];
-  [[UIApplication sharedApplication].delegate window].rootViewController = [[UINavigationController alloc] initWithRootViewController:_startVC];
+  UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:_startVC];
+  navVC.delegate = [OMNNavigationControllerDelegate sharedDelegate];
+  [[UIApplication sharedApplication].delegate window].rootViewController = navVC;
   
 }
 
