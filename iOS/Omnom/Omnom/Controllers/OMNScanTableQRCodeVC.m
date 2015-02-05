@@ -213,14 +213,6 @@ OMNCameraPermissionDescriptionVCDelegate>
   // as the media type parameter.
   AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
   
-  if ([captureDevice hasTorch]) {
-    
-    [captureDevice lockForConfiguration:nil];
-    [captureDevice setTorchMode:AVCaptureTorchModeAuto];
-    [captureDevice unlockForConfiguration];
-    
-  }
-  
   AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
   
   if (!input) {
@@ -242,7 +234,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
   [_videoPreviewLayer setFrame:self.backgroundView.layer.bounds];
   [self.backgroundView.layer addSublayer:_videoPreviewLayer];
-  
+
   [_captureSession startRunning];
   
 }
