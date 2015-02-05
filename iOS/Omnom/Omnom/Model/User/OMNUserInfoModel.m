@@ -57,12 +57,14 @@
 - (OMNUserInfoSection *)moneyItems {
   
   OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
-  section.items =
-  @[
-    [[OMNBankCardUserInfoItem alloc] init],
-    [[OMNTableUserInfoItem alloc] initWithMediator:_restaurantMediator],
-    ];
+  NSMutableArray *moneyItems = [NSMutableArray array];
+  [moneyItems addObject:[[OMNBankCardUserInfoItem alloc] init]];
+  if (_restaurantMediator.table) {
   
+    [moneyItems addObject:[[OMNTableUserInfoItem alloc] initWithMediator:_restaurantMediator]];
+    
+  }
+  section.items = moneyItems;
   return section;
   
 }
