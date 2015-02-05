@@ -46,7 +46,8 @@
 - (void)orderDidChange:(NSNotification *)n {
   
   OMNOrder *changedOrder = n.userInfo[OMNOrderKey];
-  if ([changedOrder.id isEqualToString:self.order.id] &&
+  if (!_updateAlertView &&
+      [changedOrder.id isEqualToString:self.order.id] &&
       self.didUpdateBlock) {
 
     __weak typeof(self)weakSelf = self;

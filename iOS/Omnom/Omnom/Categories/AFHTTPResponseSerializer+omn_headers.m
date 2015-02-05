@@ -22,6 +22,8 @@
   [self setValue:@"debug" forHTTPHeaderField:@"x-mobile-configuration"];
 #endif
   
+
+  [self setValue:[OMNConstants installID] forHTTPHeaderField:@"x-mobile-device-id"];
   [self setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];
   [self setValue:CURRENT_VERSION forHTTPHeaderField:@"current-app-version"];
   [self setValue:CURRENT_BUILD forHTTPHeaderField:@"x-current-app-build"];

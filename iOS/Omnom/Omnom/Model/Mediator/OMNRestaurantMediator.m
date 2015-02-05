@@ -25,6 +25,7 @@
 #import "OMNLaunchHandler.h"
 #import "OMNProductModiferAlertVC.h"
 #import "OMNRestaurant+omn_network.h"
+#import <BlocksKit.h>
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,

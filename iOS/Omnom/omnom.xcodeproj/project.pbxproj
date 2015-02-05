@@ -192,6 +192,12 @@
 		935A1E2B1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E291A80CADB00704086 /* OMNMenuModiferCategoryCell.m */; };
 		935A1E2E1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E2D1A80CAEE00704086 /* OMNMenuModiferCell.m */; };
 		935A1E2F1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E2D1A80CAEE00704086 /* OMNMenuModiferCell.m */; };
+		935A1E311A80DF0300704086 /* config_staging.json in Resources */ = {isa = PBXBuildFile; fileRef = 935A1E301A80DF0300704086 /* config_staging.json */; };
+		935A1E321A80DF0300704086 /* config_staging.json in Resources */ = {isa = PBXBuildFile; fileRef = 935A1E301A80DF0300704086 /* config_staging.json */; };
+		935A1E351A81D5D100704086 /* OMNClearButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E341A81D5D100704086 /* OMNClearButton.m */; };
+		935A1E361A81D5D100704086 /* OMNClearButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E341A81D5D100704086 /* OMNClearButton.m */; };
+		935A1E391A8238B700704086 /* NSData+omn_deviceToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */; };
+		935A1E3A1A8238B700704086 /* NSData+omn_deviceToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */; };
 		935C284219066755003B4881 /* fill-form in Resources */ = {isa = PBXBuildFile; fileRef = 935C283C19066737003B4881 /* fill-form */; };
 		935C284319066755003B4881 /* jquery-2.0.3.min in Resources */ = {isa = PBXBuildFile; fileRef = 935C283D19066737003B4881 /* jquery-2.0.3.min */; };
 		935C35571A188BF0006C8550 /* new_guest_loud.caf in Resources */ = {isa = PBXBuildFile; fileRef = 935C35561A188BF0006C8550 /* new_guest_loud.caf */; };
@@ -803,6 +809,11 @@
 		935A1E291A80CADB00704086 /* OMNMenuModiferCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuModiferCategoryCell.m; sourceTree = "<group>"; };
 		935A1E2C1A80CAEE00704086 /* OMNMenuModiferCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuModiferCell.h; sourceTree = "<group>"; };
 		935A1E2D1A80CAEE00704086 /* OMNMenuModiferCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuModiferCell.m; sourceTree = "<group>"; };
+		935A1E301A80DF0300704086 /* config_staging.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_staging.json; sourceTree = "<group>"; };
+		935A1E331A81D5D100704086 /* OMNClearButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNClearButton.h; sourceTree = "<group>"; };
+		935A1E341A81D5D100704086 /* OMNClearButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNClearButton.m; sourceTree = "<group>"; };
+		935A1E371A8238B700704086 /* NSData+omn_deviceToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+omn_deviceToken.h"; sourceTree = "<group>"; };
+		935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+omn_deviceToken.m"; sourceTree = "<group>"; };
 		935C283C19066737003B4881 /* fill-form */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "fill-form"; sourceTree = "<group>"; };
 		935C283D19066737003B4881 /* jquery-2.0.3.min */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "jquery-2.0.3.min"; sourceTree = "<group>"; };
 		935C35561A188BF0006C8550 /* new_guest_loud.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = new_guest_loud.caf; sourceTree = "<group>"; };
@@ -1645,6 +1656,8 @@
 				93CE47C91A78C9A4002D293B /* OMNMyOrderButton.m */,
 				93CE47FF1A7A4B19002D293B /* OMNTableButton.h */,
 				93CE48001A7A4B19002D293B /* OMNTableButton.m */,
+				935A1E331A81D5D100704086 /* OMNClearButton.h */,
+				935A1E341A81D5D100704086 /* OMNClearButton.m */,
 			);
 			name = Button;
 			sourceTree = "<group>";
@@ -3168,7 +3181,6 @@
 				931456B8193CA84D003E2CD6 /* OMNTipButton.m in Sources */,
 				933A9EA21A4BC61D001C0909 /* OMNRestaurantSchedule.m in Sources */,
 				9342AD2A1A5ACD5500CDE7ED /* OMNRestaurant+omn_payment.m in Sources */,
-				9319FD6C192F34250053F3A4 /* OMNEditCell.m in Sources */,
 				93CE47B01A77ABC5002D293B /* OMNMenuProductExtendedCell.m in Sources */,
 				935D8C9C1A38693B00877C02 /* OMNError.m in Sources */,
 				933D48F119E7BFD4004E591C /* OMNGuestView.m in Sources */,
@@ -3247,6 +3259,7 @@
 				934CDF5119D4078900D73FC4 /* OMNLabelCell.m in Sources */,
 				93B90495196550F4007D21C4 /* OMNRatingModel.m in Sources */,
 				93CE47BA1A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m in Sources */,
+				935A1E3A1A8238B700704086 /* NSData+omn_deviceToken.m in Sources */,
 				933A9EA31A4BC61D001C0909 /* OMNRestaurantSchedule.m in Sources */,
 				93CE47CB1A78C9A4002D293B /* OMNMyOrderButton.m in Sources */,
 				93F21B9119B6031B00D5F78A /* OMNLightBackgroundButton.m in Sources */,
@@ -3852,7 +3865,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
