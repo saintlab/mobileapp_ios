@@ -15,10 +15,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurantManager.h"
 #import "OMNTable+omn_network.h"
-
-@interface OMNRestaurantActionsVC()
-
-@end
+#import "OMNNavigationControllerDelegate.h"
 
 @implementation OMNRestaurantActionsVC {
   
@@ -195,7 +192,7 @@
   _r1VC = [[OMNR1VC alloc] initWithMediator:_restaurantMediator];
   
   _navigationController = [[OMNNavigationController alloc] initWithRootViewController:_r1VC];
-  _navigationController.delegate = self.navigationController.delegate;
+  _navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
   [self addChildViewController:_navigationController];
   [self.view addSubview:_navigationController.view];
   _navigationController.view.translatesAutoresizingMaskIntoConstraints = NO;

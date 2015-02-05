@@ -11,4 +11,6 @@
 @interface OMNNavigationControllerDelegate : NSObject
 <UINavigationControllerDelegate>
 
++ (instancetype)sharedDelegate;
+
 @end

@@ -26,7 +26,6 @@ OMNSearchRestaurantVCDelegate>
 
 @implementation OMNStartVC {
   
-  OMNNavigationControllerDelegate *_navigationControllerDelegate;
   BOOL _authorizationPresented;
   OMNSearchRestaurantVC *_searchRestaurantVC;
   
@@ -43,9 +42,6 @@ OMNSearchRestaurantVCDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _navigationControllerDelegate = [[OMNNavigationControllerDelegate alloc] init];
-  
-  self.navigationController.delegate = _navigationControllerDelegate;
   [self.navigationController setNavigationBarHidden:YES animated:NO];
   
   self.backgroundView.image = [UIImage omn_imageNamed:@"LaunchImage-700"];
@@ -119,7 +115,7 @@ OMNSearchRestaurantVCDelegate>
     
     UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:_searchRestaurantVC];
     navigationController.navigationBar.barStyle = UIBarStyleDefault;
-    navigationController.delegate = _navigationControllerDelegate;
+    navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
     [self presentViewController:navigationController animated:NO completion:nil];
 
   }

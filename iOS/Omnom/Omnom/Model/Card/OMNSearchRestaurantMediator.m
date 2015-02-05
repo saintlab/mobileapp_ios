@@ -15,6 +15,7 @@
 #import "OMNDemoRestaurantVC.h"
 #import "OMNRestaurantCardVC.h"
 #import "UINavigationController+omn_replace.h"
+#import "OMNNavigationControllerDelegate.h"
 
 @interface OMNSearchRestaurantMediator ()
 <OMNSearchRestaurantsVCDelegate,
@@ -56,7 +57,7 @@ OMNScanTableQRCodeVCDelegate>
     
   };
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
-  navigationController.delegate = _rootVC.navigationController.delegate;
+  navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
   [_rootVC.navigationController presentViewController:navigationController animated:YES completion:nil];
   
 }

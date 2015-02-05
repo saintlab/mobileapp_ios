@@ -26,6 +26,7 @@
 #import <OMNStyler.h>
 #import "OMNOrderAlertManager.h"
 #import "UIView+omn_autolayout.h"
+#import "OMNNavigationControllerDelegate.h"
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -333,7 +334,7 @@ OMNPaymentFooterViewDelegate>
   OMNOrderPaymentVC *orderPaymentVC = [[OMNOrderPaymentVC alloc] initWithOrder:_restaurantMediator.selectedOrder restaurant:_restaurantMediator.restaurant];
   orderPaymentVC.delegate = self;
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:orderPaymentVC];
-  navigationController.delegate = self.navigationController.delegate;
+  navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
   
 }

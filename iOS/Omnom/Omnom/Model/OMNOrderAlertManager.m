@@ -46,9 +46,10 @@
 - (void)orderDidChange:(NSNotification *)n {
   
   OMNOrder *changedOrder = n.userInfo[OMNOrderKey];
-  if ([changedOrder.id isEqualToString:self.order.id] &&
+  if (!_updateAlertView &&
+      [changedOrder.id isEqualToString:self.order.id] &&
       self.didUpdateBlock) {
-
+    
     __weak typeof(self)weakSelf = self;
     _updateAlertView = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_UPDATE_ALERT_TITLE", @"Этот счёт обновлён заведением") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_UPDATE_ALERT_BUTTON_TITLE", @"Обновить") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
       
@@ -63,6 +64,7 @@
   }
   
 }
+
 
 - (void)checkOrderIsClosed {
   

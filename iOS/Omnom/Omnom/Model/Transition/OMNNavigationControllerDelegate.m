@@ -26,7 +26,18 @@
 #import "OMNPushUpTransition.h"
 
 @implementation OMNNavigationControllerDelegate {
+  
   NSMutableDictionary *_transitions;
+  
+}
+
++ (instancetype)sharedDelegate {
+  static id manager = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    manager = [[[self class] alloc] init];
+  });
+  return manager;
 }
 
 - (instancetype)init {
@@ -75,7 +86,9 @@
   NSString *key = [OMNCustomTransition keyFromClass:[fromVC class] toClass:[toVC class]];
   NSString *transition = _transitions[key];
   
-  if (transition) {
+  if (transition &&
+      fromVC &&
+      toVC) {
 
     OMNCustomTransition *customTransition = [[NSClassFromString(transition) alloc] init];
     customTransition.sourceController = fromVC;
