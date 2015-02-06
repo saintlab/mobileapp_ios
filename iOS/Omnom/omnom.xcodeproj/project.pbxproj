@@ -560,6 +560,8 @@
 		93E58CB61A246AA1008064F9 /* OMNHelpPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CB41A246AA1008064F9 /* OMNHelpPage.m */; };
 		93E58CB91A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CB81A246FFB008064F9 /* OMNPermissionHelpVC.m */; };
 		93E58CBA1A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CB81A246FFB008064F9 /* OMNPermissionHelpVC.m */; };
+		93E6ED971A84838100FB890C /* OMNTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6ED961A84838100FB890C /* OMNTableButton.m */; };
+		93E6ED981A84838100FB890C /* OMNTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6ED961A84838100FB890C /* OMNTableButton.m */; };
 		93EDCC9519C2D296006BC364 /* OMNSocketTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EDCC9419C2D296006BC364 /* OMNSocketTest.m */; };
 		93EDD46D19B86D9F0017B6ED /* config_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDD46C19B86D9F0017B6ED /* config_prod.json */; };
 		93EDD46E19B86D9F0017B6ED /* config_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDD46C19B86D9F0017B6ED /* config_prod.json */; };
@@ -1174,6 +1176,8 @@
 		93E58CB41A246AA1008064F9 /* OMNHelpPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNHelpPage.m; sourceTree = "<group>"; };
 		93E58CB71A246FFB008064F9 /* OMNPermissionHelpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPermissionHelpVC.h; sourceTree = "<group>"; };
 		93E58CB81A246FFB008064F9 /* OMNPermissionHelpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPermissionHelpVC.m; sourceTree = "<group>"; };
+		93E6ED951A84838100FB890C /* OMNTableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTableButton.h; sourceTree = "<group>"; };
+		93E6ED961A84838100FB890C /* OMNTableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTableButton.m; sourceTree = "<group>"; };
 		93EDCC9419C2D296006BC364 /* OMNSocketTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSocketTest.m; sourceTree = "<group>"; };
 		93EDD46C19B86D9F0017B6ED /* config_prod.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_prod.json; sourceTree = "<group>"; };
 		93EE3081198F57150024EAF4 /* OMNMailRUCardConfirmVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMailRUCardConfirmVC.h; sourceTree = "<group>"; };
@@ -1634,6 +1638,8 @@
 		934EB93A1A0B714C00E5CB53 /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				93E6ED951A84838100FB890C /* OMNTableButton.h */,
+				93E6ED961A84838100FB890C /* OMNTableButton.m */,
 				934EB93B1A0B716B00E5CB53 /* OMNSelectOrderButton.h */,
 				934EB93C1A0B716B00E5CB53 /* OMNSelectOrderButton.m */,
 				93F21B8E19B6031B00D5F78A /* OMNLightBackgroundButton.h */,
@@ -3127,6 +3133,7 @@
 				9389455C19B0531C00C37C82 /* OMNUtils.m in Sources */,
 				93CB66D31A35FD8100C5B10E /* OMNLaunchOptions.m in Sources */,
 				939FD05E1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
+				93E6ED971A84838100FB890C /* OMNTableButton.m in Sources */,
 				9366558119DA7F0600EF7098 /* OMNRestaurantActionsVC.m in Sources */,
 				934EB93D1A0B716B00E5CB53 /* OMNSelectOrderButton.m in Sources */,
 				93676DF918D1E4FC00FC55F1 /* main.m in Sources */,
@@ -3333,6 +3340,7 @@
 				937C3E761A2859C9006525A9 /* OMNUser+network.m in Sources */,
 				935A1E2F1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */,
 				937A37831981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
+				93E6ED981A84838100FB890C /* OMNTableButton.m in Sources */,
 				933A9EAB1A4C0851001C0909 /* OMNRestaurantCardVC.m in Sources */,
 				93B368B319A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
 				937822A51963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,

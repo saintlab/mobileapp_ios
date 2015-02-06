@@ -48,6 +48,9 @@
   OMNTableButton *_tableButton;
   BOOL showTableButtonAnimation;
   
+  OMNTableButton *_tableButton;
+  BOOL _showTableButtonAnimation;
+  
 }
 
 - (void)dealloc {
