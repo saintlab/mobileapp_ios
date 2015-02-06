@@ -498,8 +498,6 @@
 		93CE47CB1A78C9A4002D293B /* OMNMyOrderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47C91A78C9A4002D293B /* OMNMyOrderButton.m */; };
 		93CE47CF1A790409002D293B /* OMNWith.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47CE1A790409002D293B /* OMNWith.m */; };
 		93CE47D01A790409002D293B /* OMNWith.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47CE1A790409002D293B /* OMNWith.m */; };
-		93CE48011A7A4B19002D293B /* OMNTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE48001A7A4B19002D293B /* OMNTableButton.m */; };
-		93CE48021A7A4B19002D293B /* OMNTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE48001A7A4B19002D293B /* OMNTableButton.m */; };
 		93CE7CA31A62A8320032D96B /* decodeBeacons.json in Resources */ = {isa = PBXBuildFile; fileRef = 93CE7CA21A62A8320032D96B /* decodeBeacons.json */; };
 		93CE7CA51A62AAEF0032D96B /* OMNRestaurantMediatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE7CA41A62AAEF0032D96B /* OMNRestaurantMediatorTests.m */; };
 		93D104191A59856A00BC2E12 /* OMNScanTableQRCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D104181A59856A00BC2E12 /* OMNScanTableQRCodeVC.m */; };
@@ -1114,8 +1112,6 @@
 		93CE47C91A78C9A4002D293B /* OMNMyOrderButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMyOrderButton.m; sourceTree = "<group>"; };
 		93CE47CD1A790409002D293B /* OMNWith.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWith.h; sourceTree = "<group>"; };
 		93CE47CE1A790409002D293B /* OMNWith.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWith.m; sourceTree = "<group>"; };
-		93CE47FF1A7A4B19002D293B /* OMNTableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTableButton.h; sourceTree = "<group>"; };
-		93CE48001A7A4B19002D293B /* OMNTableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTableButton.m; sourceTree = "<group>"; };
 		93CE7CA21A62A8320032D96B /* decodeBeacons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = decodeBeacons.json; sourceTree = "<group>"; };
 		93CE7CA41A62AAEF0032D96B /* OMNRestaurantMediatorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantMediatorTests.m; sourceTree = "<group>"; };
 		93D104171A59856A00BC2E12 /* OMNScanTableQRCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScanTableQRCodeVC.h; sourceTree = "<group>"; };
@@ -1650,8 +1646,6 @@
 				933A9EB11A4C33DA001C0909 /* OMNBottomTextButton.m */,
 				93CE47C81A78C9A4002D293B /* OMNMyOrderButton.h */,
 				93CE47C91A78C9A4002D293B /* OMNMyOrderButton.m */,
-				93CE47FF1A7A4B19002D293B /* OMNTableButton.h */,
-				93CE48001A7A4B19002D293B /* OMNTableButton.m */,
 				935A1E331A81D5D100704086 /* OMNClearButton.h */,
 				935A1E341A81D5D100704086 /* OMNClearButton.m */,
 			);
@@ -3027,7 +3021,6 @@
 				93E2996F197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
 				9325BA491A1DA15A003557BD /* OMNPaymentLoadingVC.m in Sources */,
 				935FF15B1A6D23E0004B69A6 /* OMNPreorderActionCell.m in Sources */,
-				93CE48011A7A4B19002D293B /* OMNTableButton.m in Sources */,
 				9345AFB7199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */,
 				9390D2D1196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
 				93C126941A7155BC0019655A /* OMNProductModiferAlertVC.m in Sources */,
@@ -3260,7 +3253,6 @@
 				930D8BAC1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
 				9345AFCE199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
 				93B3689D19A4CD2D00B6E6CB /* OMNSlideUpTransition.m in Sources */,
-				93CE48021A7A4B19002D293B /* OMNTableButton.m in Sources */,
 				93CE47911A775729002D293B /* OMNMenuProductWithRecommedtations.m in Sources */,
 				935A1E2B1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */,
 				93E58CAD1A245604008064F9 /* OMNCameraPermission.m in Sources */,
