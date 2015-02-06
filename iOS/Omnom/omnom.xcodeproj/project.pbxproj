@@ -246,8 +246,6 @@
 		936BAD9719A77F5E0029873B /* OMNNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936BAD9519A77F5E0029873B /* OMNNavigationController.m */; };
 		936BAD9A19A797030029873B /* OMNBorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 936BAD9919A797030029873B /* OMNBorderedButton.m */; };
 		936BAD9B19A797030029873B /* OMNBorderedButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 936BAD9919A797030029873B /* OMNBorderedButton.m */; };
-		936E71DA1991FEFF008FF864 /* OMNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71D91991FEFF008FF864 /* OMNViewController.m */; };
-		936E71DB1991FEFF008FF864 /* OMNViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71D91991FEFF008FF864 /* OMNViewController.m */; };
 		936E71F119921B5C008FF864 /* OMNErrorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F019921B5C008FF864 /* OMNErrorTextField.m */; };
 		936E71F219921B5C008FF864 /* OMNErrorTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F019921B5C008FF864 /* OMNErrorTextField.m */; };
 		936E71F919925563008FF864 /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
@@ -865,8 +863,6 @@
 		936BAD9519A77F5E0029873B /* OMNNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationController.m; sourceTree = "<group>"; };
 		936BAD9819A797030029873B /* OMNBorderedButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBorderedButton.h; sourceTree = "<group>"; };
 		936BAD9919A797030029873B /* OMNBorderedButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBorderedButton.m; sourceTree = "<group>"; };
-		936E71D81991FEFF008FF864 /* OMNViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNViewController.h; path = ../../OMNCardEnterControl/Example/OMNCardEnterControl/OMNViewController.h; sourceTree = "<group>"; };
-		936E71D91991FEFF008FF864 /* OMNViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNViewController.m; path = ../../OMNCardEnterControl/Example/OMNCardEnterControl/OMNViewController.m; sourceTree = "<group>"; };
 		936E71EF19921B5C008FF864 /* OMNErrorTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNErrorTextField.h; sourceTree = "<group>"; };
 		936E71F019921B5C008FF864 /* OMNErrorTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNErrorTextField.m; sourceTree = "<group>"; };
 		936E71F719925563008FF864 /* OMNNavigationBarProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationBarProgressView.h; sourceTree = "<group>"; };
@@ -1868,8 +1864,6 @@
 				93F21BE919B6283300D5F78A /* config_laaaab.json */,
 				93F21BEC19B6284B00D5F78A /* config_stand.json */,
 				93EDD46C19B86D9F0017B6ED /* config_prod.json */,
-				936E71D81991FEFF008FF864 /* OMNViewController.h */,
-				936E71D91991FEFF008FF864 /* OMNViewController.m */,
 				938E8F65192F5C030088EF38 /* Resources */,
 				938E8F28192F3A200088EF38 /* Model */,
 				9319FDDF192F365B0053F3A4 /* Categories */,
@@ -2976,7 +2970,6 @@
 				93D9EB231A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */,
 				9391F6621A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */,
 				93F2AEFF1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */,
-				936E71DA1991FEFF008FF864 /* OMNViewController.m in Sources */,
 				939F992619752BE90051822E /* OMNRegisterUserVC.m in Sources */,
 				93E435B71998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */,
 				9378228D1963E29900CE6661 /* OMNOrderCalculationVC.m in Sources */,
@@ -3226,7 +3219,6 @@
 				932F5DD71A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m in Sources */,
 				93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,
-				936E71DB1991FEFF008FF864 /* OMNViewController.m in Sources */,
 				935FF16A1A6D4092004B69A6 /* OMNMenuHeaderItemCell.m in Sources */,
 				93CB66D01A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */,
 				9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */,

@@ -35,7 +35,14 @@
   
   self.translatesAutoresizingMaskIntoConstraints = NO;
   
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
+  self.opaque = YES;
+  self.backgroundColor = backgroundColor;
+  
   _nameLabel = [UILabel omn_autolayoutView];
+  _nameLabel.opaque = YES;
+  _nameLabel.backgroundColor = backgroundColor;
   _nameLabel.numberOfLines = 0;
   _nameLabel.textAlignment = NSTextAlignmentCenter;
   _nameLabel.textColor = colorWithHexString(@"000000");
@@ -43,6 +50,8 @@
   [self addSubview:_nameLabel];
   
   _infoLabel = [UILabel omn_autolayoutView];
+  _infoLabel.opaque = YES;
+  _infoLabel.backgroundColor = backgroundColor;
   _infoLabel.textAlignment = NSTextAlignmentCenter;
   _infoLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
   _infoLabel.font = FuturaLSFOmnomLERegular(12.0f);
@@ -54,7 +63,6 @@
   [_priceButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateHighlighted];
   [_priceButton setTitle:@"" forState:UIControlStateSelected];
   [_priceButton setTitle:@"" forState:UIControlStateSelected|UIControlStateHighlighted];
-  
   [_priceButton setImage:[UIImage imageNamed:@"ic_in_wish_list_position"] forState:UIControlStateSelected];
   [_priceButton setImage:[UIImage imageNamed:@"ic_in_wish_list_position"] forState:UIControlStateSelected|UIControlStateHighlighted];
   _priceButton.titleLabel.font = FuturaLSFOmnomLERegular(15.0f);
@@ -66,6 +74,7 @@
   [self addSubview:_priceButton];
   
   _productIV = [UIImageView omn_autolayoutView];
+  _productIV.backgroundColor = backgroundColor;
   _productIV.opaque = YES;
   _productIV.contentMode = UIViewContentModeScaleAspectFit;
   _productIV.clipsToBounds = YES;
