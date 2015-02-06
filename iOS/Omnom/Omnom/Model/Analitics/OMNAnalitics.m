@@ -136,7 +136,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 
 - (void)logEnterRestaurant:(OMNRestaurant *)restaurant mode:(RestaurantEnterMode)mode {
   
-  NSMutableDictionary *properties = [NSMutableDictionary dictionary];
+  NSMutableDictionary *properties = [self superProperties];
   if (restaurant.title) {
     properties[@"restaurant_name"] = restaurant.title;
   }
@@ -151,8 +151,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 //  else {
 //    properties[@"method_used"] = @"QR";
 //  }
-  properties[@"timestamp"] = [self dateString];
-
+  
   if (1 == restaurant.tables.count) {
     OMNTable *table = restaurant.tables[0];
     properties[@"table_id"] = table.id;
@@ -179,8 +178,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 
 - (void)logScore:(NSInteger)score order:(OMNOrder *)order {
 
-  NSMutableDictionary *properties = [NSMutableDictionary dictionary];
-  properties[@"timestamp"] = [self dateString];
+  NSMutableDictionary *properties = [self superProperties];
   properties[@"score"] = @(score);
   properties[@"order_id"] = (order.id) ? (order.id) : (@"");
   properties[@"bill_id"] = (order.bill.id) ? (order.bill.id) : (@"");
@@ -190,8 +188,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 
 - (void)logBillView:(OMNOrder *)order {
   
-  NSMutableDictionary *properties = [NSMutableDictionary dictionary];
-  properties[@"timestamp"] = [self dateString];
+  NSMutableDictionary *properties = [self superProperties];
   properties[@"restaurant_id"] = (order.restaurant_id) ? (order.restaurant_id) : (@"");
   properties[@"table_id"] = (order.table_id) ? (order.table_id) : (@"");
   properties[@"order_id"] = (order.id) ? (order.id) : (@"");
@@ -225,7 +222,8 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      }];
   [_mixpanel.people set:@"last_payment" to:[NSDate date]];
   
-  [_mixpanel track:@"payment_success" properties:
+  NSMutableDictionary *properties = [self superProperties];
+  [properties addEntriesFromDictionary:
    @{
      @"bill_sum" : @(orderTansactionInfo.bill_amount),
      @"tips_sum" : @(orderTansactionInfo.tips_amount),
@@ -233,13 +231,13 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"percent" : @(orderTansactionInfo.tips_percent),
      @"tips_way" : orderTansactionInfo.tips_way,
      @"split" : orderTansactionInfo.split,
-     @"timestamp" : [self dateString],
      @"order_id" : orderTansactionInfo.order_id,
      @"restaurant_id" : orderTansactionInfo.restaurant_id,
      @"table_id" : orderTansactionInfo.table_id,
      @"bill_id" : (bill_id) ? (bill_id) : (@""),
      @"card_info" : (bankCardInfo) ? (bankCardInfo.debugInfo) : (@""),
      }];
+  [_mixpanel track:@"payment_success" properties:properties];
   [_mixpanel flush];
   
 }
@@ -271,15 +269,15 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
 
-  NSMutableDictionary *newParamentrs = [NSMutableDictionary dictionaryWithDictionary:parametrs];
-  newParamentrs[@"timestamp"] = [self dateString];
+  NSMutableDictionary *newParamentrs = [self superProperties];
+  [newParamentrs addEntriesFromDictionary:parametrs];
   [_mixpanel track:eventName properties:newParamentrs];
   
 }
 
 - (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response {
   
-  NSMutableDictionary *debugInfo = [NSMutableDictionary dictionary];
+  NSMutableDictionary *debugInfo = [self superProperties];
   if (error.localizedDescription) {
     debugInfo[@"error"] = error.localizedDescription;
   }
@@ -297,30 +295,28 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     debugInfo[@"card_info"] = bankCardInfo.debugInfo;
   }
 
-  debugInfo[@"timestamp"] = [self dateString];
   [_mixpanel track:eventName properties:debugInfo];
 
 }
 
 - (void)logDebugEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs {
   
-  NSMutableDictionary *newParamentrs = [NSMutableDictionary dictionaryWithDictionary:parametrs];
-  newParamentrs[@"timestamp"] = [self dateString];
+  NSMutableDictionary *newParamentrs = [self superProperties];
+  [newParamentrs addEntriesFromDictionary:parametrs];
   [_mixpanelDebug track:eventName properties:newParamentrs];
   
 }
 
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse {
   
-  NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
+  NSMutableDictionary *parametrs = [self superProperties];
   parametrs[@"jsonRequest"] = (jsonRequest) ? (jsonRequest) : (@"");
   parametrs[@"jsonResponse"] = (jsonResponse) ? (jsonResponse) : (@"");
-  parametrs[@"timestamp"] = [self dateString];
   [_mixpanelDebug track:eventName properties:parametrs];
   
 }
 
-- (NSString *)dateString {
+- (NSMutableDictionary *)superProperties {
   
   static NSDateFormatter *dateFormatter = nil;
   if (nil == dateFormatter) {
@@ -330,7 +326,14 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   }
   
   NSDate *actualDate = [NSDate dateWithTimeIntervalSinceNow:-_serverTimeDelta];
-  return [dateFormatter stringFromDate:actualDate];
+  
+  NSMutableDictionary *timeProperties =
+  [@{
+    @"timestamp" : [dateFormatter stringFromDate:actualDate],
+    @"time" : @([actualDate timeIntervalSince1970]),
+    } mutableCopy];
+  
+  return timeProperties;
   
 }
 
@@ -338,15 +341,17 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 
   NSString *requestID = responseOperation.response.allHeaderFields[@"X-Request-ID"];
   
-  [_mixpanelDebug track:eventName properties:
-  @{
-    @"timestamp" : [self dateString],
-    @"jsonRequest" : (jsonRequest) ? (jsonRequest) : (@""),
-    @"error" : (responseOperation.error.localizedDescription) ? (responseOperation.error.localizedDescription) : (@""),
-    @"errorCode" : @(responseOperation.error.code),
-    @"requestID" : (requestID) ? (requestID) : (@"unknown"),
-    @"responseString" : (responseOperation.responseString) ? (responseOperation.responseString) : (@""),
-    }];
+  NSMutableDictionary *properties = [self superProperties];
+  [properties addEntriesFromDictionary:
+   @{
+     @"jsonRequest" : (jsonRequest) ? (jsonRequest) : (@""),
+     @"error" : (responseOperation.error.localizedDescription) ? (responseOperation.error.localizedDescription) : (@""),
+     @"errorCode" : @(responseOperation.error.code),
+     @"requestID" : (requestID) ? (requestID) : (@"unknown"),
+     @"responseString" : (responseOperation.responseString) ? (responseOperation.responseString) : (@""),
+     }];
+  
+  [_mixpanelDebug track:eventName properties:properties];
   
 }
 
