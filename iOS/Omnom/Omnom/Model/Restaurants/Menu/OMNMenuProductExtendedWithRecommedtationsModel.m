@@ -9,6 +9,7 @@
 #import "OMNMenuProductExtendedWithRecommedtationsModel.h"
 #import "OMNMenuProductExtended.h"
 #import "OMNMenuProductRecommendationsDelimiter.h"
+#import "OMNMenuProduct+cell.h"
 
 @implementation OMNMenuProductExtendedWithRecommedtationsModel
 
@@ -19,24 +20,8 @@
   if (self) {
     
     _menuProduct = menuProduct;
-    
     self.model = [NSMutableArray arrayWithObject:@[[[OMNMenuProductExtended alloc] initWithMenuProduct:menuProduct]]];
-    
-    if (_menuProduct.recommendations.count) {
-      
-      [self.model addObject:@[[[OMNMenuProductRecommendationsDelimiter alloc] init]]];
-      
-      NSMutableArray *recommendations = [NSMutableArray arrayWithCapacity:menuProduct.recommendations.count];
-      [menuProduct.recommendations enumerateObjectsUsingBlock:^(id productID, NSUInteger idx, BOOL *stop) {
-        
-        OMNMenuProduct *recommendationProduct = products[productID];
-        [recommendations addObject:recommendationProduct];
-        
-      }];
-      
-      [self.model addObject:recommendations];
-      
-    }
+    [self.model addObjectsFromArray:[menuProduct recommendationListWithProducts:products]];
     
   }
   return self;

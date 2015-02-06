@@ -46,9 +46,6 @@
   OMNMenuModel *_menuModel;
   
   OMNTableButton *_tableButton;
-  BOOL showTableButtonAnimation;
-  
-  OMNTableButton *_tableButton;
   BOOL _showTableButtonAnimation;
   
 }
@@ -124,7 +121,7 @@
   
   [super viewWillAppear:animated];
   [self updateNavigationButtons];
-
+  
   __weak typeof(self)weakSelf = self;
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
   
@@ -139,12 +136,6 @@
   
   [_circleAnimation finishCircleAnimation];
   [_tableButton removeFromSuperview] ,_tableButton = nil;
-  
-}
-
-- (UIStatusBarStyle)preferredStatusBarStyle {
-  
-  return UIStatusBarStyleLightContent;
   
 }
 
@@ -167,9 +158,9 @@
     UIButton *userButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:self action:@selector(showUserProfile)];
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:userButton]];
     
-    if (!showTableButtonAnimation) {
+    if (!_showTableButtonAnimation) {
       
-      showTableButtonAnimation = YES;
+      _showTableButtonAnimation = YES;
       _tableButton = [OMNTableButton buttonWithColor:color];
       [_tableButton addTarget:self action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
       [_tableButton setText:_restaurantMediator.table.internal_id];
@@ -210,6 +201,12 @@
     }
     
   }
+  
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  
+  return UIStatusBarStyleLightContent;
   
 }
 

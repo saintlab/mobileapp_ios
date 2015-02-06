@@ -10,6 +10,10 @@
 #import "OMNMenuProductView.h"
 #import "OMNMenuProductCell.h"
 #import "OMNPreorderConfirmCell.h"
+#import "OMNMenuProductRecommendationsDelimiter.h"
+#import "OMNMenuProductRecommendationsDelimiterCell.h"
+#import "OMNMenuProductsDelimiterCell.h"
+#import "OMNMenuProductsDelimiter.h"
 
 @implementation OMNMenuProduct (cell)
 
@@ -52,7 +56,9 @@
 + (void)registerCellForTableView:(UITableView *)tableView {
   
   [tableView registerClass:[OMNMenuProductCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductCell class])];
-  
+  [tableView registerClass:[OMNMenuProductsDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductsDelimiterCell class])];
+  [tableView registerClass:[OMNMenuProductRecommendationsDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductRecommendationsDelimiterCell class])];
+
 }
 
 - (CGFloat)preorderHeightForTableView:(UITableView *)tableView {
@@ -75,6 +81,37 @@
   height += 1.0f;
   
   return height;
+  
+}
+
+- (NSArray *)recommendationListWithProducts:(NSDictionary *)products {
+  
+  NSMutableArray *recommendationList  = [NSMutableArray array];
+  
+  NSInteger recommendationsCount = self.recommendations.count;
+  if (recommendationsCount > 0) {
+    
+    [recommendationList addObject:@[[[OMNMenuProductRecommendationsDelimiter alloc] init]]];
+    
+    NSMutableArray *recommendations = [NSMutableArray arrayWithCapacity:self.recommendations.count];
+    [self.recommendations enumerateObjectsUsingBlock:^(id productID, NSUInteger idx, BOOL *stop) {
+      
+      OMNMenuProduct *recommendationProduct = products[productID];
+      [recommendations addObject:recommendationProduct];
+      
+      if (idx < recommendationsCount - 1) {
+        
+        [recommendations addObject:[[OMNMenuProductsDelimiter alloc] init]];
+        
+      }
+      
+    }];
+    
+    [recommendationList addObject:recommendations];
+    
+  }
+  
+  return recommendationList;
   
 }
 

@@ -13,5 +13,6 @@
 <OMNMenuCellItemProtocol>
 
 - (CGFloat)preorderHeightForTableView:(UITableView *)tableView;
+- (NSArray *)recommendationListWithProducts:(NSDictionary *)products;
 
 @end
