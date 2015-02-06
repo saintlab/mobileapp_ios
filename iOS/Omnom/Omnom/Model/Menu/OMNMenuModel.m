@@ -83,8 +83,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
   
-  
-  if (self.didSelectBlock) {
+  if (self.didSelectBlock &&
+      1 == indexPath.section) {
     
     OMNMenuCategory *menuCategory = _menu.categories[indexPath.row];
     self.didSelectBlock(menuCategory);

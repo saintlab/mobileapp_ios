@@ -18,6 +18,8 @@
   UILabel *_nameLabel;
   UILabel *_infoLabel;
   UILabel *_descriptionLabel;
+  UILabel *_info100Label;
+  UILabel *_ingredientsLabel;
   NSLayoutConstraint *_heightConstraint;
   
 }
@@ -45,10 +47,24 @@
   [self addSubview:_nameLabel];
   
   _infoLabel = [UILabel omn_autolayoutView];
+  _infoLabel.numberOfLines = 0;
   _infoLabel.textAlignment = NSTextAlignmentCenter;
   _infoLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
   _infoLabel.font = FuturaLSFOmnomLERegular(12.0f);
   [self addSubview:_infoLabel];
+  
+  _info100Label = [UILabel omn_autolayoutView];
+  _info100Label.textAlignment = NSTextAlignmentCenter;
+  _info100Label.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
+  _info100Label.font = FuturaLSFOmnomLERegular(12.0f);
+  [self addSubview:_info100Label];
+
+  _ingredientsLabel = [UILabel omn_autolayoutView];
+  _ingredientsLabel.numberOfLines = 0;
+  _ingredientsLabel.textAlignment = NSTextAlignmentCenter;
+  _ingredientsLabel.textColor = colorWithHexString(@"000000");
+  _ingredientsLabel.font = FuturaLSFOmnomLERegular(15.0f);
+  [self addSubview:_ingredientsLabel];
   
   _priceButton = [UIButton omn_autolayoutView];
   _priceButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
@@ -87,8 +103,10 @@
     @"priceButton" : _priceButton,
     @"productIV" : _productIV,
     @"descriptionLabel" : _descriptionLabel,
+    @"ingredientsLabel" : _ingredientsLabel,
+    @"info100Label" : _info100Label,
     };
-  
+
   NSDictionary *metrics =
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
@@ -98,8 +116,10 @@
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[descriptionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[productIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[ingredientsLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[info100Label]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[productIV]-(8)-[nameLabel]-(8)-[infoLabel]-(8)-[priceButton]-(8)-[descriptionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[productIV]-(8)-[nameLabel]-(20)-[infoLabel]-(20)-[priceButton]-(20)-[ingredientsLabel]-(20)-[info100Label]-(8)-[descriptionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
   _heightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
   [self addConstraint:_heightConstraint];
@@ -124,7 +144,9 @@
   _priceButton.selected = (menuProduct.quantity > 0.0);
   _descriptionLabel.text = menuProduct.Description;
   _nameLabel.text = menuProduct.name;
-  _infoLabel.text = [menuProduct.details displayText];
+  _infoLabel.text = [menuProduct.details displayFullText];
+  _info100Label.text = [menuProduct.details display100Text];
+  _ingredientsLabel.text = menuProduct.details.ingredients;
   [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProduct.price] forState:UIControlStateNormal];
   
 }

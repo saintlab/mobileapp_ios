@@ -129,7 +129,7 @@
   if (section > 0) {
 
     OMNMenuCategoryHeaderView *menuCategoryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];
-    OMNMenuCategory *menuCategory = _menuCategory.children[section];
+    OMNMenuCategory *menuCategory = _menuCategory.children[section - 1];
     menuCategoryHeaderView.menuCategory = menuCategory;
     viewForHeader = menuCategoryHeaderView;
     

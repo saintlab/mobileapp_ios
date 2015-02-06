@@ -88,6 +88,7 @@
     [self addSubview:_nameLabel];
     
     _infoLabel = [UILabel omn_autolayoutView];
+    _infoLabel.textAlignment = NSTextAlignmentCenter;
     _infoLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
     _infoLabel.font = FuturaLSFOmnomLERegular(12.0f);
     [self addSubview:_infoLabel];
