@@ -25,6 +25,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurant+omn_network.h"
 #import "OMNRestaurantManager.h"
+#import "OMNTableButton.h"
 
 @interface OMNR1VC ()
 <OMNRestaurantInfoVCDelegate>
@@ -37,6 +38,9 @@
   OMNRestaurantMediator *_restaurantMediator;
   UIPercentDrivenInteractiveTransition *_interactiveTransition;
   NSString *_restaurantWaiterCallIdentifier;
+  
+  OMNTableButton *_tableButton;
+  BOOL _showTableButtonAnimation;
   
 }
 
@@ -104,6 +108,26 @@
 - (void)viewWillAppear:(BOOL)animated {
   
   [super viewWillAppear:animated];
+  [self updateNavigationButtons];
+  
+  __weak typeof(self)weakSelf = self;
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+  
+    [weakSelf beginCircleAnimationIfNeeded];
+    
+  });
+  
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+  [super viewWillDisappear:animated];
+  
+  [_circleAnimation finishCircleAnimation];
+  [_tableButton removeFromSuperview] ,_tableButton = nil;
+  
+}
+
+- (void)updateNavigationButtons {
   
   if (_restaurantMediator.restaurant.is_demo) {
     
@@ -118,23 +142,53 @@
     
     UIColor *color = _restaurantMediator.restaurant.decoration.antagonist_color;
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:self action:@selector(showUserProfile)];
+    
+    UIButton *userButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:self action:@selector(showUserProfile)];
+    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:userButton]];
+    
+    if (!_showTableButtonAnimation) {
+      
+      _showTableButtonAnimation = YES;
+      _tableButton = [OMNTableButton buttonWithColor:color];
+      [_tableButton addTarget:self action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
+      [_tableButton setText:_restaurantMediator.table.internal_id];
+      _tableButton.center = userButton.center;
+      [userButton.superview addSubview:_tableButton];
+      CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;
+      _tableButton.transform = CGAffineTransformMakeTranslation(centerX - _tableButton.center.x, 0.0f);
+      _tableButton.alpha = 0.0f;
+      
+      [UIView animateWithDuration:0.8 delay:1.0 options:0 animations:^{
+        
+        _tableButton.alpha = 1.0f;
+        
+      } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+          
+          _tableButton.transform = CGAffineTransformIdentity;
+          userButton.alpha = 0.0f;
+          
+        } completion:^(BOOL finished) {
+          
+          [UIView animateWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            
+            _tableButton.alpha = 0.0f;
+            userButton.alpha = 1.0f;
+            
+          } completion:^(BOOL finished) {
+            
+            [_tableButton removeFromSuperview], _tableButton = nil;
+            
+          }];
+          
+        }];
+        
+      }];
+      
+    }
     
   }
-
-  __weak typeof(self)weakSelf = self;
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-  
-    [weakSelf beginCircleAnimationIfNeeded];
-    
-  });
-  
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-  [super viewWillDisappear:animated];
-  
-  [_circleAnimation finishCircleAnimation];
   
 }
 
