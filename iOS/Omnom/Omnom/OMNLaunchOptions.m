@@ -33,12 +33,12 @@
 //    _customConfigName = @"config_staging";
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";
 //    _qr = @"qr-code-for-2-saintlab-iiko";
+//        @"qr-code-3-at-saintlab-iiko";
 //    @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";
 //    @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7";
 //    @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";
-//    @"qr-code-3-at-saintlab-iiko";
 //    @"http://omnom.menu/qr/special-and-vip";
-//    _qr =  @"http://m.2gis.ru/os/";
+    _qr =  @"http://m.2gis.ru/os/";
 //    _hashString = @"hash-QWERTY-restaurant-B";
 #endif
   }

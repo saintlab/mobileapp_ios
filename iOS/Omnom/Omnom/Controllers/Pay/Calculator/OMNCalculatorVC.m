@@ -69,6 +69,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
   _fadeView = [UIView omn_autolayoutView];
   _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
+  _fadeView.alpha = 0.0f;
   [self.view addSubview:_fadeView];
   
   _totalButton = [UIButton omn_autolayoutView];

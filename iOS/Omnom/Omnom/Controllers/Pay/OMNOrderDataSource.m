@@ -20,7 +20,7 @@
 
 @implementation OMNOrderDataSource
 
-- (void)registerCellsForTableView:(UITableView *)tableView {
++ (void)registerCellsForTableView:(UITableView *)tableView {
   
   [tableView registerClass:[OMNOrderItemCell class] forCellReuseIdentifier:@"OMNOrderItemCell"];
   [tableView registerClass:[OMNGuestView class] forHeaderFooterViewReuseIdentifier:OMNGuestViewIdentifier];

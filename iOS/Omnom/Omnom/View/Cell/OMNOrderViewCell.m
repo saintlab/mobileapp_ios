@@ -50,7 +50,7 @@
     _tableView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
     _tableView.transform = CGAffineTransformMakeScale(scale, scale);
     
-    [_orderDataSource registerCellsForTableView:_tableView];
+    [OMNOrderDataSource registerCellsForTableView:_tableView];
   }
   return self;
 }
