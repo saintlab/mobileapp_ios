@@ -157,6 +157,7 @@ OMNPaymentFooterViewDelegate>
   CGFloat bottomInset = 1.0f;
   _scrollView.contentInset = UIEdgeInsetsMake(topInset, 0.0f, bottomInset, 0.0f);
   _scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, bottomInset, 0.0f);
+  [_tableView scrollRectToVisible:CGRectMake(0.0f, _tableView.contentSize.height - 1.0f, 1.0f, 1.0f) animated:NO];
   
 }
 
@@ -219,8 +220,13 @@ OMNPaymentFooterViewDelegate>
       NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_HEADER_TITLE %ld", @"Счёт {number} \u25BC"), (long)index + 1];
       [button setTitle:title forState:UIControlStateNormal];
       [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
-      [button sizeToFit];
-      self.navigationItem.titleView = button;
+      
+      [UIView performWithoutAnimation:^{
+        
+        [button sizeToFit];
+        self.navigationItem.titleView = button;
+
+      }];
       
     }
     
@@ -237,6 +243,7 @@ OMNPaymentFooterViewDelegate>
   tableView.scrollEnabled = NO;
   OMNOrderActionView *orderActionView = [[OMNOrderActionView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kOrderTableFooterHeight)];
   orderActionView.delegate = self;
+  orderActionView.order = dataSource.order;
   tableView.orderActionView = orderActionView;
   
   [OMNOrderDataSource registerCellsForTableView:tableView];
@@ -244,10 +251,7 @@ OMNPaymentFooterViewDelegate>
   tableView.delegate = dataSource;
   tableView.dataSource = dataSource;
   [tableView reloadData];
-
   [_scrollContentView addSubview:tableView];
-  
-  [tableView scrollRectToVisible:CGRectMake(0.0f, tableView.contentSize.height - 1.0f, 1.0f, 1.0f) animated:NO];
   return tableView;
   
 }
@@ -292,8 +296,6 @@ OMNPaymentFooterViewDelegate>
   swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
   swipeGR.direction = UISwipeGestureRecognizerDirectionRight;
   [_scrollView addGestureRecognizer:swipeGR];
-//  UIPanGestureRecognizer *tapGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-//  [self.view addGestureRecognizer:tapGR];
   
   [self.view layoutIfNeeded];
   _tableFadeView.frame = _scrollContentView.frame;
@@ -327,37 +329,46 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (void)showOrderAtIndex:(NSInteger)index animationDirection:(UISwipeGestureRecognizerDirection)direction {
-  return;
-  /*
-  static OMNOrderDataSource *dataSource = nil;
-  dataSource = [[OMNOrderDataSource alloc] init];
-  dataSource.order = _restaurantMediator.orders[index];
-  
-  OMNOrderTableView *tableView = [self orderTableView];
-  [_scrollView addSubview:tableView];
-  [dataSource registerCellsForTableView:tableView];
-  tableView.dataSource = dataSource;
-  tableView.delegate = dataSource;
 
-  CGRect frame = tableView.frame;
-  frame.size = tableView.contentSize;
-  tableView.frame = frame;
-  tableView.bottom = _scrollView.contentSize.height;
-  [tableView reloadData];
+  UIView *oldScrollView = [_scrollView snapshotViewAfterScreenUpdates:NO];
+  oldScrollView.frame = _scrollView.frame;
+  [self.view addSubview:oldScrollView];
   
-  CGFloat xOffset = (UISwipeGestureRecognizerDirectionLeft == direction) ? (CGRectGetWidth(tableView.frame)) : (-CGRectGetWidth(tableView.frame));
-  tableView.transform = CGAffineTransformMakeTranslation(xOffset, 0.0f);
+  CGFloat offset = CGRectGetWidth(_tableView.frame)*1.1f;
+  CGFloat xOffset = (UISwipeGestureRecognizerDirectionLeft == direction) ? (offset) : (-offset);
+  CGAffineTransform transform = CGAffineTransformMakeTranslation(xOffset, 0.0f);
+  _tableView.transform = transform;
   
-  [UIView animateWithDuration:0.5 delay:0.0 options:0 animations:^{
+  UIView *oldPaymentView = [_paymentView snapshotViewAfterScreenUpdates:NO];
+  oldPaymentView.frame = _paymentView.frame;
+  [self.view addSubview:oldPaymentView];
+  _paymentView.alpha = 0.0f;
+  
+  _restaurantMediator.selectedOrder = _restaurantMediator.orders[index];
+  [self updateOrder];
+  
+  [UIView animateWithDuration:0.3 delay:0.1 options:0 animations:^{
     
-    tableView.transform = CGAffineTransformIdentity;
+    _paymentView.alpha = 1.0f;
     
   } completion:^(BOOL finished) {
     
-    [tableView removeFromSuperview];
+  }];
+  
+  [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
+    
+    _paymentView.alpha = 1.0f;
+    oldPaymentView.transform = CGAffineTransformInvert(transform);
+    oldScrollView.transform = CGAffineTransformInvert(transform);
+    _tableView.transform = CGAffineTransformIdentity;
+    
+  } completion:^(BOOL finished) {
+
+    [self updateScrollViewInstets];
+    [oldScrollView removeFromSuperview];
+    [oldPaymentView removeFromSuperview];
     
   }];
-   */
   
 }
 
@@ -402,58 +413,6 @@ OMNPaymentFooterViewDelegate>
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:orderPaymentVC];
   navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
-  
-}
-
-- (void)handlePan:(UIPanGestureRecognizer *)panGR {
-  
-  CGAffineTransform scaleTransform = CGAffineTransformMakeScale(0.95f, 0.95f);
-  
-  NSTimeInterval duration = 0.3;
-  CGFloat shadowOpacity = 0.8f;
-  
-  switch (panGR.state) {
-    case UIGestureRecognizerStateBegan: {
-
-      CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
-      anim.fromValue = @(0.0f);
-      anim.toValue = @(shadowOpacity);
-      anim.duration = duration;
-      [self.tableView.layer addAnimation:anim forKey:@"shadowOpacity"];
-      self.tableView.layer.shadowOpacity = shadowOpacity;
-      
-      [UIView animateWithDuration:0.3 animations:^{
-        
-        self.tableView.transform = scaleTransform;
-        
-      }];
-      
-    } break;
-    case UIGestureRecognizerStateEnded:
-    case UIGestureRecognizerStateCancelled: {
-      
-      CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"shadowOpacity"];
-      anim.fromValue = @(self.tableView.layer.shadowOpacity);
-      anim.toValue = @(0.0f);
-      anim.duration = duration;
-      [self.tableView.layer addAnimation:anim forKey:@"shadowOpacity"];
-      self.tableView.layer.shadowOpacity = 0.0;
-      
-      [UIView animateWithDuration:duration animations:^{
-        
-        self.tableView.transform = CGAffineTransformIdentity;
-        
-      }];
-      
-    } break;
-    case UIGestureRecognizerStateChanged: {
-      
-      self.tableView.transform = CGAffineTransformConcat(CGAffineTransformMakeTranslation([panGR translationInView:panGR.view].x, 0.0f), scaleTransform);
-      
-    } break;
-    default:
-      break;
-  }
   
 }
 

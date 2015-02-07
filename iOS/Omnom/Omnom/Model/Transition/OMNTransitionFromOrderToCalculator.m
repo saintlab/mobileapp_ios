@@ -80,7 +80,8 @@
       fromTableView.contentOffset = startTableOffset;
       fromViewController.view.hidden = NO;
       [footerExtendedView removeFromSuperview];
-      
+      toViewController.view.backgroundColor = [UIColor whiteColor];
+
       [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
       
     }];
@@ -91,7 +92,7 @@
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  return 0.8;
+  return 0.9;
   
 }
 
