@@ -39,7 +39,7 @@
   [super viewDidLoad];
    
   _dataSource = [[OMNOrderDataSource alloc] init];
-  [_dataSource registerCellsForTableView:self.tableView];
+  [OMNOrderDataSource registerCellsForTableView:self.tableView];
   
   __weak typeof(self)weakSelf = self;
   [_dataSource setDidSelectBlock:^(UITableView *tv, NSIndexPath *indexPath) {
