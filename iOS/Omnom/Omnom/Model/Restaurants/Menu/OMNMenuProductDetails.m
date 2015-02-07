@@ -14,18 +14,18 @@
   self = [super init];
   if (self) {
  
-    self.weight_gr = [jsonData[@"weight"] integerValue];
-    self.volume_ml = [jsonData[@"volume"] integerValue];
+    self.weight_gr = jsonData[@"weight"];
+    self.volume_ml = jsonData[@"volume"];
     self.persons = [jsonData[@"persons"] integerValue];
     self.cooking_time_minutes = [jsonData[@"cooking_time"] integerValue];
-    self.energy_100 = [jsonData[@"energy_100"] doubleValue];
-    self.energy_total = [jsonData[@"energy_total"] doubleValue];
-    self.protein_100 = [jsonData[@"protein_100"] doubleValue];
-    self.protein_total = [jsonData[@"protein_total"] doubleValue];
-    self.fat_100 = [jsonData[@"fat_100"] doubleValue];
-    self.fat_total = [jsonData[@"fat_total"] doubleValue];
-    self.carbohydrate_100 = [jsonData[@"carbohydrate_100"] doubleValue];
-    self.carbohydrate_total = [jsonData[@"carbohydrate_total"] doubleValue];
+    self.energy_100 = jsonData[@"energy_100"];
+    self.energy_total = jsonData[@"energy_total"];
+    self.protein_100 = jsonData[@"protein_100"];
+    self.protein_total = jsonData[@"protein_total"];
+    self.fat_100 = jsonData[@"fat_100"];
+    self.fat_total = jsonData[@"fat_total"];
+    self.carbohydrate_100 = jsonData[@"carbohydrate_100"];
+    self.carbohydrate_total = jsonData[@"carbohydrate_total"];
     self.ingredients = jsonData[@"ingredients"];
     
   }
@@ -36,15 +36,15 @@
   
   NSMutableArray *displayItems = [NSMutableArray arrayWithCapacity:2];
   
-  if (self.energy_total > 0.0) {
+  if (self.energy_total.length) {
     
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %.0f", @"{ENERGY} ккал"), self.energy_total]];
+    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал"), self.energy_total]];
     
   }
   
-  if (self.weight_gr > 0) {
+  if (self.weight_gr.length) {
     
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_WEIGHT %d", @"{WEIGHT} гр."), self.weight_gr]];
+    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_WEIGHT %@", @"{WEIGHT} гр."), self.weight_gr]];
     
   }
   
@@ -65,7 +65,6 @@
   
   switch (self.persons) {
     case 0: {
-      
     } break;
     case 1: {
       [displayItems addObject:NSLocalizedString(@"MENU_PRODUCT_PERSON_1", @"Порция на одного")];
@@ -115,21 +114,21 @@
   
   NSMutableArray *displayItems = [NSMutableArray arrayWithCapacity:3];
   
-  if (self.protein_100 > 0.0) {
+  if (self.protein_100.length) {
     
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %.0f", @"Белки {PROTEIN}"), self.protein_100]];
-    
-  }
-  
-  if (self.fat_100 > 0.0) {
-    
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_FAT %.0f", @"Жиры {FAT}"), self.fat_100]];
+    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %@", @"Белки {PROTEIN}"), self.protein_100]];
     
   }
   
-  if (self.carbohydrate_100 > 0.0) {
+  if (self.fat_100.length) {
     
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE %.0f", @"Углеводы {CARBOHYDRATE}"), self.carbohydrate_100]];
+    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_FAT %@", @"Жиры {FAT}"), self.fat_100]];
+    
+  }
+  
+  if (self.carbohydrate_100.length) {
+    
+    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE %@", @"Углеводы {CARBOHYDRATE}"), self.carbohydrate_100]];
     
   }
   
