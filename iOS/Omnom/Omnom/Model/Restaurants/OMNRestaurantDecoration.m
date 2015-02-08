@@ -55,8 +55,8 @@
 }
 
 - (UIImage *)woodBackgroundImage {
-  
-   return [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:self.background_color];
+
+  return [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:self.background_color blendMode:kCGBlendModeMultiply alpha:0.85f];
   
 }
 

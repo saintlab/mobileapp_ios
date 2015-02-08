@@ -145,8 +145,10 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (void)viewDidLayoutSubviews {
+
   [super viewDidLayoutSubviews];
   [self updateScrollViewInstets];
+  [self.view layoutIfNeeded];
   
 }
 
@@ -236,7 +238,7 @@ OMNPaymentFooterViewDelegate>
 
 - (OMNOrderTableView *)orderTableViewWithDataSource:(OMNOrderDataSource *)dataSource {
   
-  OMNOrderTableView *tableView = [[OMNOrderTableView alloc] initWithFrame:_scrollContentView.bounds style:UITableViewStylePlain];
+  OMNOrderTableView *tableView = [[OMNOrderTableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
   tableView.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.tableView.bounds].CGPath;
   tableView.allowsSelection = NO;
   tableView.clipsToBounds = NO;
@@ -250,8 +252,6 @@ OMNPaymentFooterViewDelegate>
   
   tableView.delegate = dataSource;
   tableView.dataSource = dataSource;
-  [tableView reloadData];
-  [_scrollContentView addSubview:tableView];
   return tableView;
   
 }
@@ -265,7 +265,7 @@ OMNPaymentFooterViewDelegate>
   _scrollView.showsVerticalScrollIndicator = NO;
   [self.view addSubview:_scrollView];
   
-  _scrollContentView = [UIView omn_autolayoutView];
+  _scrollContentView = [[UIView alloc] initWithFrame:self.view.bounds];
   _scrollContentView.backgroundColor = [UIColor clearColor];
   [_scrollView addSubview:_scrollContentView];
   
@@ -274,16 +274,17 @@ OMNPaymentFooterViewDelegate>
   _tableFadeView.alpha = 0.0f;
   [_scrollView addSubview:_tableFadeView];
   
+  _dataSource = [[OMNOrderDataSource alloc] init];
+  _dataSource.order = _restaurantMediator.selectedOrder;
+  _tableView = [self orderTableViewWithDataSource:_dataSource];
+  [_scrollContentView addSubview:_tableView];
+
   NSDictionary *views =
   @{
     @"payment" : _paymentView,
     @"scrollView" : _scrollView,
     @"tableFadeView" : _tableFadeView,
     };
-
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scrollContentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scrollContentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scrollContentView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:CGRectGetHeight([UIScreen mainScreen].bounds)]];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]" options:0 metrics:nil views:views]];
@@ -296,13 +297,6 @@ OMNPaymentFooterViewDelegate>
   swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
   swipeGR.direction = UISwipeGestureRecognizerDirectionRight;
   [_scrollView addGestureRecognizer:swipeGR];
-  
-  [self.view layoutIfNeeded];
-  _tableFadeView.frame = _scrollContentView.frame;
-
-  _dataSource = [[OMNOrderDataSource alloc] init];
-  _dataSource.order = _restaurantMediator.selectedOrder;
-  _tableView = [self orderTableViewWithDataSource:_dataSource];
   
 }
 

@@ -114,6 +114,7 @@
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
 
   [[OMNAuthorization authorisation] application:application didRegisterUserNotificationSettings:notificationSettings];
+  [OMNAnalitics analitics].notificationSettings = notificationSettings;
   
 }
 

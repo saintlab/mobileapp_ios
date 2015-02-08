@@ -139,23 +139,23 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 }
 
 - (UIUserNotificationSettings *)notificationSettings {
-  UIMutableUserNotificationAction *declineAction = [[UIMutableUserNotificationAction alloc] init];
-  declineAction.identifier = @"declineAction";
-  declineAction.activationMode = UIUserNotificationActivationModeBackground;
-  declineAction.title = NSLocalizedString(@"Отменить", nil);
-  declineAction.destructive = YES;
+//  UIMutableUserNotificationAction *declineAction = [[UIMutableUserNotificationAction alloc] init];
+//  declineAction.identifier = @"declineAction";
+//  declineAction.activationMode = UIUserNotificationActivationModeBackground;
+//  declineAction.title = NSLocalizedString(@"Отменить", nil);
+//  declineAction.destructive = YES;
+//  
+//  UIMutableUserNotificationAction *answerAction = [[UIMutableUserNotificationAction alloc] init];
+//  answerAction.identifier = @"answerAction";
+//  answerAction.activationMode = UIUserNotificationActivationModeBackground;
+//  answerAction.title = @"Ответить";
+//  
+//  UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
+//  category.identifier = @"incomingCall"; //category name to send in the payload
+//  [category setActions:@[answerAction,declineAction] forContext:UIUserNotificationActionContextDefault];
+//  [category setActions:@[answerAction,declineAction] forContext:UIUserNotificationActionContextMinimal];
   
-  UIMutableUserNotificationAction *answerAction = [[UIMutableUserNotificationAction alloc] init];
-  answerAction.identifier = @"answerAction";
-  answerAction.activationMode = UIUserNotificationActivationModeBackground;
-  answerAction.title = @"Ответить";
-  
-  UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
-  category.identifier = @"incomingCall"; //category name to send in the payload
-  [category setActions:@[answerAction,declineAction] forContext:UIUserNotificationActionContextDefault];
-  [category setActions:@[answerAction,declineAction] forContext:UIUserNotificationActionContextMinimal];
-  
-  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:[NSSet setWithObjects:category,nil]];
+  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:[NSSet setWithObjects:nil]];
   return settings;
 }
 
@@ -170,15 +170,10 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
   UIApplication *application = [UIApplication sharedApplication];
   
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-  
   if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
     
     [SSKeychain setPassword:@"YES" forService:kIOS8PushNotificationsRequestedKey account:kAuthorisationAccountName];
     _userNotificationRegisterCompletionBlock = [completion copy];
-    [application registerUserNotificationSettings:[self notificationSettings]];
-#pragma clang diagnostic pop
     
   }
   else {
@@ -189,7 +184,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   }
   
   //anyway we need to register for remote notifications to obtain device token
-  [self registerForRemoteNotifications];
+  [self registerForRemoteNotificationsIfPossible];
   
 }
 
@@ -197,22 +192,24 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
   if (self.pushNotificationsRequested) {
     
-    [self registerForRemoteNotifications];
+    UIApplication *application = [UIApplication sharedApplication];
     
-  }
-  
-}
-
-- (void)registerForRemoteNotifications {
-  
-  if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)]) {
+    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+      
+      [application registerForRemoteNotifications];
+      
+    }
+    else {
+      
+      [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+      
+    }
     
-    [[UIApplication sharedApplication] registerForRemoteNotifications];
-    
-  }
-  else {
-
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+      
+      [application registerUserNotificationSettings:[self notificationSettings]];
+      
+    }
     
   }
   

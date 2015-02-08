@@ -25,6 +25,7 @@ typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
 + (instancetype)analitics;
 
 @property (nonatomic, strong) NSData *deviceToken;
+@property (nonatomic, strong) UIUserNotificationSettings *notificationSettings;
 
 - (void)setUser:(OMNUser *)user;
 - (void)setServerTimeStamp:(NSTimeInterval)serverTimeStamp;

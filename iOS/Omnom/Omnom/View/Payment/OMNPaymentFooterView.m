@@ -182,6 +182,14 @@
   
 }
 
+- (void)updatePaymentLabel {
+  
+  BOOL amountEnteredOrEditing = (_keyboardShown || _order.enteredAmountChanged);
+  _payLabel.hidden = _order.paymentCompleted;
+  _payLabel.text = (amountEnteredOrEditing) ? (NSLocalizedString(@"PAYMENT_DID_PAY_LABEL_TEXT", @"Я оплачу")) : (NSLocalizedString(@"PAYMENT_TO_PAY_LABEL_TEXT", @"к оплате"));
+  
+}
+
 - (void)setKeyboardShown:(BOOL)keyboardShown {
   
   _keyboardShown = keyboardShown;
@@ -238,13 +246,6 @@
   [self updatePaymentLabel];
   [self updateToPayButton];
   
-}
-
-- (void)updatePaymentLabel {
-  
-  BOOL amountEnteredOrEditing = (_keyboardShown || _order.enteredAmountChanged);
-  _payLabel.text = (amountEnteredOrEditing) ? (NSLocalizedString(@"PAYMENT_DID_PAY_LABEL_TEXT", @"Я оплачу")) : (NSLocalizedString(@"PAYMENT_TO_PAY_LABEL_TEXT", @"к оплате"));
-
 }
 
 - (IBAction)cancelEditingTap:(id)sender {

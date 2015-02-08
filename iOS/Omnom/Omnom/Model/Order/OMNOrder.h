@@ -83,6 +83,7 @@ extern NSInteger const kCustomTipIndex;
 - (BOOL)paymentValueIsTooHigh;
 - (BOOL)hasSelectedItems;
 - (BOOL)hasProducts;
+- (BOOL)paymentCompleted;
 - (long long)totalAmount;
 - (long long)selectedItemsTotal;
 
