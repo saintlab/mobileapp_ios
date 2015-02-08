@@ -39,7 +39,7 @@
 //    @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";
 //    @"http://omnom.menu/qr/special-and-vip";
 //    _qr =  @"http://m.2gis.ru/os/";
-    _hashString = @"hash-QWERTY-restaurant-B";
+//    _hashString = @"hash-QWERTY-restaurant-B";
 #endif
   }
   return self;

@@ -14,6 +14,7 @@
 @property (nonatomic, assign) long long tip_amount;
 @property (nonatomic, assign, readonly) long long net_amount;
 
+- (instancetype)initWithJsonData:(id)jsonData;
 - (instancetype)initWithTotal:(long long)total tip:(long long)tip;
 
 @end

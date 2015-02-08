@@ -77,10 +77,7 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
     self.modifiedTime = jsonData[@"modified_time"];
     self.restaurant_id = jsonData[@"restaurant_id"];
     self.table_id = jsonData[@"table_id"];
-    
-    if (jsonData[@"paid_amount"]) {
-      self.paid = [[OMNOrderPaid alloc] initWithTotal:[jsonData[@"paid_amount"] longLongValue] tip:[jsonData[@"paid_tip"] longLongValue]];
-    }
+    self.paid = [[OMNOrderPaid alloc] initWithJsonData:jsonData];
     
     NSArray *itemsData = jsonData[@"items"];
     NSMutableDictionary *orderItemIDs = [NSMutableDictionary dictionary];
@@ -231,6 +228,13 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
   }];
   
   return hasProducts;
+  
+}
+
+- (BOOL)paymentCompleted {
+  
+  return (self.hasProducts &&
+          0ll == self.expectedValue);
   
 }
 
