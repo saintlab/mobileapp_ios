@@ -99,8 +99,6 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     userInfo[@"ID"] = _user.id;
   }
   
-  userInfo[@"push_activated"] = @([OMNAuthorization authorisation].pushNotificationsRequested);
-  
   if (_user.name) {
     userInfo[@"name"] = _user.name;
   }
@@ -116,6 +114,8 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   if (_user.created_at) {
     userInfo[@"created"] = _user.created_at;
   }
+  
+  [_mixpanel.people set:@"push_notification_requested" to:@([OMNAuthorization authorisation].pushNotificationsRequested)];
   [_mixpanel.people set:userInfo];
   [_mixpanel registerSuperProperties:@{OMNAnaliticsUserKey : userInfo}];
   [self updateUserDeviceTokenIfNeeded];
@@ -362,14 +362,39 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
+- (void)setNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+  
+  _notificationSettings = notificationSettings;
+  [self updateUserDeviceTokenIfNeeded];
+  
+}
+
+- (BOOL)userNotificationPermissionReceived {
+  
+  if (![UIUserNotificationSettings class]) {
+    return YES;
+  }
+  
+  BOOL userNotificationPermissionReceived = (_notificationSettings.types != UIUserNotificationTypeNone);
+  return userNotificationPermissionReceived;
+  
+}
+
 - (void)updateUserDeviceTokenIfNeeded {
   
-  if (_user &&
-      _deviceToken) {
-    
-    [_mixpanel.people addPushDeviceToken:_deviceToken];
-    
+  if (!_user) {
+    return;
   }
+  
+  if (_deviceToken) {
+   
+    [_mixpanel.people addPushDeviceToken:_deviceToken];
+
+  }
+  
+  BOOL userCanReceivePush = (_deviceToken != nil &&
+                             [self userNotificationPermissionReceived]);
+  [_mixpanel.people set:@"user_can_receive_push" to:@(userCanReceivePush)];
   
 }
 
