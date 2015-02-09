@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OMNMenuProductsDelimiter.h"
 
 @interface OMNMenuProductsDelimiterCell : UITableViewCell
 
-@property (nonatomic, strong) UIColor *color;
+@property (nonatomic, strong) OMNMenuProductsDelimiter *menuProductsDelimiter;
 
 @end

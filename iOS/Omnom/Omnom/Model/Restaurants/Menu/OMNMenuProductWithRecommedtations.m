@@ -10,11 +10,22 @@
 #import "OMNMenuProductView.h"
 #import "OMNMenuProductWithRecommedtationsCell.h"
 #import "OMNMenuProductWithRecommedtationsModel.h"
+#import <BlocksKit.h>
+#import <OMNStyler.h>
 
 @implementation OMNMenuProductWithRecommedtations {
   
   OMNMenuProduct *_menuProduct;
   OMNMenuProductWithRecommedtationsModel *_model;
+  NSString *_selectedObserverID;
+  
+}
+
+- (void)dealloc {
+  
+  if (_selectedObserverID) {
+    [_menuProduct bk_removeObserversWithIdentifier:_selectedObserverID];
+  }
   
 }
 
@@ -23,10 +34,29 @@
   if (self) {
     
     _menuProduct = menuProduct;
+    __weak typeof(self)weakSelf = self;
+    _selectedObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:NSKeyValueObservingOptionNew task:^(OMNMenuProduct *mp, NSDictionary *change) {
+      
+      [weakSelf updateBottomDelimetr];
+      
+    }];
     _model = [[OMNMenuProductWithRecommedtationsModel alloc] initWithMenuProduct:menuProduct products:products];
     
   }
   return self;
+}
+
+- (void)updateBottomDelimetr {
+  
+  self.bottomDelimetr.color = (_menuProduct.selected) ? (colorWithHexString(@"F5A623")) : ([colorWithHexString(@"000000") colorWithAlphaComponent:0.2f]);
+  
+}
+
+- (void)setBottomDelimetr:(OMNMenuProductsDelimiter *)bottomDelimetr {
+  
+  _bottomDelimetr = bottomDelimetr;
+  [self updateBottomDelimetr];
+  
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {

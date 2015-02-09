@@ -10,10 +10,26 @@
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
 #import "OMNConstants.h"
+#import <BlocksKit.h>
 
 @implementation OMNMenuProductsDelimiterCell {
   
   UIView *_line;
+  NSString *_menuProductsDelimiterColorObserverID;
+  
+}
+
+- (void)dealloc {
+  
+  [self removeMenuProductsDelimiterColorObserver];
+  
+}
+
+- (void)removeMenuProductsDelimiterColorObserver {
+  
+  if (_menuProductsDelimiterColorObserverID) {
+    [_menuProductsDelimiter bk_removeObserversWithIdentifier:_menuProductsDelimiterColorObserverID];
+  }
   
 }
 
@@ -62,9 +78,16 @@
   
 }
 
-- (void)setColor:(UIColor *)color {
+- (void)setMenuProductsDelimiter:(OMNMenuProductsDelimiter *)menuProductsDelimiter {
   
-  _line.backgroundColor = color;
+  [self removeMenuProductsDelimiterColorObserver];
+  _menuProductsDelimiter = menuProductsDelimiter;
+  __weak UIView *line = _line;
+  _menuProductsDelimiterColorObserverID = [_menuProductsDelimiter bk_addObserverForKeyPath:NSStringFromSelector(@selector(color)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+    
+    line.backgroundColor = menuProductsDelimiter.color;
+    
+  }];
   
 }
 

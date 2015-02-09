@@ -100,11 +100,12 @@
       OMNMenuProduct *recommendationProduct = products[productID];
       [recommendations addObject:recommendationProduct];
       
-      OMNMenuProductsDelimiter *menuProductsDelimiter = [[OMNMenuProductsDelimiter alloc] init];
-      if (recommendationsCount - 1 == idx) {
-        menuProductsDelimiter.color = colorWithHexString(@"F5A623");
+      if (idx < recommendationsCount - 1) {
+        
+        OMNMenuProductsDelimiter *menuProductsDelimiter = [[OMNMenuProductsDelimiter alloc] init];
+        [recommendations addObject:menuProductsDelimiter];
+        
       }
-      [recommendations addObject:menuProductsDelimiter];
       
     }];
     

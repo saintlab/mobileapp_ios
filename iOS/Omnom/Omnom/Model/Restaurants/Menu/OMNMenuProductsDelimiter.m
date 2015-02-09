@@ -31,7 +31,7 @@
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   OMNMenuProductsDelimiterCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuProductsDelimiterCell class])];
-  cell.color = self.color;
+  cell.menuProductsDelimiter = self;
   return cell;
   
 }
