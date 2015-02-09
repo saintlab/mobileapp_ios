@@ -292,7 +292,6 @@
 
 - (void)getMenuWithCompletion:(OMNMenuBlock)completion {
 
-#warning stub menu
   if (NO) {
     id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
     OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
@@ -303,7 +302,6 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/menu", self.id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", operation.responseString);
     if ([responseObject omn_isSuccessResponse]) {
       
       OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject[@"menu"]];
