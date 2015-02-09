@@ -16,6 +16,7 @@
   NSDictionary *parameters =
   @{
     @"amount": @(self.enteredAmount),
+    @"tip_amount": @(self.tipAmount),
     @"restaurant_id" : self.restaurant_id,
     @"restaurateur_order_id" : self.id,
     @"table_id" : self.table_id,

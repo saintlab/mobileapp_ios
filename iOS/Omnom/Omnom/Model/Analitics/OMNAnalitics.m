@@ -211,7 +211,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo cardInfo:(OMNBankCardInfo *)bankCardInfo bill_id:(NSString *)bill_id {
+- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo cardInfo:(OMNBankCardInfo *)bankCardInfo bill:(OMNBill *)bill {
   
   [_mixpanel.people increment:
    @{
@@ -221,6 +221,11 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"number_of_payments" : @(1),
      }];
   [_mixpanel.people set:@"last_payment" to:[NSDate date]];
+  [_mixpanel.people trackCharge:@(bill.revenue) withProperties:
+  @{
+    @"order_id" : orderTansactionInfo.order_id,
+    @"bill_id" : (bill.id) ? (bill.id) : (@""),
+    }];
   
   NSMutableDictionary *properties = [self superProperties];
   [properties addEntriesFromDictionary:
@@ -234,7 +239,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"order_id" : orderTansactionInfo.order_id,
      @"restaurant_id" : orderTansactionInfo.restaurant_id,
      @"table_id" : orderTansactionInfo.table_id,
-     @"bill_id" : (bill_id) ? (bill_id) : (@""),
+     @"bill_id" : (bill.id) ? (bill.id) : (@""),
      @"card_info" : (bankCardInfo) ? (bankCardInfo.debugInfo) : (@""),
      }];
   [_mixpanel track:@"payment_success" properties:properties];
