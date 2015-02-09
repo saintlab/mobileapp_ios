@@ -145,18 +145,14 @@
 
 - (void)updateTableViewWithSelectedItems:(OMNMenuProduct *)menuProduct andScrollToCell:(UITableViewCell *)cell {
   
-  if (menuProduct.quantity > 0.0) {
-    
-    _menuProductSelectionItem.selected = NO;
-    _menuProductSelectionItem = menuProduct;
-    _menuProductSelectionItem.selected = YES;
-    
-    NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
-    [_tableView beginUpdates];
-    [_tableView endUpdates];
-    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    
-  }
+  _menuProductSelectionItem.selected = NO;
+  _menuProductSelectionItem = menuProduct;
+  _menuProductSelectionItem.selected = (menuProduct.quantity > 0.0);
+  
+  NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
+  [_tableView beginUpdates];
+  [_tableView endUpdates];
+  [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
   
 }
 

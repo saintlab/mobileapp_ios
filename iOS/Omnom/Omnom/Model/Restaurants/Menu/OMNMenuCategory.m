@@ -67,7 +67,9 @@
 
     if (idx < self.products.count - 1) {
       
-      [listItems addObject:[[OMNMenuProductsDelimiter alloc] init]];
+      OMNMenuProductsDelimiter *menuProductsDelimiter = [[OMNMenuProductsDelimiter alloc] init];
+      menuProductWithRecommedtations.bottomDelimetr = menuProductsDelimiter;
+      [listItems addObject:menuProductsDelimiter];
       
     }
     

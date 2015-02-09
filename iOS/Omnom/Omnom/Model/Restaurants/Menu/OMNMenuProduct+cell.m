@@ -14,6 +14,7 @@
 #import "OMNMenuProductRecommendationsDelimiterCell.h"
 #import "OMNMenuProductsDelimiterCell.h"
 #import "OMNMenuProductsDelimiter.h"
+#import <OMNStyler.h>
 
 @implementation OMNMenuProduct (cell)
 
@@ -99,9 +100,13 @@
       OMNMenuProduct *recommendationProduct = products[productID];
       [recommendations addObject:recommendationProduct];
       
-      if (idx < recommendationsCount - 1) {
+      if (idx > 0) {
         
-        [recommendations addObject:[[OMNMenuProductsDelimiter alloc] init]];
+        OMNMenuProductsDelimiter *menuProductsDelimiter = [[OMNMenuProductsDelimiter alloc] init];
+        if (recommendationsCount - 1 == idx) {
+          menuProductsDelimiter.color = colorWithHexString(@"F5A623");
+        }
+        [recommendations addObject:menuProductsDelimiter];
         
       }
       

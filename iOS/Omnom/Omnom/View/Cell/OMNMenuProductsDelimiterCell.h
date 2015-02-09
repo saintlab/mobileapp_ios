@@ -10,4 +10,6 @@
 
 @interface OMNMenuProductsDelimiterCell : UITableViewCell
 
+@property (nonatomic, strong) UIColor *color;
+
 @end

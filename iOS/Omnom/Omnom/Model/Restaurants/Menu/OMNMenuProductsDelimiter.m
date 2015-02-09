@@ -8,8 +8,19 @@
 
 #import "OMNMenuProductsDelimiter.h"
 #import "OMNMenuProductsDelimiterCell.h"
+#import <OMNStyler.h>
 
 @implementation OMNMenuProductsDelimiter
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    
+    self.color = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
+    
+  }
+  return self;
+}
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
@@ -20,6 +31,7 @@
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   OMNMenuProductsDelimiterCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuProductsDelimiterCell class])];
+  cell.color = self.color;
   return cell;
   
 }

@@ -11,7 +11,11 @@
 #import <OMNStyler.h>
 #import "OMNConstants.h"
 
-@implementation OMNMenuProductsDelimiterCell
+@implementation OMNMenuProductsDelimiterCell {
+  
+  UIView *_line;
+  
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -40,14 +44,12 @@
   self.backgroundView.backgroundColor = [UIColor clearColor];
   self.backgroundColor = [UIColor clearColor];
   
-  UIColor *lineColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
-  UIView *line = [UIView omn_autolayoutView];
-  line.backgroundColor = lineColor;
-  [self.contentView addSubview:line];
+  _line = [UIView omn_autolayoutView];
+  [self.contentView addSubview:_line];
 
   NSDictionary *views =
   @{
-    @"line" : line,
+    @"line" : _line,
     };
   
   NSDictionary *metrics =
@@ -57,6 +59,12 @@
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[line(1)]" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[line]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  
+}
+
+- (void)setColor:(UIColor *)color {
+  
+  _line.backgroundColor = color;
   
 }
 

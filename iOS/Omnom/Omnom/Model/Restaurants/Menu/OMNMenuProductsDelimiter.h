@@ -12,4 +12,6 @@
 @interface OMNMenuProductsDelimiter : NSObject
 <OMNMenuCellItemProtocol>
 
+@property (nonatomic, strong) UIColor *color;
+
 @end
