@@ -78,7 +78,12 @@ static NSDictionary *_config = nil;
 + (void)setConfig:(NSDictionary *)config {
   
   if ([self isValidConfig:config]) {
-    _config = config;
+    
+    NSMutableDictionary *cfg = [config mutableCopy];
+//    cfg[@"OMNMailRu_vterm_id"] = @"DGISMobile2";
+//#warning 123
+    _config = cfg;
+    
   }
 
 }

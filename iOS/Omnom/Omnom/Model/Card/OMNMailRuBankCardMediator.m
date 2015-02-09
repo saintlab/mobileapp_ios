@@ -141,7 +141,7 @@
         
         [bankCardInfo logCardRegister];
         [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
-        [[OMNAnalitics analitics] logPayment:orderTansactionInfo cardInfo:bankCardInfo bill_id:order.bill.id];
+        [[OMNAnalitics analitics] logPayment:orderTansactionInfo cardInfo:bankCardInfo bill:order.bill];
         paymentDidFinishBlock(nil);
         
       } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
