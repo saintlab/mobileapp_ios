@@ -34,6 +34,7 @@
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";
 //    _qr = @"qr-code-for-2-saintlab-iiko";
 //        @"qr-code-3-at-saintlab-iiko";
+//    _qr = @"qr-code-for-4-saintlab-rkeeper-v6";
 //    @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";
 //    @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7";
 //    @"http://omnom.menu/qr/58428fff2c68200b7a6111644d544832";

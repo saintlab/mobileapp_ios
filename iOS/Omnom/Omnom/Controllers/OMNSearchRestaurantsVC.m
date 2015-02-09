@@ -39,7 +39,7 @@
 
 - (void)dealloc {
   
-  [self stopBeaconManager];
+  [self stopBeaconSearchManager];
   
 }
 
@@ -68,54 +68,16 @@
   [super viewDidAppear:animated];
   
   __weak typeof(self)weakSelf = self;
-  OMNLaunchOptions *launchOptions = [OMNLaunchHandler sharedHandler].launchOptions;
-  if (launchOptions.restaurants) {
+  dispatch_async(dispatch_get_main_queue(), ^{
     
-    [self.loaderView startAnimating:self.estimateAnimationDuration];
-    dispatch_async(dispatch_get_main_queue(), ^{
-      
-      [weakSelf didFindRestaurants:launchOptions.restaurants];
-      
-    });
+    [weakSelf startSearchingRestaurants];
     
-  }
-  else if (launchOptions.hashString) {
-    
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-      
-      [weakSelf processHash:launchOptions.hashString];
-      
-    });
-    
-  }
-  else if (launchOptions.qr) {
-    
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-      
-      [weakSelf processQrCode:launchOptions.qr];
-      
-    });
-    
-  }
-  else if (nil == _beaconsSearchManager) {
-    
-    _beaconsSearchManager = [[OMNBeaconsSearchManager alloc] init];
-    _beaconsSearchManager.delegate = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-      
-      [weakSelf startSearchingBeacons];
-      
-    });
-    
-  }
+  });
   
 }
 
 - (void)processHash:(NSString *)hash {
   
-  [self.loaderView startAnimating:10.0f];
   __weak typeof(self)weakSelf = self;
   [OMNRestaurantManager decodeHash:hash withCompletion:^(NSArray *restaurants) {
     
@@ -131,7 +93,6 @@
 
 - (void)processQrCode:(NSString *)code {
   
-  [self.loaderView startAnimating:10.0f];
   __weak typeof(self)weakSelf = self;
   [OMNRestaurantManager decodeQR:code withCompletion:^(NSArray *restaurants) {
     
@@ -165,7 +126,7 @@
   __weak typeof(self)weakSelf = self;
   [self showRetryMessageWithError:error retryBlock:^{
     
-    [weakSelf startSearchingBeacons];
+    [weakSelf startSearchingRestaurants];
     
   } cancelBlock:^{
     
@@ -177,7 +138,7 @@
 
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
-  [self stopBeaconManager];
+  [self stopBeaconSearchManager];
   __weak typeof(self)weakSelf = self;
   [self finishLoading:^{
   
@@ -189,16 +150,15 @@
 
 - (void)cancelTap {
   
-  [self stopBeaconManager];
+  [self stopBeaconSearchManager];
   [self.delegate searchRestaurantsVCDidCancel:self];
   
 }
 
-- (void)startSearchingBeacons {
+- (void)startSearchingRestaurants {
   
+  [self stopBeaconSearchManager];
   [self.loaderView stop];
-  _beaconsSearchManager.delegate = nil;
-  [_beaconsSearchManager stop];
   
   __weak typeof(self)weakSelf = self;
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
@@ -220,7 +180,7 @@
     
     if (user) {
       
-      [weakSelf startBeaconSearchManager];
+      [weakSelf checkLaunchOptions];
       
     }
     else {
@@ -237,15 +197,59 @@
   
 }
 
+- (void)checkLaunchOptions {
+  
+  __weak typeof(self)weakSelf = self;
+  OMNLaunchOptions *launchOptions = [OMNLaunchHandler sharedHandler].launchOptions;
+  if (launchOptions.restaurants) {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      [weakSelf didFindRestaurants:launchOptions.restaurants];
+      
+    });
+    
+  }
+  else if (launchOptions.hashString) {
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      [weakSelf processHash:launchOptions.hashString];
+      
+    });
+    
+  }
+  else if (launchOptions.qr) {
+    
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      [weakSelf processQrCode:launchOptions.qr];
+      
+    });
+    
+  }
+  else  {
+    
+    [self startBeaconSearchManager];
+    
+  }
+  
+}
+
 - (void)startBeaconSearchManager {
   
   [self.loaderView setProgress:0.1];
+  if (!_beaconsSearchManager) {
+    _beaconsSearchManager = [[OMNBeaconsSearchManager alloc] init];
+  }
   _beaconsSearchManager.delegate = self;
   [_beaconsSearchManager startSearching];
   
 }
 
-- (void)stopBeaconManager {
+- (void)stopBeaconSearchManager {
   
   _beaconsSearchManager.delegate = nil;
   [_beaconsSearchManager stop];
@@ -281,7 +285,7 @@
   @[
     [OMNBarButtonInfo infoWithTitle:actionText image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
-      [weakSelf startSearchingBeacons];
+      [weakSelf startSearchingRestaurants];
       
     }]
     ];
@@ -322,7 +326,7 @@
     } break;
     case kSearchManagerRequestReload: {
       
-      [self startSearchingBeacons];
+      [self startSearchingRestaurants];
       
     } break;
   }
