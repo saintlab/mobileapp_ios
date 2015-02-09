@@ -23,7 +23,6 @@
   
   OMNMenuCategoryModel *_model;
   OMNRestaurantMediator *_restaurantMediator;
-  __weak OMNMenuProduct *_menuProductSelectionItem;
   
 }
 
@@ -145,9 +144,8 @@
 
 - (void)updateTableViewWithSelectedItems:(OMNMenuProduct *)menuProduct andScrollToCell:(UITableViewCell *)cell {
   
-  _menuProductSelectionItem.selected = NO;
-  _menuProductSelectionItem = menuProduct;
-  _menuProductSelectionItem.selected = (menuProduct.quantity > 0.0);
+  [_restaurantMediator.menu deselectAllProducts];
+  menuProduct.selected = (menuProduct.quantity > 0.0);
   
   NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
   [_tableView beginUpdates];

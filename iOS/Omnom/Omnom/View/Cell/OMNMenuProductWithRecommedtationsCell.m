@@ -60,7 +60,7 @@
 - (void)omn_setup {
   
   self.selectionStyle = UITableViewCellSelectionStyleNone;
-  
+  self.clipsToBounds = YES;
   _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   _tableView.translatesAutoresizingMaskIntoConstraints = NO;
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;

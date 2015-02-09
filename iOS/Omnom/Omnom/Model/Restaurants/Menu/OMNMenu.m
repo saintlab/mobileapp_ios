@@ -52,6 +52,16 @@
   
 }
 
+- (void)deselectAllProducts {
+  
+  [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
+    
+    menuProduct.selected = NO;
+    
+  }];
+  
+}
+
 - (long long)total {
   
   __block long long total = 0ll;
