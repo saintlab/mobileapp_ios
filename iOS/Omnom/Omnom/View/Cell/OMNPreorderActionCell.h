@@ -8,10 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol OMNPreorderActionCellDelegate;
+
 @interface OMNPreorderActionCell : UITableViewCell
 
-@property (nonatomic, copy) dispatch_block_t didOrderBlock;
-@property (nonatomic, copy) dispatch_block_t didClearBlock;
+@property (nonatomic, weak) id <OMNPreorderActionCellDelegate> delegate;
 @property (nonatomic, strong, readonly) UIButton *actionButton;
+
+@end
+
+@protocol OMNPreorderActionCellDelegate <NSObject>
+
+- (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell;
+- (void)preorderActionCellDidClear:(OMNPreorderActionCell *)preorderActionCell;
 
 @end

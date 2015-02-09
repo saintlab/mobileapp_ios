@@ -43,21 +43,13 @@
 
 - (void)orderTap {
   
-  if (self.didOrderBlock) {
-    
-    self.didOrderBlock();
-    
-  }
+  [self.delegate preorderActionCellDidOrder:self];
   
 }
 
 - (void)clearTap {
   
-  if (self.didClearBlock) {
-    
-    self.didClearBlock();
-    
-  }
+  [self.delegate preorderActionCellDidClear:self];
   
 }
 

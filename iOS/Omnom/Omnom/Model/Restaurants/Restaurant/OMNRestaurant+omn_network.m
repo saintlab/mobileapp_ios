@@ -188,7 +188,7 @@
   
 }
 
-- (void)createWishForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(OMNError *error))failureBlock {
+- (void)createWishForTableID:(NSString *)tableID products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
   if (tableID) {
@@ -198,14 +198,11 @@
     parameters[@"items"] = products;
   }
   
-#warning 123
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", @"saintlab-iiko"];
-  
-//  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.id];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"%@", responseObject);
-    block(nil);
+    OMNWish *wish = [[OMNWish alloc] initWithJsonData:responseObject];
+    completionBlock(wish);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     

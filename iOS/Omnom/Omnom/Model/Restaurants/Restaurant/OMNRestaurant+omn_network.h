@@ -8,10 +8,12 @@
 
 #import "OMNRestaurant.h"
 #import <CoreLocation/CoreLocation.h>
+#import "OMNWish.h"
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 typedef void(^OMNMenuBlock)(OMNMenu *menu);
+typedef void(^OMNWishBlock)(OMNWish *wish);
 
 @interface OMNRestaurant (omn_network)
 
@@ -22,7 +24,7 @@ typedef void(^OMNMenuBlock)(OMNMenu *menu);
  *  @param tableID      table ID or nil
  *  @param products     list of {"id":"", "quantity":"1", "modifiers":[{"id":"", "quantity":"1"}]} objects
  */
-- (void)createWishForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(OMNError *error))failureBlock;
+- (void)createWishForTableID:(NSString *)tableID products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
 
 - (void)handleEnterEventWithCompletion:(dispatch_block_t)completionBlock;

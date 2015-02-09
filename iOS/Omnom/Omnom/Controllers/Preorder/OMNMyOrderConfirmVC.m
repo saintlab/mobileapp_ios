@@ -14,8 +14,10 @@
 #import "UIView+screenshot.h"
 #import "OMNRestaurant+omn_network.h"
 #import "OMNMenuProduct+cell.h"
+#import "OMNMenu+wish.h"
 
 @interface OMNMyOrderConfirmVC ()
+<OMNPreorderActionCellDelegate>
 
 @end
 
@@ -23,6 +25,7 @@
   
   OMNRestaurantMediator *_restaurantMediator;
   NSMutableArray *_products;
+  
 }
 
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator {
@@ -48,7 +51,6 @@
     }
     
   }];
-  
   
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"upper_bar_wish"] forBarMetrics:UIBarMetricsDefault];
   
@@ -83,48 +85,13 @@
   
 }
 
-- (void)clearOrders {
+- (void)didCreateWish:(OMNWish *)wish {
   
   [_restaurantMediator.menu resetSelection];
 
-  NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:_products.count];
-  for (NSInteger row = 0; row < _products.count; row++) {
-    
-    [indexPaths addObject:[NSIndexPath indexPathForRow:row inSection:0]];
-    
-  }
-  [_products removeAllObjects];
-  [self.tableView beginUpdates];
-  [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-  [self.tableView endUpdates];
-
-}
-
-- (void)preorderTap {
-  
-  return;
-  NSArray *products =
-  @[
-    @{@"id":@"2084-in-riba-ris-nsk-at-aura", @"quantity":@(1)},
-    @{@"id":@"2092-in-riba-ris-nsk-at-aura", @"quantity":@(1)},
-    ];
-  
-  [_restaurantMediator.restaurant createWishForTableID:_restaurantMediator.table.id products:products block:^(OMNOrder *order) {
-    
-  } failureBlock:^(OMNError *error) {
-    
-  }];
-  
-  return;
   OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] init];
   preorderDoneVC.backgroundImage = [self.view omn_screenshot];
-  __weak typeof(self)weakSelf = self;
-  preorderDoneVC.didCloseBlock = ^{
-    
-    [weakSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-  };
+  preorderDoneVC.didCloseBlock = self.didCloseBlock;
   [self.navigationController presentViewController:preorderDoneVC animated:YES completion:nil];
   
 }
@@ -169,19 +136,9 @@
     } break;
     case 1: {
       
-      __weak typeof(self)weakSelf = self;
       OMNPreorderActionCell *preorderActionCell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderActionCell" forIndexPath:indexPath];
+      preorderActionCell.delegate = self;
       preorderActionCell.actionButton.enabled = (_products.count > 0);
-      preorderActionCell.didOrderBlock = ^{
-      
-        [weakSelf preorderTap];
-        
-      };
-      preorderActionCell.didClearBlock = ^{
-        
-        [weakSelf clearOrders];
-        
-      };
       cell = preorderActionCell;
       
     } break;
@@ -215,6 +172,53 @@
   }
   
   return heightForRow;
+  
+}
+
+#pragma mark - OMNPreorderActionCellDelegate
+
+- (void)preorderActionCellDidOrder:(__weak OMNPreorderActionCell *)preorderActionCell {
+  
+  preorderActionCell.actionButton.enabled = NO;
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
+  
+  NSArray *selectedWishItems = [_restaurantMediator.menu selectedWishItems];
+  __weak typeof(self)weakSelf = self;
+  [_restaurantMediator.restaurant createWishForTableID:_restaurantMediator.table.id products:selectedWishItems completionBlock:^(OMNWish *wish) {
+    
+    [self stopLoading:preorderActionCell.actionButton];
+    [weakSelf didCreateWish:wish];
+    
+  } failureBlock:^(OMNError *error) {
+    
+    [self stopLoading:preorderActionCell.actionButton];
+    
+  }];
+  
+}
+
+- (void)stopLoading:(__weak  UIButton *)actionButton {
+  
+  self.navigationItem.rightBarButtonItem = nil;
+  actionButton.enabled = YES;
+  
+}
+
+- (void)preorderActionCellDidClear:(OMNPreorderActionCell *)preorderActionCell {
+  
+  [_restaurantMediator.menu resetSelection];
+  
+  NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:_products.count];
+  for (NSInteger row = 0; row < _products.count; row++) {
+    
+    [indexPaths addObject:[NSIndexPath indexPathForRow:row inSection:0]];
+    
+  }
+  [_products removeAllObjects];
+  [self.tableView beginUpdates];
+  [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+  [self.tableView endUpdates];
   
 }
 
