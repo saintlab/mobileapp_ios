@@ -16,6 +16,7 @@
   
   UIView *_line;
   NSString *_menuProductsDelimiterColorObserverID;
+  NSLayoutConstraint *_lineHeightConstraint;
   
 }
 
@@ -73,8 +74,39 @@
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
   
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[line(1)]" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[line]" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[line]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  
+  _lineHeightConstraint = [NSLayoutConstraint constraintWithItem:_line attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:1.0f];
+  [self.contentView addConstraint:_lineHeightConstraint];
+  
+}
+
+- (void)updateLineView {
+  
+  CGFloat height = 1.0f;
+  UIColor *backgroundColor = nil;
+  switch (_menuProductsDelimiter.type) {
+    case kMenuProductsDelimiterTypeNone: {
+      
+      backgroundColor = [UIColor clearColor];
+      
+    } break;
+    case kMenuProductsDelimiterTypeGray: {
+      
+      backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
+      
+    } break;
+    case kMenuProductsDelimiterTypeRecommendations: {
+      
+      backgroundColor = colorWithHexString(@"F5A623");
+      height = 2.0f;
+      
+    } break;
+  }
+  
+  _line.backgroundColor = backgroundColor;
+  _lineHeightConstraint.constant = height;
   
 }
 
@@ -82,10 +114,10 @@
   
   [self removeMenuProductsDelimiterColorObserver];
   _menuProductsDelimiter = menuProductsDelimiter;
-  __weak UIView *line = _line;
-  _menuProductsDelimiterColorObserverID = [_menuProductsDelimiter bk_addObserverForKeyPath:NSStringFromSelector(@selector(color)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+  __weak typeof(self)weakSelf = self;
+  _menuProductsDelimiterColorObserverID = [_menuProductsDelimiter bk_addObserverForKeyPath:NSStringFromSelector(@selector(type)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
-    line.backgroundColor = menuProductsDelimiter.color;
+    [weakSelf updateLineView];
     
   }];
   

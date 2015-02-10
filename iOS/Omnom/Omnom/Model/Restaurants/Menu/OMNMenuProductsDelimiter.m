@@ -15,16 +15,25 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    
-    self.color = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
-    
   }
   return self;
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
-  return 2.0f;
+  CGFloat height = 2.0f;
+  switch (self.type) {
+    case kMenuProductsDelimiterTypeNone: {
+      
+    } break;
+    case kMenuProductsDelimiterTypeGray: {
+      
+    } break;
+    case kMenuProductsDelimiterTypeRecommendations: {
+      height = 20.0f;
+    } break;
+  }
+  return height;
   
 }
 

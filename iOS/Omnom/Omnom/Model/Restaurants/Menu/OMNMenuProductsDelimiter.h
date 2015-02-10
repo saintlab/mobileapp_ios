@@ -9,9 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "OMNMenuCellItemProtocol.h"
 
+typedef NS_ENUM(NSInteger, OMNMenuProductsDelimiterType) {
+  kMenuProductsDelimiterTypeNone,
+  kMenuProductsDelimiterTypeGray,
+  kMenuProductsDelimiterTypeRecommendations,
+};
+
 @interface OMNMenuProductsDelimiter : NSObject
 <OMNMenuCellItemProtocol>
 
-@property (nonatomic, strong) UIColor *color;
+@property (nonatomic, assign) OMNMenuProductsDelimiterType type;
 
 @end

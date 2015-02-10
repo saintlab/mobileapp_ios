@@ -37,7 +37,7 @@
     __weak typeof(self)weakSelf = self;
     _selectedObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:NSKeyValueObservingOptionNew task:^(OMNMenuProduct *mp, NSDictionary *change) {
       
-      [weakSelf updateBottomDelimetr];
+      [weakSelf updateBottomDelimiter];
       
     }];
     _model = [[OMNMenuProductWithRecommedtationsModel alloc] initWithMenuProduct:menuProduct products:products];
@@ -46,16 +46,16 @@
   return self;
 }
 
-- (void)updateBottomDelimetr {
+- (void)updateBottomDelimiter {
   
-  self.bottomDelimetr.color = (_menuProduct.selected) ? (colorWithHexString(@"F5A623")) : ([colorWithHexString(@"000000") colorWithAlphaComponent:0.2f]);
+  self.bottomDelimetr.type = (_menuProduct.selected) ? (kMenuProductsDelimiterTypeNone) : (kMenuProductsDelimiterTypeGray);
   
 }
 
 - (void)setBottomDelimetr:(OMNMenuProductsDelimiter *)bottomDelimetr {
   
   _bottomDelimetr = bottomDelimetr;
-  [self updateBottomDelimetr];
+  [self updateBottomDelimiter];
   
 }
 

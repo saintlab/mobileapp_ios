@@ -100,12 +100,9 @@
       OMNMenuProduct *recommendationProduct = products[productID];
       [recommendations addObject:recommendationProduct];
       
-      if (idx < recommendationsCount - 1) {
-        
-        OMNMenuProductsDelimiter *menuProductsDelimiter = [[OMNMenuProductsDelimiter alloc] init];
-        [recommendations addObject:menuProductsDelimiter];
-        
-      }
+      OMNMenuProductsDelimiter *menuProductsDelimiter = [[OMNMenuProductsDelimiter alloc] init];
+      menuProductsDelimiter.type = (idx < recommendationsCount - 1) ? (kMenuProductsDelimiterTypeGray) : (kMenuProductsDelimiterTypeRecommendations);
+      [recommendations addObject:menuProductsDelimiter];
       
     }];
     
