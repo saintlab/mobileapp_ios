@@ -184,11 +184,11 @@
   
   NSArray *selectedWishItems = [_restaurantMediator.menu selectedWishItems];
   __weak typeof(self)weakSelf = self;
-  [_restaurantMediator.restaurant createWishForTableID:_restaurantMediator.table.id products:selectedWishItems completionBlock:^(OMNWish *wish) {
+  [_restaurantMediator.restaurant createWishForTable:_restaurantMediator.table products:selectedWishItems completionBlock:^(OMNWish *wish) {
     
     [self stopLoading:preorderActionCell.actionButton];
     [weakSelf didCreateWish:wish];
-    
+
   } failureBlock:^(OMNError *error) {
     
     [self stopLoading:preorderActionCell.actionButton];

@@ -92,6 +92,10 @@
 
 - (BOOL)readyForPush {
   
+#warning readyForEnter
+  return YES;
+
+  
   if (!self.id) {
     return NO;
   }
@@ -120,7 +124,8 @@
 }
 
 - (BOOL)readyForEnter {
-  
+#warning readyForEnter
+  return YES;
   BOOL readyForEnter = YES;
   const NSTimeInterval timeIntervalForEnter = 20.0*60.0;
   NSDate *lastEnterDate = [self lastEnterDate];
@@ -188,11 +193,14 @@
   
 }
 
-- (void)createWishForTableID:(NSString *)tableID products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+- (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-  if (tableID) {
-    parameters[@"internal_table_id"] = tableID;
+  if (table.internal_id) {
+    parameters[@"internal_table_id"] = table.internal_id;
+  }
+  if (table.id) {
+    parameters[@"table_id"] = table.id;
   }
   if (products) {
     parameters[@"items"] = products;
