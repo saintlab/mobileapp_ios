@@ -104,9 +104,6 @@
     return NO;
   }
 
-#warning readyForPush
-  return YES;
-  
   BOOL readyForPush = YES;
   const NSTimeInterval timeIntervalForLocalPush = 4.0*60.0*60.0;
   NSDate *lastPushDate = [self lastPushDate];
@@ -124,8 +121,6 @@
 
 - (BOOL)readyForEnter {
   
-#warning 123
-  return YES;
   BOOL readyForEnter = YES;
   const NSTimeInterval timeIntervalForEnter = 20.0*60.0;
   NSDate *lastEnterDate = [self lastEnterDate];
