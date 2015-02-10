@@ -29,6 +29,6 @@
 - (instancetype)initWithJsonData:(id)jsonData;
 - (NSString *)displayText;
 - (NSString *)displayFullText;
-- (NSString *)display100Text;
+- (NSString *)compositionText;
 
 @end

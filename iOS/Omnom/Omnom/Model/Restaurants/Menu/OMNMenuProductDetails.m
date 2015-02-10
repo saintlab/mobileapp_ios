@@ -34,21 +34,20 @@
 
 - (NSString *)displayText {
   
-  NSMutableArray *displayItems = [NSMutableArray arrayWithCapacity:2];
+  NSString *displayText = @"";
   
-  if (self.energy_total.length) {
+  if (self.volume_ml.length) {
     
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал"), self.energy_total]];
+    displayText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_VOLUME %@", @"{VOLUME} мл."), self.volume_ml];
+    
+  }
+  else if (self.weight_gr.length) {
+    
+    displayText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_WEIGHT %@", @"{WEIGHT} гр."), self.weight_gr];
     
   }
   
-  if (self.weight_gr.length) {
-    
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_WEIGHT %@", @"{WEIGHT} гр."), self.weight_gr]];
-    
-  }
-  
-  return [displayItems componentsJoinedByString:@", "];
+  return displayText;
   
 }
 
@@ -110,37 +109,54 @@
   
 }
 
-- (NSString *)display100Text {
+- (NSString *)compositionText {
   
-  NSMutableArray *displayItems = [NSMutableArray arrayWithCapacity:3];
+  NSMutableArray *compositionItems = [NSMutableArray arrayWithCapacity:2];
   
+  NSMutableArray *display100Items = [NSMutableArray arrayWithCapacity:4];
+  
+  if (self.energy_100.length) {
+    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал."), self.energy_100]];
+  }
   if (self.protein_100.length) {
-    
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %@", @"Белки {PROTEIN}"), self.protein_100]];
-    
+    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %@", @"Белки {PROTEIN}"), self.protein_100]];
   }
-  
   if (self.fat_100.length) {
-    
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_FAT %@", @"Жиры {FAT}"), self.fat_100]];
-    
+    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_FAT %@", @"Жиры {FAT}"), self.fat_100]];
   }
-  
   if (self.carbohydrate_100.length) {
-    
-    [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE %@", @"Углеводы {CARBOHYDRATE}"), self.carbohydrate_100]];
-    
+    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE %@", @"Углеводы {CARBOHYDRATE}"), self.carbohydrate_100]];
   }
   
-  NSString *display100Text = @"";
-  
-  if (displayItems.count) {
+  if (display100Items.count) {
     
-    display100Text = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_100_DISPLAY_TEXT %@", @"На 100 гр. – {DISPLAY_TEXT}"), [displayItems componentsJoinedByString:@"|"]];
+    NSString *display100Text = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_100_DISPLAY_TEXT %@", @"На 100 гр.\n{DISPLAY_TEXT}"), [display100Items componentsJoinedByString:@"|"]];
+    [compositionItems addObject:display100Text];
     
   }
 
-  return display100Text;
+  NSMutableArray *displayTotalItems = [NSMutableArray arrayWithCapacity:4];
+  if (self.energy_total.length) {
+    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал."), self.energy_total]];
+  }
+  if (self.protein_total.length) {
+    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %@", @"Белки {PROTEIN}"), self.protein_total]];
+  }
+  if (self.fat_total.length) {
+    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_FAT %@", @"Жиры {FAT}"), self.fat_total]];
+  }
+  if (self.carbohydrate_total.length) {
+    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE %@", @"Углеводы {CARBOHYDRATE}"), self.carbohydrate_total]];
+  }
+  
+  if (displayTotalItems.count) {
+    
+    NSString *displayTotalText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_TOTAL_DISPLAY_TEXT %@", @"На порцию\n{DISPLAY_TEXT}"), [displayTotalItems componentsJoinedByString:@"|"]];
+    [compositionItems addObject:displayTotalText];
+    
+  }
+
+  return [compositionItems componentsJoinedByString:@"\n\n"];
   
 }
 

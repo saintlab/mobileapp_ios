@@ -18,7 +18,7 @@
   UILabel *_nameLabel;
   UILabel *_infoLabel;
   UILabel *_descriptionLabel;
-  UILabel *_info100Label;
+  UILabel *_compositionLabel;
   NSLayoutConstraint *_imageHeightConstraint;
   NSArray *_heightConstraints;
 //  UILabel *_ingredientsLabel;
@@ -94,13 +94,14 @@
   _descriptionLabel.font = FuturaOSFOmnomRegular(15.0f);
   [self addSubview:_descriptionLabel];
 
-  _info100Label = [UILabel omn_autolayoutView];
-  _info100Label.opaque = YES;
-  _info100Label.backgroundColor = backgroundColor;
-  _info100Label.textAlignment = NSTextAlignmentCenter;
-  _info100Label.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
-  _info100Label.font = FuturaLSFOmnomLERegular(12.0f);
-  [self addSubview:_info100Label];
+  _compositionLabel = [UILabel omn_autolayoutView];
+  _compositionLabel.opaque = YES;
+  _compositionLabel.numberOfLines = 0;
+  _compositionLabel.backgroundColor = backgroundColor;
+  _compositionLabel.textAlignment = NSTextAlignmentCenter;
+  _compositionLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
+  _compositionLabel.font = FuturaLSFOmnomLERegular(12.0f);
+  [self addSubview:_compositionLabel];
   
   NSDictionary *views =
   @{
@@ -108,7 +109,7 @@
     @"infoLabel" : _infoLabel,
     @"priceButton" : _priceButton,
     @"productIV" : _productIV,
-    @"info100Label" : _info100Label,
+    @"compositionLabel" : _compositionLabel,
     @"descriptionLabel" : _descriptionLabel,
     };
   
@@ -121,7 +122,7 @@
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[descriptionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[productIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[info100Label]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[compositionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
   _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
@@ -148,18 +149,18 @@
     @"priceButton" : _priceButton,
     @"productIV" : _productIV,
     @"descriptionLabel" : _descriptionLabel,
-    @"info100Label" : _info100Label,
+    @"compositionLabel" : _compositionLabel,
     };
   
   NSDictionary *metrics =
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
     @"infoLabelOffset" : (_menuProduct.details.displayFullText.length) ? (@(20.0f)) : (@(0.0f)),
-    @"info100LabelLabelOffset" : (_menuProduct.details.display100Text.length) ? (@(20.0f)) : (@(0.0f)),
+    @"compositionLabelOffset" : (_menuProduct.details.compositionText.length) ? (@(20.0f)) : (@(0.0f)),
     @"descriptionLabelOffset" : (_menuProduct.Description.length) ? (@(20.0f)) : (@(0.0f)),
     };
   
-  _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[productIV]-(8)-[nameLabel]-(infoLabelOffset)-[infoLabel]-(20)-[priceButton]-(descriptionLabelOffset)-[descriptionLabel]-(info100LabelLabelOffset)-[info100Label]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views];
+  _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[productIV]-(8)-[nameLabel]-(infoLabelOffset)-[infoLabel]-(20)-[priceButton]-(descriptionLabelOffset)-[descriptionLabel]-(compositionLabelOffset)-[compositionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views];
   [self addConstraints:_heightConstraints];
   
 }
@@ -169,7 +170,7 @@
   CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
   _nameLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   _infoLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
-  _info100Label.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
+  _compositionLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   _descriptionLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
   
@@ -183,7 +184,7 @@
   _descriptionLabel.text = menuProduct.Description;
   _nameLabel.text = menuProduct.name;
   _infoLabel.text = [menuProduct.details displayFullText];
-  _info100Label.text = [menuProduct.details display100Text];
+  _compositionLabel.text = [menuProduct.details compositionText];
   [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProduct.price] forState:UIControlStateNormal];
   [self updateHeightConstraints];
   
