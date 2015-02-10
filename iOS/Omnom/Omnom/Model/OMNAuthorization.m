@@ -250,6 +250,18 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
 }
 
+- (void)unregisterDevice {
+  
+  [[OMNOperationManager sharedManager] POST:@"/notifier/unregister" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSLog(@"unregister>%@", responseObject);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+  }];
+  
+}
+
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
 
   if (_userNotificationRegisterCompletionBlock) {
