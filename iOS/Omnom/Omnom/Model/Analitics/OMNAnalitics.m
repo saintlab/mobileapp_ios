@@ -251,7 +251,8 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
   __block NSInteger heldCardsCount = 0;
   __block NSInteger registerCardsCount = 0;
-  [bankCards enumerateObjectsUsingBlock:^(OMNBankCard *bankCard, NSUInteger idx, BOOL *stop) {
+  NSArray *enumerateCards = [bankCards copy];
+  [enumerateCards enumerateObjectsUsingBlock:^(OMNBankCard *bankCard, NSUInteger idx, BOOL *stop) {
     
     switch (bankCard.status) {
       case kOMNBankCardStatusUnknown: {
