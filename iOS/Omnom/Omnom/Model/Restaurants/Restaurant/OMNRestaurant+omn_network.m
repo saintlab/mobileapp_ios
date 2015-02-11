@@ -254,12 +254,12 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/nearby", self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"nearby>%@", responseObject);
+    DDLogDebug(@"nearby>%@", responseObject);
     completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"nearby>%@", error);
+    DDLogError(@"nearby>%@", error);
     completionBlock();
     
   }];
@@ -271,7 +271,7 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/entrance", self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"entrance>%@", responseObject);
+    DDLogInfo(@"path>%@", responseObject);
     completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -287,7 +287,7 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/leave", self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"leave>%@", responseObject);
+    DDLogInfo(@"path>%@", responseObject);
     completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

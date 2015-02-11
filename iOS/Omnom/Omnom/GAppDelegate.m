@@ -34,7 +34,7 @@
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   [OMNConstants setupWithLaunchOptions:lo completion:^{
     
-    NSLog(@"config loaded");
+    DDLogDebug(@"config loaded");
     
     [[OMNAnalitics analitics] setup];
     
@@ -126,13 +126,13 @@
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
-  NSLog(@"handleActionWithIdentifier>%@ forLocalNotification>%@", identifier, notification);
+  DDLogDebug(@"handleActionWithIdentifier>%@ forLocalNotification>%@", identifier, notification);
   completionHandler();
 
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
-  NSLog(@"handleActionWithIdentifier>%@ forRemoteNotification>%@", identifier, userInfo);
+  DDLogDebug(@"handleActionWithIdentifier>%@ forRemoteNotification>%@", identifier, userInfo);
   completionHandler();
 }
 
