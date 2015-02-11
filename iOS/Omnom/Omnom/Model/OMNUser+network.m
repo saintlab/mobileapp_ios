@@ -117,12 +117,10 @@
   
   [[OMNAuthorizationManager sharedManager] POST:@"/confirm/phone/resend" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSLog(@"/confirm/phone/resend>%@", responseObject);
     completion();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    NSLog(@"/confirm/phone/resend>%@", error);
     failureBlock([error omn_internetError]);
     
   }];

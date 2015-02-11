@@ -98,8 +98,6 @@
 		9332CB001A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */; };
 		93363FF61A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */; };
 		93363FF71A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */; };
-		93363FFD1A1B709D009D16CE /* OMNNotifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FFC1A1B709D009D16CE /* OMNNotifierManager.m */; };
-		93363FFE1A1B709D009D16CE /* OMNNotifierManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FFC1A1B709D009D16CE /* OMNNotifierManager.m */; };
 		933A2E8A19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */; };
 		933A2E8B19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */; };
 		933A9E8E1A49907A001C0909 /* OMNRestaurantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9E8D1A49907A001C0909 /* OMNRestaurantCell.m */; };
@@ -635,8 +633,6 @@
 		9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTansactionInfo.m; sourceTree = "<group>"; };
 		93363FF41A1B5EA2009D16CE /* OMNOrderTotalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderTotalView.h; sourceTree = "<group>"; };
 		93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTotalView.m; sourceTree = "<group>"; };
-		93363FFB1A1B709D009D16CE /* OMNNotifierManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNotifierManager.h; sourceTree = "<group>"; };
-		93363FFC1A1B709D009D16CE /* OMNNotifierManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNotifierManager.m; sourceTree = "<group>"; };
 		933A2E8819861CA5000055AB /* OMNOrderToRestaurantTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderToRestaurantTransition.h; sourceTree = "<group>"; };
 		933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderToRestaurantTransition.m; sourceTree = "<group>"; };
 		933A9E8C1A49907A001C0909 /* OMNRestaurantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantCell.h; sourceTree = "<group>"; };
@@ -1790,8 +1786,6 @@
 				9389455B19B0531C00C37C82 /* OMNUtils.m */,
 				9351676F19BFF7460071DA57 /* OMNImageManager.h */,
 				9351677019BFF7460071DA57 /* OMNImageManager.m */,
-				93363FFB1A1B709D009D16CE /* OMNNotifierManager.h */,
-				93363FFC1A1B709D009D16CE /* OMNNotifierManager.m */,
 				935D8C9A1A38693B00877C02 /* OMNError.h */,
 				935D8C9B1A38693B00877C02 /* OMNError.m */,
 				93D4ABD41A61144900E7C7A5 /* OMNLaunchHandler.h */,
@@ -2630,7 +2624,6 @@
 				93D117811A2F0766000131C4 /* OMNTableUserInfoItem.m in Sources */,
 				938E8F5B192F3A200088EF38 /* OMNRestaurant.m in Sources */,
 				93245DB61A1C60520065D4EC /* OMNMailRuBankCardMediator.m in Sources */,
-				93363FFD1A1B709D009D16CE /* OMNNotifierManager.m in Sources */,
 				939F992419752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				9390D25E1966DA68007E13AB /* OMNRestaurantMediator.m in Sources */,
 				9391F6661A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */,
@@ -2834,7 +2827,6 @@
 				9390D25F1966DA68007E13AB /* OMNRestaurantMediator.m in Sources */,
 				93175DC119C2DD2D005EE4C6 /* UIImage+ImageEffects.m in Sources */,
 				93F2AF001A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */,
-				93363FFE1A1B709D009D16CE /* OMNNotifierManager.m in Sources */,
 				93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,
 				936E71DB1991FEFF008FF864 /* OMNViewController.m in Sources */,
@@ -3459,7 +3451,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "df767c70-7c1a-43b6-bb01-fe8e878b6be4";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
