@@ -21,6 +21,7 @@
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC;
 
+- (long long)totalOrdersAmount;
 - (void)checkOrders;
 - (void)showUserProfile;
 - (void)myOrderTap;

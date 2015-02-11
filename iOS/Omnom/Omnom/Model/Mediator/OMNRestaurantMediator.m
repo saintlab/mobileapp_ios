@@ -309,6 +309,25 @@ OMNOrderCalculationVCDelegate>
     [self callBill];
     
   }
+  else if (0 == _orders.count) {
+    
+    [self updateOrdersIfNeeded];
+    
+  }
+  
+}
+
+- (long long)totalOrdersAmount {
+  
+  NSArray *orders = [self.orders copy];
+  __block long long total = 0ll;
+  [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
+    
+    total += order.expectedValue;
+    
+  }];
+  
+  return total;
   
 }
 

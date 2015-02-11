@@ -18,17 +18,19 @@
 #import "OMNMyOrderButton.h"
 #import "UIButton+omn_helper.h"
 #import "OMNNavigationControllerDelegate.h"
+#import "OMNUtils.h"
 
 @implementation OMNRestaurantActionsVC {
   
   OMNRestaurantMediator *_restaurantMediator;
   OMNNavigationController *_navigationController;
   NSString *_restaurantWaiterCallIdentifier;
-  
+
 }
 
 - (void)dealloc {
   
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   if (_restaurantWaiterCallIdentifier) {
     [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
   }
@@ -52,6 +54,8 @@
   self.view.backgroundColor = [UIColor whiteColor];
   
   [self setupControllers];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRestaurantActionButtons) name:OMNRestaurantOrdersDidChangeNotification object:nil];
   
   __weak typeof(self)weakSelf = self;
   _restaurantWaiterCallIdentifier = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
@@ -196,7 +200,6 @@
      [UIBarButtonItem omn_flexibleItem],
      ]
                       animated:YES];
-  
   
 }
 
