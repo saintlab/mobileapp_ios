@@ -16,17 +16,19 @@
 #import "OMNRestaurantManager.h"
 #import "OMNTable+omn_network.h"
 #import "OMNNavigationControllerDelegate.h"
+#import "OMNUtils.h"
 
 @implementation OMNRestaurantActionsVC {
   
   OMNRestaurantMediator *_restaurantMediator;
   OMNNavigationController *_navigationController;
   NSString *_restaurantWaiterCallIdentifier;
-  
+
 }
 
 - (void)dealloc {
   
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
   if (_restaurantWaiterCallIdentifier) {
     [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
   }
@@ -50,6 +52,8 @@
   self.view.backgroundColor = [UIColor whiteColor];
   
   [self setupControllers];
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRestaurantActionButtons) name:OMNRestaurantOrdersDidChangeNotification object:nil];
   
   __weak typeof(self)weakSelf = self;
   _restaurantWaiterCallIdentifier = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
@@ -100,7 +104,9 @@
   [self addActionBoardIfNeeded];
   self.bottomToolbar.hidden = NO;
   
-  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт")];
+  long long totalOrdersAmount = _restaurantMediator.totalOrdersAmount;
+  NSString *callBillTitle = ((totalOrdersAmount > 0ll)) ? ([OMNUtils formattedMoneyStringFromKop:totalOrdersAmount]) : (NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт"));
+  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:callBillTitle];
   [callBillButton addTarget:_restaurantMediator action:@selector(callBill) forControlEvents:UIControlEventTouchUpInside];
   
   if (_restaurantMediator.restaurant.settings.has_waiter_call) {
@@ -167,7 +173,6 @@
      [UIBarButtonItem omn_flexibleItem],
      ]
                       animated:YES];
-  
   
 }
 

@@ -109,7 +109,7 @@
   if (self) {
 
     self.tintColor = [UIColor blackColor];
-    self.titleLabel.font = FuturaOSFOmnomRegular(20.0f);
+    self.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
 
   }
