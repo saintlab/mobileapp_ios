@@ -8,11 +8,13 @@
 
 #import "OMNMenuProduct.h"
 #import "OMNMenuCellItemProtocol.h"
+#import "OMNMenuProductsDelimiter.h"
 
 @interface OMNMenuProduct (cell)
 <OMNMenuCellItemProtocol>
 
 - (CGFloat)preorderHeightForTableView:(UITableView *)tableView;
 - (NSArray *)recommendationListWithProducts:(NSDictionary *)products;
+- (OMNMenuProductsDelimiterType)bottomDelimiterType;
 
 @end

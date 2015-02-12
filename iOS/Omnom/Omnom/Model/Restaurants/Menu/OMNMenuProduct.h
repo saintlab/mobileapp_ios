@@ -34,6 +34,7 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 @property (nonatomic, assign) CGFloat calculationHeight;
 
 - (instancetype)initWithJsonData:(id)data allModifers:(NSDictionary *)allModifers;
+- (BOOL)hasRecommendations;
 - (void)loadImage;
 - (void)resetSelection;
 

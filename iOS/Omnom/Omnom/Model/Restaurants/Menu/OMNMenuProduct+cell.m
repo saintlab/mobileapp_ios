@@ -13,7 +13,6 @@
 #import "OMNMenuProductRecommendationsDelimiter.h"
 #import "OMNMenuProductRecommendationsDelimiterCell.h"
 #import "OMNMenuProductsDelimiterCell.h"
-#import "OMNMenuProductsDelimiter.h"
 #import <OMNStyler.h>
 
 @implementation OMNMenuProduct (cell)
@@ -51,6 +50,12 @@
   OMNMenuProductCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuProductCell class])];
   cell.menuProduct = self;
   return cell;
+  
+}
+
+- (OMNMenuProductsDelimiterType)bottomDelimiterType {
+  
+  return (self.selected && self.hasRecommendations) ? (kMenuProductsDelimiterTypeNone) : (kMenuProductsDelimiterTypeGray);
   
 }
 

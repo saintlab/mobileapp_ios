@@ -38,6 +38,12 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   return self;
 }
 
+- (BOOL)hasRecommendations {
+  
+  return (self.recommendations.count > 0);
+  
+}
+
 - (void)setQuantity:(double)quantity {
   
   _quantity = quantity;

@@ -12,6 +12,7 @@
 #import "OMNMenuProductWithRecommedtationsModel.h"
 #import <BlocksKit.h>
 #import <OMNStyler.h>
+#import "OMNMenuProduct+cell.h"
 
 @implementation OMNMenuProductWithRecommedtations {
   
@@ -48,7 +49,7 @@
 
 - (void)updateBottomDelimiter {
   
-  self.bottomDelimetr.type = (_menuProduct.selected) ? (kMenuProductsDelimiterTypeNone) : (kMenuProductsDelimiterTypeGray);
+  self.bottomDelimetr.type = _menuProduct.bottomDelimiterType;
   
 }
 
