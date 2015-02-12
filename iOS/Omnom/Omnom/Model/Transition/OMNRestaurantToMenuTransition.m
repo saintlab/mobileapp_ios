@@ -10,8 +10,6 @@
 #import "OMNR1VC.h"
 #import "OMNMenuVC.h"
 
-
-
 @implementation OMNRestaurantToMenuTransition
 
 + (NSArray *)keys {

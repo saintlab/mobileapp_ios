@@ -61,10 +61,8 @@
 }
 
 - (NSString *)formatLogMessage:(DDLogMessage *)logMessage {
-  
-  NSString *path = [NSString stringWithCString:logMessage->file encoding:NSASCIIStringEncoding];
-  NSString *fileName = [path lastPathComponent];
-  return [NSString stringWithFormat:@"[%@] %@:%d %@",[self stringFromDate:logMessage->timestamp], fileName, logMessage->lineNumber, logMessage->logMsg];
+
+  return [NSString stringWithFormat:@"[%@] %@:%lu %@",[self stringFromDate:logMessage->_timestamp], logMessage.fileName, (unsigned long)logMessage->_line, logMessage->_message];
   
 }
 

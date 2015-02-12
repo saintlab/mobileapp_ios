@@ -15,8 +15,6 @@
 #import <SSKeychain.h>
 #import "OMNAuthorization.h"
 #import "OMNLaunchOptions.h"
-#import <DDASLLogger.h>
-#import <DDTTYLogger.h>
 #import "OMNLineNumberLogFormatter.h"
 
 NSString * const kPushSoundName = @"new_guest.caf";
