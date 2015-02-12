@@ -107,7 +107,7 @@
     
   }];
   
-  _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+  _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
     
     [weakSelf menuDidChange:obj.menu];
     
@@ -326,6 +326,11 @@
   
   _menuModel.menu = menu;
   [_menuTable reloadData];
+  [UIView animateWithDuration:0.5 animations:^{
+    
+    _menuTable.alpha = (menu.products.count > 0) ? (1.0f) : (0.0f);
+    
+  }];
   
 }
 
@@ -355,6 +360,7 @@
     
     _menuModel = [[OMNMenuModel alloc] init];
     _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _menuTable.alpha = 0.0f;
     _menuTable.allowsSelection = NO;
     _menuTable.scrollEnabled = NO;
     _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
@@ -395,6 +401,10 @@
 }
 
 - (void)menuTap {
+  
+  if (!_restaurantMediator.menu.products.count > 0) {
+    return;
+  }
   
   OMNMenuVC *menuVC = [[OMNMenuVC alloc] initWithMediator:_restaurantMediator];
   __weak typeof(self)weakSelf = self;
