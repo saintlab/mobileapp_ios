@@ -112,9 +112,13 @@
     
   }];
 
-  _menuModel.didScrollToTopBlock = ^{
+  _menuModel.didEndDraggingBlock = ^(UITableView *tableView) {
     
-    [weakSelf menuTap];
+    if (tableView.contentOffset.y > -20.0f) {
+      
+      [weakSelf menuTap];
+      
+    }
     
   };
   

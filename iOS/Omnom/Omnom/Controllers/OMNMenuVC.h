@@ -14,7 +14,7 @@
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
-@property (nonatomic, strong) UIColor *fadeViewColor;
+@property (nonatomic, strong, readonly) UIView *fadeView;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 

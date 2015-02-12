@@ -30,41 +30,28 @@
   [containerView addSubview:toViewController.view];
   [containerView addSubview:fromViewController.view];
   
-//  UIEdgeInsets initialContentInset = menuTable.contentInset;
-//  CGRect fromTableFrame = menuTable.frame;
-//  CGRect toTableFrame = [toViewController.tableView convertRect:toViewController.tableView.bounds toView:containerView];
-//  
-//  UIView *fadeView = [[UIView alloc] initWithFrame:fromViewController.view.bounds];
-//  fadeView.backgroundColor = toViewController.fadeViewColor;
-//  fadeView.alpha = 0.0f;
-//  [fromViewController.view insertSubview:fadeView belowSubview:menuTable];
-//  [fromViewController.view layoutIfNeeded];
-//  //  [fromViewController.view bringSubviewToFront:menuTable];
-//  
-//  [UIView animateWithDuration:duration animations:^{
-//    
-//    fadeView.alpha = 1.0f;
-//    fromViewController.circleButton.alpha = 0.0f;
-//    menuTable.contentOffset = CGPointZero;
-//    menuTable.contentInset = toViewController.tableView.contentInset;
-//    menuTable.frame = toTableFrame;
-//    
-//  } completion:^(BOOL finished) {
-//    
-//    fromViewController.circleButton.alpha = 1.0f;
-//    [fadeView removeFromSuperview];
-//    menuTable.frame = fromTableFrame;
-//    menuTable.bounces = YES;
-//    menuTable.contentInset = initialContentInset;
-//    [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-//    
-//  }];
+  CGRect toTableFrame = [toViewController.menuTable convertRect:toViewController.menuTable.bounds toView:containerView];
+  toViewController.menuTable.hidden = YES;
+  
+  [UIView animateWithDuration:duration animations:^{
+    
+    fromViewController.backgroundView.alpha = 0.0f;
+    menuTable.contentOffset = CGPointZero;
+    menuTable.contentInset = toViewController.menuTable.contentInset;
+    menuTable.frame = toTableFrame;
+    
+  } completion:^(BOOL finished) {
+  
+    toViewController.menuTable.hidden = NO;
+    [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+    
+  }];
   
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  return 10.5;
+  return 0.5;
   
 }
 

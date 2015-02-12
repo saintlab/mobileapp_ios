@@ -36,11 +36,10 @@
   CGRect toTableFrame = [toViewController.tableView convertRect:toViewController.tableView.bounds toView:containerView];
   
   UIView *fadeView = [[UIView alloc] initWithFrame:fromViewController.view.bounds];
-  fadeView.backgroundColor = toViewController.fadeViewColor;
+  fadeView.backgroundColor = toViewController.fadeView.backgroundColor;
   fadeView.alpha = 0.0f;
   [fromViewController.view insertSubview:fadeView belowSubview:menuTable];
   [fromViewController.view layoutIfNeeded];
-//  [fromViewController.view bringSubviewToFront:menuTable];
 
   [UIView animateWithDuration:duration animations:^{
     

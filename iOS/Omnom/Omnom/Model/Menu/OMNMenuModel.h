@@ -10,13 +10,14 @@
 #import "OMNMenu.h"
 
 typedef void(^OMNMenuCategoryDidSelectBlock)(OMNMenuCategory *menuCategory);
+typedef void(^OMNMenuTableDidEndDraggingBlock)(UITableView *tableView);
 
 @interface OMNMenuModel : NSObject
 <UITableViewDataSource,
 UITableViewDelegate>
 
 @property (nonatomic, copy) OMNMenuCategoryDidSelectBlock didSelectBlock;
-@property (nonatomic, copy) dispatch_block_t didScrollToTopBlock;
+@property (nonatomic, copy) OMNMenuTableDidEndDraggingBlock didEndDraggingBlock;
 @property (nonatomic, strong) OMNMenu *menu;
 
 - (void)configureTableView:(UITableView *)tableView;

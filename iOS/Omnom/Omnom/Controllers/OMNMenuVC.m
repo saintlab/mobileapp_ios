@@ -48,6 +48,16 @@
     
   };
   
+  _menuModel.didEndDraggingBlock = ^(UITableView *tableView) {
+    
+    if (tableView.contentOffset.y + tableView.contentInset.top < -20.0f) {
+      
+      [weakSelf backTap];
+      
+    }
+    
+  };
+  
   UIEdgeInsets insets = UIEdgeInsetsMake(100.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   _tableView.contentInset = insets;
   _tableView.scrollIndicatorInsets = insets;
@@ -100,11 +110,11 @@
 
 - (void)omn_setup {
   
-  self.view.backgroundColor = [UIColor whiteColor];
-  self.fadeViewColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
-  UIView *fadeView = [UIView omn_autolayoutView];
-  fadeView.backgroundColor = self.fadeViewColor;
-  [self.view addSubview:fadeView];
+  self.view.backgroundColor = [UIColor clearColor];
+
+  _fadeView = [UIView omn_autolayoutView];
+  _fadeView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
+  [self.backgroundView addSubview:_fadeView];
   
   _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   _tableView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -117,7 +127,7 @@
   NSDictionary *views =
   @{
     @"tableView" : _tableView,
-    @"fadeView" : fadeView,
+    @"fadeView" : _fadeView,
     @"topLayoutGuide" : self.topLayoutGuide,
     };
   
@@ -127,8 +137,8 @@
     @"bottomToolbarHeight" : [OMNStyler styler].bottomToolbarHeight,
     };
 
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
