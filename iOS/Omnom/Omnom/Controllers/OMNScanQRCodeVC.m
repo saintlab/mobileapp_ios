@@ -126,7 +126,7 @@
   
   if (!input) {
     // If any error occurs, simply log the description of it and don't continue any more.
-    DDLogError(@"startScanning>%@", [error localizedDescription]);
+    NSLog(@"startScanning>%@", [error localizedDescription]);
     return;
   }
   
@@ -153,7 +153,7 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
   
-  DDLogInfo(@"didOutputMetadataObjects>%@", metadataObjects);
+  NSLog(@"didOutputMetadataObjects>%@", metadataObjects);
   AVMetadataMachineReadableCodeObject *metadataObject = [metadataObjects firstObject];
 
   if (metadataObject) {

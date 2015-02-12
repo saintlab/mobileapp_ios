@@ -9,8 +9,7 @@
 #import "OMNTableUserInfoItem.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
-#import "UIImage+omn_helper.h"
-#import "UIButton+omn_helper.h"
+#import "OMNTableButton.h"
 #import "OMNChangeTableAlertVC.h"
 
 @implementation OMNTableUserInfoItem {
@@ -52,17 +51,11 @@
   
   if (_restaurantMediator.table) {
     
+    OMNTableButton *tableButton = [OMNTableButton buttonWithColor:colorWithHexString(@"157EFB")];
     NSString *title = [NSString stringWithFormat:NSLocalizedString(@"TABLE_UPDATE_BUTTON_TITLE %@", @"{table_number} Обновить"), _restaurantMediator.table.internal_id];
-    UIButton *pinButton = [[UIButton alloc] init];
-    pinButton.userInteractionEnabled = NO;
-    UIColor *color = colorWithHexString(@"157EFB");
-    pinButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
-    [pinButton setTitleColor:color forState:UIControlStateNormal];
-    [pinButton setImage:[[UIImage imageNamed:@"table_marker_icon"] omn_tintWithColor:color] forState:UIControlStateNormal];
-    [pinButton omn_centerButtonAndImageWithSpacing:2.0f];
-    [pinButton setTitle:title forState:UIControlStateNormal];
-    [pinButton sizeToFit];
-    cell.accessoryView = pinButton;
+    [tableButton setText:title];
+    tableButton.userInteractionEnabled = NO;
+    cell.accessoryView = tableButton;
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     
   }

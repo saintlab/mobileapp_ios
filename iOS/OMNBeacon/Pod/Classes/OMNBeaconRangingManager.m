@@ -146,7 +146,7 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
 }
 
 - (void)locationManager:(CLLocationManager *)manager rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region withError:(NSError *)error {
-  
+
   if (![_rangingBeaconRegions containsObject:region]) {
     return;
   }

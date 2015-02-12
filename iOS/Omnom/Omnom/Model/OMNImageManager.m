@@ -55,29 +55,7 @@
 - (void)downloadImageWithURL:(NSString *)urlString completion:(void (^)(UIImage *image))completionBlock {
   
   NSURL *imageUrl = [NSURL URLWithString:urlString];
-  
-  if ([_imageManager cachedImageExistsForURL:imageUrl]) {
-
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:imageUrl];
-    [request setHTTPMethod:@"HEAD"];
-    request.timeoutInterval = 5.0;
-    __weak typeof(self)weakSelf = self;
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue new] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-      
-      if ([response expectedContentLength] != [weakSelf cachedImageSizeForUrl:imageUrl]) {
-        [weakSelf removeImageForUrl:imageUrl];
-      }
-      
-      [weakSelf startDownloadImageWithURL:imageUrl options:SDWebImageRetryFailed completion:completionBlock];
-      
-    }];
-
-  }
-  else {
-    
-    [self startDownloadImageWithURL:imageUrl options:0 completion:completionBlock];
-    
-  }
+  [self startDownloadImageWithURL:imageUrl options:0 completion:completionBlock];
 
 }
 

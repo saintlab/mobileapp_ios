@@ -20,7 +20,11 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNSocketManager.h"
 #import "OMNNoOrdersVC.h"
+#import "OMNMyOrderConfirmVC.h"
+#import "OMNNavigationController.h"
 #import "OMNLaunchHandler.h"
+#import "OMNProductModiferAlertVC.h"
+#import "OMNRestaurant+omn_network.h"
 #import <BlocksKit.h>
 #import "OMNNavigationControllerDelegate.h"
 
@@ -52,7 +56,7 @@ OMNOrderCalculationVCDelegate>
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC {
   self = [super init];
   if (self) {
-    
+
     _restaurantActionsVC = restaurantActionsVC;
     _restaurant = restaurant;
     self.table = [_restaurant.tables firstObject];
@@ -67,6 +71,13 @@ OMNOrderCalculationVCDelegate>
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidCreate:) name:OMNSocketIOOrderDidCreateNotification object:[OMNSocketManager manager]];
     
     [self startListeningRestaurantEvents];
+    
+    __weak typeof(self)weakSelf = self;
+    [_restaurant getMenuWithCompletion:^(OMNMenu *menu) {
+      
+      weakSelf.menu = menu;
+      
+    }];
     
   }
   return self;
@@ -401,6 +412,18 @@ OMNOrderCalculationVCDelegate>
   
 }
 
+- (void)myOrderTap {
+  
+  OMNMyOrderConfirmVC *preorderConfirmVC = [[OMNMyOrderConfirmVC alloc] initWithRestaurantMediator:self];
+  __weak typeof(self)weakSelf = self;
+  preorderConfirmVC.didCloseBlock = ^{
+    
+    [weakSelf.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [_restaurantActionsVC.navigationController presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
+  
+}
 
 - (void)callBill {
   
@@ -422,6 +445,25 @@ OMNOrderCalculationVCDelegate>
     [weakSelf getOrdersWithLoadingVC:loadingCircleVC];
     
   }];
+  
+}
+
+- (void)editMenuProduct:(OMNMenuProduct *)menuProduct withCompletion:(dispatch_block_t)completionBlock {
+  
+  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
+  __weak typeof(self)weakSelf = self;
+  productModiferAlertVC.didCloseBlock = ^{
+    
+    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  
+  productModiferAlertVC.didSelectOrderBlock = ^{
+    
+    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:completionBlock];
+    
+  };
+  [self.restaurantActionsVC.navigationController presentViewController:productModiferAlertVC animated:YES completion:nil];
   
 }
 

@@ -28,10 +28,12 @@
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
 #if DEBUG
+    NSLog(@"not app store");
 //    _customConfigName = @"config_laaaab";
 //    _customConfigName = @"config_staging";
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";
 //    _qr = @"qr-code-for-2-saintlab-iiko";
+//    _qr = @"http://omnom.menu/qr/8eab9af3006a4fb0cd0bd92836e90130"; //мехико
 //        @"qr-code-3-at-saintlab-iiko";
 //    _qr = @"qr-code-for-4-saintlab-rkeeper-v6";
 //    @"qr-code-for-1-ruby-bar-nsk-at-lenina-9";

@@ -18,17 +18,18 @@
 #import "OMNRestaurantManager.h"
 #import "OMNNearestBeaconSearchManager.h"
 
+#import "OMNMenuCategory.h"
+
 @implementation GAppDelegate {
   
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+  
 #if OMN_TEST
   return YES;
 #endif
-  
-  DDLogDebug(@"didFinishLaunchingWithOptions>%@", launchOptions);
+  NSLog(@"didFinishLaunchingWithOptions>%@", launchOptions);
   
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   [OMNConstants setupWithLaunchOptions:lo completion:^{

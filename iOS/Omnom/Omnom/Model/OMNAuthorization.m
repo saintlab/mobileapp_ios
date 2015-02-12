@@ -9,6 +9,7 @@
 #import "OMNAnalitics.h"
 #import "OMNAuthorization.h"
 #import "OMNAuthorizationManager.h"
+#import "OMNNotifierManager.h"
 #import "OMNOperationManager.h"
 #import "OMNUser.h"
 #import "OMNUser+network.h"
@@ -93,6 +94,8 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   [self willChangeValueForKey:@"user"];
   
   [_user updateWithUser:user];
+  
+  [OMNNotifierManager sharedManager].userID = user.id;
   
   [[OMNAnalitics analitics] setUser:user];
   
@@ -225,8 +228,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
       };
     [[OMNOperationManager sharedManager] POST:@"/notifier/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
-      DDLogDebug(@"notifier/register>%@", parameters);
-      
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_NOTIFIER" jsonRequest:parameters responseOperation:operation];
@@ -241,7 +242,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
   [[OMNOperationManager sharedManager] POST:@"/notifier/unregister" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    DDLogDebug(@"unregister>%@", responseObject);
+    NSLog(@"unregister>%@", responseObject);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -260,6 +261,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
+  [OMNNotifierManager sharedManager].deviceToken = deviceToken;
   self.deviceToken = deviceToken;
   [self registerDeviceIfPossible];
   
@@ -298,6 +300,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)updateAuthenticationToken {
   
+  [[OMNNotifierManager sharedManager].requestSerializer setValue:self.token forHTTPHeaderField:@"x-authentication-token"];
   [[OMNOperationManager sharedManager].requestSerializer setValue:self.token forHTTPHeaderField:@"x-authentication-token"];
   [self registerDeviceIfPossible];
   
@@ -335,7 +338,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
   //Check if we have UUID already
   NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAuthorisationAccountName];
-  DDLogDebug(@"installId>%@", retrieveuuid);
+  NSLog(@"installId>%@", retrieveuuid);
   if (nil == retrieveuuid) {
     
     //Create new key for this app/device

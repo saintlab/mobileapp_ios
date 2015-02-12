@@ -25,6 +25,8 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurant+omn_network.h"
 #import "OMNRestaurantManager.h"
+#import "OMNMenuModel.h"
+#import "OMNMenuVC.h"
 #import "OMNTableButton.h"
 
 @interface OMNR1VC ()
@@ -38,6 +40,10 @@
   OMNRestaurantMediator *_restaurantMediator;
   UIPercentDrivenInteractiveTransition *_interactiveTransition;
   NSString *_restaurantWaiterCallIdentifier;
+  NSString *_restaurantMenuOserverID;
+  
+  UITableView *_menuTable;
+  OMNMenuModel *_menuModel;
   
   OMNTableButton *_tableButton;
   BOOL _showTableButtonAnimation;
@@ -50,6 +56,9 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   if (_restaurantWaiterCallIdentifier) {
     [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
+  }
+  if (_restaurantMenuOserverID) {
+    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantMenuOserverID];
   }
   
 }
@@ -83,9 +92,6 @@
 
   self.navigationItem.title = @"";
   
-  UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-  [self.view addGestureRecognizer:panGR];
-  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
 
   [[OMNAnalitics analitics] logEnterRestaurant:_restaurantMediator.restaurant mode:kRestaurantEnterModeApplicationLaunch];
@@ -98,6 +104,12 @@
   _restaurantWaiterCallIdentifier = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
     
     (obj.waiterIsCalled) ? ([weakSelf callWaiterDidStart]) : ([weakSelf callWaiterDidStop]);
+    
+  }];
+  
+  _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+    
+    [weakSelf menuDidChange:obj.menu];
     
   }];
 
@@ -310,6 +322,18 @@
   
 }
 
+- (void)menuDidChange:(OMNMenu *)menu {
+  
+  _menuModel.menu = menu;
+  [_menuTable reloadData];
+  [UIView animateWithDuration:0.5 animations:^{
+    
+    _menuTable.alpha = (menu.products.count > 0) ? (1.0f) : (0.0f);
+    
+  }];
+  
+}
+
 - (void)orderDidPay:(NSNotification *)n {
   
   id paymentData = n.userInfo[OMNPaymentDataKey];
@@ -324,25 +348,73 @@
   gradientView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.backgroundView addSubview:gradientView];
   
-  NSDictionary *views =
-  @{
-    @"gradientView" : gradientView,
-    };
+  NSMutableDictionary *views =
+  [@{
+     @"gradientView" : gradientView,
+     } mutableCopy];
   
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:0 metrics:nil views:views]];
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[gradientView]|" options:0 metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:kNilOptions metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[gradientView]|" options:kNilOptions metrics:nil views:views]];
   
-  UIButton *actionButton = [[UIButton alloc] init];
-  actionButton.translatesAutoresizingMaskIntoConstraints = NO;
-  [actionButton addTarget:self action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
-  [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
-  [self.view addSubview:actionButton];
+  if (_restaurantMediator.restaurant.settings.has_menu) {
+    
+    _menuModel = [[OMNMenuModel alloc] init];
+    _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _menuTable.alpha = 0.0f;
+    _menuTable.allowsSelection = NO;
+    _menuTable.scrollEnabled = NO;
+    _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
+    [_menuModel configureTableView:_menuTable];
+    [self.backgroundView addSubview:_menuTable];
+    
+    views[@"menuTable"] = _menuTable;
+    
+    self.backgroundView.userInteractionEnabled = YES;
+    [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:nil views:views]];
+    [self.backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:gradientView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
+    [self.backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+    
+    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuTap)];
+    [_menuTable addGestureRecognizer:tapGR];
+    
+  }
+  else {
+
+    UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [self.view addGestureRecognizer:panGR];
+
+    UIButton *actionButton = [[UIButton alloc] init];
+    actionButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [actionButton addTarget:self action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
+    [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
+    [self.view addSubview:actionButton];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-[OMNStyler styler].bottomToolbarHeight.floatValue]];
+    
+    [self.view layoutIfNeeded];
+    
+  }
   
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-[OMNStyler styler].bottomToolbarHeight.floatValue]];
-  [self.view layoutIfNeeded];
+}
+
+- (void)menuTap {
+  
+  if (!_restaurantMediator.menu.products.count > 0) {
+    return;
+  }
+  
+  OMNMenuVC *menuVC = [[OMNMenuVC alloc] initWithMediator:_restaurantMediator];
+  __weak typeof(self)weakSelf = self;
+  menuVC.didCloseBlock = ^{
+    
+    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    
+  };
+  menuVC.backgroundImage = self.backgroundImage;
+  [self.navigationController pushViewController:menuVC animated:YES];
   
 }
 
