@@ -17,6 +17,7 @@
 #import "OMNLaunchOptions.h"
 #import <DDASLLogger.h>
 #import <DDTTYLogger.h>
+#import "OMNLineNumberLogFormatter.h"
 
 NSString * const kPushSoundName = @"new_guest.caf";
 NSString * const OMNFacebookPageUrlString = @"https://www.facebook.com/omnom.menu/";
@@ -42,7 +43,8 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
   
   [DDLog addLogger:[DDASLLogger sharedInstance]];
   [DDLog addLogger:[DDTTYLogger sharedInstance]];
-  
+  [[DDTTYLogger sharedInstance] setLogFormatter:[OMNLineNumberLogFormatter new]];
+
   _customConfig = [self configWithName:launchOptions.customConfigName];
   
   //setup keychain for background usage

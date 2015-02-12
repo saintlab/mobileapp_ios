@@ -16,6 +16,7 @@ typedef void(^OMNMenuCategoryDidSelectBlock)(OMNMenuCategory *menuCategory);
 UITableViewDelegate>
 
 @property (nonatomic, copy) OMNMenuCategoryDidSelectBlock didSelectBlock;
+@property (nonatomic, copy) dispatch_block_t didScrollToTopBlock;
 @property (nonatomic, strong) OMNMenu *menu;
 
 - (void)configureTableView:(UITableView *)tableView;

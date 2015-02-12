@@ -25,9 +25,6 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
-  // Get a snapshot of the thing cell we're transitioning from
-  
-  
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
   UITableViewCell *cell = [toViewController.tableView cellForRowAtIndexPath:toViewController.selectedIndexPath];
   

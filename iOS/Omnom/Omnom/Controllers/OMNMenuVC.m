@@ -101,9 +101,9 @@
 - (void)omn_setup {
   
   self.view.backgroundColor = [UIColor whiteColor];
-  
+  self.fadeViewColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
   UIView *fadeView = [UIView omn_autolayoutView];
-  fadeView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.8f];
+  fadeView.backgroundColor = self.fadeViewColor;
   [self.view addSubview:fadeView];
   
   _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];

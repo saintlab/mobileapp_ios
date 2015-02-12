@@ -98,4 +98,15 @@
   
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  
+  if (scrollView.contentOffset.y > -20.0f &&
+      self.didScrollToTopBlock) {
+    
+    self.didScrollToTopBlock();
+    
+  }
+  
+}
+
 @end

@@ -13,6 +13,7 @@
 @interface OMNR1VC : OMNCircleRootVC
 
 @property (nonatomic, assign, readonly) BOOL isViewVisible;
+@property (nonatomic, strong, readonly) UITableView *menuTable;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 

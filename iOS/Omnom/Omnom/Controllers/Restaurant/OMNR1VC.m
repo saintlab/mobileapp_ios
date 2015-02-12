@@ -42,7 +42,6 @@
   NSString *_restaurantWaiterCallIdentifier;
   NSString *_restaurantMenuOserverID;
   
-  UITableView *_menuTable;
   OMNMenuModel *_menuModel;
   
   OMNTableButton *_tableButton;
@@ -113,6 +112,12 @@
     
   }];
 
+  _menuModel.didScrollToTopBlock = ^{
+    
+    [weakSelf menuTap];
+    
+  };
+  
   self.circleBackground = _restaurantMediator.restaurant.decoration.circleBackground;
   
 }
@@ -155,14 +160,14 @@
     UIColor *color = _restaurantMediator.restaurant.decoration.antagonist_color;
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
     
-    UIButton *userButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:self action:@selector(showUserProfile)];
+    UIButton *userButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:_restaurantMediator action:@selector(showUserProfile)];
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:userButton]];
     
     if (!_showTableButtonAnimation) {
       
       _showTableButtonAnimation = YES;
       _tableButton = [OMNTableButton buttonWithColor:color];
-      [_tableButton addTarget:self action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
+      [_tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
       [_tableButton setText:_restaurantMediator.table.internal_id];
       _tableButton.center = userButton.center;
       [userButton.superview addSubview:_tableButton];
@@ -316,16 +321,15 @@
 
 }
 
-- (void)showUserProfile {
-  
-  [_restaurantMediator showUserProfile];
-  
-}
-
 - (void)menuDidChange:(OMNMenu *)menu {
   
   _menuModel.menu = menu;
   [_menuTable reloadData];
+  
+  const CGFloat kMenuTableOffset = 60.0f;
+  CGFloat bottomInset = _menuTable.frame.size.height - _menuTable.contentSize.height - kMenuTableOffset;
+  _menuTable.contentInset = UIEdgeInsetsMake(kMenuTableOffset, 0.0f, bottomInset, 0.0f);
+
   [UIView animateWithDuration:0.5 animations:^{
     
     _menuTable.alpha = (menu.products.count > 0) ? (1.0f) : (0.0f);
@@ -361,18 +365,18 @@
     _menuModel = [[OMNMenuModel alloc] init];
     _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _menuTable.alpha = 0.0f;
+    _menuTable.clipsToBounds = NO;
+    _menuTable.showsVerticalScrollIndicator = NO;
     _menuTable.allowsSelection = NO;
-    _menuTable.scrollEnabled = NO;
     _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
     [_menuModel configureTableView:_menuTable];
-    [self.backgroundView addSubview:_menuTable];
+    [self.view insertSubview:_menuTable belowSubview:self.circleButton];
     
     views[@"menuTable"] = _menuTable;
     
-    self.backgroundView.userInteractionEnabled = YES;
-    [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:nil views:views]];
-    [self.backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:gradientView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
-    [self.backgroundView addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.backgroundView attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:nil views:views]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
     
     UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuTap)];
     [_menuTable addGestureRecognizer:tapGR];
