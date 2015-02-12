@@ -37,7 +37,7 @@
   if (self) {
     
     _menuProduct = menuProduct;
-    _quantity = _menuProduct.quantity;
+    _quantity = (_menuProduct.quantity > 0.0) ? (_menuProduct.quantity) : (1.0);
     _model = [[OMNMenuProductModifersModel alloc] init];
     _model.menuProduct = menuProduct;
     
