@@ -15,6 +15,7 @@
 @property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 @property (nonatomic, strong, readonly) UITableView *tableView;
+@property (nonatomic, strong, readonly) UILabel *headerLabel;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator category:(OMNMenuCategory *)menuCategory;
 

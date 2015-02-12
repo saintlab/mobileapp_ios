@@ -10,9 +10,9 @@
 #import <OMNStyler.h>
 #import "OMNMenuProductVC.h"
 #import "OMNMenuCategoryModel.h"
-#import "OMNCategoryNavigationView.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
+#import "OMNMenuHeaderLabel.h"
 
 @interface OMNMenuCategoryVC ()
 <OMNMenuProductWithRecommedtationsCellDelegate>
@@ -42,21 +42,11 @@
   [super viewDidLoad];
   
   [self omn_setup];
-  [self.view layoutIfNeeded];
   _tableView.delegate = _model;
   _tableView.dataSource = _model;
-
+  
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
 
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
- 
-  OMNCategoryNavigationView *categoryNavigationView = [[OMNCategoryNavigationView alloc] init];
-  categoryNavigationView.category = _menuCategory;
-  self.navigationItem.titleView = categoryNavigationView;
-  
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -109,6 +99,13 @@
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][tableView]|" options:kNilOptions metrics:metrics views:views]];
+  
+  _headerLabel = [[OMNMenuHeaderLabel alloc] init];
+  _headerLabel.text = _menuCategory.name;
+  [_headerLabel sizeToFit];
+  self.navigationItem.titleView = _headerLabel;
+  
+  [self.view layoutIfNeeded];
   
 }
 

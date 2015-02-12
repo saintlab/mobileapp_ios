@@ -11,6 +11,7 @@
 #import <OMNStyler.h>
 #import "OMNConstants.h"
 #import "UIImage+omn_helper.h"
+#import "OMNMenuHeaderLabel.h"
 
 @implementation OMNMenuItemCell {
   
@@ -39,13 +40,13 @@
 - (void)omn_setup {
   
   self.backgroundView = [[UIView alloc] init];
+  self.selectedBackgroundView = [[UIView alloc] init];
+  self.selectedBackgroundView.backgroundColor = [UIColor clearColor];
   self.backgroundView.backgroundColor = [UIColor clearColor];
   self.contentView.backgroundColor = [UIColor clearColor];
   self.backgroundColor = [UIColor clearColor];
 
-  _label = [UILabel omn_autolayoutView];
-  _label.textColor = colorWithHexString(@"FFFFFF");
-  _label.font = FuturaOSFOmnomRegular(20.0f);
+  _label = [OMNMenuHeaderLabel omn_autolayoutView];
   [self.contentView addSubview:_label];
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
