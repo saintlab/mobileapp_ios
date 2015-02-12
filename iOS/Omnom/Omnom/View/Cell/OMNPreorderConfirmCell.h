@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNMenuProduct.h"
 
 @interface OMNPreorderConfirmCell : UITableViewCell
+
+@property (nonatomic, strong) OMNMenuProduct *menuProduct;
+
+@end
+
+@interface OMNPreorderConfirmView : UIView
+
+@property (nonatomic, strong) OMNMenuProduct *menuProduct;
 
 @end

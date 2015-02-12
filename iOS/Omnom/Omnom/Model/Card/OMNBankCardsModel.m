@@ -17,6 +17,7 @@
 #import "UINavigationController+omn_replace.h"
 #import <OMNStyler.h>
 #import <SSKeychain.h>
+#import <BlocksKit.h>
 
 NSString * const kCardIdServiceName = @"card_id";
 
@@ -43,14 +44,11 @@ NSString * const kCardIdServiceName = @"card_id";
 
 - (OMNBankCard *)selectedCard {
   
-  __block OMNBankCard *selectedCard = nil;
+  NSString *selectedCardId = self.card_id;
   NSArray *cards = [self.cards copy];
-  [cards enumerateObjectsUsingBlock:^(OMNBankCard *card, NSUInteger idx, BOOL *stop) {
+  OMNBankCard *selectedCard = [cards bk_match:^BOOL(OMNBankCard *card) {
     
-    if ([card.id isEqualToString:self.card_id]) {
-      selectedCard = card;
-      *stop = YES;
-    }
+    return [card.id isEqualToString:selectedCardId];
     
   }];
   
@@ -87,7 +85,8 @@ NSString * const kCardIdServiceName = @"card_id";
     return;
   }
   
-  [self.cards enumerateObjectsUsingBlock:^(OMNBankCard *card, NSUInteger idx, BOOL *stop) {
+  NSArray *cards = [self.cards copy];
+  [cards enumerateObjectsUsingBlock:^(OMNBankCard *card, NSUInteger idx, BOOL *stop) {
     
     if (kOMNBankCardStatusRegistered == card.status) {
       self.card_id = card.id;
@@ -111,18 +110,12 @@ NSString * const kCardIdServiceName = @"card_id";
 
 - (BOOL)hasRegisterdCards {
   
-  __block BOOL hasRegisterdCards = NO;
-  [self.cards enumerateObjectsUsingBlock:^(OMNBankCard *card, NSUInteger idx, BOOL *stop) {
+  NSArray *cards = [self.cards copy];
+  BOOL hasRegisterdCards = [cards bk_any:^BOOL(OMNBankCard *card) {
     
-    if (kOMNBankCardStatusRegistered == card.status) {
-      
-      hasRegisterdCards = YES;
-      *stop = YES;
-      
-    }
+    return (kOMNBankCardStatusRegistered == card.status);
     
   }];
-  
   return hasRegisterdCards;
   
 }

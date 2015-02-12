@@ -91,7 +91,11 @@
 }
 
 - (BOOL)readyForPush {
-    return YES;
+  
+#warning readyForEnter
+  return YES;
+
+  
   if (!self.id) {
     return NO;
   }
@@ -120,7 +124,7 @@
 }
 
 - (BOOL)readyForEnter {
-  
+#warning readyForEnter
   return YES;
   BOOL readyForEnter = YES;
   const NSTimeInterval timeIntervalForEnter = 20.0*60.0;
@@ -189,32 +193,30 @@
   
 }
 
-- (void)createOrderForTableID:(NSString *)tableID products:(NSArray *)products block:(OMNOrderBlock)block failureBlock:(void(^)(NSError *error))failureBlock {
+- (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
   
-  if (0 == tableID.length) {
-    failureBlock(nil);
-    return;
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+  if (table.internal_id) {
+    parameters[@"internal_table_id"] = table.internal_id;
+  }
+  if (table.id) {
+    parameters[@"table_id"] = table.id;
+  }
+  if (products) {
+    parameters[@"items"] = products;
   }
   
-  NSMutableArray *items = [NSMutableArray arrayWithCapacity:products.count];
-  
-  [products enumerateObjectsUsingBlock:^(OMNMenuItem *menuItem, NSUInteger idx, BOOL *stop) {
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.id];
+  [[OMNOperationManager sharedManager] POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    NSDictionary *item =
-    @{
-      @"internalId" : menuItem.internalId,
-      @"" : @(menuItem.quantity),
-      };
-    [items addObject:item];
+    OMNWish *wish = [[OMNWish alloc] initWithJsonData:responseObject];
+    completionBlock(wish);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock([error omn_internetError]);
     
   }];
-  
-  __unused NSDictionary *info =
-  @{
-    @"restaurantId" : self.id,
-    @"tableId" : tableID,
-    @"items" : items,
-    };
   
 }
 
@@ -291,6 +293,40 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     completionBlock();
+    
+  }];
+  
+}
+
+- (void)getMenuWithCompletion:(OMNMenuBlock)completion {
+
+  if (NO) {
+    id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
+    OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
+    completion(menu);
+    return;
+  }
+
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/menu", self.id];
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if ([responseObject omn_isSuccessResponse]) {
+      
+      OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject[@"menu"]];
+      completion(menu);
+      
+    }
+    else {
+    
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MENU" jsonRequest:path responseOperation:operation];
+      completion(nil);
+      
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MENU" jsonRequest:path responseOperation:operation];
+    completion(nil);
     
   }];
   

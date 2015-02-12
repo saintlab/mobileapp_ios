@@ -15,6 +15,8 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurantManager.h"
 #import "OMNTable+omn_network.h"
+#import "OMNMyOrderButton.h"
+#import "UIButton+omn_helper.h"
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNUtils.h"
 
@@ -104,12 +106,38 @@
   [self addActionBoardIfNeeded];
   self.bottomToolbar.hidden = NO;
   
-  long long totalOrdersAmount = _restaurantMediator.totalOrdersAmount;
-  NSString *callBillTitle = ((totalOrdersAmount > 0ll)) ? ([OMNUtils formattedMoneyStringFromKop:totalOrdersAmount]) : (NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт"));
-  UIButton *callBillButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"bill_icon_small"] title:callBillTitle];
-  [callBillButton addTarget:_restaurantMediator action:@selector(callBill) forControlEvents:UIControlEventTouchUpInside];
+  UIButton *callBillButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"bill_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callBill)];
+  UIButton *callWaiterButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callWaiterTap)];
   
-  if (_restaurantMediator.restaurant.settings.has_waiter_call) {
+  OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
+  if (settings.has_menu) {
+    
+    callWaiterButton.hidden = !settings.has_waiter_call;
+
+    OMNMyOrderButton *myOrderButton = [[OMNMyOrderButton alloc] initWithRestaurantMediator:_restaurantMediator];
+    
+    [self.bottomToolbar setItems:
+     @[
+       [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
+       [UIBarButtonItem omn_flexibleItem],
+       [[UIBarButtonItem alloc] initWithCustomView:myOrderButton],
+       [UIBarButtonItem omn_flexibleItem],
+       [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+       ]
+                        animated:YES];
+    
+  }
+  else if (_restaurantMediator.restaurant.settings.has_waiter_call) {
+    
+    long long totalOrdersAmount = _restaurantMediator.totalOrdersAmount;
+    NSString *callBillTitle = ((totalOrdersAmount > 0ll)) ? ([OMNUtils formattedMoneyStringFromKop:totalOrdersAmount]) : (NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт"));
+    [callBillButton setTitle:callBillTitle forState:UIControlStateNormal];
+    [callBillButton omn_centerButtonAndImageWithSpacing:4.0f];
+    [callBillButton sizeToFit];
+    
+    [callWaiterButton setTitle:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант") forState:UIControlStateNormal];
+    [callWaiterButton omn_centerButtonAndImageWithSpacing:4.0f];
+    [callWaiterButton sizeToFit];
     
     if (_restaurantMediator.waiterIsCalled) {
       
@@ -117,11 +145,6 @@
       
     }
     else {
-      
-      UIImage *callWaiterImage = [UIImage imageNamed:@"call_waiter_icon_small"];
-      OMNToolbarButton *callWaiterButton = [[OMNToolbarButton alloc] initWithImage:callWaiterImage title:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")];
-      [callWaiterButton addTarget:self action:@selector(callWaiterTap) forControlEvents:UIControlEventTouchUpInside];
-      [callWaiterButton sizeToFit];
       
       [self.bottomToolbar setItems:
        @[
@@ -136,6 +159,10 @@
   }
   else {
     
+    [callBillButton setTitle:NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт") forState:UIControlStateNormal];
+    [callBillButton omn_centerButtonAndImageWithSpacing:4.0f];
+    [callBillButton sizeToFit];
+    
     [self.bottomToolbar setItems:
      @[
        [UIBarButtonItem omn_flexibleItem],
@@ -145,6 +172,8 @@
                         animated:YES];
     
   }
+  
+  
   
 }
 

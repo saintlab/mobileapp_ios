@@ -6,12 +6,19 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNMenuItem.h"
+#import "OMNMenuCategory.h"
+#import "OMNMenuProduct.h"
+#import "OMNMenuModifer.h"
 
 @interface OMNMenu : NSObject
 
-@property (nonatomic, strong) NSArray *items;
+@property (nonatomic, strong) NSDictionary *products;
+@property (nonatomic, strong) NSArray *categories;
+@property (nonatomic, strong) NSDictionary *modifiers;
 
 - (instancetype)initWithJsonData:(id)data;
+- (void)resetSelection;
+- (void)deselectAllProducts;
+- (long long)total;
 
 @end

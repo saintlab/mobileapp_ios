@@ -1,0 +1,496 @@
+{
+  "status" : "success",
+  "menu" : {
+    "restaurant_id" : "saintlab-rkeeper-v6",
+    "items" : {
+      "2237-in-saintlab-rkeeper-v6" : {
+        "id" : "2237-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Банановая темпура",
+        "price" : 140
+      },
+      "2554-in-saintlab-rkeeper-v6" : {
+        "id" : "2554-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Бэйлис кофе",
+        "price" : 200
+      },
+      "2550-in-saintlab-rkeeper-v6" : {
+        "id" : "2550-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Венский кофе",
+        "price" : 115
+      },
+      "2269-in-saintlab-rkeeper-v6" : {
+        "id" : "2269-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Французский капучино",
+        "price" : 125
+      },
+      "2233-in-saintlab-rkeeper-v6" : {
+        "id" : "2233-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Минари",
+        "price" : 180
+      },
+      "2262-in-saintlab-rkeeper-v6" : {
+        "id" : "2262-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "«Китайский жасмин» зелен.",
+        "price" : 125
+      },
+      "2449-in-saintlab-rkeeper-v6" : {
+        "id" : "2449-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Молоко 100мл",
+        "price" : 12
+      },
+      "2227-in-saintlab-rkeeper-v6" : {
+        "id" : "2227-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "recommendations" : [
+              "2258-in-saintlab-rkeeper-v6",
+              "2259-in-saintlab-rkeeper-v6",
+              "2260-in-saintlab-rkeeper-v6",
+              "2261-in-saintlab-rkeeper-v6",
+              "2262-in-saintlab-rkeeper-v6",
+              "2263-in-saintlab-rkeeper-v6"
+              ],
+        "modifiers" : [
+                       {
+                       "id" : "57-in-saintlab-rkeeper-v6",
+                       "type" : "checkbox"
+                       },
+                       {
+                       "name" : "Кухня1",
+                       "type" : "select",
+                       "list" : [
+                                 "m1",
+                                 "m2",
+                                 "m3"
+                                 ]
+                       },
+                       {
+                       "name" : "Кухня2",
+                       "type" : "multiselect",
+                       "list" : [
+                                 "m4",
+                                 "m5",
+                                 "m6"
+                                 ]
+                       }
+                       ],
+        "name" : "Виноградная темпура",
+        "price" : 160
+      },
+      "2266-in-saintlab-rkeeper-v6" : {
+        "id" : "2266-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Эспрессо",
+        "price" : 85
+      },
+      "2259-in-saintlab-rkeeper-v6" : {
+        "id" : "2259-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "«1002 ночь» черный",
+        "price" : 125
+      },
+      "2230-in-saintlab-rkeeper-v6" : {
+        "id" : "2230-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "modifiers" : [
+                       {
+                       "name" : "Кухня",
+                       "type" : "select",
+                       "list" : [
+                                 "57-in-saintlab-rkeeper-v6"
+                                 ]
+                       }
+                       ],
+        "name" : "Кудамоно",
+        "price" : 395
+      },
+      "2234-in-saintlab-rkeeper-v6" : {
+        "id" : "2234-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Фрукты в карамели",
+        "price" : 235
+      },
+      "2446-in-saintlab-rkeeper-v6" : {
+        "id" : "2446-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Лимон 10гр",
+        "price" : 2
+      },
+      "7-in-saintlab-rkeeper-v6" : {
+        "id" : "7-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Ирландский кофе",
+        "price" : 230
+      },
+      "2270-in-saintlab-rkeeper-v6" : {
+        "id" : "2270-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Гляссе",
+        "price" : 110
+      },
+      "2263-in-saintlab-rkeeper-v6" : {
+        "id" : "2263-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "«Нахальный фрукт» фруктов",
+        "price" : 125
+      },
+      "2228-in-saintlab-rkeeper-v6" : {
+        "id" : "2228-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Ролл Гейша",
+        "price" : 165
+      },
+      "2552-in-saintlab-rkeeper-v6" : {
+        "id" : "2552-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Молочный улун",
+        "price" : 135
+      },
+      "2267-in-saintlab-rkeeper-v6" : {
+        "id" : "2267-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Американо",
+        "price" : 85
+      },
+      "2231-in-saintlab-rkeeper-v6" : {
+        "id" : "2231-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Чизкейк с шоколадной крош",
+        "price" : 185
+      },
+      "2239-in-saintlab-rkeeper-v6" : {
+        "id" : "2239-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Орехово-шоколадная темпур",
+        "price" : 130
+      },
+      "2549-in-saintlab-rkeeper-v6" : {
+        "id" : "2549-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Латте",
+        "price" : 130
+      },
+      "2450-in-saintlab-rkeeper-v6" : {
+        "id" : "2450-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Сливки 50мл",
+        "price" : 10
+      },
+      "2235-in-saintlab-rkeeper-v6" : {
+        "recommendations" : [
+                             "2449-in-saintlab-rkeeper-v6",
+                             "2552-in-saintlab-rkeeper-v6"
+                             ],
+        "id" : "2235-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "modifiers" : [
+                       {
+                       "name" : "Кухня",
+                       "type" : "select",
+                       "list" : [
+                                 "15-in-saintlab-rkeeper-v6"
+                                 ]
+                       }
+                       ],
+        "name" : "Сливочно-кокосовый десерт",
+        "price" : 175
+      },
+      "2260-in-saintlab-rkeeper-v6" : {
+        "id" : "2260-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "«Эрл Грэй» черный",
+        "price" : 125
+      },
+      "2447-in-saintlab-rkeeper-v6" : {
+        "id" : "2447-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Молоко 50мл",
+        "price" : 5
+      },
+      "2271-in-saintlab-rkeeper-v6" : {
+        "id" : "2271-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Шотландский крем",
+        "price" : 120
+      },
+      "2264-in-saintlab-rkeeper-v6" : {
+        "id" : "2264-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "«Китайский лимонник» зел.",
+        "price" : 125
+      },
+      "12572-in-saintlab-rkeeper-v6" : {
+        "id" : "12572-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Фруктово-сливочный ролл",
+        "price" : 190
+      },
+      "2229-in-saintlab-rkeeper-v6" : {
+        "id" : "2229-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Чизкейк Нью-Йорк",
+        "price" : 185
+      },
+      "2553-in-saintlab-rkeeper-v6" : {
+        "id" : "2553-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Пуэр",
+        "price" : 140
+      },
+      "2268-in-saintlab-rkeeper-v6" : {
+        "id" : "2268-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Капучино",
+        "price" : 1.5
+      },
+      "2232-in-saintlab-rkeeper-v6" : {
+        "id" : "2232-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Сливочно-шоколадный ролл",
+        "price" : 160
+      },
+      "2236-in-saintlab-rkeeper-v6" : {
+        "id" : "2236-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "modifiers" : [
+                       {
+                       "name" : "Кухня",
+                       "type" : "select",
+                       "list" : [
+                                 "57-in-saintlab-rkeeper-v6",
+                                 "28-in-saintlab-rkeeper-v6"
+                                 ]
+                       }
+                       ],
+        "name" : "Мороженое темпура",
+        "price" : 130
+      },
+      "2261-in-saintlab-rkeeper-v6" : {
+        "id" : "2261-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "«Порох» зеленый",
+        "price" : 125
+      },
+      "2226-in-saintlab-rkeeper-v6" : {
+        "id" : "2226-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Мороженое ассорти",
+        "price" : 130
+      },
+      "2272-in-saintlab-rkeeper-v6" : {
+        "id" : "2272-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Латте с сиропом",
+        "price" : 135
+      },
+      "2265-in-saintlab-rkeeper-v6" : {
+        "id" : "2265-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "Мед",
+        "price" : 50
+      },
+      "2258-in-saintlab-rkeeper-v6" : {
+        "id" : "2258-in-saintlab-rkeeper-v6",
+        "details" : {
+          
+        },
+        "name" : "«Даржилинг» черный",
+        "price" : 125
+      }
+    },
+    "modifiers" : {
+      "m1" : {
+        "id" : "m1",
+        "name" : "m1",
+        "parent" : "Кухня"
+      },
+      "m2" : {
+        "id" : "m2",
+        "name" : "m2",
+        "parent" : "Кухня"
+      },
+      "m3" : {
+        "id" : "m3",
+        "name" : "m3",
+        "parent" : "Кухня"
+      },
+      "m4" : {
+        "id" : "m4",
+        "name" : "m4",
+        "parent" : "Кухня"
+      },
+      "m5" : {
+        "id" : "m5",
+        "name" : "m5",
+        "parent" : "Кухня"
+      },
+      "m6" : {
+        "id" : "m6",
+        "name" : "m6",
+        "parent" : "Кухня"
+      },
+      "57-in-saintlab-rkeeper-v6" : {
+        "id" : "57-in-saintlab-rkeeper-v6",
+        "name" : "VIP-гость",
+        "parent" : "Кухня"
+      },
+      "28-in-saintlab-rkeeper-v6" : {
+        "id" : "28-in-saintlab-rkeeper-v6",
+        "name" : "Готовить через 10 минут",
+        "parent" : "Кухня"
+      },
+      "15-in-saintlab-rkeeper-v6" : {
+        "id" : "15-in-saintlab-rkeeper-v6",
+        "name" : "Не острое",
+        "parent" : "Кухня"
+      }
+    },
+    "categories" : [
+                    {
+                    "parent_id" : 0,
+                    "id" : 125,
+                    "name" : "Завтрак",
+                    "sort" : 0,
+                    "children" : [
+                                  {
+                                  "parent_id" : 125,
+                                  "id" : 124,
+                                  "items" : [
+                                             "12572-in-saintlab-rkeeper-v6",
+                                             "2226-in-saintlab-rkeeper-v6",
+                                             "2227-in-saintlab-rkeeper-v6",
+                                             "2228-in-saintlab-rkeeper-v6",
+                                             "2229-in-saintlab-rkeeper-v6",
+                                             "2230-in-saintlab-rkeeper-v6",
+                                             "2231-in-saintlab-rkeeper-v6",
+                                             "2232-in-saintlab-rkeeper-v6",
+                                             "2233-in-saintlab-rkeeper-v6",
+                                             "2234-in-saintlab-rkeeper-v6",
+                                             "2235-in-saintlab-rkeeper-v6",
+                                             "2236-in-saintlab-rkeeper-v6",
+                                             "2237-in-saintlab-rkeeper-v6",
+                                             "2239-in-saintlab-rkeeper-v6"
+                                             ],
+                                  "name" : "Десерты",
+                                  "sort" : 0
+                                  },
+                                  {
+                                  "parent_id" : 125,
+                                  "id" : 126,
+                                  "items" : [
+                                             "2258-in-saintlab-rkeeper-v6",
+                                             "2259-in-saintlab-rkeeper-v6",
+                                             "2260-in-saintlab-rkeeper-v6",
+                                             "2261-in-saintlab-rkeeper-v6",
+                                             "2262-in-saintlab-rkeeper-v6",
+                                             "2263-in-saintlab-rkeeper-v6",
+                                             "2264-in-saintlab-rkeeper-v6",
+                                             "2265-in-saintlab-rkeeper-v6",
+                                             "2266-in-saintlab-rkeeper-v6",
+                                             "2267-in-saintlab-rkeeper-v6",
+                                             "2268-in-saintlab-rkeeper-v6",
+                                             "2269-in-saintlab-rkeeper-v6",
+                                             "2270-in-saintlab-rkeeper-v6",
+                                             "2271-in-saintlab-rkeeper-v6",
+                                             "2272-in-saintlab-rkeeper-v6",
+                                             "2446-in-saintlab-rkeeper-v6",
+                                             "2447-in-saintlab-rkeeper-v6",
+                                             "2449-in-saintlab-rkeeper-v6",
+                                             "2450-in-saintlab-rkeeper-v6",
+                                             "2549-in-saintlab-rkeeper-v6",
+                                             "2550-in-saintlab-rkeeper-v6",
+                                             "2552-in-saintlab-rkeeper-v6",
+                                             "2553-in-saintlab-rkeeper-v6",
+                                             "2554-in-saintlab-rkeeper-v6",
+                                             "7-in-saintlab-rkeeper-v6"
+                                             ],
+                                  "name" : "Горячительное",
+                                  "sort" : 1
+                                  }
+                                  ]
+                    }
+                    ]
+  }
+}

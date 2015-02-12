@@ -1,5 +1,5 @@
 //
-//  OMNPreorderConfirmVC.h
+//  OMNMenuHeaderItemCell.h
 //  omnom
 //
 //  Created by tea on 19.01.15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMNPreorderConfirmVC : UITableViewController
+@interface OMNMenuHeaderItemCell : UITableViewCell
 
 @end

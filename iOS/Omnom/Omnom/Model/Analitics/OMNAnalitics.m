@@ -18,8 +18,6 @@
 #import "OMNLocationManager.h"
 #import "OMNBankCardInfo.h"
 #import "OMNBankCard.h"
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CoreTelephony/CTCarrier.h>
 
 NSString * const OMNAnaliticsUserKey = @"omn_user";
 
@@ -101,11 +99,6 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     userInfo[@"ID"] = _user.id;
   }
   
-  CTTelephonyNetworkInfo *netinfo = [[CTTelephonyNetworkInfo alloc] init];
-  CTCarrier *carrier = [netinfo subscriberCellularProvider];
-  if (carrier.carrierName) {
-    [_mixpanel.people set:@"Сarrier" to:carrier.carrierName];
-  }
   if (_user.name) {
     userInfo[@"name"] = _user.name;
   }
@@ -258,7 +251,8 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
   __block NSInteger heldCardsCount = 0;
   __block NSInteger registerCardsCount = 0;
-  [bankCards enumerateObjectsUsingBlock:^(OMNBankCard *bankCard, NSUInteger idx, BOOL *stop) {
+  NSArray *enumerateCards = [bankCards copy];
+  [enumerateCards enumerateObjectsUsingBlock:^(OMNBankCard *bankCard, NSUInteger idx, BOOL *stop) {
     
     switch (bankCard.status) {
       case kOMNBankCardStatusUnknown: {
