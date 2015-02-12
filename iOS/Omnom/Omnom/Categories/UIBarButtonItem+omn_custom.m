@@ -33,7 +33,7 @@
   [button setImage:[templateImage omn_tintWithColor:color] forState:UIControlStateNormal];
   [button setImage:[templateImage omn_tintWithColor:highlitedColor] forState:UIControlStateHighlighted];
   [button setImage:[templateImage omn_tintWithColor:highlitedColor] forState:UIControlStateDisabled];
-  button.titleLabel.font = FuturaOSFOmnomRegular(20.0f);
+  button.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
   [button setTitleColor:color forState:UIControlStateNormal];
   [button setTitleColor:highlitedColor forState:UIControlStateHighlighted];
   [button setTitleColor:highlitedColor forState:UIControlStateDisabled];

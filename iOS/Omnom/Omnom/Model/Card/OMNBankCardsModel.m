@@ -44,7 +44,6 @@ NSString * const kCardIdServiceName = @"card_id";
 
 - (OMNBankCard *)selectedCard {
   
-  __block OMNBankCard *selectedCard = nil;
   NSString *selectedCardId = self.card_id;
   NSArray *cards = [self.cards copy];
   OMNBankCard *selectedCard = [cards bk_match:^BOOL(OMNBankCard *card) {

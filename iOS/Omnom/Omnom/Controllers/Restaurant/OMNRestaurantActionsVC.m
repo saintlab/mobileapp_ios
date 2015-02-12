@@ -129,7 +129,9 @@
   }
   else if (_restaurantMediator.restaurant.settings.has_waiter_call) {
     
-    [callBillButton setTitle:NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт") forState:UIControlStateNormal];
+    long long totalOrdersAmount = _restaurantMediator.totalOrdersAmount;
+    NSString *callBillTitle = ((totalOrdersAmount > 0ll)) ? ([OMNUtils formattedMoneyStringFromKop:totalOrdersAmount]) : (NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт"));
+    [callBillButton setTitle:callBillTitle forState:UIControlStateNormal];
     [callBillButton omn_centerButtonAndImageWithSpacing:4.0f];
     [callBillButton sizeToFit];
     
