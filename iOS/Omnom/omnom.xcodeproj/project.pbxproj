@@ -28,6 +28,8 @@
 		930D8BAC1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 930D8BAA1965C22F002DFDC3 /* OMNCustomTransition.m */; };
 		930FF3781A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 930FF3771A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m */; };
 		930FF3791A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 930FF3771A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m */; };
+		930FF37C1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 930FF37B1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m */; };
+		930FF37D1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 930FF37B1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m */; };
 		931232781A230A8300C27110 /* OMNBeacon+omn_debug.m in Sources */ = {isa = PBXBuildFile; fileRef = 931232771A230A8300C27110 /* OMNBeacon+omn_debug.m */; };
 		931232791A230A8300C27110 /* OMNBeacon+omn_debug.m in Sources */ = {isa = PBXBuildFile; fileRef = 931232771A230A8300C27110 /* OMNBeacon+omn_debug.m */; };
 		931456B8193CA84D003E2CD6 /* OMNTipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 931456B7193CA84D003E2CD6 /* OMNTipButton.m */; };
@@ -646,6 +648,8 @@
 		930D8BAA1965C22F002DFDC3 /* OMNCustomTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCustomTransition.m; sourceTree = "<group>"; };
 		930FF3761A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuHeaderLabel.h; sourceTree = "<group>"; };
 		930FF3771A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuHeaderLabel.m; sourceTree = "<group>"; };
+		930FF37A1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductPriceButton.h; sourceTree = "<group>"; };
+		930FF37B1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductPriceButton.m; sourceTree = "<group>"; };
 		931232761A230A8300C27110 /* OMNBeacon+omn_debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNBeacon+omn_debug.h"; sourceTree = "<group>"; };
 		931232771A230A8300C27110 /* OMNBeacon+omn_debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNBeacon+omn_debug.m"; sourceTree = "<group>"; };
 		931456B6193CA84D003E2CD6 /* OMNTipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTipButton.h; sourceTree = "<group>"; };
@@ -1670,6 +1674,8 @@
 				93CE47C91A78C9A4002D293B /* OMNMyOrderButton.m */,
 				935A1E331A81D5D100704086 /* OMNClearButton.h */,
 				935A1E341A81D5D100704086 /* OMNClearButton.m */,
+				930FF37A1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.h */,
+				930FF37B1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m */,
 			);
 			name = Button;
 			sourceTree = "<group>";
@@ -2986,6 +2992,7 @@
 				935A1E2E1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */,
 				937C3E751A2859C9006525A9 /* OMNUser+network.m in Sources */,
 				9307A6DF19D53F7E00101B81 /* OMNLabeledTextField.m in Sources */,
+				930FF37C1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m in Sources */,
 				932118121962D8A700183729 /* OMNProductsModel.m in Sources */,
 				938F3A5A198E081500AB288E /* OMNPushPermissionVC.m in Sources */,
 				93CE47CA1A78C9A4002D293B /* OMNMyOrderButton.m in Sources */,
@@ -3359,6 +3366,7 @@
 				9317C06819DE52000071E42B /* NSURL+omn_query.m in Sources */,
 				934FC72F19D054F8008AC4B0 /* OMNOrderPaid.m in Sources */,
 				932118371962E88000183729 /* OMNTransitionFromProductToList.m in Sources */,
+				930FF37D1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m in Sources */,
 				931BD3881941C04100F77AA7 /* OMNCalcaulcationTests.m in Sources */,
 				936BAD9B19A797030029873B /* OMNBorderedButton.m in Sources */,
 				93B368A119A4CF1100B6E6CB /* OMNSlideDownTransition.m in Sources */,

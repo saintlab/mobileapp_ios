@@ -15,6 +15,7 @@
   
   NSString *_productSelectionObserverID;
   NSString *_productImageObserverID;
+  NSString *_productEditingObserverID;
   OMNMenuProductExtendedView *_menuProductDetailsView;
   
 }
@@ -34,6 +35,9 @@
   }
   if (_productImageObserverID) {
     [_menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
+  }
+  if (_productEditingObserverID) {
+    [_menuProduct bk_removeObserversWithIdentifier:_productEditingObserverID];
   }
   
 }
@@ -74,6 +78,16 @@
     [UIView transitionWithView:menuProductDetailsView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
       menuProductDetailsView.priceButton.selected = (mp.quantity > 0.0);
+      
+    } completion:nil];
+    
+  }];
+  
+  _productEditingObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(editing)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+    
+    [UIView transitionWithView:menuProductDetailsView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+      
+      menuProductDetailsView.priceButton.omn_editing = mp.editing;
       
     } completion:nil];
     

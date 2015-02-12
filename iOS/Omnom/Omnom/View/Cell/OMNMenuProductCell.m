@@ -15,6 +15,7 @@
   
   NSString *_productSelectionObserverID;
   NSString *_productImageObserverID;
+  NSString *_productEditingObserverID;
   OMNMenuProductView *_menuProductView;
   
 }
@@ -32,6 +33,9 @@
   }
   if (_productImageObserverID) {
     [_menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
+  }
+  if (_productEditingObserverID) {
+    [_menuProduct bk_removeObserversWithIdentifier:_productEditingObserverID];
   }
   
 }
@@ -69,10 +73,8 @@
   @{
     @"menuProductView" : _menuProductView,
     };
-  
-  NSDictionary *metrics =
-  @{
-    };
+
+  NSDictionary *metrics = nil;
 
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuProductView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuProductView]" options:kNilOptions metrics:metrics views:views]];
@@ -92,6 +94,16 @@
     [UIView transitionWithView:menuProductView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
       menuProductView.priceButton.selected = (mp.quantity > 0.0);
+      
+    } completion:nil];
+    
+  }];
+  
+  _productEditingObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(editing)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+    
+    [UIView transitionWithView:menuProductView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+      
+      menuProductView.priceButton.omn_editing = mp.editing;
       
     } completion:nil];
     

@@ -11,7 +11,6 @@
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
-#import "UIImage+omn_helper.h"
 
 @implementation OMNMenuProductExtendedView {
   
@@ -69,20 +68,7 @@
   _infoLabel.font = FuturaLSFOmnomLERegular(12.0f);
   [self addSubview:_infoLabel];
   
-  _priceButton = [UIButton omn_autolayoutView];
-  _priceButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
-  [_priceButton setTitleColor:colorWithHexString(@"157EFB") forState:UIControlStateNormal];
-  [_priceButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateHighlighted];
-  [_priceButton setTitle:@"" forState:UIControlStateSelected];
-  [_priceButton setTitle:@"" forState:UIControlStateSelected|UIControlStateHighlighted];
-  [_priceButton setImage:[UIImage imageNamed:@"ic_in_wish_list_position"] forState:UIControlStateSelected];
-  [_priceButton setImage:[UIImage imageNamed:@"ic_in_wish_list_position"] forState:UIControlStateSelected|UIControlStateHighlighted];
-  _priceButton.titleLabel.font = FuturaLSFOmnomLERegular(15.0f);
-  [_priceButton setBackgroundImage:[[UIImage imageNamed:@"rounded_button_light_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
-  UIImage *selectedImage = [[UIImage imageNamed:@"blue_button_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
-  [_priceButton setBackgroundImage:selectedImage forState:UIControlStateSelected];
-  [_priceButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-  [_priceButton setBackgroundImage:[selectedImage omn_tintWithColor:[colorWithHexString(@"157EFB") colorWithAlphaComponent:0.5f]] forState:UIControlStateSelected|UIControlStateHighlighted];
+  _priceButton = [OMNMenuProductPriceButton omn_autolayoutView];
   [self addSubview:_priceButton];
   
   _descriptionLabel = [UILabel omn_autolayoutView];

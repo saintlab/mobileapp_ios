@@ -450,16 +450,19 @@ OMNOrderCalculationVCDelegate>
 
 - (void)editMenuProduct:(OMNMenuProduct *)menuProduct withCompletion:(dispatch_block_t)completionBlock {
   
+  menuProduct.editing = YES;
   OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
   __weak typeof(self)weakSelf = self;
   productModiferAlertVC.didCloseBlock = ^{
-    
+  
+    menuProduct.editing = NO;
     [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
     
   };
   
   productModiferAlertVC.didSelectOrderBlock = ^{
     
+    menuProduct.editing = NO;
     [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:completionBlock];
     
   };

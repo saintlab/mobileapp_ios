@@ -127,6 +127,11 @@
 - (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editMenuProduct:(OMNMenuProduct *)menuProduct {
   
   __weak typeof(self)weakSelf = self;
+  NSIndexPath *indexPath = [_tableView indexPathForCell:menuProductWithRecommedtationsCell];
+  if (indexPath) {
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+  }
+  
   [_restaurantMediator editMenuProduct:menuProduct withCompletion:^{
 
     if ([menuProductWithRecommedtationsCell.model.menuProduct isEqual:menuProduct]) {
@@ -147,7 +152,9 @@
   NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
   [_tableView beginUpdates];
   [_tableView endUpdates];
-  [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+  if (indexPath) {
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+  }
   
 }
 

@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "OMNMenuProduct.h"
+#import "OMNMenuProductPriceButton.h"
 
 @interface OMNMenuProductView : UIView
 
 @property (nonatomic, strong) OMNMenuProduct *menuProduct;
-@property (nonatomic, strong, readonly) UIButton *priceButton;
+@property (nonatomic, strong, readonly) OMNMenuProductPriceButton *priceButton;
 @property (nonatomic, strong, readonly) UIImageView *productIV;
 
 @end
