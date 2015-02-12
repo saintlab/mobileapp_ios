@@ -62,7 +62,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   }
   
   [self connectWithToken:_token completion:^{
-    NSLog(@"socket did resume connection");
+    DDLogDebug(@"socket did resume connection");
   }];
   
 }
@@ -90,7 +90,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 
   [_socket on:@"order_close" listener:^(id data) {
     
-    NSLog(@"order_close %@, %@", data, [data class]);
+    DDLogDebug(@"order_close %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
       if (data) {
@@ -105,7 +105,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
   [_socket on:@"order_create" listener:^(id data) {
     
-    NSLog(@"order_create %@, %@", data, [data class]);
+    DDLogDebug(@"order_create %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
       if (data) {
@@ -120,7 +120,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
   [_socket on:@"order_update" listener:^(id data) {
     
-    NSLog(@"order_update %@, %@", data, [data class]);
+    DDLogDebug(@"order_update %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
       if (data) {
@@ -135,7 +135,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
   [_socket on:@"payment" listener:^(id data) {
 
-    NSLog(@"payment response %@, %@", data, [data class]);
+    DDLogDebug(@"payment response %@, %@", data, [data class]);
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
@@ -153,7 +153,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
   [_socket on:@"waiter_call_done" listener:^(id data) {
     
-    NSLog(@"waiter_call_done response %@, %@", data, [data class]);
+    DDLogDebug(@"waiter_call_done response %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
       [[NSNotificationCenter defaultCenter] postNotificationName:OMNSocketIOWaiterCallDoneNotification
@@ -181,7 +181,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   if (roomId.length) {
     [_rooms addObject:roomId];
     [_socket emit:@"join", roomId, nil];
-    NSLog(@"join:%@", roomId);
+    DDLogDebug(@"join:%@", roomId);
   }
   
 }

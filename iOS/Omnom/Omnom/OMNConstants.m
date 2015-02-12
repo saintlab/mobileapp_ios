@@ -15,6 +15,8 @@
 #import <SSKeychain.h>
 #import "OMNAuthorization.h"
 #import "OMNLaunchOptions.h"
+#import <DDASLLogger.h>
+#import <DDTTYLogger.h>
 
 NSString * const kPushSoundName = @"new_guest.caf";
 NSString * const OMNFacebookPageUrlString = @"https://www.facebook.com/omnom.menu/";
@@ -37,6 +39,9 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 @implementation OMNConstants
 
 + (void)setupWithLaunchOptions:(OMNLaunchOptions *)launchOptions completion:(dispatch_block_t)completionBlock {
+  
+  [DDLog addLogger:[DDASLLogger sharedInstance]];
+  [DDLog addLogger:[DDTTYLogger sharedInstance]];
   
   _customConfig = [self configWithName:launchOptions.customConfigName];
   
@@ -194,10 +199,6 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 }
 + (NSString *)authorizationUrlString {
   return [self stringForKey:@"authorizationUrlString"];
-}
-
-+ (NSString *)notifierUrlString {
-  return [self stringForKey:@"notifierUrlString"];
 }
 
 + (NSString *)tokenForKey:(NSString *)key {

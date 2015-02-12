@@ -64,7 +64,7 @@
   
   if (UIBackgroundTaskInvalid != _searchBeaconTask) {
     
-    NSLog(@"did finish background ranging");
+    DDLogDebug(@"did finish background ranging");
     [[UIApplication sharedApplication] endBackgroundTask:_searchBeaconTask];
     _searchBeaconTask = UIBackgroundTaskInvalid;
     

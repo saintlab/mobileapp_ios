@@ -28,7 +28,6 @@
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
 #if DEBUG
-    NSLog(@"not app store");
 //    _customConfigName = @"config_laaaab";
 //    _customConfigName = @"config_staging";
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";

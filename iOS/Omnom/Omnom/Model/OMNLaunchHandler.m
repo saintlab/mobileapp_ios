@@ -64,8 +64,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
   
-  NSLog(@"didReceiveRemoteNotification>%@", userInfo);
-  //  {"aps":{"sound":"new_guest.caf"}, "open_url" : "http://try.omnom.menu/mango"}
+  DDLogDebug(@"didReceiveRemoteNotification>%@", userInfo);
   NSString *open_url = userInfo[@"open_url"];
   if (open_url &&
       UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {

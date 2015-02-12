@@ -1,7 +1,6 @@
 {
   "baseUrlString" : "http://omnom.staging.saintlab.com",
   "authorizationUrlString" : "http://wicket.staging.saintlab.com",
-  "notifierUrlString" : "https://notifier.saintlab.com",
   
   "AuthToken" : "Ga7Rc1lBabcEIOoqd8MsSejzsroI01En",
   

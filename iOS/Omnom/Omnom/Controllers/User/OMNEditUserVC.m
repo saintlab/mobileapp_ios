@@ -235,11 +235,9 @@ OMNChangePhoneWebVCDelegate>
   [_user updateUserInfoWithUserAndImage:editUser withCompletion:^{
     
     [weakSelf setLoading:NO];
-    NSLog(@"updateUserInfoWithUserAndImage");
     
   } failure:^(NSError *error) {
     
-    NSLog(@"updateUserInfoWithUserAndImage>%@", error);
     [weakSelf setLoading:NO];
     
   }];

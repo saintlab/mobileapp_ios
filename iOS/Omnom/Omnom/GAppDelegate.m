@@ -29,12 +29,11 @@
 #if OMN_TEST
   return YES;
 #endif
-  NSLog(@"didFinishLaunchingWithOptions>%@", launchOptions);
   
   OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
   [OMNConstants setupWithLaunchOptions:lo completion:^{
     
-    DDLogDebug(@"config loaded");
+    DDLogDebug(@"config loaded with options>%@", launchOptions);
     
     [[OMNAnalitics analitics] setup];
     
