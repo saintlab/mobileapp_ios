@@ -13,7 +13,7 @@
 
 @implementation OMNMenuCategoryDelimiterCell {
   
-  UILabel *_label;
+  OMNMenuCategoryDelimiterView *_delimiterView;
   
 }
 
@@ -44,40 +44,97 @@
   self.backgroundView.backgroundColor = [UIColor clearColor];
   self.backgroundColor = [UIColor clearColor];
 
-  UIColor *lineColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
-  UIView *leftLine = [UIView omn_autolayoutView];
-  leftLine.backgroundColor = lineColor;
-  [self.contentView addSubview:leftLine];
+  _delimiterView = [OMNMenuCategoryDelimiterView omn_autolayoutView];
+  [self.contentView addSubview:_delimiterView];
   
-  UIView *rightLine = [UIView omn_autolayoutView];
-  rightLine.backgroundColor = lineColor;
-  [self.contentView addSubview:rightLine];
+  NSDictionary *views =
+  @{
+    @"delimiterView" : _delimiterView
+    };
   
-  _label = [UILabel omn_autolayoutView];
-  _label.textColor = lineColor;
-  _label.font = FuturaOSFOmnomRegular(20.0f);
-  _label.text = NSLocalizedString(@"MENU_LIST_TITLE", @"Меню");
-  [self.contentView addSubview:_label];
+  NSDictionary *metrics =
+  @{
+    };
 
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_label attribute:NSLayoutAttributeLeft multiplier:1.0f constant:-10.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:2.0f]];
-  
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_label attribute:NSLayoutAttributeRight multiplier:1.0f constant:10.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:2.0f]];
-  
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[delimiterView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[delimiterView]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
 - (void)setMenuCategory:(OMNMenuCategory *)menuCategory {
   
   _menuCategory = menuCategory;
+  _delimiterView.menuCategory = menuCategory;
+  
+}
+
+@end
+
+@implementation OMNMenuCategoryDelimiterView {
+  
+  UILabel *_label;
+  
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    
+    [self omn_setup];
+    
+  }
+  return self;
+}
+
+- (void)setMenuCategory:(OMNMenuCategory *)menuCategory {
+  
+  _menuCategory = menuCategory;
   _label.text = menuCategory.name;
+  
+}
+
+- (void)omn_setup {
+  
+  UIColor *lineColor = colorWithHexString(@"7B7B7B");
+  UIView *leftLine = [UIView omn_autolayoutView];
+  leftLine.backgroundColor = lineColor;
+  [self addSubview:leftLine];
+  
+  UIView *rightLine = [UIView omn_autolayoutView];
+  rightLine.backgroundColor = lineColor;
+  [self addSubview:rightLine];
+  
+  _label = [UILabel omn_autolayoutView];
+  _label.textColor = lineColor;
+  _label.font = FuturaLSFOmnomLERegular(20.0f);
+  _label.numberOfLines = 0;
+  [self addSubview:_label];
+  
+  NSDictionary *views =
+  @{
+    @"label" : _label,
+    };
+  
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_label attribute:NSLayoutAttributeLeft multiplier:1.0f constant:-10.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:2.0f]];
+  
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_label attribute:NSLayoutAttributeRight multiplier:1.0f constant:10.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:2.0f]];
+  
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:kNilOptions metrics:nil views:views]];
+  
+}
+
+- (void)layoutSubviews {
+  
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  _label.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
+  [super layoutSubviews];
   
 }
 

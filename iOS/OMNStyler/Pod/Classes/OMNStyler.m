@@ -37,6 +37,12 @@
   return @(50.0f);
 }
 
+- (UIColor *)toolbarColor {
+  
+  return [UIColor colorWithWhite:0.95f alpha:0.95f];
+  
+}
+
 - (OMNStyle *)styleForClass:(Class)class {
   
   NSString *className = NSStringFromClass(class);

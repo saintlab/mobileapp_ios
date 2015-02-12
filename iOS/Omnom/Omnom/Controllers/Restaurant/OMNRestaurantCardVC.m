@@ -181,7 +181,7 @@
   [_scroll addSubview:_contentView];
   
   _bottomView = [UIView omn_autolayoutView];
-  _bottomView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.9f];
+  _bottomView.backgroundColor = [OMNStyler styler].toolbarColor;
   [self.view addSubview:_bottomView];
   
   _logoIcon = [UIButton omn_autolayoutView];

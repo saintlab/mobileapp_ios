@@ -144,7 +144,7 @@
   CGFloat heightForHeader = 0.0f;
   if (section > 0) {
     
-    heightForHeader = 45.0f;
+    heightForHeader = 28.0f;
     
   }
   

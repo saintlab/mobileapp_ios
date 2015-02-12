@@ -35,15 +35,16 @@
 
 - (void)omn_setup {
   
-  self.backgroundView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"bar_2nd_level_category"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)]];
+  self.backgroundView = [[UIView alloc] init];
+  self.backgroundView.backgroundColor = [OMNStyler styler].toolbarColor;
   
   _label = [UILabel omn_autolayoutView];
-  _label.textColor = colorWithHexString(@"000000");
+  _label.textColor = colorWithHexString(@"7B7B7B");
   _label.textAlignment = NSTextAlignmentCenter;
-  _label.font = FuturaOSFOmnomRegular(20.0f);
+  _label.font = FuturaLSFOmnomLERegular(17.0f);
   _label.adjustsFontSizeToFitWidth = YES;
   [self addSubview:_label];
-  
+
   NSDictionary *views =
   @{
     @"label" : _label,

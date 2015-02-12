@@ -14,3 +14,9 @@
 @property (nonatomic, strong) OMNMenuCategory *menuCategory;
 
 @end
+
+@interface OMNMenuCategoryDelimiterView : UIView
+
+@property (nonatomic, strong) OMNMenuCategory *menuCategory;
+
+@end

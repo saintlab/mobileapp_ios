@@ -22,6 +22,8 @@
 
 @property (nonatomic, weak) NSDictionary *allProducts;
 
+@property (nonatomic, assign)  CGFloat calculationHeight;
+
 - (instancetype)initWithJsonData:(id)jsonData menuProducts:(__weak NSDictionary *)menuProducts level:(NSInteger)level;
 - (NSArray *)listItems;
 

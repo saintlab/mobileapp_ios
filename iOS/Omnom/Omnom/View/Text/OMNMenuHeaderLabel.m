@@ -18,7 +18,7 @@
     
     self.textColor = colorWithHexString(@"FFFFFF");
     self.highlightedTextColor = colorWithHexString(@"CCCCCC");
-    self.font = FuturaOSFOmnomRegular(20.0f);
+    self.font = FuturaLSFOmnomLERegular(20.0f);
     
   }
   return self;
