@@ -90,6 +90,7 @@
   _circleAnimation = [[OMNCircleAnimation alloc] initWithCircleButton:self.circleButton];
 
   self.navigationItem.title = @"";
+  self.automaticallyAdjustsScrollViewInsets = NO;
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidPay:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
 
@@ -330,9 +331,8 @@
   _menuModel.menu = menu;
   [_menuTable reloadData];
   
-  const CGFloat kMenuTableOffset = 60.0f;
-  CGFloat bottomInset = _menuTable.frame.size.height - _menuTable.contentSize.height - kMenuTableOffset;
-  _menuTable.contentInset = UIEdgeInsetsMake(kMenuTableOffset, 0.0f, bottomInset, 0.0f);
+  CGFloat bottomInset = _menuTable.frame.size.height - _menuTable.contentSize.height - kMenuTableTopOffset;
+  _menuTable.contentInset = UIEdgeInsetsMake(kMenuTableTopOffset, 0.0f, bottomInset, 0.0f);
 
   [UIView animateWithDuration:0.5 animations:^{
     

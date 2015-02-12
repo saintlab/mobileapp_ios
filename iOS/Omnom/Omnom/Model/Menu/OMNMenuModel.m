@@ -10,6 +10,8 @@
 #import "OMNMenuHeaderItemCell.h"
 #import "OMNMenuItemCell.h"
 
+const CGFloat kMenuTableTopOffset = 60.0f;
+
 @implementation OMNMenuModel
 
 - (void)configureTableView:(UITableView *)tableView {
@@ -23,7 +25,7 @@
   tableView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
   tableView.delegate = self;
   tableView.dataSource = self;
-  
+
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

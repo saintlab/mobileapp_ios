@@ -12,6 +12,8 @@
 typedef void(^OMNMenuCategoryDidSelectBlock)(OMNMenuCategory *menuCategory);
 typedef void(^OMNMenuTableDidEndDraggingBlock)(UITableView *tableView);
 
+extern const CGFloat kMenuTableTopOffset;
+
 @interface OMNMenuModel : NSObject
 <UITableViewDataSource,
 UITableViewDelegate>

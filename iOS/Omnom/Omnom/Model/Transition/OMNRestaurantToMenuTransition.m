@@ -27,27 +27,26 @@
   UITableView *menuTable = fromViewController.menuTable;
   menuTable.bounces = NO;
   
-  
   [containerView addSubview:toViewController.view];
+  toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
+  [toViewController.view layoutIfNeeded];
+  CGRect toTableFrame = [toViewController.tableView convertRect:toViewController.tableView.bounds toView:containerView];
+
   [containerView addSubview:fromViewController.view];
 
   UIEdgeInsets initialContentInset = menuTable.contentInset;
   CGRect fromTableFrame = menuTable.frame;
-  CGRect toTableFrame = [toViewController.tableView convertRect:toViewController.tableView.bounds toView:containerView];
-  
   UIView *fadeView = [[UIView alloc] initWithFrame:fromViewController.view.bounds];
   fadeView.backgroundColor = toViewController.fadeView.backgroundColor;
   fadeView.alpha = 0.0f;
   [fromViewController.view insertSubview:fadeView belowSubview:menuTable];
   [fromViewController.view layoutIfNeeded];
-
+  
   [UIView animateWithDuration:duration animations:^{
     
+    menuTable.frame = toTableFrame;
     fadeView.alpha = 1.0f;
     fromViewController.circleButton.alpha = 0.0f;
-    menuTable.contentOffset = CGPointZero;
-    menuTable.contentInset = toViewController.tableView.contentInset;
-    menuTable.frame = toTableFrame;
     
   } completion:^(BOOL finished) {
     

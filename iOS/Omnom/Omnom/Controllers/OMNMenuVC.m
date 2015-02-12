@@ -37,6 +37,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  self.automaticallyAdjustsScrollViewInsets = NO;
+
   [self omn_setup];
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
@@ -58,11 +60,13 @@
     
   };
   
-  UIEdgeInsets insets = UIEdgeInsetsMake(100.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(kMenuTableTopOffset, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   _tableView.contentInset = insets;
   _tableView.scrollIndicatorInsets = insets;
   [self.view layoutIfNeeded];
-  
+
+  _tableView.contentOffset = CGPointMake(0.0f, -kMenuTableTopOffset);
+
 }
 
 - (void)showMenuCategory:(OMNMenuCategory *)menuCategory {
@@ -82,8 +86,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
-  
- 
+
   if (_tableView.indexPathForSelectedRow) {
     
     [_tableView deselectRowAtIndexPath:_tableView.indexPathForSelectedRow animated:YES];

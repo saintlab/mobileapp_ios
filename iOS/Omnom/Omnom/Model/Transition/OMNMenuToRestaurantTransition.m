@@ -32,12 +32,11 @@
   
   CGRect toTableFrame = [toViewController.menuTable convertRect:toViewController.menuTable.bounds toView:containerView];
   toViewController.menuTable.hidden = YES;
+  toTableFrame.size = fromViewController.tableView.frame.size;
   
   [UIView animateWithDuration:duration animations:^{
     
     fromViewController.backgroundView.alpha = 0.0f;
-    menuTable.contentOffset = CGPointZero;
-    menuTable.contentInset = toViewController.menuTable.contentInset;
     menuTable.frame = toTableFrame;
     
   } completion:^(BOOL finished) {
