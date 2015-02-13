@@ -12,11 +12,12 @@
 #import "UIButton+omn_helper.h"
 #import "OMNUtils.h"
 #import "UIView+omn_autolayout.h"
+#import <TTTAttributedLabel.h>
 
 @implementation OMNRestaurantDetailsView {
   
   UIButton *_workdayButton;
-  UILabel *_restaurantInfoLabelAddress;
+  TTTAttributedLabel *_restaurantInfoLabelAddress;
   UILabel *_cityLabel;
   
 }
@@ -42,7 +43,7 @@
   [self addSubview:_cityLabel];
   
   
-  _restaurantInfoLabelAddress = [UILabel omn_autolayoutView];
+  _restaurantInfoLabelAddress = [TTTAttributedLabel omn_autolayoutView];
   _restaurantInfoLabelAddress.contentMode = UIViewContentModeCenter;
   _restaurantInfoLabelAddress.numberOfLines = 1;
   _restaurantInfoLabelAddress.textAlignment = NSTextAlignmentCenter;
@@ -84,6 +85,7 @@
   _cityLabel.text = restaurant.address.city;
   NSMutableString *address = [NSMutableString stringWithString:_restaurant.address.text];
   NSString *distance = @"";
+
   if (fabs(restaurant.distance) > 1000.0) {
   
     distance = [NSString stringWithFormat:@" ~%.2fкм", restaurant.distance/1000.0];
@@ -108,7 +110,7 @@
     
   }
 
-  _restaurantInfoLabelAddress.attributedText = text;
+  _restaurantInfoLabelAddress.text = text;
   [_workdayButton setTitle:_restaurant.schedules.work.fromToText forState:UIControlStateNormal];
 
 }
