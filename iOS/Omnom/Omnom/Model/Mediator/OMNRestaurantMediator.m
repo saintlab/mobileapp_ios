@@ -37,7 +37,7 @@ OMNOrderCalculationVCDelegate>
 @implementation OMNRestaurantMediator {
   
   __weak OMNOrdersVC *_ordersVC;
-  BOOL _ordersDidShow;
+  BOOL _shouldShowOrdersOnLaunch;
   dispatch_semaphore_t _ordersLock;
 
 }
@@ -61,6 +61,7 @@ OMNOrderCalculationVCDelegate>
     _restaurant = restaurant;
     self.table = [_restaurant.tables firstObject];
     self.orders = [NSArray arrayWithArray:_restaurant.orders];
+    _shouldShowOrdersOnLaunch = [self.orders count];
     _ordersLock = dispatch_semaphore_create(1);
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -297,8 +298,8 @@ OMNOrderCalculationVCDelegate>
 
 - (void)checkOrders {
   
-  if (_orders.count &&
-      !_ordersDidShow) {
+  if (_shouldShowOrdersOnLaunch &&
+      _orders.count) {
     
     [self showOrders];
     
@@ -306,7 +307,7 @@ OMNOrderCalculationVCDelegate>
   else if ([OMNLaunchHandler sharedHandler].launchOptions.showTableOrders) {
     
     [OMNLaunchHandler sharedHandler].launchOptions.showTableOrders = NO;
-    [self callBill];
+    [self requestTableOrders];
     
   }
   else if (0 == _orders.count) {
@@ -425,7 +426,7 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (void)callBill {
+- (void)requestTableOrders {
   
   if (!self.table) {
     return;
@@ -445,28 +446,6 @@ OMNOrderCalculationVCDelegate>
     [weakSelf getOrdersWithLoadingVC:loadingCircleVC];
     
   }];
-  
-}
-
-- (void)editMenuProduct:(OMNMenuProduct *)menuProduct withCompletion:(dispatch_block_t)completionBlock {
-  
-  menuProduct.editing = YES;
-  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
-  __weak typeof(self)weakSelf = self;
-  productModiferAlertVC.didCloseBlock = ^{
-  
-    menuProduct.editing = NO;
-    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  
-  productModiferAlertVC.didSelectOrderBlock = ^{
-    
-    menuProduct.editing = NO;
-    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:completionBlock];
-    
-  };
-  [self.restaurantActionsVC.navigationController presentViewController:productModiferAlertVC animated:YES completion:nil];
   
 }
 
@@ -506,6 +485,28 @@ OMNOrderCalculationVCDelegate>
   
 }
 
+- (void)editMenuProduct:(OMNMenuProduct *)menuProduct withCompletion:(dispatch_block_t)completionBlock {
+  
+  menuProduct.editing = YES;
+  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
+  __weak typeof(self)weakSelf = self;
+  productModiferAlertVC.didCloseBlock = ^{
+  
+    menuProduct.editing = NO;
+    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  
+  productModiferAlertVC.didSelectOrderBlock = ^{
+    
+    menuProduct.editing = NO;
+    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:completionBlock];
+    
+  };
+  [self.restaurantActionsVC.navigationController presentViewController:productModiferAlertVC animated:YES completion:nil];
+  
+}
+
 - (void)checkPushNotificationAndProcessOrders:(NSArray *)orders {
 
   self.orders = orders;
@@ -542,7 +543,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)showOrders {
   
-  _ordersDidShow = YES;
+  _shouldShowOrdersOnLaunch = NO;
   
   BOOL ordersHasProducts = [self.orders bk_all:^BOOL(OMNOrder *order) {
     

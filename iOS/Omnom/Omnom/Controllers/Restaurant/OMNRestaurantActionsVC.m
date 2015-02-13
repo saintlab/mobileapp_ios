@@ -106,7 +106,7 @@
   [self addActionBoardIfNeeded];
   self.bottomToolbar.hidden = NO;
   
-  UIButton *callBillButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"bill_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callBill)];
+  UIButton *callBillButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"bill_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(requestTableOrders)];
   UIButton *callWaiterButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callWaiterTap)];
   
   OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
