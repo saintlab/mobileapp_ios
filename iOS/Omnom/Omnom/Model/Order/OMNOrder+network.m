@@ -40,8 +40,14 @@
         failureBlock([OMNError omnomErrorFromCode:OMNErrorOrderClosed]);
         
       }
-      else {
+      else if ([status isEqualToString:@"restaurant_not_avaliable"]) {
         
+#warning restaurant_not_avaliable
+        failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+        
+      }
+      else {
+
         failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
         
       }

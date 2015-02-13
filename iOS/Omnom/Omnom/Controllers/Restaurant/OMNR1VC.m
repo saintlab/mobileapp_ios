@@ -363,7 +363,7 @@
   
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:kNilOptions metrics:nil views:views]];
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[gradientView]|" options:kNilOptions metrics:nil views:views]];
-  
+
   if (_restaurantMediator.restaurant.settings.has_menu) {
     
     _menuModel = [[OMNMenuModel alloc] init];

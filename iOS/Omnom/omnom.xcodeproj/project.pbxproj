@@ -538,6 +538,8 @@
 		93D9D8451A5306B400824AD0 /* OMNTable+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9D8431A5306B400824AD0 /* OMNTable+omn_network.m */; };
 		93D9EB231A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */; };
 		93D9EB241A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */; };
+		93DE37D01A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */; };
+		93DE37D11A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */; };
 		93DEBF561A875A2E00B46881 /* OMNMenu+wish.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEBF551A875A2E00B46881 /* OMNMenu+wish.m */; };
 		93DEBF571A875A2E00B46881 /* OMNMenu+wish.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEBF551A875A2E00B46881 /* OMNMenu+wish.m */; };
 		93E2996F197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E2996E197CCBFC00051B04 /* UIImage+omn_helper.m */; };
@@ -1164,6 +1166,8 @@
 		93D9D8431A5306B400824AD0 /* OMNTable+omn_network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNTable+omn_network.m"; sourceTree = "<group>"; };
 		93D9EB211A39C9BE0000D9B5 /* OMNRestaurantSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNRestaurantSettings.h; path = ../OMNRestaurantSettings.h; sourceTree = "<group>"; };
 		93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNRestaurantSettings.m; path = ../OMNRestaurantSettings.m; sourceTree = "<group>"; };
+		93DE37CE1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEnterHashAlertVC.h; sourceTree = "<group>"; };
+		93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEnterHashAlertVC.m; sourceTree = "<group>"; };
 		93DEBF541A875A2E00B46881 /* OMNMenu+wish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNMenu+wish.h"; sourceTree = "<group>"; };
 		93DEBF551A875A2E00B46881 /* OMNMenu+wish.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNMenu+wish.m"; sourceTree = "<group>"; };
 		93E2996D197CCBFC00051B04 /* UIImage+omn_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+omn_helper.h"; sourceTree = "<group>"; };
@@ -1360,6 +1364,8 @@
 				93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */,
 				93C126921A7155BC0019655A /* OMNProductModiferAlertVC.h */,
 				93C126931A7155BC0019655A /* OMNProductModiferAlertVC.m */,
+				93DE37CE1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.h */,
+				93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -2995,6 +3001,7 @@
 				930FF37C1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m in Sources */,
 				932118121962D8A700183729 /* OMNProductsModel.m in Sources */,
 				938F3A5A198E081500AB288E /* OMNPushPermissionVC.m in Sources */,
+				93DE37D01A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */,
 				93CE47CA1A78C9A4002D293B /* OMNMyOrderButton.m in Sources */,
 				939F9949197544820051822E /* OMNUserInfoItem.m in Sources */,
 				939F991C19752BE90051822E /* OMNUserInfoVC.m in Sources */,
@@ -3421,6 +3428,7 @@
 				939F994C197544820051822E /* OMNUserInfoModel.m in Sources */,
 				935FF14D1A6CE751004B69A6 /* OMNPreorderConfirmCell.m in Sources */,
 				9325BA521A1E1FAB003557BD /* NSString+omn_json.m in Sources */,
+				93DE37D11A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */,
 				935D8C831A3807F400877C02 /* OMNCameraRollPermissionDescriptionVC.m in Sources */,
 				93C126881A7109010019655A /* OMNMenuCategory.m in Sources */,
 				939F994019752D680051822E /* OMNBankCard.m in Sources */,

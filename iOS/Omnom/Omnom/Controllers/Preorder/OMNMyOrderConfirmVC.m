@@ -15,6 +15,7 @@
 #import "OMNRestaurant+omn_network.h"
 #import "OMNMenuProduct+cell.h"
 #import "OMNMenu+wish.h"
+#import "OMNTable+omn_network.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate>
@@ -49,6 +50,12 @@
       [_products addObject:product];
       
     }
+    
+  }];
+  
+  [_restaurantMediator.table getProductItems:^{
+    
+  } error:^(OMNError *error) {
     
   }];
   

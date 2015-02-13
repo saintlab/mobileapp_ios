@@ -47,7 +47,6 @@
   if (self.buttonInfo.count) {
     
     [self updateActionBoard];
-    self.bottomToolbar.hidden = NO;
     
   }
   

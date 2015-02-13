@@ -24,6 +24,7 @@
 #import "OMNCameraPermission.h"
 #import "OMNCameraPermissionDescriptionVC.h"
 #import <BlocksKit+UIKit.h>
+#import "OMNEnterHashAlertVC.h"
 
 @interface OMNScanTableQRCodeVC ()
 <AVCaptureMetadataOutputObjectsDelegate,
@@ -73,6 +74,61 @@ OMNCameraPermissionDescriptionVCDelegate>
     [weakSelf showCameraPermissionHelp];
     
   }];
+  
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
+    [weakSelf showBottomMenu];
+    
+  });
+  
+}
+
+- (void)showBottomMenu {
+  
+  __weak typeof(self)weakSelf = self;
+  self.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"QR_NOT_SCAN_BUTTON_TITLE", @"Не сканирует?") image:nil block:^{
+      
+      [weakSelf requestManualCode];
+      
+    }]
+    ];
+  [self updateActionBoard];
+  [self.view layoutIfNeeded];
+  self.bottomToolbar.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(self.bottomToolbar.frame));
+  [UIView animateWithDuration:0.5 animations:^{
+  
+    self.bottomToolbar.transform = CGAffineTransformIdentity;
+    
+  }];
+  
+}
+
+- (void)requestManualCode {
+  
+  OMNEnterHashAlertVC *enterHashAlertVC = [[OMNEnterHashAlertVC alloc] init];
+  __weak typeof(self)weakSelf = self;
+  enterHashAlertVC.didCloseBlock = ^{
+    
+    [weakSelf dismissViewControllerAnimated:YES completion:^{
+      
+      [weakSelf startScanning];
+      
+    }];
+    
+  };
+  enterHashAlertVC.didFindRestaurantsBlock = ^(NSArray *restaurants) {
+    
+    [weakSelf dismissViewControllerAnimated:YES completion:^{
+    
+      [weakSelf didFindRestaurants:restaurants];
+      
+    }];
+    
+  };
+  [self stopScanning];
+  [self presentViewController:enterHashAlertVC animated:YES completion:nil];
   
 }
 
@@ -187,21 +243,23 @@ OMNCameraPermissionDescriptionVCDelegate>
     @"qrIcon" : _qrIcon,
     @"flashButton" : _flashButton,
     @"contentView" : contentView,
+    @"topLayoutGuide" : self.topLayoutGuide,
     };
   
   NSDictionary *metrics =
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"bottomToolbarHeight" : [OMNStyler styler].bottomToolbarHeight,
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][contentView]-(bottomToolbarHeight)-|" options:kNilOptions metrics:metrics views:views]];
   
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_qrFrame attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_flashButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_qrIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[flashButton]-(18)-[qrFrame]-(80)-[qrIcon]-[textLabel]|" options:kNilOptions metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[flashButton]-(18)-[qrFrame]-(<=60)-[qrIcon]-[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
