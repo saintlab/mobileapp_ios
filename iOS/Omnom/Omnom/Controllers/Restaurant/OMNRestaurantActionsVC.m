@@ -110,86 +110,80 @@
   UIButton *callWaiterButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callWaiterTap)];
   
   OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
-  if (settings.has_menu) {
+  NSArray *bottomToolbarItems = nil;
+  
+  
+  if (settings.has_waiter_call &&
+      _restaurantMediator.waiterIsCalled) {
+    
+    bottomToolbarItems = [self waiterCancelButtons];
+    
+  }
+  else if (settings.has_menu) {
     
     callWaiterButton.hidden = !settings.has_waiter_call;
 
     OMNMyOrderButton *myOrderButton = [[OMNMyOrderButton alloc] initWithRestaurantMediator:_restaurantMediator];
     
-    [self.bottomToolbar setItems:
-     @[
-       [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
-       [UIBarButtonItem omn_flexibleItem],
-       [[UIBarButtonItem alloc] initWithCustomView:myOrderButton],
-       [UIBarButtonItem omn_flexibleItem],
-       [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-       ]
-                        animated:YES];
+    bottomToolbarItems =
+    @[
+      [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
+      [UIBarButtonItem omn_flexibleItem],
+      [[UIBarButtonItem alloc] initWithCustomView:myOrderButton],
+      [UIBarButtonItem omn_flexibleItem],
+      [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+      ];
     
   }
-  else if (_restaurantMediator.restaurant.settings.has_waiter_call) {
+  else {
     
     long long totalOrdersAmount = _restaurantMediator.totalOrdersAmount;
     NSString *callBillTitle = ((totalOrdersAmount > 0ll)) ? ([OMNUtils formattedMoneyStringFromKop:totalOrdersAmount]) : (NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт"));
     [callBillButton setTitle:callBillTitle forState:UIControlStateNormal];
     [callBillButton omn_centerButtonAndImageWithSpacing:4.0f];
     [callBillButton sizeToFit];
-    
-    [callWaiterButton setTitle:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант") forState:UIControlStateNormal];
-    [callWaiterButton omn_centerButtonAndImageWithSpacing:4.0f];
-    [callWaiterButton sizeToFit];
-    
-    if (_restaurantMediator.waiterIsCalled) {
+
+    if (settings.has_waiter_call) {
       
-      [self setWaiterCancelButtons];
+      [callWaiterButton setTitle:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант") forState:UIControlStateNormal];
+      [callWaiterButton omn_centerButtonAndImageWithSpacing:4.0f];
+      [callWaiterButton sizeToFit];
+      bottomToolbarItems =
+      @[
+        [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
+        [UIBarButtonItem omn_flexibleItem],
+        [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+        ];
       
     }
     else {
       
-      [self.bottomToolbar setItems:
-       @[
-         [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
-         [UIBarButtonItem omn_flexibleItem],
-         [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-         ]
-                          animated:YES];
+      bottomToolbarItems =
+      @[
+        [UIBarButtonItem omn_flexibleItem],
+        [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+        [UIBarButtonItem omn_flexibleItem],
+        ];
       
     }
-    
-  }
-  else {
-    
-    [callBillButton setTitle:NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт") forState:UIControlStateNormal];
-    [callBillButton omn_centerButtonAndImageWithSpacing:4.0f];
-    [callBillButton sizeToFit];
-    
-    [self.bottomToolbar setItems:
-     @[
-       [UIBarButtonItem omn_flexibleItem],
-       [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-       [UIBarButtonItem omn_flexibleItem],
-       ]
-                        animated:YES];
-    
+  
   }
   
-  
+  [self.bottomToolbar setItems:bottomToolbarItems animated:YES];
   
 }
 
-- (void)setWaiterCancelButtons {
+- (NSArray *)waiterCancelButtons {
   
   OMNToolbarButton *cancelWaiterButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"WAITER_CALL_CANCEL_BUTTON_TITLE", @"Отменить вызов")];
   [cancelWaiterButton addTarget:self action:@selector(cancelWaiterCallTap) forControlEvents:UIControlEventTouchUpInside];
   [cancelWaiterButton sizeToFit];
   
-  [self.bottomToolbar setItems:
-   @[
-     [UIBarButtonItem omn_flexibleItem],
-     [[UIBarButtonItem alloc] initWithCustomView:cancelWaiterButton],
-     [UIBarButtonItem omn_flexibleItem],
-     ]
-                      animated:YES];
+  return @[
+           [UIBarButtonItem omn_flexibleItem],
+           [[UIBarButtonItem alloc] initWithCustomView:cancelWaiterButton],
+           [UIBarButtonItem omn_flexibleItem],
+           ];
   
 }
 
