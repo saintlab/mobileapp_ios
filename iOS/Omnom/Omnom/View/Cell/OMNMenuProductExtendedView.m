@@ -141,12 +141,12 @@
   NSDictionary *metrics =
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
-    @"infoLabelOffset" : (_menuProduct.details.displayFullText.length) ? (@(20.0f)) : (@(0.0f)),
-    @"compositionLabelOffset" : (_menuProduct.details.compositionText.length) ? (@(20.0f)) : (@(0.0f)),
-    @"descriptionLabelOffset" : (_menuProduct.Description.length) ? (@(20.0f)) : (@(0.0f)),
+    @"infoLabelOffset" : (_menuProduct.details.displayFullText.length) ? (@(2.0f)) : (@(0.0f)),
+    @"compositionLabelOffset" : (_menuProduct.details.compositionText.length) ? (@(10.0f)) : (@(0.0f)),
+    @"descriptionLabelOffset" : (_menuProduct.Description.length) ? (@(10.0f)) : (@(0.0f)),
     };
   
-  _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[productIV]-(8)-[nameLabel]-(infoLabelOffset)-[infoLabel]-(20)-[priceButton]-(descriptionLabelOffset)-[descriptionLabel]-(compositionLabelOffset)-[compositionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views];
+  _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[productIV]-(8)-[nameLabel]-(infoLabelOffset)-[infoLabel]-(10)-[priceButton]-(descriptionLabelOffset)-[descriptionLabel]-(compositionLabelOffset)-[compositionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views];
   [self addConstraints:_heightConstraints];
   
 }
