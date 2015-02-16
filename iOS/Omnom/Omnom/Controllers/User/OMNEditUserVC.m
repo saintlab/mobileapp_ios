@@ -234,7 +234,7 @@ OMNChangePhoneWebVCDelegate>
   __weak typeof(self)weakSelf = self;
   [_user updateUserInfoWithUserAndImage:editUser withCompletion:^{
     
-    [weakSelf setLoading:NO];
+    [weakSelf closeTap];
     
   } failure:^(NSError *error) {
     
