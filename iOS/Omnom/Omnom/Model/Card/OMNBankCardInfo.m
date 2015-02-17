@@ -29,10 +29,6 @@
 
 - (void)logCardRegister {
   
-  if (!self.pan) {
-    return;
-  }
-  
   NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
   parametrs[@"scanner_used"] = @(self.scanUsed);
   if (self.masked_pan) {
@@ -80,11 +76,17 @@
   
 }
 
-- (BOOL)readyForPayment {
+- (BOOL)hasPANMMYYCVV {
   
   BOOL hasPANMMYYCVV = (self.pan.length && self.expiryMonth && self.expiryYear && self.cvv.length);
+  return hasPANMMYYCVV;
+  
+}
+
+- (BOOL)readyForPayment {
+  
   BOOL hasCardId = (self.card_id.length > 0);
-  return (hasPANMMYYCVV || hasCardId);
+  return (self.hasPANMMYYCVV || hasCardId);
   
 }
 

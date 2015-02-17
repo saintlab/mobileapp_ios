@@ -139,7 +139,10 @@
       
       [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
         
-        [bankCardInfo logCardRegister];
+        if (bankCardInfo.hasPANMMYYCVV) {
+          [bankCardInfo logCardRegister];
+        }
+        
         [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
         [[OMNAnalitics analitics] logPayment:orderTansactionInfo cardInfo:bankCardInfo bill:order.bill];
         paymentDidFinishBlock(nil);

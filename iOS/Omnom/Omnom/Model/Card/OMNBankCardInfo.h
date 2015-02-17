@@ -22,6 +22,7 @@
 @property (nonatomic, assign) NSInteger numberOfRegisterAttempts;
 
 - (BOOL)readyForPayment;
+- (BOOL)hasPANMMYYCVV;
 - (void)logCardRegister;
 - (NSDictionary *)debugInfo;
 
