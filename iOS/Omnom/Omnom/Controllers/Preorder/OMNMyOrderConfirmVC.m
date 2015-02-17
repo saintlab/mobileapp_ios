@@ -98,7 +98,7 @@
 
   OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] init];
   preorderDoneVC.backgroundImage = [self.view omn_screenshot];
-  preorderDoneVC.didCloseBlock = self.didCloseBlock;
+  preorderDoneVC.didCloseBlock = self.didCreateBlock;
   [self.navigationController presentViewController:preorderDoneVC animated:YES completion:nil];
   
 }

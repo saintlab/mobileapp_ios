@@ -422,6 +422,12 @@ OMNOrderCalculationVCDelegate>
     [weakSelf.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
     
   };
+  preorderConfirmVC.didCreateBlock = ^{
+    
+    [weakSelf.restaurantActionsVC showRestaurantAnimated:NO];
+    [weakSelf.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
+    
+  };
   [_restaurantActionsVC.navigationController presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
   
 }

@@ -12,6 +12,7 @@
 @interface OMNMyOrderConfirmVC : UITableViewController
 
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
+@property (nonatomic, copy) dispatch_block_t didCreateBlock;
 
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator;
 
