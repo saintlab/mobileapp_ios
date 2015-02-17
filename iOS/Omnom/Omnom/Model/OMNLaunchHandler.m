@@ -66,8 +66,7 @@
   
   DDLogDebug(@"didReceiveRemoteNotification>%@", userInfo);
   NSString *open_url = userInfo[@"open_url"];
-  if (open_url &&
-      UIApplicationStateActive == [UIApplication sharedApplication].applicationState) {
+  if (open_url) {
     __weak typeof(self)weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       

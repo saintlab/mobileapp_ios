@@ -54,6 +54,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
   [_mixpanel flush];
   _mixpanel = [[Mixpanel alloc] initWithToken:[OMNConstants mixpanelToken] andFlushInterval:60.0];
+//  _mixpanel = [[Mixpanel alloc] initWithToken:@"da0247cf586fac84dadf9fe36754d82a" andFlushInterval:60.0];
   _mixpanel.flushInterval = 60.0;
 
   [_mixpanelDebug flush];
