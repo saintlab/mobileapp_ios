@@ -17,8 +17,13 @@
 + (UIBarButtonItem *)omn_flexibleItem;
 + (UIBarButtonItem *)omn_fixedItemWithSpace:(CGFloat)space;
 
-+ (UIButton *)omn_buttonWithImage:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action;
-+ (UIButton *)omn_buttonWithTitle:(NSString *)title color:(UIColor *)color target:(id)target action:(SEL)action;
-+ (UIButton *)omn_buttonWithTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action;
+
+@end
+
+@interface UIButton (omn_bar_button)
+
++ (instancetype)omn_barButtonWithImage:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action;
++ (instancetype)omn_barButtonWithTitle:(NSString *)title color:(UIColor *)color target:(id)target action:(SEL)action;
++ (instancetype)omn_barButtonWithTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action;
 
 @end

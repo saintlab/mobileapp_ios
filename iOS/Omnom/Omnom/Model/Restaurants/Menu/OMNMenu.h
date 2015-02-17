@@ -20,5 +20,6 @@
 - (void)resetSelection;
 - (void)deselectAllProducts;
 - (long long)total;
+- (BOOL)hasSelectedItems;
 
 @end

@@ -165,7 +165,7 @@
     UIColor *color = _restaurantMediator.restaurant.decoration.antagonist_color;
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
     
-    UIButton *userButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:_restaurantMediator action:@selector(showUserProfile)];
+    UIButton *userButton = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:_restaurantMediator action:@selector(showUserProfile)];
     self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:userButton]];
     
     if (!_showTableButtonAnimation) {

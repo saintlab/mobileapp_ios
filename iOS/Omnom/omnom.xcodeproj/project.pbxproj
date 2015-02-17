@@ -574,6 +574,10 @@
 		93E58CBA1A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CB81A246FFB008064F9 /* OMNPermissionHelpVC.m */; };
 		93E6ED971A84838100FB890C /* OMNTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6ED961A84838100FB890C /* OMNTableButton.m */; };
 		93E6ED981A84838100FB890C /* OMNTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E6ED961A84838100FB890C /* OMNTableButton.m */; };
+		93E773711A931CB300080EAF /* OMNRestaurantActionsToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773701A931CB300080EAF /* OMNRestaurantActionsToolbar.m */; };
+		93E773721A931CB300080EAF /* OMNRestaurantActionsToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773701A931CB300080EAF /* OMNRestaurantActionsToolbar.m */; };
+		93E773751A93266600080EAF /* OMNOrderToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773741A93266600080EAF /* OMNOrderToolbarButton.m */; };
+		93E773761A93266600080EAF /* OMNOrderToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773741A93266600080EAF /* OMNOrderToolbarButton.m */; };
 		93EDCC9519C2D296006BC364 /* OMNSocketTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EDCC9419C2D296006BC364 /* OMNSocketTest.m */; };
 		93EDD46D19B86D9F0017B6ED /* config_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDD46C19B86D9F0017B6ED /* config_prod.json */; };
 		93EDD46E19B86D9F0017B6ED /* config_prod.json in Resources */ = {isa = PBXBuildFile; fileRef = 93EDD46C19B86D9F0017B6ED /* config_prod.json */; };
@@ -1202,6 +1206,10 @@
 		93E58CB81A246FFB008064F9 /* OMNPermissionHelpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPermissionHelpVC.m; sourceTree = "<group>"; };
 		93E6ED951A84838100FB890C /* OMNTableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTableButton.h; sourceTree = "<group>"; };
 		93E6ED961A84838100FB890C /* OMNTableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTableButton.m; sourceTree = "<group>"; };
+		93E7736F1A931CB300080EAF /* OMNRestaurantActionsToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantActionsToolbar.h; sourceTree = "<group>"; };
+		93E773701A931CB300080EAF /* OMNRestaurantActionsToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantActionsToolbar.m; sourceTree = "<group>"; };
+		93E773731A93266600080EAF /* OMNOrderToolbarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderToolbarButton.h; sourceTree = "<group>"; };
+		93E773741A93266600080EAF /* OMNOrderToolbarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderToolbarButton.m; sourceTree = "<group>"; };
 		93EDCC9419C2D296006BC364 /* OMNSocketTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSocketTest.m; sourceTree = "<group>"; };
 		93EDD46C19B86D9F0017B6ED /* config_prod.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_prod.json; sourceTree = "<group>"; };
 		93EE3081198F57150024EAF4 /* OMNMailRUCardConfirmVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMailRUCardConfirmVC.h; sourceTree = "<group>"; };
@@ -1389,6 +1397,8 @@
 				9345AFD0199BB3C700328F73 /* OMNPaymentNotificationControl.m */,
 				93998C1319ACB6BD00FEE940 /* OMNScrollExtendView.h */,
 				93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */,
+				93E7736F1A931CB300080EAF /* OMNRestaurantActionsToolbar.h */,
+				93E773701A931CB300080EAF /* OMNRestaurantActionsToolbar.m */,
 			);
 			name = Views;
 			path = View;
@@ -1682,6 +1692,8 @@
 				935A1E341A81D5D100704086 /* OMNClearButton.m */,
 				930FF37A1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.h */,
 				930FF37B1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m */,
+				93E773731A93266600080EAF /* OMNOrderToolbarButton.h */,
+				93E773741A93266600080EAF /* OMNOrderToolbarButton.m */,
 			);
 			name = Button;
 			sourceTree = "<group>";
@@ -3067,6 +3079,7 @@
 				93E2996F197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
 				9325BA491A1DA15A003557BD /* OMNPaymentLoadingVC.m in Sources */,
 				935FF15B1A6D23E0004B69A6 /* OMNPreorderActionCell.m in Sources */,
+				93E773711A931CB300080EAF /* OMNRestaurantActionsToolbar.m in Sources */,
 				9345AFB7199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */,
 				9390D2D1196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
 				93C126941A7155BC0019655A /* OMNProductModiferAlertVC.m in Sources */,
@@ -3099,6 +3112,7 @@
 				935D8C8E1A381CE400877C02 /* OMNCameraPermissionDescriptionVC.m in Sources */,
 				93363FF61A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */,
 				9317C06C19DE85BB0071E42B /* OMNPaymentAlertVC.m in Sources */,
+				93E773751A93266600080EAF /* OMNOrderToolbarButton.m in Sources */,
 				933D48E919E67AFD004E591C /* UIBarButtonItem+omn_custom.m in Sources */,
 				939F992019752BE90051822E /* OMNLoginVC.m in Sources */,
 				9345AFCD199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
@@ -3425,6 +3439,7 @@
 				932872C319AC5E1A00FF8B0E /* OMNRestaurantTests.m in Sources */,
 				93D34DB119D2689800B7BDBE /* NSString+omnScanner.m in Sources */,
 				93CE478D1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m in Sources */,
+				93E773721A931CB300080EAF /* OMNRestaurantActionsToolbar.m in Sources */,
 				939F994C197544820051822E /* OMNUserInfoModel.m in Sources */,
 				935FF14D1A6CE751004B69A6 /* OMNPreorderConfirmCell.m in Sources */,
 				9325BA521A1E1FAB003557BD /* NSString+omn_json.m in Sources */,
@@ -3456,6 +3471,7 @@
 				93D9EB241A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */,
 				932118331962E35C00183729 /* OMNTransitionFromListToProduct.m in Sources */,
 				936E71FA19925563008FF864 /* OMNNavigationBarProgressView.m in Sources */,
+				93E773761A93266600080EAF /* OMNOrderToolbarButton.m in Sources */,
 				93D4ABDB1A6243BB00E7C7A5 /* OMNBankCard+omn_info.m in Sources */,
 				93245DA91A1B9A2C0065D4EC /* OMNTestBankCardsModel.m in Sources */,
 				9389456519B0622900C37C82 /* OMNPushText.m in Sources */,

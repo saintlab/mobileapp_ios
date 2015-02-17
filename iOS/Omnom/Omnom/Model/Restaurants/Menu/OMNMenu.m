@@ -62,6 +62,16 @@
   
 }
 
+- (BOOL)hasSelectedItems {
+  
+  return [self.products bk_any:^BOOL(id key, OMNMenuProduct *menuProduct) {
+    
+    return (menuProduct.quantity > 0.0);
+    
+  }];
+  
+}
+
 - (long long)total {
   
   __block long long total = 0ll;

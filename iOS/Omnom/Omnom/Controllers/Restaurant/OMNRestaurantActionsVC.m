@@ -7,34 +7,18 @@
 //
 
 #import "OMNRestaurantActionsVC.h"
-#import "OMNToolbarButton.h"
 #import "OMNRestaurantMediator.h"
 #import "OMNR1VC.h"
 #import "OMNNavigationController.h"
-#import <BlocksKit+UIKit.h>
-#import "UIBarButtonItem+omn_custom.h"
-#import "OMNRestaurantManager.h"
-#import "OMNTable+omn_network.h"
-#import "OMNMyOrderButton.h"
-#import "UIButton+omn_helper.h"
 #import "OMNNavigationControllerDelegate.h"
-#import "OMNUtils.h"
+#import "OMNRestaurantActionsToolbar.h"
+#import <OMNStyler.h>
 
 @implementation OMNRestaurantActionsVC {
   
   OMNRestaurantMediator *_restaurantMediator;
   OMNNavigationController *_navigationController;
-  NSString *_restaurantWaiterCallIdentifier;
 
-}
-
-- (void)dealloc {
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  if (_restaurantWaiterCallIdentifier) {
-    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
-  }
-  
 }
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
@@ -54,15 +38,6 @@
   self.view.backgroundColor = [UIColor whiteColor];
   
   [self setupControllers];
-  
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRestaurantActionButtons) name:OMNRestaurantOrdersDidChangeNotification object:nil];
-  
-  __weak typeof(self)weakSelf = self;
-  _restaurantWaiterCallIdentifier = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
-    
-    [weakSelf updateRestaurantActionButtons];
-    
-  }];
 
 }
 
@@ -101,120 +76,6 @@
   
 }
 
-- (void)updateRestaurantActionButtons {
-
-  [self addActionBoardIfNeeded];
-  self.bottomToolbar.hidden = NO;
-  
-  UIButton *callBillButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"bill_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(requestTableOrders)];
-  UIButton *callWaiterButton = [UIBarButtonItem omn_buttonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:_restaurantMediator action:@selector(callWaiterTap)];
-  
-  OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
-  NSArray *bottomToolbarItems = nil;
-  
-  
-  if (settings.has_waiter_call &&
-      _restaurantMediator.waiterIsCalled) {
-    
-    bottomToolbarItems = [self waiterCancelButtons];
-    
-  }
-  else if (settings.has_menu) {
-    
-    callWaiterButton.hidden = !settings.has_waiter_call;
-
-    OMNMyOrderButton *myOrderButton = [[OMNMyOrderButton alloc] initWithRestaurantMediator:_restaurantMediator];
-    
-    bottomToolbarItems =
-    @[
-      [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
-      [UIBarButtonItem omn_flexibleItem],
-      [[UIBarButtonItem alloc] initWithCustomView:myOrderButton],
-      [UIBarButtonItem omn_flexibleItem],
-      [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-      ];
-    
-  }
-  else {
-    
-    long long totalOrdersAmount = _restaurantMediator.totalOrdersAmount;
-    NSString *callBillTitle = ((totalOrdersAmount > 0ll)) ? ([OMNUtils formattedMoneyStringFromKop:totalOrdersAmount]) : (NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт"));
-    [callBillButton setTitle:callBillTitle forState:UIControlStateNormal];
-    [callBillButton omn_centerButtonAndImageWithSpacing:4.0f];
-    [callBillButton sizeToFit];
-
-    if (settings.has_waiter_call) {
-      
-      [callWaiterButton setTitle:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант") forState:UIControlStateNormal];
-      [callWaiterButton omn_centerButtonAndImageWithSpacing:4.0f];
-      [callWaiterButton sizeToFit];
-      bottomToolbarItems =
-      @[
-        [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
-        [UIBarButtonItem omn_flexibleItem],
-        [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-        ];
-      
-    }
-    else {
-      
-      bottomToolbarItems =
-      @[
-        [UIBarButtonItem omn_flexibleItem],
-        [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-        [UIBarButtonItem omn_flexibleItem],
-        ];
-      
-    }
-  
-  }
-  
-  [self.bottomToolbar setItems:bottomToolbarItems animated:YES];
-  
-}
-
-- (NSArray *)waiterCancelButtons {
-  
-  OMNToolbarButton *cancelWaiterButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"WAITER_CALL_CANCEL_BUTTON_TITLE", @"Отменить вызов")];
-  [cancelWaiterButton addTarget:self action:@selector(cancelWaiterCallTap) forControlEvents:UIControlEventTouchUpInside];
-  [cancelWaiterButton sizeToFit];
-  
-  return @[
-           [UIBarButtonItem omn_flexibleItem],
-           [[UIBarButtonItem alloc] initWithCustomView:cancelWaiterButton],
-           [UIBarButtonItem omn_flexibleItem],
-           ];
-  
-}
-
-- (void)setLoadingState {
-  
-  [self.bottomToolbar setItems:
-   @[
-     [UIBarButtonItem omn_flexibleItem],
-     [UIBarButtonItem omn_loadingItem],
-     [UIBarButtonItem omn_flexibleItem],
-     ]
-                      animated:YES];
-  
-}
-
-- (void)callWaiterTap {
-  
-  [self setLoadingState];
-  [_restaurantMediator waiterCallWithCompletion:^{
-  }];
-  
-}
-
-- (void)cancelWaiterCallTap {
-  
-  [self setLoadingState];
-  [_restaurantMediator waiterCallStopWithCompletion:^{
-  }];
-  
-}
-
 - (void)setupControllers {
   
   _r1VC = [[OMNR1VC alloc] initWithMediator:_restaurantMediator];
@@ -225,13 +86,27 @@
   [self.view addSubview:_navigationController.view];
   _navigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
   
+  OMNRestaurantActionsToolbar *toolbar = [[OMNRestaurantActionsToolbar alloc] init];
+  toolbar.translatesAutoresizingMaskIntoConstraints = NO;
+  toolbar.restaurantMediator = _restaurantMediator;
+  [self.view addSubview:toolbar];
+  
   NSDictionary *views =
   @{
+    @"bottomToolbar" : toolbar,
     @"navigationController" : _navigationController.view,
     };
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navigationController]|" options:kNilOptions metrics:nil views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navigationController]|" options:kNilOptions metrics:nil views:views]];
   
+  NSDictionary *metrics =
+  @{
+    @"bottomToolbarHeight" : [[OMNStyler styler] bottomToolbarHeight],
+    };
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navigationController]|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navigationController]|" options:kNilOptions metrics:metrics views:views]];
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomToolbar]|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomToolbar(bottomToolbarHeight)]|" options:kNilOptions metrics:metrics views:views]];
   [_navigationController didMoveToParentViewController:self];
   
 }

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "OMNRestaurantMediator.h"
+#import "OMNBackgroundVC.h"
 
-@interface OMNMyOrderConfirmVC : UITableViewController
+@interface OMNMyOrderConfirmVC : OMNBackgroundVC
 
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 @property (nonatomic, copy) dispatch_block_t didCreateBlock;

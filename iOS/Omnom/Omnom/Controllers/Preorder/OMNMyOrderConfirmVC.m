@@ -16,9 +16,15 @@
 #import "OMNMenuProduct+cell.h"
 #import "OMNMenu+wish.h"
 #import "OMNTable+omn_network.h"
+#import <OMNStyler.h>
+#import "OMNOrderToolbarButton.h"
 
 @interface OMNMyOrderConfirmVC ()
-<OMNPreorderActionCellDelegate>
+<OMNPreorderActionCellDelegate,
+UITableViewDelegate,
+UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -42,6 +48,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  [self omn_setup];
+  
+  _tableView.delegate = self;
+  _tableView.dataSource = self;
+  
   _products = [NSMutableArray array];
   [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
     
@@ -61,18 +72,26 @@
   
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"upper_bar_wish"] forBarMetrics:UIBarMetricsDefault];
   
-  self.tableView.tableFooterView = [[UIView alloc] init];
-  [self.tableView registerClass:[OMNPreorderConfirmCell class] forCellReuseIdentifier:@"OMNPreorderConfirmCell"];
-  [self.tableView registerClass:[OMNPreorderActionCell class] forCellReuseIdentifier:@"OMNPreorderActionCell"];
-  
-  self.tableView.tableFooterView = [[UIView alloc] init];
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:NSLocalizedString(@"PREORDER_CONFIRM_CLOSE_BUTTON_TITLE", @"Закрыть") color:[UIColor whiteColor] target:self action:@selector(closeTap)];
+  
+  [self addActionBoardIfNeeded];
+
+  OMNOrderToolbarButton *callBillButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(requestTableOrders)];
+  self.bottomToolbar.hidden = NO;
+  self.bottomToolbar.items =
+  @[
+    [UIBarButtonItem omn_flexibleItem],
+    [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+    [UIBarButtonItem omn_flexibleItem],
+    ];
   
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
- 
+
+- (void)requestTableOrders {
+  
+  [_restaurantMediator requestTableOrders];
+  [self closeTap];
   
 }
 
@@ -226,6 +245,38 @@
   [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
   [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
   [self.tableView endUpdates];
+  
+}
+
+- (void)omn_setup {
+  
+  _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+  _tableView.tableFooterView = [[UIView alloc] init];
+  _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  [self.view addSubview:_tableView];
+  
+  [_tableView registerClass:[OMNPreorderConfirmCell class] forCellReuseIdentifier:@"OMNPreorderConfirmCell"];
+  [_tableView registerClass:[OMNPreorderActionCell class] forCellReuseIdentifier:@"OMNPreorderActionCell"];
+  
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  _tableView.contentInset = insets;
+  _tableView.scrollIndicatorInsets = insets;
+  
+  NSDictionary *views =
+  @{
+    @"tableView" : _tableView,
+    @"topLayoutGuide" : self.topLayoutGuide,
+    };
+  
+  NSDictionary *metrics =
+  @{
+    };
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][tableView]|" options:kNilOptions metrics:metrics views:views]];
+  
+  [self.view layoutIfNeeded];
   
 }
 
