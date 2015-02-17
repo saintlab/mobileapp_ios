@@ -290,8 +290,8 @@ OMNChangePhoneWebVCDelegate>
   UIButton *userEditButton = [[UIButton alloc] init];
   userEditButton.translatesAutoresizingMaskIntoConstraints = NO;
   userEditButton.titleLabel.font = FuturaOSFOmnomRegular(20.0f);
-  [userEditButton setTitleColor:colorWithHexString(@"157EFB") forState:UIControlStateNormal];
-  [userEditButton setTitleColor:[colorWithHexString(@"157EFB") colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
+  [userEditButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
+  [userEditButton setTitleColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
   [userEditButton setTitle:NSLocalizedString(@"EDIT_USER_CHANGE_PHONE_BUTTON_TITLE", @"Сменить") forState:UIControlStateNormal];
   [userEditButton addTarget:self action:@selector(changePhoneTap:) forControlEvents:UIControlEventTouchUpInside];
   [_userInfoView addSubview:userEditButton];

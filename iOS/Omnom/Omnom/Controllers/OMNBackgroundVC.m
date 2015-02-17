@@ -137,7 +137,7 @@
   _bottomToolbar.translatesAutoresizingMaskIntoConstraints = NO;
   [_bottomToolbar setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionAny];
   [_bottomToolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
-  _bottomToolbar.backgroundColor = [OMNStyler styler].toolbarColor;
+  _bottomToolbar.backgroundColor = [OMNStyler toolbarColor];
   [self.view addSubview:_bottomToolbar];
   
   NSDictionary *views =

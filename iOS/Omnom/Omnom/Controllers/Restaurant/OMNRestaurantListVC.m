@@ -262,7 +262,7 @@
   _bottomToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.width, [OMNStyler styler].bottomToolbarHeight.floatValue)];
   [_bottomToolbar setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionAny];
   [_bottomToolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
-  _bottomToolbar.backgroundColor = [OMNStyler styler].toolbarColor;
+  _bottomToolbar.backgroundColor = [OMNStyler toolbarColor];
   [self.tableView addSubview:_bottomToolbar];
   
   UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);

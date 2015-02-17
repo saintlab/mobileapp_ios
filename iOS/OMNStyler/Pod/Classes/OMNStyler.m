@@ -37,9 +37,19 @@
   return @(50.0f);
 }
 
-- (UIColor *)toolbarColor {
++ (UIColor *)toolbarColor {
   
   return [UIColor colorWithWhite:0.95f alpha:0.95f];
+  
+}
+
++ (UIColor *)blueColor {
+  
+  static UIColor *blueColor = nil;
+  if (!blueColor) {
+    blueColor = colorWithHexString(@"157EFB");
+  }
+  return blueColor;
   
 }
 

@@ -45,7 +45,7 @@
     UIImage *selectedImage = [[UIImage imageNamed:@"blue_button_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
     [self setBackgroundImage:selectedImage forState:UIControlStateSelected];
     [self setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-    [self setBackgroundImage:[selectedImage omn_tintWithColor:[colorWithHexString(@"157EFB") colorWithAlphaComponent:0.5f]] forState:UIControlStateSelected|UIControlStateHighlighted];
+    [self setBackgroundImage:[selectedImage omn_tintWithColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f]] forState:UIControlStateSelected|UIControlStateHighlighted];
     [self updateTitle];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuProductDidChange:) name:OMNMenuProductDidChangeNotification object:nil];
     

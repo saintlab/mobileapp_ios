@@ -72,7 +72,7 @@
 
 - (void)setupAppearance {
   
-  [[UITextField appearance] setTintColor:colorWithHexString(@"157EFB")];
+  [[UITextField appearance] setTintColor:[OMNStyler blueColor]];
   
   [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
   UIFont *buttonFont = FuturaOSFOmnomRegular(20.0f);

@@ -45,7 +45,7 @@
     
     [self setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionAny];
     [self setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
-    self.backgroundColor = [OMNStyler styler].toolbarColor;
+    self.backgroundColor = [OMNStyler toolbarColor];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRestaurantActionButtons) name:OMNRestaurantOrdersDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuProductDidChange:) name:OMNMenuProductDidChangeNotification object:nil];
     

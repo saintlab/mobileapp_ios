@@ -24,7 +24,7 @@
   if (self) {
     
     self.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
-    [self setTitleColor:colorWithHexString(@"157EFB") forState:UIControlStateNormal];
+    [self setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
     [self setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateHighlighted];
     [self setTitleColor:colorWithHexString(@"FFFFFF") forState:kUIControlStateCustomState];
     [self setTitle:@"" forState:UIControlStateSelected];
@@ -41,7 +41,7 @@
     [self setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
     [self setBackgroundImage:selectedImage forState:kUIControlStateCustomState];
     [self setBackgroundImage:selectedImage forState:UIControlStateSelected|kUIControlStateCustomState];
-    [self setBackgroundImage:[selectedImage omn_tintWithColor:[colorWithHexString(@"157EFB") colorWithAlphaComponent:0.5f]] forState:UIControlStateSelected|UIControlStateHighlighted];
+    [self setBackgroundImage:[selectedImage omn_tintWithColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f]] forState:UIControlStateSelected|UIControlStateHighlighted];
     
   }
   return self;

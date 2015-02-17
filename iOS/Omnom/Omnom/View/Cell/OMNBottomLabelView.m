@@ -26,7 +26,7 @@
 
 - (void)setup {
   
-  self.backgroundColor = [OMNStyler styler].toolbarColor;
+  self.backgroundColor = [OMNStyler toolbarColor];
   
   _label = [[UILabel alloc] init];
   _label.translatesAutoresizingMaskIntoConstraints = NO;

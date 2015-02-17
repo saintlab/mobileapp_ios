@@ -16,7 +16,10 @@
 
 - (NSNumber *)leftOffset;
 - (NSNumber *)bottomToolbarHeight;
-- (UIColor *)toolbarColor;
+
++ (UIColor *)toolbarColor;
++ (UIColor *)blueColor;
+
 - (OMNStyle *)styleForClass:(Class)class;
 - (NSTimeInterval)animationDurationForKey:(NSString *)key;
 - (void)reset;

@@ -95,7 +95,7 @@
     
     _priceButton = [UIButton omn_autolayoutView];
     _priceButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
-    [_priceButton setTitleColor:colorWithHexString(@"157EFB") forState:UIControlStateNormal];
+    [_priceButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
     _priceButton.titleLabel.font = FuturaLSFOmnomLERegular(15.0f);
     [_priceButton setBackgroundImage:[[UIImage imageNamed:@"rounded_button_light_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
     

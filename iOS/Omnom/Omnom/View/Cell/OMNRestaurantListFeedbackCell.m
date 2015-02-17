@@ -76,7 +76,7 @@
   
   NSDictionary *attributes2 =
   @{
-    NSForegroundColorAttributeName : colorWithHexString(@"157EFB"),
+    NSForegroundColorAttributeName : [OMNStyler blueColor],
     NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
     NSParagraphStyleAttributeName : [self centerParagraphStyle],
     };
@@ -97,7 +97,7 @@
   self.selectedBackgroundView.backgroundColor = color;
   
   _mailIconImageView = [[UIImageView alloc] init];
-  _mailIconImageView.image = [[UIImage imageNamed:@"send_mail_icon"] omn_tintWithColor:colorWithHexString(@"157EFB")];
+  _mailIconImageView.image = [[UIImage imageNamed:@"send_mail_icon"] omn_tintWithColor:[OMNStyler blueColor]];
   _mailIconImageView.opaque = YES;
   _mailIconImageView.backgroundColor = color;
   _mailIconImageView.translatesAutoresizingMaskIntoConstraints = NO;

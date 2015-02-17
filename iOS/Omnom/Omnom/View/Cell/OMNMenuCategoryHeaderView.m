@@ -36,7 +36,7 @@
 - (void)omn_setup {
   
   self.backgroundView = [[UIView alloc] init];
-  self.backgroundView.backgroundColor = [OMNStyler styler].toolbarColor;
+  self.backgroundView.backgroundColor = [OMNStyler toolbarColor];
   
   _label = [UILabel omn_autolayoutView];
   _label.textColor = colorWithHexString(@"7B7B7B");

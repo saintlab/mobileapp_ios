@@ -91,7 +91,7 @@
   [_phoneButton setTitle:_restaurant.phone forState:UIControlStateNormal];
   [_phoneButton addTarget:self action:@selector(callTap) forControlEvents:UIControlEventTouchUpInside];
 
-  UIColor *defaultColor = colorWithHexString(@"157EFB");
+  UIColor *defaultColor = [OMNStyler blueColor];
   UIColor *disabledColor = colorWithHexString(@"A1A1A1");
   [_reserveButton setTitle:@"Бронировать\nстолик" image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
   _reserveButton.enabled = NO;
@@ -181,7 +181,7 @@
   [_scroll addSubview:_contentView];
   
   _bottomView = [UIView omn_autolayoutView];
-  _bottomView.backgroundColor = [OMNStyler styler].toolbarColor;
+  _bottomView.backgroundColor = [OMNStyler toolbarColor];
   [self.view addSubview:_bottomView];
   
   _logoIcon = [UIButton omn_autolayoutView];

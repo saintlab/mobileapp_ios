@@ -51,7 +51,7 @@
   
   if (_restaurantMediator.table) {
     
-    OMNTableButton *tableButton = [OMNTableButton buttonWithColor:colorWithHexString(@"157EFB")];
+    OMNTableButton *tableButton = [OMNTableButton buttonWithColor:[OMNStyler blueColor]];
     NSString *title = [NSString stringWithFormat:NSLocalizedString(@"TABLE_UPDATE_BUTTON_TITLE %@", @"{table_number} Обновить"), _restaurantMediator.table.internal_id];
     [tableButton setText:title];
     tableButton.userInteractionEnabled = NO;

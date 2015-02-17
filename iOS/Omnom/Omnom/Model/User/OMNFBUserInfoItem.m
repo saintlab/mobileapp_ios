@@ -35,7 +35,7 @@
       
     };
 
-    self.titleColor = colorWithHexString(@"157EFB");
+    self.titleColor = [OMNStyler blueColor];
     
   }
   return self;
