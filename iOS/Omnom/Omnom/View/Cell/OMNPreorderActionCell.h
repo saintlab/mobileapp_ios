@@ -14,6 +14,7 @@
 
 @property (nonatomic, weak) id <OMNPreorderActionCellDelegate> delegate;
 @property (nonatomic, strong, readonly) UIButton *actionButton;
+@property (nonatomic, strong, readonly) UIButton *refreshButton;
 
 @end
 
@@ -21,5 +22,6 @@
 
 - (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell;
 - (void)preorderActionCellDidClear:(OMNPreorderActionCell *)preorderActionCell;
+- (void)preorderActionCellDidRefresh:(OMNPreorderActionCell *)preorderActionCell;
 
 @end

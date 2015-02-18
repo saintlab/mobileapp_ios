@@ -272,6 +272,7 @@ UIGestureRecognizerDelegate>
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     cell = [[OMNLabelCell alloc] init];
+    cell.hidden = YES;
   });
   [self configureDescriptionCell:cell];
   

@@ -67,7 +67,7 @@
   _productIV = [UIImageView omn_autolayoutView];
   _productIV.backgroundColor = backgroundColor;
   _productIV.opaque = YES;
-  _productIV.contentMode = UIViewContentModeScaleAspectFit;
+  _productIV.contentMode = UIViewContentModeScaleAspectFill;
   _productIV.clipsToBounds = YES;
   [self addSubview:_productIV];
   

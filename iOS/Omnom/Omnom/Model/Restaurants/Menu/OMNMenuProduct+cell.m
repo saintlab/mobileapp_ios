@@ -27,6 +27,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     menuProductView = [[OMNMenuProductView alloc] initWithFrame:tableView.bounds];
+    menuProductView.hidden = YES;
   });
   
   menuProductView.bounds = tableView.bounds;
@@ -73,6 +74,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     preorderConfirmView = [[OMNPreorderConfirmView alloc] initWithFrame:tableView.bounds];
+    preorderConfirmView.hidden = YES;
   });
   
   preorderConfirmView.bounds = tableView.bounds;

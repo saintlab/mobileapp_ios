@@ -17,7 +17,6 @@
   
   UIButton *_clearButton;
   UILabel *_refreshLabel;
-  UIButton *_refreshButton;
   
 }
 
@@ -50,6 +49,12 @@
 - (void)clearTap {
   
   [self.delegate preorderActionCellDidClear:self];
+  
+}
+
+- (void)refreshTap {
+  
+  [self.delegate preorderActionCellDidRefresh:self];
   
 }
 
@@ -87,6 +92,7 @@
   [refreshView addSubview:_refreshLabel];
   
   _refreshButton = [UIButton omn_autolayoutView];
+  [_refreshButton addTarget:self action:@selector(refreshTap) forControlEvents:UIControlEventTouchUpInside];
   [_refreshButton omn_setImage:[UIImage imageNamed:@"refresh_icon"] withColor:[UIColor blackColor]];
   [refreshView addSubview:_refreshButton];
   

@@ -20,7 +20,6 @@
   UILabel *_compositionLabel;
   NSLayoutConstraint *_imageHeightConstraint;
   NSArray *_heightConstraints;
-//  UILabel *_ingredientsLabel;
   
 }
 
@@ -46,7 +45,8 @@
   _productIV = [UIImageView omn_autolayoutView];
   _productIV.opaque = YES;
   _productIV.backgroundColor = backgroundColor;
-  _productIV.contentMode = UIViewContentModeScaleAspectFit;
+  _productIV.contentMode = UIViewContentModeScaleAspectFill;
+  [_productIV setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
   _productIV.clipsToBounds = YES;
   [self addSubview:_productIV];
   
@@ -111,8 +111,8 @@
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[compositionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
-  _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
-  [self addConstraint:_imageHeightConstraint];
+//  _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
+//  [self addConstraint:_imageHeightConstraint];
   
   [self updateHeightConstraints];
   

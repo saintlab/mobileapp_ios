@@ -37,12 +37,21 @@
 
 }
 
-- (void)getProductItems:(dispatch_block_t)pi error:(void(^)(OMNError *error))errorBlock {
+- (void)getProductItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/items", self.restaurant_id, self.id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
-    NSLog(@"%@", response);
+    NSMutableArray *items = [NSMutableArray arrayWithCapacity:[response count]];
+    [response enumerateObjectsUsingBlock:^(NSDictionary *item, NSUInteger idx, BOOL *stop) {
+      
+      if (item[@"id"]) {
+        [items addObject:item[@"id"]];
+      }
+      
+    }];
+    
+    productItemsBlock(items);
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     

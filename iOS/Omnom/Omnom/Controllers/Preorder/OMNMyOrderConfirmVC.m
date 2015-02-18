@@ -18,11 +18,13 @@
 #import "OMNTable+omn_network.h"
 #import <OMNStyler.h>
 #import "OMNOrderToolbarButton.h"
+#import "OMNMenuProduct+omn_edit.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,
 UITableViewDelegate,
-UITableViewDataSource>
+UITableViewDataSource,
+OMNPreorderConfirmCellDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -32,6 +34,8 @@ UITableViewDataSource>
   
   OMNRestaurantMediator *_restaurantMediator;
   NSMutableArray *_products;
+  NSArray *_tableProductsIds;
+  NSMutableArray *_tableProducts;
   
 }
 
@@ -53,23 +57,6 @@ UITableViewDataSource>
   _tableView.delegate = self;
   _tableView.dataSource = self;
   
-  _products = [NSMutableArray array];
-  [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
-    
-    if (product.quantity > 0.0) {
-    
-      [_products addObject:product];
-      
-    }
-    
-  }];
-  
-  [_restaurantMediator.table getProductItems:^{
-    
-  } error:^(OMNError *error) {
-    
-  }];
-  
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"upper_bar_wish"] forBarMetrics:UIBarMetricsDefault];
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:NSLocalizedString(@"PREORDER_CONFIRM_CLOSE_BUTTON_TITLE", @"Закрыть") color:[UIColor whiteColor] target:self action:@selector(closeTap)];
@@ -87,6 +74,82 @@ UITableViewDataSource>
   
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+
+  [self updateTableViewAnimated:NO];
+  [self loadTableProductItemsWithCompletion:nil];
+  
+}
+
+- (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock {
+  
+  __weak typeof(self)weakSelf = self;
+  [_restaurantMediator.table getProductItems:^(NSArray *productItems) {
+    
+    [weakSelf didLoadTableProductItems:productItems];
+    if (completionBlock) {
+      completionBlock();
+    }
+    
+  } error:^(OMNError *error) {
+    
+    if (completionBlock) {
+      completionBlock();
+    }
+
+  }];
+  
+}
+
+- (void)didLoadTableProductItems:(NSArray *)items {
+  
+  _tableProductsIds = items;
+  [self updateTableViewAnimated:YES];
+  
+}
+
+- (void)updateTableViewAnimated:(BOOL)animated {
+  
+  NSMutableArray *products = [NSMutableArray array];
+  [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
+    
+    if (product.quantity > 0.0) {
+      
+      [products addObject:product];
+      
+    }
+    
+  }];
+  
+  _products = products;
+  
+  NSMutableArray *tableProducts = [NSMutableArray arrayWithCapacity:_tableProductsIds.count];
+  [_tableProductsIds enumerateObjectsUsingBlock:^(id tableProductId, NSUInteger idx, BOOL *stop) {
+    
+    OMNMenuProduct *menuProduct = _restaurantMediator.menu.products[tableProductId];
+    if (menuProduct &&
+        menuProduct.quantity == 0.0) {
+      
+      [tableProducts addObject:menuProduct];
+      
+    }
+    
+  }];
+  _tableProducts = tableProducts;
+  
+  if (animated) {
+    
+    [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)] withRowAnimation:UITableViewRowAnimationFade];
+    
+  }
+  else {
+    
+    [_tableView reloadData];
+    
+  }
+  
+}
 
 - (void)requestTableOrders {
   
@@ -142,6 +205,7 @@ UITableViewDataSource>
       numberOfRows = 1;
     } break;
     case 2: {
+      numberOfRows = _tableProducts.count;
     } break;
   }
   
@@ -156,6 +220,7 @@ UITableViewDataSource>
     case 0: {
       
       OMNPreorderConfirmCell *preorderConfirmCell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderConfirmCell" forIndexPath:indexPath];
+      preorderConfirmCell.delegate = self;
       preorderConfirmCell.menuProduct = _products[indexPath.row];
       cell = preorderConfirmCell;
       
@@ -170,7 +235,10 @@ UITableViewDataSource>
     } break;
     case 2: {
       
-      cell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderConfirmCell" forIndexPath:indexPath];
+      OMNPreorderConfirmCell *preorderConfirmCell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderConfirmCell" forIndexPath:indexPath];
+      preorderConfirmCell.delegate = self;
+      preorderConfirmCell.menuProduct = _tableProducts[indexPath.row];
+      cell = preorderConfirmCell;
       
     } break;
   }
@@ -193,7 +261,10 @@ UITableViewDataSource>
       heightForRow = 140.0f;
     } break;
     case 2: {
-      heightForRow = 86.0f;
+
+      OMNMenuProduct *menuProduct = _tableProducts[indexPath.row];
+      heightForRow = [menuProduct preorderHeightForTableView:tableView];
+
     } break;
   }
   
@@ -233,18 +304,18 @@ UITableViewDataSource>
 - (void)preorderActionCellDidClear:(OMNPreorderActionCell *)preorderActionCell {
   
   [_restaurantMediator.menu resetSelection];
+  [self updateTableViewAnimated:YES];
   
-  NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:_products.count];
-  for (NSInteger row = 0; row < _products.count; row++) {
+}
+
+- (void)preorderActionCellDidRefresh:(OMNPreorderActionCell *)preorderActionCell {
+  
+  preorderActionCell.refreshButton.enabled = NO;
+  [self loadTableProductItemsWithCompletion:^{
     
-    [indexPaths addObject:[NSIndexPath indexPathForRow:row inSection:0]];
-    
-  }
-  [_products removeAllObjects];
-  [self.tableView beginUpdates];
-  [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-  [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-  [self.tableView endUpdates];
+    preorderActionCell.refreshButton.enabled = YES;
+
+  }];
   
 }
 
@@ -277,6 +348,19 @@ UITableViewDataSource>
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][tableView]|" options:kNilOptions metrics:metrics views:views]];
   
   [self.view layoutIfNeeded];
+  
+}
+
+#pragma mark - OMNPreorderConfirmCellDelegate
+
+- (void)preorderConfirmCell:(OMNPreorderConfirmCell *)preorderConfirmCell didEditMenuProduct:(OMNMenuProduct *)menuProduct {
+  
+  __weak typeof(self)weakSelf = self;
+  [menuProduct editMenuProductFromController:self withCompletion:^{
+    
+    [weakSelf updateTableViewAnimated:YES];
+    
+  }];
   
 }
 

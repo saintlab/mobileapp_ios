@@ -13,6 +13,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNMenuHeaderLabel.h"
+#import "OMNMenuProduct+omn_edit.h"
 
 @interface OMNMenuCategoryVC ()
 <OMNMenuProductWithRecommedtationsCellDelegate>
@@ -132,14 +133,14 @@
     [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
   }
   
-  [_restaurantMediator editMenuProduct:menuProduct withCompletion:^{
-
+  [menuProduct editMenuProductFromController:self withCompletion:^{
+    
     if ([menuProductWithRecommedtationsCell.model.menuProduct isEqual:menuProduct]) {
       
       [weakSelf updateTableViewWithSelectedItems:menuProduct andScrollToCell:menuProductWithRecommedtationsCell];
       
     }
-    
+
   }];
   
 }

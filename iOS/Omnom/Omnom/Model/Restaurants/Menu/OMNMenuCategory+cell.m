@@ -21,6 +21,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     menuCategoryDelimiterView = [[OMNMenuCategoryDelimiterView alloc] initWithFrame:tableView.bounds];
+    menuCategoryDelimiterView.hidden = YES;
   });
   
   menuCategoryDelimiterView.bounds = tableView.bounds;

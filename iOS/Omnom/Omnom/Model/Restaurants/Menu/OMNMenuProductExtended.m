@@ -32,6 +32,7 @@
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     menuProductExtendedView = [[OMNMenuProductExtendedView alloc] initWithFrame:tableView.bounds];
+    menuProductExtendedView.hidden = YES;
   });
   
   menuProductExtendedView.bounds = tableView.bounds;

@@ -57,6 +57,14 @@
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[preorderConfirmView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[preorderConfirmView]|" options:kNilOptions metrics:metrics views:views]];
   
+  [_preorderConfirmView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
+  
+}
+
+- (void)priceTap {
+  
+  [self.delegate preorderConfirmCell:self didEditMenuProduct:_menuProduct];
+  
 }
 
 - (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
@@ -72,7 +80,6 @@
   
   UILabel *_nameLabel;
   UILabel *_infoLabel;
-  UIButton *_priceButton;
   
 }
 
@@ -136,8 +143,17 @@
   _menuProduct = menuProduct;
   _nameLabel.text = menuProduct.name;
   _infoLabel.text = _menuProduct.details.displayText;
-  NSString *priceText = [NSString stringWithFormat:@"%.f x %@", _menuProduct.quantity, [OMNUtils moneyStringFromKop:_menuProduct.price]];
-  [_priceButton setTitle:priceText forState:UIControlStateNormal];
+  if (_menuProduct.quantity > 0.0) {
+
+    NSString *priceText = [NSString stringWithFormat:@"%.f x %@", _menuProduct.quantity, [OMNUtils moneyStringFromKop:_menuProduct.price]];
+    [_priceButton setTitle:priceText forState:UIControlStateNormal];
+
+  }
+  else {
+    
+    [_priceButton setTitle:[OMNUtils moneyStringFromKop:_menuProduct.price] forState:UIControlStateNormal];
+
+  }
   
 }
 

@@ -10,6 +10,7 @@
 #import "OMNMenuProductExtendedWithRecommedtationsModel.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
+#import "OMNMenuProduct+omn_edit.h"
 
 @interface OMNMenuProductVC ()
 <OMNMenuProductCellDelegate>
@@ -71,7 +72,9 @@
 
 - (void)menuProductCell:(OMNMenuProductCell *)menuProductCell editProduct:(OMNMenuProduct *)menuProduct {
   
-  [_restaurantMediator editMenuProduct:menuProduct withCompletion:nil];
+  [menuProduct editMenuProductFromController:self withCompletion:^{
+    
+  }];
   
 }
 

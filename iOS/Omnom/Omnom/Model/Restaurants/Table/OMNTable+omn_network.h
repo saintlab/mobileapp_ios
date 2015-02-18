@@ -10,11 +10,13 @@
 #import "OMNOrder.h"
 #import "OMNError.h"
 
+typedef void(^OMNProductItemsBlock)(NSArray *productItems);
+
 @interface OMNTable (omn_network)
 
 - (void)tableIn;
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(OMNError *error))errorBlock;
-- (void)getProductItems:(dispatch_block_t)pi error:(void(^)(OMNError *error))errorBlock;
+- (void)getProductItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock;
 - (void)waiterCallWithCompletion:(void(^)(OMNError *error))completionBlock;
 - (void)waiterCallStopWithFailure:(void(^)(OMNError *error))failureBlock;
 - (void)newGuestWithCompletion:(dispatch_block_t)completionBlock;

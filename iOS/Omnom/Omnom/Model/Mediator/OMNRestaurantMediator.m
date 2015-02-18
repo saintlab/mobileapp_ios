@@ -23,7 +23,6 @@
 #import "OMNMyOrderConfirmVC.h"
 #import "OMNNavigationController.h"
 #import "OMNLaunchHandler.h"
-#import "OMNProductModiferAlertVC.h"
 #import "OMNRestaurant+omn_network.h"
 #import <BlocksKit.h>
 #import "OMNNavigationControllerDelegate.h"
@@ -488,28 +487,6 @@ OMNOrderCalculationVCDelegate>
     }];
     
   }];
-  
-}
-
-- (void)editMenuProduct:(OMNMenuProduct *)menuProduct withCompletion:(dispatch_block_t)completionBlock {
-  
-  menuProduct.editing = YES;
-  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
-  __weak typeof(self)weakSelf = self;
-  productModiferAlertVC.didCloseBlock = ^{
-  
-    menuProduct.editing = NO;
-    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  
-  productModiferAlertVC.didSelectOrderBlock = ^{
-    
-    menuProduct.editing = NO;
-    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:completionBlock];
-    
-  };
-  [self.restaurantActionsVC.navigationController presentViewController:productModiferAlertVC animated:YES completion:nil];
   
 }
 
