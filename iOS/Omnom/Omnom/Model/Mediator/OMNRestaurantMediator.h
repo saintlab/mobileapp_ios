@@ -8,15 +8,14 @@
 
 #import "OMNRestaurantActionsVC.h"
 #import "OMNMenu.h"
+#import "OMNVisitor.h"
 
 @interface OMNRestaurantMediator : NSObject
 
 @property (nonatomic, weak, readonly) OMNRestaurantActionsVC *restaurantActionsVC;
 @property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
 @property (nonatomic, assign) BOOL waiterIsCalled;
-@property (nonatomic, strong) OMNTable *table;
-@property (nonatomic, weak) OMNOrder *selectedOrder;
-@property (nonatomic, strong) NSArray *orders;
+@property (nonatomic, strong, readonly) OMNVisitor *visitor;
 @property (nonatomic, strong) OMNMenu *menu;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC;

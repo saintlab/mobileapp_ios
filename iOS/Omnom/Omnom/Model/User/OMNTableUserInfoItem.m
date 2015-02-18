@@ -23,7 +23,7 @@
   self = [super initWithTitle:NSLocalizedString(@"USER_INFO_TABLE_TITLE", @"Столик") actionBlock:^(UIViewController *__weak vc, UITableView *__weak tv, NSIndexPath *indexPath) {
     
     [tv deselectRowAtIndexPath:indexPath animated:YES];
-    OMNChangeTableAlertVC *changeTableAlertVC = [[OMNChangeTableAlertVC alloc] initWithTable:restaurantMediator.table];
+    OMNChangeTableAlertVC *changeTableAlertVC = [[OMNChangeTableAlertVC alloc] initWithTable:restaurantMediator.visitor.table];
     changeTableAlertVC.didCloseBlock = ^{
       
       [vc dismissViewControllerAnimated:YES completion:nil];
@@ -48,11 +48,11 @@
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   UITableViewCell *cell = [super cellForTableView:tableView];
-  
-  if (_restaurantMediator.table) {
+  OMNVisitor *_visitor = _restaurantMediator.visitor;
+  if (_visitor.tableName) {
     
     OMNTableButton *tableButton = [OMNTableButton buttonWithColor:[OMNStyler blueColor]];
-    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"TABLE_UPDATE_BUTTON_TITLE %@", @"{table_number} Обновить"), _restaurantMediator.table.internal_id];
+    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"TABLE_UPDATE_BUTTON_TITLE %@", @"{table_number} Обновить"), _visitor.tableName];
     [tableButton setText:title];
     tableButton.userInteractionEnabled = NO;
     cell.accessoryView = tableButton;

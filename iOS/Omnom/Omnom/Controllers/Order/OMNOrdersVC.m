@@ -26,6 +26,7 @@ UICollectionViewDelegate>
   UILabel *_label;
   UIPageControl *_pageControl;
   OMNRestaurantMediator *_restaurantMediator;
+  OMNVisitor *_visitor;
   
 }
 
@@ -40,6 +41,7 @@ UICollectionViewDelegate>
   if (self) {
     
     _restaurantMediator = restaurantMediator;
+    _visitor = restaurantMediator.visitor;
     
   }
   return self;
@@ -143,7 +145,7 @@ UICollectionViewDelegate>
 
 - (void)updateOrders {
   
-  NSInteger ordersCount = _restaurantMediator.orders.count;
+  NSInteger ordersCount = _visitor.orders.count;
   if (0 == ordersCount) {
     
     _label.text = NSLocalizedString(@"ORDERS_0_ORDER_ON_TABLE_TEXT", @"На вашем столике нет счетов");
@@ -195,14 +197,14 @@ UICollectionViewDelegate>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
   
-  return _restaurantMediator.orders.count;
+  return _visitor.orders.count;
   
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNOrderViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  OMNOrder *order = _restaurantMediator.orders[indexPath.item];
+  OMNOrder *order = _visitor.orders[indexPath.item];
   
   if (1 == indexPath.item &&
       NO == _animationPerformed) {
@@ -226,7 +228,7 @@ UICollectionViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-  OMNOrder *order = _restaurantMediator.orders[indexPath.item];
+  OMNOrder *order = _visitor.orders[indexPath.item];
   if (order.hasProducts) {
     
     [self.delegate ordersVC:self didSelectOrder:order];

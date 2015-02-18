@@ -22,6 +22,7 @@
 @implementation OMNNoOrdersVC {
   
   OMNRestaurantMediator *_restaurantMediator;
+  OMNVisitor *_visitor;
   TTTAttributedLabel *_textLabel;
   
 }
@@ -31,6 +32,8 @@
   if (self) {
     
     _restaurantMediator = restaurantMediator;
+    _visitor = restaurantMediator.visitor;
+    
     self.buttonInfo =
     @[
       [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:didCloseBlock]
@@ -81,9 +84,9 @@
   self.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
   
   NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(25.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter];
-  
+
   NSString *actionText = NSLocalizedString(@"NO_ORDERS_HOWTO_ACTION_TEXT", @"Почему так может быть");
-  NSString *text = [NSString stringWithFormat:NSLocalizedString(@"NO_ORDERS_HOWTO_TEXT %@ %@", @"Стол %@\nНа этом столе\nпока нет заказов.\n{NO_ORDERS_HOWTO_ACTION_TEXT}?"), _restaurantMediator.table.internal_id, actionText];
+  NSString *text = [NSString stringWithFormat:NSLocalizedString(@"NO_ORDERS_HOWTO_TEXT %@ %@", @"Стол %@\nНа этом столе\nпока нет заказов.\n{NO_ORDERS_HOWTO_ACTION_TEXT}?"), _visitor.tableName, actionText];
   
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:[attributes copy]];
   _textLabel.text = attributedText;
@@ -102,7 +105,7 @@
 
 - (void)showChangeTableAlert {
   
-  OMNNoOrdersAlertVC *noOrdersAlertVC = [[OMNNoOrdersAlertVC alloc] initWithTable:_restaurantMediator.table];
+  OMNNoOrdersAlertVC *noOrdersAlertVC = [[OMNNoOrdersAlertVC alloc] initWithTable:_visitor.table];
   __weak typeof(self)weakSelf = self;
   noOrdersAlertVC.didCloseBlock = ^{
     

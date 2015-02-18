@@ -33,6 +33,7 @@
   TQStarRatingView *_starRatingView;
   
   OMNRestaurantMediator *_restaurantMediator;
+  OMNVisitor *_visitor;
   
 }
 
@@ -47,6 +48,7 @@
   if (self) {
     
     _restaurantMediator = restaurantMediator;
+    _visitor = restaurantMediator.visitor;
     
   }
   return self;
@@ -235,14 +237,15 @@
   if (_starRatingView.score > 0.0f) {
     
     NSInteger score = (NSInteger)roundf(5*_starRatingView.score);
-    NSString *path = [NSString stringWithFormat:@"/rating/mobile/iphone/%ld/%@", (long)score, _restaurantMediator.selectedOrder.id];
+    NSString *path = [NSString stringWithFormat:@"/rating/mobile/iphone/%ld/%@", (long)score, _visitor.selectedOrder.id];
+    OMNOrder *selectedOrder = _visitor.selectedOrder;
     [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-      [[OMNAnalitics analitics] logScore:score order:_restaurantMediator.selectedOrder];
+      [[OMNAnalitics analitics] logScore:score order:selectedOrder];
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      [[OMNAnalitics analitics] logScore:score order:_restaurantMediator.selectedOrder];
+      [[OMNAnalitics analitics] logScore:score order:selectedOrder];
       
     }];
     

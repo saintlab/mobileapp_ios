@@ -44,14 +44,14 @@ describe(@"waiter call tests", ^{
     
     [[_restaurant should] beNonNil];
     [[_restaurantMediator should] beNonNil];
-    [[_restaurantMediator.table should] beNonNil];
+    [[_restaurantMediator.visitor.table should] beNonNil];
     
   });
   
   it(@"should new guest", ^{
     
     __block NSNumber *is_new_guest = nil;
-    [_restaurantMediator.table newGuestWithCompletion:^{
+    [_restaurantMediator.visitor.table newGuestWithCompletion:^{
       
       is_new_guest = @(YES);
       

@@ -26,6 +26,7 @@
 #import "OMNRestaurantCardVC.h"
 #import "OMNNoOrdersVC.h"
 #import "OMNOrdersVC.h"
+#import "OMNOrdersLoadingVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -96,6 +97,7 @@
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNRestaurantActionsVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNSearchRestaurantsVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNLoadingCircleVC class]],
+    [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrdersLoadingVC class]],
     
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNDenyCLPermissionVC class]],
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNSearchRestaurantVC class]],

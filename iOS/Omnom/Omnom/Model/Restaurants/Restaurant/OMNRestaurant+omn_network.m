@@ -93,9 +93,10 @@
 
 - (BOOL)readyForPush {
   
-#warning readyForEnter
+#if DEBUG
+#warning readyForPush
   return YES;
-
+#endif
   
   if (!self.id) {
     return NO;
@@ -125,8 +126,12 @@
 }
 
 - (BOOL)readyForEnter {
+  
+#if DEBUG
 #warning readyForEnter
   return YES;
+#endif
+  
   BOOL readyForEnter = YES;
   const NSTimeInterval timeIntervalForEnter = 20.0*60.0;
   NSDate *lastEnterDate = [self lastEnterDate];

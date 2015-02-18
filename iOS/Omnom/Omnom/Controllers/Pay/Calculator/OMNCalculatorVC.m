@@ -107,7 +107,7 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [self.firstViewController didMoveToParentViewController:self];
   [self.view bringSubviewToFront:_fadeView];
   
-  OMNOrder *order = _restaurantMediator.selectedOrder;
+  OMNOrder *order = _restaurantMediator.visitor.selectedOrder;
   [self totalDidChange:order.selectedItemsTotal showPaymentButton:order.hasSelectedItems];
   
 }

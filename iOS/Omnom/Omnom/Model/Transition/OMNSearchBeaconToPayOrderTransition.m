@@ -13,6 +13,7 @@
 #import <OMNStyler.h>
 #import "OMNPushPermissionVC.h"
 #import "OMNRestaurantActionsVC.h"
+#import "OMNOrdersLoadingVC.h"
 
 @implementation OMNSearchBeaconToPayOrderTransition
 
@@ -117,8 +118,8 @@
     [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNOrdersVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrdersVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrderCalculationVC class]],
-    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNOrderCalculationVC class]],
-    [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNOrdersVC class]],
+    [self keyFromClass:[OMNOrdersLoadingVC class] toClass:[OMNOrderCalculationVC class]],
+    [self keyFromClass:[OMNOrdersLoadingVC class] toClass:[OMNOrdersVC class]],
     ];
 }
 

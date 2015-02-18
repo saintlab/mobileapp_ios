@@ -173,7 +173,7 @@
       _showTableButtonAnimation = YES;
       _tableButton = [OMNTableButton buttonWithColor:color];
       [_tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
-      [_tableButton setText:_restaurantMediator.table.internal_id];
+      [_tableButton setText:_restaurantMediator.visitor.tableName];
       _tableButton.center = userButton.center;
       [userButton.superview addSubview:_tableButton];
       CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;

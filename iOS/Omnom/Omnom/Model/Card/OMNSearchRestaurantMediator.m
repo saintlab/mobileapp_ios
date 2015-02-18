@@ -23,11 +23,7 @@ OMNScanTableQRCodeVCDelegate>
 
 @end
 
-@implementation OMNSearchRestaurantMediator {
-  
-  __weak UIViewController *_scanQRPresentingVC;
-  
-}
+@implementation OMNSearchRestaurantMediator
 
 - (instancetype)initWithRootVC:(__weak UIViewController *)vc {
   self = [super init];

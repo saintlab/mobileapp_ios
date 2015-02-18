@@ -26,6 +26,7 @@
 #import "OMNRestaurant+omn_network.h"
 #import <BlocksKit.h>
 #import "OMNNavigationControllerDelegate.h"
+#import "OMNOrdersLoadingVC.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -37,18 +38,12 @@ OMNOrderCalculationVCDelegate>
   
   __weak OMNOrdersVC *_ordersVC;
   BOOL _shouldShowOrdersOnLaunch;
-  dispatch_semaphore_t _ordersLock;
 
 }
 
 - (void)dealloc {
   
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  if (!_restaurant.is_demo) {
-    
-    [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
-    
-  }
   
 }
 
@@ -58,19 +53,10 @@ OMNOrderCalculationVCDelegate>
 
     _restaurantActionsVC = restaurantActionsVC;
     _restaurant = restaurant;
-    self.table = [_restaurant.tables firstObject];
-    self.orders = [NSArray arrayWithArray:_restaurant.orders];
-    _shouldShowOrdersOnLaunch = [self.orders count];
-    _ordersLock = dispatch_semaphore_create(1);
+    _visitor = [[OMNVisitor alloc] initWithRestaurant:restaurant];
+    _shouldShowOrdersOnLaunch = [_restaurant.orders count];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:[OMNSocketManager manager]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidChangeNotification object:[OMNSocketManager manager]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNSocketIOOrderDidCloseNotification object:[OMNSocketManager manager]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidCreate:) name:OMNSocketIOOrderDidCreateNotification object:[OMNSocketManager manager]];
-    
-    [self startListeningRestaurantEvents];
     
     __weak typeof(self)weakSelf = self;
     [_restaurant getMenuWithCompletion:^(OMNMenu *menu) {
@@ -85,220 +71,16 @@ OMNOrderCalculationVCDelegate>
 
 #pragma mark - notifications
 
-- (void)applicationDidBecomeActive:(NSNotification *)n {
-  
-  [self updateOrdersIfNeeded];
-  
-}
-
-- (void)startListeningRestaurantEvents {
-  
-  if (!_restaurant.is_demo) {
-    
-    [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
-    }];
-    
-  }
-  
-}
-
-- (void)updateOrdersIfNeeded {
-  
-  __weak typeof(self)weakSelf = self;
-  [self.table getOrders:^(NSArray *orders) {
-
-    [weakSelf updateOrdersWithOrders:orders];
-    
-  } error:^(OMNError *error) {
-  }];
-
-}
-
 - (void)waiterCallDone:(NSNotification *)n {
   
   self.waiterIsCalled = NO;
   
 }
 
-- (void)orderDidChange:(NSNotification *)n {
-  
-  OMNOrder *newOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
-  [self updateOrder:newOrder];
-  
-}
-
-- (void)orderDidClose:(NSNotification *)n {
-  
-  OMNOrder *removedOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
-  [self removeOrder:removedOrder];
-  
-}
-
-- (void)orderDidCreate:(NSNotification *)n {
-  
-  OMNOrder *newOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
-  [self addOrder:newOrder];
-  
-}
-
-- (void)updateOrder:(OMNOrder *)changedOrder {
-  
-  dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
-  
-  NSString *selectedOrderID = self.selectedOrder.id;
-  NSMutableArray *orders = [self.orders mutableCopy];
-  __block BOOL ordersDidChange = NO;
-  [self.orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
-    
-    if ([changedOrder.id isEqualToString:order.id]) {
-      [orders replaceObjectAtIndex:idx withObject:changedOrder];
-      ordersDidChange = YES;
-      *stop = YES;
-    }
-    
-  }];
-  
-  if (ordersDidChange) {
-
-    if ([changedOrder.id isEqualToString:selectedOrderID]) {
-      
-      self.selectedOrder = changedOrder;
-      
-    }
-    self.orders = orders;
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification
-                                                        object:self
-                                                      userInfo:@{OMNOrderKey : changedOrder}];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification
-                                                        object:self];
-
-    
-  }
-  dispatch_semaphore_signal(_ordersLock);
-  
-}
-
-- (void)addOrder:(OMNOrder *)newOrder {
-  
-  dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
-  
-  if (newOrder &&
-      [newOrder.restaurant_id isEqualToString:self.restaurant.id]) {
-    
-    self.orders = [_orders arrayByAddingObject:newOrder];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification object:self];
-    
-  }
-  
-  dispatch_semaphore_signal(_ordersLock);
-  
-}
-
-- (void)removeOrder:(OMNOrder *)removedOrder {
-  
-  if (removedOrder &&
-      [removedOrder.restaurant_id isEqualToString:self.restaurant.id]) {
-    
-    dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
-    
-    NSMutableArray *orders = [_orders mutableCopy];
-    [orders bk_performReject:^BOOL(OMNOrder *order) {
-      
-      return [order.id isEqualToString:removedOrder.id];
-      
-    }];
-    
-    dispatch_semaphore_signal(_ordersLock);
-    
-    if (orders.count != _orders.count) {
-      
-      [self updateOrdersWithOrders:orders];
-      
-    }
-    
-  }
-  
-}
-
-- (void)updateOrdersWithOrders:(NSArray *)orders {
-  
-  dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
-  
-  NSArray *existingOrders = [self.orders copy];
-  
-  NSMutableDictionary *existingOrdersDictionary = [NSMutableDictionary dictionaryWithCapacity:existingOrders.count];
-  [existingOrders enumerateObjectsUsingBlock:^(OMNOrder *existingOrder, NSUInteger idx, BOOL *stop) {
-    
-    existingOrdersDictionary[existingOrder.id] = existingOrder;
-    
-  }];
-  
-  NSString *selectedOrderId = self.selectedOrder.id;
-  NSMutableArray *newOrders = [NSMutableArray arrayWithCapacity:orders.count];
-  NSMutableSet *newOrdersIDs = [NSMutableSet setWithCapacity:orders.count];
-  
-  __weak typeof(self)weakSelf = self;
-  [orders enumerateObjectsUsingBlock:^(OMNOrder *newOrder, NSUInteger idx, BOOL *stop) {
-    
-    OMNOrder *existingOrder = existingOrdersDictionary[newOrder.id];
-    [newOrdersIDs addObject:newOrder.id];
-    if (existingOrder &&
-        [existingOrder.modifiedTime isEqualToString:newOrder.modifiedTime]) {
-      
-      [newOrders addObject:existingOrder];
-      
-    }
-    else {
-      
-      if ([newOrder.id isEqualToString:selectedOrderId]) {
-        
-        weakSelf.selectedOrder = newOrder;
-        
-      }
-      [newOrders addObject:newOrder];
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification object:weakSelf userInfo:@{OMNOrderKey : newOrder}];
-      
-    }
-    
-  }];
-  
-  [existingOrders enumerateObjectsUsingBlock:^(OMNOrder *existingOrder, NSUInteger idx, BOOL *stop) {
-    
-    if (![newOrdersIDs containsObject:existingOrder.id]) {
-      
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:weakSelf userInfo:@{OMNOrderKey : existingOrder}];
-      
-    }
-    
-  }];
-  
-  self.orders = newOrders;
-  [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification object:self];
-  
-  dispatch_semaphore_signal(_ordersLock);
-  
-}
-
-- (void)setTable:(OMNTable *)table {
-
-  [[OMNSocketManager manager] leave:_table.id];
-  
-  _table = table;
-  if (!_restaurant.is_demo) {
-    
-    [[OMNSocketManager manager] join:_table.id];
-    [_table tableIn];
-    [_table newGuestWithCompletion:^{}];
-    
-  }
-  
-}
-
 - (void)checkOrders {
   
   if (_shouldShowOrdersOnLaunch &&
-      _orders.count) {
+      _visitor.hasOrders) {
     
     [self showOrders];
     
@@ -309,9 +91,9 @@ OMNOrderCalculationVCDelegate>
     [self requestTableOrders];
     
   }
-  else if (0 == _orders.count) {
+  else {
     
-    [self updateOrdersIfNeeded];
+    [_visitor updateOrdersIfNeeded];
     
   }
   
@@ -319,15 +101,7 @@ OMNOrderCalculationVCDelegate>
 
 - (long long)totalOrdersAmount {
   
-  NSArray *orders = [self.orders copy];
-  __block long long total = 0ll;
-  [orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
-    
-    total += order.expectedValue;
-    
-  }];
-  
-  return total;
+  return _visitor.ordersTotalAmount;
   
 }
 
@@ -380,13 +154,13 @@ OMNOrderCalculationVCDelegate>
 
 - (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock {
   
-  if (!self.table) {
+  if (!_visitor.table) {
     completionBlock();
     return;
   }
   
   __weak typeof(self)weakSelf = self;
-  [self.table waiterCallWithCompletion:^(OMNError *error) {
+  [_visitor.table waiterCallWithCompletion:^(OMNError *error) {
     
     weakSelf.waiterIsCalled = (nil == error);
     completionBlock();
@@ -397,13 +171,13 @@ OMNOrderCalculationVCDelegate>
 
 - (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock {
   
-  if (!self.table) {
+  if (!_visitor.table) {
     completionBlock();
     return;
   }
 
   __weak typeof(self)weakSelf = self;
-  [self.table waiterCallStopWithFailure:^(OMNError *error) {
+  [_visitor.table waiterCallStopWithFailure:^(OMNError *error) {
     
     weakSelf.waiterIsCalled = (nil != error);
     completionBlock();
@@ -433,92 +207,47 @@ OMNOrderCalculationVCDelegate>
 
 - (void)requestTableOrders {
   
-  if (!self.table) {
+  if (!_visitor.table) {
     return;
   }
-  
-  OMNLoadingCircleVC *loadingCircleVC = [[OMNLoadingCircleVC alloc] initWithParent:_restaurantActionsVC.r1VC];
+
+  OMNOrdersLoadingVC *ordersLoadingVC = [[OMNOrdersLoadingVC alloc] initWithMediator:self];
   __weak typeof(self)weakSelf = self;
-  loadingCircleVC.didCloseBlock = ^{
+  ordersLoadingVC.didLoadOrdersBlock = ^(NSArray *orders) {
     
-    [weakSelf popToRootViewControllerAnimated:YES];
+    [weakSelf checkPushNotificationAndProcessOrders:orders];
     
   };
-  loadingCircleVC.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
-  
-  [_restaurantActionsVC.navigationController omn_pushViewController:loadingCircleVC animated:YES completion:^{
-    
-    [weakSelf getOrdersWithLoadingVC:loadingCircleVC];
-    
-  }];
+  [_restaurantActionsVC.navigationController pushViewController:ordersLoadingVC animated:YES];
   
 }
 
-- (void)getOrdersWithLoadingVC:(OMNLoadingCircleVC *)loadingCircleVC {
+- (BOOL)skipRequestPushNotificationPermission {
   
-  __weak typeof(self)weakSelf = self;
-  [_restaurantActionsVC.navigationController omn_popToViewController:loadingCircleVC animated:YES completion:^{
-    
-    [loadingCircleVC.loaderView startAnimating:10.0];
-    [weakSelf.table getOrders:^(NSArray *orders) {
-      
-      [loadingCircleVC finishLoading:^{
-        
-        [weakSelf checkPushNotificationAndProcessOrders:orders];
-        
-      }];
-      
-    } error:^(OMNError *error) {
-      
-      [loadingCircleVC finishLoading:^{
-        
-        [loadingCircleVC showRetryMessageWithError:error retryBlock:^{
-          
-          [weakSelf getOrdersWithLoadingVC:loadingCircleVC];
-          
-        } cancelBlock:^{
-          
-          [weakSelf popToRootViewControllerAnimated:YES];
-          
-        }];
-        
-      }];
-      
-    }];
-    
-  }];
+  return (_restaurant.is_demo ||
+          [OMNAuthorization authorisation].pushNotificationsRequested ||
+          TARGET_IPHONE_SIMULATOR);
   
 }
 
 - (void)checkPushNotificationAndProcessOrders:(NSArray *)orders {
-
-  self.orders = orders;
-  if ([OMNAuthorization authorisation].pushNotificationsRequested) {
+  
+  _visitor.orders = orders;
+  if ([self skipRequestPushNotificationPermission]) {
     
     [self showOrders];
     
   }
   else {
     
-    if (!_restaurant.is_demo &&
-        orders.count &&
-        !TARGET_IPHONE_SIMULATOR) {
+    OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:_restaurantActionsVC.r1VC];
+    __weak typeof(self)weakSelf = self;
+    pushPermissionVC.completionBlock = ^{
       
-      OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:_restaurantActionsVC.r1VC];
-      __weak typeof(self)weakSelf = self;
-      pushPermissionVC.completionBlock = ^{
-        
-        [weakSelf showOrders];
-        
-      };
-      [self pushViewController:pushPermissionVC];
+      [weakSelf showOrders];
       
-    }
-    else {
-      
-      [self showOrders];
-      
-    }
+    };
+    [self pushViewController:pushPermissionVC];
     
   }
   
@@ -527,48 +256,33 @@ OMNOrderCalculationVCDelegate>
 - (void)showOrders {
   
   _shouldShowOrdersOnLaunch = NO;
-  
-  BOOL ordersHasProducts = [self.orders bk_any:^BOOL(OMNOrder *order) {
-    
-    return order.hasProducts;
-    
-  }];
-
 //  https://github.com/saintlab/mobileapp_ios/issues/336
-  if (!ordersHasProducts) {
+  if (!_visitor.ordersHasProducts) {
+    
     [self processNoOrders];
+    
     return;
   }
   
-  NSInteger ordersCount = self.orders.count;
   NSMutableArray *pushedControllers = [NSMutableArray array];
   
-  if (ordersCount) {
+  OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithMediator:self];
+  ordersVC.delegate = self;
+  [pushedControllers addObject:ordersVC];
+  _ordersVC = ordersVC;
+  
+  if (1 == _visitor.orders.count) {
     
-    OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithMediator:self];
-    ordersVC.delegate = self;
-    [pushedControllers addObject:ordersVC];
-    _ordersVC = ordersVC;
-    
-    if (1 == ordersCount) {
-      
-      self.selectedOrder = [self.orders firstObject];
-      OMNOrderCalculationVC *paymentVC = [[OMNOrderCalculationVC alloc] initWithMediator:self];
-      paymentVC.delegate = self;
-      [pushedControllers addObject:paymentVC];
-      
-    }
-
-    NSArray *newControllers = [_restaurantActionsVC.navigationController.viewControllers arrayByAddingObjectsFromArray:pushedControllers];
-    [_restaurantActionsVC.navigationController setViewControllers:newControllers animated:YES];
-    
-  }
-  else {
-    
-    [self processNoOrders];
+    _visitor.selectedOrder = [_visitor.orders firstObject];
+    OMNOrderCalculationVC *paymentVC = [[OMNOrderCalculationVC alloc] initWithMediator:self];
+    paymentVC.delegate = self;
+    [pushedControllers addObject:paymentVC];
     
   }
   
+  NSArray *newControllers = [_restaurantActionsVC.navigationController.viewControllers arrayByAddingObjectsFromArray:pushedControllers];
+  [_restaurantActionsVC.navigationController setViewControllers:newControllers animated:YES];
+
 }
 
 - (void)processNoOrders {
@@ -606,7 +320,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)showOrder:(OMNOrder *)order {
   
-  self.selectedOrder = order;
+  _visitor.selectedOrder = order;
   OMNOrderCalculationVC *paymentVC = [[OMNOrderCalculationVC alloc] initWithMediator:self];
   paymentVC.delegate = self;
   [self pushViewController:paymentVC];
@@ -648,7 +362,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)orderCalculationVCDidCancel:(OMNOrderCalculationVC *)orderCalculationVC {
   
-  if (self.table) {
+  if (_visitor.table) {
     
     [self popToRootViewControllerAnimated:YES];
     

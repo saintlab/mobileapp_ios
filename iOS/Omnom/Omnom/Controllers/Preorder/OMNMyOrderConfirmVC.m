@@ -33,6 +33,7 @@ OMNPreorderConfirmCellDelegate>
 @implementation OMNMyOrderConfirmVC {
   
   OMNRestaurantMediator *_restaurantMediator;
+  OMNVisitor *_visitor;
   NSMutableArray *_products;
   NSArray *_tableProductsIds;
   NSMutableArray *_tableProducts;
@@ -44,6 +45,7 @@ OMNPreorderConfirmCellDelegate>
   if (self) {
     
     _restaurantMediator = restaurantMediator;
+    _visitor = restaurantMediator.visitor;
     
   }
   return self;
@@ -85,7 +87,7 @@ OMNPreorderConfirmCellDelegate>
 - (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock {
   
   __weak typeof(self)weakSelf = self;
-  [_restaurantMediator.table getProductItems:^(NSArray *productItems) {
+  [_visitor.table getProductItems:^(NSArray *productItems) {
     
     [weakSelf didLoadTableProductItems:productItems];
     if (completionBlock) {
@@ -281,7 +283,7 @@ OMNPreorderConfirmCellDelegate>
   
   NSArray *selectedWishItems = [_restaurantMediator.menu selectedWishItems];
   __weak typeof(self)weakSelf = self;
-  [_restaurantMediator.restaurant createWishForTable:_restaurantMediator.table products:selectedWishItems completionBlock:^(OMNWish *wish) {
+  [_visitor.restaurant createWishForTable:_visitor.table products:selectedWishItems completionBlock:^(OMNWish *wish) {
     
     [self stopLoading:preorderActionCell.actionButton];
     [weakSelf didCreateWish:wish];

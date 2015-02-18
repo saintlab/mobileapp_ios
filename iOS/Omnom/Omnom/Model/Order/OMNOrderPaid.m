@@ -38,8 +38,6 @@
 - (long long)net_amount {
   
   long long net_amount = MAX(0ll, self.total_amount - self.tip_amount);
-#warning 123
-//  net_amount = 1000000;
   return net_amount;
   
 }
