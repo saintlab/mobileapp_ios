@@ -25,6 +25,7 @@
 #import "OMNRestaurantListVC.h"
 #import "OMNRestaurantCardVC.h"
 #import "OMNNoOrdersVC.h"
+#import "OMNOrdersVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -116,11 +117,16 @@
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNNoOrdersVC class]],
     [self keyFromClass:[OMNNoOrdersVC class] toClass:[OMNRestaurantActionsVC class]],
     
+    [self keyFromClass:[OMNOrdersVC class] toClass:[OMNNoOrdersVC class]],
+    [self keyFromClass:[OMNNoOrdersVC class] toClass:[OMNOrdersVC class]],
+
     ];
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+  
   return 0.3;
+  
 }
 
 @end

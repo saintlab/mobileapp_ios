@@ -8,10 +8,11 @@
 
 #import "OMNRestaurantSchedule.h"
 #import "NSDate+omn_custom.h"
+#import <BlocksKit.h>
 
 @implementation OMNRestaurantSchedule
 
-- (instancetype)initWithJsonData:(id)jsonData {
+- (instancetype)initWithJsonData:(NSDictionary *)jsonData {
   
   if (![jsonData isKindOfClass:[NSDictionary class]]) {
     return nil;
@@ -20,17 +21,11 @@
   self = [super init];
   if (self) {
     
-    NSMutableDictionary *days = [NSMutableDictionary dictionaryWithCapacity:[jsonData count]];
-    [jsonData enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-
-      OMNRestaurantScheduleDay *day = [[OMNRestaurantScheduleDay alloc] initWithJsonData:obj];
-      if (day) {
-        days[key] = day;
-      }
+    _days = [jsonData bk_map:^id(id key, id obj) {
+      
+      return [[OMNRestaurantScheduleDay alloc] initWithJsonData:obj];
       
     }];
-    
-    _days = [days copy];
     _title = jsonData[@"title"];
 
   }

@@ -7,6 +7,7 @@
 //
 
 #import "OMNTable.h"
+#import <BlocksKit.h>
 
 @implementation OMNTable
 
@@ -33,15 +34,12 @@
   }
   
   NSArray *tablesData = (NSArray *)self;
-  NSMutableArray *tables = [NSMutableArray arrayWithCapacity:tablesData.count];
-  [tablesData enumerateObjectsUsingBlock:^(id tableData, NSUInteger idx, BOOL *stop) {
+  NSArray *tables = [tablesData bk_map:^id(id tableData) {
     
-    OMNTable *table = [[OMNTable alloc] initWithJsonData:tableData];
-    [tables addObject:table];
+    return [[OMNTable alloc] initWithJsonData:tableData];
     
   }];
-  
-  return [tables copy];
+  return tables;
   
 }
 

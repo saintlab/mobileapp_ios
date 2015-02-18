@@ -8,6 +8,7 @@
 
 #import "OMNRestaurantInfo.h"
 #import "OMNFeedItem.h"
+#import <BlocksKit.h>
 
 @implementation OMNRestaurantInfo
 
@@ -16,13 +17,11 @@
   if (self) {
     self.title = jsonData[@"title"];
     NSArray *rawFeedItems = jsonData[@"feedItems"];
-    NSMutableArray *feedItems = [NSMutableArray arrayWithCapacity:rawFeedItems.count];
-    [rawFeedItems enumerateObjectsUsingBlock:^(id feedItemData, NSUInteger idx, BOOL *stop) {
-      OMNFeedItem *feedItem = [[OMNFeedItem alloc] initWithJsonData:feedItemData];
-      [feedItems addObject:feedItem];
-    }];
+    self.feedItems = [rawFeedItems bk_map:^id(id feedItemData) {
     
-    self.feedItems = [feedItems copy];
+      return [[OMNFeedItem alloc] initWithJsonData:feedItemData];
+      
+    }];
     self.shortItems = [self infoItemsFromData:jsonData[@"shortItems"]];
     self.fullItems = [self infoItemsFromData:jsonData[@"fullItems"]];
     
@@ -33,12 +32,11 @@
 - (NSArray *)infoItemsFromData:(id)data {
   
   NSArray *rawItems = data;
-  NSMutableArray *items = [NSMutableArray arrayWithCapacity:rawItems.count];
-  [rawItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    OMNRestaurantInfoItem *restaurantInfoItem = [[OMNRestaurantInfoItem alloc] initWithJsonData:obj];
-    [items addObject:restaurantInfoItem];
+  return [rawItems bk_map:^id(id obj) {
+    
+    return [[OMNRestaurantInfoItem alloc] initWithJsonData:obj];
+    
   }];
-  return [items copy];
   
 }
 

@@ -173,31 +173,25 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 
 - (long long)totalAmount {
   
-  return [self totalForAllItems:YES];
+  __block long long total = 0ll;
+  [_guests bk_each:^(OMNGuest *guest) {
+    
+    total += [guest total];
+    
+  }];
+  return total;
   
 }
 
 - (long long)selectedItemsTotal {
   
-  return [self totalForAllItems:NO];
-  
-}
-
-- (long long)totalForAllItems:(BOOL)allItems {
-  
-  __block long long total = 0ll;
-  [_guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
+  __block long long selectedItemsTotal = 0ll;
+  [_guests bk_each:^(OMNGuest *guest) {
     
-    if (allItems) {
-      total += [guest total];
-    }
-    else {
-      total += [guest selectedItemsTotal];
-    }
+    selectedItemsTotal += [guest selectedItemsTotal];
     
   }];
-  
-  return total;
+  return selectedItemsTotal;
   
 }
 

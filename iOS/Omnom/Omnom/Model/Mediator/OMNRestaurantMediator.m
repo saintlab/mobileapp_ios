@@ -528,7 +528,7 @@ OMNOrderCalculationVCDelegate>
   
   _shouldShowOrdersOnLaunch = NO;
   
-  BOOL ordersHasProducts = [self.orders bk_all:^BOOL(OMNOrder *order) {
+  BOOL ordersHasProducts = [self.orders bk_any:^BOOL(OMNOrder *order) {
     
     return order.hasProducts;
     
@@ -573,7 +573,12 @@ OMNOrderCalculationVCDelegate>
 
 - (void)processNoOrders {
   
-  OMNNoOrdersVC *noOrdersVC = [[OMNNoOrdersVC alloc] initWithMediator:self];
+  __weak typeof(self)weakSelf = self;
+  OMNNoOrdersVC *noOrdersVC = [[OMNNoOrdersVC alloc] initWithMediator:self closeBlock:^{
+    
+    [weakSelf popToRootViewControllerAnimated:YES];
+    
+  }];
   [self pushViewController:noOrdersVC];
   
 }

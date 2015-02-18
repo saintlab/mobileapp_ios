@@ -41,11 +41,7 @@
 
 - (void)deselectAllItems {
   
-  [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
-    
-    orderItem.selected = NO;
-    
-  }];
+  [self setSelected:NO];
   
 }
 
@@ -59,8 +55,9 @@
 
 - (long long)totalForSelectedItems:(BOOL)selectedItems {
   
-  __block long long total = 0.;
-  [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+  __block long long total = 0ll;
+  NSArray *items = [_items copy];
+  [items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
     
     if (NO == selectedItems ||
         orderItem.selected) {
@@ -76,8 +73,11 @@
 - (void)setSelected:(BOOL)selected {
   _selected = selected;
   
-  [_items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+  NSArray *items = [_items copy];
+  [items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+    
     orderItem.selected = selected;
+    
   }];
   
 }

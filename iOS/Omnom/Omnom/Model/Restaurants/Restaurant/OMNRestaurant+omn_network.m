@@ -11,6 +11,7 @@
 #import "OMNAnalitics.h"
 #import "OMNOrder+network.h"
 #import "OMNTable+omn_network.h"
+#import <BlocksKit.h>
 
 @implementation OMNRestaurant (omn_network)
 
@@ -368,15 +369,13 @@
   }
   
   NSArray *restaurantsData = (NSArray *)self;
-  NSMutableArray *restaurants = [NSMutableArray arrayWithCapacity:restaurantsData.count];
-  [restaurantsData enumerateObjectsUsingBlock:^(id restaurantData, NSUInteger idx, BOOL *stop) {
+  NSArray *restaurants = [restaurantsData bk_map:^id(id restaurantData) {
     
-    OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:restaurantData];
-    [restaurants addObject:restaurant];
+    return [[OMNRestaurant alloc] initWithJsonData:restaurantData];
     
   }];
   
-  return [restaurants copy];
+  return restaurants;
   
 }
 

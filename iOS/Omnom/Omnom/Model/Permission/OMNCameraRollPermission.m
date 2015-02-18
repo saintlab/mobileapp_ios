@@ -22,6 +22,7 @@
   [lib enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
     
     authorizedBlock();
+    *stop = YES;
     
   } failureBlock:^(NSError *error) {
     

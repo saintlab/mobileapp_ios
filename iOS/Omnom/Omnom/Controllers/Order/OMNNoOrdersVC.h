@@ -11,6 +11,6 @@
 
 @interface OMNNoOrdersVC : OMNCircleRootVC
 
-- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator closeBlock:(dispatch_block_t)didCloseBlock;
 
 @end

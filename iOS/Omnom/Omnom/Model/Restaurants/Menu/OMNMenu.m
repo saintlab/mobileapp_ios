@@ -16,23 +16,23 @@
   if (self) {
     
     NSDictionary *modifiersData = jsonData[@"modifiers"];
-    self.modifiers = [modifiersData bk_map:^id(id key, id modifierData) {
+    NSDictionary *modifiers = [modifiersData bk_map:^id(id key, id modifierData) {
       
       return [[OMNMenuModifer alloc] initWithJsonData:modifierData];
       
     }];
+    _modifiers = modifiers;
     
     NSDictionary *productsData = jsonData[@"items"];
-    __weak typeof(self)weakSelf = self;
-    self.products = [productsData bk_map:^id(id key, id productData) {
+    NSDictionary *products = [productsData bk_map:^id(id key, id productData) {
       
-      return [[OMNMenuProduct alloc] initWithJsonData:productData allModifers:weakSelf.modifiers];
+      return [[OMNMenuProduct alloc] initWithJsonData:productData allModifers:modifiers];
       
     }];
+    _products = products;
 
     NSArray *categoriesData = jsonData[@"categories"];
-    __weak NSDictionary *products = self.products;
-    self.categories = [categoriesData bk_map:^id(id categoryData) {
+    _categories = [categoriesData bk_map:^id(id categoryData) {
       
       return [[OMNMenuCategory alloc] initWithJsonData:categoryData menuProducts:products level:0];
       

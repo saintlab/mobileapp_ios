@@ -26,18 +26,14 @@
   
 }
 
-- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator closeBlock:(dispatch_block_t)didCloseBlock {
   self = [super initWithParent:restaurantMediator.restaurantActionsVC.r1VC];
   if (self) {
     
     _restaurantMediator = restaurantMediator;
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:^{
-        
-        [restaurantMediator popToRootViewControllerAnimated:YES];
-        
-      }]
+      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:didCloseBlock]
       ];
     
   }
