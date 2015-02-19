@@ -12,7 +12,6 @@
 #import "UIImage+omn_helper.h"
 #import "OMNToolbarButton.h"
 #import "OMNRestaurantManager.h"
-#import "OMNNoOrdersVC.h"
 
 @interface OMNOrdersVC ()
 <UICollectionViewDataSource,
@@ -192,7 +191,9 @@ UICollectionViewDelegate>
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+  
   return 1;
+  
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -229,22 +230,7 @@ UICollectionViewDelegate>
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
   OMNOrder *order = _visitor.orders[indexPath.item];
-  if (order.hasProducts) {
-    
-    [self.delegate ordersVC:self didSelectOrder:order];
-    
-  }
-  else {
-    
-    __weak typeof(self)weakSelf = self;
-    OMNNoOrdersVC *noOrdersVC = [[OMNNoOrdersVC alloc] initWithMediator:_restaurantMediator closeBlock:^{
-      
-      [weakSelf.navigationController popToViewController:weakSelf animated:YES];
-      
-    }];
-    [self.navigationController pushViewController:noOrdersVC animated:YES];
-    
-  }
+  [self.delegate ordersVC:self didSelectOrder:order];
   
 }
 

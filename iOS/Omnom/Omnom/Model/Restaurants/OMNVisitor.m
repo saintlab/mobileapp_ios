@@ -35,7 +35,7 @@
     
     _restaurant = restaurant;
     self.table = [_restaurant.tables firstObject];
-    _orders = [NSArray arrayWithArray:restaurant.orders];
+    self.orders = [NSArray arrayWithArray:restaurant.orders];
     
     _ordersLock = dispatch_semaphore_create(1);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
@@ -172,7 +172,7 @@
 - (void)orderDidChange:(NSNotification *)n {
   
   OMNOrder *newOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
-  [self updateOrder:newOrder];
+  [self updateOrdersWithOrder:newOrder];
   
 }
 
@@ -186,12 +186,16 @@
 - (void)orderDidCreate:(NSNotification *)n {
   
   OMNOrder *newOrder = [[OMNOrder alloc] initWithJsonData:n.userInfo[OMNOrderDataKey]];
-  [self addOrder:newOrder];
+  [self updateOrdersWithOrder:newOrder];
   
 }
 
-- (void)updateOrder:(OMNOrder *)changedOrder {
+- (void)updateOrdersWithOrder:(OMNOrder *)changedOrder {
   
+  if (![changedOrder.restaurant_id isEqualToString:self.restaurant.id]) {
+    return;
+  }
+
   dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
   
   NSString *selectedOrderID = self.selectedOrder.id;
@@ -214,31 +218,22 @@
       self.selectedOrder = changedOrder;
       
     }
-    self.orders = orders;
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification
-                                                        object:self
-                                                      userInfo:@{OMNOrderKey : changedOrder}];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification
-                                                        object:self];
-    
     
   }
-  dispatch_semaphore_signal(_ordersLock);
-  
-}
+  else {
+    
+    [orders addObject:changedOrder];
+    
+  }
 
-- (void)addOrder:(OMNOrder *)newOrder {
+  self.orders = orders;
   
-  dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification
+                                                      object:self
+                                                    userInfo:@{OMNOrderKey : changedOrder}];
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification
+                                                      object:self];
   
-  if (newOrder &&
-      [newOrder.restaurant_id isEqualToString:self.restaurant.id]) {
-    
-    self.orders = [_orders arrayByAddingObject:newOrder];
-    [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification object:self];
-    
-  }
   
   dispatch_semaphore_signal(_ordersLock);
   
@@ -271,7 +266,7 @@
 }
 
 - (void)updateOrdersWithOrders:(NSArray *)orders {
-  
+
   dispatch_semaphore_wait(_ordersLock, DISPATCH_TIME_FOREVER);
   
   NSArray *existingOrders = [self.orders copy];
@@ -326,6 +321,16 @@
   [[NSNotificationCenter defaultCenter] postNotificationName:OMNRestaurantOrdersDidChangeNotification object:self];
   
   dispatch_semaphore_signal(_ordersLock);
+  
+}
+
+- (void)setOrders:(NSArray *)orders {
+  
+  _orders = [orders bk_select:^BOOL(OMNOrder *order) {
+    
+    return order.hasProducts;
+    
+  }];
   
 }
 

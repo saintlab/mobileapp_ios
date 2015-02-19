@@ -20,7 +20,7 @@
 #define NSLog(__FORMAT__, ...) NSLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 #ifdef APP_STORE
-static const DDLogLevel ddLogLevel = LOG_LEVEL_ERROR;
+static const DDLogLevel ddLogLevel = DDLogLevelError;
 #else
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
 #endif
