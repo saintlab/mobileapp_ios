@@ -34,7 +34,7 @@
 - (void)removeRestaurantWaiterCallObserver {
   
   if (_restaurantWaiterCallObserverId) {
-    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallObserverId];
+    [_restaurantMediator.visitor bk_removeObserversWithIdentifier:_restaurantWaiterCallObserverId];
   }
 
 }
@@ -59,7 +59,7 @@
   _restaurantMediator = restaurantMediator;
   _hasSelectedMenuItems = restaurantMediator.menu.hasSelectedItems;
   __weak typeof(self)weakSelf = self;
-  _restaurantWaiterCallObserverId = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+  _restaurantWaiterCallObserverId = [_restaurantMediator.visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNVisitor *obj, NSDictionary *change) {
     
     [weakSelf updateRestaurantActionButtons];
     
@@ -88,7 +88,7 @@
   [callWaiterButton bk_addEventHandler:^(id sender) {
     
     [weakSelf setLoadingState];
-    [weakSelf.restaurantMediator waiterCallWithCompletion:^{}];
+    [weakSelf.restaurantMediator waiterCall];
     
   } forControlEvents:UIControlEventTouchUpInside];
   OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
@@ -96,13 +96,13 @@
   NSArray *bottomToolbarItems = nil;
   
   if (settings.has_waiter_call &&
-      _restaurantMediator.waiterIsCalled) {
+      _restaurantMediator.visitor.waiterIsCalled) {
     
     OMNToolbarButton *cancelWaiterButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"WAITER_CALL_CANCEL_BUTTON_TITLE", @"Отменить вызов")];
     [cancelWaiterButton bk_addEventHandler:^(id sender) {
       
       [weakSelf setLoadingState];
-      [weakSelf.restaurantMediator waiterCallStopWithCompletion:^{}];
+      [weakSelf.restaurantMediator waiterCallStop];
       
     } forControlEvents:UIControlEventTouchUpInside];
     [cancelWaiterButton sizeToFit];

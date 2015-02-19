@@ -14,7 +14,6 @@
 
 @property (nonatomic, weak, readonly) OMNRestaurantActionsVC *restaurantActionsVC;
 @property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
-@property (nonatomic, assign) BOOL waiterIsCalled;
 @property (nonatomic, strong, readonly) OMNVisitor *visitor;
 @property (nonatomic, strong) OMNMenu *menu;
 
@@ -24,8 +23,8 @@
 - (void)checkOrders;
 - (void)showUserProfile;
 - (void)myOrderTap;
-- (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock;
-- (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock;
+- (void)waiterCall;
+- (void)waiterCallStop;
 - (void)requestTableOrders;
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
 

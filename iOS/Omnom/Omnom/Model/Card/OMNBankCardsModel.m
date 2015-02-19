@@ -58,7 +58,8 @@ NSString * const kCardIdServiceName = @"card_id";
 
 - (NSString *)card_id {
   
-  return [SSKeychain passwordForService:kCardIdServiceName account:NSStringFromClass(self.class)];
+  NSString *card_id = [SSKeychain passwordForService:kCardIdServiceName account:NSStringFromClass(self.class)];
+  return card_id;
   
 }
 

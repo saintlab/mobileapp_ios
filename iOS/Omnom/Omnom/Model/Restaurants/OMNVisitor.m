@@ -34,7 +34,7 @@
   if (self) {
     
     _restaurant = restaurant;
-    _table = [_restaurant.tables firstObject];
+    self.table = [_restaurant.tables firstObject];
     _orders = [NSArray arrayWithArray:restaurant.orders];
     
     _ordersLock = dispatch_semaphore_create(1);
@@ -43,14 +43,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidChange:) name:OMNSocketIOOrderDidPayNotification object:[OMNSocketManager manager]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidClose:) name:OMNSocketIOOrderDidCloseNotification object:[OMNSocketManager manager]];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(orderDidCreate:) name:OMNSocketIOOrderDidCreateNotification object:[OMNSocketManager manager]];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:[OMNSocketManager manager]];
+
     [self startListeningRestaurantEventsIfPossible];
     
   }
   return self;
 }
-
-#pragma mark - notifications
 
 - (NSString *)tableName {
   
@@ -78,7 +77,7 @@
 - (BOOL)hasOrders {
   
   @synchronized(self) {
-  
+    
     return (_orders.count > 0);
     
   }
@@ -88,7 +87,7 @@
 - (BOOL)ordersHasProducts {
   
   @synchronized(self) {
-   
+    
     BOOL ordersHasProducts = [self.orders bk_any:^BOOL(OMNOrder *order) {
       
       return order.hasProducts;
@@ -153,6 +152,14 @@
     
   } error:^(OMNError *error) {
   }];
+  
+}
+
+#pragma mark - notifications
+
+- (void)waiterCallDone:(NSNotification *)n {
+  
+  self.waiterIsCalled = NO;
   
 }
 
@@ -321,5 +328,28 @@
   dispatch_semaphore_signal(_ordersLock);
   
 }
+
+- (void)waiterCall {
+  
+  __weak typeof(self)weakSelf = self;
+  [self.table waiterCallWithCompletion:^(OMNError *error) {
+    
+    weakSelf.waiterIsCalled = (nil == error);
+    
+  }];
+  
+}
+
+- (void)waiterCallStop {
+  
+  __weak typeof(self)weakSelf = self;
+  [self.table waiterCallStopWithFailure:^(OMNError *error) {
+    
+    weakSelf.waiterIsCalled = (nil != error);
+    
+  }];
+  
+}
+
 
 @end

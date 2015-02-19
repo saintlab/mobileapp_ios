@@ -54,7 +54,7 @@
   _circleAnimation = nil;
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   if (_restaurantWaiterCallIdentifier) {
-    [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
+    [_restaurantMediator.visitor bk_removeObserversWithIdentifier:_restaurantWaiterCallIdentifier];
   }
   if (_restaurantMenuOserverID) {
     [_restaurantMediator bk_removeObserversWithIdentifier:_restaurantMenuOserverID];
@@ -101,9 +101,9 @@
   [self loadIconIfNeeded];
 
   __weak typeof(self)weakSelf = self;
-  _restaurantWaiterCallIdentifier = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+  _restaurantWaiterCallIdentifier = [_restaurantMediator.visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNVisitor *visitor, NSDictionary *change) {
     
-    (obj.waiterIsCalled) ? ([weakSelf callWaiterDidStart]) : ([weakSelf callWaiterDidStop]);
+    (visitor.waiterIsCalled) ? ([weakSelf callWaiterDidStart]) : ([weakSelf callWaiterDidStop]);
     
   }];
   
@@ -436,7 +436,7 @@
 
 - (void)beginCircleAnimationIfNeeded {
 
-  if (_restaurantMediator.waiterIsCalled &&
+  if (_restaurantMediator.visitor.waiterIsCalled &&
       [self.navigationController.topViewController isEqual:self]) {
     
     [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];

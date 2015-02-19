@@ -62,17 +62,19 @@ describe(@"waiter call tests", ^{
   
   it(@"should call waiter", ^{
     
-    _restaurantMediator.waiterIsCalled = NO;
-    [_restaurantMediator waiterCallWithCompletion:^{}];
-    [[expectFutureValue(@(_restaurantMediator.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
+    OMNVisitor *visitor = _restaurantMediator.visitor;
+    visitor.waiterIsCalled = NO;
+    [_restaurantMediator waiterCall];
+    [[expectFutureValue(@(visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
     
   });
   
   it(@"should stop waiter", ^{
     
-    _restaurantMediator.waiterIsCalled = YES;
-    [_restaurantMediator waiterCallStopWithCompletion:^{}];
-    [[expectFutureValue(@(_restaurantMediator.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(NO)];
+    OMNVisitor *visitor = _restaurantMediator.visitor;
+    visitor.waiterIsCalled = YES;
+    [_restaurantMediator waiterCallStop];
+    [[expectFutureValue(@(visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(NO)];
 
   });
   

@@ -15,6 +15,7 @@
 @property (nonatomic, strong) OMNTable *table;
 @property (nonatomic, weak) OMNOrder *selectedOrder;
 @property (nonatomic, strong) NSArray *orders;
+@property (nonatomic, assign) BOOL waiterIsCalled;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
 - (NSString *)tableName;
@@ -23,5 +24,8 @@
 - (BOOL)ordersHasProducts;
 - (void)updateOrdersIfNeeded;
 - (long long)ordersTotalAmount;
+
+- (void)waiterCall;
+- (void)waiterCallStop;
 
 @end

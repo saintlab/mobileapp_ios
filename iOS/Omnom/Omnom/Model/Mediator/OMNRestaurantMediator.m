@@ -14,8 +14,6 @@
 #import "OMNPushPermissionVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNOrderCalculationVC.h"
-#import "OMNError.h"
-#import "OMNRestaurantManager.h"
 #import "OMNTable+omn_network.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNSocketManager.h"
@@ -24,7 +22,6 @@
 #import "OMNNavigationController.h"
 #import "OMNLaunchHandler.h"
 #import "OMNRestaurant+omn_network.h"
-#import <BlocksKit.h>
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNOrdersLoadingVC.h"
 
@@ -41,12 +38,6 @@ OMNOrderCalculationVCDelegate>
 
 }
 
-- (void)dealloc {
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-}
-
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC {
   self = [super init];
   if (self) {
@@ -56,8 +47,6 @@ OMNOrderCalculationVCDelegate>
     _visitor = [[OMNVisitor alloc] initWithRestaurant:restaurant];
     _shouldShowOrdersOnLaunch = [_restaurant.orders count];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(waiterCallDone:) name:OMNSocketIOWaiterCallDoneNotification object:[OMNSocketManager manager]];
-    
     __weak typeof(self)weakSelf = self;
     [_restaurant getMenuWithCompletion:^(OMNMenu *menu) {
       
@@ -67,14 +56,6 @@ OMNOrderCalculationVCDelegate>
     
   }
   return self;
-}
-
-#pragma mark - notifications
-
-- (void)waiterCallDone:(NSNotification *)n {
-  
-  self.waiterIsCalled = NO;
-  
 }
 
 - (void)checkOrders {
@@ -152,37 +133,15 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (void)waiterCallWithCompletion:(dispatch_block_t)completionBlock {
+- (void)waiterCall {
   
-  if (!_visitor.table) {
-    completionBlock();
-    return;
-  }
-  
-  __weak typeof(self)weakSelf = self;
-  [_visitor.table waiterCallWithCompletion:^(OMNError *error) {
-    
-    weakSelf.waiterIsCalled = (nil == error);
-    completionBlock();
-    
-  }];
+  [_visitor waiterCall];
   
 }
 
-- (void)waiterCallStopWithCompletion:(dispatch_block_t)completionBlock {
+- (void)waiterCallStop {
   
-  if (!_visitor.table) {
-    completionBlock();
-    return;
-  }
-
-  __weak typeof(self)weakSelf = self;
-  [_visitor.table waiterCallStopWithFailure:^(OMNError *error) {
-    
-    weakSelf.waiterIsCalled = (nil != error);
-    completionBlock();
-    
-  }];
+  [_visitor waiterCallStop];
   
 }
 

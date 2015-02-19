@@ -94,7 +94,6 @@
 - (BOOL)readyForPush {
   
 #if DEBUG
-#warning readyForPush
   return YES;
 #endif
   
@@ -128,7 +127,6 @@
 - (BOOL)readyForEnter {
   
 #if DEBUG
-#warning readyForEnter
   return YES;
 #endif
   
