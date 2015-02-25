@@ -17,15 +17,6 @@ static const char kNavigationControllerPopToControllerKey;
 
 @implementation UINavigationController (omn_replace)
 
-- (void)omn_replaceCurrentViewControllerWithController:(UIViewController *)viewController animated:(BOOL)animated {
-  
-  NSMutableArray *currentControllers = [NSMutableArray arrayWithArray:self.viewControllers];
-  [currentControllers removeLastObject];
-  [currentControllers addObject:viewController];
-  [self setViewControllers:currentControllers animated:animated];
-  
-}
-
 - (void)omn_pushViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completionBlock {
   
   objc_setAssociatedObject(self, &kNavigationControllerPushBlockKey, completionBlock, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

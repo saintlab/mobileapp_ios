@@ -55,7 +55,7 @@
 
     toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
     UIView *navBar = toViewController.navigationController.navigationBar;
-    headerLabel.center = [navBar convertPoint:CGPointMake(CGRectGetWidth(navBar.frame)/2.0, CGRectGetHeight(navBar.frame)/2.0f) toView:nil];
+    headerLabel.center = [navBar convertPoint:CGPointMake(CGRectGetWidth(navBar.frame)/2.0f, CGRectGetHeight(navBar.frame)/2.0f) toView:nil];
     
   } completion:^(BOOL finished) {
     // Clean up

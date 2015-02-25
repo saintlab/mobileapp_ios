@@ -8,9 +8,6 @@
 
 #import "OMNTestBankCardsModel.h"
 #import "OMNBankCard.h"
-#import "OMNBankCardMediator.h"
-#import "OMNPaymentNotificationControl.h"
-#import "OMNAuthorization.h"
 
 @implementation OMNTestBankCardsModel
 

@@ -14,7 +14,7 @@
   
   NSString *path = [[NSBundle bundleForClass:class] pathForResource:self ofType:nil];
   NSData *data = [NSData dataWithContentsOfFile:path];
-  id object = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+  id object = [NSJSONSerialization JSONObjectWithData:data options:0UL error:nil];
   return object;
   
 }

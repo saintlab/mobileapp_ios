@@ -8,7 +8,6 @@
 
 #import "OMNRestaurantActionsVC.h"
 #import "OMNRestaurantMediator.h"
-#import "OMNR1VC.h"
 #import "OMNNavigationController.h"
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNRestaurantActionsToolbar.h"

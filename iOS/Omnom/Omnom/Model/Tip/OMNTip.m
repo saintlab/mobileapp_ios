@@ -14,13 +14,6 @@
   
 }
 
-+ (instancetype)tipWithPercent:(double)percent {
-  
-  OMNTip *tip = [[OMNTip alloc] init];
-  tip.percent = percent;
-  return tip;
-}
-
 - (instancetype)initWithJsonData:(id)jsonData thresholds:(NSArray *)thresholds {
   self = [super init];
   if (self) {

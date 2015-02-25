@@ -44,7 +44,7 @@
 
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_cardEnterControl attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
 
-  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]" options:0 metrics:nil views:views];
+  NSArray *panV = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[cardEnterControl]" options:kNilOptions metrics:nil views:views];
   [self.view addConstraints:panV];
   
 	// Do any additional setup after loading the view, typically from a nib.

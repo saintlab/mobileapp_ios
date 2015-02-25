@@ -20,7 +20,6 @@ UITableViewDelegate>
 @property (nonatomic, copy) void(^didSelectBlock)(UITableView *tableView, NSIndexPath *indexPath);
 @property (nonatomic, copy) dispatch_block_t didScrollToTopBlock;
 
-- (OMNOrderItem *)orderItemAtIndexPath:(NSIndexPath *)indexPath;
 + (void)registerCellsForTableView:(UITableView *)tableView;
 - (void)updateTableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)lastIndexPath;

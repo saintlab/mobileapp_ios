@@ -64,7 +64,7 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
 
 + (OMNError *)omnomErrorFromCode:(NSInteger)code {
   
-  NSString *description = @"";
+  NSString *description = nil;
   switch (code) {
     case kOMNErrorCodeNotConnectedToInternet: {
       description = NSLocalizedString(@"ERROR_MESSAGE_NO_INTERNET", @"Нет доступа в интернет");
@@ -143,7 +143,7 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
 
   OMNError *error = [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun];
 
-  if (NO == [self isKindOfClass:[NSDictionary class]]) {
+  if (![self isKindOfClass:[NSDictionary class]]) {
     return error;
   }
 

@@ -12,11 +12,7 @@
 #import "OMNRestaurant+omn_network.h"
 #import <OMNDevicePositionManager.h>
 
-@implementation OMNRestaurantManager {
-  
-  NSMutableDictionary *_tablePushEvents;
-  
-}
+@implementation OMNRestaurantManager
 
 + (instancetype)sharedManager {
   static id manager = nil;

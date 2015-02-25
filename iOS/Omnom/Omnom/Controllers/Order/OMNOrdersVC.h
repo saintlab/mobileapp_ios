@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNOrderVCDelegate.h"
 #import "OMNRestaurantMediator.h"
 #import "OMNBackgroundVC.h"
 

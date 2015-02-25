@@ -7,12 +7,9 @@
 //
 
 #import "OMNEditAmountControl.h"
-#import <UIControl+BlocksKit.h>
-#import "UIView+frame.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
-#import "OMNDotTextField.h"
 #import "OMNLabeledTextField.h"
 
 const long long kMaxEnteredValue = 999999ll;

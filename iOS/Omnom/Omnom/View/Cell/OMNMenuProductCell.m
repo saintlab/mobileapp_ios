@@ -141,7 +141,6 @@
   UILabel *_descriptionLabel;
   UIView *_descriptionView;
   NSLayoutConstraint *_imageHeightConstraint;
-  NSLayoutConstraint *_descriptionHeightConstraint;
   NSArray *_heightConstraints;
   UIView *_delimiterView;
 

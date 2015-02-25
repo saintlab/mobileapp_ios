@@ -7,7 +7,6 @@
 //
 
 #import "OMNBill.h"
-#import "OMNOperationManager.h"
 
 @implementation OMNBill
 

@@ -9,16 +9,8 @@
 #import <AFNetworking/AFNetworking.h>
 #import "OMNUtils.h"
 
-typedef NS_ENUM(NSInteger, OMNReachableState) {
-  kOMNReachableStateNoInternet = 0,
-//  kOMNReachableStateNoOmnom,
-  kOMNReachableStateIsReachable,
-};
-
 @interface OMNOperationManager : AFHTTPRequestOperationManager
 
 + (instancetype)sharedManager;
-
-- (OMNReachableState)reachableState;
 
 @end

@@ -8,15 +8,11 @@
 
 #import "OMNBankCardsVC.h"
 #import "OMNBankCardsModel.h"
-#import "OMNAddBankCardVC.h"
 #import "OMNConstants.h"
-#import "OMNMailRUCardConfirmVC.h"
 #import "OMNMailRuBankCardsModel.h"
 #import <BlocksKit.h>
 #import "OMNMailRuBankCardMediator.h"
 #import "OMNBankCard+omn_info.h"
-
-NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
 
 @interface OMNBankCardsVC ()
 
@@ -30,10 +26,7 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
 
   __weak IBOutlet UIButton *_addCardButton;
   NSString *_bankCardsLoadingIdentifier;
-  
-  OMNBankCardsVCDidSelectBlock _didSelectCardBlock;
-  OMNBankCardsVCDidCancelBlock _didCancelBlock;
-  
+
 }
 
 - (void)removeBankCardsObserver {
@@ -48,17 +41,6 @@ NSString * const OMNB = @"OMNBankCardsVCLoadingIdentifier";
   
   [self removeBankCardsObserver];
   
-}
-
-- (instancetype)initWithDidSelectCardBlock:(OMNBankCardsVCDidSelectBlock)didSelectCardBlock cancelBlock:(OMNBankCardsVCDidCancelBlock)cancelBlock {
-  self = [super init];
-  if (self) {
-    
-    _didSelectCardBlock = [didSelectCardBlock copy];
-    _didCancelBlock = [cancelBlock copy];
-    
-  }
-  return self;
 }
 
 - (void)viewDidLoad {

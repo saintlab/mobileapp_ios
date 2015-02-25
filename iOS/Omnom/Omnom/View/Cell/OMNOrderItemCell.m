@@ -7,7 +7,6 @@
 //
 
 #import "OMNOrderItemCell.h"
-#import "UIView+frame.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
@@ -76,7 +75,7 @@
   
   self.selectionStyle = UITableViewCellSelectionStyleDefault;
   self.selectedBackgroundView = [[UIView alloc] init];
-  self.selectedBackgroundView.backgroundColor = ([UIColor colorWithRed:2/255. green:193/255. blue:100/255. alpha:1]);
+  self.selectedBackgroundView.backgroundColor = ([UIColor colorWithRed:2.0f/255.0f green:193.0f/255.0f blue:100.0f/255.0f alpha:1.0f]);
   
   UIView *selectedSeporatorView = [UIView omn_autolayoutView];
   selectedSeporatorView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.5f];

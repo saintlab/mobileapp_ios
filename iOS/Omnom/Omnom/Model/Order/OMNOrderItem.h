@@ -22,6 +22,4 @@
 
 - (instancetype)initWithJsonData:(id)data;
 
-- (void)deselect;
-
 @end

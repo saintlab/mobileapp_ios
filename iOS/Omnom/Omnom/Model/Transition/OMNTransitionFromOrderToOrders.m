@@ -67,7 +67,7 @@
       
       moveView.alpha = 0.0f;
       
-    } completion:^(BOOL finished) {
+    } completion:^(BOOL finished1) {
     
       // Clean up
       [moveView removeFromSuperview];

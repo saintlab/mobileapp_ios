@@ -46,12 +46,12 @@
     NSString *key = @"MyCustomFormatter_NSDateFormatter";
     
     NSMutableDictionary *threadDictionary = [[NSThread currentThread] threadDictionary];
-    NSDateFormatter *dateFormatter = [threadDictionary objectForKey:key];
+    NSDateFormatter *dateFormatter = threadDictionary[key];
     
     if (!dateFormatter) {
       
       dateFormatter = [self dateFormatter];
-      [threadDictionary setObject:dateFormatter forKey:key];
+        threadDictionary[key] = dateFormatter;
       
     }
     

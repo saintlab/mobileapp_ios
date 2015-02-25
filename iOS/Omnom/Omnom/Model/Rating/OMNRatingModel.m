@@ -34,28 +34,19 @@ const NSInteger kRatedProductsCount = 100;
   return self;
 }
 
-- (NSIndexPath *)indexPathForProduct:(OMNProduct *)product {
-  
-  NSUInteger productIndex = [_products indexOfObject:product];
-  if (productIndex == NSNotFound) {
-    return nil;
-  }
-  else {
-    return [NSIndexPath indexPathForRow:productIndex inSection:0];
-  }
-  
-}
-
-
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+  
   return 1;
+  
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
+  
   return _products.count;
+  
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView

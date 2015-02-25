@@ -7,7 +7,6 @@
 //
 
 #import "OMNMenuProductFullCell.h"
-#import <BlocksKit.h>
 #import "UIView+omn_autolayout.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>

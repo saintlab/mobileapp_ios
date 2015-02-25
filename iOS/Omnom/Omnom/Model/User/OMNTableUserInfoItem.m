@@ -7,7 +7,6 @@
 //
 
 #import "OMNTableUserInfoItem.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNTableButton.h"
 #import "OMNChangeTableAlertVC.h"

@@ -7,7 +7,6 @@
 //
 
 #import "OMNUtils.h"
-#import "OMNConstants.h"
 
 NSString * const kRubleSign = @"\u20BD";
 NSString * const kGroupingSeparator = @" ";

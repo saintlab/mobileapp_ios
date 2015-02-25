@@ -76,7 +76,7 @@
 
 - (void)addTansitionForClass:(Class)class {
   
-  if (NO == [class isSubclassOfClass:[OMNCustomTransition class]]) {
+  if (![class isSubclassOfClass:[OMNCustomTransition class]]) {
     return;
   }
   

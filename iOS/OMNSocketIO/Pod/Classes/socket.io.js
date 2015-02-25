@@ -3977,25 +3977,25 @@ module.exports = Object.keys || function keys (obj){
 };
 
 },{}],24:[function(require,module,exports){
-module.exports = after
+module.exports = after;
 
 function after(count, callback, err_cb) {
-    var bail = false
-    err_cb = err_cb || noop
-    proxy.count = count
+    var bail = false;
+    err_cb = err_cb || noop;
+    proxy.count = count;
 
-    return (count === 0) ? callback() : proxy
+    return (count === 0) ? callback() : proxy;
 
     function proxy(err, result) {
         if (proxy.count <= 0) {
             throw new Error('after called too many times')
         }
-        --proxy.count
+        --proxy.count;
 
         // after first error, rest are passed to err_cb
         if (err) {
-            bail = true
-            callback(err)
+            bail = true;
+            callback(err);
             // future error callbacks will go to error handler
             callback = err_cb
         } else if (proxy.count === 0 && !bail) {
@@ -4137,9 +4137,8 @@ function BlobBuilderConstructor(ary, options) {
     bb.append(ary[i]);
   }
   return (options.type) ? bb.getBlob(options.type) : bb.getBlob();
-};
-
-module.exports = (function() {
+}
+    module.exports = (function() {
   if (blobSupported) {
     return global.Blob;
   } else if (blobBuilderSupported) {
@@ -4151,9 +4150,9 @@ module.exports = (function() {
 
 },{}],28:[function(require,module,exports){
 var global=typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {};/*! http://mths.be/utf8js v2.0.0 by @mathias */
-;(function(root) {
+    (function (root) {
 
-	// Detect free variables `exports`
+        // Detect free variables `exports`
 	var freeExports = typeof exports == 'object' && exports;
 
 	// Detect free variable `module`
@@ -4778,7 +4777,7 @@ exports.deconstructPacket = function(packet) {
     pack.data = deconstructBinPackRecursive(packetData);
     pack.attachments = buffers.length; // number of binary 'attachments'
     return {packet: pack, buffers: buffers};
-}
+};
 
 /**
  * Reconstructs a binary packet from its placeholder packet and buffers
@@ -4813,7 +4812,7 @@ exports.deconstructPacket = function(packet) {
     packet.data = reconstructBinPackRecursive(packet.data);
     packet.attachments = undefined; // no longer useful
     return packet;
- }
+ };
 
 /**
  * Asynchronously removes Blobs or Files from data via
@@ -4871,7 +4870,7 @@ exports.removeBlobs = function(data, callback) {
   if (!pendingBlobs) {
     callback(bloblessData);
   }
-}
+};
 
 /**
  * Returns true if obj is a buffer or an arraybuffer.
@@ -4975,16 +4974,16 @@ exports.BINARY_EVENT = 5;
 
 exports.BINARY_ACK = 6;
 
-exports.Encoder = Encoder
+exports.Encoder = Encoder;
 
 /**
  * A socket.io Encoder instance
  *
  * @api public
  */
-function Encoder() {};
-
-/**
+function Encoder() {
+}
+    /**
  * Encode a packet as a single string if non-binary, or as a
  * buffer sequence, depending on packet type.
  *
@@ -5077,7 +5076,7 @@ function encodeAsBinary(obj, callback) {
   binary.removeBlobs(obj, writeEncoding);
 }
 
-exports.Decoder = Decoder
+exports.Decoder = Decoder;
 
 /**
  * A socket.io Decoder instance
@@ -5135,7 +5134,7 @@ Decoder.prototype.add = function(obj) {
   else {
     throw new Error('Unknown type: ' + obj);
   }
-}
+};
 
 /**
  * Decode a packet String (JSON data)
@@ -5202,9 +5201,8 @@ function decodeString(str) {
 
   debug('decoded %s as %j', str, p);
   return p;
-};
-
-/**
+}
+    /**
  * Deallocates a parser's resources
  *
  * @api public
@@ -5214,7 +5212,7 @@ Decoder.prototype.destroy = function() {
   if (this.reconstructor) {
     this.reconstructor.finishedReconstruction();
   }
-}
+};
 
 /**
  * A manager of a binary event's 'buffer sequence'. Should
@@ -5249,7 +5247,7 @@ BinaryReconstructor.prototype.takeBinaryData = function(binData) {
     return packet;
   }
   return null;
-}
+};
 
 /**
  * Cleans up binary packet reconstruction variables.
@@ -5260,7 +5258,7 @@ BinaryReconstructor.prototype.takeBinaryData = function(binData) {
 BinaryReconstructor.prototype.finishedReconstruction = function() {
   this.reconPack = null;
   this.buffers = [];
-}
+};
 
 function error(data){
   return {
@@ -5273,8 +5271,8 @@ function error(data){
 module.exports=require(33)
 },{}],42:[function(require,module,exports){
 /*! JSON v3.2.6 | http://bestiejs.github.io/json3 | Copyright 2012-2013, Kit Cambridge | http://kit.mit-license.org */
-;(function (window) {
-  // Convenience aliases.
+    (function (window) {
+        // Convenience aliases.
   var getClass = {}.toString, isProperty, forEach, undef;
 
   // Detect the `define` function exposed by asynchronous module loaders. The
@@ -5345,8 +5343,8 @@ module.exports=require(33)
               stringify(0) === "0" &&
               // FF 3.1b1, b2, and JSON 2 serialize wrapped primitives as object
               // literals.
-              stringify(new Number()) === "0" &&
-              stringify(new String()) == '""' &&
+              stringify(Number()) === "0" &&
+              stringify(String()) == '""' &&
               // FF 3.1b1, 2 throw an error if the value is `null`, `undefined`, or
               // does not define a canonical JSON representation (this applies to
               // objects with `toJSON` properties as well, *unless* they are nested
@@ -6135,12 +6133,12 @@ module.exports=require(33)
 }(this));
 
 },{}],43:[function(require,module,exports){
-module.exports = toArray
+module.exports = toArray;
 
 function toArray(list, index) {
-    var array = []
+    var array = [];
 
-    index = index || 0
+    index = index || 0;
 
     for (var i = index || 0; i < list.length; i++) {
         array[i - index] = list[i]
@@ -6152,4 +6150,4 @@ function toArray(list, index) {
 },{}]},{},[1])
 (1)
 });
-;
+

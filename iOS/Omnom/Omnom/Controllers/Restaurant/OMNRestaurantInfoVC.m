@@ -7,8 +7,6 @@
 //
 
 #import "OMNRestaurantInfoVC.h"
-#import <AFNetworking.h>
-#import "OMNRestaurantInfo.h"
 #import "OMNFeedItem.h"
 #import "OMNAnalitics.h"
 #import <OMNStyler.h>
@@ -41,7 +39,6 @@ UIGestureRecognizerDelegate>
 
   OMNRestaurant *_restaurant;
   BOOL _disableNavigationBarAnimation;
-  BOOL _disableSwipeTransition;
   UIPercentDrivenInteractiveTransition *_percentDrivenInteractiveTransition;
   UIButton *_arrowButton;
   
@@ -57,8 +54,7 @@ UIGestureRecognizerDelegate>
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
-  _disableSwipeTransition = YES;
+
   _disableNavigationBarAnimation = YES;
   
   _arrowButton = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"back_button_top_icon"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
@@ -113,18 +109,9 @@ UIGestureRecognizerDelegate>
   
 }
 
-
-- (void)viewDidAppear:(BOOL)animated {
-  
-  [super viewDidAppear:animated];
-  _disableSwipeTransition = NO;
-  
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   _disableNavigationBarAnimation = YES;
-  _disableSwipeTransition = YES;
   
   CALayer *navigationBarLayer = self.navigationController.navigationBar.layer;
   navigationBarLayer.transform = CATransform3DIdentity;
@@ -217,7 +204,6 @@ UIGestureRecognizerDelegate>
 
 - (void)closeTap {
   
-  _disableSwipeTransition = YES;
   [self.delegate restaurantInfoVCDidFinish:self];
   
 }

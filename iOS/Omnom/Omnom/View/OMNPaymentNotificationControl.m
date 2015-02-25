@@ -56,10 +56,10 @@
       };
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[closeButton]-|" options:0 metrics:metrics views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[closeButton]|" options:0 metrics:0 views:views]];
-    [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|" options:0 metrics:nil views:views]];
-    [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(64.0)]" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[closeButton]-|" options:kNilOptions metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[closeButton]|" options:kNilOptions metrics:nil views:views]];
+    [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[self]|" options:kNilOptions metrics:nil views:views]];
+    [self.superview addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[self(64.0)]" options:kNilOptions metrics:nil views:views]];
     
   }
   return self;
@@ -110,7 +110,7 @@
     
   }];
   
-  NSString *title = @"";
+  NSString *title = nil;
   
   if ([paymentDetails.userID isEqualToString:[OMNAuthorization authorisation].user.id] &&
       paymentDetails.tipAmount > 0) {

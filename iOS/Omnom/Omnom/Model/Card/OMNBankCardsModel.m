@@ -6,16 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNAddBankCardVC.h"
 #import "OMNBankCard.h"
 #import "OMNBankCardCell.h"
-#import "OMNBankCardInfo.h"
-#import "OMNBankCardMediator.h"
 #import "OMNBankCardsModel.h"
-#import "OMNConstants.h"
-#import "OMNOrder.h"
-#import "UINavigationController+omn_replace.h"
-#import <OMNStyler.h>
 #import <SSKeychain.h>
 #import <BlocksKit.h>
 
@@ -30,17 +23,6 @@ NSString * const kCardIdServiceName = @"card_id";
 @implementation OMNBankCardsModel
 
 @dynamic card_id;
-
-- (instancetype)init {
-
-  self = [super init];
-  if (self) {
-    
-
-    
-  }
-  return self;
-}
 
 - (OMNBankCard *)selectedCard {
   

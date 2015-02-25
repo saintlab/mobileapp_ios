@@ -63,7 +63,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 
 + (NSString *)installID {
   
-  NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
+  NSString *appName = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
   //Check if we have UUID already
   NSString *retrieveuuid = [SSKeychain passwordForService:appName account:@"constants"];
   if (nil == retrieveuuid) {
@@ -84,7 +84,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 + (void)loadRemoteConfigWithCompletion:(dispatch_block_t)completionBlock {
   
   NSString *path = @"/mobile/config";
-  AFHTTPRequestOperation *operation = [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  AFHTTPRequestOperation *op = [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if (responseObject[@"tokens"]) {
 
@@ -113,7 +113,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
     
   }];
   
-  NSMutableURLRequest *mRequest = (NSMutableURLRequest *)operation.request;
+  NSMutableURLRequest *mRequest = (NSMutableURLRequest *)op.request;
   if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
 
     //https://github.com/saintlab/mobileapp_ios/issues/548
@@ -203,7 +203,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 
 + (NSString *)tokenForKey:(NSString *)key {
  
-  if (NO == [key isKindOfClass:[NSString class]]) {
+  if (![key isKindOfClass:[NSString class]]) {
     return @"";
   }
   

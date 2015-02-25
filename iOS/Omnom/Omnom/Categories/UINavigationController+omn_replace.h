@@ -10,8 +10,6 @@
 
 @interface UINavigationController (omn_replace)
 
-- (void)omn_replaceCurrentViewControllerWithController:(UIViewController *)viewController animated:(BOOL)animated;
-
 - (void)omn_pushViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completionBlock;
 
 - (NSArray *)omn_popToViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completionBlock;

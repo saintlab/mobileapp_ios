@@ -94,21 +94,21 @@
   
   if (_controlWidth > 0.0f) {
     NSDictionary *metrics = @{@"width" : @(_controlWidth)};
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[colorView(width)]" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[colorView(width)]" options:kNilOptions metrics:metrics views:views]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_colorView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[textField(width)]" options:0 metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[textField(width)]" options:kNilOptions metrics:metrics views:views]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_textField attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
     
   }
   else {
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorView]|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[textField]|" options:kNilOptions metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[colorView]|" options:kNilOptions metrics:nil views:views]];
   }
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[errorLabel]|" options:0 metrics:nil views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[errorLabel]|" options:kNilOptions metrics:nil views:views]];
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(>=45)][colorView(1)]-[errorLabel]|" options:0 metrics:nil views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textField(>=45)][colorView(1)]-[errorLabel]|" options:kNilOptions metrics:nil views:views]];
   
   [self updateColorView];
   

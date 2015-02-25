@@ -8,26 +8,18 @@
 
 #import "OMNR1VC.h"
 #import "OMNOrdersVC.h"
-#import "OMNOperationManager.h"
-#import "OMNAuthorization.h"
 #import <BlocksKit+UIKit.h>
-#import "UIImage+omn_helper.h"
-#import "OMNPushPermissionVC.h"
 #import "OMNSocketManager.h"
 #import "OMNLightBackgroundButton.h"
-#import "OMNImageManager.h"
 #import "OMNAnalitics.h"
 #import "OMNPaymentNotificationControl.h"
 #import "OMNCircleAnimation.h"
 #import "OMNRestaurantInfoVC.h"
-#import <OMNStyler.h>
-#import "OMNRestaurantMediator.h"
-#import "UIBarButtonItem+omn_custom.h"
-#import "OMNRestaurant+omn_network.h"
-#import "OMNRestaurantManager.h"
 #import "OMNMenuModel.h"
 #import "OMNMenuVC.h"
 #import "OMNTableButton.h"
+#import "UIBarButtonItem+omn_custom.h"
+#import <OMNStyler.h>
 
 @interface OMNR1VC ()
 <OMNRestaurantInfoVCDelegate>
@@ -180,7 +172,7 @@
       _tableButton.transform = CGAffineTransformMakeTranslation(centerX - _tableButton.center.x, 0.0f);
       _tableButton.alpha = 0.0f;
       
-      [UIView animateWithDuration:0.8 delay:1.0 options:0 animations:^{
+      [UIView animateWithDuration:0.8 delay:1.0 options:kNilOptions animations:^{
         
         _tableButton.alpha = 1.0f;
         
@@ -191,14 +183,14 @@
           _tableButton.transform = CGAffineTransformIdentity;
           userButton.alpha = 0.0f;
           
-        } completion:^(BOOL finished) {
+        } completion:^(BOOL finished1) {
           
           [UIView animateWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
             
             _tableButton.alpha = 0.0f;
             userButton.alpha = 1.0f;
             
-          } completion:^(BOOL finished) {
+          } completion:^(BOOL finished2) {
             
             [_tableButton removeFromSuperview], _tableButton = nil;
             

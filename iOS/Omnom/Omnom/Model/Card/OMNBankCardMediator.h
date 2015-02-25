@@ -10,7 +10,6 @@
 #import "OMNBankCardInfo.h"
 #import "OMNError.h"
 
-typedef void(^OMNBankCardInfoBlock)(OMNBankCardInfo *bankCardInfo);
 typedef void(^OMNPaymentDidFinishBlock)(OMNError *error);
 typedef void(^OMNPaymentVCDidPresentBlock)(OMNPaymentDidFinishBlock paymentDidFinishBlock);
 

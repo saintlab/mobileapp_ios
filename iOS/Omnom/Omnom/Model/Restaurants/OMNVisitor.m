@@ -204,7 +204,7 @@
   [self.orders enumerateObjectsUsingBlock:^(OMNOrder *order, NSUInteger idx, BOOL *stop) {
     
     if ([changedOrder.id isEqualToString:order.id]) {
-      [orders replaceObjectAtIndex:idx withObject:changedOrder];
+      orders[idx] = changedOrder;
       ordersDidChange = YES;
       *stop = YES;
     }

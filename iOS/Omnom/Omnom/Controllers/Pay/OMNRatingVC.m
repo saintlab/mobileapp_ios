@@ -7,17 +7,10 @@
 //
 
 #import "OMNRatingVC.h"
-#import "OMNOrder+network.h"
-#import "OMNBorderedButton.h"
 #import "TQStarRatingView.h"
 #import <OMNStyler.h>
-#import "UIImage+omn_helper.h"
 #import "OMNAnalitics.h"
 #import "OMNOperationManager.h"
-
-@interface OMNRatingVC ()
-
-@end
 
 @implementation OMNRatingVC {
   

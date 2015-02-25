@@ -45,7 +45,7 @@ OMNOrderCalculationVCDelegate>
     _restaurantActionsVC = restaurantActionsVC;
     _restaurant = restaurant;
     _visitor = [[OMNVisitor alloc] initWithRestaurant:restaurant];
-    _shouldShowOrdersOnLaunch = [_restaurant.orders count];
+    _shouldShowOrdersOnLaunch = (_restaurant.orders.count > 0);
 
     __weak typeof(self)weakSelf = self;
     [_restaurant getMenuWithCompletion:^(OMNMenu *menu) {
@@ -253,14 +253,6 @@ OMNOrderCalculationVCDelegate>
     
   }];
   [self pushViewController:noOrdersVC];
-  
-}
-
-#pragma mark - OMNUserInfoVCDelegate
-
-- (void)userInfoVCDidFinish:(OMNUserInfoVC *)userInfoVC {
-  
-  [_restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
   
 }
 

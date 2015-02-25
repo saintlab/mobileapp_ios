@@ -280,7 +280,7 @@
 - (void)uploadImage:(UIImage *)image withCompletion:(void (^)(OMNUser *user))completion progress:(void (^)(CGFloat percent))progressBlock failure:(void (^)(OMNError *error))failureBlock {
   
   NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorization authorisation].token];
-  AFHTTPRequestOperation *operation = [[OMNAuthorizationManager sharedManager] POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+  AFHTTPRequestOperation *op = [[OMNAuthorizationManager sharedManager] POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     
     [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.9f) name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
     
@@ -306,7 +306,7 @@
   
   if (progressBlock) {
     
-    [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+    [op setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
 
       CGFloat progress = (CGFloat)totalBytesWritten/totalBytesExpectedToWrite;
       progressBlock(progress);
@@ -367,8 +367,8 @@
 
     if ([responseObject omn_isSuccessResponse]) {
     
-      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-      [[OMNAuthorization authorisation] updateUserInfoWithUser:user];
+      OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+      [[OMNAuthorization authorisation] updateUserInfoWithUser:newUser];
       completion();
       
     }

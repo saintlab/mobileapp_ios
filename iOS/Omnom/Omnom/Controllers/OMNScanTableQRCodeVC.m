@@ -16,15 +16,12 @@
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import "UIView+omn_autolayout.h"
-#import "OMNQRHelpAlertVC.h"
-#import "UIImage+omn_helper.h"
-#import <OMNStyler.h>
-#import "OMNToolbarButton.h"
-#import "UIView+frame.h"
 #import "OMNCameraPermission.h"
 #import "OMNCameraPermissionDescriptionVC.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNEnterHashAlertVC.h"
+#import "UIImage+omn_helper.h"
+#import "OMNQRHelpAlertVC.h"
 
 @interface OMNScanTableQRCodeVC ()
 <AVCaptureMetadataOutputObjectsDelegate,
@@ -286,7 +283,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   [_captureSession addOutput:captureMetadataOutput];
   
   [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
-  [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
+  [captureMetadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
   
   _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
   [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];

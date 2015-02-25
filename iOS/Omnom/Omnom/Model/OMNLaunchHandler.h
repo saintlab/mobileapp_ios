@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "OMNLaunchOptions.h"
 
-@protocol OMNLaunchHandlerDelegate;
-
 @interface OMNLaunchHandler : NSObject
 
 @property (nonatomic, strong) OMNLaunchOptions *launchOptions;

@@ -9,10 +9,7 @@
 #import "OMNFeedItem.h"
 #import "OMNImageManager.h"
 
-@implementation OMNFeedItem {
-  id _jsonData;
-  BOOL _viewEventLogged;
-}
+@implementation OMNFeedItem
 
 - (instancetype)initWithJsonData:(id)jsonData {
   self = [super init];

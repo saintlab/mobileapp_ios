@@ -7,15 +7,12 @@
 //
 
 #import "OMNSearchRestaurantsVC.h"
-#import "OMNOperationManager.h"
 #import "OMNAskCLPermissionsVC.h"
 #import "OMNCLPermissionsHelpVC.h"
-#import "OMNCircleRootVC.h"
 #import "OMNTurnOnBluetoothVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNDenyCLPermissionVC.h"
 #import "OMNAnalitics.h"
-#import "UIBarButtonItem+omn_custom.h"
 #import "OMNBeacon+omn_debug.h"
 #import "OMNAuthorization.h"
 #import "OMNRestaurantManager.h"

@@ -7,7 +7,6 @@
 //
 
 #import "OMNRestaurantFeedItemCell.h"
-#import <UIImageView+AFNetworking.h>
 #import "OMNFeedItem.h"
 #import "OMNImageManager.h"
 #import <OMNStyler.h>
@@ -79,10 +78,10 @@
       @"leftOffset" : [[OMNStyler styler] leftOffset],
       };
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:0 metrics:0 views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel][priceLabel(>=70@1000)]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(180)][textLabel(44)]" options:0 metrics:0 views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[priceLabel(==textLabel)]" options:0 metrics:0 views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:kNilOptions metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel][priceLabel(>=70@1000)]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView(180)][textLabel(44)]" options:kNilOptions metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[priceLabel(==textLabel)]" options:kNilOptions metrics:nil views:views]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_priceLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_textLabel attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     
     [_iconView addConstraint:[NSLayoutConstraint constraintWithItem:_spinner attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_iconView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];

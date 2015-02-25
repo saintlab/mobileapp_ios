@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSplashToSearchBeaconTransition.h"
 #import "OMNSearchRestaurantVC.h"
-#import "OMNSearchRestaurantsVC.h"
-#import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
+#import "OMNSplashToSearchBeaconTransition.h"
 
 @implementation OMNSplashToSearchBeaconTransition {
+  
   CAShapeLayer *_layer;
   CGRect _circleFrame;
+  
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -37,7 +37,7 @@
   CGFloat xOffset = (diametr - containerView.frame.size.width)/2.0f;
   CGFloat yOffset = (diametr - containerView.frame.size.height)/2.0f;
   _layer.frame = containerView.bounds;
-  _layer.transform = CATransform3DMakeRotation(M_PI, 1, 0, 0);
+  _layer.transform = CATransform3DMakeRotation(M_PI, 1.0f, 0.0f, 0.0f);
   
   [fromViewSnapshot.layer addSublayer:_layer];
   
@@ -95,8 +95,8 @@
   [colorLayer addAnimation:pathAnimation forKey:@"path"];
   colorLayer.fillColor = redColor.CGColor;
   colorLayer.path = toPath.CGPath;
-  
-  [UIView animateWithDuration:duration/2. delay:delay options:0 animations:^{
+
+  [UIView animateWithDuration:duration/2. delay:delay options:kNilOptions animations:^{
     
     iconsIV.alpha = 0.0f;
     oldLogoIV.alpha = 0.0f;
@@ -107,7 +107,7 @@
     
   }];
   
-  [UIView animateWithDuration:duration delay:delay options:0 animations:^{
+  [UIView animateWithDuration:duration delay:delay options:kNilOptions animations:^{
 
     newLogoIV.center = circleCenter;
     newLogoIV.transform = CGAffineTransformIdentity;

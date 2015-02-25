@@ -19,7 +19,6 @@
   [super setUp];
   
 
-//  _calculationAmount = [[OMNCalculationAmount alloc] initWithTips:_tips tipsThreshold:250. total:1000.];
   // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 

@@ -24,7 +24,7 @@
       if (menuProduct.selectedModifers.count) {
         
         NSMutableArray *selectedModifers = [NSMutableArray arrayWithCapacity:menuProduct.selectedModifers.count];
-        [menuProduct.selectedModifers enumerateObjectsUsingBlock:^(id obj, BOOL *stop) {
+        [menuProduct.selectedModifers enumerateObjectsUsingBlock:^(id obj, BOOL *stop1) {
           
           [selectedModifers addObject:@{@"id" : obj}];
           

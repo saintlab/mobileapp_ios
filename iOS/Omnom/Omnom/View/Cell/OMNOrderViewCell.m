@@ -84,7 +84,7 @@
   
   OMNGuest *guest = [_order.guests lastObject];
   
-  if (_order.guests > 0 &&
+  if (_order.guests.count > 0 &&
       guest.items.count > 0) {
     
     [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:guest.items.count - 1 inSection:_order.guests.count - 1] atScrollPosition:UITableViewScrollPositionTop animated:NO];

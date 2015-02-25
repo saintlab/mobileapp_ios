@@ -7,9 +7,7 @@
 //
 
 #import "OMNMenuProductWithRecommedtationsCell.h"
-#import "OMNMenuProductCell.h"
 #import <BlocksKit.h>
-#import "UIView+omn_autolayout.h"
 
 @interface OMNMenuProductWithRecommedtationsCell ()
 <OMNMenuProductCellDelegate>

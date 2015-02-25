@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^OMNBillPayLinkBlock)(NSString *url);
-
 @interface OMNBill : NSObject
 
 @property (nonatomic, copy) NSString *id;

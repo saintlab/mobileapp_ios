@@ -9,11 +9,7 @@
 #import "OMNPreorderActionCellItem.h"
 #import "OMNPreorderActionCell.h"
 
-@implementation OMNPreorderActionCellItem {
-  
-  CGFloat _calculationHeight;
-  
-}
+@implementation OMNPreorderActionCellItem
 
 @synthesize hidden=_hidden;
 

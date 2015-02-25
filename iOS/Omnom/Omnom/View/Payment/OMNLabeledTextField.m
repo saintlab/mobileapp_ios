@@ -7,11 +7,6 @@
 //
 
 #import "OMNLabeledTextField.h"
-#import "OMNUtils.h"
-
-@interface OMNLabeledTextField ()
-
-@end
 
 @implementation OMNLabeledTextField 
 

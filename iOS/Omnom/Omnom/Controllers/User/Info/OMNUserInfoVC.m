@@ -8,9 +8,7 @@
 
 #import "OMNUserInfoVC.h"
 #import "OMNAuthorization.h"
-#import "OMNUser.h"
 #import "OMNUserInfoModel.h"
-#import "OMNEditTableVC.h"
 #import <OMNStyler.h>
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNEditUserVC.h"
@@ -18,8 +16,7 @@
 #import <BlocksKit+UIKit.h>
 
 @interface OMNUserInfoVC ()
-<OMNEditTableVCDelegate,
-OMNEditUserVCDelegate>
+<OMNEditUserVCDelegate>
 
 @end
 
@@ -29,8 +26,6 @@ OMNEditUserVCDelegate>
   
   __weak IBOutlet UILabel *_userNameLabel;
   __weak IBOutlet OMNUserIconView *_iconView;
-
-  UIView *_tableFooterView;
 
   NSString *_userObserverIdentifier;
   NSString *_userImageObserverIdentifier;
@@ -177,26 +172,10 @@ OMNEditUserVCDelegate>
   
 }
 
-- (void)editTableTap {
-  
-  OMNEditTableVC *editTableVC = [[OMNEditTableVC alloc] init];
-  editTableVC.delegate = self;
-  [self.navigationController pushViewController:editTableVC animated:YES];
-  
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
   [_userInfoModel reloadUserInfo];
-  
-}
-
-#pragma mark - OMNEditTableVCDelegate
-
-- (void)editTableVCDidFinish:(OMNEditTableVC *)editTableVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 

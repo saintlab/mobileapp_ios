@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNAnalitics.h"
 #import "OMNChangePhoneVC.h"
 #import "OMNConfirmCodeVC.h"
 #import "OMNErrorTextField.h"
@@ -19,7 +18,6 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
 #import <TTTAttributedLabel.h>
-#import "OMNError.h"
 #import "UIView+omn_autolayout.h"
 
 @interface OMNLoginVC ()
@@ -34,8 +32,7 @@ TTTAttributedLabelDelegate> {
   
   OMNErrorTextField *_loginTF;
   TTTAttributedLabel *_hintLabel;
-  OMNPhoneNumberTextFieldDelegate *_phoneNumberTextFieldDelegate;
-  
+
   NSURL *_createUserUrl;
   NSURL *_resetPhoneUrl;
   
@@ -133,21 +130,15 @@ TTTAttributedLabelDelegate> {
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[loginTF]-|" options:0 metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintLabel]-|" options:0 metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]-[hintLabel]" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[loginTF]-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintLabel]-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]-[hintLabel]" options:kNilOptions metrics:nil views:views]];
   
   _loginTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
   _loginTF.textField.keyboardType = UIKeyboardTypePhonePad;
 
   [self setResetPhoneHint];
   
-}
-
-- (NSMutableParagraphStyle *)centerParagraphStyle {
-  NSMutableParagraphStyle *attributeStyle = [[NSMutableParagraphStyle alloc] init];
-  attributeStyle.alignment = NSTextAlignmentCenter;
-  return attributeStyle;
 }
 
 - (void)setCreateUserHint {

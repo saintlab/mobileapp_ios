@@ -7,10 +7,8 @@
 //
 
 #import "OMNProductModiferAlertVC.h"
-#import <TTTAttributedLabel.h>
 #import "OMNConstants.h"
 #import <OMNStyler.h>
-#import "OMNUtils.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNMenuProductModifersModel.h"
 

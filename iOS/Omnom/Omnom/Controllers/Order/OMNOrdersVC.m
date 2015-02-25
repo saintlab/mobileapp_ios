@@ -99,12 +99,12 @@ UICollectionViewDelegate>
     @"collectionView" : _collectionView,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[pageControl]-(-11)-[label]-7-|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[pageControl]-(-11)-[label]-7-|" options:kNilOptions metrics:nil views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_pageControl attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[label]-|" options:kNilOptions metrics:nil views:views]];
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:0 metrics:nil views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[collectionView]|" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[collectionView]|" options:kNilOptions metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[collectionView]|" options:kNilOptions metrics:nil views:views]];
   
 }
 
@@ -123,7 +123,7 @@ UICollectionViewDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [UIView animateWithDuration:0.3 delay:0.3 options:0 animations:^{
+  [UIView animateWithDuration:0.3 delay:0.3 options:kNilOptions animations:^{
     _label.alpha = 1.0f;
     _pageControl.alpha = 1.0f;
   } completion:nil];
@@ -208,12 +208,12 @@ UICollectionViewDelegate>
   OMNOrder *order = _visitor.orders[indexPath.item];
   
   if (1 == indexPath.item &&
-      NO == _animationPerformed) {
+      !_animationPerformed) {
     _animationPerformed = YES;
     
     CGAffineTransform initialTransform = cell.transform;
     cell.transform = CGAffineTransformConcat(initialTransform, CGAffineTransformMakeTranslation(0.0f, -500.0f));
-    [UIView animateWithDuration:0.5 delay:1 options:0 animations:^{
+    [UIView animateWithDuration:0.5 delay:1 options:kNilOptions animations:^{
       cell.transform = initialTransform;
     } completion:nil];
 

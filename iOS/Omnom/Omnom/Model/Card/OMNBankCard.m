@@ -44,7 +44,7 @@
   
   OMNBankCardStatus status = kOMNBankCardStatusUnknown;
   
-  if (NO == [string isKindOfClass:[NSString class]]) {
+  if (![string isKindOfClass:[NSString class]]) {
     //do nothing
   }
   else if ([string isEqualToString:@"registered"]) {

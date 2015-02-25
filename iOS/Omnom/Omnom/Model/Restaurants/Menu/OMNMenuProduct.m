@@ -59,7 +59,7 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
 
 - (long long)total {
   
-  return (self.price*self.quantity);
+  return (long long int) (self.price*self.quantity);
   
 }
 

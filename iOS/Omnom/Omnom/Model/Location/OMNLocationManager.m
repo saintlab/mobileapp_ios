@@ -16,7 +16,6 @@
 @implementation OMNLocationManager {
 
   CLLocationManager *_locationManager;
-  CLGeocoder *_geocoder;
   OMNLocationBlock _locationBlock;
   
 }

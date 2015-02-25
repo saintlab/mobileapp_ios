@@ -7,7 +7,6 @@
 //
 
 #import "OMNFBUserInfoItem.h"
-#import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
 #import "UIButton+omn_helper.h"
 #import "OMNConstants.h"

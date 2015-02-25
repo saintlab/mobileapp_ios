@@ -66,7 +66,7 @@
       
       circleIV.alpha = 1.0f;
       
-    } completion:^(BOOL finished) {
+    } completion:^(BOOL finished1) {
       
       self.circleBackground = coloredCircleImage;
       [circleIV removeFromSuperview];

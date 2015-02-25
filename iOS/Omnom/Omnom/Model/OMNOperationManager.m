@@ -8,7 +8,6 @@
 
 #import "OMNOperationManager.h"
 #import "OMNConstants.h"
-#import <UIDevice-Reachability.h>
 #import "AFHTTPResponseSerializer+omn_headers.h"
 
 @implementation OMNOperationManager {
@@ -18,7 +17,7 @@
   static id manager = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:[OMNConstants baseUrlString]]];
+    manager = [[self alloc] initWithBaseURL:[NSURL URLWithString:[OMNConstants baseUrlString]]];
   });
   return manager;
 }
@@ -34,24 +33,6 @@
 
   }
   return self;
-}
-
-- (OMNReachableState)reachableState {
-  
-  OMNReachableState reachableState = kOMNReachableStateNoInternet;
-  if ([[UIDevice currentDevice] networkAvailable]) {
-    
-    reachableState = kOMNReachableStateIsReachable;
-    
-  }
-  else {
-    
-    reachableState = kOMNReachableStateNoInternet;
-    
-  }
-
-  return reachableState;
-  
 }
 
 @end

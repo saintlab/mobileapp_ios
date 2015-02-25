@@ -71,16 +71,16 @@
     @"height" : @(40.0f),
     };
 
-  NSArray *h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[l1(width)]-(offset)-[l2(width)]-(offset)-[l3(width)]-(offset)-[l4(width)]|" options:0 metrics:metrics views:views];
+  NSArray *h = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[l1(width)]-(offset)-[l2(width)]-(offset)-[l3(width)]-(offset)-[l4(width)]|" options:kNilOptions metrics:metrics views:views];
   [self addConstraints:h];
   
-  NSArray *v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[l1(height)]|" options:0 metrics:metrics views:views];
+  NSArray *v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[l1(height)]|" options:kNilOptions metrics:metrics views:views];
   [self addConstraints:v];
-  v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[l2(height)]|" options:0 metrics:metrics views:views];
+  v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[l2(height)]|" options:kNilOptions metrics:metrics views:views];
   [self addConstraints:v];
-  v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[l3(height)]|" options:0 metrics:metrics views:views];
+  v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[l3(height)]|" options:kNilOptions metrics:metrics views:views];
   [self addConstraints:v];
-  v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[l4(height)]|" options:0 metrics:metrics views:views];
+  v = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[l4(height)]|" options:kNilOptions metrics:metrics views:views];
   [self addConstraints:v];
   
   self.code = @"";
@@ -122,7 +122,7 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
   
-  if (NO == self.enabled) {
+  if (!self.enabled) {
     return NO;
   }
   

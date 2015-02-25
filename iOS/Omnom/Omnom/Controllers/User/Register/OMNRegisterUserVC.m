@@ -208,7 +208,7 @@ TTTAttributedLabelDelegate>
 - (void)keyboardDidShow:(NSNotification *)notification {
   
   NSDictionary* info = [notification userInfo];
-  CGRect kbRect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+  CGRect kbRect = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
   kbRect = [self.view convertRect:kbRect fromView:nil];
   
   UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbRect.size.height, 0.0);
@@ -303,7 +303,7 @@ TTTAttributedLabelDelegate>
   CGRect textFieldFrame = [textField convertRect:textField.bounds toView:_scroll];
   [_scroll scrollRectToVisible:textFieldFrame animated:YES];
   CGPoint contentOffset = CGPointMake(0.0f, MAX(0.0f, textFieldFrame.origin.y - 20.0f));
-  [UIView animateWithDuration:0.3 delay:0.1 options:0 animations:^{
+  [UIView animateWithDuration:0.3 delay:0.1 options:kNilOptions animations:^{
     
     [_scroll setContentOffset:contentOffset];
     

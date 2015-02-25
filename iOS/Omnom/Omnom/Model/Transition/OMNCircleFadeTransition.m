@@ -8,9 +8,6 @@
 
 #import "OMNCircleFadeTransition.h"
 #import "OMNSearchRestaurantsVC.h"
-#import "OMNCircleRootVC.h"
-#import "OMNR1VC.h"
-#import "OMNStartVC.h"
 #import "OMNAskCLPermissionsVC.h"
 #import "OMNDenyCLPermissionVC.h"
 #import "OMNPushPermissionVC.h"
@@ -20,8 +17,6 @@
 #import "OMNOrderPaymentVC.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNRestaurantActionsVC.h"
-#import "OMNAuthorizationVC.h"
-#import "OMNScanQRCodeVC.h"
 #import "OMNRestaurantListVC.h"
 #import "OMNRestaurantCardVC.h"
 #import "OMNNoOrdersVC.h"
@@ -75,8 +70,6 @@
     
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNAskCLPermissionsVC class]],
     [self keyFromClass:[OMNAskCLPermissionsVC class] toClass:[OMNSearchRestaurantsVC class]],
-    
-    [self keyFromClass:[OMNScanQRCodeVC class] toClass:[OMNSearchRestaurantsVC class]],
     
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNCircleRootVC class]],
     [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNSearchRestaurantsVC class]],

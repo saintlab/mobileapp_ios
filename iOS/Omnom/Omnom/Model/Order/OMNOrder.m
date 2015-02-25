@@ -58,7 +58,6 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 @implementation OMNOrder {
   
   id _data;
-  NSString *_callBillOrderId;
   NSArray *_tipsThresholds;
   
 }
@@ -361,7 +360,7 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
   NSSet *changedOrderItemsIDs = [self.changedItemsIDs copy];
   [self.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
     
-    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx1, BOOL *stop1) {
       
       if ([changedOrderItemsIDs containsObject:orderItem.uid]) {
         

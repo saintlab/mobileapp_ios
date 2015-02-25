@@ -8,10 +8,8 @@
 
 #import "OMNAddBankCardVC.h"
 #import <CardIO.h>
-#import "OMNConstants.h"
 #import <OMNCardEnterControl.h>
 #import "OMNCardBrandView.h"
-#import "OMNBorderedButton.h"
 #import <OMNStyler.h>
 #import "OMNCameraPermission.h"
 #import "OMNCameraPermissionDescriptionVC.h"

@@ -149,14 +149,14 @@
     @"buttonWidth" : @(76.0f)
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[b1(buttonWidth)][seporatorView1][b2(buttonWidth)][seporatorView2][b3(buttonWidth)][seporatorView3][b4(buttonWidth)]|" options:0 metrics:metrics views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[b1]|" options:0 metrics:metrics views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[b2]|" options:0 metrics:metrics views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[b3]|" options:0 metrics:metrics views:views]];
-  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[b4]|" options:0 metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[b1(buttonWidth)][seporatorView1][b2(buttonWidth)][seporatorView2][b3(buttonWidth)][seporatorView3][b4(buttonWidth)]|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[b1]|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[b2]|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[b3]|" options:kNilOptions metrics:metrics views:views]];
+  [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[b4]|" options:kNilOptions metrics:metrics views:views]];
   [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:seporatorView1 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:seporatorView2 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:seporatorView3 attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];

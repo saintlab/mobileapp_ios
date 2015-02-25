@@ -51,10 +51,4 @@
   
 }
 
-- (void)deselect {
-  
-  self.selected = NO;
-  
-}
-
 @end

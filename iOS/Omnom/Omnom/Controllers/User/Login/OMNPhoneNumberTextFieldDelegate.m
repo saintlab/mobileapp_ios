@@ -28,7 +28,8 @@
     return NO;
   }
 
-  char leadingCharacter = [newString characterAtIndex:0];
+    char leadingCharacter;
+    leadingCharacter = [newString characterAtIndex:0];
   
   NSUInteger index = 0;
   NSMutableString *formattedString = [NSMutableString string];

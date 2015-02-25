@@ -12,7 +12,7 @@
 
 + (instancetype)itemWithTitle:(NSString *)title actionBlock:(OMNUserInfoItemBlock)actionBlock {
   
-  OMNUserInfoItem *item = [[[self class] alloc] init];
+  OMNUserInfoItem *item = [[self alloc] init];
   item.title = title;
   item.actionBlock = actionBlock;
   return item;

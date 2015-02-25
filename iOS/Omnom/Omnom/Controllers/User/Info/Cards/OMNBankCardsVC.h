@@ -16,6 +16,4 @@ typedef void(^OMNBankCardsVCDidCancelBlock)(__weak OMNBankCardsVC *bankCardsVC);
 
 @interface OMNBankCardsVC : UITableViewController
 
-- (instancetype)initWithDidSelectCardBlock:(OMNBankCardsVCDidSelectBlock)didSelectCardBlock cancelBlock:(OMNBankCardsVCDidCancelBlock)cancelBlock;
-
 @end

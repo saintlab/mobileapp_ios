@@ -9,7 +9,6 @@
 #import "OMNTransitionFromOrderToCalculator.h"
 #import "OMNCalculatorVC.h"
 #import "OMNOrderCalculationVC.h"
-#import "UITableView+screenshot.h"
 #import "UIView+screenshot.h"
 
 @implementation OMNTransitionFromOrderToCalculator 
@@ -73,7 +72,7 @@
       
       toViewController.containerView.alpha = 1.0f;
       
-    } completion:^(BOOL finished) {
+    } completion:^(BOOL finished1) {
       
       [tableSuperView addSubview:fromTableView];
       fromTableView.frame = initialTableFrame;

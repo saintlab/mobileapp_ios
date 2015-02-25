@@ -12,20 +12,15 @@
 #import "OMNNavigationController.h"
 #import "OMNOrderDataSource.h"
 #import "OMNOrderTableView.h"
-#import "OMNOrderActionView.h"
-#import "OMNOrdersVC.h"
 #import "OMNOrderCalculationVC.h"
 #import "OMNPaymentFooterView.h"
 #import "OMNRatingVC.h"
-#import "OMNSelectOrderButton.h"
-#import "UIBarButtonItem+omn_custom.h"
-#import "UIImage+omn_helper.h"
 #import "UIView+frame.h"
 #import <BlocksKit+UIKit.h>
-#import <OMNStyler.h>
 #import "OMNOrderAlertManager.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNNavigationControllerDelegate.h"
+#import "OMNSelectOrderButton.h"
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -289,8 +284,8 @@ OMNPaymentFooterViewDelegate>
     @"tableFadeView" : _tableFadeView,
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:0 metrics:nil views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]" options:0 metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scrollView]|" options:kNilOptions metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[scrollView]" options:kNilOptions metrics:nil views:views]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_scrollView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_paymentView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
   
   UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipe:)];
@@ -344,7 +339,7 @@ OMNPaymentFooterViewDelegate>
   _visitor.selectedOrder = _visitor.orders[index];
   [self updateOrder];
   
-  [UIView animateWithDuration:0.3 delay:0.1 options:0 animations:^{
+  [UIView animateWithDuration:0.3 delay:0.1 options:kNilOptions animations:^{
     
     _paymentView.alpha = 1.0f;
     
@@ -352,7 +347,7 @@ OMNPaymentFooterViewDelegate>
     
   }];
   
-  [UIView animateWithDuration:0.3 delay:0.0 options:0 animations:^{
+  [UIView animateWithDuration:0.3 delay:0.0 options:kNilOptions animations:^{
     
     _paymentView.alpha = 1.0f;
     oldPaymentView.transform = CGAffineTransformInvert(transform);

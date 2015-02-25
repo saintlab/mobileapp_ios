@@ -7,9 +7,7 @@
 //
 
 #import "OMNPushPermissionVC.h"
-#import <BlocksKit+UIKit.h>
 #import "OMNAuthorization.h"
-#import "OMNToolbarButton.h"
 
 @interface OMNPushPermissionVC ()
 

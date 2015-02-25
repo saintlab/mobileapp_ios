@@ -45,7 +45,7 @@
     OMNRestaurantActionsVC *restaurantActionsVC = (OMNRestaurantActionsVC *)fromViewController;
     circleRootVC = restaurantActionsVC.r1VC;
     
-    if (NO == restaurantActionsVC.r1VC.isViewVisible) {
+    if (!restaurantActionsVC.r1VC.isViewVisible) {
 
 //      CGFloat scale = 0.1f;
 //      initialCircleTransofrm = CGAffineTransformMakeScale(scale, scale);
@@ -89,7 +89,7 @@
       toBackgroundView.alpha = 1.0f;
       toViewController.view.transform = CGAffineTransformIdentity;
       
-    } completion:^(BOOL finished) {
+    } completion:^(BOOL finished1) {
       
       toViewController.backgroundView.alpha = 1.0f;
       [bigCircleIV removeFromSuperview];

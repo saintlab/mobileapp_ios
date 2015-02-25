@@ -6,11 +6,8 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuCategory.h"
-#import "OMNMenuProductRecommendationsDelimiterCellItem.h"
-#import "OMNMenuProductsDelimiterCellItem.h"
-#import "OMNMenuProductWithRecommedtations.h"
 #import <BlocksKit.h>
+#import "OMNMenuCategory.h"
 
 @implementation OMNMenuCategory
 

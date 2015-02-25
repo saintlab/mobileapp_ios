@@ -101,6 +101,7 @@
     [self addSubview:_infoLabel];
     
     _priceButton = [UIButton omn_autolayoutView];
+    [_priceButton setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
     _priceButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
     [_priceButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
     _priceButton.titleLabel.font = FuturaLSFOmnomLERegular(15.0f);

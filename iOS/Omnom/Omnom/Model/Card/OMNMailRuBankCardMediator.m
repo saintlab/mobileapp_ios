@@ -23,12 +23,7 @@
 
 @end
 
-@implementation OMNMailRuBankCardMediator {
-  
-  dispatch_block_t _didPayBlock;
-  dispatch_block_t _didCloseBlock;
-  
-}
+@implementation OMNMailRuBankCardMediator
 
 - (void)registerCard {
   

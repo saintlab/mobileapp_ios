@@ -112,8 +112,8 @@
 
 - (long long)cachedImageSizeForUrl:(NSURL *)imageUrl {
 
-  if (NO == [_imageManager cachedImageExistsForURL:imageUrl]) {
-    return 0ul;
+  if (![_imageManager cachedImageExistsForURL:imageUrl]) {
+    return 0ll;
   }
   
   NSString *key = [_imageManager cacheKeyForURL:imageUrl];

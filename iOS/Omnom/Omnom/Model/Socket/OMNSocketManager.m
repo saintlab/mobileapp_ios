@@ -20,10 +20,11 @@ NSString * const OMNOrderDataKey = @"OMNOrderDataKey";
 NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 
 @implementation OMNSocketManager {
+
   OMNSocketIO *_io;
   Socket *_socket;
   NSString *_token;
-  NSMutableDictionary *_listners;
+
 }
 
 + (instancetype)manager {
@@ -40,7 +41,6 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   if (self) {
     
     _rooms = [NSMutableSet set];
-    _listners = [NSMutableDictionary dictionary];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resumeConnection) name:UIApplicationDidBecomeActiveNotification object:nil];
 
@@ -194,12 +194,6 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     [_socket emit:@"leave", roomId, nil];
     
   }
-  
-}
-
-- (void)connectWithToken:(NSString *)token {
-  
-  [self connectWithToken:token completion:nil];
   
 }
 

@@ -12,7 +12,7 @@
 
 + (instancetype)omn_autolayoutView {
   
-  UIView *view = [[[self class] alloc] init];
+  UIView *view = [[self alloc] init];
   view.translatesAutoresizingMaskIntoConstraints = NO;
   return view;
   

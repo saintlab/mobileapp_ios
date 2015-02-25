@@ -7,9 +7,6 @@
 //
 
 #import "OMNRestaurant.h"
-#import <AFNetworking/AFNetworking.h>
-#import "OMNOperationManager.h"
-#import "OMNAnalitics.h"
 
 NSString * const OMNRestaurantNotificationLaunchKey = @"OMNRestaurantNotificationLaunchKey";
 NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrdersDidChangeNotification";

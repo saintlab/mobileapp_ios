@@ -7,19 +7,9 @@
 //
 
 #import "OMNCLPermissionsHelpVC.h"
-#import "OMNScrollExtendView.h"
 #import "OMNUtils.h"
-#import "OMNConstants.h"
 
-@implementation OMNCLPermissionsHelpVC {
-  
-  UIView *_contentView;
-  UILabel *_label;
-  UIPageControl *_pageControl;
-  UIScrollView *_scrollView;
-  NSArray *_labelTexts;
-
-}
+@implementation OMNCLPermissionsHelpVC
 
 - (instancetype)init {
   

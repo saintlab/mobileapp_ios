@@ -7,7 +7,6 @@
 //
 
 #import "OMNOrderTansactionInfo.h"
-#import "OMNAnalitics.h"
 
 @implementation OMNOrderTansactionInfo
 

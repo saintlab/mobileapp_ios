@@ -20,7 +20,7 @@
 
 @implementation OMNModalAlertVC {
   
-  UIButton *_closeButton;;
+  UIButton *_closeButton;
   
 }
 

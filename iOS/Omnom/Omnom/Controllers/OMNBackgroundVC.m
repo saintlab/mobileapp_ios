@@ -89,7 +89,7 @@
 - (void)setBackgroundImage:(UIImage *)backgroundImage animated:(BOOL)animated {
   
   _backgroundImage = backgroundImage;
-  if (NO == self.isViewLoaded) {
+  if (!self.isViewLoaded) {
     return;
   }
   

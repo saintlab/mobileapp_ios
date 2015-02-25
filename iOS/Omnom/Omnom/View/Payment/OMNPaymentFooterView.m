@@ -165,7 +165,7 @@
 - (void)updateToPayButton {
   
   long long enteredAmountWithTips = _order.enteredAmountWithTips;
-  BOOL payButtonEnabled = (enteredAmountWithTips > 0) ? (YES) : (NO);
+  BOOL payButtonEnabled = (enteredAmountWithTips > 0);
   _payButton.enabled = payButtonEnabled;
   [UIView performWithoutAnimation:^{
     

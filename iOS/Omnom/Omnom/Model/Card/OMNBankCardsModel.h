@@ -25,7 +25,6 @@ UITableViewDelegate>
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic, strong, readonly) OMNBankCard *selectedCard;
 
-- (instancetype)init;
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock;
 - (void)updateCardSelection;
 

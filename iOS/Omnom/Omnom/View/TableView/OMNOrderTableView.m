@@ -7,7 +7,6 @@
 //
 
 #import "OMNOrderTableView.h"
-#import <OMNStyler.h>
 
 @implementation OMNOrderTableView
 

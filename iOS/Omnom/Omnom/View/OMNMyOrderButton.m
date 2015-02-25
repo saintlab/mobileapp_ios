@@ -7,7 +7,6 @@
 //
 
 #import "OMNMyOrderButton.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 #import "OMNUtils.h"

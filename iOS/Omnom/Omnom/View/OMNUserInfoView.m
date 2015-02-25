@@ -248,7 +248,7 @@
     [_emailTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NO_EMAIL", @"Вы забыли ввести e-mail")];
     hasErrors = YES;
   }
-  else if (NO == [_emailTF.textField.text omn_isValidEmail]) {
+  else if (![_emailTF.textField.text omn_isValidEmail]) {
     [_emailTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_EMAIL", @"Некорректный e-mail")];
     hasErrors = YES;
   }
@@ -257,7 +257,7 @@
     [_phoneTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NO_PHONE_NUMBER", @"Вы забыли ввести номер телефона")];
     hasErrors = YES;
   }
-  else if (NO == [_phoneTF.textField.text omn_isValidPhone]) {
+  else if (![_phoneTF.textField.text omn_isValidPhone]) {
     [_phoneTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_PHONE_NUMBER", @"Некорректный номер телефона")];
     hasErrors = YES;
   }
@@ -317,13 +317,9 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-  
-  if ([textField isEqual:_birthdayTF]) {
-    return NO;
-  }
-  
-  return YES;
-  
+
+    return [textField isEqual:_birthdayTF] ? NO : YES;
+
 }
 
 @end

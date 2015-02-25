@@ -8,11 +8,7 @@
 
 #import "OMNSearchRestaurantVC.h"
 #import "UIImage+omn_helper.h"
-#import <AFHTTPRequestOperation.h>
-#import "UINavigationController+omn_replace.h"
 #import <OMNStyler.h>
-#import "OMNAnalitics.h"
-#import "OMNSearchRestaurantMediator.h"
 
 @interface OMNSearchRestaurantVC ()
 

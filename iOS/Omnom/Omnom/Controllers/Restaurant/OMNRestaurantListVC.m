@@ -7,12 +7,10 @@
 //
 
 #import "OMNRestaurantListVC.h"
-#import "OMNMenu.h"
 #import "OMNToolbarButton.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurantCell.h"
 #import "OMNRestaurantListFeedbackCell.h"
-#import "UIView+omn_autolayout.h"
 #import "UIView+frame.h"
 #import <OMNStyler.h>
 #import "OMNRestaurant+omn_network.h"

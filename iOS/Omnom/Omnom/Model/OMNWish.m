@@ -7,7 +7,6 @@
 //
 
 #import "OMNWish.h"
-#import "OMNOperationManager.h"
 
 @implementation OMNWish
 

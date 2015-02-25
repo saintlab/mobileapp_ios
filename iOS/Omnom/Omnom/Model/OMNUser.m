@@ -134,7 +134,7 @@
   }
   
   // found match but we need to check if it matched the whole string
-  NSTextCheckingResult *result = (NSTextCheckingResult *)[matches objectAtIndex:0];
+  NSTextCheckingResult *result = (NSTextCheckingResult *) [matches firstObject];
   
   if ([result resultType] == NSTextCheckingTypePhoneNumber &&
       result.range.location == inputRange.location &&

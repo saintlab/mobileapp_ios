@@ -14,7 +14,6 @@ typedef NS_OPTIONS(NSUInteger, OMNAddBankPurpose) {
   kAddBankPurposeAll = (kAddBankPurposeRegister|kAddBankPurposePayment),
 };
 
-@protocol OMNAddBankCardVCDelegate;
 
 @interface OMNAddBankCardVC : UIViewController
 

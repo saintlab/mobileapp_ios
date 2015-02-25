@@ -44,8 +44,8 @@
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label(50)]|" options:0 metrics:nil views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-|" options:0 metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label(50)]|" options:kNilOptions metrics:nil views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-|" options:kNilOptions metrics:metrics views:views]];
   
 }
 

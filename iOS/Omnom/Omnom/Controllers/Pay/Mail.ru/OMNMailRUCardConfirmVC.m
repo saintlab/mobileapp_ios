@@ -9,19 +9,15 @@
 #import "OMNMailRUCardConfirmVC.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNBankCardInfo.h"
-#import <OMNMailRuAcquiring.h>
-#import "OMNSocketManager.h"
 #import "OMNAuthorization.h"
 #import "OMNErrorTextField.h"
 #import "OMNUtils.h"
 #import "OMNAnalitics.h"
 #import "OMNOperationManager.h"
-#import "OMNDotTextField.h"
 #import "OMNLabeledTextField.h"
 #import <OMNStyler.h>
 #import "OMNCardEnterErrorLabel.h"
 #import "UIBarButtonItem+omn_custom.h"
-#import "OMNError.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate,
@@ -142,17 +138,17 @@ TTTAttributedLabelDelegate>
     @"leftOffset" : [[OMNStyler styler] leftOffset],
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:0 metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:kNilOptions metrics:metrics views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[errorLabel]-|" options:0 metrics:metrics views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardHoldValueTF]-(leftOffset)-|" options:0 metrics:metrics views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-(leftOffset)-|" options:0 metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[errorLabel]-|" options:kNilOptions metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardHoldValueTF]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeft relatedBy:0 toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:0 toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeLeft relatedBy:kNilOptions toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:kNilOptions toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
   
-  [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:0 metrics:nil views:views]];
+  [_scrollView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:kNilOptions metrics:nil views:views]];
   
 }
 
@@ -322,7 +318,7 @@ TTTAttributedLabelDelegate>
         finalString = [finalString substringToIndex:4];
       }
       
-      if (NO == [string isEqualToString:@""]) {
+      if (![string isEqualToString:@""]) {
         NSString *component1 = [finalString substringToIndex:2];
         NSString *component2 = [finalString substringFromIndex:2];
         finalString = [NSString stringWithFormat:@"%@%@%@", component1, omnCommaString(), component2];

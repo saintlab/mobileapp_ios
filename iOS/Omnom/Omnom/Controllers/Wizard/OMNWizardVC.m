@@ -7,8 +7,6 @@
 //
 
 #import "OMNWizardVC.h"
-#import <OMNStyler.h>
-#import "UIImage+omn_helper.h"
 #import "OMNWizardPageVC.h"
 
 @interface OMNWizardVC ()
@@ -61,8 +59,8 @@
     @"imageView" : imageView,
     };
   
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|" options:0 metrics:nil views:views]];
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:0 metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[imageView]|" options:kNilOptions metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:kNilOptions metrics:nil views:views]];
   
   _imageViews[@(page)] = imageView;
   
@@ -135,7 +133,7 @@
   
   CGFloat offset = scrollView.contentOffset.x;
   CGFloat pageFloat = offset/scrollView.frame.size.width;
-  NSInteger page = floorf(pageFloat + 0.5f);
+  NSInteger currentPage = floorf(pageFloat + 0.5f);
   
   [_imageViews enumerateKeysAndObjectsUsingBlock:^(NSNumber *page, UIImageView *iv, BOOL *stop) {
     
@@ -145,21 +143,21 @@
     
   }];
   
-  if (page == _pageControl.currentPage) {
+  if (currentPage == _pageControl.currentPage) {
     return;
   }
   
-  _pageControl.currentPage = page;
+  _pageControl.currentPage = currentPage;
   
-  [self loadControllerAtIndex:page + 1];
-  [self loadControllerAtIndex:page - 1];
+  [self loadControllerAtIndex:currentPage + 1];
+  [self loadControllerAtIndex:currentPage - 1];
 
-  if (page < _viewControllers.count - 2) {
-    [self unloadControllerAtIndex:page + 2];
+  if (currentPage < _viewControllers.count - 2) {
+    [self unloadControllerAtIndex:currentPage + 2];
   }
   
-  if (page >= 2) {
-    [self unloadControllerAtIndex:page - 2];
+  if (currentPage >= 2) {
+    [self unloadControllerAtIndex:currentPage - 2];
   }
   
 }

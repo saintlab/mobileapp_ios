@@ -20,7 +20,6 @@
 #import <BlocksKit.h>
 #import "OMNPreorderConfirmCellItem.h"
 #import "OMNPreorderActionCellItem.h"
-#import "OMNMenuProductCellItem+edit.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,

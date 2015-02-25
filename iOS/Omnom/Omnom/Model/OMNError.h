@@ -11,7 +11,7 @@
 typedef NS_ENUM(NSInteger, OMNErrorCode) {
   
   kOMNErrorCodeUnknoun = -1,
-  OMNErrorDefault = 0,
+  kOMNErrorDefault = 0,
   
   kOMNErrorCodeTimedOut,
   kOMNErrorCodeNotConnectedToInternet,

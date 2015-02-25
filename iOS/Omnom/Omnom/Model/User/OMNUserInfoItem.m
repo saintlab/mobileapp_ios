@@ -7,8 +7,6 @@
 //
 
 #import "OMNUserInfoItem.h"
-#import <OMNStyler.h>
-#import "OMNConstants.h"
 
 @implementation OMNUserInfoItem
 

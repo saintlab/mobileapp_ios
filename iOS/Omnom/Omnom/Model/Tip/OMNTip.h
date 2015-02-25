@@ -17,7 +17,6 @@
 @property (nonatomic, strong, readonly) NSArray *amounts;
 @property (nonatomic, strong, readonly) NSArray *thresholds;
 
-+ (instancetype)tipWithPercent:(double)percent;
 - (instancetype)initWithJsonData:(id)jsonData thresholds:(NSArray *)thresholds;
 
 /**

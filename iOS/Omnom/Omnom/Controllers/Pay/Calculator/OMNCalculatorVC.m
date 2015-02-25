@@ -8,11 +8,7 @@
 
 #import "OMNCalculatorVC.h"
 #import "OMNSplitSelectionVC.h"
-#import <BlocksKit+UIKit.h>
-#import "OMNOrder.h"
 #import "OMNNavigationBarSelector.h"
-#import "OMNConstants.h"
-#import "UIView+frame.h"
 #import "OMNUtils.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
@@ -144,12 +140,12 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   
   SplitType splitType = kSplitTypeNone;
   
-  if ([[self.childViewControllers objectAtIndex:0] isEqual:self.firstViewController]) {
+  if ([[self.childViewControllers firstObject] isEqual:self.firstViewController]) {
     
     splitType = kSplitTypeOrders;
     
   }
-  else if ([[self.childViewControllers objectAtIndex:0] isEqual:self.secondViewController]) {
+  else if ([[self.childViewControllers firstObject] isEqual:self.secondViewController]) {
     
     splitType = kSplitTypeNumberOfGuests;
     
@@ -231,7 +227,11 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
   if ((0 == index && [self.firstViewController isEqual:self.childViewControllers.firstObject]) ||
       (1 == index && [self.secondViewController isEqual:self.childViewControllers.firstObject])) {
-    completionBlock();
+
+      if (completionBlock) {
+          completionBlock();
+      }
+
     return;
   }
   

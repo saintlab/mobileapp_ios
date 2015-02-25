@@ -15,11 +15,7 @@
 
 @end
 
-@implementation OMNLaunchOptions {
-  
-  NSDictionary *_launchQuery;
-
-}
+@implementation OMNLaunchOptions
 
 - (instancetype)init {
   self = [super init];

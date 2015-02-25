@@ -41,7 +41,7 @@ RestaurantInfoItemType typeFromString(NSString *s) {
   }
   
   
-  return [types[s] integerValue];
+  return (RestaurantInfoItemType) [types[s] integerValue];
   
 }
 

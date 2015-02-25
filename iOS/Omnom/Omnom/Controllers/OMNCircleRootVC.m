@@ -68,8 +68,8 @@
     @"fadeView" : _fadeView,
     };
   
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:0 metrics:nil views:views]];
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:0 metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:nil views:views]];
   
   return _fadeView;
 }
@@ -101,9 +101,9 @@
     
     };
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[circleButton(circleSize)]-[label]-(bottomOffset)-|" options:0 metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[circleButton(circleSize)]" options:0 metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=20)-[label]-(>=20)-|" options:0 metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[circleButton(circleSize)]-[label]-(bottomOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[circleButton(circleSize)]" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(>=20)-[label]-(>=20)-|" options:kNilOptions metrics:metrics views:views]];
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_circleButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_label attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
@@ -114,7 +114,7 @@
 - (void)setText:(NSString *)newText {
   _text = newText;
   
-  if (NO == self.isViewLoaded) {
+  if (!self.isViewLoaded) {
     return;
   }
   

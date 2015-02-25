@@ -67,13 +67,13 @@
         bigCircleIV.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
       }
       
-    } completion:^(BOOL finished) {
+    } completion:^(BOOL finished1) {
       
       [UIView animateWithDuration:OrderCircleFadeAnimationDuration animations:^{
         
         bigCircleIV.alpha = 0.0f;
         
-      } completion:^(BOOL finished) {
+      } completion:^(BOOL finished2) {
 
         fromViewController.backgroundView.alpha = 1.0f;
         fromViewController.view.hidden = NO;

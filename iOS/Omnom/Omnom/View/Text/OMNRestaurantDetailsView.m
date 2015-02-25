@@ -7,7 +7,6 @@
 //
 
 #import "OMNRestaurantDetailsView.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIButton+omn_helper.h"
 #import "OMNUtils.h"

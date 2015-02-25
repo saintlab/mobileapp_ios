@@ -15,7 +15,6 @@
 @implementation OMNMenuCategoryHeaderView {
   
   UIButton *_button;
-  BOOL _constrintsAdded;
   
 }
 

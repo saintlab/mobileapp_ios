@@ -59,7 +59,7 @@
   NSArray *items = [_items copy];
   [items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
     
-    if (NO == selectedItems ||
+    if (!selectedItems ||
         orderItem.selected) {
       total += orderItem.price_total;
     }

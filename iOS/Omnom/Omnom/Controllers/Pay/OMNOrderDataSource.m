@@ -8,10 +8,7 @@
 
 #import "OMNOrderDataSource.h"
 #import "OMNPaymentFooterView.h"
-#import "OMNOrder.h"
-#import "OMNConstants.h"
 #import "OMNOrderItemCell.h"
-#import "OMNUtils.h"
 #import "OMNGuestView.h"
 
 @interface OMNOrderDataSource ()
@@ -24,26 +21,6 @@
   
   [tableView registerClass:[OMNOrderItemCell class] forCellReuseIdentifier:@"OMNOrderItemCell"];
   [tableView registerClass:[OMNGuestView class] forHeaderFooterViewReuseIdentifier:OMNGuestViewIdentifier];
-  
-}
-
-- (OMNOrderItem *)orderItemAtIndexPath:(NSIndexPath *)indexPath {
-  
-  OMNOrderItem *orderItem = nil;
-  
-  if (indexPath.section < _order.guests.count) {
-    
-    OMNGuest *guest = _order.guests[indexPath.section];
-    
-    if (indexPath.row < guest.items.count) {
-      
-      orderItem = guest.items[indexPath.row];
-      
-    }
-    
-  }
-  
-  return orderItem;
   
 }
 
