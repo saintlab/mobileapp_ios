@@ -21,13 +21,9 @@
   
 }
 
-@synthesize hidden=_hidden;
-
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products {
   self = [super init];
   if (self) {
-    
-    self.hidden = YES;
     
     _menuProduct = menuProduct;
     _menuProductCellItem = [[OMNMenuProductCellItem alloc] initWithMenuProduct:menuProduct];
@@ -54,20 +50,14 @@
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
-  if (self.hidden) {
-    
-    return 0.0f;
-    
-  }
-  
   __block CGFloat height = [_menuProductCellItem heightForTableView:tableView];
   
   if (self.selected &&
       _menuProductCellItem.hasReccomendations) {
     
-    [_recommendations enumerateObjectsUsingBlock:^(id<OMNMenuTableCellItemProtocol> obj, NSUInteger idx, BOOL *stop) {
+    [_recommendations enumerateObjectsUsingBlock:^(id<OMNCellItemProtocol> obj, NSUInteger idx, BOOL *stop) {
       
-      if ([obj conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+      if ([obj conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
         height += [obj heightForTableView:tableView];
       }
       
@@ -150,7 +140,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   id item = [self itemAtIndexPath:indexPath];
-  if ([item conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+  if ([item conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
     
     UITableViewCell *cell = [item cellForTableView:tableView];
     if ([cell isKindOfClass:[OMNMenuProductCell class]]) {
@@ -173,7 +163,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   id item = [self itemAtIndexPath:indexPath];
-  if ([item conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+  if ([item conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
     
     return [item heightForTableView:tableView];
     

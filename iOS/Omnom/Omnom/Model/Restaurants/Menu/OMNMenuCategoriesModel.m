@@ -101,7 +101,7 @@
   
   id listItem = [self listItemAtIndexPath:indexPath];
   
-  if ([listItem conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+  if ([listItem conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
     
     UITableViewCell *cell = [listItem cellForTableView:tableView];
     
@@ -126,7 +126,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   id listItem = [self listItemAtIndexPath:indexPath];
-  if ([listItem conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+  if ([listItem conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
     
     return [listItem heightForTableView:tableView];
     

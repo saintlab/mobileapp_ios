@@ -13,8 +13,6 @@
   
 }
 
-@synthesize hidden=_hidden;
-
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
   return 40.0f;

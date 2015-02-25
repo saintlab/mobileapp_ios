@@ -17,6 +17,7 @@
 #import "UINavigationBar+omn_custom.h"
 #import "OMNLocationManager.h"
 #import <MFMailComposeViewController+BlocksKit.h>
+#import <BlocksKit.h>
 
 @interface OMNRestaurantListVC ()
 
@@ -56,13 +57,13 @@
     ];
   
   self.refreshControl = [[UIRefreshControl alloc] init];
-  [self.refreshControl addTarget:self action:@selector(refreshOrders) forControlEvents:UIControlEventValueChanged];
+  [self.refreshControl addTarget:self action:@selector(refreshRestaurants) forControlEvents:UIControlEventValueChanged];
   
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   if (0 == self.restaurants.count) {
     
-    [self refreshOrdersIfNeeded];
+    [self refreshRestaurantsIfNeeded];
     
   }
   
@@ -112,19 +113,19 @@
   
 }
 
-- (void)refreshOrdersIfNeeded {
+- (void)refreshRestaurantsIfNeeded {
   
   if (self.isViewLoaded &&
       !self.refreshControl.refreshing) {
     
     [self.refreshControl beginRefreshing];
-    [self refreshOrders];
+    [self refreshRestaurants];
     
   }
   
 }
 
-- (void)refreshOrders {
+- (void)refreshRestaurants {
   
   __weak typeof(self)weakSelf = self;
   [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
@@ -146,7 +147,11 @@
 - (void)finishLoadingRestaurants:(NSArray *)restaurants {
   
   [self.refreshControl endRefreshing];
-  self.restaurants = restaurants;
+  self.restaurants = [restaurants bk_map:^id(OMNRestaurant *obj) {
+    
+    return [[OMNRestaurantCellItem alloc] initWithRestaurant:obj];
+    
+  }];
   [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationFade];
   [self updateBottomToolbar];
   
@@ -187,10 +192,8 @@
   switch (indexPath.section) {
     case 0: {
       
-      OMNRestaurantCell *restaurantCell = [OMNRestaurantCell cellForTableView:tableView];
-      OMNRestaurant *restaurant = self.restaurants[indexPath.row];
-      restaurantCell.restaurant = restaurant;
-      cell = restaurantCell;
+      OMNRestaurantCellItem *item = self.restaurants[indexPath.row];
+      cell = [item cellForTableView:tableView];
       
     } break;
     case 1: {
@@ -209,7 +212,8 @@
   switch (indexPath.section) {
     case 0: {
       
-      heightForRow = [OMNRestaurantCell height];
+      OMNRestaurantCellItem *item = self.restaurants[indexPath.row];
+      heightForRow = [item heightForTableView:tableView];
       
     } break;
     case 1: {
@@ -230,8 +234,8 @@
   switch (indexPath.section) {
     case 0: {
 
-      OMNRestaurant *restaurant = self.restaurants[indexPath.row];
-      [_searchRestaurantMediator showCardForRestaurant:restaurant];
+      OMNRestaurantCellItem *item = self.restaurants[indexPath.row];
+      [_searchRestaurantMediator showCardForRestaurant:item.restaurant];
       
     } break;
     case 1: {
@@ -266,6 +270,8 @@
   UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   self.tableView.contentInset = insets;
   self.tableView.scrollIndicatorInsets = insets;
+  
+  [OMNRestaurantCellItem registerCellForTableView:self.tableView];
   
 }
 

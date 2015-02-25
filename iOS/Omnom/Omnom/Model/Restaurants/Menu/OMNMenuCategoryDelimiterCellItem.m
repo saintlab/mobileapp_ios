@@ -15,13 +15,10 @@
   
 }
 
-@synthesize hidden=_hidden;
-
 - (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory {
   self = [super init];
   if (self) {
     
-    self.hidden = YES;
     _menuCategory = menuCategory;
     
   }
@@ -30,10 +27,6 @@
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
-  if (self.hidden) {
-    return 0.0f;
-  }
-
   if (_calculationHeight > 0.0f) {
     return _calculationHeight;
   }

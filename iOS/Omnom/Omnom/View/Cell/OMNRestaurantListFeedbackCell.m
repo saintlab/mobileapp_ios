@@ -10,6 +10,7 @@
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
+#import "OMNUtils.h"
 
 @implementation OMNRestaurantListFeedbackCell {
   
@@ -32,7 +33,7 @@
 
 + (CGFloat)height {
   
-  return 114.0f;
+  return 140.0f;
   
 }
 
@@ -65,22 +66,9 @@
 
 - (void)configureNotFoundLabel {
   
-  NSDictionary *attributes1 =
-  @{
-    NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
-    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
-    NSParagraphStyleAttributeName : [self centerParagraphStyle],
-    };
+  NSMutableAttributedString *notFoundText = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"NOT_FOUND_RESTARANT_BUTTON_TEXT1", @"Не нашли любимое зведение?") attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:[colorWithHexString(@"000000") colorWithAlphaComponent:0.5f] textAlignment:NSTextAlignmentCenter]];
   
-  NSMutableAttributedString *notFoundText = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"NOT_FOUND_RESTARANT_BUTTON_TEXT1", @"Не нашли любимое зведение?") attributes:attributes1];
-  
-  NSDictionary *attributes2 =
-  @{
-    NSForegroundColorAttributeName : [OMNStyler blueColor],
-    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
-    NSParagraphStyleAttributeName : [self centerParagraphStyle],
-    };
-  NSMutableAttributedString *notFoundText1 = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"NOT_FOUND_RESTARANT_BUTTON_TEXT2", @"Напишите нам") attributes:attributes2];
+  NSMutableAttributedString *notFoundText1 = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"NOT_FOUND_RESTARANT_BUTTON_TEXT2", @"Напишите нам") attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:[OMNStyler blueColor] textAlignment:NSTextAlignmentCenter]];
   
   [notFoundText appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
   [notFoundText appendAttributedString:notFoundText1];
@@ -123,7 +111,7 @@
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[notFoundLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[notFoundLabel]-(15)-[mailIconImageView]" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(30)-[notFoundLabel]-(7)-[mailIconImageView]" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_mailIconImageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   
 }

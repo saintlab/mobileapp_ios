@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNMenuTableCellItemProtocol.h"
+#import "OMNCellItemProtocol.h"
 #import "OMNMenuProduct.h"
 
 @interface OMNPreorderConfirmCellItem : NSObject
-<OMNMenuTableCellItemProtocol>
+<OMNCellItemProtocol>
 
 @property (nonatomic, strong, readonly) OMNMenuProduct *menuProduct;
 

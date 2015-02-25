@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNMenuTableCellItemProtocol.h"
+#import "OMNCellItemProtocol.h"
 
 typedef NS_ENUM(NSInteger, OMNMenuProductsDelimiterType) {
   kMenuProductsDelimiterTypeNone,
@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger, OMNMenuProductsDelimiterType) {
 };
 
 @interface OMNMenuProductsDelimiterCellItem : NSObject
-<OMNMenuTableCellItemProtocol>
+<OMNCellItemProtocol>
 
 @property (nonatomic, assign) OMNMenuProductsDelimiterType type;
 @property (nonatomic, assign) BOOL selected;

@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol OMNMenuTableCellItemProtocol <NSObject>
-
-@property (nonatomic, assign) BOOL hidden;
+@protocol OMNCellItemProtocol <NSObject>
 
 - (CGFloat)heightForTableView:(UITableView *)tableView;
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView;

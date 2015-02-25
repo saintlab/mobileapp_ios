@@ -12,15 +12,6 @@
 
 @implementation OMNMenuProductsDelimiterCellItem
 
-@synthesize hidden=_hidden;
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-  }
-  return self;
-}
-
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
   return (self.selected) ? (20.0f) : (2.0f);

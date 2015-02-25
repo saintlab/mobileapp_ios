@@ -7,13 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNRestaurant.h"
+#import "OMNRestaurantCellItem.h"
 
 @interface OMNRestaurantCell : UITableViewCell
 
-@property (nonatomic, strong) OMNRestaurant *restaurant;
+@property (nonatomic, strong) OMNRestaurantCellItem *item;
 
-+ (instancetype)cellForTableView:(UITableView *)tableView;
-+ (CGFloat)height;
+@end
+
+@interface OMNRestaurantView : UIView
+
+@property (nonatomic, strong) OMNRestaurant *restaurant;
 
 @end

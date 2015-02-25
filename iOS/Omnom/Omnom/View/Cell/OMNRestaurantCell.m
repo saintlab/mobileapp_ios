@@ -12,25 +12,11 @@
 #import "UIImage+omn_helper.h"
 #import <BlocksKit.h>
 
+const CGFloat kRestaurantCellIconSize = 150.0f;
+
 @implementation OMNRestaurantCell {
   
-  UIButton *_restaurantIcon;
-  OMNRestaurantDetailsView *_restaurantDetailsView;
-  NSString *_restaurantLogoObserverIdentifier;
-  
-}
-
-- (void)dealloc {
-  
-  [self removeRestaurantLogoObserver];
-  
-}
-
-- (void)removeRestaurantLogoObserver {
-  
-  if (_restaurantLogoObserverIdentifier) {
-    [_restaurant.decoration bk_removeObserversWithIdentifier:_restaurantLogoObserverIdentifier];
-  }
+  OMNRestaurantView *_restaurantView;
   
 }
 
@@ -55,14 +41,62 @@
 
 - (void)setup {
   
+  _restaurantView = [OMNRestaurantView omn_autolayoutView];
+  [self.contentView addSubview:_restaurantView];
+  
+  NSDictionary *views =
+  @{
+    @"restaurantView" : _restaurantView,
+    };
+  
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[restaurantView]|" options:kNilOptions metrics:nil views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[restaurantView]" options:kNilOptions metrics:nil views:views]];
+  
+}
+
+- (void)setItem:(OMNRestaurantCellItem *)item {
+
+  _item = item;
+  _restaurantView.restaurant = item.restaurant;
+  
+}
+
+@end
+
+@implementation OMNRestaurantView {
+  
+  UIButton *_restaurantIcon;
+  OMNRestaurantDetailsView *_restaurantDetailsView;
+  NSString *_restaurantLogoObserverIdentifier;
+  
+}
+
+- (void)dealloc {
+  
+  [self removeRestaurantLogoObserver];
+  
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    
+    [self setup];
+    
+  }
+  return self;
+}
+
+- (void)setup {
+  
   _restaurantIcon = [UIButton omn_autolayoutView];
   _restaurantIcon.userInteractionEnabled = NO;
   _restaurantIcon.clipsToBounds = YES;
   _restaurantIcon.contentMode = UIViewContentModeScaleAspectFill;
-  [self.contentView addSubview:_restaurantIcon];
-
+  [self addSubview:_restaurantIcon];
+  
   _restaurantDetailsView = [OMNRestaurantDetailsView omn_autolayoutView];
-  [self.contentView addSubview:_restaurantDetailsView];
+  [self addSubview:_restaurantDetailsView];
   
   NSDictionary *views =
   @{
@@ -72,36 +106,25 @@
   
   NSDictionary *metrics =
   @{
+    @"kRestaurantCellIconSize" : @(kRestaurantCellIconSize)
     };
   
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_restaurantIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[restaurantDetailsView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[restaurantIcon]-(15)-[restaurantDetailsView]" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_restaurantIcon attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[restaurantDetailsView]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[restaurantIcon(kRestaurantCellIconSize)]-(15)-[restaurantDetailsView]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
-+ (instancetype)cellForTableView:(UITableView *)tableView {
+- (void)removeRestaurantLogoObserver {
   
-  static NSString *reuseIdentifier = @"OMNRestaurantCell";
-  OMNRestaurantCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-  if (nil == cell) {
-    
-    cell = [[OMNRestaurantCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:reuseIdentifier];
-    
+  if (_restaurantLogoObserverIdentifier) {
+    [_restaurant.decoration bk_removeObserversWithIdentifier:_restaurantLogoObserverIdentifier];
   }
-  
-  return cell;
-  
-}
-
-+ (CGFloat)height {
-  
-  return 268.0f;
   
 }
 
 - (void)setRestaurant:(OMNRestaurant *)restaurant {
-
+  
   [self removeRestaurantLogoObserver];
   _restaurant = restaurant;
   
@@ -110,7 +133,7 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       
-      UIImage *circleImage = [_restaurant.decoration.logo omn_circleImageWithDiametr:150.0f];
+      UIImage *circleImage = [_restaurant.decoration.logo omn_circleImageWithDiametr:kRestaurantCellIconSize];
       dispatch_async(dispatch_get_main_queue(), ^{
         
         [restaurantIcon setImage:circleImage forState:UIControlStateNormal];
@@ -120,7 +143,7 @@
     });
     
   }];
-
+  
   [_restaurant.decoration loadLogo:^(UIImage *image) {}];
   
   _restaurantDetailsView.restaurant = restaurant;

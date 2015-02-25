@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNMenuTableCellItemProtocol.h"
+#import "OMNCellItemProtocol.h"
 
 @interface OMNPreorderActionCellItem : NSObject
-<OMNMenuTableCellItemProtocol>
+<OMNCellItemProtocol>
 
 @end

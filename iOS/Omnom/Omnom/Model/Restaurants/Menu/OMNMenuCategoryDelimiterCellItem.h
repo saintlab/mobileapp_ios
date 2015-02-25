@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNMenuTableCellItemProtocol.h"
+#import "OMNCellItemProtocol.h"
 #import "OMNMenuCategory.h"
 
 @interface OMNMenuCategoryDelimiterCellItem : NSObject
-<OMNMenuTableCellItemProtocol>
+<OMNCellItemProtocol>
 
 @property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
 

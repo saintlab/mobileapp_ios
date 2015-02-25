@@ -16,8 +16,6 @@
   
 }
 
-@synthesize hidden=_hidden;
-
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct {
   self = [super init];
   if (self) {
@@ -29,10 +27,6 @@
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
-  
-  if (self.hidden) {
-    return 0.0f;
-  }
   
   if (_calculationHeight > 0.0f) {
     return _calculationHeight;

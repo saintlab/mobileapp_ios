@@ -11,8 +11,6 @@
 
 @implementation OMNPreorderActionCellItem
 
-@synthesize hidden=_hidden;
-
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
   return 140.0f;

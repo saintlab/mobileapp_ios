@@ -222,9 +222,9 @@ OMNPreorderConfirmCellDelegate>
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = nil;
   
-  id<OMNMenuTableCellItemProtocol> item = [self itemAtIndexPath:indexPath];
+  id<OMNCellItemProtocol> item = [self itemAtIndexPath:indexPath];
   
-  if ([item conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+  if ([item conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
     
     cell = [item cellForTableView:tableView];
     
@@ -247,9 +247,9 @@ OMNPreorderConfirmCellDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  id<OMNMenuTableCellItemProtocol> item = [self itemAtIndexPath:indexPath];
+  id<OMNCellItemProtocol> item = [self itemAtIndexPath:indexPath];
   
-  if ([item conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+  if ([item conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
     
     return [item heightForTableView:tableView];
     

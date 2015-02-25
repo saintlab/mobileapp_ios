@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "OMNMenuProduct.h"
 #import "OMNMenuProductCell.h"
-#import "OMNMenuTableCellItemProtocol.h"
+#import "OMNCellItemProtocol.h"
 #import "OMNMenuProductsDelimiterCellItem.h"
 
 @interface OMNMenuProductWithRecommendationsCellItem : NSObject
-<OMNMenuTableCellItemProtocol,
+<OMNCellItemProtocol,
 UITableViewDataSource,
 UITableViewDelegate>
 

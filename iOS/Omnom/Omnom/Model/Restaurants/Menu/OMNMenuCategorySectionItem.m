@@ -27,20 +27,6 @@
   return self;
 }
 
-- (void)setSelected:(BOOL)selected {
-  
-  if (_selected == selected) {
-    return;
-  }
-  _selected = selected;
-  [self.rowItems enumerateObjectsUsingBlock:^(id<OMNMenuTableCellItemProtocol> obj, NSUInteger idx, BOOL *stop) {
-    
-    [obj setHidden:!selected];
-    
-  }];
-  
-}
-
 - (NSArray *)rowItems {
   
   if (!self.selected) {
