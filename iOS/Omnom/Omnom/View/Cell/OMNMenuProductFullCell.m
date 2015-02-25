@@ -1,18 +1,46 @@
 //
-//  OMNMenuProductDetailsView.m
+//  OMNMenuProductDetailsCell.m
 //  omnom
 //
 //  Created by tea on 27.01.15.
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuProductExtendedView.h"
+#import "OMNMenuProductFullCell.h"
+#import <BlocksKit.h>
 #import "UIView+omn_autolayout.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 
-@implementation OMNMenuProductExtendedView {
+@implementation OMNMenuProductFullCell
+
+- (void)omn_setup {
+  
+  self.selectionStyle = UITableViewCellSelectionStyleNone;
+  self.contentView.clipsToBounds = YES;
+  
+  self.menuProductView = [OMNMenuProductFullView omn_autolayoutView];
+  [self.menuProductView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
+  [self.contentView addSubview:self.menuProductView];
+  
+  NSDictionary *views =
+  @{
+    @"menuProductDetailsView" : self.menuProductView,
+    };
+  
+  NSDictionary *metrics =
+  @{
+    };
+  
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuProductDetailsView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuProductDetailsView]" options:kNilOptions metrics:metrics views:views]];
+  
+}
+
+@end
+
+@implementation OMNMenuProductFullView {
   
   UILabel *_nameLabel;
   UILabel *_infoLabel;
@@ -21,16 +49,6 @@
   NSLayoutConstraint *_imageHeightConstraint;
   NSArray *_heightConstraints;
   
-}
-
-- (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
-  if (self) {
-    
-    [self omn_setup];
-    
-  }
-  return self;
 }
 
 - (void)omn_setup {
@@ -79,7 +97,7 @@
   _descriptionLabel.numberOfLines = 0;
   _descriptionLabel.font = FuturaOSFOmnomRegular(15.0f);
   [self addSubview:_descriptionLabel];
-
+  
   _compositionLabel = [UILabel omn_autolayoutView];
   _compositionLabel.opaque = YES;
   _compositionLabel.numberOfLines = 0;
@@ -111,8 +129,8 @@
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[compositionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
-//  _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
-//  [self addConstraint:_imageHeightConstraint];
+  //  _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
+  //  [self addConstraint:_imageHeightConstraint];
   
   [self updateHeightConstraints];
   
@@ -126,7 +144,9 @@
     
   }
   
-  _imageHeightConstraint.constant = (_menuProduct.photo.length) ? (150.0f) : (0.0f);
+  OMNMenuProduct *menuProduct = self.item.menuProduct;
+  
+  _imageHeightConstraint.constant = (menuProduct.hasPhoto) ? (150.0f) : (0.0f);
   
   NSDictionary *views =
   @{
@@ -141,9 +161,9 @@
   NSDictionary *metrics =
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
-    @"infoLabelOffset" : (_menuProduct.details.displayFullText.length) ? (@(2.0f)) : (@(0.0f)),
-    @"compositionLabelOffset" : (_menuProduct.details.compositionText.length) ? (@(10.0f)) : (@(0.0f)),
-    @"descriptionLabelOffset" : (_menuProduct.Description.length) ? (@(10.0f)) : (@(0.0f)),
+    @"infoLabelOffset" : (menuProduct.details.displayFullText.length) ? (@(2.0f)) : (@(0.0f)),
+    @"compositionLabelOffset" : (menuProduct.details.compositionText.length) ? (@(10.0f)) : (@(0.0f)),
+    @"descriptionLabelOffset" : (menuProduct.Description.length) ? (@(10.0f)) : (@(0.0f)),
     };
   
   _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[productIV]-(8)-[nameLabel]-(infoLabelOffset)-[infoLabel]-(10)-[priceButton]-(descriptionLabelOffset)-[descriptionLabel]-(compositionLabelOffset)-[compositionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views];
@@ -159,14 +179,15 @@
   _compositionLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   _descriptionLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
-  
+
 }
 
-- (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)setItem:(OMNMenuProductFullCellItem *)item {
   
-  _menuProduct = menuProduct;
+  _item = item;
+  OMNMenuProduct *menuProduct = item.menuProduct;
   _productIV.image = menuProduct.photoImage;
-  _priceButton.selected = (menuProduct.quantity > 0.0);
+  _priceButton.selected = menuProduct.preordered;
   _descriptionLabel.text = menuProduct.Description;
   _nameLabel.text = menuProduct.name;
   _infoLabel.text = [menuProduct.details displayFullText];

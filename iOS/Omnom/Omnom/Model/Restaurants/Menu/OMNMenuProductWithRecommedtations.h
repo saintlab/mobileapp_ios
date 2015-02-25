@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "OMNMenuCellItemProtocol.h"
 #import "OMNMenuProduct.h"
-#import "OMNMenuProductsDelimiter.h"
+#import "OMNMenuProductsDelimiterCellItem.h"
 
 @interface OMNMenuProductWithRecommedtations : NSObject
 <OMNMenuCellItemProtocol>
 
-@property (nonatomic, weak) OMNMenuProductsDelimiter *bottomDelimetr;
+@property (nonatomic, weak) OMNMenuProductsDelimiterCellItem *bottomDelimetr;
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products;
 

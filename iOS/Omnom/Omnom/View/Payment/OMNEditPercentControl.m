@@ -41,6 +41,7 @@ UITextFieldDelegate>
 
 - (BOOL)resignFirstResponder {
   
+  [super resignFirstResponder];
   BOOL result = [_percentTF resignFirstResponder];
   [UIView animateWithDuration:0.3 animations:^{
     

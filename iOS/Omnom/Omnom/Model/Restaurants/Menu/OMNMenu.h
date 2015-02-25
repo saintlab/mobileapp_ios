@@ -18,8 +18,7 @@
 
 - (instancetype)initWithJsonData:(id)data;
 - (void)resetSelection;
-- (void)deselectAllProducts;
 - (long long)total;
-- (BOOL)hasSelectedItems;
+- (BOOL)hasPreorderedItems;
 
 @end

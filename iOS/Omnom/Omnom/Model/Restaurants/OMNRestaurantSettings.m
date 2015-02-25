@@ -21,7 +21,6 @@
   if (self) {
     
     _has_menu = [jsonData[@"has_menu"] boolValue];
-    _has_menu = NO;
     _has_promo = [jsonData[@"has_promo"] boolValue];
     _has_waiter_call = [jsonData[@"has_waiter_call"] boolValue];
     _has_bar = [jsonData[@"has_bar"] boolValue];

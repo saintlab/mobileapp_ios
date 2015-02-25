@@ -102,8 +102,8 @@
 		932F5DCB1A7253E800AF86AD /* menu_stub1.json in Resources */ = {isa = PBXBuildFile; fileRef = 932F5DC91A7253E800AF86AD /* menu_stub1.json */; };
 		932F5DCE1A7256D400AF86AD /* OMNMenuProductDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DCD1A7256D400AF86AD /* OMNMenuProductDetails.m */; };
 		932F5DCF1A7256D400AF86AD /* OMNMenuProductDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DCD1A7256D400AF86AD /* OMNMenuProductDetails.m */; };
-		932F5DD21A725D5C00AF86AD /* OMNMenuProductsDelimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD11A725D5C00AF86AD /* OMNMenuProductsDelimiter.m */; };
-		932F5DD31A725D5C00AF86AD /* OMNMenuProductsDelimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD11A725D5C00AF86AD /* OMNMenuProductsDelimiter.m */; };
+		932F5DD21A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD11A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.m */; };
+		932F5DD31A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD11A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.m */; };
 		932F5DD61A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD51A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m */; };
 		932F5DD71A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD51A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m */; };
 		932F5DDA1A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD91A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m */; };
@@ -114,6 +114,14 @@
 		93363FF71A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */; };
 		9336BA301A94EB1D002C2955 /* OMNVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA2F1A94EB1D002C2955 /* OMNVisitor.m */; };
 		9336BA311A94EB1D002C2955 /* OMNVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA2F1A94EB1D002C2955 /* OMNVisitor.m */; };
+		9336BA341A95C214002C2955 /* OMNMenuCategoriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA331A95C214002C2955 /* OMNMenuCategoriesModel.m */; };
+		9336BA351A95C214002C2955 /* OMNMenuCategoriesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA331A95C214002C2955 /* OMNMenuCategoriesModel.m */; };
+		9336BA381A95ED95002C2955 /* OMNMenuCategorySectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA371A95ED95002C2955 /* OMNMenuCategorySectionItem.m */; };
+		9336BA391A95ED95002C2955 /* OMNMenuCategorySectionItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA371A95ED95002C2955 /* OMNMenuCategorySectionItem.m */; };
+		9336BA3D1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA3C1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m */; };
+		9336BA3E1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA3C1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m */; };
+		9336BA441A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA431A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m */; };
+		9336BA451A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA431A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m */; };
 		933A2E8A19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */; };
 		933A2E8B19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */; };
 		933A9E8E1A49907A001C0909 /* OMNRestaurantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9E8D1A49907A001C0909 /* OMNRestaurantCell.m */; };
@@ -303,6 +311,8 @@
 		9389456C19B5957100C37C82 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 9389456A19B5957100C37C82 /* config.json */; };
 		9389456F19B5B01600C37C82 /* OMNDisclamerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456E19B5B01600C37C82 /* OMNDisclamerView.m */; };
 		9389457019B5B01600C37C82 /* OMNDisclamerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456E19B5B01600C37C82 /* OMNDisclamerView.m */; };
+		938A4F851A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
+		938A4F861A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B92D71929EF2900476AA0 /* OMNBeaconTests.m */; };
 		938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */; };
 		938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
@@ -451,14 +461,12 @@
 		93C126881A7109010019655A /* OMNMenuCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C126861A7109010019655A /* OMNMenuCategory.m */; };
 		93C1268B1A7120980019655A /* OMNMenuCategoryDelimiterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1268A1A7120980019655A /* OMNMenuCategoryDelimiterCell.m */; };
 		93C1268C1A7120980019655A /* OMNMenuCategoryDelimiterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1268A1A7120980019655A /* OMNMenuCategoryDelimiterCell.m */; };
-		93C126901A7123550019655A /* OMNMenuCategory+cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1268F1A7123550019655A /* OMNMenuCategory+cell.m */; };
-		93C126911A7123550019655A /* OMNMenuCategory+cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1268F1A7123550019655A /* OMNMenuCategory+cell.m */; };
 		93C126941A7155BC0019655A /* OMNProductModiferAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C126931A7155BC0019655A /* OMNProductModiferAlertVC.m */; };
 		93C126951A7155BC0019655A /* OMNProductModiferAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C126931A7155BC0019655A /* OMNProductModiferAlertVC.m */; };
 		93C126981A7212500019655A /* OMNMenuProductModiferCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C126971A7212500019655A /* OMNMenuProductModiferCategory.m */; };
 		93C126991A7212500019655A /* OMNMenuProductModiferCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C126971A7212500019655A /* OMNMenuProductModiferCategory.m */; };
-		93C1269C1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1269B1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m */; };
-		93C1269D1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1269B1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m */; };
+		93C1269C1A7234A10019655A /* OMNMenuProductRecommendationsDelimiterCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1269B1A7234A10019655A /* OMNMenuProductRecommendationsDelimiterCellItem.m */; };
+		93C1269D1A7234A10019655A /* OMNMenuProductRecommendationsDelimiterCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1269B1A7234A10019655A /* OMNMenuProductRecommendationsDelimiterCellItem.m */; };
 		93C126A01A7235440019655A /* OMNMenuProductRecommendationsDelimiterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1269F1A7235440019655A /* OMNMenuProductRecommendationsDelimiterCell.m */; };
 		93C126A11A7235440019655A /* OMNMenuProductRecommendationsDelimiterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C1269F1A7235440019655A /* OMNMenuProductRecommendationsDelimiterCell.m */; };
 		93C2F8EA1A3088E3003EF669 /* OMNUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C2F8E91A3088E3003EF669 /* OMNUserInfoView.m */; };
@@ -476,28 +484,14 @@
 		93CB66D41A35FD8100C5B10E /* OMNLaunchOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */; };
 		93CB9E7B1A67EE220062112A /* OMNPushUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB9E7A1A67EE210062112A /* OMNPushUpTransition.m */; };
 		93CB9E7C1A67EE220062112A /* OMNPushUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB9E7A1A67EE210062112A /* OMNPushUpTransition.m */; };
-		93CE47801A763158002D293B /* OMNMenuProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE477F1A763158002D293B /* OMNMenuProductView.m */; };
-		93CE47811A763158002D293B /* OMNMenuProductView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE477F1A763158002D293B /* OMNMenuProductView.m */; };
 		93CE47881A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47871A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m */; };
 		93CE47891A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47871A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m */; };
-		93CE478C1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE478B1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m */; };
-		93CE478D1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE478B1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m */; };
 		93CE47901A775729002D293B /* OMNMenuProductWithRecommedtations.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE478F1A775729002D293B /* OMNMenuProductWithRecommedtations.m */; };
 		93CE47911A775729002D293B /* OMNMenuProductWithRecommedtations.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE478F1A775729002D293B /* OMNMenuProductWithRecommedtations.m */; };
-		93CE47971A775A86002D293B /* OMNMenuProduct+cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47961A775A86002D293B /* OMNMenuProduct+cell.m */; };
-		93CE47981A775A86002D293B /* OMNMenuProduct+cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47961A775A86002D293B /* OMNMenuProduct+cell.m */; };
-		93CE479B1A77647B002D293B /* OMNMenuCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE479A1A77647B002D293B /* OMNMenuCategoryModel.m */; };
-		93CE479C1A77647B002D293B /* OMNMenuCategoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE479A1A77647B002D293B /* OMNMenuCategoryModel.m */; };
 		93CE479F1A778C81002D293B /* OMNMenuProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE479E1A778C81002D293B /* OMNMenuProductVC.m */; };
 		93CE47A01A778C81002D293B /* OMNMenuProductVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE479E1A778C81002D293B /* OMNMenuProductVC.m */; };
-		93CE47AC1A77AAD3002D293B /* OMNMenuProductExtendedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47AB1A77AAD3002D293B /* OMNMenuProductExtendedView.m */; };
-		93CE47AD1A77AAD3002D293B /* OMNMenuProductExtendedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47AB1A77AAD3002D293B /* OMNMenuProductExtendedView.m */; };
-		93CE47B01A77ABC5002D293B /* OMNMenuProductExtendedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47AF1A77ABC5002D293B /* OMNMenuProductExtendedCell.m */; };
-		93CE47B11A77ABC5002D293B /* OMNMenuProductExtendedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47AF1A77ABC5002D293B /* OMNMenuProductExtendedCell.m */; };
-		93CE47B51A789A5C002D293B /* OMNMenuProductExtended.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47B41A789A5C002D293B /* OMNMenuProductExtended.m */; };
-		93CE47B61A789A5C002D293B /* OMNMenuProductExtended.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47B41A789A5C002D293B /* OMNMenuProductExtended.m */; };
-		93CE47B91A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47B81A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m */; };
-		93CE47BA1A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47B81A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m */; };
+		93CE47B01A77ABC5002D293B /* OMNMenuProductFullCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47AF1A77ABC5002D293B /* OMNMenuProductFullCell.m */; };
+		93CE47B11A77ABC5002D293B /* OMNMenuProductFullCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47AF1A77ABC5002D293B /* OMNMenuProductFullCell.m */; };
 		93CE47BD1A78A04D002D293B /* OMNCategoryNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47BC1A78A04D002D293B /* OMNCategoryNavigationView.m */; };
 		93CE47BE1A78A04D002D293B /* OMNCategoryNavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47BC1A78A04D002D293B /* OMNCategoryNavigationView.m */; };
 		93CE47C21A78B746002D293B /* OMNMenuToCategoryTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47C11A78B746002D293B /* OMNMenuToCategoryTransition.m */; };
@@ -540,6 +534,16 @@
 		93D9D8451A5306B400824AD0 /* OMNTable+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9D8431A5306B400824AD0 /* OMNTable+omn_network.m */; };
 		93D9EB231A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */; };
 		93D9EB241A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */; };
+		93DB26BC1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26BB1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m */; };
+		93DB26BD1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26BB1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m */; };
+		93DB26C01A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26BF1A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m */; };
+		93DB26C11A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26BF1A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m */; };
+		93DB26C41A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26C31A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.m */; };
+		93DB26C51A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26C31A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.m */; };
+		93DB26C81A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26C71A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m */; };
+		93DB26C91A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26C71A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m */; };
+		93DB26CD1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26CC1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m */; };
+		93DB26CE1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26CC1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m */; };
 		93DE37D01A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */; };
 		93DE37D11A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */; };
 		93DEBF561A875A2E00B46881 /* OMNMenu+wish.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEBF551A875A2E00B46881 /* OMNMenu+wish.m */; };
@@ -580,8 +584,6 @@
 		93E773721A931CB300080EAF /* OMNRestaurantActionsToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773701A931CB300080EAF /* OMNRestaurantActionsToolbar.m */; };
 		93E773751A93266600080EAF /* OMNOrderToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773741A93266600080EAF /* OMNOrderToolbarButton.m */; };
 		93E773761A93266600080EAF /* OMNOrderToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773741A93266600080EAF /* OMNOrderToolbarButton.m */; };
-		93E773AE1A94712100080EAF /* OMNMenuProduct+omn_edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773AD1A94712100080EAF /* OMNMenuProduct+omn_edit.m */; };
-		93E773AF1A94712100080EAF /* OMNMenuProduct+omn_edit.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773AD1A94712100080EAF /* OMNMenuProduct+omn_edit.m */; };
 		93E773B61A94BAF000080EAF /* OMNOrdersLoadingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773B51A94BAF000080EAF /* OMNOrdersLoadingVC.m */; };
 		93E773B71A94BAF000080EAF /* OMNOrdersLoadingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E773B51A94BAF000080EAF /* OMNOrdersLoadingVC.m */; };
 		93EDCC9519C2D296006BC364 /* OMNSocketTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 93EDCC9419C2D296006BC364 /* OMNSocketTest.m */; };
@@ -599,8 +601,6 @@
 		93F2AEDF1A6D551800CDF3D9 /* OMNMenuVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEDD1A6D551800CDF3D9 /* OMNMenuVC.m */; };
 		93F2AEE21A6E2C9F00CDF3D9 /* OMNMenuCategoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEE11A6E2C9F00CDF3D9 /* OMNMenuCategoryVC.m */; };
 		93F2AEE31A6E2C9F00CDF3D9 /* OMNMenuCategoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEE11A6E2C9F00CDF3D9 /* OMNMenuCategoryVC.m */; };
-		93F2AEE61A6E2CDA00CDF3D9 /* OMNMenuItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEE51A6E2CDA00CDF3D9 /* OMNMenuItemModel.m */; };
-		93F2AEE71A6E2CDA00CDF3D9 /* OMNMenuItemModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEE51A6E2CDA00CDF3D9 /* OMNMenuItemModel.m */; };
 		93F2AEEE1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEED1A6E31AA00CDF3D9 /* OMNMenuProductCell.m */; };
 		93F2AEEF1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEED1A6E31AA00CDF3D9 /* OMNMenuProductCell.m */; };
 		93F2AEF11A6E7FCB00CDF3D9 /* menu_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93F2AEF01A6E7FCB00CDF3D9 /* menu_stub.json */; };
@@ -740,8 +740,8 @@
 		932F5DC91A7253E800AF86AD /* menu_stub1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_stub1.json; sourceTree = "<group>"; };
 		932F5DCC1A7256D400AF86AD /* OMNMenuProductDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductDetails.h; sourceTree = "<group>"; };
 		932F5DCD1A7256D400AF86AD /* OMNMenuProductDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductDetails.m; sourceTree = "<group>"; };
-		932F5DD01A725D5C00AF86AD /* OMNMenuProductsDelimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductsDelimiter.h; sourceTree = "<group>"; };
-		932F5DD11A725D5C00AF86AD /* OMNMenuProductsDelimiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductsDelimiter.m; sourceTree = "<group>"; };
+		932F5DD01A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductsDelimiterCellItem.h; sourceTree = "<group>"; };
+		932F5DD11A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductsDelimiterCellItem.m; sourceTree = "<group>"; };
 		932F5DD41A725DF500AF86AD /* OMNMenuProductsDelimiterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductsDelimiterCell.h; sourceTree = "<group>"; };
 		932F5DD51A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductsDelimiterCell.m; sourceTree = "<group>"; };
 		932F5DD81A726E9E00AF86AD /* OMNMenuCategoryHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategoryHeaderView.h; sourceTree = "<group>"; };
@@ -752,6 +752,15 @@
 		93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTotalView.m; sourceTree = "<group>"; };
 		9336BA2E1A94EB1D002C2955 /* OMNVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNVisitor.h; sourceTree = "<group>"; };
 		9336BA2F1A94EB1D002C2955 /* OMNVisitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNVisitor.m; sourceTree = "<group>"; };
+		9336BA321A95C214002C2955 /* OMNMenuCategoriesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategoriesModel.h; sourceTree = "<group>"; };
+		9336BA331A95C214002C2955 /* OMNMenuCategoriesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuCategoriesModel.m; sourceTree = "<group>"; };
+		9336BA361A95ED95002C2955 /* OMNMenuCategorySectionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategorySectionItem.h; sourceTree = "<group>"; };
+		9336BA371A95ED95002C2955 /* OMNMenuCategorySectionItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuCategorySectionItem.m; sourceTree = "<group>"; };
+		9336BA3B1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductWithRecommendationsCellItem.h; sourceTree = "<group>"; };
+		9336BA3C1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductWithRecommendationsCellItem.m; sourceTree = "<group>"; };
+		9336BA3F1A95F774002C2955 /* OMNMenuTableCellItemProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuTableCellItemProtocol.h; sourceTree = "<group>"; };
+		9336BA421A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategoryDelimiterCellItem.h; sourceTree = "<group>"; };
+		9336BA431A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuCategoryDelimiterCellItem.m; sourceTree = "<group>"; };
 		933A2E8819861CA5000055AB /* OMNOrderToRestaurantTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderToRestaurantTransition.h; sourceTree = "<group>"; };
 		933A2E8919861CA5000055AB /* OMNOrderToRestaurantTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderToRestaurantTransition.m; sourceTree = "<group>"; };
 		933A9E8C1A49907A001C0909 /* OMNRestaurantCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantCell.h; sourceTree = "<group>"; };
@@ -939,6 +948,8 @@
 		9389456A19B5957100C37C82 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		9389456D19B5B01600C37C82 /* OMNDisclamerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDisclamerView.h; sourceTree = "<group>"; };
 		9389456E19B5B01600C37C82 /* OMNDisclamerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDisclamerView.m; sourceTree = "<group>"; };
+		938A4F831A97173E00BC2C2E /* OMNMenuProductCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductCellItem.h; sourceTree = "<group>"; };
+		938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductCellItem.m; sourceTree = "<group>"; };
 		938B92D71929EF2900476AA0 /* OMNBeaconTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconTests.m; sourceTree = "<group>"; };
 		938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDevicePositionManagerTests.m; sourceTree = "<group>"; };
 		938E54981980CCB200B38B45 /* OMNR1VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNR1VC.h; sourceTree = "<group>"; };
@@ -1087,14 +1098,12 @@
 		93C126891A7120980019655A /* OMNMenuCategoryDelimiterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategoryDelimiterCell.h; sourceTree = "<group>"; };
 		93C1268A1A7120980019655A /* OMNMenuCategoryDelimiterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuCategoryDelimiterCell.m; sourceTree = "<group>"; };
 		93C1268D1A7122DB0019655A /* OMNMenuCellItemProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNMenuCellItemProtocol.h; path = ../../../View/Cell/OMNMenuCellItemProtocol.h; sourceTree = "<group>"; };
-		93C1268E1A7123550019655A /* OMNMenuCategory+cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNMenuCategory+cell.h"; sourceTree = "<group>"; };
-		93C1268F1A7123550019655A /* OMNMenuCategory+cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNMenuCategory+cell.m"; sourceTree = "<group>"; };
 		93C126921A7155BC0019655A /* OMNProductModiferAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNProductModiferAlertVC.h; sourceTree = "<group>"; };
 		93C126931A7155BC0019655A /* OMNProductModiferAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNProductModiferAlertVC.m; sourceTree = "<group>"; };
 		93C126961A7212500019655A /* OMNMenuProductModiferCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductModiferCategory.h; sourceTree = "<group>"; };
 		93C126971A7212500019655A /* OMNMenuProductModiferCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductModiferCategory.m; sourceTree = "<group>"; };
-		93C1269A1A7234A00019655A /* OMNMenuProductRecommendationsDelimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductRecommendationsDelimiter.h; sourceTree = "<group>"; };
-		93C1269B1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductRecommendationsDelimiter.m; sourceTree = "<group>"; };
+		93C1269A1A7234A00019655A /* OMNMenuProductRecommendationsDelimiterCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductRecommendationsDelimiterCellItem.h; sourceTree = "<group>"; };
+		93C1269B1A7234A10019655A /* OMNMenuProductRecommendationsDelimiterCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductRecommendationsDelimiterCellItem.m; sourceTree = "<group>"; };
 		93C1269E1A7235440019655A /* OMNMenuProductRecommendationsDelimiterCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductRecommendationsDelimiterCell.h; sourceTree = "<group>"; };
 		93C1269F1A7235440019655A /* OMNMenuProductRecommendationsDelimiterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductRecommendationsDelimiterCell.m; sourceTree = "<group>"; };
 		93C2F8E81A3088E3003EF669 /* OMNUserInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUserInfoView.h; sourceTree = "<group>"; };
@@ -1113,29 +1122,14 @@
 		93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLaunchOptions.m; sourceTree = "<group>"; };
 		93CB9E791A67EE210062112A /* OMNPushUpTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPushUpTransition.h; sourceTree = "<group>"; };
 		93CB9E7A1A67EE210062112A /* OMNPushUpTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPushUpTransition.m; sourceTree = "<group>"; };
-		93CE477E1A763158002D293B /* OMNMenuProductView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductView.h; sourceTree = "<group>"; };
-		93CE477F1A763158002D293B /* OMNMenuProductView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductView.m; sourceTree = "<group>"; };
 		93CE47861A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductWithRecommedtationsCell.h; sourceTree = "<group>"; };
 		93CE47871A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductWithRecommedtationsCell.m; sourceTree = "<group>"; };
-		93CE478A1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductWithRecommedtationsModel.h; sourceTree = "<group>"; };
-		93CE478B1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductWithRecommedtationsModel.m; sourceTree = "<group>"; };
 		93CE478E1A775729002D293B /* OMNMenuProductWithRecommedtations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductWithRecommedtations.h; sourceTree = "<group>"; };
 		93CE478F1A775729002D293B /* OMNMenuProductWithRecommedtations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductWithRecommedtations.m; sourceTree = "<group>"; };
-		93CE47951A775A86002D293B /* OMNMenuProduct+cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNMenuProduct+cell.h"; sourceTree = "<group>"; };
-		93CE47961A775A86002D293B /* OMNMenuProduct+cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNMenuProduct+cell.m"; sourceTree = "<group>"; };
-		93CE47991A77647B002D293B /* OMNMenuCategoryModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategoryModel.h; sourceTree = "<group>"; };
-		93CE479A1A77647B002D293B /* OMNMenuCategoryModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuCategoryModel.m; sourceTree = "<group>"; };
 		93CE479D1A778C81002D293B /* OMNMenuProductVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductVC.h; sourceTree = "<group>"; };
 		93CE479E1A778C81002D293B /* OMNMenuProductVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductVC.m; sourceTree = "<group>"; };
-		93CE47AA1A77AAD3002D293B /* OMNMenuProductExtendedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductExtendedView.h; sourceTree = "<group>"; };
-		93CE47AB1A77AAD3002D293B /* OMNMenuProductExtendedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductExtendedView.m; sourceTree = "<group>"; };
-		93CE47AE1A77ABC5002D293B /* OMNMenuProductExtendedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductExtendedCell.h; sourceTree = "<group>"; };
-		93CE47AF1A77ABC5002D293B /* OMNMenuProductExtendedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductExtendedCell.m; sourceTree = "<group>"; };
-		93CE47B21A77AC01002D293B /* OMNMenuProductCellDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductCellDelegate.h; sourceTree = "<group>"; };
-		93CE47B31A789A5C002D293B /* OMNMenuProductExtended.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductExtended.h; sourceTree = "<group>"; };
-		93CE47B41A789A5C002D293B /* OMNMenuProductExtended.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductExtended.m; sourceTree = "<group>"; };
-		93CE47B71A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductExtendedWithRecommedtationsModel.h; sourceTree = "<group>"; };
-		93CE47B81A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductExtendedWithRecommedtationsModel.m; sourceTree = "<group>"; };
+		93CE47AE1A77ABC5002D293B /* OMNMenuProductFullCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductFullCell.h; sourceTree = "<group>"; };
+		93CE47AF1A77ABC5002D293B /* OMNMenuProductFullCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductFullCell.m; sourceTree = "<group>"; };
 		93CE47BB1A78A04D002D293B /* OMNCategoryNavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCategoryNavigationView.h; sourceTree = "<group>"; };
 		93CE47BC1A78A04D002D293B /* OMNCategoryNavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCategoryNavigationView.m; sourceTree = "<group>"; };
 		93CE47C01A78B746002D293B /* OMNMenuToCategoryTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuToCategoryTransition.h; sourceTree = "<group>"; };
@@ -1178,6 +1172,16 @@
 		93D9D8431A5306B400824AD0 /* OMNTable+omn_network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNTable+omn_network.m"; sourceTree = "<group>"; };
 		93D9EB211A39C9BE0000D9B5 /* OMNRestaurantSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNRestaurantSettings.h; path = ../OMNRestaurantSettings.h; sourceTree = "<group>"; };
 		93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNRestaurantSettings.m; path = ../OMNRestaurantSettings.m; sourceTree = "<group>"; };
+		93DB26BA1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNMenuProductCellItem+edit.h"; sourceTree = "<group>"; };
+		93DB26BB1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNMenuProductCellItem+edit.m"; sourceTree = "<group>"; };
+		93DB26BE1A9DAE3000DDB739 /* OMNMenuProductFullCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductFullCellItem.h; sourceTree = "<group>"; };
+		93DB26BF1A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductFullCellItem.m; sourceTree = "<group>"; };
+		93DB26C21A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductFullWithRecommendationsCellItem.h; sourceTree = "<group>"; };
+		93DB26C31A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductFullWithRecommendationsCellItem.m; sourceTree = "<group>"; };
+		93DB26C61A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPreorderConfirmCellItem.h; sourceTree = "<group>"; };
+		93DB26C71A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderConfirmCellItem.m; sourceTree = "<group>"; };
+		93DB26CB1A9DBC5300DDB739 /* OMNPreorderActionCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPreorderActionCellItem.h; sourceTree = "<group>"; };
+		93DB26CC1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderActionCellItem.m; sourceTree = "<group>"; };
 		93DE37CE1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEnterHashAlertVC.h; sourceTree = "<group>"; };
 		93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEnterHashAlertVC.m; sourceTree = "<group>"; };
 		93DEBF541A875A2E00B46881 /* OMNMenu+wish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNMenu+wish.h"; sourceTree = "<group>"; };
@@ -1218,8 +1222,6 @@
 		93E773701A931CB300080EAF /* OMNRestaurantActionsToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantActionsToolbar.m; sourceTree = "<group>"; };
 		93E773731A93266600080EAF /* OMNOrderToolbarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderToolbarButton.h; sourceTree = "<group>"; };
 		93E773741A93266600080EAF /* OMNOrderToolbarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderToolbarButton.m; sourceTree = "<group>"; };
-		93E773AC1A94712100080EAF /* OMNMenuProduct+omn_edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNMenuProduct+omn_edit.h"; sourceTree = "<group>"; };
-		93E773AD1A94712100080EAF /* OMNMenuProduct+omn_edit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNMenuProduct+omn_edit.m"; sourceTree = "<group>"; };
 		93E773B41A94BAF000080EAF /* OMNOrdersLoadingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrdersLoadingVC.h; sourceTree = "<group>"; };
 		93E773B51A94BAF000080EAF /* OMNOrdersLoadingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrdersLoadingVC.m; sourceTree = "<group>"; };
 		93EDCC9419C2D296006BC364 /* OMNSocketTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSocketTest.m; sourceTree = "<group>"; };
@@ -1234,8 +1236,6 @@
 		93F2AEDD1A6D551800CDF3D9 /* OMNMenuVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuVC.m; sourceTree = "<group>"; };
 		93F2AEE01A6E2C9F00CDF3D9 /* OMNMenuCategoryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategoryVC.h; sourceTree = "<group>"; };
 		93F2AEE11A6E2C9F00CDF3D9 /* OMNMenuCategoryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuCategoryVC.m; sourceTree = "<group>"; };
-		93F2AEE41A6E2CDA00CDF3D9 /* OMNMenuItemModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuItemModel.h; sourceTree = "<group>"; };
-		93F2AEE51A6E2CDA00CDF3D9 /* OMNMenuItemModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuItemModel.m; sourceTree = "<group>"; };
 		93F2AEEC1A6E31AA00CDF3D9 /* OMNMenuProductCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductCell.h; sourceTree = "<group>"; };
 		93F2AEED1A6E31AA00CDF3D9 /* OMNMenuProductCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductCell.m; sourceTree = "<group>"; };
 		93F2AEF01A6E7FCB00CDF3D9 /* menu_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_stub.json; sourceTree = "<group>"; };
@@ -1659,6 +1659,49 @@
 			path = Sound;
 			sourceTree = "<group>";
 		};
+		9336BA3A1A95EE69002C2955 /* MenuTable */ = {
+			isa = PBXGroup;
+			children = (
+				9336BA321A95C214002C2955 /* OMNMenuCategoriesModel.h */,
+				9336BA331A95C214002C2955 /* OMNMenuCategoriesModel.m */,
+				9336BA411A95FFA4002C2955 /* Header */,
+				9336BA401A95FF9F002C2955 /* Cell */,
+			);
+			name = MenuTable;
+			sourceTree = "<group>";
+		};
+		9336BA401A95FF9F002C2955 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				9336BA3F1A95F774002C2955 /* OMNMenuTableCellItemProtocol.h */,
+				93C1269A1A7234A00019655A /* OMNMenuProductRecommendationsDelimiterCellItem.h */,
+				93C1269B1A7234A10019655A /* OMNMenuProductRecommendationsDelimiterCellItem.m */,
+				9336BA421A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.h */,
+				9336BA431A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m */,
+				938A4F831A97173E00BC2C2E /* OMNMenuProductCellItem.h */,
+				938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */,
+				93DB26CA1A9DBC3C00DDB739 /* preorder */,
+				93DB26BA1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.h */,
+				93DB26BB1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m */,
+				93DB26BE1A9DAE3000DDB739 /* OMNMenuProductFullCellItem.h */,
+				93DB26BF1A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m */,
+				9336BA3B1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.h */,
+				9336BA3C1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m */,
+				93DB26C21A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.h */,
+				93DB26C31A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		9336BA411A95FFA4002C2955 /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				9336BA361A95ED95002C2955 /* OMNMenuCategorySectionItem.h */,
+				9336BA371A95ED95002C2955 /* OMNMenuCategorySectionItem.m */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
 		933A9E8B1A499064001C0909 /* Restaurant */ = {
 			isa = PBXGroup;
 			children = (
@@ -1841,8 +1884,6 @@
 			children = (
 				935FF1621A6D3ED0004B69A6 /* OMNMenuModel.h */,
 				935FF1631A6D3ED0004B69A6 /* OMNMenuModel.m */,
-				93F2AEE41A6E2CDA00CDF3D9 /* OMNMenuItemModel.h */,
-				93F2AEE51A6E2CDA00CDF3D9 /* OMNMenuItemModel.m */,
 			);
 			path = Menu;
 			sourceTree = "<group>";
@@ -1863,8 +1904,6 @@
 				932F5DD51A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m */,
 				932F5DD81A726E9E00AF86AD /* OMNMenuCategoryHeaderView.h */,
 				932F5DD91A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m */,
-				93CE47861A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.h */,
-				93CE47871A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m */,
 				93CE47BB1A78A04D002D293B /* OMNCategoryNavigationView.h */,
 				93CE47BC1A78A04D002D293B /* OMNCategoryNavigationView.m */,
 			);
@@ -2138,6 +2177,7 @@
 		938E8F3E192F3A200088EF38 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
+				9336BA3A1A95EE69002C2955 /* MenuTable */,
 				938E8F3F192F3A200088EF38 /* OMNMenu.h */,
 				938E8F40192F3A200088EF38 /* OMNMenu.m */,
 				93DEBF541A875A2E00B46881 /* OMNMenu+wish.h */,
@@ -2426,12 +2466,6 @@
 			children = (
 				93CE478E1A775729002D293B /* OMNMenuProductWithRecommedtations.h */,
 				93CE478F1A775729002D293B /* OMNMenuProductWithRecommedtations.m */,
-				93C1269A1A7234A00019655A /* OMNMenuProductRecommendationsDelimiter.h */,
-				93C1269B1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m */,
-				93CE478A1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.h */,
-				93CE478B1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m */,
-				93CE47B71A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.h */,
-				93CE47B81A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m */,
 			);
 			name = Recommedtations;
 			sourceTree = "<group>";
@@ -2441,20 +2475,14 @@
 			children = (
 				938E8F41192F3A200088EF38 /* OMNMenuProduct.h */,
 				938E8F42192F3A200088EF38 /* OMNMenuProduct.m */,
-				93CE47951A775A86002D293B /* OMNMenuProduct+cell.h */,
-				93CE47961A775A86002D293B /* OMNMenuProduct+cell.m */,
 				932F5DCC1A7256D400AF86AD /* OMNMenuProductDetails.h */,
 				932F5DCD1A7256D400AF86AD /* OMNMenuProductDetails.m */,
-				932F5DD01A725D5C00AF86AD /* OMNMenuProductsDelimiter.h */,
-				932F5DD11A725D5C00AF86AD /* OMNMenuProductsDelimiter.m */,
+				932F5DD01A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.h */,
+				932F5DD11A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.m */,
 				93C126961A7212500019655A /* OMNMenuProductModiferCategory.h */,
 				93C126971A7212500019655A /* OMNMenuProductModiferCategory.m */,
-				93CE47B31A789A5C002D293B /* OMNMenuProductExtended.h */,
-				93CE47B41A789A5C002D293B /* OMNMenuProductExtended.m */,
 				9373254A1A7F9EBF00A73673 /* OMNMenuModifer.h */,
 				9373254B1A7F9EBF00A73673 /* OMNMenuModifer.m */,
-				93E773AC1A94712100080EAF /* OMNMenuProduct+omn_edit.h */,
-				93E773AD1A94712100080EAF /* OMNMenuProduct+omn_edit.m */,
 			);
 			name = MenuProduct;
 			sourceTree = "<group>";
@@ -2464,10 +2492,6 @@
 			children = (
 				93C126851A7109010019655A /* OMNMenuCategory.h */,
 				93C126861A7109010019655A /* OMNMenuCategory.m */,
-				93C1268E1A7123550019655A /* OMNMenuCategory+cell.h */,
-				93C1268F1A7123550019655A /* OMNMenuCategory+cell.m */,
-				93CE47991A77647B002D293B /* OMNMenuCategoryModel.h */,
-				93CE479A1A77647B002D293B /* OMNMenuCategoryModel.m */,
 			);
 			name = MenuCategory;
 			sourceTree = "<group>";
@@ -2477,13 +2501,10 @@
 			children = (
 				93F2AEEC1A6E31AA00CDF3D9 /* OMNMenuProductCell.h */,
 				93F2AEED1A6E31AA00CDF3D9 /* OMNMenuProductCell.m */,
-				93CE477E1A763158002D293B /* OMNMenuProductView.h */,
-				93CE477F1A763158002D293B /* OMNMenuProductView.m */,
-				93CE47AA1A77AAD3002D293B /* OMNMenuProductExtendedView.h */,
-				93CE47AB1A77AAD3002D293B /* OMNMenuProductExtendedView.m */,
-				93CE47AE1A77ABC5002D293B /* OMNMenuProductExtendedCell.h */,
-				93CE47AF1A77ABC5002D293B /* OMNMenuProductExtendedCell.m */,
-				93CE47B21A77AC01002D293B /* OMNMenuProductCellDelegate.h */,
+				93CE47AE1A77ABC5002D293B /* OMNMenuProductFullCell.h */,
+				93CE47AF1A77ABC5002D293B /* OMNMenuProductFullCell.m */,
+				93CE47861A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.h */,
+				93CE47871A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m */,
 			);
 			name = MenuProduct;
 			sourceTree = "<group>";
@@ -2567,6 +2588,17 @@
 				933A9EA51A4BC657001C0909 /* OMNRestaurantScheduleDay.m */,
 			);
 			path = Restaurant;
+			sourceTree = "<group>";
+		};
+		93DB26CA1A9DBC3C00DDB739 /* preorder */ = {
+			isa = PBXGroup;
+			children = (
+				93DB26CB1A9DBC5300DDB739 /* OMNPreorderActionCellItem.h */,
+				93DB26CC1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m */,
+				93DB26C61A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.h */,
+				93DB26C71A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m */,
+			);
+			name = preorder;
 			sourceTree = "<group>";
 		};
 		93E29976197CD23B00051B04 /* Start */ = {
@@ -2984,7 +3016,9 @@
 				938E8F64192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				9391F66A1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */,
 				93B65E651A6956C90061F1B1 /* OMNModalWebVC.m in Sources */,
+				9336BA341A95C214002C2955 /* OMNMenuCategoriesModel.m in Sources */,
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
+				9336BA3D1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m in Sources */,
 				93750B21196BF40F0031AD31 /* OMNScanQRCodeVC.m in Sources */,
 				938EE0D61A317F1400508039 /* OMNCameraRollPermission.m in Sources */,
 				938E8F58192F3A200088EF38 /* OMNMenu.m in Sources */,
@@ -3019,8 +3053,9 @@
 				933D48ED19E7A09E004E591C /* OMNGuest.m in Sources */,
 				93E58CAC1A245604008064F9 /* OMNCameraPermission.m in Sources */,
 				938E8F5E192F3A200088EF38 /* OMNTip.m in Sources */,
-				93C1269C1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m in Sources */,
+				93C1269C1A7234A10019655A /* OMNMenuProductRecommendationsDelimiterCellItem.m in Sources */,
 				934CDF5019D4078900D73FC4 /* OMNLabelCell.m in Sources */,
+				93DB26BC1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m in Sources */,
 				93F2AEEE1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */,
 				935A1E2A1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */,
 				9373254C1A7F9EBF00A73673 /* OMNMenuModifer.m in Sources */,
@@ -3048,6 +3083,7 @@
 				93D117811A2F0766000131C4 /* OMNTableUserInfoItem.m in Sources */,
 				9336BA301A94EB1D002C2955 /* OMNVisitor.m in Sources */,
 				938E8F5B192F3A200088EF38 /* OMNRestaurant.m in Sources */,
+				93DB26C41A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.m in Sources */,
 				93245DB61A1C60520065D4EC /* OMNMailRuBankCardMediator.m in Sources */,
 				932F5DDA1A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m in Sources */,
 				939F992419752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
@@ -3059,9 +3095,7 @@
 				935FF1641A6D3ED0004B69A6 /* OMNMenuModel.m in Sources */,
 				93E299A2197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */,
 				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
-				93CE47801A763158002D293B /* OMNMenuProductView.m in Sources */,
 				9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */,
-				93CE479B1A77647B002D293B /* OMNMenuCategoryModel.m in Sources */,
 				93B368B219A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
 				930FF3781A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m in Sources */,
 				93175DC419C6BEFE005EE4C6 /* TQStarRatingView.m in Sources */,
@@ -3076,6 +3110,7 @@
 				938E8F5D192F3A200088EF38 /* OMNCalculationAmount.m in Sources */,
 				93CE479F1A778C81002D293B /* OMNMenuProductVC.m in Sources */,
 				93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */,
+				93DB26CD1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */,
 				9345AFD1199BB3C700328F73 /* OMNPaymentNotificationControl.m in Sources */,
 				932118261962E12700183729 /* OMNRestaurantListVC.m in Sources */,
 				932118321962E35C00183729 /* OMNTransitionFromListToProduct.m in Sources */,
@@ -3102,7 +3137,6 @@
 				9345AFB7199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */,
 				9390D2D1196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
 				93C126941A7155BC0019655A /* OMNProductModiferAlertVC.m in Sources */,
-				93CE478C1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m in Sources */,
 				935FF1551A6D1054004B69A6 /* OMNMyOrderConfirmVC.m in Sources */,
 				93E773B61A94BAF000080EAF /* OMNOrdersLoadingVC.m in Sources */,
 				939F992E19752CFC0051822E /* OMNEnterCodeView.m in Sources */,
@@ -3116,6 +3150,7 @@
 				932F5DCE1A7256D400AF86AD /* OMNMenuProductDetails.m in Sources */,
 				9321181A1962DF7C00183729 /* OMNProduct.m in Sources */,
 				939F991819752BE90051822E /* OMNEditTableVC.m in Sources */,
+				9336BA381A95ED95002C2955 /* OMNMenuCategorySectionItem.m in Sources */,
 				93D4ABD61A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */,
 				939F991419752BE90051822E /* OMNBankCardsVC.m in Sources */,
 				9325BA511A1E1FAB003557BD /* NSString+omn_json.m in Sources */,
@@ -3160,8 +3195,7 @@
 				93D1178D1A2F2C56000131C4 /* OMNEditUserVC.m in Sources */,
 				937822A01963E65F00CE6661 /* OMNOrderViewCell.m in Sources */,
 				933A9EA61A4BC657001C0909 /* OMNRestaurantScheduleDay.m in Sources */,
-				93C126901A7123550019655A /* OMNMenuCategory+cell.m in Sources */,
-				932F5DD21A725D5C00AF86AD /* OMNMenuProductsDelimiter.m in Sources */,
+				932F5DD21A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.m in Sources */,
 				93D104191A59856A00BC2E12 /* OMNScanTableQRCodeVC.m in Sources */,
 				93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */,
 				93BA9BC91A8C5C0E00717FF9 /* OMNLineNumberLogFormatter.m in Sources */,
@@ -3176,23 +3210,21 @@
 				93D9D8441A5306B400824AD0 /* OMNTable+omn_network.m in Sources */,
 				930555031935DA7C00E6F4EC /* OMNOrderDataSource.m in Sources */,
 				939F991019752BE90051822E /* OMNAddBankCardVC.m in Sources */,
-				93E773AE1A94712100080EAF /* OMNMenuProduct+omn_edit.m in Sources */,
 				93F21B9019B6031B00D5F78A /* OMNLightBackgroundButton.m in Sources */,
-				93F2AEE61A6E2CDA00CDF3D9 /* OMNMenuItemModel.m in Sources */,
 				93535F12198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m in Sources */,
+				9336BA441A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m in Sources */,
 				93676DFD18D1E4FC00FC55F1 /* GAppDelegate.m in Sources */,
 				937E0B5F18F04EC20058A249 /* OMNConstants.m in Sources */,
 				939689BE195C010900AAAF9C /* OMNWizardPageVC.m in Sources */,
+				93DB26C01A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m in Sources */,
 				93EE3084198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				938EE0DE1A31A75100508039 /* OMNUserIconView.m in Sources */,
 				930C481419CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				933A9E8E1A49907A001C0909 /* OMNRestaurantCell.m in Sources */,
 				934CDF5419D4196D00D73FC4 /* OMNBottomLabelView.m in Sources */,
-				93CE47971A775A86002D293B /* OMNMenuProduct+cell.m in Sources */,
 				938E8F56192F3A200088EF38 /* OMNAcquiring.m in Sources */,
 				93750B28196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */,
 				93D117741A2ED3C7000131C4 /* OMNUserInfoSection.m in Sources */,
-				93CE47AC1A77AAD3002D293B /* OMNMenuProductExtendedView.m in Sources */,
 				93F2AEE21A6E2C9F00CDF3D9 /* OMNMenuCategoryVC.m in Sources */,
 				937A37371980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				93E435B31998CA6400EDC488 /* OMNRestaurantInfoVC.m in Sources */,
@@ -3217,6 +3249,7 @@
 				938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */,
 				93CB66CF1A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */,
 				93B65E611A6941510061F1B1 /* OMNChangeTableAlertVC.m in Sources */,
+				938A4F851A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */,
 				93CA085819AA33D100615F43 /* UITableView+screenshot.m in Sources */,
 				93CE47881A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m in Sources */,
 				937822881963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
@@ -3233,25 +3266,24 @@
 				932A67C11A63D0E70052F0E4 /* OMNNoOrdersAlertVC.m in Sources */,
 				9317C07019DE922B0071E42B /* UIButton+omn_helper.m in Sources */,
 				939689B2195BD76E00AAAF9C /* OMNWizardVC.m in Sources */,
-				93CE47B91A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m in Sources */,
 				9345AFB3199A291C00328F73 /* OMNBankCardUserInfoItem.m in Sources */,
 				93B3689619A3376100B6E6CB /* OMNResetPasswordVC.m in Sources */,
 				93BA9BC51A8C5AA400717FF9 /* OMNRestaurantToMenuTransition.m in Sources */,
 				9389456F19B5B01600C37C82 /* OMNDisclamerView.m in Sources */,
+				93DB26C81A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m in Sources */,
 				93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				937325501A7FAC5300A73673 /* OMNMenuProductModifersModel.m in Sources */,
 				9328F3981988C6360065DC58 /* OMNSocketManager.m in Sources */,
 				93D1177D1A2F0401000131C4 /* OMNUserInfoHeaderView.m in Sources */,
 				936E71F119921B5C008FF864 /* OMNErrorTextField.m in Sources */,
 				936BAD9619A77F5E0029873B /* OMNNavigationController.m in Sources */,
-				93CE47B51A789A5C002D293B /* OMNMenuProductExtended.m in Sources */,
 				933A9EAE1A4C0915001C0909 /* OMNRestaurantDetailsView.m in Sources */,
 				9389456019B0620D00C37C82 /* OMNPushTexts.m in Sources */,
 				93E4856F1A49136700DCDB0F /* OMNUserInfoCell.m in Sources */,
 				931456B8193CA84D003E2CD6 /* OMNTipButton.m in Sources */,
 				933A9EA21A4BC61D001C0909 /* OMNRestaurantSchedule.m in Sources */,
 				9342AD2A1A5ACD5500CDE7ED /* OMNRestaurant+omn_payment.m in Sources */,
-				93CE47B01A77ABC5002D293B /* OMNMenuProductExtendedCell.m in Sources */,
+				93CE47B01A77ABC5002D293B /* OMNMenuProductFullCell.m in Sources */,
 				935D8C9C1A38693B00877C02 /* OMNError.m in Sources */,
 				933D48F119E7BFD4004E591C /* OMNGuestView.m in Sources */,
 			);
@@ -3262,7 +3294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9307A6E019D53F7E00101B81 /* OMNLabeledTextField.m in Sources */,
-				93CE47B11A77ABC5002D293B /* OMNMenuProductExtendedCell.m in Sources */,
+				93CE47B11A77ABC5002D293B /* OMNMenuProductFullCell.m in Sources */,
 				93B3688F19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */,
 				939F994219752D680051822E /* OMNBankCardsModel.m in Sources */,
 				9390D2D2196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
@@ -3295,15 +3327,15 @@
 				93F2AF001A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */,
 				932F5DD71A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m in Sources */,
 				93CA085919AA33D100615F43 /* UITableView+screenshot.m in Sources */,
+				938A4F861A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,
 				935FF16A1A6D4092004B69A6 /* OMNMenuHeaderItemCell.m in Sources */,
 				93CB66D01A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */,
 				9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */,
-				93CE47AD1A77AAD3002D293B /* OMNMenuProductExtendedView.m in Sources */,
 				93C1268C1A7120980019655A /* OMNMenuCategoryDelimiterCell.m in Sources */,
 				93D1177E1A2F0401000131C4 /* OMNUserInfoHeaderView.m in Sources */,
 				9345AFB4199A291C00328F73 /* OMNBankCardUserInfoItem.m in Sources */,
-				93C1269D1A7234A10019655A /* OMNMenuProductRecommendationsDelimiter.m in Sources */,
+				93C1269D1A7234A10019655A /* OMNMenuProductRecommendationsDelimiterCellItem.m in Sources */,
 				93B3689319A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */,
 				93B3689719A3376100B6E6CB /* OMNResetPasswordVC.m in Sources */,
 				93B9048E19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
@@ -3327,7 +3359,6 @@
 				934EB93E1A0B716B00E5CB53 /* OMNSelectOrderButton.m in Sources */,
 				934CDF5119D4078900D73FC4 /* OMNLabelCell.m in Sources */,
 				93B90495196550F4007D21C4 /* OMNRatingModel.m in Sources */,
-				93CE47BA1A789B2C002D293B /* OMNMenuProductExtendedWithRecommedtationsModel.m in Sources */,
 				935A1E3A1A8238B700704086 /* NSData+omn_deviceToken.m in Sources */,
 				933A9EA31A4BC61D001C0909 /* OMNRestaurantSchedule.m in Sources */,
 				93CE47CB1A78C9A4002D293B /* OMNMyOrderButton.m in Sources */,
@@ -3342,7 +3373,6 @@
 				93E58CAD1A245604008064F9 /* OMNCameraPermission.m in Sources */,
 				93E58CBA1A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */,
 				93CE47BE1A78A04D002D293B /* OMNCategoryNavigationView.m in Sources */,
-				93C126911A7123550019655A /* OMNMenuCategory+cell.m in Sources */,
 				937EF7F019DFB47300BD9090 /* OMNCardEnterErrorLabel.m in Sources */,
 				933A9EB31A4C33DA001C0909 /* OMNBottomTextButton.m in Sources */,
 				93B368B519A708C600B6E6CB /* OMNDemoStandWaiterTests.m in Sources */,
@@ -3350,6 +3380,7 @@
 				939F992719752BE90051822E /* OMNRegisterUserVC.m in Sources */,
 				93535F00198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
 				93BA9BCA1A8C5C0E00717FF9 /* OMNLineNumberLogFormatter.m in Sources */,
+				9336BA3E1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m in Sources */,
 				938EE0D71A317F1400508039 /* OMNCameraRollPermission.m in Sources */,
 				93E299A3197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */,
 				93998C1619ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */,
@@ -3360,7 +3391,9 @@
 				93E4856C1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */,
 				937A37381980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				9345AFB8199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */,
+				93DB26C91A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m in Sources */,
 				93E29998197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
+				93DB26BD1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m in Sources */,
 				93CE47C31A78B746002D293B /* OMNMenuToCategoryTransition.m in Sources */,
 				9373254D1A7F9EBF00A73673 /* OMNMenuModifer.m in Sources */,
 				938EE0DF1A31A75100508039 /* OMNUserIconView.m in Sources */,
@@ -3369,7 +3402,6 @@
 				935FF16E1A6D4290004B69A6 /* OMNMenuItemCell.m in Sources */,
 				935D8C9D1A38693B00877C02 /* OMNError.m in Sources */,
 				934CDF5519D4196D00D73FC4 /* OMNBottomLabelView.m in Sources */,
-				93F2AEE71A6E2CDA00CDF3D9 /* OMNMenuItemModel.m in Sources */,
 				937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */,
 				937822891963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
 				9328F3991988C6360065DC58 /* OMNSocketManager.m in Sources */,
@@ -3380,12 +3412,13 @@
 				93F2AEFB1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */,
 				93B9049919655168007D21C4 /* OMNRatingProductCell.m in Sources */,
 				9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */,
-				932F5DD31A725D5C00AF86AD /* OMNMenuProductsDelimiter.m in Sources */,
+				932F5DD31A725D5C00AF86AD /* OMNMenuProductsDelimiterCellItem.m in Sources */,
 				93245DB71A1C60520065D4EC /* OMNMailRuBankCardMediator.m in Sources */,
 				93BE2F5B1A63C43000FB2211 /* OMNNoOrdersVC.m in Sources */,
 				933D48F619E7DFA7004E591C /* OMNOrderActionView.m in Sources */,
 				93B65E621A6941510061F1B1 /* OMNChangeTableAlertVC.m in Sources */,
 				9391F6671A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */,
+				93DB26C51A9DB1E600DDB739 /* OMNMenuProductFullWithRecommendationsCellItem.m in Sources */,
 				93D1178A1A2F20BA000131C4 /* OMNLogoutUserInfoItem.m in Sources */,
 				93363FF71A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */,
 				933A2E8B19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */,
@@ -3420,6 +3453,7 @@
 				937C3E761A2859C9006525A9 /* OMNUser+network.m in Sources */,
 				935A1E2F1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */,
 				937A37831981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
+				93DB26C11A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m in Sources */,
 				93E6ED981A84838100FB890C /* OMNTableButton.m in Sources */,
 				933A9EAB1A4C0851001C0909 /* OMNRestaurantCardVC.m in Sources */,
 				93B368B319A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
@@ -3431,12 +3465,11 @@
 				933A9EAF1A4C0915001C0909 /* OMNRestaurantDetailsView.m in Sources */,
 				935A1E361A81D5D100704086 /* OMNClearButton.m in Sources */,
 				9342AD2B1A5ACD5500CDE7ED /* OMNRestaurant+omn_payment.m in Sources */,
-				93CE47981A775A86002D293B /* OMNMenuProduct+cell.m in Sources */,
 				93CE7CA51A62AAEF0032D96B /* OMNRestaurantMediatorTests.m in Sources */,
+				93DB26CE1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */,
 				93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */,
 				933A9EBB1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
-				93CE479C1A77647B002D293B /* OMNMenuCategoryModel.m in Sources */,
 				93CE47A01A778C81002D293B /* OMNMenuProductVC.m in Sources */,
 				93E2998A197CE0FD00051B04 /* OMNSearchRestaurantsVC.m in Sources */,
 				933A9EB71A4C46BC001C0909 /* UIView+omn_autolayout.m in Sources */,
@@ -3446,6 +3479,7 @@
 				932118171962DA2800183729 /* OMNStubProductCell.m in Sources */,
 				939DA163195405650063AB23 /* OMNAuthorizationVC.m in Sources */,
 				93B9048119653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */,
+				9336BA351A95C214002C2955 /* OMNMenuCategoriesModel.m in Sources */,
 				93B9047819652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */,
 				93BA9BC61A8C5AA400717FF9 /* OMNRestaurantToMenuTransition.m in Sources */,
 				933D48EE19E7A09E004E591C /* OMNGuest.m in Sources */,
@@ -3457,11 +3491,8 @@
 				935FF1601A6D2BA3004B69A6 /* OMNPreorderDoneVC.m in Sources */,
 				9389456119B0620D00C37C82 /* OMNPushTexts.m in Sources */,
 				93F2AEE31A6E2C9F00CDF3D9 /* OMNMenuCategoryVC.m in Sources */,
-				93CE47B61A789A5C002D293B /* OMNMenuProductExtended.m in Sources */,
-				93E773AF1A94712100080EAF /* OMNMenuProduct+omn_edit.m in Sources */,
 				932872C319AC5E1A00FF8B0E /* OMNRestaurantTests.m in Sources */,
 				93D34DB119D2689800B7BDBE /* NSString+omnScanner.m in Sources */,
-				93CE478D1A77530A002D293B /* OMNMenuProductWithRecommedtationsModel.m in Sources */,
 				93E773721A931CB300080EAF /* OMNRestaurantActionsToolbar.m in Sources */,
 				939F994C197544820051822E /* OMNUserInfoModel.m in Sources */,
 				935FF14D1A6CE751004B69A6 /* OMNPreorderConfirmCell.m in Sources */,
@@ -3469,10 +3500,11 @@
 				93DE37D11A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */,
 				935D8C831A3807F400877C02 /* OMNCameraRollPermissionDescriptionVC.m in Sources */,
 				93C126881A7109010019655A /* OMNMenuCategory.m in Sources */,
+				9336BA451A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m in Sources */,
 				939F994019752D680051822E /* OMNBankCard.m in Sources */,
-				93CE47811A763158002D293B /* OMNMenuProductView.m in Sources */,
 				93E29970197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
 				9351677219BFF7460071DA57 /* OMNImageManager.m in Sources */,
+				9336BA391A95ED95002C2955 /* OMNMenuCategorySectionItem.m in Sources */,
 				939F992119752BE90051822E /* OMNLoginVC.m in Sources */,
 				93CE47891A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m in Sources */,
 				931B2DF319BC710C0071883C /* OMNOrder+network.m in Sources */,

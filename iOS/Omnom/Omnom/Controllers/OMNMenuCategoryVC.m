@@ -9,11 +9,11 @@
 #import "OMNMenuCategoryVC.h"
 #import <OMNStyler.h>
 #import "OMNMenuProductVC.h"
-#import "OMNMenuCategoryModel.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNMenuHeaderLabel.h"
-#import "OMNMenuProduct+omn_edit.h"
+#import "OMNMenuCategoriesModel.h"
+#import "OMNMenuProductCellItem+edit.h"
 
 @interface OMNMenuCategoryVC ()
 <OMNMenuProductWithRecommedtationsCellDelegate>
@@ -22,8 +22,9 @@
 
 @implementation OMNMenuCategoryVC {
   
-  OMNMenuCategoryModel *_model;
+  OMNMenuCategoriesModel *_model;
   OMNRestaurantMediator *_restaurantMediator;
+  __weak OMNMenuProductWithRecommendationsCellItem *_selectedItem;
   
 }
 
@@ -33,7 +34,7 @@
     
     _menuCategory = menuCategory;
     _restaurantMediator = restaurantMediator;
-    _model = [[OMNMenuCategoryModel alloc] initWithMenuCategory:menuCategory delegate:self];
+    _model = [[OMNMenuCategoriesModel alloc] initWithMenu:_restaurantMediator.menu delegate:self];
     
   }
   return self;
@@ -78,7 +79,7 @@
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   [self.view addSubview:_tableView];
 
-  [OMNMenuCategoryModel registerCellsForTableView:_tableView];
+  [OMNMenuCategoriesModel registerCellsForTableView:_tableView];
   
   UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   _tableView.contentInset = insets;
@@ -112,9 +113,9 @@
 
 #pragma mark - OMNMenuProductWithRecommedtationsCellDelegate
 
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectItem:(OMNMenuProductCellItem *)item {
   
-  OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMediator:_restaurantMediator menuProduct:menuProduct products:_menuCategory.allProducts];
+  OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMediator:_restaurantMediator menuProduct:item.menuProduct products:_menuCategory.allProducts];
   __weak typeof(self)weakSelf = self;
   menuProductVC.didCloseBlock = ^{
     
@@ -125,7 +126,7 @@
   
 }
 
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editItem:(OMNMenuProductCellItem *)item {
   
   __weak typeof(self)weakSelf = self;
   NSIndexPath *indexPath = [_tableView indexPathForCell:menuProductWithRecommedtationsCell];
@@ -133,23 +134,25 @@
     [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
   }
   
-  [menuProduct editMenuProductFromController:self withCompletion:^{
+  [item editMenuProductFromController:self withCompletion:^{
     
-    if ([menuProductWithRecommedtationsCell.model.menuProduct isEqual:menuProduct]) {
-      
-      [weakSelf updateTableViewWithSelectedItems:menuProduct andScrollToCell:menuProductWithRecommedtationsCell];
-      
+    if ([menuProductWithRecommedtationsCell.item.menuProduct isEqual:item.menuProduct]) {
+      [weakSelf updateTableViewWithSelectedItem:menuProductWithRecommedtationsCell.item andScrollToCell:menuProductWithRecommedtationsCell];
     }
-
+    
   }];
   
 }
 
-- (void)updateTableViewWithSelectedItems:(OMNMenuProduct *)menuProduct andScrollToCell:(UITableViewCell *)cell {
+- (void)updateTableViewWithSelectedItem:(OMNMenuProductWithRecommendationsCellItem *)item andScrollToCell:(UITableViewCell *)cell {
   
-  [_restaurantMediator.menu deselectAllProducts];
-  menuProduct.selected = (menuProduct.quantity > 0.0);
-  
+  if ([_selectedItem isEqual:item]) {
+    return;
+  }
+
+  _selectedItem.selected = NO;
+  _selectedItem = item;
+  _selectedItem.selected = YES;
   NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
   [_tableView beginUpdates];
   [_tableView endUpdates];

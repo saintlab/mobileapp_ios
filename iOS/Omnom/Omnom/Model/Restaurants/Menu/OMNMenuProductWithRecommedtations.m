@@ -7,17 +7,14 @@
 //
 
 #import "OMNMenuProductWithRecommedtations.h"
-#import "OMNMenuProductView.h"
 #import "OMNMenuProductWithRecommedtationsCell.h"
-#import "OMNMenuProductWithRecommedtationsModel.h"
 #import <BlocksKit.h>
 #import <OMNStyler.h>
-#import "OMNMenuProduct+cell.h"
 
 @implementation OMNMenuProductWithRecommedtations {
   
   OMNMenuProduct *_menuProduct;
-  OMNMenuProductWithRecommedtationsModel *_model;
+//  OMNMenuProductWithRecommedtationsModel *_model;
   NSString *_selectedObserverID;
   
 }
@@ -41,7 +38,7 @@
       [weakSelf updateBottomDelimiter];
       
     }];
-    _model = [[OMNMenuProductWithRecommedtationsModel alloc] initWithMenuProduct:menuProduct products:products];
+//    _model = [[OMNMenuProductWithRecommedtationsModel alloc] initWithMenuProduct:menuProduct products:products];
     
   }
   return self;
@@ -49,11 +46,11 @@
 
 - (void)updateBottomDelimiter {
   
-  self.bottomDelimetr.type = _menuProduct.bottomDelimiterType;
+//  self.bottomDelimetr.type = _menuProduct.bottomDelimiterType;
   
 }
 
-- (void)setBottomDelimetr:(OMNMenuProductsDelimiter *)bottomDelimetr {
+- (void)setBottomDelimetr:(OMNMenuProductsDelimiterCellItem *)bottomDelimetr {
   
   _bottomDelimetr = bottomDelimetr;
   [self updateBottomDelimiter];
@@ -61,15 +58,14 @@
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
-  
-  return [_model totalHeightForTableView:tableView];
+  return 0.0f;
+//  return [_model totalHeightForTableView:tableView];
   
 }
 
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   OMNMenuProductWithRecommedtationsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuProductWithRecommedtationsCell class])];
-  cell.model = _model;
   return cell;
   
 }

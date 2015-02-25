@@ -86,23 +86,28 @@
   
   CGFloat height = 1.0f;
   UIColor *backgroundColor = nil;
-  switch (_menuProductsDelimiter.type) {
-    case kMenuProductsDelimiterTypeNone: {
-      
-      backgroundColor = [UIColor clearColor];
-      
-    } break;
-    case kMenuProductsDelimiterTypeGray: {
-      
-      backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
-      
-    } break;
-    case kMenuProductsDelimiterTypeRecommendations: {
-      
-      backgroundColor = colorWithHexString(@"F5A623");
-      height = 2.0f;
-      
-    } break;
+  
+  if (_menuProductsDelimiter.selected) {
+    
+    backgroundColor = colorWithHexString(@"F5A623");
+    height = 2.0f;
+
+  }
+  else {
+    
+    switch (_menuProductsDelimiter.type) {
+      case kMenuProductsDelimiterTypeNone: {
+        
+        backgroundColor = [UIColor clearColor];
+        
+      } break;
+      case kMenuProductsDelimiterTypeGray: {
+        
+        backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
+        
+      } break;
+    }
+    
   }
   
   _line.backgroundColor = backgroundColor;
@@ -110,12 +115,12 @@
   
 }
 
-- (void)setMenuProductsDelimiter:(OMNMenuProductsDelimiter *)menuProductsDelimiter {
+- (void)setMenuProductsDelimiter:(OMNMenuProductsDelimiterCellItem *)menuProductsDelimiter {
   
   [self removeMenuProductsDelimiterColorObserver];
   _menuProductsDelimiter = menuProductsDelimiter;
   __weak typeof(self)weakSelf = self;
-  _menuProductsDelimiterColorObserverID = [_menuProductsDelimiter bk_addObserverForKeyPath:NSStringFromSelector(@selector(type)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+  _menuProductsDelimiterColorObserverID = [_menuProductsDelimiter bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
     [weakSelf updateLineView];
     

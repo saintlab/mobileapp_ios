@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "OMNMenuProduct.h"
+#import "OMNPreorderConfirmCellItem.h"
 
 @protocol OMNPreorderConfirmCellDelegate;
 
 @interface OMNPreorderConfirmCell : UITableViewCell
 
-@property (nonatomic, strong) OMNMenuProduct *menuProduct;
+@property (nonatomic, strong) OMNPreorderConfirmCellItem *item;
 @property (nonatomic, weak) id<OMNPreorderConfirmCellDelegate> delegate;
 
 @end
@@ -27,6 +28,6 @@
 
 @protocol OMNPreorderConfirmCellDelegate <NSObject>
 
-- (void)preorderConfirmCell:(OMNPreorderConfirmCell *)preorderConfirmCell didEditMenuProduct:(OMNMenuProduct *)menuProduct;
+- (void)preorderConfirmCellDidEdit:(OMNPreorderConfirmCell *)preorderConfirmCell;
 
 @end

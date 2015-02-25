@@ -52,21 +52,11 @@
   
 }
 
-- (void)deselectAllProducts {
-  
-  [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
-    
-    menuProduct.selected = NO;
-    
-  }];
-  
-}
-
-- (BOOL)hasSelectedItems {
+- (BOOL)hasPreorderedItems {
   
   return [self.products bk_any:^BOOL(id key, OMNMenuProduct *menuProduct) {
     
-    return (menuProduct.quantity > 0.0);
+    return (menuProduct.preordered);
     
   }];
   

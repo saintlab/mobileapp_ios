@@ -7,16 +7,12 @@
 //
 
 #import "OMNMenuCategory.h"
-#import "OMNMenuProductRecommendationsDelimiter.h"
-#import "OMNMenuProductsDelimiter.h"
+#import "OMNMenuProductRecommendationsDelimiterCellItem.h"
+#import "OMNMenuProductsDelimiterCellItem.h"
 #import "OMNMenuProductWithRecommedtations.h"
 #import <BlocksKit.h>
 
-@implementation OMNMenuCategory {
-  
-  NSMutableArray *_listItems;
-  
-}
+@implementation OMNMenuCategory
 
 - (instancetype)initWithJsonData:(id)jsonData menuProducts:(__weak NSDictionary *)menuProducts level:(NSInteger)level {
   self = [super init];
@@ -43,51 +39,6 @@
     
   }
   return self;
-}
-
-- (NSArray *)listItems {
-  
-  if (_listItems) {
-    return _listItems;
-  }
-  
-  NSMutableArray *listItems = [NSMutableArray array];
-  
-  if (self.level > 1) {
-    
-    [listItems addObject:self];
-    
-  }
-  
-  [self.products enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    
-    OMNMenuProduct *product = _allProducts[obj];
-    OMNMenuProductWithRecommedtations *menuProductWithRecommedtations = [[OMNMenuProductWithRecommedtations alloc] initWithMenuProduct:product products:_allProducts];
-    [listItems addObject:menuProductWithRecommedtations];
-
-    if (idx < self.products.count - 1) {
-      
-      OMNMenuProductsDelimiter *menuProductsDelimiter = [[OMNMenuProductsDelimiter alloc] init];
-      menuProductWithRecommedtations.bottomDelimetr = menuProductsDelimiter;
-      [listItems addObject:menuProductsDelimiter];
-      
-    }
-    
-  }];
-
-  if (self.level > 0) {
-    
-    [self.children enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
-      
-      [listItems addObjectsFromArray:menuCategory.listItems];
-      
-    }];
-
-  }
-  
-  _listItems = listItems;
-  return listItems;
-  
 }
 
 - (NSString *)description {

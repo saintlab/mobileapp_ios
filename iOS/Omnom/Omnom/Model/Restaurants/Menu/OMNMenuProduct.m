@@ -38,6 +38,12 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   return self;
 }
 
+- (BOOL)hasPhoto {
+  
+  return (self.photo.length > 0);
+  
+}
+
 - (BOOL)hasRecommendations {
   
   return (self.recommendations.count > 0);
@@ -65,7 +71,7 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
 
 - (void)loadImage {
   
-  if (0 == self.photo.length) {
+  if (!self.hasPhoto) {
     return;
   }
   
@@ -82,9 +88,14 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   
 }
 
+- (BOOL)preordered {
+  
+  return (_quantity > 0.0);
+  
+}
+
 - (void)resetSelection {
   
-  _selected = NO;
   self.quantity = 0.0;
   [self.selectedModifers removeAllObjects];
   

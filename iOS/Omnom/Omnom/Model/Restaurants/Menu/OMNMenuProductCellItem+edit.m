@@ -1,20 +1,20 @@
 //
-//  OMNMenuProduct+omn_edit.m
+//  OMNMenuProductCellItem+edit.m
 //  omnom
 //
-//  Created by tea on 18.02.15.
+//  Created by tea on 24.02.15.
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuProduct+omn_edit.h"
+#import "OMNMenuProductCellItem+edit.h"
 #import "OMNProductModiferAlertVC.h"
 
-@implementation OMNMenuProduct (omn_edit)
+@implementation OMNMenuProductCellItem (edit)
 
 - (void)editMenuProductFromController:(__weak UIViewController *)viewController withCompletion:(dispatch_block_t)completionBlock {
   
   self.editing = YES;
-  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:self];
+  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:self.menuProduct];
   __weak typeof(self)weakSelf = self;
   productModiferAlertVC.didCloseBlock = ^{
     

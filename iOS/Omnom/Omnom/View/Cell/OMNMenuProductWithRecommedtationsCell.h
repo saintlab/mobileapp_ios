@@ -7,20 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OMNMenuProductWithRecommedtationsModel.h"
+#import "OMNMenuProductWithRecommendationsCellItem.h"
 
 @protocol OMNMenuProductWithRecommedtationsCellDelegate;
 
 @interface OMNMenuProductWithRecommedtationsCell : UITableViewCell
 
 @property (nonatomic, weak) id<OMNMenuProductWithRecommedtationsCellDelegate> delegate;
-@property (nonatomic, strong) OMNMenuProductWithRecommedtationsModel *model;
+@property (nonatomic, strong) OMNMenuProductWithRecommendationsCellItem *item;
 
 @end
 
 @protocol OMNMenuProductWithRecommedtationsCellDelegate <NSObject>
 
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectMenuProduct:(OMNMenuProduct *)menuProduct;
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editMenuProduct:(OMNMenuProduct *)menuProduct;
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectItem:(OMNMenuProductCellItem *)item;
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editItem:(OMNMenuProductCellItem *)item;
 
 @end

@@ -10,10 +10,12 @@
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
 #import "OMNConstants.h"
+#import "OMNMenuCategorySectionItem.h"
 
 @implementation OMNMenuCategoryHeaderView {
   
-  UILabel *_label;
+  UIButton *_button;
+  BOOL _constrintsAdded;
   
 }
 
@@ -36,33 +38,41 @@
 - (void)omn_setup {
   
   self.backgroundView = [[UIView alloc] init];
-  self.backgroundView.backgroundColor = [OMNStyler toolbarColor];
+  self.backgroundView.backgroundColor = [UIColor clearColor];
   
-  _label = [UILabel omn_autolayoutView];
-  _label.textColor = colorWithHexString(@"7B7B7B");
-  _label.textAlignment = NSTextAlignmentCenter;
-  _label.font = FuturaLSFOmnomLERegular(17.0f);
-  _label.adjustsFontSizeToFitWidth = YES;
-  [self addSubview:_label];
-
+  _button = [UIButton omn_autolayoutView];
+  [_button addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
+  [_button setTitleColor:colorWithHexString(@"7B7B7B") forState:UIControlStateNormal];
+  _button.titleLabel.textAlignment = NSTextAlignmentCenter;
+  _button.backgroundColor = [OMNStyler toolbarColor];
+  _button.titleLabel.font = FuturaLSFOmnomLERegular(17.0f);
+  [self addSubview:_button];
+  
   NSDictionary *views =
   @{
-    @"label" : _label,
+    @"button" : _button,
     };
   
   NSDictionary *metrics =
   @{
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[label]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(1@999)-[button]-(1@999)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(2@999)-[button]-(2@999)-|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
-- (void)setMenuCategory:(OMNMenuCategory *)menuCategory {
+- (void)buttonTap {
   
-  _menuCategory = menuCategory;
-  _label.text = menuCategory.name;
+  [self.delegate menuCategoryHeaderViewDidSelect:self];
+  
+}
+
+- (void)setMenuCategorySectionItem:(OMNMenuCategorySectionItem *)menuCategorySectionItem {
+  
+  _menuCategorySectionItem = menuCategorySectionItem;
+  _button.titleLabel.font = FuturaLSFOmnomLERegular((0 == menuCategorySectionItem.menuCategory.level) ? (17.0f) : (13.0f));
+  [_button setTitle:menuCategorySectionItem.menuCategory.name forState:UIControlStateNormal];
   
 }
 

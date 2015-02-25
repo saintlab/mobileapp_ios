@@ -63,14 +63,14 @@
 
 - (void)priceTap {
   
-  [self.delegate preorderConfirmCell:self didEditMenuProduct:_menuProduct];
+  [self.delegate preorderConfirmCellDidEdit:self];
   
 }
 
-- (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)setItem:(OMNPreorderConfirmCellItem *)item {
   
-  _menuProduct = menuProduct;
-  _preorderConfirmView.menuProduct = menuProduct;
+  _item = item;
+  _preorderConfirmView.menuProduct = item.menuProduct;
   
 }
 

@@ -6,11 +6,13 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuProductsDelimiter.h"
+#import "OMNMenuProductsDelimiterCellItem.h"
 #import "OMNMenuProductsDelimiterCell.h"
 #import <OMNStyler.h>
 
-@implementation OMNMenuProductsDelimiter
+@implementation OMNMenuProductsDelimiterCellItem
+
+@synthesize hidden=_hidden;
 
 - (instancetype)init {
   self = [super init];
@@ -21,19 +23,7 @@
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
-  CGFloat height = 2.0f;
-  switch (self.type) {
-    case kMenuProductsDelimiterTypeNone: {
-      
-    } break;
-    case kMenuProductsDelimiterTypeGray: {
-      
-    } break;
-    case kMenuProductsDelimiterTypeRecommendations: {
-      height = 20.0f;
-    } break;
-  }
-  return height;
+  return (self.selected) ? (20.0f) : (2.0f);
   
 }
 

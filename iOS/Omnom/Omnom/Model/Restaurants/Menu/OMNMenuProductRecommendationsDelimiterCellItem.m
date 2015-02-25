@@ -6,12 +6,14 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNMenuProductRecommendationsDelimiter.h"
+#import "OMNMenuProductRecommendationsDelimiterCellItem.h"
 #import "OMNMenuProductRecommendationsDelimiterCell.h"
 
-@implementation OMNMenuProductRecommendationsDelimiter {
+@implementation OMNMenuProductRecommendationsDelimiterCellItem {
   
 }
+
+@synthesize hidden=_hidden;
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   

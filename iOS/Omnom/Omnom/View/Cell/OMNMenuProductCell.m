@@ -9,14 +9,16 @@
 #import "OMNMenuProductCell.h"
 #import <BlocksKit.h>
 #import "UIView+omn_autolayout.h"
-#import "OMNMenuProductView.h"
+#import "OMNConstants.h"
+#import <OMNStyler.h>
+#import "OMNUtils.h"
+#import "UIImage+omn_helper.h"
 
 @implementation OMNMenuProductCell {
   
   NSString *_productSelectionObserverID;
   NSString *_productImageObserverID;
   NSString *_productEditingObserverID;
-  OMNMenuProductView *_menuProductView;
   
 }
 
@@ -29,13 +31,13 @@
 - (void)removeMenuProductObservers {
   
   if (_productSelectionObserverID) {
-    [_menuProduct bk_removeObserversWithIdentifier:_productSelectionObserverID];
+    [_item.menuProduct bk_removeObserversWithIdentifier:_productSelectionObserverID];
   }
   if (_productImageObserverID) {
-    [_menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
+    [_item.menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
   }
   if (_productEditingObserverID) {
-    [_menuProduct bk_removeObserversWithIdentifier:_productEditingObserverID];
+    [_item.menuProduct bk_removeObserversWithIdentifier:_productEditingObserverID];
   }
   
 }
@@ -69,6 +71,7 @@
   [_menuProductView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
   [self.contentView addSubview:_menuProductView];
   
+  
   NSDictionary *views =
   @{
     @"menuProductView" : _menuProductView,
@@ -81,25 +84,25 @@
   
 }
 
-- (void)setMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)setItem:(OMNMenuProductCellItem *)item {
   
   [self removeMenuProductObservers];
   
-  _menuProduct = menuProduct;
-  _menuProductView.menuProduct = menuProduct;
+  _item = item;
+  _menuProductView.item = item;
 
   __weak OMNMenuProductView *menuProductView = _menuProductView;
-  _productSelectionObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+  _productSelectionObserverID = [_item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
    
     [UIView transitionWithView:menuProductView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
-      menuProductView.priceButton.selected = (mp.quantity > 0.0);
+      menuProductView.priceButton.selected = mp.preordered;
       
     } completion:nil];
     
   }];
-  
-  _productEditingObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(editing)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+
+  _productEditingObserverID = [_item bk_addObserverForKeyPath:NSStringFromSelector(@selector(editing)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProductCellItem *mp, NSDictionary *change) {
     
     [UIView transitionWithView:menuProductView.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
@@ -109,7 +112,7 @@
     
   }];
   
-  _productImageObserverID = [_menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+  _productImageObserverID = [_item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
 
     [UIView transitionWithView:menuProductView.productIV duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
@@ -119,13 +122,203 @@
     
   }];
   
-  [_menuProduct loadImage];
+  [_item.menuProduct loadImage];
   
 }
 
 - (void)priceTap {
   
-  [self.delegate menuProductCell:self editProduct:_menuProduct];
+  [self.delegate menuProductCellDidEdit:self];
+  
+}
+
+@end
+
+@implementation OMNMenuProductView {
+  
+  UILabel *_nameLabel;
+  UILabel *_infoLabel;
+  UILabel *_descriptionLabel;
+  UIView *_descriptionView;
+  NSLayoutConstraint *_imageHeightConstraint;
+  NSLayoutConstraint *_descriptionHeightConstraint;
+  NSArray *_heightConstraints;
+  UIView *_delimiterView;
+
+}
+
+@synthesize item = _item;
+@synthesize priceButton = _priceButton;
+@synthesize productIV = _productIV;
+
+- (instancetype)initWithFrame:(CGRect)frame {
+  self = [super initWithFrame:frame];
+  if (self) {
+    
+    [self omn_setup];
+    
+  }
+  return self;
+}
+
+- (void)omn_setup {
+  
+  self.translatesAutoresizingMaskIntoConstraints = NO;
+  
+  UIColor *backgroundColor = [UIColor whiteColor];
+  
+  self.opaque = YES;
+  self.backgroundColor = backgroundColor;
+  
+  _nameLabel = [UILabel omn_autolayoutView];
+  _nameLabel.opaque = YES;
+  _nameLabel.backgroundColor = backgroundColor;
+  _nameLabel.numberOfLines = 0;
+  _nameLabel.textAlignment = NSTextAlignmentCenter;
+  _nameLabel.textColor = colorWithHexString(@"000000");
+  _nameLabel.font = FuturaLSFOmnomLERegular(20.0f);
+  [self addSubview:_nameLabel];
+  
+  _infoLabel = [UILabel omn_autolayoutView];
+  _infoLabel.opaque = YES;
+  _infoLabel.backgroundColor = backgroundColor;
+  _infoLabel.textAlignment = NSTextAlignmentCenter;
+  _infoLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
+  _infoLabel.font = FuturaLSFOmnomLERegular(12.0f);
+  [self addSubview:_infoLabel];
+  
+  _priceButton = [OMNMenuProductPriceButton omn_autolayoutView];
+  [self addSubview:_priceButton];
+  
+  _productIV = [UIImageView omn_autolayoutView];
+  _productIV.backgroundColor = backgroundColor;
+  _productIV.opaque = YES;
+  _productIV.contentMode = UIViewContentModeScaleAspectFill;
+  _productIV.clipsToBounds = YES;
+  [self addSubview:_productIV];
+  
+  _descriptionView = [UIView omn_autolayoutView];
+  [self addSubview:_descriptionView];
+  
+  _descriptionLabel = [UILabel omn_autolayoutView];
+  [_descriptionLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
+  _descriptionLabel.opaque = YES;
+  _descriptionLabel.backgroundColor = backgroundColor;
+  _descriptionLabel.textAlignment = NSTextAlignmentCenter;
+  _descriptionLabel.textColor = colorWithHexString(@"000000");
+  _descriptionLabel.numberOfLines = 0;
+  _descriptionLabel.font = FuturaOSFOmnomRegular(15.0f);
+  [_descriptionView addSubview:_descriptionLabel];
+  
+  UILabel *moreLabel = [UILabel omn_autolayoutView];
+  moreLabel.opaque = YES;
+  moreLabel.backgroundColor = backgroundColor;
+  moreLabel.textAlignment = NSTextAlignmentCenter;
+  moreLabel.textColor = [OMNStyler blueColor];
+  [moreLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+  moreLabel.numberOfLines = 0;
+  moreLabel.font = FuturaOSFOmnomRegular(15.0f);
+  moreLabel.text = NSLocalizedString(@"eще", @"eще");
+  [_descriptionView addSubview:moreLabel];
+  
+  _delimiterView = [UIView omn_autolayoutView];
+  [self addSubview:_delimiterView];
+  
+  NSDictionary *views =
+  @{
+    @"descriptionView" : _descriptionView,
+    @"descriptionLabel" : _descriptionLabel,
+    @"moreLabel" : moreLabel,
+    @"nameLabel" : _nameLabel,
+    @"infoLabel" : _infoLabel,
+    @"priceButton" : _priceButton,
+    @"productIV" : _productIV,
+    @"delimiterView" : _delimiterView,
+    };
+  
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : [OMNStyler styler].leftOffset,
+    };
+  
+  [_descriptionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[descriptionLabel][moreLabel]|" options:kNilOptions metrics:metrics views:views]];
+  [_descriptionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[descriptionLabel]|" options:kNilOptions metrics:metrics views:views]];
+  [_descriptionView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[moreLabel]|" options:kNilOptions metrics:metrics views:views]];
+  
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_descriptionView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_descriptionView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self attribute:NSLayoutAttributeWidth multiplier:1.0f constant:-2*[OMNStyler styler].leftOffset.floatValue]];
+  
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[productIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[delimiterView]|" options:kNilOptions metrics:metrics views:views]];
+
+  _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
+  [self addConstraint:_imageHeightConstraint];
+  
+}
+
+- (void)layoutSubviews {
+  
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  _nameLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
+  _infoLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
+  [super layoutSubviews];
+  
+}
+
+- (void)updateHeightConstraints {
+  
+  if (_heightConstraints) {
+    
+    [self removeConstraints:_heightConstraints];
+    
+  }
+  
+  BOOL hasPhoto = _item.menuProduct.hasPhoto;
+  
+  _imageHeightConstraint.constant = (hasPhoto) ? (110.0f) : (0.0f);
+  
+  NSDictionary *views =
+  @{
+    @"nameLabel" : _nameLabel,
+    @"infoLabel" : _infoLabel,
+    @"priceButton" : _priceButton,
+    @"productIV" : _productIV,
+    @"descriptionLabel" : _descriptionLabel,
+    @"descriptionView" : _descriptionView,
+    @"delimiterView" : _delimiterView,
+    };
+  
+  OMNMenuProduct *menuProduct = _item.menuProduct;
+  NSDictionary *metrics =
+  @{
+    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"imageOffset" : (hasPhoto) ? (@(8.0f)) : (@(0.0f)),
+    @"infoLabelOffset" : (menuProduct.details.displayText.length) ? (@(8.0f)) : (@(0.0f)),
+    @"descriptionLabelOffset" : (menuProduct.Description.length) ? (@(10.0f)) : (@(0.0f)),
+    @"descriptionViewHeight" : (menuProduct.Description.length) ? (@(25.0f)) : (@(0.0f)),
+    };
+  
+  _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(8)-[nameLabel]-(imageOffset)-[productIV]-(descriptionLabelOffset)-[descriptionView(<=descriptionViewHeight)]-(infoLabelOffset)-[infoLabel]-(8)-[priceButton]-(leftOffset)-[delimiterView(1)]|" options:kNilOptions metrics:metrics views:views];
+  [self addConstraints:_heightConstraints];
+  
+}
+
+- (void)setItem:(OMNMenuProductCellItem *)item {
+  
+  _item = item;
+  OMNMenuProduct *menuProduct = item.menuProduct;
+  _descriptionLabel.text = [menuProduct.Description stringByAppendingString:@"..."];
+  _productIV.image = menuProduct.photoImage;
+  _priceButton.selected = menuProduct.preordered;
+  _nameLabel.text = menuProduct.name;
+  _infoLabel.text = [menuProduct.details displayText];
+  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProduct.price] forState:UIControlStateNormal];
+  _delimiterView.backgroundColor = (kBottomDelimiterTypeNone == item.delimiterType) ? ([UIColor clearColor]) : ([UIColor colorWithWhite:0.0f alpha:0.3f]);
+
+  [self updateHeightConstraints];
   
 }
 

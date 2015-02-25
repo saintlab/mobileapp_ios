@@ -51,6 +51,7 @@ const long long kMaxEnteredValue = 999999ll;
 
 - (BOOL)resignFirstResponder {
   
+  [super resignFirstResponder];
   BOOL result = [_amountTF resignFirstResponder];
   [self sendActionsForControlEvents:UIControlEventEditingDidEnd];
   return result;

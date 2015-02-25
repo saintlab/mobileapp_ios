@@ -7,10 +7,10 @@
 //
 
 #import "OMNMenuProductVC.h"
-#import "OMNMenuProductExtendedWithRecommedtationsModel.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
-#import "OMNMenuProduct+omn_edit.h"
+#import "OMNMenuProductFullWithRecommendationsCellItem.h"
+#import "OMNMenuProductCellItem+edit.h"
 
 @interface OMNMenuProductVC ()
 <OMNMenuProductCellDelegate>
@@ -20,7 +20,7 @@
 @implementation OMNMenuProductVC {
   
   OMNMenuProduct *_menuProduct;
-  OMNMenuProductExtendedWithRecommedtationsModel *_model;
+  OMNMenuProductFullWithRecommendationsCellItem *_menuProductFullWithRecommendations;
   OMNRestaurantMediator *_restaurantMediator;
   
 }
@@ -31,7 +31,7 @@
     
     _menuProduct = menuProduct;
     _restaurantMediator = restaurantMediator;
-    _model = [[OMNMenuProductExtendedWithRecommedtationsModel alloc] initWithMenuProduct:menuProduct products:products];
+    _menuProductFullWithRecommendations = [[OMNMenuProductFullWithRecommendationsCellItem alloc] initWithMenuProduct:menuProduct products:products];
     
   }
   return self;
@@ -43,16 +43,16 @@
   
   self.view.backgroundColor = [UIColor whiteColor];
   
-  [OMNMenuProductExtendedWithRecommedtationsModel registerCellsForTableView:self.tableView];
+  [OMNMenuProductFullWithRecommendationsCellItem registerProductWithRecommendationsCellForTableView:self.tableView];
   
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  self.tableView.delegate = _model;
-  self.tableView.dataSource = _model;
+  self.tableView.delegate = _menuProductFullWithRecommendations;
+  self.tableView.dataSource = _menuProductFullWithRecommendations;
   UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   self.tableView.contentInset = insets;
   self.tableView.scrollIndicatorInsets = insets;
 
-  _model.delegate = self;
+  _menuProductFullWithRecommendations.delegate = self;
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
@@ -70,18 +70,16 @@
 
 #pragma mark - OMNMenuProductCellDelegate
 
-- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell editProduct:(OMNMenuProduct *)menuProduct {
+- (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell {
   
-  [menuProduct editMenuProductFromController:self withCompletion:^{
+  [menuProductCell.item editMenuProductFromController:self withCompletion:^{
     
   }];
   
 }
 
-- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProduct *)menuProduct {
-  
-  
-  
+- (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell {
+  //do nothing
 }
 
 @end

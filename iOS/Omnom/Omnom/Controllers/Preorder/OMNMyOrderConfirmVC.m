@@ -13,12 +13,14 @@
 #import "OMNPreorderDoneVC.h"
 #import "UIView+screenshot.h"
 #import "OMNRestaurant+omn_network.h"
-#import "OMNMenuProduct+cell.h"
 #import "OMNMenu+wish.h"
 #import "OMNTable+omn_network.h"
 #import <OMNStyler.h>
 #import "OMNOrderToolbarButton.h"
-#import "OMNMenuProduct+omn_edit.h"
+#import <BlocksKit.h>
+#import "OMNPreorderConfirmCellItem.h"
+#import "OMNPreorderActionCellItem.h"
+#import "OMNMenuProductCellItem+edit.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,
@@ -34,9 +36,10 @@ OMNPreorderConfirmCellDelegate>
   
   OMNRestaurantMediator *_restaurantMediator;
   OMNVisitor *_visitor;
-  NSMutableArray *_products;
   NSArray *_tableProductsIds;
-  NSMutableArray *_tableProducts;
+
+  NSArray *_model;
+  OMNPreorderActionCellItem *_preorderActionCellItem;
   
 }
 
@@ -53,6 +56,8 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _preorderActionCellItem = [[OMNPreorderActionCellItem alloc] init];
   
   [self omn_setup];
   
@@ -114,31 +119,35 @@ OMNPreorderConfirmCellDelegate>
 - (void)updateTableViewAnimated:(BOOL)animated {
   
   NSMutableArray *products = [NSMutableArray array];
+
   [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
     
-    if (product.quantity > 0.0) {
+    if (product.preordered) {
       
-      [products addObject:product];
+      [products addObject:[[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:product]];
       
     }
     
   }];
-  
-  _products = products;
   
   NSMutableArray *tableProducts = [NSMutableArray arrayWithCapacity:_tableProductsIds.count];
   [_tableProductsIds enumerateObjectsUsingBlock:^(id tableProductId, NSUInteger idx, BOOL *stop) {
     
     OMNMenuProduct *menuProduct = _restaurantMediator.menu.products[tableProductId];
-    if (menuProduct &&
-        menuProduct.quantity == 0.0) {
+    if (menuProduct) {
       
-      [tableProducts addObject:menuProduct];
+      [tableProducts addObject:[[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:menuProduct]];
       
     }
     
   }];
-  _tableProducts = tableProducts;
+
+  _model =
+  @[
+    products,
+    @[_preorderActionCellItem],
+    tableProducts,
+    ];
   
   if (animated) {
     
@@ -192,57 +201,45 @@ OMNPreorderConfirmCellDelegate>
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
-  return 3;
+  return _model.count;
   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   
-  NSInteger numberOfRows = 0;
-  switch (section) {
-    case 0: {
-      numberOfRows = _products.count;
-    } break;
-    case 1: {
-      numberOfRows = 1;
-    } break;
-    case 2: {
-      numberOfRows = _tableProducts.count;
-    } break;
-  }
+  NSArray *rowItems = _model[section];
+  return rowItems.count;
   
-  return numberOfRows;
+}
+
+- (id)itemAtIndexPath:(NSIndexPath *)indexPath {
+  
+  NSArray *rowItems = _model[indexPath.section];
+  id item = rowItems[indexPath.row];
+  return item;
   
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   UITableViewCell *cell = nil;
   
-  switch (indexPath.section) {
-    case 0: {
+  id<OMNMenuTableCellItemProtocol> item = [self itemAtIndexPath:indexPath];
+  
+  if ([item conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+    
+    cell = [item cellForTableView:tableView];
+    
+    if ([cell isKindOfClass:[OMNPreorderConfirmCell class]]) {
       
-      OMNPreorderConfirmCell *preorderConfirmCell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderConfirmCell" forIndexPath:indexPath];
-      preorderConfirmCell.delegate = self;
-      preorderConfirmCell.menuProduct = _products[indexPath.row];
-      cell = preorderConfirmCell;
+      [(OMNPreorderConfirmCell *)cell setDelegate:self];
       
-    } break;
-    case 1: {
+    }
+    else if ([cell isKindOfClass:[OMNPreorderActionCell class]]) {
       
-      OMNPreorderActionCell *preorderActionCell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderActionCell" forIndexPath:indexPath];
-      preorderActionCell.delegate = self;
-      preorderActionCell.actionButton.enabled = (_products.count > 0);
-      cell = preorderActionCell;
+      [(OMNPreorderActionCell *)cell setDelegate:self];
       
-    } break;
-    case 2: {
-      
-      OMNPreorderConfirmCell *preorderConfirmCell = [tableView dequeueReusableCellWithIdentifier:@"OMNPreorderConfirmCell" forIndexPath:indexPath];
-      preorderConfirmCell.delegate = self;
-      preorderConfirmCell.menuProduct = _tableProducts[indexPath.row];
-      cell = preorderConfirmCell;
-      
-    } break;
+    }
+    
   }
   
   return cell;
@@ -251,26 +248,14 @@ OMNPreorderConfirmCellDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  CGFloat heightForRow = 0.0f;
-  switch (indexPath.section) {
-    case 0: {
-      
-      OMNMenuProduct *menuProduct = _products[indexPath.row];
-      heightForRow = [menuProduct preorderHeightForTableView:tableView];
-
-    } break;
-    case 1: {
-      heightForRow = 140.0f;
-    } break;
-    case 2: {
-
-      OMNMenuProduct *menuProduct = _tableProducts[indexPath.row];
-      heightForRow = [menuProduct preorderHeightForTableView:tableView];
-
-    } break;
-  }
+  id<OMNMenuTableCellItemProtocol> item = [self itemAtIndexPath:indexPath];
   
-  return heightForRow;
+  if ([item conformsToProtocol:@protocol(OMNMenuTableCellItemProtocol)]) {
+    
+    return [item heightForTableView:tableView];
+    
+  }
+  return 0.0f;
   
 }
 
@@ -329,9 +314,9 @@ OMNPreorderConfirmCellDelegate>
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   [self.view addSubview:_tableView];
   
-  [_tableView registerClass:[OMNPreorderConfirmCell class] forCellReuseIdentifier:@"OMNPreorderConfirmCell"];
-  [_tableView registerClass:[OMNPreorderActionCell class] forCellReuseIdentifier:@"OMNPreorderActionCell"];
-  
+  [OMNPreorderConfirmCellItem registerCellForTableView:_tableView];
+  [OMNPreorderActionCellItem registerCellForTableView:_tableView];
+
   UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   _tableView.contentInset = insets;
   _tableView.scrollIndicatorInsets = insets;
@@ -355,10 +340,10 @@ OMNPreorderConfirmCellDelegate>
 
 #pragma mark - OMNPreorderConfirmCellDelegate
 
-- (void)preorderConfirmCell:(OMNPreorderConfirmCell *)preorderConfirmCell didEditMenuProduct:(OMNMenuProduct *)menuProduct {
+- (void)preorderConfirmCellDidEdit:(OMNPreorderConfirmCell *)preorderConfirmCell {
   
   __weak typeof(self)weakSelf = self;
-  [menuProduct editMenuProductFromController:self withCompletion:^{
+  [preorderConfirmCell.item editMenuProductFromController:self withCompletion:^{
     
     [weakSelf updateTableViewAnimated:YES];
     

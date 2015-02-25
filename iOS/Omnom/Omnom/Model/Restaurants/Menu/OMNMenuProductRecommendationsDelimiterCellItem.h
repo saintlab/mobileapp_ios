@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNMenuCellItemProtocol.h"
+#import "OMNMenuTableCellItemProtocol.h"
 
-@interface OMNMenuProductRecommendationsDelimiter : NSObject
-<OMNMenuCellItemProtocol>
+@interface OMNMenuProductRecommendationsDelimiterCellItem : NSObject
+<OMNMenuTableCellItemProtocol>
 
 @end

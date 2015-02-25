@@ -8,7 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNMenuProductCell.h"
+#import "OMNMenuProductPriceButton.h"
+#import "OMNMenuProductFullCellItem.h"
 
-@interface OMNMenuProductExtendedCell : OMNMenuProductCell
+@interface OMNMenuProductFullCell : OMNMenuProductCell
+
+@end
+
+@interface OMNMenuProductFullView : OMNMenuProductView
 
 @end

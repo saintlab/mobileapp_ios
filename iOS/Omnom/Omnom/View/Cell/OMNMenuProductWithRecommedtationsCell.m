@@ -9,6 +9,7 @@
 #import "OMNMenuProductWithRecommedtationsCell.h"
 #import "OMNMenuProductCell.h"
 #import <BlocksKit.h>
+#import "UIView+omn_autolayout.h"
 
 @interface OMNMenuProductWithRecommedtationsCell ()
 <OMNMenuProductCellDelegate>
@@ -18,7 +19,6 @@
 @implementation OMNMenuProductWithRecommedtationsCell {
   
   UITableView *_tableView;
-  OMNMenuProductWithRecommedtationsModel *_model;
   NSString *_menuProductSelectionObserverID;
   
 }
@@ -32,7 +32,7 @@
 - (void)removeMenuProductSelectionObserver {
   
   if (_menuProductSelectionObserverID) {
-    [_model bk_removeObserversWithIdentifier:_menuProductSelectionObserverID];
+    [_item bk_removeObserversWithIdentifier:_menuProductSelectionObserverID];
   }
   
 }
@@ -67,16 +67,14 @@
   _tableView.scrollEnabled = NO;
   [self.contentView addSubview:_tableView];
 
-  [OMNMenuProductWithRecommedtationsModel registerCellsForTableView:_tableView];
+  [OMNMenuProductWithRecommendationsCellItem registerProductWithRecommendationsCellForTableView:_tableView];
 
   NSDictionary *views =
   @{
     @"tableView" : _tableView,
     };
   
-  NSDictionary *metrics =
-  @{
-    };
+  NSDictionary *metrics = @{};
 
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
@@ -84,28 +82,28 @@
   
 }
 
-- (void)setModel:(OMNMenuProductWithRecommedtationsModel *)model {
+- (void)setItem:(OMNMenuProductWithRecommendationsCellItem *)item {
   
   [self removeMenuProductSelectionObserver];
-  _model = model;
-  _model.delegate = self;
-  _tableView.delegate = model;
-  _tableView.dataSource = model;
+  _item = item;
+  _item.delegate = self;
+  _tableView.delegate = _item;
+  _tableView.dataSource = _item;
   [_tableView reloadData];
   
 }
 
 #pragma mark - OMNMenuProductCellDelegate
 
-- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell editProduct:(OMNMenuProduct *)menuProduct {
+- (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell {
   
-  [self.delegate menuProductWithRecommedtationsCell:self editMenuProduct:menuProduct];
+  [self.delegate menuProductWithRecommedtationsCell:self editItem:menuProductCell.item];
   
 }
 
-- (void)menuProductCell:(OMNMenuProductCell *)menuProductCell didSelectProduct:(OMNMenuProduct *)menuProduct {
+- (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell {
   
-  [self.delegate menuProductWithRecommedtationsCell:self didSelectMenuProduct:menuProduct];
+  [self.delegate menuProductWithRecommedtationsCell:self didSelectItem:menuProductCell.item];
   
 }
 

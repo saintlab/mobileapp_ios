@@ -15,7 +15,7 @@
   NSMutableArray *selectedWishItems = [NSMutableArray array];
   [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
     
-    if (menuProduct.quantity > 0.0) {
+    if (menuProduct.preordered) {
       
       NSMutableDictionary *wishItem = [NSMutableDictionary dictionary];
       wishItem[@"id"] = menuProduct.id;

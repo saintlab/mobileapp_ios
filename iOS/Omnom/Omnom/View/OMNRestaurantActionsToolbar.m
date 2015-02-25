@@ -20,7 +20,7 @@
 @implementation OMNRestaurantActionsToolbar {
   
   NSString *_restaurantWaiterCallObserverId;
-  BOOL _hasSelectedMenuItems;
+  BOOL _hasPreorderedMenuItems;
   
 }
 
@@ -57,7 +57,7 @@
   
   [self removeRestaurantWaiterCallObserver];
   _restaurantMediator = restaurantMediator;
-  _hasSelectedMenuItems = restaurantMediator.menu.hasSelectedItems;
+  _hasPreorderedMenuItems = restaurantMediator.menu.hasPreorderedItems;
   __weak typeof(self)weakSelf = self;
   _restaurantWaiterCallObserverId = [_restaurantMediator.visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNVisitor *obj, NSDictionary *change) {
     
@@ -69,10 +69,10 @@
 
 - (void)menuProductDidChange:(NSNotification *)n {
   
-  BOOL hasSelectedMenuItems = _restaurantMediator.menu.hasSelectedItems;
-  if (hasSelectedMenuItems != _hasSelectedMenuItems) {
+  BOOL hasPreorderedMenuItems = _restaurantMediator.menu.hasPreorderedItems;
+  if (hasPreorderedMenuItems != _hasPreorderedMenuItems) {
     
-    _hasSelectedMenuItems = hasSelectedMenuItems;
+    _hasPreorderedMenuItems = hasPreorderedMenuItems;
     [self updateRestaurantActionButtons];
     
   }
@@ -116,7 +116,7 @@
     
   }
   else if (settings.has_menu &&
-           _restaurantMediator.menu.hasSelectedItems) {
+           _restaurantMediator.menu.hasPreorderedItems) {
     
     OMNMyOrderButton *myOrderButton = [[OMNMyOrderButton alloc] initWithRestaurantMediator:_restaurantMediator];
     

@@ -26,16 +26,14 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 @property (nonatomic, strong) NSArray *recommendations;
 @property (nonatomic, strong) OMNMenuProductDetails *details;
 @property (nonatomic, strong, readonly) NSDictionary *allModifers;
-@property (nonatomic, assign) BOOL selected;
-@property (nonatomic, assign) BOOL editing;
 @property (nonatomic, strong, readonly) NSMutableSet *selectedModifers;
 
 @property (nonatomic, assign, readonly) long long total;
 
-@property (nonatomic, assign) CGFloat calculationHeight;
-
 - (instancetype)initWithJsonData:(id)data allModifers:(NSDictionary *)allModifers;
 - (BOOL)hasRecommendations;
+- (BOOL)hasPhoto;
+- (BOOL)preordered;
 - (void)loadImage;
 - (void)resetSelection;
 
