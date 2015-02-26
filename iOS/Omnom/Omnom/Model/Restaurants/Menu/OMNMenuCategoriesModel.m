@@ -59,13 +59,16 @@
     OMNMenuCategorySectionItem *parent = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:menuCategory];
     [menuCategorySectionItems addObject:parent];
 
-    [menuCategorySectionItems addObjectsFromArray:[menuCategory.children bk_map:^id(OMNMenuCategory *childCategory) {
+    NSArray *children = [menuCategory.children bk_map:^id(OMNMenuCategory *childCategory) {
       
       OMNMenuCategorySectionItem *child = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:childCategory];
+      child.hidden = YES;
       child.parent = parent;
       return child;
       
-    }]];
+    }];
+    parent.children = children;
+    [menuCategorySectionItems addObjectsFromArray:children];
     
   }];
   
@@ -149,10 +152,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   
-  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[section];
-  
-//  if (menuCategorySectionItem.parent &&
-//      !menuCategorySectionItem.parent.selected) {
+//  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[section];
+//  
+//  if (menuCategorySectionItem.hidden) {
 //    return 0.0f;
 //  }
   
@@ -165,7 +167,8 @@
 
 - (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
   
-  if (menuCategoryHeaderView.menuCategorySectionItem.selected) {
+  OMNMenuCategorySectionItem *selectedCategoryItem = menuCategoryHeaderView.menuCategorySectionItem;
+  if (selectedCategoryItem.selected) {
     return;
   }
   
