@@ -56,11 +56,14 @@
   
   [_menu.categories enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
     
-    [menuCategorySectionItems addObject:[[OMNMenuCategorySectionItem alloc] initWithMenuCategory:menuCategory]];
+    OMNMenuCategorySectionItem *parent = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:menuCategory];
+    [menuCategorySectionItems addObject:parent];
 
     [menuCategorySectionItems addObjectsFromArray:[menuCategory.children bk_map:^id(OMNMenuCategory *childCategory) {
       
-      return [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:childCategory];
+      OMNMenuCategorySectionItem *child = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:childCategory];
+      child.parent = parent;
+      return child;
       
     }]];
     
@@ -146,6 +149,13 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   
+  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[section];
+  
+//  if (menuCategorySectionItem.parent &&
+//      !menuCategorySectionItem.parent.selected) {
+//    return 0.0f;
+//  }
+  
   CGFloat heightForHeader = 44.0f;
   return heightForHeader;
   
@@ -154,6 +164,10 @@
 #pragma mark - OMNMenuCategoryHeaderViewDelegate
 
 - (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
+  
+  if (menuCategoryHeaderView.menuCategorySectionItem.selected) {
+    return;
+  }
   
   NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
   __block NSInteger selectedIndex = NSNotFound;

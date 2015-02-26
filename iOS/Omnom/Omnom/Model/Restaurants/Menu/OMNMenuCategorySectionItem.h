@@ -13,6 +13,7 @@
 @interface OMNMenuCategorySectionItem : NSObject
 
 @property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
+@property (nonatomic, weak) OMNMenuCategorySectionItem *parent;
 @property (nonatomic, assign) BOOL selected;
 
 - (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory;
