@@ -31,7 +31,7 @@
   [containerView addSubview:fromViewController.view];
   
   CGRect toTableFrame = [toViewController.menuTable convertRect:toViewController.menuTable.bounds toView:containerView];
-  toViewController.menuTable.hidden = YES;
+  toViewController.menuTable.alpha = 0.0f;
   toTableFrame.size = fromViewController.tableView.frame.size;
   
   [UIView animateWithDuration:duration animations:^{
@@ -41,8 +41,16 @@
     
   } completion:^(BOOL finished) {
   
-    toViewController.menuTable.hidden = NO;
-    [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+    [UIView animateWithDuration:0.2 animations:^{
+      
+      menuTable.alpha = 0.0f;
+      toViewController.menuTable.alpha = 1.0f;
+      
+    } completion:^(BOOL finished) {
+      
+      [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+
+    }];
     
   }];
   

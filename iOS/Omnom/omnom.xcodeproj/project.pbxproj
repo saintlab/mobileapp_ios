@@ -527,6 +527,8 @@
 		93DB26CE1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26CC1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m */; };
 		93DB26D21A9E1B4B00DDB739 /* OMNRestaurantCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D11A9E1B4B00DDB739 /* OMNRestaurantCellItem.m */; };
 		93DB26D31A9E1B4B00DDB739 /* OMNRestaurantCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D11A9E1B4B00DDB739 /* OMNRestaurantCellItem.m */; };
+		93DB26D61A9F647F00DDB739 /* OMNMenuHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D51A9F647F00DDB739 /* OMNMenuHeaderView.m */; };
+		93DB26D71A9F647F00DDB739 /* OMNMenuHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D51A9F647F00DDB739 /* OMNMenuHeaderView.m */; };
 		93DE37D01A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */; };
 		93DE37D11A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */; };
 		93DEBF561A875A2E00B46881 /* OMNMenu+wish.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEBF551A875A2E00B46881 /* OMNMenu+wish.m */; };
@@ -1143,6 +1145,8 @@
 		93DB26CC1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderActionCellItem.m; sourceTree = "<group>"; };
 		93DB26D01A9E1B4B00DDB739 /* OMNRestaurantCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRestaurantCellItem.h; sourceTree = "<group>"; };
 		93DB26D11A9E1B4B00DDB739 /* OMNRestaurantCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantCellItem.m; sourceTree = "<group>"; };
+		93DB26D41A9F647F00DDB739 /* OMNMenuHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuHeaderView.h; sourceTree = "<group>"; };
+		93DB26D51A9F647F00DDB739 /* OMNMenuHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuHeaderView.m; sourceTree = "<group>"; };
 		93DE37CE1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEnterHashAlertVC.h; sourceTree = "<group>"; };
 		93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEnterHashAlertVC.m; sourceTree = "<group>"; };
 		93DEBF541A875A2E00B46881 /* OMNMenu+wish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNMenu+wish.h"; sourceTree = "<group>"; };
@@ -2016,6 +2020,8 @@
 				933A9EAD1A4C0915001C0909 /* OMNRestaurantDetailsView.m */,
 				930FF3761A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.h */,
 				930FF3771A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m */,
+				93DB26D41A9F647F00DDB739 /* OMNMenuHeaderView.h */,
+				93DB26D51A9F647F00DDB739 /* OMNMenuHeaderView.m */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -2968,6 +2974,7 @@
 				937C3E751A2859C9006525A9 /* OMNUser+network.m in Sources */,
 				9307A6DF19D53F7E00101B81 /* OMNLabeledTextField.m in Sources */,
 				930FF37C1A8CEDC4002FAAA5 /* OMNMenuProductPriceButton.m in Sources */,
+				93DB26D61A9F647F00DDB739 /* OMNMenuHeaderView.m in Sources */,
 				938F3A5A198E081500AB288E /* OMNPushPermissionVC.m in Sources */,
 				93DE37D01A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */,
 				93CE47CA1A78C9A4002D293B /* OMNMyOrderButton.m in Sources */,
@@ -3264,6 +3271,7 @@
 				935A1E2B1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */,
 				93E58CAD1A245604008064F9 /* OMNCameraPermission.m in Sources */,
 				93E58CBA1A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */,
+				93DB26D71A9F647F00DDB739 /* OMNMenuHeaderView.m in Sources */,
 				937EF7F019DFB47300BD9090 /* OMNCardEnterErrorLabel.m in Sources */,
 				933A9EB31A4C33DA001C0909 /* OMNBottomTextButton.m in Sources */,
 				93B368B519A708C600B6E6CB /* OMNDemoStandWaiterTests.m in Sources */,

@@ -62,7 +62,6 @@
     NSArray *children = [menuCategory.children bk_map:^id(OMNMenuCategory *childCategory) {
       
       OMNMenuCategorySectionItem *child = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:childCategory];
-      child.hidden = YES;
       child.parent = parent;
       return child;
       
@@ -152,11 +151,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   
-//  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[section];
-//  
-//  if (menuCategorySectionItem.hidden) {
-//    return 0.0f;
-//  }
+  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[section];
+  
+  if (menuCategorySectionItem.menuCategory.level > 0 &&
+      !menuCategorySectionItem.parent.entered) {
+    
+    return 0.0f;
+    
+  }
   
   CGFloat heightForHeader = 44.0f;
   return heightForHeader;
@@ -167,23 +169,29 @@
 
 - (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
   
-  OMNMenuCategorySectionItem *selectedCategoryItem = menuCategoryHeaderView.menuCategorySectionItem;
-  if (selectedCategoryItem.selected) {
+  OMNMenuCategorySectionItem *selectedSectionItem = menuCategoryHeaderView.menuCategorySectionItem;
+  if (selectedSectionItem.selected) {
     return;
   }
   
-  NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+  NSMutableIndexSet *reloadIndexSet = [NSMutableIndexSet indexSet];
   __block NSInteger selectedIndex = NSNotFound;
   
   [_menuCategorySectionItems enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *sectionItem, NSUInteger idx, BOOL *stop) {
     
     if (sectionItem.selected) {
-      [indexSet addIndex:idx];
+      [reloadIndexSet addIndex:idx];
     }
     
-    if ([sectionItem isEqual:menuCategoryHeaderView.menuCategorySectionItem]) {
+    if (selectedSectionItem.menuCategory.level == sectionItem.menuCategory.level) {
+      
+      sectionItem.entered = NO;
+      
+    }
     
-      [indexSet addIndex:idx];
+    if ([sectionItem isEqual:selectedSectionItem]) {
+    
+      [reloadIndexSet addIndex:idx];
       sectionItem.selected = YES;
       selectedIndex = idx;
       
@@ -193,14 +201,16 @@
       sectionItem.selected = NO;
       
     }
-
+    
   }];
   
+  selectedSectionItem.entered = YES;
+  
   [_tableView beginUpdates];
-  [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+  [_tableView reloadSections:reloadIndexSet withRowAnimation:UITableViewRowAnimationFade];
   [_tableView endUpdates];
   if (NSNotFound != selectedIndex &&
-      menuCategoryHeaderView.menuCategorySectionItem.rowItems.count) {
+      selectedSectionItem.rowItems.count) {
     
     [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:selectedIndex] atScrollPosition:UITableViewScrollPositionTop animated:YES];
     

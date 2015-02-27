@@ -10,7 +10,7 @@
 #import "OMNMenuHeaderItemCell.h"
 #import "OMNMenuItemCell.h"
 
-const CGFloat kMenuTableTopOffset = 60.0f;
+const CGFloat kMenuTableTopOffset = 20.0f;
 
 @implementation OMNMenuModel
 
@@ -77,7 +77,13 @@ const CGFloat kMenuTableTopOffset = 60.0f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  return 50.0f;
+  CGFloat heightForRow = 50.0f;
+  if (0 == indexPath.section) {
+    
+    heightForRow = 44.0f;
+    
+  }
+  return heightForRow;
   
 }
 

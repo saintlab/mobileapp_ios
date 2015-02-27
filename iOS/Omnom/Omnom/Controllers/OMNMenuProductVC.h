@@ -14,6 +14,6 @@
 
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
-- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator menuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator menuProduct:(OMNMenuProduct *)menuProduct;
 
 @end

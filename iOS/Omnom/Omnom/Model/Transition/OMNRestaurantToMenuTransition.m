@@ -32,6 +32,8 @@
   [toViewController.view layoutIfNeeded];
   CGRect toTableFrame = [toViewController.tableView convertRect:toViewController.tableView.bounds toView:containerView];
 
+  toViewController.menuHeaderView.hidden = YES;
+  
   [containerView addSubview:fromViewController.view];
 
   UIEdgeInsets initialContentInset = menuTable.contentInset;
@@ -50,12 +52,22 @@
     
   } completion:^(BOOL finished) {
     
-    fromViewController.circleButton.alpha = 1.0f;
-    [fadeView removeFromSuperview];
-    menuTable.frame = fromTableFrame;
-    menuTable.bounces = YES;
-    menuTable.contentInset = initialContentInset;
-    [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+    [UIView animateWithDuration:0.2 animations:^{
+      
+      fromViewController.view.alpha = 0.0f;
+      toViewController.menuHeaderView.hidden = NO;
+
+    } completion:^(BOOL finished1) {
+      
+      fromViewController.view.alpha = 1.0f;
+      fromViewController.circleButton.alpha = 1.0f;
+      [fadeView removeFromSuperview];
+      menuTable.frame = fromTableFrame;
+      menuTable.bounces = YES;
+      menuTable.contentInset = initialContentInset;
+      [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+      
+    }];
     
   }];
 

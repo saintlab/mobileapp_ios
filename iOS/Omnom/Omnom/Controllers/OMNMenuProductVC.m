@@ -25,13 +25,13 @@
   
 }
 
-- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator menuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator menuProduct:(OMNMenuProduct *)menuProduct {
   self = [super initWithStyle:UITableViewStylePlain];
   if (self) {
     
     _menuProduct = menuProduct;
     _restaurantMediator = restaurantMediator;
-    _menuProductFullWithRecommendations = [[OMNMenuProductFullWithRecommendationsCellItem alloc] initWithMenuProduct:menuProduct products:products];
+    _menuProductFullWithRecommendations = [[OMNMenuProductFullWithRecommendationsCellItem alloc] initWithMenuProduct:menuProduct products:restaurantMediator.menu.products];
     
   }
   return self;

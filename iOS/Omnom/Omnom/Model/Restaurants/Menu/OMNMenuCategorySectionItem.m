@@ -10,6 +10,7 @@
 #import "OMNMenuProductWithRecommendationsCellItem.h"
 #import "OMNMenuCategoryDelimiterCellItem.h"
 #import "OMNMenuProductsDelimiterCellItem.h"
+#import <BlocksKit.h>
 
 @implementation OMNMenuCategorySectionItem {
   

@@ -38,6 +38,7 @@
   
   self.backgroundView = [[UIView alloc] init];
   self.backgroundView.backgroundColor = [UIColor clearColor];
+  self.clipsToBounds = YES;
   
   _button = [UIButton omn_autolayoutView];
   [_button addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
