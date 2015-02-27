@@ -13,7 +13,7 @@ set -e
 set -u
 
 LOG_FORMAT=${1:-"%ci: %H (%aN)%n * %s%n"}
-LAST_TAG=$( git tag -l 'crashlytics-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]' | sort | tail -1 )
+LAST_TAG=$( git tag -l 'crashlytics-build-*' | sort | tail -1 )
 LAST_TAG=${LAST_TAG:-$( git log --reverse --format=format:"%H" | head -1 )}
 
 if [ "x" = "x$LAST_TAG" ]; then
