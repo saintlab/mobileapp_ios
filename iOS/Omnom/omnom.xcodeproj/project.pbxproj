@@ -2663,7 +2663,6 @@
 				471B3C426B7446CBA4EE48D9 /* Check Pods Manifest.lock */,
 				93676DE518D1E4FC00FC55F1 /* Sources */,
 				93676DE618D1E4FC00FC55F1 /* Frameworks */,
-				931E7849198674AC00BBFE94 /* build increment script */,
 				93676DE718D1E4FC00FC55F1 /* Resources */,
 				4F9249CB50BE4BCAA2D125E0 /* Copy Pods Resources */,
 				932112ED19BE1AE20074CF2A /* Crashlytics */,
@@ -2889,20 +2888,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-omnomTests/Pods-omnomTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		931E7849198674AC00BBFE94 /* build increment script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "build increment script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\nif [[ \"${CONFIGURATION}\" = \"Ad-Hoc\" || \"${CONFIGURATION}\" = \"AppStore\" ]]; then\n\n{\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\";\necho $buildNumber\n}\n\nfi\n";
 		};
 		932112ED19BE1AE20074CF2A /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
