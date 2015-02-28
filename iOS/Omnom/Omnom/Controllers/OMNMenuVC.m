@@ -15,9 +15,11 @@
 #import "OMNMenuCategoriesModel.h"
 #import "OMNMenuProductCellItem+edit.h"
 #import "OMNMenuHeaderView.h"
+#import "OMNMenuCategorySectionItem.h"
 
 @interface OMNMenuVC ()
-<OMNMenuProductWithRecommedtationsCellDelegate>
+<OMNMenuProductWithRecommedtationsCellDelegate,
+OMNMenuCategoryHeaderViewDelegate>
 
 @end
 
@@ -26,6 +28,7 @@
   OMNMenuCategoriesModel *_model;
   OMNRestaurantMediator *_restaurantMediator;
   __weak OMNMenuProductWithRecommendationsCellItem *_selectedItem;
+  BOOL _categiryInitiallyExpanded;
   
 }
 
@@ -34,7 +37,7 @@
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-    _model = [[OMNMenuCategoriesModel alloc] initWithMenu:_restaurantMediator.menu delegate:self];
+    _model = [[OMNMenuCategoriesModel alloc] initWithMenu:_restaurantMediator.menu cellDelegate:self headerDelegate:self];
     
   }
   return self;
@@ -51,6 +54,21 @@
   _menuHeaderView = [[OMNMenuHeaderView alloc] init];
   [_menuHeaderView sizeToFit];
   self.navigationItem.titleView = _menuHeaderView;
+  
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+ 
+  if (!_categiryInitiallyExpanded &&
+      _model.categories.count) {
+    _categiryInitiallyExpanded = YES;
+    
+    OMNMenuCategorySectionItem *firstCategory = [_model.categories firstObject];
+    firstCategory.selected = YES;
+    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    
+  }
   
 }
 
@@ -168,6 +186,59 @@
   [_tableView endUpdates];
   if (indexPath) {
     [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+  }
+  
+}
+
+#pragma mark - OMNMenuCategoryHeaderViewDelegate
+
+- (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
+  
+  OMNMenuCategorySectionItem *selectedSectionItem = menuCategoryHeaderView.menuCategorySectionItem;
+  if (selectedSectionItem.selected) {
+    return;
+  }
+  
+  NSMutableIndexSet *reloadIndexSet = [NSMutableIndexSet indexSet];
+  __block NSInteger selectedIndex = NSNotFound;
+  
+  [_model.categories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *sectionItem, NSUInteger idx, BOOL *stop) {
+    
+    if (sectionItem.selected) {
+      [reloadIndexSet addIndex:idx];
+    }
+    
+    if (selectedSectionItem.menuCategory.level == sectionItem.menuCategory.level) {
+      
+      sectionItem.entered = NO;
+      
+    }
+    
+    if ([sectionItem isEqual:selectedSectionItem]) {
+      
+      [reloadIndexSet addIndex:idx];
+      sectionItem.selected = YES;
+      selectedIndex = idx;
+      
+    }
+    else {
+      
+      sectionItem.selected = NO;
+      
+    }
+    
+  }];
+  
+  selectedSectionItem.entered = YES;
+  
+  [_tableView beginUpdates];
+  [_tableView reloadSections:reloadIndexSet withRowAnimation:UITableViewRowAnimationFade];
+  [_tableView endUpdates];
+  if (NSNotFound != selectedIndex &&
+      selectedSectionItem.rowItems.count) {
+    
+    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:selectedIndex] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    
   }
   
 }

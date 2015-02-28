@@ -9,12 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "OMNMenu.h"
 #import "OMNMenuProductWithRecommedtationsCell.h"
+#import "OMNMenuCategoryHeaderView.h"
 
 @interface OMNMenuCategoriesModel : NSObject
 <UITableViewDataSource,
 UITableViewDelegate>
 
-- (instancetype)initWithMenu:(OMNMenu *)menu delegate:(id<OMNMenuProductWithRecommedtationsCellDelegate>)delegate;
+@property (nonatomic, strong, readonly) NSArray *categories;
+
+- (instancetype)initWithMenu:(OMNMenu *)menu cellDelegate:(id<OMNMenuProductWithRecommedtationsCellDelegate>)cellDelegate headerDelegate:(id<OMNMenuCategoryHeaderViewDelegate>)headerDelegate;
 
 + (void)registerCellsForTableView:(UITableView *)tableView;
 

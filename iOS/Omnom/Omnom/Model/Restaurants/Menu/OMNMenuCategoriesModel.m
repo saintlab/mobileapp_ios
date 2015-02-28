@@ -12,26 +12,23 @@
 #import "OMNMenuCategoryDelimiterCellItem.h"
 #import "OMNMenuProductsDelimiterCellItem.h"
 
-@interface OMNMenuCategoriesModel ()
-<OMNMenuCategoryHeaderViewDelegate>
-
-@end
-
 @implementation OMNMenuCategoriesModel {
   
   OMNMenu *_menu;
-  NSMutableArray *_menuCategorySectionItems;
-  UITableView *_tableView;
-  __weak id<OMNMenuProductWithRecommedtationsCellDelegate> _delegate;
+  __weak id<OMNMenuProductWithRecommedtationsCellDelegate> _cellDelegate;
+  __weak id<OMNMenuCategoryHeaderViewDelegate> _headerDelegate;
   
 }
 
-- (instancetype)initWithMenu:(OMNMenu *)menu delegate:(id<OMNMenuProductWithRecommedtationsCellDelegate>)delegate {
+@synthesize categories=_categories;
+
+- (instancetype)initWithMenu:(OMNMenu *)menu cellDelegate:(id<OMNMenuProductWithRecommedtationsCellDelegate>)cellDelegate headerDelegate:(id<OMNMenuCategoryHeaderViewDelegate>)headerDelegate {
   self = [super init];
   if (self) {
     
     _menu = menu;
-    _delegate = delegate;
+    _cellDelegate = cellDelegate;
+    _headerDelegate = headerDelegate;
     
   }
   return self;
@@ -46,10 +43,10 @@
   
 }
 
-- (NSArray *)categoriesList {
+- (NSArray *)categories {
   
-  if (_menuCategorySectionItems) {
-    return _menuCategorySectionItems;
+  if (_categories) {
+    return _categories;
   }
   
   NSMutableArray *menuCategorySectionItems = [NSMutableArray array];
@@ -58,7 +55,7 @@
     
     OMNMenuCategorySectionItem *parent = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:menuCategory];
     [menuCategorySectionItems addObject:parent];
-
+    
     NSArray *children = [menuCategory.children bk_map:^id(OMNMenuCategory *childCategory) {
       
       OMNMenuCategorySectionItem *child = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:childCategory];
@@ -71,9 +68,9 @@
     
   }];
   
-  _menuCategorySectionItems = menuCategorySectionItems;
+  _categories = [menuCategorySectionItems copy];
   
-  return _menuCategorySectionItems;
+  return _categories;
   
 }
 
@@ -81,14 +78,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
-  _tableView = tableView;
-  return self.categoriesList.count;
+  return self.categories.count;
   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   
-  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[section];
+  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categories[section];
   return menuCategorySectionItem.rowItems.count;
 
 }
@@ -96,7 +92,7 @@
 - (id)listItemAtIndexPath:(NSIndexPath *)indexPath {
   
   id listItem = nil;
-  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[indexPath.section];
+  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categories[indexPath.section];
   listItem = menuCategorySectionItem.rowItems[indexPath.row];
   return listItem;
   
@@ -113,7 +109,7 @@
     if ([cell isKindOfClass:[OMNMenuProductWithRecommedtationsCell class]]) {
       
       OMNMenuProductWithRecommedtationsCell *productWithRecommedtationsCell = (OMNMenuProductWithRecommedtationsCell *)cell;
-      productWithRecommedtationsCell.delegate = _delegate;
+      productWithRecommedtationsCell.delegate = _cellDelegate;
       
     }
     
@@ -142,16 +138,16 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   
-  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[section];
+  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categories[section];
   OMNMenuCategoryHeaderView *menuCategoryHeaderView = [menuCategorySectionItem headerViewForTableView:tableView];
-  menuCategoryHeaderView.delegate = self;
+  menuCategoryHeaderView.delegate = _headerDelegate;
   return menuCategoryHeaderView;
   
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
   
-  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categoriesList[section];
+  OMNMenuCategorySectionItem *menuCategorySectionItem = self.categories[section];
   
   if (menuCategorySectionItem.menuCategory.level > 0 &&
       !menuCategorySectionItem.parent.entered) {
@@ -162,59 +158,6 @@
   
   CGFloat heightForHeader = 44.0f;
   return heightForHeader;
-  
-}
-
-#pragma mark - OMNMenuCategoryHeaderViewDelegate
-
-- (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
-  
-  OMNMenuCategorySectionItem *selectedSectionItem = menuCategoryHeaderView.menuCategorySectionItem;
-  if (selectedSectionItem.selected) {
-    return;
-  }
-  
-  NSMutableIndexSet *reloadIndexSet = [NSMutableIndexSet indexSet];
-  __block NSInteger selectedIndex = NSNotFound;
-  
-  [_menuCategorySectionItems enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *sectionItem, NSUInteger idx, BOOL *stop) {
-    
-    if (sectionItem.selected) {
-      [reloadIndexSet addIndex:idx];
-    }
-    
-    if (selectedSectionItem.menuCategory.level == sectionItem.menuCategory.level) {
-      
-      sectionItem.entered = NO;
-      
-    }
-    
-    if ([sectionItem isEqual:selectedSectionItem]) {
-    
-      [reloadIndexSet addIndex:idx];
-      sectionItem.selected = YES;
-      selectedIndex = idx;
-      
-    }
-    else {
-      
-      sectionItem.selected = NO;
-      
-    }
-    
-  }];
-  
-  selectedSectionItem.entered = YES;
-  
-  [_tableView beginUpdates];
-  [_tableView reloadSections:reloadIndexSet withRowAnimation:UITableViewRowAnimationFade];
-  [_tableView endUpdates];
-  if (NSNotFound != selectedIndex &&
-      selectedSectionItem.rowItems.count) {
-    
-    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:selectedIndex] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    
-  }
   
 }
 

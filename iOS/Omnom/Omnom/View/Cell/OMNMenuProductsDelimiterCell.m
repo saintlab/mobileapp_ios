@@ -58,8 +58,9 @@
   
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   self.backgroundView = [[UIView alloc] init];
-  self.backgroundView.backgroundColor = [UIColor clearColor];
-  self.backgroundColor = [UIColor clearColor];
+  
+  self.backgroundView.backgroundColor = [UIColor whiteColor];
+  self.backgroundColor = [UIColor whiteColor];
   
   _line = [UIView omn_autolayoutView];
   [self.contentView addSubview:_line];
