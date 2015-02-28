@@ -14,6 +14,4 @@
 
 - (NSArray *)omn_popToViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(dispatch_block_t)completionBlock;
 
-- (void)omn_didShowViewController:(UIViewController *)viewController;
-
 @end

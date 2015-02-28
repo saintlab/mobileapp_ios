@@ -75,7 +75,7 @@ OMNScanTableQRCodeVCDelegate>
 
 - (void)showRestaurants:(NSArray *)restaurants {
   
-  NSMutableArray *controllers = [NSMutableArray array];
+  NSMutableArray *controllers = [NSMutableArray arrayWithArray:_rootVC.navigationController.viewControllers];
   OMNRestaurantListVC *restaurantListVC = [[OMNRestaurantListVC alloc] initWithMediator:self];
   [controllers addObject:restaurantListVC];
   
@@ -121,7 +121,7 @@ OMNScanTableQRCodeVCDelegate>
     
   }
   
-  [_rootVC.navigationController setViewControllers:[_rootVC.navigationController.viewControllers arrayByAddingObjectsFromArray:controllers] animated:YES];
+  [_rootVC.navigationController setViewControllers:controllers animated:YES];
   
 }
 

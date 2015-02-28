@@ -223,11 +223,11 @@ OMNOrderCalculationVCDelegate>
     return;
   }
   
-  NSMutableArray *pushedControllers = [NSMutableArray array];
+  NSMutableArray *controllers = [NSMutableArray arrayWithArray:_restaurantActionsVC.navigationController.viewControllers];
   
   OMNOrdersVC *ordersVC = [[OMNOrdersVC alloc] initWithMediator:self];
   ordersVC.delegate = self;
-  [pushedControllers addObject:ordersVC];
+  [controllers addObject:ordersVC];
   _ordersVC = ordersVC;
   
   if (1 == _visitor.orders.count) {
@@ -235,12 +235,11 @@ OMNOrderCalculationVCDelegate>
     _visitor.selectedOrder = [_visitor.orders firstObject];
     OMNOrderCalculationVC *paymentVC = [[OMNOrderCalculationVC alloc] initWithMediator:self];
     paymentVC.delegate = self;
-    [pushedControllers addObject:paymentVC];
+    [controllers addObject:paymentVC];
     
   }
   
-  NSArray *newControllers = [_restaurantActionsVC.navigationController.viewControllers arrayByAddingObjectsFromArray:pushedControllers];
-  [_restaurantActionsVC.navigationController setViewControllers:newControllers animated:YES];
+  [_restaurantActionsVC.navigationController setViewControllers:controllers animated:YES];
 
 }
 

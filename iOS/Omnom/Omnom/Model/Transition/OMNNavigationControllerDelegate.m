@@ -112,12 +112,10 @@
   
 }
 
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+}
+
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-  
-  if ([navigationController respondsToSelector:@selector(omn_didShowViewController:)]) {
-    [navigationController omn_didShowViewController:viewController];
-  }
-  
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController {
