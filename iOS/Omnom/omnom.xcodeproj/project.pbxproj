@@ -429,7 +429,6 @@
 		93B65E651A6956C90061F1B1 /* OMNModalWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */; };
 		93B65E661A6956C90061F1B1 /* OMNModalWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */; };
 		93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
-		93B9047819652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
 		93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */; };
 		93B9048119653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */; };
 		93B9048D19654DE1007D21C4 /* OMNRatingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9048B19654DE1007D21C4 /* OMNRatingVC.m */; };
@@ -3362,7 +3361,6 @@
 				939DA163195405650063AB23 /* OMNAuthorizationVC.m in Sources */,
 				93B9048119653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */,
 				9336BA351A95C214002C2955 /* OMNMenuCategoriesModel.m in Sources */,
-				93B9047819652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */,
 				93BA9BC61A8C5AA400717FF9 /* OMNRestaurantToMenuTransition.m in Sources */,
 				933D48EE19E7A09E004E591C /* OMNGuest.m in Sources */,
 				9336BA311A94EB1D002C2955 /* OMNVisitor.m in Sources */,
