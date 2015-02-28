@@ -147,6 +147,12 @@
   
 }
 
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+  
+  [[OMNLaunchHandler sharedHandler] applicationDidEnterBackground];
+  
+}
+
 - (void)applicationWillEnterForeground:(UIApplication *)application {
   
   [[OMNLaunchHandler sharedHandler] applicationWillEnterForeground];

@@ -19,5 +19,6 @@
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification;
 - (void)didFinishLaunchingWithOptions:(OMNLaunchOptions *)lo;
 - (void)applicationWillEnterForeground;
+- (void)applicationDidEnterBackground;
 
 @end

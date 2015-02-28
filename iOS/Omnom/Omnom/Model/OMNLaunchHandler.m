@@ -139,7 +139,14 @@
 
 - (void)applicationWillEnterForeground {
   
+  [Crashlytics setBoolValue:YES forKey:@"application_state_foreground"];
   [self startApplicationIfNeeded];
+  
+}
+
+- (void)applicationDidEnterBackground {
+  
+  [Crashlytics setBoolValue:NO forKey:@"application_state_foreground"];
   
 }
 
