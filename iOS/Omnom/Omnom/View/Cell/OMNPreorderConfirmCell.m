@@ -11,6 +11,7 @@
 #import <OMNStyler.h>
 #import "OMNConstants.h"
 #import "OMNUtils.h"
+#import "UIImage+omn_helper.h"
 
 @implementation OMNPreorderConfirmCell {
   
@@ -67,6 +68,12 @@
   
 }
 
+- (void)setHidePrice:(BOOL)hidePrice {
+  
+  _preorderConfirmView.priceButton.selected = hidePrice;
+  
+}
+
 - (void)setItem:(OMNPreorderConfirmCellItem *)item {
   
   _item = item;
@@ -106,7 +113,13 @@
     [_priceButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
     _priceButton.titleLabel.font = FuturaLSFOmnomLERegular(15.0f);
     [_priceButton setBackgroundImage:[[UIImage imageNamed:@"rounded_button_light_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
-    
+    [_priceButton setTitle:@"" forState:UIControlStateSelected];
+    [_priceButton setTitle:@"" forState:UIControlStateSelected|UIControlStateHighlighted];
+    UIImage *selectedImage = [[UIImage imageNamed:@"blue_button_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
+    [_priceButton setBackgroundImage:selectedImage forState:UIControlStateSelected|UIControlStateHighlighted];
+    UIImage *checkImage = [[UIImage imageNamed:@"ic_in_wish_list_position"] omn_tintWithColor:[OMNStyler blueColor]];
+    [_priceButton setImage:checkImage forState:UIControlStateSelected];
+    [_priceButton setImage:[UIImage imageNamed:@"ic_in_wish_list_position"] forState:UIControlStateSelected|UIControlStateHighlighted];
     [self addSubview:_priceButton];
     
     NSDictionary *views =

@@ -34,7 +34,7 @@
     
     _menuCategory = menuCategory;
     _restaurantMediator = restaurantMediator;
-    _model = [[OMNMenuCategoriesModel alloc] initWithMenu:_restaurantMediator.menu delegate:self];
+    _model = [[OMNMenuCategoriesModel alloc] initWithMenu:_restaurantMediator.menu cellDelegate:self headerDelegate:nil];
     
   }
   return self;
@@ -115,7 +115,7 @@
 
 - (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectItem:(OMNMenuProductCellItem *)item {
   
-  OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMediator:_restaurantMediator menuProduct:item.menuProduct products:_menuCategory.allProducts];
+  OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMediator:_restaurantMediator menuProduct:item.menuProduct];
   __weak typeof(self)weakSelf = self;
   menuProductVC.didCloseBlock = ^{
     

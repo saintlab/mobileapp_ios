@@ -93,9 +93,8 @@
   
   _refreshButton = [UIButton omn_autolayoutView];
   [_refreshButton addTarget:self action:@selector(refreshTap) forControlEvents:UIControlEventTouchUpInside];
-  [_refreshButton omn_setImage:[UIImage imageNamed:@"refresh_icon"] withColor:[UIColor blackColor]];
+  [_refreshButton omn_setImage:[UIImage imageNamed:@"refresh_icon"] withColor:[UIColor colorWithWhite:0.0f alpha:0.6f]];
   [refreshView addSubview:_refreshButton];
-  
   
   NSDictionary *views =
   @{
@@ -111,11 +110,10 @@
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
   
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:refreshView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  
   [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[refreshLabel]|" options:kNilOptions metrics:metrics views:views]];
   [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[refreshButton]|" options:kNilOptions metrics:metrics views:views]];
-  [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[refreshLabel]-(20)-[refreshButton]|" options:kNilOptions metrics:metrics views:views]];
+  [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[refreshLabel]-(>=0)-[refreshButton]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[refreshView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[clearButton]-(>=0)-[actionButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(leftOffset)-[clearButton]" options:kNilOptions metrics:metrics views:views]];

@@ -230,7 +230,9 @@ OMNPreorderConfirmCellDelegate>
     
     if ([cell isKindOfClass:[OMNPreorderConfirmCell class]]) {
       
-      [(OMNPreorderConfirmCell *)cell setDelegate:self];
+      OMNPreorderConfirmCell *preorderConfirmCell = (OMNPreorderConfirmCell *)cell;
+      preorderConfirmCell.delegate = self;
+      preorderConfirmCell.hidePrice = (indexPath.section > 0);
       
     }
     else if ([cell isKindOfClass:[OMNPreorderActionCell class]]) {

@@ -15,6 +15,7 @@
 @interface OMNPreorderConfirmCell : UITableViewCell
 
 @property (nonatomic, strong) OMNPreorderConfirmCellItem *item;
+@property (nonatomic, assign) BOOL hidePrice;
 @property (nonatomic, weak) id<OMNPreorderConfirmCellDelegate> delegate;
 
 @end
