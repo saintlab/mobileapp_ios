@@ -32,7 +32,7 @@
   return self;
 }
 
-- (NSString *)displayText {
+- (NSString *)weighVolumeText {
   
   NSString *displayText = @"";
   
@@ -55,7 +55,7 @@
   
   NSMutableArray *displayItems = [NSMutableArray arrayWithCapacity:3];
   
-  NSString *displayText = self.displayText;
+  NSString *displayText = self.weighVolumeText;
   if (displayText.length) {
     
     [displayItems addObject:displayText];
@@ -116,7 +116,7 @@
   NSMutableArray *display100Items = [NSMutableArray arrayWithCapacity:4];
   
   if (self.energy_100.length) {
-    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал."), self.energy_100]];
+    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал"), self.energy_100]];
   }
   if (self.protein_100.length) {
     [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %@", @"Белки {PROTEIN}"), self.protein_100]];
@@ -128,16 +128,18 @@
     [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE %@", @"Углеводы {CARBOHYDRATE}"), self.carbohydrate_100]];
   }
   
+  NSString *componentsSeporator = @" \u00B7 ";
+  
   if (display100Items.count) {
     
-    NSString *display100Text = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_100_DISPLAY_TEXT %@", @"На 100 гр.\n{DISPLAY_TEXT}"), [display100Items componentsJoinedByString:@"|"]];
+    NSString *display100Text = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_100_DISPLAY_TEXT %@", @"На 100 гр.\n{DISPLAY_TEXT}"), [display100Items componentsJoinedByString:componentsSeporator]];
     [compositionItems addObject:display100Text];
     
   }
 
   NSMutableArray *displayTotalItems = [NSMutableArray arrayWithCapacity:4];
   if (self.energy_total.length) {
-    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал."), self.energy_total]];
+    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал"), self.energy_total]];
   }
   if (self.protein_total.length) {
     [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %@", @"Белки {PROTEIN}"), self.protein_total]];
@@ -151,7 +153,7 @@
   
   if (displayTotalItems.count) {
     
-    NSString *displayTotalText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_TOTAL_DISPLAY_TEXT %@", @"На порцию\n{DISPLAY_TEXT}"), [displayTotalItems componentsJoinedByString:@"|"]];
+    NSString *displayTotalText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_TOTAL_DISPLAY_TEXT %@", @"На порцию\n{DISPLAY_TEXT}"), [displayTotalItems componentsJoinedByString:componentsSeporator]];
     [compositionItems addObject:displayTotalText];
     
   }

@@ -60,12 +60,12 @@
   _label.text = NSLocalizedString(@"BEST_WITH_PRODUCT_DELIMITER_TEXT", @"Хорошо вместе");
   [self.contentView addSubview:_label];
   
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0f constant:[OMNStyler styler].leftOffset.floatValue]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_label attribute:NSLayoutAttributeLeft multiplier:1.0f constant:-10.0f]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:2.0f]];
   
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0f constant:-[OMNStyler styler].leftOffset.floatValue]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:_label attribute:NSLayoutAttributeRight multiplier:1.0f constant:10.0f]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:rightLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:2.0f]];

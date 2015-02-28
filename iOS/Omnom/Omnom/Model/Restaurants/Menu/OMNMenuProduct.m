@@ -9,6 +9,9 @@
 #import "OMNMenuProduct.h"
 #import "OMNImageManager.h"
 #import <BlocksKit.h>
+#import "OMNUtils.h"
+#import "OMNConstants.h"
+#import <OMNStyler.h>
 
 NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChangeNotification";
 
@@ -69,6 +72,19 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   
 }
 
+- (NSString *)shortDescription {
+  
+  NSString *description = self.Description;
+  NSInteger descriptionLength = 35;
+  if (description.length > descriptionLength) {
+    description = [description substringToIndex:descriptionLength];
+  }
+  description = [description stringByAppendingString:@"..."];
+
+  return description;
+  
+}
+
 - (void)loadImage {
   
   if (!self.hasPhoto) {
@@ -98,6 +114,22 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   
   self.quantity = 0.0;
   [self.selectedModifers removeAllObjects];
+  
+}
+
+- (NSAttributedString *)nameAttributedString {
+  
+  NSString *weightString = self.details.weighVolumeText;
+  NSString *nameString = [NSString stringWithFormat:@"%@ %@", self.name, weightString];
+  
+  NSMutableAttributedString *nameAttributedString = [[NSMutableAttributedString alloc] initWithString:nameString attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(20.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
+  [nameAttributedString setAttributes:
+   @{
+     NSFontAttributeName : FuturaLSFOmnomLERegular(12.0f),
+     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f],
+     } range:[nameString rangeOfString:weightString]];
+  
+  return nameAttributedString;
   
 }
 

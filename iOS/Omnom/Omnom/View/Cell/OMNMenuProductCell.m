@@ -137,7 +137,6 @@
 @implementation OMNMenuProductView {
   
   UILabel *_nameLabel;
-  UILabel *_infoLabel;
   UILabel *_descriptionLabel;
   UIView *_descriptionView;
   NSLayoutConstraint *_imageHeightConstraint;
@@ -178,14 +177,6 @@
   _nameLabel.font = FuturaLSFOmnomLERegular(20.0f);
   [self addSubview:_nameLabel];
   
-  _infoLabel = [UILabel omn_autolayoutView];
-  _infoLabel.opaque = YES;
-  _infoLabel.backgroundColor = backgroundColor;
-  _infoLabel.textAlignment = NSTextAlignmentCenter;
-  _infoLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
-  _infoLabel.font = FuturaLSFOmnomLERegular(12.0f);
-  [self addSubview:_infoLabel];
-  
   _priceButton = [OMNMenuProductPriceButton omn_autolayoutView];
   [self addSubview:_priceButton];
   
@@ -217,7 +208,7 @@
   [moreLabel setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
   moreLabel.numberOfLines = 0;
   moreLabel.font = FuturaOSFOmnomRegular(15.0f);
-  moreLabel.text = NSLocalizedString(@"eще", @"eще");
+  moreLabel.text = NSLocalizedString(@"ещё", @"ещё");
   [_descriptionView addSubview:moreLabel];
   
   _delimiterView = [UIView omn_autolayoutView];
@@ -229,7 +220,6 @@
     @"descriptionLabel" : _descriptionLabel,
     @"moreLabel" : moreLabel,
     @"nameLabel" : _nameLabel,
-    @"infoLabel" : _infoLabel,
     @"priceButton" : _priceButton,
     @"productIV" : _productIV,
     @"delimiterView" : _delimiterView,
@@ -249,8 +239,7 @@
   
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[productIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[productIV]|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[delimiterView]|" options:kNilOptions metrics:metrics views:views]];
 
   _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
@@ -262,7 +251,6 @@
   
   CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
   _nameLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
-  _infoLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
   
 }
@@ -282,7 +270,6 @@
   NSDictionary *views =
   @{
     @"nameLabel" : _nameLabel,
-    @"infoLabel" : _infoLabel,
     @"priceButton" : _priceButton,
     @"productIV" : _productIV,
     @"descriptionLabel" : _descriptionLabel,
@@ -295,12 +282,11 @@
   @{
     @"leftOffset" : [OMNStyler styler].leftOffset,
     @"imageOffset" : (hasPhoto) ? (@(8.0f)) : (@(0.0f)),
-    @"infoLabelOffset" : (menuProduct.details.displayText.length) ? (@(8.0f)) : (@(0.0f)),
     @"descriptionLabelOffset" : (menuProduct.Description.length) ? (@(10.0f)) : (@(0.0f)),
     @"descriptionViewHeight" : (menuProduct.Description.length) ? (@(25.0f)) : (@(0.0f)),
     };
   
-  _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(8)-[nameLabel]-(imageOffset)-[productIV]-(descriptionLabelOffset)-[descriptionView(<=descriptionViewHeight)]-(infoLabelOffset)-[infoLabel]-(8)-[priceButton]-(leftOffset)-[delimiterView(1)]|" options:kNilOptions metrics:metrics views:views];
+  _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(8)-[nameLabel]-(imageOffset)-[productIV]-(descriptionLabelOffset)-[descriptionView(<=descriptionViewHeight)]-(8)-[priceButton]-(leftOffset)-[delimiterView(1)]|" options:kNilOptions metrics:metrics views:views];
   [self addConstraints:_heightConstraints];
   
 }
@@ -309,12 +295,13 @@
   
   _item = item;
   OMNMenuProduct *menuProduct = item.menuProduct;
-  _descriptionLabel.text = [menuProduct.Description stringByAppendingString:@"..."];
+  _descriptionLabel.text = menuProduct.shortDescription;
+
   _productIV.image = menuProduct.photoImage;
   _priceButton.selected = menuProduct.preordered;
-  _nameLabel.text = menuProduct.name;
-  _infoLabel.text = [menuProduct.details displayText];
-  [_priceButton setTitle:[OMNUtils formattedMoneyStringFromKop:menuProduct.price] forState:UIControlStateNormal];
+  _nameLabel.attributedText = menuProduct.nameAttributedString;
+
+  [_priceButton setTitle:[OMNUtils moneyStringFromKop:menuProduct.price] forState:UIControlStateNormal];
   _delimiterView.backgroundColor = (kBottomDelimiterTypeNone == item.delimiterType) ? ([UIColor clearColor]) : ([UIColor colorWithWhite:0.0f alpha:0.3f]);
 
   [self updateHeightConstraints];

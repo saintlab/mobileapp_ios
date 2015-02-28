@@ -45,7 +45,6 @@
   UILabel *_infoLabel;
   UILabel *_descriptionLabel;
   UILabel *_compositionLabel;
-  NSLayoutConstraint *_imageHeightConstraint;
   NSArray *_heightConstraints;
   
 }
@@ -62,7 +61,8 @@
   _productIV = [UIImageView omn_autolayoutView];
   _productIV.opaque = YES;
   _productIV.backgroundColor = backgroundColor;
-  _productIV.contentMode = UIViewContentModeScaleAspectFill;
+  _productIV.contentMode = UIViewContentModeScaleAspectFit;
+  [_productIV setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisVertical];
   [_productIV setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
   _productIV.clipsToBounds = YES;
   [self addSubview:_productIV];
@@ -103,7 +103,7 @@
   _compositionLabel.backgroundColor = backgroundColor;
   _compositionLabel.textAlignment = NSTextAlignmentCenter;
   _compositionLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
-  _compositionLabel.font = FuturaLSFOmnomLERegular(12.0f);
+  _compositionLabel.font = FuturaOSFOmnomRegular(12.0f);
   [self addSubview:_compositionLabel];
   
   NSDictionary *views =
@@ -124,12 +124,9 @@
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[descriptionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[productIV]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[productIV]|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[compositionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  
-  //  _imageHeightConstraint = [NSLayoutConstraint constraintWithItem:_productIV attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
-  //  [self addConstraint:_imageHeightConstraint];
   
   [self updateHeightConstraints];
   
@@ -144,9 +141,7 @@
   }
   
   OMNMenuProduct *menuProduct = self.item.menuProduct;
-  
-  _imageHeightConstraint.constant = (menuProduct.hasPhoto) ? (150.0f) : (0.0f);
-  
+
   NSDictionary *views =
   @{
     @"nameLabel" : _nameLabel,

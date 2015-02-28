@@ -27,7 +27,7 @@
 @property (nonatomic, copy) NSString *ingredients;
 
 - (instancetype)initWithJsonData:(id)jsonData;
-- (NSString *)displayText;
+- (NSString *)weighVolumeText;
 - (NSString *)displayFullText;
 - (NSString *)compositionText;
 

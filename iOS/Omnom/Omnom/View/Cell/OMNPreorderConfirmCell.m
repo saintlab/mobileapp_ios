@@ -156,7 +156,7 @@
   
   _menuProduct = menuProduct;
   _nameLabel.text = menuProduct.name;
-  _infoLabel.text = _menuProduct.details.displayText;
+  _infoLabel.text = _menuProduct.details.weighVolumeText;
   if (_menuProduct.quantity > 0.0) {
 
     NSString *priceText = [NSString stringWithFormat:@"%.f x %@", _menuProduct.quantity, [OMNUtils moneyStringFromKop:_menuProduct.price]];

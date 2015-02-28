@@ -58,7 +58,7 @@
     };
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(1@999)-[button]-(1@999)-|" options:kNilOptions metrics:metrics views:views]];
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(2@999)-[button]-(2@999)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 

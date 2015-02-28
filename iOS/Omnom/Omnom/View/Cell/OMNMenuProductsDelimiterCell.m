@@ -76,7 +76,7 @@
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[line]" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[line]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[line]|" options:kNilOptions metrics:metrics views:views]];
   
   _lineHeightConstraint = [NSLayoutConstraint constraintWithItem:_line attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:1.0f];
   [self.contentView addConstraint:_lineHeightConstraint];

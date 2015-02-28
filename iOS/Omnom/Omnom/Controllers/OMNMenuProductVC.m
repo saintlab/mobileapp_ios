@@ -54,7 +54,8 @@
 
   _menuProductFullWithRecommendations.delegate = self;
   
-  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
+  [self.navigationItem setHidesBackButton:YES animated:NO];
+  self.navigationItem.titleView = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
 }
 

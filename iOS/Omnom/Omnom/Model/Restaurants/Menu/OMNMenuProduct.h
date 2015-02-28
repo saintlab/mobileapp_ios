@@ -20,6 +20,7 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 @property (nonatomic, assign) long long price;
 @property (nonatomic, assign) double quantity;
 @property (nonatomic, copy) NSString *Description;
+@property (nonatomic, strong, readonly) NSString *shortDescription;
 @property (nonatomic, copy) NSString *photo;
 @property (nonatomic, strong) UIImage *photoImage;
 @property (nonatomic, strong) NSArray *modifiers;
@@ -36,5 +37,7 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 - (BOOL)preordered;
 - (void)loadImage;
 - (void)resetSelection;
+
+- (NSAttributedString *)nameAttributedString;
 
 @end

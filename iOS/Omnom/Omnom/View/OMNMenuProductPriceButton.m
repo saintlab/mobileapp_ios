@@ -34,7 +34,7 @@
     [self setImage:iconImage forState:UIControlStateSelected];
     [self setImage:iconImage forState:UIControlStateSelected|kUIControlStateCustomState];
     [self setImage:iconImage forState:UIControlStateSelected|UIControlStateHighlighted];
-    self.titleLabel.font = FuturaLSFOmnomLERegular(15.0f);
+    self.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
     [self setBackgroundImage:[[UIImage imageNamed:@"rounded_button_light_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
     UIImage *selectedImage = [[UIImage imageNamed:@"blue_button_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
     [self setBackgroundImage:selectedImage forState:UIControlStateSelected];
