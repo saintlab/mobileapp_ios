@@ -37,6 +37,7 @@
   [UIView animateWithDuration:duration animations:^{
     
     fromViewController.backgroundView.alpha = 0.0f;
+    fromViewController.navigationFadeView.alpha = 0.0f;
     menuTable.frame = toTableFrame;
     
   } completion:^(BOOL finished) {

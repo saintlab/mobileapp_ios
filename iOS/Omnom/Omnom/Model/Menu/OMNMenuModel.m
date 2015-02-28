@@ -77,7 +77,7 @@ const CGFloat kMenuTableTopOffset = 20.0f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  CGFloat heightForRow = 50.0f;
+  CGFloat heightForRow = 44.0f;
   if (0 == indexPath.section) {
     
     heightForRow = 44.0f;

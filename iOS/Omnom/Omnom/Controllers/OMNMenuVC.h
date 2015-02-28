@@ -15,6 +15,7 @@
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 @property (nonatomic, strong) NSIndexPath *selectedIndexPath;
 @property (nonatomic, strong, readonly) UIView *fadeView;
+@property (nonatomic, strong, readonly) UIView *navigationFadeView;
 @property (nonatomic, strong, readonly) UIView *menuHeaderView;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
