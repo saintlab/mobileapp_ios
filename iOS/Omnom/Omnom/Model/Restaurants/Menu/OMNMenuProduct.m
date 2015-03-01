@@ -72,7 +72,11 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   
 }
 
-- (NSString *)shortDescription {
+- (NSAttributedString *)shortDescription {
+  
+  if (0 == self.Description.length) {
+    return nil;
+  }
   
   NSString *description = self.Description;
   NSInteger descriptionLength = 35;
@@ -81,7 +85,10 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   }
   description = [description stringByAppendingString:@"..."];
 
-  return description;
+  NSMutableAttributedString *descriptionAttributedString = [[NSMutableAttributedString alloc] initWithString:description attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(15.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
+  [descriptionAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"ещё", @"ещё") attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(15.0f) textColor:[OMNStyler blueColor] textAlignment:NSTextAlignmentCenter]]];
+  
+  return descriptionAttributedString;
   
 }
 
@@ -118,18 +125,32 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
 }
 
 - (NSAttributedString *)nameAttributedString {
-  
+
   NSString *weightString = self.details.weighVolumeText;
-  NSString *nameString = [NSString stringWithFormat:@"%@ %@", self.name, weightString];
-  
-  NSMutableAttributedString *nameAttributedString = [[NSMutableAttributedString alloc] initWithString:nameString attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(20.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
-  [nameAttributedString setAttributes:
-   @{
-     NSFontAttributeName : FuturaLSFOmnomLERegular(12.0f),
-     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f],
-     } range:[nameString rangeOfString:weightString]];
-  
-  return nameAttributedString;
+  if (weightString.length) {
+    
+    NSString *nameString = [NSString stringWithFormat:@"%@ %@", self.name, weightString];
+    
+    NSMutableAttributedString *nameAttributedString = [[NSMutableAttributedString alloc] initWithString:nameString attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(20.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
+    [nameAttributedString setAttributes:
+     @{
+       NSFontAttributeName : FuturaLSFOmnomLERegular(12.0f),
+       NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f],
+       } range:[nameString rangeOfString:weightString]];
+    
+    return nameAttributedString;
+    
+  }
+  else if (self.name) {
+    
+    return [[NSAttributedString alloc] initWithString:self.name attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(20.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
+    
+  }
+  else {
+    
+    return nil;
+    
+  }
   
 }
 

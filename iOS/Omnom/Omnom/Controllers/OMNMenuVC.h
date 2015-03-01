@@ -8,12 +8,13 @@
 
 #import "OMNBackgroundVC.h"
 #import "OMNRestaurantMediator.h"
+#import "OMNMenuProductCell.h"
 
 @interface OMNMenuVC : OMNBackgroundVC
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
-@property (nonatomic, strong) NSIndexPath *selectedIndexPath;
+@property (nonatomic, weak) OMNMenuProductCell *selectedCell;
 @property (nonatomic, strong, readonly) UIView *fadeView;
 @property (nonatomic, strong, readonly) UIView *navigationFadeView;
 @property (nonatomic, strong, readonly) UIView *menuHeaderView;

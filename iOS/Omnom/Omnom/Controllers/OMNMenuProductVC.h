@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "OMNMenuProduct.h"
 #import "OMNRestaurantMediator.h"
+#import "OMNMenuProductFullCell.h"
 
 @interface OMNMenuProductVC : UITableViewController
 
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator menuProduct:(OMNMenuProduct *)menuProduct;
+- (OMNMenuProductFullCell *)rootCell;
 
 @end

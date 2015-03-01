@@ -26,7 +26,7 @@
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
   toViewController.view.frame = [transitionContext finalFrameForViewController:toViewController];
-  UITableViewCell *cell = [toViewController.tableView cellForRowAtIndexPath:toViewController.selectedIndexPath];
+  UITableViewCell *cell = [toViewController.tableView cellForRowAtIndexPath:[toViewController.tableView indexPathForSelectedRow]];
   
   CGRect cellFrame = [cell convertRect:cell.bounds toView:toViewController.view];
   

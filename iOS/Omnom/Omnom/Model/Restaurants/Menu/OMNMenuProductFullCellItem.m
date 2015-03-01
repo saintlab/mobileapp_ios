@@ -13,19 +13,19 @@
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
-  static OMNMenuProductFullView *menuProductFullView = nil;
+  static OMNMenuProductFullCell *menuProductFullCell = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    menuProductFullView = [[OMNMenuProductFullView alloc] initWithFrame:tableView.bounds];
-    menuProductFullView.hidden = YES;
+    menuProductFullCell = [[OMNMenuProductFullCell alloc] initWithFrame:tableView.bounds];
+    menuProductFullCell.hidden = YES;
   });
   
-  menuProductFullView.bounds = tableView.bounds;
-  menuProductFullView.item = self;
-  [menuProductFullView setNeedsLayout];
-  [menuProductFullView layoutIfNeeded];
+  menuProductFullCell.frame = tableView.bounds;
+  menuProductFullCell.item = self;
+  [menuProductFullCell setNeedsLayout];
+  [menuProductFullCell layoutIfNeeded];
   
-  CGFloat height = [menuProductFullView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+  CGFloat height = [menuProductFullCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
   
   // Add an extra point to the height to account for the cell separator, which is added between the bottom
   // of the cell's contentView and the bottom of the table view cell.

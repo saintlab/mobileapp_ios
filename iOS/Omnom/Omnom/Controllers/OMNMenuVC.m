@@ -141,9 +141,10 @@ OMNMenuCategoryHeaderViewDelegate>
 
 #pragma mark - OMNMenuProductWithRecommedtationsCellDelegate
 
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectItem:(OMNMenuProductCellItem *)item {
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectCell:(OMNMenuProductCell *)cell {
   
-  OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMediator:_restaurantMediator menuProduct:item.menuProduct];
+  self.selectedCell = cell;
+  OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMediator:_restaurantMediator menuProduct:cell.item.menuProduct];
   __weak typeof(self)weakSelf = self;
   menuProductVC.didCloseBlock = ^{
     
@@ -154,7 +155,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
 }
 
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editItem:(OMNMenuProductCellItem *)item {
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editCell:(OMNMenuProductCell *)cell {
   
   __weak typeof(self)weakSelf = self;
   NSIndexPath *indexPath = [_tableView indexPathForCell:menuProductWithRecommedtationsCell];
@@ -162,9 +163,9 @@ OMNMenuCategoryHeaderViewDelegate>
     [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
   }
   
-  [item editMenuProductFromController:self withCompletion:^{
+  [cell.item editMenuProductFromController:self withCompletion:^{
     
-    if ([menuProductWithRecommedtationsCell.item.menuProduct isEqual:item.menuProduct]) {
+    if ([menuProductWithRecommedtationsCell.item.menuProduct isEqual:cell.item.menuProduct]) {
       [weakSelf updateTableViewWithSelectedItem:menuProductWithRecommedtationsCell.item andScrollToCell:menuProductWithRecommedtationsCell];
     }
     

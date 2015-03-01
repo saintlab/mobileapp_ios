@@ -29,6 +29,8 @@
 #import "OMNCategoryToMenuTransition.h"
 #import "OMNRestaurantToMenuTransition.h"
 #import "OMNMenuToRestaurantTransition.h"
+#import "OMNMenuToProductTransition.h"
+#import "OMNProductToMenuTransition.h"
 
 @implementation OMNNavigationControllerDelegate {
   
@@ -70,6 +72,8 @@
     [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
     [self addTansitionForClass:[OMNRestaurantToMenuTransition class]];
     [self addTansitionForClass:[OMNMenuToRestaurantTransition class]];
+    [self addTansitionForClass:[OMNMenuToProductTransition class]];
+    [self addTansitionForClass:[OMNProductToMenuTransition class]];
 
   }
   return self;

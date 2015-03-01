@@ -95,13 +95,13 @@
 
 - (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell {
   
-  [self.delegate menuProductWithRecommedtationsCell:self editItem:menuProductCell.item];
+  [self.delegate menuProductWithRecommedtationsCell:self editCell:menuProductCell];
   
 }
 
 - (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell {
   
-  [self.delegate menuProductWithRecommedtationsCell:self didSelectItem:menuProductCell.item];
+  [self.delegate menuProductWithRecommedtationsCell:self didSelectCell:menuProductCell];
   
 }
 

@@ -58,7 +58,7 @@
 - (CGSize)sizeThatFits:(CGSize)size {
   
   [self layoutIfNeeded];
-  size = [self systemLayoutSizeFittingSize:size];
+  size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
   return size;
   
 }

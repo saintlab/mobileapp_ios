@@ -53,14 +53,7 @@
 
 - (NSString *)displayFullText {
   
-  NSMutableArray *displayItems = [NSMutableArray arrayWithCapacity:3];
-  
-  NSString *displayText = self.weighVolumeText;
-  if (displayText.length) {
-    
-    [displayItems addObject:displayText];
-    
-  }
+  NSMutableArray *displayItems = [NSMutableArray arrayWithCapacity:2];
   
   switch (self.persons) {
     case 0: {

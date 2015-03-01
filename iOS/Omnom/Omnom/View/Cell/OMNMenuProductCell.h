@@ -11,29 +11,16 @@
 #import "OMNMenuProductPriceButton.h"
 
 @protocol OMNMenuProductCellDelegate;
-@class OMNMenuProductView;
 
 @interface OMNMenuProductCell : UITableViewCell
 
 @property (nonatomic, weak) id<OMNMenuProductCellDelegate> delegate;
 @property (nonatomic, strong) OMNMenuProductCellItem *item;
-@property (nonatomic, strong) OMNMenuProductView *menuProductView;
-
-- (void)priceTap;
-
-@end
-
-@interface OMNMenuProductView : UIView {
-  
-  OMNMenuProductCellItem *_item;
-  OMNMenuProductPriceButton *_priceButton;
-  UIImageView *_productIV;
-  
-}
-
-@property (nonatomic, strong) OMNMenuProductCellItem *item;
 @property (nonatomic, strong, readonly) OMNMenuProductPriceButton *priceButton;
 @property (nonatomic, strong, readonly) UIImageView *productIV;
+@property (nonatomic, strong, readonly) UILabel *nameLabel;
+
+- (void)priceTap;
 
 @end
 

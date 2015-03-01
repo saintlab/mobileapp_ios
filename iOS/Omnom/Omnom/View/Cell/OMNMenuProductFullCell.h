@@ -14,7 +14,3 @@
 @interface OMNMenuProductFullCell : OMNMenuProductCell
 
 @end
-
-@interface OMNMenuProductFullView : OMNMenuProductView
-
-@end

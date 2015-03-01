@@ -101,9 +101,14 @@ NSString *omnCommaString() {
   NSMutableDictionary *textAttributes =
   [@{
      NSFontAttributeName : font,
-     NSForegroundColorAttributeName : textColot,
      NSParagraphStyleAttributeName : attributeStyle,
      } mutableCopy];
+
+  if (textColot) {
+    
+    textAttributes[NSForegroundColorAttributeName] = textColot;
+    
+  }
   
   return textAttributes;
   

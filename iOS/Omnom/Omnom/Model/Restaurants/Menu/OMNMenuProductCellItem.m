@@ -31,20 +31,20 @@
     return _calculationHeight;
   }
   
-  static OMNMenuProductView *menuProductView = nil;
+  static OMNMenuProductCell *menuProductCell = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    menuProductView = [[OMNMenuProductView alloc] initWithFrame:tableView.bounds];
-    menuProductView.hidden = YES;
+    menuProductCell = [[OMNMenuProductCell alloc] initWithFrame:tableView.bounds];
+    menuProductCell.hidden = YES;
   });
   
-  menuProductView.bounds = tableView.bounds;
-  menuProductView.item = self;
-  [menuProductView setNeedsLayout];
-  [menuProductView layoutIfNeeded];
+  menuProductCell.bounds = tableView.bounds;
+  menuProductCell.item = self;
+  [menuProductCell setNeedsLayout];
+  [menuProductCell layoutIfNeeded];
   
-  CGFloat height = [menuProductView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
-  
+  CGFloat height = [menuProductCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+
   // Add an extra point to the height to account for the cell separator, which is added between the bottom
   // of the cell's contentView and the bottom of the table view cell.
   height += 1.0f;
