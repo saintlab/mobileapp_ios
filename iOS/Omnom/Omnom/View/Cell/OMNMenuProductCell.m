@@ -84,6 +84,7 @@
   [self.contentView addSubview:_nameLabel];
   
   _priceButton = [OMNMenuProductPriceButton omn_autolayoutView];
+  [_priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
   [_priceButton setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisVertical];
   [self.contentView addSubview:_priceButton];
   
