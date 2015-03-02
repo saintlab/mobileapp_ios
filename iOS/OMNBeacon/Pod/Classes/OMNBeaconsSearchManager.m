@@ -25,7 +25,7 @@
 }
 
 - (void)dealloc {
-  
+
   [self stop];
   
 }
@@ -253,12 +253,6 @@
   [self stopRangingNearestBeaconsWithError:NO];
   _beaconRangingManager = nil;
   
-}
-
-- (void)stopRangingTimer {
-
-  
-
 }
 
 - (void)beaconSearchTimeout {
