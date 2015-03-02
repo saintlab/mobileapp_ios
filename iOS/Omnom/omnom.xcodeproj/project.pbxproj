@@ -377,8 +377,6 @@
 		939DA163195405650063AB23 /* OMNAuthorizationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA160195405650063AB23 /* OMNAuthorizationVC.m */; };
 		939DA1761958226B0063AB23 /* OMNAnalitics.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA1751958226B0063AB23 /* OMNAnalitics.m */; };
 		939DA1771958226B0063AB23 /* OMNAnalitics.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA1751958226B0063AB23 /* OMNAnalitics.m */; };
-		939F98EA197526C70051822E /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 939F98E9197526C70051822E /* AirshipConfig.plist */; };
-		939F98EB197526C70051822E /* AirshipConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 939F98E9197526C70051822E /* AirshipConfig.plist */; };
 		939F990C19752BE90051822E /* OMNConfirmCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98EF19752BE90051822E /* OMNConfirmCodeVC.m */; };
 		939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98EF19752BE90051822E /* OMNConfirmCodeVC.m */; };
 		939F991019752BE90051822E /* OMNAddBankCardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F98F519752BE90051822E /* OMNAddBankCardVC.m */; };
@@ -999,7 +997,6 @@
 		939DA160195405650063AB23 /* OMNAuthorizationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationVC.m; sourceTree = "<group>"; };
 		939DA1741958226B0063AB23 /* OMNAnalitics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAnalitics.h; sourceTree = "<group>"; };
 		939DA1751958226B0063AB23 /* OMNAnalitics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAnalitics.m; sourceTree = "<group>"; };
-		939F98E9197526C70051822E /* AirshipConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AirshipConfig.plist; sourceTree = "<group>"; };
 		939F98EE19752BE90051822E /* OMNConfirmCodeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNConfirmCodeVC.h; sourceTree = "<group>"; };
 		939F98EF19752BE90051822E /* OMNConfirmCodeVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNConfirmCodeVC.m; sourceTree = "<group>"; };
 		939F98F419752BE90051822E /* OMNAddBankCardVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAddBankCardVC.h; sourceTree = "<group>"; };
@@ -2154,7 +2151,6 @@
 			children = (
 				935D8C901A38292100877C02 /* Fonts */,
 				932B186919AF3C01009E440E /* Sound */,
-				939F98E9197526C70051822E /* AirshipConfig.plist */,
 				9391F6591A5D5DAA00594CD5 /* tips.json */,
 			);
 			path = app_data;
@@ -2758,7 +2754,6 @@
 				93F21BED19B6284B00D5F78A /* config_stand.json in Resources */,
 				93D59A891A41F7C600C3491F /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
 				9378228F1963E29900CE6661 /* OMNOrderCalculationVC.xib in Resources */,
-				939F98EA197526C70051822E /* AirshipConfig.plist in Resources */,
 				938F3A55198BF25300AB288E /* OMNAuthorizationVC.json in Resources */,
 				935C284219066755003B4881 /* fill-form in Resources */,
 				93750B2F196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
@@ -2823,7 +2818,6 @@
 				93040A4C1A2C36B700D87CBD /* user_stub.json in Resources */,
 				935D8C971A38293B00877C02 /* Futura-OSF-Omnom-Medium.otf in Resources */,
 				9389456C19B5957100C37C82 /* config.json in Resources */,
-				939F98EB197526C70051822E /* AirshipConfig.plist in Resources */,
 				938F3A44198B859100AB288E /* timings.json in Resources */,
 				93F21BEE19B6284B00D5F78A /* config_stand.json in Resources */,
 				937822901963E29900CE6661 /* OMNOrderCalculationVC.xib in Resources */,

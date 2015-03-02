@@ -344,7 +344,7 @@
 
 - (void)omn_setup {
   
-  UIImageView *gradientView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"restaurant_bg_gradient"]];
+  UIImageView *gradientView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu_gradient_bg"]];
   gradientView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.backgroundView addSubview:gradientView];
   
