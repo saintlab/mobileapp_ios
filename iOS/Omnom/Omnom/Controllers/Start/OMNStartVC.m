@@ -89,12 +89,8 @@ OMNSearchRestaurantVCDelegate>
 
   if (_searchRestaurantVC) {
     
-    __weak typeof(self)weakSelf = self;
-    [self dismissViewControllerAnimated:YES completion:^{
-      
-      [weakSelf startSearchingRestaurant];
-      
-    }];
+    _searchRestaurantVC = nil;
+    [self dismissViewControllerAnimated:YES completion:nil];
     
   }
   else {

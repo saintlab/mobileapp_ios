@@ -20,6 +20,7 @@
 #import "OMNTableButton.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
+#import "UIView+omn_autolayout.h"
 
 @interface OMNR1VC ()
 <OMNRestaurantInfoVCDelegate>
@@ -344,18 +345,26 @@
 
 - (void)omn_setup {
   
-  UIImageView *gradientView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu_gradient_bg"]];
-  gradientView.translatesAutoresizingMaskIntoConstraints = NO;
+  UIImageView *topGradientView = [UIImageView omn_autolayoutView];
+  topGradientView.image = [UIImage imageNamed:@"top_gradient"];
+  [self.backgroundView addSubview:topGradientView];
+  
+  UIImageView *gradientView = [UIImageView omn_autolayoutView];
+  gradientView.image = [UIImage imageNamed:@"menu_gradient_bg"];
   [self.backgroundView addSubview:gradientView];
   
   NSMutableDictionary *views =
   [@{
+     @"topGradientView" : topGradientView,
      @"gradientView" : gradientView,
      } mutableCopy];
   
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:kNilOptions metrics:nil views:views]];
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[gradientView]|" options:kNilOptions metrics:nil views:views]];
-
+  
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:kNilOptions metrics:nil views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topGradientView]" options:kNilOptions metrics:nil views:views]];
+  
   if (_restaurantMediator.restaurant.settings.has_menu) {
     
     _menuModel = [[OMNMenuModel alloc] init];

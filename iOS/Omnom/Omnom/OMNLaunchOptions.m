@@ -29,7 +29,7 @@
 //    _qr = @"http://omnom.menu/zr9b"; //saintlab-iiko-dev
 
 //    _qr = @"http://omnom.menu/qr-hash-for-table-5-at-saintlab-rkeeper-v6";
-    
+    _qr = @"http://omnom.menu/qr/0ce5e61586b7971ba9929a3b3da2a021";
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";
 //    _qr = @"qr-code-for-2-saintlab-iiko";
 //    _qr = @"http://omnom.menu/qr/d5495734ed5491655234e528d50972e9"; //бирман

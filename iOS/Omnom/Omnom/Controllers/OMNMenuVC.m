@@ -66,7 +66,10 @@ OMNMenuCategoryHeaderViewDelegate>
     
     OMNMenuCategorySectionItem *firstCategory = [_model.categories firstObject];
     firstCategory.selected = YES;
-    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    firstCategory.entered = YES;
+    [_tableView beginUpdates];
+    [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];
+    [_tableView endUpdates];
     
   }
   
@@ -233,7 +236,7 @@ OMNMenuCategoryHeaderViewDelegate>
   selectedSectionItem.entered = YES;
   
   [_tableView beginUpdates];
-  [_tableView reloadSections:reloadIndexSet withRowAnimation:UITableViewRowAnimationFade];
+  [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];
   [_tableView endUpdates];
   if (NSNotFound != selectedIndex &&
       selectedSectionItem.rowItems.count) {
