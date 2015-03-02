@@ -35,7 +35,7 @@
   if (self) {
     
     _addBeaconLock = dispatch_semaphore_create(1);
-    
+
   }
   return self;
 }
@@ -108,7 +108,7 @@
       case CBCentralManagerStatePoweredOff: {
         
         [weakSelf stopRangingNearestBeaconsWithError:NO];
-        [weakSelf.delegate beaconSearchManager:self didDetermineBLEState:kBLESearchManagerRequestTurnBLEOn];
+        [weakSelf.delegate beaconSearchManager:weakSelf didDetermineBLEState:kBLESearchManagerRequestTurnBLEOn];
         
       } break;
       case CBCentralManagerStateUnauthorized: {
@@ -135,7 +135,7 @@
 
 - (void)startRangingBeacons {
   
-  if (nil == _beaconRangingManager) {
+  if (!_beaconRangingManager) {
     __weak typeof(self)weakSelf = self;
     _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
       

@@ -250,6 +250,7 @@
   
   _beaconsSearchManager.delegate = nil;
   [_beaconsSearchManager stop];
+  _beaconsSearchManager = nil;
   
 }
 

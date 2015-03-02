@@ -12,13 +12,6 @@
 
 @implementation OMNTransitionFromCalculatorToOrder
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-  }
-  return self;
-}
-
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
   OMNCalculatorVC *fromViewController = (OMNCalculatorVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];

@@ -10,12 +10,7 @@
 #import <OMNStyler.h>
 #import "OMNSplashToSearchBeaconTransition.h"
 
-@implementation OMNSplashToSearchBeaconTransition {
-  
-  CAShapeLayer *_layer;
-  CGRect _circleFrame;
-  
-}
+@implementation OMNSplashToSearchBeaconTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
@@ -31,15 +26,15 @@
   
   UIImageView *fromViewSnapshot = [[UIImageView alloc] initWithImage:toViewController.backgroundView.image];
   fromViewSnapshot.contentMode = UIViewContentModeCenter;
-  _layer = [CAShapeLayer layer];
-  _layer.fillColor = [UIColor colorWithPatternImage:fromViewController.bgIV.image].CGColor;
+  CAShapeLayer *layer = [CAShapeLayer layer];
+  layer.fillColor = [UIColor colorWithPatternImage:fromViewController.bgIV.image].CGColor;
   CGFloat diametr = hypotf(containerView.frame.size.width, containerView.frame.size.height);
   CGFloat xOffset = (diametr - containerView.frame.size.width)/2.0f;
   CGFloat yOffset = (diametr - containerView.frame.size.height)/2.0f;
-  _layer.frame = containerView.bounds;
-  _layer.transform = CATransform3DMakeRotation(M_PI, 1.0f, 0.0f, 0.0f);
+  layer.frame = containerView.bounds;
+  layer.transform = CATransform3DMakeRotation(M_PI, 1.0f, 0.0f, 0.0f);
   
-  [fromViewSnapshot.layer addSublayer:_layer];
+  [fromViewSnapshot.layer addSublayer:layer];
   
   CGPoint circleCenter = toViewController.circleButton.center;
 
@@ -64,9 +59,9 @@
   [containerView addSubview:fromViewSnapshot];
   fromViewController.view.hidden = YES;
   
-  _circleFrame = [toViewController.view.layer convertRect:toViewController.circleButton.frame toLayer:_layer];
+  CGRect circleFrame = [toViewController.view.layer convertRect:toViewController.circleButton.frame toLayer:layer];
   UIBezierPath *fromPath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(-xOffset, -yOffset, diametr, diametr)];
-  UIBezierPath *toPath = [UIBezierPath bezierPathWithOvalInRect:_circleFrame];
+  UIBezierPath *toPath = [UIBezierPath bezierPathWithOvalInRect:circleFrame];
   
   NSTimeInterval delay = 0.0;
   
@@ -76,14 +71,14 @@
   pathAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
   pathAnimation.fromValue = (id)fromPath.CGPath;
   pathAnimation.toValue = (id)toPath.CGPath;
-  _layer.path = toPath.CGPath;
-  _layer.masksToBounds = YES;
-  [_layer addAnimation:pathAnimation forKey:@"path"];
+  layer.path = toPath.CGPath;
+  layer.masksToBounds = YES;
+  [layer addAnimation:pathAnimation forKey:@"path"];
 
   CAShapeLayer *colorLayer = [CAShapeLayer layer];
   colorLayer.frame = containerView.bounds;
   colorLayer.fillColor = [UIColor clearColor].CGColor;
-  [_layer addSublayer:colorLayer];
+  [layer addSublayer:colorLayer];
   
   CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
   colorAnimation.duration = duration;
@@ -121,6 +116,8 @@
     fromViewSnapshot.alpha = 0.0f;
     [fromViewSnapshot removeFromSuperview];
     fromViewController.view.hidden = NO;
+    [layer removeFromSuperlayer];
+
     [transitionContext completeTransition:!transitionContext.transitionWasCancelled];
     
   }];

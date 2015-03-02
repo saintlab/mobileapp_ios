@@ -11,14 +11,7 @@
 #import "OMNOrderCalculationVC.h"
 #import "UIView+screenshot.h"
 
-@implementation OMNTransitionFromOrderToCalculator 
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-  }
-  return self;
-}
+@implementation OMNTransitionFromOrderToCalculator
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
