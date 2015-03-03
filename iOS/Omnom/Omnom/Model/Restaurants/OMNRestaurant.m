@@ -17,6 +17,33 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
 
 }
 
+OMNRestaurantMode enteranceModeFromString(NSString *string) {
+
+//#warning kRestaurantMode2gis_dinner
+//  return kRestaurantMode2gis_dinner;
+//  
+  OMNRestaurantMode enteranceMode = kRestaurantModeNone;
+  
+  if (string.length) {
+    return enteranceMode;
+  }
+  
+  static dispatch_once_t onceToken;
+  static NSDictionary *modes = nil;
+  dispatch_once(&onceToken, ^{
+    modes =
+    @{
+      @"none" : @(kRestaurantModeNone),
+      @"bar" : @(kRestaurantModeBar),
+      @"2gis_dinner" : @(kRestaurantMode2gis_dinner),
+      };
+  });
+  
+  enteranceMode = [modes[string] integerValue];
+  return enteranceMode;
+  
+}
+
 - (instancetype)initWithJsonData:(id)jsonData {
   
   if (![jsonData isKindOfClass:[NSDictionary class]]) {
@@ -30,6 +57,7 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
     _id = [jsonData[@"id"] description];
     _is_demo = [jsonData[@"is_demo"] boolValue];
     _available = (jsonData[@"available"]) ? ([jsonData[@"available"] boolValue]) : (YES);
+    _enterance_mode = enteranceModeFromString(jsonData[@"enterance_mode"]);
     self.title = jsonData[@"title"];
     self.Description = jsonData[@"description"];
 

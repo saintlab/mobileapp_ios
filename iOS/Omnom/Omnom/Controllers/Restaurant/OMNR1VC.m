@@ -144,25 +144,33 @@
 
 - (void)updateNavigationButtons {
   
-  if (_restaurantMediator.restaurant.is_demo) {
+  self.navigationItem.leftBarButtonItem = nil;
+  self.navigationItem.rightBarButtonItem = nil;
+
+  OMNRestaurant *restaurant = _restaurantMediator.restaurant;
+  if (restaurant.is_demo) {
     
     OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
     [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
     [cancelButton addTarget:_restaurantMediator action:@selector(exitRestaurant) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
-    self.navigationItem.rightBarButtonItem = nil;
     
   }
   else {
     
-    UIColor *color = _restaurantMediator.restaurant.decoration.antagonist_color;
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
-    
+    UIColor *color = restaurant.decoration.antagonist_color;
     UIButton *userButton = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:_restaurantMediator action:@selector(showUserProfile)];
-    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:userButton]];
-    
-    if (!_showTableButtonAnimation) {
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:userButton];
+
+    if (kRestaurantMode2gis_dinner != restaurant.enterance_mode) {
       
+      self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
+
+    }
+    
+    if (!_showTableButtonAnimation &&
+        _restaurantMediator.visitor.showTableButton) {
+
       _showTableButtonAnimation = YES;
       _tableButton = [OMNTableButton buttonWithColor:color];
       [_tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
@@ -290,17 +298,22 @@
 
 - (void)loadBackgroundIfNeeded {
 
-  UIImage *background_image = _restaurantMediator.restaurant.decoration.background_image;
-  if (background_image) {
-    
-    self.backgroundImage = background_image;
+  OMNRestaurantDecoration *decoration = _restaurantMediator.restaurant.decoration;
+  if (decoration.background_image) {
+
+    self.backgroundImage = decoration.background_image;
     return;
     
   }
-
+  
   [self setBackgroundImage:[UIImage imageNamed:@"wood_bg"] animated:NO];
+  
+  if (!decoration.hasBackgroundImage) {
+    return;
+  }
+  
   __weak typeof(self)weakSelf = self;
-  [_restaurantMediator.restaurant.decoration loadBackground:^(UIImage *image) {
+  [decoration loadBackground:^(UIImage *image) {
     
     if (image) {
       

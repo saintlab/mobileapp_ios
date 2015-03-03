@@ -72,6 +72,12 @@
   
 }
 
+- (BOOL)hasBackgroundImage {
+  
+  return (self.background_imageUrl.length > 0);
+  
+}
+
 - (void)loadBackground:(OMNImageBlock)imageBlock {
   
   __weak typeof(self)weakSelf = self;

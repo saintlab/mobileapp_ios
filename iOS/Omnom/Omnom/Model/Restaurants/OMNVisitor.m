@@ -74,6 +74,16 @@
   
 }
 
+- (BOOL)showTableButton {
+  
+  return
+  (
+   self.table &&
+   kRestaurantMode2gis_dinner != self.restaurant.enterance_mode
+   );
+  
+}
+
 - (BOOL)hasOrders {
   
   @synchronized(self) {

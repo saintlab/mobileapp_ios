@@ -20,6 +20,7 @@
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
 - (NSString *)tableName;
 - (NSUInteger)selectedOrderIndex;
+- (BOOL)showTableButton;
 - (BOOL)hasOrders;
 - (BOOL)ordersHasProducts;
 - (void)updateOrdersIfNeeded;

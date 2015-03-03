@@ -59,7 +59,7 @@
   OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
   NSMutableArray *moneyItems = [NSMutableArray array];
   [moneyItems addObject:[[OMNBankCardUserInfoItem alloc] init]];
-  if (_restaurantMediator.visitor.table) {
+  if (_restaurantMediator.visitor.showTableButton) {
   
     [moneyItems addObject:[[OMNTableUserInfoItem alloc] initWithMediator:_restaurantMediator]];
     

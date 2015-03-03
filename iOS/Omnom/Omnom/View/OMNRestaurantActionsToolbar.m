@@ -81,8 +81,10 @@
 
 - (void)updateRestaurantActionButtons {
   
+  OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
   OMNOrderToolbarButton *callBillButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:_restaurantMediator action:@selector(requestTableOrders)];
-
+  callBillButton.hidden = !settings.has_table_order;
+  
   UIButton *callWaiterButton = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:nil action:nil];
   __weak typeof(self)weakSelf = self;
   [callWaiterButton bk_addEventHandler:^(id sender) {
@@ -91,7 +93,6 @@
     [weakSelf.restaurantMediator waiterCall];
     
   } forControlEvents:UIControlEventTouchUpInside];
-  OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
   callWaiterButton.hidden = !settings.has_waiter_call;
   NSArray *bottomToolbarItems = nil;
   

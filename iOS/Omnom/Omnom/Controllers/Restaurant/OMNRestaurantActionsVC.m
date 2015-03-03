@@ -34,6 +34,7 @@
   [super viewDidLoad];
   
   self.view.opaque = YES;
+  [self.navigationItem setHidesBackButton:YES animated:NO];
   self.view.backgroundColor = [UIColor whiteColor];
   
   [self setupControllers];
@@ -49,7 +50,6 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  [self.navigationItem setHidesBackButton:YES animated:NO];
   [self.navigationController setNavigationBarHidden:YES animated:NO];
   
 }
