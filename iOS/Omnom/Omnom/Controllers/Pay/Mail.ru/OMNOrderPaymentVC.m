@@ -75,10 +75,11 @@
   
   self.bankCardMediator = [_restaurant bankCardMediatorWithOrder:_order rootVC:self];
   _bankCardsModel = [_restaurant bankCardsModel];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _bankCardsModelLoadingIdentifier = [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
     
-    [weakSelf.navigationItem setRightBarButtonItem:(obj.loading) ? ([UIBarButtonItem omn_loadingItem]) : ([weakSelf addCardButton]) animated:YES];
+    @strongify(self)
+    [self.navigationItem setRightBarButtonItem:(obj.loading) ? ([UIBarButtonItem omn_loadingItem]) : ([self addCardButton]) animated:YES];
     
   }];
 
@@ -86,7 +87,8 @@
     
     if (kOMNBankCardStatusHeld == bankCard.status) {
       
-      [weakSelf.bankCardMediator confirmCard:[bankCard bankCardInfo]];
+      @strongify(self)
+      [self.bankCardMediator confirmCard:[bankCard bankCardInfo]];
       
     }
     
@@ -94,23 +96,24 @@
   
   [self.bankCardMediator setDidPayBlock:^(OMNError *error) {
     
+    @strongify(self)
     if (error) {
       
       if (kOMNErrorOrderClosed == error.code) {
         
-        [weakSelf orderDidClosed];
+        [self orderDidClosed];
         
       }
       else {
         
-        [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+        [self.navigationController popToViewController:self animated:YES];
         
       }
       
     }
     else {
       
-      [weakSelf mailRuDidFinish];
+      [self mailRuDidFinish];
       
     }
     
@@ -153,10 +156,11 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_bankCardsModel loadCardsWithCompletion:^{
     
-    [weakSelf didLoadCards];
+    @strongify(self)
+    [self didLoadCards];
     
   }];
   

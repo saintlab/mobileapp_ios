@@ -127,14 +127,16 @@ OMNChangePhoneWebVCDelegate>
 
 - (void)cameraTap {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNCameraPermission requestPermission:^{
     
-    [weakSelf showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
+    @strongify(self)
+    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypeCamera];
     
   } restricted:^{
     
-    [weakSelf showCameraPermissionHelp];
+    @strongify(self)
+    [self showCameraPermissionHelp];
     
   }];
   
@@ -142,14 +144,16 @@ OMNChangePhoneWebVCDelegate>
 
 - (void)libraryTap {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNCameraRollPermission requestPermission:^{
     
-    [weakSelf showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+    @strongify(self)
+    [self showImagePickerForSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
     
   } restricted:^{
     
-    [weakSelf showCameraRollPermissionHelp];
+    @strongify(self)
+    [self showCameraRollPermissionHelp];
     
   }];
   
@@ -176,10 +180,12 @@ OMNChangePhoneWebVCDelegate>
   
   OMNCameraPermissionDescriptionVC *cameraPermissionDescriptionVC = [[OMNCameraPermissionDescriptionVC alloc] init];
   cameraPermissionDescriptionVC.text = NSLocalizedString(@"CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение\nна доступ к камере.");
-  __weak typeof(self)weakSelf = self;
+  
+  @weakify(self)
   cameraPermissionDescriptionVC.didCloseBlock = ^{
     
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    @strongify(self)
+    [self.navigationController popToViewController:self animated:YES];
     
   };
   cameraPermissionDescriptionVC.delegate = self;
@@ -190,10 +196,11 @@ OMNChangePhoneWebVCDelegate>
 - (void)showCameraRollPermissionHelp {
   
   OMNCameraRollPermissionDescriptionVC *cameraPermissionHelpVC = [[OMNCameraRollPermissionDescriptionVC alloc] init];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   cameraPermissionHelpVC.didCloseBlock = ^{
     
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    @strongify(self)
+    [self.navigationController popToViewController:self animated:YES];
     
   };
   [self.navigationController pushViewController:cameraPermissionHelpVC animated:YES];
@@ -231,14 +238,16 @@ OMNChangePhoneWebVCDelegate>
   editUser.image = _userImage;
 
   [self setLoading:YES];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_user updateUserInfoWithUserAndImage:editUser withCompletion:^{
     
-    [weakSelf closeTap];
+    @strongify(self)
+    [self closeTap];
     
   } failure:^(NSError *error) {
     
-    [weakSelf setLoading:NO];
+    @strongify(self)
+    [self setLoading:NO];
     
   }];
   
@@ -395,10 +404,11 @@ OMNChangePhoneWebVCDelegate>
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self dismissViewControllerAnimated:YES completion:^{
   
-    [weakSelf setUserImage:info[UIImagePickerControllerEditedImage]];
+    @strongify(self)
+    [self setUserImage:info[UIImagePickerControllerEditedImage]];
     
   }];
   
@@ -414,10 +424,11 @@ OMNChangePhoneWebVCDelegate>
 
 - (void)cameraPermissionDescriptionVCDidReceivePermission:(OMNCameraPermissionDescriptionVC *)cameraPermissionDescriptionVC {
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
   
-    [weakSelf cameraTap];
+    @strongify(self)
+    [self cameraTap];
     
   }];
 
@@ -427,10 +438,11 @@ OMNChangePhoneWebVCDelegate>
 
 - (void)cameraRollPermissionDescriptionVCDidReceivePermission:(OMNCameraRollPermissionDescriptionVC *)cameraRollPermissionDescriptionVC {
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
-    [weakSelf libraryTap];
+    @strongify(self)
+    [self libraryTap];
     
   }];
   

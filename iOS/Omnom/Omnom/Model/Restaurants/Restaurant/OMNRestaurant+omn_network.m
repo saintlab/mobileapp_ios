@@ -227,15 +227,16 @@
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/advertisement", self.id];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
     if (response &&
         [response isKindOfClass:[NSDictionary class]] &&
         response[@"title"]) {
       
+      @strongify(self)
       OMNRestaurantInfo *restaurantInfo = [[OMNRestaurantInfo alloc] initWithJsonData:response];
-      weakSelf.info = restaurantInfo;
+      self.info = restaurantInfo;
       completionBlock(restaurantInfo);
       
     }

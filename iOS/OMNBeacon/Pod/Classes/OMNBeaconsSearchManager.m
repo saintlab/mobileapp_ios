@@ -84,31 +84,32 @@
   __weak typeof(self)weakSelf = self;
   [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
     
+    __strong __typeof(weakSelf)strongSelf = weakSelf;
     switch (state) {
       case CBCentralManagerStatePoweredOn: {
         
-        if (CBCentralManagerStatePoweredOff == weakSelf.previousBluetoothState) {
+        if (CBCentralManagerStatePoweredOff == strongSelf.previousBluetoothState) {
           
-          [weakSelf.delegate beaconSearchManager:weakSelf didChangeState:kSearchManagerRequestReload];
+          [strongSelf.delegate beaconSearchManager:strongSelf didChangeState:kSearchManagerRequestReload];
           
         }
         else {
           
-          [weakSelf.delegate beaconSearchManager:weakSelf didDetermineBLEState:kBLESearchManagerBLEDidOn];
-          [weakSelf startRangingBeacons];
+          [strongSelf.delegate beaconSearchManager:strongSelf didDetermineBLEState:kBLESearchManagerBLEDidOn];
+          [strongSelf startRangingBeacons];
           
         }
         
       } break;
       case CBCentralManagerStateUnsupported: {
         
-        [weakSelf startRangingBeacons];
+        [strongSelf startRangingBeacons];
         
       } break;
       case CBCentralManagerStatePoweredOff: {
         
-        [weakSelf stopRangingNearestBeaconsWithError:NO];
-        [weakSelf.delegate beaconSearchManager:weakSelf didDetermineBLEState:kBLESearchManagerRequestTurnBLEOn];
+        [strongSelf stopRangingNearestBeaconsWithError:NO];
+        [strongSelf.delegate beaconSearchManager:strongSelf didDetermineBLEState:kBLESearchManagerRequestTurnBLEOn];
         
       } break;
       case CBCentralManagerStateUnauthorized: {
@@ -122,10 +123,10 @@
       } break;
     }
     
-    weakSelf.previousBluetoothState = state;
+    strongSelf.previousBluetoothState = state;
     if (state != CBCentralManagerStatePoweredOn) {
       
-      [weakSelf.delegate beaconSearchManagerDidFail:weakSelf];
+      [strongSelf.delegate beaconSearchManagerDidFail:strongSelf];
       
     }
     
@@ -139,7 +140,8 @@
     __weak typeof(self)weakSelf = self;
     _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
       
-      [weakSelf processCoreLocationAuthorizationStatus:status];
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      [strongSelf processCoreLocationAuthorizationStatus:status];
       
     }];
   }
@@ -177,11 +179,13 @@
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
-    [weakSelf didRangeBeacons:beacons];
+    __strong __typeof(weakSelf)strongSelf = weakSelf;
+    [strongSelf didRangeBeacons:beacons];
     
   } failure:^(NSError *error) {
     
-    [weakSelf beaconsSearchDidFailWithError:error];
+    __strong __typeof(weakSelf)strongSelf = weakSelf;
+    [strongSelf beaconsSearchDidFailWithError:error];
     
   }];
 

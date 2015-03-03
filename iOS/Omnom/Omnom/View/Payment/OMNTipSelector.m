@@ -204,10 +204,11 @@
   [self removeSelectedTipIndexObserver];
   _order = order;
   _previousSelectedIndex = _order.selectedTipIndex;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _selectedTipIndexObserverIdentifier = [_order bk_addObserverForKeyPath:NSStringFromSelector(@selector(selectedTipIndex)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
-    [weakSelf updateButtons];
+    @strongify(self)
+    [self updateButtons];
     
   }];
   

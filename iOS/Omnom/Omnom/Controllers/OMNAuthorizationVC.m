@@ -46,17 +46,19 @@
   
   self = [super initWithViewControllers:@[page1, page2, page3]];
   if (self) {
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     self.buttonInfo =
     @[
       [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Регистрация", nil) image:[UIImage imageNamed:@"user_settings_icon"] block:^{
         
-        [weakSelf registerTap:nil];
+        @strongify(self)
+        [self registerTap:nil];
         
       }],
       [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Вход", nil) image:[UIImage imageNamed:@"login_icon_small"] block:^{
         
-        [weakSelf loginTap:nil];
+        @strongify(self)
+        [self loginTap:nil];
         
       }]
       ];
@@ -124,16 +126,17 @@
   
   [OMNAuthorization authorisation].token = token;
 
-  __weak typeof(self)weakSelf = self;
-
+  @weakify(self)
   [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
     
     [[OMNAnalitics analitics] logUserLoginWithRegistration:fromRegstration];
-    [weakSelf processAuthorisation];
+    @strongify(self)
+    [self processAuthorisation];
     
   } failure:^(OMNError *error) {
     
-    [weakSelf processAuthorisation];
+    @strongify(self)
+    [self processAuthorisation];
     
   }];
   

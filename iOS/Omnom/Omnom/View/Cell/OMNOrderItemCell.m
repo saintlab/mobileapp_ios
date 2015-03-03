@@ -149,10 +149,11 @@
   _nameLabel.text = orderItem.name;
   _priceLabel.text = priceQuantityString;
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _cellOrderItemIdentifier = [_orderItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
     
-    [weakSelf updateLabelsColor];
+    @strongify(self)
+    [self updateLabelsColor];
     
   }];
 

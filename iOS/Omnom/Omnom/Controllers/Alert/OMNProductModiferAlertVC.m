@@ -49,10 +49,11 @@
   [self createViews];
   [self configureViews];
  
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _model.didSelectBlock = ^{
     
-    [weakSelf updateTableViewHeight];
+    @strongify(self)
+    [self updateTableViewHeight];
     
   };
   

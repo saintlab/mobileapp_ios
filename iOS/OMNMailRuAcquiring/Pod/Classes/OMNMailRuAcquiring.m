@@ -132,7 +132,8 @@ static NSDictionary *_config = nil;
     
     if (responseObject[@"url"]) {
       
-      [weakSelf checkCardRegisterResponse:responseObject withCompletion:completionBlock failure:failureBlock];
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      [strongSelf checkCardRegisterResponse:responseObject withCompletion:completionBlock failure:failureBlock];
       
     }
     else {
@@ -162,7 +163,8 @@ static NSDictionary *_config = nil;
       
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [weakSelf checkCardRegisterResponse:response withCompletion:completionBlock failure:failureBlock];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf checkCardRegisterResponse:response withCompletion:completionBlock failure:failureBlock];
         
       });
       
@@ -248,7 +250,8 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     if ([status isEqualToString:@"OK_CONTINUE"]) {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [weakSelf pollUrl:url withCompletion:completionBlock failure:failureBlock];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        [strongSelf pollUrl:url withCompletion:completionBlock failure:failureBlock];
         
       });
     }
@@ -303,7 +306,8 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     if (url &&
         nil == responseObject[@"error"]) {
       
-      [weakSelf pollUrl:url withCompletion:^(id response) {
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      [strongSelf pollUrl:url withCompletion:^(id response) {
         
         NSString *status = response[@"status"];
         NSString *order_status = response[@"order_status"];

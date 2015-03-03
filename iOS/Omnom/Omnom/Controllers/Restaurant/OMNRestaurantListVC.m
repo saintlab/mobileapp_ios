@@ -80,10 +80,11 @@
   [qrButton addTarget:_searchRestaurantMediator action:@selector(scanTableQrTap) forControlEvents:UIControlEventTouchUpInside];
   [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:qrButton] animated:YES];
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   dispatch_async(dispatch_get_main_queue(), ^{
   
-    [weakSelf updateBottomToolbar];
+    @strongify(self)
+    [self updateBottomToolbar];
     
   });
   
@@ -127,16 +128,18 @@
 
 - (void)refreshRestaurants {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
     
     [OMNRestaurant getRestaurantsForLocation:coordinate withCompletion:^(NSArray *restaurants) {
-      
-      [weakSelf finishLoadingRestaurants:restaurants];
+
+      @strongify(self)
+      [self finishLoadingRestaurants:restaurants];
       
     } failure:^(OMNError *error) {
       
-      [weakSelf.refreshControl endRefreshing];
+      @strongify(self)
+      [self.refreshControl endRefreshing];
       
     }];
     

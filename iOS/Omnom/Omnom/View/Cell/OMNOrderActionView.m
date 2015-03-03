@@ -63,12 +63,14 @@
   
   self.backgroundColor = [UIColor clearColor];
   
-  __weak typeof(self)weakSelf = self;
+  
   
   _splitButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_ORDER_TITLE", @"Разделить счет") color:colorWithHexString(@"D0021B")];
+  @weakify(self)
   [_splitButton bk_addEventHandler:^(id sender) {
     
-    [weakSelf.delegate orderTotalViewDidSplit:weakSelf];
+    @strongify(self)
+    [self.delegate orderTotalViewDidSplit:self];
     
   } forControlEvents:UIControlEventTouchUpInside];
   _splitButton.alpha = 0.0f;
@@ -78,7 +80,8 @@
   _editButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_EDIT_TITLE", @"Изменить") color:colorWithHexString(@"D0021B")];
   [_editButton bk_addEventHandler:^(id sender) {
     
-    [weakSelf.delegate orderTotalViewDidSplit:weakSelf];
+    @strongify(self)
+    [self.delegate orderTotalViewDidSplit:self];
     
   } forControlEvents:UIControlEventTouchUpInside];
   _editButton.alpha = 0.0f;
@@ -131,10 +134,11 @@
 
   [self removeSetOrderObserver];
   _order = order;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _setOrderIdentifier = [_order bk_addObserverForKeyPath:NSStringFromSelector(@selector(hasSelectedItems)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
     
-    [weakSelf updateButtons];
+    @strongify(self)
+    [self updateButtons];
     
   }];
   

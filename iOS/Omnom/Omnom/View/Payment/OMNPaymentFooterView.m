@@ -119,10 +119,11 @@
   
   _tipsSelector.delegate = self;
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_percentControl bk_addEventHandler:^(OMNEditAmountControl *sender) {
     
-    [weakSelf updateAmountForPercentLabel];
+    @strongify(self)
+    [self updateAmountForPercentLabel];
     
   } forControlEvents:UIControlEventValueChanged|UIControlEventEditingDidBegin];
 
@@ -145,10 +146,11 @@
 
   [self removeSelectedTipIndexObserver];
   _order = order;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _selectedTipIndexObserverIdentifier = [_order bk_addObserverForKeyPath:NSStringFromSelector(@selector(selectedTipIndex)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
-    [weakSelf updateToPayButton];
+    @strongify(self)
+    [self updateToPayButton];
     
   }];
   

@@ -113,13 +113,13 @@
   }
   
   repeatVC.didCloseBlock = cancelBlock;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   repeatVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
 
-      
-      [weakSelf.navigationController omn_popToViewController:weakSelf animated:YES completion:^{
+      @strongify(self)
+      [self.navigationController omn_popToViewController:self animated:YES completion:^{
         
         if (retryBlock) {
           retryBlock();

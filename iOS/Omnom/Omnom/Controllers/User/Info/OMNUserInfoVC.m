@@ -103,22 +103,25 @@
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   
   OMNAuthorization *authorisation = [OMNAuthorization authorisation];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _userObserverIdentifier = [authorisation bk_addObserverForKeyPath:NSStringFromSelector(@selector(user)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
     
-    [weakSelf updateUserInfo];
+    @strongify(self)
+    [self updateUserInfo];
     
   }];
 
   _userImageObserverIdentifier = [authorisation.user bk_addObserverForKeyPath:NSStringFromSelector(@selector(image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
     
-    [weakSelf updateUserImage];
+    @strongify(self)
+    [self updateUserImage];
     
   }];
   
   _userInfoModel.didSelectBlock = ^UIViewController *(UITableView *tableView, NSIndexPath *indexPath) {
     
-    return weakSelf;
+    @strongify(self)
+    return self;
     
   };
   

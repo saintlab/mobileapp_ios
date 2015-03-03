@@ -110,16 +110,18 @@ OMNPaymentFooterViewDelegate>
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNOrderAlertManager sharedManager].didCloseBlock = ^{
   
-    [weakSelf.delegate orderCalculationVCDidCancel:weakSelf];
+    @strongify(self)
+    [self.delegate orderCalculationVCDidCancel:self];
     
   };
   
   [OMNOrderAlertManager sharedManager].didUpdateBlock = ^{
     
-    [weakSelf updateOrder];
+    @strongify(self)
+    [self updateOrder];
     
   };
   [[OMNOrderAlertManager sharedManager] checkOrderIsClosed];
@@ -377,11 +379,12 @@ OMNPaymentFooterViewDelegate>
   
   if (_visitor.selectedOrder.paymentValueIsTooHigh) {
     
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
 
+      @strongify(self)
       if (buttonIndex != alertView.cancelButtonIndex) {
-        [weakSelf processCardPayment];
+        [self processCardPayment];
       }
       
     }];

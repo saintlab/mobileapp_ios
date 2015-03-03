@@ -93,16 +93,18 @@
   [self loadBackgroundIfNeeded];
   [self loadIconIfNeeded];
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _restaurantWaiterCallIdentifier = [_restaurantMediator.visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNVisitor *visitor, NSDictionary *change) {
     
-    (visitor.waiterIsCalled) ? ([weakSelf callWaiterDidStart]) : ([weakSelf callWaiterDidStop]);
+    @strongify(self)
+    (visitor.waiterIsCalled) ? ([self callWaiterDidStart]) : ([self callWaiterDidStop]);
     
   }];
   
   _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
     
-    [weakSelf menuDidChange:obj.menu];
+    @strongify(self)
+    [self menuDidChange:obj.menu];
     
   }];
 
@@ -110,7 +112,8 @@
     
     if (tableView.contentOffset.y > -20.0f) {
       
-      [weakSelf menuTap];
+      @strongify(self)
+      [self menuTap];
       
     }
     
@@ -125,10 +128,11 @@
   [super viewWillAppear:animated];
   [self updateNavigationButtons];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
   
-    [weakSelf beginCircleAnimationIfNeeded];
+    @strongify(self)
+    [self beginCircleAnimationIfNeeded];
     
   });
   
@@ -276,18 +280,19 @@
     return;
   }
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_restaurantMediator.restaurant.decoration loadLogo:^(UIImage *image) {
     
+    @strongify(self)
     if (image) {
       
-      weakSelf.circleIcon = image;
+      self.circleIcon = image;
       
     }
     else {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [weakSelf loadIconIfNeeded];
+        [self loadIconIfNeeded];
         
       });
     }
@@ -312,18 +317,19 @@
     return;
   }
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [decoration loadBackground:^(UIImage *image) {
     
+    @strongify(self)
     if (image) {
       
-      [weakSelf setBackgroundImage:image animated:YES];
+      [self setBackgroundImage:image animated:YES];
       
     }
     else {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        [weakSelf loadBackgroundIfNeeded];
+        [self loadBackgroundIfNeeded];
         
       });
     }
@@ -429,10 +435,11 @@
   }
   
   OMNMenuVC *menuVC = [[OMNMenuVC alloc] initWithMediator:_restaurantMediator];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   menuVC.didCloseBlock = ^{
     
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    @strongify(self)
+    [self.navigationController popToViewController:self animated:YES];
     
   };
   menuVC.backgroundImage = self.backgroundImage;

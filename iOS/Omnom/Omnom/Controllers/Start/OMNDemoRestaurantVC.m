@@ -39,28 +39,30 @@
   
   [self.loaderView startAnimating:10.0];
   _decodeBeaconsStarted = YES;
-  __weak typeof(self)weakSelf = self;
   
+  @weakify(self)
   [OMNRestaurantManager demoRestaurantWithCompletion:^(NSArray *restaurants) {
     
+    @strongify(self)
     if (restaurants.count) {
       
-      [weakSelf finishLoading:^{
+      [self finishLoading:^{
         
-        [weakSelf didFindRestaurant:restaurants[0]];
+        [self didFindRestaurant:[restaurants firstObject]];
         
       }];
 
     }
     else {
     
-      [weakSelf didFailOmnom:nil];
+      [self didFailOmnom:nil];
       
     }
     
   } failureBlock:^(OMNError *error) {
     
-    [weakSelf didFailOmnom:error];
+    @strongify(self)
+    [self didFailOmnom:error];
     
   }];
   

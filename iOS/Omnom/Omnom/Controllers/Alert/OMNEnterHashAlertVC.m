@@ -65,15 +65,17 @@
 
 - (void)decodeHash:(NSString *)hash {
   
-  __weak typeof(self)weakSelf = self;
   _loading = YES;
+  @weakify(self)
   [OMNRestaurantManager decodeHash:hash withCompletion:^(NSArray *restaurants) {
     
-    [weakSelf finishLoadingWithRestaurants:restaurants];
+    @strongify(self)
+    [self finishLoadingWithRestaurants:restaurants];
     
   } failureBlock:^(OMNError *error) {
     
-    [weakSelf finishLoadingWithRestaurants:nil];
+    @strongify(self)
+    [self finishLoadingWithRestaurants:nil];
     
   }];
   
@@ -141,10 +143,11 @@
 - (void)setKeyboardHeight:(CGFloat)height duration:(NSTimeInterval)duration {
   
   _keyboardHeightConstraint.constant = height;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [UIView animateWithDuration:duration animations:^{
   
-    [weakSelf.contentView layoutIfNeeded];;
+    @strongify(self)
+    [self.contentView layoutIfNeeded];;
     
   }];
   

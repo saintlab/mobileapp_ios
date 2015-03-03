@@ -22,17 +22,19 @@
     self.faded = YES;
     self.text = NSLocalizedString(@"Разрешить Omnom получить push-уведомления", nil);
     
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     self.buttonInfo =
     @[
       [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Позже", nil) image:nil block:^{
         
-        [weakSelf didFinish];
+        @strongify(self)
+        [self didFinish];
         
       }],
       [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Разрешить", nil) image:nil block:^{
         
-        [weakSelf requestPermissionTap];
+        @strongify(self)
+        [self requestPermissionTap];
         
       }]
       ];
@@ -55,10 +57,11 @@
 
 - (void)requestPermissionTap {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNAuthorization authorisation] requestPushNotifications:^(BOOL success) {
     
-    [weakSelf didFinish];
+    @strongify(self)
+    [self didFinish];
     
   }];
   

@@ -177,17 +177,20 @@ TTTAttributedLabelDelegate> {
 - (void)loginTap {
 
   [self setNextButtonLoading:YES];
-  __weak typeof(self)weakSelf = self;
-
+  
+  @weakify(self)
   [self requestAuthorisationCodeCompletion:^{
-    [weakSelf requestAuthorizationCode];
+    
+    @strongify(self)
+    [self requestAuthorizationCode];
+    
   }];
   
 }
 
 - (void)requestAuthorisationCodeCompletion:(dispatch_block_t)completionBlock {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNUser loginUsingData:_loginTF.textField.text code:nil completion:^(NSString *token) {
     
     if (completionBlock) {
@@ -196,7 +199,8 @@ TTTAttributedLabelDelegate> {
     
   } failure:^(NSError *error) {
 
-    [weakSelf processLoginError:error];
+    @strongify(self)
+    [self processLoginError:error];
     
   }];
 }
@@ -269,11 +273,11 @@ TTTAttributedLabelDelegate> {
 
 - (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code {
   
-  __weak typeof(self)weakSelf = self;
-  
+  @weakify(self)
   [OMNUser loginUsingData:_loginTF.textField.text code:code completion:^(NSString *token) {
 
-    [weakSelf tokenDidReceived:token];
+    @strongify(self)
+    [self tokenDidReceived:token];
     
   } failure:^(NSError *error) {
     

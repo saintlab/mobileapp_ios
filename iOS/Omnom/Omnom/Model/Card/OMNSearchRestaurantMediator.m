@@ -51,10 +51,11 @@ OMNScanTableQRCodeVCDelegate>
 - (void)showUserProfile {
   
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:nil];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   userInfoVC.didCloseBlock = ^{
     
-    [weakSelf.rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    @strongify(self)
+    [self.rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
     
   };
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
@@ -67,11 +68,12 @@ OMNScanTableQRCodeVCDelegate>
   
   OMNScanTableQRCodeVC *scanTableQRCodeVC = [[OMNScanTableQRCodeVC alloc] init];
   scanTableQRCodeVC.delegate = self;
-  __weak UIViewController *presentingVC = _rootVC.navigationController.topViewController;
-  __weak typeof(self)weakSelf = self;
+  UIViewController *presentingVC = _rootVC.navigationController.topViewController;
+  @weakify(self)
   scanTableQRCodeVC.didCloseBlock = ^{
     
-    [weakSelf.rootVC.navigationController popToViewController:presentingVC animated:YES];
+    @strongify(self)
+    [self.rootVC.navigationController popToViewController:presentingVC animated:YES];
     
   };
   [_rootVC.navigationController pushViewController:scanTableQRCodeVC animated:YES];
@@ -101,10 +103,11 @@ OMNScanTableQRCodeVCDelegate>
 
   }
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   dispatch_block_t showRestaurantListBlock = ^{
     
-    [weakSelf showRestaurantListVC];
+    @strongify(self)
+    [self showRestaurantListVC];
     
   };
   
@@ -119,7 +122,8 @@ OMNScanTableQRCodeVCDelegate>
       restaurantActionsVC.didCloseBlock = showRestaurantListBlock;
       restaurantActionsVC.rescanTableBlock = ^{
         
-        [weakSelf didFinish];
+        @strongify(self)
+        [self didFinish];
         
       };
       [controllers addObject:restaurantActionsVC];
@@ -164,11 +168,12 @@ OMNScanTableQRCodeVCDelegate>
 - (void)demoModeTap {
   
   OMNDemoRestaurantVC *demoRestaurantVC = [[OMNDemoRestaurantVC alloc] initWithParent:nil];
-  __weak typeof(self)weakSelf = self;
-  __weak UIViewController *presentingVC = _rootVC.navigationController.topViewController;
+  @weakify(self)
+  UIViewController *presentingVC = _rootVC.navigationController.topViewController;
   demoRestaurantVC.didCloseBlock = ^{
     
-    [weakSelf.rootVC.navigationController popToViewController:presentingVC animated:YES];
+    @strongify(self)
+    [self.rootVC.navigationController popToViewController:presentingVC animated:YES];
     
   };
   [_rootVC.navigationController pushViewController:demoRestaurantVC animated:YES];

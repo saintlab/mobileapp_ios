@@ -31,10 +31,11 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _searchRestaurantMediator.didFinishBlock = ^{
     
-    [weakSelf didFinish];
+    @strongify(self)
+    [self didFinish];
     
   };
   
@@ -59,10 +60,11 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   dispatch_async(dispatch_get_main_queue(), ^{
   
-    [weakSelf.searchRestaurantMediator searchRestarants];
+    @strongify(self)
+    [self.searchRestaurantMediator searchRestarants];
 
   });
   

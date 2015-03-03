@@ -129,14 +129,16 @@ UIGestureRecognizerDelegate>
   }
   
   [self startAnimating:YES];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
     
-    [weakSelf didFinishLoadingRestaurantInfo:restaurantInfo];
+    @strongify(self)
+    [self didFinishLoadingRestaurantInfo:restaurantInfo];
     
   } error:^(NSError *error) {
     
-    [weakSelf didFail];
+    @strongify(self)
+    [self didFail];
     
   }];
   

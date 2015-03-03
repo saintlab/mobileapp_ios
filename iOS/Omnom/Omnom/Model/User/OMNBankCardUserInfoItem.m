@@ -22,10 +22,12 @@
   if (self) {
     self.title = NSLocalizedString(@"Мои привязанные карты", nil);
     self.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    __weak typeof(self)weakSelf = self;
+    
+    @weakify(self)
     [self setActionBlock:^(__weak UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath) {
       
-      weakSelf.rootViewController = vc;
+      @strongify(self)
+      self.rootViewController = vc;
       
       OMNBankCardsVC *bankCardsVC = [[OMNBankCardsVC alloc] init];
       [vc.navigationController pushViewController:bankCardsVC animated:YES];

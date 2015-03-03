@@ -67,10 +67,12 @@
   DDLogDebug(@"didReceiveRemoteNotification>%@", userInfo);
   NSString *open_url = userInfo[@"open_url"];
   if (open_url) {
-    __weak typeof(self)weakSelf = self;
+    
+    @weakify(self)
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       
-      [weakSelf openURL:[NSURL URLWithString:open_url]];
+      @strongify(self)
+      [self openURL:[NSURL URLWithString:open_url]];
       
     });
     

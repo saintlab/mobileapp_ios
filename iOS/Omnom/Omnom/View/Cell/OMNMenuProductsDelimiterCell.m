@@ -120,10 +120,11 @@
   
   [self removeMenuProductsDelimiterColorObserver];
   _menuProductsDelimiter = menuProductsDelimiter;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _menuProductsDelimiterColorObserverID = [_menuProductsDelimiter bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
-    [weakSelf updateLineView];
+    @strongify(self)
+    [self updateLineView];
     
   }];
   

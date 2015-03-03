@@ -116,10 +116,11 @@
 - (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectCell:(OMNMenuProductCell *)cell {
   
   OMNMenuProductVC *menuProductVC = [[OMNMenuProductVC alloc] initWithMediator:_restaurantMediator menuProduct:cell.item.menuProduct];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   menuProductVC.didCloseBlock = ^{
     
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    @strongify(self)
+    [self.navigationController popToViewController:self animated:YES];
     
   };
   [self.navigationController pushViewController:menuProductVC animated:YES];
@@ -128,16 +129,17 @@
 
 - (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editCell:(OMNMenuProductCell *)cell {
   
-  __weak typeof(self)weakSelf = self;
   NSIndexPath *indexPath = [_tableView indexPathForCell:menuProductWithRecommedtationsCell];
   if (indexPath) {
     [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
   }
   
+  @weakify(self)
   [cell.item editMenuProductFromController:self withCompletion:^{
     
+    @strongify(self)
     if ([menuProductWithRecommedtationsCell.item.menuProduct isEqual:cell.item.menuProduct]) {
-      [weakSelf updateTableViewWithSelectedItem:menuProductWithRecommedtationsCell.item andScrollToCell:menuProductWithRecommedtationsCell];
+      [self updateTableViewWithSelectedItem:menuProductWithRecommedtationsCell.item andScrollToCell:menuProductWithRecommedtationsCell];
     }
     
   }];

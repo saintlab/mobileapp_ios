@@ -194,18 +194,20 @@ TTTAttributedLabelDelegate>
   double amount = [self.currentAmountString omn_doubleValue];
   [self startLoader];
   OMNUser *user = [OMNAuthorization authorisation].user;
-  __weak typeof(self)weakSelf = self;
-
+  
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
+  @weakify(self)
   [[OMNMailRuAcquiring acquiring] verifyCard:_bankCardInfo.card_id user_login:user.id amount:amount completion:^{
     
-    [weakSelf cardDidVerify];
+    @strongify(self)
+    [self cardDidVerify];
     
   } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_VERIFY" cardInfo:bankCardInfo error:error request:request response:response];
     NSError *omnomError = [OMNError omnnomErrorFromError:error];
-    [weakSelf processError:omnomError];
+    @strongify(self)
+    [self processError:omnomError];
     
   }];
   
@@ -264,18 +266,20 @@ TTTAttributedLabelDelegate>
   [self startLoader];
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(NSString *cardId) {
     
     NSDictionary *parametrs = bankCardInfo.debugInfo;
     [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:parametrs];
     [[OMNOperationManager sharedManager] POST:@"/report/mail/register" parameters:parametrs success:nil failure:nil];
-    weakSelf.card_id = cardId;
+    @strongify(self)
+    self.card_id = cardId;
     
   } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_REGISTER" cardInfo:bankCardInfo error:error request:request response:response];
-    [weakSelf procsessCardRegisterError:[OMNError omnnomErrorFromError:error]];
+    @strongify(self)
+    [self procsessCardRegisterError:[OMNError omnnomErrorFromError:error]];
     
   }];
   

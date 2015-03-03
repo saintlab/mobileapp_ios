@@ -142,12 +142,13 @@
   
   _item = item;
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _productSelectionObserverID = [_item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
    
-    [UIView transitionWithView:weakSelf.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    @strongify(self)
+    [UIView transitionWithView:self.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
-      weakSelf.priceButton.selected = mp.preordered;
+      self.priceButton.selected = mp.preordered;
       
     } completion:nil];
     
@@ -155,9 +156,10 @@
 
   _productEditingObserverID = [_item bk_addObserverForKeyPath:NSStringFromSelector(@selector(editing)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProductCellItem *mp, NSDictionary *change) {
     
-    [UIView transitionWithView:weakSelf.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    @strongify(self)
+    [UIView transitionWithView:self.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
-      weakSelf.priceButton.omn_editing = mp.editing;
+      self.priceButton.omn_editing = mp.editing;
       
     } completion:nil];
     
@@ -165,9 +167,10 @@
   
   _productImageObserverID = [_item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
 
-    [UIView transitionWithView:weakSelf.productIV duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    @strongify(self)
+    [UIView transitionWithView:self.productIV duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
-      weakSelf.productIV.image = mp.photoImage;
+      self.productIV.image = mp.photoImage;
       
     } completion:nil];
     

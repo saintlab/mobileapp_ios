@@ -74,14 +74,15 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
   [_socket emit:@"handshake", nil];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_socket on:@"handshake" listener:^(id data) {
     
     if (completionBlock &&
         [data isKindOfClass:[NSString class]] &&
         [data isEqualToString:@"authentication success"]) {
       
-      [weakSelf socketDidAuthenticate];
+      @strongify(self)
+      [self socketDidAuthenticate];
       completionBlock();
       
     }
@@ -212,10 +213,11 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   else {
     
     _io = [[OMNSocketIO alloc] init];
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     [_io once:@"ready" listener:^{
       
-      [weakSelf establishConnecttionWithToken:token completion:completionBlock];
+      @strongify(self)
+      [self establishConnecttionWithToken:token completion:completionBlock];
       
     }];
   }

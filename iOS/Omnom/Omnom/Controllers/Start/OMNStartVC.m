@@ -46,12 +46,13 @@ OMNSearchRestaurantVCDelegate>
   
   self.backgroundView.image = [UIImage omn_imageNamed:@"LaunchImage-700"];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNAuthorization authorisation].logoutCallback = ^{
     
-    [weakSelf dismissViewControllerAnimated:YES completion:^{
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:^{
       
-      [weakSelf requestAuthorizationIfNeeded];
+      [self requestAuthorizationIfNeeded];
       
     }];
   };
@@ -67,17 +68,18 @@ OMNSearchRestaurantVCDelegate>
 
 - (void)checkUserToken {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
 
+    @strongify(self)
     if ([OMNAuthorization authorisation].token) {
       
-      [weakSelf reloadSearchingRestaurant];
+      [self reloadSearchingRestaurant];
       
     }
     else {
       
-      [weakSelf requestAuthorizationIfNeeded];
+      [self requestAuthorizationIfNeeded];
       
     }
     
@@ -144,11 +146,12 @@ OMNSearchRestaurantVCDelegate>
 
 - (void)authorizationVCDidReceiveToken:(OMNAuthorizationVC *)startVC {
   
-  __weak typeof(self)weakSelf = self;
   _authorizationPresented = NO;
+  @weakify(self)
   [self.navigationController omn_popToViewController:self animated:NO completion:^{
-  
-    [weakSelf startSearchingRestaurant];
+
+    @strongify(self)
+    [self startSearchingRestaurant];
 
   }];
   

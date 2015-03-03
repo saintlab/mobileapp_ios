@@ -34,16 +34,17 @@
 
 - (void)didFailWithError:(NSError *)error action:(dispatch_block_t)actionBlock {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self finishLoading:^{
     
-    [weakSelf setText:error.localizedDescription];
-    weakSelf.buttonInfo =
+    @strongify(self)
+    [self setText:error.localizedDescription];
+    self.buttonInfo =
     @[
       [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:actionBlock]
       ];
-    [weakSelf updateActionBoard];
-    [weakSelf.view layoutIfNeeded];
+    [self updateActionBoard];
+    [self.view layoutIfNeeded];
     
   }];
   

@@ -39,10 +39,11 @@
   }
   else {
     
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     [self createBill:^(OMNBill *bill) {
       
-      weakSelf.bill = bill;
+      @strongify(self)
+      self.bill = bill;
       [paymentInfo omn_updateWithBill:bill];
       completionBlock(paymentInfo);
       

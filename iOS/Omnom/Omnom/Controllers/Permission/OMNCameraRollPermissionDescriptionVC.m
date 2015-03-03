@@ -30,12 +30,13 @@
     self.text = NSLocalizedString(@"CAMERA_ROLL_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение на\nдоступ к камере.");
     self.circleIcon = [UIImage imageNamed:@"photo_icon_big"];
     
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     self.buttonInfo =
     @[
       [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Разрешить", nil) image:nil block:^{
         
-        [weakSelf askPermissionTap];
+        @strongify(self)
+        [self askPermissionTap];
         
       }]
       ];

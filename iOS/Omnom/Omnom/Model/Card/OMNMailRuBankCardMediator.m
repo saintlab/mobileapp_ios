@@ -48,19 +48,19 @@
   
   OMNAddBankCardVC *addBankCardVC = [[OMNAddBankCardVC alloc] init];
   addBankCardVC.purpose = addBankPurpose;
-  __weak typeof(self)weakSelf = self;
-  __weak UIViewController *rootVC = self.rootVC;
   
+  @weakify(self)
   [addBankCardVC setAddCardBlock:^(OMNBankCardInfo *bankCardInfo) {
     
+    @strongify(self)
     if (bankCardInfo.saveCard) {
       
-      [weakSelf confirmCard:bankCardInfo];
+      [self confirmCard:bankCardInfo];
       
     }
     else {
       
-      [weakSelf payWithCardInfo:bankCardInfo];
+      [self payWithCardInfo:bankCardInfo];
       
     }
     
@@ -68,49 +68,51 @@
   
   [addBankCardVC setCancelBlock:^{
     
-    [rootVC.navigationController popToViewController:rootVC animated:YES];
+    @strongify(self)
+    [self.rootVC.navigationController popToViewController:self.rootVC animated:YES];
     
   }];
   
-  [rootVC.navigationController pushViewController:addBankCardVC animated:YES];
+  [self.rootVC.navigationController pushViewController:addBankCardVC animated:YES];
   
 }
 
 - (void)confirmCard:(OMNBankCardInfo *)bankCardInfo {
 
   OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
-  __weak UIViewController *rootVC = self.rootVC;
+  @weakify(self)
   mailRUCardConfirmVC.didFinishBlock = ^{
     
-    [rootVC.navigationController popToViewController:rootVC animated:YES];
+    @strongify(self)
+    [self.rootVC.navigationController popToViewController:self.rootVC animated:YES];
     
   };
   
   long long enteredAmountWithTips = self.order.enteredAmountWithTips;
-  __weak typeof(self)weakSelf = self;
   mailRUCardConfirmVC.noSMSBlock = ^{
     
+    @strongify(self)
     OMNPaymentAlertVC *paymentAlertVC = [[OMNPaymentAlertVC alloc] initWithAmount:enteredAmountWithTips];
-    [rootVC.navigationController presentViewController:paymentAlertVC animated:YES completion:nil];
+    [self.rootVC.navigationController presentViewController:paymentAlertVC animated:YES completion:nil];
     
     paymentAlertVC.didCloseBlock = ^{
       
-      [rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+      [self.rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
       
     };
     
     paymentAlertVC.didPayBlock = ^{
       
-      [rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+      [self.rootVC.navigationController dismissViewControllerAnimated:YES completion:nil];
       bankCardInfo.card_id = nil;
       bankCardInfo.saveCard =  NO;
-      [weakSelf payWithCardInfo:bankCardInfo];
+      [self payWithCardInfo:bankCardInfo];
       
     };
     
   };
   
-  [rootVC.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
+  [self.rootVC.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
   
 }
 

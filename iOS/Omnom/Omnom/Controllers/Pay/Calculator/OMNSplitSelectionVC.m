@@ -60,10 +60,11 @@ UIPickerViewDelegate>
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
  
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNOrderAlertManager sharedManager].didUpdateBlock = ^{
     
-    [weakSelf updateTotalValue];
+    @strongify(self)
+    [self updateTotalValue];
     
   };
   

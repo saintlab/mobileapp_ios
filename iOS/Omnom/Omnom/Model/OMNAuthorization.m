@@ -306,14 +306,15 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     return;
   }
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNUser userWithToken:self.token user:^(OMNUser *user) {
     
-    [weakSelf updateUserInfoWithUser:user];
+    @strongify(self)
+    [self updateUserInfoWithUser:user];
     
     if (!user) {
       
-      weakSelf.token = nil;
+      self.token = nil;
       
     }
     userBlock(user);

@@ -19,9 +19,9 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
 
 OMNRestaurantMode enteranceModeFromString(NSString *string) {
 
-//#warning kRestaurantMode2gis_dinner
+#warning kRestaurantMode2gis_dinner
 //  return kRestaurantMode2gis_dinner;
-//  
+  
   OMNRestaurantMode enteranceMode = kRestaurantModeNone;
   
   if (string.length) {

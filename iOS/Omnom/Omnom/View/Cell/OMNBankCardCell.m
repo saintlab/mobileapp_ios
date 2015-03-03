@@ -113,15 +113,16 @@
 
   [self removeBankCardObserver];
   _bankCard = bankCard;
-  __weak typeof(self)weakSelf = self;
-
+  
+  @weakify(self)
   _bankCardCellDeleteIdentifier = [_bankCard bk_addObserverForKeyPath:NSStringFromSelector(@selector(deleting)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNBankCard *bc, NSDictionary *change) {
     
+    @strongify(self)
     if (bc.deleting) {
-      weakSelf.accessoryView = [weakSelf spinner];
+      self.accessoryView = [self spinner];
     }
     else {
-      weakSelf.accessoryView = (kOMNBankCardStatusHeld == bankCard.status) ? ([weakSelf confirmButton]) : (nil);
+      self.accessoryView = (kOMNBankCardStatusHeld == bankCard.status) ? ([self confirmButton]) : (nil);
     }
     
   }];

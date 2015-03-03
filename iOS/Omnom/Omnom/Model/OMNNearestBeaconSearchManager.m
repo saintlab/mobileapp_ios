@@ -95,10 +95,11 @@
     
   }
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _searchBeaconTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
     
-    [weakSelf didFinish];
+    @strongify(self)
+    [self didFinish];
     
   }];
 
@@ -114,14 +115,15 @@
   
   [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
 
+    @strongify(self)
     if (state == CBCentralManagerStatePoweredOn) {
       
-      [weakSelf startRangingBeacons];
+      [self startRangingBeacons];
       
     }
     else {
       
-      [weakSelf didFinish];
+      [self didFinish];
       
     }
     
@@ -132,16 +134,18 @@
 - (void)startRangingBeacons {
   
   _foundBeacons = [[OMNFoundBeacons alloc] init];
-  __weak typeof(self)weakSelf = self;
   
+  @weakify(self)
   _beaconRangingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFinish) userInfo:nil repeats:NO];
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
-    [weakSelf didRangeBeacons:beacons];
+    @strongify(self)
+    [self didRangeBeacons:beacons];
     
   } failure:^(NSError *error) {
     
-    [weakSelf didFinish];
+    @strongify(self)
+    [self didFinish];
     
   }];
   
@@ -164,10 +168,11 @@
   
   [self stopRangingBeacons];
   NSArray *nearestBeacons = _foundBeacons.allBeacons;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNRestaurantManager sharedManager] handleBackgroundBeacons:nearestBeacons withCompletion:^{
     
-    [weakSelf didFinish];
+    @strongify(self)
+    [self didFinish];
     
   }];
 

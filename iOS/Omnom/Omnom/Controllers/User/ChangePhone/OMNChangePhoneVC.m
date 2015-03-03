@@ -62,14 +62,16 @@
   
   [self setLoading:YES];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNUser recoverUsingData:_phoneTF.textField.text completion:^{
     
-    [weakSelf didResetPhone];
+    @strongify(self)
+    [self didResetPhone];
     
   } failure:^(NSError *error) {
     
-    [weakSelf handleError:error];
+    @strongify(self)
+    [self handleError:error];
     
   }];
   
@@ -78,9 +80,12 @@
 - (void)didResetPhone {
   
   OMNResetPasswordVC *resetPasswordVC = [[OMNResetPasswordVC alloc] init];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   resetPasswordVC.completionBlock = ^{
-    [weakSelf didFinishReset];
+    
+    @strongify(self)
+    [self didFinishReset];
+    
   };
   [self.navigationController pushViewController:resetPasswordVC animated:YES];
   

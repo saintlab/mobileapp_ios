@@ -42,14 +42,16 @@
     [_context evaluateScript:[[NSString alloc] initWithContentsOfFile:[[NSBundle bundleForClass:self.class] pathForResource:@"socket.io.js" ofType:nil] encoding:NSUTF8StringEncoding error:nil]];
     __weak typeof(self)weakSelf = self;
     _context[@"window"][@"onload"] = ^{
-      [weakSelf onReady];
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      [strongSelf onReady];
     };
     
     [_context setExceptionHandler:^(JSContext *ctx, JSValue *val) {
       NSLog(@"error %@", val);
       NSDictionary *info = @{@"context": ctx, @"value": val};
       NSError *error     = [NSError errorWithDomain:@"SocketIO" code:0 userInfo:info];
-      [weakSelf emit:@"error", error];
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      [strongSelf emit:@"error", error];
     }];
   }
   return self;

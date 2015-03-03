@@ -19,12 +19,13 @@
     
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     self.text = [OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavaliable].localizedDescription;
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     self.buttonInfo =
     @[
       [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ok", nil) image:nil block:^{
         
-        [weakSelf didFinish];
+        @strongify(self)
+        [self didFinish];
         
       }],
       ];

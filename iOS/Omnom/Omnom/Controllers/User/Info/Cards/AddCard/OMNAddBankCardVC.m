@@ -127,15 +127,17 @@ OMNCameraPermissionDescriptionVCDelegate>
 }
 
 - (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {
-  
-  __weak typeof(self)weakSelf = self;
+
+  @weakify(self)
   [OMNCameraPermission requestPermission:^{
     
-    [weakSelf scanCard];
+    @strongify(self)
+    [self scanCard];
     
   } restricted:^{
     
-    [weakSelf showCameraPermissionHelp];
+    @strongify(self)
+    [self showCameraPermissionHelp];
     
   }];
   
@@ -158,10 +160,11 @@ OMNCameraPermissionDescriptionVCDelegate>
   OMNCameraPermissionDescriptionVC *cameraPermissionDescriptionVC = [[OMNCameraPermissionDescriptionVC alloc] init];
   cameraPermissionDescriptionVC.text = NSLocalizedString(@"CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT", @"Для сканирования карты\nнеобходимо разрешение\nна доступ к камере.");
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   cameraPermissionDescriptionVC.didCloseBlock = ^{
     
-    [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+    @strongify(self)
+    [self.navigationController popToViewController:self animated:YES];
     
   };
   cameraPermissionDescriptionVC.delegate = self;
@@ -207,10 +210,11 @@ OMNCameraPermissionDescriptionVCDelegate>
 
 - (void)cameraPermissionDescriptionVCDidReceivePermission:(OMNCameraPermissionDescriptionVC *)cameraPermissionDescriptionVC {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
-    [weakSelf scanCard];
+    @strongify(self)
+    [self scanCard];
     
   }];
   

@@ -50,13 +50,14 @@
   
   self.bankCardMediator = [[OMNMailRuBankCardMediator alloc] initWithOrder:nil rootVC:self];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
   [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
     if (kOMNBankCardStatusHeld == bankCard.status) {
     
-      [weakSelf.bankCardMediator confirmCard:[bankCard bankCardInfo]];
+      @strongify(self)
+      [self.bankCardMediator confirmCard:[bankCard bankCardInfo]];
       
     }
     
@@ -79,10 +80,11 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_bankCardsModel loadCardsWithCompletion:^{
     
-    [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    @strongify(self)
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
     
   }];
   

@@ -67,16 +67,19 @@ OMNPreorderConfirmCellDelegate>
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:NSLocalizedString(@"PREORDER_CONFIRM_CLOSE_BUTTON_TITLE", @"Закрыть") color:[UIColor whiteColor] target:self action:@selector(closeTap)];
   
-  [self addActionBoardIfNeeded];
-
-  OMNOrderToolbarButton *callBillButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(requestTableOrders)];
-  self.bottomToolbar.hidden = NO;
-  self.bottomToolbar.items =
-  @[
-    [UIBarButtonItem omn_flexibleItem],
-    [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-    [UIBarButtonItem omn_flexibleItem],
-    ];
+  if (_restaurantMediator.restaurant.settings.has_table_order) {
+    
+    [self addActionBoardIfNeeded];
+    OMNOrderToolbarButton *callBillButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(requestTableOrders)];
+    self.bottomToolbar.hidden = NO;
+    self.bottomToolbar.items =
+    @[
+      [UIBarButtonItem omn_flexibleItem],
+      [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
+      [UIBarButtonItem omn_flexibleItem],
+      ];
+    
+  }
   
 }
 
@@ -90,10 +93,11 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_visitor.table getProductItems:^(NSArray *productItems) {
     
-    [weakSelf didLoadTableProductItems:productItems];
+    @strongify(self)
+    [self didLoadTableProductItems:productItems];
     if (completionBlock) {
       completionBlock();
     }
@@ -268,14 +272,16 @@ OMNPreorderConfirmCellDelegate>
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
   
   NSArray *selectedWishItems = [_restaurantMediator.menu selectedWishItems];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_visitor.restaurant createWishForTable:_visitor.table products:selectedWishItems completionBlock:^(OMNWish *wish) {
     
+    @strongify(self)
     [self stopLoading:preorderActionCell.actionButton];
-    [weakSelf didCreateWish:wish];
+    [self didCreateWish:wish];
 
   } failureBlock:^(OMNError *error) {
     
+    @strongify(self)
     [self stopLoading:preorderActionCell.actionButton];
     
   }];
@@ -343,10 +349,11 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)preorderConfirmCellDidEdit:(OMNPreorderConfirmCell *)preorderConfirmCell {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [preorderConfirmCell.item editMenuProductFromController:self withCompletion:^{
     
-    [weakSelf updateTableViewAnimated:YES];
+    @strongify(self)
+    [self updateTableViewAnimated:YES];
     
   }];
   

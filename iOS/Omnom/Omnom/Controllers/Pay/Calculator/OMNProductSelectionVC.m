@@ -43,16 +43,18 @@
   _dataSource = [[OMNOrderDataSource alloc] init];
   [OMNOrderDataSource registerCellsForTableView:self.tableView];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_dataSource setDidSelectBlock:^(UITableView *tv, NSIndexPath *indexPath) {
     
-    [weakSelf updateTotalValue];
+    @strongify(self)
+    [self updateTotalValue];
     
   }];
   
   _dataSource.didScrollToTopBlock = ^{
     
-    [weakSelf handleClose];
+    @strongify(self)
+    [self handleClose];
     
   };
   
@@ -70,10 +72,11 @@
  
   [self updateOrder];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNOrderAlertManager sharedManager].didUpdateBlock = ^{
     
-    [weakSelf updateOrder];
+    @strongify(self)
+    [self updateOrder];
     
   };
   
@@ -143,16 +146,18 @@
     demoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
   }
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"CALCULATOR_ALERT_TEXT", @"Отметьте ваши блюда в чеке и платите только за себя") message:nil cancelButtonTitle:NSLocalizedString(@"OK", @"OK") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
     
-    [weakSelf updateIndexPath:demoIndexPath];
+    @strongify(self)
+    [self updateIndexPath:demoIndexPath];
 
   }];
   
   [alert bk_setDidShowBlock:^(UIAlertView *a) {
     
-    [weakSelf updateIndexPath:demoIndexPath];
+    @strongify(self)
+    [self updateIndexPath:demoIndexPath];
     
   }];
   

@@ -169,13 +169,13 @@ NSString * const kCardIdServiceName = @"card_id";
     return;
   }
   
-  __weak typeof(self)weakSelf = self;
-  __weak UITableView *weakTableView = tableView;
+  @weakify(self)
   [tableView setEditing:NO animated:YES];
   [card deleteWithCompletion:^{
     
-    [weakSelf removeCard:card];
-    [weakTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    @strongify(self)
+    [self removeCard:card];
+    [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 
   } failure:^(NSError *error) {
     

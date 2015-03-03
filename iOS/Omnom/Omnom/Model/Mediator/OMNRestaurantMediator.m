@@ -47,10 +47,11 @@ OMNOrderCalculationVCDelegate>
     _visitor = [[OMNVisitor alloc] initWithRestaurant:restaurant];
     _shouldShowOrdersOnLaunch = (_restaurant.orders.count > 0);
 
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     [_restaurant getMenuWithCompletion:^(OMNMenu *menu) {
       
-      weakSelf.menu = menu;
+      @strongify(self)
+      self.menu = menu;
       
     }];
     
@@ -101,10 +102,11 @@ OMNOrderCalculationVCDelegate>
 - (void)showUserProfile {
 
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:self];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   userInfoVC.didCloseBlock = ^{
     
-    [weakSelf.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    @strongify(self)
+    [self.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
     
   };
   UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:userInfoVC];
@@ -148,16 +150,18 @@ OMNOrderCalculationVCDelegate>
 - (void)myOrderTap {
   
   OMNMyOrderConfirmVC *preorderConfirmVC = [[OMNMyOrderConfirmVC alloc] initWithRestaurantMediator:self];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   preorderConfirmVC.didCloseBlock = ^{
     
-    [weakSelf.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
+    @strongify(self)
+    [self.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
     
   };
   preorderConfirmVC.didCreateBlock = ^{
     
-    [weakSelf.restaurantActionsVC showRestaurantAnimated:NO];
-    [weakSelf.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
+    @strongify(self)
+    [self.restaurantActionsVC showRestaurantAnimated:NO];
+    [self.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
     
   };
   [_restaurantActionsVC.navigationController presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
@@ -171,10 +175,11 @@ OMNOrderCalculationVCDelegate>
   }
 
   OMNOrdersLoadingVC *ordersLoadingVC = [[OMNOrdersLoadingVC alloc] initWithMediator:self];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   ordersLoadingVC.didLoadOrdersBlock = ^(NSArray *orders) {
     
-    [weakSelf checkPushNotificationAndProcessOrders:orders];
+    @strongify(self)
+    [self checkPushNotificationAndProcessOrders:orders];
     
   };
   [_restaurantActionsVC.navigationController pushViewController:ordersLoadingVC animated:YES];
@@ -200,10 +205,11 @@ OMNOrderCalculationVCDelegate>
   else {
     
     OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:_restaurantActionsVC.r1VC];
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     pushPermissionVC.completionBlock = ^{
       
-      [weakSelf showOrders];
+      @strongify(self)
+      [self showOrders];
       
     };
     [self pushViewController:pushPermissionVC];
@@ -245,10 +251,11 @@ OMNOrderCalculationVCDelegate>
 
 - (void)processNoOrders {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   OMNNoOrdersVC *noOrdersVC = [[OMNNoOrdersVC alloc] initWithMediator:self closeBlock:^{
     
-    [weakSelf popToRootViewControllerAnimated:YES];
+    @strongify(self)
+    [self popToRootViewControllerAnimated:YES];
     
   }];
   [self pushViewController:noOrdersVC];
@@ -259,10 +266,11 @@ OMNOrderCalculationVCDelegate>
 
 - (void)ordersVC:(OMNOrdersVC *)ordersVC didSelectOrder:(OMNOrder *)order {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_restaurantActionsVC.navigationController omn_popToViewController:ordersVC animated:NO completion:^{
     
-    [weakSelf showOrder:order];
+    @strongify(self)
+    [self showOrder:order];
     
   }];
   

@@ -43,42 +43,39 @@
   
   OMNTable *table = _restaurantMediator.visitor.table;
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
-    [weakSelf.loaderView startAnimating:10.0];
+    @strongify(self)
+    [self.loaderView startAnimating:10.0];
     
     [table getOrders:^(NSArray *orders) {
       
-      [weakSelf finishLoading:^{
+      [self finishLoading:^{
         
-        [weakSelf didLoadOrders:orders];
+        if (self.didLoadOrdersBlock) {
+          
+          self.didLoadOrdersBlock(orders);
+          
+        }
         
       }];
       
     } error:^(OMNError *error) {
       
-      [weakSelf finishLoading:^{
+      [self finishLoading:^{
         
-        [weakSelf showRetryMessageWithError:error retryBlock:^{
+        [self showRetryMessageWithError:error retryBlock:^{
           
-          [weakSelf startLoadingOrders];
+          [self startLoadingOrders];
           
-        } cancelBlock:weakSelf.didCloseBlock];
+        } cancelBlock:self.didCloseBlock];
         
       }];
       
     }];
     
   }];
-  
-}
-
-- (void)didLoadOrders:(NSArray *)orders {
-  
-  if (self.didLoadOrdersBlock) {
-    self.didLoadOrdersBlock(orders);
-  }
   
 }
 

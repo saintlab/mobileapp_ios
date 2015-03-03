@@ -102,10 +102,11 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
     return;
   }
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNImageManager manager] downloadImageWithURL:self.photo completion:^(UIImage *image) {
     
-    weakSelf.photoImage = image;
+    @strongify(self)
+    self.photoImage = image;
     
   }];
   

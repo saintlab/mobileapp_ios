@@ -15,17 +15,19 @@
   
   self.editing = YES;
   OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:self.menuProduct];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   productModiferAlertVC.didCloseBlock = ^{
     
-    weakSelf.editing = NO;
+    @strongify(self)
+    self.editing = NO;
     [viewController dismissViewControllerAnimated:YES completion:nil];
     
   };
   
   productModiferAlertVC.didSelectOrderBlock = ^{
     
-    weakSelf.editing = NO;
+    @strongify(self)
+    self.editing = NO;
     [viewController dismissViewControllerAnimated:YES completion:completionBlock];
     
   };

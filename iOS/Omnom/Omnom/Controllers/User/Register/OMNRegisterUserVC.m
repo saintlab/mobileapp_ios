@@ -104,14 +104,16 @@ TTTAttributedLabelDelegate>
     _errorLabel.text = nil;
     
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     [_user registerWithCompletion:^{
       
-      [weakSelf requestAuthorizationCode];
+      @strongify(self)
+      [self requestAuthorizationCode];
       
     } failure:^(OMNError *error) {
       
-      [weakSelf processError:error];
+      @strongify(self)
+      [self processError:error];
       
     }];
     
@@ -166,15 +168,17 @@ TTTAttributedLabelDelegate>
 
 - (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_user verifyPhoneCode:code completion:^(NSString *token) {
     
-    [weakSelf didRegisterWithToken:token];
+    @strongify(self)
+    [self didRegisterWithToken:token];
     
   } failure:^(OMNError *error) {
     
+    @strongify(self)
     [confirmCodeVC resetAnimated:YES];
-    [weakSelf processError:error];
+    [self processError:error];
     
   }];
   

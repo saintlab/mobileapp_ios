@@ -17,6 +17,12 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNOrderToolbarButton.h"
 
+@interface OMNRestaurantMediator (omn_toolbar)
+
+- (BOOL)showPreorderButton;
+
+@end
+
 @implementation OMNRestaurantActionsToolbar {
   
   NSString *_restaurantWaiterCallObserverId;
@@ -58,10 +64,11 @@
   [self removeRestaurantWaiterCallObserver];
   _restaurantMediator = restaurantMediator;
   _hasPreorderedMenuItems = restaurantMediator.menu.hasPreorderedItems;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   _restaurantWaiterCallObserverId = [_restaurantMediator.visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNVisitor *obj, NSDictionary *change) {
     
-    [weakSelf updateRestaurantActionButtons];
+    @strongify(self)
+    [self updateRestaurantActionButtons];
     
   }];
   
@@ -86,14 +93,16 @@
   callBillButton.hidden = !settings.has_table_order;
   
   UIButton *callWaiterButton = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:nil action:nil];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [callWaiterButton bk_addEventHandler:^(id sender) {
     
-    [weakSelf setLoadingState];
-    [weakSelf.restaurantMediator waiterCall];
+    @strongify(self)
+    [self setLoadingState];
+    [self.restaurantMediator waiterCall];
     
   } forControlEvents:UIControlEventTouchUpInside];
   callWaiterButton.hidden = !settings.has_waiter_call;
+  
   NSArray *bottomToolbarItems = nil;
   
   if (settings.has_waiter_call &&
@@ -102,8 +111,9 @@
     OMNToolbarButton *cancelWaiterButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"WAITER_CALL_CANCEL_BUTTON_TITLE", @"Отменить вызов")];
     [cancelWaiterButton bk_addEventHandler:^(id sender) {
       
-      [weakSelf setLoadingState];
-      [weakSelf.restaurantMediator waiterCallStop];
+      @strongify(self)
+      [self setLoadingState];
+      [self.restaurantMediator waiterCallStop];
       
     } forControlEvents:UIControlEventTouchUpInside];
     [cancelWaiterButton sizeToFit];
@@ -116,8 +126,7 @@
       ];
     
   }
-  else if (settings.has_menu &&
-           _restaurantMediator.menu.hasPreorderedItems) {
+  else if (_restaurantMediator.showPreorderButton) {
     
     OMNMyOrderButton *myOrderButton = [[OMNMyOrderButton alloc] initWithRestaurantMediator:_restaurantMediator];
     
@@ -171,3 +180,19 @@
 }
 
 @end
+
+@implementation OMNRestaurantMediator (omn_toolbar)
+
+- (BOOL)showPreorderButton {
+  
+  BOOL showPreorderButton =
+  (
+   self.restaurant.settings.has_menu &&
+   (self.menu.hasPreorderedItems || kRestaurantMode2gis_dinner == self.restaurant.enterance_mode)
+   );
+  return showPreorderButton;
+  
+}
+
+@end
+

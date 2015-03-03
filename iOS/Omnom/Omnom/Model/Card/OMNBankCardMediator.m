@@ -44,17 +44,18 @@
 - (void)showPaymentVCWithDidPresentBlock:(OMNPaymentVCDidPresentBlock)paymentVCDidPresentBlock {
   
   OMNPaymentLoadingVC *paymentLoadingVC = [[OMNPaymentLoadingVC alloc] init];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [_rootVC.navigationController omn_pushViewController:paymentLoadingVC animated:YES completion:^{
     
     [paymentLoadingVC startLoading];
     paymentVCDidPresentBlock(^(OMNError *error) {
       
+      @strongify(self)
       if (error) {
         
         [paymentLoadingVC didFailWithError:error action:^{
           
-          weakSelf.didPayBlock(error);
+          self.didPayBlock(error);
           
         }];
         
@@ -63,7 +64,7 @@
         
         [paymentLoadingVC finishLoading:^{
           
-          weakSelf.didPayBlock(error);
+          self.didPayBlock(error);
           
         }];
         

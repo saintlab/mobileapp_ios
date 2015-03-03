@@ -110,12 +110,13 @@ const CGFloat kCalculatorTopOffset = 40.0f;
 
 - (void)closeTap {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self showViewControllerAtIndex:0 withCompletion:^{
     
-    [weakSelf.firstViewController scrollToBottomWithCompletion:^{
+    @strongify(self)
+    [self.firstViewController scrollToBottomWithCompletion:^{
   
-      [weakSelf.delegate calculatorVCDidCancel:weakSelf];
+      [self.delegate calculatorVCDidCancel:self];
       
     }];
     

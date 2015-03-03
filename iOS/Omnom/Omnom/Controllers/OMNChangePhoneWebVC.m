@@ -43,15 +43,17 @@
 
 - (void)reloadPage {
   
-  __weak typeof(self)weakSelf = self;
   [self setLoading:YES];
+  @weakify(self)
   [_user recoverWithCompletion:^(NSURL *url) {
-    
-    [weakSelf showURL:url];
+
+    @strongify(self)
+    [self showURL:url];
     
   } failure:^(NSError *error) {
     
-    [weakSelf setLoading:NO];
+    @strongify(self)
+    [self setLoading:NO];
     
   }];
   

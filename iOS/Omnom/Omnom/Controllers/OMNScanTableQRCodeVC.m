@@ -61,20 +61,23 @@ OMNCameraPermissionDescriptionVCDelegate>
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNCameraPermission requestPermission:^{
     
-    [weakSelf startScanning];
+    @strongify(self)
+    [self startScanning];
     
   } restricted:^{
     
-    [weakSelf showCameraPermissionHelp];
+    @strongify(self)
+    [self showCameraPermissionHelp];
     
   }];
   
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     
-    [weakSelf showBottomMenu];
+    @strongify(self)
+    [self showBottomMenu];
     
   });
   
@@ -82,12 +85,13 @@ OMNCameraPermissionDescriptionVCDelegate>
 
 - (void)showBottomMenu {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   self.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"QR_NOT_SCAN_BUTTON_TITLE", @"Не сканирует?") image:nil block:^{
       
-      [weakSelf requestManualCode];
+      @strongify(self)
+      [self requestManualCode];
       
     }]
     ];
@@ -96,6 +100,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   self.bottomToolbar.transform = CGAffineTransformMakeTranslation(0.0f, CGRectGetHeight(self.bottomToolbar.frame));
   [UIView animateWithDuration:0.5 animations:^{
   
+    @strongify(self)
     self.bottomToolbar.transform = CGAffineTransformIdentity;
     
   }];
@@ -105,21 +110,23 @@ OMNCameraPermissionDescriptionVCDelegate>
 - (void)requestManualCode {
   
   OMNEnterHashAlertVC *enterHashAlertVC = [[OMNEnterHashAlertVC alloc] init];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   enterHashAlertVC.didCloseBlock = ^{
     
-    [weakSelf dismissViewControllerAnimated:YES completion:^{
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:^{
       
-      [weakSelf startScanning];
+      [self startScanning];
       
     }];
     
   };
   enterHashAlertVC.didFindRestaurantsBlock = ^(NSArray *restaurants) {
     
-    [weakSelf dismissViewControllerAnimated:YES completion:^{
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:^{
     
-      [weakSelf didFindRestaurants:restaurants];
+      [self didFindRestaurants:restaurants];
       
     }];
     
@@ -141,10 +148,11 @@ OMNCameraPermissionDescriptionVCDelegate>
   OMNCameraPermissionDescriptionVC *cameraPermissionDescriptionVC = [[OMNCameraPermissionDescriptionVC alloc] init];
   cameraPermissionDescriptionVC.text = NSLocalizedString(@"CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT", @"Для сканирования карты\nнеобходимо разрешение\nна доступ к камере.");
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   cameraPermissionDescriptionVC.didCloseBlock = ^{
     
-    [weakSelf closeTap];
+    @strongify(self)
+    [self closeTap];
     
   };
   cameraPermissionDescriptionVC.delegate = self;
@@ -325,14 +333,16 @@ OMNCameraPermissionDescriptionVCDelegate>
 
 - (void)decodeQR:(NSString *)qr {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNRestaurantManager decodeQR:qr withCompletion:^(NSArray *restaurants) {
     
-    [weakSelf didFindRestaurants:restaurants];
+    @strongify(self)
+    [self didFindRestaurants:restaurants];
     
   } failureBlock:^(OMNError *error) {
     
-    [weakSelf processError:error];
+    @strongify(self)
+    [self processError:error];
     
   }];
   
@@ -361,12 +371,13 @@ OMNCameraPermissionDescriptionVCDelegate>
   repeatVC.circleIcon = error.circleImage;
   repeatVC.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   repeatVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
-      [weakSelf.navigationController popToViewController:weakSelf animated:YES];
+      @strongify(self)
+      [self.navigationController popToViewController:self animated:YES];
       
     }]
     ];
@@ -396,17 +407,19 @@ OMNCameraPermissionDescriptionVCDelegate>
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
   
   OMNQRHelpAlertVC *qrHelpAlertVC = [[OMNQRHelpAlertVC alloc] init];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   qrHelpAlertVC.didCloseBlock = ^{
     
-    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:nil];
     
   };
   qrHelpAlertVC.didRequestDemoModeBlock = ^{
     
-    [weakSelf dismissViewControllerAnimated:YES completion:^{
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:^{
       
-      [weakSelf requestDemoMode];
+      [self requestDemoMode];
       
     }];
     

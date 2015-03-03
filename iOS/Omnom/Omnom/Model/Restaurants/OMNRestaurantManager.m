@@ -160,13 +160,14 @@
     return;
   }
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNRestaurantManager decodeBeacons:beacons withCompletion:^(NSArray *restaurants) {
     
     if (1 == restaurants.count) {
       
+      @strongify(self)
       OMNRestaurant *restaurant = [restaurants firstObject];
-      [weakSelf handleBackgroundDecodedRestaurant:restaurant withCompletion:completionBlock];
+      [self handleBackgroundDecodedRestaurant:restaurant withCompletion:completionBlock];
       
     }
     else {

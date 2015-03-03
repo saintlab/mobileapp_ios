@@ -155,10 +155,11 @@
 
 - (void)updateOrders {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.table getOrders:^(NSArray *orders) {
     
-    [weakSelf updateOrdersWithOrders:orders];
+    @strongify(self)
+    [self updateOrdersWithOrders:orders];
     
   } error:^(OMNError *error) {
   }];
@@ -292,7 +293,7 @@
   NSMutableArray *newOrders = [NSMutableArray arrayWithCapacity:orders.count];
   NSMutableSet *newOrdersIDs = [NSMutableSet setWithCapacity:orders.count];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [orders enumerateObjectsUsingBlock:^(OMNOrder *newOrder, NSUInteger idx, BOOL *stop) {
     
     OMNOrder *existingOrder = existingOrdersDictionary[newOrder.id];
@@ -305,13 +306,14 @@
     }
     else {
       
+      @strongify(self)
       if ([newOrder.id isEqualToString:selectedOrderId]) {
         
-        weakSelf.selectedOrder = newOrder;
+        self.selectedOrder = newOrder;
         
       }
       [newOrders addObject:newOrder];
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification object:weakSelf userInfo:@{OMNOrderKey : newOrder}];
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidChangeNotification object:self userInfo:@{OMNOrderKey : newOrder}];
       
     }
     
@@ -321,7 +323,8 @@
     
     if (![newOrdersIDs containsObject:existingOrder.id]) {
       
-      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:weakSelf userInfo:@{OMNOrderKey : existingOrder}];
+      @strongify(self)
+      [[NSNotificationCenter defaultCenter] postNotificationName:OMNOrderDidCloseNotification object:self userInfo:@{OMNOrderKey : existingOrder}];
       
     }
     
@@ -346,10 +349,11 @@
 
 - (void)waiterCall {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.table waiterCallWithCompletion:^(OMNError *error) {
     
-    weakSelf.waiterIsCalled = (nil == error);
+    @strongify(self)
+    self.waiterIsCalled = (nil == error);
     
   }];
   
@@ -357,10 +361,11 @@
 
 - (void)waiterCallStop {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.table waiterCallStopWithFailure:^(OMNError *error) {
     
-    weakSelf.waiterIsCalled = (nil != error);
+    @strongify(self)
+    self.waiterIsCalled = (nil != error);
     
   }];
   

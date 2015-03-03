@@ -258,12 +258,13 @@
     return;
   }
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNImageManager manager] downloadImageWithURL:self.avatar completion:^(UIImage *image) {
     
     if (image) {
       
-      weakSelf.image = image;
+      @strongify(self)
+      self.image = image;
       completion();
       
     }
@@ -321,10 +322,11 @@
   
   if (user.image) {
     
-    __weak typeof(self)weakSelf = self;
+    @weakify(self)
     [self uploadImage:user.image withCompletion:^(OMNUser *editUser) {
       
-      [weakSelf updateUserInfoWithUser:editUser withCompletion:completion failure:failureBlock];
+      @strongify(self)
+      [self updateUserInfoWithUser:editUser withCompletion:completion failure:failureBlock];
       
     } progress:^(CGFloat percent) {
       

@@ -62,10 +62,11 @@
 
 - (void)loadLogo:(OMNImageBlock)imageBlock {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNImageManager manager] downloadImageWithURL:self.logoUrl completion:^(UIImage *image) {
     
-    weakSelf.logo = image;
+    @strongify(self)
+    self.logo = image;
     imageBlock(image);
     
   }];
@@ -80,10 +81,11 @@
 
 - (void)loadBackground:(OMNImageBlock)imageBlock {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl completion:^(UIImage *image) {
     
-    weakSelf.background_image = image;
+    @strongify(self)
+    self.background_image = image;
     imageBlock(image);
     
   }];

@@ -80,10 +80,11 @@
   NSAssert(failureBlock != nil, @"complitionBlock is nil");
 
   self.deleting = YES;
-  __weak typeof(self)weakSelf = self;
+  NSString *cardId = self.id;
+  @weakify(self)
   [[OMNMailRuAcquiring acquiring] deleteCard:self.external_card_id user_login:self.user_id сompletion:^{
     
-    NSString *path = [NSString stringWithFormat:@"/cards/%@", weakSelf.id];
+    NSString *path = [NSString stringWithFormat:@"/cards/%@", cardId];
     [[OMNOperationManager sharedManager] DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
       if ([responseObject omn_isSuccessResponse]) {
@@ -102,15 +103,17 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MAIL_CARD_DELETE" jsonRequest:path responseOperation:operation];
-      weakSelf.deleting = NO;
+      @strongify(self)
+      self.deleting = NO;
       failureBlock(error);
       
     }];
     
   } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
-    
+
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_DELETE" cardInfo:nil error:error request:request response:response];
-    weakSelf.deleting = NO;
+    @strongify(self)
+    self.deleting = NO;
     failureBlock(nil);
     
   }];

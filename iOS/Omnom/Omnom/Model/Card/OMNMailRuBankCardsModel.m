@@ -15,16 +15,18 @@
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock {
 
-  __weak typeof(self)weakSelf = self;
   self.loading = YES;
+  @weakify(self)
   [OMNBankCard getCardsWithCompletion:^(NSArray *cards) {
     
-    [weakSelf didLoadCards:cards];
+    @strongify(self)
+    [self didLoadCards:cards];
     completionBlock();
     
   } failure:^(NSError *error) {
     
-    [weakSelf didLoadCards:nil];
+    @strongify(self)
+    [self didLoadCards:nil];
     completionBlock();
     
   }];

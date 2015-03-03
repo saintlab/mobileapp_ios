@@ -64,10 +64,11 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   dispatch_async(dispatch_get_main_queue(), ^{
     
-    [weakSelf startSearchingRestaurants];
+    @strongify(self)
+    [self startSearchingRestaurants];
     
   });
   
@@ -75,14 +76,16 @@
 
 - (void)processHash:(NSString *)hash {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNRestaurantManager decodeHash:hash withCompletion:^(NSArray *restaurants) {
     
-    [weakSelf didFindRestaurants:restaurants];
+    @strongify(self)
+    [self didFindRestaurants:restaurants];
     
   } failureBlock:^(OMNError *error) {
     
-    [weakSelf beaconsNotFound];
+    @strongify(self)
+    [self beaconsNotFound];
     
   }];
   
@@ -90,14 +93,16 @@
 
 - (void)processQrCode:(NSString *)code {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNRestaurantManager decodeQR:code withCompletion:^(NSArray *restaurants) {
     
-    [weakSelf didFindRestaurants:restaurants];
+    @strongify(self)
+    [self didFindRestaurants:restaurants];
     
   } failureBlock:^(OMNError *error) {
     
-    [weakSelf beaconsNotFound];
+    @strongify(self)
+    [self beaconsNotFound];
     
   }];
   
@@ -105,14 +110,16 @@
 
 - (void)decodeBeacons:(NSArray *)beacons {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [OMNRestaurantManager decodeBeacons:beacons withCompletion:^(NSArray *restaurants) {
     
-    [weakSelf didFindRestaurants:restaurants];
+    @strongify(self)
+    [self didFindRestaurants:restaurants];
     
   } failureBlock:^(OMNError *error) {
     
-    [weakSelf didFailOmnom:error];
+    @strongify(self)
+    [self didFailOmnom:error];
     
   }];
   
@@ -120,14 +127,16 @@
 
 - (void)didFailOmnom:(OMNError *)error {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self showRetryMessageWithError:error retryBlock:^{
     
-    [weakSelf startSearchingRestaurants];
+    @strongify(self)
+    [self startSearchingRestaurants];
     
   } cancelBlock:^{
     
-    [weakSelf beaconsNotFound];
+    @strongify(self)
+    [self beaconsNotFound];
     
   }];
   
@@ -136,10 +145,11 @@
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
   [self stopBeaconSearchManager];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self finishLoading:^{
   
-    [weakSelf.searchRestaurantMediator showRestaurants:restaurants];
+    @strongify(self)
+    [self.searchRestaurantMediator showRestaurants:restaurants];
     
   }];
   
@@ -157,10 +167,11 @@
   [self stopBeaconSearchManager];
   [self.loaderView stop];
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
-    [weakSelf checkUserToken];
+    @strongify(self)
+    [self checkUserToken];
     
   }];
   
@@ -172,23 +183,25 @@
   self.label.text = @"";
   [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
 
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
     
+    @strongify(self)
     if (user) {
       
-      [weakSelf checkLaunchOptions];
+      [self checkLaunchOptions];
       
     }
     else {
       
-      [weakSelf cancelTap];
+      [self cancelTap];
       
     }
     
   } failure:^(OMNError *error) {
     
-    [weakSelf handleInternetError:error];
+    @strongify(self)
+    [self handleInternetError:error];
     
   }];
   
@@ -196,42 +209,33 @@
 
 - (void)checkLaunchOptions {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   OMNLaunchOptions *launchOptions = [OMNLaunchHandler sharedHandler].launchOptions;
-  if (launchOptions.restaurants) {
+  dispatch_async(dispatch_get_main_queue(), ^{
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    @strongify(self)
+    if (launchOptions.restaurants) {
       
-      [weakSelf didFindRestaurants:launchOptions.restaurants];
+      [self didFindRestaurants:launchOptions.restaurants];
       
-    });
-    
-  }
-  else if (launchOptions.hashString) {
-    
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+    }
+    else if (launchOptions.hashString) {
       
-      [weakSelf processHash:launchOptions.hashString];
+      [self processHash:launchOptions.hashString];
       
-    });
-    
-  }
-  else if (launchOptions.qr) {
-    
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+    }
+    else if (launchOptions.qr) {
       
-      [weakSelf processQrCode:launchOptions.qr];
+      [self processQrCode:launchOptions.qr];
       
-    });
+    }
+    else  {
+      
+      [self startBeaconSearchManager];
+      
+    }
     
-  }
-  else  {
-    
-    [self startBeaconSearchManager];
-    
-  }
+  });
   
 }
 
@@ -278,12 +282,13 @@
   noInternetVC.text = text;
   noInternetVC.faded = YES;
   noInternetVC.circleIcon = error.circleImage;
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   noInternetVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:actionText image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
-      [weakSelf startSearchingRestaurants];
+      @strongify(self)
+      [self startSearchingRestaurants];
       
     }]
     ];
@@ -367,11 +372,12 @@
     } break;
     case kCLSearchManagerRequestPermission: {
       
-      __weak typeof(self)weakSelf = self;
+      @weakify(self)
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:weakSelf];
-        [weakSelf.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
+        @strongify(self)
+        OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:self];
+        [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
         
       });
       
@@ -383,13 +389,14 @@
 - (void)showDenyLocationPermissionDescription {
   
   OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   denyCLPermissionVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Включить", nil) image:nil block:^{
       
+      @strongify(self)
       OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
-      [weakSelf.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
+      [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
       
     }]
     ];

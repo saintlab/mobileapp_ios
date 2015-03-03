@@ -74,7 +74,8 @@ static double const kDesiredAccelerometerAccuracy = 0.08;
       
     }
     
-    [weakSelf stop];
+    __strong __typeof(weakSelf)strongSelf = weakSelf;
+    [strongSelf stop];
     
     dispatch_async(dispatch_get_main_queue(), ^{
       
@@ -119,7 +120,8 @@ static double const kDesiredAccelerometerAccuracy = 0.08;
     if (numberOfFaceUpStillPositions > numberOfDesiredStillPositions) {
       
       numberOfFaceUpStillPositions = 0;
-      [weakSelf handleDeviceFaceUp];
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      [strongSelf handleDeviceFaceUp];
 
     }
     

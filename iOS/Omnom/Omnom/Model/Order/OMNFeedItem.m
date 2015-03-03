@@ -29,10 +29,11 @@
 
 - (void)downloadImage {
   
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   [[OMNImageManager manager] downloadImageWithURL:self.imageURL completion:^(UIImage *image) {
     
-    weakSelf.image = image;
+    @strongify(self)
+    self.image = image;
     
   }];
   

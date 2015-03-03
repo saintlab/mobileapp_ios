@@ -106,17 +106,19 @@
 - (void)showChangeTableAlert {
   
   OMNNoOrdersAlertVC *noOrdersAlertVC = [[OMNNoOrdersAlertVC alloc] initWithTable:_visitor.table];
-  __weak typeof(self)weakSelf = self;
+  @weakify(self)
   noOrdersAlertVC.didCloseBlock = ^{
     
-    [weakSelf dismissViewControllerAnimated:YES completion:nil];
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:nil];
     
   };
   noOrdersAlertVC.didChangeTableBlock = ^{
     
-    [weakSelf dismissViewControllerAnimated:YES completion:^{
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:^{
       
-      [weakSelf rescanTable];
+      [self rescanTable];
       
     }];
     
