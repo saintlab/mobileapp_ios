@@ -11,6 +11,8 @@
 #import "OMNConstants.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UINavigationBar+omn_custom.h"
+#import "UIView+omn_autolayout.h"
+#import <OMNStyler.h>
 
 @interface OMNCircleRootVC ()
 
@@ -57,9 +59,8 @@
     return _fadeView;
   }
   
-  _fadeView = [[UIView alloc] init];
+  _fadeView = [UIView omn_autolayoutView];
   _fadeView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.7f];
-  _fadeView.translatesAutoresizingMaskIntoConstraints = NO;
   _fadeView.hidden = !self.faded;
   [self.backgroundView addSubview:_fadeView];
   
@@ -76,16 +77,14 @@
 
 - (void)setupCircle {
   
-  _label = [[UILabel alloc] init];
+  _label = [UILabel omn_autolayoutView];
   _label.hidden = YES;
   _label.font = FuturaOSFOmnomRegular(25.0f);
   _label.numberOfLines = 0;
-  _label.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_label];
   
-  _circleButton = [[UIButton alloc] init];
+  _circleButton = [UIButton omn_autolayoutView];
   _circleButton.userInteractionEnabled = NO;
-  _circleButton.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_circleButton];
   
   NSDictionary *views =
@@ -97,8 +96,7 @@
   NSDictionary *metrics =
   @{
     @"circleSize" : @(200.0f),
-    @"bottomOffset" : @(60.0f),
-    
+    @"bottomOffset" : [OMNStyler styler].bottomToolbarHeight,
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[circleButton(circleSize)]-[label]-(bottomOffset)-|" options:kNilOptions metrics:metrics views:views]];

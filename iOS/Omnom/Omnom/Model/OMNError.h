@@ -16,7 +16,8 @@ typedef NS_ENUM(NSInteger, OMNErrorCode) {
   kOMNErrorCodeTimedOut,
   kOMNErrorCodeNotConnectedToInternet,
   
-  OMNErrorOrderClosed = 300,
+  kOMNErrorOrderClosed = 300,
+  kOMNErrorRestaurantUnavaliable,
   kOMNErrorCodeQrDecode,
   OMNErrorWrongAmount,
   

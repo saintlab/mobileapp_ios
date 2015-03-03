@@ -72,7 +72,7 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
     case kOMNErrorCodeTimedOut: {
       description = NSLocalizedString(@"ERROR_MESSAGE_NO_CONNECTION", @"Помехи на линии.");
     } break;
-    case OMNErrorOrderClosed: {
+    case kOMNErrorOrderClosed: {
       description = NSLocalizedString(@"ERROR_MESSAGE_ORDER_CLOSED", @"Оплата по счёту невозможна - стол уже закрыт. Попробуйте запросить счёт заново или позовите официанта.");
     } break;
     case kOMNErrorCodeQrDecode: {
@@ -80,6 +80,9 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
     } break;
     case OMNErrorWrongAmount: {
       description = NSLocalizedString(@"ERROR_MESSAGE_PAYMENT_ERROR", @"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.");
+    } break;
+    case kOMNErrorRestaurantUnavaliable: {
+      description = NSLocalizedString(@"RESTAURANT_OFFLINE_TEXT", @"Прямо сейчас нет связи с кассой. Попробуйте позже или рассчитайтесь через официанта. Медленно, но иных вариантов сейчас нет.");
     } break;
     case kOMNErrorCodeUnknoun:
     default: {

@@ -27,8 +27,9 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
   if (self) {
     
     _jsonData = jsonData;
-    self.id = [jsonData[@"id"] description];
-    self.is_demo = [jsonData[@"is_demo"] boolValue];
+    _id = [jsonData[@"id"] description];
+    _is_demo = [jsonData[@"is_demo"] boolValue];
+    _available = (jsonData[@"available"]) ? ([jsonData[@"available"] boolValue]) : (YES);
     self.title = jsonData[@"title"];
     self.Description = jsonData[@"description"];
 

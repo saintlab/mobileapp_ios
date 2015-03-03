@@ -96,7 +96,7 @@
     
     if (error) {
       
-      if (OMNErrorOrderClosed == error.code) {
+      if (kOMNErrorOrderClosed == error.code) {
         
         [weakSelf orderDidClosed];
         

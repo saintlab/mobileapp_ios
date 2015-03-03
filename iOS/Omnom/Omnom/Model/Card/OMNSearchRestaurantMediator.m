@@ -16,6 +16,7 @@
 #import "OMNRestaurantCardVC.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNNavigationControllerDelegate.h"
+#import "OMNRestaurantOfflineVC.h"
 
 @interface OMNSearchRestaurantMediator ()
 <OMNSearchRestaurantsVCDelegate,
@@ -23,7 +24,11 @@ OMNScanTableQRCodeVCDelegate>
 
 @end
 
-@implementation OMNSearchRestaurantMediator
+@implementation OMNSearchRestaurantMediator {
+  
+  OMNRestaurantListVC *_restaurantListVC;
+  
+}
 
 - (instancetype)initWithRootVC:(__weak UIViewController *)vc {
   self = [super init];
@@ -73,11 +78,35 @@ OMNScanTableQRCodeVCDelegate>
   
 }
 
+- (void)showRestaurantListVC {
+  
+  [_restaurantListVC.navigationController popToViewController:_restaurantListVC animated:YES];
+  
+}
+
 - (void)showRestaurants:(NSArray *)restaurants {
   
+  if (_restaurantListVC) {
+    
+    [_rootVC.navigationController popToViewController:_restaurantListVC animated:NO];
+    
+  }
+  
   NSMutableArray *controllers = [NSMutableArray arrayWithArray:_rootVC.navigationController.viewControllers];
-  OMNRestaurantListVC *restaurantListVC = [[OMNRestaurantListVC alloc] initWithMediator:self];
-  [controllers addObject:restaurantListVC];
+  
+  if (!_restaurantListVC) {
+    
+    _restaurantListVC = [[OMNRestaurantListVC alloc] initWithMediator:self];
+    [controllers addObject:_restaurantListVC];
+
+  }
+  
+  __weak typeof(self)weakSelf = self;
+  dispatch_block_t showRestaurantListBlock = ^{
+    
+    [weakSelf showRestaurantListVC];
+    
+  };
   
   if (1 == restaurants.count) {
     
@@ -87,12 +116,7 @@ OMNScanTableQRCodeVCDelegate>
         restaurant.hasOrders) {
       
       OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
-      __weak typeof(self)weakSelf = self;
-      restaurantActionsVC.didCloseBlock = ^{
-        
-        [restaurantListVC.navigationController popToViewController:restaurantListVC animated:YES];
-        
-      };
+      restaurantActionsVC.didCloseBlock = showRestaurantListBlock;
       restaurantActionsVC.rescanTableBlock = ^{
         
         [weakSelf didFinish];
@@ -101,41 +125,29 @@ OMNScanTableQRCodeVCDelegate>
       [controllers addObject:restaurantActionsVC];
       
     }
-    else {
+    else if (restaurant.available) {
 
       OMNRestaurantCardVC *restaurantCardVC = [[OMNRestaurantCardVC alloc] initWithMediator:self restaurant:restaurant];
-      restaurantCardVC.showQRScan = YES;
-      restaurantCardVC.didCloseBlock = ^{
-        
-        [restaurantListVC.navigationController popToViewController:restaurantListVC animated:YES];
-        
-      };
+      restaurantCardVC.didCloseBlock = showRestaurantListBlock;
       [controllers addObject:restaurantCardVC];
+      
+    }
+    else {
+      
+      OMNRestaurantOfflineVC *restaurantOfflineVC = [[OMNRestaurantOfflineVC alloc] init];
+      restaurantOfflineVC.completionBlock = showRestaurantListBlock;
+      [controllers addObject:restaurantOfflineVC];
       
     }
     
   }
   else {
     
-    restaurantListVC.restaurants = restaurants;
+    _restaurantListVC.restaurants = restaurants;
     
   }
   
   [_rootVC.navigationController setViewControllers:controllers animated:YES];
-  
-}
-
-- (void)showCardForRestaurant:(OMNRestaurant *)restaurant {
-  
-  OMNRestaurantCardVC *restaurantCardVC = [[OMNRestaurantCardVC alloc] initWithMediator:self restaurant:restaurant];
-  __weak UIViewController *presentingVC = _rootVC.navigationController.topViewController;
-  __weak typeof(self)weakSelf = self;
-  restaurantCardVC.didCloseBlock = ^{
-    
-    [weakSelf.rootVC.navigationController popToViewController:presentingVC animated:YES];
-    
-  };
-  [_rootVC.navigationController pushViewController:restaurantCardVC animated:YES];
   
 }
 

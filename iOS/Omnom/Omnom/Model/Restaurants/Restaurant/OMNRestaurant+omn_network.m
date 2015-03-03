@@ -185,7 +185,7 @@
     
   }
   
-  [[OMNOperationManager sharedManager] GET:@"restaurants" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNOperationManager sharedManager] GET:@"/restaurants/all" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     [responseObject omn_decodeWithRestaurantsBlock:restaurantsBlock failureBlock:failureBlock];
     

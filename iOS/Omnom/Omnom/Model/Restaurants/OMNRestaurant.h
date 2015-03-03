@@ -30,8 +30,9 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 @interface OMNRestaurant : NSObject
 <NSCoding>
 
-@property (nonatomic, copy) NSString *id;
-@property (nonatomic, assign) BOOL is_demo;
+@property (nonatomic, copy, readonly) NSString *id;
+@property (nonatomic, assign, readonly) BOOL is_demo;
+@property (nonatomic, assign, readonly) BOOL available;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
 @property (nonatomic, assign) OMNRestaurantMode mode;

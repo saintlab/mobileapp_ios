@@ -47,7 +47,9 @@
 
 - (void)didFinish {
   
-  _completionBlock();
+  if (self.completionBlock) {
+    self.completionBlock();
+  }
   
 }
 

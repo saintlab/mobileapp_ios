@@ -37,13 +37,12 @@
       else if ([status isEqualToString:@"paid"] ||
                [status isEqualToString:@"order_closed"]) {
         
-        failureBlock([OMNError omnomErrorFromCode:OMNErrorOrderClosed]);
+        failureBlock([OMNError omnomErrorFromCode:kOMNErrorOrderClosed]);
         
       }
       else if ([status isEqualToString:@"restaurant_not_avaliable"]) {
         
-#warning restaurant_not_avaliable
-        failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+        failureBlock([OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavaliable]);
         
       }
       else {

@@ -235,7 +235,7 @@
     case 0: {
 
       OMNRestaurantCellItem *item = self.restaurants[indexPath.row];
-      [_searchRestaurantMediator showCardForRestaurant:item.restaurant];
+      [_searchRestaurantMediator showRestaurants:@[item.restaurant]];
       
     } break;
     case 1: {
