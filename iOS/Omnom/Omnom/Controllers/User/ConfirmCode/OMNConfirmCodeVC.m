@@ -97,7 +97,7 @@
   
   [_timer invalidate];
   _resendButton.enabled = NO;
-  __weak UIButton *resendButton = _resendButton;
+  UIButton *resendButton = _resendButton;
   _timer = [NSTimer bk_scheduledTimerWithTimeInterval:7.0 block:^(NSTimer *timer) {
     
     [UIView transitionWithView:resendButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{

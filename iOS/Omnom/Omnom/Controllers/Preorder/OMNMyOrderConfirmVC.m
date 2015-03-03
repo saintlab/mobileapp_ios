@@ -266,7 +266,7 @@ OMNPreorderConfirmCellDelegate>
 
 #pragma mark - OMNPreorderActionCellDelegate
 
-- (void)preorderActionCellDidOrder:(__weak OMNPreorderActionCell *)preorderActionCell {
+- (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell {
   
   preorderActionCell.actionButton.enabled = NO;
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];

@@ -20,7 +20,7 @@ typedef void(^OMNPaymentVCDidPresentBlock)(OMNPaymentDidFinishBlock paymentDidFi
 
 @property (nonatomic, copy) OMNPaymentDidFinishBlock didPayBlock;
 
-- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(__weak UIViewController *)rootVC;
+- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(UIViewController *)rootVC;
 
 - (void)addCardForPayment;
 - (void)registerCard;

@@ -70,7 +70,7 @@
   
 }
 
-- (void)editMenuProductFromController:(__weak UIViewController *)viewController withCompletion:(dispatch_block_t)completionBlock {
+- (void)editMenuProductFromController:(UIViewController *)viewController withCompletion:(dispatch_block_t)completionBlock {
   
   OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:self.menuProduct];
   productModiferAlertVC.didCloseBlock = ^{

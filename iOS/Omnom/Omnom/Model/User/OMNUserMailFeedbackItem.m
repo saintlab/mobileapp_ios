@@ -22,7 +22,7 @@
 
     self.title = NSLocalizedString(@"FEEDBACK_MAIL_ITEM_TITLE", @"Обратная связь");
     
-    [self setActionBlock:^(__weak UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath) {
+    [self setActionBlock:^(UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath) {
       
       if ([MFMailComposeViewController canSendMail]) {
         

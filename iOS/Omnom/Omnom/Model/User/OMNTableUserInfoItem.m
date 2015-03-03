@@ -19,7 +19,7 @@
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   
-  self = [super initWithTitle:NSLocalizedString(@"USER_INFO_TABLE_TITLE", @"Столик") actionBlock:^(UIViewController *__weak vc, UITableView *__weak tv, NSIndexPath *indexPath) {
+  self = [super initWithTitle:NSLocalizedString(@"USER_INFO_TABLE_TITLE", @"Столик") actionBlock:^(UIViewController *vc, UITableView *__weak tv, NSIndexPath *indexPath) {
     
     [tv deselectRowAtIndexPath:indexPath animated:YES];
     OMNChangeTableAlertVC *changeTableAlertVC = [[OMNChangeTableAlertVC alloc] initWithTable:restaurantMediator.visitor.table];

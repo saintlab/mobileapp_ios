@@ -16,6 +16,6 @@
 @property (nonatomic, strong, readonly) OMNMenuProduct *menuProduct;
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct;
-- (void)editMenuProductFromController:(__weak UIViewController *)viewController withCompletion:(dispatch_block_t)completionBlock;
+- (void)editMenuProductFromController:(UIViewController *)viewController withCompletion:(dispatch_block_t)completionBlock;
 
 @end

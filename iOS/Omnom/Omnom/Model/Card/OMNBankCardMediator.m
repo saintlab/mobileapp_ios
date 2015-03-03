@@ -14,7 +14,7 @@
   
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(__weak UIViewController *)rootVC {
+- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(UIViewController *)rootVC {
   self = [super init];
   if (self) {
     
