@@ -214,14 +214,8 @@
   
   OMNBankCard *bankCard = [_bankCardsModel selectedCard];
   OMNBankCardInfo *bankCardInfo = [bankCard bankCardInfo];
-  [self payWithCardInfo:bankCardInfo];
-
-}
-
-- (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
-
   [_bankCardMediator payWithCardInfo:bankCardInfo];
-  
+
 }
 
 - (void)mailRuDidFinish {

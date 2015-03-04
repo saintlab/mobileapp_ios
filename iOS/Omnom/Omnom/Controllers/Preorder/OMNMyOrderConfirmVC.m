@@ -20,6 +20,7 @@
 #import <BlocksKit.h>
 #import "OMNPreorderConfirmCellItem.h"
 #import "OMNPreorderActionCellItem.h"
+#import "OMNModalWebVC.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,
@@ -67,19 +68,53 @@ OMNPreorderConfirmCellDelegate>
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:NSLocalizedString(@"PREORDER_CONFIRM_CLOSE_BUTTON_TITLE", @"Закрыть") color:[UIColor whiteColor] target:self action:@selector(closeTap)];
   
-  if (_restaurantMediator.restaurant.settings.has_table_order) {
+  OMNRestaurant *restaurant = _restaurantMediator.restaurant;
+  
+  UIButton *barButton = nil;
+  if (restaurant.hasCompleteOrdresBoard) {
     
-    [self addActionBoardIfNeeded];
-    OMNOrderToolbarButton *callBillButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(requestTableOrders)];
-    self.bottomToolbar.hidden = NO;
-    self.bottomToolbar.items =
-    @[
-      [UIBarButtonItem omn_flexibleItem],
-      [[UIBarButtonItem alloc] initWithCustomView:callBillButton],
-      [UIBarButtonItem omn_flexibleItem],
-      ];
+    barButton = [UIButton omn_barButtonWithTitle:kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT color:[UIColor blackColor] target:self action:@selector(completeOrdresCall)];
     
   }
+  else if (restaurant.settings.has_table_order) {
+    
+    barButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(requestTableOrders)];
+    
+  }
+  [self setupBottomBarWithButton:barButton];
+  
+}
+
+- (void)setupBottomBarWithButton:(UIButton *)button {
+  
+  if (!button) {
+    return;
+  }
+  
+  [self addActionBoardIfNeeded];
+  
+  self.bottomToolbar.hidden = NO;
+  self.bottomToolbar.items =
+  @[
+    [UIBarButtonItem omn_flexibleItem],
+    [[UIBarButtonItem alloc] initWithCustomView:button],
+    [UIBarButtonItem omn_flexibleItem],
+    ];
+  
+}
+
+- (void)completeOrdresCall {
+  
+  OMNModalWebVC *modalWebVC = [[OMNModalWebVC alloc] init];
+  modalWebVC.url = _restaurantMediator.restaurant.complete_ordres_url;
+  @weakify(self)
+  modalWebVC.didCloseBlock = ^{
+    
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:modalWebVC] animated:YES completion:nil];
   
 }
 

@@ -185,10 +185,13 @@
 
 - (BOOL)showPreorderButton {
   
+  const OMNRestaurantMode entrance_mode = self.restaurant.entrance_mode;
   BOOL showPreorderButton =
   (
    self.restaurant.settings.has_menu &&
-   (self.menu.hasPreorderedItems || kRestaurantMode2gis_dinner == self.restaurant.enterance_mode)
+   (self.menu.hasPreorderedItems ||
+    kRestaurantMode2gis_dinner == entrance_mode ||
+    kRestaurantModeBar == entrance_mode)
    );
   return showPreorderButton;
   

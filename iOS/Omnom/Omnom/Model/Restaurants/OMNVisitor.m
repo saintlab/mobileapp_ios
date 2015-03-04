@@ -76,10 +76,12 @@
 
 - (BOOL)showTableButton {
   
+  const OMNRestaurantMode entrance_mode = self.restaurant.entrance_mode;
   return
   (
    self.table &&
-   kRestaurantMode2gis_dinner != self.restaurant.enterance_mode
+   kRestaurantMode2gis_dinner != entrance_mode &&
+   kRestaurantModeBar != entrance_mode
    );
   
 }

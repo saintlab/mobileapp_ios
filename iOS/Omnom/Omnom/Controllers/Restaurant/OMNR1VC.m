@@ -166,7 +166,7 @@
     UIButton *userButton = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:_restaurantMediator action:@selector(showUserProfile)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:userButton];
 
-    if (kRestaurantMode2gis_dinner != restaurant.enterance_mode) {
+    if (kRestaurantMode2gis_dinner != restaurant.entrance_mode) {
       
       self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
 

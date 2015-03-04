@@ -17,17 +17,18 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
 
 }
 
-OMNRestaurantMode enteranceModeFromString(NSString *string) {
+OMNRestaurantMode entranceModeFromString(NSString *string) {
 
 #warning kRestaurantMode2gis_dinner
 //  return kRestaurantMode2gis_dinner;
+//  return kRestaurantModeBar;
   
   OMNRestaurantMode enteranceMode = kRestaurantModeNone;
   
   if (string.length) {
     return enteranceMode;
   }
-  
+
   static dispatch_once_t onceToken;
   static NSDictionary *modes = nil;
   dispatch_once(&onceToken, ^{
@@ -57,7 +58,7 @@ OMNRestaurantMode enteranceModeFromString(NSString *string) {
     _id = [jsonData[@"id"] description];
     _is_demo = [jsonData[@"is_demo"] boolValue];
     _available = (jsonData[@"available"]) ? ([jsonData[@"available"] boolValue]) : (YES);
-    _enterance_mode = enteranceModeFromString(jsonData[@"enterance_mode"]);
+    _entrance_mode = entranceModeFromString(jsonData[@"entrance_mode"]);
     self.title = jsonData[@"title"];
     self.Description = jsonData[@"description"];
 
@@ -71,6 +72,9 @@ OMNRestaurantMode enteranceModeFromString(NSString *string) {
     
     _tables = [jsonData[@"tables"] omn_tables];
     _orders = [jsonData[@"orders"] omn_orders];;
+    
+#warning 123
+    _complete_ordres_url = [NSURL URLWithString:@"http://google.com"];
     
   }
   return self;
@@ -99,6 +103,16 @@ OMNRestaurantMode enteranceModeFromString(NSString *string) {
 - (BOOL)hasOrders {
   
   return (self.orders.count > 0);
+  
+}
+
+- (BOOL)hasCompleteOrdresBoard {
+  
+  return
+  (
+   self.complete_ordres_url &&
+   kRestaurantModeBar == self.entrance_mode
+   );
   
 }
 

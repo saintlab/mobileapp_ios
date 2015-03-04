@@ -8,3 +8,8 @@
 #define kOMN_ERROR_MESSAGE_RESTAURANT_OFFLINE NSLocalizedString(@"ERROR_MESSAGE_RESTAURANT_OFFLINE", @"Прямо сейчас нет связи с кассой. Попробуйте позже или рассчитайтесь через официанта. Медленно, но иных вариантов сейчас нет.")
 #define kOMN_ERROR_MESSAGE_UNKNOWN_ERROR NSLocalizedString(@"ERROR_MESSAGE_UNKNOWN_ERROR", @"Что-то пошло не так. Повторите попытку.")
 #define kOMN_ERROR_MESSAGE_ENTER_PHONE_EMAIL NSLocalizedString(@"Введите почту и телефон", nil)
+
+//bar buttons
+#define kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT NSLocalizedString(@"BAR_BUTTON_COMPLETE_ORDERS_TEXT", @"Табло готовых заказов")
+
+

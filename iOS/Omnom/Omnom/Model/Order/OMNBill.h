@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+@class OMNBill;
+typedef void(^OMNBillBlock)(OMNBill *bill);
+
 @interface OMNBill : NSObject
 
 @property (nonatomic, copy) NSString *id;

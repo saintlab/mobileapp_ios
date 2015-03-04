@@ -41,9 +41,10 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 @property (nonatomic, assign, readonly) BOOL available;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *Description;
-@property (nonatomic, assign) OMNRestaurantMode enterance_mode;
+@property (nonatomic, assign) OMNRestaurantMode entrance_mode;
 @property (nonatomic, assign, readonly) double distance;
 @property (nonatomic, copy, readonly) NSString *phone;
+@property (nonatomic, strong, readonly) NSURL *complete_ordres_url;
 @property (nonatomic, strong, readonly) NSArray *tables;
 @property (nonatomic, strong, readonly) NSArray *orders;
 @property (nonatomic, strong, readonly) OMNRestaurantDecoration *decoration;
@@ -57,6 +58,7 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 
 - (BOOL)hasTable;
 - (BOOL)hasOrders;
+- (BOOL)hasCompleteOrdresBoard;
 
 @end
 

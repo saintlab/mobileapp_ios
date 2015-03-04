@@ -20,7 +20,6 @@ extern NSString * const OMNOrderDidCloseNotification;
 extern NSString * const OMNOrderKey;
 
 typedef void(^OMNOrdersBlock)(NSArray *orders);
-typedef void(^OMNBillBlock)(OMNBill *bill);
 
 typedef NS_ENUM(NSInteger, TipType) {
   kTipTypeDefault = 0,
