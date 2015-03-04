@@ -11,11 +11,14 @@
 #import "OMNMenuProductWithRecommedtationsCell.h"
 #import "OMNMenuCategoryHeaderView.h"
 
+typedef void(^OMNMenuTableDidEndDraggingBlock)(UITableView *tableView);
+
 @interface OMNMenuCategoriesModel : NSObject
 <UITableViewDataSource,
 UITableViewDelegate>
 
 @property (nonatomic, strong, readonly) NSArray *categories;
+@property (nonatomic, copy) OMNMenuTableDidEndDraggingBlock didEndDraggingBlock;
 
 - (instancetype)initWithMenu:(OMNMenu *)menu cellDelegate:(id<OMNMenuProductWithRecommedtationsCellDelegate>)cellDelegate headerDelegate:(id<OMNMenuCategoryHeaderViewDelegate>)headerDelegate;
 

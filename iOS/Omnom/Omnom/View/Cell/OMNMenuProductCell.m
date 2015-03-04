@@ -222,7 +222,7 @@
   
   _heightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(8)-[nameLabel]-(imageOffset)-[productIV(imageHeight)]-(descriptionLabelOffset)-[descriptionLabel]-(8)-[priceButton]-(leftOffset@999)-[delimiterView(1)]|" options:kNilOptions metrics:metrics views:views];
   [self.contentView addConstraints:_heightConstraints];
-  
+
 }
 
 - (void)priceTap {

@@ -55,6 +55,18 @@ OMNMenuCategoryHeaderViewDelegate>
   [_menuHeaderView sizeToFit];
   self.navigationItem.titleView = _menuHeaderView;
   
+  @weakify(self)
+  _model.didEndDraggingBlock = ^(UITableView *tableView) {
+    
+    if (tableView.contentOffset.y < -100.0f) {
+      
+      @strongify(self)
+      [self backTap];
+      
+    }
+    
+  };
+  
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {

@@ -161,4 +161,12 @@
   
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  
+  if (self.didEndDraggingBlock) {
+    self.didEndDraggingBlock((UITableView *)scrollView);
+  }
+  
+}
+
 @end
