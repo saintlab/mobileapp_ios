@@ -9,17 +9,16 @@
 #import "OMNBankCardMediator.h"
 #import "OMNPaymentLoadingVC.h"
 #import "UINavigationController+omn_replace.h"
+#import "OMNMailAcquiringTransaction.h"
 
-@implementation OMNBankCardMediator {
-  
-}
+@implementation OMNBankCardMediator
 
-- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(UIViewController *)rootVC {
+- (instancetype)initWithRootVC:(UIViewController *)rootVC transaction:(OMNAcquiringTransaction *)transaction {
   self = [super init];
   if (self) {
     
     _rootVC = rootVC;
-    _order = order;
+    _acquiringTransaction = transaction;
     
   }
   return self;
@@ -73,6 +72,12 @@
     });
     
   }];
+  
+}
+
+- (OMNBankCardsModel *)bankCardsModel {
+  
+  return nil;
   
 }
 

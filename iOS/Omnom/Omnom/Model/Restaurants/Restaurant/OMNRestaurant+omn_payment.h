@@ -7,12 +7,10 @@
 //
 
 #import "OMNRestaurant.h"
-#import "OMNBankCardsModel.h"
-#import "OMNBankCardMediator.h"
+#import "OMNPaymentFactory.h"
 
 @interface OMNRestaurant (omn_payment)
 
-- (OMNBankCardsModel *)bankCardsModel;
-- (OMNBankCardMediator *)bankCardMediatorWithOrder:(OMNOrder *)order rootVC:(__weak UIViewController *)rootVC;
+- (id<OMNPaymentFactory>)paymentFactory;
 
 @end

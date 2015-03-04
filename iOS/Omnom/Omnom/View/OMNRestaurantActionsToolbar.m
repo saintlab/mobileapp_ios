@@ -190,7 +190,7 @@
   (
    self.restaurant.settings.has_menu &&
    (self.menu.hasPreorderedItems ||
-    kRestaurantMode2gis_dinner == entrance_mode ||
+    kRestaurantModeLunch == entrance_mode ||
     kRestaurantModeBar == entrance_mode)
    );
   return showPreorderButton;

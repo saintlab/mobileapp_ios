@@ -87,7 +87,8 @@
   _restaurant = restaurant;
   
   _cityLabel.text = restaurant.address.city;
-  NSMutableString *address = [NSMutableString stringWithString:_restaurant.address.text];
+  NSString *addressText = (_restaurant.address.text) ?: @"";
+  NSMutableString *fullAddress = [NSMutableString stringWithString:addressText];
   NSString *distance = @"";
 
   if (fabs(restaurant.distance) > 1000.0) {
@@ -101,16 +102,16 @@
     
   }
   
-  [address appendString:distance];
+  [fullAddress appendString:distance];
   
-  NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:address attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(18.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
+  NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:fullAddress attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(18.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
   
   if (distance.length) {
     
     [text addAttributes:
      @{
        NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
-       } range:[address rangeOfString:distance]];
+       } range:[fullAddress rangeOfString:distance]];
     
   }
 

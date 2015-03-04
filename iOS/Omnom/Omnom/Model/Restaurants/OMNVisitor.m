@@ -80,7 +80,7 @@
   return
   (
    self.table &&
-   kRestaurantMode2gis_dinner != entrance_mode &&
+   kRestaurantModeLunch != entrance_mode &&
    kRestaurantModeBar != entrance_mode
    );
   

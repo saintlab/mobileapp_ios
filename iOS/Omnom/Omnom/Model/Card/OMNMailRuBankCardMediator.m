@@ -16,19 +16,15 @@
 #import "OMNAnalitics.h"
 #import <OMNMailRuAcquiring.h>
 #import "OMNAuthorization.h"
-
-@interface OMNBankCardInfo (omn_mailRuBankCardInfo)
-
-- (OMNMailRuCardInfo *)omn_mailRuCardInfo;
-
-@end
+#import "OMNMailRuBankCardsModel.h"
+#import "OMNBankCard+omn_info.h"
 
 @implementation OMNMailRuBankCardMediator
 
 - (void)registerCard {
   
   OMNAddBankPurpose purpose = kAddBankPurposeRegister;
-  if (self.order != nil) {
+  if (self.acquiringTransaction) {
     
     purpose |= kAddBankPurposePayment;
     
@@ -88,7 +84,7 @@
     
   };
   
-  long long enteredAmountWithTips = self.order.enteredAmountWithTips;
+  long long enteredAmountWithTips = self.acquiringTransaction.totalAmount;
   mailRUCardConfirmVC.noSMSBlock = ^{
     
     @strongify(self)
@@ -122,35 +118,17 @@
       !bankCardInfo.readyForPayment) {
     
     [self addCardForPayment];
-    
     return;
+    
   }
   
-  OMNOrder *order = self.order;
+  @weakify(self)
   [self showPaymentVCWithDidPresentBlock:^(OMNPaymentDidFinishBlock paymentDidFinishBlock) {
-    
-    OMNMailRuCardInfo *mailRuCardInfo = [bankCardInfo omn_mailRuCardInfo];
-    OMNOrderTansactionInfo *orderTansactionInfo = [[OMNOrderTansactionInfo alloc] initWithOrder:order];
-    
-    [order getPaymentInfoForUser:[OMNAuthorization authorisation].user cardInfo:mailRuCardInfo copmletion:^(OMNMailRuPaymentInfo *paymentInfo) {
+  
+    @strongify(self)
+    [self.acquiringTransaction payWithCard:bankCardInfo completion:^{
       
-      [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
-        
-        if (bankCardInfo.hasPANMMYYCVV) {
-          [bankCardInfo logCardRegister];
-        }
-        
-        [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
-        [[OMNAnalitics analitics] logPayment:orderTansactionInfo cardInfo:bankCardInfo bill:order.bill];
-        paymentDidFinishBlock(nil);
-        
-      } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
-        
-        [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:mailError request:request response:response];
-        OMNError *omnomError = [OMNError omnnomErrorFromError:mailError];
-        paymentDidFinishBlock(omnomError);
-        
-      }];
+      paymentDidFinishBlock(nil);
       
     } failure:^(OMNError *error) {
       
@@ -162,29 +140,22 @@
   
 }
 
-@end
-
-@implementation OMNBankCardInfo (omn_mailRuBankCardInfo)
-
-- (OMNMailRuCardInfo *)omn_mailRuCardInfo {
+- (OMNBankCardsModel *)bankCardsModel {
   
-  OMNMailRuCardInfo *mailRuCardInfo = nil;
-  if (self.card_id) {
+  OMNBankCardsModel *bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
+  @weakify(self)
+  [bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
     
-    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.card_id];
+    if (kOMNBankCardStatusHeld == bankCard.status) {
+      
+      @strongify(self)
+      [self confirmCard:[bankCard bankCardInfo]];
+      
+    }
     
-  }
-  else if (self.expiryMonth &&
-           self.expiryYear &&
-           self.cvv &&
-           self.pan){
-    
-    NSString *exp_date = [OMNMailRuCardInfo exp_dateFromMonth:self.expiryMonth year:self.expiryYear];
-    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardPan:self.pan exp_date:exp_date cvv:self.cvv];
-    
-  }
+  }];
   
-  return mailRuCardInfo;
+  return bankCardsModel;
   
 }
 

@@ -79,14 +79,13 @@
   OMNToolbarButton *qrButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"qr-icon-small"] title:NSLocalizedString(@"SCAN_QR_BUTTON_TITLE", @"Сканировать QR")];
   [qrButton addTarget:_searchRestaurantMediator action:@selector(scanTableQrTap) forControlEvents:UIControlEventTouchUpInside];
   [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:qrButton] animated:YES];
-
-  @weakify(self)
-  dispatch_async(dispatch_get_main_queue(), ^{
   
-    @strongify(self)
-    [self updateBottomToolbar];
-    
-  });
+}
+
+- (void)viewDidLayoutSubviews {
+  [super viewDidLayoutSubviews];
+  
+  [self updateBottomToolbar];
   
 }
 
@@ -156,7 +155,6 @@
     
   }];
   [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationFade];
-  [self updateBottomToolbar];
   
 }
 

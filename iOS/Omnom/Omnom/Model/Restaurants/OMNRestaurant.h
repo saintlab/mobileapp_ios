@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, OMNRestaurantMode) {
   kRestaurantModeBookTable,
   
   kRestaurantModeBar,
-  kRestaurantMode2gis_dinner,
+  kRestaurantModeLunch,
   
 };
 

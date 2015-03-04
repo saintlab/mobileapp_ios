@@ -25,12 +25,13 @@
     _applicationWasOpenedByBeacon = NO;
 #if DEBUG
 //    staging
-    _customConfigName = @"config_staging";
+//    _customConfigName = @"config_staging";
 //    _qr = @"http://omnom.menu/zr9b"; //saintlab-iiko-dev
 //    _qr =  @"qr-code-for-2-saintlab-iiko-dev"; //staging
 
 //    prod
-    _qr = @"qr-code-for-0-lunch2gis";
+//    _qr = @"qr-code-for-0-harats-nsk";
+//    _qr = @"qr-code-for-0-lunch2gis";
 //    _qr = @"http://omnom.menu/qr-hash-for-table-5-at-saintlab-rkeeper-v6";
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";
 //    _qr = @"qr-code-for-2-saintlab-iiko";

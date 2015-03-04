@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNOrder.h"
+#import "OMNAcquiringTransaction.h"
 #import "OMNBankCardInfo.h"
 #import "OMNError.h"
+#import "OMNBankCardsModel.h"
 
 typedef void(^OMNPaymentDidFinishBlock)(OMNError *error);
 typedef void(^OMNPaymentVCDidPresentBlock)(OMNPaymentDidFinishBlock paymentDidFinishBlock);
@@ -16,11 +17,10 @@ typedef void(^OMNPaymentVCDidPresentBlock)(OMNPaymentDidFinishBlock paymentDidFi
 @interface OMNBankCardMediator : NSObject
 
 @property (nonatomic, weak, readonly) UIViewController *rootVC;
-@property (nonatomic, strong, readonly) OMNOrder *order;
-
+@property (nonatomic, strong, readonly) OMNAcquiringTransaction *acquiringTransaction;
 @property (nonatomic, copy) OMNPaymentDidFinishBlock didPayBlock;
 
-- (instancetype)initWithOrder:(OMNOrder *)order rootVC:(UIViewController *)rootVC;
+- (instancetype)initWithRootVC:(UIViewController *)rootVC transaction:(OMNAcquiringTransaction *)transaction;
 
 - (void)addCardForPayment;
 - (void)registerCard;
@@ -28,5 +28,7 @@ typedef void(^OMNPaymentVCDidPresentBlock)(OMNPaymentDidFinishBlock paymentDidFi
 
 - (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo;
 - (void)showPaymentVCWithDidPresentBlock:(OMNPaymentVCDidPresentBlock)paymentVCDidPresentBlock;
+
+- (OMNBankCardsModel *)bankCardsModel;
 
 @end

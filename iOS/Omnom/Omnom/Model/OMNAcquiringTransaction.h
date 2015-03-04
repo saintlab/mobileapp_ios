@@ -9,11 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "OMNError.h"
 #import "OMNBankCardInfo.h"
+#import "OMNOrder.h"
 
 typedef void(^OMNPaymentInfoBlock)(id paymentInfo);
 
 @interface OMNAcquiringTransaction : NSObject
 
-- (void)createPaymentInfoWithCard:(OMNBankCardInfo *)bankCardInfo completion:(OMNPaymentInfoBlock)completionBlock failure:(void (^)(OMNError *error))failureBlock;
+@property (nonatomic, assign) long long enteredAmount;
+@property (nonatomic, assign) long long tipAmount;
+@property (nonatomic, assign, readonly) long long totalAmount;
+
+@property (nonatomic, copy) NSString *restaurant_id;
+@property (nonatomic, copy) NSString *restaurateur_order_id;
+@property (nonatomic, copy) NSString *table_id;
+
+- (instancetype)initWithOrder:(OMNOrder *)order;
+- (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(OMNError *))failureBlock;
 
 @end

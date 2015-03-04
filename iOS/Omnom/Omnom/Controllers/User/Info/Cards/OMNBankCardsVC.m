@@ -11,7 +11,7 @@
 #import "OMNConstants.h"
 #import "OMNMailRuBankCardsModel.h"
 #import <BlocksKit.h>
-#import "OMNMailRuBankCardMediator.h"
+#import "OMNMailRuPaymentFactory.h"
 #import "OMNBankCard+omn_info.h"
 
 @interface OMNBankCardsVC ()
@@ -48,20 +48,10 @@
   
   [self setupInterface];
   
-  self.bankCardMediator = [[OMNMailRuBankCardMediator alloc] initWithOrder:nil rootVC:self];
+  OMNMailRuPaymentFactory *paymentFactory = [[OMNMailRuPaymentFactory alloc] init];
+  self.bankCardMediator = [paymentFactory bankCardMediatorWithRootVC:self transaction:nil];
   
-  @weakify(self)
-  _bankCardsModel = [[OMNMailRuBankCardsModel alloc] init];
-  [_bankCardsModel setDidSelectCardBlock:^(OMNBankCard *bankCard) {
-    
-    if (kOMNBankCardStatusHeld == bankCard.status) {
-    
-      @strongify(self)
-      [self.bankCardMediator confirmCard:[bankCard bankCardInfo]];
-      
-    }
-    
-  }];
+  _bankCardsModel = self.bankCardMediator.bankCardsModel;
   
   UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];

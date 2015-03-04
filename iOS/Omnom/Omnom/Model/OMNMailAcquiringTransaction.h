@@ -7,10 +7,7 @@
 //
 
 #import "OMNAcquiringTransaction.h"
-#import "OMNOrder.h"
 
-@interface OMNOrderAcquiringTransaction : OMNAcquiringTransaction
-
-
+@interface OMNMailAcquiringTransaction : OMNAcquiringTransaction
 
 @end

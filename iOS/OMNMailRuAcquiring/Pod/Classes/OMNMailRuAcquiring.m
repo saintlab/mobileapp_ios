@@ -314,7 +314,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
         if ([status isEqualToString:@"OK_FINISH"] &&
             [order_status isEqualToString:@"PAID"]) {
           
-          completionBlock(responseObject);
+          completionBlock(response);
           
         }
         else {

@@ -23,10 +23,8 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
 //  return kRestaurantMode2gis_dinner;
 //  return kRestaurantModeBar;
   
-  OMNRestaurantMode enteranceMode = kRestaurantModeNone;
-  
-  if (string.length) {
-    return enteranceMode;
+  if (0 == string.length) {
+    return kRestaurantModeNone;
   }
 
   static dispatch_once_t onceToken;
@@ -36,11 +34,11 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     @{
       @"none" : @(kRestaurantModeNone),
       @"bar" : @(kRestaurantModeBar),
-      @"2gis_dinner" : @(kRestaurantMode2gis_dinner),
+      @"lunch" : @(kRestaurantModeLunch),
       };
   });
   
-  enteranceMode = [modes[string] integerValue];
+  OMNRestaurantMode enteranceMode = (OMNRestaurantMode)[modes[string] integerValue];
   return enteranceMode;
   
 }

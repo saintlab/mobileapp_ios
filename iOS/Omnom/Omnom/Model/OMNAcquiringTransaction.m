@@ -10,7 +10,20 @@
 
 @implementation OMNAcquiringTransaction
 
-- (void)createPaymentInfoWithCard:(OMNBankCardInfo *)bankCardInfo completion:(OMNPaymentInfoBlock)completionBlock failure:(void (^)(OMNError *error))failureBlock; {
+- (instancetype)initWithOrder:(OMNOrder *)order {
+  self = [super init];
+  if (self) {
+  }
+  return self;
+}
+
+- (long long)totalAmount {
+  
+  return (self.enteredAmount + self.tipAmount);
+  
+}
+
+- (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(OMNError *))failureBlock {
   //do nothing
 }
 

@@ -6,7 +6,8 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-@class OMNBankCard;
+#import "OMNBankCard.h"
+
 @class OMNBankCardInfo;
 
 typedef void (^OMNSelectCardBlock)(OMNBankCard *bankCard);

@@ -21,6 +21,7 @@
 #import "UIView+omn_autolayout.h"
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNSelectOrderButton.h"
+#import "OMNRestaurant+omn_payment.h"
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -403,7 +404,8 @@ OMNPaymentFooterViewDelegate>
   [OMNOrderAlertManager sharedManager].didCloseBlock = nil;
   [OMNOrderAlertManager sharedManager].didUpdateBlock = nil;
   
-  OMNOrderPaymentVC *orderPaymentVC = [[OMNOrderPaymentVC alloc] initWithOrder:_visitor.selectedOrder restaurant:_restaurantMediator.restaurant];
+  OMNRestaurant *restaurant = _restaurantMediator.restaurant;
+  OMNOrderPaymentVC *orderPaymentVC = [[OMNOrderPaymentVC alloc] initWithRestaurant:restaurant transaction:[[restaurant paymentFactory] transactionForOrder:_visitor.selectedOrder]];
   orderPaymentVC.delegate = self;
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:orderPaymentVC];
   navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];

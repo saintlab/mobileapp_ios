@@ -33,9 +33,6 @@
   UIButton *_payButton;
   UIView *_bottomView;
   
-  OMNRestaurant *_restaurant;
-  OMNOrder *_order;
-  OMNBill *_bill;
   OMNBankCardsModel *_bankCardsModel;
   UIView *_contentView;
   BOOL _addBankCardRequested;
@@ -53,13 +50,13 @@
   
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order restaurant:(OMNRestaurant *)restaurant {
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant transaction:(OMNAcquiringTransaction *)acquiringTransaction  {
   self = [super init];
   if (self) {
     
-    _order = order;
-    _restaurant = restaurant;
-    
+    self.bankCardMediator = [[restaurant paymentFactory] bankCardMediatorWithRootVC:self transaction:acquiringTransaction];
+    _bankCardsModel = [self.bankCardMediator bankCardsModel];
+
   }
   return self;
 }
@@ -73,8 +70,6 @@
   self.view.backgroundColor = [UIColor whiteColor];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отмена", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
-  self.bankCardMediator = [_restaurant bankCardMediatorWithOrder:_order rootVC:self];
-  _bankCardsModel = [_restaurant bankCardsModel];
   @weakify(self)
   _bankCardsModelLoadingIdentifier = [_bankCardsModel bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) options:NSKeyValueObservingOptionNew task:^(OMNBankCardsModel *obj, NSDictionary *change) {
     
@@ -132,7 +127,8 @@
   [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   
-  NSString *toPayString = [NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:_order.enteredAmountWithTips]];
+  long long totalAmount = self.bankCardMediator.acquiringTransaction.totalAmount;
+  NSString *toPayString = [NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:totalAmount]];
   [_payButton setTitle:toPayString forState:UIControlStateNormal];
 
   [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
@@ -219,8 +215,8 @@
 }
 
 - (void)mailRuDidFinish {
-
-  [self.delegate orderPaymentVCDidFinish:self withBill:_bill];
+#warning 123
+  [self.delegate orderPaymentVCDidFinish:self withBill:nil];
   
 }
 

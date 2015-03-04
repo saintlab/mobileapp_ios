@@ -8,7 +8,7 @@
 
 
 #import "OMNBill.h"
-#import "OMNOrder.h"
+#import "OMNAcquiringTransaction.h"
 #import "OMNRestaurant.h"
 
 @protocol OMNOrderPaymentVCDelegate;
@@ -17,7 +17,7 @@
 
 @property (nonatomic, weak) id<OMNOrderPaymentVCDelegate> delegate;
 
-- (instancetype)initWithOrder:(OMNOrder *)order restaurant:(OMNRestaurant *)restaurant;
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant transaction:(OMNAcquiringTransaction *)acquiringTransaction;
 
 @end
 
