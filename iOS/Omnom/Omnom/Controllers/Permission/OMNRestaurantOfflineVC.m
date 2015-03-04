@@ -18,7 +18,7 @@
   if (self) {
     
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-    self.text = [OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavaliable].localizedDescription;
+    self.text = [OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavailable].localizedDescription;
     @weakify(self)
     self.buttonInfo =
     @[

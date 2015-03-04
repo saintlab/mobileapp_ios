@@ -28,7 +28,6 @@ OMNMenuCategoryHeaderViewDelegate>
   OMNMenuCategoriesModel *_model;
   OMNRestaurantMediator *_restaurantMediator;
   __weak OMNMenuProductWithRecommendationsCellItem *_selectedItem;
-  BOOL _categiryInitiallyExpanded;
   
 }
 
@@ -52,26 +51,9 @@ OMNMenuCategoryHeaderViewDelegate>
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
   _menuHeaderView = [[OMNMenuHeaderView alloc] init];
+  [_menuHeaderView addTarget:self action:@selector(backTap) forControlEvents:UIControlEventTouchUpInside];
   [_menuHeaderView sizeToFit];
   self.navigationItem.titleView = _menuHeaderView;
-  
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
- 
-  if (!_categiryInitiallyExpanded &&
-      _model.categories.count) {
-    _categiryInitiallyExpanded = YES;
-    
-    OMNMenuCategorySectionItem *firstCategory = [_model.categories firstObject];
-    firstCategory.selected = YES;
-    firstCategory.entered = YES;
-    [_tableView beginUpdates];
-    [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];
-    [_tableView endUpdates];
-    
-  }
   
 }
 
@@ -201,10 +183,6 @@ OMNMenuCategoryHeaderViewDelegate>
 - (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
   
   OMNMenuCategorySectionItem *selectedSectionItem = menuCategoryHeaderView.menuCategorySectionItem;
-  if (selectedSectionItem.selected) {
-    return;
-  }
-  
   NSMutableIndexSet *reloadIndexSet = [NSMutableIndexSet indexSet];
   __block NSInteger selectedIndex = NSNotFound;
   
@@ -214,7 +192,8 @@ OMNMenuCategoryHeaderViewDelegate>
       [reloadIndexSet addIndex:idx];
     }
     
-    if (selectedSectionItem.menuCategory.level == sectionItem.menuCategory.level) {
+    if (![sectionItem isEqual:selectedSectionItem] &&
+        selectedSectionItem.menuCategory.level == sectionItem.menuCategory.level) {
       
       sectionItem.entered = NO;
       
@@ -223,7 +202,7 @@ OMNMenuCategoryHeaderViewDelegate>
     if ([sectionItem isEqual:selectedSectionItem]) {
       
       [reloadIndexSet addIndex:idx];
-      sectionItem.selected = YES;
+      sectionItem.selected = !sectionItem.selected;
       selectedIndex = idx;
       
     }
@@ -235,7 +214,8 @@ OMNMenuCategoryHeaderViewDelegate>
     
   }];
   
-  selectedSectionItem.entered = YES;
+  
+  selectedSectionItem.entered = !selectedSectionItem.entered;
   
   [_tableView beginUpdates];
   [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];

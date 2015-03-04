@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMNMenuHeaderView : UIView
+@interface OMNMenuHeaderView : UIButton
 
 @end

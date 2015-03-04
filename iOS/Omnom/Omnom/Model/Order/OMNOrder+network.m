@@ -40,9 +40,9 @@
         failureBlock([OMNError omnomErrorFromCode:kOMNErrorOrderClosed]);
         
       }
-      else if ([status isEqualToString:@"restaurant_not_avaliable"]) {
+      else if ([status isEqualToString:@"restaurant_not_available"]) {
         
-        failureBlock([OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavaliable]);
+        failureBlock([OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavailable]);
         
       }
       else {

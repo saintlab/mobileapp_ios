@@ -8,12 +8,12 @@
 
 #import "OMNMenuCategoryHeaderView.h"
 #import "UIView+omn_autolayout.h"
-#import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "OMNMenuCategorySectionItem.h"
+#import "OMNMenuHeaderLabel.h"
 
 @implementation OMNMenuCategoryHeaderView {
   
+  OMNMenuHeaderLabel *_menuHeaderLabel;
   UIButton *_button;
   
 }
@@ -42,15 +42,15 @@
   
   _button = [UIButton omn_autolayoutView];
   [_button addTarget:self action:@selector(buttonTap) forControlEvents:UIControlEventTouchUpInside];
-  [_button setTitleColor:colorWithHexString(@"7B7B7B") forState:UIControlStateNormal];
-  _button.titleLabel.textAlignment = NSTextAlignmentCenter;
-  _button.backgroundColor = [OMNStyler toolbarColor];
-  _button.titleLabel.font = FuturaLSFOmnomLERegular(17.0f);
   [self addSubview:_button];
+  
+  _menuHeaderLabel = [OMNMenuHeaderLabel omn_autolayoutView];
+  [self addSubview:_menuHeaderLabel];
   
   NSDictionary *views =
   @{
     @"button" : _button,
+    @"menuHeaderLabel" : _menuHeaderLabel,
     };
   
   NSDictionary *metrics =
@@ -59,6 +59,9 @@
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(1@999)-[button]-(1@999)-|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|" options:kNilOptions metrics:metrics views:views]];
+  
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuHeaderLabel]|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuHeaderLabel]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
@@ -71,8 +74,8 @@
 - (void)setMenuCategorySectionItem:(OMNMenuCategorySectionItem *)menuCategorySectionItem {
   
   _menuCategorySectionItem = menuCategorySectionItem;
-  _button.titleLabel.font = FuturaLSFOmnomLERegular((0 == menuCategorySectionItem.menuCategory.level) ? (17.0f) : (13.0f));
-  [_button setTitle:menuCategorySectionItem.menuCategory.name forState:UIControlStateNormal];
+  _button.backgroundColor = [UIColor colorWithWhite:1.0f alpha:(0.3f*menuCategorySectionItem.menuCategory.level)];
+  _menuHeaderLabel.text = menuCategorySectionItem.menuCategory.name;
   
 }
 

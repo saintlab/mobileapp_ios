@@ -40,6 +40,10 @@
   
   NSMutableArray *rowItems = [NSMutableArray array];
   
+  OMNMenuProductsDelimiterCellItem *firstDelimiter = [[OMNMenuProductsDelimiterCellItem alloc] init];
+  firstDelimiter.type = kMenuProductsDelimiterTypeTransparent;
+  [rowItems addObject:firstDelimiter];
+  
   NSInteger productsCount = _menuCategory.products.count;
   [_menuCategory.products enumerateObjectsUsingBlock:^(NSString *menuProductID, NSUInteger idx, BOOL *stop) {
     

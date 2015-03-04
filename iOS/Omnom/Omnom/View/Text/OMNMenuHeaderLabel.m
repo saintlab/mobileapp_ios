@@ -18,6 +18,7 @@
     
     self.textColor = colorWithHexString(@"FFFFFF");
     self.highlightedTextColor = colorWithHexString(@"CCCCCC");
+    self.textAlignment = NSTextAlignmentCenter;
     self.font = FuturaLSFOmnomLERegular(25.0f);
     
   }

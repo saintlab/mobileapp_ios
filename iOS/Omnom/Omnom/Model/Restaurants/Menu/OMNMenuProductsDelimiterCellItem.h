@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger, OMNMenuProductsDelimiterType) {
   kMenuProductsDelimiterTypeNone,
   kMenuProductsDelimiterTypeGray,
+  kMenuProductsDelimiterTypeTransparent,
 };
 
 @interface OMNMenuProductsDelimiterCellItem : NSObject

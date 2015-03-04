@@ -57,9 +57,6 @@
 - (void)omn_setup {
   
   self.selectionStyle = UITableViewCellSelectionStyleNone;
-  self.backgroundView = [[UIView alloc] init];
-  
-  self.backgroundView.backgroundColor = [UIColor whiteColor];
   self.backgroundColor = [UIColor whiteColor];
   
   _line = [UIView omn_autolayoutView];
@@ -86,11 +83,12 @@
 - (void)updateLineView {
   
   CGFloat height = 1.0f;
-  UIColor *backgroundColor = nil;
+  UIColor *lineColor = nil;
+  UIColor *backgroundColor = [UIColor whiteColor];
   
   if (_menuProductsDelimiter.selected) {
     
-    backgroundColor = colorWithHexString(@"F5A623");
+    lineColor = colorWithHexString(@"F5A623");
     height = 2.0f;
 
   }
@@ -99,19 +97,26 @@
     switch (_menuProductsDelimiter.type) {
       case kMenuProductsDelimiterTypeNone: {
         
-        backgroundColor = [UIColor clearColor];
+        lineColor = [UIColor clearColor];
         
       } break;
       case kMenuProductsDelimiterTypeGray: {
         
-        backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
+        lineColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.2f];
+        
+      } break;
+      case kMenuProductsDelimiterTypeTransparent: {
+        
+        lineColor = [UIColor clearColor];
+        backgroundColor = [UIColor clearColor];
         
       } break;
     }
     
   }
   
-  _line.backgroundColor = backgroundColor;
+  _line.backgroundColor = lineColor;
+  self.backgroundColor = backgroundColor;
   _lineHeightConstraint.constant = height;
   
 }

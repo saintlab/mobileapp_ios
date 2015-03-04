@@ -25,8 +25,6 @@
 #import "OMNTransitionFromCalculatorToOrder.h"
 #import "OMNInteractiveTransitioningProtocol.h"
 #import "OMNPushUpTransition.h"
-#import "OMNMenuToCategoryTransition.h"
-#import "OMNCategoryToMenuTransition.h"
 #import "OMNRestaurantToMenuTransition.h"
 #import "OMNMenuToRestaurantTransition.h"
 #import "OMNMenuToProductTransition.h"
@@ -67,8 +65,6 @@
     [self addTansitionForClass:[OMNSlideDownTransition class]];
     [self addTansitionForClass:[OMNSplashToSearchBeaconTransition class]];
     [self addTansitionForClass:[OMNPushUpTransition class]];
-    [self addTansitionForClass:[OMNMenuToCategoryTransition class]];
-    [self addTansitionForClass:[OMNCategoryToMenuTransition class]];
     [self addTansitionForClass:[OMNTransitionFromCalculatorToOrder class]];
     [self addTansitionForClass:[OMNRestaurantToMenuTransition class]];
     [self addTansitionForClass:[OMNMenuToRestaurantTransition class]];
