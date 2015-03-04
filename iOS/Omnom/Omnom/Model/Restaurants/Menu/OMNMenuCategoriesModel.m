@@ -12,6 +12,12 @@
 #import "OMNMenuCategoryDelimiterCellItem.h"
 #import "OMNMenuProductsDelimiterCellItem.h"
 
+@interface OMNMenuCategory (omn_categories)
+
+- (NSArray *)sectionItemsWithParent:(OMNMenuCategorySectionItem *)parentItem;
+
+@end
+
 @implementation OMNMenuCategoriesModel {
   
   OMNMenu *_menu;
@@ -52,19 +58,9 @@
   NSMutableArray *menuCategorySectionItems = [NSMutableArray array];
   
   [_menu.categories enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
-    
-    OMNMenuCategorySectionItem *parent = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:menuCategory];
-    [menuCategorySectionItems addObject:parent];
-    
-    NSArray *children = [menuCategory.children bk_map:^id(OMNMenuCategory *childCategory) {
-      
-      OMNMenuCategorySectionItem *child = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:childCategory];
-      child.parent = parent;
-      return child;
-      
-    }];
-    parent.children = children;
-    [menuCategorySectionItems addObjectsFromArray:children];
+   
+    NSArray *sectionItems = [menuCategory sectionItemsWithParent:nil];
+    [menuCategorySectionItems addObjectsFromArray:sectionItems];
     
   }];
   
@@ -166,6 +162,29 @@
   if (self.didEndDraggingBlock) {
     self.didEndDraggingBlock((UITableView *)scrollView);
   }
+  
+}
+
+@end
+
+@implementation OMNMenuCategory (omn_categories)
+
+- (NSArray *)sectionItemsWithParent:(OMNMenuCategorySectionItem *)parentItem {
+  
+  NSMutableArray *menuCategorySectionItems = [NSMutableArray array];
+  
+  OMNMenuCategorySectionItem *sectionItem = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:self];
+  sectionItem.parent = parentItem;
+  [menuCategorySectionItems addObject:sectionItem];
+
+  [self.children enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
+    
+    NSArray *childItems = [menuCategory sectionItemsWithParent:sectionItem];
+    [menuCategorySectionItems addObjectsFromArray:childItems];
+    
+  }];
+  
+  return menuCategorySectionItems;
   
 }
 

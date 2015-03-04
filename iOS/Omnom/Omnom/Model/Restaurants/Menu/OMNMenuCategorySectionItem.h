@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
 @property (nonatomic, weak) OMNMenuCategorySectionItem *parent;
-@property (nonatomic, strong) NSArray *children;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL entered;
 

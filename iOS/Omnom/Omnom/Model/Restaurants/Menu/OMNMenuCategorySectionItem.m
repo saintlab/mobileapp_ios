@@ -58,19 +58,6 @@
     
   }];
   
-  if (_menuCategory.level > 0) {
-    
-    [_menuCategory.children enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
-
-      [rowItems addObject:[[OMNMenuCategoryDelimiterCellItem alloc] initWithMenuCategory:menuCategory]];
-      OMNMenuCategorySectionItem *menuCategorySectionItem = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:menuCategory];
-      menuCategorySectionItem.selected = YES;
-      [rowItems addObjectsFromArray:menuCategorySectionItem.rowItems];
-      
-    }];
-    
-  }
-  
   _rowItems = rowItems;
   
   return _rowItems;
