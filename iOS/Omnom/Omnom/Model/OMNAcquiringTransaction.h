@@ -10,20 +10,24 @@
 #import "OMNError.h"
 #import "OMNBankCardInfo.h"
 #import "OMNOrder.h"
+#import "OMNWish.h"
 
 typedef void(^OMNPaymentInfoBlock)(id paymentInfo);
 
 @interface OMNAcquiringTransaction : NSObject
 
-@property (nonatomic, assign) long long enteredAmount;
-@property (nonatomic, assign) long long tipAmount;
-@property (nonatomic, assign, readonly) long long totalAmount;
-
-@property (nonatomic, copy) NSString *restaurant_id;
-@property (nonatomic, copy) NSString *restaurateur_order_id;
+@property (nonatomic, copy) NSString *order_id;
 @property (nonatomic, copy) NSString *table_id;
+@property (nonatomic, copy) NSString *restaurant_id;
+@property (nonatomic, assign) long long bill_amount;
+@property (nonatomic, assign) long long tips_amount;
+@property (nonatomic, copy) NSString *tips_way;
+@property (nonatomic, copy) NSString *split_way;
 
 - (instancetype)initWithOrder:(OMNOrder *)order;
+- (instancetype)initWithWish:(OMNWish *)wish;
+- (long long)total_amount;
+- (double)tips_percent;
 - (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(OMNError *))failureBlock;
 
 @end

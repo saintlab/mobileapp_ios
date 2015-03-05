@@ -17,9 +17,23 @@
   return self;
 }
 
-- (long long)totalAmount {
+- (instancetype)initWithWish:(OMNWish *)wish {
+  self = [super init];
+  if (self) {
+  }
+  return self;
+}
+
+- (long long)total_amount {
   
-  return (self.enteredAmount + self.tipAmount);
+  return (self.bill_amount + self.tips_amount);
+  
+}
+
+- (double)tips_percent {
+  
+  double tips_percent = (self.bill_amount) ? (100.0*((double)self.tips_amount/self.bill_amount)) : (0.0);
+  return tips_percent;
   
 }
 

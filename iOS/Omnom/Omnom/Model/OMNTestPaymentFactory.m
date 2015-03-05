@@ -25,4 +25,10 @@
   
 }
 
+- (OMNAcquiringTransaction *)transactionForWish:(OMNWish *)wish {
+  
+  return [[OMNMailAcquiringTransaction alloc] initWithWish:wish];
+  
+}
+
 @end

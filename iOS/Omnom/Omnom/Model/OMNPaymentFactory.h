@@ -10,10 +10,12 @@
 #import "OMNBankCardMediator.h"
 #import "OMNAcquiringTransaction.h"
 #import "OMNBankCardsModel.h"
+#import "OMNWish.h"
 
 @protocol OMNPaymentFactory <NSObject>
 
 - (OMNBankCardMediator *)bankCardMediatorWithRootVC:(UIViewController *)rootVC transaction:(OMNAcquiringTransaction *)transaction;
 - (OMNAcquiringTransaction *)transactionForOrder:(OMNOrder *)order;
+- (OMNAcquiringTransaction *)transactionForWish:(OMNWish *)wish;
 
 @end

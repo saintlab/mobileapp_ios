@@ -10,7 +10,6 @@
 #import "OMNAddBankCardVC.h"
 #import "OMNPaymentAlertVC.h"
 #import "OMNOperationManager.h"
-#import "OMNOrderTansactionInfo.h"
 #import "OMNOrder+omn_mailru.h"
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNAnalitics.h"
@@ -84,7 +83,7 @@
     
   };
   
-  long long enteredAmountWithTips = self.acquiringTransaction.totalAmount;
+  long long enteredAmountWithTips = self.acquiringTransaction.total_amount;
   mailRUCardConfirmVC.noSMSBlock = ^{
     
     @strongify(self)

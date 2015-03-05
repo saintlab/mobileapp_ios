@@ -7,16 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OMNOrderItem.h"
 
 @interface OMNWish : NSObject
 
-@property (nonatomic, copy) NSString *id;
-@property (nonatomic, copy) NSString *restaurant_id;
-@property (nonatomic, copy) NSString *created;
-@property (nonatomic, copy) NSString *internal_table_id;
-@property (nonatomic, copy) NSString *person;
-@property (nonatomic, copy) NSString *phone;
+@property (nonatomic, copy, readonly) NSString *id;
+@property (nonatomic, copy, readonly) NSString *restaurant_id;
+@property (nonatomic, copy, readonly) NSString *created;
+@property (nonatomic, copy, readonly) NSString *table_id;
+@property (nonatomic, copy, readonly) NSString *internal_table_id;
+@property (nonatomic, copy, readonly) NSString *person;
+@property (nonatomic, copy, readonly) NSString *phone;
+@property (nonatomic, strong, readonly) NSArray *items;
 
 - (instancetype)initWithJsonData:(id)jsonData;
+- (long long)totalAmount;
 
 @end

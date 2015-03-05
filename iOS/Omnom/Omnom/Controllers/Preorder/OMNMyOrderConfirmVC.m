@@ -225,12 +225,15 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)didCreateWish:(OMNWish *)wish {
   
-  [_restaurantMediator.menu resetSelection];
-
-  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] init];
-  preorderDoneVC.backgroundImage = [self.view omn_screenshot];
-  preorderDoneVC.didCloseBlock = self.didCreateBlock;
-  [self.navigationController presentViewController:preorderDoneVC animated:YES completion:nil];
+//  _restaurantMediator
+//  [_restaurantMediator.menu resetSelection];
+#warning 123
+  
+//.
+//  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] init];
+//  preorderDoneVC.backgroundImage = [self.view omn_screenshot];
+//  preorderDoneVC.didCloseBlock = self.didCreateBlock;
+//  [self.navigationController presentViewController:preorderDoneVC animated:YES completion:nil];
   
 }
 
@@ -289,7 +292,6 @@ OMNPreorderConfirmCellDelegate>
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   id<OMNCellItemProtocol> item = [self itemAtIndexPath:indexPath];
-  
   if ([item conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
     
     return [item heightForTableView:tableView];

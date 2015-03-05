@@ -37,7 +37,7 @@
   NSString *displayText = @"";
   
   if (self.volume_ml.length) {
-    
+
     displayText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_VOLUME %@", @"{VOLUME} мл."), self.volume_ml];
     
   }

@@ -105,8 +105,6 @@
 		932F5DD71A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD51A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m */; };
 		932F5DDA1A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD91A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m */; };
 		932F5DDB1A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DD91A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m */; };
-		9332CAFF1A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */; };
-		9332CB001A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */; };
 		93363FF61A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */; };
 		93363FF71A1B5EA2009D16CE /* OMNOrderTotalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */; };
 		9336BA301A94EB1D002C2955 /* OMNVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 9336BA2F1A94EB1D002C2955 /* OMNVisitor.m */; };
@@ -732,8 +730,6 @@
 		932F5DD51A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductsDelimiterCell.m; sourceTree = "<group>"; };
 		932F5DD81A726E9E00AF86AD /* OMNMenuCategoryHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategoryHeaderView.h; sourceTree = "<group>"; };
 		932F5DD91A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuCategoryHeaderView.m; sourceTree = "<group>"; };
-		9332CAFD1A15ECC800885017 /* OMNOrderTansactionInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderTansactionInfo.h; sourceTree = "<group>"; };
-		9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTansactionInfo.m; sourceTree = "<group>"; };
 		93363FF41A1B5EA2009D16CE /* OMNOrderTotalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderTotalView.h; sourceTree = "<group>"; };
 		93363FF51A1B5EA2009D16CE /* OMNOrderTotalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTotalView.m; sourceTree = "<group>"; };
 		9336BA2E1A94EB1D002C2955 /* OMNVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNVisitor.h; sourceTree = "<group>"; };
@@ -1737,8 +1733,6 @@
 				938E8F36192F3A200088EF38 /* OMNOrderItem.m */,
 				93958B5B198747E1009BB2ED /* OMNBill.h */,
 				93958B5C198747E1009BB2ED /* OMNBill.m */,
-				9332CAFD1A15ECC800885017 /* OMNOrderTansactionInfo.h */,
-				9332CAFE1A15ECC800885017 /* OMNOrderTansactionInfo.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -3126,7 +3120,6 @@
 				933A9F0F1A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.m in Sources */,
 				93D34DB019D2689800B7BDBE /* NSString+omnScanner.m in Sources */,
 				932B185B19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
-				9332CAFF1A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */,
 				939F994B197544820051822E /* OMNUserInfoModel.m in Sources */,
 				937C3E711A2824E9006525A9 /* OMNLocationManager.m in Sources */,
 				93E4856B1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */,
@@ -3469,7 +3462,6 @@
 				9345AFB0199A253F00328F73 /* OMNBankCardInfo.m in Sources */,
 				939689B3195BD76E00AAAF9C /* OMNWizardVC.m in Sources */,
 				93E485701A49136700DCDB0F /* OMNUserInfoCell.m in Sources */,
-				9332CB001A15ECC800885017 /* OMNOrderTansactionInfo.m in Sources */,
 				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,
 				939DA1771958226B0063AB23 /* OMNAnalitics.m in Sources */,
 				9391F6631A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */,

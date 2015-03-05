@@ -8,7 +8,7 @@
 
 @class AFHTTPRequestOperation;
 @class OMNOrder;
-@class OMNOrderTansactionInfo;
+@class OMNAcquiringTransaction;
 @class OMNUser;
 @class OMNRestaurant;
 @class OMNBankCardInfo;
@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
 - (void)setup;
 - (void)logUserLoginWithRegistration:(BOOL)withRegistration;
 - (void)logEnterRestaurant:(OMNRestaurant *)restaurant mode:(RestaurantEnterMode)mode;
-- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo cardInfo:(OMNBankCardInfo *)bankCardInfo bill:(OMNBill *)bill;
+- (void)logPayment:(OMNAcquiringTransaction *)acquiringTransaction cardInfo:(OMNBankCardInfo *)bankCardInfo bill:(OMNBill *)bill;
 - (void)logRegisterCards:(NSArray *)bankCards;
 - (void)logScore:(NSInteger)score order:(OMNOrder *)order;
 - (void)logBillView:(OMNOrder *)order;

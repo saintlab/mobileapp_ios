@@ -40,6 +40,7 @@
   self.backgroundColor = [UIColor clearColor];
   
   OMNMenuHeaderView *headerView = [OMNMenuHeaderView omn_autolayoutView];
+  headerView.userInteractionEnabled = NO;
   [self.contentView addSubview:headerView];
 
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:headerView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];

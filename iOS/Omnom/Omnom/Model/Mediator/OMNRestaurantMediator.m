@@ -99,6 +99,12 @@ OMNOrderCalculationVCDelegate>
   
 }
 
+- (void)processWish:(OMNWish *)wish {
+  
+//  .
+  
+}
+
 - (void)showUserProfile {
 
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:self];

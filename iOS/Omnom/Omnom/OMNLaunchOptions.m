@@ -45,7 +45,9 @@
 
 //    laaaab
 //    _customConfigName = @"config_laaaab";
-
+#warning 123
+//    D3D3D3 — фон
+//    484848 — текст
 
 #endif
   }

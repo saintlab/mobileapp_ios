@@ -9,6 +9,7 @@
 #import "OMNRestaurantActionsVC.h"
 #import "OMNMenu.h"
 #import "OMNVisitor.h"
+#import "OMNWish.h"
 
 @interface OMNRestaurantMediator : NSObject
 
@@ -27,7 +28,7 @@
 - (void)waiterCallStop;
 - (void)requestTableOrders;
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
-
+- (void)processWish:(OMNWish *)wish;
 - (void)exitRestaurant;
 - (void)rescanTable;
 

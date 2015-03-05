@@ -21,7 +21,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       
       @strongify(self)
-      OMNPaymentDetails *paymentDetails = [OMNPaymentDetails paymentDetailsWithTotalAmount:self.acquiringTransaction.totalAmount tipAmount:self.acquiringTransaction.tipAmount userID:[OMNAuthorization authorisation].user.id userName:[OMNAuthorization authorisation].user.name];
+      OMNPaymentDetails *paymentDetails = [OMNPaymentDetails paymentDetailsWithTotalAmount:self.acquiringTransaction.total_amount tipAmount:self.acquiringTransaction.tips_amount userID:[OMNAuthorization authorisation].user.id userName:[OMNAuthorization authorisation].user.name];
       [OMNPaymentNotificationControl showWithPaymentDetails:paymentDetails];
       paymentDidFinishBlock(nil);
       

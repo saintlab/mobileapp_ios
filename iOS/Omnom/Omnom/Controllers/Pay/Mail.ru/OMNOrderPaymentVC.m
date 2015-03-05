@@ -127,7 +127,7 @@
   [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   
-  long long totalAmount = self.bankCardMediator.acquiringTransaction.totalAmount;
+  long long totalAmount = self.bankCardMediator.acquiringTransaction.total_amount;
   NSString *toPayString = [NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:totalAmount]];
   [_payButton setTitle:toPayString forState:UIControlStateNormal];
 

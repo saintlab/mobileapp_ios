@@ -7,6 +7,7 @@
 //
 
 #import "OMNWish.h"
+#import <BlocksKit.h>
 
 @implementation OMNWish
 
@@ -14,15 +15,40 @@
   self = [super init];
   if (self) {
     
-    self.id = jsonData[@"id"];
-    self.restaurant_id = jsonData[@"restaurant_id"];
-    self.created = jsonData[@"created"];
-    self.internal_table_id = jsonData[@"internal_table_id"];
-    self.person = jsonData[@"person"];
-    self.phone = jsonData[@"phone"];
+    _id = jsonData[@"id"];
+    _restaurant_id = jsonData[@"restaurant_id"];
+    _created = jsonData[@"created"];
+    _internal_table_id = jsonData[@"internal_table_id"];
+    _person = jsonData[@"person"];
+    _phone = jsonData[@"phone"];
+    _table_id = jsonData[@"table_id"];
+    
+    NSArray *items = jsonData[@"items"];
+    if ([items isKindOfClass:[NSArray class]]) {
+      
+      _items = [items bk_map:^id(id obj) {
+        
+        return [[OMNOrderItem alloc] initWithJsonData:obj];
+        
+      }];
+      
+    }
     
   }
   return self;
+}
+
+- (long long)totalAmount {
+  
+  __block long long total = 0ll;
+  NSArray *items = [_items copy];
+  [items enumerateObjectsUsingBlock:^(OMNOrderItem *orderItem, NSUInteger idx, BOOL *stop) {
+    
+    total += orderItem.price_total;
+    
+  }];
+  
+  return total;
 }
 
 @end

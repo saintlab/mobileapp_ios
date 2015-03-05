@@ -8,7 +8,6 @@
 
 #import "OMNAnalitics.h"
 #import "OMNOrder.h"
-#import "OMNOrderTansactionInfo.h"
 #import "OMNUser.h"
 #import "OMNUser+network.h"
 #import "OMNRestaurant.h"
@@ -18,6 +17,7 @@
 #import "OMNLocationManager.h"
 #import "OMNBankCardInfo.h"
 #import "OMNBankCard.h"
+#import "OMNAcquiringTransaction.h"
 
 NSString * const OMNAnaliticsUserKey = @"omn_user";
 
@@ -212,34 +212,34 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logPayment:(OMNOrderTansactionInfo *)orderTansactionInfo cardInfo:(OMNBankCardInfo *)bankCardInfo bill:(OMNBill *)bill {
+- (void)logPayment:(OMNAcquiringTransaction *)acquiringTransaction cardInfo:(OMNBankCardInfo *)bankCardInfo bill:(OMNBill *)bill {
   
   [_mixpanel.people increment:
    @{
-     @"bill_sum" : @(orderTansactionInfo.bill_amount),
-     @"tips_sum" : @(orderTansactionInfo.tips_amount),
-     @"total_sum" : @(orderTansactionInfo.total_amount),
+     @"bill_sum" : @(acquiringTransaction.bill_amount),
+     @"tips_sum" : @(acquiringTransaction.tips_amount),
+     @"total_sum" : @(acquiringTransaction.total_amount),
      @"number_of_payments" : @(1),
      }];
   [_mixpanel.people set:@"last_payment" to:[NSDate date]];
   [_mixpanel.people trackCharge:@(bill.revenue) withProperties:
   @{
-    @"order_id" : orderTansactionInfo.order_id,
+    @"order_id" : acquiringTransaction.order_id,
     @"bill_id" : (bill.id) ? (bill.id) : (@""),
     }];
   
   NSMutableDictionary *properties = [self superProperties];
   [properties addEntriesFromDictionary:
    @{
-     @"bill_sum" : @(orderTansactionInfo.bill_amount),
-     @"tips_sum" : @(orderTansactionInfo.tips_amount),
-     @"total_amount" : @(orderTansactionInfo.total_amount),
-     @"percent" : @(orderTansactionInfo.tips_percent),
-     @"tips_way" : orderTansactionInfo.tips_way,
-     @"split" : orderTansactionInfo.split,
-     @"order_id" : orderTansactionInfo.order_id,
-     @"restaurant_id" : orderTansactionInfo.restaurant_id,
-     @"table_id" : orderTansactionInfo.table_id,
+     @"bill_sum" : @(acquiringTransaction.bill_amount),
+     @"tips_sum" : @(acquiringTransaction.tips_amount),
+     @"total_amount" : @(acquiringTransaction.total_amount),
+     @"percent" : @(acquiringTransaction.tips_percent),
+     @"tips_way" : acquiringTransaction.tips_way,
+     @"split" : acquiringTransaction.split_way,
+     @"order_id" : acquiringTransaction.order_id,
+     @"restaurant_id" : acquiringTransaction.restaurant_id,
+     @"table_id" : acquiringTransaction.table_id,
      @"bill_id" : (bill.id) ? (bill.id) : (@""),
      @"card_info" : (bankCardInfo) ? (bankCardInfo.debugInfo) : (@""),
      }];

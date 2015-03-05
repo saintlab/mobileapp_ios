@@ -198,6 +198,7 @@ OMNMenuCategoryHeaderViewDelegate>
   NSMutableIndexSet *reloadIndexSet = [NSMutableIndexSet indexSet];
   __block NSInteger selectedIndex = NSNotFound;
   
+  NSInteger selectedCategoryLevel = selectedSectionItem.menuCategory.level;
   [_model.categories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *sectionItem, NSUInteger idx, BOOL *stop) {
     
     if (sectionItem.selected) {
@@ -205,7 +206,7 @@ OMNMenuCategoryHeaderViewDelegate>
     }
     
     if (![sectionItem isEqual:selectedSectionItem] &&
-        selectedSectionItem.menuCategory.level == sectionItem.menuCategory.level) {
+        sectionItem.menuCategory.level >= selectedCategoryLevel) {
       
       sectionItem.entered = NO;
       
