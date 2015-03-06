@@ -10,11 +10,13 @@
 #import "UIView+omn_autolayout.h"
 #import "OMNMenuCategorySectionItem.h"
 #import "OMNMenuHeaderLabel.h"
+#import <OMNStyler.h>
 
 @implementation OMNMenuCategoryHeaderView {
   
   OMNMenuHeaderLabel *_menuHeaderLabel;
   UIButton *_button;
+  BOOL _stuck;
   
 }
 
@@ -57,11 +59,47 @@
   @{
     };
   
-  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(1@999)-[button]-(1@999)-|" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|" options:kNilOptions metrics:metrics views:views]];
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuHeaderLabel]|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuHeaderLabel]|" options:kNilOptions metrics:metrics views:views]];
+  
+}
+
+- (void)setFrame:(CGRect)frame {
+  [super setFrame:frame];
+  
+  CGFloat top = [self convertPoint:CGPointZero toView:nil].y;
+
+  [self setStuck:
+   (
+    top <= 64.0f &&
+    _menuCategorySectionItem.selected
+   )];
+  
+}
+
+- (void)setStuck:(BOOL)stuck {
+  
+  if (stuck == _stuck) {
+    return;
+  }
+  _stuck = stuck;
+  
+  UIColor *bgColor = (stuck) ? colorWithHexString(@"D3D3D3") : [UIColor clearColor];
+  UIColor *textColor = (stuck) ? colorWithHexString(@"484848") : [UIColor whiteColor];
+
+  [UIView transitionWithView:_button duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    
+    _button.backgroundColor = bgColor;
+    
+  } completion:nil];
+  [UIView transitionWithView:_menuHeaderLabel duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+    
+    _menuHeaderLabel.textColor = textColor;
+    
+  } completion:nil];
   
 }
 
@@ -74,7 +112,7 @@
 - (void)setMenuCategorySectionItem:(OMNMenuCategorySectionItem *)menuCategorySectionItem {
   
   _menuCategorySectionItem = menuCategorySectionItem;
-  _button.backgroundColor = [UIColor colorWithWhite:1.0f alpha:(0.3f*menuCategorySectionItem.menuCategory.level)];
+  self.backgroundView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:(0.3f*menuCategorySectionItem.menuCategory.level)];
   _menuHeaderLabel.text = menuCategorySectionItem.menuCategory.name;
   
 }

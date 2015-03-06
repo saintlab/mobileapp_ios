@@ -21,6 +21,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
+#import "UIView+screenshot.h"
 
 @interface OMNR1VC ()
 <OMNRestaurantInfoVCDelegate>
@@ -442,7 +443,7 @@
     [self.navigationController popToViewController:self animated:YES];
     
   };
-  menuVC.backgroundImage = self.backgroundImage;
+  menuVC.backgroundImage = [self.backgroundView omn_screenshot];
   [self.navigationController pushViewController:menuVC animated:YES];
   
 }

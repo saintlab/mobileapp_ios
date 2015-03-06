@@ -42,9 +42,8 @@
     
   } completion:^(BOOL finished) {
   
-    [UIView animateWithDuration:0.2 animations:^{
+    [UIView animateWithDuration:0.5 animations:^{
       
-      menuTable.alpha = 0.0f;
       toViewController.menuTable.alpha = 1.0f;
       
     } completion:^(BOOL finished) {

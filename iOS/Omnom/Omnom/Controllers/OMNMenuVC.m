@@ -16,6 +16,7 @@
 #import "OMNMenuProductCellItem+edit.h"
 #import "OMNMenuHeaderView.h"
 #import "OMNMenuCategorySectionItem.h"
+#import "UIView+screenshot.h"
 
 @interface OMNMenuVC ()
 <OMNMenuProductWithRecommedtationsCellDelegate,
@@ -69,6 +70,12 @@ OMNMenuCategoryHeaderViewDelegate>
   
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  _navigationFadeView.image = [self.view omn_screenshotWithBounds:_navigationFadeView.bounds];
+ 
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
   
   return UIStatusBarStyleLightContent;
@@ -100,8 +107,8 @@ OMNMenuCategoryHeaderViewDelegate>
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   [self.view addSubview:_tableView];
   
-  _navigationFadeView = [UIView omn_autolayoutView];
-  _navigationFadeView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
+  _navigationFadeView = [UIImageView omn_autolayoutView];
+  _navigationFadeView.clipsToBounds = YES;
   [self.view addSubview:_navigationFadeView];
   
   [OMNMenuCategoriesModel registerCellsForTableView:_tableView];
@@ -124,7 +131,7 @@ OMNMenuCategoryHeaderViewDelegate>
     };
   
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(topOffset)-[fadeView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];

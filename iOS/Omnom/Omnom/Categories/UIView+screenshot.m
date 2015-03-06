@@ -22,6 +22,20 @@
   return screenshotImage;
 }
 
+- (UIImage *)omn_screenshotWithBounds:(CGRect)bounds {
+  
+  UIGraphicsBeginImageContextWithOptions(bounds.size, NO, 0.0f);
+  // Create a graphics context and translate it the view we want to crop so
+  // that even in grabbing (0,0), that origin point now represents the actual
+  // cropping origin desired:
+  [self layoutIfNeeded];
+  [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:NO];
+  UIImage *screenshotImage = UIGraphicsGetImageFromCurrentImageContext();
+  UIGraphicsEndImageContext();
+  return screenshotImage;
+  
+}
+
 + (UIImage *)omn_imageFromArray:(NSArray *)images {
   
   __block CGSize size = CGSizeZero;

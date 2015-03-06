@@ -10,6 +10,7 @@
 
 @interface UIView (screenshot)
 
+- (UIImage *)omn_screenshotWithBounds:(CGRect)bounds;
 - (UIImage *)omn_screenshot;
 + (UIImage *)omn_imageFromArray:(NSArray *)images;
 
