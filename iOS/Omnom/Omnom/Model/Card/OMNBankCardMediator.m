@@ -47,14 +47,14 @@
   [_rootVC.navigationController omn_pushViewController:paymentLoadingVC animated:YES completion:^{
     
     [paymentLoadingVC startLoading];
-    paymentVCDidPresentBlock(^(OMNError *error) {
+    paymentVCDidPresentBlock(^(OMNBill *bill, OMNError *error) {
       
       @strongify(self)
       if (error) {
         
         [paymentLoadingVC didFailWithError:error action:^{
           
-          self.didPayBlock(error);
+          self.didPayBlock(bill, error);
           
         }];
         
@@ -63,7 +63,7 @@
         
         [paymentLoadingVC finishLoading:^{
           
-          self.didPayBlock(error);
+          self.didPayBlock(bill, error);
           
         }];
         

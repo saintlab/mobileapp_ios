@@ -10,10 +10,11 @@
 #import "OMNRestaurantMediator.h"
 #import "OMNBackgroundVC.h"
 
+@protocol OMNMyOrderConfirmVCDelegate;
+
 @interface OMNMyOrderConfirmVC : OMNBackgroundVC
 
-@property (nonatomic, copy) dispatch_block_t didCloseBlock;
-@property (nonatomic, copy) dispatch_block_t didCreateBlock;
+@property (nonatomic, copy) dispatch_block_t didFinishBlock;
 
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator;
 

@@ -165,13 +165,6 @@
   
 }
 
-- (void)scrollViewDidScroll:(UITableView *)scrollView {
-#warning 123
-//  UITableViewHeaderFooterView
-//  [scrollView headerViewForSection:<#(NSInteger)#>]
-  
-}
-
 @end
 
 @implementation OMNMenuCategory (omn_categories)

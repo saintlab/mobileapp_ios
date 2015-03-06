@@ -10,7 +10,6 @@
 #import "OMNPreorderConfirmCell.h"
 #import "OMNPreorderActionCell.h"
 #import "UIBarButtonItem+omn_custom.h"
-#import "OMNPreorderDoneVC.h"
 #import "UIView+screenshot.h"
 #import "OMNRestaurant+omn_network.h"
 #import "OMNMenu+wish.h"
@@ -21,6 +20,7 @@
 #import "OMNPreorderConfirmCellItem.h"
 #import "OMNPreorderActionCellItem.h"
 #import "OMNModalWebVC.h"
+#import "OMNPreorderMediator.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,
@@ -41,6 +41,8 @@ OMNPreorderConfirmCellDelegate>
   NSArray *_model;
   OMNPreorderActionCellItem *_preorderActionCellItem;
   
+  OMNPreorderMediator *_preorderMediator;
+  
 }
 
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator {
@@ -49,6 +51,7 @@ OMNPreorderConfirmCellDelegate>
     
     _restaurantMediator = restaurantMediator;
     _visitor = restaurantMediator.visitor;
+    _preorderMediator = [[OMNPreorderMediator alloc] initWithRootVC:self restaurant:restaurantMediator.restaurant];
     
   }
   return self;
@@ -58,6 +61,7 @@ OMNPreorderConfirmCellDelegate>
   [super viewDidLoad];
   
   _preorderActionCellItem = [[OMNPreorderActionCellItem alloc] init];
+  _preorderMediator.didFinishBlock = self.didFinishBlock;
   
   [self omn_setup];
   
@@ -73,7 +77,7 @@ OMNPreorderConfirmCellDelegate>
   UIButton *barButton = nil;
   if (restaurant.hasCompleteOrdresBoard) {
     
-    barButton = [UIButton omn_barButtonWithTitle:kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT color:[UIColor blackColor] target:self action:@selector(completeOrdresCall)];
+    barButton = [UIButton omn_barButtonWithTitle:kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT color:[UIColor blackColor] target:_preorderMediator action:@selector(completeOrdresCall)];
     
   }
   else if (restaurant.settings.has_table_order) {
@@ -103,26 +107,11 @@ OMNPreorderConfirmCellDelegate>
   
 }
 
-- (void)completeOrdresCall {
-  
-  OMNModalWebVC *modalWebVC = [[OMNModalWebVC alloc] init];
-  modalWebVC.url = _restaurantMediator.restaurant.complete_ordres_url;
-  @weakify(self)
-  modalWebVC.didCloseBlock = ^{
-    
-    @strongify(self)
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:modalWebVC] animated:YES completion:nil];
-  
-}
-
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
   [self updateTableViewAnimated:NO];
-  [self loadTableProductItemsWithCompletion:nil];
+  [self loadTableProductItemsWithCompletion:^{}];
   
 }
 
@@ -133,15 +122,11 @@ OMNPreorderConfirmCellDelegate>
     
     @strongify(self)
     [self didLoadTableProductItems:productItems];
-    if (completionBlock) {
-      completionBlock();
-    }
+    completionBlock();
     
   } error:^(OMNError *error) {
     
-    if (completionBlock) {
-      completionBlock();
-    }
+    completionBlock();
 
   }];
   
@@ -207,12 +192,21 @@ OMNPreorderConfirmCellDelegate>
   
 }
 
+- (void)didCreateWish:(OMNWish *)wish {
+  
+  [_restaurantMediator.menu resetSelection];
+  [_restaurantMediator.restaurantActionsVC showRestaurantAnimated:NO];
+  
+  
+  _preorderMediator.didFinishBlock = self.didFinishBlock;
+  [_preorderMediator processWish:wish];
+  
+}
+
 - (void)closeTap {
   
-  if (self.didCloseBlock) {
-    
-    self.didCloseBlock();
-    
+  if (self.didFinishBlock) {
+    self.didFinishBlock();
   }
   
 }
@@ -222,21 +216,6 @@ OMNPreorderConfirmCellDelegate>
   return UIStatusBarStyleLightContent;
   
 }
-
-- (void)didCreateWish:(OMNWish *)wish {
-  
-//  _restaurantMediator
-//  [_restaurantMediator.menu resetSelection];
-#warning 123
-  
-//.
-//  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] init];
-//  preorderDoneVC.backgroundImage = [self.view omn_screenshot];
-//  preorderDoneVC.didCloseBlock = self.didCreateBlock;
-//  [self.navigationController presentViewController:preorderDoneVC animated:YES completion:nil];
-  
-}
-
 
 #pragma mark - Table view data source
 

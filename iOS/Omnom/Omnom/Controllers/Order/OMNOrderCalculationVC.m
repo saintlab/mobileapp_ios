@@ -369,7 +369,7 @@ OMNPaymentFooterViewDelegate>
 
 - (void)showRatingForBill:(OMNBill *)bill {
   
-  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithMediator:_restaurantMediator];
+  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithOrder:_visitor.selectedOrder];
   ratingVC.backgroundImage = self.backgroundImage;
   ratingVC.delegate = self;
   [self.navigationController pushViewController:ratingVC animated:YES];

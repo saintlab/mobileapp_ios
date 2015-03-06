@@ -56,7 +56,7 @@
   return self;
 }
 
-- (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(OMNError *))failureBlock {
+- (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(OMNPaymentDidFinishBlock)completionBlock {
   
   _bankCardInfo = bankCardInfo;
   
@@ -80,42 +80,42 @@
         
         @strongify(self)
         OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
-        [self didCreateBill:bill withCompletion:completionBlock failure:failureBlock];
+        [self didCreateBill:bill completion:completionBlock];
         
       }
       else if ([status isEqualToString:@"paid"] ||
                [status isEqualToString:@"order_closed"]) {
         
-        failureBlock([OMNError omnomErrorFromCode:kOMNErrorOrderClosed]);
+        completionBlock(nil, [OMNError omnomErrorFromCode:kOMNErrorOrderClosed]);
         
       }
       else if ([status isEqualToString:@"restaurant_not_available"]) {
         
-        failureBlock([OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavailable]);
+        completionBlock(nil, [OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavailable]);
         
       }
       else {
         
-        failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+        completionBlock(nil, [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
         
       }
       
     }
     else {
       
-      failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+      completionBlock(nil, [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock([error omn_internetError]);
+    completionBlock(nil, [error omn_internetError]);
     
   }];
   
 }
 
-- (void)didCreateBill:(OMNBill *)bill withCompletion:(dispatch_block_t)completionBlock failure:(void (^)(OMNError *))failureBlock {
+- (void)didCreateBill:(OMNBill *)bill completion:(OMNPaymentDidFinishBlock)completionBlock {
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
@@ -132,13 +132,13 @@
     
     [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
     [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
-    completionBlock();
+    completionBlock(bill, nil);
     
   } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:mailError request:request response:response];
     OMNError *omnomError = [OMNError omnnomErrorFromError:mailError];
-    failureBlock(omnomError);
+    completionBlock(bill, omnomError);
     
   }];
  

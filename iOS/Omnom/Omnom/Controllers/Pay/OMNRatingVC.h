@@ -7,7 +7,7 @@
 //
 
 #import "OMNBackgroundVC.h"
-#import "OMNRestaurantMediator.h"
+#import "OMNOrder.h"
 
 @protocol OMNRatingVCDelegate;
 
@@ -15,7 +15,7 @@
 
 @property (nonatomic, weak) id<OMNRatingVCDelegate> delegate;
 
-- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
+- (instancetype)initWithOrder:(OMNOrder *)order;
 
 @end
 

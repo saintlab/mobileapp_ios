@@ -125,15 +125,7 @@
   [self showPaymentVCWithDidPresentBlock:^(OMNPaymentDidFinishBlock paymentDidFinishBlock) {
   
     @strongify(self)
-    [self.acquiringTransaction payWithCard:bankCardInfo completion:^{
-      
-      paymentDidFinishBlock(nil);
-      
-    } failure:^(OMNError *error) {
-      
-      paymentDidFinishBlock(error);
-      
-    }];
+    [self.acquiringTransaction payWithCard:bankCardInfo completion:paymentDidFinishBlock];
     
   }];
   

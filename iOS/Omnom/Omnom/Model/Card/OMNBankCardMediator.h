@@ -11,7 +11,6 @@
 #import "OMNError.h"
 #import "OMNBankCardsModel.h"
 
-typedef void(^OMNPaymentDidFinishBlock)(OMNError *error);
 typedef void(^OMNPaymentVCDidPresentBlock)(OMNPaymentDidFinishBlock paymentDidFinishBlock);
 
 @interface OMNBankCardMediator : NSObject

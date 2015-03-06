@@ -12,7 +12,7 @@
 #import "OMNOrder.h"
 #import "OMNWish.h"
 
-typedef void(^OMNPaymentInfoBlock)(id paymentInfo);
+typedef void(^OMNPaymentDidFinishBlock)(OMNBill *bill, OMNError *error);
 
 @interface OMNAcquiringTransaction : NSObject
 
@@ -28,6 +28,6 @@ typedef void(^OMNPaymentInfoBlock)(id paymentInfo);
 - (instancetype)initWithWish:(OMNWish *)wish;
 - (long long)total_amount;
 - (double)tips_percent;
-- (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(dispatch_block_t)completionBlock failure:(void (^)(OMNError *))failureBlock;
+- (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(OMNPaymentDidFinishBlock)completionBlock;
 
 @end

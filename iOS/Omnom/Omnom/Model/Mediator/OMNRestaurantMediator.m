@@ -99,12 +99,6 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (void)processWish:(OMNWish *)wish {
-  
-//  .
-  
-}
-
 - (void)showUserProfile {
 
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:self];
@@ -157,17 +151,10 @@ OMNOrderCalculationVCDelegate>
   
   OMNMyOrderConfirmVC *preorderConfirmVC = [[OMNMyOrderConfirmVC alloc] initWithRestaurantMediator:self];
   @weakify(self)
-  preorderConfirmVC.didCloseBlock = ^{
+  preorderConfirmVC.didFinishBlock = ^{
     
     @strongify(self)
-    [self.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  preorderConfirmVC.didCreateBlock = ^{
-    
-    @strongify(self)
-    [self.restaurantActionsVC showRestaurantAnimated:NO];
-    [self.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
+    [self.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
     
   };
   [_restaurantActionsVC.navigationController presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];

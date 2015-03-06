@@ -71,7 +71,7 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     _tables = [jsonData[@"tables"] omn_tables];
     _orders = [jsonData[@"orders"] omn_orders];;
     
-#warning 123
+#warning haarts orders url
     _complete_ordres_url = [NSURL URLWithString:@"http://google.com"];
     
   }

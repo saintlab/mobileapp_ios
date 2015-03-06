@@ -23,7 +23,7 @@
       @strongify(self)
       OMNPaymentDetails *paymentDetails = [OMNPaymentDetails paymentDetailsWithTotalAmount:self.acquiringTransaction.total_amount tipAmount:self.acquiringTransaction.tips_amount userID:[OMNAuthorization authorisation].user.id userName:[OMNAuthorization authorisation].user.name];
       [OMNPaymentNotificationControl showWithPaymentDetails:paymentDetails];
-      paymentDidFinishBlock(nil);
+      paymentDidFinishBlock(nil, nil);
       
     });
     

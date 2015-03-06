@@ -89,7 +89,7 @@
     
   }];
   
-  [self.bankCardMediator setDidPayBlock:^(OMNError *error) {
+  [self.bankCardMediator setDidPayBlock:^(OMNBill *bill, OMNError *error) {
     
     @strongify(self)
     if (error) {
@@ -108,7 +108,7 @@
     }
     else {
       
-      [self mailRuDidFinish];
+      [self paymentDidFinishWithBill:bill];
       
     }
     
@@ -214,9 +214,9 @@
 
 }
 
-- (void)mailRuDidFinish {
-#warning 123
-  [self.delegate orderPaymentVCDidFinish:self withBill:nil];
+- (void)paymentDidFinishWithBill:(OMNBill *)bill {
+
+  [self.delegate orderPaymentVCDidFinish:self withBill:bill];
   
 }
 
