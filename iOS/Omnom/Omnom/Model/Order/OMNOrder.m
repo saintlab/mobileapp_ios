@@ -390,6 +390,40 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
   
 }
 
+- (NSDictionary *)debug_info {
+  
+  NSMutableArray *items = [NSMutableArray array];
+  __block long long total = 0ll;
+  __block long long selectedTotal = 0ll;
+  [self.guests enumerateObjectsUsingBlock:^(OMNGuest *guest, NSUInteger idx, BOOL *stop) {
+    
+    [guest.items enumerateObjectsUsingBlock:^(OMNOrderItem *item, NSUInteger idx, BOOL *stop) {
+      
+      total += item.price_total;
+      selectedTotal += (item.selected) ? (item.price_total) : (0ll);
+      [items addObject:
+       @{
+         @"id" : item.id,
+         @"price_total" : @(item.price_total),
+         @"selected" : @(item.selected)
+         }];
+      
+    }];
+    
+  }];
+  
+  NSDictionary *order_info =
+  @{
+    @"total" : @(total),
+    @"selected_items_total" : @(selectedTotal),
+    @"items" : items,
+    @"paid_net_amount" : @(self.paid.net_amount),
+    @"paid_tip_amount" : @(self.paid.tip_amount),
+    };
+  return order_info;
+  
+}
+
 @end
 
 @implementation NSObject (omn_orders)

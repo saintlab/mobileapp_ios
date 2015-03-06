@@ -242,6 +242,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"table_id" : acquiringTransaction.table_id,
      @"bill_id" : (bill.id) ? (bill.id) : (@""),
      @"card_info" : (bankCardInfo) ? (bankCardInfo.debugInfo) : (@""),
+     @"transaction_info" : (acquiringTransaction.info) ?: @"",
      }];
   [_mixpanel track:@"payment_success" properties:properties];
   [_mixpanel flush];

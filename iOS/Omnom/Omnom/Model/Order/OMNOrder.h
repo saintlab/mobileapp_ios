@@ -92,6 +92,7 @@ extern NSInteger const kCustomTipIndex;
 - (void)resetEnteredAmount;
 
 - (void)setCustomTipPercent:(double)percent;
+- (NSDictionary *)debug_info;
 
 @end
 

@@ -24,6 +24,8 @@ typedef void(^OMNPaymentDidFinishBlock)(OMNBill *bill, OMNError *error);
 @property (nonatomic, copy) NSString *tips_way;
 @property (nonatomic, copy) NSString *split_way;
 
+@property (nonatomic, strong) NSDictionary *info;
+
 - (instancetype)initWithOrder:(OMNOrder *)order;
 - (instancetype)initWithWish:(OMNWish *)wish;
 - (long long)total_amount;

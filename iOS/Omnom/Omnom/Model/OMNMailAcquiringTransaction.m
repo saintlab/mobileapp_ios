@@ -36,6 +36,8 @@
     self.table_id = (order.table_id) ? ([order.table_id copy]) : @"";;
     self.tips_way = stringFromTipType(order.tipType);
     self.split_way = stringFromSplitType(order.splitType);
+    self.info = [order debug_info];
+    
   }
   return self;
 }
@@ -52,6 +54,8 @@
     self.tips_way = stringFromTipType(kTipTypeDefault);
     self.split_way = stringFromSplitType(kSplitTypeNone);
 
+    
+    
   }
   return self;
 }
