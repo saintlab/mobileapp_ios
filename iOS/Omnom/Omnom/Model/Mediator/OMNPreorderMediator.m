@@ -56,10 +56,15 @@
     self.didFinishBlock();
     
   }
+  else if (kRestaurantModeLunch == _restaurant.entrance_mode) {
+    
+    OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 didCloseBlock:self.didFinishBlock];
+    [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
+    
+  }
   else {
     
-    OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] init];
-    preorderDoneVC.didCloseBlock = self.didFinishBlock;
+    OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:self.didFinishBlock];
     [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
     
   }

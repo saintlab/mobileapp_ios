@@ -12,4 +12,10 @@
 //bar buttons
 #define kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT NSLocalizedString(@"BAR_BUTTON_COMPLETE_ORDERS_TEXT", @"Табло готовых заказов")
 
+//info
+#define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
+#define kOMN_PREORDER_DONE_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_2", @"Выбранные блюда скоро будут\nдобавлены официантом на ваш стол.")
+
+#define kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_2GIS_LABEL_TEXT_1", @"Заказ принят\nи передан Роме")
+#define kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_2GIS_LABEL_TEXT_2", @"Спасибо!")
 

@@ -22,6 +22,22 @@
   UILabel *_detailedTextLabel;
   UIButton *_closeButton;
   
+  dispatch_block_t _didCloseBlock;
+  NSString *_title;
+  NSString *_subTitle;
+  
+}
+
+- (instancetype)initTitle:(NSString *)title subTitle:(NSString *)subTitle didCloseBlock:(dispatch_block_t)didCloseBlock {
+  self = [super init];
+  if (self) {
+    
+    _didCloseBlock = [didCloseBlock copy];
+    _title = title;
+    _subTitle = subTitle;
+    
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -29,12 +45,12 @@
 
   [self omn_setup];
   
-  _textLabel.text = NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается");
+  _textLabel.text = _title;
   _textLabel.font = FuturaLSFOmnomLERegular(25.0f);
   _textLabel.textAlignment = NSTextAlignmentCenter;
   _textLabel.textColor = colorWithHexString(@"FFFFFF");
   
-  _detailedTextLabel.text = NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_2", @"Выбранные блюда скоро будут\nдобавлены официантом на ваш стол.");
+  _detailedTextLabel.text = _subTitle;
   _detailedTextLabel.font = FuturaLSFOmnomLERegular(17.0f);
   _detailedTextLabel.textAlignment = NSTextAlignmentCenter;
   _detailedTextLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.5f];
@@ -45,9 +61,9 @@
 
 - (void)closeTap {
   
-  if (self.didCloseBlock) {
+  if (_didCloseBlock) {
     
-    self.didCloseBlock();
+    _didCloseBlock();
     
   }
   
