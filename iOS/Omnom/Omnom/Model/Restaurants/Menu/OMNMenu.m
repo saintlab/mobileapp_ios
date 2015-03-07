@@ -9,6 +9,8 @@
 #import "OMNMenu.h"
 #import <BlocksKit.h>
 
+NSString * const OMNMenuDidResetNotofocation = @"OMNMenuDidResetNotofocation";
+
 @implementation OMNMenu
 
 - (instancetype)initWithJsonData:(id)jsonData {
@@ -49,6 +51,7 @@
     [menuProduct resetSelection];
     
   }];
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNMenuDidResetNotofocation object:self];
   
 }
 

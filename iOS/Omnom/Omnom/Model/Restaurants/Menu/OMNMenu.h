@@ -10,6 +10,8 @@
 #import "OMNMenuProduct.h"
 #import "OMNMenuModifer.h"
 
+extern NSString * const OMNMenuDidResetNotofocation;
+
 @interface OMNMenu : NSObject
 
 @property (nonatomic, strong) NSDictionary *products;

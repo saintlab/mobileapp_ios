@@ -32,6 +32,10 @@ OMNMenuCategoryHeaderViewDelegate>
   
 }
 
+- (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   self = [super init];
   if (self) {
@@ -68,6 +72,8 @@ OMNMenuCategoryHeaderViewDelegate>
     
   };
   
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidReset) name:OMNMenuDidResetNotofocation object:nil];
+  
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,6 +85,15 @@ OMNMenuCategoryHeaderViewDelegate>
 - (UIStatusBarStyle)preferredStatusBarStyle {
   
   return UIStatusBarStyleLightContent;
+  
+}
+
+- (void)menuDidReset {
+  
+  _selectedItem.selected = NO;
+  _selectedItem = nil;
+  [self.tableView beginUpdates];
+  [self.tableView endUpdates];
   
 }
 
