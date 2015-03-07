@@ -217,6 +217,7 @@ TTTAttributedLabelDelegate>
 
   [_cardHoldValueTF setError:NO];
   _errorLabel.text = nil;
+  _bankCardInfo.saveCard = YES;
   [_bankCardInfo logCardRegister];
   if (self.didFinishBlock) {
     self.didFinishBlock();
