@@ -12,8 +12,15 @@
 #import "OMNConstants.h"
 #import "UIButton+omn_helper.h"
 #import "UIImage+omn_helper.h"
+#import <BlocksKit.h>
 
-@implementation OMNPreorderActionCell
+@implementation OMNPreorderActionCell {
+  NSString *_enabledObserverID;
+}
+
+- (void)dealloc {
+  [self removeEnabledObserverID];
+}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -23,6 +30,12 @@
     
   }
   return self;
+}
+
+- (void)removeEnabledObserverID {
+  if (_enabledObserverID) {
+    [_item bk_removeObserversWithIdentifier:_enabledObserverID];
+  }
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
@@ -124,10 +137,23 @@
 
 - (void)setItem:(OMNPreorderActionCellItem *)item {
   
+  [self removeEnabledObserverID];
   _item = item;
+  @weakify(self)
+  [_item bk_addObserverForKeyPath:NSStringFromSelector(@selector(enabled)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+    
+    @strongify(self)
+    [self updateEnabledState];
+    
+  }];
   _refreshLabel.text = item.actionText;
-  _clearButton.enabled = item.enabled;
-  _actionButton.enabled = item.enabled;
+  
+}
+
+- (void)updateEnabledState {
+  
+  _clearButton.enabled = _item.enabled;
+  _actionButton.enabled = _item.enabled;
   
 }
 

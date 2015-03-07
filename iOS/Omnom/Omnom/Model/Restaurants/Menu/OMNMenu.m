@@ -55,6 +55,18 @@ NSString * const OMNMenuDidResetNotofocation = @"OMNMenuDidResetNotofocation";
   
 }
 
+- (void)deselectItems:(NSArray *)itemsIDs {
+  
+  [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
+    
+    if ([itemsIDs containsObject:key]) {
+      [menuProduct resetSelection];
+    }
+    
+  }];
+  
+}
+
 - (BOOL)hasPreorderedItems {
   
   return [self.products bk_any:^BOOL(id key, OMNMenuProduct *menuProduct) {

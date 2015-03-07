@@ -197,7 +197,7 @@
   
 }
 
-- (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+- (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
   if (table.internal_id) {
@@ -218,7 +218,17 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock([error omn_internetError]);
+    //    Формат - статус код 409, массив skip_id:[]
+    if (409 == error.code) {
+
+      wrongIDsBlock(operation.responseObject[@"skip_id"]);
+      
+    }
+    else {
+    
+      failureBlock([error omn_internetError]);
+      
+    }
     
   }];
   

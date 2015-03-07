@@ -9,6 +9,10 @@
 #define kOMN_ERROR_MESSAGE_UNKNOWN_ERROR NSLocalizedString(@"ERROR_MESSAGE_UNKNOWN_ERROR", @"Что-то пошло не так. Повторите попытку.")
 #define kOMN_ERROR_MESSAGE_ENTER_PHONE_EMAIL NSLocalizedString(@"Введите почту и телефон", nil)
 
+#define kOMN_WISH_CREATE_ERROR_TITLE NSLocalizedString(@"WISH_CREATE_ERROR_TITLE", @"Нет в продаже")
+#define kOMN_WISH_CREATE_ERROR_SUBTITLE NSLocalizedString(@"WISH_CREATE_ERROR_SUBTITLE %@", @"В вашем заказе есть блюда, которые больше не продают:\n{product_list}\n\nУбрать из заказа и продолжить?")
+
+
 //bar buttons
 #define kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT NSLocalizedString(@"BAR_BUTTON_COMPLETE_ORDERS_TEXT", @"Табло готовых заказов")
 
@@ -18,7 +22,6 @@
 
 #define kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_2GIS_LABEL_TEXT_1", @"Заказ принят\nи передан Роме")
 #define kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_2GIS_LABEL_TEXT_2", @"Спасибо!")
-
 
 #define kOMN_MY_TABLE_ORDERS_LABEL_TEXT NSLocalizedString(@"MY_TABLE_ORDERS_LABEL_TEXT", @"Блюда на вашем столе")
 #define kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT NSLocalizedString(@"WISH_RECOMMENDATIONS_LABEL_TEXT", @"Ранее вы заказывали")

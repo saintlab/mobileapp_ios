@@ -20,6 +20,7 @@ extern NSString * const OMNMenuDidResetNotofocation;
 
 - (instancetype)initWithJsonData:(id)data;
 - (void)resetSelection;
+- (void)deselectItems:(NSArray *)itemsIDs;
 - (long long)total;
 - (BOOL)hasPreorderedItems;
 

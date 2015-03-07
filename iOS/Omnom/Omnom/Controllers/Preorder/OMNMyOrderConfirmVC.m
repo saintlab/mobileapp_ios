@@ -14,7 +14,7 @@
 #import "OMNMenu+wish.h"
 #import "OMNTable+omn_network.h"
 #import <OMNStyler.h>
-#import <BlocksKit.h>
+#import <BlocksKit+UIKit.h>
 #import "OMNPreorderConfirmCellItem.h"
 #import "OMNPreorderActionCellItem.h"
 #import "OMNPreorderMediator.h"
@@ -256,11 +256,13 @@ OMNPreorderConfirmCellDelegate>
   
 }
 
-#pragma mark - OMNPreorderActionCellDelegate
-
-- (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell {
+- (void)preorderItems {
   
-  preorderActionCell.actionButton.enabled = NO;
+  if (!_restaurantMediator.menu.hasPreorderedItems) {
+    return;
+  }
+  
+  _preorderActionCellItem.enabled = NO;
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
   
   NSArray *selectedWishItems = [_restaurantMediator.menu selectedWishItems];
@@ -268,22 +270,72 @@ OMNPreorderConfirmCellDelegate>
   [_visitor.restaurant createWishForTable:_visitor.table products:selectedWishItems completionBlock:^(OMNWish *wish) {
     
     @strongify(self)
-    [self stopLoading:preorderActionCell.actionButton];
+    [self stopLoading];
     [self didCreateWish:wish];
-
+    
+  } wrongIDsBlock:^(NSArray *wrongIDs) {
+    
+    @strongify(self)
+    [self didFailCreateWithWithProductIDs:wrongIDs];
+    
   } failureBlock:^(OMNError *error) {
     
     @strongify(self)
-    [self stopLoading:preorderActionCell.actionButton];
+    [self stopLoading];
     
   }];
   
 }
 
-- (void)stopLoading:(__weak  UIButton *)actionButton {
+#pragma mark - OMNPreorderActionCellDelegate
+
+- (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell {
+  
+  [self preorderItems];
+  
+}
+
+- (void)didFailCreateWithWithProductIDs:(NSArray *)productIDs {
+  
+  NSMutableArray *productList = [NSMutableArray arrayWithCapacity:productIDs.count];
+  
+  [productIDs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    
+    OMNMenuProduct *menuProduct = _restaurantMediator.menu.products[obj];
+    if (menuProduct.name.length) {
+      [productList addObject:menuProduct.name];
+    }
+    
+  }];
+  [self stopLoading];
+
+  NSString *subtitle = [NSString stringWithFormat:kOMN_WISH_CREATE_ERROR_SUBTITLE, [productList componentsJoinedByString:@"\n"]];
+  @weakify(self)
+  [UIAlertView bk_showAlertViewWithTitle:kOMN_WISH_CREATE_ERROR_TITLE message:subtitle cancelButtonTitle:NSLocalizedString(@"Отменить", @"Отменить") otherButtonTitles:@[NSLocalizedString(@"Ok", @"OK")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+
+    @strongify(self)
+    if (alertView.cancelButtonIndex != buttonIndex) {
+      
+      [self deselectProductsAndReload:productIDs];
+      
+    }
+    
+  }];
+  
+}
+
+- (void)deselectProductsAndReload:(NSArray *)productIDs {
+  
+  [_restaurantMediator.menu deselectItems:productIDs];
+  [self updateTableViewAnimated:NO];
+  [self preorderItems];
+  
+}
+
+- (void)stopLoading {
   
   self.navigationItem.rightBarButtonItem = nil;
-  actionButton.enabled = YES;
+  _preorderActionCellItem.enabled = YES;
   
 }
 

@@ -11,6 +11,7 @@
 #import "OMNWish.h"
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
+typedef void(^OMNWrongIDsBlock)(NSArray *wrongIDs);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 typedef void(^OMNMenuBlock)(OMNMenu *menu);
 typedef void(^OMNWishBlock)(OMNWish *wish);
@@ -24,7 +25,7 @@ typedef void(^OMNWishBlock)(OMNWish *wish);
  *  @param tableID      table ID or nil
  *  @param products     list of {"id":"", "quantity":"1", "modifiers":[{"id":"", "quantity":"1"}]} objects
  */
-- (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock;
+- (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
 
 - (void)handleEnterEventWithCompletion:(dispatch_block_t)completionBlock;
