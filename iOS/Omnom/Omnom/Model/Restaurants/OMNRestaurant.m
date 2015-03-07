@@ -104,16 +104,6 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
   
 }
 
-- (BOOL)hasCompleteOrdresBoard {
-  
-  return
-  (
-   self.complete_ordres_url &&
-   kRestaurantModeBar == self.entrance_mode
-   );
-  
-}
-
 - (NSString *)description {
   
   return [NSString stringWithFormat:@"%@, %@", _title, _id];

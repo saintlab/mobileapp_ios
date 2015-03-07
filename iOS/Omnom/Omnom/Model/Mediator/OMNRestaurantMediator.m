@@ -24,6 +24,8 @@
 #import "OMNRestaurant+omn_network.h"
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNOrdersLoadingVC.h"
+#import "OMNPreorderMediator.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -38,7 +40,7 @@ OMNOrderCalculationVCDelegate>
 
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC {
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC {
   self = [super init];
   if (self) {
 
@@ -323,6 +325,42 @@ OMNOrderCalculationVCDelegate>
     [self exitRestaurant];
     
   }
+  
+}
+
+- (UIBarButtonItem *)exitRestaurantButton {
+  
+  UIColor *color = self.restaurant.decoration.antagonist_color;
+  return [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:self action:@selector(exitRestaurant)];
+  
+}
+
+- (UIButton *)userProfileButton {
+  
+  UIColor *color = self.restaurant.decoration.antagonist_color;
+  return [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:self action:@selector(showUserProfile)];
+  
+}
+
+- (BOOL)showTableButton {
+  
+  return (self.visitor.table!= nil);
+  
+}
+
+- (BOOL)showPreorderButton {
+  
+  return
+  (
+   self.restaurant.settings.has_menu &&
+   self.menu.hasPreorderedItems
+   );
+  
+}
+
+- (OMNPreorderMediator *)preorderMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
+  
+  return [[OMNPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
   
 }
 

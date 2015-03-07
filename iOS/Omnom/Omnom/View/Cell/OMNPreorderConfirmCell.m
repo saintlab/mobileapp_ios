@@ -46,17 +46,26 @@
   _preorderConfirmView = [OMNPreorderConfirmView omn_autolayoutView];
   [self.contentView addSubview:_preorderConfirmView];
   
+  UIView *lineView = [UIView omn_autolayoutView];
+  lineView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
+  [self.contentView addSubview:lineView];
+  
   NSDictionary *views =
   @{
     @"preorderConfirmView" : _preorderConfirmView,
+    @"lineView" : lineView,
     };
   
   NSDictionary *metrics =
   @{
+    @"leftOffset" : [OMNStyler styler].leftOffset,
     };
 
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[preorderConfirmView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[preorderConfirmView]|" options:kNilOptions metrics:metrics views:views]];
+
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[lineView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[lineView(1)]" options:kNilOptions metrics:metrics views:views]];
   
   [_preorderConfirmView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
   
@@ -64,19 +73,14 @@
 
 - (void)priceTap {
   
-  [self.delegate preorderConfirmCellDidEdit:self];
-  
-}
-
-- (void)setHidePrice:(BOOL)hidePrice {
-  
-  _preorderConfirmView.priceButton.selected = hidePrice;
+  [_item.delegate preorderConfirmCellDidEdit:self];
   
 }
 
 - (void)setItem:(OMNPreorderConfirmCellItem *)item {
   
   _item = item;
+  _preorderConfirmView.priceButton.selected = item.hidePrice;
   _preorderConfirmView.menuProduct = item.menuProduct;
   
 }
@@ -135,7 +139,7 @@
       };
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-[priceButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[nameLabel]-[priceButton(>=60)]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[nameLabel]-(leftOffset)-[infoLabel]-|" options:kNilOptions metrics:metrics views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[infoLabel]" options:kNilOptions metrics:metrics views:views]];
     

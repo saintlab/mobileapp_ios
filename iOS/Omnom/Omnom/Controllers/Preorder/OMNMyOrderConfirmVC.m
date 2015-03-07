@@ -9,18 +9,16 @@
 #import "OMNMyOrderConfirmVC.h"
 #import "OMNPreorderConfirmCell.h"
 #import "OMNPreorderActionCell.h"
-#import "UIBarButtonItem+omn_custom.h"
 #import "UIView+screenshot.h"
 #import "OMNRestaurant+omn_network.h"
 #import "OMNMenu+wish.h"
 #import "OMNTable+omn_network.h"
 #import <OMNStyler.h>
-#import "OMNOrderToolbarButton.h"
 #import <BlocksKit.h>
 #import "OMNPreorderConfirmCellItem.h"
 #import "OMNPreorderActionCellItem.h"
-#import "OMNModalWebVC.h"
 #import "OMNPreorderMediator.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,
@@ -51,7 +49,7 @@ OMNPreorderConfirmCellDelegate>
     
     _restaurantMediator = restaurantMediator;
     _visitor = restaurantMediator.visitor;
-    _preorderMediator = [[OMNPreorderMediator alloc] initWithRootVC:self restaurant:restaurantMediator.restaurant];
+    _preorderMediator = [_restaurantMediator preorderMediatorWithRootVC:self];
     
   }
   return self;
@@ -61,7 +59,8 @@ OMNPreorderConfirmCellDelegate>
   [super viewDidLoad];
   
   _preorderActionCellItem = [[OMNPreorderActionCellItem alloc] init];
-  _preorderMediator.didFinishBlock = self.didFinishBlock;
+  _preorderActionCellItem.actionText = [_preorderMediator refreshOrdersTitle];
+  _preorderActionCellItem.delegate = self;
   
   [self omn_setup];
   
@@ -72,28 +71,20 @@ OMNPreorderConfirmCellDelegate>
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:NSLocalizedString(@"PREORDER_CONFIRM_CLOSE_BUTTON_TITLE", @"Закрыть") color:[UIColor whiteColor] target:self action:@selector(closeTap)];
   
-  OMNRestaurant *restaurant = _restaurantMediator.restaurant;
-  
-  UIButton *barButton = nil;
-  if (restaurant.hasCompleteOrdresBoard) {
-    
-    barButton = [UIButton omn_barButtonWithTitle:kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT color:[UIColor blackColor] target:_preorderMediator action:@selector(completeOrdresCall)];
-    
-  }
-  else if (restaurant.settings.has_table_order) {
-    
-    barButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(requestTableOrders)];
-    
-  }
-  [self setupBottomBarWithButton:barButton];
-  
+  [self setupBottomBar];
+
 }
 
-- (void)setupBottomBarWithButton:(UIButton *)button {
+- (void)setupBottomBar {
   
+  UIButton *button = [_preorderMediator bottomButton];
   if (!button) {
     return;
   }
+  
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  _tableView.contentInset = insets;
+  _tableView.scrollIndicatorInsets = insets;
   
   [self addActionBoardIfNeeded];
   
@@ -147,24 +138,32 @@ OMNPreorderConfirmCellDelegate>
     
     if (product.preordered) {
       
-      [products addObject:[[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:product]];
+      OMNPreorderConfirmCellItem *orderedItem = [[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:product];
+      orderedItem.delegate = self;
+      [products addObject:orderedItem];
       
     }
     
   }];
   
   NSMutableArray *tableProducts = [NSMutableArray arrayWithCapacity:_tableProductsIds.count];
+
   [_tableProductsIds enumerateObjectsUsingBlock:^(id tableProductId, NSUInteger idx, BOOL *stop) {
     
     OMNMenuProduct *menuProduct = _restaurantMediator.menu.products[tableProductId];
     if (menuProduct) {
       
-      [tableProducts addObject:[[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:menuProduct]];
+      OMNPreorderConfirmCellItem *tableItem = [[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:menuProduct];
+      tableItem.hidePrice = YES;
+      tableItem.delegate = self;
+      [tableProducts addObject:tableItem];
       
     }
     
   }];
 
+  _preorderActionCellItem.enabled = (products.count > 0);
+  
   _model =
   @[
     products,
@@ -185,20 +184,10 @@ OMNPreorderConfirmCellDelegate>
   
 }
 
-- (void)requestTableOrders {
-  
-  [_restaurantMediator requestTableOrders];
-  [self closeTap];
-  
-}
-
 - (void)didCreateWish:(OMNWish *)wish {
   
   [_restaurantMediator.menu resetSelection];
   [_restaurantMediator.restaurantActionsVC showRestaurantAnimated:NO];
-  
-  
-  _preorderMediator.didFinishBlock = self.didFinishBlock;
   [_preorderMediator processWish:wish];
   
 }
@@ -248,19 +237,6 @@ OMNPreorderConfirmCellDelegate>
   if ([item conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
     
     cell = [item cellForTableView:tableView];
-    
-    if ([cell isKindOfClass:[OMNPreorderConfirmCell class]]) {
-      
-      OMNPreorderConfirmCell *preorderConfirmCell = (OMNPreorderConfirmCell *)cell;
-      preorderConfirmCell.delegate = self;
-      preorderConfirmCell.hidePrice = (indexPath.section > 0);
-      
-    }
-    else if ([cell isKindOfClass:[OMNPreorderActionCell class]]) {
-      
-      [(OMNPreorderActionCell *)cell setDelegate:self];
-      
-    }
     
   }
   
@@ -340,10 +316,6 @@ OMNPreorderConfirmCellDelegate>
   [OMNPreorderConfirmCellItem registerCellForTableView:_tableView];
   [OMNPreorderActionCellItem registerCellForTableView:_tableView];
 
-  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
-  _tableView.contentInset = insets;
-  _tableView.scrollIndicatorInsets = insets;
-  
   NSDictionary *views =
   @{
     @"tableView" : _tableView,

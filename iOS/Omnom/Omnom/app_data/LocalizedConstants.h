@@ -19,3 +19,6 @@
 #define kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_2GIS_LABEL_TEXT_1", @"Заказ принят\nи передан Роме")
 #define kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_2GIS_LABEL_TEXT_2", @"Спасибо!")
 
+
+#define kOMN_MY_TABLE_ORDERS_LABEL_TEXT NSLocalizedString(@"MY_TABLE_ORDERS_LABEL_TEXT", @"Блюда на вашем столе")
+#define kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT NSLocalizedString(@"WISH_RECOMMENDATIONS_LABEL_TEXT", @"Ранее вы заказывали")

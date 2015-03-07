@@ -10,6 +10,9 @@
 #import "OMNMenu.h"
 #import "OMNVisitor.h"
 
+@class OMNPreorderMediator;
+@class OMNMyOrderConfirmVC;
+
 @interface OMNRestaurantMediator : NSObject
 
 @property (nonatomic, weak, readonly) OMNRestaurantActionsVC *restaurantActionsVC;
@@ -17,7 +20,7 @@
 @property (nonatomic, strong, readonly) OMNVisitor *visitor;
 @property (nonatomic, strong) OMNMenu *menu;
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(__weak OMNRestaurantActionsVC *)restaurantActionsVC;
+- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC;
 
 - (long long)totalOrdersAmount;
 - (void)checkOrders;
@@ -29,5 +32,12 @@
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
 - (void)exitRestaurant;
 - (void)rescanTable;
+
+- (UIBarButtonItem *)exitRestaurantButton;
+- (UIButton *)userProfileButton;
+- (BOOL)showTableButton;
+- (BOOL)showPreorderButton;
+
+- (OMNPreorderMediator *)preorderMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC;
 
 @end

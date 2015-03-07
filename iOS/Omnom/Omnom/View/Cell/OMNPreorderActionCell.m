@@ -13,12 +13,7 @@
 #import "UIButton+omn_helper.h"
 #import "UIImage+omn_helper.h"
 
-@implementation OMNPreorderActionCell {
-  
-  UIButton *_clearButton;
-  UILabel *_refreshLabel;
-  
-}
+@implementation OMNPreorderActionCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -42,19 +37,19 @@
 
 - (void)orderTap {
   
-  [self.delegate preorderActionCellDidOrder:self];
+  [_item.delegate preorderActionCellDidOrder:self];
   
 }
 
 - (void)clearTap {
   
-  [self.delegate preorderActionCellDidClear:self];
+  [_item.delegate preorderActionCellDidClear:self];
   
 }
 
 - (void)refreshTap {
   
-  [self.delegate preorderActionCellDidRefresh:self];
+  [_item.delegate preorderActionCellDidRefresh:self];
   
 }
 
@@ -112,7 +107,8 @@
   
   [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[refreshLabel]|" options:kNilOptions metrics:metrics views:views]];
   [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[refreshButton]|" options:kNilOptions metrics:metrics views:views]];
-  [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[refreshLabel]-(>=0)-[refreshButton]|" options:kNilOptions metrics:metrics views:views]];
+  [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[refreshLabel]-(>=0)-[refreshButton]" options:kNilOptions metrics:metrics views:views]];
+  [refreshView addConstraint:[NSLayoutConstraint constraintWithItem:_refreshButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:refreshView attribute:NSLayoutAttributeRight multiplier:1.0f constant:-30.0f]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[refreshView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[clearButton]-(>=0)-[actionButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
@@ -125,4 +121,14 @@
   _refreshLabel.text = NSLocalizedString(@"PREORDER_REFRESH_LABEL_TITLE", @"Блюда на вашем столе");
   
 }
+
+- (void)setItem:(OMNPreorderActionCellItem *)item {
+  
+  _item = item;
+  _refreshLabel.text = item.actionText;
+  _clearButton.enabled = item.enabled;
+  _actionButton.enabled = item.enabled;
+  
+}
+
 @end

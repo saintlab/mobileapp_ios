@@ -7,11 +7,11 @@
 //
 
 #import "OMNRestaurantActionsVC.h"
-#import "OMNRestaurantMediator.h"
 #import "OMNNavigationController.h"
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNRestaurantActionsToolbar.h"
 #import <OMNStyler.h>
+#import "OMNRestaurantMediatorFactory.h"
 
 @implementation OMNRestaurantActionsVC {
   
@@ -24,7 +24,7 @@
   self = [super init];
   if (self) {
     
-    _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRestaurant:restaurant rootViewController:self];
+    _restaurantMediator = [OMNRestaurantMediatorFactory mediatorWithRestaurant:restaurant rootViewController:self];
     
   }
   return self;

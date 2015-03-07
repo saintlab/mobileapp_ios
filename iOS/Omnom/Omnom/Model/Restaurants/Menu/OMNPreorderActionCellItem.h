@@ -9,7 +9,23 @@
 #import <Foundation/Foundation.h>
 #import "OMNCellItemProtocol.h"
 
+@protocol OMNPreorderActionCellDelegate;
+@class OMNPreorderActionCell;
+
 @interface OMNPreorderActionCellItem : NSObject
 <OMNCellItemProtocol>
+
+@property (nonatomic, copy) NSString *actionText;
+@property (nonatomic, assign) BOOL enabled;
+@property (nonatomic, weak) id<OMNPreorderActionCellDelegate> delegate;
+
+@end
+
+
+@protocol OMNPreorderActionCellDelegate <NSObject>
+
+- (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell;
+- (void)preorderActionCellDidClear:(OMNPreorderActionCell *)preorderActionCell;
+- (void)preorderActionCellDidRefresh:(OMNPreorderActionCell *)preorderActionCell;
 
 @end

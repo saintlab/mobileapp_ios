@@ -7,21 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@protocol OMNPreorderActionCellDelegate;
+#import "OMNPreorderActionCellItem.h"
 
 @interface OMNPreorderActionCell : UITableViewCell
 
-@property (nonatomic, weak) id <OMNPreorderActionCellDelegate> delegate;
 @property (nonatomic, strong, readonly) UIButton *actionButton;
 @property (nonatomic, strong, readonly) UIButton *refreshButton;
+@property (nonatomic, strong, readonly) UIButton *clearButton;
+@property (nonatomic, strong, readonly) UILabel *refreshLabel;
+
+@property (nonatomic, strong) OMNPreorderActionCellItem *item;
 
 @end
 
-@protocol OMNPreorderActionCellDelegate <NSObject>
-
-- (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell;
-- (void)preorderActionCellDidClear:(OMNPreorderActionCell *)preorderActionCell;
-- (void)preorderActionCellDidRefresh:(OMNPreorderActionCell *)preorderActionCell;
-
-@end

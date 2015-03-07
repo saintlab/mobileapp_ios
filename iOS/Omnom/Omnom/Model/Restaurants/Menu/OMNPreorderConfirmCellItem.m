@@ -7,8 +7,8 @@
 //
 
 #import "OMNPreorderConfirmCellItem.h"
-#import "OMNPreorderConfirmCell.h"
 #import "OMNProductModiferAlertVC.h"
+#import "OMNPreorderConfirmCell.h"
 
 @implementation OMNPreorderConfirmCellItem {
   
@@ -52,7 +52,6 @@
   _calculationHeight = height;
   
   return height;
-
   
 }
 

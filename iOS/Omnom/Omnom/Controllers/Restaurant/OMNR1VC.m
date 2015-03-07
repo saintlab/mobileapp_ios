@@ -149,72 +149,51 @@
 
 - (void)updateNavigationButtons {
   
-  self.navigationItem.leftBarButtonItem = nil;
-  self.navigationItem.rightBarButtonItem = nil;
+  OMNVisitor *visitor = _restaurantMediator.visitor;
+  self.navigationItem.leftBarButtonItem = [_restaurantMediator exitRestaurantButton];
+  UIButton *userButton = [_restaurantMediator userProfileButton];
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:userButton];
 
-  OMNRestaurant *restaurant = _restaurantMediator.restaurant;
-  if (restaurant.is_demo) {
+  if (!_showTableButtonAnimation &&
+      _restaurantMediator.showTableButton) {
     
-    OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
-    [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
-    [cancelButton addTarget:_restaurantMediator action:@selector(exitRestaurant) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
+    _showTableButtonAnimation = YES;
+    _tableButton = [OMNTableButton buttonWithColor:visitor.restaurant.decoration.antagonist_color];
+    [_tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
+    [_tableButton setText:_restaurantMediator.visitor.tableName];
+    _tableButton.center = userButton.center;
+    [userButton.superview addSubview:_tableButton];
+    CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;
+    _tableButton.transform = CGAffineTransformMakeTranslation(centerX - _tableButton.center.x, 0.0f);
+    _tableButton.alpha = 0.0f;
     
-  }
-  else {
-    
-    UIColor *color = restaurant.decoration.antagonist_color;
-    UIButton *userButton = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:_restaurantMediator action:@selector(showUserProfile)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:userButton];
-
-    if (kRestaurantModeLunch != restaurant.entrance_mode) {
+    [UIView animateWithDuration:0.8 delay:1.0 options:kNilOptions animations:^{
       
-      self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"back_button"] color:color target:_restaurantMediator action:@selector(exitRestaurant)];
-
-    }
-    
-    if (!_showTableButtonAnimation &&
-        _restaurantMediator.visitor.showTableButton) {
-
-      _showTableButtonAnimation = YES;
-      _tableButton = [OMNTableButton buttonWithColor:color];
-      [_tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
-      [_tableButton setText:_restaurantMediator.visitor.tableName];
-      _tableButton.center = userButton.center;
-      [userButton.superview addSubview:_tableButton];
-      CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;
-      _tableButton.transform = CGAffineTransformMakeTranslation(centerX - _tableButton.center.x, 0.0f);
-      _tableButton.alpha = 0.0f;
+      _tableButton.alpha = 1.0f;
       
-      [UIView animateWithDuration:0.8 delay:1.0 options:kNilOptions animations:^{
+    } completion:^(BOOL finished) {
+      
+      [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         
-        _tableButton.alpha = 1.0f;
+        _tableButton.transform = CGAffineTransformIdentity;
+        userButton.alpha = 0.0f;
         
-      } completion:^(BOOL finished) {
+      } completion:^(BOOL finished1) {
         
-        [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [UIView animateWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
           
-          _tableButton.transform = CGAffineTransformIdentity;
-          userButton.alpha = 0.0f;
+          _tableButton.alpha = 0.0f;
+          userButton.alpha = 1.0f;
           
-        } completion:^(BOOL finished1) {
+        } completion:^(BOOL finished2) {
           
-          [UIView animateWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-            
-            _tableButton.alpha = 0.0f;
-            userButton.alpha = 1.0f;
-            
-          } completion:^(BOOL finished2) {
-            
-            [_tableButton removeFromSuperview], _tableButton = nil;
-            
-          }];
+          [_tableButton removeFromSuperview], _tableButton = nil;
           
         }];
         
       }];
       
-    }
+    }];
     
   }
   

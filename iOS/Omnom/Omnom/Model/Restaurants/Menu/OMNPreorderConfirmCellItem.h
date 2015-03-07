@@ -10,12 +10,23 @@
 #import "OMNCellItemProtocol.h"
 #import "OMNMenuProduct.h"
 
+@class OMNPreorderConfirmCell;
+@protocol OMNPreorderConfirmCellDelegate;
+
 @interface OMNPreorderConfirmCellItem : NSObject
 <OMNCellItemProtocol>
 
 @property (nonatomic, strong, readonly) OMNMenuProduct *menuProduct;
+@property (nonatomic, weak) id<OMNPreorderConfirmCellDelegate> delegate;
+@property (nonatomic, assign) BOOL hidePrice;
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct;
 - (void)editMenuProductFromController:(UIViewController *)viewController withCompletion:(dispatch_block_t)completionBlock;
+
+@end
+
+@protocol OMNPreorderConfirmCellDelegate <NSObject>
+
+- (void)preorderConfirmCellDidEdit:(OMNPreorderConfirmCell *)preorderConfirmCell;
 
 @end

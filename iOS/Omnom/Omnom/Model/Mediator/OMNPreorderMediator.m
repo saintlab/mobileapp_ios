@@ -7,68 +7,62 @@
 //
 
 #import "OMNPreorderMediator.h"
-#import "OMNModalWebVC.h"
 #import "OMNPreorderDoneVC.h"
-
-@interface OMNPreorderMediator ()
-
-@property (nonatomic, weak) OMNMyOrderConfirmVC *rootVC;
-
-@end
+#import "OMNOrderToolbarButton.h"
 
 @implementation OMNPreorderMediator {
   
-  OMNRestaurant *_restaurant;
+  OMNRestaurantMediator *_restaurantMediator;
   
 }
 
-- (instancetype)initWithRootVC:(OMNMyOrderConfirmVC *)myOrderConfirmVC restaurant:(OMNRestaurant *)restaurant {
+- (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator rootVC:(OMNMyOrderConfirmVC *)rootVC {
   self = [super init];
   if (self) {
     
-    self.rootVC = myOrderConfirmVC;
-    _restaurant = restaurant;
+    _rootVC = rootVC;
+    _restaurantMediator = restaurantMediator;
     
   }
   return self;
 }
 
-- (void)completeOrdresCall {
+- (void)processWish:(OMNWish *)wish {
   
-  OMNModalWebVC *modalWebVC = [[OMNModalWebVC alloc] init];
-  modalWebVC.url = _restaurant.complete_ordres_url;
-  @weakify(self)
-  modalWebVC.didCloseBlock = ^{
+  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:self.rootVC.didFinishBlock];
+  [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
+
+}
+
+- (NSString *)refreshOrdersTitle {
+  return kOMN_MY_TABLE_ORDERS_LABEL_TEXT;
+}
+
+- (UIButton *)bottomButton {
+  
+  UIButton *bottomButton = nil;
+  if (_restaurantMediator.restaurant.settings.has_table_order) {
     
-    @strongify(self)
-    [self.rootVC dismissViewControllerAnimated:YES completion:nil];
+    bottomButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(requestTableOrders)];
     
-  };
-  [self.rootVC presentViewController:[[UINavigationController alloc] initWithRootViewController:modalWebVC] animated:YES completion:nil];
+  }
+  return bottomButton;
   
 }
 
-- (void)processWish:(OMNWish *)wish {
+- (void)requestTableOrders {
   
-#warning 123
-  if (kRestaurantModeBar == _restaurant.entrance_mode) {
-    
-    self.didFinishBlock();
-    
-  }
-  else if (kRestaurantModeLunch == _restaurant.entrance_mode) {
-    
-    OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 didCloseBlock:self.didFinishBlock];
-    [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
-    
-  }
-  else {
-    
-    OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:self.didFinishBlock];
-    [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
-    
-  }
+  [_restaurantMediator requestTableOrders];
+  [self closeTap];
+  
+}
 
+- (void)closeTap {
+  
+  if (_rootVC.didFinishBlock) {
+    _rootVC.didFinishBlock();
+  }
+  
 }
 
 @end

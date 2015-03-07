@@ -20,6 +20,7 @@
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   OMNPreorderActionCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNPreorderActionCell class])];
+  cell.item = self;
   return cell;
   
 }

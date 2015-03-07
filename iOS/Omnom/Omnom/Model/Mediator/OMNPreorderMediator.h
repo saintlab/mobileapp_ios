@@ -10,14 +10,18 @@
 #import "OMNWish.h"
 #import "OMNMyOrderConfirmVC.h"
 #import "OMNRestaurant.h"
+#import "OMNRestaurantMediator.h"
 
 @interface OMNPreorderMediator : NSObject
 
-@property (nonatomic, copy) dispatch_block_t didFinishBlock;
+@property (nonatomic, weak, readonly) OMNMyOrderConfirmVC *rootVC;
+@property (nonatomic, strong, readonly) OMNRestaurantMediator *restaurantMediator;
 
-- (instancetype)initWithRootVC:(OMNMyOrderConfirmVC *)myOrderConfirmVC restaurant:(OMNRestaurant *)restaurant;
+- (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator rootVC:(OMNMyOrderConfirmVC *)rootVC;
 
 - (void)processWish:(OMNWish *)wish;
-- (void)completeOrdresCall;
+
+- (NSString *)refreshOrdersTitle;
+- (UIButton *)bottomButton;
 
 @end

@@ -17,12 +17,6 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNOrderToolbarButton.h"
 
-@interface OMNRestaurantMediator (omn_toolbar)
-
-- (BOOL)showPreorderButton;
-
-@end
-
 @implementation OMNRestaurantActionsToolbar {
   
   NSString *_restaurantWaiterCallObserverId;
@@ -181,21 +175,4 @@
 
 @end
 
-@implementation OMNRestaurantMediator (omn_toolbar)
-
-- (BOOL)showPreorderButton {
-  
-  const OMNRestaurantMode entrance_mode = self.restaurant.entrance_mode;
-  BOOL showPreorderButton =
-  (
-   self.restaurant.settings.has_menu &&
-   (self.menu.hasPreorderedItems ||
-    kRestaurantModeLunch == entrance_mode ||
-    kRestaurantModeBar == entrance_mode)
-   );
-  return showPreorderButton;
-  
-}
-
-@end
 

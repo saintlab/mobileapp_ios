@@ -74,18 +74,6 @@
   
 }
 
-- (BOOL)showTableButton {
-  
-  const OMNRestaurantMode entrance_mode = self.restaurant.entrance_mode;
-  return
-  (
-   self.table &&
-   kRestaurantModeLunch != entrance_mode &&
-   kRestaurantModeBar != entrance_mode
-   );
-  
-}
-
 - (BOOL)hasOrders {
   
   @synchronized(self) {
@@ -372,6 +360,5 @@
   }];
   
 }
-
 
 @end
