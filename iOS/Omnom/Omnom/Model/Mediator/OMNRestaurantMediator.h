@@ -23,9 +23,9 @@
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC;
 
 - (long long)totalOrdersAmount;
-- (void)checkOrders;
+- (void)checkStartConditions;
 - (void)showUserProfile;
-- (void)myOrderTap;
+- (void)showPreorders;
 - (void)waiterCall;
 - (void)waiterCallStop;
 - (void)requestTableOrders;

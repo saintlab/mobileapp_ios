@@ -24,10 +24,9 @@
 - (instancetype)initWithBaseURL:(NSURL *)url {
   self = [super initWithBaseURL:url];
   if (self) {
+
     self.responseSerializer = [AFJSONResponseSerializer serializer];
-    
     self.requestSerializer = [AFJSONRequestSerializer serializer];
-    self.requestSerializer.timeoutInterval = 10.0;
     [self.requestSerializer omn_addCustomHeaders];
     
   }

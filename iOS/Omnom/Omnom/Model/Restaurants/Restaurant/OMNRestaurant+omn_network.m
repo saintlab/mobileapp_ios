@@ -323,6 +323,7 @@
   }
 
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/menu", self.id];
+  @weakify(self)
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject omn_isSuccessResponse]) {
@@ -341,7 +342,8 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MENU" jsonRequest:path responseOperation:operation];
-    completion(nil);
+    @strongify(self)
+    [self getMenuWithCompletion:completion];
     
   }];
   

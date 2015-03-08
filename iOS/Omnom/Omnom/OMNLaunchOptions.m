@@ -24,6 +24,7 @@
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
 #if DEBUG
+
 //    staging
 //    _customConfigName = @"config_staging";
 //    _qr = @"http://omnom.menu/zr9b"; //saintlab-iiko-dev
@@ -57,6 +58,7 @@
   if (self) {
     
     _showTableOrders = [info[@"show_table_orders"] boolValue];
+    _showRecommendations = [info[@"show_recommendations"] boolValue];
     if (info[@"hash"]) {
       _hashString = info[@"hash"];
     }

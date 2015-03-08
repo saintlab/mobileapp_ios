@@ -48,7 +48,7 @@
     [self updateTitle];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuProductDidChange:) name:OMNMenuProductDidChangeNotification object:nil];
     
-    [self addTarget:_restaurantMediator action:@selector(myOrderTap) forControlEvents:UIControlEventTouchUpInside];
+    [self addTarget:_restaurantMediator action:@selector(showPreorders) forControlEvents:UIControlEventTouchUpInside];
     
   }
   return self;

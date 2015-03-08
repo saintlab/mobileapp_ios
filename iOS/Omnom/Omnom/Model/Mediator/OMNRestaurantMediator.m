@@ -61,7 +61,7 @@ OMNOrderCalculationVCDelegate>
   return self;
 }
 
-- (void)checkOrders {
+- (void)checkStartConditions {
   
   if (_shouldShowOrdersOnLaunch &&
       _visitor.hasOrders) {
@@ -149,7 +149,7 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (void)myOrderTap {
+- (void)showPreorders {
   
   OMNMyOrderConfirmVC *preorderConfirmVC = [[OMNMyOrderConfirmVC alloc] initWithRestaurantMediator:self];
   @weakify(self)

@@ -29,7 +29,6 @@
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFJSONRequestSerializer serializer];
     [self.requestSerializer omn_addCustomHeaders];
-    self.requestSerializer.timeoutInterval = 10.0;
 
   }
   return self;

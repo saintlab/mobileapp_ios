@@ -15,6 +15,7 @@
 @property (nonatomic, copy, readonly) NSString *qr;
 @property (nonatomic, copy, readonly) NSString *hashString;
 @property (nonatomic, assign) BOOL showTableOrders;
+@property (nonatomic, assign) BOOL showRecommendations;
 @property (nonatomic, strong, readonly) NSArray *restaurants;
 @property (nonatomic, assign, readonly) BOOL applicationWasOpenedByBeacon;
 

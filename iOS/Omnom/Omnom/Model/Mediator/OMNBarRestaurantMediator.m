@@ -8,6 +8,7 @@
 
 #import "OMNBarRestaurantMediator.h"
 #import "OMNBarPreorderMediator.h"
+#import "OMNLaunchHandler.h"
 
 @implementation OMNBarRestaurantMediator
 
@@ -21,6 +22,17 @@
 
 - (OMNPreorderMediator *)preorderMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
   return [[OMNBarPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+}
+
+- (void)checkStartConditions {
+  
+  if ([OMNLaunchHandler sharedHandler].launchOptions.showRecommendations) {
+    
+    [OMNLaunchHandler sharedHandler].launchOptions.showRecommendations = NO;
+    [self showPreorders];
+    
+  }
+  
 }
 
 @end

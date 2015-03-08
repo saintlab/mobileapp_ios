@@ -33,6 +33,10 @@
   [self setValue:[[UIDevice currentDevice] systemVersion] forHTTPHeaderField:@"x-mobile-os-version"];
   [self setValue:[[UIDevice currentDevice] modelName] forHTTPHeaderField:@"x-mobile-model"];
   
+  [self willChangeValueForKey:NSStringFromSelector(@selector(timeoutInterval))];
+  self.timeoutInterval = 10.0;
+  [self didChangeValueForKey:NSStringFromSelector(@selector(timeoutInterval))];
+  
 }
 
 @end
