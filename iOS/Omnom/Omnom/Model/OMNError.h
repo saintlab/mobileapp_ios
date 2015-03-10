@@ -37,6 +37,7 @@ extern NSString * const OMNUserErrorDomain;
 
 @interface OMNError : NSError
 
++ (OMNError *)billErrorFromResponse:(id)response;
 + (OMNError *)omnnomErrorFromError:(NSError *)error;
 + (OMNError *)omnomErrorFromCode:(NSInteger)code;
 + (OMNError *)userErrorFromCode:(OMNUserErrorCode)code;

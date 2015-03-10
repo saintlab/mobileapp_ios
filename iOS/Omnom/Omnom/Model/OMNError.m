@@ -115,6 +115,38 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
   
 }
 
++ (OMNError *)billErrorFromResponse:(id)response {
+  
+  if (![response isKindOfClass:[NSDictionary class]]) {
+    return [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun];
+  }
+  
+  OMNError *error = nil;
+  NSString *status = response[@"status"];
+  if ([status isEqualToString:@"new"]) {
+    //no error
+  }
+  else if ([status isEqualToString:@"paid"] ||
+      [status isEqualToString:@"order_closed"]) {
+    
+    error = [OMNError omnomErrorFromCode:kOMNErrorOrderClosed];
+    
+  }
+  else if ([status isEqualToString:@"restaurant_not_available"]) {
+    
+    error = [OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavailable];
+    
+  }
+  else {
+    
+    error = [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun];
+    
+  }
+
+  return error;
+  
+}
+
 - (UIImage *)circleImage {
   
   UIImage *circleImage = nil;

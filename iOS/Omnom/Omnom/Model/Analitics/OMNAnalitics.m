@@ -328,11 +328,12 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 - (NSMutableDictionary *)superProperties {
   
   static NSDateFormatter *dateFormatter = nil;
-  if (nil == dateFormatter) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"ru"]];
     [dateFormatter setDateFormat:@"{yyyy-MM-dd'T'HH:mm:ssZZZZZ}"];
-  }
+  });
   
   NSDate *actualDate = [NSDate dateWithTimeIntervalSinceNow:-_serverTimeDelta];
   
@@ -353,11 +354,11 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   NSMutableDictionary *properties = [self superProperties];
   [properties addEntriesFromDictionary:
    @{
-     @"jsonRequest" : (jsonRequest) ? (jsonRequest) : (@""),
+     @"jsonRequest" : (jsonRequest) ?: (@""),
      @"error" : (responseOperation.error.localizedDescription) ? (responseOperation.error.localizedDescription) : (@""),
      @"errorCode" : @(responseOperation.error.code),
-     @"requestID" : (requestID) ? (requestID) : (@"unknown"),
-     @"responseString" : (responseOperation.responseString) ? (responseOperation.responseString) : (@""),
+     @"requestID" : (requestID) ?: (@"unknown"),
+     @"responseString" : (responseOperation.responseString) ?: (@""),
      }];
   
   [_mixpanelDebug track:eventName properties:properties];

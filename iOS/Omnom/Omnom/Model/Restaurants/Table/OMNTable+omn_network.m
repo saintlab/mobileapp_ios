@@ -9,7 +9,7 @@
 #import "OMNTable+omn_network.h"
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
-#import "OMNOrder+network.h"
+#import "NSObject+omn_order.h"
 
 @implementation OMNTable (omn_network)
 
@@ -67,22 +67,17 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant_id, self.id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
-    if ([response isKindOfClass:[NSArray class]]) {
+    OMNError *error = nil;
+    NSArray *orders = [response omn_decodeOrdersWithError:&error];
+    if (error) {
       
-      NSArray *ordersData = response;
-      NSArray *orders = [ordersData omn_decodeOrdersWithError:nil];
-      if (0 == orders.count) {
-        
-        [[OMNAnalitics analitics] logDebugEvent:@"NO_ORDERS" jsonRequest:path responseOperation:operation];
-        
-      }
-      ordersBlock(orders);
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
+      errorBlock(error);
       
     }
     else {
       
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
-      errorBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+      ordersBlock(orders);
       
     }
     

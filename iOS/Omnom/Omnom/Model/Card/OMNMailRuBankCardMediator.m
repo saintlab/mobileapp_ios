@@ -10,7 +10,6 @@
 #import "OMNAddBankCardVC.h"
 #import "OMNPaymentAlertVC.h"
 #import "OMNOperationManager.h"
-#import "OMNOrder+omn_mailru.h"
 #import "OMNMailRUCardConfirmVC.h"
 #import "OMNAnalitics.h"
 #import <OMNMailRuAcquiring.h>

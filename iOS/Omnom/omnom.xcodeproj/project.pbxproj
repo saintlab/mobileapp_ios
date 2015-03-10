@@ -52,8 +52,6 @@
 		9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE1192F365B0053F3A4 /* NSString+jquery.m */; };
 		9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */; };
 		9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
-		931B2DF219BC710C0071883C /* OMNOrder+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF119BC710C0071883C /* OMNOrder+network.m */; };
-		931B2DF319BC710C0071883C /* OMNOrder+network.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF119BC710C0071883C /* OMNOrder+network.m */; };
 		931B2DF619BC83910071883C /* OMNOrder+tipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF519BC83910071883C /* OMNOrder+tipButton.m */; };
 		931B2DF719BC83910071883C /* OMNOrder+tipButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 931B2DF519BC83910071883C /* OMNOrder+tipButton.m */; };
 		931BD3881941C04100F77AA7 /* OMNCalcaulcationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */; };
@@ -149,6 +147,8 @@
 		933A9F101A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9F0E1A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.m */; };
 		933AB0D619C1D4D8004D8F55 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 933AB0D919C1D4D8004D8F55 /* Localizable.strings */; };
 		933AB0D719C1D4D8004D8F55 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 933AB0D919C1D4D8004D8F55 /* Localizable.strings */; };
+		933C93CA1AAF0715000BA7D6 /* NSObject+omn_order.m in Sources */ = {isa = PBXBuildFile; fileRef = 933C93C91AAF0715000BA7D6 /* NSObject+omn_order.m */; };
+		933C93CB1AAF0715000BA7D6 /* NSObject+omn_order.m in Sources */ = {isa = PBXBuildFile; fileRef = 933C93C91AAF0715000BA7D6 /* NSObject+omn_order.m */; };
 		933D48E919E67AFD004E591C /* UIBarButtonItem+omn_custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D48E819E67AFD004E591C /* UIBarButtonItem+omn_custom.m */; };
 		933D48EA19E67AFD004E591C /* UIBarButtonItem+omn_custom.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D48E819E67AFD004E591C /* UIBarButtonItem+omn_custom.m */; };
 		933D48ED19E7A09E004E591C /* OMNGuest.m in Sources */ = {isa = PBXBuildFile; fileRef = 933D48EC19E7A09E004E591C /* OMNGuest.m */; };
@@ -431,8 +431,6 @@
 		93B368A419A4D24300B6E6CB /* OMNFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368A319A4D24300B6E6CB /* OMNFeedItem.m */; };
 		93B368A519A4D24300B6E6CB /* OMNFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368A319A4D24300B6E6CB /* OMNFeedItem.m */; };
 		93B368A719A5BB0E00B6E6CB /* OMNDemoStandTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368A619A5BB0E00B6E6CB /* OMNDemoStandTests.m */; };
-		93B368B219A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */; };
-		93B368B319A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */; };
 		93B368B519A708C600B6E6CB /* OMNDemoStandWaiterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B368B419A708C600B6E6CB /* OMNDemoStandWaiterTests.m */; };
 		93B65E611A6941510061F1B1 /* OMNChangeTableAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */; };
 		93B65E621A6941510061F1B1 /* OMNChangeTableAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */; };
@@ -694,8 +692,6 @@
 		9319FDE3192F365B0053F3A4 /* NSURL+OMNQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+OMNQuery.m"; sourceTree = "<group>"; };
 		9319FDE6192F36910053F3A4 /* UIView+frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frame.h"; sourceTree = "<group>"; };
 		9319FDE7192F36910053F3A4 /* UIView+frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frame.m"; sourceTree = "<group>"; };
-		931B2DF019BC710C0071883C /* OMNOrder+network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+network.h"; sourceTree = "<group>"; };
-		931B2DF119BC710C0071883C /* OMNOrder+network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+network.m"; sourceTree = "<group>"; };
 		931B2DF419BC83910071883C /* OMNOrder+tipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+tipButton.h"; sourceTree = "<group>"; };
 		931B2DF519BC83910071883C /* OMNOrder+tipButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+tipButton.m"; sourceTree = "<group>"; };
 		931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCalcaulcationTests.m; sourceTree = "<group>"; };
@@ -787,6 +783,8 @@
 		933A9EBD1A517D8A001C0909 /* OMNRestaurantManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantManager.m; sourceTree = "<group>"; };
 		933A9F0D1A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPResponseSerializer+omn_headers.h"; sourceTree = "<group>"; };
 		933A9F0E1A5293FC001C0909 /* AFHTTPResponseSerializer+omn_headers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPResponseSerializer+omn_headers.m"; sourceTree = "<group>"; };
+		933C93C81AAF0715000BA7D6 /* NSObject+omn_order.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+omn_order.h"; sourceTree = "<group>"; };
+		933C93C91AAF0715000BA7D6 /* NSObject+omn_order.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+omn_order.m"; sourceTree = "<group>"; };
 		933D48E619E6445C004E591C /* OMNInteractiveTransitioningProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OMNInteractiveTransitioningProtocol.h; sourceTree = "<group>"; };
 		933D48E719E67AFD004E591C /* UIBarButtonItem+omn_custom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+omn_custom.h"; sourceTree = "<group>"; };
 		933D48E819E67AFD004E591C /* UIBarButtonItem+omn_custom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+omn_custom.m"; sourceTree = "<group>"; };
@@ -1068,8 +1066,6 @@
 		93B368A219A4D24300B6E6CB /* OMNFeedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNFeedItem.h; sourceTree = "<group>"; };
 		93B368A319A4D24300B6E6CB /* OMNFeedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNFeedItem.m; sourceTree = "<group>"; };
 		93B368A619A5BB0E00B6E6CB /* OMNDemoStandTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoStandTests.m; sourceTree = "<group>"; };
-		93B368B019A7030900B6E6CB /* OMNOrder+omn_mailru.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+omn_mailru.h"; sourceTree = "<group>"; };
-		93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+omn_mailru.m"; sourceTree = "<group>"; };
 		93B368B419A708C600B6E6CB /* OMNDemoStandWaiterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoStandWaiterTests.m; sourceTree = "<group>"; };
 		93B65E5F1A6941510061F1B1 /* OMNChangeTableAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangeTableAlertVC.h; sourceTree = "<group>"; };
 		93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangeTableAlertVC.m; sourceTree = "<group>"; };
@@ -2152,14 +2148,12 @@
 				934FC73019D05553008AC4B0 /* Components */,
 				93B368A219A4D24300B6E6CB /* OMNFeedItem.h */,
 				93B368A319A4D24300B6E6CB /* OMNFeedItem.m */,
-				93B368B019A7030900B6E6CB /* OMNOrder+omn_mailru.h */,
-				93B368B119A7030900B6E6CB /* OMNOrder+omn_mailru.m */,
-				931B2DF019BC710C0071883C /* OMNOrder+network.h */,
-				931B2DF119BC710C0071883C /* OMNOrder+network.m */,
 				931B2DF419BC83910071883C /* OMNOrder+tipButton.h */,
 				931B2DF519BC83910071883C /* OMNOrder+tipButton.m */,
 				933D48EB19E7A09E004E591C /* OMNGuest.h */,
 				933D48EC19E7A09E004E591C /* OMNGuest.m */,
+				933C93C81AAF0715000BA7D6 /* NSObject+omn_order.h */,
+				933C93C91AAF0715000BA7D6 /* NSObject+omn_order.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -3098,7 +3092,6 @@
 				93E299A2197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */,
 				9319FDE5192F365B0053F3A4 /* NSURL+OMNQuery.m in Sources */,
 				9319FD64192F33B90053F3A4 /* OMNPaymentFooterView.m in Sources */,
-				93B368B219A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
 				930FF3781A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m in Sources */,
 				93175DC419C6BEFE005EE4C6 /* TQStarRatingView.m in Sources */,
 				93245DB01A1C5FB70065D4EC /* OMNBankCardMediator.m in Sources */,
@@ -3121,13 +3114,13 @@
 				930555111935DB7700E6F4EC /* UINavigationController+omn_replace.m in Sources */,
 				9317C06719DE52000071E42B /* NSURL+omn_query.m in Sources */,
 				938E8F53192F3A200088EF38 /* OMNOperationManager.m in Sources */,
+				933C93CA1AAF0715000BA7D6 /* NSObject+omn_order.m in Sources */,
 				93BA9BCD1A8C8E6400717FF9 /* OMNMenuToRestaurantTransition.m in Sources */,
 				933A2E8A19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */,
 				930D8BAB1965C22F002DFDC3 /* OMNCustomTransition.m in Sources */,
 				93C2F8EA1A3088E3003EF669 /* OMNUserInfoView.m in Sources */,
 				936BAD9A19A797030029873B /* OMNBorderedButton.m in Sources */,
 				9345AFC9199B7E1A00328F73 /* OMNRestaurantInfoItem.m in Sources */,
-				931B2DF219BC710C0071883C /* OMNOrder+network.m in Sources */,
 				935FF1691A6D4092004B69A6 /* OMNMenuHeaderItemCell.m in Sources */,
 				93E2996F197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,
 				9325BA491A1DA15A003557BD /* OMNPaymentLoadingVC.m in Sources */,
@@ -3455,11 +3448,11 @@
 				937C3E761A2859C9006525A9 /* OMNUser+network.m in Sources */,
 				935A1E2F1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */,
 				937A37831981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
+				933C93CB1AAF0715000BA7D6 /* NSObject+omn_order.m in Sources */,
 				93DB26C11A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m in Sources */,
 				93E6ED981A84838100FB890C /* OMNTableButton.m in Sources */,
 				933A9EAB1A4C0851001C0909 /* OMNRestaurantCardVC.m in Sources */,
 				937CDC9B1AA7041A000856AB /* OMNMailAcquiringTransaction.m in Sources */,
-				93B368B319A7030900B6E6CB /* OMNOrder+omn_mailru.m in Sources */,
 				937822A51963FE3000CE6661 /* OMNTransitionFromOrdersToOrder.m in Sources */,
 				9345AFCA199B7E1A00328F73 /* OMNRestaurantInfoItem.m in Sources */,
 				93E26EC21AA973230034A7A3 /* OMNPreorderMediator.m in Sources */,
@@ -3512,7 +3505,6 @@
 				939F992119752BE90051822E /* OMNLoginVC.m in Sources */,
 				93CE47891A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m in Sources */,
 				937CDCA01AA75D69000856AB /* OMNMailRuPaymentFactory.m in Sources */,
-				931B2DF319BC710C0071883C /* OMNOrder+network.m in Sources */,
 				9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */,
 				937CDC971AA6F76B000856AB /* OMNAcquiringTransaction.m in Sources */,
 				939F994A197544820051822E /* OMNUserInfoItem.m in Sources */,
@@ -3724,7 +3716,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"AD_HOC_2GIS=1",
+					"AD_HOC_LUNCH_2GIS=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

@@ -10,7 +10,6 @@
 #import <Kiwi.h>
 #import "OMNAuthorization.h"
 #import <OMNMailRuAcquiring.h>
-#import "OMNOrder+omn_mailru.h"
 #import "OMNBankCard.h"
 #import "OMNUser.h"
 #import "OMNUser+network.h"

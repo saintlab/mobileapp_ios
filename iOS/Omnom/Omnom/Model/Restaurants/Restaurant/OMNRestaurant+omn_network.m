@@ -9,7 +9,6 @@
 #import "OMNRestaurant+omn_network.h"
 #import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
-#import "OMNOrder+network.h"
 #import "OMNTable+omn_network.h"
 #import <BlocksKit.h>
 

@@ -16,8 +16,8 @@
   
 #ifdef APP_STORE
   [self setValue:@"appstore" forHTTPHeaderField:@"x-mobile-configuration"];
-#elif defined (AD_HOC_2GIS)
-  [self setValue:@"2gis" forHTTPHeaderField:@"x-mobile-configuration"];
+#elif defined (AD_HOC_LUNCH_2GIS)
+  [self setValue:@"lunch2gis" forHTTPHeaderField:@"x-mobile-configuration"];
 #elif defined (AD_HOC)
   [self setValue:@"ad-hoc" forHTTPHeaderField:@"x-mobile-configuration"];
 #else

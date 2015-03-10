@@ -85,7 +85,7 @@
     } mutableCopy];
 
   if (self.order_id.length) {
-    parameters[@""] = self.order_id;
+    parameters[@"restaurateur_order_id"] = self.order_id;
   }
   
   if (self.wish_id.length) {
@@ -95,42 +95,24 @@
   @weakify(self)
   [[OMNOperationManager sharedManager] POST:@"/bill" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    if ([responseObject isKindOfClass:[NSDictionary class]]) {
+    OMNError *error = [OMNError billErrorFromResponse:responseObject];
+    if (error) {
       
-      NSString *status = responseObject[@"status"];
-      if ([status isEqualToString:@"new"]) {
-        
-        @strongify(self)
-        OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
-        [self didCreateBill:bill completion:completionBlock];
-        
-      }
-      else if ([status isEqualToString:@"paid"] ||
-               [status isEqualToString:@"order_closed"]) {
-        
-        completionBlock(nil, [OMNError omnomErrorFromCode:kOMNErrorOrderClosed]);
-        
-      }
-      else if ([status isEqualToString:@"restaurant_not_available"]) {
-        
-        completionBlock(nil, [OMNError omnomErrorFromCode:kOMNErrorRestaurantUnavailable]);
-        
-      }
-      else {
-        
-        completionBlock(nil, [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
-        
-      }
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" jsonRequest:parameters responseOperation:operation];
+      completionBlock(nil, error);
       
     }
     else {
       
-      completionBlock(nil, [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+      @strongify(self)
+      OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
+      [self didCreateBill:bill completion:completionBlock];
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" jsonRequest:parameters responseOperation:operation];
     completionBlock(nil, [error omn_internetError]);
     
   }];

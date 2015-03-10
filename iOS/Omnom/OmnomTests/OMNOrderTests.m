@@ -8,9 +8,9 @@
 
 #import <Kiwi.h>
 #import "OMNAuthorization.h"
-#import "OMNOrder+network.h"
 #import "OMNTable+omn_network.h"
 #import "NSString+omn_json.h"
+#import "NSObject+omn_order.h"
 
 SPEC_BEGIN(OMNOrderTests)
 
