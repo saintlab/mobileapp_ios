@@ -9,6 +9,7 @@
 #import "OMNSplitSelectionVC.h"
 #import <OMNStyler.h>
 #import "OMNOrderAlertManager.h"
+#import "OMNUtils.h"
 
 @interface OMNSplitSelectionVC ()
 <UIPickerViewDataSource,
@@ -101,15 +102,12 @@ UIPickerViewDelegate>
 
 #pragma mark - UIPickerView
 
-- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
-
-  NSDictionary *attributes =
-  @{
-    NSFontAttributeName : FuturaLSFOmnomLERegular(22.0f),
-    };
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
   
-  NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", (long)row + 1] attributes:attributes];
-  return attributedTitle;
+  NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", (long)row + 1] attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(22.0f) textColor:[UIColor blackColor] textAlignment:NSTextAlignmentCenter]];
+  UILabel *label = [[UILabel alloc] init];
+  label.attributedText = attributedTitle;
+  return label;
   
 }
 
@@ -122,9 +120,7 @@ UIPickerViewDelegate>
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-  
   self.numberOfGuests = row + 1;
-  
 }
 
 @end
