@@ -26,3 +26,9 @@
 
 #define kOMN_MY_TABLE_ORDERS_LABEL_TEXT NSLocalizedString(@"MY_TABLE_ORDERS_LABEL_TEXT", @"Блюда на вашем столе")
 #define kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT NSLocalizedString(@"WISH_RECOMMENDATIONS_LABEL_TEXT", @"Ранее вы заказывали")
+
+//orders
+#define kOMN_NO_ORDERS_ON_TABLE_TEXT NSLocalizedString(@"NO_ORDERS_ON_TABLE_TEXT", @"На вашем столике нет счетов");
+#define kOMN_ORDERS_ON_TABLE_TEXT1 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT1{счёта} %ld", @"На вашем столике {orders_count} счёта")
+#define kOMN_ORDERS_ON_TABLE_TEXT2 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT2{счёт} %ld", @"На вашем столике {orders_count} счёт")
+#define kOMN_ORDERS_ON_TABLE_TEXT3 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT3{счетов} %ld", @"На вашем столике {orders_count} счетов")

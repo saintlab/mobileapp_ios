@@ -142,25 +142,47 @@ UICollectionViewDelegate>
   
 }
 
+- (NSString *)stringFromOrdersCount:(NSInteger)ordersCount {
+  
+  NSInteger decimal = ordersCount/10;
+  NSInteger left = ordersCount%10;
+  
+  NSString *string = @"";
+  if (0 == ordersCount) {
+    
+    string = kOMN_NO_ORDERS_ON_TABLE_TEXT;
+    
+  }
+  //  для кол-ва счетов: 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25, 26, 27, 28, 29, 30, 35, 36 и т.д.
+  else if (1 == decimal ||
+           0 == left ||
+           left >= 5) {
+    
+    string = [NSString stringWithFormat:kOMN_ORDERS_ON_TABLE_TEXT3, ordersCount];
+    
+  }
+  //  для кол-ва счетов: 1, 21, 31, и т.д.
+  else if (1 == left) {
+    
+    string = [NSString stringWithFormat:kOMN_ORDERS_ON_TABLE_TEXT2, ordersCount];
+    
+  }
+  //  для кол-ва счетов: 2,3,4,22,23,24,32,33,34 и т.д.
+  else if (left < 5) {
+    
+    string = [NSString stringWithFormat:kOMN_ORDERS_ON_TABLE_TEXT1, ordersCount];
+    
+  }
+  
+  return string;
+  
+}
+
+//https://github.com/saintlab/mobileapp_ios/issues/375#issuecomment-78023185
 - (void)updateOrders {
   
   NSInteger ordersCount = _visitor.orders.count;
-  if (0 == ordersCount) {
-    
-    _label.text = NSLocalizedString(@"ORDERS_0_ORDER_ON_TABLE_TEXT", @"На вашем столике нет счетов");
-    
-  }
-  else if (1 == ordersCount) {
-    
-    _label.text = NSLocalizedString(@"ORDERS_1_ORDER_ON_TABLE_TEXT", @"На вашем столике 1 счет");
-    
-  }
-  else {
-  
-    _label.text = [NSString stringWithFormat:NSLocalizedString(@"ORDERS_N_ORDERs_ON_TABLE_TEXT %d", @"На вашем столике\nраздельных счетов: {orders_count}"), ordersCount];
-    
-  }
-  
+  _label.text = [self stringFromOrdersCount:ordersCount];
   _pageControl.numberOfPages = ordersCount;
   @weakify(self)
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
