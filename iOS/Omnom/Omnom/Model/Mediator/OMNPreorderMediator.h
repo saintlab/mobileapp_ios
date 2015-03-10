@@ -20,6 +20,7 @@
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator rootVC:(OMNMyOrderConfirmVC *)rootVC;
 
 - (void)processWish:(OMNWish *)wish;
+- (void)didFinishPreorder;
 
 - (NSString *)refreshOrdersTitle;
 - (UIButton *)bottomButton;

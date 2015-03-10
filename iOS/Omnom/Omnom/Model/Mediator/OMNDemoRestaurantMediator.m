@@ -28,4 +28,8 @@
   return NO;
 }
 
+- (void)didFinishPayment {
+  [self exitRestaurant];
+}
+
 @end

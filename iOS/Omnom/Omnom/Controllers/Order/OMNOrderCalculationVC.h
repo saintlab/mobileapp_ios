@@ -23,7 +23,6 @@
 
 @protocol OMNOrderCalculationVCDelegate <NSObject>
 
-- (void)orderCalculationVCDidFinish:(OMNOrderCalculationVC *)orderCalculationVC;
 - (void)orderCalculationVCRequestOrders:(OMNOrderCalculationVC *)orderCalculationVC;
 - (void)orderCalculationVCDidCancel:(OMNOrderCalculationVC *)orderCalculationVC;
 

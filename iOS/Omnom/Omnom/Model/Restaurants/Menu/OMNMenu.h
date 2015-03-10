@@ -10,7 +10,7 @@
 #import "OMNMenuProduct.h"
 #import "OMNMenuModifer.h"
 
-extern NSString * const OMNMenuDidResetNotofocation;
+extern NSString * const OMNMenuDidResetNotification;
 
 @interface OMNMenu : NSObject
 

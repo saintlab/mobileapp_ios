@@ -35,7 +35,7 @@ typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
 - (void)logEnterRestaurant:(OMNRestaurant *)restaurant mode:(RestaurantEnterMode)mode;
 - (void)logPayment:(OMNAcquiringTransaction *)acquiringTransaction cardInfo:(OMNBankCardInfo *)bankCardInfo bill:(OMNBill *)bill;
 - (void)logRegisterCards:(NSArray *)bankCards;
-- (void)logScore:(NSInteger)score order:(OMNOrder *)order;
+- (void)logScore:(NSInteger)score acquiringTransaction:(OMNAcquiringTransaction *)acquiringTransaction bill:(OMNBill *)bill;
 - (void)logBillView:(OMNOrder *)order;
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;

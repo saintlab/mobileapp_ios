@@ -15,6 +15,7 @@
 
 //bar buttons
 #define kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT NSLocalizedString(@"BAR_BUTTON_COMPLETE_ORDERS_TEXT", @"Табло готовых заказов")
+#define kOMN_BAR_TITLE_BUTTON_TEXT NSLocalizedString(@"BAR_TITLE_BUTTON_TEXT", @"Бар")
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")

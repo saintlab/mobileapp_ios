@@ -72,7 +72,7 @@ OMNMenuCategoryHeaderViewDelegate>
     
   };
   
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidReset) name:OMNMenuDidResetNotofocation object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidReset) name:OMNMenuDidResetNotification object:nil];
   
 }
 

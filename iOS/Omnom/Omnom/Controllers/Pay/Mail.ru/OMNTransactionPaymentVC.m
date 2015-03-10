@@ -9,7 +9,7 @@
 #import "OMNAuthorization.h"
 #import "OMNBankCardInfo.h"
 #import "OMNCardBrandView.h"
-#import "OMNOrderPaymentVC.h"
+#import "OMNTransactionPaymentVC.h"
 #import "OMNOperationManager.h"
 #import <BlocksKit.h>
 #import <OMNStyler.h>
@@ -18,14 +18,14 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurant+omn_payment.h"
 
-@interface OMNOrderPaymentVC()
+@interface OMNTransactionPaymentVC()
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, strong) OMNBankCardMediator *bankCardMediator;
 
 @end
 
-@implementation OMNOrderPaymentVC {
+@implementation OMNTransactionPaymentVC {
 
   UILabel *_errorLabel;
   
@@ -54,6 +54,7 @@
   self = [super init];
   if (self) {
     
+    _acquiringTransaction = acquiringTransaction;
     self.bankCardMediator = [[restaurant paymentFactory] bankCardMediatorWithRootVC:self transaction:acquiringTransaction];
     _bankCardsModel = [self.bankCardMediator bankCardsModel];
 
@@ -216,19 +217,19 @@
 
 - (void)paymentDidFinishWithBill:(OMNBill *)bill {
 
-  [self.delegate orderPaymentVCDidFinish:self withBill:bill];
+  [self.delegate transactionPaymentVCDidFinish:self withBill:bill];
   
 }
 
 - (void)orderDidClosed {
   
-  [self.delegate orderPaymentVCOrderDidClosed:self];
+  [self.delegate transactionPaymentVCDidFail:self];
   
 }
 
 - (void)cancelTap {
   
-  [self.delegate orderPaymentVCDidCancel:self];
+  [self.delegate transactionPaymentVCDidCancel:self];
   
 }
 

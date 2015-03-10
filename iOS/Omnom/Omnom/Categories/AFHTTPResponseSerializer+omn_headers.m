@@ -16,12 +16,13 @@
   
 #ifdef APP_STORE
   [self setValue:@"appstore" forHTTPHeaderField:@"x-mobile-configuration"];
+#elif defined (AD_HOC_2GIS)
+  [self setValue:@"2gis" forHTTPHeaderField:@"x-mobile-configuration"];
 #elif defined (AD_HOC)
   [self setValue:@"ad-hoc" forHTTPHeaderField:@"x-mobile-configuration"];
 #else
   [self setValue:@"debug" forHTTPHeaderField:@"x-mobile-configuration"];
 #endif
-  
 
   [self setValue:[OMNConstants installID] forHTTPHeaderField:@"x-mobile-device-id"];
   [self setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];

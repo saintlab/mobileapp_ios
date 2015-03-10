@@ -16,6 +16,11 @@
   
 }
 
+- (void)dealloc
+{
+  
+}
+
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator rootVC:(OMNMyOrderConfirmVC *)rootVC {
   self = [super init];
   if (self) {
@@ -29,9 +34,23 @@
 
 - (void)processWish:(OMNWish *)wish {
   
-  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:self.rootVC.didFinishBlock];
+  @weakify(self)
+  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:^{
+    
+    @strongify(self)
+    [self didFinishPreorder];
+    
+  }];
   [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
 
+}
+
+- (void)didFinishPreorder {
+  
+  [_restaurantMediator.restaurantActionsVC showRestaurantAnimated:NO];
+  [_restaurantMediator.menu resetSelection];
+  self.rootVC.didFinishBlock();
+  
 }
 
 - (NSString *)refreshOrdersTitle {
@@ -43,16 +62,16 @@
   UIButton *bottomButton = nil;
   if (_restaurantMediator.restaurant.settings.has_table_order) {
     
-    bottomButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(requestTableOrders)];
+    bottomButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(showTableOrders)];
     
   }
   return bottomButton;
   
 }
 
-- (void)requestTableOrders {
+- (void)showTableOrders {
   
-  [_restaurantMediator requestTableOrders];
+  [_restaurantMediator showTableOrders];
   [self closeTap];
   
 }

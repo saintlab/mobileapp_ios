@@ -177,12 +177,12 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logScore:(NSInteger)score order:(OMNOrder *)order {
+- (void)logScore:(NSInteger)score acquiringTransaction:(OMNAcquiringTransaction *)acquiringTransaction bill:(OMNBill *)bill {
 
   NSMutableDictionary *properties = [self superProperties];
   properties[@"score"] = @(score);
-  properties[@"order_id"] = (order.id) ? (order.id) : (@"");
-  properties[@"bill_id"] = (order.bill.id) ? (order.bill.id) : (@"");
+  properties[@"order_id"] = (acquiringTransaction.order_id) ?: (@"");
+  properties[@"bill_id"] = (bill.id) ?: (@"");
   [_mixpanel track:@"user_score" properties:properties];
 
 }
@@ -225,7 +225,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   [_mixpanel.people trackCharge:@(bill.revenue) withProperties:
   @{
     @"order_id" : acquiringTransaction.order_id,
-    @"bill_id" : (bill.id) ? (bill.id) : (@""),
+    @"bill_id" : (bill.id) ?: (@""),
     }];
   
   NSMutableDictionary *properties = [self superProperties];
@@ -237,10 +237,11 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"percent" : @(acquiringTransaction.tips_percent),
      @"tips_way" : acquiringTransaction.tips_way,
      @"split" : acquiringTransaction.split_way,
-     @"order_id" : acquiringTransaction.order_id,
-     @"restaurant_id" : acquiringTransaction.restaurant_id,
-     @"table_id" : acquiringTransaction.table_id,
-     @"bill_id" : (bill.id) ? (bill.id) : (@""),
+     @"order_id" : (acquiringTransaction.order_id) ?: (@""),
+     @"wish_id" : (acquiringTransaction.wish_id) ?: (@""),
+     @"restaurant_id" : (acquiringTransaction.restaurant_id) ?: (@""),
+     @"table_id" : (acquiringTransaction.table_id) ?: (@""),
+     @"bill_id" : (bill.id) ?: (@""),
      @"card_info" : (bankCardInfo) ? (bankCardInfo.debugInfo) : (@""),
      @"transaction_info" : (acquiringTransaction.info) ?: @"",
      }];

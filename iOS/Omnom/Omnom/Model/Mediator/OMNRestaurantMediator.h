@@ -9,6 +9,7 @@
 #import "OMNRestaurantActionsVC.h"
 #import "OMNMenu.h"
 #import "OMNVisitor.h"
+#import "OMNAcquiringTransaction.h"
 
 @class OMNPreorderMediator;
 @class OMNMyOrderConfirmVC;
@@ -28,13 +29,18 @@
 - (void)showPreorders;
 - (void)waiterCall;
 - (void)waiterCallStop;
-- (void)requestTableOrders;
+- (void)showTableOrders;
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
 - (void)exitRestaurant;
 - (void)rescanTable;
 
+- (void)showRatingForTransaction:(OMNAcquiringTransaction *)transaction bill:(OMNBill *)bill;
+- (void)didFinishPayment;
+
 - (UIBarButtonItem *)exitRestaurantButton;
 - (UIButton *)userProfileButton;
+- (UIView *)titleView;
+
 - (BOOL)showTableButton;
 - (BOOL)showPreorderButton;
 

@@ -8,13 +8,12 @@
 
 #import "OMNAnalitics.h"
 #import "OMNCalculatorVC.h"
-#import "OMNOrderPaymentVC.h"
+#import "OMNTransactionPaymentVC.h"
 #import "OMNNavigationController.h"
 #import "OMNOrderDataSource.h"
 #import "OMNOrderTableView.h"
 #import "OMNOrderCalculationVC.h"
 #import "OMNPaymentFooterView.h"
-#import "OMNRatingVC.h"
 #import "UIView+frame.h"
 #import <BlocksKit+UIKit.h>
 #import "OMNOrderAlertManager.h"
@@ -25,11 +24,10 @@
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
-OMNRatingVCDelegate,
 UITableViewDelegate,
-OMNOrderPaymentVCDelegate,
 OMNOrderTotalViewDelegate,
-OMNPaymentFooterViewDelegate>
+OMNPaymentFooterViewDelegate,
+OMNTransactionPaymentVCDelegate>
 
 @end
 
@@ -367,15 +365,6 @@ OMNPaymentFooterViewDelegate>
   
 }
 
-- (void)showRatingForBill:(OMNBill *)bill {
-  
-  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithOrder:_visitor.selectedOrder];
-  ratingVC.backgroundImage = self.backgroundImage;
-  ratingVC.delegate = self;
-  [self.navigationController pushViewController:ratingVC animated:YES];
-  
-}
-
 - (IBAction)payTap:(id)sender {
   
   if (_visitor.selectedOrder.paymentValueIsTooHigh) {
@@ -405,11 +394,34 @@ OMNPaymentFooterViewDelegate>
   [OMNOrderAlertManager sharedManager].didUpdateBlock = nil;
   
   OMNRestaurant *restaurant = _restaurantMediator.restaurant;
-  OMNOrderPaymentVC *orderPaymentVC = [[OMNOrderPaymentVC alloc] initWithRestaurant:restaurant transaction:[[restaurant paymentFactory] transactionForOrder:_visitor.selectedOrder]];
-  orderPaymentVC.delegate = self;
-  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:orderPaymentVC];
+  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForOrder:_visitor.selectedOrder];
+  OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithRestaurant:restaurant transaction:transaction];
+  transactionPaymentVC.delegate = self;
+  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:transactionPaymentVC];
   navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
   [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+  
+}
+
+#pragma mark - OMNTransactionPaymentVCDelegate
+
+- (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
+  
+  [_restaurantMediator showRatingForTransaction:transactionPaymentVC.acquiringTransaction bill:bill];
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+  
+}
+
+- (void)transactionPaymentVCDidCancel:(OMNTransactionPaymentVC *)transactionPaymentVC {
+  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)transactionPaymentVCDidFail:(OMNTransactionPaymentVC *)transactionPaymentVC {
+  
+  OMNRestaurantMediator *restaurantMediator = _restaurantMediator;
+  [self.navigationController dismissViewControllerAnimated:YES completion:^{
+    [restaurantMediator didFinishPayment];
+  }];
   
 }
 
@@ -435,14 +447,6 @@ OMNPaymentFooterViewDelegate>
   }
   
   [self updateOrder];
-  
-}
-
-#pragma mark - OMNRatingVCDelegate
-
-- (void)ratingVCDidFinish:(OMNRatingVC *)ratingVC {
-  
-  [self.delegate orderCalculationVCDidFinish:self];
   
 }
 
@@ -502,31 +506,6 @@ OMNPaymentFooterViewDelegate>
     [self calculatorTap];
     
   }
-  
-}
-
-#pragma mark - OMNOrderPaymentVCDelegate
-
-- (void)orderPaymentVCDidFinish:(OMNOrderPaymentVC *)orderPaymentVC withBill:(OMNBill *)bill {
-  
-  [self showRatingForBill:bill];
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-  
-}
-
-- (void)orderPaymentVCDidCancel:(OMNOrderPaymentVC *)orderPaymentVC {
-  
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-  
-}
-
-- (void)orderPaymentVCOrderDidClosed:(OMNOrderPaymentVC *)orderPaymentVC {
-  
-  [self.navigationController dismissViewControllerAnimated:YES completion:^{
-  
-    [self.delegate orderCalculationVCDidCancel:self];
-    
-  }];
   
 }
 

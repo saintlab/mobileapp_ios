@@ -9,6 +9,7 @@
 #import "OMNBarRestaurantMediator.h"
 #import "OMNBarPreorderMediator.h"
 #import "OMNLaunchHandler.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @implementation OMNBarRestaurantMediator
 
@@ -32,6 +33,15 @@
     [self showPreorders];
     
   }
+  
+}
+
+- (UIView *)titleView {
+  
+  UIColor *color = self.restaurant.decoration.antagonist_color;
+  UIButton *titleButton = [UIButton omn_barButtonWithTitle:kOMN_BAR_TITLE_BUTTON_TEXT color:color target:nil action:nil];
+  titleButton.userInteractionEnabled = NO;
+  return titleButton;
   
 }
 

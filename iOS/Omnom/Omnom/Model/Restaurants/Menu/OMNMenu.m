@@ -9,7 +9,7 @@
 #import "OMNMenu.h"
 #import <BlocksKit.h>
 
-NSString * const OMNMenuDidResetNotofocation = @"OMNMenuDidResetNotofocation";
+NSString * const OMNMenuDidResetNotification = @"OMNMenuDidResetNotofocation";
 
 @implementation OMNMenu
 
@@ -51,7 +51,7 @@ NSString * const OMNMenuDidResetNotofocation = @"OMNMenuDidResetNotofocation";
     [menuProduct resetSelection];
     
   }];
-  [[NSNotificationCenter defaultCenter] postNotificationName:OMNMenuDidResetNotofocation object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:OMNMenuDidResetNotification object:self];
   
 }
 

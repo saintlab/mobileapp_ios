@@ -17,7 +17,13 @@
 
 - (void)processWish:(OMNWish *)wish {
 
-  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 didCloseBlock:self.rootVC.didFinishBlock];
+  @weakify(self)
+  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 didCloseBlock:^{
+    
+    @strongify(self)
+    [self didFinishPreorder];
+    
+  }];
   [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
   
 }

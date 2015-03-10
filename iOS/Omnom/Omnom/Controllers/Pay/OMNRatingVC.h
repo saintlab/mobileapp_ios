@@ -7,20 +7,13 @@
 //
 
 #import "OMNBackgroundVC.h"
-#import "OMNOrder.h"
-
-@protocol OMNRatingVCDelegate;
+#import "OMNAcquiringTransaction.h"
+#import "OMNBill.h"
 
 @interface OMNRatingVC : OMNBackgroundVC
 
-@property (nonatomic, weak) id<OMNRatingVCDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t didFinishBlock;
 
-- (instancetype)initWithOrder:(OMNOrder *)order;
-
-@end
-
-@protocol OMNRatingVCDelegate <NSObject>
-
-- (void)ratingVCDidFinish:(OMNRatingVC *)ratingVC;
+- (instancetype)initWithTransaction:(OMNAcquiringTransaction *)transaction bill:(OMNBill *)bill;
 
 @end

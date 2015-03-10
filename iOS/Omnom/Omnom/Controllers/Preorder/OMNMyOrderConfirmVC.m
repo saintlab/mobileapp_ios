@@ -37,6 +37,7 @@ OMNPreorderConfirmCellDelegate>
   NSArray *_tableProductsIds;
 
   NSArray *_model;
+  NSMutableArray *_preorderedProducts;
   OMNPreorderActionCellItem *_preorderActionCellItem;
   
   OMNPreorderMediator *_preorderMediator;
@@ -162,11 +163,12 @@ OMNPreorderConfirmCellDelegate>
     
   }];
 
+  _preorderedProducts = products;
   _preorderActionCellItem.enabled = (products.count > 0);
   
   _model =
   @[
-    products,
+    _preorderedProducts,
     @[_preorderActionCellItem],
     tableProducts,
     ];
@@ -186,8 +188,6 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)didCreateWish:(OMNWish *)wish {
   
-  [_restaurantMediator.menu resetSelection];
-  [_restaurantMediator.restaurantActionsVC showRestaurantAnimated:NO];
   [_preorderMediator processWish:wish];
   
 }
@@ -253,6 +253,22 @@ OMNPreorderConfirmCellDelegate>
     
   }
   return 0.0f;
+  
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+  return (0 == indexPath.section);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+  if (indexPath.section != 0) {
+    return;
+  }
+  
+  OMNPreorderConfirmCellItem *orderedItem = _preorderedProducts[indexPath.row];
+  [orderedItem.menuProduct resetSelection];
+  [self updateTableViewAnimated:YES];
   
 }
 

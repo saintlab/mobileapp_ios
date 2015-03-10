@@ -26,6 +26,8 @@
 #import "OMNOrdersLoadingVC.h"
 #import "OMNPreorderMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNTransactionPaymentVC.h"
+#import "OMNRatingVC.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -72,7 +74,7 @@ OMNOrderCalculationVCDelegate>
   else if ([OMNLaunchHandler sharedHandler].launchOptions.showTableOrders) {
     
     [OMNLaunchHandler sharedHandler].launchOptions.showTableOrders = NO;
-    [self requestTableOrders];
+    [self showTableOrders];
     
   }
   else {
@@ -137,16 +139,31 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (void)waiterCall {
+- (void)showRatingForTransaction:(OMNAcquiringTransaction *)transaction bill:(OMNBill *)bill {
   
-  [_visitor waiterCall];
+  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithTransaction:transaction bill:bill];
+  ratingVC.backgroundImage = _restaurant.decoration.woodBackgroundImage;
+  @weakify(self)
+  ratingVC.didFinishBlock = ^{
+    
+    @strongify(self)
+    [self didFinishPayment];
+    
+  };
+  [_restaurantActionsVC.navigationController pushViewController:ratingVC animated:YES];
   
 }
 
+- (void)didFinishPayment {
+  [self popToRootViewControllerAnimated:YES];
+}
+
+- (void)waiterCall {
+  [_visitor waiterCall];
+}
+
 - (void)waiterCallStop {
-  
   [_visitor waiterCallStop];
-  
 }
 
 - (void)showPreorders {
@@ -163,7 +180,7 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (void)requestTableOrders {
+- (void)showTableOrders {
   
   if (!_visitor.table) {
     return;
@@ -288,21 +305,6 @@ OMNOrderCalculationVCDelegate>
 
 #pragma mark - OMNOrderCalculationVCDelegate
 
-- (void)orderCalculationVCDidFinish:(OMNOrderCalculationVC *)orderCalculationVC {
-
-  if (_restaurant.is_demo) {
-    
-    [self exitRestaurant];
-    
-  }
-  else {
-    
-    [self popToRootViewControllerAnimated:YES];
-    
-  }
-  
-}
-
 - (void)orderCalculationVCRequestOrders:(OMNOrderCalculationVC *)orderCalculationVC {
   
   if (_ordersVC) {
@@ -342,10 +344,12 @@ OMNOrderCalculationVCDelegate>
   
 }
 
+- (UIView *)titleView {
+  return nil;
+}
+
 - (BOOL)showTableButton {
-  
-  return (self.visitor.table!= nil);
-  
+  return (self.visitor.table != nil);
 }
 
 - (BOOL)showPreorderButton {
@@ -359,9 +363,7 @@ OMNOrderCalculationVCDelegate>
 }
 
 - (OMNPreorderMediator *)preorderMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
-  
   return [[OMNPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
-  
 }
 
 @end

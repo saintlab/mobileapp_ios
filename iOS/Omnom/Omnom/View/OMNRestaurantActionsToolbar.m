@@ -83,7 +83,7 @@
 - (void)updateRestaurantActionButtons {
   
   OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
-  OMNOrderToolbarButton *callBillButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:_restaurantMediator action:@selector(requestTableOrders)];
+  OMNOrderToolbarButton *callBillButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:_restaurantMediator action:@selector(showTableOrders)];
   callBillButton.hidden = !settings.has_table_order;
   
   UIButton *callWaiterButton = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"call_waiter_icon_small"] color:[UIColor blackColor] target:nil action:nil];

@@ -25,21 +25,17 @@
   UILabel *_ratingLabel;
   TQStarRatingView *_starRatingView;
   
-  OMNOrder *_order;
+  OMNAcquiringTransaction *_transaction;
+  OMNBill *_bill;
   
 }
 
-- (void)dealloc {
-  
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-}
-
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (instancetype)initWithTransaction:(OMNAcquiringTransaction *)transaction bill:(OMNBill *)bill {
   self = [super init];
   if (self) {
     
-    _order = order;
+    _transaction = transaction;
+    _bill = bill;
     
   }
   return self;
@@ -229,16 +225,18 @@
     
     NSInteger score = (NSInteger)roundf(5*_starRatingView.score);
     
-    [[OMNAnalitics analitics] logScore:score order:_order];
-
-    NSString *path = [NSString stringWithFormat:@"/rating/mobile/iphone/%ld/%@", (long)score, _order.id];
+    [[OMNAnalitics analitics] logScore:score acquiringTransaction:_transaction bill:_bill];
+    
+    NSString *path = [NSString stringWithFormat:@"/rating/mobile/iphone/%ld/%@", (long)score, _transaction.order_id];
     [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     }];
     
   }
   
-  [self.delegate ratingVCDidFinish:self];
+  if (self.didFinishBlock) {
+    self.didFinishBlock();
+  }
   
 }
 

@@ -25,15 +25,28 @@
   
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (instancetype)init {
   self = [super init];
+  if (self) {
+    
+    self.order_id = @"";
+    self.wish_id = @"";
+    self.table_id = @"";
+    self.restaurant_id = @"";
+    
+  }
+  return self;
+}
+
+- (instancetype)initWithOrder:(OMNOrder *)order {
+  self = [self init];
   if (self) {
     
     self.bill_amount = order.enteredAmount;
     self.tips_amount = order.tipAmount;
-    self.restaurant_id = (order.restaurant_id) ? ([order.restaurant_id copy]) : (@"");
-    self.order_id = (order.id) ? ([order.id copy]) : (@"");
-    self.table_id = (order.table_id) ? ([order.table_id copy]) : @"";;
+    self.restaurant_id = (order.restaurant_id) ?: (@"");
+    self.order_id = (order.id) ?: (@"");
+    self.table_id = (order.table_id) ?: @"";;
     self.tips_way = stringFromTipType(order.tipType);
     self.split_way = stringFromSplitType(order.splitType);
     self.info = [order debug_info];
@@ -43,18 +56,16 @@
 }
 
 - (instancetype)initWithWish:(OMNWish *)wish {
-  self = [super init];
+  self = [self init];
   if (self) {
     
     self.bill_amount = wish.totalAmount;
     self.tips_amount = 0ll;
-    self.restaurant_id = (wish.restaurant_id) ? ([wish.restaurant_id copy]) : (@"");
-    self.order_id = (wish.id) ? ([wish.id copy]) : (@"");
-    self.table_id = (wish.table_id) ? ([wish.table_id copy]) : @"";;
+    self.restaurant_id = (wish.restaurant_id) ?: (@"");
+    self.wish_id = (wish.id) ?: (@"");
+    self.table_id = (wish.table_id) ?: @"";;
     self.tips_way = stringFromTipType(kTipTypeDefault);
     self.split_way = stringFromSplitType(kSplitTypeNone);
-
-    
     
   }
   return self;
@@ -64,15 +75,22 @@
   
   _bankCardInfo = bankCardInfo;
   
-  NSDictionary *parameters =
-  @{
+  NSMutableDictionary *parameters =
+  [@{
     @"amount": @(self.bill_amount),
     @"tip_amount": @(self.tips_amount),
     @"restaurant_id" : self.restaurant_id,
-    @"restaurateur_order_id" : self.order_id,
     @"table_id" : self.table_id,
     @"description" : @"",
-    };
+    } mutableCopy];
+
+  if (self.order_id.length) {
+    parameters[@""] = self.order_id;
+  }
+  
+  if (self.wish_id.length) {
+    parameters[@"wish_id"] = self.wish_id;
+  }
   
   @weakify(self)
   [[OMNOperationManager sharedManager] POST:@"/bill" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {

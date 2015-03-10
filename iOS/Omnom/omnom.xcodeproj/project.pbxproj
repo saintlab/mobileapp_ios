@@ -165,8 +165,8 @@
 		9345AFB0199A253F00328F73 /* OMNBankCardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFAE199A253F00328F73 /* OMNBankCardInfo.m */; };
 		9345AFB3199A291C00328F73 /* OMNBankCardUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFB2199A291C00328F73 /* OMNBankCardUserInfoItem.m */; };
 		9345AFB4199A291C00328F73 /* OMNBankCardUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFB2199A291C00328F73 /* OMNBankCardUserInfoItem.m */; };
-		9345AFB7199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFB6199A2EC200328F73 /* OMNOrderPaymentVC.m */; };
-		9345AFB8199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFB6199A2EC200328F73 /* OMNOrderPaymentVC.m */; };
+		9345AFB7199A2EC200328F73 /* OMNTransactionPaymentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFB6199A2EC200328F73 /* OMNTransactionPaymentVC.m */; };
+		9345AFB8199A2EC200328F73 /* OMNTransactionPaymentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFB6199A2EC200328F73 /* OMNTransactionPaymentVC.m */; };
 		9345AFC5199B7DCC00328F73 /* OMNRestaurantInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFC4199B7DCC00328F73 /* OMNRestaurantInfo.m */; };
 		9345AFC6199B7DCC00328F73 /* OMNRestaurantInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFC4199B7DCC00328F73 /* OMNRestaurantInfo.m */; };
 		9345AFC9199B7E1A00328F73 /* OMNRestaurantInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFC8199B7E1A00328F73 /* OMNRestaurantInfoItem.m */; };
@@ -804,8 +804,8 @@
 		9345AFAE199A253F00328F73 /* OMNBankCardInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBankCardInfo.m; sourceTree = "<group>"; };
 		9345AFB1199A291C00328F73 /* OMNBankCardUserInfoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCardUserInfoItem.h; sourceTree = "<group>"; };
 		9345AFB2199A291C00328F73 /* OMNBankCardUserInfoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBankCardUserInfoItem.m; sourceTree = "<group>"; };
-		9345AFB5199A2EC200328F73 /* OMNOrderPaymentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrderPaymentVC.h; sourceTree = "<group>"; };
-		9345AFB6199A2EC200328F73 /* OMNOrderPaymentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderPaymentVC.m; sourceTree = "<group>"; };
+		9345AFB5199A2EC200328F73 /* OMNTransactionPaymentVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTransactionPaymentVC.h; sourceTree = "<group>"; };
+		9345AFB6199A2EC200328F73 /* OMNTransactionPaymentVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTransactionPaymentVC.m; sourceTree = "<group>"; };
 		9345AFC3199B7DCC00328F73 /* OMNRestaurantInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNRestaurantInfo.h; path = ../OMNRestaurantInfo.h; sourceTree = "<group>"; };
 		9345AFC4199B7DCC00328F73 /* OMNRestaurantInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNRestaurantInfo.m; path = ../OMNRestaurantInfo.m; sourceTree = "<group>"; };
 		9345AFC7199B7E1A00328F73 /* OMNRestaurantInfoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNRestaurantInfoItem.h; path = ../OMNRestaurantInfoItem.h; sourceTree = "<group>"; };
@@ -2712,8 +2712,8 @@
 			children = (
 				93EE3081198F57150024EAF4 /* OMNMailRUCardConfirmVC.h */,
 				93EE3082198F57150024EAF4 /* OMNMailRUCardConfirmVC.m */,
-				9345AFB5199A2EC200328F73 /* OMNOrderPaymentVC.h */,
-				9345AFB6199A2EC200328F73 /* OMNOrderPaymentVC.m */,
+				9345AFB5199A2EC200328F73 /* OMNTransactionPaymentVC.h */,
+				9345AFB6199A2EC200328F73 /* OMNTransactionPaymentVC.m */,
 			);
 			path = Mail.ru;
 			sourceTree = "<group>";
@@ -3134,7 +3134,7 @@
 				935FF15B1A6D23E0004B69A6 /* OMNPreorderActionCell.m in Sources */,
 				93E773711A931CB300080EAF /* OMNRestaurantActionsToolbar.m in Sources */,
 				93E26EC11AA973230034A7A3 /* OMNPreorderMediator.m in Sources */,
-				9345AFB7199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */,
+				9345AFB7199A2EC200328F73 /* OMNTransactionPaymentVC.m in Sources */,
 				9390D2D1196BD70E007E13AB /* OMNAskCLPermissionsVC.m in Sources */,
 				93C126941A7155BC0019655A /* OMNProductModiferAlertVC.m in Sources */,
 				935FF1551A6D1054004B69A6 /* OMNMyOrderConfirmVC.m in Sources */,
@@ -3395,7 +3395,7 @@
 				934FC72B19D03CED008AC4B0 /* OMNRestaurantDecoration.m in Sources */,
 				93E4856C1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */,
 				937A37381980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
-				9345AFB8199A2EC200328F73 /* OMNOrderPaymentVC.m in Sources */,
+				9345AFB8199A2EC200328F73 /* OMNTransactionPaymentVC.m in Sources */,
 				93DB26C91A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m in Sources */,
 				93E29998197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
 				93DB26BD1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m in Sources */,
@@ -3675,6 +3675,92 @@
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = AppStore;
+		};
+		933C93C51AAECF75000BA7D6 /* 2gis */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = 2gis;
+		};
+		933C93C61AAECF75000BA7D6 /* 2gis */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FEEAF39B4BB129529E9C15A9 /* Pods-omnom.ad-hoc.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"AD_HOC_2GIS=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/**",
+				);
+				INFOPLIST_FILE = "omnom/omnom-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = omnom;
+				PROVISIONING_PROFILE = "";
+				REZ_SEARCH_PATHS = "$(inherited)";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = 2gis;
+		};
+		933C93C71AAECF75000BA7D6 /* 2gis */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2883D67E3218C0821BF831A0 /* Pods-omnomTests.ad-hoc.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/omnom.app/omnom";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
+				INFOPLIST_FILE = "omnomTests/omnomTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = omnomTests;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = 2gis;
 		};
 		93676E1C18D1E4FC00FC55F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -4040,6 +4126,7 @@
 				93676E1D18D1E4FC00FC55F1 /* Release */,
 				932112EA19BE10AD0074CF2A /* AppStore */,
 				93F21B8B19B5EA3800D5F78A /* Ad-Hoc */,
+				933C93C51AAECF75000BA7D6 /* 2gis */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -4052,6 +4139,7 @@
 				93676E2018D1E4FC00FC55F1 /* Release */,
 				932112EB19BE10AD0074CF2A /* AppStore */,
 				93F21B8C19B5EA3800D5F78A /* Ad-Hoc */,
+				933C93C61AAECF75000BA7D6 /* 2gis */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -4064,6 +4152,7 @@
 				93676E2318D1E4FC00FC55F1 /* Release */,
 				932112EC19BE10AD0074CF2A /* AppStore */,
 				93F21B8D19B5EA3800D5F78A /* Ad-Hoc */,
+				933C93C71AAECF75000BA7D6 /* 2gis */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

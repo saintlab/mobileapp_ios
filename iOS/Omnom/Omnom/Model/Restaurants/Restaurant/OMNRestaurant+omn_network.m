@@ -327,7 +327,7 @@
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject omn_isSuccessResponse]) {
-      
+
       OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject[@"menu"]];
       completion(menu);
       

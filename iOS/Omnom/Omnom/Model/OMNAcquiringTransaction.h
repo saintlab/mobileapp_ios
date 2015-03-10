@@ -17,6 +17,7 @@ typedef void(^OMNPaymentDidFinishBlock)(OMNBill *bill, OMNError *error);
 @interface OMNAcquiringTransaction : NSObject
 
 @property (nonatomic, copy) NSString *order_id;
+@property (nonatomic, copy) NSString *wish_id;
 @property (nonatomic, copy) NSString *table_id;
 @property (nonatomic, copy) NSString *restaurant_id;
 @property (nonatomic, assign) long long bill_amount;

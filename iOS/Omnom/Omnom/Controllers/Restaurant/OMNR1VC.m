@@ -153,7 +153,8 @@
   self.navigationItem.leftBarButtonItem = [_restaurantMediator exitRestaurantButton];
   UIButton *userButton = [_restaurantMediator userProfileButton];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:userButton];
-
+  self.navigationItem.titleView = [_restaurantMediator titleView];
+  
   if (!_showTableButtonAnimation &&
       _restaurantMediator.showTableButton) {
     
