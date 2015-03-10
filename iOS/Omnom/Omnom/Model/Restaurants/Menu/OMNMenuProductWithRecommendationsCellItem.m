@@ -48,12 +48,21 @@
   return self;
 }
 
+- (BOOL)showRecommendations {
+  
+  return
+  (
+   _selected &&
+   _menuProduct.showRecommendations
+   );
+  
+}
+
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
   __block CGFloat height = [_menuProductCellItem heightForTableView:tableView];
   
-  if (self.selected &&
-      _menuProductCellItem.hasReccomendations) {
+  if ([self showRecommendations]) {
     
     [_recommendations enumerateObjectsUsingBlock:^(id<OMNCellItemProtocol> obj, NSUInteger idx, BOOL *stop) {
       
@@ -93,7 +102,7 @@
 - (void)setSelected:(BOOL)selected {
   
   _selected = selected;
-  _bottomDelimiter.selected = (selected && _menuProductCellItem.hasReccomendations);
+  _bottomDelimiter.selected = [self showRecommendations];
   
 }
 

@@ -118,6 +118,16 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   
 }
 
+- (BOOL)showRecommendations {
+  
+  return
+  (
+   self.preordered &&
+   self.hasRecommendations
+  );
+  
+}
+
 - (void)resetSelection {
   
   self.quantity = 0.0;

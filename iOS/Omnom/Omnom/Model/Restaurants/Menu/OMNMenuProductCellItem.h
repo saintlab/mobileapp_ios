@@ -25,6 +25,4 @@ typedef NS_ENUM(NSInteger, OMNBottomDelimiterType) {
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct;
 
-- (BOOL)hasReccomendations;
-
 @end

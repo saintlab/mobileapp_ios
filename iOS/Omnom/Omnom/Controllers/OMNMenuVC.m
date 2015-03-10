@@ -195,11 +195,7 @@ OMNMenuCategoryHeaderViewDelegate>
 }
 
 - (void)updateTableViewWithSelectedItem:(OMNMenuProductWithRecommendationsCellItem *)item andScrollToCell:(UITableViewCell *)cell {
-  
-  if ([_selectedItem isEqual:item]) {
-    return;
-  }
-  
+
   _selectedItem.selected = NO;
   _selectedItem = item;
   _selectedItem.selected = YES;

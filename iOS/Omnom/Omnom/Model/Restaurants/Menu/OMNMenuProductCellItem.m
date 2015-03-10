@@ -54,12 +54,6 @@
   
 }
 
-- (BOOL)hasReccomendations {
-  
-  return (_menuProduct.recommendations.count > 0);
-  
-}
-
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
   OMNMenuProductCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNMenuProductCell class])];

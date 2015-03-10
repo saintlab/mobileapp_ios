@@ -32,6 +32,7 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 
 - (instancetype)initWithJsonData:(id)data allModifers:(NSDictionary *)allModifers;
 - (BOOL)hasRecommendations;
+- (BOOL)showRecommendations;
 - (BOOL)hasPhoto;
 - (BOOL)preordered;
 - (void)loadImage;
