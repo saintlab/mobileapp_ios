@@ -33,8 +33,6 @@
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
 - (void)exitRestaurant;
 - (void)rescanTable;
-
-- (void)showRatingForTransaction:(OMNAcquiringTransaction *)transaction bill:(OMNBill *)bill;
 - (void)didFinishPayment;
 
 - (UIBarButtonItem *)exitRestaurantButton;

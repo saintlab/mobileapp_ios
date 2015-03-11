@@ -19,7 +19,7 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
 
 OMNRestaurantMode entranceModeFromString(NSString *string) {
 
-#warning kRestaurantMode2gis_dinner
+#warning kRestaurantModeBar
 //  return kRestaurantModeLunch;
 //  return kRestaurantModeBar;
   
@@ -71,8 +71,10 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     _tables = [jsonData[@"tables"] omn_tables];
     _orders = [jsonData[@"orders"] omn_orders];;
     
-#warning haarts orders url
-    _complete_ordres_url = [NSURL URLWithString:@"http://google.com"];
+    NSString *orders_paid_url = jsonData[@"orders_paid_url"];
+    if (orders_paid_url) {
+      _orders_paid_url = [NSURL URLWithString:orders_paid_url];
+    }
     
   }
   return self;

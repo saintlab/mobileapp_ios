@@ -9,10 +9,7 @@
 #import "OMNResetPasswordVC.h"
 #import <OMNStyler.h>
 #import "OMNConstants.h"
-
-@interface OMNResetPasswordVC ()
-
-@end
+#import "UIBarButtonItem+omn_custom.h"
 
 @implementation OMNResetPasswordVC
 
@@ -23,7 +20,7 @@
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
   self.view.backgroundColor = [UIColor whiteColor];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Готово", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:kOMN_DONE_BUTTON_TITLE color:[UIColor blackColor] target:self action:@selector(doneTap)];
   
 }
 

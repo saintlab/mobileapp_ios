@@ -16,6 +16,7 @@
 //bar buttons
 #define kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT NSLocalizedString(@"BAR_BUTTON_COMPLETE_ORDERS_TEXT", @"Табло готовых заказов")
 #define kOMN_BAR_TITLE_BUTTON_TEXT NSLocalizedString(@"BAR_TITLE_BUTTON_TEXT", @"Бар")
+#define kOMN_DONE_BUTTON_TITLE NSLocalizedString(@"DONE_BUTTON_TITLE", @"Готово")
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
@@ -32,3 +33,11 @@
 #define kOMN_ORDERS_ON_TABLE_TEXT1 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT1{счёта} %ld", @"На вашем столике {orders_count} счёта")
 #define kOMN_ORDERS_ON_TABLE_TEXT2 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT2{счёт} %ld", @"На вашем столике {orders_count} счёт")
 #define kOMN_ORDERS_ON_TABLE_TEXT3 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT3{счетов} %ld", @"На вашем столике {orders_count} счетов")
+
+//bar
+#define kOMN_BAR_SUCCESS_TITLE1 NSLocalizedString(@"BAR_SUCCESS_TITLE1", @"Заказ принят")
+#define kOMN_BAR_SUCCESS_ORDER_NUMBER_TEXT NSLocalizedString(@"BAR_SUCCESS_ORDER_NUMBER_TEXT", @"Номер заказа")
+#define kOMN_BAR_SUCCESS_PIN_TEXT NSLocalizedString(@"BAR_SUCCESS_PIN_TEXT", @"Пин-код")
+#define kOMN_BAR_SUCCESS_HELP_TEXT NSLocalizedString(@"BAR_SUCCESS_HELP_TEXT %@", @"Мы пригласим вас, когда заказ будет готов.\nТакже проверить готов ли ваш заказ\nможно {link_text}.")
+#define kOMN_BAR_SUCCESS_HELP_ACTION_TEXT NSLocalizedString(@"BAR_SUCCESS_HELP_ACTION_TEXT", @"здесь")
+#define kOMN_BAR_SUCCESS_MAIL_TEXT NSLocalizedString(@"BAR_SUCCESS_MAIL_TEXT", @"Чек об оплате отправлен на почту.")

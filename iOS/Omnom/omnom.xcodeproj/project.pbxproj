@@ -451,6 +451,8 @@
 		93BA9BCA1A8C5C0E00717FF9 /* OMNLineNumberLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BA9BC81A8C5C0E00717FF9 /* OMNLineNumberLogFormatter.m */; };
 		93BA9BCD1A8C8E6400717FF9 /* OMNMenuToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BA9BCC1A8C8E6400717FF9 /* OMNMenuToRestaurantTransition.m */; };
 		93BA9BCE1A8C8E6400717FF9 /* OMNMenuToRestaurantTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BA9BCC1A8C8E6400717FF9 /* OMNMenuToRestaurantTransition.m */; };
+		93BCD74C1AAF159000725B12 /* OMNWishSuccessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCD74B1AAF159000725B12 /* OMNWishSuccessVC.m */; };
+		93BCD74D1AAF159000725B12 /* OMNWishSuccessVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BCD74B1AAF159000725B12 /* OMNWishSuccessVC.m */; };
 		93BE2F5A1A63C43000FB2211 /* OMNNoOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BE2F591A63C43000FB2211 /* OMNNoOrdersVC.m */; };
 		93BE2F5B1A63C43000FB2211 /* OMNNoOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BE2F591A63C43000FB2211 /* OMNNoOrdersVC.m */; };
 		93C126871A7109010019655A /* OMNMenuCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C126861A7109010019655A /* OMNMenuCategory.m */; };
@@ -1087,6 +1089,8 @@
 		93BA9BC81A8C5C0E00717FF9 /* OMNLineNumberLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLineNumberLogFormatter.m; sourceTree = "<group>"; };
 		93BA9BCB1A8C8E6400717FF9 /* OMNMenuToRestaurantTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuToRestaurantTransition.h; sourceTree = "<group>"; };
 		93BA9BCC1A8C8E6400717FF9 /* OMNMenuToRestaurantTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuToRestaurantTransition.m; sourceTree = "<group>"; };
+		93BCD74A1AAF159000725B12 /* OMNWishSuccessVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWishSuccessVC.h; sourceTree = "<group>"; };
+		93BCD74B1AAF159000725B12 /* OMNWishSuccessVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWishSuccessVC.m; sourceTree = "<group>"; };
 		93BE2F581A63C43000FB2211 /* OMNNoOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNoOrdersVC.h; sourceTree = "<group>"; };
 		93BE2F591A63C43000FB2211 /* OMNNoOrdersVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNoOrdersVC.m; sourceTree = "<group>"; };
 		93C126851A7109010019655A /* OMNMenuCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuCategory.h; sourceTree = "<group>"; };
@@ -1465,6 +1469,7 @@
 		9319FD96192F362F0053F3A4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				93BCD7491AAF156C00725B12 /* Bar */,
 				93F2AEDB1A6D54F200CDF3D9 /* Menu */,
 				935FF1521A6D1046004B69A6 /* Preorder */,
 				93E58CAE1A246500008064F9 /* Permission */,
@@ -2444,6 +2449,15 @@
 			path = Rating;
 			sourceTree = "<group>";
 		};
+		93BCD7491AAF156C00725B12 /* Bar */ = {
+			isa = PBXGroup;
+			children = (
+				93BCD74A1AAF159000725B12 /* OMNWishSuccessVC.h */,
+				93BCD74B1AAF159000725B12 /* OMNWishSuccessVC.m */,
+			);
+			name = Bar;
+			sourceTree = "<group>";
+		};
 		93CE47931A775961002D293B /* MenuProduct */ = {
 			isa = PBXGroup;
 			children = (
@@ -3104,6 +3118,7 @@
 				9317C07619DE95DD0071E42B /* OMNAlertTransitionAnimator.m in Sources */,
 				93CE479F1A778C81002D293B /* OMNMenuProductVC.m in Sources */,
 				93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */,
+				93BCD74C1AAF159000725B12 /* OMNWishSuccessVC.m in Sources */,
 				93DB26CD1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */,
 				9345AFD1199BB3C700328F73 /* OMNPaymentNotificationControl.m in Sources */,
 				932118261962E12700183729 /* OMNRestaurantListVC.m in Sources */,
@@ -3458,6 +3473,7 @@
 				93E26EC21AA973230034A7A3 /* OMNPreorderMediator.m in Sources */,
 				93EDCC9519C2D296006BC364 /* OMNSocketTest.m in Sources */,
 				93D1041A1A59856A00BC2E12 /* OMNScanTableQRCodeVC.m in Sources */,
+				93BCD74D1AAF159000725B12 /* OMNWishSuccessVC.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				933A9EAF1A4C0915001C0909 /* OMNRestaurantDetailsView.m in Sources */,
 				935A1E361A81D5D100704086 /* OMNClearButton.m in Sources */,

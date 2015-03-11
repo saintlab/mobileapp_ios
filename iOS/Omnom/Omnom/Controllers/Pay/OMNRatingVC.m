@@ -11,6 +11,7 @@
 #import <OMNStyler.h>
 #import "OMNAnalitics.h"
 #import "OMNOperationManager.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @implementation OMNRatingVC {
   
@@ -73,14 +74,14 @@
   
   self.automaticallyAdjustsScrollViewInsets = NO;
   
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"RATINGSCREEN_DONE_BUTTON_TITLE", @"Готово") style:UIBarButtonItemStylePlain target:self action:@selector(closeTap)];
+  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:kOMN_DONE_BUTTON_TITLE color:[UIColor blackColor] target:self action:@selector(closeTap)];
 
 }
 
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
   
-  CGSize size = _scroll.frame.size;
+  CGSize size = _contentView.frame.size;
   size.height += 1.0f;
   _scroll.contentSize = size;
   

@@ -27,7 +27,6 @@
 #import "OMNPreorderMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNTransactionPaymentVC.h"
-#import "OMNRatingVC.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -136,21 +135,6 @@ OMNOrderCalculationVCDelegate>
     _restaurantActionsVC.rescanTableBlock();
     
   }
-  
-}
-
-- (void)showRatingForTransaction:(OMNAcquiringTransaction *)transaction bill:(OMNBill *)bill {
-  
-  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithTransaction:transaction bill:bill];
-  ratingVC.backgroundImage = _restaurant.decoration.woodBackgroundImage;
-  @weakify(self)
-  ratingVC.didFinishBlock = ^{
-    
-    @strongify(self)
-    [self didFinishPayment];
-    
-  };
-  [_restaurantActionsVC.navigationController pushViewController:ratingVC animated:YES];
   
 }
 

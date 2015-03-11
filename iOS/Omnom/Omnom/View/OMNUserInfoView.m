@@ -9,6 +9,7 @@
 #import "OMNUserInfoView.h"
 #import <OMNStyler.h>
 #import "OMNConstants.h"
+#import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNUserInfoView ()
 <UITextFieldDelegate>
@@ -65,7 +66,7 @@
   nextToolbar.items =
   @[
     [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_CANCEL", @"Отмена") style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+    [UIBarButtonItem omn_flexibleItem],
     [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_NEXT", @"Следующий") style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)],
     ];
   
@@ -73,10 +74,10 @@
   doneToolbar.items =
   @[
     [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_CANCEL", @"Отмена") style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_DONE", @"Готово") style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)],
+    [UIBarButtonItem omn_flexibleItem],
+    [[UIBarButtonItem alloc] initWithTitle:kOMN_DONE_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)],
     ];
-  
+
   _nameTF = [[OMNErrorTextField alloc] init];
   _nameTF.textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
   _nameTF.textField.returnKeyType = UIReturnKeyNext;

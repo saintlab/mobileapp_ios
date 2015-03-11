@@ -89,7 +89,8 @@
     }];
     
   }
-  else if ([type isEqualToString:@"show_orders"]) {
+  else if ([type isEqualToString:@"show_orders"] ||
+           [type isEqualToString:@"lunch2gis"]) {
     
     if (UIApplicationStateActive != [UIApplication sharedApplication].applicationState) {
       

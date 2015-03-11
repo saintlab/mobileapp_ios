@@ -13,13 +13,18 @@
 #import "OMNTransactionPaymentVC.h"
 #import "OMNNavigationController.h"
 #import "OMNNavigationControllerDelegate.h"
+#import "OMNWishSuccessVC.h"
 
 @interface OMNBarPreorderMediator ()
 <OMNTransactionPaymentVCDelegate>
 
 @end
 
-@implementation OMNBarPreorderMediator
+@implementation OMNBarPreorderMediator {
+  
+  OMNWish *_wish;
+  
+}
 
 - (NSString *)refreshOrdersTitle {
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
@@ -27,6 +32,8 @@
 
 - (void)processWish:(OMNWish *)wish {
   
+  _wish = wish;
+
   OMNRestaurant *restaurant = self.restaurantMediator.restaurant;
   OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForWish:wish];
   OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithRestaurant:restaurant transaction:transaction];
@@ -41,8 +48,16 @@
 
 - (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
   
-  [self didFinishPreorder];
-  [self.restaurantMediator showRatingForTransaction:transactionPaymentVC.acquiringTransaction bill:bill];
+  OMNWishSuccessVC *wishSuccessVC = [[OMNWishSuccessVC alloc] initWithWish:_wish];
+  @weakify(self)
+  wishSuccessVC.didFinishBlock = ^{
+    
+    @strongify(self)
+    [self didFinishPreorder];
+    
+  };
+  wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
+  [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
   
 }
 
@@ -58,7 +73,7 @@
   
   UIButton *bottomButton = nil;
   
-  if (self.restaurantMediator.restaurant.complete_ordres_url) {
+  if (self.restaurantMediator.restaurant.orders_paid_url) {
     
     bottomButton = [UIButton omn_barButtonWithTitle:kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT color:[UIColor blackColor] target:self action:@selector(completeOrdresCall)];;
     
@@ -70,7 +85,7 @@
 - (void)completeOrdresCall {
   
   OMNModalWebVC *modalWebVC = [[OMNModalWebVC alloc] init];
-  modalWebVC.url = self.restaurantMediator.restaurant.complete_ordres_url;
+  modalWebVC.url = self.restaurantMediator.restaurant.orders_paid_url;
   @weakify(self)
   modalWebVC.didCloseBlock = ^{
     

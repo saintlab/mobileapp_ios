@@ -23,7 +23,11 @@
     
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
-#if DEBUG
+#if AD_HOC_LUNCH_2GIS
+
+    _qr = @"qr-code-for-0-lunch2gis";
+
+#elif DEBUG
 
 //    staging
 //    _customConfigName = @"config_staging";

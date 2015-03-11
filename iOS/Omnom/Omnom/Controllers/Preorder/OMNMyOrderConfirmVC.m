@@ -68,8 +68,6 @@ OMNPreorderConfirmCellDelegate>
   _tableView.delegate = self;
   _tableView.dataSource = self;
   
-  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"upper_bar_wish"] forBarMetrics:UIBarMetricsDefault];
-  
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:NSLocalizedString(@"PREORDER_CONFIRM_CLOSE_BUTTON_TITLE", @"Закрыть") color:[UIColor whiteColor] target:self action:@selector(closeTap)];
   
   [self setupBottomBar];
@@ -104,7 +102,8 @@ OMNPreorderConfirmCellDelegate>
 
   [self updateTableViewAnimated:NO];
   [self loadTableProductItemsWithCompletion:^{}];
-  
+  [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"upper_bar_wish"] forBarMetrics:UIBarMetricsDefault];
+
 }
 
 - (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock {

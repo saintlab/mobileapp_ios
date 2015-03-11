@@ -21,6 +21,7 @@
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNSelectOrderButton.h"
 #import "OMNRestaurant+omn_payment.h"
+#import "OMNRatingVC.h"
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -407,7 +408,14 @@ OMNTransactionPaymentVCDelegate>
 
 - (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
   
-  [_restaurantMediator showRatingForTransaction:transactionPaymentVC.acquiringTransaction bill:bill];
+  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithTransaction:transactionPaymentVC.acquiringTransaction bill:bill];
+  ratingVC.backgroundImage = _restaurantMediator.restaurant.decoration.woodBackgroundImage;
+  OMNRestaurantMediator *restaurantMediator = _restaurantMediator;
+  ratingVC.didFinishBlock = ^{
+    [restaurantMediator didFinishPayment];
+  };
+  [self.navigationController pushViewController:ratingVC animated:YES];
+
   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
   
 }
