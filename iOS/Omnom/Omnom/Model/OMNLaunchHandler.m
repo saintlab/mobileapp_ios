@@ -54,10 +54,16 @@
   
 }
 
+- (void)reloadWithOptions:(OMNLaunchOptions *)lo {
+  
+  self.launchOptions = lo;
+  [_startVC reloadSearchingRestaurant];
+  
+}
+
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   
-  self.launchOptions = [[OMNLaunchOptions alloc] initWithURL:url sourceApplication:sourceApplication annotation:annotation];
-  [_startVC reloadSearchingRestaurant];
+  [self reloadWithOptions:[[OMNLaunchOptions alloc] initWithURL:url sourceApplication:sourceApplication annotation:annotation]];
   return YES;
   
 }
@@ -94,8 +100,7 @@
     
     if (UIApplicationStateActive != [UIApplication sharedApplication].applicationState) {
       
-      self.launchOptions = [[OMNLaunchOptions alloc] initWithRemoteNotification:userInfo];
-      [_startVC reloadSearchingRestaurant];
+      [self reloadWithOptions:[[OMNLaunchOptions alloc] initWithRemoteNotification:userInfo]];
       
     }
     completionHandler(UIBackgroundFetchResultNoData);
@@ -135,8 +140,7 @@
 
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification {
   
-  self.launchOptions = [[OMNLaunchOptions alloc] initWithLocanNotification:notification];
-  [_startVC reloadSearchingRestaurant];
+  [self reloadWithOptions:[[OMNLaunchOptions alloc] initWithLocanNotification:notification]];
   
 }
 
