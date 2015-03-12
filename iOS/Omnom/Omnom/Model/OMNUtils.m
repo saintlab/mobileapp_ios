@@ -23,10 +23,11 @@ NSString *omnCommaString() {
 + (NSString *)unitStringFromDouble:(double)value {
   
   static NSNumberFormatter *unitNumberFormatter = nil;
-  if (nil == unitNumberFormatter) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     unitNumberFormatter = [[NSNumberFormatter alloc] init];
     [unitNumberFormatter setPositiveFormat:@"###0.###"];
-  }
+  });
   return [unitNumberFormatter stringFromNumber:@(value)];
   
 }
@@ -34,32 +35,35 @@ NSString *omnCommaString() {
 + (NSString *)moneyStringFromKop:(long long)kop {
   
   static NSNumberFormatter *currencyNumberFormatter = nil;
-  if (nil == currencyNumberFormatter) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     currencyNumberFormatter = [self commaNumberFormatter];
     currencyNumberFormatter.numberStyle = kCFNumberFormatterCurrencyStyle;
     currencyNumberFormatter.currencySymbol = kRubleSign;
     currencyNumberFormatter.currencyDecimalSeparator = omnCommaString();
     currencyNumberFormatter.minimumFractionDigits = 0;
     currencyNumberFormatter.maximumFractionDigits = 2;
-  }
+  });
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
 }
 
 + (NSString *)formatedStringFromRub:(long long)rub {
   static NSNumberFormatter *currencyNumberFormatter = nil;
-  if (nil == currencyNumberFormatter) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     currencyNumberFormatter = [self commaNumberFormatter];
-  }
+  });
   return [currencyNumberFormatter stringFromNumber:@(rub)];
 }
 
 + (NSString *)formattedMoneyStringFromKop:(long long)kop {
   static NSNumberFormatter *currencyNumberFormatter = nil;
-  if (nil == currencyNumberFormatter) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     currencyNumberFormatter = [self commaNumberFormatter];
-  }
+  });
   currencyNumberFormatter.minimumFractionDigits = (kop%100ll == 0) ? (0) : (2);
-  return [NSString stringWithFormat:@"%@%@", [currencyNumberFormatter stringFromNumber:@(kop/100.)], kRubleSign];
+  return [NSString stringWithFormat:@"%@\u2008%@", [currencyNumberFormatter stringFromNumber:@(kop/100.)], kRubleSign];
 }
 
 + (NSNumberFormatter *)commaNumberFormatter {
@@ -77,23 +81,25 @@ NSString *omnCommaString() {
 
 + (NSString *)evenCommaStringFromKop:(long long)kop {
   static NSNumberFormatter *currencyNumberFormatter = nil;
-  if (nil == currencyNumberFormatter) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     currencyNumberFormatter = [self commaNumberFormatter];
-  }
+  });
   return [currencyNumberFormatter stringFromNumber:@(round(kop/100.))];
 }
 
 + (NSString *)commaStringFromKop:(long long)kop {
   
   static NSNumberFormatter *currencyNumberFormatter = nil;
-  if (nil == currencyNumberFormatter) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     currencyNumberFormatter = [self commaNumberFormatter];
-  }
+  });
   currencyNumberFormatter.minimumFractionDigits = (kop%100ll == 0) ? (0) : (2);
   return [currencyNumberFormatter stringFromNumber:@(kop/100.)];
 }
 
-+ (NSMutableDictionary *)textAttributesWithFont:(UIFont *)font textColor:(UIColor *)textColot textAlignment:(NSTextAlignment)textAlignment {
++ (NSMutableDictionary *)textAttributesWithFont:(UIFont *)font textColor:(UIColor *)textColor textAlignment:(NSTextAlignment)textAlignment {
   
   NSMutableParagraphStyle *attributeStyle = [[NSMutableParagraphStyle alloc] init];
   attributeStyle.alignment = textAlignment;
@@ -104,10 +110,8 @@ NSString *omnCommaString() {
      NSParagraphStyleAttributeName : attributeStyle,
      } mutableCopy];
 
-  if (textColot) {
-    
-    textAttributes[NSForegroundColorAttributeName] = textColot;
-    
+  if (textColor) {
+    textAttributes[NSForegroundColorAttributeName] = textColor;
   }
   
   return textAttributes;

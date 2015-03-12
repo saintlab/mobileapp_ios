@@ -23,7 +23,7 @@ extern NSString *omnCommaString();
 + (NSString *)formatedStringFromRub:(long long)rub;
 + (NSString *)unitStringFromDouble:(double)value;
 
-+ (NSMutableDictionary *)textAttributesWithFont:(UIFont *)font textColor:(UIColor *)textColot textAlignment:(NSTextAlignment)textAlignment;
++ (NSMutableDictionary *)textAttributesWithFont:(UIFont *)font textColor:(UIColor *)textColor textAlignment:(NSTextAlignment)textAlignment;
 
 @end
 
