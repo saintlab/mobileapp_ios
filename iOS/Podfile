@@ -26,15 +26,13 @@ def import_all
   pod 'TTTAttributedLabel'
   pod 'uidevice-extension'
   pod 'UIDevice-Hardware'
-  pod "libextobjc"
+  pod 'libextobjc'
   pod 'CocoaLumberjack', '~> 2.0.0-rc'
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"
   pod "OMNSocketIO", :path => "OMNSocketIO/"
   pod "OMNMailRuAcquiring", :path => "OMNMailRuAcquiring/"
-  
-  #  pod "OMNSocial", :path => "OMNSocial/"
 end
 
 target 'omnom', :exclusive => true do

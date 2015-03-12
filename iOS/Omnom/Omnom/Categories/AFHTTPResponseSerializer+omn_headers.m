@@ -13,17 +13,8 @@
 @implementation AFHTTPRequestSerializer (omn_headers)
 
 - (void)omn_addCustomHeaders {
-  
-#ifdef APP_STORE
-  [self setValue:@"appstore" forHTTPHeaderField:@"x-mobile-configuration"];
-#elif defined (AD_HOC_LUNCH_2GIS)
-  [self setValue:@"lunch2gis" forHTTPHeaderField:@"x-mobile-configuration"];
-#elif defined (AD_HOC)
-  [self setValue:@"ad-hoc" forHTTPHeaderField:@"x-mobile-configuration"];
-#else
-  [self setValue:@"debug" forHTTPHeaderField:@"x-mobile-configuration"];
-#endif
-
+ 
+  [self setValue:[OMNConstants mobileConfiguration] forHTTPHeaderField:@"x-mobile-configuration"];
   [self setValue:[OMNConstants installID] forHTTPHeaderField:@"x-mobile-device-id"];
   [self setValue:CURRENT_BUILD forHTTPHeaderField:@"current-app-build"];
   [self setValue:CURRENT_VERSION forHTTPHeaderField:@"current-app-version"];

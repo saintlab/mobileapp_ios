@@ -24,20 +24,17 @@
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
     
-#warning AD_HOC_LUNCH_2GIS
-    _qr = @"qr-code-for-0-lunch2gis";
-    _customConfigName = @"config_staging";
-    
-#if AD_HOC_LUNCH_2GIS
+#if LUNCH_2GIS
 
     _qr = @"qr-code-for-0-lunch2gis";
+    _customConfigName = @"config_staging";
 
 #elif DEBUG
 
 //    staging
-//    _customConfigName = @"config_staging";
+    _customConfigName = @"config_staging";
 //    _qr = @"http://omnom.menu/zr9b"; //saintlab-iiko-dev
-//    _qr =  @"qr-code-for-2-saintlab-iiko-dev"; //staging
+    _qr =  @"qr-code-for-2-saintlab-iiko-dev"; //staging
 
 //    prod
 //    _qr = @"qr-code-for-4-ruby-bar-nsk-at-lenina-9"; //rubi

@@ -50,7 +50,7 @@ extern NSString * const OMNFacebookAppUrlString;
 + (NSString *)mixpanelToken;
 + (NSString *)mixpanelDebugToken;
 + (NSString *)crashlyticsAPIKey;
-
++ (NSString *)mobileConfiguration;
 + (NSString *)pushSoundName;
 + (BOOL)disableOnEntrancePush;
 

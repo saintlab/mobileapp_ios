@@ -228,7 +228,19 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 + (BOOL)disableOnEntrancePush {
   return [[self tokenForKey:@"disableOnEntrancePush"] boolValue];
 }
-
++ (NSString *)mobileConfiguration {
+  NSString *mobileConfiguration = @"debug";
+#ifdef APP_STORE
+  mobileConfiguration = @"appstore";
+#elif defined (LUNCH_2GIS)
+  mobileConfiguration = @"lunch2gis";
+#elif defined (AD_HOC)
+  mobileConfiguration = @"ad-hoc";
+#else
+  mobileConfiguration = @"debug";
+#endif
+  return mobileConfiguration;
+}
 + (NSString *)pushSoundName {
   return nil;
 }

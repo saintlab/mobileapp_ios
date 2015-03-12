@@ -116,6 +116,9 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     userInfo[@"created"] = _user.created_at;
   }
   
+  userInfo[@"mobile_configuration"] = [OMNConstants mobileConfiguration];
+  userInfo[@"base_url"] = [OMNConstants baseUrlString];
+  
   [_mixpanel.people set:@"push_notification_requested" to:@([OMNAuthorization authorisation].pushNotificationsRequested)];
   [_mixpanel.people set:userInfo];
   [_mixpanel registerSuperProperties:@{OMNAnaliticsUserKey : userInfo}];
