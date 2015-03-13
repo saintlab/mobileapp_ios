@@ -87,7 +87,7 @@
     };
   
   [[OMNOperationManager sharedManager] POST:@"/v2/decode/qr" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+    
     [[OMNAnalitics analitics] logDebugEvent:@"DECODE_QR_V2_RESPONSE" jsonRequest:parameters responseOperation:operation];
 
     NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
