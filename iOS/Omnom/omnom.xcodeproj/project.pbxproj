@@ -973,7 +973,7 @@
 		9307C5721937022800408519 /* OMNOrderItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderItemCell.m; sourceTree = "<group>"; };
 		930C481219CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTransitionFromCalculatorToOrder.h; sourceTree = "<group>"; };
 		930C481319CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTransitionFromCalculatorToOrder.m; sourceTree = "<group>"; };
-		930C4E951AB15E1B006CA608 /* omnom copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "omnom copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		930C4E951AB15E1B006CA608 /* lunch2gis.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lunch2gis.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		930C4E961AB15E1C006CA608 /* lunch2gis-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "lunch2gis-Info.plist"; path = "/Users/tea/Documents/Projects/saintlab/mobileapp/iOS/Omnom/lunch2gis-Info.plist"; sourceTree = "<absolute>"; };
 		930D8BA91965C22F002DFDC3 /* OMNCustomTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCustomTransition.h; sourceTree = "<group>"; };
 		930D8BAA1965C22F002DFDC3 /* OMNCustomTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCustomTransition.m; sourceTree = "<group>"; };
@@ -2243,7 +2243,7 @@
 			children = (
 				93676DE918D1E4FC00FC55F1 /* omnom.app */,
 				93676E0D18D1E4FC00FC55F1 /* omnomTests.xctest */,
-				930C4E951AB15E1B006CA608 /* omnom copy.app */,
+				930C4E951AB15E1B006CA608 /* lunch2gis.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3119,7 +3119,7 @@
 			);
 			name = lunch2gis;
 			productName = restaurants;
-			productReference = 930C4E951AB15E1B006CA608 /* omnom copy.app */;
+			productReference = 930C4E951AB15E1B006CA608 /* lunch2gis.app */;
 			productType = "com.apple.product-type.application";
 		};
 		93676DE818D1E4FC00FC55F1 /* omnom */ = {
@@ -4342,7 +4342,7 @@
 				INFOPLIST_FILE = "lunch2gis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "omnom copy";
+				PRODUCT_NAME = lunch2gis;
 				PROVISIONING_PROFILE = "e1cfc3c9-1c70-4d06-8d11-9041d4ca849b";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4373,7 +4373,7 @@
 				INFOPLIST_FILE = "lunch2gis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "omnom copy";
+				PRODUCT_NAME = lunch2gis;
 				PROVISIONING_PROFILE = "";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4398,7 +4398,7 @@
 				INFOPLIST_FILE = "lunch2gis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "omnom copy";
+				PRODUCT_NAME = lunch2gis;
 				PROVISIONING_PROFILE = "";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4430,7 +4430,7 @@
 				INFOPLIST_FILE = "lunch2gis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "omnom copy";
+				PRODUCT_NAME = lunch2gis;
 				PROVISIONING_PROFILE = "b0e431ee-85db-4335-97a8-6ccc1a6387bd";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4462,7 +4462,7 @@
 				INFOPLIST_FILE = "lunch2gis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_NAME = "omnom copy";
+				PRODUCT_NAME = lunch2gis;
 				PROVISIONING_PROFILE = "";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
