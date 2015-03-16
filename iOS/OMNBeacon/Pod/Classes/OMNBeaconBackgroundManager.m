@@ -26,12 +26,18 @@
 @implementation OMNBeaconBackgroundManager
 
 + (instancetype)manager {
+  
+#if LUNCH_2GIS
+  return nil;
+#endif
+  
   static id manager = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     manager = [[[self class] alloc] init];
   });
   return manager;
+  
 }
 
 - (instancetype)init {

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "930C4D4C1AB15E1B006CA608"
-               BuildableName = "omnom copy.app"
+               BuildableName = "lunch2gis.app"
                BlueprintName = "lunch2gis"
                ReferencedContainer = "container:omnom.xcodeproj">
             </BuildableReference>
@@ -63,7 +63,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "930C4D4C1AB15E1B006CA608"
-            BuildableName = "omnom copy.app"
+            BuildableName = "lunch2gis.app"
             BlueprintName = "lunch2gis"
             ReferencedContainer = "container:omnom.xcodeproj">
          </BuildableReference>
@@ -82,7 +82,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "930C4D4C1AB15E1B006CA608"
-            BuildableName = "omnom copy.app"
+            BuildableName = "lunch2gis.app"
             BlueprintName = "lunch2gis"
             ReferencedContainer = "container:omnom.xcodeproj">
          </BuildableReference>
@@ -92,7 +92,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release"
+      buildConfiguration = "Ad-Hoc"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
