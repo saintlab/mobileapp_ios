@@ -65,13 +65,15 @@
   NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(16.0f) textColor:colorWithHexString(@"515753") textAlignment:NSTextAlignmentCenter];
   NSMutableAttributedString *numberText = [[NSMutableAttributedString alloc] initWithString:kOMN_BAR_SUCCESS_ORDER_NUMBER_TEXT attributes:[attributes copy]];
   attributes[NSFontAttributeName] = FuturaLSFOmnomLERegular(25.0f);
-  [numberText appendAttributedString:[[NSAttributedString alloc] initWithString:@" 9999" attributes:[attributes copy]]];
+  NSString *number = [NSString stringWithFormat:@" %@", _wish.orderNumber];
+  [numberText appendAttributedString:[[NSAttributedString alloc] initWithString:number attributes:[attributes copy]]];
   _orderNumberLabel.attributedText = numberText;
   
   attributes[NSFontAttributeName] = FuturaLSFOmnomLERegular(16.0f);
   NSMutableAttributedString *pinText = [[NSMutableAttributedString alloc] initWithString:kOMN_BAR_SUCCESS_PIN_TEXT attributes:[attributes copy]];
   attributes[NSFontAttributeName] = FuturaLSFOmnomLERegular(25.0f);
-  [pinText appendAttributedString:[[NSAttributedString alloc] initWithString:@" 9991" attributes:[attributes copy]]];
+  NSString *pin = [NSString stringWithFormat:@" %@", _wish.pin];
+  [pinText appendAttributedString:[[NSAttributedString alloc] initWithString:pin attributes:[attributes copy]]];
   _orderPinLabel.attributedText = pinText;
   
   _orderHelpLabel.linkAttributes =

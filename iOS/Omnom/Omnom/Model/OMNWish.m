@@ -23,6 +23,9 @@
     _phone = jsonData[@"phone"];
     _table_id = jsonData[@"table_id"];
     
+    _orderNumber = jsonData[@"internal_table_id"];
+    _pin = jsonData[@"code"];
+    
     NSArray *items = jsonData[@"items"];
     if ([items isKindOfClass:[NSArray class]]) {
       

@@ -48,6 +48,8 @@
 
 - (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
   
+  [self.rootVC dismissViewControllerAnimated:YES completion:nil];
+  
   OMNWishSuccessVC *wishSuccessVC = [[OMNWishSuccessVC alloc] initWithWish:_wish];
   @weakify(self)
   wishSuccessVC.didFinishBlock = ^{
@@ -57,7 +59,7 @@
     
   };
   wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
-  [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
+  [self.rootVC.navigationController pushViewController:wishSuccessVC animated:NO];
   
 }
 

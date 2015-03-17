@@ -18,6 +18,8 @@
 @property (nonatomic, copy, readonly) NSString *internal_table_id;
 @property (nonatomic, copy, readonly) NSString *person;
 @property (nonatomic, copy, readonly) NSString *phone;
+@property (nonatomic, copy, readonly) NSString *orderNumber;
+@property (nonatomic, copy, readonly) NSString *pin;
 @property (nonatomic, strong, readonly) NSArray *items;
 
 - (instancetype)initWithJsonData:(id)jsonData;
