@@ -20,6 +20,7 @@ typedef void(^OMNPaymentDidFinishBlock)(OMNBill *bill, OMNError *error);
 @property (nonatomic, copy) NSString *wish_id;
 @property (nonatomic, copy) NSString *table_id;
 @property (nonatomic, copy) NSString *restaurant_id;
+@property (nonatomic, copy, readonly) NSString *type;
 @property (nonatomic, assign) long long bill_amount;
 @property (nonatomic, assign) long long tips_amount;
 @property (nonatomic, copy) NSString *tips_way;

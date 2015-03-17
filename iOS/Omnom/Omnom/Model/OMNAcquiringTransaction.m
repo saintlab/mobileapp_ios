@@ -10,16 +10,35 @@
 
 @implementation OMNAcquiringTransaction
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
+- (instancetype)init {
   self = [super init];
   if (self) {
+    
+    _type = @"none";
+    self.order_id = @"";
+    self.wish_id = @"";
+    self.table_id = @"";
+    self.restaurant_id = @"";
+  }
+  return self;
+}
+
+- (instancetype)initWithOrder:(OMNOrder *)order {
+  self = [self init];
+  if (self) {
+    
+    _type = @"order";
+
   }
   return self;
 }
 
 - (instancetype)initWithWish:(OMNWish *)wish {
-  self = [super init];
+  self = [self init];
   if (self) {
+    
+    _type = @"wish";
+    
   }
   return self;
 }

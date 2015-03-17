@@ -98,7 +98,6 @@ describe(@"register test", ^{
       
       cardPayResponse = response;
       
-      
     }];
     
     [[expectFutureValue(cardPayResponse) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];

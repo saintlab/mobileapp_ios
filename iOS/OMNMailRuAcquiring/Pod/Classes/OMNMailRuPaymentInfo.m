@@ -33,6 +33,7 @@
   self = [super init];
   if (self) {
     self.restaurant_id = @"";
+    self.type = @"";
   }
   return self;
 }
@@ -47,6 +48,7 @@
   @{
     @"tip" : @(self.tip),
     @"restaurant_id" : self.restaurant_id,
+    @"type" : self.type,
     };
   
   NSError *error = nil;

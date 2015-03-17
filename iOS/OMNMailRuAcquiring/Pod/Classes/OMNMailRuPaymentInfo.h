@@ -28,6 +28,7 @@
 
 @property (nonatomic, assign) long long tip;
 @property (nonatomic, copy) NSString *restaurant_id;
+@property (nonatomic, copy) NSString *type;
 
 - (NSString *)extra_text;
 

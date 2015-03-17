@@ -25,21 +25,8 @@
   
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    
-    self.order_id = @"";
-    self.wish_id = @"";
-    self.table_id = @"";
-    self.restaurant_id = @"";
-    
-  }
-  return self;
-}
-
 - (instancetype)initWithOrder:(OMNOrder *)order {
-  self = [self init];
+  self = [super initWithOrder:order];
   if (self) {
     
     self.bill_amount = order.enteredAmount;
@@ -56,7 +43,7 @@
 }
 
 - (instancetype)initWithWish:(OMNWish *)wish {
-  self = [self init];
+  self = [super initWithWish:wish];
   if (self) {
     
     self.bill_amount = wish.totalAmount;
@@ -129,6 +116,7 @@
   paymentInfo.order_message = @"message";
   paymentInfo.extra.tip = self.tips_amount;
   paymentInfo.extra.restaurant_id = bill.mail_restaurant_id;
+  paymentInfo.extra.type = self.type;
   paymentInfo.order_amount = @(0.01*self.total_amount);
   paymentInfo.order_id = bill.id;
 
