@@ -34,10 +34,10 @@ OMNPreorderConfirmCellDelegate>
   
   OMNRestaurantMediator *_restaurantMediator;
   OMNVisitor *_visitor;
-  NSArray *_tableProductsIds;
 
-  NSArray *_model;
   NSMutableArray *_preorderedProducts;
+  NSArray *_recommendationProducts;
+
   OMNPreorderActionCellItem *_preorderActionCellItem;
   
   OMNPreorderMediator *_preorderMediator;
@@ -100,7 +100,7 @@ OMNPreorderConfirmCellDelegate>
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
 
-  [self updateTableViewAnimated:NO];
+  [self updatePreorderedProductsAnimated:NO];
   [self loadTableProductItemsWithCompletion:^{}];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"upper_bar_wish"] forBarMetrics:UIBarMetricsDefault];
 
@@ -125,30 +125,9 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)didLoadTableProductItems:(NSArray *)items {
   
-  _tableProductsIds = items;
-  [self updateTableViewAnimated:YES];
+  NSMutableArray *tableProducts = [NSMutableArray arrayWithCapacity:items.count];
   
-}
-
-- (void)updateTableViewAnimated:(BOOL)animated {
-  
-  NSMutableArray *products = [NSMutableArray array];
-
-  [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
-    
-    if (product.preordered) {
-      
-      OMNPreorderConfirmCellItem *orderedItem = [[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:product];
-      orderedItem.delegate = self;
-      [products addObject:orderedItem];
-      
-    }
-    
-  }];
-  
-  NSMutableArray *tableProducts = [NSMutableArray arrayWithCapacity:_tableProductsIds.count];
-
-  [_tableProductsIds enumerateObjectsUsingBlock:^(id tableProductId, NSUInteger idx, BOOL *stop) {
+  [items enumerateObjectsUsingBlock:^(id tableProductId, NSUInteger idx, BOOL *stop) {
     
     OMNMenuProduct *menuProduct = _restaurantMediator.menu.products[tableProductId];
     if (menuProduct) {
@@ -161,20 +140,34 @@ OMNPreorderConfirmCellDelegate>
     }
     
   }];
-
-  _preorderedProducts = products;
-  _preorderActionCellItem.enabled = (products.count > 0);
   
-  _model =
-  @[
-    _preorderedProducts,
-    @[_preorderActionCellItem],
-    tableProducts,
-    ];
+  _recommendationProducts = [tableProducts copy];
+  [_tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+  
+}
+
+- (void)updatePreorderedProductsAnimated:(BOOL)animated {
+  
+  NSMutableArray *preorderedProducts = [NSMutableArray array];
+
+  [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
+    
+    if (product.preordered) {
+      
+      OMNPreorderConfirmCellItem *orderedItem = [[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:product];
+      orderedItem.delegate = self;
+      [preorderedProducts addObject:orderedItem];
+      
+    }
+    
+  }];
+
+  _preorderedProducts = preorderedProducts;
+  _preorderActionCellItem.enabled = (preorderedProducts.count > 0);
   
   if (animated) {
     
-    [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)] withRowAnimation:UITableViewRowAnimationFade];
+    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
     
   }
   else {
@@ -209,21 +202,46 @@ OMNPreorderConfirmCellDelegate>
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
-  return _model.count;
+  return 3;
   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   
-  NSArray *rowItems = _model[section];
-  return rowItems.count;
+  NSInteger numberOfRows = 0;
+  switch (section) {
+    case 0: {
+      numberOfRows = _preorderedProducts.count;
+    } break;
+    case 1: {
+      numberOfRows = 1;
+    } break;
+    case 2: {
+      numberOfRows = _recommendationProducts.count;
+    } break;
+    default:
+      break;
+  }
+  return numberOfRows;
   
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath {
   
-  NSArray *rowItems = _model[indexPath.section];
-  id item = rowItems[indexPath.row];
+  id item = nil;
+  switch (indexPath.section) {
+    case 0: {
+      item = _preorderedProducts[indexPath.row];
+    } break;
+    case 1: {
+      item = _preorderActionCellItem;
+    } break;
+    case 2: {
+      item = _recommendationProducts[indexPath.row];
+    } break;
+    default:
+      break;
+  }
   return item;
   
 }
@@ -267,7 +285,8 @@ OMNPreorderConfirmCellDelegate>
   
   OMNPreorderConfirmCellItem *orderedItem = _preorderedProducts[indexPath.row];
   [orderedItem.menuProduct resetSelection];
-  [self updateTableViewAnimated:YES];
+  [_preorderedProducts removeObjectAtIndex:indexPath.row];
+  [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
   
 }
 
@@ -342,7 +361,7 @@ OMNPreorderConfirmCellDelegate>
 - (void)deselectProductsAndReload:(NSArray *)productIDs {
   
   [_restaurantMediator.menu deselectItems:productIDs];
-  [self updateTableViewAnimated:NO];
+  [self updatePreorderedProductsAnimated:NO];
   [self preorderItems];
   
 }
@@ -357,7 +376,7 @@ OMNPreorderConfirmCellDelegate>
 - (void)preorderActionCellDidClear:(OMNPreorderActionCell *)preorderActionCell {
   
   [_restaurantMediator.menu resetSelection];
-  [self updateTableViewAnimated:YES];
+  [self updatePreorderedProductsAnimated:YES];
   
 }
 
@@ -408,7 +427,7 @@ OMNPreorderConfirmCellDelegate>
   [preorderConfirmCell.item editMenuProductFromController:self withCompletion:^{
     
     @strongify(self)
-    [self updateTableViewAnimated:YES];
+    [self updatePreorderedProductsAnimated:YES];
     
   }];
   

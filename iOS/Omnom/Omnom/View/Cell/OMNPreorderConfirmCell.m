@@ -64,7 +64,7 @@
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[preorderConfirmView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[preorderConfirmView]|" options:kNilOptions metrics:metrics views:views]];
 
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[lineView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[lineView]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[lineView(1)]" options:kNilOptions metrics:metrics views:views]];
   
   [_preorderConfirmView.priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
@@ -73,7 +73,9 @@
 
 - (void)priceTap {
   
-  [_item.delegate preorderConfirmCellDidEdit:self];
+  if (!self.isEditing) {
+    [_item.delegate preorderConfirmCellDidEdit:self];
+  }
   
 }
 
