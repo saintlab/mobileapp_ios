@@ -29,7 +29,6 @@
 #if LUNCH_2GIS
 
     _qr = @"qr-code-for-0-lunch2gis";
-    _customConfigName = @"config_staging";
 
 #elif DEBUG
 
