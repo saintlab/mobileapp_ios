@@ -90,13 +90,9 @@
   UIColor *bgColor = (stuck) ? colorWithHexString(@"D3D3D3") : [UIColor clearColor];
   UIColor *textColor = (stuck) ? colorWithHexString(@"484848") : [UIColor whiteColor];
 
-  [UIView transitionWithView:_button duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-    
-    _button.backgroundColor = bgColor;
-    
-  } completion:nil];
   [UIView transitionWithView:_menuHeaderLabel duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
+    _menuHeaderLabel.backgroundColor = bgColor;
     _menuHeaderLabel.textColor = textColor;
     
   } completion:nil];

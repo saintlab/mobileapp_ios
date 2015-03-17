@@ -14,7 +14,15 @@
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
   
-  return (self.selected) ? (20.0f) : (2.0f);
+  if (self.selected) {
+    return 20.0f;
+  }
+  else if (kMenuProductsDelimiterTypeTransparent == self.type) {
+    return 0.0f;
+  }
+  else {
+    return 2.0f;
+  }
   
 }
 

@@ -250,6 +250,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
   [_tableView beginUpdates];
   [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];
+//    [_tableView reloadSections:reloadIndexSet withRowAnimation:UITableViewRowAnimationFade];
   [_tableView endUpdates];
   if (NSNotFound != selectedIndex &&
       selectedSectionItem.rowItems.count) {

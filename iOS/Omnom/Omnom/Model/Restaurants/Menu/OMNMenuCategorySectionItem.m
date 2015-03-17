@@ -29,7 +29,7 @@
 }
 
 - (NSArray *)rowItems {
-  
+
   if (!self.selected) {
     return @[];
   }
