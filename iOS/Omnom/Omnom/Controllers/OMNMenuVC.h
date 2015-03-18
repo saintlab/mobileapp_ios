@@ -17,7 +17,6 @@
 @property (nonatomic, weak) OMNMenuProductCell *selectedCell;
 @property (nonatomic, strong, readonly) UIView *fadeView;
 @property (nonatomic, strong, readonly) UIImageView *navigationFadeView;
-@property (nonatomic, strong, readonly) UIButton *menuHeaderView;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator selectedCategory:(OMNMenuCategory *)selectedCategory;
 

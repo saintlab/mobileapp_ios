@@ -65,18 +65,18 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 - (instancetype)initWithJsonData:(id)jsonData {
   self = [super init];
   if (self) {
-#warning 123
+
     _data = jsonData;
-    self.id = [jsonData[@"id"] description];
-    self.created = jsonData[@"created"];
-    self.Description = jsonData[@"description"];
-    self.notes = jsonData[@"notes"];
-    self.status = jsonData[@"status"];
-    self.openTime = jsonData[@"open_time"];
-    self.modifiedTime = jsonData[@"modified_time"];
-    self.restaurant_id = jsonData[@"restaurant_id"];
-    self.table_id = jsonData[@"table_id"];
-    self.paid = [[OMNOrderPaid alloc] initWithJsonData:jsonData];
+    _id = [jsonData[@"id"] description];
+    _created = jsonData[@"created"];
+    _Description = jsonData[@"description"];
+    _notes = jsonData[@"notes"];
+    _status = jsonData[@"status"];
+    _openTime = jsonData[@"open_time"];
+    _modifiedTime = jsonData[@"modified_time"];
+    _restaurant_id = jsonData[@"restaurant_id"];
+    _table_id = jsonData[@"table_id"];
+    _paid = [[OMNOrderPaid alloc] initWithJsonData:jsonData];
     
     NSArray *itemsData = jsonData[@"items"];
     NSMutableDictionary *orderItemIDs = [NSMutableDictionary dictionary];

@@ -9,7 +9,6 @@
 #import "OMNConstants.h"
 #import "OMNOrderItem.h"
 #import "OMNTip.h"
-#import "OMNBill.h"
 #import "OMNOrderPaid.h"
 #import "OMNGuest.h"
 
@@ -43,24 +42,23 @@ extern NSInteger const kCustomTipIndex;
 
 @interface OMNOrder : NSObject
 
-@property (nonatomic, copy) NSString *id;
+@property (nonatomic, copy, readonly) NSString *id;
 
-@property (nonatomic, copy) NSString *created;
-@property (nonatomic, copy) NSString *Description;
-@property (nonatomic, copy) NSString *notes;
-@property (nonatomic, copy) NSString *status;
-@property (nonatomic, copy) NSString *openTime;
-@property (nonatomic, copy) NSString *modifiedTime;
-@property (nonatomic, copy) NSString *table_id;
-@property (nonatomic, copy) NSString *restaurant_id;
-@property (nonatomic, copy) NSString *restarateurOrderId;
+@property (nonatomic, copy, readonly) NSString *created;
+@property (nonatomic, copy, readonly) NSString *Description;
+@property (nonatomic, copy, readonly) NSString *notes;
+@property (nonatomic, copy, readonly) NSString *status;
+@property (nonatomic, copy, readonly) NSString *openTime;
+@property (nonatomic, copy, readonly) NSString *modifiedTime;
+@property (nonatomic, copy, readonly) NSString *table_id;
+@property (nonatomic, copy, readonly) NSString *restaurant_id;
+@property (nonatomic, copy, readonly) NSString *restarateurOrderId;
 
 @property (nonatomic, strong, readonly) NSArray *guests;
 @property (nonatomic, strong, readonly) NSArray *tips;
 @property (nonatomic, assign, readonly) long long percentTipsThreshold;
 
-@property (nonatomic, strong) OMNOrderPaid *paid;
-@property (nonatomic, strong) OMNBill *bill;
+@property (nonatomic, strong, readonly) OMNOrderPaid *paid;
 
 @property (nonatomic, strong, readonly) OMNTip *customTip;
 @property (nonatomic, assign, readonly) long long expectedValue;

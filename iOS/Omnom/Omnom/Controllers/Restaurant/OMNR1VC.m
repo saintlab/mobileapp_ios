@@ -375,42 +375,59 @@
   OMNRestaurantSettings *restaurantSettings = _restaurantMediator.restaurant.settings;
   if (restaurantSettings.has_menu) {
     
-    _menuModel = [[OMNMenuModel alloc] init];
-    _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _menuTable.alpha = 0.0f;
-    _menuTable.clipsToBounds = NO;
-    _menuTable.showsVerticalScrollIndicator = NO;
-    _menuTable.allowsSelection = YES;
-    _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
-    [_menuModel configureTableView:_menuTable];
-    [self.view insertSubview:_menuTable belowSubview:self.circleButton];
-    
-    views[@"menuTable"] = _menuTable;
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:nil views:views]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+    [self addMenu];
     
   }
-  else {
+  else if (restaurantSettings.has_promo) {
 
-    UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
-    [self.view addGestureRecognizer:panGR];
-
-    UIButton *actionButton = [[UIButton alloc] init];
-    actionButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [actionButton addTarget:self action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
-    [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
-    [self.view addSubview:actionButton];
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-[OMNStyler styler].bottomToolbarHeight.floatValue]];
-    
-    [self.view layoutIfNeeded];
+    [self addPromo];
     
   }
+  
+}
+
+- (void)addMenu {
+  
+  _menuModel = [[OMNMenuModel alloc] init];
+  _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+  _menuTable.alpha = 0.0f;
+  _menuTable.clipsToBounds = NO;
+  _menuTable.showsVerticalScrollIndicator = NO;
+  _menuTable.allowsSelection = YES;
+  _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
+  [_menuModel configureTableView:_menuTable];
+  [self.view insertSubview:_menuTable belowSubview:self.circleButton];
+  
+  NSDictionary *views =
+  @{
+    @"menuTable" : _menuTable
+    };
+  
+  NSDictionary *metrics = @{};
+  
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+  
+}
+
+- (void)addPromo {
+  
+  UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+  [self.view addGestureRecognizer:panGR];
+  
+  UIButton *actionButton = [[UIButton alloc] init];
+  actionButton.translatesAutoresizingMaskIntoConstraints = NO;
+  [actionButton addTarget:self action:@selector(showRestaurantInfo) forControlEvents:UIControlEventTouchUpInside];
+  [actionButton setImage:[UIImage imageNamed:@"down_button_icon"] forState:UIControlStateNormal];
+  [self.view addSubview:actionButton];
+  
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:60.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-[OMNStyler styler].bottomToolbarHeight.floatValue]];
+  
+  [self.view layoutIfNeeded];
   
 }
 

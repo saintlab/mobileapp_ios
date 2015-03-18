@@ -58,10 +58,6 @@ OMNMenuCategoryHeaderViewDelegate>
   _tableView.dataSource = _model;
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
-  _menuHeaderView = [[OMNMenuHeaderView alloc] init];
-  [_menuHeaderView addTarget:self action:@selector(backTap) forControlEvents:UIControlEventTouchUpInside];
-  [_menuHeaderView sizeToFit];
-  self.navigationItem.titleView = _menuHeaderView;
   
   @weakify(self)
   _model.didEndDraggingBlock = ^(UITableView *tableView) {
@@ -133,6 +129,7 @@ OMNMenuCategoryHeaderViewDelegate>
   _tableView.backgroundColor = [UIColor clearColor];
   _tableView.translatesAutoresizingMaskIntoConstraints = NO;
   _tableView.tableFooterView = [[UIView alloc] init];
+  _tableView.tableHeaderView = [[OMNMenuHeaderView alloc] init];
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   [self.view addSubview:_tableView];
   
@@ -142,7 +139,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
   [OMNMenuCategoriesModel registerCellsForTableView:_tableView];
 
-  UIEdgeInsets insets = UIEdgeInsetsMake(64.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(20.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   _tableView.contentInset = insets;
   _tableView.scrollIndicatorInsets = insets;
   
@@ -156,7 +153,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
   NSDictionary *metrics =
   @{
-    @"topOffset" : @(64.0f),
+    @"topOffset" : @(20.0f),
     };
   
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];

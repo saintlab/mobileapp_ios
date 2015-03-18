@@ -16,7 +16,8 @@
 @implementation OMNMenuHeaderView
 
 - (instancetype)initWithFrame:(CGRect)frame {
-  self = [super initWithFrame:frame];
+  
+  self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
   if (self) {
     
     [self omn_setup];
@@ -28,12 +29,13 @@
 - (void)omn_setup {
   
   UIColor *tintColor = colorWithHexString(@"F5A623");
-  
+  UIColor *highlightedTintColor = [tintColor colorWithAlphaComponent:0.5f];
   self.titleLabel.font = FuturaOSFOmnomRegular(25.0f);
   [self setTitleColor:tintColor forState:UIControlStateNormal];
-  [self setTitleColor:[tintColor colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
+  [self setTitleColor:highlightedTintColor forState:UIControlStateHighlighted];
   [self setTitle:NSLocalizedString(@"MENU_LIST_TITLE", @"Меню") forState:UIControlStateNormal];
   [self setImage:[[UIImage imageNamed:@"ic_menu"] omn_tintWithColor:tintColor] forState:UIControlStateNormal];
+  [self setImage:[[UIImage imageNamed:@"ic_menu"] omn_tintWithColor:highlightedTintColor] forState:UIControlStateHighlighted];
   [self omn_centerButtonAndImageWithSpacing:7.0f];
   
 }

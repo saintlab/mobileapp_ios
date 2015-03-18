@@ -7,8 +7,8 @@
 //
 
 #import "OMNMenuModel.h"
-#import "OMNMenuHeaderItemCell.h"
 #import "OMNMenuItemCell.h"
+#import "OMNMenuHeaderView.h"
 
 const CGFloat kMenuTableTopOffset = 20.0f;
 
@@ -16,9 +16,11 @@ const CGFloat kMenuTableTopOffset = 20.0f;
 
 - (void)configureTableView:(UITableView *)tableView {
   
-  [tableView registerClass:[OMNMenuHeaderItemCell class] forCellReuseIdentifier:@"OMNMenuHeaderItemCell"];
   [tableView registerClass:[OMNMenuItemCell class] forCellReuseIdentifier:@"OMNMenuItemCell"];
   
+  OMNMenuHeaderView *menuHeaderView = [[OMNMenuHeaderView alloc] init];
+  [menuHeaderView addTarget:self action:@selector(menuTap) forControlEvents:UIControlEventTouchUpInside];
+  tableView.tableHeaderView = menuHeaderView;
   tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   tableView.backgroundView = [[UIView alloc] init];
   tableView.backgroundView.backgroundColor = [UIColor clearColor];
@@ -29,61 +31,38 @@ const CGFloat kMenuTableTopOffset = 20.0f;
 
 }
 
+- (void)menuTap {
+  
+  if (self.didSelectBlock) {
+    self.didSelectBlock(nil);
+  }
+  
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
-  return 2;
+  return 1;
   
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   
-  NSInteger numberOfRows = 0;
-  
-  switch (section) {
-    case 0: {
-      numberOfRows = 1;
-    } break;
-    case 1: {
-      numberOfRows = _menu.categories.count;
-    } break;
-  }
-  
-  return numberOfRows;
+  return _menu.categories.count;
   
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  UITableViewCell *cell = nil;
-  
-  switch (indexPath.section) {
-    case 0: {
-
-      cell = [tableView dequeueReusableCellWithIdentifier:@"OMNMenuHeaderItemCell" forIndexPath:indexPath];
-
-    } break;
-    case 1: {
-
-      OMNMenuItemCell *menuItemCell = [tableView dequeueReusableCellWithIdentifier:@"OMNMenuItemCell" forIndexPath:indexPath];
-      OMNMenuCategory *menuCategory = _menu.categories[indexPath.row];
-      menuItemCell.label.text = menuCategory.name;
-      cell = menuItemCell;
-      
-    } break;
-  }
-  
-  return cell;
+  OMNMenuItemCell *menuItemCell = [tableView dequeueReusableCellWithIdentifier:@"OMNMenuItemCell" forIndexPath:indexPath];
+  OMNMenuCategory *menuCategory = _menu.categories[indexPath.row];
+  menuItemCell.label.text = menuCategory.name;
+  return menuItemCell;
   
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   CGFloat heightForRow = 44.0f;
-  if (0 == indexPath.section) {
-    
-    heightForRow = 44.0f;
-    
-  }
   return heightForRow;
   
 }
@@ -94,10 +73,7 @@ const CGFloat kMenuTableTopOffset = 20.0f;
   
   if (self.didSelectBlock) {
     
-    OMNMenuCategory *menuCategory = nil;
-    if (1 == indexPath.section) {
-      menuCategory = _menu.categories[indexPath.row];
-    }
+    OMNMenuCategory *menuCategory = _menu.categories[indexPath.row];
     self.didSelectBlock(menuCategory);
     
   }

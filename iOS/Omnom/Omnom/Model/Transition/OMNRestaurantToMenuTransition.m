@@ -32,8 +32,6 @@
   [toViewController.view layoutIfNeeded];
   CGRect toTableFrame = [toViewController.tableView convertRect:toViewController.tableView.bounds toView:containerView];
 
-  toViewController.menuHeaderView.hidden = YES;
-  
   [containerView addSubview:fromViewController.view];
 
   UIEdgeInsets initialContentInset = menuTable.contentInset;
@@ -55,7 +53,6 @@
     [UIView animateWithDuration:0.2 animations:^{
       
       fromViewController.view.alpha = 0.0f;
-      toViewController.menuHeaderView.hidden = NO;
 
     } completion:^(BOOL finished1) {
       

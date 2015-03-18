@@ -11,6 +11,7 @@
 #import "OMNBankCardInfo.h"
 #import "OMNOrder.h"
 #import "OMNWish.h"
+#import "OMNBill.h"
 
 typedef void(^OMNPaymentDidFinishBlock)(OMNBill *bill, OMNError *error);
 
