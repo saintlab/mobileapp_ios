@@ -9,10 +9,6 @@
 #import "OMNPushPermissionVC.h"
 #import "OMNAuthorization.h"
 
-@interface OMNPushPermissionVC ()
-
-@end
-
 @implementation OMNPushPermissionVC
 
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {

@@ -45,7 +45,8 @@
   self.backgroundView.backgroundColor = [UIColor clearColor];
   self.contentView.backgroundColor = [UIColor clearColor];
   self.backgroundColor = [UIColor clearColor];
-
+  self.selectionStyle = UITableViewCellSelectionStyleNone;
+  
   _label = [OMNMenuHeaderLabel omn_autolayoutView];
   [self.contentView addSubview:_label];
   

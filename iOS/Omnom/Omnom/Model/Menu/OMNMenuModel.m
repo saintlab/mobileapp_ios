@@ -18,6 +18,7 @@ const CGFloat kMenuTableTopOffset = 20.0f;
   
   [tableView registerClass:[OMNMenuHeaderItemCell class] forCellReuseIdentifier:@"OMNMenuHeaderItemCell"];
   [tableView registerClass:[OMNMenuItemCell class] forCellReuseIdentifier:@"OMNMenuItemCell"];
+  
   tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   tableView.backgroundView = [[UIView alloc] init];
   tableView.backgroundView.backgroundColor = [UIColor clearColor];
@@ -91,10 +92,12 @@ const CGFloat kMenuTableTopOffset = 20.0f;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath  {
   
-  if (self.didSelectBlock &&
-      1 == indexPath.section) {
+  if (self.didSelectBlock) {
     
-    OMNMenuCategory *menuCategory = _menu.categories[indexPath.row];
+    OMNMenuCategory *menuCategory = nil;
+    if (1 == indexPath.section) {
+      menuCategory = _menu.categories[indexPath.row];
+    }
     self.didSelectBlock(menuCategory);
     
   }

@@ -17,6 +17,7 @@
 #import "OMNMenuHeaderView.h"
 #import "OMNMenuCategorySectionItem.h"
 #import "UIView+screenshot.h"
+#import <BlocksKit.h>
 
 @interface OMNMenuVC ()
 <OMNMenuProductWithRecommedtationsCellDelegate,
@@ -28,6 +29,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
   OMNMenuCategoriesModel *_model;
   OMNRestaurantMediator *_restaurantMediator;
+  OMNMenuCategory *_selectedCategory;
   __weak OMNMenuProductWithRecommendationsCellItem *_selectedItem;
   
 }
@@ -36,11 +38,12 @@ OMNMenuCategoryHeaderViewDelegate>
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator selectedCategory:(OMNMenuCategory *)selectedCategory {
   self = [super init];
   if (self) {
     
     _restaurantMediator = restaurantMediator;
+    _selectedCategory = selectedCategory;
     _model = [[OMNMenuCategoriesModel alloc] initWithMenu:_restaurantMediator.menu cellDelegate:self headerDelegate:self];
     
   }
@@ -80,6 +83,17 @@ OMNMenuCategoryHeaderViewDelegate>
   [super viewDidAppear:animated];
   _navigationFadeView.image = [self.view omn_screenshotWithBounds:_navigationFadeView.bounds];
  
+  NSString *selectedCategoryId = _selectedCategory.id;
+  OMNMenuCategorySectionItem *selectedItem = [_model.categories bk_match:^BOOL(OMNMenuCategorySectionItem *item) {
+    
+    return [item.menuCategory.id isEqualToString:selectedCategoryId];
+    
+  }];
+  
+  if (selectedItem) {
+    [self selectMenuCategorySectionItem:selectedItem];
+  }
+  
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -212,7 +226,12 @@ OMNMenuCategoryHeaderViewDelegate>
 
 - (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
   
-  OMNMenuCategorySectionItem *selectedSectionItem = menuCategoryHeaderView.menuCategorySectionItem;
+  [self selectMenuCategorySectionItem:menuCategoryHeaderView.menuCategorySectionItem];
+  
+}
+
+- (void)selectMenuCategorySectionItem:(OMNMenuCategorySectionItem *)selectedSectionItem {
+  
   NSMutableIndexSet *reloadIndexSet = [NSMutableIndexSet indexSet];
   __block NSInteger selectedIndex = NSNotFound;
   
@@ -250,7 +269,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
   [_tableView beginUpdates];
   [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];
-//    [_tableView reloadSections:reloadIndexSet withRowAnimation:UITableViewRowAnimationFade];
+  //    [_tableView reloadSections:reloadIndexSet withRowAnimation:UITableViewRowAnimationFade];
   [_tableView endUpdates];
   if (NSNotFound != selectedIndex &&
       selectedSectionItem.rowItems.count) {

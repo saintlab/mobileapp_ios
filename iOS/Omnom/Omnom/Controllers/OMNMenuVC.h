@@ -19,6 +19,6 @@
 @property (nonatomic, strong, readonly) UIImageView *navigationFadeView;
 @property (nonatomic, strong, readonly) UIButton *menuHeaderView;
 
-- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
+- (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator selectedCategory:(OMNMenuCategory *)selectedCategory;
 
 @end

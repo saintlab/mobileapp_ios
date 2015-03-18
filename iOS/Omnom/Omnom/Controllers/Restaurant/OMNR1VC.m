@@ -114,9 +114,16 @@
     if (tableView.contentOffset.y > -20.0f) {
       
       @strongify(self)
-      [self menuTap];
+      [self showMenuAtCategory:nil];
       
     }
+    
+  };
+  
+  _menuModel.didSelectBlock = ^(OMNMenuCategory *selectedMenuCategory) {
+    
+    @strongify(self)
+    [self showMenuAtCategory:selectedMenuCategory];
     
   };
   
@@ -365,14 +372,15 @@
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:kNilOptions metrics:nil views:views]];
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topGradientView]" options:kNilOptions metrics:nil views:views]];
   
-  if (_restaurantMediator.restaurant.settings.has_menu) {
+  OMNRestaurantSettings *restaurantSettings = _restaurantMediator.restaurant.settings;
+  if (restaurantSettings.has_menu) {
     
     _menuModel = [[OMNMenuModel alloc] init];
     _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     _menuTable.alpha = 0.0f;
     _menuTable.clipsToBounds = NO;
     _menuTable.showsVerticalScrollIndicator = NO;
-    _menuTable.allowsSelection = NO;
+    _menuTable.allowsSelection = YES;
     _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
     [_menuModel configureTableView:_menuTable];
     [self.view insertSubview:_menuTable belowSubview:self.circleButton];
@@ -382,9 +390,6 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:nil views:views]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
-    
-    UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(menuTap)];
-    [_menuTable addGestureRecognizer:tapGR];
     
   }
   else {
@@ -409,13 +414,13 @@
   
 }
 
-- (void)menuTap {
+- (void)showMenuAtCategory:(OMNMenuCategory *)selectedMenuCategory {
   
   if (!_restaurantMediator.menu.products.count > 0) {
     return;
   }
   
-  OMNMenuVC *menuVC = [[OMNMenuVC alloc] initWithMediator:_restaurantMediator];
+  OMNMenuVC *menuVC = [[OMNMenuVC alloc] initWithMediator:_restaurantMediator selectedCategory:selectedMenuCategory];
   @weakify(self)
   menuVC.didCloseBlock = ^{
     
