@@ -121,6 +121,10 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (BOOL)pushNotificationsRequested {
   
+#if LUNCH_2GIS
+  return YES;
+#endif
+  
   BOOL pushNotificationsRequested = NO;
   if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
     
@@ -225,6 +229,8 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
       };
     [[OMNOperationManager sharedManager] POST:@"/notifier/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
+      [[OMNAnalitics analitics] logDebugEvent:@"NOTIFIER_REGISTER" jsonRequest:parameters jsonResponse:responseObject];
+      
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_NOTIFIER" jsonRequest:parameters responseOperation:operation];
@@ -256,6 +262,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
+  [[OMNAnalitics analitics] logDebugEvent:@"didRegisterForRemoteNotificationsWithDeviceToken" jsonRequest:deviceToken jsonResponse:nil];
   self.deviceToken = deviceToken;
   [self registerDeviceIfPossible];
   
@@ -268,6 +275,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
   
+  [[OMNAnalitics analitics] logDebugEvent:@"didFailToRegisterForRemoteNotificationsWithError" jsonRequest:[NSString stringWithFormat:@"%@", error] jsonResponse:nil];
   if (_remoteNotificationRegisterCompletionBlock) {
     _remoteNotificationRegisterCompletionBlock(NO);
     _remoteNotificationRegisterCompletionBlock = nil;
