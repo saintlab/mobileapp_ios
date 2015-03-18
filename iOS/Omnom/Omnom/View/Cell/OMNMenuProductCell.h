@@ -22,6 +22,9 @@
 
 - (void)priceTap;
 
+- (void)addMenuProductObservers;
+- (void)removeMenuProductObservers;
+
 @end
 
 @protocol OMNMenuProductCellDelegate <NSObject>

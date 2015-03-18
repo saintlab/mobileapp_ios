@@ -35,17 +35,16 @@
 - (void)removeMenuProductObservers {
   
   if (_productSelectionObserverID) {
-    [_item.menuProduct bk_removeObserversWithIdentifier:_productSelectionObserverID];
+    [self.item.menuProduct bk_removeObserversWithIdentifier:_productSelectionObserverID];
   }
   if (_productImageObserverID) {
-    [_item.menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
+    [self.item.menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
   }
   if (_productEditingObserverID) {
-    [_item.menuProduct bk_removeObserversWithIdentifier:_productEditingObserverID];
+    [self.item.menuProduct bk_removeObserversWithIdentifier:_productEditingObserverID];
   }
   
 }
-
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -136,15 +135,11 @@
   
 }
 
-- (void)setItem:(OMNMenuProductCellItem *)item {
+- (void)addMenuProductObservers {
   
-  [self removeMenuProductObservers];
-  
-  _item = item;
-
   @weakify(self)
-  _productSelectionObserverID = [_item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
-   
+  _productSelectionObserverID = [self.item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(quantity)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+    
     @strongify(self)
     [UIView transitionWithView:self.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
@@ -153,8 +148,8 @@
     } completion:nil];
     
   }];
-
-  _productEditingObserverID = [_item bk_addObserverForKeyPath:NSStringFromSelector(@selector(editing)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProductCellItem *mp, NSDictionary *change) {
+  
+  _productEditingObserverID = [self.item bk_addObserverForKeyPath:NSStringFromSelector(@selector(editing)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProductCellItem *mp, NSDictionary *change) {
     
     @strongify(self)
     [UIView transitionWithView:self.priceButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
@@ -165,8 +160,8 @@
     
   }];
   
-  _productImageObserverID = [_item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
-
+  _productImageObserverID = [self.item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(photoImage)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuProduct *mp, NSDictionary *change) {
+    
     @strongify(self)
     [UIView transitionWithView:self.productIV duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
       
@@ -175,6 +170,15 @@
     } completion:nil];
     
   }];
+  
+}
+
+- (void)setItem:(OMNMenuProductCellItem *)item {
+  
+  [self removeMenuProductObservers];
+  _item = item;
+  [self addMenuProductObservers];
+  
   
   [_item.menuProduct loadImage];
   

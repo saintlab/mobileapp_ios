@@ -29,7 +29,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
   OMNMenuCategoriesModel *_model;
   OMNRestaurantMediator *_restaurantMediator;
-  OMNMenuCategory *_selectedCategory;
+  OMNMenuCategory *_initiallySelectedCategory;
   __weak OMNMenuProductWithRecommendationsCellItem *_selectedItem;
   
 }
@@ -43,7 +43,7 @@ OMNMenuCategoryHeaderViewDelegate>
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-    _selectedCategory = selectedCategory;
+    _initiallySelectedCategory = selectedCategory;
     _model = [[OMNMenuCategoriesModel alloc] initWithMenu:_restaurantMediator.menu cellDelegate:self headerDelegate:self];
     
   }
@@ -79,7 +79,11 @@ OMNMenuCategoryHeaderViewDelegate>
   [super viewDidAppear:animated];
   _navigationFadeView.image = [self.view omn_screenshotWithBounds:_navigationFadeView.bounds];
  
-  NSString *selectedCategoryId = _selectedCategory.id;
+  if (!_initiallySelectedCategory) {
+    return;
+  }
+  NSString *selectedCategoryId = _initiallySelectedCategory.id;
+  _initiallySelectedCategory = nil;
   OMNMenuCategorySectionItem *selectedItem = [_model.categories bk_match:^BOOL(OMNMenuCategorySectionItem *item) {
     
     return [item.menuCategory.id isEqualToString:selectedCategoryId];

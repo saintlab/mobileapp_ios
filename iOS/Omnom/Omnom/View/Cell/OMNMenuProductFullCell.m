@@ -110,7 +110,9 @@
 
 - (void)setItem:(OMNMenuProductFullCellItem *)item {
   
+  [self removeMenuProductObservers];
   _item = item;
+  [self addMenuProductObservers];
   OMNMenuProduct *menuProduct = item.menuProduct;
   _productIV.image = menuProduct.photoImage;
   _priceButton.selected = menuProduct.preordered;
