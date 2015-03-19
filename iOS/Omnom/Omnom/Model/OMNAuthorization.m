@@ -262,7 +262,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
-  [[OMNAnalitics analitics] logDebugEvent:@"didRegisterForRemoteNotificationsWithDeviceToken" jsonRequest:deviceToken jsonResponse:nil];
+  [[OMNAnalitics analitics] logDebugEvent:@"didRegisterForRemoteNotificationsWithDeviceToken" jsonRequest:[deviceToken description] jsonResponse:nil];
   self.deviceToken = deviceToken;
   [self registerDeviceIfPossible];
   

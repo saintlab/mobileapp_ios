@@ -180,7 +180,6 @@
   _item = item;
   [self addMenuProductObservers];
   
-  
   [_item.menuProduct loadImage];
   
   OMNMenuProduct *menuProduct = item.menuProduct;

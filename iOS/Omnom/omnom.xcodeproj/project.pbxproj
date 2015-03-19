@@ -751,6 +751,9 @@
 		93B65E621A6941510061F1B1 /* OMNChangeTableAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */; };
 		93B65E651A6956C90061F1B1 /* OMNModalWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */; };
 		93B65E661A6956C90061F1B1 /* OMNModalWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */; };
+		93B743AF1ABA76950001AE6F /* OMNMenuSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B743AE1ABA76950001AE6F /* OMNMenuSearchVC.m */; };
+		93B743B01ABA76950001AE6F /* OMNMenuSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B743AE1ABA76950001AE6F /* OMNMenuSearchVC.m */; };
+		93B743B11ABA76950001AE6F /* OMNMenuSearchVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B743AE1ABA76950001AE6F /* OMNMenuSearchVC.m */; };
 		93B9047719652B93007D21C4 /* OMNNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */; };
 		93B9048019653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */; };
 		93B9048119653393007D21C4 /* OMNTransitionFromOrderToOrders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B9047F19653393007D21C4 /* OMNTransitionFromOrderToOrders.m */; };
@@ -1390,6 +1393,8 @@
 		93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangeTableAlertVC.m; sourceTree = "<group>"; };
 		93B65E631A6956C90061F1B1 /* OMNModalWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNModalWebVC.h; sourceTree = "<group>"; };
 		93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNModalWebVC.m; sourceTree = "<group>"; };
+		93B743AD1ABA76950001AE6F /* OMNMenuSearchVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuSearchVC.h; sourceTree = "<group>"; };
+		93B743AE1ABA76950001AE6F /* OMNMenuSearchVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuSearchVC.m; sourceTree = "<group>"; };
 		93B9047519652B93007D21C4 /* OMNNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNavigationControllerDelegate.h; sourceTree = "<group>"; };
 		93B9047619652B93007D21C4 /* OMNNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		93B9047E19653393007D21C4 /* OMNTransitionFromOrderToOrders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTransitionFromOrderToOrders.h; sourceTree = "<group>"; };
@@ -3064,6 +3069,8 @@
 				93F2AEDD1A6D551800CDF3D9 /* OMNMenuVC.m */,
 				93CE479D1A778C81002D293B /* OMNMenuProductVC.h */,
 				93CE479E1A778C81002D293B /* OMNMenuProductVC.m */,
+				93B743AD1ABA76950001AE6F /* OMNMenuSearchVC.h */,
+				93B743AE1ABA76950001AE6F /* OMNMenuSearchVC.m */,
 			);
 			name = Menu;
 			sourceTree = "<group>";
@@ -3538,6 +3545,7 @@
 				930C4D981AB15E1B006CA608 /* OMNMenuCategoryHeaderView.m in Sources */,
 				930C4D991AB15E1B006CA608 /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				930C4D9A1AB15E1B006CA608 /* OMNRestaurantMediator.m in Sources */,
+				93B743B11ABA76950001AE6F /* OMNMenuSearchVC.m in Sources */,
 				930C4D9B1AB15E1B006CA608 /* OMNQRHelpAlertVC.m in Sources */,
 				930C4D9C1AB15E1B006CA608 /* OMNStartVC.m in Sources */,
 				930C4D9D1AB15E1B006CA608 /* OMNPreorderDoneVC.m in Sources */,
@@ -3819,6 +3827,7 @@
 				932F5DDA1A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m in Sources */,
 				939F992419752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */,
 				9390D25E1966DA68007E13AB /* OMNRestaurantMediator.m in Sources */,
+				93B743AF1ABA76950001AE6F /* OMNMenuSearchVC.m in Sources */,
 				9391F6661A5E4D5D00594CD5 /* OMNQRHelpAlertVC.m in Sources */,
 				93E2997A197CD24F00051B04 /* OMNStartVC.m in Sources */,
 				935FF15F1A6D2BA3004B69A6 /* OMNPreorderDoneVC.m in Sources */,
@@ -4035,6 +4044,7 @@
 				930FF3791A8CA9F9002FAAA5 /* OMNMenuHeaderLabel.m in Sources */,
 				933A9E9F1A4BC5E5001C0909 /* OMNRestaurantSchedules.m in Sources */,
 				936203251AA308F400247A4B /* OMNMenuToProductTransition.m in Sources */,
+				93B743B01ABA76950001AE6F /* OMNMenuSearchVC.m in Sources */,
 				936BAD9719A77F5E0029873B /* OMNNavigationController.m in Sources */,
 				935FF1651A6D3ED0004B69A6 /* OMNMenuModel.m in Sources */,
 				932B185C19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
@@ -4343,7 +4353,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = lunch2gis;
-				PROVISIONING_PROFILE = "e1cfc3c9-1c70-4d06-8d11-9041d4ca849b";
+				PROVISIONING_PROFILE = "8b5a7958-2c23-4850-b03b-38c748ac8284";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

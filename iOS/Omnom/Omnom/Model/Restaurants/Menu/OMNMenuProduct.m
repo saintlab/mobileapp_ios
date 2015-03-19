@@ -68,7 +68,7 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
 
 - (NSString *)description {
   
-  return [NSString stringWithFormat:@"%@, name = %@", NSStringFromClass(self.class), self.name];
+  return [NSString stringWithFormat:@"%@, name = %@, id = %@", NSStringFromClass(self.class), self.name, self.id];
   
 }
 
@@ -132,6 +132,23 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   
   self.quantity = 0.0;
   [self.selectedModifers removeAllObjects];
+  
+}
+
+- (NSString *)preorderedText {
+  
+  NSString *preorderedText = nil;
+  if (self.preordered) {
+    
+    preorderedText = [NSString stringWithFormat:@"%.f x %@", self.quantity, [OMNUtils moneyStringFromKop:self.price]];
+    
+  }
+  else {
+    
+    preorderedText = [OMNUtils moneyStringFromKop:self.price];
+    
+  }
+  return preorderedText;
   
 }
 

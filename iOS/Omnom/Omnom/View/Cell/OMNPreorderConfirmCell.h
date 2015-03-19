@@ -16,9 +16,3 @@
 
 @end
 
-@interface OMNPreorderConfirmView : UIView
-
-@property (nonatomic, strong) OMNMenuProduct *menuProduct;
-@property (nonatomic, strong, readonly) UIButton *priceButton;
-
-@end

@@ -100,7 +100,6 @@
   
   [[OMNAuthorization authorisation] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
   [OMNAnalitics analitics].deviceToken = deviceToken;
-  [OMNAuthorization authorisation].deviceToken = deviceToken;
   
 }
 

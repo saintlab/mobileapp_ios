@@ -38,6 +38,8 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 - (void)loadImage;
 - (void)resetSelection;
 
+- (NSString *)preorderedText;
+
 - (NSAttributedString *)shortDescription;
 - (NSAttributedString *)nameAttributedString;
 

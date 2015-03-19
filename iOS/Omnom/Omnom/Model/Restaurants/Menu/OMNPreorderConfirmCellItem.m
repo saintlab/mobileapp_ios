@@ -32,19 +32,19 @@
     return _calculationHeight;
   }
   
-  static OMNPreorderConfirmView *preorderConfirmView = nil;
+  static OMNPreorderConfirmCell *preorderConfirmCell = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    preorderConfirmView = [[OMNPreorderConfirmView alloc] initWithFrame:tableView.bounds];
-    preorderConfirmView.hidden = YES;
+    preorderConfirmCell = [[OMNPreorderConfirmCell alloc] initWithFrame:tableView.bounds];
+    preorderConfirmCell.hidden = YES;
   });
   
-  preorderConfirmView.bounds = tableView.bounds;
-  preorderConfirmView.menuProduct = _menuProduct;
-  [preorderConfirmView setNeedsLayout];
-  [preorderConfirmView layoutIfNeeded];
+  preorderConfirmCell.bounds = tableView.bounds;
+  preorderConfirmCell.item = self;
+  [preorderConfirmCell setNeedsLayout];
+  [preorderConfirmCell layoutIfNeeded];
   
-  CGFloat height = [preorderConfirmView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+  CGFloat height = [preorderConfirmCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
   
   // Add an extra point to the height to account for the cell separator, which is added between the bottom
   // of the cell's contentView and the bottom of the table view cell.

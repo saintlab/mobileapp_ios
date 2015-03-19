@@ -18,6 +18,8 @@
 #import "OMNMenuCategorySectionItem.h"
 #import "UIView+screenshot.h"
 #import <BlocksKit.h>
+#import "OMNMenuSearchVC.h"
+#import "UINavigationBar+omn_custom.h"
 
 @interface OMNMenuVC ()
 <OMNMenuProductWithRecommedtationsCellDelegate,
@@ -58,7 +60,7 @@ OMNMenuCategoryHeaderViewDelegate>
   _tableView.dataSource = _model;
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
-  
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchTap)];
   @weakify(self)
   _model.didEndDraggingBlock = ^(UITableView *tableView) {
     
@@ -72,6 +74,13 @@ OMNMenuCategoryHeaderViewDelegate>
   };
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidReset) name:OMNMenuDidResetNotification object:nil];
+  
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+ 
+  [self.navigationController.navigationBar omn_setTransparentBackground];
   
 }
 
@@ -99,6 +108,13 @@ OMNMenuCategoryHeaderViewDelegate>
 - (UIStatusBarStyle)preferredStatusBarStyle {
   
   return UIStatusBarStyleLightContent;
+  
+}
+
+- (void)searchTap {
+  
+  OMNMenuSearchVC *menuSearchVC = [[OMNMenuSearchVC alloc] initWithMenu:_restaurantMediator.menu];
+  [self.navigationController pushViewController:menuSearchVC animated:YES];
   
 }
 
@@ -264,7 +280,6 @@ OMNMenuCategoryHeaderViewDelegate>
     }
     
   }];
-  
   
   selectedSectionItem.entered = !selectedSectionItem.entered;
   
