@@ -20,4 +20,6 @@
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator selectedCategory:(OMNMenuCategory *)selectedCategory;
 
+- (void)closeAllCategoriesWithCompletion:(dispatch_block_t)completionBlock;
+
 @end

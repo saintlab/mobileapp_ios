@@ -78,7 +78,8 @@ OMNPreorderConfirmCellDelegate>
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
   [self.navigationController.navigationBar omn_setDefaultBackground];
-  
+  [self.navigationController setNavigationBarHidden:NO animated:animated];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -174,7 +175,7 @@ OMNPreorderConfirmCellDelegate>
 - (void)startSearch {
   
   NSString *searchText = _searchBar.text;
-  if (0 == searchText.length) {
+  if (searchText.length < 2) {
     [self didFindProducts:nil];
     return;
   }
@@ -183,7 +184,8 @@ OMNPreorderConfirmCellDelegate>
   @weakify(self)
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     
-    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@ OR Description contains[c] %@", searchText, searchText];
+//    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@ OR Description contains[c] %@", searchText, searchText];
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[c] %@", searchText];
     NSArray *foundProducts = [allProducts filteredArrayUsingPredicate:searchPredicate];
     
     NSArray *foundItems = [foundProducts bk_map:^id(OMNMenuProduct *menuProduct) {

@@ -11,13 +11,25 @@
 #import "OMNMenuCategorySectionItem.h"
 #import "OMNMenuHeaderLabel.h"
 #import <OMNStyler.h>
+#import <BlocksKit.h>
 
 @implementation OMNMenuCategoryHeaderView {
   
   OMNMenuHeaderLabel *_menuHeaderLabel;
+  NSString *_itemSelectedOberverId;
   UIButton *_button;
   BOOL _stuck;
   
+}
+
+- (void)dealloc {
+  [self removeItemSelectedOberver];
+}
+
+- (void)removeItemSelectedOberver {
+  if (_itemSelectedOberverId) {
+    [_menuCategorySectionItem bk_removeObserversWithIdentifier:_itemSelectedOberverId];
+  }
 }
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
@@ -67,35 +79,27 @@
   
 }
 
-- (void)setFrame:(CGRect)frame {
-  [super setFrame:frame];
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
   
-  CGFloat top = [self convertPoint:CGPointZero toView:nil].y;
+  UIColor *bgColor = (selected) ? colorWithHexString(@"D3D3D3") : [UIColor clearColor];
+  UIColor *textColor = (selected) ? colorWithHexString(@"484848") : [UIColor whiteColor];
 
-  [self setStuck:
-   (
-    top <= 64.0f &&
-    _menuCategorySectionItem.selected
-   )];
-  
-}
+  if (animated) {
 
-- (void)setStuck:(BOOL)stuck {
-  
-  if (stuck == _stuck) {
-    return;
+    [UIView transitionWithView:_menuHeaderLabel duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+      
+      _menuHeaderLabel.backgroundColor = bgColor;
+      _menuHeaderLabel.textColor = textColor;
+      
+    } completion:nil];
+
   }
-  _stuck = stuck;
-  
-  UIColor *bgColor = (stuck) ? colorWithHexString(@"D3D3D3") : [UIColor clearColor];
-  UIColor *textColor = (stuck) ? colorWithHexString(@"484848") : [UIColor whiteColor];
-
-  [UIView transitionWithView:_menuHeaderLabel duration:0.35 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+  else {
     
     _menuHeaderLabel.backgroundColor = bgColor;
     _menuHeaderLabel.textColor = textColor;
-    
-  } completion:nil];
+
+  }
   
 }
 
@@ -107,7 +111,16 @@
 
 - (void)setMenuCategorySectionItem:(OMNMenuCategorySectionItem *)menuCategorySectionItem {
   
+  [self removeItemSelectedOberver];
   _menuCategorySectionItem = menuCategorySectionItem;
+  @weakify(self)
+  [_menuCategorySectionItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(entered)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuCategorySectionItem *obj, NSDictionary *change) {
+    
+    @strongify(self)
+    [self setSelected:obj.entered animated:YES];
+    
+  }];
+  [self setSelected:menuCategorySectionItem.entered animated:NO];
   self.backgroundView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:(0.3f*menuCategorySectionItem.menuCategory.level)];
   _menuHeaderLabel.text = menuCategorySectionItem.menuCategory.name;
   

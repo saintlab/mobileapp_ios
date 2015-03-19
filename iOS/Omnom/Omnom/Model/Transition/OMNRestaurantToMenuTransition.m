@@ -45,6 +45,7 @@
   [UIView animateWithDuration:duration animations:^{
     
     menuTable.frame = toTableFrame;
+    menuTable.contentInset = toViewController.tableView.contentInset;
     fadeView.alpha = 1.0f;
     fromViewController.circleButton.alpha = 0.0f;
     
@@ -72,7 +73,7 @@
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  return 0.5;
+  return 0.3;
   
 }
 

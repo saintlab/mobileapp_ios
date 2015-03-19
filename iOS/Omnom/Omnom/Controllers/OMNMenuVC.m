@@ -60,7 +60,8 @@ OMNMenuCategoryHeaderViewDelegate>
   _tableView.dataSource = _model;
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchTap)];
+  self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"ic_search_black"] color:[UIColor whiteColor] target:self action:@selector(searchTap)];
+  
   @weakify(self)
   _model.didEndDraggingBlock = ^(UITableView *tableView) {
     
@@ -127,12 +128,23 @@ OMNMenuCategoryHeaderViewDelegate>
   
 }
 
+- (void)closeAllCategoriesWithCompletion:(dispatch_block_t)completionBlock {
+  
+  [_model.categories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *item, NSUInteger idx, BOOL *stop) {
+    
+    item.selected = NO;
+    item.entered = NO;
+    
+  }];
+  [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), completionBlock);
+  
+}
+
 - (void)backTap {
   
   if (self.didCloseBlock) {
-    
     self.didCloseBlock();
-    
   }
   
 }
@@ -145,11 +157,12 @@ OMNMenuCategoryHeaderViewDelegate>
   _fadeView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
   [self.backgroundView addSubview:_fadeView];
   
-  _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-  _tableView.backgroundColor = [UIColor clearColor];
-  _tableView.translatesAutoresizingMaskIntoConstraints = NO;
-  _tableView.tableFooterView = [[UIView alloc] init];
+  _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+  _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
   _tableView.tableHeaderView = [[OMNMenuHeaderView alloc] init];
+  _tableView.tableHeaderView.userInteractionEnabled = NO;
+  _tableView.backgroundColor = [UIColor clearColor];
+  _tableView.tableFooterView = [[UIView alloc] init];
   _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   [self.view addSubview:_tableView];
   
@@ -159,7 +172,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
   [OMNMenuCategoriesModel registerCellsForTableView:_tableView];
 
-  UIEdgeInsets insets = UIEdgeInsetsMake(20.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(64.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   _tableView.contentInset = insets;
   _tableView.scrollIndicatorInsets = insets;
   
@@ -173,14 +186,14 @@ OMNMenuCategoryHeaderViewDelegate>
   
   NSDictionary *metrics =
   @{
-    @"topOffset" : @(20.0f),
+    @"topOffset" : @(64.0f),
     };
-  
+
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
   
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
+//  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
+//  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navigationFadeView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navigationFadeView(topOffset)]" options:kNilOptions metrics:metrics views:views]];
