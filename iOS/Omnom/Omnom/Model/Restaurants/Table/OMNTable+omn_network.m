@@ -39,7 +39,7 @@
 
 - (void)getProductItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/items", self.restaurant_id, self.id];
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/recommendations", self.restaurant_id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
     
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:[response count]];
