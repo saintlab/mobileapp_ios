@@ -41,6 +41,7 @@
   [self addSubview:_iconView];
   
   _label = [UILabel omn_autolayoutView];
+  _label.font = self.font;
   _label.numberOfLines = 0;
   _label.textAlignment = NSTextAlignmentCenter;
   [self addSubview:_label];
@@ -54,6 +55,7 @@
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]-(8)-[label]-(>=0)-|" options:kNilOptions metrics:nil views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[label]|" options:kNilOptions metrics:nil views:views]];
   [self addConstraint:[NSLayoutConstraint constraintWithItem:_iconView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:_iconView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
   
 }
 

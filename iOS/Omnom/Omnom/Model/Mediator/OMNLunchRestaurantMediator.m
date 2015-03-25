@@ -13,7 +13,13 @@
 @implementation OMNLunchRestaurantMediator
 
 - (UIBarButtonItem *)exitRestaurantButton {
+
+#if LUNCH_2GIS
   return nil;
+#else
+  return [super exitRestaurantButton];
+#endif
+
 }
 
 - (BOOL)showTableButton {

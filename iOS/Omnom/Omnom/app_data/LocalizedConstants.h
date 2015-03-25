@@ -18,6 +18,13 @@
 #define kOMN_BAR_TITLE_BUTTON_TEXT NSLocalizedString(@"BAR_TITLE_BUTTON_TEXT", @"Бар")
 #define kOMN_DONE_BUTTON_TITLE NSLocalizedString(@"DONE_BUTTON_TITLE", @"Готово")
 
+//buttons
+
+#define kOMN_RESTAURANT_MODE_BAR_TITLE NSLocalizedString(@"RESTAURANT_MODE_BAR_TITLE", @"В бар")
+#define kOMN_RESTAURANT_MODE_IN_TITLE NSLocalizedString(@"RESTAURANT_MODE_IN_TITLE", @"За стол")
+#define kOMN_RESTAURANT_MODE_LUNCH_TITLE NSLocalizedString(@"RESTAURANT_MODE_LUNCH_TITLE", @"Заказ\nобеда\nв офис")
+#define kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE NSLocalizedString(@"RESTAURANT_MODE_TAKE_AWAY_TITLE", @"Заказ\nна вынос")
+
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
 #define kOMN_PREORDER_DONE_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_2", @"Выбранные блюда скоро будут\nдобавлены официантом на ваш стол.")

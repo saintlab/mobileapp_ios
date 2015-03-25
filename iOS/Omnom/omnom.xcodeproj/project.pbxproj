@@ -929,6 +929,9 @@
 		93F2AEFB1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */; };
 		93F2AEFF1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */; };
 		93F2AF001A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */; };
+		93F628FE1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F628FD1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m */; };
+		93F628FF1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F628FD1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m */; };
+		93F629001AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F628FD1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m */; };
 		93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		93FEEB321A43E166002ED717 /* OMNEditPercentControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */; };
 		C6C76590351C4176B35ECE19 /* libPods-omnomTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 79C1CE5E4E1243D5AFFD1065 /* libPods-omnomTests.a */; };
@@ -1568,6 +1571,8 @@
 		93F2AEF91A6F7A8200CDF3D9 /* OMNOrderAlertManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderAlertManager.m; sourceTree = "<group>"; };
 		93F2AEFD1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNNearestBeaconSearchManager.h; sourceTree = "<group>"; };
 		93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNNearestBeaconSearchManager.m; sourceTree = "<group>"; };
+		93F628FC1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLunchOrderAlertVC.h; sourceTree = "<group>"; };
+		93F628FD1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLunchOrderAlertVC.m; sourceTree = "<group>"; };
 		93FEEB2F1A43E166002ED717 /* OMNEditPercentControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEditPercentControl.h; sourceTree = "<group>"; };
 		93FEEB301A43E166002ED717 /* OMNEditPercentControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditPercentControl.m; sourceTree = "<group>"; };
 		9BCE6415AF2807DAACF8AC44 /* Pods-omnomTests.appstore.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-omnomTests.appstore.xcconfig"; path = "../Pods/Target Support Files/Pods-omnomTests/Pods-omnomTests.appstore.xcconfig"; sourceTree = "<group>"; };
@@ -1725,6 +1730,8 @@
 				93C126931A7155BC0019655A /* OMNProductModiferAlertVC.m */,
 				93DE37CE1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.h */,
 				93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */,
+				93F628FC1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.h */,
+				93F628FD1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -3567,6 +3574,7 @@
 				930C4DAD1AB15E1B006CA608 /* OMNDemoRestaurantVC.m in Sources */,
 				930C4DAE1AB15E1B006CA608 /* OMNWishSuccessVC.m in Sources */,
 				930C4DAF1AB15E1B006CA608 /* OMNPreorderActionCellItem.m in Sources */,
+				93F629001AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m in Sources */,
 				930C4DB01AB15E1B006CA608 /* OMNPaymentNotificationControl.m in Sources */,
 				930C4DB11AB15E1B006CA608 /* OMNRestaurantListVC.m in Sources */,
 				930C4DB21AB15E1B006CA608 /* OMNTransitionFromListToProduct.m in Sources */,
@@ -3849,6 +3857,7 @@
 				93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */,
 				93BCD74C1AAF159000725B12 /* OMNWishSuccessVC.m in Sources */,
 				93DB26CD1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */,
+				93F628FE1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m in Sources */,
 				9345AFD1199BB3C700328F73 /* OMNPaymentNotificationControl.m in Sources */,
 				932118261962E12700183729 /* OMNRestaurantListVC.m in Sources */,
 				932118321962E35C00183729 /* OMNTransitionFromListToProduct.m in Sources */,
@@ -4067,6 +4076,7 @@
 				9390D25F1966DA68007E13AB /* OMNRestaurantMediator.m in Sources */,
 				93175DC119C2DD2D005EE4C6 /* UIImage+ImageEffects.m in Sources */,
 				93F2AF001A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */,
+				93F628FF1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m in Sources */,
 				932F5DD71A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m in Sources */,
 				938A4F861A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,

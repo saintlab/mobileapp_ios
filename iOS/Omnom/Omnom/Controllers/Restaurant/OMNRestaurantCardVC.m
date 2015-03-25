@@ -17,6 +17,7 @@
 #import "UIImage+omn_helper.h"
 #import "UINavigationBar+omn_custom.h"
 #import <BlocksKit.h>
+#import "OMNLunchOrderAlertVC.h"
 
 @implementation OMNRestaurantCardVC {
   
@@ -26,10 +27,6 @@
   OMNBorderedButton *_phoneButton;
   
   UIScrollView *_scroll;
-  
-  OMNBottomTextButton *_reserveButton;
-  OMNBottomTextButton *_insideButton;
-  OMNBottomTextButton *_preorderButton;
   
   OMNSearchRestaurantMediator *_searchRestaurantMediator;
   UIView *_bottomView;
@@ -91,18 +88,6 @@
   [_phoneButton setTitle:_restaurant.phone forState:UIControlStateNormal];
   [_phoneButton addTarget:self action:@selector(callTap) forControlEvents:UIControlEventTouchUpInside];
 
-  UIColor *defaultColor = [OMNStyler blueColor];
-  UIColor *disabledColor = colorWithHexString(@"A1A1A1");
-  [_reserveButton setTitle:@"Бронировать\nстолик" image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
-  _reserveButton.enabled = NO;
-  
-  [_insideButton setTitle:@"Я внутри" image:[UIImage imageNamed:@"ic_im_inside"] color:defaultColor disabledColor:disabledColor];
-  [_insideButton addTarget:self action:@selector(insideRestaurantTap) forControlEvents:UIControlEventTouchUpInside];
-  _insideButton.enabled = YES;
-
-  [_preorderButton setTitle:@"Сделать\nпредзаказ" image:[UIImage imageNamed:@"ic_make_order"] color:defaultColor disabledColor:disabledColor];
-  _preorderButton.enabled = NO;
-  
   [_logoIcon setBackgroundImage:[[UIImage imageNamed:@"restaurant_card_circle_bg"] omn_tintWithColor:_restaurant.decoration.background_color] forState:UIControlStateNormal];
 
 }
@@ -126,7 +111,7 @@
   
   if (self.showQRScan) {
     
-    [self insideRestaurantTap];
+    [self inTap];
     
   }
   
@@ -140,7 +125,7 @@
   
 }
 
-- (void)insideRestaurantTap {
+- (void)inTap {
   
   self.showQRScan = NO;
   if (_restaurant.hasTable) {
@@ -153,6 +138,36 @@
     [_searchRestaurantMediator scanTableQrTap];
     
   }
+  
+}
+
+- (void)barTap {
+  
+  _restaurant.entrance_mode = kRestaurantModeBar;
+  [_searchRestaurantMediator showRestaurants:@[_restaurant]];
+  
+}
+
+- (void)lunchTap {
+  
+  OMNLunchOrderAlertVC *lunchOrderAlertVC = [[OMNLunchOrderAlertVC alloc] init];
+  @weakify(self)
+  lunchOrderAlertVC.didCloseBlock = ^{
+    
+    @strongify(self)
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [self.navigationController presentViewController:lunchOrderAlertVC animated:YES completion:nil];
+//  _restaurant.entrance_mode = kRestaurantModeLunch;
+//  [_searchRestaurantMediator showRestaurants:@[_restaurant]];
+  
+}
+
+- (void)preorderTap {
+  
+  _restaurant.entrance_mode = kRestaurantModePreorder;
+  [_searchRestaurantMediator showRestaurants:@[_restaurant]];
   
 }
 
@@ -196,29 +211,75 @@
   _restaurantDetailsView = [OMNRestaurantDetailsView omn_autolayoutView];
   [_contentView addSubview:_restaurantDetailsView];
   
-  UIView *bottonsView = [UIView omn_autolayoutView];
-  [_bottomView addSubview:bottonsView];
+  UIView *buttonsView = [UIView omn_autolayoutView];
+  [_bottomView addSubview:buttonsView];
   
-  _reserveButton = [OMNBottomTextButton omn_autolayoutView];
-  _reserveButton.label.font = FuturaOSFOmnomRegular(16.0f);
-  [bottonsView addSubview:_reserveButton];
+  NSMutableArray *buttons = [NSMutableArray array];
+  UIColor *defaultColor = [OMNStyler blueColor];
+  UIColor *disabledColor = colorWithHexString(@"A1A1A1");
+
+  if (_restaurant.settings.has_bar) {
+    
+    OMNBottomTextButton *barButton = [OMNBottomTextButton omn_autolayoutView];
+    [barButton setTitle:kOMN_RESTAURANT_MODE_BAR_TITLE image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
+    [barButton addTarget:self action:@selector(barTap) forControlEvents:UIControlEventTouchUpInside];
+    [buttons addObject:barButton];
+  }
   
-  _insideButton = [OMNBottomTextButton omn_autolayoutView];
-  _insideButton.label.font = FuturaOSFOmnomRegular(16.0f);
-  [bottonsView addSubview:_insideButton];
+  if (_restaurant.settings.has_table_order) {
+    
+    OMNBottomTextButton *orderButton = [OMNBottomTextButton omn_autolayoutView];
+    [orderButton setTitle:kOMN_RESTAURANT_MODE_IN_TITLE image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
+    [orderButton addTarget:self action:@selector(inTap) forControlEvents:UIControlEventTouchUpInside];
+    [buttons addObject:orderButton];
+    
+  }
   
-  _preorderButton = [OMNBottomTextButton omn_autolayoutView];
-  _preorderButton.label.font = FuturaOSFOmnomRegular(16.0f);
-  [bottonsView addSubview:_preorderButton];
+  if (_restaurant.settings.has_lunch) {
+    
+    OMNBottomTextButton *lunchButton = [OMNBottomTextButton omn_autolayoutView];
+    [lunchButton setTitle:kOMN_RESTAURANT_MODE_LUNCH_TITLE image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
+    [lunchButton addTarget:self action:@selector(lunchTap) forControlEvents:UIControlEventTouchUpInside];
+    [buttons addObject:lunchButton];
+    
+  }
   
-  UIView *fillView1 = [UIView omn_autolayoutView];
-  fillView1.hidden = YES;
-  [bottonsView addSubview:fillView1];
+  if (_restaurant.settings.has_pre_order) {
+    
+    OMNBottomTextButton *preorderButton = [OMNBottomTextButton omn_autolayoutView];
+    [preorderButton setTitle:kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
+    [preorderButton addTarget:self action:@selector(preorderTap) forControlEvents:UIControlEventTouchUpInside];
+    [buttons addObject:preorderButton];
+    
+  }
   
-  UIView *fillView2 = [UIView omn_autolayoutView];
-  fillView2.hidden = YES;
-  [bottonsView addSubview:fillView2];
+  NSMutableDictionary *buttonViews = [NSMutableDictionary dictionary];
+  UIView *fillView = [UIView omn_autolayoutView];
+  [buttonsView addSubview:fillView];
+  buttonViews[@"v0"] = fillView;
+  NSMutableString *format = [NSMutableString stringWithString:@"H:|[v0(>=0)]"];
   
+  [buttons enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL *stop) {
+    
+    NSString *buttonName = [NSString stringWithFormat:@"b%lu", (unsigned long)idx];
+    buttonViews[buttonName] = button;
+    [format appendFormat:@"[%@]", buttonName];
+    
+    NSString *fillViewName = [NSString stringWithFormat:@"v%lu", (unsigned long)idx + 1];
+    UIView *fillView = [UIView omn_autolayoutView];
+    [buttonsView addSubview:fillView];
+    buttonViews[fillViewName] = fillView;
+    
+    [format appendFormat:@"[%@(==v0)]", fillViewName];
+    
+    [buttonsView addSubview:button];
+    [buttonsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[%@]|", buttonName] options:kNilOptions metrics:nil views:buttonViews]];
+    
+  }];
+  
+  [format appendString:@"|"];
+  [buttonsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:format options:kNilOptions metrics:nil views:buttonViews]];
+
   NSDictionary *views =
   @{
     @"contentView" : _contentView,
@@ -227,12 +288,7 @@
     @"logoIcon" : _logoIcon,
     @"phoneButton" : _phoneButton,
     @"restaurantDetailsView" : _restaurantDetailsView,
-    @"bottonsView" : bottonsView,
-    @"reserveButton" : _reserveButton,
-    @"insideButton" : _insideButton,
-    @"preorderButton" : _preorderButton,
-    @"fillView1" : fillView1,
-    @"fillView2" : fillView2,
+    @"buttonsView" : buttonsView,
     };
 
   NSDictionary *metrics =
@@ -248,13 +304,8 @@
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
 
-  [bottonsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[reserveButton(>=0)][fillView1(>=0)][insideButton(==reserveButton)][fillView2(==fillView1)][preorderButton(==reserveButton)]|" options:kNilOptions metrics:metrics views:views]];
-  [bottonsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[reserveButton]|" options:kNilOptions metrics:metrics views:views]];
-  [bottonsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[insideButton]|" options:kNilOptions metrics:metrics views:views]];
-  [bottonsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[preorderButton]|" options:kNilOptions metrics:metrics views:views]];
-
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[bottonsView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(leftOffset)-[bottonsView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[buttonsView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(leftOffset)-[buttonsView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomView]|" options:kNilOptions metrics:metrics views:views]];
   

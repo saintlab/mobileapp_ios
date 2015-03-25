@@ -58,6 +58,7 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 
 - (BOOL)hasTable;
 - (BOOL)hasOrders;
+- (BOOL)canShow;
 
 @end
 

@@ -26,7 +26,13 @@
     _has_bar = [jsonData[@"has_bar"] boolValue];
     _has_pre_order = [jsonData[@"has_pre_order"] boolValue];
     _has_table_order = [jsonData[@"has_table_order"] boolValue];
-
+    _has_lunch = [jsonData[@"has_lunch"] boolValue];
+    
+#warning 123
+//    _has_bar = YES;
+//  _has_lunch = YES;
+//    _has_pre_order = YES;
+//    _has_table_order = YES;
   }
   return self;
 }

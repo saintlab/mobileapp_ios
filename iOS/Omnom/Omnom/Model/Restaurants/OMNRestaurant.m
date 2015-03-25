@@ -106,6 +106,31 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
   
 }
 
+- (BOOL)canShow {
+  
+  if (!self.available) {
+    return NO;
+  }
+  
+  if (self.hasOrders ||
+      self.hasTable) {
+    
+    return YES;
+    
+  }
+  
+  if (kRestaurantModeBar == self.entrance_mode ||
+      kRestaurantModeLunch == self.entrance_mode ||
+      kRestaurantModePreorder == self.entrance_mode) {
+    
+    return YES;
+    
+  }
+
+  return NO;
+  
+}
+
 - (NSString *)description {
   
   return [NSString stringWithFormat:@"%@, %@", _title, _id];
