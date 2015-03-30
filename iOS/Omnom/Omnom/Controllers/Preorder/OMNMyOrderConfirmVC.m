@@ -72,7 +72,7 @@ OMNPreorderConfirmCellDelegate>
   _tableView.delegate = self;
   _tableView.dataSource = self;
   
-  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:NSLocalizedString(@"PREORDER_CONFIRM_CLOSE_BUTTON_TITLE", @"Закрыть") color:[UIColor whiteColor] target:self action:@selector(closeTap)];
+  self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:kOMN_CLOSE_BUTTON_TITLE color:[UIColor whiteColor] target:self action:@selector(closeTap)];
   
   [self setupBottomBar];
 
@@ -113,7 +113,7 @@ OMNPreorderConfirmCellDelegate>
 - (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock {
   
   @weakify(self)
-  [_visitor.table getProductItems:^(NSArray *productItems) {
+  [_visitor.restaurant getRecommendationItems:^(NSArray *productItems) {
     
     @strongify(self)
     [self didLoadTableProductItems:productItems];

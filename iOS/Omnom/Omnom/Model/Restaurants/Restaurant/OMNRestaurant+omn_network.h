@@ -11,6 +11,7 @@
 #import "OMNWish.h"
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
+typedef void(^OMNProductItemsBlock)(NSArray *productItems);
 typedef void(^OMNWrongIDsBlock)(NSArray *wrongIDs);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 typedef void(^OMNMenuBlock)(OMNMenu *menu);
@@ -36,6 +37,7 @@ typedef void(^OMNWishBlock)(OMNWish *wish);
 - (void)nearbyWithCompletion:(dispatch_block_t)completionBlock;;
 
 - (void)getMenuWithCompletion:(OMNMenuBlock)completion;
+- (void)getRecommendationItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock;
 
 @end
 

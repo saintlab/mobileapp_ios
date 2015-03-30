@@ -37,31 +37,6 @@
 
 }
 
-- (void)getProductItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock {
-  
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/recommendations", self.restaurant_id];
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
-    
-    NSMutableArray *items = [NSMutableArray arrayWithCapacity:[response count]];
-    [response enumerateObjectsUsingBlock:^(NSDictionary *item, NSUInteger idx, BOOL *stop) {
-      
-      if (item[@"id"]) {
-        [items addObject:item[@"id"]];
-      }
-      
-    }];
-    
-    productItemsBlock(items);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_PRODUCT_ITEMS" jsonRequest:path responseOperation:operation];
-    errorBlock([error omn_internetError]);
-    
-  }];
-  
-}
-
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(OMNError *error))errorBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant_id, self.id];

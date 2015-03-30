@@ -86,7 +86,7 @@ OMNTransactionPaymentVCDelegate>
   OMNOrder *selectedOrder = _visitor.selectedOrder;
   [[OMNAnalitics analitics] logBillView:selectedOrder];
 
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Закрыть", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_CLOSE_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
 
   [self updateOrder];
   [OMNOrderAlertManager sharedManager].order = selectedOrder;

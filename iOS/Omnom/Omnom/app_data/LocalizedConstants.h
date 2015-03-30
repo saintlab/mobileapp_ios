@@ -23,6 +23,7 @@
 #define kOMN_RESTAURANT_MODE_IN_TITLE NSLocalizedString(@"RESTAURANT_MODE_IN_TITLE", @"За стол")
 #define kOMN_RESTAURANT_MODE_LUNCH_TITLE NSLocalizedString(@"RESTAURANT_MODE_LUNCH_TITLE", @"Заказ\nобеда\nв офис")
 #define kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE NSLocalizedString(@"RESTAURANT_MODE_TAKE_AWAY_TITLE", @"Заказ\nна вынос")
+#define kOMN_CLOSE_BUTTON_TITLE NSLocalizedString(@"CLOSE_BUTTON_TITLE", @"Закрыть")
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
