@@ -39,7 +39,7 @@
     [self setTitle:@"" forState:UIControlStateSelected];
     [self setTitle:@"" forState:UIControlStateSelected|UIControlStateHighlighted];
     
-    self.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
+    self.titleLabel.font = PRICE_BUTTON_FONT;
     [self setBackgroundImage:[[[UIImage imageNamed:@"rounded_button_light_bg"] omn_tintWithColor:textColor] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
     UIImage *selectedImage = [[UIImage imageNamed:@"blue_button_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
     [self setBackgroundImage:selectedImage forState:UIControlStateSelected];

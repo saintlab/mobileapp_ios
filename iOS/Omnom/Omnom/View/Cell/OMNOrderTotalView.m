@@ -71,26 +71,13 @@
 - (void)setOrder:(OMNOrder *)order {
   
   _order = order;
-  
-  NSString *totalText = NSLocalizedString(@"ORDER_TABLE_TOTAL_TEXT", @"Итого:");
   NSString *moneyText = [OMNUtils moneyStringFromKop:_order.totalAmount];
+  NSString *text = [NSString stringWithFormat:kOMN_TOTAL_TEXT, moneyText];
   
-  NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ %@", totalText, moneyText]];
+  NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomMedium(17.0f) textColor:[colorWithHexString(@"000000") colorWithAlphaComponent:0.8f] textAlignment:NSTextAlignmentCenter]];
   
-  [text setAttributes:
-   @{
-     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f],
-     NSFontAttributeName : FuturaOSFOmnomMedium(17.0f),
-     } range:[text.string rangeOfString:totalText]];
-  
-  [text setAttributes:
-   @{
-     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.8f],
-     NSFontAttributeName : FuturaLSFOmnomLERegular(17.0f),
-     } range:[text.string rangeOfString:moneyText]];
-  
-  _totalLabel.attributedText = text;
-  _totalLabel.textAlignment = NSTextAlignmentCenter;
+  [attributedText setAttributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(17.0f) textColor:[colorWithHexString(@"000000") colorWithAlphaComponent:0.8f] textAlignment:NSTextAlignmentCenter] range:[text rangeOfString:moneyText]];
+  _totalLabel.attributedText = attributedText;
   
 }
 

@@ -41,7 +41,7 @@
   
   [self setup];
   
-  _payButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
+  _payButton.titleLabel.font = PRICE_BUTTON_FONT;
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];

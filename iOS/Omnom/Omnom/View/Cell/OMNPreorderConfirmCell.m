@@ -62,12 +62,12 @@
   _priceButton = [UIButton omn_autolayoutView];
   [_priceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
   [_priceButton setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-  _priceButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
+  _priceButton.contentEdgeInsets = [OMNStyler buttonEdgeInsets];
   [_priceButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
   [_priceButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateHighlighted];
   [_priceButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateSelected];
   [_priceButton setTitleColor:[colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.5f] forState:UIControlStateSelected|UIControlStateHighlighted];
-  _priceButton.titleLabel.font = FuturaLSFOmnomLERegular(15.0f);
+  _priceButton.titleLabel.font = PRICE_BUTTON_FONT;
   UIImage *selectedBGImage = [[UIImage imageNamed:@"blue_button_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
   UIImage *bgImage = [[UIImage imageNamed:@"rounded_button_light_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
   [_priceButton setBackgroundImage:bgImage forState:UIControlStateNormal];
@@ -79,7 +79,7 @@
   _selectedPriceButton = [UIButton omn_autolayoutView];
   [_selectedPriceButton addTarget:self action:@selector(priceTap) forControlEvents:UIControlEventTouchUpInside];
   [_selectedPriceButton setContentHuggingPriority:UILayoutPriorityDefaultHigh forAxis:UILayoutConstraintAxisHorizontal];
-  _selectedPriceButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
+  _selectedPriceButton.contentEdgeInsets = [OMNStyler buttonEdgeInsets];
   [_selectedPriceButton setBackgroundImage:bgImage forState:UIControlStateNormal];
   [_selectedPriceButton setBackgroundImage:selectedBGImage forState:UIControlStateHighlighted];
   UIImage *checkImage = [[UIImage imageNamed:@"ic_in_wish_list_position"] omn_tintWithColor:[OMNStyler blueColor]];

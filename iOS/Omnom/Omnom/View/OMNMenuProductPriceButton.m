@@ -23,7 +23,7 @@
   self = [super initWithFrame:frame];
   if (self) {
     
-    self.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
+    self.contentEdgeInsets = [OMNStyler buttonEdgeInsets];
     [self setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
     [self setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateHighlighted];
     [self setTitleColor:colorWithHexString(@"FFFFFF") forState:kUIControlStateCustomState];
@@ -34,7 +34,7 @@
     [self setImage:iconImage forState:UIControlStateSelected];
     [self setImage:iconImage forState:UIControlStateSelected|kUIControlStateCustomState];
     [self setImage:iconImage forState:UIControlStateSelected|UIControlStateHighlighted];
-    self.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
+    self.titleLabel.font = PRICE_BUTTON_FONT;
     [self setBackgroundImage:[[UIImage imageNamed:@"rounded_button_light_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
     UIImage *selectedImage = [[UIImage imageNamed:@"blue_button_bg"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
     [self setBackgroundImage:selectedImage forState:UIControlStateSelected];

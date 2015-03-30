@@ -11,10 +11,7 @@
 #import "OMNUser.h"
 #import "OMNNavigationBarProgressView.h"
 #import <BlocksKit.h>
-
-@interface OMNConfirmCodeVC ()
-
-@end
+#import <OMNStyler.h>
 
 @implementation OMNConfirmCodeVC {
 
@@ -70,7 +67,7 @@
   [_resendButton setTitle:NSLocalizedString(@"Выслать новый код", nil) forState:UIControlStateNormal];
   [_resendButton addTarget:self action:@selector(resentTap) forControlEvents:UIControlEventTouchUpInside];
   _resendButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
-  _resendButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
+  _resendButton.contentEdgeInsets = [OMNStyler buttonEdgeInsets];
   [_resendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   [_resendButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   [_resendButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateHighlighted];

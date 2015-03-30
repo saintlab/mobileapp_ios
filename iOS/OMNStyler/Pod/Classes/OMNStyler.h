@@ -19,7 +19,7 @@
 
 + (UIColor *)toolbarColor;
 + (UIColor *)blueColor;
-
++ (UIEdgeInsets)buttonEdgeInsets;
 - (OMNStyle *)styleForClass:(Class)class;
 - (NSTimeInterval)animationDurationForKey:(NSString *)key;
 - (void)reset;

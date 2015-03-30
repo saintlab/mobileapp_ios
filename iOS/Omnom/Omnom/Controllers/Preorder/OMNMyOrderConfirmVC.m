@@ -19,6 +19,7 @@
 #import "OMNPreorderActionCellItem.h"
 #import "OMNPreorderMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "OMNPreorderTotalCell.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,
@@ -38,6 +39,7 @@ OMNPreorderConfirmCellDelegate>
   NSMutableArray *_preorderedProducts;
   NSArray *_recommendationProducts;
 
+  OMNPreorderTotalCellItem *_totalCellItem;
   OMNPreorderActionCellItem *_preorderActionCellItem;
   
   OMNPreorderMediator *_preorderMediator;
@@ -58,6 +60,8 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  _totalCellItem = [[OMNPreorderTotalCellItem alloc] init];
   
   _preorderActionCellItem = [[OMNPreorderActionCellItem alloc] init];
   _preorderActionCellItem.actionText = [_preorderMediator refreshOrdersTitle];
@@ -142,7 +146,7 @@ OMNPreorderConfirmCellDelegate>
   }];
   
   _recommendationProducts = [tableProducts copy];
-  [_tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+  [_tableView reloadSections:[NSIndexSet indexSetWithIndex:3] withRowAnimation:UITableViewRowAnimationAutomatic];
   
 }
 
@@ -150,10 +154,12 @@ OMNPreorderConfirmCellDelegate>
   
   NSMutableArray *preorderedProducts = [NSMutableArray array];
 
+  __block long long total = 0ll;
   [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
     
     if (product.preordered) {
       
+      total += product.total;
       OMNPreorderConfirmCellItem *orderedItem = [[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:product];
       orderedItem.delegate = self;
       [preorderedProducts addObject:orderedItem];
@@ -164,10 +170,11 @@ OMNPreorderConfirmCellDelegate>
 
   _preorderedProducts = preorderedProducts;
   _preorderActionCellItem.enabled = (preorderedProducts.count > 0);
+  _totalCellItem.total = total;
   
   if (animated) {
     
-    [_tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
     
   }
   else {
@@ -202,7 +209,7 @@ OMNPreorderConfirmCellDelegate>
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
   
-  return 3;
+  return 4;
   
 }
 
@@ -217,6 +224,9 @@ OMNPreorderConfirmCellDelegate>
       numberOfRows = 1;
     } break;
     case 2: {
+      numberOfRows = 1;
+    } break;
+    case 3: {
       numberOfRows = _recommendationProducts.count;
     } break;
     default:
@@ -234,9 +244,12 @@ OMNPreorderConfirmCellDelegate>
       item = _preorderedProducts[indexPath.row];
     } break;
     case 1: {
-      item = _preorderActionCellItem;
+      item = _totalCellItem;
     } break;
     case 2: {
+      item = _preorderActionCellItem;
+    } break;
+    case 3: {
       item = _recommendationProducts[indexPath.row];
     } break;
     default:
@@ -279,7 +292,7 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
   
-  if (indexPath.section != 0) {
+  if (indexPath.section > 0) {
     return;
   }
   
@@ -400,6 +413,7 @@ OMNPreorderConfirmCellDelegate>
   [self.view addSubview:_tableView];
   
   [OMNPreorderConfirmCellItem registerCellForTableView:_tableView];
+  [OMNPreorderTotalCellItem registerCellForTableView:_tableView];
   [OMNPreorderActionCellItem registerCellForTableView:_tableView];
 
   NSDictionary *views =

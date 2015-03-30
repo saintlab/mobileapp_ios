@@ -37,6 +37,10 @@
   return @(50.0f);
 }
 
++ (UIEdgeInsets)buttonEdgeInsets {
+  return UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 10.0f);
+}
+
 + (UIColor *)toolbarColor {
   
   return [UIColor colorWithWhite:0.95f alpha:0.95f];

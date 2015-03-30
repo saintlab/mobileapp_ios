@@ -107,7 +107,7 @@
   [_editButton addTarget:_amountControl action:@selector(becomeFirstResponder) forControlEvents:UIControlEventTouchUpInside];
   
   _payButton.translatesAutoresizingMaskIntoConstraints = NO;
-  _payButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
+  _payButton.titleLabel.font = PRICE_BUTTON_FONT;
   [_payButton setBackgroundImage:[[UIImage imageNamed:@"red_roundy_button"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   _payButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f);
   [_payButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];

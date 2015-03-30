@@ -19,7 +19,6 @@
 #define kOMN_DONE_BUTTON_TITLE NSLocalizedString(@"DONE_BUTTON_TITLE", @"Готово")
 
 //buttons
-
 #define kOMN_RESTAURANT_MODE_BAR_TITLE NSLocalizedString(@"RESTAURANT_MODE_BAR_TITLE", @"В бар")
 #define kOMN_RESTAURANT_MODE_IN_TITLE NSLocalizedString(@"RESTAURANT_MODE_IN_TITLE", @"За стол")
 #define kOMN_RESTAURANT_MODE_LUNCH_TITLE NSLocalizedString(@"RESTAURANT_MODE_LUNCH_TITLE", @"Заказ\nобеда\nв офис")
@@ -42,6 +41,9 @@
 #define kOMN_ORDERS_ON_TABLE_TEXT1 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT1{счёта} %ld", @"На вашем столике {orders_count} счёта")
 #define kOMN_ORDERS_ON_TABLE_TEXT2 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT2{счёт} %ld", @"На вашем столике {orders_count} счёт")
 #define kOMN_ORDERS_ON_TABLE_TEXT3 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT3{счетов} %ld", @"На вашем столике {orders_count} счетов")
+
+//preorder
+#define kOMN_TOTAL_TEXT NSLocalizedString(@"TOTAL_TEXT %@", @"Итого {total_string}")
 
 //bar
 #define kOMN_BAR_SUCCESS_TITLE1 NSLocalizedString(@"BAR_SUCCESS_TITLE1", @"Заказ принят")
