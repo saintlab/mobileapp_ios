@@ -11,6 +11,12 @@
 NSString * const OMNRestaurantNotificationLaunchKey = @"OMNRestaurantNotificationLaunchKey";
 NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrdersDidChangeNotification";
 
+@interface OMNRestaurant ()
+
+@property (nonatomic, assign) OMNRestaurantMode entrance_mode;
+
+@end
+
 @implementation OMNRestaurant {
   
   id _jsonData;
@@ -94,6 +100,14 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
   
 }
 
+- (instancetype)restaurantWithMode:(OMNRestaurantMode)mode {
+  
+  OMNRestaurant *restaurant = [[[self class] alloc] initWithJsonData:_jsonData];
+  restaurant.entrance_mode = mode;
+  return restaurant;
+  
+}
+
 - (BOOL)hasTable {
   
   return (1 == self.tables.count);
@@ -106,7 +120,7 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
   
 }
 
-- (BOOL)canShow {
+- (BOOL)canProcess {
   
   if (!self.available) {
     return NO;

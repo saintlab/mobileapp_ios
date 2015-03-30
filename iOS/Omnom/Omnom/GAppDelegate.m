@@ -136,6 +136,7 @@
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
   
+  [[OMNAnalitics analitics] logDebugEvent:@"didReceiveRemoteNotification" parametrs:userInfo];
   [[OMNLaunchHandler sharedHandler] application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
   
 }

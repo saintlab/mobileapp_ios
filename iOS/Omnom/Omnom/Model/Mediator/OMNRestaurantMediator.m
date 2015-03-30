@@ -121,10 +121,7 @@ OMNOrderCalculationVCDelegate>
 - (void)exitRestaurant {
   
   if (_restaurantActionsVC.didCloseBlock) {
-    
-    _restaurant.entrance_mode = kRestaurantModeNone;
     _restaurantActionsVC.didCloseBlock();
-    
   }
   
 }

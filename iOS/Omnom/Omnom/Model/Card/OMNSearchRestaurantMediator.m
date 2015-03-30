@@ -115,7 +115,7 @@ OMNScanTableQRCodeVCDelegate>
     
     OMNRestaurant *restaurant = [restaurants firstObject];
     
-    if (restaurant.canShow) {
+    if (restaurant.canProcess) {
       
       OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
       restaurantActionsVC.didCloseBlock = showRestaurantListBlock;

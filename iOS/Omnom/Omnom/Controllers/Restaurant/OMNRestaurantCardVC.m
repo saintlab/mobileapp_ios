@@ -142,10 +142,7 @@
 }
 
 - (void)barTap {
-  
-  _restaurant.entrance_mode = kRestaurantModeBar;
-  [_searchRestaurantMediator showRestaurants:@[_restaurant]];
-  
+  [_searchRestaurantMediator showRestaurants:@[[_restaurant restaurantWithMode:kRestaurantModeBar]]];
 }
 
 - (void)lunchTap {
@@ -165,26 +162,19 @@
 }
 
 - (void)preorderTap {
-  
-  _restaurant.entrance_mode = kRestaurantModePreorder;
-  [_searchRestaurantMediator showRestaurants:@[_restaurant]];
-  
+  [_searchRestaurantMediator showRestaurants:@[[_restaurant restaurantWithMode:kRestaurantModePreorder]]];
 }
 
 - (void)closeTap {
   
   if (self.didCloseBlock) {
-    
     self.didCloseBlock();
-    
   }
   
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  
   return UIStatusBarStyleDefault;
-  
 }
 
 - (void)setup {
