@@ -11,6 +11,8 @@
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
+#import "OMNRestaurantAddressSelectionVC.h"
+#import "OMNDateSelectionVC.h"
 
 @implementation OMNLunchOrderAlertVC {
   
@@ -21,6 +23,9 @@
   UIView *_addressLine;
   OMNRestaurant *_restaurant;
   UIButton *_doneButton;
+  
+  NSString *_date;
+  OMNRestaurantAddress *_address;
   
 }
 
@@ -37,8 +42,45 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
+  _date = [_restaurant.delivery_dates firstObject];
   [self createViews];
   [self configureViews];
+  
+}
+
+- (void)doneTap {
+  
+  if (self.didSelectDeliveryBlock) {
+    self.didSelectDeliveryBlock(nil, nil);
+  }
+  
+}
+
+- (void)addressTap {
+  
+  OMNRestaurantAddressSelectionVC *restaurantAddressSelectionVC = [[OMNRestaurantAddressSelectionVC alloc] initWithRestaurant:_restaurant];
+  @weakify(self)
+  restaurantAddressSelectionVC.didCloseBlock = ^{
+    
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:restaurantAddressSelectionVC] animated:YES completion:nil];
+  
+}
+
+- (void)dateTap {
+  
+  OMNDateSelectionVC *restaurantAddressSelectionVC = [[OMNDateSelectionVC alloc] initWithDates:_restaurant.delivery_dates];
+  @weakify(self)
+  restaurantAddressSelectionVC.didCloseBlock = ^{
+    
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:restaurantAddressSelectionVC] animated:YES completion:nil];
   
 }
 
@@ -49,15 +91,18 @@
   _textLabel.text = NSLocalizedString(@"ORDER_LUNCH_ALERT_TITLE", @"Заказ обада в офис");
   
   _doneButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
+  [_doneButton addTarget:self action:@selector(doneTap) forControlEvents:UIControlEventTouchUpInside];
   [_doneButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
   [_doneButton setTitleColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
   [_doneButton setTitle:NSLocalizedString(@"Ok", @"Ok") forState:UIControlStateNormal];
   
   _dateButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
+  [_dateButton addTarget:self action:@selector(dateTap) forControlEvents:UIControlEventTouchUpInside];
   [_dateButton setTitle:@"На завтра, 19 марта" forState:UIControlStateNormal];
   [_dateButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
   
   _addressButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
+  [_addressButton addTarget:self action:@selector(addressTap) forControlEvents:UIControlEventTouchUpInside];
   [_addressButton setTitle:@"Банк интеза, Октябрьская 49" forState:UIControlStateNormal];
   [_addressButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
   
@@ -111,8 +156,5 @@
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[doneButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
 }
-
-
-
 
 @end

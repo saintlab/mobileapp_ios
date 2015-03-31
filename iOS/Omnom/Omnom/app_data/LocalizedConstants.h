@@ -53,3 +53,7 @@
 #define kOMN_BAR_SUCCESS_HELP_TEXT NSLocalizedString(@"BAR_SUCCESS_HELP_TEXT %@", @"Мы пригласим вас, когда заказ будет готов.\nТакже проверить готов ли ваш заказ\nможно {link_text}.")
 #define kOMN_BAR_SUCCESS_HELP_ACTION_TEXT NSLocalizedString(@"BAR_SUCCESS_HELP_ACTION_TEXT", @"здесь")
 #define kOMN_BAR_SUCCESS_MAIL_TEXT NSLocalizedString(@"BAR_SUCCESS_MAIL_TEXT", @"Чек об оплате отправлен на почту.")
+
+//title
+#define kOMN_RESTAURANT_ADDRESS_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_ADDRESS_SELECTION_TITLE", @"Куда")
+#define kOMN_RESTAURANT_DATE_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_DATE_SELECTION_TITLE", @"Когда")

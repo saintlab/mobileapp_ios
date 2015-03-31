@@ -47,6 +47,7 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 @property (nonatomic, strong, readonly) NSURL *orders_paid_url;
 @property (nonatomic, strong, readonly) NSArray *tables;
 @property (nonatomic, strong, readonly) NSArray *orders;
+@property (nonatomic, strong, readonly) NSArray *delivery_dates;
 @property (nonatomic, strong, readonly) OMNRestaurantDecoration *decoration;
 @property (nonatomic, strong, readonly) OMNRestaurantAddress *address;
 @property (nonatomic, strong, readonly) OMNPushTexts *mobile_texts;

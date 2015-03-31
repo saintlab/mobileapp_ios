@@ -12,7 +12,7 @@
 @interface OMNVisitor : NSObject
 
 @property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
-@property (nonatomic, strong) OMNTable *table;
+@property (nonatomic, strong, readonly) OMNTable *table;
 @property (nonatomic, weak) OMNOrder *selectedOrder;
 @property (nonatomic, strong) NSArray *orders;
 @property (nonatomic, assign) BOOL waiterIsCalled;

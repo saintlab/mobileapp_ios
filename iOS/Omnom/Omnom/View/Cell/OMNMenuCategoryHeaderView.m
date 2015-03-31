@@ -12,10 +12,12 @@
 #import "OMNMenuHeaderLabel.h"
 #import <OMNStyler.h>
 #import <BlocksKit.h>
+#import "UIImage+omn_helper.h"
 
 @implementation OMNMenuCategoryHeaderView {
   
   OMNMenuHeaderLabel *_menuHeaderLabel;
+  UIImageView *_iconView;
   NSString *_itemSelectedOberverId;
   UIButton *_button;
   BOOL _stuck;
@@ -61,9 +63,14 @@
   _menuHeaderLabel = [OMNMenuHeaderLabel omn_autolayoutView];
   [self addSubview:_menuHeaderLabel];
   
+  _iconView = [UIImageView omn_autolayoutView];
+  _iconView.alpha = 0.2f;
+  [self addSubview:_iconView];
+  
   NSDictionary *views =
   @{
     @"button" : _button,
+    @"iconView" : _iconView,
     @"menuHeaderLabel" : _menuHeaderLabel,
     };
   
@@ -73,6 +80,10 @@
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[button]|" options:kNilOptions metrics:metrics views:views]];
+
+  [self addConstraint:[NSLayoutConstraint constraintWithItem:_iconView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(3)-[iconView]" options:kNilOptions metrics:metrics views:views]];
+  [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[iconView(20)]" options:kNilOptions metrics:metrics views:views]];
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuHeaderLabel]|" options:kNilOptions metrics:metrics views:views]];
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuHeaderLabel]|" options:kNilOptions metrics:metrics views:views]];
@@ -121,6 +132,7 @@
     
   }];
   [self setSelected:menuCategorySectionItem.entered animated:NO];
+  _iconView.image = [[UIImage imageNamed:[NSString stringWithFormat:@"category_level%ld", menuCategorySectionItem.menuCategory.level + 1]] omn_tintWithColor:[UIColor blackColor]];
   self.backgroundView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:(0.3f*menuCategorySectionItem.menuCategory.level)];
   _menuHeaderLabel.text = menuCategorySectionItem.menuCategory.name;
   

@@ -82,6 +82,16 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
       _orders_paid_url = [NSURL URLWithString:orders_paid_url];
     }
     
+    _delivery_dates =
+    @[
+      @"20/01/2015",
+      @"22/01/2015",
+      @"23/01/2015",
+      @"24/01/2015",
+      @"25/01/2015",
+      @"26/01/2015",
+      @"27/01/2015"
+      ];
   }
   return self;
 }

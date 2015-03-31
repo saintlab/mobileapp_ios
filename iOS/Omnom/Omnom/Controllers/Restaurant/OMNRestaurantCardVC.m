@@ -147,7 +147,7 @@
 
 - (void)lunchTap {
   
-  OMNLunchOrderAlertVC *lunchOrderAlertVC = [[OMNLunchOrderAlertVC alloc] init];
+  OMNLunchOrderAlertVC *lunchOrderAlertVC = [[OMNLunchOrderAlertVC alloc] initWithRestaurant:_restaurant];
   @weakify(self)
   lunchOrderAlertVC.didCloseBlock = ^{
     
@@ -155,6 +155,7 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     
   };
+//  lunchOrderAlertVC.did
   [self.navigationController presentViewController:lunchOrderAlertVC animated:YES completion:nil];
 //  _restaurant.entrance_mode = kRestaurantModeLunch;
 //  [_searchRestaurantMediator showRestaurants:@[_restaurant]];
