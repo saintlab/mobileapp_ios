@@ -3,8 +3,7 @@
 
 # Xcode
 build/
-build-ad-hoc/
-build-appstore/
+/build-*/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
