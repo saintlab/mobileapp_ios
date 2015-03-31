@@ -17,6 +17,7 @@
 #import "OMNRestaurantSchedules.h"
 #import "OMNTable.h"
 #import "OMNOrder.h"
+#import "OMNRestaurantDelivery.h"
 
 typedef NS_ENUM(NSInteger, OMNRestaurantMode) {
   
@@ -53,10 +54,12 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 @property (nonatomic, strong, readonly) OMNPushTexts *mobile_texts;
 @property (nonatomic, strong, readonly) OMNRestaurantSettings *settings;
 @property (nonatomic, strong, readonly) OMNRestaurantSchedules *schedules;
+@property (nonatomic, strong, readonly) OMNRestaurantDelivery *delivery;
 @property (nonatomic, strong) OMNRestaurantInfo *info;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 - (instancetype)restaurantWithMode:(OMNRestaurantMode)mode;
+- (instancetype)restaurantWithDelivery:(OMNRestaurantDelivery *)delivery;
 
 - (BOOL)hasTable;
 - (BOOL)hasOrders;

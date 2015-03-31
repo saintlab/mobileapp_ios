@@ -10,10 +10,10 @@
 
 @interface OMNRestaurantAddress : NSObject
 
-@property (nonatomic, copy) NSString *building;
-@property (nonatomic, copy) NSString *city;
-@property (nonatomic, copy) NSString *street;
-@property (nonatomic, copy) NSString *floor;
+@property (nonatomic, copy, readonly) NSString *building;
+@property (nonatomic, copy, readonly) NSString *city;
+@property (nonatomic, copy, readonly) NSString *street;
+@property (nonatomic, copy, readonly) NSString *floor;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 

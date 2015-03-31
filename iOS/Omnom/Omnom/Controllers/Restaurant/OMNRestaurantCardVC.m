@@ -155,10 +155,15 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     
   };
-//  lunchOrderAlertVC.did
+  OMNSearchRestaurantMediator *searchRestaurantMediator = _searchRestaurantMediator;
+  lunchOrderAlertVC.didSelectRestaurantBlock = ^(OMNRestaurant *restaurant) {
+
+    @strongify(self)
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [searchRestaurantMediator showRestaurants:@[restaurant]];
+    
+  };
   [self.navigationController presentViewController:lunchOrderAlertVC animated:YES completion:nil];
-//  _restaurant.entrance_mode = kRestaurantModeLunch;
-//  [_searchRestaurantMediator showRestaurants:@[_restaurant]];
   
 }
 

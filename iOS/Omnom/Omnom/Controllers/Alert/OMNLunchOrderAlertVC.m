@@ -13,6 +13,7 @@
 #import "UIView+omn_autolayout.h"
 #import "OMNRestaurantAddressSelectionVC.h"
 #import "OMNDateSelectionVC.h"
+#import "OMNRestaurantDelivery.h"
 
 @implementation OMNLunchOrderAlertVC {
   
@@ -24,8 +25,7 @@
   OMNRestaurant *_restaurant;
   UIButton *_doneButton;
   
-  NSString *_date;
-  OMNRestaurantAddress *_address;
+  OMNRestaurantDelivery *_delivery;
   
 }
 
@@ -42,16 +42,21 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _date = [_restaurant.delivery_dates firstObject];
+  _delivery = [[OMNRestaurantDelivery alloc] init];
+  _delivery.date = [_restaurant.delivery_dates firstObject];
   [self createViews];
   [self configureViews];
+  [self updateButtons];
   
 }
 
 - (void)doneTap {
   
-  if (self.didSelectDeliveryBlock) {
-    self.didSelectDeliveryBlock(nil, nil);
+  if (self.didSelectRestaurantBlock &&
+      _delivery.readyForDelivery) {
+
+    self.didSelectRestaurantBlock([_restaurant restaurantWithDelivery:_delivery]);
+    
   }
   
 }
@@ -60,6 +65,13 @@
   
   OMNRestaurantAddressSelectionVC *restaurantAddressSelectionVC = [[OMNRestaurantAddressSelectionVC alloc] initWithRestaurant:_restaurant];
   @weakify(self)
+  restaurantAddressSelectionVC.didSelectRestaurantAddressBlock = ^(OMNRestaurantAddress *restaurantAddress) {
+    
+    @strongify(self)
+    [self didSelectAddress:restaurantAddress];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+  };
   restaurantAddressSelectionVC.didCloseBlock = ^{
     
     @strongify(self)
@@ -72,15 +84,44 @@
 
 - (void)dateTap {
   
-  OMNDateSelectionVC *restaurantAddressSelectionVC = [[OMNDateSelectionVC alloc] initWithDates:_restaurant.delivery_dates];
+  OMNDateSelectionVC *dateSelectionVC = [[OMNDateSelectionVC alloc] initWithDates:_restaurant.delivery_dates];
   @weakify(self)
-  restaurantAddressSelectionVC.didCloseBlock = ^{
+  dateSelectionVC.didSelectDateBlock = ^(NSString *date) {
+    
+    @strongify(self)
+    [self didSelectDate:date];
+    [self dismissViewControllerAnimated:YES completion:nil];
+
+  };
+  dateSelectionVC.didCloseBlock = ^{
     
     @strongify(self)
     [self dismissViewControllerAnimated:YES completion:nil];
     
   };
-  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:restaurantAddressSelectionVC] animated:YES completion:nil];
+  [self presentViewController:[[UINavigationController alloc] initWithRootViewController:dateSelectionVC] animated:YES completion:nil];
+  
+}
+
+- (void)didSelectAddress:(OMNRestaurantAddress *)address {
+  
+  _delivery.address = address;
+  [self updateButtons];
+
+}
+
+- (void)didSelectDate:(NSString *)date {
+  
+  _delivery.date = date;
+  [self updateButtons];
+  
+}
+
+- (void)updateButtons {
+  
+  [_addressButton setTitle:_delivery.address.text forState:UIControlStateNormal];
+  [_dateButton setTitle:_delivery.date forState:UIControlStateNormal];
+  _doneButton.enabled = _delivery.readyForDelivery;
   
 }
 
@@ -94,6 +135,7 @@
   [_doneButton addTarget:self action:@selector(doneTap) forControlEvents:UIControlEventTouchUpInside];
   [_doneButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
   [_doneButton setTitleColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
+  [_doneButton setTitleColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f] forState:UIControlStateDisabled];
   [_doneButton setTitle:NSLocalizedString(@"Ok", @"Ok") forState:UIControlStateNormal];
   
   _dateButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);

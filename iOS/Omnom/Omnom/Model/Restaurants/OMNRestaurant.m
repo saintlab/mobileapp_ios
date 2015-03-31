@@ -14,6 +14,7 @@ NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrder
 @interface OMNRestaurant ()
 
 @property (nonatomic, assign) OMNRestaurantMode entrance_mode;
+@property (nonatomic, strong) OMNRestaurantDelivery *delivery;
 
 @end
 
@@ -114,6 +115,15 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
   
   OMNRestaurant *restaurant = [[[self class] alloc] initWithJsonData:_jsonData];
   restaurant.entrance_mode = mode;
+  return restaurant;
+  
+}
+
+- (instancetype)restaurantWithDelivery:(OMNRestaurantDelivery *)delivery {
+  
+  OMNRestaurant *restaurant = [[[self class] alloc] initWithJsonData:_jsonData];
+  restaurant.delivery = delivery;
+  restaurant.entrance_mode = kRestaurantModeLunch;
   return restaurant;
   
 }

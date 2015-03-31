@@ -12,6 +12,7 @@
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNProductItemsBlock)(NSArray *productItems);
+typedef void(^OMNAddressesBlock)(NSArray *addresses);
 typedef void(^OMNWrongIDsBlock)(NSArray *wrongIDs);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 typedef void(^OMNMenuBlock)(OMNMenu *menu);
@@ -28,6 +29,7 @@ typedef void(^OMNWishBlock)(OMNWish *wish);
  */
 - (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
+- (void)getDeliveryAddressesWithCompletion:(OMNAddressesBlock)addressesBlock failure:(void(^)(OMNError *error))failureBlock;
 
 - (void)handleEnterEventWithCompletion:(dispatch_block_t)completionBlock;
 - (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock;

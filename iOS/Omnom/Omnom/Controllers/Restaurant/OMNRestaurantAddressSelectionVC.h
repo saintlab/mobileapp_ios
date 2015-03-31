@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "OMNRestaurant.h"
 
+typedef void(^OMNRestaurantAddressBlock)(OMNRestaurantAddress *restaurantAddress);
+
 @interface OMNRestaurantAddressSelectionVC : UIViewController
 
+@property (nonatomic, copy) OMNRestaurantAddressBlock didSelectRestaurantAddressBlock;
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;

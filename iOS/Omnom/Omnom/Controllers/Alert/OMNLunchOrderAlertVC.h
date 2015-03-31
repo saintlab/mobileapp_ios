@@ -9,11 +9,11 @@
 #import "OMNModalAlertVC.h"
 #import "OMNRestaurant.h"
 
-typedef void(^OMNDidSelectDeliveryBlock)(NSString *date, OMNRestaurantAddress *address);
+typedef void(^OMNDidSelectRestaurantBlock)(OMNRestaurant *restaurant);
 
 @interface OMNLunchOrderAlertVC : OMNModalAlertVC
 
-@property (nonatomic, copy) OMNDidSelectDeliveryBlock didSelectDeliveryBlock;
+@property (nonatomic, copy) OMNDidSelectRestaurantBlock didSelectRestaurantBlock;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
 

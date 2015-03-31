@@ -8,7 +8,11 @@
 
 #import "OMNRestaurantAddress.h"
 
-@implementation OMNRestaurantAddress
+@implementation OMNRestaurantAddress {
+  
+  id _jsonData;
+  
+}
 
 - (instancetype)initWithJsonData:(id)jsonData {
   
@@ -19,10 +23,11 @@
   self = [super init];
   if (self) {
     
-    self.building = [jsonData[@"building"] description];
-    self.city = jsonData[@"city"];
-    self.street = jsonData[@"street"];
-    self.floor = (jsonData[@"floor"]) ? ([jsonData[@"floor"] description]) : (@"");
+    _jsonData = jsonData;
+    _building = [jsonData[@"building"] description];
+    _city = jsonData[@"city"];
+    _street = jsonData[@"street"];
+    _floor = (jsonData[@"floor"]) ? ([jsonData[@"floor"] description]) : (@"");
     
   }
   return self;

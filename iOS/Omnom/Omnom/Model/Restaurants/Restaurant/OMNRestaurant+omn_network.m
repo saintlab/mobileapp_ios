@@ -52,6 +52,19 @@
   
 }
 
+- (void)getDeliveryAddressesWithCompletion:(OMNAddressesBlock)addressesBlock failure:(void(^)(OMNError *error))failureBlock {
+  
+  NSArray *a = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"addresses.json" ofType:nil]] options:kNilOptions error:nil];
+  
+  NSArray *addresses = [a bk_map:^id(id obj) {
+    
+    return [[OMNRestaurantAddress alloc] initWithJsonData:obj];
+    
+  }];
+  addressesBlock(addresses);
+  
+}
+
 - (NSDate *)lastEnterDate {
   
   NSMutableDictionary *lastEnterDates = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEnterDates"];
