@@ -345,6 +345,39 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
   
 }
 
+- (void)refundOrder:(NSString *)orderID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock {
+  
+  NSAssert(orderID != nil, @"order id should not be nil");
+  
+  NSDictionary *reqiredSignatureParams =
+  @{
+    @"merch_id" : _config[@"OMNMailRu_merch_id"],
+    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
+    @"order_id" : orderID,
+    };
+  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
+  parameters[@"signature"] = [reqiredSignatureParams omn_signature];
+  [self POST:@"/order/refund" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    if ([responseObject[@"status"] isEqualToString:@"OK"]) {
+      
+      completionBlock();
+      
+    }
+    else {
+      
+      failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
+      
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock(error, parameters, nil);
+    
+  }];
+  
+}
+
 - (void)deleteCard:(NSString *)card_id user_login:(NSString *)user_login сompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock {
   
   NSDictionary *reqiredSignatureParams =

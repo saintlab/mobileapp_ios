@@ -12,6 +12,7 @@
 #import <OMNMailRuAcquiring.h>
 #import <OMNBeacon.h>
 #import "OMNAuthorization.h"
+#import "OMNLaunchOptions.h"
 
 SPEC_BEGIN(OMNConfigTests)
 
@@ -51,7 +52,8 @@ describe(@"check initial state", ^{
     [[[OMNAuthorization authorisation].token should] beNonNil];
     
     __block NSNumber *isConfigLoaded = nil;
-    [OMNConstants setupWithLaunchOptions:nil completion:^{
+    OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:nil];
+    [OMNConstants setupWithLaunchOptions:lo completion:^{
       
       isConfigLoaded = @(YES);
       
