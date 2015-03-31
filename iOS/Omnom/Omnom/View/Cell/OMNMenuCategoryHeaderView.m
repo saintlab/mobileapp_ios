@@ -132,7 +132,7 @@
     
   }];
   [self setSelected:menuCategorySectionItem.entered animated:NO];
-  _iconView.image = [[UIImage imageNamed:[NSString stringWithFormat:@"category_level%ld", menuCategorySectionItem.menuCategory.level + 1]] omn_tintWithColor:[UIColor blackColor]];
+  _iconView.image = [[UIImage imageNamed:[NSString stringWithFormat:@"category_level%ld", (long)menuCategorySectionItem.menuCategory.level + 1]] omn_tintWithColor:[UIColor blackColor]];
   self.backgroundView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:(0.3f*menuCategorySectionItem.menuCategory.level)];
   _menuHeaderLabel.text = menuCategorySectionItem.menuCategory.name;
   

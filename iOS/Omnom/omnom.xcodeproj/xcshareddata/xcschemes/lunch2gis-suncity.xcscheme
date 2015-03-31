@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "930C8B371ACA7D9F00CE4E5A"
-               BuildableName = "lunch2gis copy.app"
+               BuildableName = "lunch2gis-suncity.app"
                BlueprintName = "lunch2gis-suncity"
                ReferencedContainer = "container:omnom.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "930C8B371ACA7D9F00CE4E5A"
-            BuildableName = "lunch2gis copy.app"
+            BuildableName = "lunch2gis-suncity.app"
             BlueprintName = "lunch2gis-suncity"
             ReferencedContainer = "container:omnom.xcodeproj">
          </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "930C8B371ACA7D9F00CE4E5A"
-            BuildableName = "lunch2gis copy.app"
+            BuildableName = "lunch2gis-suncity.app"
             BlueprintName = "lunch2gis-suncity"
             ReferencedContainer = "container:omnom.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "930C8B371ACA7D9F00CE4E5A"
-            BuildableName = "lunch2gis copy.app"
+            BuildableName = "lunch2gis-suncity.app"
             BlueprintName = "lunch2gis-suncity"
             ReferencedContainer = "container:omnom.xcodeproj">
          </BuildableReference>
