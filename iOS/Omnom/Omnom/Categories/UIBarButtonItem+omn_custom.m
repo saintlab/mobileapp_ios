@@ -10,6 +10,7 @@
 #import "UIImage+omn_helper.h"
 #import "OMNConstants.h"
 #import "UIButton+omn_helper.h"
+#import <BlocksKit+UIKit.h>
 
 @implementation UIBarButtonItem (omn_custom)
 
@@ -32,6 +33,18 @@
   UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
   barButtonItem.width = space;
   return barButtonItem;
+  
+}
+
++ (UIBarButtonItem *)omn_barButtonWithTitle:(NSString *)title color:(UIColor *)color actionBlock:(dispatch_block_t)actionBlock {
+  
+  UIButton *button = [UIButton omn_barButtonWithTitle:title image:nil color:color target:nil action:nil];
+  [button bk_addEventHandler:^(id sender) {
+    
+    actionBlock();
+    
+  } forControlEvents:UIControlEventTouchUpInside];
+  return [[UIBarButtonItem alloc] initWithCustomView:button];
   
 }
 

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "OMNWish.h"
 #import "OMNMyOrderConfirmVC.h"
-#import "OMNRestaurant.h"
+#import "OMNRestaurant+omn_network.h"
 #import "OMNRestaurantMediator.h"
 
 @interface OMNPreorderMediator : NSObject
@@ -19,8 +19,9 @@
 
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator rootVC:(OMNMyOrderConfirmVC *)rootVC;
 
-- (void)processWish:(OMNWish *)wish;
-- (void)didFinishPreorder;
+- (void)createWish:(NSArray *)wishItems completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
+- (void)processCreatedWish:(OMNWish *)wish;
+- (void)didFinishWish;
 
 - (NSString *)refreshOrdersTitle;
 - (UIButton *)bottomButton;

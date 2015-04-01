@@ -8,11 +8,7 @@
 
 #import "OMNRestaurantAddress.h"
 
-@implementation OMNRestaurantAddress {
-  
-  id _jsonData;
-  
-}
+@implementation OMNRestaurantAddress
 
 - (instancetype)initWithJsonData:(id)jsonData {
   
@@ -24,6 +20,7 @@
   if (self) {
     
     _jsonData = jsonData;
+    _name = jsonData[@"name"];
     _building = [jsonData[@"building"] description];
     _city = jsonData[@"city"];
     _street = jsonData[@"street"];

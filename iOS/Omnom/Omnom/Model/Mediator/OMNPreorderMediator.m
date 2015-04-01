@@ -16,11 +16,6 @@
   
 }
 
-- (void)dealloc
-{
-  
-}
-
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator rootVC:(OMNMyOrderConfirmVC *)rootVC {
   self = [super init];
   if (self) {
@@ -32,20 +27,27 @@
   return self;
 }
 
-- (void)processWish:(OMNWish *)wish {
+- (void)processCreatedWish:(OMNWish *)wish {
   
   @weakify(self)
   OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:^{
     
     @strongify(self)
-    [self didFinishPreorder];
+    [self didFinishWish];
     
   }];
   [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
 
 }
 
-- (void)didFinishPreorder {
+- (void)createWish:(NSArray *)wishItems completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+  
+  OMNVisitor *visitor = _restaurantMediator.visitor;
+  [visitor.restaurant createWishForTable:visitor.table products:wishItems completionBlock:completionBlock wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
+  
+}
+
+- (void)didFinishWish {
   
   [_restaurantMediator.restaurantActionsVC showRestaurantAnimated:NO];
   [_restaurantMediator.menu resetSelection];

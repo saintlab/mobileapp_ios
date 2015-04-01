@@ -73,7 +73,7 @@ TTTAttributedLabelDelegate>
 
 - (UIBarButtonItem *)createUserButton {
   
-  return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_BUTTON_TITLE", @"Далее") style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];
+  return [[UIBarButtonItem alloc] initWithTitle:kOMN_NEXT_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(createUserTap)];
   
 }
 

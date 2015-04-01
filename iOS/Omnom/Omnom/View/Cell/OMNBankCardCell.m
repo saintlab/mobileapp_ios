@@ -145,7 +145,7 @@
     backgroundView.backgroundColor = colorWithHexString(@"4A90E2");;
     self.backgroundView = backgroundView;
 
-    _iconView.image = [UIImage imageNamed:@"active_card_icon"];
+    _iconView.image = [UIImage imageNamed:@"checkbox_white"];
     masked_panColor = colorWithHexString(@"FFFFFF");
     associationColor = colorWithHexString(@"FFFFFF");
     

@@ -9,12 +9,15 @@
 #import "OMNLunchRestaurantMediator.h"
 #import "OMNLunchPreorderMediator.h"
 #import "OMNLaunchHandler.h"
+#import "OMNSuncityLunchPreorderMediator.h"
 
 @implementation OMNLunchRestaurantMediator
 
 - (UIBarButtonItem *)exitRestaurantButton {
 
 #if LUNCH_2GIS
+  return nil;
+#elif LUNCH_2GIS_SUNCITY
   return nil;
 #else
   return [super exitRestaurantButton];
@@ -31,7 +34,11 @@
 }
 
 - (OMNPreorderMediator *)preorderMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
+#if LUNCH_2GIS_SUNCITY
+  return [[OMNSuncityLunchPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+#else
   return [[OMNLunchPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+#endif
 }
 
 - (void)checkStartConditions {

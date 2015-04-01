@@ -187,7 +187,7 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)didCreateWish:(OMNWish *)wish {
   
-  [_preorderMediator processWish:wish];
+  [_preorderMediator processCreatedWish:wish];
   
 }
 
@@ -312,24 +312,25 @@ OMNPreorderConfirmCellDelegate>
   _preorderActionCellItem.enabled = NO;
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
   
-  NSArray *selectedWishItems = [_restaurantMediator.menu selectedWishItems];
+  NSArray *wishItems = [_restaurantMediator.menu selectedWishItems];
+  
   @weakify(self)
-  [_visitor.restaurant createWishForTable:_visitor.table products:selectedWishItems completionBlock:^(OMNWish *wish) {
+  [_preorderMediator createWish:wishItems completionBlock:^(OMNWish *wish) {
     
     @strongify(self)
     [self stopLoading];
     [self didCreateWish:wish];
-    
+
   } wrongIDsBlock:^(NSArray *wrongIDs) {
     
     @strongify(self)
     [self didFailCreateWithWithProductIDs:wrongIDs];
-    
+
   } failureBlock:^(OMNError *error) {
     
     @strongify(self)
     [self stopLoading];
-    
+
   }];
   
 }
@@ -423,8 +424,7 @@ OMNPreorderConfirmCellDelegate>
     };
   
   NSDictionary *metrics =
-  @{
-    };
+  @{};
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][tableView]|" options:kNilOptions metrics:metrics views:views]];

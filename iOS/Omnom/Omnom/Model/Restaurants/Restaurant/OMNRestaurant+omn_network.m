@@ -54,7 +54,7 @@
 
 - (void)getDeliveryAddressesWithCompletion:(OMNAddressesBlock)addressesBlock failure:(void(^)(OMNError *error))failureBlock {
   
-  NSArray *a = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"addresses.json" ofType:nil]] options:kNilOptions error:nil];
+  NSArray *a = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"suncity_addresses.json" ofType:nil]] options:kNilOptions error:nil];
   
   NSArray *addresses = [a bk_map:^id(id obj) {
     
@@ -209,6 +209,10 @@
   
 }
 
+- (NSString *)wishType {
+  return (kRestaurantModeLunch == self.entrance_mode) ? (@"lunch") : (@"pre_order");
+}
+
 - (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -220,6 +224,10 @@
   }
   if (products) {
     parameters[@"items"] = products;
+  }
+  parameters[@"type"] = [self wishType];
+  if (self.delivery) {
+    parameters[@"delivery_address"] = self.delivery.addressData;
   }
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.id];

@@ -18,11 +18,8 @@
 
 @implementation OMNPreorderDoneVC {
   
-  UILabel *_textLabel;
-  UILabel *_detailedTextLabel;
   UIButton *_closeButton;
   
-  dispatch_block_t _didCloseBlock;
   NSString *_title;
   NSString *_subTitle;
   
@@ -62,9 +59,7 @@
 - (void)closeTap {
   
   if (_didCloseBlock) {
-    
     _didCloseBlock();
-    
   }
   
 }
@@ -79,11 +74,11 @@
   [_closeButton omn_setImage:[UIImage imageNamed:@"cross_icon_white"] withColor:[UIColor whiteColor]];
   [self.view addSubview:_closeButton];
   
-  _textLabel = [UILabel omn_autolayoutView];
+  _textLabel = [TTTAttributedLabel omn_autolayoutView];
   _textLabel.numberOfLines = 0;
   [self.view addSubview:_textLabel];
   
-  _detailedTextLabel = [UILabel omn_autolayoutView];
+  _detailedTextLabel = [TTTAttributedLabel omn_autolayoutView];
   _detailedTextLabel.numberOfLines = 0;
   [self.view addSubview:_detailedTextLabel];
   
@@ -108,8 +103,6 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[closeButton]-(20)-[textLabel]-[detailedTextLabel]" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[detailedTextLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  
-  
   
 }
 

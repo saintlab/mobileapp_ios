@@ -86,7 +86,7 @@ TTTAttributedLabelDelegate> {
   }
   else {
     
-    rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Далее", nil) style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
+    rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_NEXT_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(loginTap)];
     
   }
   [self.navigationItem setRightBarButtonItem:rightBarButtonItem animated:YES];

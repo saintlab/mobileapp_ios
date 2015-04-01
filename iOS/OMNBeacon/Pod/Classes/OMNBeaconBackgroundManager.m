@@ -29,6 +29,8 @@
   
 #if LUNCH_2GIS
   return nil;
+#elif LUNCH_2GIS_SUNCITY
+  return nil;
 #endif
   
   static id manager = nil;

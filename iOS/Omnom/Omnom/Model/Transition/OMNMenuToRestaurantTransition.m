@@ -31,7 +31,7 @@
   [containerView addSubview:fromViewController.view];
   
   CGRect toTableFrame = [toViewController.menuTable convertRect:toViewController.menuTable.bounds toView:containerView];
-  toViewController.menuTable.alpha = 0.0f;
+  toViewController.menuTable.hidden = YES;
   toTableFrame.size = fromViewController.tableView.frame.size;
   fromViewController.navigationFadeView.alpha = 0.0f;
   
@@ -40,15 +40,22 @@
     fromViewController.backgroundView.alpha = 0.0f;
     menuTable.frame = toTableFrame;
     
-  } completion:^(BOOL finished) {
+  } completion:^(BOOL finished1) {
   
     [fromViewController closeAllCategoriesWithCompletion:^{
       
-      toViewController.menuTable.alpha = 1.0f;
-      [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+      toViewController.menuTable.hidden = NO;
+      [UIView animateWithDuration:0.3 animations:^{
+        
+        fromViewController.tableView.alpha = 0.0f;
+        
+      } completion:^(BOOL finished2) {
+      
+        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+        
+      }];
 
     }];
-    
     
   }];
   

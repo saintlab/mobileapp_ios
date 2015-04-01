@@ -30,6 +30,11 @@
 
     _qr = @"qr-code-for-0-lunch2gis";
 
+#elif LUNCH_2GIS_SUNCITY
+    
+    _customConfigName = @"config_staging";
+    _qr = @"qr-code-for-0-lunch2gis-sun-city";
+    
 #elif DEBUG
 
 //    staging

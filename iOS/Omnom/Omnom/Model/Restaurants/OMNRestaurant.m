@@ -64,9 +64,8 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     _is_demo = [jsonData[@"is_demo"] boolValue];
     _available = (jsonData[@"available"]) ? ([jsonData[@"available"] boolValue]) : (YES);
     _entrance_mode = entranceModeFromString(jsonData[@"entrance_mode"]);
-    self.title = jsonData[@"title"];
-    self.Description = jsonData[@"description"];
-
+    _title = jsonData[@"title"];
+    _Description = jsonData[@"description"];
     _distance = [jsonData[@"distance"] doubleValue];
     _decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
     _mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
@@ -83,6 +82,7 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
       _orders_paid_url = [NSURL URLWithString:orders_paid_url];
     }
     
+#warning TODO
     _delivery_dates =
     @[
       @"20/01/2015",

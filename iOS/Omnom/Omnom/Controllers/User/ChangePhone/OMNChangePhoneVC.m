@@ -53,7 +53,7 @@
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
   }
   else {
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"CHANGE_PHONE_NEXT_BUTTON_TITLE", @"Далее") style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_NEXT_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)];
   }
   
 }

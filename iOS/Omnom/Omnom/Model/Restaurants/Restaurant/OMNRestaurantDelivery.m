@@ -10,11 +10,26 @@
 
 @implementation OMNRestaurantDelivery
 
++ (instancetype)deliveryWithAddress:(OMNRestaurantAddress *)address date:(NSString *)date {
+  
+  OMNRestaurantDelivery *delivery = [[OMNRestaurantDelivery alloc] init];
+  delivery.date = date;
+  delivery.address = address;
+  return delivery;
+  
+}
+
 - (BOOL)readyForDelivery {
   
   return
   (self.date != nil) &&
   (self.address != nil);
+  
+}
+
+- (NSDictionary *)addressData {
+  
+  return (self.address.jsonData) ?: (@"");
   
 }
 

@@ -15,13 +15,13 @@
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
-- (void)processWish:(OMNWish *)wish {
+- (void)processCreatedWish:(OMNWish *)wish {
 
   @weakify(self)
   OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 didCloseBlock:^{
     
     @strongify(self)
-    [self didFinishPreorder];
+    [self didFinishWish];
     
   }];
   [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];

@@ -24,6 +24,7 @@
 #define kOMN_RESTAURANT_MODE_LUNCH_TITLE NSLocalizedString(@"RESTAURANT_MODE_LUNCH_TITLE", @"Заказ\nобеда\nв офис")
 #define kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE NSLocalizedString(@"RESTAURANT_MODE_TAKE_AWAY_TITLE", @"Заказ\nна вынос")
 #define kOMN_CLOSE_BUTTON_TITLE NSLocalizedString(@"CLOSE_BUTTON_TITLE", @"Закрыть")
+#define kOMN_NEXT_BUTTON_TITLE NSLocalizedString(@"NEXT_BUTTON_TITLE", @"Далее")
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
@@ -31,6 +32,10 @@
 
 #define kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_2GIS_LABEL_TEXT_1", @"Заказ принят\nи передан Роме")
 #define kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_2GIS_LABEL_TEXT_2", @"Спасибо!")
+
+#define kOMN_PREORDER_DONE_2GIS_SUNCITY_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_2GIS_SUNCITY_LABEL_TEXT_1", @"Заказ принят\nи ожидеате оплаты")
+#define kOMN_PREORDER_DONE_2GIS_SUNCITY_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_2GIS_SUNCITY_LABEL_TEXT_2 %@ %@", @"Чтобы поесть, оплатите {amount_string} по ссылке\n{PREORDER_DONE_2GIS_SUNCITY_LABEL_ACTION_TEXT_2},\nуказав номер договора 5000306562\n\nОбед будет ждать вас на кухне на следующий рабочий день ориентировачно в 13:20.")
+#define kOMN_PREORDER_DONE_2GIS_SUNCITY_LABEL_ACTION_TEXT_2 NSLocalizedString(@"PREORDER_DONE_2GIS_SUNCITY_LABEL_ACTION_TEXT_2", @"http://tinkoff.ru/cardtocard")
 
 #define kOMN_MY_TABLE_ORDERS_LABEL_TEXT NSLocalizedString(@"MY_TABLE_ORDERS_LABEL_TEXT", @"Блюда на вашем столе")
 #define kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT NSLocalizedString(@"WISH_RECOMMENDATIONS_LABEL_TEXT", @"Ранее вы заказывали")
@@ -45,6 +50,11 @@
 
 //preorder
 #define kOMN_TOTAL_TEXT NSLocalizedString(@"TOTAL_TEXT %@", @"Итого {total_string}")
+
+//address
+#define kOMN_FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES", @"Добавьте мой адрес")
+#define kOMN_RESTAURANT_ADDRESSES_ADD_ACTION_TEXT NSLocalizedString(@"RESTAURANT_ADDRESSES_ADD_ACTION_TEXT", @"Оставьте заявку")
+#define kOMN_RESTAURANT_ADDRESSES_ADD_TEXT NSLocalizedString(@"RESTAURANT_ADDRESSES_ADD_TEXT %@", @"Не нашли свой офис?\n{action_text}\nЕсли заведение готово доставить к вам, то ваш офис через день появится в списке")
 
 //bar
 #define kOMN_BAR_SUCCESS_TITLE1 NSLocalizedString(@"BAR_SUCCESS_TITLE1", @"Заказ принят")

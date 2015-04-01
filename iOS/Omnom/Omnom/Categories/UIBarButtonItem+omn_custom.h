@@ -12,6 +12,7 @@
 
 + (UIBarButtonItem *)omn_barButtonWithImage:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action;
 + (UIBarButtonItem *)omn_barButtonWithTitle:(NSString *)title color:(UIColor *)color target:(id)target action:(SEL)action;
++ (UIBarButtonItem *)omn_barButtonWithTitle:(NSString *)title color:(UIColor *)color actionBlock:(dispatch_block_t)actionBlock;
 
 + (UIBarButtonItem *)omn_loadingItem;
 + (UIBarButtonItem *)omn_flexibleItem;

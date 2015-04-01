@@ -30,7 +30,7 @@
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
-- (void)processWish:(OMNWish *)wish {
+- (void)processCreatedWish:(OMNWish *)wish {
   
   _wish = wish;
 
@@ -55,7 +55,7 @@
   wishSuccessVC.didFinishBlock = ^{
     
     @strongify(self)
-    [self didFinishPreorder];
+    [self didFinishWish];
     
   };
   wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;

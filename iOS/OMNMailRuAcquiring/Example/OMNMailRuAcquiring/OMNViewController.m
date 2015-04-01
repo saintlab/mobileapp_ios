@@ -20,8 +20,7 @@
   NSString *_user_phone;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
   [super viewDidLoad];
   _user_login = @"5";
   _user_phone = @"89833087335";

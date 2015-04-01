@@ -17,5 +17,6 @@ typedef void(^OMNRestaurantAddressBlock)(OMNRestaurantAddress *restaurantAddress
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
+- (OMNRestaurantAddress *)selectedAddress;
 
 @end
