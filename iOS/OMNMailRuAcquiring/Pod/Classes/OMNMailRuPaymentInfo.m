@@ -40,7 +40,7 @@
 
 - (NSString *)extra_text {
   
-  if (0 == self.restaurant_id.length) {
+  if (!self.restaurant_id) {
     return nil;
   }
   

@@ -355,13 +355,36 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
     @"order_id" : orderID,
     };
+  
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
   parameters[@"signature"] = [reqiredSignatureParams omn_signature];
-  [self POST:@"/order/refund" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  __weak typeof(self)weakSelf = self;
+  [self POST:@"order/refund" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    if ([responseObject[@"status"] isEqualToString:@"OK"]) {
+    NSString *url = responseObject[@"url"];
+    if (url &&
+        nil == responseObject[@"error"]) {
       
-      completionBlock();
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      [strongSelf pollUrl:url withCompletion:^(id response) {
+        
+        NSString *status = response[@"status"];
+        if ([status isEqualToString:@"OK_REFUND_FINISH"]) {
+          
+          completionBlock();
+          
+        }
+        else {
+          
+          failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
+          
+        }
+        
+      } failure:^(NSError *error) {
+        
+        failureBlock(error, responseObject, nil);
+        
+      }];
       
     }
     else {
