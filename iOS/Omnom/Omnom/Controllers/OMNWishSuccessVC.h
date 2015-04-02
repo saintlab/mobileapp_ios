@@ -14,6 +14,6 @@
 
 @property (nonatomic, copy) dispatch_block_t didFinishBlock;
 
-- (instancetype)initWithWish:(OMNWish *)wish;
+- (instancetype)initWithWish:(OMNWish *)wish paymentOrdersURL:(NSURL *)paymentOrdersURL;
 
 @end

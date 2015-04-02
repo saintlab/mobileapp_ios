@@ -14,6 +14,7 @@
 #import <TTTAttributedLabel.h>
 #import "OMNUtils.h"
 #import "UIImage+omn_helper.h"
+#import "OMNLaunchHandler.h"
 
 @interface OMNWishSuccessVC ()
 <TTTAttributedLabelDelegate>
@@ -34,14 +35,16 @@
   UIView *_contentView;
   
   OMNWish *_wish;
+  NSURL *_paymentOrdersURL;
   
 }
 
-- (instancetype)initWithWish:(OMNWish *)wish {
+- (instancetype)initWithWish:(OMNWish *)wish paymentOrdersURL:(NSURL *)paymentOrdersURL {
   self = [super init];
   if (self) {
     
     _wish = wish;
+    _paymentOrdersURL = paymentOrdersURL;
     
   }
   return self;
@@ -91,7 +94,7 @@
   
   NSString *helpText = [NSString stringWithFormat:kOMN_BAR_SUCCESS_HELP_TEXT, kOMN_BAR_SUCCESS_HELP_ACTION_TEXT];
   _orderHelpLabel.text = [[NSAttributedString alloc] initWithString:helpText attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(15.0f) textColor:colorWithHexString(@"515753") textAlignment:NSTextAlignmentCenter]];
-  [_orderHelpLabel addLinkToURL:[NSURL URLWithString:@""] withRange:[helpText rangeOfString:kOMN_BAR_SUCCESS_HELP_ACTION_TEXT]];
+  [_orderHelpLabel addLinkToURL:_paymentOrdersURL withRange:[helpText rangeOfString:kOMN_BAR_SUCCESS_HELP_ACTION_TEXT]];
   _orderHelpLabel.delegate = self;
   
   _orderHelpLabel.font = FuturaOSFOmnomRegular(20.0f);
@@ -229,7 +232,7 @@
 #pragma mark - TTTAttributedLabelDelegate
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
-  
+  [[OMNLaunchHandler sharedHandler] openURL:url];
 }
 
 @end

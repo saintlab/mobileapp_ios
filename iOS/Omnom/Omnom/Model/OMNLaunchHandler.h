@@ -20,5 +20,6 @@
 - (void)didFinishLaunchingWithOptions:(OMNLaunchOptions *)lo;
 - (void)applicationWillEnterForeground;
 - (void)applicationDidEnterBackground;
+- (void)openURL:(NSURL *)url;
 
 @end

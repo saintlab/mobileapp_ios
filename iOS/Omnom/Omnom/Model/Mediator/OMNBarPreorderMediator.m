@@ -50,7 +50,7 @@
   
   [self.rootVC dismissViewControllerAnimated:YES completion:nil];
   
-  OMNWishSuccessVC *wishSuccessVC = [[OMNWishSuccessVC alloc] initWithWish:_wish];
+  OMNWishSuccessVC *wishSuccessVC = [[OMNWishSuccessVC alloc] initWithWish:_wish paymentOrdersURL:self.restaurantMediator.restaurant.orders_paid_url];
   @weakify(self)
   wishSuccessVC.didFinishBlock = ^{
     
