@@ -55,6 +55,7 @@
 #define kOMN_FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES", @"Добавьте мой адрес")
 #define kOMN_RESTAURANT_ADDRESSES_ADD_ACTION_TEXT NSLocalizedString(@"RESTAURANT_ADDRESSES_ADD_ACTION_TEXT", @"Оставьте заявку")
 #define kOMN_RESTAURANT_ADDRESSES_ADD_TEXT NSLocalizedString(@"RESTAURANT_ADDRESSES_ADD_TEXT %@", @"Не нашли свой офис?\n{action_text}\nЕсли заведение готово доставить к вам, то ваш офис через день появится в списке")
+#define kOMN_RESTAURANT_ADDRESSES_HEADER_TEXT NSLocalizedString(@"RESTAURANT_ADDRESSES_HEADER_TEXT", @"Выберите этаж, куда доставить обед:")
 
 //bar
 #define kOMN_BAR_SUCCESS_TITLE1 NSLocalizedString(@"BAR_SUCCESS_TITLE1", @"Заказ принят")

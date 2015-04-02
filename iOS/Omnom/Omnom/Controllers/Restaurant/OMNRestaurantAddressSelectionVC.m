@@ -87,6 +87,19 @@
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view layoutIfNeeded];
   
+  UILabel *headerLabel = [[UILabel alloc] init];
+  headerLabel.numberOfLines = 0;
+  headerLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  headerLabel.font = FuturaOSFOmnomRegular(20.0f);
+  headerLabel.text = kOMN_RESTAURANT_ADDRESSES_HEADER_TEXT;
+  CGFloat offset = [OMNStyler styler].leftOffset.floatValue;
+  CGFloat headerLabelHeight = [headerLabel sizeThatFits:CGSizeMake(CGRectGetWidth(_tableView.frame) - 2*offset, 9999.0f)].height;
+  headerLabel.frame = CGRectMake(offset, offset, CGRectGetWidth(_tableView.frame) - 2*offset, headerLabelHeight);
+  
+  UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_tableView.frame), headerLabelHeight + 2*[OMNStyler styler].leftOffset.floatValue)];
+  [headerView addSubview:headerLabel];
+  self.tableView.tableHeaderView = headerView;
+  
   TTTAttributedLabel *actionLabel = [[TTTAttributedLabel alloc] init];
   actionLabel.numberOfLines = 0;
   actionLabel.textAlignment = NSTextAlignmentCenter;
