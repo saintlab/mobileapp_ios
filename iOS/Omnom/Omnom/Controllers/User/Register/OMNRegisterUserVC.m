@@ -132,7 +132,7 @@ TTTAttributedLabelDelegate>
     
     NSString *actionText = NSLocalizedString(@"REGISTER_USER_NO_USER_ACTION_TEXT", @"Можно входить");
     NSString *text = [NSString stringWithFormat:NSLocalizedString(@"REGISTER_USER_NO_USER_TEXT %@", @"{REGISTER_USER_NO_USER_ACTION_TEXT}. Пользователь с таким номером телефона уже зарегистрирован"), actionText];
-    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:colorWithHexString(@"d0021b") textAlignment:NSTextAlignmentCenter]];
+    NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:[OMNStyler redColor] textAlignment:NSTextAlignmentCenter]];
     _errorLabel.text = attributedText;
     [_errorLabel addLinkToURL:[NSURL URLWithString:@""] withRange:[text rangeOfString:actionText]];
     
@@ -264,7 +264,7 @@ TTTAttributedLabelDelegate>
   _errorLabel.delegate = self;
   _errorLabel.text = nil;
   _errorLabel.font = FuturaOSFOmnomRegular(18.0f);
-  _errorLabel.textColor = colorWithHexString(@"d0021b");
+  _errorLabel.textColor = [OMNStyler redColor];
   _errorLabel.textAlignment = NSTextAlignmentCenter;
   _errorLabel.numberOfLines = 0;
   [contentView addSubview:_errorLabel];

@@ -53,7 +53,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
+  UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:[OMNStyler redColor]];
   self.circleBackground = circleBackground;
   self.circleIcon = [UIImage imageNamed:@"logo_icon"];
   self.backgroundImage = [UIImage imageNamed:@"wood_bg"];

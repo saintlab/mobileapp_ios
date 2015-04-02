@@ -81,7 +81,7 @@
   _errorLabel.numberOfLines = 0;
   _errorLabel.font = FuturaLSFOmnomLERegular(18.0f);
   _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
-  _errorLabel.textColor = colorWithHexString(@"D0021B");
+  _errorLabel.textColor = [OMNStyler redColor];
   _errorLabel.textAlignment = NSTextAlignmentCenter;
   [self addSubview:_errorLabel];
   
@@ -167,7 +167,7 @@
 - (void)updateColorView {
   
   if (_error) {
-    _colorView.backgroundColor = colorWithHexString(@"D0021B");
+    _colorView.backgroundColor = [OMNStyler redColor];
   }
   else if(_textField.editing) {
     _colorView.backgroundColor = [UIColor blackColor];

@@ -100,7 +100,7 @@ TTTAttributedLabelDelegate> {
   
   _hintLabel = [TTTAttributedLabel omn_autolayoutView];
   _hintLabel.font = FuturaOSFOmnomRegular(18.0f);
-  _hintLabel.textColor = colorWithHexString(@"D0021B");
+  _hintLabel.textColor = [OMNStyler redColor];
   _hintLabel.numberOfLines = 0;
   _hintLabel.delegate = self;
   _hintLabel.linkAttributes =

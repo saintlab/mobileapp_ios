@@ -50,10 +50,22 @@
 + (UIColor *)blueColor {
   
   static UIColor *blueColor = nil;
-  if (!blueColor) {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
     blueColor = colorWithHexString(@"157EFB");
-  }
+  });
   return blueColor;
+  
+}
+
++ (UIColor *)redColor {
+  
+  static UIColor *redColor = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    redColor = colorWithHexString(@"d0021b");
+  });
+  return redColor;
   
 }
 

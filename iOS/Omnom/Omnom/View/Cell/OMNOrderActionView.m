@@ -65,7 +65,7 @@
   
   
   
-  _splitButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_ORDER_TITLE", @"Разделить счет") color:colorWithHexString(@"D0021B")];
+  _splitButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_ORDER_TITLE", @"Разделить счет") color:[OMNStyler redColor]];
   @weakify(self)
   [_splitButton bk_addEventHandler:^(id sender) {
     
@@ -77,7 +77,7 @@
   _splitButton.translatesAutoresizingMaskIntoConstraints = NO;
   [bgView addSubview:_splitButton];
   
-  _editButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_EDIT_TITLE", @"Изменить") color:colorWithHexString(@"D0021B")];
+  _editButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_EDIT_TITLE", @"Изменить") color:[OMNStyler redColor]];
   [_editButton bk_addEventHandler:^(id sender) {
     
     @strongify(self)

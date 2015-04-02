@@ -25,6 +25,10 @@
 #define kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE NSLocalizedString(@"RESTAURANT_MODE_TAKE_AWAY_TITLE", @"Заказ\nна вынос")
 #define kOMN_CLOSE_BUTTON_TITLE NSLocalizedString(@"CLOSE_BUTTON_TITLE", @"Закрыть")
 #define kOMN_NEXT_BUTTON_TITLE NSLocalizedString(@"NEXT_BUTTON_TITLE", @"Далее")
+#define kOMN_OK_BUTTON_TITLE NSLocalizedString(@"Ok", @"Ok")
+#define kOMN_LUNCH_ALERT_SELECT_OFFICE_TITLE NSLocalizedString(@"LUNCH_ALERT_SELECT_OFFICE_TITLE", @"Выберите офис")
+#define kOMN_LUNCH_ALERT_SELECT_DATE_TITLE NSLocalizedString(@"LUNCH_ALERT_SELECT_DATE_TITLE", @"Выберите дату")
+
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
@@ -57,6 +61,17 @@
 #define kOMN_RESTAURANT_ADDRESSES_ADD_TEXT NSLocalizedString(@"RESTAURANT_ADDRESSES_ADD_TEXT %@", @"Не нашли свой офис?\n{action_text}\nЕсли заведение готово доставить к вам, то ваш офис через день появится в списке")
 #define kOMN_RESTAURANT_ADDRESSES_HEADER_TEXT NSLocalizedString(@"RESTAURANT_ADDRESSES_HEADER_TEXT", @"Выберите этаж, куда доставить обед:")
 
+//weekdays
+#define kOMN_WEEKDAY_TOMORROW_FORMAT NSLocalizedString(@"WEEKDAY_TOMORROW_FORMAT %@", @"Завтра ({weekday})")
+#define kOMN_WEEKDAY_SUNDAY NSLocalizedString(@"WEEKDAY_SUNDAY", @"Воскресенье")
+#define kOMN_WEEKDAY_MONDAY NSLocalizedString(@"WEEKDAY_MONDAY", @"Понедельник")
+#define kOMN_WEEKDAY_TUESDAY NSLocalizedString(@"WEEKDAY_TUESDAY", @"Вторник")
+#define kOMN_WEEKDAY_WEDNESDAY NSLocalizedString(@"WEEKDAY_WEDNESDAY", @"Среда")
+#define kOMN_WEEKDAY_THURSDAY NSLocalizedString(@"WEEKDAY_THURSDAY", @"Четверг")
+#define kOMN_WEEKDAY_FRIDAY NSLocalizedString(@"WEEKDAY_FRIDAY", @"Пятница")
+#define kOMN_WEEKDAY_SATURDAY NSLocalizedString(@"WEEKDAY_SATURDAY", @"Суббота")
+#define kOMN_RESTAURANT_DATE_HEADER_TEXT NSLocalizedString(@"RESTAURANT_DATE_HEADER_TEXT", @"Выберите, когда надо доставить обед:")
+
 //bar
 #define kOMN_BAR_SUCCESS_TITLE1 NSLocalizedString(@"BAR_SUCCESS_TITLE1", @"Заказ принят")
 #define kOMN_BAR_SUCCESS_ORDER_NUMBER_TEXT NSLocalizedString(@"BAR_SUCCESS_ORDER_NUMBER_TEXT", @"Номер заказа")
@@ -68,3 +83,5 @@
 //title
 #define kOMN_RESTAURANT_ADDRESS_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_ADDRESS_SELECTION_TITLE", @"Куда")
 #define kOMN_RESTAURANT_DATE_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_DATE_SELECTION_TITLE", @"Когда")
+#define kOMN_ORDER_LUNCH_ALERT_TITLE NSLocalizedString(@"ORDER_LUNCH_ALERT_TITLE", @"Заказ обада в офис")
+

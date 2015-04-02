@@ -23,7 +23,7 @@
   if (self) {
     
     self.circleIcon = [UIImage imageNamed:@"logo_icon"];
-    self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
+    self.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:[OMNStyler redColor]];
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
     
   }

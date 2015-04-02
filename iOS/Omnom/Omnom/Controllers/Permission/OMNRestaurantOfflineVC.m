@@ -22,7 +22,7 @@
     @weakify(self)
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ok", nil) image:nil block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_OK_BUTTON_TITLE image:nil block:^{
         
         @strongify(self)
         [self didFinish];

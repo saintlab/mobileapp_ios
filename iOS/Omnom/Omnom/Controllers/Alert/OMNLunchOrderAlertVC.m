@@ -14,6 +14,7 @@
 #import "OMNRestaurantAddressSelectionVC.h"
 #import "OMNDateSelectionVC.h"
 #import "OMNRestaurantDelivery.h"
+#import "NSString+omn_date.h"
 
 @implementation OMNLunchOrderAlertVC {
   
@@ -119,8 +120,38 @@
 
 - (void)updateButtons {
   
-  [_addressButton setTitle:_delivery.address.text forState:UIControlStateNormal];
-  [_dateButton setTitle:_delivery.date forState:UIControlStateNormal];
+  UIColor *officeColor = nil;
+  if (_delivery.address) {
+    
+    [_addressButton setTitle:_delivery.address.text forState:UIControlStateNormal];
+    officeColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+    
+  }
+  else {
+    
+    [_addressButton setTitle:kOMN_LUNCH_ALERT_SELECT_OFFICE_TITLE forState:UIControlStateNormal];
+    officeColor = [OMNStyler redColor];
+    
+  }
+  [_addressButton setTitleColor:officeColor forState:UIControlStateNormal];
+  _addressLine.backgroundColor = officeColor;
+
+  UIColor *dateColor = nil;
+  if (_delivery.date) {
+    
+    [_dateButton setTitle:[_delivery.date omn_localizedWeekday] forState:UIControlStateNormal];
+    dateColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+    
+  }
+  else {
+    
+    [_addressButton setTitle:kOMN_LUNCH_ALERT_SELECT_DATE_TITLE forState:UIControlStateNormal];
+    dateColor = [OMNStyler redColor];
+    
+  }
+  [_dateButton setTitleColor:dateColor forState:UIControlStateNormal];
+  _dateLine.backgroundColor = dateColor;
+  
   _doneButton.enabled = _delivery.readyForDelivery;
   
 }
@@ -129,27 +160,20 @@
 
   _textLabel.font = FuturaOSFOmnomRegular(18.0f);
   _textLabel.textAlignment = NSTextAlignmentCenter;
-  _textLabel.text = NSLocalizedString(@"ORDER_LUNCH_ALERT_TITLE", @"Заказ обада в офис");
+  _textLabel.text = kOMN_ORDER_LUNCH_ALERT_TITLE;
   
   _doneButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
   [_doneButton addTarget:self action:@selector(doneTap) forControlEvents:UIControlEventTouchUpInside];
   [_doneButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
   [_doneButton setTitleColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
   [_doneButton setTitleColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f] forState:UIControlStateDisabled];
-  [_doneButton setTitle:NSLocalizedString(@"Ok", @"Ok") forState:UIControlStateNormal];
+  [_doneButton setTitle:kOMN_OK_BUTTON_TITLE forState:UIControlStateNormal];
   
   _dateButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
   [_dateButton addTarget:self action:@selector(dateTap) forControlEvents:UIControlEventTouchUpInside];
-  [_dateButton setTitle:@"На завтра, 19 марта" forState:UIControlStateNormal];
-  [_dateButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
   
   _addressButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
   [_addressButton addTarget:self action:@selector(addressTap) forControlEvents:UIControlEventTouchUpInside];
-  [_addressButton setTitle:@"Банк интеза, Октябрьская 49" forState:UIControlStateNormal];
-  [_addressButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-  
-  _dateLine.backgroundColor = [UIColor lightGrayColor];
-  _addressLine.backgroundColor = [UIColor lightGrayColor];
   
 }
 
@@ -189,7 +213,7 @@
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
   
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[textLabel]-[dateButton][dateLine(1)]-[addressButton][addressLine(1)]-(leftOffset)-[doneButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[textLabel]-(leftOffset)-[dateButton][dateLine(1)]-(leftOffset)-[addressButton][addressLine(1)]-(leftOffset)-[doneButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[dateButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[addressButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

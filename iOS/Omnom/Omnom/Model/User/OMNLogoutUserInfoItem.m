@@ -36,7 +36,7 @@
       
     };
     
-    self.titleColor = colorWithHexString(@"D0021B");
+    self.titleColor = [OMNStyler redColor];
     self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     
   }

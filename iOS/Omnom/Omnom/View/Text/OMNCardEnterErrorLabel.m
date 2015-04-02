@@ -35,7 +35,7 @@
       NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
       };
     
-    self.textColor = colorWithHexString(@"D0021B");
+    self.textColor = [OMNStyler redColor];
     self.font = FuturaOSFOmnomRegular(15.0f);
     
   }
@@ -60,7 +60,7 @@
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
   [attributedString setAttributes:
    @{
-     NSForegroundColorAttributeName : colorWithHexString(@"D0021B"),
+     NSForegroundColorAttributeName : [OMNStyler redColor],
      NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
      NSParagraphStyleAttributeName : [self centerParagraphStyle],
      } range:[text rangeOfString:errorText]];
@@ -88,7 +88,7 @@
   [attributedString setAttributes:
    @{
      NSParagraphStyleAttributeName : [self centerParagraphStyle],
-     NSForegroundColorAttributeName : colorWithHexString(@"D0021B"),
+     NSForegroundColorAttributeName : [OMNStyler redColor],
      NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
      } range:NSMakeRange(0, attributedString.length)];
   self.text = attributedString;

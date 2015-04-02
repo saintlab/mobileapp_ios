@@ -164,8 +164,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   
   self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
   
-  UIColor *color = colorWithHexString(@"D0021B");
-  
+  UIColor *color = [OMNStyler redColor];
   NSString *actionText = NSLocalizedString(@"QR_DESCRIPTION_ACTION_TEXT", @"Что это такое?");
   NSString *text = [NSString stringWithFormat:NSLocalizedString(@"QR_DESCRIPTION_TEXT %@", @"Наведите камеру\nна QR-код Omnom.\n{QR_DESCRIPTION_ACTION_TEXT}"), actionText];
   
@@ -369,7 +368,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   repeatVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
   repeatVC.text = error.localizedDescription;
   repeatVC.circleIcon = error.circleImage;
-  repeatVC.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"d0021b")];
+  repeatVC.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:[OMNStyler redColor]];
   
   @weakify(self)
   repeatVC.buttonInfo =

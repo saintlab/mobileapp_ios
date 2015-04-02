@@ -84,7 +84,7 @@
   colorAnimation.duration = duration;
   colorAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
   colorAnimation.fromValue = (id)[UIColor clearColor].CGColor;
-  UIColor *redColor = colorWithHexString(@"d0021b");
+  UIColor *redColor = [OMNStyler redColor];
   colorAnimation.toValue = (id)redColor.CGColor;
   [colorLayer addAnimation:colorAnimation forKey:@"fillColor"];
   [colorLayer addAnimation:pathAnimation forKey:@"path"];

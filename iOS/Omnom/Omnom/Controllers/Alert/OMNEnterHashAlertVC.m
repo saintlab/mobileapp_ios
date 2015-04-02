@@ -106,10 +106,10 @@
     
     if (error) {
       
-      _textField.textColor = colorWithHexString(@"D0021B");
-      _textLabel.textColor = colorWithHexString(@"D0021B");
+      _textField.textColor = [OMNStyler redColor];
+      _textLabel.textColor = [OMNStyler redColor];
       _textLabel.text = NSLocalizedString(@"HASH_DECODE_ERROR_TEXT", @"Указан неверный код");
-      _lineView.backgroundColor = colorWithHexString(@"D0021B");
+      _lineView.backgroundColor = [OMNStyler redColor];
       
     }
     else {

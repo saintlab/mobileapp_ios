@@ -359,7 +359,7 @@ OMNPreorderConfirmCellDelegate>
 
   NSString *subtitle = [NSString stringWithFormat:kOMN_WISH_CREATE_ERROR_SUBTITLE, [productList componentsJoinedByString:@"\n"]];
   @weakify(self)
-  [UIAlertView bk_showAlertViewWithTitle:kOMN_WISH_CREATE_ERROR_TITLE message:subtitle cancelButtonTitle:NSLocalizedString(@"Отменить", @"Отменить") otherButtonTitles:@[NSLocalizedString(@"Ok", @"OK")] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+  [UIAlertView bk_showAlertViewWithTitle:kOMN_WISH_CREATE_ERROR_TITLE message:subtitle cancelButtonTitle:NSLocalizedString(@"Отменить", @"Отменить") otherButtonTitles:@[kOMN_OK_BUTTON_TITLE] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
 
     @strongify(self)
     if (alertView.cancelButtonIndex != buttonIndex) {

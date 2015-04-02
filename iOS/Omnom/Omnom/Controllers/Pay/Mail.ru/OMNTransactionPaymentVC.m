@@ -261,7 +261,7 @@
   _errorLabel = [[UILabel alloc] init];
   _errorLabel.numberOfLines = 0;
   _errorLabel.textAlignment = NSTextAlignmentCenter;
-  _errorLabel.textColor = colorWithHexString(@"d0021b");
+  _errorLabel.textColor = [OMNStyler redColor];
   _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
   [_contentView addSubview:_errorLabel];
   
