@@ -14,17 +14,19 @@
 
 @property (nonatomic, copy) NSString *userID;
 @property (nonatomic, copy) NSString *user_phone;
+@property (nonatomic, copy) NSString *cardID;
+@property (nonatomic, copy) NSString *internalCardID;
 
 @end
 
 @implementation OMNViewController {
-  NSString *_cardId;
-  NSDictionary *_cardInfo;
   
   __weak IBOutlet UILabel *_cardIDLabel;
   
   AFHTTPRequestOperationManager *_authManager;
   AFHTTPRequestOperationManager *_operationManager;
+  
+  NSNumber *_heldAmount;
   
 }
 
@@ -32,7 +34,8 @@
   [super viewDidLoad];
   
   NSString *token = @"YaqOpPO008IXxxs8FSaLX5iOHkWqMqgu";
-
+  _heldAmount = @(1);
+  
   _authManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:[NSURL URLWithString:@"http://wicket.staging.saintlab.com"]];
   _authManager.responseSerializer = [AFJSONResponseSerializer serializer];
   _authManager.requestSerializer = [AFJSONRequestSerializer serializer];
@@ -52,15 +55,8 @@
   _operationManager.responseSerializer = [AFJSONResponseSerializer serializer];
   _operationManager.requestSerializer = [AFJSONRequestSerializer serializer];
   [_operationManager.requestSerializer setValue:token forHTTPHeaderField:@"x-authentication-token"];
+  [self reloadCards];
   
-  [_operationManager GET:@"/cards" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    NSLog(@"%@", responseObject);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-  }];
-
   NSDictionary *config =
   @{
     @"OMNMailRuAcquiringBaseURL" : @"https://cpg.money.mail.ru/api/",
@@ -75,33 +71,20 @@
   [self updateOrderID];
   
 
-  _user_phone = @"89833087335";
-  
-//  _cardId = @"30002847034833862453";
-//  _cardInfo =
-//  @{
-//    @"pan" : @"4111111111111111",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : kOMNMailRu_cvv,
-//    };
-  
-  _cardId = @"30001197651493912571";
+}
 
-  _cardInfo =
-  @{
-//    @"pan" : @"4111111111111112",
-    @"pan" : @"639002000000000003",
-    @"exp_date" : @"12.2015",
-    @"cvv" : @"123",
-    };
+- (void)reloadCards {
   
-//  _cardId = @"30001197651493912571";
-//  _cardInfo =
-//  @{
-//    @"pan" : @"639002000000000003",
-//    @"exp_date" : @"12.2015",
-//    @"cvv" : kOMNMailRu_cvv,
-//    };
+  [_operationManager GET:@"/cards" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    id card = [responseObject[@"cards"] firstObject];
+    self.cardID = card[@"external_card_id"];
+    self.internalCardID = card[@"id"];
+    NSLog(@"%@", responseObject);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+  }];
   
 }
 
@@ -130,13 +113,14 @@
   paymentInfo.extra.tip = 0;
   paymentInfo.extra.restaurant_id = @"";
   paymentInfo.extra.type = @"";
-  paymentInfo.order_amount = @(1);
+  paymentInfo.order_amount = _heldAmount;
   paymentInfo.order_id = @"";
   
   [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
 
     NSString *order_id = response[@"order_id"];
     [self setOrderID:order_id];
+    [self reloadCards];
     NSLog(@"%@", response);
     
   } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
@@ -168,26 +152,10 @@
 
 - (IBAction)registerTap:(id)sender {
   
-  NSDictionary *cardInfo =
-  @{
-    //    @"pan" : @"4111111111111112",
-    @"pan" : @"6011000000000004",
-    //    @"pan" : @"639002000000000003",
-    @"exp_date" : @"12.2015",
-    @"cvv" : @"123",
-    };
-  
-//  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:_user_login user_phone:_user_phone completion:^(id response, NSString *cardId) {
-//
-//    NSLog(@"%@  %@", response, cardId);
-//    
-//  }];
-
+ 
 }
 
 - (IBAction)verifyTap:(id)sender {
-  
-//  _cardId = @"30008685803965102459";
 //  [[OMNMailRuAcquiring acquiring] cardVerify:1.02 user_login:_user_login card_id:_cardId completion:^{
 //    
 //  } failure:^(NSError *error, NSDictionary *debugInfo) {
@@ -196,13 +164,51 @@
 }
 
 - (IBAction)deleteCard:(id)sender {
-//  [[OMNMailRuAcquiring acquiring] cardDelete:_cardId user_login:_user_login completion:^(id response) {
-//    
-//  }];
+  
+  [[OMNMailRuAcquiring acquiring] deleteCard:self.cardID user_login:self.userID сompletion:^{
+    
+    NSString *path = [NSString stringWithFormat:@"/cards/%@", self.internalCardID];
+    [_operationManager DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      NSLog(@"%@", responseObject);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+      NSLog(@"%@", error);
+      
+    }];
+    
+  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+    
+    NSLog(@"%@ %@ %@", error, request, response);
+    
+  }];
+
 }
 
 - (IBAction)payWithCardID:(id)sender {
   
+  OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
+  OMNMailRuCardInfo *mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.cardID];
+  paymentInfo.cardInfo = mailRuCardInfo;
+  paymentInfo.user_login = self.userID;
+  paymentInfo.user_phone = self.user_phone;
+  paymentInfo.order_message = @"message";
+  paymentInfo.extra.tip = 0;
+  paymentInfo.extra.restaurant_id = @"701137";
+  paymentInfo.extra.type = @"order";
+  paymentInfo.order_amount = @(1);
+  paymentInfo.order_id = @"1";
+  
+  [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
+    
+    NSLog(@"%@", response);
+    
+  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+    
+    NSLog(@"%@ %@ %@", error, request, response);
+    
+  }];
 //  NSDictionary *cardInfo =
 //  @{
 //    @"card_id" : _cardId,

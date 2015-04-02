@@ -19,6 +19,14 @@
   
 }
 
++ (instancetype)deliveryWithMinutes:(NSInteger)minutes {
+  
+  OMNRestaurantDelivery *delivery = [[OMNRestaurantDelivery alloc] init];
+  delivery.minutes = minutes;
+  return delivery;
+
+}
+
 - (BOOL)readyForDelivery {
   
   return

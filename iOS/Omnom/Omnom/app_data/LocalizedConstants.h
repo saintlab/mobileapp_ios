@@ -29,7 +29,6 @@
 #define kOMN_LUNCH_ALERT_SELECT_OFFICE_TITLE NSLocalizedString(@"LUNCH_ALERT_SELECT_OFFICE_TITLE", @"Выберите офис")
 #define kOMN_LUNCH_ALERT_SELECT_DATE_TITLE NSLocalizedString(@"LUNCH_ALERT_SELECT_DATE_TITLE", @"Выберите дату")
 
-
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
 #define kOMN_PREORDER_DONE_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_2", @"Выбранные блюда скоро будут\nдобавлены официантом на ваш стол.")
@@ -55,6 +54,10 @@
 //preorder
 #define kOMN_TOTAL_TEXT NSLocalizedString(@"TOTAL_TEXT %@", @"Итого {total_string}")
 #define kOMN_PREORDER_TITLE_BUTTON_TEXT NSLocalizedString(@"PREORDER_TITLE_BUTTON_TEXT", @"Предзаказ")
+#define kOMN_PREORDER_MINUTES_TEXT NSLocalizedString(@"PREORDER_MINUTES_TEXT", @"Когда вас ждать?")
+#define kOMN_PREORDER_IN_MINUTES_FORMAT NSLocalizedString(@"PREORDER_IN_MINUTES_FORMAT %@", @"Через {minutes} минут")
+#define kOMN_PREORDER_IN_HOUR_TEXT NSLocalizedString(@"PREORDER_IN_HOUR_TEXT", @"Через час")
+#define kOMN_PREORDER_IN_HOURS_FORMAT NSLocalizedString(@"PREORDER_IN_HOURS_FORMAT %.f", @"Через {hours} часа")
 
 //address
 #define kOMN_FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES", @"Добавьте мой адрес")

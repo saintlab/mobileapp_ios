@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNLunchPreorderMediator.h"
+#import "OMNLunchWishMediator.h"
 #import "OMNPreorderDoneVC.h"
 
-@implementation OMNLunchPreorderMediator
+@implementation OMNLunchWishMediator
 
 - (NSString *)refreshOrdersTitle {
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;

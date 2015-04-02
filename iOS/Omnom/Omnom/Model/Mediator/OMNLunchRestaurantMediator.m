@@ -7,9 +7,9 @@
 //
 
 #import "OMNLunchRestaurantMediator.h"
-#import "OMNLunchPreorderMediator.h"
+#import "OMNLunchWishMediator.h"
 #import "OMNLaunchHandler.h"
-#import "OMNSuncityLunchPreorderMediator.h"
+#import "OMNSuncityLunchWishMediator.h"
 
 @implementation OMNLunchRestaurantMediator
 
@@ -33,11 +33,11 @@
   return YES;
 }
 
-- (OMNPreorderMediator *)preorderMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
+- (OMNWishMediator *)wishMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
 #if LUNCH_2GIS_SUNCITY
   return [[OMNSuncityLunchPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
 #else
-  return [[OMNLunchPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+  return [[OMNLunchWishMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
 #endif
 }
 

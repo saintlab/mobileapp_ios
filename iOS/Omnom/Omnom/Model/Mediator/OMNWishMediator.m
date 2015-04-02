@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNPreorderMediator.h"
+#import "OMNWishMediator.h"
 #import "OMNPreorderDoneVC.h"
 #import "OMNOrderToolbarButton.h"
 
-@implementation OMNPreorderMediator {
+@implementation OMNWishMediator {
   
   OMNRestaurantMediator *_restaurantMediator;
   

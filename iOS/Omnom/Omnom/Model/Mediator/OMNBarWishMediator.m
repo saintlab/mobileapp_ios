@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNBarPreorderMediator.h"
+#import "OMNBarWishMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNModalWebVC.h"
 #import "OMNRestaurant+omn_payment.h"
@@ -15,12 +15,12 @@
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNWishSuccessVC.h"
 
-@interface OMNBarPreorderMediator ()
+@interface OMNBarWishMediator ()
 <OMNTransactionPaymentVCDelegate>
 
 @end
 
-@implementation OMNBarPreorderMediator {
+@implementation OMNBarWishMediator {
   
   OMNWish *_wish;
   

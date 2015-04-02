@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNPreorderMediator.h"
+#import "OMNWishMediator.h"
 
-@interface OMNPaidPreorderMediator : OMNPreorderMediator
+@interface OMNPaidWishMediator : OMNWishMediator
 
 @end

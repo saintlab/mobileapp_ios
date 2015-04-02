@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNPreorderMediator.h"
+#import "OMNWishMediator.h"
 
-@interface OMNLunchPreorderMediator : OMNPreorderMediator
+@interface OMNLunchWishMediator : OMNWishMediator
 
 @end

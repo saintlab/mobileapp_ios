@@ -226,7 +226,7 @@
     parameters[@"items"] = products;
   }
   parameters[@"type"] = [self wishType];
-  if (self.delivery) {
+  if (self.delivery.address) {
     parameters[@"delivery_address"] = self.delivery.addressData;
   }
   

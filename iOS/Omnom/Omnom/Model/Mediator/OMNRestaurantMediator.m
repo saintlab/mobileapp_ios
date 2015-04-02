@@ -24,7 +24,7 @@
 #import "OMNRestaurant+omn_network.h"
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNOrdersLoadingVC.h"
-#import "OMNPreorderMediator.h"
+#import "OMNWishMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNTransactionPaymentVC.h"
 
@@ -344,8 +344,8 @@ OMNOrderCalculationVCDelegate>
   
 }
 
-- (OMNPreorderMediator *)preorderMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
-  return [[OMNPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+- (OMNWishMediator *)wishMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
+  return [[OMNWishMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
 }
 
 @end

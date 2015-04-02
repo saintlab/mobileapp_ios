@@ -12,7 +12,7 @@
 #import "OMNRestaurant+omn_network.h"
 #import "OMNRestaurantMediator.h"
 
-@interface OMNPreorderMediator : NSObject
+@interface OMNWishMediator : NSObject
 
 @property (nonatomic, weak, readonly) OMNMyOrderConfirmVC *rootVC;
 @property (nonatomic, strong, readonly) OMNRestaurantMediator *restaurantMediator;

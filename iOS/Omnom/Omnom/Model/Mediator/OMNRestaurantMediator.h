@@ -11,7 +11,7 @@
 #import "OMNVisitor.h"
 #import "OMNAcquiringTransaction.h"
 
-@class OMNPreorderMediator;
+@class OMNWishMediator;
 @class OMNMyOrderConfirmVC;
 
 @interface OMNRestaurantMediator : NSObject
@@ -42,6 +42,6 @@
 - (BOOL)showTableButton;
 - (BOOL)showPreorderButton;
 
-- (OMNPreorderMediator *)preorderMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC;
+- (OMNWishMediator *)wishMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC;
 
 @end

@@ -77,20 +77,17 @@
      NSFontAttributeName : (self.font) ? (self.font) : ([UIFont systemFontOfSize:16.0f]),
      } range:NSMakeRange(0, title.length)];
   _label.textColor = color;
-  _label.highlightedTextColor = disabledColor;
   _label.attributedText = attributedText;
   
 }
 
 - (void)setTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color disabledColor:(UIColor *)disabledColor {
-
   [self setTitle:title image:image highlightedImage:[image omn_tintWithColor:disabledColor] color:color disabledColor:disabledColor];
-
 }
 
 - (void)fadeControls:(BOOL)fade {
   
-  _iconView.alpha = (fade) ? (0.5f) : (1.0f);
+  _iconView.highlighted = fade;
   _label.alpha = (fade) ? (0.5f) : (1.0f);
   
 }
@@ -103,10 +100,9 @@
 }
 
 - (void)setEnabled:(BOOL)enabled {
-  
   [super setEnabled:enabled];
-  _iconView.highlighted = !enabled;
-  _label.highlighted = !enabled;
+
+  [self fadeControls:!enabled];
 
 }
 

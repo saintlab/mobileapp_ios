@@ -354,7 +354,7 @@
   
   UIImageView *topGradientView = [UIImageView omn_autolayoutView];
   topGradientView.image = [UIImage imageNamed:@"top_gradient"];
-  [self.backgroundView addSubview:topGradientView];
+  [self.view addSubview:topGradientView];
   
   UIImageView *gradientView = [UIImageView omn_autolayoutView];
   gradientView.image = [UIImage imageNamed:@"menu_gradient_bg"];
@@ -369,8 +369,8 @@
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:kNilOptions metrics:nil views:views]];
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[gradientView]|" options:kNilOptions metrics:nil views:views]];
   
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[gradientView]|" options:kNilOptions metrics:nil views:views]];
-  [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topGradientView]" options:kNilOptions metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[topGradientView]|" options:kNilOptions metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topGradientView]" options:kNilOptions metrics:nil views:views]];
   
   OMNRestaurantSettings *restaurantSettings = _restaurantMediator.restaurant.settings;
   if (restaurantSettings.has_menu) {

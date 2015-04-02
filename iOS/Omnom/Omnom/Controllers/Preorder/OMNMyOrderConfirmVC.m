@@ -17,7 +17,7 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNPreorderConfirmCellItem.h"
 #import "OMNPreorderActionCellItem.h"
-#import "OMNPreorderMediator.h"
+#import "OMNWishMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNPreorderTotalCell.h"
 
@@ -42,7 +42,7 @@ OMNPreorderConfirmCellDelegate>
   OMNPreorderTotalCellItem *_totalCellItem;
   OMNPreorderActionCellItem *_preorderActionCellItem;
   
-  OMNPreorderMediator *_preorderMediator;
+  OMNWishMediator *_wishMediator;
   
 }
 
@@ -52,7 +52,7 @@ OMNPreorderConfirmCellDelegate>
     
     _restaurantMediator = restaurantMediator;
     _visitor = restaurantMediator.visitor;
-    _preorderMediator = [_restaurantMediator preorderMediatorWithRootVC:self];
+    _wishMediator = [_restaurantMediator wishMediatorWithRootVC:self];
     
   }
   return self;
@@ -64,7 +64,7 @@ OMNPreorderConfirmCellDelegate>
   _totalCellItem = [[OMNPreorderTotalCellItem alloc] init];
   
   _preorderActionCellItem = [[OMNPreorderActionCellItem alloc] init];
-  _preorderActionCellItem.actionText = [_preorderMediator refreshOrdersTitle];
+  _preorderActionCellItem.actionText = [_wishMediator refreshOrdersTitle];
   _preorderActionCellItem.delegate = self;
   
   [self omn_setup];
@@ -80,7 +80,7 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)setupBottomBar {
   
-  UIButton *button = [_preorderMediator bottomButton];
+  UIButton *button = [_wishMediator bottomButton];
   if (!button) {
     return;
   }
@@ -186,9 +186,7 @@ OMNPreorderConfirmCellDelegate>
 }
 
 - (void)didCreateWish:(OMNWish *)wish {
-  
-  [_preorderMediator processCreatedWish:wish];
-  
+  [_wishMediator processCreatedWish:wish];
 }
 
 - (void)closeTap {
@@ -315,7 +313,7 @@ OMNPreorderConfirmCellDelegate>
   NSArray *wishItems = [_restaurantMediator.menu selectedWishItems];
   
   @weakify(self)
-  [_preorderMediator createWish:wishItems completionBlock:^(OMNWish *wish) {
+  [_wishMediator createWish:wishItems completionBlock:^(OMNWish *wish) {
     
     @strongify(self)
     [self stopLoading];

@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNSuncityLunchPreorderMediator.h"
+#import "OMNSuncityLunchWishMediator.h"
 #import "OMNRestaurantAddressSelectionVC.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNSuncityPreorderDoneVC.h"
 
-@implementation OMNSuncityLunchPreorderMediator
+@implementation OMNSuncityLunchWishMediator
 
 - (void)createWish:(NSArray *)wishItems completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
 

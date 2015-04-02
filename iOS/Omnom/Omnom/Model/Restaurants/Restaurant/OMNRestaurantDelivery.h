@@ -16,6 +16,7 @@
 @property (nonatomic, assign) NSInteger minutes;
 
 + (instancetype)deliveryWithAddress:(OMNRestaurantAddress *)address date:(NSString *)date;
++ (instancetype)deliveryWithMinutes:(NSInteger)minutes;
 - (BOOL)readyForDelivery;
 - (NSDictionary *)addressData;
 

@@ -112,7 +112,7 @@
     if (self.exp_date.length) {
       card_info[@"exp_date"] = self.exp_date;
     }
-    card_info[@"add_card"] = @(0);
+    card_info[@"add_card"] = @(self.add_card);
   }
   
   if (self.cvv.length) {
