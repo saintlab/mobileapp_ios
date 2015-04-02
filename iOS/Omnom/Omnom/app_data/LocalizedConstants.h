@@ -54,6 +54,7 @@
 
 //preorder
 #define kOMN_TOTAL_TEXT NSLocalizedString(@"TOTAL_TEXT %@", @"Итого {total_string}")
+#define kOMN_PREORDER_TITLE_BUTTON_TEXT NSLocalizedString(@"PREORDER_TITLE_BUTTON_TEXT", @"Предзаказ")
 
 //address
 #define kOMN_FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES", @"Добавьте мой адрес")

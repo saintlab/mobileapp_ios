@@ -78,7 +78,8 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     _orders = [jsonData[@"orders"] omn_orders];;
     
     NSString *orders_paid_url = jsonData[@"orders_paid_url"];
-    if (orders_paid_url) {
+    if (orders_paid_url &&
+        [orders_paid_url isKindOfClass:[NSString class]]) {
       _orders_paid_url = [NSURL URLWithString:orders_paid_url];
     }
     

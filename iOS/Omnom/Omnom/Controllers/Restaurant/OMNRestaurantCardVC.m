@@ -217,7 +217,7 @@
   if (_restaurant.settings.has_bar) {
     
     OMNBottomTextButton *barButton = [OMNBottomTextButton omn_autolayoutView];
-    [barButton setTitle:kOMN_RESTAURANT_MODE_BAR_TITLE image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
+    [barButton setTitle:kOMN_RESTAURANT_MODE_BAR_TITLE image:[UIImage imageNamed:@"card_ic_bar"] highlightedImage:[UIImage imageNamed:@"card_ic_bar_selected"] color:defaultColor disabledColor:disabledColor];
     [barButton addTarget:self action:@selector(barTap) forControlEvents:UIControlEventTouchUpInside];
     [buttons addObject:barButton];
   }
@@ -225,7 +225,7 @@
   if (_restaurant.settings.has_table_order) {
     
     OMNBottomTextButton *orderButton = [OMNBottomTextButton omn_autolayoutView];
-    [orderButton setTitle:kOMN_RESTAURANT_MODE_IN_TITLE image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
+    [orderButton setTitle:kOMN_RESTAURANT_MODE_IN_TITLE image:[UIImage imageNamed:@"card_ic_table"] highlightedImage:[UIImage imageNamed:@"card_ic_table_selected"] color:defaultColor disabledColor:disabledColor];
     [orderButton addTarget:self action:@selector(inTap) forControlEvents:UIControlEventTouchUpInside];
     [buttons addObject:orderButton];
     
@@ -234,7 +234,7 @@
   if (_restaurant.settings.has_lunch) {
     
     OMNBottomTextButton *lunchButton = [OMNBottomTextButton omn_autolayoutView];
-    [lunchButton setTitle:kOMN_RESTAURANT_MODE_LUNCH_TITLE image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
+    [lunchButton setTitle:kOMN_RESTAURANT_MODE_LUNCH_TITLE image:[UIImage imageNamed:@"card_ic_bar"] highlightedImage:[UIImage imageNamed:@"card_ic_bar_selected"] color:defaultColor disabledColor:disabledColor];
     [lunchButton addTarget:self action:@selector(lunchTap) forControlEvents:UIControlEventTouchUpInside];
     [buttons addObject:lunchButton];
     
@@ -243,7 +243,7 @@
   if (_restaurant.settings.has_pre_order) {
     
     OMNBottomTextButton *preorderButton = [OMNBottomTextButton omn_autolayoutView];
-    [preorderButton setTitle:kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE image:[UIImage imageNamed:@"ic_reserve_table"] color:defaultColor disabledColor:disabledColor];
+    [preorderButton setTitle:kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE image:[UIImage imageNamed:@"card_ic_takeaway"] highlightedImage:[UIImage imageNamed:@"card_ic_takeaway_selected"] color:defaultColor disabledColor:disabledColor];
     [preorderButton addTarget:self action:@selector(preorderTap) forControlEvents:UIControlEventTouchUpInside];
     [buttons addObject:preorderButton];
     

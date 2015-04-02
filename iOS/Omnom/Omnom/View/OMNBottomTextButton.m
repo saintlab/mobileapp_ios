@@ -59,10 +59,10 @@
   
 }
 
-- (void)setTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color disabledColor:(UIColor *)disabledColor {
-
+- (void)setTitle:(NSString *)title image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage color:(UIColor *)color disabledColor:(UIColor *)disabledColor {
+  
   _iconView.image = [image omn_tintWithColor:color];
-  _iconView.highlightedImage = [image omn_tintWithColor:disabledColor];
+  _iconView.highlightedImage = highlightedImage;
   
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:(title) ? (title) : (@"")];
   NSMutableParagraphStyle *style = [[NSMutableParagraphStyle alloc] init];
@@ -70,15 +70,21 @@
   style.maximumLineHeight = 18.0f;
   style.alignment = NSTextAlignmentCenter;
   [attributedText addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0, attributedText.length)];
-
+  
   [attributedText setAttributes:
-  @{
-    NSParagraphStyleAttributeName : style,
-    NSFontAttributeName : (self.font) ? (self.font) : ([UIFont systemFontOfSize:16.0f]),
-    } range:NSMakeRange(0, title.length)];
+   @{
+     NSParagraphStyleAttributeName : style,
+     NSFontAttributeName : (self.font) ? (self.font) : ([UIFont systemFontOfSize:16.0f]),
+     } range:NSMakeRange(0, title.length)];
   _label.textColor = color;
   _label.highlightedTextColor = disabledColor;
   _label.attributedText = attributedText;
+  
+}
+
+- (void)setTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color disabledColor:(UIColor *)disabledColor {
+
+  [self setTitle:title image:image highlightedImage:[image omn_tintWithColor:disabledColor] color:color disabledColor:disabledColor];
 
 }
 

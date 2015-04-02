@@ -23,7 +23,6 @@
     
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
-//    _customConfigName = @"config_staging";
     
 #if LUNCH_2GIS
 
@@ -37,7 +36,7 @@
 #elif DEBUG
 
 //    staging
-//    _customConfigName = @"config_staging";
+    _customConfigName = @"config_staging";
 //    _qr = @"http://omnom.menu/zr9b"; //saintlab-iiko-dev
 //    _qr =  @"qr-code-for-2-saintlab-iiko-dev"; //staging
 

@@ -10,6 +10,7 @@
 #import "OMNBarRestaurantMediator.h"
 #import "OMNDemoRestaurantMediator.h"
 #import "OMNLunchRestaurantMediator.h"
+#import "OMNPreorderRestaurantMediator.h"
 
 @implementation OMNRestaurantMediatorFactory
 
@@ -30,6 +31,11 @@
     case kRestaurantModeLunch: {
       
       restaurantMediator = [[OMNLunchRestaurantMediator alloc] initWithRestaurant:restaurant rootViewController:restaurantActionsVC];
+      
+    } break;
+    case kRestaurantModePreorder: {
+      
+      restaurantMediator = [[OMNPreorderRestaurantMediator alloc] initWithRestaurant:restaurant rootViewController:restaurantActionsVC];
       
     } break;
     default: {

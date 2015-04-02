@@ -15,5 +15,6 @@
 @property (nonatomic, strong) UIFont *font;
 
 - (void)setTitle:(NSString *)title image:(UIImage *)image color:(UIColor *)color disabledColor:(UIColor *)disabledColor;
+- (void)setTitle:(NSString *)title image:(UIImage *)image highlightedImage:(UIImage *)highlightedImage color:(UIColor *)color disabledColor:(UIColor *)disabledColor;
 
 @end
