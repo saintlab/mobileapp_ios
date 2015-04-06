@@ -15,12 +15,11 @@
 
 @property (nonatomic, weak) id<OMNSearchRestaurantsVCDelegate> delegate;
 
-- (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator;
-
 @end
 
 @protocol OMNSearchRestaurantsVCDelegate <NSObject>
 
+- (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants;
 - (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC;
 
 @end

@@ -241,7 +241,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
   
 }
 
-- (void)pollUrl:(NSString *)url withCompletion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error))failureBlock {
+- (void)pollUrl:(NSString *)url time:(NSInteger)time withCompletion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error))failureBlock {
   
   __weak typeof(self)weakSelf = self;
   [self GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -251,9 +251,14 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
         __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf pollUrl:url withCompletion:completionBlock failure:failureBlock];
+        [strongSelf pollUrl:url time:(time + 1) withCompletion:completionBlock failure:failureBlock];
         
       });
+    }
+    else if(time > 20) {
+      
+      failureBlock([NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:nil]);
+      
     }
     else {
       
@@ -307,7 +312,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
         nil == responseObject[@"error"]) {
       
       __strong __typeof(weakSelf)strongSelf = weakSelf;
-      [strongSelf pollUrl:url withCompletion:^(id response) {
+      [strongSelf pollUrl:url time:0 withCompletion:^(id response) {
         
         NSString *status = response[@"status"];
         NSString *order_status = response[@"order_status"];
@@ -366,7 +371,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
         nil == responseObject[@"error"]) {
       
       __strong __typeof(weakSelf)strongSelf = weakSelf;
-      [strongSelf pollUrl:url withCompletion:^(id response) {
+      [strongSelf pollUrl:url time:0 withCompletion:^(id response) {
         
         NSString *status = response[@"status"];
         if ([status isEqualToString:@"OK_REFUND_FINISH"]) {

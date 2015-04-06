@@ -10,10 +10,11 @@
 #import "OMNRestaurantAddressSelectionVC.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNSuncityPreorderDoneVC.h"
+#import "OMNLunchVisitor.h"
 
 @implementation OMNSuncityLunchWishMediator
 
-- (void)createWish:(NSArray *)wishItems completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+- (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
 
   OMNRestaurantAddressSelectionVC *restaurantAddressSelectionVC = [[OMNRestaurantAddressSelectionVC alloc] initWithRestaurant:self.restaurantMediator.restaurant];
   @weakify(self)
@@ -26,18 +27,31 @@
 
   OMNRestaurant *restaurant = self.restaurantMediator.visitor.restaurant;
   @weakify(restaurantAddressSelectionVC)
-  
   UIBarButtonItem *nextItem = [UIBarButtonItem omn_barButtonWithTitle:kOMN_NEXT_BUTTON_TITLE color:[UIColor blackColor] actionBlock:^{
     
     @strongify(restaurantAddressSelectionVC)
-    OMNRestaurant *deliveryRestaurant = [restaurant restaurantWithDelivery:[OMNRestaurantDelivery deliveryWithAddress:restaurantAddressSelectionVC.selectedAddress date:nil]];
-    [deliveryRestaurant createWishForTable:nil products:wishItems completionBlock:^(OMNWish *wish) {
+    [restaurantAddressSelectionVC.navigationItem setRightBarButtonItem:[UIBarButtonItem omn_loadingItem] animated:YES];
+    
+    OMNLunchVisitor *lunchVisitor = [OMNLunchVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery deliveryWithAddress:restaurantAddressSelectionVC.selectedAddress date:nil]];
+    [lunchVisitor createWish:wishItems completionBlock:^(OMNVisitor *visitor) {
       
       @strongify(self)
       [self.rootVC dismissViewControllerAnimated:YES completion:nil];
-      completionBlock(wish);
+      completionBlock(visitor);
+
+    } wrongIDsBlock:^(NSArray *wrongIDs) {
       
-    } wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
+      @strongify(self)
+      [self.rootVC dismissViewControllerAnimated:YES completion:nil];
+      wrongIDsBlock(wrongIDs);
+      
+    } failureBlock:^(OMNError *error) {
+      
+      @strongify(self)
+      [self.rootVC dismissViewControllerAnimated:YES completion:nil];
+      failureBlock(error);
+
+    }];
     
   }];
   nextItem.enabled = NO;
@@ -53,10 +67,10 @@
   
 }
 
-- (void)processCreatedWish:(OMNWish *)wish {
+- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
   
   @weakify(self)
-  OMNSuncityPreorderDoneVC *preorderDoneVC = [[OMNSuncityPreorderDoneVC alloc] initWithWish:wish didCloseBlock:^{
+  OMNSuncityPreorderDoneVC *preorderDoneVC = [[OMNSuncityPreorderDoneVC alloc] initWithWish:visitor.wish didCloseBlock:^{
     
     @strongify(self)
     [self didFinishWish];

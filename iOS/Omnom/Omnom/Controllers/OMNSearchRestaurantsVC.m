@@ -24,8 +24,6 @@
 @interface OMNSearchRestaurantsVC ()
 <OMNBeaconsSearchManagerDelegate>
 
-@property (nonatomic, strong) OMNSearchRestaurantMediator *searchRestaurantMediator;
-
 @end
 
 @implementation OMNSearchRestaurantsVC {
@@ -40,12 +38,9 @@
   
 }
 
-- (instancetype)initWithMediator:(OMNSearchRestaurantMediator *)searchRestaurantMediator {
+- (instancetype)init {
   self = [super initWithParent:nil];
   if (self) {
-    
-    _searchRestaurantMediator = searchRestaurantMediator;
-    
   }
   return self;
 }
@@ -149,7 +144,7 @@
   [self finishLoading:^{
   
     @strongify(self)
-    [self.searchRestaurantMediator showRestaurants:restaurants];
+    [self.delegate searchRestaurantsVC:self didFindRestaurants:restaurants];
     
   }];
   

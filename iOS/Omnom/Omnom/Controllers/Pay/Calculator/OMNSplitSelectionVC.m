@@ -79,15 +79,11 @@ UIPickerViewDelegate>
 }
 
 - (long long)total {
-  
-  return _restaurantMediator.visitor.selectedOrder.totalAmount;
-  
+  return _restaurantMediator.table.selectedOrder.totalAmount;
 }
 
 - (void)updateTotalValue {
-  
   [self.delegate totalDidChange:ceil((double)self.total / _numberOfGuests) showPaymentButton:YES];
-  
 }
 
 - (void)setNumberOfGuests:(NSInteger)numberOfGuests {

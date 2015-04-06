@@ -209,51 +209,6 @@
   
 }
 
-- (NSString *)wishType {
-  return (kRestaurantModeLunch == self.entrance_mode) ? (@"lunch") : (@"pre_order");
-}
-
-- (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
-  
-  NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-  if (table.internal_id) {
-    parameters[@"internal_table_id"] = table.internal_id;
-  }
-  if (table.id) {
-    parameters[@"table_id"] = table.id;
-  }
-  if (products) {
-    parameters[@"items"] = products;
-  }
-  parameters[@"type"] = [self wishType];
-  if (self.delivery.address) {
-    parameters[@"delivery_address"] = self.delivery.addressData;
-  }
-  
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.id];
-  [[OMNOperationManager sharedManager] POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    OMNWish *wish = [[OMNWish alloc] initWithJsonData:responseObject];
-    completionBlock(wish);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    //    Формат - статус код 409, массив skip_id:[]
-    if (409 == error.code) {
-
-      wrongIDsBlock(operation.responseObject[@"skip_id"]);
-      
-    }
-    else {
-    
-      failureBlock([error omn_internetError]);
-      
-    }
-    
-  }];
-  
-}
-
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))errorBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/advertisement", self.id];
@@ -363,7 +318,9 @@
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MENU" jsonRequest:path responseOperation:operation];
     @strongify(self)
-    [self getMenuWithCompletion:completion];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      [self getMenuWithCompletion:completion];
+    });
     
   }];
   

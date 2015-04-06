@@ -95,14 +95,14 @@
   [self loadIconIfNeeded];
 
   @weakify(self)
-  _restaurantWaiterCallIdentifier = [_restaurantMediator.visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNVisitor *visitor, NSDictionary *change) {
+  _restaurantWaiterCallIdentifier = [_restaurantMediator.table bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:NSKeyValueObservingOptionNew task:^(OMNTable *table, NSDictionary *change) {
     
     @strongify(self)
-    (visitor.waiterIsCalled) ? ([self callWaiterDidStart]) : ([self callWaiterDidStop]);
+    (table.waiterIsCalled) ? ([self callWaiterDidStart]) : ([self callWaiterDidStop]);
     
   }];
   
-  _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+  _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
     
     @strongify(self)
     [self menuDidChange:obj.menu];
@@ -168,7 +168,7 @@
     _showTableButtonAnimation = YES;
     _tableButton = [OMNTableButton buttonWithColor:visitor.restaurant.decoration.antagonist_color];
     [_tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
-    [_tableButton setText:_restaurantMediator.visitor.tableName];
+    [_tableButton setText:_restaurantMediator.table.name];
     _tableButton.center = userButton.center;
     [userButton.superview addSubview:_tableButton];
     CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;
@@ -460,7 +460,7 @@
 
 - (void)beginCircleAnimationIfNeeded {
 
-  if (_restaurantMediator.visitor.waiterIsCalled &&
+  if (_restaurantMediator.table.waiterIsCalled &&
       [self.navigationController.topViewController isEqual:self]) {
     
     [_circleAnimation beginCircleAnimationIfNeededWithImage:[UIImage imageNamed:@"bell_ringing_icon_white_big"]];

@@ -13,21 +13,12 @@
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNProductItemsBlock)(NSArray *productItems);
 typedef void(^OMNAddressesBlock)(NSArray *addresses);
-typedef void(^OMNWrongIDsBlock)(NSArray *wrongIDs);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 typedef void(^OMNMenuBlock)(OMNMenu *menu);
-typedef void(^OMNWishBlock)(OMNWish *wish);
 
 @interface OMNRestaurant (omn_network)
 
 + (void)getRestaurantsForLocation:(CLLocationCoordinate2D)coordinate withCompletion:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock;
-/**
- *  curl -X POST  -H 'X-Authentication-Token: Ga7Rc1lBabcEIOoqd8MsSejzsroI01En' -H "Content-Type: application/json" -d '{ "internal_table_id":"2", "items":[{"id":"15ecf053-feea-46ae-ac94-9a4087a724a8-in-saintlab-iiko","quantity":"1", "modifiers": [{"id":"69c53de0-be11-4843-9628-fb1e01c9437e-in-saintlab-iiko","quantity":"1"}  ] }]}' http://omnom.laaaab.com/restaurants/saintlab-iiko/wishes
- *
- *  @param tableID      table ID or nil
- *  @param products     list of {"id":"", "quantity":"1", "modifiers":[{"id":"", "quantity":"1"}]} objects
- */
-- (void)createWishForTable:(OMNTable *)table products:(NSArray *)products completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
 - (void)getDeliveryAddressesWithCompletion:(OMNAddressesBlock)addressesBlock failure:(void(^)(OMNError *error))failureBlock;
 

@@ -17,7 +17,7 @@ SPEC_BEGIN(OMNDemoStandWaiterTests)
 
 describe(@"waiter call tests", ^{
   
-  __block OMNRestaurant *_restaurant = nil;
+  __block OMNVisitor *_visitor = nil;
   __block OMNRestaurantMediator *_restaurantMediator = nil;
   
   beforeAll(^{
@@ -28,30 +28,31 @@ describe(@"waiter call tests", ^{
     
     [OMNRestaurantManager decodeBeacons:@[demoBeacon] withCompletion:^(NSArray *restaurants) {
       
-      _restaurant = [restaurants firstObject];
+      OMNRestaurant *restaurant = [restaurants firstObject];
+      _visitor = [[OMNVisitor alloc] initWithRestaurant:restaurant];
       
     } failureBlock:^(OMNError *error) {
       
     }];
     
-    [[expectFutureValue(_restaurant) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
+    [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
 
-    _restaurantMediator = [[OMNRestaurantMediator alloc] initWithRestaurant:_restaurant rootViewController:nil];
+    _restaurantMediator = [_visitor mediatorWithRootVC:nil];
     
   });
   
   it(@"should check initial conditions", ^{
     
-    [[_restaurant should] beNonNil];
+    [[_visitor should] beNonNil];
     [[_restaurantMediator should] beNonNil];
-    [[_restaurantMediator.visitor.table should] beNonNil];
+    [[_restaurantMediator.table should] beNonNil];
     
   });
   
   it(@"should new guest", ^{
     
     __block NSNumber *is_new_guest = nil;
-    [_restaurantMediator.visitor.table newGuestWithCompletion:^{
+    [_restaurantMediator.table newGuestWithCompletion:^{
       
       is_new_guest = @(YES);
       
@@ -62,19 +63,19 @@ describe(@"waiter call tests", ^{
   
   it(@"should call waiter", ^{
     
-    OMNVisitor *visitor = _restaurantMediator.visitor;
-    visitor.waiterIsCalled = NO;
-    [_restaurantMediator waiterCall];
-    [[expectFutureValue(@(visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
+    OMNTable *table = _restaurantMediator.table;
+    table.waiterIsCalled = NO;
+    [table waiterCall];
+    [[expectFutureValue(@(table.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(YES)];
     
   });
   
   it(@"should stop waiter", ^{
     
-    OMNVisitor *visitor = _restaurantMediator.visitor;
-    visitor.waiterIsCalled = YES;
-    [_restaurantMediator waiterCallStop];
-    [[expectFutureValue(@(visitor.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(NO)];
+    OMNTable *table = _restaurantMediator.table;
+    table.waiterIsCalled = YES;
+    [table waiterCallStop];
+    [[expectFutureValue(@(table.waiterIsCalled)) shouldEventuallyBeforeTimingOutAfter(10.0f)] equal:@(NO)];
 
   });
   

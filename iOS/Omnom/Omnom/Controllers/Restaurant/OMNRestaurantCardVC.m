@@ -18,6 +18,8 @@
 #import "UINavigationBar+omn_custom.h"
 #import <BlocksKit.h>
 #import "OMNLunchOrderAlertVC.h"
+#import "OMNBarVisitor.h"
+#import "OMNPreorderVisitor.h"
 
 @implementation OMNRestaurantCardVC {
   
@@ -128,9 +130,9 @@
 - (void)inTap {
   
   self.showQRScan = NO;
-  if (_restaurant.hasTable) {
+  if (_restaurant.canProcess) {
 
-    [_searchRestaurantMediator showRestaurants:@[_restaurant]];
+    [_searchRestaurantMediator showVisitor:[OMNVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]]];
     
   }
   else {
@@ -142,7 +144,7 @@
 }
 
 - (void)barTap {
-  [_searchRestaurantMediator showRestaurants:@[[_restaurant restaurantWithMode:kRestaurantModeBar]]];
+  [_searchRestaurantMediator showVisitor:[OMNBarVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]]];
 }
 
 - (void)lunchTap {
@@ -156,11 +158,11 @@
     
   };
   OMNSearchRestaurantMediator *searchRestaurantMediator = _searchRestaurantMediator;
-  lunchOrderAlertVC.didSelectRestaurantBlock = ^(OMNRestaurant *restaurant) {
+  lunchOrderAlertVC.didSelectVisitorBlock = ^(OMNVisitor *visitor) {
 
     @strongify(self)
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    [searchRestaurantMediator showRestaurants:@[restaurant]];
+    [searchRestaurantMediator showVisitor:visitor];
     
   };
   [self.navigationController presentViewController:lunchOrderAlertVC animated:YES completion:nil];
@@ -168,7 +170,7 @@
 }
 
 - (void)preorderTap {
-  [_searchRestaurantMediator showRestaurants:@[[_restaurant restaurantWithMode:kRestaurantModePreorder]]];
+  [_searchRestaurantMediator showVisitor:[OMNPreorderVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]]];
 }
 
 - (void)closeTap {

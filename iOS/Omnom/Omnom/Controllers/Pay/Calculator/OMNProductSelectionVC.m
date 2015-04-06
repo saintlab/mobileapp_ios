@@ -21,7 +21,7 @@
 @implementation OMNProductSelectionVC {
   
   OMNRestaurantMediator *_restaurantMediator;
-  OMNVisitor *_visitor;
+  OMNTable *_table;
   BOOL _didClose;
   
 }
@@ -31,7 +31,7 @@
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-    _visitor = restaurantMediator.visitor;
+    _table = restaurantMediator.table;
     
   }
   return self;
@@ -124,7 +124,7 @@
 
 - (void)updateOrder {
   
-  _dataSource.order = _visitor.selectedOrder;
+  _dataSource.order = _table.selectedOrder;
   [self.tableView reloadData];
   [self updateTotalValue];
   
@@ -141,7 +141,7 @@
   [[NSUserDefaults standardUserDefaults] synchronize];
   
   NSIndexPath *demoIndexPath = nil;
-  OMNGuest *guest = [_visitor.selectedOrder.guests firstObject];
+  OMNGuest *guest = [_table.selectedOrder.guests firstObject];
   if (guest.items.count) {
     demoIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
   }
@@ -178,7 +178,7 @@
 
   if ([self.delegate respondsToSelector:@selector(totalDidChange:showPaymentButton:)]) {
     
-    OMNOrder *order = _visitor.selectedOrder;
+    OMNOrder *order = _table.selectedOrder;
     [self.delegate totalDidChange:order.selectedItemsTotal showPaymentButton:order.hasSelectedItems];
     
   }

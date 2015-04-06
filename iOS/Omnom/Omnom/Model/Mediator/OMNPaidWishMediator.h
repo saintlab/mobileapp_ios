@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNWishMediator.h"
+#import "OMNTransactionPaymentVC.h"
 
 @interface OMNPaidWishMediator : OMNWishMediator
+<OMNTransactionPaymentVCDelegate>
 
 @end

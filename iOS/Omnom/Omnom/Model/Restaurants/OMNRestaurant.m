@@ -9,12 +9,10 @@
 #import "OMNRestaurant.h"
 
 NSString * const OMNRestaurantNotificationLaunchKey = @"OMNRestaurantNotificationLaunchKey";
-NSString * const OMNRestaurantOrdersDidChangeNotification = @"OMNRestaurantOrdersDidChangeNotification";
 
 @interface OMNRestaurant ()
 
 @property (nonatomic, assign) OMNRestaurantMode entrance_mode;
-@property (nonatomic, strong) OMNRestaurantDelivery *delivery;
 
 @end
 
@@ -84,7 +82,6 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     }
     
 #warning TODO
-//    _entrance_mode = kRestaurantModeNone;
     _delivery_dates =
     @[
       @"1/04/2015",
@@ -109,23 +106,6 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
 - (void)encodeWithCoder:(NSCoder *)aCoder {
   
   [aCoder encodeObject:_jsonData forKey:@"jsonData"];
-  
-}
-
-- (instancetype)restaurantWithMode:(OMNRestaurantMode)mode {
-  
-  OMNRestaurant *restaurant = [[[self class] alloc] initWithJsonData:_jsonData];
-  restaurant.entrance_mode = mode;
-  return restaurant;
-  
-}
-
-- (instancetype)restaurantWithDelivery:(OMNRestaurantDelivery *)delivery {
-  
-  OMNRestaurant *restaurant = [[[self class] alloc] initWithJsonData:_jsonData];
-  restaurant.delivery = delivery;
-  restaurant.entrance_mode = kRestaurantModeLunch;
-  return restaurant;
   
 }
 

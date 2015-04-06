@@ -14,6 +14,7 @@
 @property (nonatomic, copy, readonly) NSString *id;
 @property (nonatomic, copy, readonly) NSString *restaurant_id;
 @property (nonatomic, copy, readonly) NSString *created;
+@property (nonatomic, copy, readonly) NSDate *createdDate;
 @property (nonatomic, copy, readonly) NSString *table_id;
 @property (nonatomic, copy, readonly) NSString *internal_table_id;
 @property (nonatomic, copy, readonly) NSString *person;

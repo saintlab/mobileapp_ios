@@ -7,13 +7,13 @@
 //
 
 #import "OMNModalAlertVC.h"
-#import "OMNRestaurant.h"
+#import "OMNVisitor.h"
 
-typedef void(^OMNDidSelectRestaurantBlock)(OMNRestaurant *restaurant);
+typedef void(^OMNDidSelectVisitorBlock)(OMNVisitor *visitor);
 
 @interface OMNLunchOrderAlertVC : OMNModalAlertVC
 
-@property (nonatomic, copy) OMNDidSelectRestaurantBlock didSelectRestaurantBlock;
+@property (nonatomic, copy) OMNDidSelectVisitorBlock didSelectVisitorBlock;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
 

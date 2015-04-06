@@ -25,7 +25,7 @@ UICollectionViewDelegate>
   UILabel *_label;
   UIPageControl *_pageControl;
   OMNRestaurantMediator *_restaurantMediator;
-  OMNVisitor *_visitor;
+  OMNTable *_table;
   
 }
 
@@ -40,7 +40,7 @@ UICollectionViewDelegate>
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-    _visitor = restaurantMediator.visitor;
+    _table = restaurantMediator.table;
     
   }
   return self;
@@ -69,7 +69,7 @@ UICollectionViewDelegate>
   [cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
 
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:OMNRestaurantOrdersDidChangeNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:OMNTableOrdersDidChangeNotification object:nil];
   
 }
 
@@ -181,7 +181,7 @@ UICollectionViewDelegate>
 //https://github.com/saintlab/mobileapp_ios/issues/375#issuecomment-78023185
 - (void)updateOrders {
   
-  NSInteger ordersCount = _visitor.orders.count;
+  NSInteger ordersCount = _table.orders.count;
   _label.text = [self stringFromOrdersCount:ordersCount];
   _pageControl.numberOfPages = ordersCount;
   @weakify(self)
@@ -223,14 +223,14 @@ UICollectionViewDelegate>
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
   
-  return _visitor.orders.count;
+  return _table.orders.count;
   
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNOrderViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-  OMNOrder *order = _visitor.orders[indexPath.item];
+  OMNOrder *order = _table.orders[indexPath.item];
   
   if (1 == indexPath.item &&
       !_animationPerformed) {
@@ -254,7 +254,7 @@ UICollectionViewDelegate>
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-  OMNOrder *order = _visitor.orders[indexPath.item];
+  OMNOrder *order = _table.orders[indexPath.item];
   [self.delegate ordersVC:self didSelectOrder:order];
   
 }

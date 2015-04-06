@@ -41,7 +41,7 @@
 
 - (void)startLoadingOrders {
   
-  OMNTable *table = _restaurantMediator.visitor.table;
+  OMNTable *table = _restaurantMediator.table;
   
   @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{

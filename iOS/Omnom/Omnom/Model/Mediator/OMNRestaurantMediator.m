@@ -41,15 +41,40 @@ OMNOrderCalculationVCDelegate>
 
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC {
+- (void)dealloc {
+  
+  if (!_restaurant.is_demo) {
+  
+    [[OMNSocketManager manager] leave:_table.id];
+    [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
+    
+  }
+  
+}
+
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor rootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC {
   self = [super init];
   if (self) {
 
     _restaurantActionsVC = restaurantActionsVC;
-    _restaurant = restaurant;
-    _visitor = [[OMNVisitor alloc] initWithRestaurant:restaurant];
+    _visitor = visitor;
+    _restaurant = visitor.restaurant;
+    
+    if (!_restaurant.is_demo) {
+      
+      [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
+      }];
+      
+    }
+    
+    if (_restaurant.tables.count) {
+      
+      OMNTable *table = [_restaurant.tables firstObject];
+      table.orders = _restaurant.orders;
+      [self setTable:table];
+      
+    }
     _shouldShowOrdersOnLaunch = (_restaurant.orders.count > 0);
-
     @weakify(self)
     [_restaurant getMenuWithCompletion:^(OMNMenu *menu) {
       
@@ -62,10 +87,21 @@ OMNOrderCalculationVCDelegate>
   return self;
 }
 
+- (void)setTable:(OMNTable *)table {
+  
+  _table = table;
+  if (!_restaurant.is_demo) {
+    
+    [_table join];
+    
+  }
+  
+}
+
 - (void)checkStartConditions {
   
   if (_shouldShowOrdersOnLaunch &&
-      _visitor.hasOrders) {
+      _table.hasOrders) {
     
     [self showOrders];
     
@@ -78,7 +114,7 @@ OMNOrderCalculationVCDelegate>
   }
   else {
     
-    [_visitor updateOrdersIfNeeded];
+    [_table updateOrdersIfNeeded];
     
   }
   
@@ -86,7 +122,7 @@ OMNOrderCalculationVCDelegate>
 
 - (long long)totalOrdersAmount {
   
-  return _visitor.ordersTotalAmount;
+  return _table.ordersTotalAmount;
   
 }
 
@@ -140,14 +176,6 @@ OMNOrderCalculationVCDelegate>
   [self popToRootViewControllerAnimated:YES];
 }
 
-- (void)waiterCall {
-  [_visitor waiterCall];
-}
-
-- (void)waiterCallStop {
-  [_visitor waiterCallStop];
-}
-
 - (void)showPreorders {
   
   OMNMyOrderConfirmVC *preorderConfirmVC = [[OMNMyOrderConfirmVC alloc] initWithRestaurantMediator:self];
@@ -164,7 +192,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)showTableOrders {
   
-  if (!_visitor.table) {
+  if (!_table) {
     return;
   }
 
@@ -190,7 +218,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)checkPushNotificationAndProcessOrders:(NSArray *)orders {
   
-  _visitor.orders = orders;
+  _table.orders = orders;
   if ([self skipRequestPushNotificationPermission]) {
     
     [self showOrders];
@@ -216,7 +244,7 @@ OMNOrderCalculationVCDelegate>
   
   _shouldShowOrdersOnLaunch = NO;
 //  https://github.com/saintlab/mobileapp_ios/issues/336
-  if (!_visitor.ordersHasProducts) {
+  if (!_table.ordersHasProducts) {
     
     [self processNoOrders];
     
@@ -230,9 +258,9 @@ OMNOrderCalculationVCDelegate>
   [controllers addObject:ordersVC];
   _ordersVC = ordersVC;
   
-  if (1 == _visitor.orders.count) {
+  if (1 == _table.orders.count) {
     
-    _visitor.selectedOrder = [_visitor.orders firstObject];
+    _table.selectedOrder = [_table.orders firstObject];
     OMNOrderCalculationVC *paymentVC = [[OMNOrderCalculationVC alloc] initWithMediator:self];
     paymentVC.delegate = self;
     [controllers addObject:paymentVC];
@@ -272,7 +300,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)showOrder:(OMNOrder *)order {
   
-  _visitor.selectedOrder = order;
+  _table.selectedOrder = order;
   OMNOrderCalculationVC *paymentVC = [[OMNOrderCalculationVC alloc] initWithMediator:self];
   paymentVC.delegate = self;
   [self pushViewController:paymentVC];
@@ -299,7 +327,7 @@ OMNOrderCalculationVCDelegate>
 
 - (void)orderCalculationVCDidCancel:(OMNOrderCalculationVC *)orderCalculationVC {
   
-  if (_visitor.table) {
+  if (_table) {
     
     [self popToRootViewControllerAnimated:YES];
     
@@ -331,7 +359,7 @@ OMNOrderCalculationVCDelegate>
 }
 
 - (BOOL)showTableButton {
-  return (self.visitor.table != nil);
+  return (_table != nil);
 }
 
 - (BOOL)showPreorderButton {

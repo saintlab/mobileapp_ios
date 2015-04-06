@@ -15,7 +15,7 @@
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
-- (void)processCreatedWish:(OMNWish *)wish {
+- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
 
   @weakify(self)
   OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 didCloseBlock:^{

@@ -30,10 +30,10 @@
     
 #if DEBUG
 #warning 123
-    _has_bar = YES;
-    _has_lunch = YES;
-    _has_pre_order = YES;
-    _has_table_order = YES;
+//    _has_bar = YES;
+//    _has_lunch = YES;
+//    _has_pre_order = YES;
+//    _has_table_order = YES;
 #endif
     
   }

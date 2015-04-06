@@ -9,12 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "OMNRestaurantAddress.h"
 
-@interface OMNRestaurantDelivery : NSObject
+@interface OMNDelivery : NSObject
 
 @property (nonatomic, strong) OMNRestaurantAddress *address;
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, assign) NSInteger minutes;
 
++ (instancetype)delivery;
 + (instancetype)deliveryWithAddress:(OMNRestaurantAddress *)address date:(NSString *)date;
 + (instancetype)deliveryWithMinutes:(NSInteger)minutes;
 - (BOOL)readyForDelivery;

@@ -13,8 +13,9 @@
 #import "UIView+omn_autolayout.h"
 #import "OMNRestaurantAddressSelectionVC.h"
 #import "OMNDateSelectionVC.h"
-#import "OMNRestaurantDelivery.h"
+#import "OMNDelivery.h"
 #import "NSString+omn_date.h"
+#import "OMNLunchVisitor.h"
 
 @implementation OMNLunchOrderAlertVC {
   
@@ -26,7 +27,7 @@
   OMNRestaurant *_restaurant;
   UIButton *_doneButton;
   
-  OMNRestaurantDelivery *_delivery;
+  OMNDelivery *_delivery;
   
 }
 
@@ -43,7 +44,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  _delivery = [[OMNRestaurantDelivery alloc] init];
+  _delivery = [[OMNDelivery alloc] init];
   _delivery.date = [_restaurant.delivery_dates firstObject];
   [self createViews];
   [self configureViews];
@@ -53,10 +54,10 @@
 
 - (void)doneTap {
   
-  if (self.didSelectRestaurantBlock &&
+  if (self.didSelectVisitorBlock &&
       _delivery.readyForDelivery) {
-
-    self.didSelectRestaurantBlock([_restaurant restaurantWithDelivery:_delivery]);
+    
+    self.didSelectVisitorBlock([OMNLunchVisitor visitorWithRestaurant:_restaurant delivery:_delivery]);
     
   }
   
@@ -120,37 +121,35 @@
 
 - (void)updateButtons {
   
-  UIColor *officeColor = nil;
   if (_delivery.address) {
     
     [_addressButton setTitle:_delivery.address.text forState:UIControlStateNormal];
-    officeColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+    [_addressButton setTitleColor:colorWithHexString(@"000000") forState:UIControlStateNormal];
+    _addressLine.backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
     
   }
   else {
     
     [_addressButton setTitle:kOMN_LUNCH_ALERT_SELECT_OFFICE_TITLE forState:UIControlStateNormal];
-    officeColor = [OMNStyler redColor];
+    [_addressButton setTitleColor:[OMNStyler redColor] forState:UIControlStateNormal];
+    _addressLine.backgroundColor = [OMNStyler redColor];
     
   }
-  [_addressButton setTitleColor:officeColor forState:UIControlStateNormal];
-  _addressLine.backgroundColor = officeColor;
 
-  UIColor *dateColor = nil;
   if (_delivery.date) {
     
     [_dateButton setTitle:[_delivery.date omn_localizedWeekday] forState:UIControlStateNormal];
-    dateColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+    [_dateButton setTitleColor:colorWithHexString(@"000000") forState:UIControlStateNormal];
+    _dateLine.backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
     
   }
   else {
     
     [_addressButton setTitle:kOMN_LUNCH_ALERT_SELECT_DATE_TITLE forState:UIControlStateNormal];
-    dateColor = [OMNStyler redColor];
+    [_dateButton setTitleColor:[OMNStyler redColor] forState:UIControlStateNormal];
+    _dateLine.backgroundColor = [OMNStyler redColor];
     
   }
-  [_dateButton setTitleColor:dateColor forState:UIControlStateNormal];
-  _dateLine.backgroundColor = dateColor;
   
   _doneButton.enabled = _delivery.readyForDelivery;
   

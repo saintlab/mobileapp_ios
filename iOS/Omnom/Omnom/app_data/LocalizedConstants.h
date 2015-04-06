@@ -51,14 +51,6 @@
 #define kOMN_ORDERS_ON_TABLE_TEXT2 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT2{счёт} %ld", @"На вашем столике {orders_count} счёт")
 #define kOMN_ORDERS_ON_TABLE_TEXT3 NSLocalizedString(@"ORDERS_ON_TABLE_TEXT3{счетов} %ld", @"На вашем столике {orders_count} счетов")
 
-//preorder
-#define kOMN_TOTAL_TEXT NSLocalizedString(@"TOTAL_TEXT %@", @"Итого {total_string}")
-#define kOMN_PREORDER_TITLE_BUTTON_TEXT NSLocalizedString(@"PREORDER_TITLE_BUTTON_TEXT", @"Предзаказ")
-#define kOMN_PREORDER_MINUTES_TEXT NSLocalizedString(@"PREORDER_MINUTES_TEXT", @"Когда вас ждать?")
-#define kOMN_PREORDER_IN_MINUTES_FORMAT NSLocalizedString(@"PREORDER_IN_MINUTES_FORMAT %@", @"Через {minutes} минут")
-#define kOMN_PREORDER_IN_HOUR_TEXT NSLocalizedString(@"PREORDER_IN_HOUR_TEXT", @"Через час")
-#define kOMN_PREORDER_IN_HOURS_FORMAT NSLocalizedString(@"PREORDER_IN_HOURS_FORMAT %.f", @"Через {hours} часа")
-
 //address
 #define kOMN_FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT_RESTAURANTS_ADDRESSES", @"Добавьте мой адрес")
 #define kOMN_RESTAURANT_ADDRESSES_ADD_ACTION_TEXT NSLocalizedString(@"RESTAURANT_ADDRESSES_ADD_ACTION_TEXT", @"Оставьте заявку")
@@ -76,13 +68,34 @@
 #define kOMN_WEEKDAY_SATURDAY NSLocalizedString(@"WEEKDAY_SATURDAY", @"Суббота")
 #define kOMN_RESTAURANT_DATE_HEADER_TEXT NSLocalizedString(@"RESTAURANT_DATE_HEADER_TEXT", @"Выберите, когда надо доставить обед:")
 
+#define kOMN_WEEKDAY_IN_SUNDAY NSLocalizedString(@"WEEKDAY_IN_SUNDAY", @"в воскресенье")
+#define kOMN_WEEKDAY_IN_MONDAY NSLocalizedString(@"WEEKDAY_IN_MONDAY", @"в понедельник")
+#define kOMN_WEEKDAY_IN_TUESDAY NSLocalizedString(@"WEEKDAY_IN_TUESDAY", @"во вторник")
+#define kOMN_WEEKDAY_IN_WEDNESDAY NSLocalizedString(@"WEEKDAY_IN_WEDNESDAY", @"в среду")
+#define kOMN_WEEKDAY_IN_THURSDAY NSLocalizedString(@"WEEKDAY_IN_THURSDAY", @"в четверг")
+#define kOMN_WEEKDAY_IN_FRIDAY NSLocalizedString(@"WEEKDAY_IN_FRIDAY", @"в пятницу")
+#define kOMN_WEEKDAY_IN_SATURDAY NSLocalizedString(@"WEEKDAY_IN_SATURDAY", @"в субботу")
+
 //bar
-#define kOMN_BAR_SUCCESS_TITLE1 NSLocalizedString(@"BAR_SUCCESS_TITLE1", @"Заказ принят")
+#define kOMN_PAYMENT_SUCCESS_TITLE1 NSLocalizedString(@"BAR_SUCCESS_TITLE1", @"Заказ принят")
+#define kOMN_PAYMENT_SUCCESS_DATE_FORMAT NSLocalizedString(@"PAYMENT_SUCCESS_DATE_FORMAT", @"dd MMMM 'в' HH:mm")
 #define kOMN_BAR_SUCCESS_ORDER_NUMBER_TEXT NSLocalizedString(@"BAR_SUCCESS_ORDER_NUMBER_TEXT", @"Номер заказа")
 #define kOMN_BAR_SUCCESS_PIN_TEXT NSLocalizedString(@"BAR_SUCCESS_PIN_TEXT", @"Пин-код")
 #define kOMN_BAR_SUCCESS_HELP_TEXT NSLocalizedString(@"BAR_SUCCESS_HELP_TEXT %@", @"Мы пригласим вас, когда заказ будет готов.\nТакже проверить готов ли ваш заказ\nможно {link_text}.")
 #define kOMN_BAR_SUCCESS_HELP_ACTION_TEXT NSLocalizedString(@"BAR_SUCCESS_HELP_ACTION_TEXT", @"здесь")
-#define kOMN_BAR_SUCCESS_MAIL_TEXT NSLocalizedString(@"BAR_SUCCESS_MAIL_TEXT", @"Чек об оплате отправлен на почту.")
+#define kOMN_PAYMENT_SUCCESS_MAIL_TEXT NSLocalizedString(@"BAR_SUCCESS_MAIL_TEXT", @"Чек об оплате отправлен на почту.")
+
+//preorder
+#define kOMN_TOTAL_TEXT NSLocalizedString(@"TOTAL_TEXT %@", @"Итого {total_string}")
+#define kOMN_PREORDER_TITLE_BUTTON_TEXT NSLocalizedString(@"PREORDER_TITLE_BUTTON_TEXT", @"Предзаказ")
+#define kOMN_PREORDER_MINUTES_TEXT NSLocalizedString(@"PREORDER_MINUTES_TEXT", @"Когда вас ждать?")
+#define kOMN_PREORDER_IN_MINUTES_FORMAT NSLocalizedString(@"PREORDER_IN_MINUTES_FORMAT %d", @"Через {minutes} минут")
+#define kOMN_PREORDER_IN_HOUR_TEXT NSLocalizedString(@"PREORDER_IN_HOUR_TEXT", @"Через час")
+#define kOMN_PREORDER_IN_HOURS_FORMAT NSLocalizedString(@"PREORDER_IN_HOURS_FORMAT %.f", @"Через {hours} часа")
+#define kOMN_PREORDER_DONE_FORMAT NSLocalizedString(@"PREORDER_DONE_FORMAT %@ %@", @"Заказ будет ждать вас сегодня %@\nпо адресу\n%@.")
+
+//lunch
+#define kOMN_LUNCH_DONE_FORMAT NSLocalizedString(@"LUNCH_DONE_FORMAT %@ %@", @"Заказ будет доставлен по адресу\n{address}\nв {date}\nориентировачно в 13:00.")
 
 //title
 #define kOMN_RESTAURANT_ADDRESS_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_ADDRESS_SELECTION_TITLE", @"Куда")

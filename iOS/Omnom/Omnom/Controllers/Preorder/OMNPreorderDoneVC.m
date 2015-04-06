@@ -42,15 +42,15 @@
 
   [self omn_setup];
   
-  _textLabel.text = _title;
   _textLabel.font = FuturaLSFOmnomLERegular(25.0f);
   _textLabel.textAlignment = NSTextAlignmentCenter;
   _textLabel.textColor = colorWithHexString(@"FFFFFF");
+  _textLabel.text = _title;
   
-  _detailedTextLabel.text = _subTitle;
   _detailedTextLabel.font = FuturaLSFOmnomLERegular(17.0f);
   _detailedTextLabel.textAlignment = NSTextAlignmentCenter;
   _detailedTextLabel.textColor = [colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.5f];
+  _detailedTextLabel.text = _subTitle;
   
   [_closeButton addTarget:self action:@selector(closeTap) forControlEvents:UIControlEventTouchUpInside];
   

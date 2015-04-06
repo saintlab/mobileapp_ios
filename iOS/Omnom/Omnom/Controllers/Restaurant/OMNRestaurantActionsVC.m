@@ -11,7 +11,7 @@
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNRestaurantActionsToolbar.h"
 #import <OMNStyler.h>
-#import "OMNRestaurantMediatorFactory.h"
+#import "OMNVisitor.h"
 
 @implementation OMNRestaurantActionsVC {
   
@@ -20,11 +20,11 @@
 
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super init];
   if (self) {
     
-    _restaurantMediator = [OMNRestaurantMediatorFactory mediatorWithRestaurant:restaurant rootViewController:self];
+    _restaurantMediator = [visitor mediatorWithRootVC:self];
     
   }
   return self;

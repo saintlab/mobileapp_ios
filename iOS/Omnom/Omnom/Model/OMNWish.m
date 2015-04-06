@@ -25,6 +25,9 @@
     
     _orderNumber = jsonData[@"internal_table_id"];
     _pin = jsonData[@"code"];
+    if ([jsonData[@"created_unix"] respondsToSelector:@selector(doubleValue)]) {
+      _createdDate = [NSDate dateWithTimeIntervalSince1970:[jsonData[@"created_unix"] doubleValue]];
+    }
     
     NSArray *items = jsonData[@"items"];
     if ([items isKindOfClass:[NSArray class]]) {
@@ -55,5 +58,3 @@
 }
 
 @end
-
-//curl -X POST  -H 'X-Authentication-Token: Ga7Rc1lBabcEIOoqd8MsSejzsroI01En' -H "Content-Type: application/json" -d '{ "internal_table_id":"2", "items":[{"id":"15ecf053-feea-46ae-ac94-9a4087a724a8-in-saintlab-iiko","quantity":"1", "modifiers": [{"id":"69c53de0-be11-4843-9628-fb1e01c9437e-in-saintlab-iiko","quantity":"1"}  ] }]}' http://omnom.laaaab.com/restaurants/saintlab-iiko/wishes

@@ -15,7 +15,9 @@
  @returns localized weekday
  */
 - (NSString *)omn_localizedWeekday;
-
+- (NSString *)omn_localizedInWeekday;
+- (NSDate *)omn_dateFromddMMyyyy;
 - (BOOL)omn_isTomorrow;
++ (NSString *)omn_takeAfterIntervalString:(NSInteger)minutes;
 
 @end

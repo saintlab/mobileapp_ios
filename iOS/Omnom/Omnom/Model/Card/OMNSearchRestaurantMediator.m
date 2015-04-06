@@ -17,6 +17,7 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNRestaurantOfflineVC.h"
+#import "OMNVisitorFactory.h"
 
 @interface OMNSearchRestaurantMediator ()
 <OMNSearchRestaurantsVCDelegate,
@@ -42,9 +43,23 @@ OMNScanTableQRCodeVCDelegate>
 
 - (void)searchRestarants {
   
-  OMNSearchRestaurantsVC *searchRestaurantsVC = [[OMNSearchRestaurantsVC alloc] initWithMediator:self];
+  OMNSearchRestaurantsVC *searchRestaurantsVC = [[OMNSearchRestaurantsVC alloc] init];
   searchRestaurantsVC.delegate = self;
   [self.rootVC.navigationController pushViewController:searchRestaurantsVC animated:YES];
+  
+}
+
+#pragma mark - OMNSearchRestaurantsVCDelegate
+
+- (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants {
+  
+  [self showRestaurants:restaurants];
+  
+}
+
+- (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {
+  
+  [self didFinish];
   
 }
 
@@ -80,20 +95,43 @@ OMNScanTableQRCodeVCDelegate>
   
 }
 
-- (void)showRestaurantListVC {
+- (void)showRestaurantListAnimated:(BOOL)animated {
   
-  [_restaurantListVC.navigationController popToViewController:_restaurantListVC animated:YES];
+  if (_restaurantListVC) {
+    [_restaurantListVC.navigationController popToViewController:_restaurantListVC animated:animated];
+  }
+  
+}
+
+- (UIViewController *)restaurantActionsVCForVisitor:(OMNVisitor *)visitor {
+  
+  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithVisitor:visitor];
+  @weakify(self)
+  restaurantActionsVC.didCloseBlock = ^{
+    
+    @strongify(self)
+    [self showRestaurantListAnimated:YES];
+    
+  };
+  restaurantActionsVC.rescanTableBlock = ^{
+    
+    @strongify(self)
+    [self didFinish];
+    
+  };
+  return restaurantActionsVC;
+  
+}
+
+- (void)showVisitor:(OMNVisitor *)visitor {
+  
+  [_rootVC.navigationController pushViewController:[self restaurantActionsVCForVisitor:visitor] animated:YES];
   
 }
 
 - (void)showRestaurants:(NSArray *)restaurants {
   
-  if (_restaurantListVC) {
-    
-    [_rootVC.navigationController popToViewController:_restaurantListVC animated:NO];
-    
-  }
-  
+  [self showRestaurantListAnimated:NO];
   NSMutableArray *controllers = [NSMutableArray arrayWithArray:_rootVC.navigationController.viewControllers];
   
   if (!_restaurantListVC) {
@@ -107,7 +145,7 @@ OMNScanTableQRCodeVCDelegate>
   dispatch_block_t showRestaurantListBlock = ^{
     
     @strongify(self)
-    [self showRestaurantListVC];
+    [self showRestaurantListAnimated:YES];
     
   };
   
@@ -117,15 +155,7 @@ OMNScanTableQRCodeVCDelegate>
     
     if (restaurant.canProcess) {
       
-      OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
-      restaurantActionsVC.didCloseBlock = showRestaurantListBlock;
-      restaurantActionsVC.rescanTableBlock = ^{
-        
-        @strongify(self)
-        [self didFinish];
-        
-      };
-      [controllers addObject:restaurantActionsVC];
+      [controllers addObject:[self restaurantActionsVCForVisitor:[OMNVisitorFactory visitorForRestaurant:restaurant]]];
       
     }
     else if (restaurant.available) {
@@ -176,14 +206,6 @@ OMNScanTableQRCodeVCDelegate>
     
   };
   [_rootVC.navigationController pushViewController:demoRestaurantVC animated:YES];
-  
-}
-
-#pragma mark - OMNSearchRestaurantsVCDelegate
-
-- (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {
-  
-  [self didFinish];
   
 }
 

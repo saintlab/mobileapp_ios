@@ -69,6 +69,10 @@
   
 }
 
++ (UIColor *)greenColor {
+  return colorWithHexString(@"00881E");
+}
+
 - (OMNStyle *)styleForClass:(Class)class {
   
   NSString *className = NSStringFromClass(class);

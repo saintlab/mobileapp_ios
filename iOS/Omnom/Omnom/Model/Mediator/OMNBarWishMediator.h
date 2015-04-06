@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNWishMediator.h"
+#import "OMNPaidWishMediator.h"
 
-@interface OMNBarWishMediator : OMNWishMediator
+@interface OMNBarWishMediator : OMNPaidWishMediator
 
 @end

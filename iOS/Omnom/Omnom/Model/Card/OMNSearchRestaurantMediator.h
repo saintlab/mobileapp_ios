@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNRestaurant.h"
+#import "OMNVisitor.h"
 #import "OMNLaunchOptions.h"
 
 @interface OMNSearchRestaurantMediator : NSObject
@@ -22,6 +22,7 @@
 - (void)showUserProfile;
 - (void)scanTableQrTap;
 - (void)demoModeTap;
+- (void)showVisitor:(OMNVisitor *)visitor;
 - (void)showRestaurants:(NSArray *)restaurants;
 
 @end

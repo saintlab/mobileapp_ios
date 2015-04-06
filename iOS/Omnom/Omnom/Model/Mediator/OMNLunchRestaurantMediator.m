@@ -7,9 +7,10 @@
 //
 
 #import "OMNLunchRestaurantMediator.h"
-#import "OMNLunchWishMediator.h"
 #import "OMNLaunchHandler.h"
+#import "OMN2GISLunchWishMediator.h"
 #import "OMNSuncityLunchWishMediator.h"
+#import "OMNPaidLunchWishMediator.h"
 
 @implementation OMNLunchRestaurantMediator
 
@@ -35,10 +36,13 @@
 
 - (OMNWishMediator *)wishMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
 #if LUNCH_2GIS_SUNCITY
-  return [[OMNSuncityLunchPreorderMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+  return [[OMNSuncityLunchWishMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+#elif LUNCH_2GIS
+  return [[OMN2GISLunchWishMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
 #else
-  return [[OMNLunchWishMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+  return [[OMNPaidLunchWishMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
 #endif
+  
 }
 
 - (void)checkStartConditions {

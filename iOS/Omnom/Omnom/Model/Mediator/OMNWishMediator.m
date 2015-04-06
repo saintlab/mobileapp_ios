@@ -27,7 +27,12 @@
   return self;
 }
 
-- (void)processCreatedWish:(OMNWish *)wish {
+
+- (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+  [_restaurantMediator.visitor createWish:wishItems completionBlock:completionBlock wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
+}
+
+- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
   
   @weakify(self)
   OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:^{
@@ -37,13 +42,6 @@
     
   }];
   [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
-
-}
-
-- (void)createWish:(NSArray *)wishItems completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
-  
-  OMNVisitor *visitor = _restaurantMediator.visitor;
-  [visitor.restaurant createWishForTable:visitor.table products:wishItems completionBlock:completionBlock wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
   
 }
 

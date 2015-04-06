@@ -46,7 +46,7 @@ OMNTransactionPaymentVCDelegate>
 
   UIView *_tableFadeView;
   OMNRestaurantMediator *_restaurantMediator;
-  OMNVisitor *_visitor;
+  OMNTable *_table;
   
 }
 
@@ -62,7 +62,7 @@ OMNTransactionPaymentVCDelegate>
   if (self) {
 
     _restaurantMediator = restaurantMediator;
-    _visitor = restaurantMediator.visitor;
+    _table = restaurantMediator.table;
     
   }
   return self;
@@ -83,14 +83,14 @@ OMNTransactionPaymentVCDelegate>
   [_paymentView configureWithColor:decoration.background_color antogonistColor:decoration.antagonist_color];
   _paymentView.delegate = self;
   
-  OMNOrder *selectedOrder = _visitor.selectedOrder;
+  OMNOrder *selectedOrder = _table.selectedOrder;
   [[OMNAnalitics analitics] logBillView:selectedOrder];
 
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_CLOSE_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
 
   [self updateOrder];
   [OMNOrderAlertManager sharedManager].order = selectedOrder;
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(restaurantOrdersDidChange) name:OMNRestaurantOrdersDidChangeNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tableOrdersDidChange) name:OMNTableOrdersDidChangeNotification object:nil];
   
 }
 
@@ -163,7 +163,7 @@ OMNTransactionPaymentVCDelegate>
   
 }
 
-- (void)restaurantOrdersDidChange {
+- (void)tableOrdersDidChange {
   
   [self updateTitle];
   
@@ -196,13 +196,13 @@ OMNTransactionPaymentVCDelegate>
 
 - (void)updateOrder {
   
-  OMNOrder *order = _visitor.selectedOrder;
-  if (order) {
+  OMNOrder *selectedOrder = _table.selectedOrder;
+  if (selectedOrder) {
     
-    _paymentView.order = order;
-    _dataSource.order = order;
-    _dataSource.fadeNonSelectedItems = (kSplitTypeOrders == order.splitType);
-    self.tableView.orderActionView.order = order;
+    _paymentView.order = selectedOrder;
+    _dataSource.order = selectedOrder;
+    _dataSource.fadeNonSelectedItems = (kSplitTypeOrders == selectedOrder.splitType);
+    self.tableView.orderActionView.order = selectedOrder;
     [self.tableView reloadData];
     [self updateTitle];
 
@@ -213,9 +213,9 @@ OMNTransactionPaymentVCDelegate>
 - (void)updateTitle {
 
   self.navigationItem.titleView = nil;
-  if (_visitor.orders.count > 1) {
+  if (_table.orders.count > 1) {
     
-    NSUInteger index = _visitor.selectedOrderIndex;
+    NSUInteger index = _table.selectedOrderIndex;
     if (NSNotFound != index) {
       
       UIButton *button = [[OMNSelectOrderButton alloc] init];
@@ -275,7 +275,7 @@ OMNTransactionPaymentVCDelegate>
   [_scrollView addSubview:_tableFadeView];
   
   _dataSource = [[OMNOrderDataSource alloc] init];
-  _dataSource.order = _visitor.selectedOrder;
+  _dataSource.order = _table.selectedOrder;
   _tableView = [self orderTableViewWithDataSource:_dataSource];
   [_scrollContentView addSubview:_tableView];
 
@@ -302,7 +302,7 @@ OMNTransactionPaymentVCDelegate>
 
 - (void)swipe:(UISwipeGestureRecognizer *)swipeGR {
   
-  NSInteger index = _visitor.selectedOrderIndex;
+  NSInteger index = _table.selectedOrderIndex;
   if (NSNotFound == index) {
     return;
   }
@@ -314,7 +314,7 @@ OMNTransactionPaymentVCDelegate>
     
   }
   else if (UISwipeGestureRecognizerDirectionLeft == swipeGR.direction &&
-           index < _visitor.orders.count - 1) {
+           index < _table.orders.count - 1) {
     
     [self showOrderAtIndex:(index + 1) animationDirection:UISwipeGestureRecognizerDirectionLeft];
     
@@ -338,7 +338,7 @@ OMNTransactionPaymentVCDelegate>
   [self.view addSubview:oldPaymentView];
   _paymentView.alpha = 0.0f;
   
-  _visitor.selectedOrder = _visitor.orders[index];
+  _table.selectedOrder = _table.orders[index];
   [self updateOrder];
   
   [UIView animateWithDuration:0.3 delay:0.1 options:kNilOptions animations:^{
@@ -368,7 +368,7 @@ OMNTransactionPaymentVCDelegate>
 
 - (IBAction)payTap:(id)sender {
   
-  if (_visitor.selectedOrder.paymentValueIsTooHigh) {
+  if (_table.selectedOrder.paymentValueIsTooHigh) {
     
     @weakify(self)
     [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -395,8 +395,8 @@ OMNTransactionPaymentVCDelegate>
   [OMNOrderAlertManager sharedManager].didUpdateBlock = nil;
   
   OMNRestaurant *restaurant = _restaurantMediator.restaurant;
-  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForOrder:_visitor.selectedOrder];
-  OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithRestaurant:restaurant transaction:transaction];
+  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForOrder:_table.selectedOrder];
+  OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:_restaurantMediator.visitor transaction:transaction];
   transactionPaymentVC.delegate = self;
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:transactionPaymentVC];
   navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
@@ -435,21 +435,21 @@ OMNTransactionPaymentVCDelegate>
 
 - (void)setOrderEnteredAmount:(long long)enteredAmount splitType:(SplitType)splitType {
   
-  OMNOrder *order = _visitor.selectedOrder;
-  order.enteredAmount = enteredAmount;
-  order.splitType = splitType;
+  OMNOrder *selectedOrder = _table.selectedOrder;
+  selectedOrder.enteredAmount = enteredAmount;
+  selectedOrder.splitType = splitType;
   
   switch (splitType) {
     case kSplitTypeOrders: {
       
-      [order selectionDidFinish];
+      [selectedOrder selectionDidFinish];
       
     } break;
     case kSplitTypeNone:
     case kSplitTypeNumberOfGuests:
     case kSplitTypePercent: {
       
-      [order deselectAllItems];
+      [selectedOrder deselectAllItems];
       
     } break;
   }
@@ -469,7 +469,7 @@ OMNTransactionPaymentVCDelegate>
 
 - (void)calculatorVCDidCancel:(OMNCalculatorVC *)calculatorVC {
   
-  [_visitor.selectedOrder resetSelection];
+  [_table.selectedOrder resetSelection];
   [self.navigationController popToViewController:self animated:YES];
   
 }
@@ -527,7 +527,7 @@ OMNTransactionPaymentVCDelegate>
 
 - (void)orderTotalViewDidCancel:(OMNOrderActionView *)orderTotalView {
   
-  [self setOrderEnteredAmount:_visitor.selectedOrder.expectedValue splitType:kSplitTypeNone];
+  [self setOrderEnteredAmount:_table.selectedOrder.expectedValue splitType:kSplitTypeNone];
 
 }
 

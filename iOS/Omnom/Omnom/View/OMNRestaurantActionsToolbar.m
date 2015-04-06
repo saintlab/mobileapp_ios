@@ -46,7 +46,7 @@
     [self setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionAny];
     [self setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
     self.backgroundColor = [OMNStyler toolbarColor];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRestaurantActionButtons) name:OMNRestaurantOrdersDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRestaurantActionButtons) name:OMNTableOrdersDidChangeNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuProductDidChange:) name:OMNMenuProductDidChangeNotification object:nil];
     
   }
@@ -59,12 +59,13 @@
   _restaurantMediator = restaurantMediator;
   _hasPreorderedMenuItems = restaurantMediator.menu.hasPreorderedItems;
   @weakify(self)
-  _restaurantWaiterCallObserverId = [_restaurantMediator.visitor bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNVisitor *obj, NSDictionary *change) {
+  _restaurantWaiterCallObserverId = [_restaurantMediator.table bk_addObserverForKeyPath:NSStringFromSelector(@selector(waiterIsCalled)) options:(NSKeyValueObservingOptionNew) task:^(OMNTable *obj, NSDictionary *change) {
     
     @strongify(self)
     [self updateRestaurantActionButtons];
     
   }];
+  [self updateRestaurantActionButtons];
   
 }
 
@@ -92,7 +93,7 @@
     
     @strongify(self)
     [self setLoadingState];
-    [self.restaurantMediator waiterCall];
+    [self.restaurantMediator.table waiterCall];
     
   } forControlEvents:UIControlEventTouchUpInside];
   callWaiterButton.hidden = !settings.has_waiter_call;
@@ -100,14 +101,14 @@
   NSArray *bottomToolbarItems = nil;
   
   if (settings.has_waiter_call &&
-      _restaurantMediator.visitor.waiterIsCalled) {
+      _restaurantMediator.table.waiterIsCalled) {
     
     OMNToolbarButton *cancelWaiterButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"WAITER_CALL_CANCEL_BUTTON_TITLE", @"Отменить вызов")];
     [cancelWaiterButton bk_addEventHandler:^(id sender) {
       
       @strongify(self)
       [self setLoadingState];
-      [self.restaurantMediator waiterCallStop];
+      [self.restaurantMediator.table waiterCallStop];
       
     } forControlEvents:UIControlEventTouchUpInside];
     [cancelWaiterButton sizeToFit];

@@ -185,10 +185,6 @@ OMNPreorderConfirmCellDelegate>
   
 }
 
-- (void)didCreateWish:(OMNWish *)wish {
-  [_wishMediator processCreatedWish:wish];
-}
-
 - (void)closeTap {
   
   if (self.didFinishBlock) {
@@ -313,11 +309,11 @@ OMNPreorderConfirmCellDelegate>
   NSArray *wishItems = [_restaurantMediator.menu selectedWishItems];
   
   @weakify(self)
-  [_wishMediator createWish:wishItems completionBlock:^(OMNWish *wish) {
+  [_wishMediator createWish:wishItems completionBlock:^(OMNVisitor *visitor) {
     
     @strongify(self)
     [self stopLoading];
-    [self didCreateWish:wish];
+    [self didCreateWishForVisitor:visitor];
 
   } wrongIDsBlock:^(NSArray *wrongIDs) {
     
@@ -331,6 +327,10 @@ OMNPreorderConfirmCellDelegate>
 
   }];
   
+}
+
+- (void)didCreateWishForVisitor:(OMNVisitor *)visitor {
+  [_wishMediator processCreatedWishForVisitor:visitor];
 }
 
 #pragma mark - OMNPreorderActionCellDelegate

@@ -20,6 +20,7 @@
 + (UIColor *)toolbarColor;
 + (UIColor *)blueColor;
 + (UIColor *)redColor;
++ (UIColor *)greenColor;
 
 + (UIEdgeInsets)buttonEdgeInsets;
 - (OMNStyle *)styleForClass:(Class)class;

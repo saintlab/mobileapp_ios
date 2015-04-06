@@ -50,12 +50,13 @@
   
 }
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant transaction:(OMNAcquiringTransaction *)acquiringTransaction  {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor transaction:(OMNAcquiringTransaction *)acquiringTransaction {
   self = [super init];
   if (self) {
     
     _acquiringTransaction = acquiringTransaction;
-    self.bankCardMediator = [[restaurant paymentFactory] bankCardMediatorWithRootVC:self transaction:acquiringTransaction];
+    _visitor = visitor;
+    self.bankCardMediator = [[visitor.restaurant paymentFactory] bankCardMediatorWithRootVC:self transaction:acquiringTransaction];
     _bankCardsModel = [self.bankCardMediator bankCardsModel];
 
   }

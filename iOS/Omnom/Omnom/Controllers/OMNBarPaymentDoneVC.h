@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OMNBackgroundVC.h"
+#import "OMNPaymentDoneVC.h"
 #import "OMNWish.h"
 
-@interface OMNWishSuccessVC : OMNBackgroundVC
-
-@property (nonatomic, copy) dispatch_block_t didFinishBlock;
+@interface OMNBarPaymentDoneVC : OMNPaymentDoneVC
 
 - (instancetype)initWithWish:(OMNWish *)wish paymentOrdersURL:(NSURL *)paymentOrdersURL;
 

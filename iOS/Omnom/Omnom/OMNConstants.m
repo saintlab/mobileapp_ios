@@ -235,7 +235,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 #elif defined (LUNCH_2GIS)
   mobileConfiguration = @"lunch2gis";
 #elif defined (LUNCH_2GIS_SUNCITY)
-  mobileConfiguration = @"lunch2gis-suncity";
+  mobileConfiguration = @"lunch2gisSuncity";
 #elif defined (AD_HOC)
   mobileConfiguration = @"ad-hoc";
 #else

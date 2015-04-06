@@ -11,6 +11,7 @@
 #import "OMNRestaurantManager.h"
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
+#import "OMNDemoVisitor.h"
 
 @implementation OMNDemoRestaurantVC {
   
@@ -48,7 +49,7 @@
       
       [self finishLoading:^{
         
-        [self didFindRestaurant:[restaurants firstObject]];
+        [self didFindDemoRestaurant:[restaurants firstObject]];
         
       }];
 
@@ -78,9 +79,9 @@
   
 }
 
-- (void)didFindRestaurant:(OMNRestaurant *)restaurant {
+- (void)didFindDemoRestaurant:(OMNRestaurant *)demoRestaurant {
 
-  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithRestaurant:restaurant];
+  OMNRestaurantActionsVC *restaurantActionsVC = [[OMNRestaurantActionsVC alloc] initWithVisitor:[OMNDemoVisitor visitorWithRestaurant:demoRestaurant delivery:[OMNDelivery delivery]]];
   restaurantActionsVC.didCloseBlock = self.didCloseBlock;
   [self.navigationController pushViewController:restaurantActionsVC animated:YES];
   

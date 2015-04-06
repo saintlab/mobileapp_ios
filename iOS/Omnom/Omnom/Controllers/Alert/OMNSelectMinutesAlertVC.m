@@ -11,6 +11,7 @@
 #import "OMNConstants.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNUtils.h"
+#import "NSString+omn_date.h"
 
 @interface OMNSelectMinutesAlertVC ()
 <UIPickerViewDataSource,
@@ -64,7 +65,7 @@ UIPickerViewDelegate>
 
 - (void)configureViews {
   
-  _doneButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
+  _doneButton.titleLabel.font = FuturaOSFOmnomRegular(20.0f);
   [_doneButton addTarget:self action:@selector(doneTap) forControlEvents:UIControlEventTouchUpInside];
   [_doneButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
   [_doneButton setTitleColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
@@ -104,7 +105,7 @@ UIPickerViewDelegate>
     @"leftOffset" : [OMNStyler styler].leftOffset,
     };
   
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[label][minutesPicker]-[doneButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[label][minutesPicker][doneButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[minutesPicker]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[doneButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
@@ -122,30 +123,14 @@ UIPickerViewDelegate>
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
-  return 44.0f;
-}
-
-- (NSString *)textFromMinutes:(NSNumber *)minutes {
-  
-  NSString *text = nil;
-  NSInteger m = minutes.integerValue;
-  const NSInteger kMinutesInHour = 60;
-  if (m < kMinutesInHour) {
-    text = [NSString stringWithFormat:kOMN_PREORDER_IN_MINUTES_FORMAT, minutes];
-  }
-  else if (kMinutesInHour == m) {
-    text = kOMN_PREORDER_IN_HOUR_TEXT;
-  }
-  else {
-    text = [NSString stringWithFormat:kOMN_PREORDER_IN_HOURS_FORMAT, (double)m/kMinutesInHour];
-  }
-  return text;
+  return 35.0f;
 }
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
 
   UILabel *label = [[UILabel alloc] init];
-  label.attributedText = [[NSAttributedString alloc] initWithString:[self textFromMinutes:_minutes[row]] attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(25.0f) textColor:[UIColor blackColor] textAlignment:NSTextAlignmentCenter]];
+  NSInteger minutes = [_minutes[row] integerValue];
+  label.attributedText = [[NSAttributedString alloc] initWithString:[NSString omn_takeAfterIntervalString:minutes] attributes:[OMNUtils textAttributesWithFont:FuturaLSFOmnomLERegular(25.0f) textColor:[UIColor blackColor] textAlignment:NSTextAlignmentCenter]];
   return label;
   
 }

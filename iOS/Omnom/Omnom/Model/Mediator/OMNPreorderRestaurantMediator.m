@@ -8,7 +8,7 @@
 
 #import "OMNPreorderRestaurantMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
-#import "OMNPaidWishMediator.h"
+#import "OMNPreorderWishMediator.h"
 
 @implementation OMNPreorderRestaurantMediator
 
@@ -21,7 +21,7 @@
 }
 
 - (OMNWishMediator *)wishMediatorWithRootVC:(OMNMyOrderConfirmVC *)rootVC {
-  return [[OMNPaidWishMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
+  return [[OMNPreorderWishMediator alloc] initWithRestaurantMediator:self rootVC:rootVC];
 }
 
 - (UIView *)titleView {
@@ -32,5 +32,7 @@
   return titleButton;
   
 }
+
+
 
 @end

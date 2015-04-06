@@ -19,16 +19,15 @@
 @property (nonatomic, weak, readonly) OMNRestaurantActionsVC *restaurantActionsVC;
 @property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
 @property (nonatomic, strong, readonly) OMNVisitor *visitor;
+@property (nonatomic, strong, readonly) OMNTable *table;
 @property (nonatomic, strong) OMNMenu *menu;
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant rootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC;
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor rootViewController:(OMNRestaurantActionsVC *)restaurantActionsVC;
 
 - (long long)totalOrdersAmount;
 - (void)checkStartConditions;
 - (void)showUserProfile;
 - (void)showPreorders;
-- (void)waiterCall;
-- (void)waiterCallStop;
 - (void)showTableOrders;
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
 - (void)exitRestaurant;

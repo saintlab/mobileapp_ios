@@ -8,14 +8,16 @@
 
 #import "OMNBackgroundVC.h"
 #import "OMNR1VC.h"
-#import "OMNRestaurant.h"
+
+@class OMNVisitor;
+
 @interface OMNRestaurantActionsVC : OMNBackgroundVC
 
 @property (nonatomic, strong, readonly) OMNR1VC *r1VC;
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
 @property (nonatomic, copy) dispatch_block_t rescanTableBlock;
 
-- (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 - (void)showRestaurantAnimated:(BOOL)animated;
 
 @end

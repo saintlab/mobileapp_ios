@@ -14,13 +14,14 @@
 
 @interface OMNWishMediator : NSObject
 
+@property (nonatomic, strong) OMNWish *wish;
 @property (nonatomic, weak, readonly) OMNMyOrderConfirmVC *rootVC;
 @property (nonatomic, strong, readonly) OMNRestaurantMediator *restaurantMediator;
 
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator rootVC:(OMNMyOrderConfirmVC *)rootVC;
 
-- (void)createWish:(NSArray *)wishItems completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
-- (void)processCreatedWish:(OMNWish *)wish;
+- (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
+- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor;
 - (void)didFinishWish;
 
 - (NSString *)refreshOrdersTitle;

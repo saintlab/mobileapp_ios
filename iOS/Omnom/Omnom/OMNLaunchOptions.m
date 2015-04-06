@@ -24,15 +24,13 @@
     _customConfigName = @"config_prod";
     _applicationWasOpenedByBeacon = NO;
     
-#if LUNCH_2GIS
-
+#if OMN_TEST
+    NSLog(@"test");
+#elif LUNCH_2GIS
     _qr = @"qr-code-for-0-lunch2gis";
-
 #elif LUNCH_2GIS_SUNCITY
-    
     _customConfigName = @"config_staging";
     _qr = @"qr-code-for-0-lunch2gis-sun-city";
-    
 #elif DEBUG
 
 //    staging
@@ -59,6 +57,7 @@
 //    _customConfigName = @"config_laaaab";
 
 #endif
+    
   }
   return self;
 }

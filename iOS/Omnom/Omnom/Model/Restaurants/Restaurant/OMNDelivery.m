@@ -6,13 +6,17 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNRestaurantDelivery.h"
+#import "OMNDelivery.h"
 
-@implementation OMNRestaurantDelivery
+@implementation OMNDelivery
+
++ (instancetype)delivery {
+  return [[OMNDelivery alloc] init];
+}
 
 + (instancetype)deliveryWithAddress:(OMNRestaurantAddress *)address date:(NSString *)date {
   
-  OMNRestaurantDelivery *delivery = [[OMNRestaurantDelivery alloc] init];
+  OMNDelivery *delivery = [[OMNDelivery alloc] init];
   delivery.date = date;
   delivery.address = address;
   return delivery;
@@ -21,7 +25,7 @@
 
 + (instancetype)deliveryWithMinutes:(NSInteger)minutes {
   
-  OMNRestaurantDelivery *delivery = [[OMNRestaurantDelivery alloc] init];
+  OMNDelivery *delivery = [[OMNDelivery alloc] init];
   delivery.minutes = minutes;
   return delivery;
 
@@ -40,5 +44,6 @@
   return (self.address.jsonData) ?: (@"");
   
 }
+
 
 @end

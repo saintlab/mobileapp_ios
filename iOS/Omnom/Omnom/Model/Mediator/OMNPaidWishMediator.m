@@ -7,59 +7,23 @@
 //
 
 #import "OMNPaidWishMediator.h"
-#import "OMNSelectMinutesAlertVC.h"
 #import "OMNRestaurant+omn_payment.h"
-#import "OMNTransactionPaymentVC.h"
 #import "OMNNavigationController.h"
 #import "OMNNavigationControllerDelegate.h"
-#import "OMNWishSuccessVC.h"
+#import "OMNPaymentDoneVC.h"
 
-@interface OMNPaidWishMediator ()
-<OMNTransactionPaymentVCDelegate>
+@implementation OMNPaidWishMediator
 
-@end
-
-@implementation OMNPaidWishMediator {
-  
-  OMNWish *_wish;
-  
+- (NSString *)refreshOrdersTitle {
+  return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
-- (void)createWish:(NSArray *)wishItems completionBlock:(OMNWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
-
-  OMNSelectMinutesAlertVC *selectMinutesAlertVC = [[OMNSelectMinutesAlertVC alloc] init];
-  @weakify(self)
-  selectMinutesAlertVC.didCloseBlock = ^{
-    
-    @strongify(self)
-    [self.rootVC dismissViewControllerAnimated:YES completion:nil];
-    
-  };
+- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
   
-  OMNRestaurant *restaurant = self.restaurantMediator.visitor.restaurant;
-  selectMinutesAlertVC.didSelectMinutesBlock = ^(NSInteger minutes) {
-    
-    OMNRestaurant *deliveryRestaurant = [restaurant restaurantWithDelivery:[OMNRestaurantDelivery deliveryWithMinutes:minutes]];
-    [deliveryRestaurant createWishForTable:nil products:wishItems completionBlock:^(OMNWish *wish) {
-      
-      @strongify(self)
-      [self.rootVC dismissViewControllerAnimated:YES completion:nil];
-      completionBlock(wish);
-      
-    } wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
-    
-  };
-  [self.rootVC presentViewController:selectMinutesAlertVC animated:YES completion:nil];
-  
-}
-
-- (void)processCreatedWish:(OMNWish *)wish {
-  
-  _wish = wish;
-  
+  self.wish = visitor.wish;
   OMNRestaurant *restaurant = self.restaurantMediator.restaurant;
-  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForWish:wish];
-  OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithRestaurant:restaurant transaction:transaction];
+  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForWish:self.wish];
+  OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:visitor transaction:transaction];
   transactionPaymentVC.delegate = self;
   UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:transactionPaymentVC];
   navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
@@ -71,9 +35,9 @@
 
 - (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
   
-  [self.rootVC dismissViewControllerAnimated:YES completion:nil];
+  [transactionPaymentVC.presentingViewController dismissViewControllerAnimated:YES completion:nil];
   
-  OMNWishSuccessVC *wishSuccessVC = [[OMNWishSuccessVC alloc] initWithWish:_wish paymentOrdersURL:self.restaurantMediator.restaurant.orders_paid_url];
+  OMNPaymentDoneVC *wishSuccessVC = [[OMNPaymentDoneVC alloc] init];
   @weakify(self)
   wishSuccessVC.didFinishBlock = ^{
     
@@ -81,8 +45,9 @@
     [self didFinishWish];
     
   };
+  
   wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
-  [self.rootVC.navigationController pushViewController:wishSuccessVC animated:NO];
+  [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
   
 }
 
