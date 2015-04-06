@@ -40,7 +40,7 @@ describe(@"OMNVisitor", ^{
     id response = [@"decodeBeacons.json" omn_jsonObjectNamedForClass:self.class];
     NSArray *restaurants = [response[@"restaurants"] omn_restaurants];
     _restaurant = [restaurants firstObject];
-    _visitor = [[OMNVisitor alloc] initWithRestaurant:_restaurant delivery:[OMNDelivery delivery]];
+    _visitor = [OMNVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]];
     _restaurantMediator = [_visitor mediatorWithRootVC:nil];
     
   });
@@ -56,7 +56,7 @@ describe(@"OMNVisitor", ^{
   
   it(@"should check bar visitor", ^{
     
-    OMNVisitor *barVisitor = [[OMNBarVisitor alloc] initWithRestaurant:_restaurant delivery:[OMNDelivery delivery]];
+    OMNVisitor *barVisitor = [OMNBarVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]];
     OMNRestaurantMediator *barRestaurantMediator = [barVisitor mediatorWithRootVC:nil];
     [[barRestaurantMediator should] beKindOfClass:[OMNBarRestaurantMediator class]];
     
@@ -81,7 +81,7 @@ describe(@"OMNVisitor", ^{
   
   it(@"should check preorder visitor", ^{
     
-    OMNVisitor *preorderVisitor = [[OMNPreorderVisitor alloc] initWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithMinutes:0]];
+    OMNVisitor *preorderVisitor = [OMNPreorderVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithMinutes:0]];
     OMNRestaurantMediator *preorderRestaurantMediator = [preorderVisitor mediatorWithRootVC:nil];
     [[preorderRestaurantMediator should] beKindOfClass:[OMNPreorderRestaurantMediator class]];
     
@@ -100,7 +100,7 @@ describe(@"OMNVisitor", ^{
   
   it(@"should check lunch visitor", ^{
     
-    OMNVisitor *lunchVisitor = [[OMNLunchVisitor alloc] initWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithAddress:nil date:nil]];
+    OMNVisitor *lunchVisitor = [OMNLunchVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithAddress:nil date:nil]];
     OMNRestaurantMediator *lunchRestaurantMediator = [lunchVisitor mediatorWithRootVC:nil];
     [[lunchRestaurantMediator should] beKindOfClass:[OMNLunchRestaurantMediator class]];
     
@@ -109,7 +109,7 @@ describe(@"OMNVisitor", ^{
     [[lunchRestaurantMediator.titleView should] beNil];
     
     OMNWishMediator *lunchWishMediator = [lunchRestaurantMediator wishMediatorWithRootVC:nil];
-    [[lunchWishMediator should] beKindOfClass:[OMNLunchWishMediator class]];
+    [[lunchWishMediator should] beKindOfClass:[OMNPaidWishMediator class]];
     [[lunchWishMediator.restaurantMediator should] equal:lunchRestaurantMediator];
     
     [[lunchWishMediator.refreshOrdersTitle should] equal:kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT];
@@ -120,7 +120,7 @@ describe(@"OMNVisitor", ^{
   
   it(@"should check demo visitor", ^{
     
-    OMNVisitor *demoVisitor = [[OMNLunchVisitor alloc] initWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithAddress:nil date:nil]];
+    OMNVisitor *demoVisitor = [OMNDemoVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithAddress:nil date:nil]];
     OMNRestaurantMediator *demoRestaurantMediator = [demoVisitor mediatorWithRootVC:nil];
     [[demoRestaurantMediator should] beKindOfClass:[OMNDemoRestaurantMediator class]];
     

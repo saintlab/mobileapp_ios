@@ -29,7 +29,7 @@ describe(@"waiter call tests", ^{
     [OMNRestaurantManager decodeBeacons:@[demoBeacon] withCompletion:^(NSArray *restaurants) {
       
       OMNRestaurant *restaurant = [restaurants firstObject];
-      _visitor = [[OMNVisitor alloc] initWithRestaurant:restaurant];
+      _visitor = [OMNVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery delivery]];
       
     } failureBlock:^(OMNError *error) {
       
