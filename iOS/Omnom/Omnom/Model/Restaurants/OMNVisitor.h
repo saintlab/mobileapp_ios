@@ -34,6 +34,5 @@ typedef void(^OMNWrongIDsBlock)(NSArray *wrongIDs);
  *  @param wishItems     list of {"id":"", "quantity":"1", "modifiers":[{"id":"", "quantity":"1"}]} objects
  */
 - (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
-- (NSMutableDictionary *)wishParametersWithItems:(NSArray *)items;
 
 @end

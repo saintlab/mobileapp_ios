@@ -16,13 +16,4 @@
   return [[OMNPreorderRestaurantMediator alloc] initWithVisitor:self rootViewController:rootVC];
 }
 
-- (NSMutableDictionary *)wishParametersWithItems:(NSArray *)items {
-  
-  NSMutableDictionary *wishParameters = [super wishParametersWithItems:items];
-  wishParameters[@"type"] = @"pre_order";
-  wishParameters[@"take_away_interval"] = @(self.delivery.minutes);
-  return wishParameters;
-  
-}
-
 @end

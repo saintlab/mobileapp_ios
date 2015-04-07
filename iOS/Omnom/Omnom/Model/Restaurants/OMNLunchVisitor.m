@@ -14,17 +14,4 @@
   return [[OMNLunchRestaurantMediator alloc] initWithVisitor:self rootViewController:rootVC];
 }
 
-- (NSMutableDictionary *)wishParametersWithItems:(NSArray *)items {
-  
-  NSMutableDictionary *wishParameters = [super wishParametersWithItems:items];
-  wishParameters[@"type"] = @"lunch";
-  if (self.delivery.address) {
-    wishParameters[@"delivery_address"] = self.delivery.addressData;
-  }
-  if (self.delivery.date) {
-    wishParameters[@"delivery_date"] = self.delivery.date;
-  }
-  return wishParameters;
-}
-
 @end

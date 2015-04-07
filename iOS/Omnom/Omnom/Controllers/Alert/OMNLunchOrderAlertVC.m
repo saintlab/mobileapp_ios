@@ -55,7 +55,7 @@
 - (void)doneTap {
   
   if (self.didSelectVisitorBlock &&
-      _delivery.readyForDelivery) {
+      _delivery.readyForLunch) {
     
     self.didSelectVisitorBlock([OMNLunchVisitor visitorWithRestaurant:_restaurant delivery:_delivery]);
     
@@ -151,7 +151,7 @@
     
   }
   
-  _doneButton.enabled = _delivery.readyForDelivery;
+  _doneButton.enabled = _delivery.readyForLunch;
   
 }
 

@@ -8,7 +8,21 @@
 
 #import "OMNDelivery.h"
 
+@interface OMNDelivery ()
+
+@property (nonatomic, strong) NSString *type;
+
+@end
+
 @implementation OMNDelivery
+
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+    _type = @"restaurant";
+  }
+  return self;
+}
 
 + (instancetype)delivery {
   return [[OMNDelivery alloc] init];
@@ -19,6 +33,7 @@
   OMNDelivery *delivery = [[OMNDelivery alloc] init];
   delivery.date = date;
   delivery.address = address;
+  delivery.type = @"lunch";
   return delivery;
   
 }
@@ -27,23 +42,32 @@
   
   OMNDelivery *delivery = [[OMNDelivery alloc] init];
   delivery.minutes = minutes;
+  delivery.type = @"pre_order";
   return delivery;
 
 }
 
-- (BOOL)readyForDelivery {
+- (NSDictionary *)parameters {
   
-  return
-  (self.date != nil) &&
-  (self.address != nil);
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+  parameters[@"type"] = self.type;
+  if (self.address) {
+    parameters[@"delivery_address"] = self.addressData;
+  }
+  if (self.date) {
+    parameters[@"delivery_date"] = self.date;
+  }
+  parameters[@"take_away_interval"] = @(self.minutes);
+  return parameters;
   
+}
+
+- (BOOL)readyForLunch {
+  return (self.date != nil) && (self.address != nil);
 }
 
 - (NSDictionary *)addressData {
-  
   return (self.address.jsonData) ?: (@"");
-  
 }
-
 
 @end

@@ -20,6 +20,7 @@
 		93005C6F1AD27A6A00635521 /* OMNLunchPaymentDoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C6D1AD27A6A00635521 /* OMNLunchPaymentDoneVC.m */; };
 		93005C701AD27A6A00635521 /* OMNLunchPaymentDoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C6D1AD27A6A00635521 /* OMNLunchPaymentDoneVC.m */; };
 		93005C711AD27A6A00635521 /* OMNLunchPaymentDoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C6D1AD27A6A00635521 /* OMNLunchPaymentDoneVC.m */; };
+		93005C741AD3771100635521 /* OMNDeliverySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C721AD3771100635521 /* OMNDeliverySpec.m */; };
 		93040A4C1A2C36B700D87CBD /* user_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93040A4B1A2C36B700D87CBD /* user_stub.json */; };
 		930554E11934978400E6F4EC /* OMNAuthorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E01934978400E6F4EC /* OMNAuthorization.m */; };
 		930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E31934A1AC00E6F4EC /* OMNUser.m */; };
@@ -1377,6 +1378,7 @@
 		93005C671AD27A0D00635521 /* OMNPaidLunchWishMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPaidLunchWishMediator.m; sourceTree = "<group>"; };
 		93005C6C1AD27A6A00635521 /* OMNLunchPaymentDoneVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLunchPaymentDoneVC.h; sourceTree = "<group>"; };
 		93005C6D1AD27A6A00635521 /* OMNLunchPaymentDoneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLunchPaymentDoneVC.m; sourceTree = "<group>"; };
+		93005C721AD3771100635521 /* OMNDeliverySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDeliverySpec.m; sourceTree = "<group>"; };
 		93040A4B1A2C36B700D87CBD /* user_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_stub.json; sourceTree = "<group>"; };
 		930554DC1934914F00E6F4EC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		930554DF1934978400E6F4EC /* OMNAuthorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorization.h; sourceTree = "<group>"; };
@@ -2848,6 +2850,7 @@
 				93EDCC9419C2D296006BC364 /* OMNSocketTest.m */,
 				9325BA551A1E2456003557BD /* OMNOrderTests.m */,
 				93F15DF61ACEEEEC000C8129 /* OMNVisitorSpec.m */,
+				93005C721AD3771100635521 /* OMNDeliverySpec.m */,
 			);
 			path = OmnomTests;
 			sourceTree = "<group>";
@@ -5166,6 +5169,7 @@
 				9345AFCE199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
 				93B3689D19A4CD2D00B6E6CB /* OMNSlideUpTransition.m in Sources */,
 				935A1E2B1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */,
+				93005C741AD3771100635521 /* OMNDeliverySpec.m in Sources */,
 				93E58CAD1A245604008064F9 /* OMNCameraPermission.m in Sources */,
 				9394CC131ACD3B87008FB6CC /* OMNSelectMinutesAlertVC.m in Sources */,
 				93E58CBA1A246FFB008064F9 /* OMNPermissionHelpVC.m in Sources */,

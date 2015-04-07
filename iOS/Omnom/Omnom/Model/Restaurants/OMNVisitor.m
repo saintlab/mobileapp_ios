@@ -30,6 +30,9 @@
   self = [super init];
   if (self) {
     
+    NSAssert(delivery != nil, @"delivery should not be nil");
+    NSAssert(restaurant != nil, @"restaurant should not be nil");
+    
     _restaurant = restaurant;
     _delivery = delivery;
     
@@ -49,20 +52,14 @@
   return [[OMNRestaurantMediator alloc] initWithVisitor:self rootViewController:rootVC];
 }
 
-- (NSMutableDictionary *)wishParametersWithItems:(NSArray *)items {
-  
-  NSMutableDictionary *wishParameters = [NSMutableDictionary dictionary];
-  if (items) {
-    wishParameters[@"items"] = items;
-  }
-  wishParameters[@"type"] = @"restaurant";
-  return wishParameters;
-  
-}
-
 - (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
 
-  NSMutableDictionary *parameters = [self wishParametersWithItems:wishItems];
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+  if (wishItems) {
+    parameters[@"items"] = wishItems;
+  }
+  [parameters addEntriesFromDictionary:_delivery.parameters];
+
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.restaurant.id];
   [[OMNOperationManager sharedManager] POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
