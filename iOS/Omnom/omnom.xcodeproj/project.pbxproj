@@ -25,6 +25,11 @@
 		93005C7B1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */; };
 		93005C7C1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */; };
 		93005C7D1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */; };
+		93005CB21AD3C55B00635521 /* NSArray+omn_tableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005CB11AD3C55B00635521 /* NSArray+omn_tableHelper.m */; };
+		93005CB31AD3C55B00635521 /* NSArray+omn_tableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005CB11AD3C55B00635521 /* NSArray+omn_tableHelper.m */; };
+		93005CB41AD3C55B00635521 /* NSArray+omn_tableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005CB11AD3C55B00635521 /* NSArray+omn_tableHelper.m */; };
+		93005CB51AD3C55B00635521 /* NSArray+omn_tableHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005CB11AD3C55B00635521 /* NSArray+omn_tableHelper.m */; };
+		93005CB71AD3C59A00635521 /* NSArray+omn_tableHelperSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005CB61AD3C59A00635521 /* NSArray+omn_tableHelperSpec.m */; };
 		93040A4C1A2C36B700D87CBD /* user_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93040A4B1A2C36B700D87CBD /* user_stub.json */; };
 		930554E11934978400E6F4EC /* OMNAuthorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E01934978400E6F4EC /* OMNAuthorization.m */; };
 		930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E31934A1AC00E6F4EC /* OMNUser.m */; };
@@ -1385,6 +1390,9 @@
 		93005C721AD3771100635521 /* OMNDeliverySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDeliverySpec.m; sourceTree = "<group>"; };
 		93005C781AD37A0B00635521 /* OMNMyOrderConfirmModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMyOrderConfirmModel.h; sourceTree = "<group>"; };
 		93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMyOrderConfirmModel.m; sourceTree = "<group>"; };
+		93005CB01AD3C55B00635521 /* NSArray+omn_tableHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+omn_tableHelper.h"; sourceTree = "<group>"; };
+		93005CB11AD3C55B00635521 /* NSArray+omn_tableHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+omn_tableHelper.m"; sourceTree = "<group>"; };
+		93005CB61AD3C59A00635521 /* NSArray+omn_tableHelperSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+omn_tableHelperSpec.m"; sourceTree = "<group>"; };
 		93040A4B1A2C36B700D87CBD /* user_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_stub.json; sourceTree = "<group>"; };
 		930554DC1934914F00E6F4EC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		930554DF1934978400E6F4EC /* OMNAuthorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorization.h; sourceTree = "<group>"; };
@@ -2398,6 +2406,8 @@
 				935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */,
 				9394CC041ACD193F008FB6CC /* NSString+omn_date.h */,
 				9394CC051ACD193F008FB6CC /* NSString+omn_date.m */,
+				93005CB01AD3C55B00635521 /* NSArray+omn_tableHelper.h */,
+				93005CB11AD3C55B00635521 /* NSArray+omn_tableHelper.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -2866,6 +2876,7 @@
 				9325BA551A1E2456003557BD /* OMNOrderTests.m */,
 				93F15DF61ACEEEEC000C8129 /* OMNVisitorSpec.m */,
 				93005C721AD3771100635521 /* OMNDeliverySpec.m */,
+				93005CB61AD3C59A00635521 /* NSArray+omn_tableHelperSpec.m */,
 			);
 			path = OmnomTests;
 			sourceTree = "<group>";
@@ -4199,6 +4210,7 @@
 				930C4D5B1AB15E1B006CA608 /* OMNEditPercentControl.m in Sources */,
 				930C4D5C1AB15E1B006CA608 /* OMNEditAmountControl.m in Sources */,
 				930C4D5D1AB15E1B006CA608 /* NSDate+omn_custom.m in Sources */,
+				93005CB41AD3C55B00635521 /* NSArray+omn_tableHelper.m in Sources */,
 				930C4D5E1AB15E1B006CA608 /* OMNStubProductCell.m in Sources */,
 				930C4D5F1AB15E1B006CA608 /* OMNPushText.m in Sources */,
 				930C4D601AB15E1B006CA608 /* OMNOrderItemCell.m in Sources */,
@@ -4507,6 +4519,7 @@
 				930C8B471ACA7D9F00CE4E5A /* OMNEditPercentControl.m in Sources */,
 				930C8B481ACA7D9F00CE4E5A /* OMNEditAmountControl.m in Sources */,
 				930C8B491ACA7D9F00CE4E5A /* NSDate+omn_custom.m in Sources */,
+				93005CB51AD3C55B00635521 /* NSArray+omn_tableHelper.m in Sources */,
 				930C8B4A1ACA7D9F00CE4E5A /* OMNStubProductCell.m in Sources */,
 				930C8B4B1ACA7D9F00CE4E5A /* OMNPushText.m in Sources */,
 				930C8B4C1ACA7D9F00CE4E5A /* OMNOrderItemCell.m in Sources */,
@@ -4815,6 +4828,7 @@
 				93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */,
 				9319FD62192F33B90053F3A4 /* OMNEditAmountControl.m in Sources */,
 				933A9E9A1A4B23ED001C0909 /* NSDate+omn_custom.m in Sources */,
+				93005CB21AD3C55B00635521 /* NSArray+omn_tableHelper.m in Sources */,
 				932118161962DA2800183729 /* OMNStubProductCell.m in Sources */,
 				9389456419B0622900C37C82 /* OMNPushText.m in Sources */,
 				9307C5731937022800408519 /* OMNOrderItemCell.m in Sources */,
@@ -5149,6 +5163,7 @@
 				936203291AA3175C00247A4B /* OMNProductToMenuTransition.m in Sources */,
 				9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */,
 				930C8B351ACA6D8300CE4E5A /* OMNDateSelectionVC.m in Sources */,
+				93005CB71AD3C59A00635521 /* NSArray+omn_tableHelperSpec.m in Sources */,
 				93F15DF71ACEEEEC000C8129 /* OMNVisitorSpec.m in Sources */,
 				93C1268C1A7120980019655A /* OMNMenuCategoryDelimiterCell.m in Sources */,
 				93D1177E1A2F0401000131C4 /* OMNUserInfoHeaderView.m in Sources */,
@@ -5157,6 +5172,7 @@
 				93B3689319A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */,
 				93B3689719A3376100B6E6CB /* OMNResetPasswordVC.m in Sources */,
 				93B9048E19654DE1007D21C4 /* OMNRatingVC.m in Sources */,
+				93005CB31AD3C55B00635521 /* NSArray+omn_tableHelper.m in Sources */,
 				93535F0F19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				9391F65F1A5E3E4800594CD5 /* UINavigationBar+omn_custom.m in Sources */,
 				932F5DCF1A7256D400AF86AD /* OMNMenuProductDetails.m in Sources */,
