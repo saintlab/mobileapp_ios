@@ -25,6 +25,8 @@
 - (void)didFinishWish;
 
 - (NSString *)refreshOrdersTitle;
+- (NSString *)wishHintText;
+
 - (UIButton *)bottomButton;
 
 @end

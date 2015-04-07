@@ -15,6 +15,7 @@
 @property (nonatomic, strong, readonly) UIButton *refreshButton;
 @property (nonatomic, strong, readonly) UIButton *clearButton;
 @property (nonatomic, strong, readonly) UILabel *refreshLabel;
+@property (nonatomic, strong, readonly) UILabel *hintLabel;
 
 @property (nonatomic, strong) OMNPreorderActionCellItem *item;
 

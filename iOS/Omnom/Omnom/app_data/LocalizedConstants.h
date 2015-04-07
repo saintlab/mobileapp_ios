@@ -93,9 +93,13 @@
 #define kOMN_PREORDER_IN_HOUR_TEXT NSLocalizedString(@"PREORDER_IN_HOUR_TEXT", @"Через час")
 #define kOMN_PREORDER_IN_HOURS_FORMAT NSLocalizedString(@"PREORDER_IN_HOURS_FORMAT %.f", @"Через {hours} часа")
 #define kOMN_PREORDER_DONE_FORMAT NSLocalizedString(@"PREORDER_DONE_FORMAT %@ %@", @"Заказ будет ждать вас сегодня %@\nпо адресу\n%@.")
+#define kOMN_PREORDER_CLEAR_BUTTON_TITLE NSLocalizedString(@"PREORDER_CLEAR_BUTTON_TITLE", @"Очистить")
+#define kOMN_PREORDER_ORDER_BUTTON_TITLE NSLocalizedString(@"PREORDER_ORDER_BUTTON_TITLE", @"Заказать")
+#define kOMN_PREORDER_REFRESH_LABEL_TITLE NSLocalizedString(@"PREORDER_REFRESH_LABEL_TITLE", @"Блюда на вашем столе")
 
 //lunch
 #define kOMN_LUNCH_DONE_FORMAT NSLocalizedString(@"LUNCH_DONE_FORMAT %@ %@", @"Заказ будет доставлен по адресу\n{address}\nв {date}\nориентировачно в 13:00.")
+#define kOMN_LUNCH_DELIVERY_HINT_FORMAT NSLocalizedString(@"LUNCH_DELIVERY_HINT_FORMAT %@ %@", @"Доставка на {date} по адресу:\n{address}")
 
 //title
 #define kOMN_RESTAURANT_ADDRESS_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_ADDRESS_SELECTION_TITLE", @"Куда")

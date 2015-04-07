@@ -8,6 +8,7 @@
 
 #import "OMNPaidLunchWishMediator.h"
 #import "OMNLunchPaymentDoneVC.h"
+#import "NSString+omn_date.h"
 
 @implementation OMNPaidLunchWishMediator
 
@@ -30,6 +31,13 @@
 
 - (UIButton *)bottomButton {
   return nil;
+}
+
+- (NSString *)wishHintText {
+  
+  OMNDelivery *delivery = self.restaurantMediator.visitor.delivery;
+  return [NSString stringWithFormat:kOMN_LUNCH_DELIVERY_HINT_FORMAT, [delivery.date omn_localizedDate], delivery.address.text];
+  
 }
 
 @end

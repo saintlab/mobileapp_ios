@@ -66,6 +66,19 @@
   
 }
 
+- (NSString *)omn_localizedDate {
+  
+  NSDate *date = [self omn_dateFromddMMyyyy];
+  static NSDateFormatter *dateFormatter = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateFormat = @"d MMMM";
+  });
+  return [dateFormatter stringFromDate:date];
+  
+}
+
 - (BOOL)omn_isTomorrow {
 
   NSDate *date = [[self omn_dateFormatter] dateFromString:self];

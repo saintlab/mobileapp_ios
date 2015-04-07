@@ -63,7 +63,7 @@
   [self removeObservers];
   _tip = tip;
   @weakify(self)
-  [_tip bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNTip *t, NSDictionary *change) {
+  _selectedTipObserverID = [_tip bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNTip *t, NSDictionary *change) {
     
     @strongify(self)
     self.selected = t.selected;

@@ -65,15 +65,14 @@
   self.selectionStyle = UITableViewCellSelectionStyleNone;
   
   UIColor *highlitedColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
+  
   _clearButton = [UIButton omn_autolayoutView];
   _clearButton.contentEdgeInsets = UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f);
   [_clearButton setTitleColor:[colorWithHexString(@"000000") colorWithAlphaComponent:0.4f] forState:UIControlStateNormal];
   [_clearButton setTitleColor:highlitedColor forState:UIControlStateHighlighted];
   _clearButton.titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
   [_clearButton addTarget:self action:@selector(clearTap) forControlEvents:UIControlEventTouchUpInside];
-  
-  UIImage *image = [[UIImage imageNamed:@"button_clear_wish"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)];
-  [_clearButton setBackgroundImage:image forState:UIControlStateNormal];
+  [_clearButton setBackgroundImage:[[UIImage imageNamed:@"button_clear_wish"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_clearButton setBackgroundImage:[[[UIImage imageNamed:@"button_clear_wish"] omn_tintWithColor:highlitedColor] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateHighlighted];
   [self.contentView addSubview:_clearButton];
   
@@ -98,8 +97,15 @@
   [_refreshButton omn_setImage:[UIImage imageNamed:@"refresh_icon"] withColor:[UIColor colorWithWhite:0.0f alpha:0.6f]];
   [refreshView addSubview:_refreshButton];
   
+  _hintLabel = [UILabel omn_autolayoutView];
+  _hintLabel.numberOfLines = 0;
+  _hintLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
+  _hintLabel.font = FuturaLSFOmnomLERegular(20.0f);
+  [self.contentView addSubview:_hintLabel];
+  
   NSDictionary *views =
   @{
+    @"hintLabel" : _hintLabel,
     @"clearButton" : _clearButton,
     @"actionButton" : _actionButton,
     @"refreshLabel" : _refreshLabel,
@@ -117,15 +123,24 @@
   [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[refreshLabel]-(>=0)-[refreshButton]" options:kNilOptions metrics:metrics views:views]];
   [refreshView addConstraint:[NSLayoutConstraint constraintWithItem:_refreshButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:refreshView attribute:NSLayoutAttributeRight multiplier:1.0f constant:-30.0f]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[refreshView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[clearButton]-(>=0)-[actionButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(leftOffset)-[clearButton]" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(leftOffset)-[actionButton]" options:kNilOptions metrics:metrics views:views]];
-  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[refreshView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(leftOffset)-[hintLabel]-(leftOffset)-[clearButton]-(leftOffset)-[refreshView]-(leftOffset@999)-|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_actionButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_clearButton attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_clearButton attribute:NSLayoutAttributeHeight multiplier:1.0f constant:0.0f]];
+  
+  [_clearButton setTitle:kOMN_PREORDER_CLEAR_BUTTON_TITLE forState:UIControlStateNormal];
+  [_actionButton setTitle:kOMN_PREORDER_ORDER_BUTTON_TITLE forState:UIControlStateNormal];
+  _refreshLabel.text = kOMN_PREORDER_REFRESH_LABEL_TITLE;
+  
+}
 
-  [_clearButton setTitle:NSLocalizedString(@"PREORDER_CLEAR_BUTTON_TITLE", @"Очистить") forState:UIControlStateNormal];
-  [_actionButton setTitle:NSLocalizedString(@"PREORDER_ORDER_BUTTON_TITLE", @"Заказать") forState:UIControlStateNormal];
-  _refreshLabel.text = NSLocalizedString(@"PREORDER_REFRESH_LABEL_TITLE", @"Блюда на вашем столе");
+- (void)layoutSubviews {
+  
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  _hintLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
+  [super layoutSubviews];
   
 }
 
@@ -134,12 +149,13 @@
   [self removeEnabledObserverID];
   _item = item;
   @weakify(self)
-  [_item bk_addObserverForKeyPath:NSStringFromSelector(@selector(enabled)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+  _enabledObserverID = [_item bk_addObserverForKeyPath:NSStringFromSelector(@selector(enabled)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
     @strongify(self)
     [self updateEnabledState];
     
   }];
+  _hintLabel.text = item.hintText;
   _refreshLabel.text = item.actionText;
   
 }

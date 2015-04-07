@@ -62,6 +62,8 @@ OMNPreorderConfirmCellDelegate>
 
   [self omn_setup];
   
+  [_model configureTableView:_tableView];
+  
   @weakify(self)
   _model.reloadSectionsBlock = ^(NSIndexSet *indexes, BOOL animated) {
     
@@ -172,7 +174,6 @@ OMNPreorderConfirmCellDelegate>
   _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   _tableView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_tableView];
-  [_model configureTableView:_tableView];
   
   NSDictionary *views =
   @{

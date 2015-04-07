@@ -16,6 +16,7 @@
 <OMNCellItemProtocol>
 
 @property (nonatomic, copy) NSString *actionText;
+@property (nonatomic, copy) NSString *hintText;
 @property (nonatomic, assign) BOOL enabled;
 @property (nonatomic, weak) id<OMNPreorderActionCellDelegate> delegate;
 

@@ -57,6 +57,10 @@
   return kOMN_MY_TABLE_ORDERS_LABEL_TEXT;
 }
 
+- (NSString *)wishHintText {
+  return nil;
+}
+
 - (UIButton *)bottomButton {
   
   UIButton *bottomButton = nil;

@@ -43,8 +43,7 @@
   _orderDoneLabel1.font = FuturaLSFOmnomLERegular(20.0f);
   _orderDoneLabel1.textColor = titleColor;
   
-  df.dateFormat = @"d MMMM";
-  NSString *date = [NSString stringWithFormat:@"%@ %@", [self.visitor.delivery.date omn_localizedInWeekday], [df stringFromDate:[self.visitor.delivery.date omn_dateFromddMMyyyy]]];
+  NSString *date = [NSString stringWithFormat:@"%@ %@", [self.visitor.delivery.date omn_localizedInWeekday], [self.visitor.delivery.date omn_localizedDate]];
   _textLabel.text = [NSString stringWithFormat:kOMN_LUNCH_DONE_FORMAT, self.visitor.restaurant.address.text, date];
   _textLabel.font = FuturaLSFOmnomLERegular(17.0f);
   _textLabel.textColor = colorWithHexString(@"515753");

@@ -82,6 +82,7 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     }
     
 #warning TODO
+//    _entrance_mode = kRestaurantModeNone;
     _delivery_dates =
     @[
       @"1/04/2015",

@@ -8,6 +8,7 @@
 
 #import "OMNLunchVisitor.h"
 #import "OMNLunchRestaurantMediator.h"
+
 @implementation OMNLunchVisitor
 
 - (OMNRestaurantMediator *)mediatorWithRootVC:(OMNRestaurantActionsVC *)rootVC {

@@ -17,11 +17,6 @@
 
 @implementation OMNVisitor
 
-- (void)dealloc
-{
-  
-}
-
 + (instancetype)visitorWithRestaurant:(OMNRestaurant *)restaurant delivery:(OMNDelivery *)delivery {
   return [[[self class] alloc] initWithRestaurant:restaurant delivery:delivery];
 }

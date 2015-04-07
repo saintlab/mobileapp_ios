@@ -50,13 +50,15 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
     _preorderDelegate = preorderDelegate;
     _totalCellItem = [[OMNPreorderTotalCellItem alloc] init];
     _wishMediator = wishMediator;
-    _preorderActionCellItem = [[OMNPreorderActionCellItem alloc] init];
-    _preorderActionCellItem.actionText = [_wishMediator refreshOrdersTitle];
-    _preorderActionCellItem.delegate = actionDelegate;
 
     _menu = _wishMediator.restaurantMediator.menu;
     _visitor = _wishMediator.restaurantMediator.visitor;
     
+    _preorderActionCellItem = [[OMNPreorderActionCellItem alloc] init];
+    _preorderActionCellItem.actionText = [_wishMediator refreshOrdersTitle];
+    _preorderActionCellItem.hintText = _wishMediator.wishHintText;
+    _preorderActionCellItem.delegate = actionDelegate;
+
   }
   return self;
 }

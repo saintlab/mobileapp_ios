@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "OMNLunchWishMediator.h"
 
 @interface OMNSuncityLunchWishMediator : OMNLunchWishMediator

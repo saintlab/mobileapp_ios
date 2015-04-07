@@ -125,7 +125,7 @@
   [self removeItemSelectedOberver];
   _menuCategorySectionItem = menuCategorySectionItem;
   @weakify(self)
-  [_menuCategorySectionItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(entered)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuCategorySectionItem *obj, NSDictionary *change) {
+  _itemSelectedOberverId = [_menuCategorySectionItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(entered)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuCategorySectionItem *obj, NSDictionary *change) {
     
     @strongify(self)
     [self setSelected:obj.entered animated:YES];
