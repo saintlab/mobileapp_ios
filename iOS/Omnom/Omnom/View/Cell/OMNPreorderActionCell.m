@@ -49,21 +49,15 @@
 }
 
 - (void)orderTap {
-  
   [_item.delegate preorderActionCellDidOrder:self];
-  
 }
 
 - (void)clearTap {
-  
   [_item.delegate preorderActionCellDidClear:self];
-  
 }
 
 - (void)refreshTap {
-  
   [_item.delegate preorderActionCellDidRefresh:self];
-  
 }
 
 - (void)omn_setup {

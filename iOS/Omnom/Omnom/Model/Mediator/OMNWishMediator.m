@@ -48,7 +48,7 @@
 - (void)didFinishWish {
   
   [_restaurantMediator.restaurantActionsVC showRestaurantAnimated:NO];
-  [_restaurantMediator.menu resetSelection];
+  [_restaurantMediator.menu removePreorderedItems];
   self.rootVC.didFinishBlock();
   
 }

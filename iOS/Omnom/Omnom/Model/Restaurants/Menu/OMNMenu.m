@@ -44,7 +44,7 @@ NSString * const OMNMenuDidResetNotification = @"OMNMenuDidResetNotofocation";
   return self;
 }
 
-- (void)resetSelection {
+- (void)removePreorderedItems {
   
   [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
     

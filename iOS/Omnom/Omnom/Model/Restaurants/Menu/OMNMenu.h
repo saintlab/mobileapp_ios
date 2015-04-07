@@ -19,7 +19,7 @@ extern NSString * const OMNMenuDidResetNotification;
 @property (nonatomic, strong) NSDictionary *modifiers;
 
 - (instancetype)initWithJsonData:(id)data;
-- (void)resetSelection;
+- (void)removePreorderedItems;
 - (void)deselectItems:(NSArray *)itemsIDs;
 - (long long)total;
 - (BOOL)hasPreorderedItems;

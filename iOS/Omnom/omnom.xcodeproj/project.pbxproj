@@ -21,6 +21,10 @@
 		93005C701AD27A6A00635521 /* OMNLunchPaymentDoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C6D1AD27A6A00635521 /* OMNLunchPaymentDoneVC.m */; };
 		93005C711AD27A6A00635521 /* OMNLunchPaymentDoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C6D1AD27A6A00635521 /* OMNLunchPaymentDoneVC.m */; };
 		93005C741AD3771100635521 /* OMNDeliverySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C721AD3771100635521 /* OMNDeliverySpec.m */; };
+		93005C7A1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */; };
+		93005C7B1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */; };
+		93005C7C1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */; };
+		93005C7D1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */; };
 		93040A4C1A2C36B700D87CBD /* user_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93040A4B1A2C36B700D87CBD /* user_stub.json */; };
 		930554E11934978400E6F4EC /* OMNAuthorization.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E01934978400E6F4EC /* OMNAuthorization.m */; };
 		930554E41934A1AC00E6F4EC /* OMNUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 930554E31934A1AC00E6F4EC /* OMNUser.m */; };
@@ -1379,6 +1383,8 @@
 		93005C6C1AD27A6A00635521 /* OMNLunchPaymentDoneVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLunchPaymentDoneVC.h; sourceTree = "<group>"; };
 		93005C6D1AD27A6A00635521 /* OMNLunchPaymentDoneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLunchPaymentDoneVC.m; sourceTree = "<group>"; };
 		93005C721AD3771100635521 /* OMNDeliverySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDeliverySpec.m; sourceTree = "<group>"; };
+		93005C781AD37A0B00635521 /* OMNMyOrderConfirmModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMyOrderConfirmModel.h; sourceTree = "<group>"; };
+		93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMyOrderConfirmModel.m; sourceTree = "<group>"; };
 		93040A4B1A2C36B700D87CBD /* user_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_stub.json; sourceTree = "<group>"; };
 		930554DC1934914F00E6F4EC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		930554DF1934978400E6F4EC /* OMNAuthorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorization.h; sourceTree = "<group>"; };
@@ -2121,6 +2127,15 @@
 				2883D67E3218C0821BF831A0 /* Pods-omnomTests.ad-hoc.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		93005C771AD379FA00635521 /* Preorder */ = {
+			isa = PBXGroup;
+			children = (
+				93005C781AD37A0B00635521 /* OMNMyOrderConfirmModel.h */,
+				93005C791AD37A0B00635521 /* OMNMyOrderConfirmModel.m */,
+			);
+			name = Preorder;
 			sourceTree = "<group>";
 		};
 		930554D619347BFA00E6F4EC /* SearchBeacon */ = {
@@ -2968,6 +2983,7 @@
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				93005C771AD379FA00635521 /* Preorder */,
 				937CDC931AA6F74E000856AB /* Acquiring */,
 				93CE47CC1A7903F6002D293B /* Wish */,
 				935FF1611A6D3EB3004B69A6 /* Menu */,
@@ -4189,6 +4205,7 @@
 				930C4D611AB15E1B006CA608 /* OMNVersionUserInfoItem.m in Sources */,
 				930C4D621AB15E1B006CA608 /* NSString+omn_uuid.m in Sources */,
 				930C4D631AB15E1B006CA608 /* OMNMailAcquiringTransaction.m in Sources */,
+				93005C7C1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */,
 				930C8B361ACA6D8300CE4E5A /* OMNDateSelectionVC.m in Sources */,
 				930C4D641AB15E1B006CA608 /* OMNOrderPaid.m in Sources */,
 				930C4D651AB15E1B006CA608 /* OMNOrderAlertManager.m in Sources */,
@@ -4496,6 +4513,7 @@
 				930C8B4D1ACA7D9F00CE4E5A /* OMNVersionUserInfoItem.m in Sources */,
 				930C8B4E1ACA7D9F00CE4E5A /* NSString+omn_uuid.m in Sources */,
 				930C8B4F1ACA7D9F00CE4E5A /* OMNMailAcquiringTransaction.m in Sources */,
+				93005C7D1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */,
 				930C8B501ACA7D9F00CE4E5A /* OMNDateSelectionVC.m in Sources */,
 				930C8B511ACA7D9F00CE4E5A /* OMNOrderPaid.m in Sources */,
 				930C8B521ACA7D9F00CE4E5A /* OMNOrderAlertManager.m in Sources */,
@@ -4803,6 +4821,7 @@
 				93D117851A2F1ABF000131C4 /* OMNVersionUserInfoItem.m in Sources */,
 				933A9EBA1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */,
 				937CDC9A1AA7041A000856AB /* OMNMailAcquiringTransaction.m in Sources */,
+				93005C7A1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */,
 				930C8B341ACA6D8300CE4E5A /* OMNDateSelectionVC.m in Sources */,
 				934FC72E19D054F8008AC4B0 /* OMNOrderPaid.m in Sources */,
 				93F2AEFA1A6F7A8200CDF3D9 /* OMNOrderAlertManager.m in Sources */,
@@ -5277,6 +5296,7 @@
 				93EDCC9519C2D296006BC364 /* OMNSocketTest.m in Sources */,
 				93D1041A1A59856A00BC2E12 /* OMNScanTableQRCodeVC.m in Sources */,
 				93F15DF11ACEE0BC000C8129 /* OMNVisitorFactory.m in Sources */,
+				93005C7B1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */,
 				93BCD74D1AAF159000725B12 /* OMNBarPaymentDoneVC.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				933A9EAF1A4C0915001C0909 /* OMNRestaurantDetailsView.m in Sources */,
