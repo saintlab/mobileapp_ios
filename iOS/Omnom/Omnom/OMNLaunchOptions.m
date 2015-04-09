@@ -40,7 +40,7 @@
 
 //    prod
 //    _qr = @"qr-code-for-4-ruby-bar-nsk-at-lenina-9"; //rubi
-//    _qr = @"qr-code-for-0-harats-nsk";
+//    _qr = @"qr-code-for-0-harats-tomsk";
 //    _qr = @"qr-code-for-0-lunch2gis";
 //    _qr = @"http://omnom.menu/qr-hash-for-table-5-at-saintlab-rkeeper-v6";
 //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";

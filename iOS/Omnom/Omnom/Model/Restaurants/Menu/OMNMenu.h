@@ -20,7 +20,7 @@ extern NSString * const OMNMenuDidResetNotification;
 
 - (instancetype)initWithJsonData:(id)data;
 - (void)removePreorderedItems;
-- (void)deselectItems:(NSArray *)itemsIDs;
+- (void)deselectItemsWithIDs:(NSArray *)itemsIDs;
 - (long long)total;
 - (BOOL)hasPreorderedItems;
 

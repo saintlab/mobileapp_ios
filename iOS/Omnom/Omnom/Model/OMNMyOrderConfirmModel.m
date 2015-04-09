@@ -187,20 +187,23 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   
 }
 
-- (void)didFailCreateWithWithProductIDs:(NSArray *)productIDs withCompletion:(OMNVisitorWishBlock)completionBlock {
+- (void)didFailCreateWithWithProductIDs:(NSArray *)products withCompletion:(OMNVisitorWishBlock)completionBlock {
   
-  NSMutableArray *productList = [NSMutableArray arrayWithCapacity:productIDs.count];
+  NSMutableArray *forbiddenProductNames = [NSMutableArray arrayWithCapacity:products.count];
+  NSMutableArray *forbiddenProductIDs = [NSMutableArray arrayWithCapacity:products.count];
   
-  [productIDs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+  [products enumerateObjectsUsingBlock:^(id product, NSUInteger idx, BOOL *stop) {
     
-    OMNMenuProduct *menuProduct = _menu.products[obj];
+    id productID = product[@"id"];
+    [forbiddenProductIDs addObject:productID];
+    OMNMenuProduct *menuProduct = _menu.products[productID];
     if (menuProduct.name.length) {
-      [productList addObject:menuProduct.name];
+      [forbiddenProductNames addObject:menuProduct.name];
     }
     
   }];
   
-  NSString *subtitle = [NSString stringWithFormat:kOMN_WISH_CREATE_ERROR_SUBTITLE, [productList componentsJoinedByString:@"\n"]];
+  NSString *subtitle = [NSString stringWithFormat:kOMN_WISH_CREATE_ERROR_SUBTITLE, [forbiddenProductNames componentsJoinedByString:@"\n"]];
   @weakify(self)
   [UIAlertView bk_showAlertViewWithTitle:kOMN_WISH_CREATE_ERROR_TITLE message:subtitle cancelButtonTitle:NSLocalizedString(@"Отменить", @"Отменить") otherButtonTitles:@[kOMN_OK_BUTTON_TITLE] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
     
@@ -214,7 +217,7 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
     else {
       
       @strongify(self)
-      [self deselectProductsAndReload:productIDs withCompletion:completionBlock];
+      [self deselectProductsAndReload:forbiddenProductIDs withCompletion:completionBlock];
       
     }
     
@@ -222,9 +225,9 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   
 }
 
-- (void)deselectProductsAndReload:(NSArray *)productIDs withCompletion:(OMNVisitorWishBlock)completionBlock {
-  
-  [_menu deselectItems:productIDs];
+- (void)deselectProductsAndReload:(NSArray *)forbiddenProductIDs withCompletion:(OMNVisitorWishBlock)completionBlock {
+
+  [_menu deselectItemsWithIDs:forbiddenProductIDs];
   [self updatePreorderedProductsAnimated:NO];
   [self preorderItemsWithCompletion:completionBlock];
   

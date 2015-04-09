@@ -55,7 +55,7 @@ NSString * const OMNMenuDidResetNotification = @"OMNMenuDidResetNotofocation";
   
 }
 
-- (void)deselectItems:(NSArray *)itemsIDs {
+- (void)deselectItemsWithIDs:(NSArray *)itemsIDs {
   
   [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
     

@@ -63,10 +63,10 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    //    Формат - статус код 409, массив skip_id:[]
-    if (409 == error.code) {
+    //    Формат - статус код 409, массив {"forbidden":[{"id":"-1"}]}
+    if (409 == operation.response.statusCode) {
       
-      wrongIDsBlock(operation.responseObject[@"skip_id"]);
+      wrongIDsBlock(operation.responseObject[@"forbidden"]);
       
     }
     else {
