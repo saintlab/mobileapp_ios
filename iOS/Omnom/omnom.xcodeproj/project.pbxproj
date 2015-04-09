@@ -2362,6 +2362,8 @@
 		9319FDDF192F365B0053F3A4 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				93005CB01AD3C55B00635521 /* NSArray+omn_tableHelper.h */,
+				93005CB11AD3C55B00635521 /* NSArray+omn_tableHelper.m */,
 				93175DBE19C2DD2D005EE4C6 /* UIImage+ImageEffects.h */,
 				93175DBF19C2DD2D005EE4C6 /* UIImage+ImageEffects.m */,
 				9319FDE0192F365B0053F3A4 /* NSString+jquery.h */,
@@ -2406,8 +2408,6 @@
 				935A1E381A8238B700704086 /* NSData+omn_deviceToken.m */,
 				9394CC041ACD193F008FB6CC /* NSString+omn_date.h */,
 				9394CC051ACD193F008FB6CC /* NSString+omn_date.m */,
-				93005CB01AD3C55B00635521 /* NSArray+omn_tableHelper.h */,
-				93005CB11AD3C55B00635521 /* NSArray+omn_tableHelper.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -5927,7 +5927,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = omnom;
-				PROVISIONING_PROFILE = "e1cfc3c9-1c70-4d06-8d11-9041d4ca849b";
+				PROVISIONING_PROFILE = "8b5a7958-2c23-4850-b03b-38c748ac8284";
 				REZ_SEARCH_PATHS = "$(inherited)";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

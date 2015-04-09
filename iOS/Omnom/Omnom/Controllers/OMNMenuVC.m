@@ -25,14 +25,15 @@
 <OMNMenuProductWithRecommedtationsCellDelegate,
 OMNMenuCategoryHeaderViewDelegate>
 
+@property (nonatomic, strong, readonly) OMNMenuCategoriesModel *model;
+
 @end
 
 @implementation OMNMenuVC {
   
-  OMNMenuCategoriesModel *_model;
   OMNRestaurantMediator *_restaurantMediator;
   OMNMenuCategory *_initiallySelectedCategory;
-  __weak OMNMenuProductWithRecommendationsCellItem *_selectedItem;
+  __weak OMNMenuProductWithRecommendationsCellItem *_selectedItemWithRecommendations;
   
 }
 
@@ -74,6 +75,13 @@ OMNMenuCategoryHeaderViewDelegate>
     
   };
   
+  [_model updateWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+    
+    @strongify(self)
+    [self.tableView reloadData];
+    
+  }];
+  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidReset) name:OMNMenuDidResetNotification object:nil];
   
 }
@@ -94,7 +102,7 @@ OMNMenuCategoryHeaderViewDelegate>
   }
   NSString *selectedCategoryId = _initiallySelectedCategory.id;
   _initiallySelectedCategory = nil;
-  OMNMenuCategorySectionItem *selectedItem = [_model.categories bk_match:^BOOL(OMNMenuCategorySectionItem *item) {
+  OMNMenuCategorySectionItem *selectedItem = [_model.allCategories bk_match:^BOOL(OMNMenuCategorySectionItem *item) {
     
     return [item.menuCategory.id isEqualToString:selectedCategoryId];
     
@@ -121,23 +129,25 @@ OMNMenuCategoryHeaderViewDelegate>
 
 - (void)menuDidReset {
   
-  _selectedItem.selected = NO;
-  _selectedItem = nil;
-  [self.tableView beginUpdates];
-  [self.tableView endUpdates];
-  
+  _selectedItemWithRecommendations.selected = NO;
+  _selectedItemWithRecommendations = nil;
+  [self.tableView reloadData];
+
 }
 
 - (void)closeAllCategoriesWithCompletion:(dispatch_block_t)completionBlock {
   
-  [_model.categories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *item, NSUInteger idx, BOOL *stop) {
+  @weakify(self)
+  [_model closeAllCategoriesWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
     
-    item.selected = NO;
-    item.entered = NO;
+    @strongify(self)
+    [self.tableView beginUpdates];
+    [self.tableView deleteSections:deletedIndexes withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView insertSections:insertedIndexes withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), completionBlock);
     
   }];
-  [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), completionBlock);
   
 }
 
@@ -240,9 +250,9 @@ OMNMenuCategoryHeaderViewDelegate>
 
 - (void)updateTableViewWithSelectedItem:(OMNMenuProductWithRecommendationsCellItem *)item andScrollToCell:(UITableViewCell *)cell {
 
-  _selectedItem.selected = NO;
-  _selectedItem = item;
-  _selectedItem.selected = YES;
+  _selectedItemWithRecommendations.selected = NO;
+  _selectedItemWithRecommendations = item;
+  _selectedItemWithRecommendations.selected = YES;
   NSIndexPath *indexPath = [_tableView indexPathForCell:cell];
   [_tableView beginUpdates];
   [_tableView endUpdates];
@@ -255,57 +265,31 @@ OMNMenuCategoryHeaderViewDelegate>
 #pragma mark - OMNMenuCategoryHeaderViewDelegate
 
 - (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
-  
   [self selectMenuCategorySectionItem:menuCategoryHeaderView.menuCategorySectionItem];
-  
 }
 
 - (void)selectMenuCategorySectionItem:(OMNMenuCategorySectionItem *)selectedSectionItem {
   
-  NSMutableIndexSet *reloadIndexSet = [NSMutableIndexSet indexSet];
-  __block NSInteger selectedIndex = NSNotFound;
-  
-  NSInteger selectedCategoryLevel = selectedSectionItem.menuCategory.level;
-  [_model.categories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *sectionItem, NSUInteger idx, BOOL *stop) {
+  @weakify(self)
+  [_model selectMenuCategoryItem:selectedSectionItem withCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes, NSArray *deletedCells, NSArray *insertedCells) {
     
-    if (sectionItem.selected) {
-      [reloadIndexSet addIndex:idx];
-    }
+    @strongify(self)
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:deletedCells withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView insertRowsAtIndexPaths:insertedCells withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView deleteSections:deletedIndexes withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView insertSections:insertedIndexes withRowAnimation:UITableViewRowAnimationMiddle];
+    [self.tableView endUpdates];
     
-    if (![sectionItem isEqual:selectedSectionItem] &&
-        sectionItem.menuCategory.level >= selectedCategoryLevel) {
+    NSInteger selectedIndex = [self.model.visibleCategories indexOfObject:selectedSectionItem];
+    if (NSNotFound != selectedIndex &&
+        selectedSectionItem.rowItems.count) {
       
-      sectionItem.entered = NO;
-      
-    }
-    
-    if ([sectionItem isEqual:selectedSectionItem]) {
-      
-      [reloadIndexSet addIndex:idx];
-      sectionItem.selected = !sectionItem.selected;
-      selectedIndex = idx;
+      [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:selectedIndex] atScrollPosition:UITableViewScrollPositionTop animated:YES];
       
     }
-    else {
-      
-      sectionItem.selected = NO;
-      
-    }
-    
+
   }];
-  
-  selectedSectionItem.entered = !selectedSectionItem.entered;
-  
-  [_tableView beginUpdates];
-  [_tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, _model.categories.count)] withRowAnimation:UITableViewRowAnimationFade];
-  //    [_tableView reloadSections:reloadIndexSet withRowAnimation:UITableViewRowAnimationFade];
-  [_tableView endUpdates];
-  if (NSNotFound != selectedIndex &&
-      selectedSectionItem.rowItems.count) {
-    
-    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:selectedIndex] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    
-  }
   
 }
 

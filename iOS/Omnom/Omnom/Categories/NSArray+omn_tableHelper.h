@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OMNMenuCategorySectionItem.h"
 
-typedef void(^OMNUpdatedIndexesBlock)(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes);
+typedef void(^OMNUpdatedIndexesBlock)(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes);
 
 @interface NSArray (omn_tableHelper)
 

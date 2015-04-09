@@ -64,6 +64,17 @@
   
 }
 
+- (void)close {
+  
+  self.selected = NO;
+  self.entered = NO;
+  
+}
+
+- (BOOL)visible {
+  return (self.menuCategory.level == 0 || self.parent.entered);
+}
+
 + (void)registerHeaderFooterViewForTableView:(UITableView *)tableView {
   
   [tableView registerClass:[OMNMenuCategoryHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];

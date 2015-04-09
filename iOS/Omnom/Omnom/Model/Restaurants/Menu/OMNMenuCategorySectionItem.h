@@ -17,11 +17,16 @@
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL entered;
 
+@property (nonatomic, assign) NSInteger insertedRowsCount;
+@property (nonatomic, assign) NSInteger deletedRowsCount;
+
 - (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory;
 
 + (void)registerHeaderFooterViewForTableView:(UITableView *)tableView;
 
 - (NSArray *)rowItems;
+- (void)close;
+- (BOOL)visible;
 - (OMNMenuCategoryHeaderView *)headerViewForTableView:(UITableView *)tableView;
 
 @end

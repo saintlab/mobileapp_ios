@@ -12,18 +12,23 @@
 
 - (void)omn_compareToArray:(NSArray *)array withCompletion:(OMNUpdatedIndexesBlock)updatedIndexesBlock {
   
-  NSMutableArray *removedSelf = [self mutableCopy];
   NSArray *compareArray = [array copy];
   
   NSMutableIndexSet *deletedSet = [NSMutableIndexSet indexSet];
+  NSMutableIndexSet *reloadSet = [NSMutableIndexSet indexSet];
   [[self copy] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     
     if (![compareArray containsObject:obj]) {
-      [removedSelf removeObject:obj];
       [deletedSet addIndex:idx];
+    }
+    else {
+      [reloadSet addIndex:idx];
     }
     
   }];
+  
+  NSMutableArray *removedSelf = [self mutableCopy];
+  [removedSelf removeObjectsAtIndexes:deletedSet];
   
   NSMutableIndexSet *insertSet = [NSMutableIndexSet indexSet];
   [compareArray enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -34,7 +39,7 @@
     
   }];
   
-  updatedIndexesBlock(deletedSet, insertSet);
+  updatedIndexesBlock(deletedSet, insertSet, reloadSet);
   
 }
 
