@@ -28,6 +28,8 @@
 #define kOMN_OK_BUTTON_TITLE NSLocalizedString(@"Ok", @"Ok")
 #define kOMN_LUNCH_ALERT_SELECT_OFFICE_TITLE NSLocalizedString(@"LUNCH_ALERT_SELECT_OFFICE_TITLE", @"Выберите офис")
 #define kOMN_LUNCH_ALERT_SELECT_DATE_TITLE NSLocalizedString(@"LUNCH_ALERT_SELECT_DATE_TITLE", @"Выберите дату")
+#define kOMN_ALLOW_BUTTON_TITLE NSLocalizedString(@"ALLOW_BUTTON_TITLE", @"Разрешить")
+#define kOMN_LATER_BUTTON_TITLE NSLocalizedString(@"LATER_BUTTON_TITLE", @"Позже")
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
@@ -44,6 +46,9 @@
 #define kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT NSLocalizedString(@"WISH_RECOMMENDATIONS_LABEL_TEXT", @"Ранее вы заказывали")
 
 #define kOMN_SEARCH_PRODUCT_HINT_TEXT NSLocalizedString(@"SEARCH_PRODUCT_HINT_TEXT", @"Увы, но такого блюда\nнет в нашем меню")
+
+#define kOMN_PUSH_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"PUSH_PERMISSION_DESCRIPTION_TEXT", @"Разрешить Omnom получить push-уведомления")
+
 
 //orders
 #define kOMN_NO_ORDERS_ON_TABLE_TEXT NSLocalizedString(@"NO_ORDERS_ON_TABLE_TEXT", @"На вашем столике нет счетов");

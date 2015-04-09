@@ -33,7 +33,7 @@
     @weakify(self)
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Разрешить", nil) image:nil block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_ALLOW_BUTTON_TITLE image:nil block:^{
         
         @strongify(self)
         [self askPermissionTap];

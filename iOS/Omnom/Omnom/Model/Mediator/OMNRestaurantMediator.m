@@ -38,7 +38,8 @@ OMNOrderCalculationVCDelegate>
   
   __weak OMNOrdersVC *_ordersVC;
   BOOL _shouldShowOrdersOnLaunch;
-
+  BOOL _pushPermissionRequested;
+  
 }
 
 - (void)dealloc {
@@ -110,6 +111,17 @@ OMNOrderCalculationVCDelegate>
     
     [OMNLaunchHandler sharedHandler].launchOptions.showTableOrders = NO;
     [self showTableOrders];
+    
+  }
+  else if (!self.skipRequestPushNotificationPermission) {
+    
+    @weakify(self)
+    [self showPushPermissionVCWithCompletion:^{
+      
+      @strongify(self)
+      [self popToRootViewControllerAnimated:YES];
+      
+    }];
     
   }
   else {
@@ -209,11 +221,7 @@ OMNOrderCalculationVCDelegate>
 }
 
 - (BOOL)skipRequestPushNotificationPermission {
-  
-  return (_restaurant.is_demo ||
-          [OMNAuthorization authorisation].pushNotificationsRequested ||
-          TARGET_IPHONE_SIMULATOR);
-  
+  return (_restaurant.is_demo || [OMNAuthorization authorisation].pushNotificationsRequested || _pushPermissionRequested);
 }
 
 - (void)checkPushNotificationAndProcessOrders:(NSArray *)orders {
@@ -226,17 +234,24 @@ OMNOrderCalculationVCDelegate>
   }
   else {
     
-    OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:_restaurantActionsVC.r1VC];
     @weakify(self)
-    pushPermissionVC.completionBlock = ^{
+    [self showPushPermissionVCWithCompletion:^{
       
       @strongify(self)
       [self showOrders];
       
-    };
-    [self pushViewController:pushPermissionVC];
+    }];
     
   }
+  
+}
+
+- (void)showPushPermissionVCWithCompletion:(dispatch_block_t)completionBlock {
+  
+  _pushPermissionRequested = YES;
+  OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:_restaurantActionsVC.r1VC];
+  pushPermissionVC.completionBlock = completionBlock;
+  [self pushViewController:pushPermissionVC];
   
 }
 

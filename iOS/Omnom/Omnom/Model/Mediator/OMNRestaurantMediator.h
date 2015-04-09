@@ -29,6 +29,7 @@
 - (void)showUserProfile;
 - (void)showPreorders;
 - (void)showTableOrders;
+- (void)showPushPermissionVCWithCompletion:(dispatch_block_t)completionBlock;
 - (void)popToRootViewControllerAnimated:(BOOL)animated;
 - (void)exitRestaurant;
 - (void)rescanTable;

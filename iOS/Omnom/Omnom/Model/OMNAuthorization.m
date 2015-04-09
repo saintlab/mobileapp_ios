@@ -121,10 +121,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (BOOL)pushNotificationsRequested {
   
-#if LUNCH_2GIS
-  return YES;
-#endif
-  
   BOOL pushNotificationsRequested = NO;
   if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
     

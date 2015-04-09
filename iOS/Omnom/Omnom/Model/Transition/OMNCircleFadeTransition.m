@@ -79,7 +79,8 @@
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNPushPermissionVC class]],
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNPushPermissionVC class]],
     [self keyFromClass:[OMNLoadingCircleVC class] toClass:[OMNPushPermissionVC class]],
-
+    [self keyFromClass:[OMNPushPermissionVC class] toClass:[OMNRestaurantActionsVC class]],
+    
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNTurnOnBluetoothVC class]],
     [self keyFromClass:[OMNTurnOnBluetoothVC class] toClass:[OMNSearchRestaurantsVC class]],
 

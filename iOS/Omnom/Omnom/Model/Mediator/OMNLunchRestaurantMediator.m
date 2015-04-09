@@ -53,6 +53,11 @@
     [self showPreorders];
     
   }
+  else {
+    
+    [super checkStartConditions];
+    
+  }
   
 }
 

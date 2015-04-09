@@ -38,7 +38,7 @@
         [self denyPermissionTap];
         
       }],
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Разрешить", nil) image:[UIImage imageNamed:@"allow_icon_small"] block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_ALLOW_BUTTON_TITLE image:[UIImage imageNamed:@"allow_icon_small"] block:^{
         
         @strongify(self)
         [self askPermissionTap];

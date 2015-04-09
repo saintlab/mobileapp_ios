@@ -16,18 +16,18 @@
   if (self) {
     self.circleIcon = [UIImage imageNamed:@"allow_push_icon_big"];
     self.faded = YES;
-    self.text = NSLocalizedString(@"Разрешить Omnom получить push-уведомления", nil);
+    self.text = kOMN_PUSH_PERMISSION_DESCRIPTION_TEXT;
     
     @weakify(self)
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Позже", nil) image:nil block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_LATER_BUTTON_TITLE image:nil block:^{
         
         @strongify(self)
         [self didFinish];
         
       }],
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Разрешить", nil) image:nil block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_ALLOW_BUTTON_TITLE image:nil block:^{
         
         @strongify(self)
         [self requestPermissionTap];
