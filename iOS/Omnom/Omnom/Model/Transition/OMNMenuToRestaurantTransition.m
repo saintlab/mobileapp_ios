@@ -35,35 +35,28 @@
   toTableFrame.size = fromViewController.tableView.frame.size;
   fromViewController.navigationFadeView.alpha = 0.0f;
   
-  [UIView animateWithDuration:(duration-0.5) animations:^{
+  [fromViewController closeAllCategoriesWithCompletion:^{
+  }];
+
+  [UIView animateWithDuration:duration animations:^{
     
     fromViewController.backgroundView.alpha = 0.0f;
     menuTable.frame = toTableFrame;
     
   } completion:^(BOOL finished1) {
-  
-    [fromViewController closeAllCategoriesWithCompletion:^{
-      
-      toViewController.menuTable.hidden = NO;
-      [UIView animateWithDuration:0.3 animations:^{
-        
-        fromViewController.tableView.alpha = 0.0f;
-        
-      } completion:^(BOOL finished2) {
-      
-        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
-        
-      }];
-
-    }];
+    
+    toViewController.menuTable.hidden = NO;
+    [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     
   }];
+
+  
   
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  return 0.8;
+  return kCloseAllCategoriesDuration + 0.2;
   
 }
 

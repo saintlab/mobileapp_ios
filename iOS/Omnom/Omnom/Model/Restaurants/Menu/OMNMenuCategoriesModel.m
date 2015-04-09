@@ -148,9 +148,16 @@
   NSMutableArray *deletedRows = [NSMutableArray array];
   [self.allCategories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *item, NSUInteger idx, BOOL *stop) {
     
-    if (item.rowItems.count) {
+    if (item.rowItems.count &&
+        [self.visibleCategories containsObject:item]) {
+      
       item.deletedRowsCount = item.rowItems.count;
+      
     }
+    else {
+      item.deletedRowsCount = 0;
+    }
+    
     [item close];
     [deletedRows addObjectsFromArray:[self indexPathsWithSection:[self.visibleCategories indexOfObject:item] maxRows:item.deletedRowsCount]];
     

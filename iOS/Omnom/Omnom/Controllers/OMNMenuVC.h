@@ -10,6 +10,8 @@
 #import "OMNRestaurantMediator.h"
 #import "OMNMenuProductCell.h"
 
+#define kCloseAllCategoriesDuration 0.4
+
 @interface OMNMenuVC : OMNBackgroundVC
 
 @property (nonatomic, strong, readonly) UITableView *tableView;

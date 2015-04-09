@@ -397,7 +397,7 @@
   _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
   [_menuModel configureTableView:_menuTable];
   [self.view insertSubview:_menuTable belowSubview:self.circleButton];
-  
+
   NSDictionary *views =
   @{
     @"menuTable" : _menuTable
