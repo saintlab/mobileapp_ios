@@ -138,15 +138,17 @@ OMNMenuCategoryHeaderViewDelegate>
 - (void)closeAllCategoriesWithCompletion:(dispatch_block_t)completionBlock {
   
   @weakify(self)
-  [_model closeAllCategoriesWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+  [_model closeAllCategoriesWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes, NSArray *deletedCells, NSArray *insertedCells) {
     
     @strongify(self)
     [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:deletedCells withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView insertRowsAtIndexPaths:insertedCells withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView deleteSections:deletedIndexes withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView insertSections:insertedIndexes withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView insertSections:insertedIndexes withRowAnimation:UITableViewRowAnimationMiddle];
     [self.tableView endUpdates];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), completionBlock);
-    
+
   }];
   
 }

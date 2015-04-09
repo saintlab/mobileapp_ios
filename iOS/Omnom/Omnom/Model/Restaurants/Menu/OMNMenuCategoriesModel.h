@@ -30,6 +30,6 @@ UITableViewDelegate>
 
 - (void)updateWithCompletion:(OMNUpdatedIndexesBlock)block;
 - (void)selectMenuCategoryItem:(OMNMenuCategorySectionItem *)selectedItem withCompletion:(OMNUpdatedIndexesAndRowsBlock)block;
-- (void)closeAllCategoriesWithCompletion:(OMNUpdatedIndexesBlock)block;
+- (void)closeAllCategoriesWithCompletion:(OMNUpdatedIndexesAndRowsBlock)block;
 
 @end

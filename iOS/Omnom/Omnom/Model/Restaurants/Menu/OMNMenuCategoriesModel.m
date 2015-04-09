@@ -143,13 +143,24 @@
   
 }
 
-- (void)closeAllCategoriesWithCompletion:(OMNUpdatedIndexesBlock)block {
+- (void)closeAllCategoriesWithCompletion:(OMNUpdatedIndexesAndRowsBlock)block {
   
+  NSMutableArray *deletedRows = [NSMutableArray array];
   [self.allCategories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *item, NSUInteger idx, BOOL *stop) {
+    
+    if (item.rowItems.count) {
+      item.deletedRowsCount = item.rowItems.count;
+    }
     [item close];
+    [deletedRows addObjectsFromArray:[self indexPathsWithSection:[self.visibleCategories indexOfObject:item] maxRows:item.deletedRowsCount]];
+    
   }];
   
-  [self updateWithCompletion:block];
+  [self updateWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+    
+    block(deletedIndexes, insertedIndexes, reloadIndexes, deletedRows, @[]);
+    
+  }];
   
 }
 
