@@ -19,14 +19,14 @@ describe(@"NSArray+omn_tableHelper", ^{
     NSArray *a = @[@"0", @"1", @"2"];
     NSArray *b = @[@"1", @"2"];
     
-    [a omn_compareToArray:b withCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+    [a omn_compareToArray:b withCompletion:^(OMNTableReloadData *tableReloadData) {
       
-      [[deletedIndexes should] equal:[NSIndexSet indexSetWithIndex:0]];
-      [[insertedIndexes should] beEmpty];
-      [[reloadIndexes should] equal:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
-      
-    }];
+      [[tableReloadData.deletedIndexes should] equal:[NSIndexSet indexSetWithIndex:0]];
+      [[tableReloadData.insertedIndexes should] beEmpty];
+      [[tableReloadData.reloadIndexes should] equal:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
 
+    }];
+    
   });
   
   it(@"should check equal", ^{
@@ -34,11 +34,11 @@ describe(@"NSArray+omn_tableHelper", ^{
     NSArray *a = @[@"0", @"1", @"2"];
     NSArray *b = @[@"0", @"1", @"2"];
     
-    [a omn_compareToArray:b withCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+    [a omn_compareToArray:b withCompletion:^(OMNTableReloadData *tableReloadData) {
       
-      [[deletedIndexes should] beEmpty];
-      [[insertedIndexes should] beEmpty];
-      [[reloadIndexes should] equal:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)]];
+      [[tableReloadData.deletedIndexes should] beEmpty];
+      [[tableReloadData.insertedIndexes should] beEmpty];
+      [[tableReloadData.reloadIndexes should] equal:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 3)]];
       
     }];
     
@@ -49,11 +49,11 @@ describe(@"NSArray+omn_tableHelper", ^{
     NSArray *a = @[@"0"];
     NSArray *b = @[@"0", @"1", @"2"];
     
-    [a omn_compareToArray:b withCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+    [a omn_compareToArray:b withCompletion:^(OMNTableReloadData *tableReloadData) {
       
-      [[deletedIndexes should] beEmpty];
-      [[insertedIndexes should] equal:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
-      [[reloadIndexes should] equal:[NSIndexSet indexSetWithIndex:0]];
+      [[tableReloadData.deletedIndexes should] beEmpty];
+      [[tableReloadData.insertedIndexes should] equal:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
+      [[tableReloadData.reloadIndexes should] equal:[NSIndexSet indexSetWithIndex:0]];
 
     }];
     
@@ -65,11 +65,11 @@ describe(@"NSArray+omn_tableHelper", ^{
     NSArray *a = @[@"0", @"1", @"2"];
     NSArray *b = @[@"0", @"5"];
     
-    [a omn_compareToArray:b withCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+    [a omn_compareToArray:b withCompletion:^(OMNTableReloadData *tableReloadData) {
       
-      [[deletedIndexes should] equal:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
-      [[insertedIndexes should] equal:[NSIndexSet indexSetWithIndex:1]];
-      [[reloadIndexes should] equal:[NSIndexSet indexSetWithIndex:0]];
+      [[tableReloadData.deletedIndexes should] equal:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)]];
+      [[tableReloadData.insertedIndexes should] equal:[NSIndexSet indexSetWithIndex:1]];
+      [[tableReloadData.reloadIndexes should] equal:[NSIndexSet indexSetWithIndex:0]];
 
     }];
     

@@ -143,9 +143,9 @@
   
 }
 
-- (void)closeAllCategoriesWithCompletion:(OMNUpdatedIndexesAndRowsBlock)block {
+- (void)closeAllCategoriesWithCompletion:(OMNTableReloadDataBlock)block {
   
-  NSMutableArray *deletedRows = [NSMutableArray array];
+  NSMutableArray *deletedIndexPaths = [NSMutableArray array];
   [self.allCategories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *item, NSUInteger idx, BOOL *stop) {
     
     if (item.rowItems.count &&
@@ -159,13 +159,13 @@
     }
     
     [item close];
-    [deletedRows addObjectsFromArray:[self indexPathsWithSection:[self.visibleCategories indexOfObject:item] maxRows:item.deletedRowsCount]];
+    [deletedIndexPaths addObjectsFromArray:[self indexPathsWithSection:[self.visibleCategories indexOfObject:item] maxRows:item.deletedRowsCount]];
     
   }];
   
-  [self updateWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+  [self updateWithCompletion:^(OMNTableReloadData *data) {
     
-    block(deletedIndexes, insertedIndexes, reloadIndexes, deletedRows, @[]);
+    block([data dataWithDeletedIndexPaths:deletedIndexPaths insertedIndexPaths:nil]);
     
   }];
   
@@ -186,7 +186,7 @@
   
 }
 
-- (void)selectMenuCategoryItem:(OMNMenuCategorySectionItem *)selectedItem withCompletion:(OMNUpdatedIndexesAndRowsBlock)block {
+- (void)selectMenuCategoryItem:(OMNMenuCategorySectionItem *)selectedItem withCompletion:(OMNTableReloadDataBlock)block {
   
   NSInteger selectedCategoryLevel = selectedItem.menuCategory.level;
   NSArray *initialCategories = [self.visibleCategories copy];
@@ -219,31 +219,31 @@
   
   selectedItem.entered = !selectedItem.entered;
   
-  [self updateWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+  [self updateWithCompletion:^(OMNTableReloadData *data) {
     
-    NSMutableArray *insertedRows = [NSMutableArray array];
-    NSMutableArray *deletedRows = [NSMutableArray array];
+    NSMutableArray *insertedIndexPaths = [NSMutableArray array];
+    NSMutableArray *deletedIndexPaths = [NSMutableArray array];
     [self.visibleCategories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *item, NSUInteger idx, BOOL *stop) {
       
-      [insertedRows addObjectsFromArray:[self indexPathsWithSection:idx maxRows:item.insertedRowsCount]];
+      [insertedIndexPaths addObjectsFromArray:[self indexPathsWithSection:idx maxRows:item.insertedRowsCount]];
 
     }];
 
     [initialCategories enumerateObjectsUsingBlock:^(OMNMenuCategorySectionItem *item, NSUInteger idx, BOOL *stop) {
       
       if ([self.visibleCategories containsObject:item]) {
-        [deletedRows addObjectsFromArray:[self indexPathsWithSection:idx maxRows:item.deletedRowsCount]];
+        [deletedIndexPaths addObjectsFromArray:[self indexPathsWithSection:idx maxRows:item.deletedRowsCount]];
       }
       
     }];
     
-    block(deletedIndexes, insertedIndexes, reloadIndexes, deletedRows, insertedRows);
+    block([data dataWithDeletedIndexPaths:deletedIndexPaths insertedIndexPaths:insertedIndexPaths]);
     
   }];
   
 }
 
-- (void)updateWithCompletion:(OMNUpdatedIndexesBlock)block {
+- (void)updateWithCompletion:(OMNTableReloadDataBlock)block {
   
   NSArray *newVisibleCategories = [self.allCategories bk_select:^BOOL(OMNMenuCategorySectionItem *item) {
     
@@ -261,7 +261,7 @@
   else {
     
     _visibleCategories = newVisibleCategories;
-    block([NSIndexSet indexSet], [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, newVisibleCategories.count)], [NSIndexSet indexSet]);
+    block([OMNTableReloadData new]);
     
   }
   

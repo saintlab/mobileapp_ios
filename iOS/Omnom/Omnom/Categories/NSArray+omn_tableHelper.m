@@ -10,7 +10,7 @@
 
 @implementation NSArray (omn_tableHelper)
 
-- (void)omn_compareToArray:(NSArray *)array withCompletion:(OMNUpdatedIndexesBlock)updatedIndexesBlock {
+- (void)omn_compareToArray:(NSArray *)array withCompletion:(OMNTableReloadDataBlock)updatedIndexesBlock {
   
   NSArray *compareArray = [array copy];
   
@@ -39,7 +39,7 @@
     
   }];
   
-  updatedIndexesBlock(deletedSet, insertSet, reloadSet);
+  updatedIndexesBlock([OMNTableReloadData dataWithReloadIndexes:reloadSet deletedIndexes:deletedSet insertedIndexes:insertSet]);
   
 }
 

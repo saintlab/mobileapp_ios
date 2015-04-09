@@ -75,11 +75,11 @@ OMNMenuCategoryHeaderViewDelegate>
     
   };
   
-  [_model updateWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes) {
+  [_model updateWithCompletion:^(OMNTableReloadData *tableReloadData) {
     
     @strongify(self)
     [self.tableView reloadData];
-    
+
   }];
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidReset) name:OMNMenuDidResetNotification object:nil];
@@ -115,9 +115,7 @@ OMNMenuCategoryHeaderViewDelegate>
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  
   return UIStatusBarStyleLightContent;
-  
 }
 
 - (void)searchTap {
@@ -138,17 +136,12 @@ OMNMenuCategoryHeaderViewDelegate>
 - (void)closeAllCategoriesWithCompletion:(dispatch_block_t)completionBlock {
   
   @weakify(self)
-  [_model closeAllCategoriesWithCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes, NSArray *deletedCells, NSArray *insertedCells) {
+  [_model closeAllCategoriesWithCompletion:^(OMNTableReloadData *tableReloadData) {
     
     @strongify(self)
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:deletedCells withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView insertRowsAtIndexPaths:insertedCells withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView deleteSections:deletedIndexes withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView insertSections:insertedIndexes withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [tableReloadData updateTableView:self.tableView];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kCloseAllCategoriesDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), completionBlock);
-
+    
   }];
   
 }
@@ -273,15 +266,10 @@ OMNMenuCategoryHeaderViewDelegate>
 - (void)selectMenuCategorySectionItem:(OMNMenuCategorySectionItem *)selectedSectionItem {
   
   @weakify(self)
-  [_model selectMenuCategoryItem:selectedSectionItem withCompletion:^(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes, NSArray *deletedCells, NSArray *insertedCells) {
+  [_model selectMenuCategoryItem:selectedSectionItem withCompletion:^(OMNTableReloadData *tableReloadData) {
     
     @strongify(self)
-    [self.tableView beginUpdates];
-    [self.tableView deleteRowsAtIndexPaths:deletedCells withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView insertRowsAtIndexPaths:insertedCells withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView deleteSections:deletedIndexes withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView insertSections:insertedIndexes withRowAnimation:UITableViewRowAnimationMiddle];
-    [self.tableView endUpdates];
+    [tableReloadData updateTableView:self.tableView];
     
     NSInteger selectedIndex = [self.model.visibleCategories indexOfObject:selectedSectionItem];
     if (NSNotFound != selectedIndex &&

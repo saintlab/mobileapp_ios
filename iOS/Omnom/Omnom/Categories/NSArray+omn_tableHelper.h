@@ -7,12 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNMenuCategorySectionItem.h"
-
-typedef void(^OMNUpdatedIndexesBlock)(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes);
+#import "OMNTableReloadData.h"
 
 @interface NSArray (omn_tableHelper)
 
-- (void)omn_compareToArray:(NSArray *)array withCompletion:(OMNUpdatedIndexesBlock)updatedIndexesBlock;
+- (void)omn_compareToArray:(NSArray *)array withCompletion:(OMNTableReloadDataBlock)updatedIndexesBlock;
 
 @end

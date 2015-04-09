@@ -13,8 +13,6 @@
 #import "NSArray+omn_tableHelper.h"
 
 typedef void(^OMNMenuTableDidEndDraggingBlock)(UITableView *tableView);
-typedef void(^OMNUpdatedIndexesAndRowsBlock)(NSIndexSet *deletedIndexes, NSIndexSet *insertedIndexes, NSIndexSet *reloadIndexes, NSArray *deletedCells, NSArray *insertedCells);
-
 
 @interface OMNMenuCategoriesModel : NSObject
 <UITableViewDataSource,
@@ -28,8 +26,8 @@ UITableViewDelegate>
 
 + (void)registerCellsForTableView:(UITableView *)tableView;
 
-- (void)updateWithCompletion:(OMNUpdatedIndexesBlock)block;
-- (void)selectMenuCategoryItem:(OMNMenuCategorySectionItem *)selectedItem withCompletion:(OMNUpdatedIndexesAndRowsBlock)block;
-- (void)closeAllCategoriesWithCompletion:(OMNUpdatedIndexesAndRowsBlock)block;
+- (void)updateWithCompletion:(OMNTableReloadDataBlock)block;
+- (void)selectMenuCategoryItem:(OMNMenuCategorySectionItem *)selectedItem withCompletion:(OMNTableReloadDataBlock)block;
+- (void)closeAllCategoriesWithCompletion:(OMNTableReloadDataBlock)block;
 
 @end
