@@ -8,6 +8,9 @@
 
 #import <TTTAttributedLabel.h>
 
+#define kOMNNoSMSURL ([NSURL URLWithString:@"no_sms_url"])
+#define kOMNMoneyQuestionURL ([NSURL URLWithString:@"money_question_url"])
+
 @interface OMNCardEnterErrorLabel : TTTAttributedLabel
 
 - (void)setHelpText;

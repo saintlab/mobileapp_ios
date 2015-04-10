@@ -42,9 +42,7 @@
 }
 
 + (UIColor *)toolbarColor {
-  
   return [UIColor colorWithWhite:0.95f alpha:0.95f];
-  
 }
 
 + (UIColor *)blueColor {
@@ -71,6 +69,18 @@
 
 + (UIColor *)greenColor {
   return colorWithHexString(@"00881E");
+}
+
++ (UIColor *)linkColor {
+  return colorWithHexString(@"4A90E2");
+}
+
++ (UIColor *)activeLinkColor {
+  return [[self linkColor] colorWithAlphaComponent:0.5f];
+}
+
++ (UIColor *)greyColor {
+  return colorWithHexString(@"787878");
 }
 
 - (OMNStyle *)styleForClass:(Class)class {

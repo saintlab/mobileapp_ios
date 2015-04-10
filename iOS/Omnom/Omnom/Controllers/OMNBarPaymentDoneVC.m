@@ -75,13 +75,13 @@
   _orderHelpLabel.linkAttributes =
   @{
     (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
-    NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
+    NSForegroundColorAttributeName : [OMNStyler linkColor],
     NSFontAttributeName : FuturaLSFOmnomLERegular(15.0f),
     };
   _orderHelpLabel.activeLinkAttributes =
   @{
     (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
-    NSForegroundColorAttributeName : [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f],
+    NSForegroundColorAttributeName : [OMNStyler activeLinkColor],
     NSFontAttributeName : FuturaLSFOmnomLERegular(15.0f),
     };
   

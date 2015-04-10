@@ -21,6 +21,9 @@
 + (UIColor *)blueColor;
 + (UIColor *)redColor;
 + (UIColor *)greenColor;
++ (UIColor *)linkColor;
++ (UIColor *)activeLinkColor;
++ (UIColor *)greyColor;
 
 + (UIEdgeInsets)buttonEdgeInsets;
 - (OMNStyle *)styleForClass:(Class)class;

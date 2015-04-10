@@ -102,7 +102,7 @@
   
   UILabel *label = [[UILabel alloc] init];
   label.text = NSLocalizedString(@"CARD_CONFIRM_BUTTON_TITLE", @"Подтвердить");
-  label.textColor = colorWithHexString(@"4A90E2");
+  label.textColor = [OMNStyler linkColor];
   label.font = FuturaOSFOmnomRegular(15.0f);
   [label sizeToFit];
   return label;
@@ -142,7 +142,7 @@
   else if (selected) {
     
     UIView *backgroundView = [[UIView alloc] init];
-    backgroundView.backgroundColor = colorWithHexString(@"4A90E2");;
+    backgroundView.backgroundColor = [OMNStyler linkColor];
     self.backgroundView = backgroundView;
 
     _iconView.image = [UIImage imageNamed:@"checkbox_white"];

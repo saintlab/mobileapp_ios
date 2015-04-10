@@ -18,6 +18,8 @@
 #import <OMNStyler.h>
 #import "OMNCardEnterErrorLabel.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "UIView+omn_autolayout.h"
+#import "OMNMoneyQuestionVC.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate,
@@ -26,11 +28,13 @@ TTTAttributedLabelDelegate>
 @end
 
 @implementation OMNMailRUCardConfirmVC {
+  
   UIScrollView *_scrollView;
   OMNBankCardInfo *_bankCardInfo;
   OMNErrorTextField *_cardHoldValueTF;
   OMNCardEnterErrorLabel *_errorLabel;
   NSString *_detailedText;
+  
 }
 
 - (void)dealloc {
@@ -61,7 +65,6 @@ TTTAttributedLabelDelegate>
   _detailedText = [NSString stringWithFormat:@" %@", kRubleSign];
   [(OMNLabeledTextField *)_cardHoldValueTF.textField setDetailedText:_detailedText];
   _cardHoldValueTF.textField.placeholder = [NSString stringWithFormat:@"00%@00 %@", omnCommaString(), kRubleSign];
-
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -85,9 +88,7 @@ TTTAttributedLabelDelegate>
 }
 
 - (void)startLoader {
-  
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
-  
 }
 
 - (void)addDoneButton {
@@ -98,16 +99,14 @@ TTTAttributedLabelDelegate>
 
 - (void)setupView {
   
-  _scrollView = [[UIScrollView alloc] init];
-  _scrollView.translatesAutoresizingMaskIntoConstraints = NO;
+  _scrollView = [UIScrollView omn_autolayoutView];
   [self.view addSubview:_scrollView];
   
   UIColor *backgroundColor = [UIColor whiteColor];
   
-  UIView *contentView = [[UIView alloc] init];
+  UIView *contentView = [UIView omn_autolayoutView];
   contentView.backgroundColor = backgroundColor;
   contentView.opaque = YES;
-  contentView.translatesAutoresizingMaskIntoConstraints = NO;
   [_scrollView addSubview:contentView];
   
   _cardHoldValueTF = [[OMNErrorTextField alloc] initWithWidth:140.0f textFieldClass:[OMNLabeledTextField class]];
@@ -117,9 +116,8 @@ TTTAttributedLabelDelegate>
   _cardHoldValueTF.textField.delegate = self;
   [contentView addSubview:_cardHoldValueTF];
   
-  _errorLabel = [[OMNCardEnterErrorLabel alloc] init];
+  _errorLabel = [OMNCardEnterErrorLabel omn_autolayoutView];
   _errorLabel.delegate = self;
-  _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _errorLabel.backgroundColor = backgroundColor;
   _errorLabel.opaque = YES;
   [contentView addSubview:_errorLabel];
@@ -141,7 +139,7 @@ TTTAttributedLabelDelegate>
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:kNilOptions metrics:metrics views:views]];
   
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[errorLabel]-|" options:kNilOptions metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[cardHoldValueTF]-(10)-[errorLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cardHoldValueTF]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   
@@ -294,9 +292,7 @@ TTTAttributedLabelDelegate>
 }
 
 - (NSString *)currentAmountString {
-  
   return [_cardHoldValueTF.textField.text stringByReplacingOccurrencesOfString:kRubleSign withString:@""];
-  
 }
 
 #pragma mark - UITextFieldDelegate
@@ -354,17 +350,28 @@ TTTAttributedLabelDelegate>
 }
 
 - (void)setAmountString:(NSString *)amountString {
-
   _cardHoldValueTF.textField.text = amountString;
-  
 }
 
 - (void)setSelectionRange:(NSRange)range {
   
   UITextPosition *start = [_cardHoldValueTF.textField positionFromPosition:[_cardHoldValueTF.textField beginningOfDocument] offset:range.location];
   UITextPosition *end = [_cardHoldValueTF.textField positionFromPosition:start offset:range.length];
-  
   [_cardHoldValueTF.textField setSelectedTextRange:[_cardHoldValueTF.textField textRangeFromPosition:start toPosition:end]];
+  
+}
+
+- (void)showMoneyQuestion {
+  
+  OMNMoneyQuestionVC *moneyQuestionVC = [[OMNMoneyQuestionVC alloc] init];
+  @weakify(self)
+  moneyQuestionVC.didCloseBlock = ^{
+    
+    @strongify(self)
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  [self presentViewController:moneyQuestionVC animated:YES completion:nil];
   
 }
 
@@ -372,7 +379,12 @@ TTTAttributedLabelDelegate>
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
   
-  if (self.noSMSBlock) {
+  if ([url isEqual:kOMNMoneyQuestionURL]) {
+    
+    [self showMoneyQuestion];
+    
+  }
+  else if ([url isEqual:kOMNNoSMSURL] && self.noSMSBlock) {
     
     self.noSMSBlock();
     

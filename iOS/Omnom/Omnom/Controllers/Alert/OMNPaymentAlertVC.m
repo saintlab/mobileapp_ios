@@ -13,10 +13,6 @@
 #import "OMNUtils.h"
 #import "UIView+omn_autolayout.h"
 
-@interface OMNPaymentAlertVC ()
-
-@end
-
 @implementation OMNPaymentAlertVC {
   
   long long _amount;
@@ -47,16 +43,16 @@
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   [_payButton addTarget:self action:@selector(payTap) forControlEvents:UIControlEventTouchUpInside];
   [_payButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:_amount]] forState:UIControlStateNormal];
-  
-  _textLabel.text = NSLocalizedString(@"NO_SMS_ALERT_TEXT", @"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму.");
-  _detailedTextLabel.text = NSLocalizedString(@"NO_SMS_ALERT_ACTION_TEXT", @"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты.");
+
+  _textLabel.text = kOMN_NO_SMS_ALERT_TEXT;
+  _detailedTextLabel.text = kOMN_NO_SMS_ALERT_ACTION_TEXT;
   
 }
 
 - (UILabel *)textLabel {
   
   UILabel *textLabel = [UILabel omn_autolayoutView];
-  textLabel.textColor = colorWithHexString(@"787878");
+  textLabel.textColor = [OMNStyler greyColor];
   textLabel.opaque = YES;
   textLabel.numberOfLines = 0;
   textLabel.textAlignment = NSTextAlignmentCenter;
@@ -104,13 +100,13 @@
     _payButton.hidden = NO;
     _detailedTextLabel.hidden = NO;
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[detailedTextLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textLabel]-[detailedTextLabel]-20-[payButton]-(10)-|" options:kNilOptions metrics:metrics views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textLabel]-[detailedTextLabel]-20-[payButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_payButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
     
   }
   else {
 
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textLabel]-|" options:kNilOptions metrics:metrics views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
     
   }
   

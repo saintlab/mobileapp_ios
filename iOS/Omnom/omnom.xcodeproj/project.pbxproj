@@ -1253,6 +1253,10 @@
 		93DB26D31A9E1B4B00DDB739 /* OMNRestaurantCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D11A9E1B4B00DDB739 /* OMNRestaurantCellItem.m */; };
 		93DB26D61A9F647F00DDB739 /* OMNMenuHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D51A9F647F00DDB739 /* OMNMenuHeaderView.m */; };
 		93DB26D71A9F647F00DDB739 /* OMNMenuHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D51A9F647F00DDB739 /* OMNMenuHeaderView.m */; };
+		93DB92251AD799950084887B /* OMNMoneyQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB92241AD799950084887B /* OMNMoneyQuestionVC.m */; };
+		93DB92261AD799950084887B /* OMNMoneyQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB92241AD799950084887B /* OMNMoneyQuestionVC.m */; };
+		93DB92271AD799950084887B /* OMNMoneyQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB92241AD799950084887B /* OMNMoneyQuestionVC.m */; };
+		93DB92281AD799950084887B /* OMNMoneyQuestionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB92241AD799950084887B /* OMNMoneyQuestionVC.m */; };
 		93DE37D01A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */; };
 		93DE37D11A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */; };
 		93DEBF561A875A2E00B46881 /* OMNMenu+wish.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEBF551A875A2E00B46881 /* OMNMenu+wish.m */; };
@@ -1975,6 +1979,8 @@
 		93DB26D11A9E1B4B00DDB739 /* OMNRestaurantCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantCellItem.m; sourceTree = "<group>"; };
 		93DB26D41A9F647F00DDB739 /* OMNMenuHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuHeaderView.h; sourceTree = "<group>"; };
 		93DB26D51A9F647F00DDB739 /* OMNMenuHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuHeaderView.m; sourceTree = "<group>"; };
+		93DB92231AD799950084887B /* OMNMoneyQuestionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMoneyQuestionVC.h; sourceTree = "<group>"; };
+		93DB92241AD799950084887B /* OMNMoneyQuestionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMoneyQuestionVC.m; sourceTree = "<group>"; };
 		93DE37CE1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNEnterHashAlertVC.h; sourceTree = "<group>"; };
 		93DE37CF1A8DC5F400FA2F2E /* OMNEnterHashAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEnterHashAlertVC.m; sourceTree = "<group>"; };
 		93DEBF541A875A2E00B46881 /* OMNMenu+wish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNMenu+wish.h"; sourceTree = "<group>"; };
@@ -2248,6 +2254,8 @@
 				93F628FD1AC2B12C00FA0694 /* OMNLunchOrderAlertVC.m */,
 				9394CC101ACD3B87008FB6CC /* OMNSelectMinutesAlertVC.h */,
 				9394CC111ACD3B87008FB6CC /* OMNSelectMinutesAlertVC.m */,
+				93DB92231AD799950084887B /* OMNMoneyQuestionVC.h */,
+				93DB92241AD799950084887B /* OMNMoneyQuestionVC.m */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -4434,6 +4442,7 @@
 				930C4E151AB15E1B006CA608 /* OMNMenuCategoryDelimiterCellItem.m in Sources */,
 				930C4E161AB15E1B006CA608 /* GAppDelegate.m in Sources */,
 				930C4E171AB15E1B006CA608 /* OMNConstants.m in Sources */,
+				93DB92271AD799950084887B /* OMNMoneyQuestionVC.m in Sources */,
 				930C4E181AB15E1B006CA608 /* OMNWizardPageVC.m in Sources */,
 				930C4E191AB15E1B006CA608 /* OMNMenuProductFullCellItem.m in Sources */,
 				930C4E1A1AB15E1B006CA608 /* OMNMailRUCardConfirmVC.m in Sources */,
@@ -4744,6 +4753,7 @@
 				930C8C061ACA7D9F00CE4E5A /* OMNMenuCategoryDelimiterCellItem.m in Sources */,
 				930C8C071ACA7D9F00CE4E5A /* GAppDelegate.m in Sources */,
 				930C8C081ACA7D9F00CE4E5A /* OMNConstants.m in Sources */,
+				93DB92281AD799950084887B /* OMNMoneyQuestionVC.m in Sources */,
 				930C8C091ACA7D9F00CE4E5A /* OMNWizardPageVC.m in Sources */,
 				930C8C0A1ACA7D9F00CE4E5A /* OMNMenuProductFullCellItem.m in Sources */,
 				930C8C0B1ACA7D9F00CE4E5A /* OMNMailRUCardConfirmVC.m in Sources */,
@@ -5054,6 +5064,7 @@
 				9336BA441A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m in Sources */,
 				93676DFD18D1E4FC00FC55F1 /* GAppDelegate.m in Sources */,
 				937E0B5F18F04EC20058A249 /* OMNConstants.m in Sources */,
+				93DB92251AD799950084887B /* OMNMoneyQuestionVC.m in Sources */,
 				939689BE195C010900AAAF9C /* OMNWizardPageVC.m in Sources */,
 				93DB26C01A9DAE3000DDB739 /* OMNMenuProductFullCellItem.m in Sources */,
 				93EE3084198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
@@ -5237,6 +5248,7 @@
 				93B368B519A708C600B6E6CB /* OMNDemoStandWaiterTests.m in Sources */,
 				93E435B81998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */,
 				939F992719752BE90051822E /* OMNRegisterUserVC.m in Sources */,
+				93DB92261AD799950084887B /* OMNMoneyQuestionVC.m in Sources */,
 				93535F00198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
 				93BA9BCA1A8C5C0E00717FF9 /* OMNLineNumberLogFormatter.m in Sources */,
 				9336BA3E1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m in Sources */,

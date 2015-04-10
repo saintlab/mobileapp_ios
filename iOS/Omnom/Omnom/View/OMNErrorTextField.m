@@ -173,7 +173,7 @@
     _colorView.backgroundColor = [UIColor blackColor];
   }
   else {
-    _colorView.backgroundColor = [colorWithHexString(@"787878") colorWithAlphaComponent:0.3f];
+    _colorView.backgroundColor = [[OMNStyler greyColor] colorWithAlphaComponent:0.3f];
   }
   
 }

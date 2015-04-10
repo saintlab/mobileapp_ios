@@ -111,3 +111,14 @@
 #define kOMN_RESTAURANT_DATE_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_DATE_SELECTION_TITLE", @"Когда")
 #define kOMN_ORDER_LUNCH_ALERT_TITLE NSLocalizedString(@"ORDER_LUNCH_ALERT_TITLE", @"Заказ обада в офис")
 
+//bank card
+#define kOMN_CARD_CONFIRM_OTHER_ERROR NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку")
+#define kOMN_CARD_CONFIRM_HINT_LABEL_FORMAT NSLocalizedString(@"CARD_CONFIRM_HINT_LABEL_FORMAT %@ %@", @"Для привязки карты вам нужно подтвердить,\nчто вы её владелец.\nОт банка должна прийти SMS о списании суммы (до 50 ₽). Укажите эту сумму в поле\nвыше.\n\n{money_action_text}\n\n{no_sms_action_text}")
+#define kOMN_CARD_CONFIRM_MONEY_ACTION_TEXT NSLocalizedString(@"CARD_CONFIRM_MONEY_ACTION_TEXT", @"Почему списали деньги и когда их вернут?")
+#define kOMN_CARD_CONFIRM_NO_SMS_ACTION_TEXT NSLocalizedString(@"CARD_CONFIRM_NO_SMS_ACTION_TEXT", @"Не пришла SMS?")
+#define kOMN_CARD_CONFIRM_WRONG_ENTER_AMOUNT_ERROR NSLocalizedString(@"CARD_CONFIRM_WRONG_ENTER_AMOUNT_ERROR", @"Введена неверная проверочная сумма. Загляните в последние SMS. Там должно быть сообщение от банка. Введите сумму из SMS.")
+#define kOMN_MONEY_QUESTION_TEXT NSLocalizedString(@"MONEY_QUESTION_TEXT", @"Почему списали деньги\nи когда их вернут?")
+#define kOMN_MONEY_QUESTION_DETAILED_TEXT NSLocalizedString(@"MONEY_QUESTION_DETAILED_TEXT", @"На самом деле, деньги остались у вас \nна счёте, но были временно «заморожены».\nВся проверочная сумма вернётся вам в ближайшее время. Обычно, это не больше\nнедели, максимум месяц.")
+#define kOMN_NO_SMS_ALERT_TEXT NSLocalizedString(@"NO_SMS_ALERT_TEXT", @"Вероятно, SMS-уведомления не подключены. Нужно посмотреть последнее списание в банковской выписке и узнать сумму.")
+#define kOMN_NO_SMS_ALERT_ACTION_TEXT NSLocalizedString(@"NO_SMS_ALERT_ACTION_TEXT", @"Если посмотреть сумму списания сейчас возможности нет, вы можете однократно оплатить сумму без привязки карты.")
+

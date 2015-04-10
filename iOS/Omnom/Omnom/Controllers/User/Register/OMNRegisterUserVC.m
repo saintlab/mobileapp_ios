@@ -252,13 +252,13 @@ TTTAttributedLabelDelegate>
   _errorLabel.linkAttributes =
   @{
     (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
-    NSForegroundColorAttributeName : colorWithHexString(@"4A90E2"),
+    NSForegroundColorAttributeName : [OMNStyler linkColor],
     NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
     };
   _errorLabel.activeLinkAttributes =
   @{
     (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
-    NSForegroundColorAttributeName : [colorWithHexString(@"4A90E2") colorWithAlphaComponent:0.5f],
+    NSForegroundColorAttributeName : [OMNStyler activeLinkColor],
     NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
     };
   _errorLabel.delegate = self;

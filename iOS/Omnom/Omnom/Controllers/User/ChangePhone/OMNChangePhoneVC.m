@@ -110,7 +110,7 @@
   _hintLabel.translatesAutoresizingMaskIntoConstraints = NO;
   _hintLabel.numberOfLines = 0;
   _hintLabel.textAlignment = NSTextAlignmentCenter;
-  _hintLabel.textColor = colorWithHexString(@"787878");
+  _hintLabel.textColor = [OMNStyler greyColor];
   _hintLabel.font = FuturaOSFOmnomRegular(20.0f);
   [self.view addSubview:_hintLabel];
 

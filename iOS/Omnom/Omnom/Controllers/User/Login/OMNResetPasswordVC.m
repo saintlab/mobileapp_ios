@@ -36,7 +36,7 @@
   label.textAlignment = NSTextAlignmentCenter;
   label.text = NSLocalizedString(@"RESET_PASSWORD_HINT", @"На вашу почту была выслана\nссылка для смены номера\nтелефона");
   label.font = FuturaOSFOmnomRegular(20.0f);
-  label.textColor = colorWithHexString(@"787878");
+  label.textColor = [OMNStyler greyColor];
   [self.view addSubview:label];
   
   NSDictionary *views =
