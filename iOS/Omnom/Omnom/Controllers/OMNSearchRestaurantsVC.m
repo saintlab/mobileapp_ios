@@ -29,20 +29,12 @@
 @implementation OMNSearchRestaurantsVC {
   
   OMNBeaconsSearchManager *_beaconsSearchManager;
+  BOOL _searching;
   
 }
 
 - (void)dealloc {
-  
   [self stopBeaconSearchManager];
-  
-}
-
-- (instancetype)init {
-  self = [super initWithParent:nil];
-  if (self) {
-  }
-  return self;
 }
 
 - (void)viewDidLoad {
@@ -59,13 +51,15 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  @weakify(self)
-  dispatch_async(dispatch_get_main_queue(), ^{
-    
-    @strongify(self)
-    [self startSearchingRestaurants];
-    
-  });
+  if (!_searching) {
+    @weakify(self)
+    dispatch_async(dispatch_get_main_queue(), ^{
+      
+      @strongify(self)
+      [self startSearchingRestaurants];
+      
+    });
+  }
   
 }
 
@@ -161,6 +155,7 @@
   
   [self stopBeaconSearchManager];
   [self.loaderView stop];
+  _searching = YES;
   
   @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
@@ -247,6 +242,7 @@
 
 - (void)stopBeaconSearchManager {
   
+  _searching = NO;
   _beaconsSearchManager.delegate = nil;
   [_beaconsSearchManager stop];
   _beaconsSearchManager = nil;
@@ -304,9 +300,7 @@
 }
 
 - (void)beaconSearchManagerDidFail:(OMNBeaconsSearchManager *)beaconsSearchManager {
-  
   [self.loaderView stop];
-  
 }
 
 - (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didChangeState:(OMNSearchManagerState)state {

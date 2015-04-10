@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, OMNCLSearchManagerState) {
 
 @property (nonatomic, strong, readonly) OMNFoundBeacons *foundBeacons;
 @property (nonatomic, strong, readonly) NSDate *startDate;
+@property (nonatomic, assign, readonly) BOOL searching;
 @property (nonatomic, weak) id<OMNBeaconsSearchManagerDelegate> delegate;
 
 - (void)startSearching;

@@ -25,9 +25,7 @@
 }
 
 - (void)dealloc {
-
   [self stop];
-  
 }
 
 - (instancetype)init {
@@ -35,7 +33,14 @@
   if (self) {
     
     _addBeaconLock = dispatch_semaphore_create(1);
-
+    __weak typeof(self)weakSelf = self;
+    _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
+      
+      __strong __typeof(weakSelf)strongSelf = weakSelf;
+      [strongSelf processCoreLocationAuthorizationStatus:status];
+      
+    }];
+    
   }
   return self;
 }
@@ -45,7 +50,7 @@
   
   [self stopRangingNearestBeaconsWithError:NO];
   _startDate = [NSDate date];
-  
+  _searching = YES;
   if (TARGET_IPHONE_SIMULATOR) {
     
     NSArray *beacons = @[[OMNBeacon demoBeacon]];
@@ -54,7 +59,7 @@
   }
   else {
     
-    [self checkBluetoothState];
+    [self checkCLStatus];
     
   }
   
@@ -77,6 +82,28 @@
   [self stop];
   [self.delegate beaconSearchManager:self didFindBeacons:beacons];
   
+}
+
+- (void)checkCLStatus {
+  
+  CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
+  if (kCLAuthorizationStatusAuthorizedAlways == authorizationStatus) {
+    
+    [self checkBluetoothState];
+    
+  }
+  else if (TARGET_OS_IPHONE &&
+           kCLAuthorizationStatusNotDetermined == authorizationStatus) {
+    
+    [self.delegate beaconSearchManager:self didDetermineCLState:kCLSearchManagerRequestPermission];
+    
+  }
+  else {
+    
+    [self processCoreLocationAuthorizationStatus:authorizationStatus];
+    
+  }
+
 }
 
 - (void)checkBluetoothState {
@@ -136,36 +163,8 @@
 
 - (void)startRangingBeacons {
   
-  if (!_beaconRangingManager) {
-    __weak typeof(self)weakSelf = self;
-    _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
-      
-      __strong __typeof(weakSelf)strongSelf = weakSelf;
-      [strongSelf processCoreLocationAuthorizationStatus:status];
-      
-    }];
-  }
-  
-  CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
-  
-  if (TARGET_OS_IPHONE &&
-      kCLAuthorizationStatusNotDetermined == authorizationStatus) {
-    
-    [self.delegate beaconSearchManagerDidFail:self];
-    [self.delegate beaconSearchManager:self didDetermineCLState:kCLSearchManagerRequestPermission];
-    
-    return;
-  }
-  
   if (_beaconRangingManager.ranging) {
     return;
-  }
-  
-  if (kCLAuthorizationStatusAuthorizedAlways != authorizationStatus) {
-    
-    [self processCoreLocationAuthorizationStatus:authorizationStatus];
-    return;
-    
   }
   
   if (!_beaconRangingManager.isRangingAvaliable) {
@@ -255,6 +254,7 @@
 - (void)stop {
   
   [self stopRangingNearestBeaconsWithError:NO];
+  _searching = NO;
   _beaconRangingManager = nil;
   
 }

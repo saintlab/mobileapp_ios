@@ -51,8 +51,8 @@
 }
 
 - (void)startAnimating:(NSTimeInterval)duration {
+
   _loaderLayer.hidden = NO;
-  
   _startAnimationDate = [NSDate date];
   _totalDuration = duration;
   [self decreaseAnimationDuration:0 start:YES];
