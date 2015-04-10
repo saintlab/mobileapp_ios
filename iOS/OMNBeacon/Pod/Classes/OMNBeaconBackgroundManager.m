@@ -9,6 +9,7 @@
 #import "OMNBeaconBackgroundManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "OMNBeacon.h"
+#import "OMNBluetoothManager.h"
 
 @interface OMNBeaconBackgroundManager()
 <CLLocationManagerDelegate> {
@@ -88,20 +89,34 @@
   
 }
 
-- (void)startBeaconRegionMonitoringIfNeeded {
+- (void)startBeaconRegionMonitoringIfPossible {
   
   if (kCLAuthorizationStatusAuthorized != [CLLocationManager authorizationStatus]) {
     return;
   }
-  
+
   if (_monitoring) {
     return;
   }
-  
+
   if (NO == [CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
     NSLog(@"This device does not support monitoring beacon regions");
     return;
   }
+
+  __weak typeof(self)weakSelf = self;
+  [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
+    
+    __strong __typeof(weakSelf)strongSelf = weakSelf;
+    if (CBCentralManagerStatePoweredOn == state) {
+      [strongSelf startBeaconRegionMonitoring];
+    }
+    
+  }];
+  
+}
+
+- (void)startBeaconRegionMonitoring {
   
   [_deprecatedBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
     
@@ -128,7 +143,7 @@
   switch (status) {
     case kCLAuthorizationStatusAuthorizedAlways: {
       
-      [self startBeaconRegionMonitoringIfNeeded];
+      [self startBeaconRegionMonitoringIfPossible];
       
     } break;
     case kCLAuthorizationStatusNotDetermined: {

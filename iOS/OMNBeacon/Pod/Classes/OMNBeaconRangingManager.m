@@ -72,9 +72,7 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
 }
 
 - (BOOL)isRangingAvaliable {
-  
   return [CLLocationManager isRangingAvailable];
-  
 }
 
 - (void)rangeBeacons:(CLBeaconsBlock)didRangeBeaconsBlock failure:(void (^)(NSError *error))failureBlock {

@@ -339,16 +339,9 @@
       [self.loaderView setProgress:0.25];
       
     } break;
-    case kBLESearchManagerBLEUnsupported: {
+    default: {
       
       [self beaconsNotFound];
-      
-    } break;
-    case kBLESearchManagerRequestTurnBLEOn: {
-      
-      [[OMNAnalitics analitics] logTargetEvent:@"bluetooth_turned_off" parametrs:nil];
-      OMNTurnOnBluetoothVC *turnOnBluetoothVC = [[OMNTurnOnBluetoothVC alloc] initWithParent:self];
-      [self.navigationController pushViewController:turnOnBluetoothVC animated:YES];
       
     } break;
   }
