@@ -49,9 +49,7 @@
 }
 
 - (void)dealloc {
-  
   [self removeSelectedTipIndexObserver];
-  
 }
 
 - (void)removeSelectedTipIndexObserver {
@@ -207,23 +205,11 @@
   _sumEditingContainer.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, 63.0f)) : (CGAffineTransformIdentity);
   _payButton.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, 50.0f)) : (CGAffineTransformIdentity);
   
-  if (self.tipsMode &&
-      keyboardShown) {
-    
-    _payAmountLabel.alpha = 0.0f;
-    _amountControl.alpha = 0.0f;
-    _percentControl.alpha = 1.0f;
-    _amountForPercentLabel.alpha = 1.0f;
-    
-  }
-  else {
-    
-    _amountControl.alpha = 1.0f;
-    _percentControl.alpha = 0.0f;
-    _payAmountLabel.alpha = 1.0f;
-    _amountForPercentLabel.alpha = 0.0f;
-    
-  }
+  BOOL showTipsControls = (self.tipsMode && keyboardShown);
+  _percentControl.alpha = (showTipsControls) ? (1.0f) : (0.0f);
+  _amountForPercentLabel.alpha = (showTipsControls) ? (1.0f) : (0.0f);;
+  _payAmountLabel.alpha = (!showTipsControls) ? (1.0f) : (0.0f);;
+  _amountControl.alpha = (!showTipsControls) ? (1.0f) : (0.0f);;
 
   if (self.tipsMode) {
     

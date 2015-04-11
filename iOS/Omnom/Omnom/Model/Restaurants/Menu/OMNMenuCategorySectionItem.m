@@ -11,6 +11,7 @@
 #import "OMNMenuCategoryDelimiterCellItem.h"
 #import "OMNMenuProductsDelimiterCellItem.h"
 #import <BlocksKit.h>
+#import "OMNMenuCategoryHeaderView.h"
 
 @implementation OMNMenuCategorySectionItem {
   
@@ -75,7 +76,7 @@
   return (self.menuCategory.level == 0 || self.parent.entered);
 }
 
-+ (void)registerHeaderFooterViewForTableView:(UITableView *)tableView {
++ (void)registerCellsForTableView:(UITableView *)tableView {
   
   [tableView registerClass:[OMNMenuCategoryHeaderView class] forHeaderFooterViewReuseIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];
   [OMNMenuCategoryDelimiterCellItem registerCellForTableView:tableView];
@@ -86,7 +87,7 @@
 - (OMNMenuCategoryHeaderView *)headerViewForTableView:(UITableView *)tableView {
   
   OMNMenuCategoryHeaderView *menuCategoryHeaderView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:NSStringFromClass([OMNMenuCategoryHeaderView class])];
-  menuCategoryHeaderView.menuCategorySectionItem = self;
+  menuCategoryHeaderView.item = self;
   return menuCategoryHeaderView;
   
 }

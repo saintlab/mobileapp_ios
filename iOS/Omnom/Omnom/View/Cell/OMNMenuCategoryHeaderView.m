@@ -8,7 +8,6 @@
 
 #import "OMNMenuCategoryHeaderView.h"
 #import "UIView+omn_autolayout.h"
-#import "OMNMenuCategorySectionItem.h"
 #import "OMNMenuHeaderLabel.h"
 #import <OMNStyler.h>
 #import <BlocksKit.h>
@@ -30,7 +29,7 @@
 
 - (void)removeItemSelectedOberver {
   if (_itemSelectedOberverId) {
-    [_menuCategorySectionItem bk_removeObserversWithIdentifier:_itemSelectedOberverId];
+    [self.item bk_removeObserversWithIdentifier:_itemSelectedOberverId];
   }
 }
 
@@ -115,26 +114,24 @@
 }
 
 - (void)buttonTap {
-  
-  [self.delegate menuCategoryHeaderViewDidSelect:self];
-  
+  [self.item.delegate menuCategoryHeaderViewDidSelect:self];
 }
 
-- (void)setMenuCategorySectionItem:(OMNMenuCategorySectionItem *)menuCategorySectionItem {
+- (void)setItem:(OMNMenuCategorySectionItem *)item {
   
   [self removeItemSelectedOberver];
-  _menuCategorySectionItem = menuCategorySectionItem;
+  _item = item;
   @weakify(self)
-  _itemSelectedOberverId = [_menuCategorySectionItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(entered)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuCategorySectionItem *obj, NSDictionary *change) {
+  _itemSelectedOberverId = [_item bk_addObserverForKeyPath:NSStringFromSelector(@selector(entered)) options:(NSKeyValueObservingOptionNew) task:^(OMNMenuCategorySectionItem *obj, NSDictionary *change) {
     
     @strongify(self)
     [self setSelected:obj.entered animated:YES];
     
   }];
-  [self setSelected:menuCategorySectionItem.entered animated:NO];
-  _iconView.image = [[UIImage imageNamed:[NSString stringWithFormat:@"category_level%ld", (long)menuCategorySectionItem.menuCategory.level + 1]] omn_tintWithColor:[UIColor blackColor]];
-  self.backgroundView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:(0.3f*menuCategorySectionItem.menuCategory.level)];
-  _menuHeaderLabel.text = menuCategorySectionItem.menuCategory.name;
+  [self setSelected:item.entered animated:NO];
+  _iconView.image = [[UIImage imageNamed:[NSString stringWithFormat:@"category_level%ld", (long)item.menuCategory.level + 1]] omn_tintWithColor:[UIColor blackColor]];
+  self.backgroundView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:(0.3f*item.menuCategory.level)];
+  _menuHeaderLabel.text = item.menuCategory.name;
   
 }
 

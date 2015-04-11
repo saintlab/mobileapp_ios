@@ -260,7 +260,7 @@ OMNMenuCategoryHeaderViewDelegate>
 #pragma mark - OMNMenuCategoryHeaderViewDelegate
 
 - (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView {
-  [self selectMenuCategorySectionItem:menuCategoryHeaderView.menuCategorySectionItem];
+  [self selectMenuCategorySectionItem:menuCategoryHeaderView.item];
 }
 
 - (void)selectMenuCategorySectionItem:(OMNMenuCategorySectionItem *)selectedSectionItem {

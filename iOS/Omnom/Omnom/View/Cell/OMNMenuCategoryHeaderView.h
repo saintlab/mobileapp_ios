@@ -6,20 +6,10 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
-@class OMNMenuCategorySectionItem;
-@protocol OMNMenuCategoryHeaderViewDelegate;
+#import "OMNMenuCategorySectionItem.h"
 
 @interface OMNMenuCategoryHeaderView : UITableViewHeaderFooterView
 
-@property (nonatomic, weak) id<OMNMenuCategoryHeaderViewDelegate> delegate;
-@property (nonatomic, strong) OMNMenuCategorySectionItem *menuCategorySectionItem;
-
-@end
-
-@protocol OMNMenuCategoryHeaderViewDelegate <NSObject>
-
-- (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView;
+@property (nonatomic, strong) OMNMenuCategorySectionItem *item;
 
 @end

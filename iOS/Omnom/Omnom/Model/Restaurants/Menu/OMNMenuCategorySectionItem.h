@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNMenuCategory.h"
-#import "OMNMenuCategoryHeaderView.h"
+
+@class OMNMenuCategoryHeaderView;
+@protocol OMNMenuCategoryHeaderViewDelegate;
 
 @interface OMNMenuCategorySectionItem : NSObject
 
 @property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
+@property (nonatomic, weak) id<OMNMenuCategoryHeaderViewDelegate> delegate;
 @property (nonatomic, weak) OMNMenuCategorySectionItem *parent;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL entered;
@@ -22,11 +25,17 @@
 
 - (instancetype)initWithMenuCategory:(OMNMenuCategory *)menuCategory;
 
-+ (void)registerHeaderFooterViewForTableView:(UITableView *)tableView;
++ (void)registerCellsForTableView:(UITableView *)tableView;
 
 - (NSArray *)rowItems;
 - (void)close;
 - (BOOL)visible;
-- (OMNMenuCategoryHeaderView *)headerViewForTableView:(UITableView *)tableView;
+- (UIView *)headerViewForTableView:(UITableView *)tableView;
+
+@end
+
+@protocol OMNMenuCategoryHeaderViewDelegate <NSObject>
+
+- (void)menuCategoryHeaderViewDidSelect:(OMNMenuCategoryHeaderView *)menuCategoryHeaderView;
 
 @end

@@ -14,7 +14,7 @@
 
 @interface OMNMenuCategory (omn_categories)
 
-- (NSArray *)sectionItemsWithParent:(OMNMenuCategorySectionItem *)parentItem;
+- (NSArray *)sectionItemsWithParent:(OMNMenuCategorySectionItem *)parentItem headerDelegate:(id<OMNMenuCategoryHeaderViewDelegate>)headerDelegate;
 
 @end
 
@@ -38,7 +38,7 @@
     
     [_menu.categories enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
       
-      NSArray *sectionItems = [menuCategory sectionItemsWithParent:nil];
+      NSArray *sectionItems = [menuCategory sectionItemsWithParent:nil headerDelegate:headerDelegate];
       [menuCategorySectionItems addObjectsFromArray:sectionItems];
       
     }];
@@ -52,7 +52,7 @@
 + (void)registerCellsForTableView:(UITableView *)tableView {
   
   [OMNMenuProductWithRecommendationsCellItem registerCellForTableView:tableView];
-  [OMNMenuCategorySectionItem registerHeaderFooterViewForTableView:tableView];
+  [OMNMenuCategorySectionItem registerCellsForTableView:tableView];
   [OMNMenuCategoryDelimiterCellItem registerCellForTableView:tableView];
   [OMNMenuProductsDelimiterCellItem registerCellForTableView:tableView];
   
@@ -121,9 +121,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   
   OMNMenuCategorySectionItem *menuCategorySectionItem = self.visibleCategories[section];
-  OMNMenuCategoryHeaderView *menuCategoryHeaderView = [menuCategorySectionItem headerViewForTableView:tableView];
-  menuCategoryHeaderView.delegate = _headerDelegate;
-  return menuCategoryHeaderView;
+  return [menuCategorySectionItem headerViewForTableView:tableView];
   
 }
 
@@ -271,17 +269,18 @@
 
 @implementation OMNMenuCategory (omn_categories)
 
-- (NSArray *)sectionItemsWithParent:(OMNMenuCategorySectionItem *)parentItem {
+- (NSArray *)sectionItemsWithParent:(OMNMenuCategorySectionItem *)parentItem headerDelegate:(id<OMNMenuCategoryHeaderViewDelegate>)headerDelegate {
   
   NSMutableArray *menuCategorySectionItems = [NSMutableArray array];
   
   OMNMenuCategorySectionItem *sectionItem = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:self];
   sectionItem.parent = parentItem;
+  sectionItem.delegate = headerDelegate;
   [menuCategorySectionItems addObject:sectionItem];
 
   [self.children enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {
     
-    NSArray *childItems = [menuCategory sectionItemsWithParent:sectionItem];
+    NSArray *childItems = [menuCategory sectionItemsWithParent:sectionItem headerDelegate:headerDelegate];
     [menuCategorySectionItems addObjectsFromArray:childItems];
     
   }];
