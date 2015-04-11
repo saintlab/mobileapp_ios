@@ -16,15 +16,14 @@
   if (self) {
     
     self.menuProductCellItem = [[OMNMenuProductFullCellItem alloc] initWithMenuProduct:menuProduct];
+    self.menuProductCellItem.delegate = self;
     
   }
   return self;
 }
 
 + (void)registerCellForTableView:(UITableView *)tableView {
-  
   [tableView registerClass:[OMNMenuProductFullWithRecommendationsCellItem class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductFullWithRecommendationsCellItem class])];
-  
 }
 
 + (void)registerProductWithRecommendationsCellForTableView:(UITableView *)tableView {

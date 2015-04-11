@@ -14,7 +14,7 @@
 
 @implementation OMNMenuCategorySectionItem {
   
-  NSMutableArray *_rowItems;
+  NSArray *_rowItems;
   
 }
 
@@ -28,8 +28,9 @@
   return self;
 }
 
-- (NSArray *)rowItems {
 
+- (NSArray *)rowItems {
+  
   if (!self.selected) {
     return @[];
   }
@@ -49,6 +50,7 @@
     
     OMNMenuProduct *product = _menuCategory.allProducts[menuProductID];
     OMNMenuProductWithRecommendationsCellItem *cellItem = [[OMNMenuProductWithRecommendationsCellItem alloc] initWithMenuProduct:product products:_menuCategory.allProducts];
+    cellItem.recommedtationItemDelegate = self.cellWithRecommendationDelegate;
     [rowItems addObject:cellItem];
     
     OMNMenuProductsDelimiterCellItem *delimiter = [[OMNMenuProductsDelimiterCellItem alloc] init];

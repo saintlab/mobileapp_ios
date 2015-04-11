@@ -22,15 +22,13 @@
 }
 
 - (void)dealloc {
-  
-  [self removeMenuProductSelectionObserver];
-  
+  [self removeObservers];
 }
 
-- (void)removeMenuProductSelectionObserver {
+- (void)removeObservers {
   
   if (_menuProductSelectionObserverID) {
-    [_item bk_removeObserversWithIdentifier:_menuProductSelectionObserverID];
+    [self.item bk_removeObserversWithIdentifier:_menuProductSelectionObserverID];
   }
   
 }
@@ -82,9 +80,9 @@
 
 - (void)setItem:(OMNMenuProductWithRecommendationsCellItem *)item {
   
-  [self removeMenuProductSelectionObserver];
+  [self removeObservers];
   _item = item;
-  _item.delegate = self;
+  _item.productItemDelegate = self;
   _tableView.delegate = _item;
   _tableView.dataSource = _item;
   [_tableView reloadData];
@@ -94,15 +92,11 @@
 #pragma mark - OMNMenuProductCellDelegate
 
 - (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell {
-  
-  [self.delegate menuProductWithRecommedtationsCell:self editCell:menuProductCell];
-  
+  [self.item.recommedtationItemDelegate menuProductWithRecommedtationsCell:self editCell:menuProductCell];  
 }
 
 - (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell {
-  
-  [self.delegate menuProductWithRecommedtationsCell:self didSelectCell:menuProductCell];
-  
+  [self.item.recommedtationItemDelegate menuProductWithRecommedtationsCell:self didSelectCell:menuProductCell];
 }
 
 @end

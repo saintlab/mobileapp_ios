@@ -52,7 +52,7 @@
   self.tableView.contentInset = insets;
   self.tableView.scrollIndicatorInsets = insets;
 
-  _menuProductFullWithRecommendations.delegate = self;
+  _menuProductFullWithRecommendations.productItemDelegate = self;
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
   self.navigationItem.titleView = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
@@ -78,11 +78,7 @@
 #pragma mark - OMNMenuProductCellDelegate
 
 - (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell {
-  
-  [menuProductCell.item editMenuProductFromController:self withCompletion:^{
-    
-  }];
-  
+  [menuProductCell.item editMenuProductFromController:self withCompletion:^{}];
 }
 
 - (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell {

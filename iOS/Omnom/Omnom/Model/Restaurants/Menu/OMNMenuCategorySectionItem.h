@@ -17,8 +17,7 @@
 
 @property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
 @property (nonatomic, weak) id<OMNMenuCategoryHeaderViewDelegate> headerDelegate;
-#warning OMNMenuCategoryHeaderViewDelegate
-//@property (nonatomic, weak) id<OMNMenuCategoryHeaderViewDelegate> headerDelegate;
+@property (nonatomic, weak) id<OMNMenuProductWithRecommedtationsCellDelegate> cellWithRecommendationDelegate;
 @property (nonatomic, weak) OMNMenuCategorySectionItem *parent;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL entered;

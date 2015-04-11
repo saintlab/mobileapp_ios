@@ -9,11 +9,7 @@
 #import "OMNMenuProductWithRecommendationsCellItem.h"
 #import "OMNMenuProductWithRecommedtationsCell.h"
 #import "OMNMenuProductRecommendationsDelimiterCellItem.h"
-
-@interface OMNMenuProductWithRecommendationsCellItem ()
-<OMNMenuProductCellDelegate>
-
-@end
+#import "OMNMenuProductCell.h"
 
 @implementation OMNMenuProductWithRecommendationsCellItem {
   
@@ -26,8 +22,8 @@
   if (self) {
     
     _menuProduct = menuProduct;
-    _menuProductCellItem = [[OMNMenuProductCellItem alloc] initWithMenuProduct:menuProduct];
-    _menuProductCellItem.delegate = self;
+    self.menuProductCellItem = [[OMNMenuProductCellItem alloc] initWithMenuProduct:menuProduct];
+    self.menuProductCellItem.delegate = self;
     NSInteger recommendationsCount = _menuProduct.recommendations.count;
     _recommendations = [NSMutableArray array];
     if (recommendationsCount > 0) {
@@ -51,7 +47,7 @@
 }
 
 - (BOOL)showRecommendations {
-  return(self.selected && self.menuProduct.showRecommendations);
+  return (self.selected && self.menuProduct.showRecommendations);
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
@@ -165,7 +161,7 @@
   if ([item isKindOfClass:[OMNMenuProductCellItem class]]) {
     
     OMNMenuProductCell *cell = (OMNMenuProductCell *)[tableView cellForRowAtIndexPath:indexPath];
-    [self.delegate menuProductCellDidSelect:cell];
+    [self.productItemDelegate menuProductCellDidSelect:cell];
     
   }
   
@@ -174,9 +170,7 @@
 #pragma mark - OMNMenuProductCellDelegate
 
 - (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell {
-  
-  [self.delegate menuProductCellDidEdit:menuProductCell];
-  
+  [self.productItemDelegate menuProductCellDidEdit:menuProductCell];
 }
 
 - (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell {

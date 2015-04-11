@@ -6,21 +6,10 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "OMNMenuProductWithRecommendationsCellItem.h"
-
-@protocol OMNMenuProductWithRecommedtationsCellDelegate;
 
 @interface OMNMenuProductWithRecommedtationsCell : UITableViewCell
 
-@property (nonatomic, weak) id<OMNMenuProductWithRecommedtationsCellDelegate> delegate;
 @property (nonatomic, strong) OMNMenuProductWithRecommendationsCellItem *item;
-
-@end
-
-@protocol OMNMenuProductWithRecommedtationsCellDelegate <NSObject>
-
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectCell:(OMNMenuProductCell *)cell;
-- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editCell:(OMNMenuProductCell *)cell;
 
 @end

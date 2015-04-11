@@ -8,23 +8,37 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNMenuProduct.h"
-#import "OMNMenuProductCell.h"
 #import "OMNCellItemProtocol.h"
 #import "OMNMenuProductsDelimiterCellItem.h"
+#import "OMNMenuProductCellItem.h"
+
+@protocol OMNMenuProductWithRecommedtationsCellDelegate;
+@class OMNMenuProductCell;
+@class OMNMenuProductWithRecommedtationsCell;
 
 @interface OMNMenuProductWithRecommendationsCellItem : NSObject
 <OMNCellItemProtocol,
 UITableViewDataSource,
-UITableViewDelegate>
+UITableViewDelegate,
+OMNMenuProductCellDelegate>
 
 @property (nonatomic, strong, readonly) OMNMenuProduct *menuProduct;
+@property (nonatomic, weak) id<OMNMenuProductWithRecommedtationsCellDelegate> recommedtationItemDelegate;
+@property (nonatomic, weak) id<OMNMenuProductCellDelegate> productItemDelegate;
 @property (nonatomic, strong) OMNMenuProductCellItem *menuProductCellItem;
 @property (nonatomic, assign) BOOL selected;
-@property (nonatomic, weak) id<OMNMenuProductCellDelegate> delegate;
 @property (nonatomic, weak) OMNMenuProductsDelimiterCellItem *bottomDelimiter;
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products;
 
 + (void)registerProductWithRecommendationsCellForTableView:(UITableView *)tableView;
+
+@end
+
+
+@protocol OMNMenuProductWithRecommedtationsCellDelegate <NSObject>
+
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell didSelectCell:(OMNMenuProductCell *)cell;
+- (void)menuProductWithRecommedtationsCell:(OMNMenuProductWithRecommedtationsCell *)menuProductWithRecommedtationsCell editCell:(OMNMenuProductCell *)cell;
 
 @end
