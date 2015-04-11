@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNMenuCategory.h"
+#import "OMNMenuProductWithRecommendationsCellItem.h"
 
 @class OMNMenuCategoryHeaderView;
 @protocol OMNMenuCategoryHeaderViewDelegate;
@@ -15,7 +16,9 @@
 @interface OMNMenuCategorySectionItem : NSObject
 
 @property (nonatomic, strong, readonly) OMNMenuCategory *menuCategory;
-@property (nonatomic, weak) id<OMNMenuCategoryHeaderViewDelegate> delegate;
+@property (nonatomic, weak) id<OMNMenuCategoryHeaderViewDelegate> headerDelegate;
+#warning OMNMenuCategoryHeaderViewDelegate
+//@property (nonatomic, weak) id<OMNMenuCategoryHeaderViewDelegate> headerDelegate;
 @property (nonatomic, weak) OMNMenuCategorySectionItem *parent;
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL entered;

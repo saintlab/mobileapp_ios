@@ -275,7 +275,7 @@
   
   OMNMenuCategorySectionItem *sectionItem = [[OMNMenuCategorySectionItem alloc] initWithMenuCategory:self];
   sectionItem.parent = parentItem;
-  sectionItem.delegate = headerDelegate;
+  sectionItem.headerDelegate = headerDelegate;
   [menuCategorySectionItems addObject:sectionItem];
 
   [self.children enumerateObjectsUsingBlock:^(OMNMenuCategory *menuCategory, NSUInteger idx, BOOL *stop) {

@@ -114,7 +114,7 @@
 }
 
 - (void)buttonTap {
-  [self.item.delegate menuCategoryHeaderViewDidSelect:self];
+  [self.item.headerDelegate menuCategoryHeaderViewDidSelect:self];
 }
 
 - (void)setItem:(OMNMenuCategorySectionItem *)item {

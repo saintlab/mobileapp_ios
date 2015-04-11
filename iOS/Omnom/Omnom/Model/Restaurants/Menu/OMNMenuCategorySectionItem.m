@@ -7,7 +7,6 @@
 //
 
 #import "OMNMenuCategorySectionItem.h"
-#import "OMNMenuProductWithRecommendationsCellItem.h"
 #import "OMNMenuCategoryDelimiterCellItem.h"
 #import "OMNMenuProductsDelimiterCellItem.h"
 #import <BlocksKit.h>

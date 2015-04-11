@@ -27,17 +27,19 @@
     
     _menuProduct = menuProduct;
     _menuProductCellItem = [[OMNMenuProductCellItem alloc] initWithMenuProduct:menuProduct];
-    
+    _menuProductCellItem.delegate = self;
     NSInteger recommendationsCount = _menuProduct.recommendations.count;
     _recommendations = [NSMutableArray array];
     if (recommendationsCount > 0) {
       
       [_recommendations addObject:[[OMNMenuProductRecommendationsDelimiterCellItem alloc] init]];
       
+      __weak typeof(self)weakSelf = self;
       [_menuProduct.recommendations enumerateObjectsUsingBlock:^(id productID, NSUInteger idx, BOOL *stop) {
         
         OMNMenuProductCellItem *recommendationItem = [[OMNMenuProductCellItem alloc] initWithMenuProduct:products[productID]];
         recommendationItem.delimiterType = (idx < recommendationsCount - 1) ? (kBottomDelimiterTypeLine) : (kBottomDelimiterTypeNone);
+        recommendationItem.delegate = weakSelf;
         [_recommendations addObject:recommendationItem];
 
       }];
@@ -49,13 +51,7 @@
 }
 
 - (BOOL)showRecommendations {
-  
-  return
-  (
-   _selected &&
-   _menuProduct.showRecommendations
-   );
-  
+  return(self.selected && self.menuProduct.showRecommendations);
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
@@ -87,9 +83,7 @@
 }
 
 + (void)registerCellForTableView:(UITableView *)tableView {
-  
   [tableView registerClass:[OMNMenuProductWithRecommedtationsCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductWithRecommedtationsCell class])];
-  
 }
 
 + (void)registerProductWithRecommendationsCellForTableView:(UITableView *)tableView {
@@ -109,9 +103,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  
   return 2;
-  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -131,7 +123,7 @@
   
 }
 
-- (id)itemAtIndexPath:(NSIndexPath *)indexPath {
+- (id<OMNCellItemProtocol>)itemAtIndexPath:(NSIndexPath *)indexPath {
   
   id item = nil;
   switch (indexPath.section) {
@@ -149,23 +141,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   id item = [self itemAtIndexPath:indexPath];
-  if ([item conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
-    
-    UITableViewCell *cell = [item cellForTableView:tableView];
-    if ([cell isKindOfClass:[OMNMenuProductCell class]]) {
-      
-      OMNMenuProductCell *menuProductCell = (OMNMenuProductCell *)cell;
-      menuProductCell.delegate = self;
-      
-    }
-    return cell;
-    
-  }
-  else {
-    
-    return [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
-    
-  }
+  UITableViewCell *cell = [item cellForTableView:tableView];
+  return cell;
   
 }
 

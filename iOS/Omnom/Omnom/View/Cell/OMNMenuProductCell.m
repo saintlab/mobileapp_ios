@@ -230,9 +230,7 @@
 }
 
 - (void)priceTap {
-  
-  [self.delegate menuProductCellDidEdit:self];
-  
+  [self.item.delegate menuProductCellDidEdit:self];
 }
 
 @end

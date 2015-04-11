@@ -10,6 +10,9 @@
 #import "OMNCellItemProtocol.h"
 #import "OMNMenuProduct.h"
 
+@protocol OMNMenuProductCellDelegate;
+@class OMNMenuProductCell;
+
 typedef NS_ENUM(NSInteger, OMNBottomDelimiterType) {
   kBottomDelimiterTypeNone = 0,
   kBottomDelimiterTypeLine,
@@ -22,7 +25,15 @@ typedef NS_ENUM(NSInteger, OMNBottomDelimiterType) {
 @property (nonatomic, assign) BOOL selected;
 @property (nonatomic, assign) BOOL editing;
 @property (nonatomic, assign) OMNBottomDelimiterType delimiterType;
+@property (nonatomic, weak) id<OMNMenuProductCellDelegate> delegate;
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct;
+
+@end
+
+@protocol OMNMenuProductCellDelegate <NSObject>
+
+- (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell;
+- (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell;
 
 @end

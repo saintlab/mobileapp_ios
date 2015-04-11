@@ -10,11 +10,8 @@
 #import "OMNMenuProductCellItem.h"
 #import "OMNMenuProductPriceButton.h"
 
-@protocol OMNMenuProductCellDelegate;
-
 @interface OMNMenuProductCell : UITableViewCell
 
-@property (nonatomic, weak) id<OMNMenuProductCellDelegate> delegate;
 @property (nonatomic, strong) OMNMenuProductCellItem *item;
 @property (nonatomic, strong, readonly) OMNMenuProductPriceButton *priceButton;
 @property (nonatomic, strong, readonly) UIImageView *productIV;
@@ -24,12 +21,5 @@
 
 - (void)addMenuProductObservers;
 - (void)removeMenuProductObservers;
-
-@end
-
-@protocol OMNMenuProductCellDelegate <NSObject>
-
-- (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell;
-- (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell;
 
 @end
