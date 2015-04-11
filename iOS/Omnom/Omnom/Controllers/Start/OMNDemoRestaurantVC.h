@@ -11,7 +11,5 @@
 
 @interface OMNDemoRestaurantVC : OMNLoadingCircleVC
 
-@property (nonatomic, copy) dispatch_block_t didCloseBlock;
-
 @end
 

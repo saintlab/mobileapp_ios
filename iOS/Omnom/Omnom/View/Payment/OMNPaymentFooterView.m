@@ -228,7 +228,7 @@
   if (self.tipsMode) {
     
     _payLabel.alpha = (keyboardShown) ? (0.0f) : (1.0f);
-    CGFloat deltaY = fabsf(_sumEditingContainer.top - _tipsLabel.top);
+    CGFloat deltaY = fabs(_sumEditingContainer.top - _tipsLabel.top);
     _tipsLabel.transform = (keyboardShown) ? (CGAffineTransformMakeTranslation(0, -deltaY)) : (CGAffineTransformIdentity);
     
   }

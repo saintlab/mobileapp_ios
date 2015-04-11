@@ -201,7 +201,7 @@ UICollectionViewDelegate>
   CGFloat centerX = _collectionView.contentOffset.x + CGRectGetMidX(_collectionView.frame);
   [_collectionView.visibleCells enumerateObjectsUsingBlock:^(UICollectionViewCell *cell, NSUInteger idx, BOOL *stop) {
     
-    CGFloat spacing = fabsf(cell.center.x - centerX);
+    CGFloat spacing = fabs(cell.center.x - centerX);
     if (spacing < minSpacing) {
       minSpacing = spacing;
       index = [_collectionView indexPathForCell:cell].item;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
+   LastUpgradeVersion = "0630"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "93676DE818D1E4FC00FC55F1"
-               BuildableName = "omnom.app"
-               BlueprintName = "omnom"
+               BlueprintIdentifier = "936AC0D21AD8BDBC00A9D17F"
+               BuildableName = "Travelers.app"
+               BlueprintName = "Travelers"
                ReferencedContainer = "container:omnom.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -25,25 +26,15 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Test">
+      buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "93676E0C18D1E4FC00FC55F1"
-               BuildableName = "omnomTests.xctest"
-               BlueprintName = "omnomTests"
-               ReferencedContainer = "container:omnom.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "93676DE818D1E4FC00FC55F1"
-            BuildableName = "omnom.app"
-            BlueprintName = "omnom"
+            BlueprintIdentifier = "936AC0D21AD8BDBC00A9D17F"
+            BuildableName = "Travelers.app"
+            BlueprintName = "Travelers"
             ReferencedContainer = "container:omnom.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -61,9 +52,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "93676DE818D1E4FC00FC55F1"
-            BuildableName = "omnom.app"
-            BlueprintName = "omnom"
+            BlueprintIdentifier = "936AC0D21AD8BDBC00A9D17F"
+            BuildableName = "Travelers.app"
+            BlueprintName = "Travelers"
             ReferencedContainer = "container:omnom.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,15 +65,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "93676DE818D1E4FC00FC55F1"
-            BuildableName = "omnom.app"
-            BlueprintName = "omnom"
+            BlueprintIdentifier = "936AC0D21AD8BDBC00A9D17F"
+            BuildableName = "Travelers.app"
+            BlueprintName = "Travelers"
             ReferencedContainer = "container:omnom.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -91,7 +82,7 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "AppStore"
+      buildConfiguration = "Release"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

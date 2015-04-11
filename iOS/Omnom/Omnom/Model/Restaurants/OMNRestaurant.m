@@ -24,10 +24,6 @@ NSString * const OMNRestaurantNotificationLaunchKey = @"OMNRestaurantNotificatio
 
 OMNRestaurantMode entranceModeFromString(NSString *string) {
 
-#warning kRestaurantModeBar
-//  return kRestaurantModeLunch;
-//  return kRestaurantModeBar;
-  
   if (0 == string.length) {
     return kRestaurantModeNone;
   }
