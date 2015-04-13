@@ -108,6 +108,9 @@
 #define kOMN_LUNCH_DONE_FORMAT NSLocalizedString(@"LUNCH_DONE_FORMAT %@ %@", @"Заказ будет доставлен по адресу\n{address}\nв {date}\nориентировачно в 13:00.")
 #define kOMN_LUNCH_DELIVERY_HINT_FORMAT NSLocalizedString(@"LUNCH_DELIVERY_HINT_FORMAT %@ %@", @"Доставка на {date} по адресу:\n{address}")
 
+//restaurant
+#define kOMN_RESTAURANT_WISH_DONE_TEXT NSLocalizedString(@"RESTAURANT_WISH_DONE_TEXT", @"Как только заказ будет готов, официант принесёт его вам")
+
 //title
 #define kOMN_RESTAURANT_ADDRESS_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_ADDRESS_SELECTION_TITLE", @"Куда")
 #define kOMN_RESTAURANT_DATE_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_DATE_SELECTION_TITLE", @"Когда")

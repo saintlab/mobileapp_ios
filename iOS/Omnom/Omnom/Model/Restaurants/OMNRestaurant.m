@@ -78,8 +78,8 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
       _orders_paid_url = [NSURL URLWithString:orders_paid_url];
     }
     
-#warning TODO
-//    _entrance_mode = kRestaurantModeNone;
+#warning TODO delivery_dates
+    _entrance_mode = kRestaurantModeNone;
     _delivery_dates =
     @[
       @"1/04/2015",

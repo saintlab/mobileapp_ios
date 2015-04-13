@@ -10,6 +10,8 @@
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
 
+#define kPaymentLoadingDiration 20.0
+
 @implementation OMNPaymentLoadingVC
 
 - (instancetype)init {
@@ -17,7 +19,7 @@
   if (self) {
 
     self.circleIcon = [UIImage imageNamed:@"flying_credit_card_icon"];
-    self.estimateAnimationDuration = 15.0;
+    self.estimateAnimationDuration = kPaymentLoadingDiration;
     UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"000000")];
     self.circleBackground = circleBackground;
     
@@ -28,7 +30,7 @@
 - (void)startLoading {
   
   [self.loaderView setLoaderColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
-  [self.loaderView startAnimating:15.0];
+  [self.loaderView startAnimating:kPaymentLoadingDiration];
   
 }
 
@@ -41,7 +43,7 @@
     [self setText:error.localizedDescription];
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:actionBlock]
+      [OMNBarButtonInfo infoWithTitle:kOMN_OK_BUTTON_TITLE image:nil block:actionBlock]
       ];
     [self updateActionBoard];
     [self.view layoutIfNeeded];

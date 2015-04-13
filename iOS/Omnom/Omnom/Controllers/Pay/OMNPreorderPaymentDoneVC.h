@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNPaymentDoneVC.h"
+#import "OMNPaymentLabeledDoneVC.h"
 
-@interface OMNPreorderPaymentDoneVC : OMNPaymentDoneVC
+@interface OMNPreorderPaymentDoneVC : OMNPaymentLabeledDoneVC
 
 @end

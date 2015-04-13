@@ -33,7 +33,7 @@
     _restaurantMediator = restaurantMediator;
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Ок", nil) image:nil block:didCloseBlock]
+      [OMNBarButtonInfo infoWithTitle:kOMN_OK_BUTTON_TITLE image:nil block:didCloseBlock]
       ];
     
   }

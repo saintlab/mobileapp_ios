@@ -8,6 +8,6 @@
 
 #import "OMNVisitor.h"
 
-@interface OMNRestaurantVisitor : OMNVisitor
+@interface OMNRestaurantInVisitor : OMNVisitor
 
 @end

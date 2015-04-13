@@ -113,7 +113,7 @@
   
   _okButton.titleLabel.font = FuturaLSFOmnomLERegular(20);
   [_okButton setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateNormal];
-  [_okButton setTitle:@"ОК" forState:UIControlStateNormal];
+  [_okButton setTitle:kOMN_OK_BUTTON_TITLE forState:UIControlStateNormal];
   [_okButton setBackgroundImage:[[UIImage imageNamed:@"button_order"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 20.0f, 0.0f, 20.0f)] forState:UIControlStateNormal];
   [_okButton addTarget:self action:@selector(orderTap) forControlEvents:UIControlEventTouchUpInside];
   

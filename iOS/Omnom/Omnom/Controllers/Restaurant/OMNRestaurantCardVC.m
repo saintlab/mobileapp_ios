@@ -21,7 +21,7 @@
 
 #import "OMNBarVisitor.h"
 #import "OMNPreorderVisitor.h"
-#import "OMNRestaurantVisitor.h"
+#import "OMNRestaurantInVisitor.h"
 
 @implementation OMNRestaurantCardVC {
   
@@ -176,7 +176,7 @@
 }
 
 - (void)inRestaurantTap {
-  [_searchRestaurantMediator showVisitor:[OMNRestaurantVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]]];
+  [_searchRestaurantMediator showVisitor:[OMNRestaurantInVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]]];
 }
 
 - (void)closeTap {
