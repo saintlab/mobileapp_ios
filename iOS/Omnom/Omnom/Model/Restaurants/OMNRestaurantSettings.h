@@ -17,6 +17,7 @@
 @property (nonatomic, assign, readonly) BOOL has_pre_order;
 @property (nonatomic, assign, readonly) BOOL has_lunch;
 @property (nonatomic, assign, readonly) BOOL has_table_order;
+@property (nonatomic, assign, readonly) BOOL has_restaurant_order;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 

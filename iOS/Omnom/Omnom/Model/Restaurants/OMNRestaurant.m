@@ -36,6 +36,7 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
       @"none" : @(kRestaurantModeNone),
       @"bar" : @(kRestaurantModeBar),
       @"lunch" : @(kRestaurantModeLunch),
+      @"restaurant" : @(kRestaurantModeIn),
       };
   });
   
@@ -101,21 +102,15 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-  
   [aCoder encodeObject:_jsonData forKey:@"jsonData"];
-  
 }
 
 - (BOOL)hasTable {
-  
   return (1 == self.tables.count);
-  
 }
 
 - (BOOL)hasOrders {
-  
   return (self.orders.count > 0);
-  
 }
 
 - (BOOL)canProcess {
@@ -133,7 +128,8 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
   
   if (kRestaurantModeBar == self.entrance_mode ||
       kRestaurantModeLunch == self.entrance_mode ||
-      kRestaurantModePreorder == self.entrance_mode) {
+      kRestaurantModePreorder == self.entrance_mode ||
+      kRestaurantModeIn == self.entrance_mode) {
     
     return YES;
     
@@ -144,9 +140,7 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
 }
 
 - (NSString *)description {
-  
   return [NSString stringWithFormat:@"%@, %@", _title, _id];
-  
 }
 
 @end

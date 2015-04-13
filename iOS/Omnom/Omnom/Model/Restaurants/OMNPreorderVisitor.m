@@ -16,4 +16,11 @@
   return [[OMNPreorderRestaurantMediator alloc] initWithVisitor:self rootViewController:rootVC];
 }
 
+- (NSDictionary *)menuParameters {
+  return
+  @{
+    @"tags" : @"take_away",
+    };
+}
+
 @end

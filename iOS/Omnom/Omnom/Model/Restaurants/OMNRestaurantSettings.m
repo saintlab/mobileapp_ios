@@ -27,6 +27,7 @@
     _has_pre_order = [jsonData[@"has_pre_order"] boolValue];
     _has_table_order = [jsonData[@"has_table_order"] boolValue];
     _has_lunch = [jsonData[@"has_lunch"] boolValue];
+    _has_restaurant_order = [jsonData[@"has_restaurant_order"] boolValue];
     
 #if DEBUG
 #warning 123
@@ -34,6 +35,7 @@
     _has_lunch = YES;
     _has_pre_order = YES;
     _has_table_order = YES;
+    _has_restaurant_order = YES;
 #endif
     
   }

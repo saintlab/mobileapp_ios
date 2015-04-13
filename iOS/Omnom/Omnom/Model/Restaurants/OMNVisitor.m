@@ -80,6 +80,13 @@
   
 }
 
+- (NSDictionary *)menuParameters {
+  return
+  @{
+    @"tags" : @"in",
+    };
+}
+
 - (void)getMenuWithCompletion:(OMNMenuBlock)completion {
   
   if (NO) {
@@ -91,7 +98,7 @@
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/menu", self.restaurant.id];
   @weakify(self)
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNOperationManager sharedManager] GET:path parameters:self.menuParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject omn_isSuccessResponse]) {
       

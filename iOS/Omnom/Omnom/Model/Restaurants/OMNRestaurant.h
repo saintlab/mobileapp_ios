@@ -22,12 +22,10 @@
 typedef NS_ENUM(NSInteger, OMNRestaurantMode) {
   
   kRestaurantModeNone = 0,
-  kRestaurantModeInside,
   kRestaurantModePreorder,
-  kRestaurantModeBookTable,
-  
   kRestaurantModeBar,
   kRestaurantModeLunch,
+  kRestaurantModeIn,
   
 };
 

@@ -11,6 +11,7 @@
 #import "OMNBarVisitor.h"
 #import "OMNLunchVisitor.h"
 #import "OMNPreorderVisitor.h"
+#import "OMNRestaurantVisitor.h"
 
 @implementation OMNVisitorFactory
 
@@ -33,7 +34,14 @@
       
     } break;
     case kRestaurantModePreorder: {
+
       visitor = [OMNPreorderVisitor  visitorWithRestaurant:restaurant delivery:[OMNDelivery delivery]];
+      
+    } break;
+    case kRestaurantModeIn: {
+      
+      visitor = [OMNRestaurantVisitor  visitorWithRestaurant:restaurant delivery:[OMNDelivery delivery]];
+      
     } break;
     default: {
       

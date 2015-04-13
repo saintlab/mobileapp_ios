@@ -20,9 +20,11 @@
 
 //buttons
 #define kOMN_RESTAURANT_MODE_BAR_TITLE NSLocalizedString(@"RESTAURANT_MODE_BAR_TITLE", @"В бар")
-#define kOMN_RESTAURANT_MODE_IN_TITLE NSLocalizedString(@"RESTAURANT_MODE_IN_TITLE", @"За стол")
+#define kOMN_RESTAURANT_MODE_TABLE_TITLE NSLocalizedString(@"RESTAURANT_MODE_TABLE_TITLE", @"За стол")
+#define kOMN_RESTAURANT_MODE_RESTAURANT_TITLE NSLocalizedString(@"RESTAURANT_MODE_RESTAURANT_TITLE", @"Заказать\nвнутри")
 #define kOMN_RESTAURANT_MODE_LUNCH_TITLE NSLocalizedString(@"RESTAURANT_MODE_LUNCH_TITLE", @"Заказ\nобеда\nв офис")
 #define kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE NSLocalizedString(@"RESTAURANT_MODE_TAKE_AWAY_TITLE", @"Заказ\nна вынос")
+
 #define kOMN_CLOSE_BUTTON_TITLE NSLocalizedString(@"CLOSE_BUTTON_TITLE", @"Закрыть")
 #define kOMN_NEXT_BUTTON_TITLE NSLocalizedString(@"NEXT_BUTTON_TITLE", @"Далее")
 #define kOMN_OK_BUTTON_TITLE NSLocalizedString(@"Ok", @"Ok")

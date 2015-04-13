@@ -124,9 +124,7 @@ OMNScanTableQRCodeVCDelegate>
 }
 
 - (void)showVisitor:(OMNVisitor *)visitor {
-  
   [_rootVC.navigationController pushViewController:[self restaurantActionsVCForVisitor:visitor] animated:YES];
-  
 }
 
 - (void)showRestaurants:(NSArray *)restaurants {
