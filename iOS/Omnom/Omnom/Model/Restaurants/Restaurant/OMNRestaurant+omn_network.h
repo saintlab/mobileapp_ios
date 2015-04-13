@@ -8,13 +8,11 @@
 
 #import "OMNRestaurant.h"
 #import <CoreLocation/CoreLocation.h>
-#import "OMNWish.h"
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNProductItemsBlock)(NSArray *productItems);
 typedef void(^OMNAddressesBlock)(NSArray *addresses);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
-typedef void(^OMNMenuBlock)(OMNMenu *menu);
 
 @interface OMNRestaurant (omn_network)
 
@@ -29,7 +27,6 @@ typedef void(^OMNMenuBlock)(OMNMenu *menu);
 - (void)entranceWithCompletion:(dispatch_block_t)completionBlock;;
 - (void)nearbyWithCompletion:(dispatch_block_t)completionBlock;;
 
-- (void)getMenuWithCompletion:(OMNMenuBlock)completion;
 - (void)getRecommendationItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock;
 
 @end

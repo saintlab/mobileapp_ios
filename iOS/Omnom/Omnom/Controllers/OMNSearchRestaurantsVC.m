@@ -37,6 +37,13 @@
   [self stopBeaconSearchManager];
 }
 
+- (instancetype)init {
+  self = [super initWithParent:nil];
+  if (self) {
+  }
+  return self;
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   

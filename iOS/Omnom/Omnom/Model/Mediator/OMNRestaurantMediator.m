@@ -77,7 +77,7 @@ OMNOrderCalculationVCDelegate>
     }
     _shouldShowOrdersOnLaunch = (_restaurant.orders.count > 0);
     @weakify(self)
-    [_restaurant getMenuWithCompletion:^(OMNMenu *menu) {
+    [self.visitor getMenuWithCompletion:^(OMNMenu *menu) {
       
       @strongify(self)
       self.menu = menu;

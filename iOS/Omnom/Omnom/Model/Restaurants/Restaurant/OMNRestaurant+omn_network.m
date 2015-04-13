@@ -288,45 +288,6 @@
   
 }
 
-- (void)getMenuWithCompletion:(OMNMenuBlock)completion {
-
-  if (NO) {
-    id data = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"menu_stub1.json" ofType:nil]] options:kNilOptions error:nil];
-    OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:data[@"menu"]];
-    completion(menu);
-    return;
-  }
-
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/menu", self.id];
-  @weakify(self)
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    if ([responseObject omn_isSuccessResponse]) {
-
-      OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject[@"menu"]];
-      completion(menu);
-      
-    }
-    else {
-    
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MENU" jsonRequest:path responseOperation:operation];
-      completion(nil);
-      
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_MENU" jsonRequest:path responseOperation:operation];
-    @strongify(self)
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      [self getMenuWithCompletion:completion];
-    });
-    
-  }];
-  
-}
-
-
 - (void)getRecommendationItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/recommendations", self.id];

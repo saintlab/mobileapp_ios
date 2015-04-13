@@ -1444,6 +1444,10 @@
 		93998C1219ACB0F800FEE940 /* UILabel+numberOfLines.m in Sources */ = {isa = PBXBuildFile; fileRef = 93998C1119ACB0F800FEE940 /* UILabel+numberOfLines.m */; };
 		93998C1519ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */; };
 		93998C1619ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */; };
+		939CA1EA1ADB8B0F00F268F3 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 939CA1E91ADB8B0F00F268F3 /* Icons.xcassets */; };
+		939CA1EB1ADB8B0F00F268F3 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 939CA1E91ADB8B0F00F268F3 /* Icons.xcassets */; };
+		939CA1EC1ADB8B0F00F268F3 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 939CA1E91ADB8B0F00F268F3 /* Icons.xcassets */; };
+		939CA1ED1ADB8B0F00F268F3 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 939CA1E91ADB8B0F00F268F3 /* Icons.xcassets */; };
 		939DA162195405650063AB23 /* OMNAuthorizationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA160195405650063AB23 /* OMNAuthorizationVC.m */; };
 		939DA163195405650063AB23 /* OMNAuthorizationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA160195405650063AB23 /* OMNAuthorizationVC.m */; };
 		939DA1761958226B0063AB23 /* OMNAnalitics.m in Sources */ = {isa = PBXBuildFile; fileRef = 939DA1751958226B0063AB23 /* OMNAnalitics.m */; };
@@ -2173,6 +2177,7 @@
 		93998C1119ACB0F800FEE940 /* UILabel+numberOfLines.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+numberOfLines.m"; sourceTree = "<group>"; };
 		93998C1319ACB6BD00FEE940 /* OMNScrollExtendView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNScrollExtendView.h; sourceTree = "<group>"; };
 		93998C1419ACB6BD00FEE940 /* OMNScrollExtendView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNScrollExtendView.m; sourceTree = "<group>"; };
+		939CA1E91ADB8B0F00F268F3 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Icons.xcassets; path = ../Icons.xcassets; sourceTree = "<group>"; };
 		939DA15F195405650063AB23 /* OMNAuthorizationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorizationVC.h; sourceTree = "<group>"; };
 		939DA160195405650063AB23 /* OMNAuthorizationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationVC.m; sourceTree = "<group>"; };
 		939DA1741958226B0063AB23 /* OMNAnalitics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAnalitics.h; sourceTree = "<group>"; };
@@ -3224,6 +3229,7 @@
 				93676DFC18D1E4FC00FC55F1 /* GAppDelegate.m */,
 				93676E0718D1E4FC00FC55F1 /* Images.xcassets */,
 				936AC23B1AD8BE7800A9D17F /* Travelers.xcassets */,
+				939CA1E91ADB8B0F00F268F3 /* Icons.xcassets */,
 				93676DF318D1E4FC00FC55F1 /* Supporting Files */,
 			);
 			path = Omnom;
@@ -4277,6 +4283,7 @@
 				930C4E771AB15E1B006CA608 /* tips.json in Resources */,
 				930C4E781AB15E1B006CA608 /* new_guest.caf in Resources */,
 				930C4E791AB15E1B006CA608 /* OMNOrderCell.json in Resources */,
+				939CA1EC1ADB8B0F00F268F3 /* Icons.xcassets in Resources */,
 				930C4E7A1AB15E1B006CA608 /* OMNUserInfoVC.xib in Resources */,
 				930C4E7B1AB15E1B006CA608 /* OMNWizardPageVC.json in Resources */,
 				930C4E7C1AB15E1B006CA608 /* OMNWizardVC.xib in Resources */,
@@ -4321,6 +4328,7 @@
 				930C8C681ACA7D9F00CE4E5A /* tips.json in Resources */,
 				930C8C691ACA7D9F00CE4E5A /* new_guest.caf in Resources */,
 				930C8C6A1ACA7D9F00CE4E5A /* OMNOrderCell.json in Resources */,
+				939CA1ED1ADB8B0F00F268F3 /* Icons.xcassets in Resources */,
 				930C8C6B1ACA7D9F00CE4E5A /* OMNUserInfoVC.xib in Resources */,
 				930C8C6C1ACA7D9F00CE4E5A /* OMNWizardPageVC.json in Resources */,
 				930C8C6D1ACA7D9F00CE4E5A /* OMNWizardVC.xib in Resources */,
@@ -4365,6 +4373,7 @@
 				9391F65A1A5D5DAA00594CD5 /* tips.json in Resources */,
 				932B186C19AF3C80009E440E /* new_guest.caf in Resources */,
 				9390D2611966E559007E13AB /* OMNOrderCell.json in Resources */,
+				939CA1EA1ADB8B0F00F268F3 /* Icons.xcassets in Resources */,
 				939F991E19752BE90051822E /* OMNUserInfoVC.xib in Resources */,
 				938F3A4F198BECF300AB288E /* OMNWizardPageVC.json in Resources */,
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
@@ -4405,6 +4414,7 @@
 				938F3A53198BF01C00AB288E /* OMNDefaultStyle.json in Resources */,
 				9390D25919668A3A007E13AB /* OMNEditTableVC.json in Resources */,
 				9391F65B1A5D5DAA00594CD5 /* tips.json in Resources */,
+				939CA1EB1ADB8B0F00F268F3 /* Icons.xcassets in Resources */,
 				9390D2681966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
 				933AB0D719C1D4D8004D8F55 /* Localizable.strings in Resources */,
 				93F2AEF21A6E7FCB00CDF3D9 /* menu_stub.json in Resources */,
