@@ -11,13 +11,13 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNToolbarButton.h"
 #import "OMNBorderedButton.h"
-#import "OMNBottomTextButton.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 #import "UINavigationBar+omn_custom.h"
 #import <BlocksKit.h>
 #import "OMNLunchOrderAlertVC.h"
+#import "OMNRestaurantCardButtonsView.h"
 
 #import "OMNBarVisitor.h"
 #import "OMNPreorderVisitor.h"
@@ -35,7 +35,7 @@
   OMNSearchRestaurantMediator *_searchRestaurantMediator;
   UIView *_bottomView;
   UIView *_contentView;
- 
+  OMNRestaurantCardButtonsView *_buttonsView;
   NSString *_restaurantDecorationObserverID;
   
 }
@@ -66,7 +66,13 @@
   [self.navigationItem setHidesBackButton:YES animated:NO];
   [self.navigationController setNavigationBarHidden:NO animated:NO];
   
-  [self setup];
+  [self omn_setup];
+
+  [_buttonsView.barButton addTarget:self action:@selector(barTap) forControlEvents:UIControlEventTouchUpInside];
+  [_buttonsView.onTableButton addTarget:self action:@selector(onTableTap) forControlEvents:UIControlEventTouchUpInside];
+  [_buttonsView.inRestaurantButton addTarget:self action:@selector(inRestaurantTap) forControlEvents:UIControlEventTouchUpInside];
+  [_buttonsView.lunchButton addTarget:self action:@selector(lunchTap) forControlEvents:UIControlEventTouchUpInside];
+  [_buttonsView.preorderButton addTarget:self action:@selector(preorderTap) forControlEvents:UIControlEventTouchUpInside];
   
   self.navigationItem.titleView = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
@@ -191,7 +197,7 @@
   return UIStatusBarStyleDefault;
 }
 
-- (void)setup {
+- (void)omn_setup {
   
   _scroll = [UIScrollView omn_autolayoutView];
   [self.view addSubview:_scroll];
@@ -215,85 +221,9 @@
   _restaurantDetailsView = [OMNRestaurantDetailsView omn_autolayoutView];
   [_contentView addSubview:_restaurantDetailsView];
   
-  UIView *buttonsView = [UIView omn_autolayoutView];
-  [_bottomView addSubview:buttonsView];
+  _buttonsView = [[OMNRestaurantCardButtonsView alloc] initWithRestaurant:_restaurant];
+  [_bottomView addSubview:_buttonsView];
   
-  NSMutableArray *buttons = [NSMutableArray array];
-  UIColor *defaultColor = [OMNStyler blueColor];
-  UIColor *disabledColor = colorWithHexString(@"A1A1A1");
-
-  OMNRestaurantSettings *settings = _restaurant.settings;
-  if (settings.has_bar) {
-    
-    OMNBottomTextButton *barButton = [OMNBottomTextButton omn_autolayoutView];
-    [barButton setTitle:kOMN_RESTAURANT_MODE_BAR_TITLE image:[UIImage imageNamed:@"card_ic_bar"] highlightedImage:[UIImage imageNamed:@"card_ic_bar_selected"] color:defaultColor disabledColor:disabledColor];
-    [barButton addTarget:self action:@selector(barTap) forControlEvents:UIControlEventTouchUpInside];
-    [buttons addObject:barButton];
-  }
-  
-  if (settings.has_table_order) {
-    
-    OMNBottomTextButton *orderButton = [OMNBottomTextButton omn_autolayoutView];
-    [orderButton setTitle:kOMN_RESTAURANT_MODE_TABLE_TITLE image:[UIImage imageNamed:@"card_ic_table"] highlightedImage:[UIImage imageNamed:@"card_ic_table_selected"] color:defaultColor disabledColor:disabledColor];
-    [orderButton addTarget:self action:@selector(onTableTap) forControlEvents:UIControlEventTouchUpInside];
-    [buttons addObject:orderButton];
-    
-  }
-  
-  if (settings.has_restaurant_order) {
-    
-    OMNBottomTextButton *orderButton = [OMNBottomTextButton omn_autolayoutView];
-    [orderButton setTitle:kOMN_RESTAURANT_MODE_RESTAURANT_TITLE image:[UIImage imageNamed:@"card_ic_table"] highlightedImage:[UIImage imageNamed:@"card_ic_table_selected"] color:defaultColor disabledColor:disabledColor];
-    [orderButton addTarget:self action:@selector(inRestaurantTap) forControlEvents:UIControlEventTouchUpInside];
-    [buttons addObject:orderButton];
-    
-  }
-  
-  if (settings.has_lunch) {
-    
-    OMNBottomTextButton *lunchButton = [OMNBottomTextButton omn_autolayoutView];
-    [lunchButton setTitle:kOMN_RESTAURANT_MODE_LUNCH_TITLE image:[UIImage imageNamed:@"card_ic_order"] highlightedImage:[UIImage imageNamed:@"card_ic_order_selected"] color:defaultColor disabledColor:disabledColor];
-    [lunchButton addTarget:self action:@selector(lunchTap) forControlEvents:UIControlEventTouchUpInside];
-    [buttons addObject:lunchButton];
-    
-  }
-  
-  if (settings.has_pre_order) {
-    
-    OMNBottomTextButton *preorderButton = [OMNBottomTextButton omn_autolayoutView];
-    [preorderButton setTitle:kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE image:[UIImage imageNamed:@"card_ic_takeaway"] highlightedImage:[UIImage imageNamed:@"card_ic_takeaway_selected"] color:defaultColor disabledColor:disabledColor];
-    [preorderButton addTarget:self action:@selector(preorderTap) forControlEvents:UIControlEventTouchUpInside];
-    [buttons addObject:preorderButton];
-    
-  }
-  
-  NSMutableDictionary *buttonViews = [NSMutableDictionary dictionary];
-  UIView *fillView = [UIView omn_autolayoutView];
-  [buttonsView addSubview:fillView];
-  buttonViews[@"v0"] = fillView;
-  NSMutableString *format = [NSMutableString stringWithString:@"H:|[v0(>=0)]"];
-  
-  [buttons enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL *stop) {
-    
-    NSString *buttonName = [NSString stringWithFormat:@"b%lu", (unsigned long)idx];
-    buttonViews[buttonName] = button;
-    [format appendFormat:@"[%@]", buttonName];
-    
-    NSString *fillViewName = [NSString stringWithFormat:@"v%lu", (unsigned long)idx + 1];
-    UIView *fillView = [UIView omn_autolayoutView];
-    [buttonsView addSubview:fillView];
-    buttonViews[fillViewName] = fillView;
-    
-    [format appendFormat:@"[%@(==v0)]", fillViewName];
-    
-    [buttonsView addSubview:button];
-    [buttonsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|[%@]|", buttonName] options:kNilOptions metrics:nil views:buttonViews]];
-    
-  }];
-  
-  [format appendString:@"|"];
-  [buttonsView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:format options:kNilOptions metrics:nil views:buttonViews]];
-#warning TODO: add buttonsView class
   NSDictionary *views =
   @{
     @"contentView" : _contentView,
@@ -302,7 +232,7 @@
     @"logoIcon" : _logoIcon,
     @"phoneButton" : _phoneButton,
     @"restaurantDetailsView" : _restaurantDetailsView,
-    @"buttonsView" : buttonsView,
+    @"buttonsView" : _buttonsView,
     };
 
   NSDictionary *metrics =
