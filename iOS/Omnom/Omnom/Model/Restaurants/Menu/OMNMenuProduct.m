@@ -41,18 +41,6 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   return self;
 }
 
-- (BOOL)hasPhoto {
-  
-  return (self.photo.length > 0);
-  
-}
-
-- (BOOL)hasRecommendations {
-  
-  return (self.recommendations.count > 0);
-  
-}
-
 - (void)setQuantity:(double)quantity {
   
   _quantity = quantity;
@@ -61,15 +49,11 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
 }
 
 - (long long)total {
-  
   return (long long int) (self.price*self.quantity);
-  
 }
 
 - (NSString *)description {
-  
   return [NSString stringWithFormat:@"%@, name = %@, id = %@", NSStringFromClass(self.class), self.name, self.id];
-  
 }
 
 - (NSAttributedString *)shortDescription {
@@ -79,14 +63,19 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   }
   
   NSString *description = self.Description;
-  NSInteger descriptionLength = 35;
-  if (description.length > descriptionLength) {
-    description = [description substringToIndex:descriptionLength];
+  NSInteger descriptionMaxLength = 35;
+  NSAttributedString *moreString = [[NSAttributedString alloc] initWithString:@""];
+  if (description.length > descriptionMaxLength) {
+    
+    description = [description substringToIndex:descriptionMaxLength];
+    description = [description stringByAppendingString:@"... "];
+   
+    moreString = [[NSAttributedString alloc] initWithString:kOMN_SHOW_MORE_STRING attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(15.0f) textColor:[OMNStyler blueColor] textAlignment:NSTextAlignmentCenter]];
+    
   }
-  description = [description stringByAppendingString:@"..."];
 
   NSMutableAttributedString *descriptionAttributedString = [[NSMutableAttributedString alloc] initWithString:description attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(15.0f) textColor:colorWithHexString(@"000000") textAlignment:NSTextAlignmentCenter]];
-  [descriptionAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"ещё", @"ещё") attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(15.0f) textColor:[OMNStyler blueColor] textAlignment:NSTextAlignmentCenter]]];
+  [descriptionAttributedString appendAttributedString:moreString];
   
   return descriptionAttributedString;
   
@@ -113,19 +102,19 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
 }
 
 - (BOOL)preordered {
-  
   return (_quantity > 0.0);
-  
 }
 
 - (BOOL)showRecommendations {
-  
-  return
-  (
-   self.preordered &&
-   self.hasRecommendations
-  );
-  
+  return (self.preordered && self.hasRecommendations);
+}
+
+- (BOOL)hasPhoto {
+  return (self.photo.length > 0);
+}
+
+- (BOOL)hasRecommendations {
+  return (self.recommendations.count > 0);
 }
 
 - (void)resetSelection {

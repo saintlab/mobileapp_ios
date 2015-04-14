@@ -32,6 +32,7 @@
 #define kOMN_LUNCH_ALERT_SELECT_DATE_TITLE NSLocalizedString(@"LUNCH_ALERT_SELECT_DATE_TITLE", @"Выберите дату")
 #define kOMN_ALLOW_BUTTON_TITLE NSLocalizedString(@"ALLOW_BUTTON_TITLE", @"Разрешить")
 #define kOMN_LATER_BUTTON_TITLE NSLocalizedString(@"LATER_BUTTON_TITLE", @"Позже")
+#define kOMN_SHOW_MORE_STRING NSLocalizedString(@"SHOW_MORE_STRING", @"ещё")
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
