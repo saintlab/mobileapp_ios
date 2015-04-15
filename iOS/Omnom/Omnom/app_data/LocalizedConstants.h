@@ -25,6 +25,8 @@
 #define kOMN_RESTAURANT_MODE_LUNCH_TITLE NSLocalizedString(@"RESTAURANT_MODE_LUNCH_TITLE", @"Заказ\nобеда\nв офис")
 #define kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE NSLocalizedString(@"RESTAURANT_MODE_TAKE_AWAY_TITLE", @"Заказ\nна вынос")
 
+#define kOMN_SAVE_BUTTON_TITLE NSLocalizedString(@"SAVE_BUTTON_TITLE", @"Сохранить")
+#define kOMN_CANCEL_BUTTON_TITLE NSLocalizedString(@"CANCEL_BUTTON_TITLE", @"Отмена")
 #define kOMN_CLOSE_BUTTON_TITLE NSLocalizedString(@"CLOSE_BUTTON_TITLE", @"Закрыть")
 #define kOMN_NEXT_BUTTON_TITLE NSLocalizedString(@"NEXT_BUTTON_TITLE", @"Далее")
 #define kOMN_OK_BUTTON_TITLE NSLocalizedString(@"Ok", @"Ok")
@@ -33,6 +35,11 @@
 #define kOMN_ALLOW_BUTTON_TITLE NSLocalizedString(@"ALLOW_BUTTON_TITLE", @"Разрешить")
 #define kOMN_LATER_BUTTON_TITLE NSLocalizedString(@"LATER_BUTTON_TITLE", @"Позже")
 #define kOMN_SHOW_MORE_STRING NSLocalizedString(@"SHOW_MORE_STRING", @"ещё")
+#define kOMN_USER_INFO_CHANGE_BUTTON_TITLE NSLocalizedString(@"USER_INFO_CHANGE_BUTTON_TITLE", @"Изменить")
+#define kOMN_USER_INFO_FACEBOOK_TITLE NSLocalizedString(@"USER_INFO_FACEBOOK_TITLE", @"facebook/Omnom")
+#define kOMN_USER_PHOTO_DELETE_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_DELETE_BUTTON_TITLE", @"Удалить текущий снимок")
+#define kOMN_USER_PHOTO_SHOOT_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_SHOOT_BUTTON_TITLE", @"Сделать снимок")
+#define kOMN_USER_PHOTO_CHOOSE_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_CHOOSE_BUTTON_TITLE", @"Выбрать из библиотеки")
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
@@ -51,7 +58,7 @@
 #define kOMN_SEARCH_PRODUCT_HINT_TEXT NSLocalizedString(@"SEARCH_PRODUCT_HINT_TEXT", @"Увы, но такого блюда\nнет в нашем меню")
 
 #define kOMN_PUSH_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"PUSH_PERMISSION_DESCRIPTION_TEXT", @"Разрешить Omnom получить push-уведомления")
-
+#define kOMN_CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение\nна доступ к камере.")
 
 //orders
 #define kOMN_NO_ORDERS_ON_TABLE_TEXT NSLocalizedString(@"NO_ORDERS_ON_TABLE_TEXT", @"На вашем столике нет счетов");
@@ -116,6 +123,7 @@
 #define kOMN_RESTAURANT_ADDRESS_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_ADDRESS_SELECTION_TITLE", @"Куда")
 #define kOMN_RESTAURANT_DATE_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_DATE_SELECTION_TITLE", @"Когда")
 #define kOMN_ORDER_LUNCH_ALERT_TITLE NSLocalizedString(@"ORDER_LUNCH_ALERT_TITLE", @"Заказ обада в офис")
+#define kOMN_USER_INFO_ABOUT_SECTION_TITLE NSLocalizedString(@"USER_INFO_ABOUT_SECTION_TITLE", @"О ПРОГРАММЕ")
 
 //bank card
 #define kOMN_CARD_CONFIRM_OTHER_ERROR NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку")

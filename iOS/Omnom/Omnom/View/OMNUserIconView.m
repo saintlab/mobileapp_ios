@@ -29,9 +29,7 @@
 }
 
 - (void)omn_setup {
-  
   [self setBackgroundImage:[UIImage imageNamed:@"avatar_circle"] forState:UIControlStateNormal];
-  
 }
 
 - (void)updateWithImage:(UIImage *)image {

@@ -10,9 +10,7 @@
 #import "OMNConstants.h"
 #import <OMNStyler.h>
 
-@implementation OMNUserInfoCell {
-  
-}
+@implementation OMNUserInfoCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -58,6 +56,16 @@
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[button]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
 
+}
+
+- (void)setItem:(OMNUserInfoItem *)item {
+  
+  _item = item;
+  self.accessoryType = item.cellAccessoryType;
+  [self.button setTitle:item.title forState:UIControlStateNormal];
+  self.button.contentHorizontalAlignment = item.contentHorizontalAlignment;
+  [self.button setTitleColor:item.titleColor forState:UIControlStateNormal];
+  
 }
 
 @end

@@ -20,5 +20,6 @@ UITableViewDelegate>
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 - (void)reloadUserInfo;
+- (void)configureTableView:(UITableView *)tableView;
 
 @end

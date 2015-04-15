@@ -9,115 +9,36 @@
 #import "OMNUserInfoVC.h"
 #import "OMNAuthorization.h"
 #import "OMNUserInfoModel.h"
-#import <OMNStyler.h>
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNEditUserVC.h"
-#import "OMNUserIconView.h"
 #import <BlocksKit+UIKit.h>
-
-@interface OMNUserInfoVC ()
-<OMNEditUserVCDelegate>
-
-@end
 
 @implementation OMNUserInfoVC {
   
   OMNUserInfoModel *_userInfoModel;
-  
-  __weak IBOutlet UILabel *_userNameLabel;
-  __weak IBOutlet OMNUserIconView *_iconView;
-
-  NSString *_userObserverIdentifier;
-  NSString *_userImageObserverIdentifier;
   OMNRestaurantMediator *_restaurantMediator;
   
 }
 
-- (void)dealloc {
-  
-  if (_userObserverIdentifier) {
-    
-    [[OMNAuthorization authorisation] bk_removeObserversWithIdentifier:_userObserverIdentifier];
-    _userObserverIdentifier = nil;
-    
-  }
-  if (_userImageObserverIdentifier) {
-    
-    [[OMNAuthorization authorisation].user bk_removeObserversWithIdentifier:_userImageObserverIdentifier];
-    _userImageObserverIdentifier = nil;
-    
-  }
-  
-}
-
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
-  self = [super initWithNibName:@"OMNUserInfoVC" bundle:nil];
+  self = [super initWithStyle:UITableViewStyleGrouped];
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-    
+
   }
   return self;
-}
-
-- (void)updateUserInfo {
-  
-  OMNUser *user = [OMNAuthorization authorisation].user;
-  NSString *name = (user.name.length) ? (user.name) : (@"no name");
-  NSString *emailPhone = [NSString stringWithFormat:@"%@\n%@", user.email, user.phone];
-  NSString *text = [NSString stringWithFormat:@"%@\n%@", name, emailPhone];
-  
-  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
-  
-  [attributedString setAttributes:
-   @{
-     NSForegroundColorAttributeName : colorWithHexString(@"000000"),
-     NSFontAttributeName : FuturaOSFOmnomRegular(20.0f),
-     } range:[text rangeOfString:name]];
-
-  [attributedString setAttributes:
-   @{
-     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f],
-     NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
-     } range:[text rangeOfString:emailPhone]];
-  
-  _userNameLabel.attributedText = attributedString;
-  
-}
-
-- (void)updateUserImage {
-  
-  [_iconView updateWithImage:[OMNAuthorization authorisation].user.image];
-  
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   
   self.navigationItem.title = @"";
-  
+  self.view.backgroundColor = [UIColor whiteColor];
   _userInfoModel = [[OMNUserInfoModel alloc] initWithMediator:_restaurantMediator];
-  self.tableView.dataSource = _userInfoModel;
-  self.tableView.delegate = _userInfoModel;
-  self.tableView.tableFooterView = [[UIView alloc] init];
-  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  [_userInfoModel configureTableView:self.tableView];
   
-  OMNAuthorization *authorisation = [OMNAuthorization authorisation];
   @weakify(self)
-  _userObserverIdentifier = [authorisation bk_addObserverForKeyPath:NSStringFromSelector(@selector(user)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
-    
-    @strongify(self)
-    [self updateUserInfo];
-    
-  }];
-
-  _userImageObserverIdentifier = [authorisation.user bk_addObserverForKeyPath:NSStringFromSelector(@selector(image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
-    
-    @strongify(self)
-    [self updateUserImage];
-    
-  }];
-  
   _userInfoModel.didSelectBlock = ^UIViewController *(UITableView *tableView, NSIndexPath *indexPath) {
     
     @strongify(self)
@@ -125,52 +46,50 @@
     
   };
   
-  UIColor *backgroundColor = [UIColor whiteColor];
-  
-  _userNameLabel.numberOfLines = 3;
-  _userNameLabel.backgroundColor = backgroundColor;
-  _userNameLabel.opaque = YES;
-  _userNameLabel.textColor = colorWithHexString(@"000000");
-  _userNameLabel.font = FuturaLSFOmnomLERegular(20.0f);
-  
   self.navigationController.navigationBar.shadowImage = [UIImage new];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"USER_INFO_CHANGE_BUTTON_TITLE", @"Изменить") style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
-  [self updateUserInfo];
   
-  [_iconView addTarget:self action:@selector(editPhotoTap) forControlEvents:UIControlEventTouchUpInside];
+  [self updateUserView];
+  
+}
+
+- (void)updateUserView {
+
+  if ([OMNAuthorization authorisation].isAuthorized) {
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_USER_INFO_CHANGE_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
+    
+  }
+  else {
+  
+    self.tableView.tableHeaderView = nil;
+    self.navigationItem.rightBarButtonItem = nil;
+    
+  }
+  
+  [self.tableView reloadData];
   
 }
 
 - (void)closeTap {
   
   if (self.didCloseBlock) {
-    
     self.didCloseBlock();
-    
   }
-  
-}
-
-- (void)editPhotoTap {
-  
-  [self editUserWithPhoto:YES];
   
 }
 
 - (void)editUserTap {
   
-  [self editUserWithPhoto:NO];
-  
-}
-
-- (void)editUserWithPhoto:(BOOL)editPhoto {
-  
   OMNEditUserVC *editUserVC = [[OMNEditUserVC alloc] init];
-  editUserVC.delegate = self;
-  editUserVC.editPhoto = editPhoto;
+  @weakify(self)
+  editUserVC.didFinishBlock = ^{
+    
+    @strongify(self)
+    [self.navigationController popToViewController:self animated:YES];
+    
+  };
   [self.navigationController pushViewController:editUserVC animated:YES];
   
 }
@@ -179,14 +98,6 @@
   [super viewWillAppear:animated];
   
   [_userInfoModel reloadUserInfo];
-  
-}
-
-#pragma mark - OMNEditUserVCDelegate
-
-- (void)editUserVCDidFinish:(OMNEditUserVC *)editUserVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
   
 }
 

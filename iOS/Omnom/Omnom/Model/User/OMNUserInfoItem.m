@@ -7,6 +7,7 @@
 //
 
 #import "OMNUserInfoItem.h"
+#import "OMNUserInfoCell.h"
 
 @implementation OMNUserInfoItem
 
@@ -36,29 +37,20 @@
   return self;
 }
 
-- (CGFloat)height {
-  
+- (CGFloat)heightForTableView:(UITableView *)tableView {
   return 50.0f;
-  
 }
 
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
   
-  NSString *reuseIdentifier = NSStringFromClass(self.class);
-  OMNUserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-  if (nil == cell) {
-    
-    cell = [[OMNUserInfoCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    
-  }
-
-  cell.accessoryType = self.cellAccessoryType;
-  [cell.button setTitle:self.title forState:UIControlStateNormal];
-  cell.button.contentHorizontalAlignment = self.contentHorizontalAlignment;
-  [cell.button setTitleColor:self.titleColor forState:UIControlStateNormal];
-  
+  OMNUserInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([OMNUserInfoCell class])];
+  cell.item = self;
   return cell;
   
+}
+
++ (void)registerCellForTableView:(UITableView *)tableView {
+  [tableView registerClass:[OMNUserInfoCell class] forCellReuseIdentifier:NSStringFromClass([OMNUserInfoCell class])];
 }
 
 @end

@@ -34,6 +34,7 @@
   UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
   UIGraphicsEndImageContext();
   return image;
+  
 }
 
 - (UIImage *)omn_circleImageWithDiametr:(CGFloat)diametr {

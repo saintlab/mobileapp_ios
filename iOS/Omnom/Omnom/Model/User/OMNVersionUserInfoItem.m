@@ -9,13 +9,12 @@
 #import "OMNVersionUserInfoItem.h"
 #import "OMNConstants.h"
 #import <OMNStyler.h>
+#import "UIView+omn_autolayout.h"
 
 @implementation OMNVersionUserInfoItem
 
-- (CGFloat)height {
-  
+- (CGFloat)heightForTableView:(UITableView *)tableView {
   return 100.0f;
-  
 }
 
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
@@ -27,16 +26,15 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    UIImageView *logoView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"fork_n_knife_icon"]];
-    logoView.translatesAutoresizingMaskIntoConstraints = NO;
+    UIImageView *logoView = [UIImageView omn_autolayoutView];
+    logoView.image = [UIImage imageNamed:@"fork_n_knife_icon"];
     [cell.contentView addSubview:logoView];
 
-    UILabel *label = [[UILabel alloc] init];
+    UILabel *label = [UILabel omn_autolayoutView];
     label.text = [NSString stringWithFormat:@"version %@ build %@", CURRENT_VERSION, CURRENT_BUILD];
     label.font = FuturaOSFOmnomRegular(15.0f);
     label.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.4f];
     label.textAlignment = NSTextAlignmentCenter;
-    label.translatesAutoresizingMaskIntoConstraints = NO;
     [cell.contentView addSubview:label];
     
     NSDictionary *views =

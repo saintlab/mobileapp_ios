@@ -27,7 +27,7 @@
         
       }];
       
-      [logoutSheet bk_setCancelButtonWithTitle:NSLocalizedString(@"Отмена", nil) handler:^{
+      [logoutSheet bk_setCancelButtonWithTitle:kOMN_CANCEL_BUTTON_TITLE handler:^{
         
         [tv deselectRowAtIndexPath:indexPath animated:YES];
         

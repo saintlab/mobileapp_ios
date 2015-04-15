@@ -77,6 +77,12 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
 }
 
+- (BOOL)isAuthorized {
+#warning isAuthorized
+  return (self.token.length > 0);
+  return NO;
+}
+
 - (NSString *)savedUserPath {
   
   NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
@@ -138,24 +144,10 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 }
 
 - (UIUserNotificationSettings *)notificationSettings {
-//  UIMutableUserNotificationAction *declineAction = [[UIMutableUserNotificationAction alloc] init];
-//  declineAction.identifier = @"declineAction";
-//  declineAction.activationMode = UIUserNotificationActivationModeBackground;
-//  declineAction.title = NSLocalizedString(@"Отменить", nil);
-//  declineAction.destructive = YES;
-//  
-//  UIMutableUserNotificationAction *answerAction = [[UIMutableUserNotificationAction alloc] init];
-//  answerAction.identifier = @"answerAction";
-//  answerAction.activationMode = UIUserNotificationActivationModeBackground;
-//  answerAction.title = @"Ответить";
-//  
-//  UIMutableUserNotificationCategory *category = [[UIMutableUserNotificationCategory alloc] init];
-//  category.identifier = @"incomingCall"; //category name to send in the payload
-//  [category setActions:@[answerAction,declineAction] forContext:UIUserNotificationActionContextDefault];
-//  [category setActions:@[answerAction,declineAction] forContext:UIUserNotificationActionContextMinimal];
   
-  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert categories:[NSSet setWithObjects:nil]];
+  UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge|UIUserNotificationTypeSound|UIUserNotificationTypeAlert) categories:[NSSet setWithObjects:nil]];
   return settings;
+  
 }
 
 - (void)requestPushNotifications:(void(^)(BOOL))completion {

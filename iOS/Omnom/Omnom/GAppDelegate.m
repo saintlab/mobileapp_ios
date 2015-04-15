@@ -18,11 +18,7 @@
 #import "OMNRestaurantManager.h"
 #import "OMNNearestBeaconSearchManager.h"
 
-#import "OMNMenuCategory.h"
-
-@implementation GAppDelegate {
-  
-}
+@implementation GAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
@@ -44,7 +40,7 @@
       [[OMNNearestBeaconSearchManager sharedManager] findNearestBeaconsWithCompletion:nil];
       
     }];
-    
+
     [[OMNLaunchHandler sharedHandler] didFinishLaunchingWithOptions:lo];
     
   }];

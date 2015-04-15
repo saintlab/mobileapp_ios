@@ -6,20 +6,9 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import "OMNUser.h"
-
-@protocol OMNEditUserVCDelegate;
-
 @interface OMNEditUserVC : UIViewController
 
-@property (nonatomic, weak) id<OMNEditUserVCDelegate> delegate;
+@property (nonatomic, copy) dispatch_block_t didFinishBlock;
 @property (nonatomic, assign) BOOL editPhoto;
-
-@end
-
-@protocol OMNEditUserVCDelegate <NSObject>
-
-- (void)editUserVCDidFinish:(OMNEditUserVC *)editUserVC;
 
 @end

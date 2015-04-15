@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNUserInfoCell.h"
+#import "OMNCellItemProtocol.h"
 
 typedef void(^OMNUserInfoItemBlock)(__weak UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath);
 
 @interface OMNUserInfoItem : NSObject
+<OMNCellItemProtocol>
 
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, strong) UIColor *titleColor;
@@ -21,8 +22,5 @@ typedef void(^OMNUserInfoItemBlock)(__weak UIViewController *vc, __weak UITableV
 
 + (instancetype)itemWithTitle:(NSString *)title actionBlock:(OMNUserInfoItemBlock)actionBlock;
 - (instancetype)initWithTitle:(NSString *)title actionBlock:(OMNUserInfoItemBlock)actionBlock;
-
-- (OMNUserInfoCell *)cellForTableView:(UITableView *)tableView;
-- (CGFloat)height;
 
 @end

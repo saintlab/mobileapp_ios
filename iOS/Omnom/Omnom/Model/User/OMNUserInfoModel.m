@@ -20,10 +20,7 @@
 #import "OMNVersionUserInfoItem.h"
 #import "OMNLogoutUserInfoItem.h"
 #import "OMNFBUserInfoItem.h"
-
-@interface OMNUserInfoModel ()
-
-@end
+#import "OMNUserProfileCellItem.h"
 
 @implementation OMNUserInfoModel {
   
@@ -39,6 +36,7 @@
     _restaurantMediator = restaurantMediator;
     _sectionItems =
     @[
+      [self userProfileSection],
       self.moneyItems,
       [self feedbackItems],
       self.logoutItems,
@@ -48,10 +46,19 @@
   return self;
 }
 
-- (void)reloadUserInfo {
+- (void)configureTableView:(UITableView *)tableView {
   
-  [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {} failure:^(OMNError *error) {}];
+  [OMNUserProfileCellItem registerCellForTableView:tableView];
+  [OMNUserInfoItem registerCellForTableView:tableView];
+  tableView.dataSource = self;
+  tableView.delegate = self;
+  tableView.tableFooterView = [[UIView alloc] init];
+  tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  
+}
 
+- (void)reloadUserInfo {
+  [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {} failure:^(OMNError *error) {}];
 }
 
 - (OMNUserInfoSection *)moneyItems {
@@ -69,6 +76,18 @@
   
 }
 
+- (OMNUserInfoSection *)userProfileSection {
+  
+  OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
+  section.items =
+  @[
+    [[OMNUserProfileCellItem alloc] init],
+    ];
+  section.title = nil;
+  return section;
+  
+}
+
 - (OMNUserInfoSection *)feedbackItems {
   
   OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
@@ -78,7 +97,7 @@
     [[OMNFBUserInfoItem alloc] init],
     [[OMNVersionUserInfoItem alloc] init],
     ];
-  section.title = NSLocalizedString(@"USER_INFO_ABOUT_SECTION_TITLE", @"О ПРОГРАММЕ");
+  section.title = kOMN_USER_INFO_ABOUT_SECTION_TITLE;
   return section;
   
 }
@@ -124,6 +143,11 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
   
+  OMNUserInfoSection *userInfoSection = _sectionItems[section];
+
+  if (0 == userInfoSection.title.length) {
+    return nil;
+  }
   static NSString * const headerFooterViewWithIdentifier = @"headerFooterViewWithIdentifier";
   OMNUserInfoHeaderView *tableViewHeaderFooterView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:headerFooterViewWithIdentifier];
   if (nil == tableViewHeaderFooterView) {
@@ -131,7 +155,6 @@
     tableViewHeaderFooterView = [[OMNUserInfoHeaderView alloc] initWithReuseIdentifier:headerFooterViewWithIdentifier];
 
   }
-  OMNUserInfoSection *userInfoSection = _sectionItems[section];
   tableViewHeaderFooterView.label.text = userInfoSection.title;
   
   return tableViewHeaderFooterView;
@@ -145,10 +168,14 @@
   
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+  return 0.0f;
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
   
   OMNUserInfoItem *userInfoItem = [self itemAtIndexPath:indexPath];
-  return userInfoItem.height;
+  return [userInfoItem heightForTableView:tableView];
   
 }
 

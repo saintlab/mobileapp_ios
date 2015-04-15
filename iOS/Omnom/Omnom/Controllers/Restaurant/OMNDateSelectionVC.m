@@ -54,7 +54,6 @@ UITableViewDataSource>
   
 }
 
-
 - (void)omn_setup {
   
   _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];

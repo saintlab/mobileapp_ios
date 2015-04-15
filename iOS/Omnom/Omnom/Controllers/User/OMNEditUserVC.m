@@ -114,11 +114,11 @@ OMNChangePhoneWebVCDelegate>
   self.editPhoto = NO;
   UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil
                                                      delegate:nil
-                                            cancelButtonTitle:NSLocalizedString(@"USER_PHOTO_CANCEL_BUTTON_TITLE", @"Отмена")
-                                       destructiveButtonTitle:NSLocalizedString(@"USER_PHOTO_DELETE_BUTTON_TITLE", @"Удалить текущий снимок")
+                                            cancelButtonTitle:kOMN_CANCEL_BUTTON_TITLE
+                                       destructiveButtonTitle:kOMN_USER_PHOTO_DELETE_BUTTON_TITLE
                                             otherButtonTitles:
-                          NSLocalizedString(@"USER_PHOTO_SHOOT_BUTTON_TITLE", @"Сделать снимок"),
-                          NSLocalizedString(@"USER_PHOTO_CHOOSE_BUTTON_TITLE", @"Выбрать из библиотеки"),
+                          kOMN_USER_PHOTO_SHOOT_BUTTON_TITLE,
+                          kOMN_USER_PHOTO_CHOOSE_BUTTON_TITLE,
                           nil];
   sheet.delegate = self;
   [sheet showInView:self.view.window];
@@ -179,7 +179,7 @@ OMNChangePhoneWebVCDelegate>
 - (void)showCameraPermissionHelp {
   
   OMNCameraPermissionDescriptionVC *cameraPermissionDescriptionVC = [[OMNCameraPermissionDescriptionVC alloc] init];
-  cameraPermissionDescriptionVC.text = NSLocalizedString(@"CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение\nна доступ к камере.");
+  cameraPermissionDescriptionVC.text = kOMN_CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT;
   
   @weakify(self)
   cameraPermissionDescriptionVC.didCloseBlock = ^{
@@ -264,7 +264,7 @@ OMNChangePhoneWebVCDelegate>
   else {
     
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"EDIT_USER_DONE_BUTTON_TITLE", @"Сохранить") style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_SAVE_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
     
   }
   
@@ -272,7 +272,9 @@ OMNChangePhoneWebVCDelegate>
 
 - (void)closeTap {
   
-  [self.delegate editUserVCDidFinish:self];
+  if (self.didFinishBlock) {
+    self.didFinishBlock();
+  }
   
 }
 
@@ -415,9 +417,7 @@ OMNChangePhoneWebVCDelegate>
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-  
   [self dismissViewControllerAnimated:YES completion:nil];
-  
 }
 
 #pragma mark - OMNCameraPermissionDescriptionVCDelegate
@@ -451,9 +451,7 @@ OMNChangePhoneWebVCDelegate>
 #pragma mark - OMNChangePhoneWebVCDelegate
 
 - (void)changePhoneWebVCDidChangePhone:(OMNChangePhoneWebVC *)changePhoneWebVC {
-  
-  [self.delegate editUserVCDidFinish:self];
-  
+  [self closeTap];
 }
 
 @end

@@ -11,9 +11,7 @@
 @implementation OMNUserInfoSection
 
 - (CGFloat)height {
-  
   return (self.title.length) ? (50.0f) : (10.0f);
-  
 }
 
 @end

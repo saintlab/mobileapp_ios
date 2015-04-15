@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OMNUserInfoItem.h"
 
 @interface OMNUserInfoCell : UITableViewCell
 
 @property (nonatomic, strong, readonly) UIButton *button;
+@property (nonatomic, strong) OMNUserInfoItem *item;
 
 @end

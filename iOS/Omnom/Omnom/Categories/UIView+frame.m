@@ -91,9 +91,7 @@
 }
 
 - (CGFloat)height {
-  
   return self.frame.size.height;
-  
 }
 
 - (void)setHeight:(CGFloat)height {

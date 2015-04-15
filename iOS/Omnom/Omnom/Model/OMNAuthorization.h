@@ -22,6 +22,7 @@
 
 + (instancetype)authorisation;
 
+- (BOOL)isAuthorized;
 - (void)setup;
 - (void)updateUserInfoWithUser:(OMNUser *)user;
 - (void)logout;
