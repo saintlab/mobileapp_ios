@@ -93,12 +93,12 @@
 
   if (fabs(restaurant.distance) > 1000.0) {
   
-    distance = [NSString stringWithFormat:NSLocalizedString(@"RESTAURANT_DISTANCE_KM %.2f", @" ~{distance_km}км"), restaurant.distance/1000.0];
+    distance = [NSString stringWithFormat:kOMN_RESTAURANT_DISTANCE_KM_FORMAT, restaurant.distance/1000.0];
     
   }
   else if (fabs(restaurant.distance) > 0.0) {
     
-    distance = [NSString stringWithFormat:NSLocalizedString(@"RESTAURANT_DISTANCE_M %.2f", @" ~{distance_m}м"), restaurant.distance];
+    distance = [NSString stringWithFormat:kOMN_RESTAURANT_DISTANCE_M_FORMAT, restaurant.distance];
     
   }
   

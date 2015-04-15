@@ -107,7 +107,7 @@
   }
   else {
     
-    repeatVC.text = NSLocalizedString(@"NO_OMNOM_CONNECTION_ERROR_TEXT", @"Нет связи с заведением.\nОфициант в помощь.");
+    repeatVC.text = kOMN_NO_OMNOM_CONNECTION_ERROR_TEXT;
     repeatVC.circleIcon = [UIImage imageNamed:@"unlinked_icon_big"];
     
   }
@@ -116,7 +116,7 @@
   @weakify(self)
   repeatVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:kOMN_TRY_AGAIN_BUTTON_TITLE image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
 
       @strongify(self)
       [self.navigationController omn_popToViewController:self animated:YES completion:^{

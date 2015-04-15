@@ -65,7 +65,7 @@
   
   
   
-  _splitButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_ORDER_TITLE", @"Разделить счет") color:[OMNStyler redColor]];
+  _splitButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:kOMN_SPLIT_ORDER_BUTTON_TITLE color:[OMNStyler redColor]];
   @weakify(self)
   [_splitButton bk_addEventHandler:^(id sender) {
     
@@ -77,7 +77,7 @@
   _splitButton.translatesAutoresizingMaskIntoConstraints = NO;
   [bgView addSubview:_splitButton];
   
-  _editButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:NSLocalizedString(@"SPLIT_EDIT_TITLE", @"Изменить") color:[OMNStyler redColor]];
+  _editButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"divide_split_icon"] title:kOMN_SPLIT_EDIT_BUTTON_TITLE color:[OMNStyler redColor]];
   [_editButton bk_addEventHandler:^(id sender) {
     
     @strongify(self)
@@ -88,7 +88,7 @@
   _editButton.translatesAutoresizingMaskIntoConstraints = NO;
   [bgView addSubview:_editButton];
   
-  _cancelButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"cancel_split_icon"] title:NSLocalizedString(@"SPLIT_CANCEL_TITLE", @"Отменить") color:colorWithHexString(@"888888")];
+  _cancelButton = [[OMNToolbarButton alloc] initWithFitImage:[UIImage imageNamed:@"cancel_split_icon"] title:kOMN_SPLIT_CANCEL_BUTTON_TITLE color:colorWithHexString(@"888888")];
   [_cancelButton addTarget:self action:@selector(cancelTap) forControlEvents:UIControlEventTouchUpInside];
   _cancelButton.alpha = 0.0f;
   _cancelButton.translatesAutoresizingMaskIntoConstraints = NO;

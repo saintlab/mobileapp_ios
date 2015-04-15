@@ -33,7 +33,7 @@
   self.titleLabel.font = FuturaOSFOmnomRegular(25.0f);
   [self setTitleColor:tintColor forState:UIControlStateNormal];
   [self setTitleColor:highlightedTintColor forState:UIControlStateHighlighted];
-  [self setTitle:NSLocalizedString(@"MENU_LIST_TITLE", @"Меню") forState:UIControlStateNormal];
+  [self setTitle:kOMN_MENU_LIST_TITLE forState:UIControlStateNormal];
   [self setImage:[[UIImage imageNamed:@"ic_menu"] omn_tintWithColor:tintColor] forState:UIControlStateNormal];
   [self setImage:[[UIImage imageNamed:@"ic_menu"] omn_tintWithColor:highlightedTintColor] forState:UIControlStateHighlighted];
   [self omn_centerButtonAndImageWithSpacing:7.0f];

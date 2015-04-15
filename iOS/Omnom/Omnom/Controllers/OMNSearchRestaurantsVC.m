@@ -261,18 +261,18 @@
   OMNCircleRootVC *noInternetVC = [[OMNCircleRootVC alloc] initWithParent:self];
   
   NSString *text = error.localizedDescription;
-  NSString *actionText = NSLocalizedString(@"REPEAT_NO_INTERNET_BUTTON_TITLE", @"Попробуйте ещё раз");
+  NSString *actionText = kOMN_REPEAT_NO_INTERNET_BUTTON_TITLE;
   
   switch (error.code) {
     case kOMNErrorCodeTimedOut: {
       
-      text = NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Помехи на линии.");
-      actionText = NSLocalizedString(@"REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE", @"Давайте ещё раз.");
+      text = kOMN_ERROR_NO_OMNOM_SERVER_CONNECTION;
+      actionText = kOMN_REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE;
       
     } break;
     case kOMNErrorCodeNotConnectedToInternet: {
       
-      text = NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Вы видите интернет? Мы нет.");
+      text = kOMN_ERROR_NO_INTERNET_CONNECTION;
       
     } break;
   }
@@ -381,7 +381,7 @@
   @weakify(self)
   denyCLPermissionVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Включить", nil) image:nil block:^{
+    [OMNBarButtonInfo infoWithTitle:kOMN_TURN_ON_BUTTON_TITLE image:nil block:^{
       
       @strongify(self)
       OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];

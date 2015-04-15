@@ -147,7 +147,7 @@
   }
 
   @weakify(self)
-  UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"CALCULATOR_ALERT_TEXT", @"Отметьте ваши блюда в чеке и платите только за себя") message:nil cancelButtonTitle:kOMN_OK_BUTTON_TITLE otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+  UIAlertView *alert = [UIAlertView bk_showAlertViewWithTitle:kOMN_CALCULATOR_ALERT_TEXT message:nil cancelButtonTitle:kOMN_OK_BUTTON_TITLE otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
     
     @strongify(self)
     [self updateIndexPath:demoIndexPath];

@@ -82,11 +82,11 @@
 
 - (void)setupInterface {
   
-  self.navigationItem.title = NSLocalizedString(@"Карты", nil);
-  [_addCardButton setTitle:NSLocalizedString(@"Добавить карту", nil) forState:UIControlStateNormal];
+  self.navigationItem.title = kOMN_BANK_CARDS_TITLE;
+  [_addCardButton setTitle:kOMN_ADD_CARD_BUTTON_TITLE forState:UIControlStateNormal];
   [_addCardButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
   _addCardButton.titleLabel.font = FuturaOSFOmnomRegular(20);
-  
+
 }
 
 - (IBAction)addCardTap:(id)sender {

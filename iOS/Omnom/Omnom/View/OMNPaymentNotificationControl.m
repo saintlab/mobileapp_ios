@@ -117,23 +117,23 @@
 
     if (paymentDetails.netAmount) {
       
-      title = [NSString stringWithFormat:NSLocalizedString(@"PAYMENT_NOTIFICATION_AMOUNT_TITLE %@ %@ %@", @"{userName}: оплачено по счету {amount} + чай {tipAmount}"), paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.netAmount], [OMNUtils moneyStringFromKop:paymentDetails.tipAmount]];
+      title = [NSString stringWithFormat:kOMN_PAYMENT_NOTIFICATION_AMOUNT_WITH_TIPS_FORMAT, paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.netAmount], [OMNUtils moneyStringFromKop:paymentDetails.tipAmount]];
       
     }
     else {
 
-      title = [NSString stringWithFormat:NSLocalizedString(@"PAYMENT_NOTIFICATION_TIPS_ONLY_TITLE %@ %@", @"{userName}: чаевые {tipAmount}"), paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.tipAmount]];
+      title = [NSString stringWithFormat:kOMN_PAYMENT_NOTIFICATION_TIPS_ONLY_FORMAT, paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.tipAmount]];
       
     }
     
   }
   else {
 
-    title = [NSString stringWithFormat:NSLocalizedString(@"PAYMENT_NOTIFICATION_AMOUNT_TITLE %@ %@", @"{userName}: оплачено по счету {amount}"), paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.netAmount]];
+    title = [NSString stringWithFormat:kOMN_PAYMENT_NOTIFICATION_AMOUNT_FORMAT, paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.netAmount]];
     
   }
   [control.closeButton setTitle:title forState:UIControlStateNormal];
-  
+
   [self playPaySound];
 
   __weak typeof(control)weakControl = control;

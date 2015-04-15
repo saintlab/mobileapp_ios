@@ -20,7 +20,7 @@
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.title = NSLocalizedString(@"Мои привязанные карты", nil);
+    self.title = kOMN_SAVED_CARDS_BUTTON_TITLE;
     self.cellAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
     @weakify(self)
@@ -28,7 +28,7 @@
       
       @strongify(self)
       self.rootViewController = vc;
-      
+#warning rootViewController
       OMNBankCardsVC *bankCardsVC = [[OMNBankCardsVC alloc] init];
       [vc.navigationController pushViewController:bankCardsVC animated:YES];
       

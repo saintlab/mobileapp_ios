@@ -50,7 +50,7 @@ TTTAttributedLabelDelegate>
   
   [self omn_setup];
   
-  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"REGISTER_USER_TITLE", @"Создать аккаунт") count:2];
+  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:kOMN_REGISTER_USER_TITLE count:2];
   self.navigationItem.titleView = navigationBarProgressView;
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   self.navigationItem.rightBarButtonItem = [self createUserButton];
@@ -130,8 +130,8 @@ TTTAttributedLabelDelegate>
   self.navigationItem.rightBarButtonItem = [self createUserButton];
   if (kOMNUserErrorCodeUserExist == error.code) {
     
-    NSString *actionText = NSLocalizedString(@"REGISTER_USER_NO_USER_ACTION_TEXT", @"Можно входить");
-    NSString *text = [NSString stringWithFormat:NSLocalizedString(@"REGISTER_USER_NO_USER_TEXT %@", @"{REGISTER_USER_NO_USER_ACTION_TEXT}. Пользователь с таким номером телефона уже зарегистрирован"), actionText];
+    NSString *actionText = kOMN_REGISTER_USER_NO_USER_ACTION_TEXT;
+    NSString *text = [NSString stringWithFormat:kOMN_REGISTER_USER_NO_USER_FORMAT, actionText];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:[OMNStyler redColor] textAlignment:NSTextAlignmentCenter]];
     _errorLabel.text = attributedText;
     [_errorLabel addLinkToURL:[NSURL URLWithString:@""] withRange:[text rangeOfString:actionText]];
@@ -144,7 +144,7 @@ TTTAttributedLabelDelegate>
   }
   else {
     
-    _errorLabel.text = NSLocalizedString(@"REGISTER_USER_ERROR_COMMON", @"Что-то пошло не так. Повторите попытку.");
+    _errorLabel.text = kOMN_ERROR_MESSAGE_UNKNOWN_ERROR;
     
   }
   

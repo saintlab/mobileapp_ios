@@ -14,7 +14,7 @@
 
 - (instancetype)initWithTotalAmount:(long long)totalAmount  target:(id)target action:(SEL)action {
   
-  NSString *callBillTitle = ((totalAmount > 0ll)) ? ([OMNUtils formattedMoneyStringFromKop:totalAmount]) : (NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт"));
+  NSString *callBillTitle = ((totalAmount > 0ll)) ? ([OMNUtils formattedMoneyStringFromKop:totalAmount]) : (kOMN_BILL_CALL_BUTTON_TITLE);
   
   self = [OMNOrderToolbarButton omn_barButtonWithTitle:callBillTitle image:[UIImage imageNamed:@"bill_icon_small"] color:[UIColor blackColor] target:target action:action];
   if (self) {

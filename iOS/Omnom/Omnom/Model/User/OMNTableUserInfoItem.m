@@ -19,7 +19,7 @@
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
   
-  self = [super initWithTitle:NSLocalizedString(@"USER_INFO_TABLE_TITLE", @"Столик") actionBlock:^(UIViewController *vc, UITableView *__weak tv, NSIndexPath *indexPath) {
+  self = [super initWithTitle:kOMN_USER_INFO_TABLE_TITLE actionBlock:^(UIViewController *vc, UITableView *__weak tv, NSIndexPath *indexPath) {
     
     [tv deselectRowAtIndexPath:indexPath animated:YES];
     OMNChangeTableAlertVC *changeTableAlertVC = [[OMNChangeTableAlertVC alloc] initWithTable:restaurantMediator.table];
@@ -51,7 +51,7 @@
   if (tableName) {
     
     OMNTableButton *tableButton = [OMNTableButton buttonWithColor:[OMNStyler blueColor]];
-    NSString *title = [NSString stringWithFormat:NSLocalizedString(@"TABLE_UPDATE_BUTTON_TITLE %@", @"{table_number} Обновить"), tableName];
+    NSString *title = [NSString stringWithFormat:kOMN_TABLE_UPDATE_BUTTON_FORMAT, tableName];
     [tableButton setText:title];
     tableButton.userInteractionEnabled = NO;
     cell.accessoryView = tableButton;

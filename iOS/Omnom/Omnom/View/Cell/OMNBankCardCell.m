@@ -101,7 +101,7 @@
 - (UILabel *)confirmButton {
   
   UILabel *label = [[UILabel alloc] init];
-  label.text = NSLocalizedString(@"CARD_CONFIRM_BUTTON_TITLE", @"Подтвердить");
+  label.text = kOMN_CONFIRM_BUTTON_TITLE;
   label.textColor = [OMNStyler linkColor];
   label.font = FuturaOSFOmnomRegular(15.0f);
   [label sizeToFit];

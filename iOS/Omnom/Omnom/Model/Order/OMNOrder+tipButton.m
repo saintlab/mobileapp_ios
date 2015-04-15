@@ -34,7 +34,7 @@
   
   if (tip.custom) {
     
-    normalTitle = NSLocalizedString(@"Другой", nil);
+    normalTitle = kOMN_OTHER_TIP_BUTTON_TITLE;
     selectedTitle = [self titleForPercent:tip.percent];
     
   }

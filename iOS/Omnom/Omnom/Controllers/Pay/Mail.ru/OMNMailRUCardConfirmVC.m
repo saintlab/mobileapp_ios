@@ -56,7 +56,7 @@ TTTAttributedLabelDelegate>
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.navigationItem.title = NSLocalizedString(@"CARD_CONFIRM_NAVIGATION_TITLE", @"Привязка карты");
+  self.navigationItem.title = kOMN_CARD_CONFIRM_NAVIGATION_TITLE;
   self.view.backgroundColor = [UIColor whiteColor];
   self.automaticallyAdjustsScrollViewInsets = NO;
   
@@ -92,9 +92,7 @@ TTTAttributedLabelDelegate>
 }
 
 - (void)addDoneButton {
-  
-  [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"CARD_CONFIRM_ENTER_BUTTON_TITLE", @"Привязать") style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)] animated:YES];
-  
+  [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:kOMN_BANK_CARD_ADD_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(validateTap)] animated:YES];
 }
 
 - (void)setupView {

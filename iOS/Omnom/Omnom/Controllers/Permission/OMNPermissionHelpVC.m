@@ -68,29 +68,6 @@
   _pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
   
   _scrollView.delegate = self;
-  
-  //  if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
-  //    _labelTexts =
-  //    @[
-  //      NSLocalizedString(@"Чтобы разрешить геолокацию, откройте список приватности:", nil),
-  //      NSLocalizedString(@"Затем откройте\nСлужбы геолокации:", nil),
-  //      NSLocalizedString(@"Разрешите, наконец, использовать службы геолокации для Omnom:", nil),
-  //      ];
-  //  } else {
-  //
-  //    _labelTexts =
-  //    @[
-  //      NSLocalizedString(@"Чтобы разрешить геолокацию, откройте Конфиденциальность:", nil),
-  //      NSLocalizedString(@"Затем откройте\nСлужбы геолокации:", nil),
-  //      NSLocalizedString(@"Разрешите доступ к геопозиции:", nil),
-  //      ];
-  //  }
-  //  if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
-  //    iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"navigation_help_%d-7", i + 1]];
-  //  } else {
-  //    iv.image = [UIImage imageNamed:[NSString stringWithFormat:@"navigation_help_%d-8", i + 1]];
-  //  }
-  
   [self setPage:0];
   
 }
@@ -229,7 +206,7 @@
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
     [self.navigationItem setHidesBackButton:YES animated:NO];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Перейти", nil) style:UIBarButtonItemStylePlain target:self action:@selector(settingsTap)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_GO_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(settingsTap)];
     
   }
   

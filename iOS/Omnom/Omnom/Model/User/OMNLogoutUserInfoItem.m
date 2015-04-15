@@ -17,11 +17,11 @@
   self = [super init];
   if (self) {
     
-    self.title = NSLocalizedString(@"USER_INFO_LOGOUT_TITLE", @"Выход из аккаунта");
+    self.title = kOMN_USER_INFO_LOGOUT_BUTTON_TITLE;
     self.actionBlock = ^(UIViewController *vc, UITableView *tv, NSIndexPath *indexPath) {
       
       UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
-      [logoutSheet bk_setDestructiveButtonWithTitle:NSLocalizedString(@"Выйти", nil) handler:^{
+      [logoutSheet bk_setDestructiveButtonWithTitle:kOMN_EXIT_BUTTON_TITLE handler:^{
         
         [[OMNAuthorization authorisation] logout];
         

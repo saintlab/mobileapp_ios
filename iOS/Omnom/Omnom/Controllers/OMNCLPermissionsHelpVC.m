@@ -19,18 +19,18 @@
     
     pages =
     @[
-      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_1-7", @"Чтобы разрешить геолокацию, откройте список приватности:") imageName:@"navigation_help_1-7"],
-      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_2-7", @"Затем откройте\nСлужбы геолокации:") imageName:@"navigation_help_2-7"],
-      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_3-7", @"Разрешите, наконец, использовать службы геолокации для Omnom:") imageName:@"navigation_help_3-7"],
+      [OMNHelpPage pageWithText:kOMN_LOCATION_PERMISSION_HELP_TEXT_1_7 imageName:@"navigation_help_1-7"],
+      [OMNHelpPage pageWithText:kOMN_LOCATION_PERMISSION_HELP_TEXT_2_7 imageName:@"navigation_help_2-7"],
+      [OMNHelpPage pageWithText:kOMN_LOCATION_PERMISSION_HELP_TEXT_3_7 imageName:@"navigation_help_3-7"],
       ];
     
   } else if (SYSTEM_VERSION_LESS_THAN(@"8.1")) {
     
     pages =
     @[
-      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_1-8", @"Чтобы разрешить геолокацию, откройте Конфиденциальность:") imageName:@"navigation_help_1-8"],
-      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_2-8", @"Затем откройте\nСлужбы геолокации:") imageName:@"navigation_help_2-8"],
-      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_3-8", @"Разрешите доступ к геопозиции:") imageName:@"navigation_help_3-8"],
+      [OMNHelpPage pageWithText:kOMN_LOCATION_PERMISSION_HELP_TEXT_1_8 imageName:@"navigation_help_1-8"],
+      [OMNHelpPage pageWithText:kOMN_LOCATION_PERMISSION_HELP_TEXT_2_8 imageName:@"navigation_help_2-8"],
+      [OMNHelpPage pageWithText:kOMN_LOCATION_PERMISSION_HELP_TEXT_3_8 imageName:@"navigation_help_3-8"],
       ];
 
   }
@@ -38,8 +38,8 @@
     
     pages =
     @[
-      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_1-8.1", @"Выберите меню\n«Геопозиция»:") imageName:@"navigation_help_1-81"],
-      [OMNHelpPage pageWithText:NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_2-8.1", @"Разрешите доступ\nк геопозиции:") imageName:@"navigation_help_2-81"],
+      [OMNHelpPage pageWithText:kOMN_LOCATION_PERMISSION_HELP_TEXT_1_8_1 imageName:@"navigation_help_1-81"],
+      [OMNHelpPage pageWithText:kOMN_LOCATION_PERMISSION_HELP_TEXT_2_8_1 imageName:@"navigation_help_2-81"],
       ];
     
   }

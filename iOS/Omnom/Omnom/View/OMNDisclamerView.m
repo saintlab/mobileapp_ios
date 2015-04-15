@@ -34,8 +34,9 @@
   self.translatesAutoresizingMaskIntoConstraints = NO;
   self.delegate = self;
   self.numberOfLines = 0;
-  NSString *buttonText = NSLocalizedString(@"Пользовательское соглашение", nil);
-  NSString *text = [NSString stringWithFormat:@"%@\n%@", NSLocalizedString(@"Нажимая «Далее», вы принимаете", nil), buttonText];
+  
+  NSString *buttonText = kOMN_USER_DISCLAMER_ACTION_TEXT;
+  NSString *text = [NSString stringWithFormat:kOMN_USER_DISCLAMER_FORMAT, buttonText];
   
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
   [attributedString setAttributes:
@@ -65,9 +66,7 @@
 #pragma mark - TTTAttributedLabelDelegate
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
-  
   [[UIApplication sharedApplication] openURL:url];
-
 }
 
 @end

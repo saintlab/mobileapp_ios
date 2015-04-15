@@ -61,7 +61,7 @@
   
   NSArray *pages =
   @[
-    [OMNHelpPage pageWithText:NSLocalizedString(@"CAMERA_PERMISSION_HELP_TEXT", @"Разрешите доступ\nк Камере в настройках\nдля Omnom:") imageName:@"settings_camera"],
+    [OMNHelpPage pageWithText:kOMN_CAMERA_PERMISSION_HELP_TEXT imageName:@"settings_camera"],
     ];
   
   OMNPermissionHelpVC *cameraPermissionHelpVC = [[OMNPermissionHelpVC alloc] initWithPages:pages];

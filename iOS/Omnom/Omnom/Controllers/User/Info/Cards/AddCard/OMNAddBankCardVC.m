@@ -37,7 +37,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   _cardInfo = [[OMNBankCardInfo alloc] init];
   
   self.navigationItem.title = @"";
-  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Отменить", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
+  self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_CANCEL_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
   self.view.backgroundColor = [UIColor whiteColor];  
   [self setup];
@@ -97,7 +97,7 @@ OMNCameraPermissionDescriptionVCDelegate>
 
 - (void)updateSubmitButton {
   
-  NSString *title = (_cardEnterControl.saveButtonSelected) ? (NSLocalizedString(@"BANK_CARD_ADD_BUTTON_TITLE", @"Привязать")) : (NSLocalizedString(@"BANK_CARD_PAY_BUTTON_TITLE", @"Оплатить"));
+  NSString *title = (_cardEnterControl.saveButtonSelected) ? (kOMN_BANK_CARD_ADD_BUTTON_TITLE) : (kOMN_BANK_CARD_PAY_BUTTON_TITLE);
   _cardActionButton.title = title;
   
 }
@@ -158,7 +158,7 @@ OMNCameraPermissionDescriptionVCDelegate>
 - (void)showCameraPermissionHelp {
   
   OMNCameraPermissionDescriptionVC *cameraPermissionDescriptionVC = [[OMNCameraPermissionDescriptionVC alloc] init];
-  cameraPermissionDescriptionVC.text = NSLocalizedString(@"CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT", @"Для сканирования карты\nнеобходимо разрешение\nна доступ к камере.");
+  cameraPermissionDescriptionVC.text = kOMN_CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT;
 
   @weakify(self)
   cameraPermissionDescriptionVC.didCloseBlock = ^{

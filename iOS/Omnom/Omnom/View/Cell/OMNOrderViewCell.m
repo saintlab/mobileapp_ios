@@ -63,7 +63,7 @@
 - (void)setIndex:(NSInteger)index {
   
   _index = index;
-  _label.text = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_TITLE %ld", @"Счёт {number}"), (long)index + 1];
+  _label.text = [NSString stringWithFormat:kOMN_ORDER_NUMBER_FORMAT, (long)index + 1];
   
 }
 

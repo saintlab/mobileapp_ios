@@ -57,7 +57,7 @@ TTTAttributedLabelDelegate> {
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"Вход", nil) count:2];
+  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:kOMN_LOGIN_TITLE count:2];
   [navigationBarProgressView setPage:0];
   self.navigationItem.titleView = navigationBarProgressView;
   [self setNextButtonLoading:NO];
@@ -134,7 +134,7 @@ TTTAttributedLabelDelegate> {
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintLabel]-|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]-[hintLabel]" options:kNilOptions metrics:nil views:views]];
   
-  _loginTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
+  _loginTF.textField.placeholder = kOMN_PHONE_NUMBER_PLACEHOLDER;
   _loginTF.textField.keyboardType = UIKeyboardTypePhonePad;
 
   [self setResetPhoneHint];
@@ -143,8 +143,8 @@ TTTAttributedLabelDelegate> {
 
 - (void)setCreateUserHint {
   
-  NSString *buttonText = NSLocalizedString(@"LOGIN_CREATE_USER_ACTION", @"регистрация");
-  NSString *text = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"LOGIN_CREATE_USER_HINT", @"Ещё нет аккаунта? Прошу сюда –"), buttonText];
+  NSString *buttonText = kOMN_LOGIN_CREATE_USER_ACTION_TEXT;
+  NSString *text = [NSString stringWithFormat:kOMN_LOGIN_CREATE_USER_HINT_FORMAT, buttonText];
   
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
   [attributedString setAttributes:
@@ -161,7 +161,7 @@ TTTAttributedLabelDelegate> {
 
 - (void)setResetPhoneHint {
   
-  NSString *text = NSLocalizedString(@"LOGIN_RESET_PHONE_HINT", @"У меня сменился номер телефона");
+  NSString *text = kOMN_LOGIN_RESET_PHONE_HINT;
   [_hintLabel setText:text];
   [_hintLabel addLinkToURL:_resetPhoneUrl withRange:NSMakeRange(0, text.length)];
   _hintLabel.hidden = NO;
@@ -220,7 +220,7 @@ TTTAttributedLabelDelegate> {
   }
   else {
     
-    [_loginTF setErrorText:NSLocalizedString(@"Что-то пошло не так. Повторите попытку.", nil)];
+    [_loginTF setErrorText:kOMN_ERROR_MESSAGE_UNKNOWN_ERROR];
     
   }
   

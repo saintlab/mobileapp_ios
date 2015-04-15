@@ -12,6 +12,7 @@
 #import "OMNNavigationBarProgressView.h"
 #import <BlocksKit.h>
 #import <OMNStyler.h>
+#import "UIView+omn_autolayout.h"
 
 @implementation OMNConfirmCodeVC {
 
@@ -39,19 +40,18 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:NSLocalizedString(@"Вход", nil) count:2];
+  OMNNavigationBarProgressView *navigationBarProgressView = [[OMNNavigationBarProgressView alloc] initWithText:kOMN_LOGIN_TITLE count:2];
   [navigationBarProgressView setPage:1];
   self.navigationItem.titleView = navigationBarProgressView;
   
   self.view.backgroundColor = [UIColor whiteColor];
   
-  UILabel *label = [[UILabel alloc] init];
-  label.translatesAutoresizingMaskIntoConstraints = NO;
+  UILabel *label = [UILabel omn_autolayoutView];
   label.textAlignment = NSTextAlignmentCenter;
   label.numberOfLines = 0;
   label.font = FuturaOSFOmnomRegular(18.0f);
   label.textColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-  label.text = [NSString stringWithFormat:NSLocalizedString(@"CONFIRM_CODE_HINT", @"Введите код из SMS, присланного на номер\n%@"), _phone];
+  label.text = [NSString stringWithFormat:kOMN_CONFIRM_CODE_HINT_FORMAT, _phone];
   [self.view addSubview:label];
   
   _codeView = [[OMNEnterCodeView alloc] init];
@@ -59,12 +59,11 @@
   [_codeView addTarget:self action:@selector(didEnterCode) forControlEvents:UIControlEventEditingDidEnd];
   [self.view addSubview:_codeView];
 
-  _resendButton = [[UIButton alloc] init];
-  _resendButton.translatesAutoresizingMaskIntoConstraints = NO;
+  _resendButton = [UIButton omn_autolayoutView];
   [_resendButton setBackgroundImage:[UIImage imageNamed:@"roundy_button_white_black_border"] forState:UIControlStateNormal];
   [_resendButton setBackgroundImage:[UIImage imageNamed:@"roundy_button_white_light_grey_border"] forState:UIControlStateHighlighted];
   [_resendButton setBackgroundImage:[UIImage imageNamed:@"roundy_button_white_light_grey_border"] forState:UIControlStateDisabled];
-  [_resendButton setTitle:NSLocalizedString(@"Выслать новый код", nil) forState:UIControlStateNormal];
+  [_resendButton setTitle:kOMN_RESEND_CODE_BUTTON_TITLE forState:UIControlStateNormal];
   [_resendButton addTarget:self action:@selector(resentTap) forControlEvents:UIControlEventTouchUpInside];
   _resendButton.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
   _resendButton.contentEdgeInsets = [OMNStyler buttonEdgeInsets];

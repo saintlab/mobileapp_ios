@@ -17,8 +17,10 @@
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
   self = [super initWithParent:parent];
   if (self) {
+    
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-    self.text = NSLocalizedString(@"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем.", nil);
+    self.text = kOMN_CL_PERMISSION_REQUEST_TEXT;
+    
   }
   return self;
 }

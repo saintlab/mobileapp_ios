@@ -27,12 +27,12 @@
   self = [super initWithParent:parent];
   if (self) {
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-    self.text = NSLocalizedString(@"Необходимо разрешение на использование службы геолокации", nil);
+    self.text = kOMN_CL_PERMISSION_DESCRIPTION_TEXT;
     
     @weakify(self)
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Запретить", nil) image:[UIImage imageNamed:@"cancel_later_icon_small"] block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_FORBID_BUTTON_TITLE image:[UIImage imageNamed:@"cancel_later_icon_small"] block:^{
         
         @strongify(self)
         [self denyPermissionTap];
@@ -115,7 +115,7 @@
   @weakify(self)
   denyCLPermissionVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:kOMN_REPEAT_BUTTON_TITLE image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
       @strongify(self)
       [self.navigationController popToViewController:self animated:YES];

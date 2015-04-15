@@ -48,12 +48,12 @@
   UIColor *textColor = colorWithHexString(@"737478");
   _titleLabel.font = FuturaLSFOmnomLERegular(20.0f);
   _titleLabel.textColor = textColor;
-  _titleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"RESCAN_TABLE_HOWTO_TEXT_1 %@", @"Номер стола в Omnom — {table_internal_id}"), _table.internal_id];
+  _titleLabel.text = [NSString stringWithFormat:kOMN_RESCAN_TABLE_HOWTO_FORMAT_1, _table.internal_id];
   
   NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(15.0f) textColor:textColor textAlignment:NSTextAlignmentLeft];
   
-  NSString *actionText = NSLocalizedString(@"RESCAN_TABLE_HOWTO_ACTION_TEXT", @"свой стол");
-  NSString *text = [NSString stringWithFormat:NSLocalizedString(@"RESCAN_TABLE_HOWTO_TEXT_2 %@", @"Важно, чтобы стол был определён правильно.\nЭто нужно, чтобы увидеть выставленные вам\nсчета или сделать заказ.\n\nЕсли есть сомнения, уточните у официанта,\nкакой стол использовался при создании вашего\nзаказа, и определите {RESCAN_TABLE_HOWTO_ACTION_TEXT} в Omnom\nповторно."), actionText];
+  NSString *actionText = kOMN_RESCAN_TABLE_HOWTO_ACTION_TEXT;
+  NSString *text = [NSString stringWithFormat:kOMN_RESCAN_TABLE_HOWTO_FORMAT_2, actionText];
   
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:[attributes copy]];
   

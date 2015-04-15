@@ -52,12 +52,13 @@ const CGFloat kCalculatorTopOffset = 40.0f;
   [super viewDidLoad];
   
   self.view.backgroundColor = [UIColor whiteColor];
-  self.navigationItem.title = NSLocalizedString(@"CALCULATOR_TITLE", @"Разделить счёт");
+  self.navigationItem.title = kOMN_CALCULATOR_TITLE;
+  
   
   OMNNavigationBarSelector *navSelector = [[OMNNavigationBarSelector alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kCalculatorTopOffset) titles:
                                            @[
-                                             NSLocalizedString(@"CALCULATOR_ORDER_SELECTION_BUTTON_TITLE", @"По блюдам"),
-                                             NSLocalizedString(@"CALCULATOR_SPLIT_SELECTION_BUTTON_TITLE", @"Поровну")
+                                             kOMN_CALCULATOR_ORDER_SELECTION_BUTTON_TITLE,
+                                             kOMN_CALCULATOR_SPLIT_SELECTION_BUTTON_TITLE
                                              ]];
   [navSelector addTarget:self action:@selector(navSelectorDidChange:) forControlEvents:UIControlEventValueChanged];
   [navSelector setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"nav_gray_bg"]]];

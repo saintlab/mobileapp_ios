@@ -69,7 +69,7 @@ NSString * const OMNGuestViewIdentifier = @"OMNGuestViewIdentifier";
 - (void)setGuest:(OMNGuest *)guest {
   
   _guest = guest;
-  _label.text = [NSString stringWithFormat:NSLocalizedString(@"GUEST_NUMBER %d", @"Гость {номер гостя}"), guest.index + 1];
+  _label.text = [NSString stringWithFormat:kOMN_GUEST_NUMBER_FORMAT, guest.index + 1];
   
 }
 

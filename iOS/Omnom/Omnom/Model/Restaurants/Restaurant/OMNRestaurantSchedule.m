@@ -40,7 +40,7 @@
     return nil;
   }
   
-  NSString *fromToText = [NSString stringWithFormat:NSLocalizedString(@"WORKDAY_INTERVAL_TEXT %@ %@", @"c {open_time} до {close_time}"), day.open_time, day.close_time];
+  NSString *fromToText = [NSString stringWithFormat:kOMN_WORKDAY_INTERVAL_FORMAT, day.open_time, day.close_time];
   return fromToText;
   
 }

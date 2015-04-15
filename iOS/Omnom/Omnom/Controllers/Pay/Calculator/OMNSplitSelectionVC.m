@@ -46,7 +46,7 @@ UIPickerViewDelegate>
   
   [super viewDidLoad];
   
-  _hintLabel.text = NSLocalizedString(@"SPLIT_NUMBER_OF_GUESTS_HINT", @"На скольких гостей делить?");
+  _hintLabel.text = kOMN_SPLIT_NUMBER_OF_GUESTS_HINT;
   _hintLabel.font = FuturaOSFOmnomRegular(18.0f);
   _hintLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   

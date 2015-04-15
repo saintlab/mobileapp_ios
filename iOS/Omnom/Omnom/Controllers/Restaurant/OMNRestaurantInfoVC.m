@@ -411,7 +411,7 @@ UIGestureRecognizerDelegate>
       
       if (_restaurant.info.feedItems.count) {
         OMNBottomLabelView *bottomLabelView = [[OMNBottomLabelView alloc] init];
-        bottomLabelView.label.text = NSLocalizedString(@"Стоит попробовать", nil);
+        bottomLabelView.label.text = kOMN_GOOD_TO_TASTE_TEXT;
         viewForHeader = bottomLabelView;
       }
       else {

@@ -108,22 +108,23 @@
       
       _textField.textColor = [OMNStyler redColor];
       _textLabel.textColor = [OMNStyler redColor];
-      _textLabel.text = NSLocalizedString(@"HASH_DECODE_ERROR_TEXT", @"Указан неверный код");
+      _textLabel.text = kOMN_HASH_DECODE_ERROR_TEXT;
       _lineView.backgroundColor = [OMNStyler redColor];
       
     }
     else {
       
       _textField.textColor = colorWithHexString(@"000000");
-      _textLabel.text = NSLocalizedString(@"HASH_DECODE_HELP_TEXT", @"Введите код с Omnom-наклейки,\nфлажка или чека");
+      _textLabel.text = kOMN_HASH_DECODE_HELP_TEXT;
       _textLabel.textColor = colorWithHexString(@"737478");
       _lineView.backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.3f];
       
     }
-    
+
   } completion:nil];
   
 }
+
 
 - (void)keyboardWillShow:(NSNotification *)n {
   

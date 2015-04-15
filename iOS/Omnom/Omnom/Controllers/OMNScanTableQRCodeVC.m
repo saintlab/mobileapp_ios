@@ -88,7 +88,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   @weakify(self)
   self.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"QR_NOT_SCAN_BUTTON_TITLE", @"Не сканирует?") image:nil block:^{
+    [OMNBarButtonInfo infoWithTitle:kOMN_QR_NOT_SCAN_BUTTON_TITLE image:nil block:^{
       
       @strongify(self)
       [self requestManualCode];
@@ -146,7 +146,7 @@ OMNCameraPermissionDescriptionVCDelegate>
 - (void)showCameraPermissionHelp {
   
   OMNCameraPermissionDescriptionVC *cameraPermissionDescriptionVC = [[OMNCameraPermissionDescriptionVC alloc] init];
-  cameraPermissionDescriptionVC.text = NSLocalizedString(@"CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT", @"Для сканирования карты\nнеобходимо разрешение\nна доступ к камере.");
+  cameraPermissionDescriptionVC.text = kOMN_CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT;
   
   @weakify(self)
   cameraPermissionDescriptionVC.didCloseBlock = ^{
@@ -165,8 +165,8 @@ OMNCameraPermissionDescriptionVCDelegate>
   self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
   
   UIColor *color = [OMNStyler redColor];
-  NSString *actionText = NSLocalizedString(@"QR_DESCRIPTION_ACTION_TEXT", @"Что это такое?");
-  NSString *text = [NSString stringWithFormat:NSLocalizedString(@"QR_DESCRIPTION_TEXT %@", @"Наведите камеру\nна QR-код Omnom.\n{QR_DESCRIPTION_ACTION_TEXT}"), actionText];
+  NSString *actionText = kOMN_QR_DESCRIPTION_ACTION_TEXT;
+  NSString *text = [NSString stringWithFormat:kOMN_QR_DESCRIPTION_FORMAT, actionText];
   
   NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(25.0f) textColor:color textAlignment:NSTextAlignmentCenter];
   
@@ -208,7 +208,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   }
   
   _titleLabel.font = FuturaOSFOmnomRegular(25.0f);
-  _titleLabel.text = NSLocalizedString(@"QR_SCREEN_TITLE", @"Сканирование");
+  _titleLabel.text = kOMN_QR_SCREEN_TITLE;
   _titleLabel.textColor = color;
   [_titleLabel sizeToFit];
   self.navigationItem.titleView = _titleLabel;
@@ -373,7 +373,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   @weakify(self)
   repeatVC.buttonInfo =
   @[
-    [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Проверить ещё") image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+    [OMNBarButtonInfo infoWithTitle:kOMN_REPEAT_QR_BUTTON_TITLE image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
       
       @strongify(self)
       [self.navigationController popToViewController:self animated:YES];

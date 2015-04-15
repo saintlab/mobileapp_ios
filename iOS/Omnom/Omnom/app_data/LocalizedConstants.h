@@ -7,18 +7,22 @@
 #define kOMN_ERROR_MESSAGE_PAYMENT_ERROR NSLocalizedString(@"ERROR_MESSAGE_PAYMENT_ERROR", @"Ваш банк отклонил платёж.\nПовторите попытку,\nдобавьте другую карту\nили оплатите наличными.")
 #define kOMN_ERROR_MESSAGE_RESTAURANT_OFFLINE NSLocalizedString(@"ERROR_MESSAGE_RESTAURANT_OFFLINE", @"Прямо сейчас нет связи с кассой. Попробуйте позже или рассчитайтесь через официанта. Медленно, но иных вариантов сейчас нет.")
 #define kOMN_ERROR_MESSAGE_UNKNOWN_ERROR NSLocalizedString(@"ERROR_MESSAGE_UNKNOWN_ERROR", @"Что-то пошло не так. Повторите попытку.")
-#define kOMN_ERROR_MESSAGE_ENTER_PHONE_EMAIL NSLocalizedString(@"Введите почту и телефон", nil)
+#define kOMN_ERROR_MESSAGE_ENTER_PHONE_EMAIL NSLocalizedString(@"ERROR_MESSAGE_ENTER_PHONE_EMAIL", @"Введите почту и телефон")
 
 #define kOMN_WISH_CREATE_ERROR_TITLE NSLocalizedString(@"WISH_CREATE_ERROR_TITLE", @"Нет в продаже")
 #define kOMN_WISH_CREATE_ERROR_SUBTITLE NSLocalizedString(@"WISH_CREATE_ERROR_SUBTITLE %@", @"В вашем заказе есть блюда, которые больше не продают:\n{product_list}\n\nУбрать из заказа и продолжить?")
+#define kOMN_NO_OMNOM_CONNECTION_ERROR_TEXT NSLocalizedString(@"NO_OMNOM_CONNECTION_ERROR_TEXT", @"Нет связи с заведением.\nОфициант в помощь.")
+#define kOMN_REGISTER_USER_ERROR_NO_EMAIL NSLocalizedString(@"REGISTER_USER_ERROR_NO_EMAIL", @"Вы забыли ввести e-mail")
+#define kOMN_REGISTER_USER_ERROR_EMAIL NSLocalizedString(@"REGISTER_USER_ERROR_EMAIL", @"Некорректный e-mail")
+#define kOMN_REGISTER_USER_ERROR_NO_PHONE_NUMBER NSLocalizedString(@"REGISTER_USER_ERROR_NO_PHONE_NUMBER", @"Вы забыли ввести номер телефона")
+#define kOMN_REGISTER_USER_ERROR_PHONE_NUMBER NSLocalizedString(@"REGISTER_USER_ERROR_PHONE_NUMBER", @"Некорректный номер телефона")
+#define kOMN_REGISTER_USER_ERROR_NO_NAME NSLocalizedString(@"REGISTER_USER_ERROR_NO_NAME", @"Вы забыли ввести имя")
 
 
-//bar buttons
+//buttons
 #define kOMN_BAR_BUTTON_COMPLETE_ORDERS_TEXT NSLocalizedString(@"BAR_BUTTON_COMPLETE_ORDERS_TEXT", @"Табло готовых заказов")
 #define kOMN_BAR_TITLE_BUTTON_TEXT NSLocalizedString(@"BAR_TITLE_BUTTON_TEXT", @"Бар")
 #define kOMN_DONE_BUTTON_TITLE NSLocalizedString(@"DONE_BUTTON_TITLE", @"Готово")
-
-//buttons
 #define kOMN_RESTAURANT_MODE_BAR_TITLE NSLocalizedString(@"RESTAURANT_MODE_BAR_TITLE", @"В бар")
 #define kOMN_RESTAURANT_MODE_TABLE_TITLE NSLocalizedString(@"RESTAURANT_MODE_TABLE_TITLE", @"За стол")
 #define kOMN_RESTAURANT_MODE_RESTAURANT_TITLE NSLocalizedString(@"RESTAURANT_MODE_RESTAURANT_TITLE", @"Заказать\nвнутри")
@@ -40,6 +44,143 @@
 #define kOMN_USER_PHOTO_DELETE_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_DELETE_BUTTON_TITLE", @"Удалить текущий снимок")
 #define kOMN_USER_PHOTO_SHOOT_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_SHOOT_BUTTON_TITLE", @"Сделать снимок")
 #define kOMN_USER_PHOTO_CHOOSE_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_CHOOSE_BUTTON_TITLE", @"Выбрать из библиотеки")
+#define kOMN_BANK_CARD_ADD_BUTTON_TITLE NSLocalizedString(@"BANK_CARD_ADD_BUTTON_TITLE", @"Привязать")
+#define kOMN_BANK_CARD_PAY_BUTTON_TITLE NSLocalizedString(@"BANK_CARD_PAY_BUTTON_TITLE", @"Оплатить")
+#define kOMN_FORBID_BUTTON_TITLE NSLocalizedString(@"FORBID_BUTTON_TITLE", @"Запретить")
+#define kOMN_REPEAT_BUTTON_TITLE NSLocalizedString(@"REPEAT_BUTTON_TITLE", @"Повторить")
+#define kOMN_REGISTER_BUTTON_TITLE NSLocalizedString(@"REGISTER_BUTTON_TITLE", @"Регистрация")
+#define kOMN_LOGIN_BUTTON_TITLE NSLocalizedString(@"LOGIN_BUTTON_TITLE", @"Вход")
+#define kOMN_CONFIRM_BUTTON_TITLE NSLocalizedString(@"CONFIRM_BUTTON_TITLE", @"Подтвердить")
+#define kOMN_DELETE_BUTTON_TITLE NSLocalizedString(@"DELETE_BUTTON_TITLE", @"Удалить")
+#define kOMN_ADD_CARD_BUTTON_TITLE NSLocalizedString(@"ADD_CARD_BUTTON_TITLE", @"Добавить карту")
+#define kOMN_SAVED_CARDS_BUTTON_TITLE NSLocalizedString(@"SAVED_CARDS_BUTTON_TITLE", @"Мои привязанные карты")
+#define kOMN_CALCULATOR_ORDER_SELECTION_BUTTON_TITLE NSLocalizedString(@"CALCULATOR_ORDER_SELECTION_BUTTON_TITLE", @"По блюдам")
+#define kOMN_CALCULATOR_SPLIT_SELECTION_BUTTON_TITLE NSLocalizedString(@"CALCULATOR_SPLIT_SELECTION_BUTTON_TITLE", @"Поровну")
+#define kOMN_RESEND_CODE_BUTTON_TITLE NSLocalizedString(@"RESEND_CODE_BUTTON_TITLE", @"Выслать новый код")
+#define kOMN_EXIT_DEMO_BUTTON_TITLE NSLocalizedString(@"EXIT_DEMO_BUTTON_TITLE", @"Выйти из Демо")
+#define kOMN_EXIT_BUTTON_TITLE NSLocalizedString(@"EXIT_BUTTON_TITLE", @"Выйти")
+#define kOMN_CHANGE_PHONE_BUTTON_TITLE NSLocalizedString(@"CHANGE_PHONE_BUTTON_TITLE", @"Сменить")
+#define kOMN_TRY_AGAIN_BUTTON_TITLE NSLocalizedString(@"TRY_AGAIN_BUTTON_TITLE", @"Проверить ещё")
+#define kOMN_USER_INFO_LOGOUT_BUTTON_TITLE NSLocalizedString(@"USER_INFO_LOGOUT_BUTTON_TITLE", @"Выход из аккаунта")
+#define kOMN_MY_ORDER_BUTTON_TITLE NSLocalizedString(@"MY_ORDER_BUTTON_TITLE", @"Ваш заказ")
+#define kOMN_OTHER_TIP_BUTTON_TITLE NSLocalizedString(@"OTHER_TIP_BUTTON_TITLE", @"Другой")
+#define kOMN_SPLIT_ORDER_BUTTON_TITLE NSLocalizedString(@"SPLIT_ORDER_BUTTON_TITLE", @"Разделить счет")
+#define kOMN_SPLIT_EDIT_BUTTON_TITLE NSLocalizedString(@"SPLIT_EDIT_BUTTON_TITLE", @"Изменить")
+#define kOMN_SPLIT_CANCEL_BUTTON_TITLE NSLocalizedString(@"SPLIT_CANCEL_TITLE", @"Отменить")
+#define kOMN_ORDER_UPDATE_ALERT_BUTTON_TITLE NSLocalizedString(@"ORDER_UPDATE_ALERT_BUTTON_TITLE", @"Обновить")
+#define kOMN_ORDER_CLOSE_ALERT_BUTTON_TITLE NSLocalizedString(@"ORDER_CLOSE_ALERT_BUTTON_TITLE", @"Выйти")
+#define kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_CANCEL_BUTTON_TITLE NSLocalizedString(@"ORDER_AMOUNT_TOO_LARGE_ALERT_BUTTON_TITLE", @"Отказаться")
+#define kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_PAY_BUTTON_TITLE NSLocalizedString(@"ORDER_AMOUNT_TOO_LARGE_ALERT_PAY_BUTTON_TITLE", @"Оплатить")
+#define kOMN_BILL_CALL_BUTTON_TITLE NSLocalizedString(@"BILL_CALL_BUTTON_TITLE", @"Счёт")
+#define kOMN_TO_PAY_BUTTON_FORMAT NSLocalizedString(@"TO_PAY_BUTTON_FORMAT %@", @"Оплатить {AMOUNT}")
+#define kOMN_GO_BUTTON_TITLE NSLocalizedString(@"GO_BUTTON_TITLE", @"Перейти")
+#define kOMN_WAITER_CALL_CANCEL_BUTTON_TITLE NSLocalizedString(@"WAITER_CALL_CANCEL_BUTTON_TITLE", @"Отменить вызов")
+#define kOMN_WAITER_CALL_BUTTON_TITLE NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант")
+#define kOMN_DEMO_MODE_BUTTON_TITLE NSLocalizedString(@"DEMO_MODE_BUTTON_TITLE", @"Демо-режим")
+#define kOMN_SCAN_QR_BUTTON_TITLE NSLocalizedString(@"SCAN_QR_BUTTON_TITLE", @"Сканировать QR")
+#define kOMN_FEEDBACK_MAIL_SUBJECT_RESTAURANTS NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT_RESTAURANTS", @"Напишите нам")
+#define kOMN_QR_NOT_SCAN_BUTTON_TITLE NSLocalizedString(@"QR_NOT_SCAN_BUTTON_TITLE", @"Не сканирует?")
+#define kOMN_REPEAT_QR_BUTTON_TITLE NSLocalizedString(@"REPEAT_QR_BUTTON_TITLE", @"Проверить ещё")
+#define kOMN_REPEAT_NO_INTERNET_BUTTON_TITLE NSLocalizedString(@"REPEAT_NO_INTERNET_BUTTON_TITLE", @"Попробуйте ещё раз")
+#define kOMN_REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE NSLocalizedString(@"REPEAT_NO_OMNOM_SERVER_BUTTON_TITLE", @"Давайте ещё раз.")
+#define kOMN_TURN_ON_BUTTON_TITLE NSLocalizedString(@"TURN_ON_BUTTON_TITLE", @"Включить")
+#define kOMN_USER_INFO_TABLE_TITLE NSLocalizedString(@"USER_INFO_TABLE_TITLE", @"Столик")
+#define kOMN_TABLE_UPDATE_BUTTON_FORMAT NSLocalizedString(@"TABLE_UPDATE_BUTTON_FORMAT %@", @"{table_number} Обновить")
+#define kOMN_TO_PAY_BUTTON_FORMAT NSLocalizedString(@"TO_PAY_BUTTON_FORMAT %@", @"Оплатить {AMOUNT}")
+#define kOMN_REGISTER_USER_FIELD_NEXT NSLocalizedString(@"REGISTER_USER_FIELD_NEXT", @"Следующий")
+#define kOMN_FEEDBACK_MAIL_ITEM_TITLE NSLocalizedString(@"FEEDBACK_MAIL_ITEM_TITLE", @"Обратная связь")
+#define kOMN_FEEDBACK_MAIL_SUBJECT NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT", @"Всё, что я думаю про Омном")
+
+
+//text field
+#define kOMN_CHANGE_PHONE_HINT NSLocalizedString(@"CHANGE_PHONE_HINT", @"Укажите ваш предыдущий номер телефона")
+#define kOMN_CHANGE_PHONE_PLACEHOLDER NSLocalizedString(@"CHANGE_PHONE_PLACEHOLDER", @"Номер телефона")
+#define kOMN_PHONE_NUMBER_PLACEHOLDER NSLocalizedString(@"PHONE_NUMBER_PLACEHOLDER", @"Номер телефона")
+#define kOMN_REGISTER_PLACEHOLDER_NAME NSLocalizedString(@"REGISTER_PLACEHOLDER_NAME", @"Имя")
+#define kOMN_REGISTER_PLACEHOLDER_EMAIL NSLocalizedString(@"REGISTER_PLACEHOLDER_EMAIL", @"Почта")
+#define kOMN_REGISTER_PLACEHOLDER_PHONE_NUMBER NSLocalizedString(@"REGISTER_PLACEHOLDER_PHONE_NUMBER", @"Номер телефона")
+#define kOMN_REGISTER_PLACEHOLDER_BIRTHDATE NSLocalizedString(@"REGISTER_PLACEHOLDER_BIRTHDATE", @"День рождения")
+
+
+#pragma mark - label
+#define kOMN_RESCAN_TABLE_HOWTO_FORMAT_1 NSLocalizedString(@"RESCAN_TABLE_HOWTO_FORMAT_1 %@", @"Номер стола в Omnom — {table_internal_id}")
+#define kOMN_RESCAN_TABLE_HOWTO_FORMAT_2 NSLocalizedString(@"RESCAN_TABLE_HOWTO_FORMAT_2 %@", @"Важно, чтобы стол был определён правильно.\nЭто нужно, чтобы увидеть выставленные вам\nсчета или сделать заказ.\n\nЕсли есть сомнения, уточните у официанта,\nкакой стол использовался при создании вашего\nзаказа, и определите {RESCAN_TABLE_HOWTO_ACTION_TEXT} в Omnom\nповторно.")
+#define kOMN_RESCAN_TABLE_HOWTO_ACTION_TEXT NSLocalizedString(@"RESCAN_TABLE_HOWTO_ACTION_TEXT", @"свой стол")
+#define kOMN_CONFIRM_CODE_HINT_FORMAT NSLocalizedString(@"CONFIRM_CODE_HINT_FORMAT %@", @"Введите код из SMS, присланного на номер\n%@")
+#define kOMN_USER_DISCLAMER_FORMAT NSLocalizedString(@"USER_DISCLAMER_FORMAT %@", @"Нажимая «Далее», вы принимаете %@")
+#define kOMN_USER_DISCLAMER_ACTION_TEXT NSLocalizedString(@"USER_DISCLAMER_ACTION_TEXT", @"Пользовательское соглашение")
+#define kOMN_HASH_DECODE_ERROR_TEXT NSLocalizedString(@"HASH_DECODE_ERROR_TEXT", @"Указан неверный код");
+#define kOMN_HASH_DECODE_HELP_TEXT NSLocalizedString(@"HASH_DECODE_HELP_TEXT", @"Введите код с Omnom-наклейки,\nфлажка или чека")
+#define kOMN_GUEST_NUMBER_FORMAT NSLocalizedString(@"GUEST_NUMBER_FORMAT %d", @"Гость {номер гостя}")
+#define kOMN_LOGIN_CREATE_USER_HINT_FORMAT NSLocalizedString(@"LOGIN_CREATE_USER_HINT_FORMAT %@", @"Ещё нет аккаунта? Прошу сюда – %@")
+#define kOMN_LOGIN_CREATE_USER_ACTION_TEXT NSLocalizedString(@"LOGIN_CREATE_USER_ACTION_TEXT", @"регистрация")
+#define kOMN_LOGIN_RESET_PHONE_HINT NSLocalizedString(@"LOGIN_RESET_PHONE_HINT", @"У меня сменился номер телефона")
+#define kOMN_MENU_PRODUCT_VOLUME_FORMAT NSLocalizedString(@"MENU_PRODUCT_VOLUME_FORMAT %@", @"{VOLUME} мл.")
+#define kOMN_MENU_PRODUCT_WEIGHT_FORMAT NSLocalizedString(@"MENU_PRODUCT_WEIGHT_FORMAT %@", @"{WEIGHT} гр.")
+
+#define kOMN_MENU_PRODUCT_PERSON_1 NSLocalizedString(@"MENU_PRODUCT_PERSON_1", @"Порция на одного")
+#define kOMN_MENU_PRODUCT_PERSON_2 NSLocalizedString(@"MENU_PRODUCT_PERSON_2", @"Порция на двоих")
+#define kOMN_MENU_PRODUCT_PERSON_3 NSLocalizedString(@"MENU_PRODUCT_PERSON_3", @"Порция на троих")
+#define kOMN_MENU_PRODUCT_PERSON_4 NSLocalizedString(@"MENU_PRODUCT_PERSON_4", @"Порция на четверых")
+#define kOMN_MENU_PRODUCT_PERSON_5 NSLocalizedString(@"MENU_PRODUCT_PERSON_5", @"Порция на пятерых")
+#define kOMN_MENU_PRODUCT_PERSON_N_FORMAT NSLocalizedString(@"MENU_PRODUCT_PERSON_N_FORMAT %d", @"Порция на {PERSON_COUNT} человек")
+#define kOMN_MENU_PRODUCT_COOKING_TIME_HOUR_FORMAT NSLocalizedString(@"MENU_PRODUCT_COOKING_TIME_HOUR_FORMAT %d", @"{HOUR} ч.")
+#define kOMN_MENU_PRODUCT_COOKING_TIME_MINUTES_FORMAT NSLocalizedString(@"MENU_PRODUCT_COOKING_TIME_MINUTES_FORMAT %d", @"{MINUTES} минут")
+#define kOMN_MENU_PRODUCT_COOKING_TIME_FORMAT NSLocalizedString(@"MENU_PRODUCT_COOKING_TIME_FORMAT %@", @"время приготовления {DURATION}")
+#define kOMN_MENU_PRODUCT_ENERGY_FORMAT NSLocalizedString(@"MENU_PRODUCT_ENERGY_FORMAT %@", @"{ENERGY} ккал")
+#define kOMN_MENU_PRODUCT_PROTEIN_FORMAT NSLocalizedString(@"MENU_PRODUCT_PROTEIN_FORMAT %@", @"Белки {PROTEIN}")
+#define kOMN_MENU_PRODUCT_FAT_FORMAT NSLocalizedString(@"MENU_PRODUCT_FAT_FORMAT %@", @"Жиры {FAT}")
+#define kOMN_MENU_PRODUCT_CARBOHYDRATE_FORMAT NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE_FORMAT %@", @"Углеводы {CARBOHYDRATE}")
+#define kOMN_MENU_PRODUCT_100_DISPLAY_FORMAT NSLocalizedString(@"MENU_PRODUCT_100_DISPLAY_FORMAT %@", @"На 100 гр.\n{DISPLAY_TEXT}")
+#define kOMN_MENU_PRODUCT_TOTAL_DISPLAY_FORMAT NSLocalizedString(@"MENU_PRODUCT_TOTAL_DISPLAY_FORMAT %@", @"На порцию\n{DISPLAY_TEXT}")
+
+#define kOMN_BEST_WITH_PRODUCT_DELIMITER_TEXT NSLocalizedString(@"BEST_WITH_PRODUCT_DELIMITER_TEXT", @"Хорошо вместе")
+#define kOMN_CHANGE_TABLE_HOWTO_ACTION_TEXT NSLocalizedString(@"CHANGE_TABLE_HOWTO_ACTION_TEXT", @"измените номер своего стола")
+#define kOMN_CHANGE_TABLE_HOWTO_FORMAT NSLocalizedString(@"CHANGE_TABLE_HOWTO_FORMAT %@ %@",   @"Омном отображает все заказы в соответствии с номером стола в ресторане.\nСейчас на %@ столе открытых заказов нет.\n\nЕсли вы уже сделали заказ, но его ещё не видно, то, вероятно, официант ещё не успел внести его в систему. Дайте ему пару минут.\nЕсли заказ по-прежнему не виден, уточните у официанта, на какой стол заказ записан.\n\nЕсли нужно, {CHANGE_TABLE_HOWTO_ACTION_TEXT}.")
+#define kOMN_NO_ORDERS_HOWTO_ACTION_TEXT NSLocalizedString(@"NO_ORDERS_HOWTO_ACTION_TEXT", @"Почему так может быть");
+#define kOMN_NO_ORDERS_HOWTO_FORMAT NSLocalizedString(@"NO_ORDERS_HOWTO_FORMAT %@ %@", @"Стол %@\nНа этом столе\nпока нет заказов.\n{NO_ORDERS_HOWTO_ACTION_TEXT}?")
+#define kOMN_ORDER_DID_UPDATE_ALERT_TITLE NSLocalizedString(@"ORDER_DID_UPDATE_ALERT_TITLE", @"Этот счёт обновлён заведением")
+#define kOMN_ORDER_DID_CLOSE_ALERT_TITLE NSLocalizedString(@"ORDER_DID_CLOSE_ALERT_TITLE", @"Этот счёт закрыт заведением для просмотра и оплаты")
+#define kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_TITLE NSLocalizedString(@"ORDER_AMOUNT_TOO_LARGE_ALERT_TITLE", @"Сумма слишком большая")
+#define kOMN_ORDER_NUMBER_FORMAT NSLocalizedString(@"ORDER_NUMBER_FORMAT %ld", @"Счёт {number}")
+#define kOMN_PAYMENT_TIPS_LABEL_TEXT NSLocalizedString(@"PAYMENT_TIPS_LABEL_TEXT", @"чаевые")
+#define kOMN_ALREADY_PAID_AMOUNT_FORMAT NSLocalizedString(@"ALREADY_PAID_AMOUNT_FORMAT %@", @"Уже оплачено: {amount}")
+#define kOMN_AMOUNT_FOR_PERCENT_LABEL_FORMAT  NSLocalizedString(@"AMOUNT_FOR_PERCENT_LABEL_FORMAT %@%@", @"или %@%@")
+#define kOMN_PAYMENT_DID_PAY_LABEL_TEXT NSLocalizedString(@"PAYMENT_DID_PAY_LABEL_TEXT", @"Я оплачу")
+#define kOMN_PAYMENT_TO_PAY_LABEL_TEXT NSLocalizedString(@"PAYMENT_TO_PAY_LABEL_TEXT", @"К оплате")
+
+#define kOMN_PAYMENT_NOTIFICATION_AMOUNT_WITH_TIPS_FORMAT NSLocalizedString(@"PAYMENT_NOTIFICATION_AMOUNT_WITH_TIPS_FORMAT %@ %@ %@", @"{userName}: оплачено по счету {amount} + чай {tipAmount}")
+#define kOMN_PAYMENT_NOTIFICATION_TIPS_ONLY_FORMAT NSLocalizedString(@"PAYMENT_NOTIFICATION_TIPS_ONLY_FORMAT %@ %@", @"{userName}: чаевые {tipAmount}")
+#define kOMN_PAYMENT_NOTIFICATION_AMOUNT_FORMAT NSLocalizedString(@"PAYMENT_NOTIFICATION_AMOUNT_FORMAT %@ %@", @"{userName}: оплачено по счету {amount}")
+
+#define kOMN_CALCULATOR_ALERT_TEXT NSLocalizedString(@"CALCULATOR_ALERT_TEXT", @"Отметьте ваши блюда в чеке и платите только за себя")
+#define kOMN_QR_HOWTO_ACTION_TEXT NSLocalizedString(@"QR_HOWTO_ACTION_TEXT", @"посмотреть Демо-пример")
+#define kOMN_QR_HOWTO_FORMAT NSLocalizedString(@"QR_HOWTO_FORMAT %@", @"В заведениях, где работает Омном наш QR-код будет на чеке или прямо на столе. Найдите наклейку либо красный флажок Omnom на вашем столе, наведите камеру телефона на квадрат QR-кода и приложение запомнит за каким столом вы сейчас расположились. Так вы сможете получить свой счет или сделать заказ.\n\nЕсли вы сейчас вне заведения, то можно {QR_HOWTO_ACTION_TEXT}.")
+#define kOMN_RATINGSCREEN_THANK_TITLE1 NSLocalizedString(@"RATINGSCREEN_THANK_TITLE1", @"Платёж принят")
+#define kOMN_RATINGSCREEN_THANK_TITLE2 NSLocalizedString(@"RATINGSCREEN_THANK_TITLE2", @"Официант получил sms с суммой чаевых.")
+#define kOMN_RATINGSCREEN_THANK_TITLE3 NSLocalizedString(@"RATINGSCREEN_THANK_TITLE3", @"Счёт отправлен на почту")
+#define kOMN_RATINGSCREEN_THANK_TITLE4 NSLocalizedString(@"RATINGSCREEN_THANK_TITLE4", @"Подтверждение оплаты вы сможете найти на экране профиля в оплаченных счетах.")
+#define kOMN_RATINGSCREEN_RATE_CONTROL_TITLE NSLocalizedString(@"RATINGSCREEN_RATE_CONTROL_TITLE", @"Вам здесь понравилось?")
+#define kOMN_REGISTER_USER_NO_USER_ACTION_TEXT NSLocalizedString(@"REGISTER_USER_NO_USER_ACTION_TEXT", @"Можно входить");
+#define kOMN_REGISTER_USER_NO_USER_FORMAT NSLocalizedString(@"REGISTER_USER_NO_USER_FORMAT %@", @"{REGISTER_USER_NO_USER_ACTION_TEXT}. Пользователь с таким номером телефона уже зарегистрирован")
+#define kOMN_RESET_PASSWORD_HINT NSLocalizedString(@"RESET_PASSWORD_HINT", @"На вашу почту была выслана\nссылка для смены номера\nтелефона")
+#define kOMN_RESTAURANT_ADDRESS_FLOOR_FORMAT NSLocalizedString(@"RESTAURANT_ADDRESS_FLOOR_FORMAT %@", @", {NUMBER} этаж")
+#define kOMN_RESTAURANT_DISTANCE_KM_FORMAT NSLocalizedString(@"RESTAURANT_DISTANCE_KM_FORMAT %.2f", @" ~{distance_km}км")
+#define kOMN_RESTAURANT_DISTANCE_M_FORMAT NSLocalizedString(@"RESTAURANT_DISTANCE_M_FORMAT %.2f", @" ~{distance_m}м")
+#define kOMN_ALERT_WIFI_COPY_TITLE NSLocalizedString(@"ALERT_WIFI_COPY_TITLE", @"Пароль скопирован в буфер обмена")
+#define kOMN_GOOD_TO_TASTE_TEXT NSLocalizedString(@"GOOD_TO_TASTE_TEXT", @"Стоит попробовать")
+#define kOMN_NOT_FOUND_RESTARANT_BUTTON_TEXT1 NSLocalizedString(@"NOT_FOUND_RESTARANT_BUTTON_TEXT1", @"Не нашли любимое зведение?")
+#define kOMN_NOT_FOUND_RESTARANT_BUTTON_TEXT2 NSLocalizedString(@"NOT_FOUND_RESTARANT_BUTTON_TEXT2", @"Напишите нам")
+#define kOMN_WORKDAY_INTERVAL_FORMAT NSLocalizedString(@"WORKDAY_INTERVAL_FORMAT %@ %@", @"c {open_time} до {close_time}")
+#define kOMN_QR_DESCRIPTION_ACTION_TEXT NSLocalizedString(@"QR_DESCRIPTION_ACTION_TEXT", @"Что это такое?");
+#define kOMN_QR_DESCRIPTION_FORMAT NSLocalizedString(@"QR_DESCRIPTION_FORMAT %@", @"Наведите камеру\nна QR-код Omnom.\n{QR_DESCRIPTION_ACTION_TEXT}")
+#define kOMN_ERROR_NO_OMNOM_SERVER_CONNECTION NSLocalizedString(@"ERROR_NO_OMNOM_SERVER_CONNECTION", @"Помехи на линии.");
+#define kOMN_ERROR_NO_INTERNET_CONNECTION NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Вы видите интернет? Мы нет.");
+#define kOMN_SPLIT_NUMBER_OF_GUESTS_HINT NSLocalizedString(@"SPLIT_NUMBER_OF_GUESTS_HINT", @"На скольких гостей делить?")
+
+
+    
+
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")
@@ -51,14 +192,34 @@
 #define kOMN_PREORDER_DONE_2GIS_SUNCITY_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_2GIS_SUNCITY_LABEL_TEXT_1", @"Заказ принят\nи ожидеате оплаты")
 #define kOMN_PREORDER_DONE_2GIS_SUNCITY_LABEL_TEXT_2 NSLocalizedString(@"PREORDER_DONE_2GIS_SUNCITY_LABEL_TEXT_2 %@ %@", @"Чтобы поесть, оплатите {amount_string} по ссылке\n{PREORDER_DONE_2GIS_SUNCITY_LABEL_ACTION_TEXT_2},\nуказав номер договора 5000306562\n\nОбед будет ждать вас на кухне на следующий рабочий день ориентировачно в 13:20.")
 #define kOMN_PREORDER_DONE_2GIS_SUNCITY_LABEL_ACTION_TEXT_2 NSLocalizedString(@"PREORDER_DONE_2GIS_SUNCITY_LABEL_ACTION_TEXT_2", @"http://tinkoff.ru/cardtocard")
-
 #define kOMN_MY_TABLE_ORDERS_LABEL_TEXT NSLocalizedString(@"MY_TABLE_ORDERS_LABEL_TEXT", @"Блюда на вашем столе")
 #define kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT NSLocalizedString(@"WISH_RECOMMENDATIONS_LABEL_TEXT", @"Ранее вы заказывали")
 
 #define kOMN_SEARCH_PRODUCT_HINT_TEXT NSLocalizedString(@"SEARCH_PRODUCT_HINT_TEXT", @"Увы, но такого блюда\nнет в нашем меню")
+#define kOMN_WIZZARD_TEXT_1 NSLocalizedString(@"WIZZARD_TEXT_1", @"Оплатить счёт через телефон")
+#define kOMN_WIZZARD_TEXT_2 NSLocalizedString(@"WIZZARD_TEXT_2", @"Вызвать официанта\nв любой момент")
+#define kOMN_WIZZARD_TEXT_3 NSLocalizedString(@"WIZZARD_TEXT_3", @"Разделить счёт между друзьями")
 
+//–––––––––
+#pragma mark - permissions
 #define kOMN_PUSH_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"PUSH_PERMISSION_DESCRIPTION_TEXT", @"Разрешить Omnom получить push-уведомления")
 #define kOMN_CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение\nна доступ к камере.")
+#define kOMN_CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT", @"Для сканирования карты\nнеобходимо разрешение\nна доступ к камере.")
+#define kOMN_CL_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"CL_PERMISSION_DESCRIPTION_TEXT", @"Необходимо разрешение на использование службы геолокации")
+#define kOMN_CAMERA_PERMISSION_HELP_TEXT NSLocalizedString(@"CAMERA_PERMISSION_HELP_TEXT", @"Разрешите доступ\nк Камере в настройках\nдля Omnom:")
+#define kOMN_CAMERA_ROLL_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"CAMERA_ROLL_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение на\nдоступ к камере.")
+#define kOMN_CAMERA_ROLL_PERMISSION_HELP_TEXT NSLocalizedString(@"CAMERA_ROLL_PERMISSION_HELP_TEXT", @"Разрешите доступ\nк Фотографиям \nв настройках для Omnom:")
+#define kOMN_LOCATION_PERMISSION_HELP_TEXT_1_7 NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_1_7", @"Чтобы разрешить геолокацию, откройте список приватности:")
+#define kOMN_LOCATION_PERMISSION_HELP_TEXT_2_7 NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_2_7", @"Затем откройте\nСлужбы геолокации:")
+#define kOMN_LOCATION_PERMISSION_HELP_TEXT_3_7 NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_3_7", @"Разрешите, наконец, использовать службы геолокации для Omnom:")
+#define kOMN_LOCATION_PERMISSION_HELP_TEXT_1_8 NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_1_8", @"Чтобы разрешить геолокацию, откройте Конфиденциальность:")
+#define kOMN_LOCATION_PERMISSION_HELP_TEXT_2_8 NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_2_8", @"Затем откройте\nСлужбы геолокации:")
+#define kOMN_LOCATION_PERMISSION_HELP_TEXT_3_8 NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_3_8", @"Разрешите доступ к геопозиции:")
+#define kOMN_LOCATION_PERMISSION_HELP_TEXT_1_8_1 NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_1_8_1", @"Выберите меню\n«Геопозиция»:")
+#define kOMN_LOCATION_PERMISSION_HELP_TEXT_2_8_1 NSLocalizedString(@"LOCATION_PERMISSION_HELP_TEXT_2_8_1", @"Разрешите доступ\nк геопозиции:")
+#define kOMN_CL_PERMISSION_REQUEST_TEXT NSLocalizedString(@"CL_PERMISSION_REQUEST_TEXT", @"Ваше разрешение на геолокацию – одно из необходимых условий работы Omnom. Без этого мы не сможем.")
+#define kOMN_TURN_ON_BLUETOOTH_HELP_TEXT NSLocalizedString(@"TURN_ON_BLUETOOTH_HELP_TEXT", @"Включите Bluetooth.\nМожно справиться,\nпотянув за\u00A0край экрана\nснизу-вверх.")
+
 
 //orders
 #define kOMN_NO_ORDERS_ON_TABLE_TEXT NSLocalizedString(@"NO_ORDERS_ON_TABLE_TEXT", @"На вашем столике нет счетов");
@@ -90,6 +251,8 @@
 #define kOMN_WEEKDAY_IN_THURSDAY NSLocalizedString(@"WEEKDAY_IN_THURSDAY", @"в четверг")
 #define kOMN_WEEKDAY_IN_FRIDAY NSLocalizedString(@"WEEKDAY_IN_FRIDAY", @"в пятницу")
 #define kOMN_WEEKDAY_IN_SATURDAY NSLocalizedString(@"WEEKDAY_IN_SATURDAY", @"в субботу")
+
+
 
 //bar
 #define kOMN_PAYMENT_SUCCESS_TITLE1 NSLocalizedString(@"BAR_SUCCESS_TITLE1", @"Заказ принят")
@@ -124,6 +287,17 @@
 #define kOMN_RESTAURANT_DATE_SELECTION_TITLE NSLocalizedString(@"RESTAURANT_DATE_SELECTION_TITLE", @"Когда")
 #define kOMN_ORDER_LUNCH_ALERT_TITLE NSLocalizedString(@"ORDER_LUNCH_ALERT_TITLE", @"Заказ обада в офис")
 #define kOMN_USER_INFO_ABOUT_SECTION_TITLE NSLocalizedString(@"USER_INFO_ABOUT_SECTION_TITLE", @"О ПРОГРАММЕ")
+#define kOMN_BANK_CARDS_TITLE NSLocalizedString(@"BANK_CARDS_TITLE", @"Карты")
+#define kOMN_CALCULATOR_TITLE NSLocalizedString(@"CALCULATOR_TITLE", @"Разделить счёт")
+#define kOMN_CHANGE_PHONE_TITLE NSLocalizedString(@"CHANGE_PHONE_TITLE", @"Изменение номера")
+#define kOMN_LOGIN_TITLE NSLocalizedString(@"LOGIN_TITLE", @"Вход")
+#define kOMN_CARD_CONFIRM_NAVIGATION_TITLE NSLocalizedString(@"CARD_CONFIRM_NAVIGATION_TITLE", @"Привязка карты")
+#define kOMN_MENU_LIST_TITLE NSLocalizedString(@"MENU_LIST_TITLE", @"Меню")
+#define kOMN_ORDER_NUMBER_HEADER_FORMAT NSLocalizedString(@"ORDER_NUMBER_HEADER_FORMAT %ld", @"Счёт {number} \u25BC")
+#define kOMN_RATINGSCREEN_THANK_TITLE NSLocalizedString(@"RATINGSCREEN_THANK_TITLE", @"Счёт")
+#define kOMN_REGISTER_USER_TITLE NSLocalizedString(@"REGISTER_USER_TITLE", @"Создать аккаунт")
+#define kOMN_QR_SCREEN_TITLE NSLocalizedString(@"QR_SCREEN_TITLE", @"Сканирование")
+
 
 //bank card
 #define kOMN_CARD_CONFIRM_OTHER_ERROR NSLocalizedString(@"CARD_CONFIRM_OTHER_ERROR", @"Что-то пошло не так.\nПовторите попытку")

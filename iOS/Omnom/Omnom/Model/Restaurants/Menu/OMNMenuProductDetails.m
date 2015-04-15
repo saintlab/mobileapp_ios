@@ -38,12 +38,12 @@
   
   if (self.volume_ml.length) {
 
-    displayText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_VOLUME %@", @"{VOLUME} мл."), self.volume_ml];
+    displayText = [NSString stringWithFormat:kOMN_MENU_PRODUCT_VOLUME_FORMAT, self.volume_ml];
     
   }
   else if (self.weight_gr.length) {
     
-    displayText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_WEIGHT %@", @"{WEIGHT} гр."), self.weight_gr];
+    displayText = [NSString stringWithFormat:kOMN_MENU_PRODUCT_WEIGHT_FORMAT, self.weight_gr];
     
   }
   
@@ -59,22 +59,22 @@
     case 0: {
     } break;
     case 1: {
-      [displayItems addObject:NSLocalizedString(@"MENU_PRODUCT_PERSON_1", @"Порция на одного")];
+      [displayItems addObject:kOMN_MENU_PRODUCT_PERSON_1];
     } break;
     case 2: {
-      [displayItems addObject:NSLocalizedString(@"MENU_PRODUCT_PERSON_2", @"Порция на двоих")];
+      [displayItems addObject:kOMN_MENU_PRODUCT_PERSON_2];
     } break;
     case 3: {
-      [displayItems addObject:NSLocalizedString(@"MENU_PRODUCT_PERSON_3", @"Порция на троих")];
+      [displayItems addObject:kOMN_MENU_PRODUCT_PERSON_3];
     } break;
     case 4: {
-      [displayItems addObject:NSLocalizedString(@"MENU_PRODUCT_PERSON_4", @"Порция на четверых")];
+      [displayItems addObject:kOMN_MENU_PRODUCT_PERSON_4];
     } break;
     case 5: {
-      [displayItems addObject:NSLocalizedString(@"MENU_PRODUCT_PERSON_5", @"Порция на пятерых")];
+      [displayItems addObject:kOMN_MENU_PRODUCT_PERSON_5];
     } break;
     default: {
-      [displayItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PERSON_N %d", @"Порция на {PERSON_COUNT} человек"), self.persons]];
+      [displayItems addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_PERSON_N_FORMAT, self.persons]];
     } break;
   }
   
@@ -84,17 +84,17 @@
     const NSInteger kMinutesInHour = 60;
     if (self.cooking_time_minutes > kMinutesInHour) {
       
-      [timeComponents addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_COOKING_TIME_HOUR %d", @"{HOUR} ч."), self.cooking_time_minutes/kMinutesInHour]];
+      [timeComponents addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_COOKING_TIME_HOUR_FORMAT, self.cooking_time_minutes/kMinutesInHour]];
       
     }
     
-    [timeComponents addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_COOKING_TIME_MINUTES %d", @"{MINUTES} минут"), self.cooking_time_minutes%kMinutesInHour]];
+    [timeComponents addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_COOKING_TIME_MINUTES_FORMAT, self.cooking_time_minutes%kMinutesInHour]];
     
-    NSString *cookinTime = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_COOKING_TIME %@", @"время приготовления {DURATION}"), [timeComponents componentsJoinedByString:@" "]];
+    NSString *cookinTime = [NSString stringWithFormat:kOMN_MENU_PRODUCT_COOKING_TIME_FORMAT, [timeComponents componentsJoinedByString:@" "]];
     [displayItems addObject:cookinTime];
     
   }
-  
+
   NSString *displayFullText = [displayItems componentsJoinedByString:@"\n"];
   
   return displayFullText;
@@ -109,44 +109,44 @@
   NSMutableArray *display100Items = [NSMutableArray arrayWithCapacity:4];
   
   if (self.energy_100.length) {
-    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал"), self.energy_100]];
+    [display100Items addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_ENERGY_FORMAT, self.energy_100]];
   }
   if (self.protein_100.length) {
-    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %@", @"Белки {PROTEIN}"), self.protein_100]];
+    [display100Items addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_PROTEIN_FORMAT, self.protein_100]];
   }
   if (self.fat_100.length) {
-    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_FAT %@", @"Жиры {FAT}"), self.fat_100]];
+    [display100Items addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_FAT_FORMAT, self.fat_100]];
   }
   if (self.carbohydrate_100.length) {
-    [display100Items addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE %@", @"Углеводы {CARBOHYDRATE}"), self.carbohydrate_100]];
+    [display100Items addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_CARBOHYDRATE_FORMAT, self.carbohydrate_100]];
   }
   
   NSString *componentsSeporator = @" \u00B7 ";
   
   if (display100Items.count) {
     
-    NSString *display100Text = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_100_DISPLAY_TEXT %@", @"На 100 гр.\n{DISPLAY_TEXT}"), [display100Items componentsJoinedByString:componentsSeporator]];
+    NSString *display100Text = [NSString stringWithFormat:kOMN_MENU_PRODUCT_100_DISPLAY_FORMAT, [display100Items componentsJoinedByString:componentsSeporator]];
     [compositionItems addObject:display100Text];
     
   }
 
   NSMutableArray *displayTotalItems = [NSMutableArray arrayWithCapacity:4];
   if (self.energy_total.length) {
-    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_ENERGY %@", @"{ENERGY} ккал"), self.energy_total]];
+    [displayTotalItems addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_ENERGY_FORMAT, self.energy_total]];
   }
   if (self.protein_total.length) {
-    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_PROTEIN %@", @"Белки {PROTEIN}"), self.protein_total]];
+    [displayTotalItems addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_PROTEIN_FORMAT, self.protein_total]];
   }
   if (self.fat_total.length) {
-    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_FAT %@", @"Жиры {FAT}"), self.fat_total]];
+    [displayTotalItems addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_FAT_FORMAT, self.fat_total]];
   }
   if (self.carbohydrate_total.length) {
-    [displayTotalItems addObject:[NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_CARBOHYDRATE %@", @"Углеводы {CARBOHYDRATE}"), self.carbohydrate_total]];
+    [displayTotalItems addObject:[NSString stringWithFormat:kOMN_MENU_PRODUCT_CARBOHYDRATE_FORMAT, self.carbohydrate_total]];
   }
   
   if (displayTotalItems.count) {
     
-    NSString *displayTotalText = [NSString stringWithFormat:NSLocalizedString(@"MENU_PRODUCT_TOTAL_DISPLAY_TEXT %@", @"На порцию\n{DISPLAY_TEXT}"), [displayTotalItems componentsJoinedByString:componentsSeporator]];
+    NSString *displayTotalText = [NSString stringWithFormat:kOMN_MENU_PRODUCT_TOTAL_DISPLAY_FORMAT, [displayTotalItems componentsJoinedByString:componentsSeporator]];
     [compositionItems addObject:displayTotalText];
     
   }

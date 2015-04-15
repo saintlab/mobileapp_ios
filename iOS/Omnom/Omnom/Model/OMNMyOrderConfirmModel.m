@@ -205,7 +205,7 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   
   NSString *subtitle = [NSString stringWithFormat:kOMN_WISH_CREATE_ERROR_SUBTITLE, [forbiddenProductNames componentsJoinedByString:@"\n"]];
   @weakify(self)
-  [UIAlertView bk_showAlertViewWithTitle:kOMN_WISH_CREATE_ERROR_TITLE message:subtitle cancelButtonTitle:NSLocalizedString(@"Отменить", @"Отменить") otherButtonTitles:@[kOMN_OK_BUTTON_TITLE] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+  [UIAlertView bk_showAlertViewWithTitle:kOMN_WISH_CREATE_ERROR_TITLE message:subtitle cancelButtonTitle:kOMN_CANCEL_BUTTON_TITLE otherButtonTitles:@[kOMN_OK_BUTTON_TITLE] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
     
     if (alertView.cancelButtonIndex == buttonIndex) {
       

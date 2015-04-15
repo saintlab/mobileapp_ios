@@ -66,9 +66,9 @@
 
 - (void)configureNotFoundLabel {
   
-  NSMutableAttributedString *notFoundText = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"NOT_FOUND_RESTARANT_BUTTON_TEXT1", @"Не нашли любимое зведение?") attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:[colorWithHexString(@"000000") colorWithAlphaComponent:0.5f] textAlignment:NSTextAlignmentCenter]];
+  NSMutableAttributedString *notFoundText = [[NSMutableAttributedString alloc] initWithString:kOMN_NOT_FOUND_RESTARANT_BUTTON_TEXT1 attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:[colorWithHexString(@"000000") colorWithAlphaComponent:0.5f] textAlignment:NSTextAlignmentCenter]];
   
-  NSMutableAttributedString *notFoundText1 = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"NOT_FOUND_RESTARANT_BUTTON_TEXT2", @"Напишите нам") attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:[OMNStyler blueColor] textAlignment:NSTextAlignmentCenter]];
+  NSMutableAttributedString *notFoundText1 = [[NSMutableAttributedString alloc] initWithString:kOMN_NOT_FOUND_RESTARANT_BUTTON_TEXT2 attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(18.0f) textColor:[OMNStyler blueColor] textAlignment:NSTextAlignmentCenter]];
   
   [notFoundText appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
   [notFoundText appendAttributedString:notFoundText1];

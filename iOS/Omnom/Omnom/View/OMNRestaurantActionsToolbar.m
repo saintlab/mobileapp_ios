@@ -103,7 +103,7 @@
   if (settings.has_waiter_call &&
       _restaurantMediator.table.waiterIsCalled) {
     
-    OMNToolbarButton *cancelWaiterButton = [[OMNToolbarButton alloc] initWithImage:nil title:NSLocalizedString(@"WAITER_CALL_CANCEL_BUTTON_TITLE", @"Отменить вызов")];
+    OMNToolbarButton *cancelWaiterButton = [[OMNToolbarButton alloc] initWithImage:nil title:kOMN_WAITER_CALL_CANCEL_BUTTON_TITLE];
     [cancelWaiterButton bk_addEventHandler:^(id sender) {
       
       @strongify(self)
@@ -136,7 +136,7 @@
   }
   else if (settings.has_waiter_call) {
     
-    [callWaiterButton setTitle:NSLocalizedString(@"WAITER_CALL_BUTTON_TITLE", @"Официант") forState:UIControlStateNormal];
+    [callWaiterButton setTitle:kOMN_WAITER_CALL_BUTTON_TITLE forState:UIControlStateNormal];
     [callWaiterButton omn_centerButtonAndImageWithSpacing:4.0f];
     [callWaiterButton sizeToFit];
     bottomToolbarItems =

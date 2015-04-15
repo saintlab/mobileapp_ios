@@ -67,7 +67,7 @@
   @[
     [[UIBarButtonItem alloc] initWithTitle:kOMN_CANCEL_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)],
     [UIBarButtonItem omn_flexibleItem],
-    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"REGISTER_USER_FIELD_NEXT", @"Следующий") style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)],
+    [[UIBarButtonItem alloc] initWithTitle:kOMN_REGISTER_USER_FIELD_NEXT style:UIBarButtonItemStylePlain target:self action:@selector(nextTap)],
     ];
   
   UIToolbar *doneToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
@@ -84,7 +84,7 @@
   _nameTF.textField.inputAccessoryView = nextToolbar;
   _nameTF.textField.tag = 0;
   _nameTF.textField.delegate = self;
-  _nameTF.textField.placeholder = NSLocalizedString(@"REGISTER_PLACEHOLDER_NAME", @"Имя");
+  _nameTF.textField.placeholder = kOMN_REGISTER_PLACEHOLDER_NAME;
   [self addSubview:_nameTF];
   
   _emailTF = [[OMNErrorTextField alloc] init];
@@ -95,14 +95,14 @@
   _emailTF.textField.returnKeyType = UIReturnKeyNext;
   _emailTF.textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
   _emailTF.textField.autocorrectionType = UITextAutocorrectionTypeNo;
-  _emailTF.textField.placeholder = NSLocalizedString(@"REGISTER_PLACEHOLDER_EMAIL", @"Почта");
+  _emailTF.textField.placeholder = kOMN_REGISTER_PLACEHOLDER_EMAIL;
   [self addSubview:_emailTF];
   
   _phoneTF = [[OMNErrorTextField alloc] init];
   _phoneTF.textField.tag = 2;
   _phoneTF.textField.keyboardType = UIKeyboardTypePhonePad;
   _phoneTF.textField.inputAccessoryView = nextToolbar;
-  _phoneTF.textField.placeholder = NSLocalizedString(@"REGISTER_PLACEHOLDER_PHONE_NUMBER", @"Номер телефона");
+  _phoneTF.textField.placeholder = kOMN_REGISTER_PLACEHOLDER_PHONE_NUMBER;
   [self addSubview:_phoneTF];
   
   _datePicker = [[UIDatePicker alloc] init];
@@ -119,7 +119,7 @@
   _birthdayTF.textField.delegate = self;
   _birthdayTF.textField.inputView = _datePicker;
   _birthdayTF.textField.inputAccessoryView = doneToolbar;
-  _birthdayTF.textField.placeholder = NSLocalizedString(@"REGISTER_PLACEHOLDER_BIRTHDATE", @"День рождения");
+  _birthdayTF.textField.placeholder = kOMN_REGISTER_PLACEHOLDER_BIRTHDATE;
   [self addSubview:_birthdayTF];
   
   _textFields = @[_nameTF, _emailTF, _phoneTF, _birthdayTF];
@@ -246,25 +246,25 @@
   
   BOOL hasErrors = NO;
   if (0 == _emailTF.textField.text.length) {
-    [_emailTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NO_EMAIL", @"Вы забыли ввести e-mail")];
+    [_emailTF setErrorText:kOMN_REGISTER_USER_ERROR_NO_EMAIL];
     hasErrors = YES;
   }
   else if (![_emailTF.textField.text omn_isValidEmail]) {
-    [_emailTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_EMAIL", @"Некорректный e-mail")];
+    [_emailTF setErrorText:kOMN_REGISTER_USER_ERROR_EMAIL];
     hasErrors = YES;
   }
   
   if (0 == _phoneTF.textField.text.length) {
-    [_phoneTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NO_PHONE_NUMBER", @"Вы забыли ввести номер телефона")];
+    [_phoneTF setErrorText:kOMN_REGISTER_USER_ERROR_NO_PHONE_NUMBER];
     hasErrors = YES;
   }
   else if (![_phoneTF.textField.text omn_isValidPhone]) {
-    [_phoneTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_PHONE_NUMBER", @"Некорректный номер телефона")];
+    [_phoneTF setErrorText:kOMN_REGISTER_USER_ERROR_PHONE_NUMBER];
     hasErrors = YES;
   }
   
   if (0 == _nameTF.textField.text.length) {
-    [_nameTF setErrorText:NSLocalizedString(@"REGISTER_USER_ERROR_NO_NAME", @"Вы забыли ввести имя")];
+    [_nameTF setErrorText:kOMN_REGISTER_USER_ERROR_NO_NAME];
     hasErrors = YES;
   }
   

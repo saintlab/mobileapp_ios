@@ -57,7 +57,7 @@
   _label = [UILabel omn_autolayoutView];
   _label.textColor = lineColor;
   _label.font = FuturaOSFOmnomRegular(20.0f);
-  _label.text = NSLocalizedString(@"BEST_WITH_PRODUCT_DELIMITER_TEXT", @"Хорошо вместе");
+  _label.text = kOMN_BEST_WITH_PRODUCT_DELIMITER_TEXT;
   [self.contentView addSubview:_label];
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:leftLine attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0f constant:0.0f]];

@@ -27,12 +27,12 @@
   
   [self omn_setup];
   
-  _phoneTF.textField.placeholder = NSLocalizedString(@"Номер телефона", nil);
+  _phoneTF.textField.placeholder = kOMN_CHANGE_PHONE_PLACEHOLDER;
   _phoneTF.textField.keyboardType = UIKeyboardTypePhonePad;
-  _hintLabel.text = NSLocalizedString(@"CHANGE_PHONE_HINT", @"Укажите ваш предыдущий номер телефона");
+  _hintLabel.text = kOMN_CHANGE_PHONE_HINT;
   
   self.view.backgroundColor = [UIColor whiteColor];
-  self.navigationItem.title = NSLocalizedString(@"CHANGE_PHONE_TITLE", @"Изменение номера");
+  self.navigationItem.title = kOMN_CHANGE_PHONE_TITLE;
   [self setLoading:NO];
   
 }

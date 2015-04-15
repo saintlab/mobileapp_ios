@@ -81,7 +81,7 @@
   self.clipsToBounds = YES;
   self.backgroundColor = [UIColor clearColor];
   
-  _tipsLabel.text = NSLocalizedString(@"PAYMENT_TIPS_LABEL", @"чаевые");
+  _tipsLabel.text = kOMN_PAYMENT_TIPS_LABEL_TEXT;
   _tipsLabel.font = FuturaOSFOmnomRegular(18.0f);
   _tipsLabel.textColor = colorWithHexString(@"FFFFFF");
 
@@ -153,7 +153,7 @@
   }];
   
   [_tipsSelector setOrder:order];
-  _payAmountLabel.text = (_order.paid.net_amount) ? ([NSString stringWithFormat:NSLocalizedString(@"ALREADY_PAID_AMOUNT %@", @"Уже оплачено: {amount}"), [OMNUtils formattedMoneyStringFromKop:_order.paid.net_amount]]) : (@"");
+  _payAmountLabel.text = (_order.paid.net_amount) ? ([NSString stringWithFormat:kOMN_ALREADY_PAID_AMOUNT_FORMAT, [OMNUtils formattedMoneyStringFromKop:_order.paid.net_amount]]) : (@"");
   
   _amountControl.amount = _order.enteredAmount;
   _percentControl.percent = _order.customTip.percent;
@@ -169,7 +169,7 @@
   _payButton.enabled = payButtonEnabled;
   [UIView performWithoutAnimation:^{
     
-    [_payButton setTitle:[NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:enteredAmountWithTips]] forState:UIControlStateNormal];
+    [_payButton setTitle:[NSString stringWithFormat:kOMN_TO_PAY_BUTTON_FORMAT,  [OMNUtils formattedMoneyStringFromKop:enteredAmountWithTips]] forState:UIControlStateNormal];
     
   }];
   
@@ -178,7 +178,7 @@
 - (void)updateAmountForPercentLabel {
 
   long long amount = _order.enteredAmount*(_percentControl.percent/100.0);
-  _amountForPercentLabel.text = [NSString stringWithFormat:@"или %@%@", [OMNUtils evenCommaStringFromKop:amount], kRubleSign];
+  _amountForPercentLabel.text = [NSString stringWithFormat:kOMN_AMOUNT_FOR_PERCENT_LABEL_FORMAT, [OMNUtils evenCommaStringFromKop:amount], kRubleSign];
   
 }
 
@@ -186,7 +186,7 @@
   
   BOOL amountEnteredOrEditing = (_keyboardShown || _order.enteredAmountChanged);
   _payLabel.hidden = _order.paymentCompleted;
-  _payLabel.text = (amountEnteredOrEditing) ? (NSLocalizedString(@"PAYMENT_DID_PAY_LABEL_TEXT", @"Я оплачу")) : (NSLocalizedString(@"PAYMENT_TO_PAY_LABEL_TEXT", @"к оплате"));
+  _payLabel.text = (amountEnteredOrEditing) ? (kOMN_PAYMENT_DID_PAY_LABEL_TEXT) : (kOMN_PAYMENT_TO_PAY_LABEL_TEXT);
   
 }
 

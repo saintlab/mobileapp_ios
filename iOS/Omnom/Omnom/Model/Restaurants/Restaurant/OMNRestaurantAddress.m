@@ -45,7 +45,7 @@
   
   if (self.floor.length) {
     
-    [address appendFormat:NSLocalizedString(@"RESTAURANT_ADDRESS_FLOOR %@", @", {NUMBER} этаж"), self.floor];
+    [address appendFormat:kOMN_RESTAURANT_ADDRESS_FLOOR_FORMAT, self.floor];
     
   }
   

@@ -130,7 +130,7 @@
   [_payButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
   
   long long totalAmount = self.bankCardMediator.acquiringTransaction.total_amount;
-  NSString *toPayString = [NSString stringWithFormat:NSLocalizedString(@"TO_PAY_BUTTON_TEXT %@", @"Оплатить {AMOUNT}"),  [OMNUtils formattedMoneyStringFromKop:totalAmount]];
+  NSString *toPayString = [NSString stringWithFormat:kOMN_TO_PAY_BUTTON_FORMAT,  [OMNUtils formattedMoneyStringFromKop:totalAmount]];
   [_payButton setTitle:toPayString forState:UIControlStateNormal];
 
   [_payButton addTarget:self action:@selector(payTap:) forControlEvents:UIControlEventTouchUpInside];
@@ -139,7 +139,7 @@
 }
 
 - (UIBarButtonItem *)addCardButton {
-  return [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Добавить карту", nil) style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
+  return [[UIBarButtonItem alloc] initWithTitle:kOMN_ADD_CARD_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -14,7 +14,7 @@
 - (UIBarButtonItem *)exitRestaurantButton {
   
   OMNLightBackgroundButton *cancelButton = [[OMNLightBackgroundButton alloc] init];
-  [cancelButton setTitle:NSLocalizedString(@"Выйти из Демо", nil) forState:UIControlStateNormal];
+  [cancelButton setTitle:kOMN_EXIT_DEMO_BUTTON_TITLE forState:UIControlStateNormal];
   [cancelButton addTarget:self action:@selector(exitRestaurant) forControlEvents:UIControlEventTouchUpInside];
   return [[UIBarButtonItem alloc] initWithCustomView:cancelButton];
   

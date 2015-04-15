@@ -219,7 +219,7 @@ OMNTransactionPaymentVCDelegate>
     if (NSNotFound != index) {
       
       UIButton *button = [[OMNSelectOrderButton alloc] init];
-      NSString *title = [NSString stringWithFormat:NSLocalizedString(@"ORDER_NUMBER_HEADER_TITLE %ld", @"Счёт {number} \u25BC"), (long)index + 1];
+      NSString *title = [NSString stringWithFormat:kOMN_ORDER_NUMBER_HEADER_FORMAT, (long)index + 1];
       [button setTitle:title forState:UIControlStateNormal];
       [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
       
@@ -371,7 +371,7 @@ OMNTransactionPaymentVCDelegate>
   if (_table.selectedOrder.paymentValueIsTooHigh) {
     
     @weakify(self)
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"Сумма слишком большая", nil) message:nil cancelButtonTitle:NSLocalizedString(@"Отказаться", nil) otherButtonTitles:@[NSLocalizedString(@"Оплатить", nil)] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    [UIAlertView bk_showAlertViewWithTitle:kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_TITLE message:nil cancelButtonTitle:kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_CANCEL_BUTTON_TITLE otherButtonTitles:@[kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_PAY_BUTTON_TITLE] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
 
       @strongify(self)
       if (buttonIndex != alertView.cancelButtonIndex) {

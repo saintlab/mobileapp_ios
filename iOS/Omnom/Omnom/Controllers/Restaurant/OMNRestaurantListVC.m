@@ -46,7 +46,7 @@
   [self omn_setup];
   
   [self.navigationItem setHidesBackButton:YES animated:NO];
-  OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:NSLocalizedString(@"DEMO_MODE_BUTTON_TITLE", @"Демо-режим")];
+  OMNToolbarButton *demoButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"demo_mode_icon_small"] title:kOMN_DEMO_MODE_BUTTON_TITLE];
   [demoButton addTarget:_searchRestaurantMediator action:@selector(demoModeTap) forControlEvents:UIControlEventTouchUpInside];
   
   _bottomToolbar.items =
@@ -76,7 +76,7 @@
   [self.navigationController.navigationBar omn_setDefaultBackground];
   
   [self.navigationItem setRightBarButtonItem:[UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:_searchRestaurantMediator action:@selector(showUserProfile)] animated:YES];
-  OMNToolbarButton *qrButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"qr-icon-small"] title:NSLocalizedString(@"SCAN_QR_BUTTON_TITLE", @"Сканировать QR")];
+  OMNToolbarButton *qrButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"qr-icon-small"] title:kOMN_SCAN_QR_BUTTON_TITLE];
   [qrButton addTarget:_searchRestaurantMediator action:@selector(scanTableQrTap) forControlEvents:UIControlEventTouchUpInside];
   [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:qrButton] animated:YES];
   
@@ -95,7 +95,7 @@
     
     MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
     [composeViewController setToRecipients:@[@"team@omnom.menu"]];
-    [composeViewController setSubject:NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT_RESTAURANTS", @"Напишите нам")];
+    [composeViewController setSubject:kOMN_FEEDBACK_MAIL_SUBJECT_RESTAURANTS];
     
     [composeViewController bk_setCompletionBlock:^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
       

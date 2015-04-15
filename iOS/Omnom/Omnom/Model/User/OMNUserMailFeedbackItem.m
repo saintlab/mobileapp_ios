@@ -20,7 +20,7 @@
   self = [super init];
   if (self) {
 
-    self.title = NSLocalizedString(@"FEEDBACK_MAIL_ITEM_TITLE", @"Обратная связь");
+    self.title = kOMN_FEEDBACK_MAIL_ITEM_TITLE;
     
     [self setActionBlock:^(UIViewController *vc, __weak UITableView *tv, NSIndexPath *indexPath) {
       
@@ -28,7 +28,7 @@
         
         MFMailComposeViewController *composeViewController = [[MFMailComposeViewController alloc] init];
         [composeViewController setToRecipients:@[@"team@omnom.menu"]];
-        [composeViewController setSubject:NSLocalizedString(@"FEEDBACK_MAIL_SUBJECT", @"Всё, что я думаю про Омном")];
+        [composeViewController setSubject:kOMN_FEEDBACK_MAIL_SUBJECT];
         
         [composeViewController bk_setCompletionBlock:^(MFMailComposeViewController *mailComposeViewController, MFMailComposeResult result, NSError *error) {
           

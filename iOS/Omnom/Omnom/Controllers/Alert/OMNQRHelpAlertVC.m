@@ -36,8 +36,8 @@
   
   NSMutableDictionary *attributes = [OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(15.0f) textColor:colorWithHexString(@"737478") textAlignment:NSTextAlignmentLeft];
   
-  NSString *actionText = NSLocalizedString(@"QR_HOWTO_ACTION_TEXT", @"посмотреть Демо-пример");
-  NSString *text = [NSString stringWithFormat:NSLocalizedString(@"QR_HOWTO_TEXT %@", @"В заведениях, где работает Омном наш QR-код будет на чеке или прямо на столе. Найдите наклейку либо красный флажок Omnom на вашем столе, наведите камеру телефона на квадрат QR-кода и приложение запомнит за каким столом вы сейчас расположились. Так вы сможете получить свой счет или сделать заказ.\n\nЕсли вы сейчас вне заведения, то можно {QR_HOWTO_ACTION_TEXT}."), actionText];
+  NSString *actionText = kOMN_QR_HOWTO_ACTION_TEXT;
+  NSString *text = [NSString stringWithFormat:kOMN_QR_HOWTO_FORMAT, actionText];
   
   NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text attributes:[attributes copy]];
   

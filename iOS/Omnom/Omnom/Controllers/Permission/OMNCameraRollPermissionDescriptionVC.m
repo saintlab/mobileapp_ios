@@ -27,7 +27,7 @@
   if (self) {
     
     self.backgroundImage = [UIImage imageNamed:@"wood_bg"];
-    self.text = NSLocalizedString(@"CAMERA_ROLL_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение на\nдоступ к камере.");
+    self.text = kOMN_CAMERA_ROLL_PERMISSION_DESCRIPTION_TEXT;
     self.circleIcon = [UIImage imageNamed:@"photo_icon_big"];
     
     @weakify(self)
@@ -66,7 +66,7 @@
   
   NSArray *pages =
   @[
-    [OMNHelpPage pageWithText:NSLocalizedString(@"CAMERA_ROLL_PERMISSION_HELP_TEXT", @"Разрешите доступ\nк Фотографиям \nв настройках для Omnom:") imageName:@"settings_photos"],
+    [OMNHelpPage pageWithText:kOMN_CAMERA_ROLL_PERMISSION_HELP_TEXT imageName:@"settings_photos"],
     ];
   
   OMNPermissionHelpVC *cameraPermissionHelpVC = [[OMNPermissionHelpVC alloc] initWithPages:pages];

@@ -51,7 +51,7 @@
       self.didUpdateBlock) {
     
     @weakify(self)
-    _updateAlertView = [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_UPDATE_ALERT_TITLE", @"Этот счёт обновлён заведением") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_UPDATE_ALERT_BUTTON_TITLE", @"Обновить") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    _updateAlertView = [UIAlertView bk_showAlertViewWithTitle:kOMN_ORDER_DID_UPDATE_ALERT_TITLE message:nil cancelButtonTitle:kOMN_ORDER_UPDATE_ALERT_BUTTON_TITLE otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
       
       @strongify(self)
       if (self.didUpdateBlock) {
@@ -76,7 +76,7 @@
     _updateAlertView = nil;
     
     @weakify(self)
-    [UIAlertView bk_showAlertViewWithTitle:NSLocalizedString(@"ORDER_DID_CLOSE_ALERT_TITLE", @"Этот счёт закрыт заведением для просмотра и оплаты") message:nil cancelButtonTitle:NSLocalizedString(@"ORDER_CLOSE_ALERT_BUTTON_TITLE", @"Выйти") otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    [UIAlertView bk_showAlertViewWithTitle:kOMN_ORDER_DID_CLOSE_ALERT_TITLE message:nil cancelButtonTitle:kOMN_ORDER_CLOSE_ALERT_BUTTON_TITLE otherButtonTitles:nil handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
       
       @strongify(self)
       if (self.didCloseBlock) {

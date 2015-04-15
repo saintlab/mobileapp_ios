@@ -10,6 +10,7 @@
 #import <OMNStyler.h>
 #import "OMNConstants.h"
 #import "UIBarButtonItem+omn_custom.h"
+#import "UIView+omn_autolayout.h"
 
 @implementation OMNResetPasswordVC
 
@@ -26,15 +27,14 @@
 
 - (void)omn_setup {
   
-  UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"success_icon_green"]];
-  imageView.translatesAutoresizingMaskIntoConstraints = NO;
+  UIImageView *imageView = [UIImageView omn_autolayoutView];
+  imageView.image = [UIImage imageNamed:@"success_icon_green"];
   [self.view addSubview:imageView];
   
-  UILabel *label = [[UILabel alloc] init];
-  label.translatesAutoresizingMaskIntoConstraints = NO;
+  UILabel *label = [UILabel omn_autolayoutView];
   label.numberOfLines = 0;
   label.textAlignment = NSTextAlignmentCenter;
-  label.text = NSLocalizedString(@"RESET_PASSWORD_HINT", @"На вашу почту была выслана\nссылка для смены номера\nтелефона");
+  label.text = kOMN_RESET_PASSWORD_HINT;
   label.font = FuturaOSFOmnomRegular(20.0f);
   label.textColor = [OMNStyler greyColor];
   [self.view addSubview:label];

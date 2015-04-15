@@ -30,40 +30,40 @@
   page1.bgImageName = @"wood_bg";
   page1.bgColor = colorWithHexString(@"CE1200");
   page1.iconName = @"credit_cards_icon_big";
-  page1.text = NSLocalizedString(@"Оплатить счёт через телефон", nil);
+  page1.text = kOMN_WIZZARD_TEXT_1;
   
   OMNWizardPageVC *page2 = [[OMNWizardPageVC alloc] init];
   page2.bgImageName = @"wood_bg";
   page2.bgColor = colorWithHexString(@"089E7D");
   page2.iconName = @"bell_ringing_icon_big";
-  page2.text = NSLocalizedString(@"Вызвать официанта\nв любой момент", nil);
+  page2.text = kOMN_WIZZARD_TEXT_2;
 
   OMNWizardPageVC *page3 = [[OMNWizardPageVC alloc] init];
   page3.bgImageName = @"wood_bg";
   page3.bgColor = colorWithHexString(@"266BA6");
   page3.iconName = @"split_bill_icon_big";
-  page3.text = NSLocalizedString(@"Разделить счёт между друзьями", nil);
+  page3.text = kOMN_WIZZARD_TEXT_3;
   
   self = [super initWithViewControllers:@[page1, page2, page3]];
   if (self) {
     @weakify(self)
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Регистрация", nil) image:[UIImage imageNamed:@"user_settings_icon"] block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_REGISTER_BUTTON_TITLE image:[UIImage imageNamed:@"user_settings_icon"] block:^{
         
         @strongify(self)
         [self registerTap:nil];
         
       }],
-      [OMNBarButtonInfo infoWithTitle:NSLocalizedString(@"Вход", nil) image:[UIImage imageNamed:@"login_icon_small"] block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_LOGIN_BUTTON_TITLE image:[UIImage imageNamed:@"login_icon_small"] block:^{
         
         @strongify(self)
         [self loginTap:nil];
         
       }]
       ];
-    
   }
+  
   return self;
 }
 

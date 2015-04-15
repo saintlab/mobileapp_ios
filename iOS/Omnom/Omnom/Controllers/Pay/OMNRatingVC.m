@@ -48,27 +48,27 @@
   [self setup];
   
   self.view.backgroundColor = [UIColor clearColor];
-  self.navigationItem.title = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE", @"Счёт");
+  self.navigationItem.title = kOMN_RATINGSCREEN_THANK_TITLE;
   
   [_starRatingView setScore:0.0f withAnimation:NO];
 
-  _l1.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE1", @"Платёж принят");
+  _l1.text = kOMN_RATINGSCREEN_THANK_TITLE1;
   _l1.textColor = colorWithHexString(@"000000");
   _l1.font = FuturaOSFOmnomRegular(30.0f);
   
-  _l2.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE2", @"Официант получил sms с суммой чаевых.");
+  _l2.text = kOMN_RATINGSCREEN_THANK_TITLE2;
   _l2.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   _l2.font = FuturaOSFOmnomRegular(15.0f);
   
-  _l3.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE3", @"Счёт отправлен на почту");
+  _l3.text = kOMN_RATINGSCREEN_THANK_TITLE3;
   _l3.textColor = colorWithHexString(@"000000");
   _l3.font = FuturaOSFOmnomRegular(20.0f);
   
-  _l4.text = NSLocalizedString(@"RATINGSCREEN_THANK_TITLE4", @"Подтверждение оплаты вы сможете найти на экране профиля в оплаченных счетах.");
+  _l4.text = kOMN_RATINGSCREEN_THANK_TITLE4;
   _l4.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   _l4.font = FuturaOSFOmnomRegular(15.0f);
   
-  _ratingLabel.text = NSLocalizedString(@"RATINGSCREEN_RATE_CONTROL_TITLE", @"Вам здесь понравилось?");
+  _ratingLabel.text = kOMN_RATINGSCREEN_RATE_CONTROL_TITLE;
   _ratingLabel.textColor = colorWithHexString(@"FFFFFF");
   _ratingLabel.font = FuturaOSFOmnomRegular(20.0f);
   

@@ -35,7 +35,7 @@
     [self setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateHighlighted];
     [self setTitleColor:colorWithHexString(@"FFFFFF") forState:UIControlStateSelected];
     [self setTitleColor:[colorWithHexString(@"FFFFFF") colorWithAlphaComponent:0.5f] forState:UIControlStateSelected|UIControlStateHighlighted];
-    [self setTitle:NSLocalizedString(@"MY_ORDER_BUTTON_TITLE", @"Ваш заказ") forState:UIControlStateNormal];
+    [self setTitle:kOMN_MY_ORDER_BUTTON_TITLE forState:UIControlStateNormal];
     [self setTitle:@"" forState:UIControlStateSelected];
     [self setTitle:@"" forState:UIControlStateSelected|UIControlStateHighlighted];
     

@@ -21,7 +21,7 @@
   self = [super initWithParent:parent];
   if (self) {
     self.faded = YES;
-    self.text = NSLocalizedString(@"TURN_ON_BLUETOOTH_HELP_TEXT", @"Включите Bluetooth.\nМожно справиться,\nпотянув за\u00A0край экрана\nснизу-вверх.");
+    self.text = kOMN_TURN_ON_BLUETOOTH_HELP_TEXT;
     self.circleIcon = [UIImage imageNamed:@"bluetooth_icon_big"];
   }
   return self;
