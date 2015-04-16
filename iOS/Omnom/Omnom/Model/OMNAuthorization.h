@@ -18,6 +18,7 @@
 @property (nonatomic, strong, readonly) OMNUser *user;
 
 @property (nonatomic, copy, readonly) NSString *installId;
+@property (nonatomic, copy) NSString *supportPhone;
 
 @property (nonatomic, copy) dispatch_block_t logoutCallback;
 
@@ -27,7 +28,7 @@
 - (void)setup;
 - (void)updateUserInfoWithUser:(OMNUser *)user;
 - (void)logout;
-
+- (void)loadSupport;
 - (void)checkUserWithBlock:(void (^)(OMNUser *user))userBlock failure:(void (^)(OMNError *error))failureBlock;
 
 - (BOOL)pushNotificationsRequested;

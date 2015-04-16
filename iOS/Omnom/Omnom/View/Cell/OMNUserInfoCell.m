@@ -33,6 +33,7 @@
   _button.titleLabel.font = FuturaOSFOmnomRegular(18.0f);
   _button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
   _button.opaque = YES;
+  _button.clipsToBounds = YES;
   _button.userInteractionEnabled = NO;
   _button.backgroundColor = [UIColor clearColor];
   [self.contentView addSubview:_button];
