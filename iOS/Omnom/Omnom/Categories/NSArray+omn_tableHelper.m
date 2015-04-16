@@ -16,7 +16,8 @@
   
   NSMutableIndexSet *deletedSet = [NSMutableIndexSet indexSet];
   NSMutableIndexSet *reloadSet = [NSMutableIndexSet indexSet];
-  [[self copy] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+  NSArray *copySelf = [self copy];
+  [copySelf enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
     
     if (![compareArray containsObject:obj]) {
       [deletedSet addIndex:idx];

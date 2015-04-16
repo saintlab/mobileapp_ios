@@ -38,9 +38,7 @@
 }
 
 - (void)dealloc {
-  
   [self removeBankCardsObserver];
-  
 }
 
 - (void)viewDidLoad {
@@ -90,9 +88,7 @@
 }
 
 - (IBAction)addCardTap:(id)sender {
-  
   [_bankCardMediator registerCard];
-  
 }
 
 @end

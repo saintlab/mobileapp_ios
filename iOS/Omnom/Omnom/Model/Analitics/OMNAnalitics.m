@@ -23,6 +23,8 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 
 @interface OMNAnalitics ()
 
+@property (nonatomic, strong, readonly) OMNUser *user;
+
 @end
 
 @implementation OMNAnalitics {
@@ -30,7 +32,6 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   Mixpanel *_mixpanel;
   Mixpanel *_mixpanelDebug;
   NSTimeInterval _serverTimeDelta;
-  OMNUser *_user;
   
 }
 
@@ -209,7 +210,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 
   [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
     
-    [_user logCoordinates:coordinate];
+    [self.user logCoordinates:coordinate];
     
   }];
   
@@ -287,21 +288,13 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response {
+- (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error {
   
   NSMutableDictionary *debugInfo = [self superProperties];
   if (error.localizedDescription) {
-    debugInfo[@"error"] = error.localizedDescription;
+    debugInfo[@"error"] = error.userInfo;
   }
   debugInfo[@"errorCode"] = @(error.code);
-  
-  if (request) {
-    debugInfo[@"request"] = request;
-  }
-  
-  if (response) {
-    debugInfo[@"response"] = response;
-  }
   
   if (bankCardInfo) {
     debugInfo[@"card_info"] = bankCardInfo.debugInfo;

@@ -1539,6 +1539,11 @@
 		93C99116193EF6F20028F76C /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99115193EF6F20028F76C /* OMNOrder.m */; };
 		93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
 		93CA085D19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
+		93CACD661ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
+		93CACD671ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
+		93CACD681ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
+		93CACD691ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
+		93CACD6A1ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
 		93CB66CF1A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
 		93CB66D01A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
 		93CB66D31A35FD8100C5B10E /* OMNLaunchOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66D21A35FD8100C5B10E /* OMNLaunchOptions.m */; };
@@ -1631,6 +1636,11 @@
 		93D77AA11ADF92BB00C0470B /* OMNSupportUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D77A9E1ADF92BB00C0470B /* OMNSupportUserInfoItem.m */; };
 		93D77AA21ADF92BB00C0470B /* OMNSupportUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D77A9E1ADF92BB00C0470B /* OMNSupportUserInfoItem.m */; };
 		93D77AA31ADF92BB00C0470B /* OMNSupportUserInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D77A9E1ADF92BB00C0470B /* OMNSupportUserInfoItem.m */; };
+		93D77AAE1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D77AAD1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m */; };
+		93D77AAF1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D77AAD1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m */; };
+		93D77AB01ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D77AAD1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m */; };
+		93D77AB11ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D77AAD1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m */; };
+		93D77AB21ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D77AAD1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m */; };
 		93D9D8441A5306B400824AD0 /* OMNTable+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9D8431A5306B400824AD0 /* OMNTable+omn_network.m */; };
 		93D9D8451A5306B400824AD0 /* OMNTable+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9D8431A5306B400824AD0 /* OMNTable+omn_network.m */; };
 		93D9EB231A39C9BE0000D9B5 /* OMNRestaurantSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */; };
@@ -2317,6 +2327,8 @@
 		93C99115193EF6F20028F76C /* OMNOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrder.m; sourceTree = "<group>"; };
 		93CA085A19AA34FA00615F43 /* UIView+screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+screenshot.h"; sourceTree = "<group>"; };
 		93CA085B19AA34FA00615F43 /* UIView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+screenshot.m"; sourceTree = "<group>"; };
+		93CACD641ADFDB0B00826F7B /* OMNUser+omn_mailRu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNUser+omn_mailRu.h"; sourceTree = "<group>"; };
+		93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNUser+omn_mailRu.m"; sourceTree = "<group>"; };
 		93CB66CD1A35A63D00C5B10E /* OMNChangePhoneWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangePhoneWebVC.h; sourceTree = "<group>"; };
 		93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangePhoneWebVC.m; sourceTree = "<group>"; };
 		93CB66D11A35FD8100C5B10E /* OMNLaunchOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLaunchOptions.h; sourceTree = "<group>"; };
@@ -2380,6 +2392,8 @@
 		93D77A9D1ADF92BB00C0470B /* OMNSupportUserInfoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSupportUserInfoItem.h; sourceTree = "<group>"; };
 		93D77A9E1ADF92BB00C0470B /* OMNSupportUserInfoItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSupportUserInfoItem.m; sourceTree = "<group>"; };
 		93D77AA41ADF99D100C0470B /* LocalizedConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizedConstants.h; sourceTree = SOURCE_ROOT; };
+		93D77AAC1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNBankCardInfo+omn_mailRuBankCardInfo.h"; sourceTree = "<group>"; };
+		93D77AAD1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNBankCardInfo+omn_mailRuBankCardInfo.m"; sourceTree = "<group>"; };
 		93D9D8421A5306B400824AD0 /* OMNTable+omn_network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNTable+omn_network.h"; sourceTree = "<group>"; };
 		93D9D8431A5306B400824AD0 /* OMNTable+omn_network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNTable+omn_network.m"; sourceTree = "<group>"; };
 		93D9EB211A39C9BE0000D9B5 /* OMNRestaurantSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNRestaurantSettings.h; path = ../OMNRestaurantSettings.h; sourceTree = "<group>"; };
@@ -3403,6 +3417,10 @@
 				937CDC951AA6F76B000856AB /* OMNAcquiringTransaction.m */,
 				937CDC981AA7041A000856AB /* OMNMailAcquiringTransaction.h */,
 				937CDC991AA7041A000856AB /* OMNMailAcquiringTransaction.m */,
+				93D77AAC1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.h */,
+				93D77AAD1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m */,
+				93CACD641ADFDB0B00826F7B /* OMNUser+omn_mailRu.h */,
+				93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */,
 			);
 			name = Acquiring;
 			sourceTree = "<group>";
@@ -4805,6 +4823,7 @@
 			files = (
 				930C4D4F1AB15E1B006CA608 /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				930C4D501AB15E1B006CA608 /* OMNSearchRestaurantMediator.m in Sources */,
+				93CACD681ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */,
 				930C4D511AB15E1B006CA608 /* OMNModalWebVC.m in Sources */,
 				930C4D521AB15E1B006CA608 /* OMNMenuCategoriesModel.m in Sources */,
 				930C4D531AB15E1B006CA608 /* OMNRatingProductCell.m in Sources */,
@@ -4963,6 +4982,7 @@
 				93F15DF21ACEE0BC000C8129 /* OMNVisitorFactory.m in Sources */,
 				930C4DD31AB15E1B006CA608 /* OMNMenuProductDetails.m in Sources */,
 				930C4DD41AB15E1B006CA608 /* OMNProduct.m in Sources */,
+				93D77AB01ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */,
 				930C4DD51AB15E1B006CA608 /* OMNMenuCategorySectionItem.m in Sources */,
 				930C4DD61AB15E1B006CA608 /* OMNLaunchHandler.m in Sources */,
 				930C4DD71AB15E1B006CA608 /* OMNBankCardsVC.m in Sources */,
@@ -5126,6 +5146,7 @@
 			files = (
 				930C8B3A1ACA7D9F00CE4E5A /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				930C8B3B1ACA7D9F00CE4E5A /* OMNSearchRestaurantMediator.m in Sources */,
+				93CACD691ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */,
 				930C8B3C1ACA7D9F00CE4E5A /* OMNModalWebVC.m in Sources */,
 				930C8B3D1ACA7D9F00CE4E5A /* OMNMenuCategoriesModel.m in Sources */,
 				930C8B3E1ACA7D9F00CE4E5A /* OMNRatingProductCell.m in Sources */,
@@ -5284,6 +5305,7 @@
 				93F15DF31ACEE0BC000C8129 /* OMNVisitorFactory.m in Sources */,
 				930C8BC41ACA7D9F00CE4E5A /* OMNMenuProductDetails.m in Sources */,
 				930C8BC51ACA7D9F00CE4E5A /* OMNProduct.m in Sources */,
+				93D77AB11ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */,
 				930C8BC61ACA7D9F00CE4E5A /* OMNMenuCategorySectionItem.m in Sources */,
 				930C8BC71ACA7D9F00CE4E5A /* OMNLaunchHandler.m in Sources */,
 				930C8BC81ACA7D9F00CE4E5A /* OMNBankCardsVC.m in Sources */,
@@ -5447,6 +5469,7 @@
 			files = (
 				938E8F64192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				9391F66A1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */,
+				93CACD661ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */,
 				93B65E651A6956C90061F1B1 /* OMNModalWebVC.m in Sources */,
 				9336BA341A95C214002C2955 /* OMNMenuCategoriesModel.m in Sources */,
 				93B9049819655168007D21C4 /* OMNRatingProductCell.m in Sources */,
@@ -5605,6 +5628,7 @@
 				93F15DF01ACEE0BC000C8129 /* OMNVisitorFactory.m in Sources */,
 				932F5DCE1A7256D400AF86AD /* OMNMenuProductDetails.m in Sources */,
 				9321181A1962DF7C00183729 /* OMNProduct.m in Sources */,
+				93D77AAE1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */,
 				9336BA381A95ED95002C2955 /* OMNMenuCategorySectionItem.m in Sources */,
 				93D4ABD61A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */,
 				939F991419752BE90051822E /* OMNBankCardsVC.m in Sources */,
@@ -5871,6 +5895,7 @@
 				93535F00198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
 				93BA9BCA1A8C5C0E00717FF9 /* OMNLineNumberLogFormatter.m in Sources */,
 				9336BA3E1A95EF09002C2955 /* OMNMenuProductWithRecommendationsCellItem.m in Sources */,
+				93D77AAF1ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */,
 				938EE0D71A317F1400508039 /* OMNCameraRollPermission.m in Sources */,
 				93005C631ACFD4EC00635521 /* OMN2GISLunchWishMediator.m in Sources */,
 				93E299A3197D0B7500051B04 /* OMNCircleFadeTransition.m in Sources */,
@@ -5923,6 +5948,7 @@
 				933A2E8B19861CA5000055AB /* OMNOrderToRestaurantTransition.m in Sources */,
 				933A9EBF1A517D8A001C0909 /* OMNRestaurantManager.m in Sources */,
 				93D117791A2F00DB000131C4 /* OMNUserMailFeedbackItem.m in Sources */,
+				93CACD671ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */,
 				93F2AEEF1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */,
 				93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */,
 				932AAA4E1AD6739C0049CACE /* OMNTableReloadData.m in Sources */,
@@ -6072,6 +6098,7 @@
 			files = (
 				936AC0D51AD8BDBC00A9D17F /* OMNTransitionFromOrderToCalculator.m in Sources */,
 				936AC0D61AD8BDBC00A9D17F /* OMNSearchRestaurantMediator.m in Sources */,
+				93CACD6A1ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */,
 				936AC0D71AD8BDBC00A9D17F /* OMNModalWebVC.m in Sources */,
 				936AC0D81AD8BDBC00A9D17F /* OMNMenuCategoriesModel.m in Sources */,
 				936AC0D91AD8BDBC00A9D17F /* OMNRatingProductCell.m in Sources */,
@@ -6230,6 +6257,7 @@
 				936AC16B1AD8BDBC00A9D17F /* OMNVisitorFactory.m in Sources */,
 				936AC16C1AD8BDBC00A9D17F /* OMNMenuProductDetails.m in Sources */,
 				936AC16D1AD8BDBC00A9D17F /* OMNProduct.m in Sources */,
+				93D77AB21ADFA08900C0470B /* OMNBankCardInfo+omn_mailRuBankCardInfo.m in Sources */,
 				936AC16E1AD8BDBC00A9D17F /* OMNMenuCategorySectionItem.m in Sources */,
 				936AC16F1AD8BDBC00A9D17F /* OMNLaunchHandler.m in Sources */,
 				936AC1701AD8BDBC00A9D17F /* OMNBankCardsVC.m in Sources */,
@@ -6741,7 +6769,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -6749,9 +6781,13 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
@@ -6826,7 +6862,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
@@ -6840,9 +6880,13 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -6865,7 +6909,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -6873,9 +6921,13 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				SDKROOT = iphoneos;
@@ -7146,7 +7198,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
@@ -7160,9 +7216,13 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -7240,7 +7300,11 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
+				CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = NO;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -7248,9 +7312,13 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = NO;
+				GCC_WARN_STRICT_SELECTOR_MATCH = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PROVISIONING_PROFILE = "";

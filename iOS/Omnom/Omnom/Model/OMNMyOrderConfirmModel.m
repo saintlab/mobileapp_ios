@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
 @interface OMNMyOrderConfirmModel ()
 
 @property (nonatomic, assign) BOOL loading;
+@property (nonatomic, weak, readonly) id<OMNPreorderConfirmCellDelegate> preorderDelegate;
+@property (nonatomic, strong, readonly) OMNMenu *menu;
 
 @end
 
@@ -36,10 +38,8 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   
   OMNWishMediator *_wishMediator;
   
-  OMNMenu *_menu;
   OMNVisitor *_visitor;
   
-  id<OMNPreorderConfirmCellDelegate> _preorderDelegate;
   
 }
 
@@ -110,12 +110,12 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   
   [items enumerateObjectsUsingBlock:^(id tableProductId, NSUInteger idx, BOOL *stop) {
     
-    OMNMenuProduct *menuProduct = _menu.products[tableProductId];
+    OMNMenuProduct *menuProduct = self.menu.products[tableProductId];
     if (menuProduct) {
       
       OMNPreorderConfirmCellItem *tableItem = [[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:menuProduct];
       tableItem.hidePrice = YES;
-      tableItem.delegate = _preorderDelegate;
+      tableItem.delegate = self.preorderDelegate;
       [tableProducts addObject:tableItem];
       
     }
@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
       
       total += product.total;
       OMNPreorderConfirmCellItem *orderedItem = [[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:product];
-      orderedItem.delegate = _preorderDelegate;
+      orderedItem.delegate = self.preorderDelegate;
       [preorderedProducts addObject:orderedItem];
       
     }
@@ -196,7 +196,7 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
     
     id productID = product[@"id"];
     [forbiddenProductIDs addObject:productID];
-    OMNMenuProduct *menuProduct = _menu.products[productID];
+    OMNMenuProduct *menuProduct = self.menu.products[productID];
     if (menuProduct.name.length) {
       [forbiddenProductNames addObject:menuProduct.name];
     }

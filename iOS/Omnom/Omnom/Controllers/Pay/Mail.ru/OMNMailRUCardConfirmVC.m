@@ -20,6 +20,8 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNMoneyQuestionVC.h"
+#import "OMNBankCardInfo+omn_mailRuBankCardInfo.h"
+#import "OMNUser+omn_mailRu.h"
 
 @interface OMNMailRUCardConfirmVC ()
 <UITextFieldDelegate,
@@ -88,7 +90,10 @@ TTTAttributedLabelDelegate>
 }
 
 - (void)startLoader {
+  
+  [_cardHoldValueTF setErrorText:nil];
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
+  
 }
 
 - (void)addDoneButton {
@@ -198,9 +203,9 @@ TTTAttributedLabelDelegate>
     @strongify(self)
     [self cardDidVerify];
     
-  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+  } failure:^(NSError *error) {
     
-    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_VERIFY" cardInfo:bankCardInfo error:error request:request response:response];
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_VERIFY" cardInfo:bankCardInfo error:error];
     NSError *omnomError = [OMNError omnnomErrorFromError:error];
     @strongify(self)
     [self processError:omnomError];
@@ -250,35 +255,27 @@ TTTAttributedLabelDelegate>
 
 - (void)registerCard {
 
-  [_cardHoldValueTF setErrorText:nil];
-
-  NSDictionary *cardInfo =
-  @{
-    @"pan" : _bankCardInfo.pan,
-    @"exp_date" : [OMNMailRuCardInfo exp_dateFromMonth:_bankCardInfo.expiryMonth year:_bankCardInfo.expiryYear],
-    @"cvv" : _bankCardInfo.cvv,
-    };
-  
-  OMNUser *user = [OMNAuthorization authorisation].user;
   [self startLoader];
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   @weakify(self)
-#warning TODO: registerCard
-  [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(NSString *cardId) {
+  
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.cardInfo = [bankCardInfo omn_mailRuCardInfo];
+  transaction.user = [[OMNAuthorization authorisation].user omn_mailRuUser];
+  
+  [[OMNMailRuAcquiring acquiring] registerCard:transaction completion:^(NSString *cardId) {
     
-    NSDictionary *parametrs = bankCardInfo.debugInfo;
-    [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:parametrs];
-    [[OMNOperationManager sharedManager] POST:@"/report/mail/register" parameters:parametrs success:nil failure:nil];
+    [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:bankCardInfo.debugInfo];
     @strongify(self)
     self.card_id = cardId;
+
+  } failure:^(NSError *error) {
     
-  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
-    
-    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_REGISTER" cardInfo:bankCardInfo error:error request:request response:response];
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_REGISTER" cardInfo:bankCardInfo error:error];
     @strongify(self)
     [self procsessCardRegisterError:[OMNError omnnomErrorFromError:error]];
-    
+
   }];
   
 }

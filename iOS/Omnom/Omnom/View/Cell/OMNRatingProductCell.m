@@ -7,19 +7,27 @@
 //
 
 #import "OMNRatingProductCell.h"
+#import <BlocksKit.h>
+
+@interface OMNRatingProductCell ()
+
+@property (nonatomic, strong, readonly) UIImageView *heartView;
+
+@end
 
 @implementation OMNRatingProductCell {
   
   UIImageView *_heartView;
-  
+  NSString *_productRatedObserverID;
 }
 
-- (void)dealloc
-{
-  @try {
-    [_product removeObserver:self forKeyPath:NSStringFromSelector(@selector(rated))];
-  }
-  @catch (NSException *exception) {
+- (void)dealloc {
+  [self omn_removeObservers];
+}
+
+- (void)omn_removeObservers {
+  if (_productRatedObserverID) {
+    [_product bk_removeObserversWithIdentifier:_productRatedObserverID];
   }
 }
 
@@ -41,24 +49,19 @@
 
 - (void)setProduct:(OMNProduct *)product {
   
-  [_product removeObserver:self forKeyPath:NSStringFromSelector(@selector(rated))];
+  [self omn_removeObservers];
   _product = product;
-  [_product addObserver:self forKeyPath:NSStringFromSelector(@selector(rated)) options:NSKeyValueObservingOptionNew context:NULL];
+  @weakify(self)
+  [_product bk_addObserverForKeyPath:NSStringFromSelector(@selector(rated)) options:NSKeyValueObservingOptionNew task:^(OMNProduct *p, NSDictionary *change) {
+    
+    @strongify(self)
+    self.heartView.hidden = !p.rated;
+    
+  }];
   
   _iconView.image = [UIImage imageNamed:product.imageName];
   _heartView.hidden = !_product.rated;
   
 }
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-  
-  if ([keyPath isEqualToString:NSStringFromSelector(@selector(rated))]) {
-    
-    _heartView.hidden = !_product.rated;
-    
-  }
-  
-}
-
 
 @end

@@ -13,9 +13,8 @@
 #define test_restaurant_id  @"701137"
 
 @interface OMNViewController ()
-
-@property (nonatomic, copy) NSString *userID;
-@property (nonatomic, copy) NSString *user_phone;
+<UIAlertViewDelegate>
+@property (nonatomic, strong) OMNMailRuUser *user;
 @property (nonatomic, copy) NSString *cardID;
 @property (nonatomic, copy) NSString *internalCardID;
 
@@ -46,8 +45,7 @@
   [_authManager POST:@"/user" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     id user = responseObject[@"user"];
-    self.userID = user[@"id"];
-    self.user_phone = user[@"phone"];
+    self.user = [OMNMailRuUser userWithLogin:user[@"id"] phone:user[@"phone"]];
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
@@ -111,16 +109,10 @@
 
 - (IBAction)payAndRegisterTap:(id)sender {
   
-  OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
+  OMNMailRuTransaction *paymentInfo = [[OMNMailRuTransaction alloc] init];
   paymentInfo.cardInfo = [self testCardInfoWithSaveCard:YES];
-  paymentInfo.user_login = self.userID;
-  paymentInfo.user_phone = self.user_phone;
-  paymentInfo.order_message = @"message";
-  paymentInfo.extra.tip = 0;
-  paymentInfo.extra.restaurant_id = @"";
-  paymentInfo.extra.type = @"";
-  paymentInfo.order_amount = _heldAmount;
-  paymentInfo.order_id = @"";
+  paymentInfo.user = self.user;
+  paymentInfo.order = [OMNMailRuOrder orderWithID:@"" amount:_heldAmount];
   
   [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
 
@@ -129,9 +121,9 @@
     [self reloadCards];
     NSLog(@"payAndRegisterTap>%@", response);
     
-  } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
+  } failure:^(NSError *mailError) {
 
-    NSLog(@"payAndRegisterTap>%@ %@ %@", mailError, request, response);
+    NSLog(@"payAndRegisterTap>%@", mailError);
     
   }];
 
@@ -148,9 +140,9 @@
     
     [self setLastOrderID:nil];
     
-  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+  } failure:^(NSError *error) {
     
-    NSLog(@"declineTap>%@ %@ %@", error, request, response);
+    NSLog(@"declineTap>%@", error);
     
   }];
   
@@ -158,20 +150,53 @@
 
 - (IBAction)registerTap:(id)sender {
   
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.cardInfo = [self testCardInfoWithSaveCard:NO];
+  transaction.user = self.user;
+  [[OMNMailRuAcquiring acquiring] registerCard:transaction completion:^(NSString *cardId) {
+    
+    [[NSUserDefaults standardUserDefaults] setObject:cardId forKey:@"cardID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self verifyTap:nil];
+    
+    NSLog(@"registerTap>%@", cardId);
+    
+  } failure:^(NSError *error) {
+    
+    NSLog(@"deleteCard>%@", error);
+    
+  }];
  
 }
 
 - (IBAction)verifyTap:(id)sender {
-//  [[OMNMailRuAcquiring acquiring] cardVerify:1.02 user_login:_user_login card_id:_cardId completion:^{
-//    
-//  } failure:^(NSError *error, NSDictionary *debugInfo) {
-//    
-//  }];
+  
+  UIAlertView *a = [[UIAlertView alloc] initWithTitle:@"hold amount" message:nil delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Ok", nil];
+  a.alertViewStyle = UIAlertViewStylePlainTextInput;
+  UITextField *tf = [a textFieldAtIndex:0];
+  tf.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+  [a show];
+
+}
+
+- (void)verify:(double)amount {
+
+  NSString *cardID = [[NSUserDefaults standardUserDefaults] objectForKey:@"cardID"];
+  [[OMNMailRuAcquiring acquiring] verifyCard:cardID user_login:self.user.login amount:amount completion:^{
+
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"cardID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+  } failure:^(NSError *error) {
+    
+    NSLog(@"verifyTap>%@", error);
+    
+  }];
 }
 
 - (IBAction)deleteCard:(id)sender {
   
-  [[OMNMailRuAcquiring acquiring] deleteCard:self.cardID user_login:self.userID сompletion:^{
+  [[OMNMailRuAcquiring acquiring] deleteCard:self.cardID user_login:self.user.login сompletion:^{
     
     NSString *path = [NSString stringWithFormat:@"/cards/%@", self.internalCardID];
     [_operationManager DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -184,9 +209,9 @@
       
     }];
     
-  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+  } failure:^(NSError *error) {
     
-    NSLog(@"deleteCard>%@ %@ %@", error, request, response);
+    NSLog(@"deleteCard>%@", error);
     
   }];
 
@@ -194,25 +219,18 @@
 
 - (IBAction)payWithCardID:(id)sender {
   
-  OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
-  OMNMailRuCardInfo *mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.cardID];
-  paymentInfo.cardInfo = mailRuCardInfo;
-  paymentInfo.user_login = self.userID;
-  paymentInfo.user_phone = self.user_phone;
-  paymentInfo.order_message = @"message";
-  paymentInfo.extra.tip = 0;
-  paymentInfo.extra.restaurant_id = test_restaurant_id;
-  paymentInfo.extra.type = @"order";
-  paymentInfo.order_amount = @(0.01);
-  paymentInfo.order_id = @"1";
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.cardID];
+  transaction.user = self.user;
+  transaction.order = [OMNMailRuOrder orderWithID:@"1" amount:@(0.01)];
   
-  [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
+  [[OMNMailRuAcquiring acquiring] payWithInfo:transaction completion:^(id response) {
     
     NSLog(@"payWithCardID response>%@", response);
     
-  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+  } failure:^(NSError *error) {
     
-    NSLog(@"payWithCardID error>%@", response);
+    NSLog(@"payWithCardID error>%@", error);
     
   }];
   
@@ -220,28 +238,33 @@
 
 - (IBAction)payWithNewCard:(id)sender {
   
-  OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
-  paymentInfo.cardInfo = [self testCardInfoWithSaveCard:NO];
-  paymentInfo.user_login = self.userID;
-  paymentInfo.user_phone = self.user_phone;
-  paymentInfo.order_message = @"message";
-  paymentInfo.extra.tip = 0;
-  paymentInfo.extra.restaurant_id = test_restaurant_id;
-  paymentInfo.extra.type = @"";
-  paymentInfo.order_amount = _heldAmount;
-  paymentInfo.order_id = @"";
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.cardInfo = [self testCardInfoWithSaveCard:NO];
+  transaction.user = self.user;
+  transaction.order = [OMNMailRuOrder orderWithID:@"1" amount:_heldAmount];
   
-  [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
+  [[OMNMailRuAcquiring acquiring] payWithInfo:transaction completion:^(id response) {
     
     NSString *order_id = response[@"order_id"];
     [self setLastOrderID:order_id];
     NSLog(@"payWithNewCard response>%@", response);
     
-  } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
+  } failure:^(NSError *mailError) {
     
-    NSLog(@"payWithNewCard error>%@ %@ %@", mailError, request, response);
+    NSLog(@"payWithNewCard error>%@", mailError);
     
   }];
+  
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+
+  if (alertView.cancelButtonIndex != buttonIndex) {
+    
+    UITextField *tf = [alertView textFieldAtIndex:0];
+    [self verify:[tf.text doubleValue]];
+    
+  }
   
 }
 

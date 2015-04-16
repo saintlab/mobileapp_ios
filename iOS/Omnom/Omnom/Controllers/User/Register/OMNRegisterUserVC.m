@@ -25,12 +25,13 @@
 OMNUserInfoViewDelegate,
 TTTAttributedLabelDelegate>
 
+@property (nonatomic, strong, readonly)   UIScrollView *scroll;
+
 @end
 
 @implementation OMNRegisterUserVC {
 
   OMNUserInfoView *_userInfoView;
-  UIScrollView *_scroll;
   OMNUser *_user;
   TTTAttributedLabel *_errorLabel;
 
@@ -309,7 +310,7 @@ TTTAttributedLabelDelegate>
   CGPoint contentOffset = CGPointMake(0.0f, MAX(0.0f, textFieldFrame.origin.y - 20.0f));
   [UIView animateWithDuration:0.3 delay:0.1 options:kNilOptions animations:^{
     
-    [_scroll setContentOffset:contentOffset];
+    [self.scroll setContentOffset:contentOffset];
     
   } completion:nil];
   

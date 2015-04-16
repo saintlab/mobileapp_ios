@@ -6,7 +6,7 @@
 //
 //
 
-#import "OMNMailRuPaymentInfo.h"
+#import "OMNMailRuTransaction.h"
 #import "OMNMailRuAcquiring.h"
 #import <CommonCrypto/CommonDigest.h>
 
@@ -16,18 +16,17 @@
 
 @end
 
-@implementation OMNMailRuPaymentInfo
+@implementation OMNMailRuTransaction
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    self.order_id = @"";
-    self.user_phone = @"";
-    self.order_amount = @"";
-    self.order_message = @"";
-    self.user_login = @"";
+    
     self.extra = [[OMNMailRuExtra alloc] init];
     self.cardInfo = [[OMNMailRuCardInfo alloc] init];
+    self.order = [OMNMailRuOrder orderWithID:@"0" amount:@(0)];
+    self.extra = [OMNMailRuExtra extraWithRestaurantID:@"0" tipAmount:0 type:@"order"];
+    
   }
   return self;
 }
@@ -44,10 +43,9 @@
   @{
     @"merch_id" : config.merch_id,
     @"vterm_id" : config.vterm_id,
-    @"user_login" : self.user_login,
-    @"order_id" : self.order_id,
-    @"order_amount" : self.order_amount,
-    @"order_message" : self.order_message,
+    @"user_login" : self.user.login,
+    @"order_id" : self.order.id,
+    @"order_amount" : self.order.amount,
     @"extra" : extratext,
     };
   
@@ -56,24 +54,63 @@
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
   
   parameters[@"signature"] = signature;
-  NSDictionary *card_info = [self.cardInfo card_info];
-  [parameters addEntriesFromDictionary:card_info];
+  [parameters addEntriesFromDictionary:self.cardInfo.parameters];
   
   parameters[@"cardholder"] = config.cardholder;
-  parameters[@"user_phone"] = self.user_phone;
+  parameters[@"user_phone"] = self.user.phone;
+  return [parameters copy];
+  
+}
+
+- (NSDictionary *)registerCardParametersWithConfig:(OMNMailRuConfig *)config {
+  
+  NSDictionary *reqiredSignatureParams =
+  @{
+    @"merch_id" : config.merch_id,
+    @"vterm_id" : config.vterm_id,
+    @"user_login" : self.user.login,
+    };
+  
+  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
+  parameters[@"signature"] = [reqiredSignatureParams omn_mailRuSignatureWithSecret:config.secret_key];
+  parameters[@"cardholder"] = config.cardholder;
+  parameters[@"user_phone"] = self.user.phone;
+  [parameters addEntriesFromDictionary:self.cardInfo.parameters];
   return [parameters copy];
   
 }
 
 @end
 
-@implementation OMNMailRuExtra
+@implementation OMNMailRuOrder
 
-- (instancetype)init {
+- (instancetype)initWithID:(NSString *)id amount:(NSNumber *)amount {
   self = [super init];
   if (self) {
-    self.restaurant_id = @"";
-    self.type = @"";
+    _id = id;
+    _amount = amount;
+  }
+  return self;
+}
+
++ (instancetype)orderWithID:(NSString *)id amount:(NSNumber *)amount {
+  return [[OMNMailRuOrder alloc] initWithID:id amount:amount];
+}
+
+@end
+
+@implementation OMNMailRuExtra
+
++ (instancetype)extraWithRestaurantID:(NSString *)restaurantID tipAmount:(long long)tipAmount type:(NSString *)type {
+  return [[OMNMailRuExtra alloc] initWithRestaurantID:restaurantID tipAmount:tipAmount type:type];
+}
+
+- (instancetype)initWithRestaurantID:(NSString *)restaurantID tipAmount:(long long)tipAmount type:(NSString *)type {
+  self = [super init];
+  if (self) {
+    _restaurant_id = restaurantID;
+    _type = type;
+    _tip = tipAmount;
   }
   return self;
 }
@@ -119,7 +156,8 @@
 }
 
 + (NSString *)exp_dateFromMonth:(NSInteger)month year:(NSInteger)year {
-  return [NSString stringWithFormat:@"%2ld.20%2ld", (long)month, (long)year];
+  NSInteger shortYear = year%1000;
+  return [NSString stringWithFormat:@"%2ld.20%2ld", (long)month, (long)shortYear];
 }
 
 + (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id {
@@ -136,29 +174,29 @@
   return cardInfo;
 }
 
-- (NSDictionary *)card_info {
+- (NSDictionary *)parameters {
   
-  NSMutableDictionary *card_info = [NSMutableDictionary dictionary];
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
   
   if (self.card_id.length) {
-    card_info[@"card_id"] = self.card_id;
+    parameters[@"card_id"] = self.card_id;
   }
   else {
 
     if (self.pan.length) {
-      card_info[@"pan"] = self.pan;
+      parameters[@"pan"] = self.pan;
     }
     if (self.exp_date.length) {
-      card_info[@"exp_date"] = self.exp_date;
+      parameters[@"exp_date"] = self.exp_date;
     }
-    card_info[@"add_card"] = @(self.add_card);
+    parameters[@"add_card"] = @(self.add_card);
   }
   
   if (self.cvv.length) {
-    card_info[@"cvv"] = self.cvv;
+    parameters[@"cvv"] = self.cvv;
   }
   
-  return card_info;
+  return parameters;
 }
 
 @end
@@ -202,6 +240,23 @@
   
   return [output copy];
   
+}
+
+@end
+
+@implementation OMNMailRuUser
+
+- (instancetype)initWithLogin:(NSString *)login phone:(NSString *)phone {
+  self = [super init];
+  if (self) {
+    _login = login;
+    _phone = phone;
+  }
+  return self;
+}
+
++ (instancetype)userWithLogin:(NSString *)login phone:(NSString *)phone {
+  return [[OMNMailRuUser alloc] initWithLogin:login phone:phone];
 }
 
 @end

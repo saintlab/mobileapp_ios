@@ -40,7 +40,7 @@ typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
 
 - (void)logTargetEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
 
-- (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error request:(NSDictionary *)request response:(NSDictionary *)response;
+- (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error;
 - (void)logDebugEvent:(NSString *)eventName parametrs:(NSDictionary *)parametrs;
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest jsonResponse:(NSDictionary *)jsonResponse;
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation;
