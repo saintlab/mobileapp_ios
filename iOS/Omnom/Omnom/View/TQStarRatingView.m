@@ -145,29 +145,10 @@
   
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-  return;
-  UITouch *touch = [touches anyObject];
-  CGPoint point = [touch locationInView:self];
-  CGRect rect = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-  if(CGRectContainsPoint(rect,point))
-  {
-    [self changeStarForegroundViewWithPoint:point];
-  }
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-  return;
-  UITouch *touch = [touches anyObject];
-  CGPoint point = [touch locationInView:self];
-  __weak __typeof(self)weakSelf = self;
-  
-  [UIView animateWithDuration:0.2 animations:^
-   {
-     [weakSelf changeStarForegroundViewWithPoint:point];
-   }];
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
 }
 
 #pragma mark -

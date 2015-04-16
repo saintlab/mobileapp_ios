@@ -362,6 +362,24 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   return retrieveuuid;
 }
 
++ (PMKPromise *)checkToken {
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
+      
+      fulfill(user);
+      
+    } failure:^(OMNError *error) {
+      
+      reject(error);
+      
+    }];
+    
+  }];
+  
+}
+
 @end
 
 @implementation NSDictionary (omn_tokenResponse)

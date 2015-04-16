@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <OMNMailRuPaymentInfo.h>
+#import <OMNMailRuTransaction.h>
 #import "OMNBankCardsModel.h"
 
 @interface OMNMailRuBankCardsModel : OMNBankCardsModel

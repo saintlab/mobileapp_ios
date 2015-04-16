@@ -17,11 +17,12 @@ const long long kMaxEnteredValue = 999999ll;
 @interface OMNEditAmountControl ()
 <UITextFieldDelegate>
 
+@property (nonatomic, strong, readonly) OMNLabeledTextField *amountTF;
+
 @end
 
 @implementation OMNEditAmountControl {
   
-  OMNLabeledTextField *_amountTF;
   UIView *_flexibleBottomView;
   
 }
@@ -67,7 +68,7 @@ const long long kMaxEnteredValue = 999999ll;
   _amountTF.text = [[OMNUtils commaStringFromKop:self.amount] omn_moneyFormattedStringWithMaxValue:kMaxEnteredValue];
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
     
-    [_amountTF invalidateIntrinsicContentSize];
+    [self.amountTF invalidateIntrinsicContentSize];
     [self layoutIfNeeded];
     
   });

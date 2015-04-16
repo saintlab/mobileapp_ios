@@ -109,9 +109,9 @@
       
     }];
     
-  } failure:^(NSError *error, NSDictionary *request, NSDictionary *response) {
+  } failure:^(NSError *error) {
 
-    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_DELETE" cardInfo:nil error:error request:request response:response];
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_DELETE" cardInfo:nil error:error];
     @strongify(self)
     self.deleting = NO;
     failureBlock(nil);

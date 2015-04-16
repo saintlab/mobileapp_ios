@@ -25,7 +25,7 @@
     self.menuProductCellItem = [[OMNMenuProductCellItem alloc] initWithMenuProduct:menuProduct];
     self.menuProductCellItem.delegate = self;
     NSInteger recommendationsCount = _menuProduct.recommendations.count;
-    _recommendations = [NSMutableArray array];
+    NSMutableArray *recommendations = [NSMutableArray array];
     if (recommendationsCount > 0) {
       
       [_recommendations addObject:[[OMNMenuProductRecommendationsDelimiterCellItem alloc] init]];
@@ -36,12 +36,13 @@
         OMNMenuProductCellItem *recommendationItem = [[OMNMenuProductCellItem alloc] initWithMenuProduct:products[productID]];
         recommendationItem.delimiterType = (idx < recommendationsCount - 1) ? (kBottomDelimiterTypeLine) : (kBottomDelimiterTypeNone);
         recommendationItem.delegate = weakSelf;
-        [_recommendations addObject:recommendationItem];
+        [recommendations addObject:recommendationItem];
 
       }];
       
     }
-    
+      
+      _recommendations = recommendations;
   }
   return self;
 }

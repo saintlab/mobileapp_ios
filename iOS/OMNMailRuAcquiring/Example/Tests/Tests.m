@@ -83,11 +83,10 @@ describe(@"register test", ^{
   
   it(@"should pay with card id", ^{
     
-    OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
+    OMNMailRuTransaction *paymentInfo = [[OMNMailRuTransaction alloc] init];
     paymentInfo.cardInfo.card_id = _cardID;
     paymentInfo.cardInfo.cvv = @"123";
     paymentInfo.user_login = user_id;
-    paymentInfo.order_message = @"message";
     paymentInfo.order_id = @"1";
     paymentInfo.extra.tip = 0;
     paymentInfo.extra.restaurant_id = @"1";

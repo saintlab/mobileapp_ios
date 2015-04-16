@@ -31,7 +31,8 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
     self.recommendations = data[@"recommendations"];
     self.details = [[OMNMenuProductDetails alloc] initWithJsonData:data[@"details"]];
     
-    self.modifiers = [data[@"modifiers"] bk_map:^id(id modiferData) {
+    NSArray *modifiers = data[@"modifiers"];
+    self.modifiers = [modifiers bk_map:^id(id modiferData) {
     
       return [[OMNMenuProductModiferCategory alloc] initWithJsonData:modiferData allModifers:allModifers];
       

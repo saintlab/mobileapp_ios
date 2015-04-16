@@ -7,7 +7,7 @@
 //
 
 #import <AFNetworking.h>
-#import "OMNMailRuPaymentInfo.h"
+#import "OMNMailRuTransaction.h"
 
 extern NSString *const OMNMailRuErrorDomain;
 
@@ -22,25 +22,25 @@ typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
 @interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
 
 + (instancetype)acquiring;
-+ (NSDictionary *)config;
-+ (BOOL)isValidConfig:(NSDictionary *)config;
++ (OMNMailRuConfig *)config;
 + (void)setConfig:(NSDictionary *)config;
-- (NSString *)testCVV;
 
-- (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(NSString *cardId))completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock;
+- (void)registerCard:(OMNMailRuTransaction *)transaction completion:(void(^)(NSString *cardId))completionBlock failure:(void(^)(NSError *error))failureBlock;
 
-- (void)verifyCard:(NSString *)card_id user_login:(NSString *)user_login amount:(double)amount completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock;
+- (void)verifyCard:(NSString *)card_id user_login:(NSString *)user_login amount:(double)amount completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
-- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock;
+- (void)payWithInfo:(OMNMailRuTransaction *)transaction completion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error))failureBlock;
 
-- (void)refundOrder:(NSString *)orderID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock;
+- (void)refundOrder:(NSString *)orderID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
-- (void)deleteCard:(NSString *)card_id user_login:(NSString *)user_login сompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock;
+- (void)deleteCard:(NSString *)card_id user_login:(NSString *)user_login сompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
 @end
 
 @interface NSError (mailRuError)
 
-+ (NSError *)omn_errorFromResponse:(id)response;
+
++ (NSError *)omn_errorFromRequest:(id)request response:(id)response;
 
 @end
+

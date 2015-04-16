@@ -17,32 +17,21 @@
 
 @property (nonatomic, assign) BOOL loading;
 @property (nonatomic, assign) BOOL error;
+@property (nonatomic, strong, readonly) UITextField *textField;
+@property (nonatomic, strong, readonly) UIView *lineView;
+@property (nonatomic, strong, readonly) UILabel *textLabel;
 
 @end
 
 @implementation OMNEnterHashAlertVC {
   
-  UILabel *_textLabel;
   UILabel *_urlLabel;
-  UITextField *_textField;
-  UIView *_lineView;
   NSLayoutConstraint *_keyboardHeightConstraint;
   
 }
 
 - (void)dealloc {
-  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
-}
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    
-    
-  }
-  return self;
 }
 
 - (void)viewDidLoad {
@@ -106,18 +95,18 @@
     
     if (error) {
       
-      _textField.textColor = [OMNStyler redColor];
-      _textLabel.textColor = [OMNStyler redColor];
-      _textLabel.text = kOMN_HASH_DECODE_ERROR_TEXT;
-      _lineView.backgroundColor = [OMNStyler redColor];
+      self.textField.textColor = [OMNStyler redColor];
+      self.textLabel.textColor = [OMNStyler redColor];
+      self.textLabel.text = kOMN_HASH_DECODE_ERROR_TEXT;
+      self.lineView.backgroundColor = [OMNStyler redColor];
       
     }
     else {
       
-      _textField.textColor = colorWithHexString(@"000000");
-      _textLabel.text = kOMN_HASH_DECODE_HELP_TEXT;
-      _textLabel.textColor = colorWithHexString(@"737478");
-      _lineView.backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.3f];
+      self.textField.textColor = colorWithHexString(@"000000");
+      self.textLabel.text = kOMN_HASH_DECODE_HELP_TEXT;
+      self.textLabel.textColor = colorWithHexString(@"737478");
+      self.lineView.backgroundColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.3f];
       
     }
 

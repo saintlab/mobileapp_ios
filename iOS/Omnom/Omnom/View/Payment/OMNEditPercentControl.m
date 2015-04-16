@@ -15,11 +15,12 @@
 UIPickerViewDelegate,
 UITextFieldDelegate>
 
+@property (nonatomic, strong, readonly) UITextField *percentTF;
+
 @end
 
 @implementation OMNEditPercentControl {
   
-  UITextField *_percentTF;
   UIPickerView *_percentPicker;
   UIView *_flexibleBottomView;
   
@@ -45,7 +46,7 @@ UITextFieldDelegate>
   BOOL result = [_percentTF resignFirstResponder];
   [UIView animateWithDuration:0.3 animations:^{
     
-    _percentTF.alpha = 0.0f;
+    self.percentTF.alpha = 0.0f;
     
   }];
   [self sendActionsForControlEvents:UIControlEventEditingDidEnd];
@@ -57,7 +58,7 @@ UITextFieldDelegate>
   
   [UIView animateWithDuration:0.3 animations:^{
     
-    _percentTF.alpha = 1.0f;
+    self.percentTF.alpha = 1.0f;
     
   }];
   [self sendActionsForControlEvents:UIControlEventEditingDidBegin];

@@ -60,9 +60,9 @@ describe(@"check initial state", ^{
     }];
     [[expectFutureValue(isConfigLoaded) shouldEventuallyBeforeTimingOutAfter(10.0)] equal:@(YES)];
     
-    NSDictionary *config = [OMNMailRuAcquiring config];
+    OMNMailRuConfig *config = [OMNMailRuAcquiring config];
     [[config should] beNonNil];
-    [[@([OMNMailRuAcquiring isValidConfig:config]) should] equal:@(YES)];
+    [[@(config.isValid) should] equal:@(YES)];
     
   });
   

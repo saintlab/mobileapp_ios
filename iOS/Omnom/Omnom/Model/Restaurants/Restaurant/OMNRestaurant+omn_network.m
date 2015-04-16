@@ -107,7 +107,7 @@
   
 #if DEBUG
   return YES;
-#endif
+#else
   
   if (!self.id) {
     return NO;
@@ -133,6 +133,7 @@
   }
   
   return readyForPush;
+#endif
   
 }
 
@@ -291,7 +292,7 @@
 - (void)getRecommendationItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/recommendations", self.id];
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *response) {
     
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:[response count]];
     [response enumerateObjectsUsingBlock:^(NSDictionary *item, NSUInteger idx, BOOL *stop) {

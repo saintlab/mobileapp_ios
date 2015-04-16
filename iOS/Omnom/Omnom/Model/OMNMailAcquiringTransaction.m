@@ -9,15 +9,10 @@
 #import "OMNMailAcquiringTransaction.h"
 #import "OMNOperationManager.h"
 #import "OMNBill.h"
-#import <OMNMailRuAcquiring.h>
 #import "OMNAuthorization.h"
 #import "OMNAnalitics.h"
-
-@interface OMNBankCardInfo (omn_mailRuBankCardInfo)
-
-- (OMNMailRuCardInfo *)omn_mailRuCardInfo;
-
-@end
+#import "OMNBankCardInfo+omn_mailRuBankCardInfo.h"
+#import "OMNUser+omn_mailRu.h"
 
 @implementation OMNMailAcquiringTransaction {
   
@@ -109,26 +104,21 @@
 - (void)didCreateBill:(OMNBill *)bill completion:(OMNPaymentDidFinishBlock)completionBlock {
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
-  OMNMailRuPaymentInfo *paymentInfo = [[OMNMailRuPaymentInfo alloc] init];
-  paymentInfo.cardInfo = [bankCardInfo omn_mailRuCardInfo];
-  paymentInfo.user_login = [OMNAuthorization authorisation].user.id;
-  paymentInfo.user_phone = [OMNAuthorization authorisation].user.phone;
-  paymentInfo.order_message = @"message";
-  paymentInfo.extra.tip = self.tips_amount;
-  paymentInfo.extra.restaurant_id = bill.mail_restaurant_id;
-  paymentInfo.extra.type = self.type;
-  paymentInfo.order_amount = @(0.01*self.total_amount);
-  paymentInfo.order_id = bill.id;
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.cardInfo = [bankCardInfo omn_mailRuCardInfo];
+  transaction.user = [[OMNAuthorization authorisation].user omn_mailRuUser];
+  transaction.extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
+  transaction.order = [OMNMailRuOrder orderWithID:bill.id amount:@(0.01*self.total_amount)];
 
-  [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
+  [[OMNMailRuAcquiring acquiring] payWithInfo:transaction completion:^(id response) {
     
     [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
     [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
     completionBlock(bill, nil);
     
-  } failure:^(NSError *mailError, NSDictionary *request, NSDictionary *response) {
+  } failure:^(NSError *mailError) {
     
-    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:mailError request:request response:response];
+//    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:mailError request:request response:response];
     OMNError *omnomError = [OMNError omnnomErrorFromError:mailError];
     completionBlock(bill, omnomError);
     
@@ -139,28 +129,4 @@
 
 @end
 
-@implementation OMNBankCardInfo (omn_mailRuBankCardInfo)
 
-- (OMNMailRuCardInfo *)omn_mailRuCardInfo {
-  
-  OMNMailRuCardInfo *mailRuCardInfo = nil;
-  if (self.card_id) {
-    
-    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.card_id];
-    
-  }
-  else if (self.expiryMonth &&
-           self.expiryYear &&
-           self.cvv &&
-           self.pan){
-    
-    NSString *exp_date = [OMNMailRuCardInfo exp_dateFromMonth:self.expiryMonth year:self.expiryYear];
-    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardPan:self.pan exp_date:exp_date cvv:self.cvv];
-    
-  }
-  
-  return mailRuCardInfo;
-  
-}
-
-@end

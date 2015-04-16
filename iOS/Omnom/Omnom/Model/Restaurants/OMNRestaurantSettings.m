@@ -30,7 +30,7 @@
     _has_restaurant_order = [jsonData[@"has_restaurant_order"] boolValue];
     
 #if DEBUG
-#warning 123
+#warning demo RestaurantSettings
     _has_bar = YES;
     _has_lunch = YES;
     _has_pre_order = YES;
