@@ -21,6 +21,7 @@
 #import "OMNLogoutUserInfoItem.h"
 #import "OMNFBUserInfoItem.h"
 #import "OMNUserProfileCellItem.h"
+#import "OMNSupportUserInfoItem.h"
 
 @implementation OMNUserInfoModel {
   
@@ -93,9 +94,10 @@
   OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
   section.items =
   @[
-    [[OMNUserMailFeedbackItem alloc] init],
-    [[OMNFBUserInfoItem alloc] init],
-    [[OMNVersionUserInfoItem alloc] init],
+    [OMNUserMailFeedbackItem new],
+    [OMNSupportUserInfoItem new],
+    [OMNFBUserInfoItem new],
+    [OMNVersionUserInfoItem new],
     ];
   section.title = kOMN_USER_INFO_ABOUT_SECTION_TITLE;
   return section;
@@ -114,9 +116,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  
   return _sectionItems.count;
-  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

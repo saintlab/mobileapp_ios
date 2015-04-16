@@ -31,6 +31,7 @@
 
 #define kOMN_SAVE_BUTTON_TITLE NSLocalizedString(@"SAVE_BUTTON_TITLE", @"Сохранить")
 #define kOMN_CANCEL_BUTTON_TITLE NSLocalizedString(@"CANCEL_BUTTON_TITLE", @"Отмена")
+#define kOMN_CALL_BUTTON_TITLE NSLocalizedString(@"CALL_BUTTON_TITLE", @"Набрать")
 #define kOMN_CLOSE_BUTTON_TITLE NSLocalizedString(@"CLOSE_BUTTON_TITLE", @"Закрыть")
 #define kOMN_NEXT_BUTTON_TITLE NSLocalizedString(@"NEXT_BUTTON_TITLE", @"Далее")
 #define kOMN_OK_BUTTON_TITLE NSLocalizedString(@"Ok", @"Ok")
@@ -41,6 +42,7 @@
 #define kOMN_SHOW_MORE_STRING NSLocalizedString(@"SHOW_MORE_STRING", @"ещё")
 #define kOMN_USER_INFO_CHANGE_BUTTON_TITLE NSLocalizedString(@"USER_INFO_CHANGE_BUTTON_TITLE", @"Изменить")
 #define kOMN_USER_INFO_FACEBOOK_TITLE NSLocalizedString(@"USER_INFO_FACEBOOK_TITLE", @"facebook/Omnom")
+#define kOMN_USER_INFO_CALL_SUPPORT_TITLE NSLocalizedString(@"USER_INFO_CALL_SUPPORT_TITLE", @"Звонок в тех. поддержку")
 #define kOMN_USER_PHOTO_DELETE_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_DELETE_BUTTON_TITLE", @"Удалить текущий снимок")
 #define kOMN_USER_PHOTO_SHOOT_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_SHOOT_BUTTON_TITLE", @"Сделать снимок")
 #define kOMN_USER_PHOTO_CHOOSE_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_CHOOSE_BUTTON_TITLE", @"Выбрать из библиотеки")

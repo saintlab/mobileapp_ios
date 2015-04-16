@@ -18,6 +18,16 @@
   OMNUserInfoModel *_userInfoModel;
   OMNRestaurantMediator *_restaurantMediator;
   
+  NSString *_supportPhoneObserverIDs;
+  
+}
+
+- (void)dealloc {
+  
+  if (_supportPhoneObserverIDs) {
+    [[OMNAuthorization authorisation] bk_removeObserversWithIdentifier:_supportPhoneObserverIDs];
+  }
+
 }
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
@@ -25,7 +35,7 @@
   if (self) {
     
     _restaurantMediator = restaurantMediator;
-
+    
   }
   return self;
 }
@@ -51,6 +61,15 @@
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
   [self updateUserView];
+  
+  [[OMNAuthorization authorisation] loadSupport];
+  
+  _supportPhoneObserverIDs = [[OMNAuthorization authorisation] bk_addObserverForKeyPath:NSStringFromSelector(@selector(supportPhone)) options:(NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+    
+    @strongify(self)
+    [self.tableView reloadData];
+    
+  }];
   
 }
 

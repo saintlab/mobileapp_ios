@@ -92,6 +92,25 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
 }
 
+- (void)loadSupport {
+
+  @weakify(self)
+  [[OMNOperationManager sharedManager] GET:@"/support" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    NSString *phone = responseObject[@"phone"];
+    if ([phone isKindOfClass:[NSString class]] &&
+        phone.length) {
+      
+      @strongify(self)
+      self.supportPhone = phone;
+
+    }
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+  }];
+  
+}
+
 - (void)updateUserInfoWithUser:(OMNUser *)user {
   
   [NSKeyedArchiver archiveRootObject:user toFile:[self savedUserPath]];
