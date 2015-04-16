@@ -8,6 +8,13 @@
 
 #import "OMNMailRuPaymentInfo.h"
 #import "OMNMailRuAcquiring.h"
+#import <CommonCrypto/CommonDigest.h>
+
+@interface NSString (omn_mailRu)
+
+- (NSString *)omn_sha1;
+
+@end
 
 @implementation OMNMailRuPaymentInfo
 
@@ -23,6 +30,39 @@
     self.cardInfo = [[OMNMailRuCardInfo alloc] init];
   }
   return self;
+}
+
+- (NSDictionary *)payParametersWithConfig:(OMNMailRuConfig *)config {
+  
+  NSString *extratext = self.extra.extra_text;
+  if (0 == extratext.length ||
+      !config.isValid) {
+    return nil;
+  }
+
+  NSDictionary *reqiredSignatureParams =
+  @{
+    @"merch_id" : config.merch_id,
+    @"vterm_id" : config.vterm_id,
+    @"user_login" : self.user_login,
+    @"order_id" : self.order_id,
+    @"order_amount" : self.order_amount,
+    @"order_message" : self.order_message,
+    @"extra" : extratext,
+    };
+  
+  NSString *signature = [reqiredSignatureParams omn_mailRuSignatureWithSecret:config.secret_key];
+  
+  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
+  
+  parameters[@"signature"] = signature;
+  NSDictionary *card_info = [self.cardInfo card_info];
+  [parameters addEntriesFromDictionary:card_info];
+  
+  parameters[@"cardholder"] = config.cardholder;
+  parameters[@"user_phone"] = self.user_phone;
+  return [parameters copy];
+  
 }
 
 @end
@@ -85,7 +125,6 @@
 + (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id {
   OMNMailRuCardInfo *cardInfo = [[OMNMailRuCardInfo alloc] init];
   cardInfo.card_id = card_id;
-  cardInfo.cvv = [[OMNMailRuAcquiring acquiring] testCVV];
   return cardInfo;
 }
 
@@ -120,6 +159,85 @@
   }
   
   return card_info;
+}
+
+@end
+
+@implementation NSDictionary (omn_mailRu)
+
+- (NSString *)omn_mailRuSignatureWithSecret:(NSString *)secret_key; {
+  
+  NSArray *sortedKeys = [[self allKeys] sortedArrayUsingSelector:@selector(compare:)];
+  NSMutableArray *sortedValues = [NSMutableArray arrayWithCapacity:sortedKeys.count + 1];
+  [sortedKeys enumerateObjectsUsingBlock:^(id sortedKey, NSUInteger idx, BOOL *stop) {
+    
+    [sortedValues addObject:self[sortedKey]];
+    
+  }];
+  [sortedValues addObject:secret_key];
+  
+  NSString *baseSignatureString = [sortedValues componentsJoinedByString:@""];
+  NSString *signature = [baseSignatureString omn_sha1];
+  return signature;
+  
+}
+
+@end
+
+@implementation NSString (omn_mailRu)
+
+- (NSString *)omn_sha1 {
+  
+  NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
+  
+  uint8_t digest[CC_SHA1_DIGEST_LENGTH];
+  
+  CC_SHA1(data.bytes, data.length, digest);
+  
+  NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
+  
+  for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
+    [output appendFormat:@"%02x", digest[i]];
+  }
+  
+  return [output copy];
+  
+}
+
+@end
+
+
+@implementation OMNMailRuConfig
+
+- (instancetype)initWithParametrs:(NSDictionary *)parametrs {
+  self = [super init];
+  if (self) {
+    
+    _merch_id = parametrs[@"OMNMailRu_merch_id"];
+    _vterm_id = parametrs[@"OMNMailRu_vterm_id"];
+    _secret_key = parametrs[@"OMNMailRu_secret_key"];
+    _cardholder = parametrs[@"OMNMailRu_cardholder"];
+    _baseURL = parametrs[@"OMNMailRuAcquiringBaseURL"];
+    
+  }
+  return self;
+}
+
+- (BOOL)isValid {
+  
+  return
+  (
+   self.merch_id &&
+   self.vterm_id &&
+   self.secret_key &&
+   self.baseURL &&
+   self.cardholder
+   );
+  
+}
+
++ (instancetype)configWithParametrs:(NSDictionary *)parametrs {
+  return [[OMNMailRuConfig alloc] initWithParametrs:parametrs];
 }
 
 @end

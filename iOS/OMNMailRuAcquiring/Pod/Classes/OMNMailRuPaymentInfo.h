@@ -10,6 +10,7 @@
 
 @class OMNMailRuExtra;
 @class OMNMailRuCardInfo;
+@class OMNMailRuConfig;
 
 @interface OMNMailRuPaymentInfo : NSObject
 
@@ -21,6 +22,8 @@
 @property (nonatomic, strong) NSNumber *order_amount;
 @property (nonatomic, copy) NSString *order_message;
 @property (nonatomic, copy) NSString *user_login;
+
+- (NSDictionary *)payParametersWithConfig:(OMNMailRuConfig *)config;
 
 @end
 
@@ -51,3 +54,22 @@
 
 @end
 
+@interface NSDictionary (omn_mailRu)
+
+- (NSString *)omn_mailRuSignatureWithSecret:(NSString *)secret_key;
+
+@end
+
+
+@interface OMNMailRuConfig : NSObject
+
+@property (nonatomic, copy, readonly) NSString *merch_id;
+@property (nonatomic, copy, readonly) NSString *vterm_id;
+@property (nonatomic, copy, readonly) NSString *secret_key;
+@property (nonatomic, copy, readonly) NSString *cardholder;
+@property (nonatomic, copy, readonly) NSString *baseURL;
+
++ (instancetype)configWithParametrs:(NSDictionary *)parametrs;
+- (BOOL)isValid;
+
+@end

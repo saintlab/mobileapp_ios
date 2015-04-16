@@ -22,10 +22,8 @@ typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
 @interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
 
 + (instancetype)acquiring;
-+ (NSDictionary *)config;
-+ (BOOL)isValidConfig:(NSDictionary *)config;
++ (OMNMailRuConfig *)config;
 + (void)setConfig:(NSDictionary *)config;
-- (NSString *)testCVV;
 
 - (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(NSString *cardId))completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock;
 
@@ -41,6 +39,8 @@ typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
 
 @interface NSError (mailRuError)
 
-+ (NSError *)omn_errorFromResponse:(id)response;
+
++ (NSError *)omn_errorFromRequest:(id)request response:(id)response;
 
 @end
+

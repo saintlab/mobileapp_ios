@@ -174,12 +174,17 @@
   
 }
 
-- (void)checkUserToken {
+- (void)resetAnimation {
   
   [self.loaderView startAnimating:self.estimateAnimationDuration];
   self.label.text = @"";
   [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
 
+}
+
+- (void)checkUserToken {
+  
+  [self resetAnimation];
   @weakify(self)
   [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
     

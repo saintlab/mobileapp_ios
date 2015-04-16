@@ -9,6 +9,7 @@
 #import "OMNUser.h"
 #import "OMNError.h"
 #import "OMNRestaurant.h"
+#import <PromiseKit.h>
 
 @interface OMNAuthorization : NSObject
 
@@ -32,11 +33,12 @@
 - (BOOL)pushNotificationsRequested;
 - (void)requestPushNotifications:(void(^)(BOOL))completion;
 - (void)registerForRemoteNotificationsIfPossible;
-//- (void)registerForRemoteNotifications;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings;
+
++ (PMKPromise *)checkToken;
 
 @end
 

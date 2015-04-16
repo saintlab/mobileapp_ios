@@ -71,9 +71,7 @@
 }
 
 - (void)didFinish {
-  
   [self.delegate searchRestaurantVCDidFinish:self];
-  
 }
 
 @end

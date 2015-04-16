@@ -7,11 +7,11 @@
 //
 
 #import "OMNMailRuAcquiring.h"
-#import <CommonCrypto/CommonDigest.h>
+#import <PromiseKit.h>
 
 NSString *const OMNMailRuErrorDomain = @"OMNMailRuErrorDomain";
 
-static NSDictionary *_config = nil;
+static OMNMailRuConfig *_config = nil;
 
 @interface AFHTTPRequestOperation (omn_mailRu)
 
@@ -19,27 +19,15 @@ static NSDictionary *_config = nil;
 
 @end
 
-@interface NSString (omn_mailRu)
-
-- (NSString *)omn_sha1;
-
-@end
-
-@interface NSDictionary (omn_mailRu)
-
-- (NSString *)omn_signature;
-
-@end
-
 @implementation OMNMailRuAcquiring
 
-+ (NSDictionary *)config {
++ (OMNMailRuConfig *)config {
   return _config;
 }
 
 + (instancetype)acquiring {
   
-  if (nil == _config) {
+  if (!_config) {
     [self setConfig:
      @{
        @"OMNMailRu_merch_id" : @"DGIS",
@@ -54,36 +42,16 @@ static NSDictionary *_config = nil;
   static id manager = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    NSString *urlString = _config[@"OMNMailRuAcquiringBaseURL"];
-    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:urlString]];
+    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:_config.baseURL]];
   });
   return manager;
 }
 
-+ (BOOL)isValidConfig:(NSDictionary *)config {
++ (void)setConfig:(NSDictionary *)parametrs {
   
-  if (config[@"OMNMailRu_merch_id"] &&
-      config[@"OMNMailRu_vterm_id"] &&
-      config[@"OMNMailRu_cardholder"] &&
-      config[@"OMNMailRu_secret_key"] &&
-      config[@"OMNMailRuAcquiringBaseURL"]) {
-    return YES;
-  }
-  else {
-    return NO;
-  }
-  
-}
-
-+ (void)setConfig:(NSDictionary *)config {
-  
-  if ([self isValidConfig:config]) {
-    
-    NSMutableDictionary *cfg = [config mutableCopy];
-//    cfg[@"OMNMailRu_vterm_id"] = @"DGISMobile2";
-//#warning 123
-    _config = cfg;
-    
+  OMNMailRuConfig *config = [OMNMailRuConfig configWithParametrs:parametrs];
+  if (config.isValid) {
+    _config = config;
   }
 
 }
@@ -106,23 +74,18 @@ static NSDictionary *_config = nil;
   return self;
 }
 
-- (NSString *)testCVV {
-  return _config[@"OMNMailRuTestCVV"];
-}
-
 - (void)registerCard:(NSDictionary *)cardInfo user_login:(NSString *)user_login user_phone:(NSString *)user_phone completion:(void(^)(NSString *cardId))completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock {
   
   NSDictionary *reqiredSignatureParams =
   @{
-    @"merch_id" : _config[@"OMNMailRu_merch_id"],
-    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
+    @"merch_id" : _config.merch_id,
+    @"vterm_id" : _config.vterm_id,
     @"user_login" : user_login,
     };
-  
+#warning TODO card
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
-  
-  parameters[@"signature"] = [reqiredSignatureParams omn_signature];
-  parameters[@"cardholder"] = _config[@"OMNMailRu_cardholder"];
+  parameters[@"signature"] = [reqiredSignatureParams omn_mailRuSignatureWithSecret:_config.secret_key];
+  parameters[@"cardholder"] = _config.cardholder;
   parameters[@"user_phone"] = user_phone;
   
   [parameters addEntriesFromDictionary:cardInfo];
@@ -177,7 +140,7 @@ static NSDictionary *_config = nil;
     }
     else {
       
-      failureBlock([NSError omn_errorFromResponse:responseObject], response, responseObject);
+      failureBlock([NSError omn_errorFromRequest:response response:responseObject], response, responseObject);
       
     }
     
@@ -207,15 +170,15 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
 
   NSDictionary *reqiredSignatureParams =
   @{
-    @"merch_id" : _config[@"OMNMailRu_merch_id"],
-    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
+    @"merch_id" : _config.merch_id,
+    @"vterm_id" : _config.vterm_id,
     @"user_login" : user_login,
     @"card_id" : card_id,
     };
 
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
   
-  parameters[@"signature"] = [reqiredSignatureParams omn_signature];
+  parameters[@"signature"] = [reqiredSignatureParams omn_mailRuSignatureWithSecret:_config.secret_key];
   parameters[@"amount"] = @(amount);
   
   __weak typeof(self)weakSelf = self;
@@ -224,7 +187,7 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
 
     if (responseObject[@"error"]) {
       
-      failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
+      failureBlock([NSError omn_errorFromRequest:parameters response:responseObject], parameters, responseObject);
       
     }
     else {
@@ -274,79 +237,128 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
   
 }
 
-- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock {
+- (PMKPromise *)poll:(NSString *)url {
   
-  NSString *extratext = paymentInfo.extra.extra_text;
-  if (0 == extratext.length) {
-    failureBlock(errorWithCode(kOMNMailRuErrorCodeUnknown), nil, nil);
-    return;
-  }
-  
-  NSDictionary *reqiredSignatureParams =
-  @{
-    @"merch_id" : _config[@"OMNMailRu_merch_id"],
-    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
-    @"user_login" : paymentInfo.user_login,
-    @"order_id" : paymentInfo.order_id,
-    @"order_amount" : paymentInfo.order_amount,
-    @"order_message" : paymentInfo.order_message,
-    @"extra" : extratext,
-    };
-  
-  NSString *signature = [reqiredSignatureParams omn_signature];
-  
-  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
-  
-  parameters[@"signature"] = signature;
-  NSDictionary *card_info = [paymentInfo.cardInfo card_info];
-  [parameters addEntriesFromDictionary:card_info];
-
-  parameters[@"cardholder"] = _config[@"OMNMailRu_cardholder"];
-  parameters[@"user_phone"] = paymentInfo.user_phone;
-  
-  __weak typeof(self)weakSelf = self;
-  [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-    NSString *url = responseObject[@"url"];
-    if (url &&
-        nil == responseObject[@"error"]) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    [self pollUrl:url time:0 withCompletion:^(id response) {
       
-      __strong __typeof(weakSelf)strongSelf = weakSelf;
-      [strongSelf pollUrl:url time:0 withCompletion:^(id response) {
-        
-        NSString *status = response[@"status"];
-        NSString *order_status = response[@"order_status"];
-        if ([status isEqualToString:@"OK_FINISH"] &&
-            [order_status isEqualToString:@"PAID"]) {
-          
-          completionBlock(response);
-          
-        }
-        else {
-          
-          failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
-          
-        }
-        
-      } failure:^(NSError *error) {
-        
-        failureBlock(error, responseObject, nil);
-        
-      }];
-
-    }
-    else {
-
-      failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
+      fulfill(response);
       
+    } failure:^(NSError *error) {
+      
+      reject(error);
+      
+    }];
+    
+  }];
+
+}
+
+- (PMKPromise *)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo {
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    NSDictionary *parameters = [paymentInfo payParametersWithConfig:_config];
+    if (!parameters) {
+      reject(errorWithCode(kOMNMailRuErrorCodeUnknown));
+      return;
     }
     
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock(error, parameters, nil);
+    __weak typeof(self)weakSelf = self;
+    [self POST:@"order/pay" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      NSString *pollURL = responseObject[@"url"];
+      if (pollURL && !responseObject[@"error"]) {
+        
+        fulfill(pollURL);
+
+      }
+      else {
+        
+        reject([NSError omn_errorFromRequest:parameters response:responseObject]);
+        
+      }
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      reject(error);
+    }];
     
   }];
   
+}
+
+- (void)payWithInfo:(OMNMailRuPaymentInfo *)paymentInfo completion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock {
+
+  [self payWithInfo:paymentInfo].then(^(NSString *pollURL) {
+    
+    return [self poll:pollURL];
+    
+  }).then(^(NSDictionary *response) {
+    
+    NSString *status = response[@"status"];
+    NSString *order_status = response[@"order_status"];
+    if ([status isEqualToString:@"OK_FINISH"] &&
+        [order_status isEqualToString:@"PAID"]) {
+      
+      completionBlock(response);
+      
+    }
+    else {
+      
+      failureBlock([NSError omn_errorFromRequest:nil response:response], nil, nil);
+      
+    }
+    
+  }).catch(^(NSError *error) {
+    
+    failureBlock(error, nil, nil);
+    
+  });
+  
+}
+
+- (NSDictionary *)refundParametersWithOrderID:(NSString *)orderID {
+  
+  NSDictionary *reqiredSignatureParams =
+  @{
+    @"merch_id" : _config.merch_id,
+    @"vterm_id" : _config.vterm_id,
+    @"order_id" : orderID,
+    };
+  
+  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
+  parameters[@"signature"] = [reqiredSignatureParams omn_mailRuSignatureWithSecret:_config.secret_key];
+  return [parameters copy];
+  
+}
+
+- (PMKPromise *)refundOrder:(NSString *)orderID {
+  
+  NSString *refundParameters = [self refundParametersWithOrderID:orderID];
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    [self POST:@"order/refund" parameters:refundParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      NSString *pollURL = responseObject[@"url"];
+      if (pollURL && !responseObject[@"error"]) {
+        
+        fulfill(pollURL);
+        
+      }
+      else {
+        
+        reject([NSError omn_errorFromRequest:refundParameters response:responseObject]);
+        
+      }
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      reject(error);
+      
+    }];
+    
+  }];
   
 }
 
@@ -354,71 +366,55 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
   
   NSAssert(orderID != nil, @"order id should not be nil");
   
-  NSDictionary *reqiredSignatureParams =
-  @{
-    @"merch_id" : _config[@"OMNMailRu_merch_id"],
-    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
-    @"order_id" : orderID,
-    };
-  
-  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
-  parameters[@"signature"] = [reqiredSignatureParams omn_signature];
-  __weak typeof(self)weakSelf = self;
-  [self POST:@"order/refund" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [self refundOrder:orderID].then(^(NSString *pollURL) {
     
-    NSString *url = responseObject[@"url"];
-    if (url &&
-        nil == responseObject[@"error"]) {
+    return [self poll:pollURL];
+    
+  }).then(^(NSDictionary *response) {
+    
+    NSString *status = response[@"status"];
+    if ([status isEqualToString:@"OK_REFUND_FINISH"]) {
       
-      __strong __typeof(weakSelf)strongSelf = weakSelf;
-      [strongSelf pollUrl:url time:0 withCompletion:^(id response) {
-        
-        NSString *status = response[@"status"];
-        if ([status isEqualToString:@"OK_REFUND_FINISH"]) {
-          
-          completionBlock();
-          
-        }
-        else {
-          
-          failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
-          
-        }
-        
-      } failure:^(NSError *error) {
-        
-        failureBlock(error, responseObject, nil);
-        
-      }];
+      completionBlock();
       
     }
     else {
       
-      failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
+      failureBlock([NSError omn_errorFromRequest:nil response:response], nil, nil);
       
     }
     
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+  }).catch(^(NSError *error) {
     
-    failureBlock(error, parameters, nil);
+    failureBlock(error, nil, nil);
     
-  }];
+  });
   
 }
 
-- (void)deleteCard:(NSString *)card_id user_login:(NSString *)user_login сompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock {
+- (NSDictionary *)deleteCardParametersWithCardID:(NSString *)card_id user_login:(NSString *)user_login {
   
   NSDictionary *reqiredSignatureParams =
   @{
-    @"merch_id" : _config[@"OMNMailRu_merch_id"],
-    @"vterm_id" : _config[@"OMNMailRu_vterm_id"],
+    @"merch_id" : _config.merch_id,
+    @"vterm_id" : _config.vterm_id,
     @"card_id" : card_id,
     @"user_login" : user_login,
     };
   NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
-  parameters[@"signature"] = [reqiredSignatureParams omn_signature];
+  parameters[@"signature"] = [reqiredSignatureParams omn_mailRuSignatureWithSecret:_config.secret_key];
+  return [parameters copy];
+  
+}
 
-  [self POST:@"card/delete" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (void)deleteCard:(NSString *)card_id user_login:(NSString *)user_login сompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error, NSDictionary *request, NSDictionary *response))failureBlock {
+
+  NSAssert(card_id, @"card id should not be nil");
+  NSAssert(user_login, @"user_login should not be nil");
+  
+  NSDictionary *deleteCardParameters = [self deleteCardParametersWithCardID:card_id user_login:user_login];
+  
+  [self POST:@"card/delete" parameters:deleteCardParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject[@"status"] isEqualToString:@"OK"]) {
       
@@ -427,60 +423,16 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
     }
     else {
       
-      failureBlock([NSError omn_errorFromResponse:responseObject], parameters, responseObject);
+      failureBlock([NSError omn_errorFromRequest:deleteCardParameters response:responseObject], deleteCardParameters, responseObject);
       
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
-    failureBlock(error, parameters, nil);
+    failureBlock(error, deleteCardParameters, nil);
     
   }];
   
-}
-
-@end
-
-@implementation NSString (omn_mailRu)
-
-- (NSString *)omn_sha1 {
-  
-  NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:NO];
-  
-  uint8_t digest[CC_SHA1_DIGEST_LENGTH];
-  
-  CC_SHA1(data.bytes, data.length, digest);
-  
-  NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
-  
-  for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++) {
-    [output appendFormat:@"%02x", digest[i]];
-  }
-  
-  return [output copy];
-  
-}
-
-@end
-
-@implementation NSDictionary (omn_mailRu)
-
-- (NSString *)omn_signature {
-  
-  NSArray *sortedKeys = [[self allKeys] sortedArrayUsingSelector:@selector(compare:)];
-  NSMutableArray *sortedValues = [NSMutableArray arrayWithCapacity:sortedKeys.count + 1];
-  [sortedKeys enumerateObjectsUsingBlock:^(id sortedKey, NSUInteger idx, BOOL *stop) {
-    
-    [sortedValues addObject:self[sortedKey]];
-    
-  }];
-  [sortedValues addObject:_config[@"OMNMailRu_secret_key"]];
-  
-  NSString *baseSignatureString = [sortedValues componentsJoinedByString:@""];
-  NSString *signature = [baseSignatureString omn_sha1];
-
-  
-  return signature;
 }
 
 @end
@@ -500,10 +452,20 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
 
 @implementation NSError (mailRuError)
 
-+ (NSError *)omn_errorFromResponse:(id)response {
++ (NSError *)omn_errorFromRequest:(id)request response:(id)response {
   
-  if (![response isKindOfClass:[NSDictionary class]]) {
-    return [NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:nil];
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
+  
+  if (request) {
+    userInfo[@"request"] = request;
+  }
+  if (response) {
+    userInfo[@"response"] = response;
+  }
+  
+  if (![response isKindOfClass:[NSDictionary class]] ||
+      ![request isKindOfClass:[NSDictionary class]]) {
+    return [NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:userInfo];
   }
   
   NSError *error = nil;
@@ -519,18 +481,13 @@ NSError *errorWithCode(OMNMailRuErrorCode code) {
         code = kOMNMailRuErrorCodeCardAmount;
         
       }
-      
-      error = [NSError errorWithDomain:OMNMailRuErrorDomain
-                                  code:code
-                              userInfo:
-               @{
-                 NSLocalizedDescriptionKey : description,
-                 }];
+      userInfo[NSLocalizedDescriptionKey] = description;
+      error = [NSError errorWithDomain:OMNMailRuErrorDomain code:code userInfo:userInfo];
       
     }
     else {
       
-      error = [NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:nil];
+      error = [NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:userInfo];
       
     }
     

@@ -264,6 +264,7 @@ TTTAttributedLabelDelegate>
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   @weakify(self)
+#warning TODO: registerCard
   [[OMNMailRuAcquiring acquiring] registerCard:cardInfo user_login:user.id user_phone:user.phone completion:^(NSString *cardId) {
     
     NSDictionary *parametrs = bankCardInfo.debugInfo;
