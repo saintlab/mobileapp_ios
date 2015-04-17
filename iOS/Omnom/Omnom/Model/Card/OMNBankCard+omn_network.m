@@ -16,9 +16,8 @@
 
 - (PMKPromise *)omn_delete {
   
-  NSString *cardID = self.id;
   OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [OMNMailRuCard cardWithID:cardID];
+  transaction.card = [OMNMailRuCard cardWithID:self.external_card_id];
   transaction.user = [OMNMailRuUser userWithLogin:self.user_id phone:@""];
 
   return [OMNMailRuAcquiring deleteCard:transaction].then(^(NSDictionary *response) {
