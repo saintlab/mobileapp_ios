@@ -8,6 +8,7 @@
 
 #import <AFNetworking.h>
 #import "OMNMailRuTransaction.h"
+#import <PromiseKit.h>
 
 extern NSString *const OMNMailRuErrorDomain;
 
@@ -25,20 +26,17 @@ typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
 + (OMNMailRuConfig *)config;
 + (void)setConfig:(NSDictionary *)config;
 
-- (void)registerCard:(OMNMailRuTransaction *)transaction completion:(void(^)(NSString *cardId))completionBlock failure:(void(^)(NSError *error))failureBlock;
++ (PMKPromise *)registerCard:(OMNMailRuTransaction *)transaction;
++ (PMKPromise *)verifyCard:(OMNMailRuTransaction *)transaction;
++ (PMKPromise *)deleteCard:(OMNMailRuTransaction *)transaction;
 
-- (void)verifyCard:(NSString *)card_id user_login:(NSString *)user_login amount:(double)amount completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
++ (PMKPromise *)payWithInfo:(OMNMailRuTransaction *)paymentInfo;
++ (PMKPromise *)refundOrder:(NSString *)orderID;
 
-- (void)payWithInfo:(OMNMailRuTransaction *)transaction completion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error))failureBlock;
-
-- (void)refundOrder:(NSString *)orderID completion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
-
-- (void)deleteCard:(NSString *)card_id user_login:(NSString *)user_login сompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
 
 @end
 
 @interface NSError (mailRuError)
-
 
 + (NSError *)omn_errorFromRequest:(id)request response:(id)response;
 

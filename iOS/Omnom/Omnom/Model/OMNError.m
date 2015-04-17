@@ -62,6 +62,20 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
   
 }
 
++ (OMNError *)omnomErrorFromRequest:(id)request response:(id)response {
+  
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
+  if (request) {
+    userInfo[@"request"] = request;
+  }
+  if (response) {
+    userInfo[@"response"] = response;
+  }
+  
+  return [OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorCodeUnknoun userInfo:userInfo];
+  
+}
+
 + (OMNError *)omnomErrorFromCode:(NSInteger)code {
   
   NSString *description = nil;
@@ -203,6 +217,24 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
 - (OMNError *)omn_internetError {
   
   return [OMNError omnnomErrorFromError:self];
+  
+}
+
+@end
+
+
+@implementation AFHTTPRequestOperation (omn_error)
+
+- (NSDictionary *)omn_error {
+  
+  NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
+  if (self.response.allHeaderFields) {
+    parametrs[@"headers"] = self.response.allHeaderFields;
+  }
+  if (self.responseString) {
+    parametrs[@"response_string"] = self.responseString;
+  }
+  return parametrs;
   
 }
 

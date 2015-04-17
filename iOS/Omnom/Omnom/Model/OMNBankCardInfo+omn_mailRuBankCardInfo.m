@@ -10,19 +10,19 @@
 
 @implementation OMNBankCardInfo (omn_mailRuBankCardInfo)
 
-- (OMNMailRuCardInfo *)omn_mailRuCardInfo {
+- (OMNMailRuCard *)omn_mailRuCardInfo {
   
-  OMNMailRuCardInfo *mailRuCardInfo = nil;
+  OMNMailRuCard *mailRuCardInfo = nil;
   if (self.card_id) {
     
-    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.card_id];
+    mailRuCardInfo = [OMNMailRuCard cardWithID:self.card_id];
     
   }
   else if (self.cvv &&
            self.pan){
     
-    NSString *exp_date = [OMNMailRuCardInfo exp_dateFromMonth:self.expiryMonth year:self.expiryYear];
-    mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardPan:self.pan exp_date:exp_date cvv:self.cvv];
+    NSString *exp_date = [OMNMailRuCard exp_dateFromMonth:self.expiryMonth year:self.expiryYear];
+    mailRuCardInfo = [OMNMailRuCard cardWithPan:self.pan exp_date:exp_date cvv:self.cvv];
     
   }
   

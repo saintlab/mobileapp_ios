@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class OMNMailRuExtra;
-@class OMNMailRuCardInfo;
+@class OMNMailRuCard;
 @class OMNMailRuConfig;
 @class OMNMailRuUser;
 @class OMNMailRuOrder;
@@ -17,12 +17,14 @@
 @interface OMNMailRuTransaction : NSObject
 
 @property (nonatomic, strong) OMNMailRuExtra *extra;
-@property (nonatomic, strong) OMNMailRuCardInfo *cardInfo;
+@property (nonatomic, strong) OMNMailRuCard *card;
 @property (nonatomic, strong) OMNMailRuUser *user;
 @property (nonatomic, strong) OMNMailRuOrder *order;
 
 - (NSDictionary *)payParametersWithConfig:(OMNMailRuConfig *)config;
 - (NSDictionary *)registerCardParametersWithConfig:(OMNMailRuConfig *)config;
+- (NSDictionary *)verifyCardParametersWithConfig:(OMNMailRuConfig *)config;
+- (NSDictionary *)deleteCardParameterWithConfig:(OMNMailRuConfig *)config;
 
 @end
 
@@ -48,12 +50,12 @@
 
 @end
 
-@interface OMNMailRuCardInfo : NSObject
+@interface OMNMailRuCard : NSObject
 
 @property (nonatomic, copy) NSString *pan;
 @property (nonatomic, copy) NSString *exp_date;
 @property (nonatomic, copy) NSString *cvv;
-@property (nonatomic, copy) NSString *card_id;
+@property (nonatomic, copy) NSString *id;
 @property (nonatomic, assign) BOOL add_card;
 
 @property (nonatomic, copy) NSString *user_login;
@@ -61,8 +63,8 @@
 
 + (NSString *)exp_dateFromMonth:(NSInteger)month year:(NSInteger)year;
 
-+ (OMNMailRuCardInfo *)cardInfoWithCardId:(NSString *)card_id;
-+ (OMNMailRuCardInfo *)cardInfoWithCardPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv;
++ (OMNMailRuCard *)cardWithID:(NSString *)card_id;
++ (OMNMailRuCard *)cardWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv;
 
 - (NSDictionary *)parameters;
 

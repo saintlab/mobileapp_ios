@@ -8,7 +8,7 @@
 
 #import "OMNMailRuBankCardsModel.h"
 #import "OMNMailRuBankCardMediator.h"
-#import "OMNBankCard.h"
+#import "OMNBankCard+omn_network.h"
 #import "OMNAnalitics.h"
 
 @implementation OMNMailRuBankCardsModel

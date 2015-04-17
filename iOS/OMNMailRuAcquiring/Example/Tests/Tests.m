@@ -84,8 +84,8 @@ describe(@"register test", ^{
   it(@"should pay with card id", ^{
     
     OMNMailRuTransaction *paymentInfo = [[OMNMailRuTransaction alloc] init];
-    paymentInfo.cardInfo.card_id = _cardID;
-    paymentInfo.cardInfo.cvv = @"123";
+    paymentInfo.card.card_id = _cardID;
+    paymentInfo.card.cvv = @"123";
     paymentInfo.user_login = user_id;
     paymentInfo.order_id = @"1";
     paymentInfo.extra.tip = 0;

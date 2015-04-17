@@ -291,7 +291,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 - (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error {
   
   NSMutableDictionary *debugInfo = [self superProperties];
-  if (error.localizedDescription) {
+  if (error.userInfo) {
     debugInfo[@"error"] = error.userInfo;
   }
   debugInfo[@"errorCode"] = @(error.code);

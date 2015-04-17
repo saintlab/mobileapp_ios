@@ -194,23 +194,28 @@ TTTAttributedLabelDelegate>
 
   double amount = [self.currentAmountString omn_doubleValue];
   [self startLoader];
-  OMNUser *user = [OMNAuthorization authorisation].user;
+
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   @weakify(self)
-  [[OMNMailRuAcquiring acquiring] verifyCard:_bankCardInfo.card_id user_login:user.id amount:amount completion:^{
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.card = [bankCardInfo omn_mailRuCardInfo];
+  transaction.user = [[OMNAuthorization authorisation].user omn_mailRuUser];
+  transaction.order = [OMNMailRuOrder orderWithID:@"" amount:@(amount)];
+  
+  [OMNMailRuAcquiring verifyCard:transaction].then(^(NSDictionary *response) {
     
     @strongify(self)
     [self cardDidVerify];
     
-  } failure:^(NSError *error) {
+  }).catch(^(NSError *error) {
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_VERIFY" cardInfo:bankCardInfo error:error];
     NSError *omnomError = [OMNError omnnomErrorFromError:error];
     @strongify(self)
     [self processError:omnomError];
     
-  }];
+  });
   
 }
 
@@ -261,23 +266,23 @@ TTTAttributedLabelDelegate>
   @weakify(self)
   
   OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.cardInfo = [bankCardInfo omn_mailRuCardInfo];
+  transaction.card = [bankCardInfo omn_mailRuCardInfo];
   transaction.user = [[OMNAuthorization authorisation].user omn_mailRuUser];
   
-  [[OMNMailRuAcquiring acquiring] registerCard:transaction completion:^(NSString *cardId) {
+  [OMNMailRuAcquiring registerCard:transaction].then(^(NSString *cardID) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:bankCardInfo.debugInfo];
     @strongify(self)
-    self.card_id = cardId;
-
-  } failure:^(NSError *error) {
+    self.card_id = cardID;
+    
+  }).catch(^(NSError *error) {
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_REGISTER" cardInfo:bankCardInfo error:error];
     @strongify(self)
     [self procsessCardRegisterError:[OMNError omnnomErrorFromError:error]];
+    
+  });
 
-  }];
-  
 }
 
 - (void)procsessCardRegisterError:(NSError *)error {

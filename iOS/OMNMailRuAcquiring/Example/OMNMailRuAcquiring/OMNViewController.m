@@ -98,10 +98,10 @@
   _cardIDLabel.text = orderID;
 }
 
-- (OMNMailRuCardInfo *)testCardInfoWithSaveCard:(BOOL)saveCard {
+- (OMNMailRuCard *)testCardInfoWithSaveCard:(BOOL)saveCard {
   
-  NSString *exp_date = [OMNMailRuCardInfo exp_dateFromMonth:1 year:16];
-  OMNMailRuCardInfo *mailRuCardInfo = [OMNMailRuCardInfo cardInfoWithCardPan:@"5213243738433281" exp_date:exp_date cvv:@"954"];
+  NSString *exp_date = [OMNMailRuCard exp_dateFromMonth:1 year:16];
+  OMNMailRuCard *mailRuCardInfo = [OMNMailRuCard cardWithPan:@"5213243738433281" exp_date:exp_date cvv:@"954"];
   mailRuCardInfo.add_card = saveCard;
   return mailRuCardInfo;
   
@@ -109,23 +109,22 @@
 
 - (IBAction)payAndRegisterTap:(id)sender {
   
-  OMNMailRuTransaction *paymentInfo = [[OMNMailRuTransaction alloc] init];
-  paymentInfo.cardInfo = [self testCardInfoWithSaveCard:YES];
-  paymentInfo.user = self.user;
-  paymentInfo.order = [OMNMailRuOrder orderWithID:@"" amount:_heldAmount];
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.card = [self testCardInfoWithSaveCard:YES];
+  transaction.user = self.user;
+  transaction.order = [OMNMailRuOrder orderWithID:@"" amount:_heldAmount];
   
-  [[OMNMailRuAcquiring acquiring] payWithInfo:paymentInfo completion:^(id response) {
-
-    NSString *order_id = response[@"order_id"];
+  [OMNMailRuAcquiring payWithInfo:transaction].then(^(id response, id pollResponse) {
+    
+    NSString *order_id = pollResponse[@"order_id"];
     [self setLastOrderID:order_id];
     [self reloadCards];
-    NSLog(@"payAndRegisterTap>%@", response);
-    
-  } failure:^(NSError *mailError) {
 
-    NSLog(@"payAndRegisterTap>%@", mailError);
+  }).catch(^(NSError *error) {
     
-  }];
+    NSLog(@"payAndRegisterTap>%@", error);
+    
+  });
 
 }
 
@@ -136,36 +135,35 @@
     return;
   }
   
-  [[OMNMailRuAcquiring acquiring] refundOrder:orderID completion:^{
+  [OMNMailRuAcquiring refundOrder:orderID].then(^{
     
     [self setLastOrderID:nil];
     
-  } failure:^(NSError *error) {
+  }).catch(^(NSError *error) {
     
     NSLog(@"declineTap>%@", error);
     
-  }];
+  });
   
 }
 
 - (IBAction)registerTap:(id)sender {
   
   OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.cardInfo = [self testCardInfoWithSaveCard:NO];
+  transaction.card = [self testCardInfoWithSaveCard:NO];
   transaction.user = self.user;
-  [[OMNMailRuAcquiring acquiring] registerCard:transaction completion:^(NSString *cardId) {
+  [OMNMailRuAcquiring registerCard:transaction].then(^(NSString *cardID) {
     
-    [[NSUserDefaults standardUserDefaults] setObject:cardId forKey:@"cardID"];
+    NSLog(@"registerTap>%@", cardID);
+    [[NSUserDefaults standardUserDefaults] setObject:cardID forKey:@"cardID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self verifyTap:nil];
     
-    NSLog(@"registerTap>%@", cardId);
+  }).catch(^(NSError *error) {
     
-  } failure:^(NSError *error) {
+    NSLog(@"registerTap>%@", error);
     
-    NSLog(@"deleteCard>%@", error);
-    
-  }];
+  });
  
 }
 
@@ -182,21 +180,31 @@
 - (void)verify:(double)amount {
 
   NSString *cardID = [[NSUserDefaults standardUserDefaults] objectForKey:@"cardID"];
-  [[OMNMailRuAcquiring acquiring] verifyCard:cardID user_login:self.user.login amount:amount completion:^{
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.card = [OMNMailRuCard cardWithID:cardID];
+  transaction.user = self.user;
+  transaction.order = [OMNMailRuOrder orderWithID:@"" amount:@(amount)];
 
+  [OMNMailRuAcquiring verifyCard:transaction].then(^(NSDictionary *response) {
+    
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"cardID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-  } failure:^(NSError *error) {
+  }).catch(^(NSError *error) {
     
     NSLog(@"verifyTap>%@", error);
     
-  }];
+  });
+
 }
 
 - (IBAction)deleteCard:(id)sender {
   
-  [[OMNMailRuAcquiring acquiring] deleteCard:self.cardID user_login:self.user.login сompletion:^{
+  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
+  transaction.card = [OMNMailRuCard cardWithID:self.cardID];
+  transaction.user = self.user;
+
+  [OMNMailRuAcquiring deleteCard:transaction].then(^(NSDictionary *response) {
     
     NSString *path = [NSString stringWithFormat:@"/cards/%@", self.internalCardID];
     [_operationManager DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -204,56 +212,58 @@
       NSLog(@"deleteCard>%@", responseObject);
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+      
       NSLog(@"deleteCard>%@", error);
       
     }];
-    
-  } failure:^(NSError *error) {
+  }).catch(^(NSError *error) {
     
     NSLog(@"deleteCard>%@", error);
     
-  }];
-
+  });
+  
 }
 
 - (IBAction)payWithCardID:(id)sender {
   
   OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.cardInfo = [OMNMailRuCardInfo cardInfoWithCardId:self.cardID];
+  transaction.card = [OMNMailRuCard cardWithID:self.cardID];
   transaction.user = self.user;
   transaction.order = [OMNMailRuOrder orderWithID:@"1" amount:@(0.01)];
   
-  [[OMNMailRuAcquiring acquiring] payWithInfo:transaction completion:^(id response) {
+  [OMNMailRuAcquiring payWithInfo:transaction].then(^(id response, id pollResponse) {
     
-    NSLog(@"payWithCardID response>%@", response);
+    NSString *order_id = pollResponse[@"order_id"];
+    [self setLastOrderID:order_id];
+    [self reloadCards];
+    NSLog(@"payWithCardID response>%@ %@", response, pollResponse);
     
-  } failure:^(NSError *error) {
+  }).catch(^(NSError *error) {
     
     NSLog(@"payWithCardID error>%@", error);
     
-  }];
+  });
   
 }
 
 - (IBAction)payWithNewCard:(id)sender {
   
   OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.cardInfo = [self testCardInfoWithSaveCard:NO];
+  transaction.card = [self testCardInfoWithSaveCard:NO];
   transaction.user = self.user;
-  transaction.order = [OMNMailRuOrder orderWithID:@"1" amount:_heldAmount];
+  transaction.order = [OMNMailRuOrder orderWithID:@"1" amount:@(0.01)];
   
-  [[OMNMailRuAcquiring acquiring] payWithInfo:transaction completion:^(id response) {
+  [OMNMailRuAcquiring payWithInfo:transaction].then(^(id response, id pollResponse) {
     
-    NSString *order_id = response[@"order_id"];
+    NSString *order_id = pollResponse[@"order_id"];
     [self setLastOrderID:order_id];
-    NSLog(@"payWithNewCard response>%@", response);
+    NSLog(@"payWithNewCard response>%@ %@", response, pollResponse);
     
-  } failure:^(NSError *mailError) {
+  }).catch(^(NSError *error) {
     
-    NSLog(@"payWithNewCard error>%@", mailError);
+    NSLog(@"payWithNewCard error>%@", error);
     
-  }];
+  });
   
 }
 

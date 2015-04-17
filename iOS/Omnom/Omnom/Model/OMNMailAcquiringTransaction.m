@@ -105,25 +105,23 @@
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.cardInfo = [bankCardInfo omn_mailRuCardInfo];
+  transaction.card = [bankCardInfo omn_mailRuCardInfo];
   transaction.user = [[OMNAuthorization authorisation].user omn_mailRuUser];
   transaction.extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
   transaction.order = [OMNMailRuOrder orderWithID:bill.id amount:@(0.01*self.total_amount)];
 
-  [[OMNMailRuAcquiring acquiring] payWithInfo:transaction completion:^(id response) {
+  [OMNMailRuAcquiring payWithInfo:transaction].then(^(id response, id pollResponse) {
     
-    [[OMNOperationManager sharedManager] POST:@"/report/mail/payment" parameters:response success:nil failure:nil];
     [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
     completionBlock(bill, nil);
     
-  } failure:^(NSError *mailError) {
+  }).catch(^(NSError *error) {
     
-//    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:mailError request:request response:response];
-    OMNError *omnomError = [OMNError omnnomErrorFromError:mailError];
+    OMNError *omnomError = [OMNError omnnomErrorFromError:error];
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:error];
     completionBlock(bill, omnomError);
     
-  }];
- 
+  });
   
 }
 

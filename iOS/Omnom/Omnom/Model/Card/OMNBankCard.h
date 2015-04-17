@@ -29,18 +29,9 @@ typedef NS_ENUM(NSInteger, OMNBankCardStatus) {
 @property(nonatomic, copy) NSString *issuer;
 
 @property(nonatomic, assign) BOOL demo;
-@property(nonatomic, assign, readonly) BOOL deleting;
+@property(nonatomic, assign) BOOL deleting;
 
 - (instancetype)initWithJsonData:(id)jsonData;
-
-+ (void)getCardsWithCompletion:(void(^)(NSArray *cards))completionBlock failure:(void(^)(NSError *error))failureBlock;
-- (void)deleteWithCompletion:(dispatch_block_t)completionBlock failure:(void(^)(NSError *error))failureBlock;
-
-@end
-
-@interface NSDictionary (omn_decodeCardData)
-
-- (void)decodeCardData:(void(^)(NSArray *))completionBlock failure:(void(^)(NSError *))failureBlock;
 
 @end
 

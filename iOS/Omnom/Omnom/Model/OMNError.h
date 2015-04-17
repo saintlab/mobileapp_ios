@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking.h>
 
 typedef NS_ENUM(NSInteger, OMNErrorCode) {
   
@@ -40,6 +41,7 @@ extern NSString * const OMNUserErrorDomain;
 + (OMNError *)billErrorFromResponse:(id)response;
 + (OMNError *)omnnomErrorFromError:(NSError *)error;
 + (OMNError *)omnomErrorFromCode:(NSInteger)code;
++ (OMNError *)omnomErrorFromRequest:(id)request response:(id)response;
 + (OMNError *)userErrorFromCode:(OMNUserErrorCode)code;
 
 - (UIImage *)circleImage;
@@ -55,5 +57,11 @@ extern NSString * const OMNUserErrorDomain;
 @interface NSError (omn_internetError)
 
 - (OMNError *)omn_internetError;
+
+@end
+
+@interface AFHTTPRequestOperation (omn_error)
+
+- (NSDictionary *)omn_error;
 
 @end

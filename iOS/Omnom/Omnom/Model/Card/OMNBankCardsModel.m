@@ -11,6 +11,8 @@
 #import "OMNBankCardsModel.h"
 #import <SSKeychain.h>
 #import <BlocksKit.h>
+#import "OMNBankCard+omn_network.h"
+#import "OMNAnalitics.h"
 
 NSString * const kCardIdServiceName = @"card_id";
 
@@ -57,9 +59,7 @@ NSString * const kCardIdServiceName = @"card_id";
 }
 
 - (void)loadCardsWithCompletion:(dispatch_block_t)completionBlock {
-  
   completionBlock();
-  
 }
 
 - (void)updateCardSelection {
@@ -104,17 +104,13 @@ NSString * const kCardIdServiceName = @"card_id";
 }
 
 - (BOOL)canAddCards {
-  
   return NO;
-  
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  
   return 1;
-  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -149,9 +145,7 @@ NSString * const kCardIdServiceName = @"card_id";
 }
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-  
   return UITableViewCellEditingStyleDelete;
-  
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -171,15 +165,23 @@ NSString * const kCardIdServiceName = @"card_id";
   
   @weakify(self)
   [tableView setEditing:NO animated:YES];
-  [card deleteWithCompletion:^{
+  card.deleting = YES;
+  [card omn_delete].then(^(NSDictionary *response) {
     
     @strongify(self)
+    [[OMNAnalitics analitics] logTargetEvent:@"card_deleted" parametrs:@{@"card_id" : card.external_card_id}];
     [self removeCard:card];
-    [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
 
-  } failure:^(NSError *error) {
+  }).catch(^(NSError *error) {
     
-  }];
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_DELETE" cardInfo:nil error:error];
+    
+  }).finally(^{
+    
+    card.deleting = NO;
+    [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationFade];
+    
+  });
   
 }
 

@@ -11,6 +11,6 @@
 
 @interface OMNBankCardInfo (omn_mailRuBankCardInfo)
 
-- (OMNMailRuCardInfo *)omn_mailRuCardInfo;
+- (OMNMailRuCard *)omn_mailRuCardInfo;
 
 @end

@@ -925,6 +925,11 @@
 		93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 93676E1718D1E4FC00FC55F1 /* InfoPlist.strings */; };
 		93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93676E1A18D1E4FC00FC55F1 /* mockTests.m */; };
 		9367CE8D193CC67600116AC2 /* homeScreenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 9367CE8C193CC67600116AC2 /* homeScreenTest.m */; };
+		9369C9861AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369C9851AE0CBCE00333C31 /* OMNBankCard+omn_network.m */; };
+		9369C9871AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369C9851AE0CBCE00333C31 /* OMNBankCard+omn_network.m */; };
+		9369C9881AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369C9851AE0CBCE00333C31 /* OMNBankCard+omn_network.m */; };
+		9369C9891AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369C9851AE0CBCE00333C31 /* OMNBankCard+omn_network.m */; };
+		9369C98A1AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9369C9851AE0CBCE00333C31 /* OMNBankCard+omn_network.m */; };
 		936AC0D51AD8BDBC00A9D17F /* OMNTransitionFromOrderToCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F63192F580F0088EF38 /* OMNTransitionFromOrderToCalculator.m */; };
 		936AC0D61AD8BDBC00A9D17F /* OMNSearchRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */; };
 		936AC0D71AD8BDBC00A9D17F /* OMNModalWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */; };
@@ -2085,6 +2090,8 @@
 		93676E1618D1E4FC00FC55F1 /* omnomTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "omnomTests-Info.plist"; sourceTree = "<group>"; };
 		93676E1A18D1E4FC00FC55F1 /* mockTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mockTests.m; sourceTree = "<group>"; };
 		9367CE8C193CC67600116AC2 /* homeScreenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = homeScreenTest.m; sourceTree = "<group>"; };
+		9369C9841AE0CBCE00333C31 /* OMNBankCard+omn_network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNBankCard+omn_network.h"; sourceTree = "<group>"; };
+		9369C9851AE0CBCE00333C31 /* OMNBankCard+omn_network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNBankCard+omn_network.m"; sourceTree = "<group>"; };
 		936AC2391AD8BDBC00A9D17F /* Travelers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Travelers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		936AC23A1AD8BDBD00A9D17F /* Travelers-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Travelers-Info.plist"; path = "/Users/tea/Documents/Projects/saintlab/mobileapp/iOS/Omnom/Travelers-Info.plist"; sourceTree = "<absolute>"; };
 		936AC23B1AD8BE7800A9D17F /* Travelers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Travelers.xcassets; sourceTree = "<group>"; };
@@ -3747,6 +3754,8 @@
 				9345AFAE199A253F00328F73 /* OMNBankCardInfo.m */,
 				93245DB21A1C602F0065D4EC /* model */,
 				93245DB31A1C603C0065D4EC /* Mediator */,
+				9369C9841AE0CBCE00333C31 /* OMNBankCard+omn_network.h */,
+				9369C9851AE0CBCE00333C31 /* OMNBankCard+omn_network.m */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -4987,6 +4996,7 @@
 				930C4DD61AB15E1B006CA608 /* OMNLaunchHandler.m in Sources */,
 				930C4DD71AB15E1B006CA608 /* OMNBankCardsVC.m in Sources */,
 				930C4DD81AB15E1B006CA608 /* NSString+omn_json.m in Sources */,
+				9369C9881AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */,
 				930C4DD91AB15E1B006CA608 /* OMNConfirmCodeVC.m in Sources */,
 				930C4DDA1AB15E1B006CA608 /* OMNMenuCategoryDelimiterCell.m in Sources */,
 				930C4DDB1AB15E1B006CA608 /* OMNUserMailFeedbackItem.m in Sources */,
@@ -5310,6 +5320,7 @@
 				930C8BC71ACA7D9F00CE4E5A /* OMNLaunchHandler.m in Sources */,
 				930C8BC81ACA7D9F00CE4E5A /* OMNBankCardsVC.m in Sources */,
 				930C8BC91ACA7D9F00CE4E5A /* NSString+omn_json.m in Sources */,
+				9369C9891AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */,
 				930C8BCA1ACA7D9F00CE4E5A /* OMNConfirmCodeVC.m in Sources */,
 				930C8BCB1ACA7D9F00CE4E5A /* OMNMenuCategoryDelimiterCell.m in Sources */,
 				930C8BCC1ACA7D9F00CE4E5A /* OMNUserMailFeedbackItem.m in Sources */,
@@ -5633,6 +5644,7 @@
 				93D4ABD61A61144900E7C7A5 /* OMNLaunchHandler.m in Sources */,
 				939F991419752BE90051822E /* OMNBankCardsVC.m in Sources */,
 				9325BA511A1E1FAB003557BD /* NSString+omn_json.m in Sources */,
+				9369C9861AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */,
 				939F990C19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
 				93C1268B1A7120980019655A /* OMNMenuCategoryDelimiterCell.m in Sources */,
 				93D117781A2F00DB000131C4 /* OMNUserMailFeedbackItem.m in Sources */,
@@ -6052,6 +6064,7 @@
 				9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */,
 				937CDC971AA6F76B000856AB /* OMNAcquiringTransaction.m in Sources */,
 				939F994A197544820051822E /* OMNUserInfoItem.m in Sources */,
+				9369C9871AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */,
 				939FD05F1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
 				932F5DDB1A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m in Sources */,
 				93D117821A2F0766000131C4 /* OMNTableUserInfoItem.m in Sources */,
@@ -6262,6 +6275,7 @@
 				936AC16F1AD8BDBC00A9D17F /* OMNLaunchHandler.m in Sources */,
 				936AC1701AD8BDBC00A9D17F /* OMNBankCardsVC.m in Sources */,
 				936AC1711AD8BDBC00A9D17F /* NSString+omn_json.m in Sources */,
+				9369C98A1AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */,
 				936AC1721AD8BDBC00A9D17F /* OMNConfirmCodeVC.m in Sources */,
 				936AC1731AD8BDBC00A9D17F /* OMNMenuCategoryDelimiterCell.m in Sources */,
 				936AC1741AD8BDBC00A9D17F /* OMNUserMailFeedbackItem.m in Sources */,
