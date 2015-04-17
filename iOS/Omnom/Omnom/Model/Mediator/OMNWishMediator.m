@@ -10,11 +10,7 @@
 #import "OMNPreorderDoneVC.h"
 #import "OMNOrderToolbarButton.h"
 
-@implementation OMNWishMediator {
-  
-  OMNRestaurantMediator *_restaurantMediator;
-  
-}
+@implementation OMNWishMediator
 
 - (instancetype)initWithRestaurantMediator:(OMNRestaurantMediator *)restaurantMediator rootVC:(OMNMyOrderConfirmVC *)rootVC {
   self = [super init];
@@ -27,9 +23,13 @@
   return self;
 }
 
+- (void)dealloc
+{
+  
+}
 
 - (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
-  [_restaurantMediator.visitor createWish:wishItems completionBlock:completionBlock wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
+  [self.restaurantMediator.visitor createWish:wishItems completionBlock:completionBlock wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
 }
 
 - (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
@@ -47,9 +47,13 @@
 
 - (void)didFinishWish {
   
-  [_restaurantMediator.restaurantActionsVC showRestaurantAnimated:NO];
-  [_restaurantMediator.menu removePreorderedItems];
-  self.rootVC.didFinishBlock();
+  [self.restaurantMediator.menu removePreorderedItems];
+  [self closeTap];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+
+    [self.restaurantMediator.restaurantActionsVC showRestaurantAnimated:YES];
+    
+  });
   
 }
 
@@ -64,9 +68,9 @@
 - (UIButton *)bottomButton {
   
   UIButton *bottomButton = nil;
-  if (_restaurantMediator.restaurant.settings.has_table_order) {
+  if (self.restaurantMediator.restaurant.settings.has_table_order) {
     
-    bottomButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:self action:@selector(showTableOrders)];
+    bottomButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:self.restaurantMediator.totalOrdersAmount target:self action:@selector(showTableOrders)];
     
   }
   return bottomButton;
@@ -75,15 +79,15 @@
 
 - (void)showTableOrders {
   
-  [_restaurantMediator showTableOrders];
+  [self.restaurantMediator showTableOrders];
   [self closeTap];
   
 }
 
 - (void)closeTap {
   
-  if (_rootVC.didFinishBlock) {
-    _rootVC.didFinishBlock();
+  if (self.rootVC.didFinishBlock) {
+    self.rootVC.didFinishBlock();
   }
   
 }

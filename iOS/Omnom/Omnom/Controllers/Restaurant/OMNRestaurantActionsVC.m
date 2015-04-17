@@ -16,7 +16,7 @@
 @implementation OMNRestaurantActionsVC {
   
   OMNRestaurantMediator *_restaurantMediator;
-  OMNNavigationController *_navigationController;
+  OMNNavigationController *_internalNVC;
 
 }
 
@@ -42,9 +42,7 @@
 }
 
 - (void)showRestaurantAnimated:(BOOL)animated {
-  
-  [_navigationController popToViewController:_r1VC animated:animated];
-  
+  [_internalNVC popToRootViewControllerAnimated:animated];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -66,14 +64,14 @@
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
   
-  UIViewController *visibleViewController = _navigationController.childViewControllerForStatusBarHidden;
+  UIViewController *visibleViewController = _internalNVC.childViewControllerForStatusBarHidden;
   return visibleViewController;
   
 }
 
 - (UIViewController *)childViewControllerForStatusBarStyle {
   
-  UIViewController *visibleViewController = _navigationController.childViewControllerForStatusBarStyle;
+  UIViewController *visibleViewController = _internalNVC.childViewControllerForStatusBarStyle;
   return visibleViewController;
   
 }
@@ -82,11 +80,12 @@
   
   _r1VC = [[OMNR1VC alloc] initWithMediator:_restaurantMediator];
   
-  _navigationController = [[OMNNavigationController alloc] initWithRootViewController:_r1VC];
-  _navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
-  [self addChildViewController:_navigationController];
-  [self.view addSubview:_navigationController.view];
-  _navigationController.view.translatesAutoresizingMaskIntoConstraints = NO;
+  _internalNVC = [[OMNNavigationController alloc] initWithRootViewController:_r1VC];
+  _internalNVC.delegate = [OMNNavigationControllerDelegate sharedDelegate];
+  [_internalNVC willMoveToParentViewController:self];
+  [self.view addSubview:_internalNVC.view];
+  [self addChildViewController:_internalNVC];
+  _internalNVC.view.translatesAutoresizingMaskIntoConstraints = NO;
   
   OMNRestaurantActionsToolbar *toolbar = [[OMNRestaurantActionsToolbar alloc] init];
   toolbar.translatesAutoresizingMaskIntoConstraints = NO;
@@ -96,7 +95,7 @@
   NSDictionary *views =
   @{
     @"bottomToolbar" : toolbar,
-    @"navigationController" : _navigationController.view,
+    @"navigationController" : _internalNVC.view,
     };
   
   NSDictionary *metrics =
@@ -109,7 +108,7 @@
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomToolbar]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomToolbar(bottomToolbarHeight)]|" options:kNilOptions metrics:metrics views:views]];
-  [_navigationController didMoveToParentViewController:self];
+  [_internalNVC didMoveToParentViewController:self];
   
 }
 

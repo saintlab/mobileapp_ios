@@ -48,6 +48,7 @@
     menuTable.contentInset = toViewController.tableView.contentInset;
     fadeView.alpha = 1.0f;
     fromViewController.circleButton.alpha = 0.0f;
+    fromViewController.topGradientView.alpha = 0.0f;
     
   } completion:^(BOOL finished) {
     
@@ -58,6 +59,7 @@
     } completion:^(BOOL finished1) {
       
       fromViewController.view.alpha = 1.0f;
+      fromViewController.topGradientView.alpha = 1.0f;
       fromViewController.circleButton.alpha = 1.0f;
       [fadeView removeFromSuperview];
       menuTable.frame = fromTableFrame;

@@ -50,14 +50,10 @@
     
   }];
 
-  
-  
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  
   return kCloseAllCategoriesDuration + 0.2;
-  
 }
 
 @end

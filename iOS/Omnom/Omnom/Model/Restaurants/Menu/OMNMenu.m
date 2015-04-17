@@ -9,7 +9,7 @@
 #import "OMNMenu.h"
 #import <BlocksKit.h>
 
-NSString * const OMNMenuDidResetNotification = @"OMNMenuDidResetNotofocation";
+NSString * const OMNMenuDidResetNotification = @"OMNMenuDidResetNotification";
 
 @implementation OMNMenu
 

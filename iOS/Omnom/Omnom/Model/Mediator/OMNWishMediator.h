@@ -23,6 +23,7 @@
 - (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 - (void)processCreatedWishForVisitor:(OMNVisitor *)visitor;
 - (void)didFinishWish;
+- (void)closeTap;
 
 - (NSString *)refreshOrdersTitle;
 - (NSString *)wishHintText;

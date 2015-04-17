@@ -56,7 +56,7 @@
 }
 
 - (void)transactionPaymentVCDidFail:(OMNTransactionPaymentVC *)transactionPaymentVC {
-  self.rootVC.didFinishBlock();
+  [self closeTap];
 }
 
 @end

@@ -14,6 +14,7 @@
 
 @property (nonatomic, assign, readonly) BOOL isViewVisible;
 @property (nonatomic, strong, readonly) UITableView *menuTable;
+@property (nonatomic, strong, readonly) UIImageView *topGradientView;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
 

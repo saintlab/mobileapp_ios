@@ -195,10 +195,10 @@ OMNOrderCalculationVCDelegate>
   preorderConfirmVC.didFinishBlock = ^{
     
     @strongify(self)
-    [self.restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
     
   };
-  [_restaurantActionsVC.navigationController presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
+  [_restaurantActionsVC presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
   
 }
 

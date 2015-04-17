@@ -352,9 +352,9 @@
 
 - (void)omn_setup {
   
-  UIImageView *topGradientView = [UIImageView omn_autolayoutView];
-  topGradientView.image = [UIImage imageNamed:@"top_gradient"];
-  [self.view addSubview:topGradientView];
+  _topGradientView = [UIImageView omn_autolayoutView];
+  _topGradientView.image = [UIImage imageNamed:@"top_gradient"];
+  [self.view addSubview:_topGradientView];
   
   UIImageView *gradientView = [UIImageView omn_autolayoutView];
   gradientView.image = [UIImage imageNamed:@"menu_gradient_bg"];
@@ -362,7 +362,7 @@
   
   NSMutableDictionary *views =
   [@{
-     @"topGradientView" : topGradientView,
+     @"topGradientView" : _topGradientView,
      @"gradientView" : gradientView,
      } mutableCopy];
   
