@@ -31,62 +31,12 @@
   return self;
 }
 
-+ (instancetype)registerTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user {
-  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:nil extra:nil];
-}
+@end
 
-+ (instancetype)registerTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user {
+@implementation OMNMailRuPaymentTransaction
 
-  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
-  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:nil extra:nil];
+- (NSDictionary *)parametersWithConfig:(OMNMailRuConfig *)config {
   
-}
-
-+ (instancetype)payAndRegisterTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user {
-  
-  card.add_card = YES;
-  OMNMailRuOrder *order = [OMNMailRuOrder orderWithID:@"0" amount:@(1)];
-  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:order extra:nil];
-  
-}
-
-+ (instancetype)payAndRegisterTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user {
-  
-  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
-  return [self payAndRegisterTransactionWithCard:card user:user];
-  
-}
-
-+ (instancetype)payTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount {
-  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:[OMNMailRuOrder orderWithID:order_id amount:order_amount] extra:nil];
-}
-
-+ (instancetype)payTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount {
-  
-  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
-  OMNMailRuOrder *order = [OMNMailRuOrder orderWithID:order_id amount:order_amount];
-  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:order extra:nil];
-
-}
-
-+ (instancetype)verifyTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user amount:(NSNumber *)amount {
-  return [[OMNMailRuTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:[OMNMailRuOrder orderWithID:@"" amount:amount] extra:nil];
-}
-
-+ (instancetype)deleteTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user {
-  return [[OMNMailRuTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:nil extra:nil];
-}
-
-+ (instancetype)payTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount {
-  return [[OMNMailRuTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:[OMNMailRuOrder orderWithID:order_id amount:order_amount] extra:nil];
-}
-
-- (NSDictionary *)payParametersWithConfig:(OMNMailRuConfig *)config {
-  
-  if (!config.isValid) {
-    return nil;
-  }
-
   NSDictionary *reqiredSignatureParams =
   @{
     @"merch_id" : config.merch_id,
@@ -110,7 +60,30 @@
   
 }
 
-- (NSDictionary *)registerCardParametersWithConfig:(OMNMailRuConfig *)config {
+@end
+
+@implementation OMNMailRuCardDeleteTransaction : OMNMailRuTransaction
+
+- (NSDictionary *)parametersWithConfig:(OMNMailRuConfig *)config {
+  
+  NSDictionary *reqiredSignatureParams =
+  @{
+    @"merch_id" : config.merch_id,
+    @"vterm_id" : config.vterm_id,
+    @"card_id" : self.card.id,
+    @"user_login" : self.user.login,
+    };
+  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
+  parameters[@"signature"] = [reqiredSignatureParams omn_mailRuSignatureWithSecret:config.secret_key];
+  return [parameters copy];
+  
+}
+
+@end
+
+@implementation OMNMailRuCardRegisterTransaction : OMNMailRuTransaction
+
+- (NSDictionary *)parametersWithConfig:(OMNMailRuConfig *)config {
   
   NSDictionary *reqiredSignatureParams =
   @{
@@ -128,7 +101,11 @@
   
 }
 
-- (NSDictionary *)verifyCardParametersWithConfig:(OMNMailRuConfig *)config {
+@end
+
+@implementation OMNMailRuCardVerifyTransaction
+
+- (NSDictionary *)parametersWithConfig:(OMNMailRuConfig *)config {
   
   NSDictionary *reqiredSignatureParams =
   @{
@@ -142,21 +119,6 @@
   
   parameters[@"signature"] = [reqiredSignatureParams omn_mailRuSignatureWithSecret:config.secret_key];
   parameters[@"amount"] = self.order.amount;
-  return [parameters copy];
-  
-}
-
-- (NSDictionary *)deleteCardParameterWithConfig:(OMNMailRuConfig *)config {
-  
-  NSDictionary *reqiredSignatureParams =
-  @{
-    @"merch_id" : config.merch_id,
-    @"vterm_id" : config.vterm_id,
-    @"card_id" : self.card.id,
-    @"user_login" : self.user.login,
-    };
-  NSMutableDictionary *parameters = [reqiredSignatureParams mutableCopy];
-  parameters[@"signature"] = [reqiredSignatureParams omn_mailRuSignatureWithSecret:config.secret_key];
   return [parameters copy];
   
 }
@@ -261,6 +223,11 @@
   
 }
 
+- (BOOL)valid {
+  return (self.id.length ||
+          (self.pan.length && self.exp_date.length && self.cvv.length));
+}
+
 - (NSDictionary *)parameters {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
@@ -274,7 +241,7 @@
 
     parameters[@"pan"] = self.pan;
     parameters[@"exp_date"] = (self.exp_date) ?: (@"");
-    parameters[@"add_card"] = @(self.add_card);
+    parameters[@"add_card"] = @(self.add);
     parameters[@"cvv"] = self.cvv;
 
   }

@@ -7,7 +7,7 @@
 //
 
 #import "OMNLoadingCircleVC.h"
-#import <OMNMailRuAcquiring.h>
+#import "OMNBankCardInfo.h"
 
 @protocol OMNMailRUCardRegisterVCDelegate;
 
@@ -15,7 +15,7 @@
 
 @property (nonatomic, weak) id<OMNMailRUCardRegisterVCDelegate> delegate;
 
-- (instancetype)initWithTransaction:(OMNMailRuTransaction *)transaction;
+- (instancetype)initWithBankCardInfo:(OMNBankCardInfo *)bankCardInfo;
 
 @end
 

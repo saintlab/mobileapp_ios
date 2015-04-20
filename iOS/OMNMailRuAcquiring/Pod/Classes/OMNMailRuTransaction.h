@@ -21,20 +21,21 @@
 @property (nonatomic, strong, readonly) OMNMailRuUser *user;
 @property (nonatomic, strong, readonly) OMNMailRuOrder *order;
 
-- (NSDictionary *)payParametersWithConfig:(OMNMailRuConfig *)config;
-- (NSDictionary *)registerCardParametersWithConfig:(OMNMailRuConfig *)config;
-- (NSDictionary *)verifyCardParametersWithConfig:(OMNMailRuConfig *)config;
-- (NSDictionary *)deleteCardParameterWithConfig:(OMNMailRuConfig *)config;
+- (instancetype)initWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user order:(OMNMailRuOrder *)order extra:(OMNMailRuExtra *)extra;
+- (NSDictionary *)parametersWithConfig:(OMNMailRuConfig *)config;
 
-+ (instancetype)registerTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user;
-+ (instancetype)registerTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user;
-+ (instancetype)payAndRegisterTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user;
-+ (instancetype)payAndRegisterTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user;
-+ (instancetype)payTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount;
-+ (instancetype)payTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount;
-+ (instancetype)verifyTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user amount:(NSNumber *)amount;
-+ (instancetype)deleteTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user;
-+ (instancetype)payTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount;
+@end
+
+@interface OMNMailRuPaymentTransaction : OMNMailRuTransaction
+@end
+
+@interface OMNMailRuCardDeleteTransaction : OMNMailRuTransaction
+@end
+
+@interface OMNMailRuCardRegisterTransaction : OMNMailRuTransaction
+@end
+
+@interface OMNMailRuCardVerifyTransaction : OMNMailRuTransaction
 
 @end
 
@@ -64,13 +65,13 @@
 @property (nonatomic, copy) NSString *exp_date;
 @property (nonatomic, copy) NSString *cvv;
 @property (nonatomic, copy) NSString *id;
-@property (nonatomic, assign) BOOL add_card;
+@property (nonatomic, assign) BOOL add;
 
 + (NSString *)exp_dateFromMonth:(NSInteger)month year:(NSInteger)year;
 
 + (OMNMailRuCard *)cardWithID:(NSString *)card_id;
 + (OMNMailRuCard *)cardWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv;
-
+- (BOOL)valid;
 - (NSDictionary *)parameters;
 
 @end

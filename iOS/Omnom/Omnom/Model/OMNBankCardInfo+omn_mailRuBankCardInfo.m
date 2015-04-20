@@ -10,7 +10,7 @@
 
 @implementation OMNBankCardInfo (omn_mailRuBankCardInfo)
 
-- (OMNMailRuCard *)omn_mailRuCardInfo {
+- (OMNMailRuCard *)omn_mailRuCard {
   
   OMNMailRuCard *mailRuCardInfo = nil;
   if (self.card_id) {

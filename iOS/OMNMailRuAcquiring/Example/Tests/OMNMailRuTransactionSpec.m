@@ -88,13 +88,13 @@ describe(@"OMNMailRuTransaction", ^{
       [[newCard.pan should] equal:@"5213243738431111"];
       [[newCard.exp_date should] equal:@"01.2016"];
       [[newCard.cvv should] equal:@"123"];
-      [[@(newCard.add_card) should] equal:@(NO)];
+      [[@(newCard.add) should] equal:@(NO)];
       
       [[newCard.parameters should] equal:
        @{
          @"pan" : newCard.pan,
          @"exp_date" : newCard.exp_date,
-         @"add_card" : @(newCard.add_card),
+         @"add_card" : @(newCard.add),
          @"cvv" : newCard.cvv,
          }];
       

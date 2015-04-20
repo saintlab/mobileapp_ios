@@ -67,15 +67,15 @@ static OMNMailRuConfig *_config = nil;
   return self;
 }
 
-
-+ (PMKPromise *)registerCard:(OMNMailRuTransaction *)transaction {
++ (PMKPromise *)registerCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user {
   
-  NSDictionary *registerParameters = [transaction registerCardParametersWithConfig:_config];
+  OMNMailRuCardRegisterTransaction *transaction = [[OMNMailRuCardRegisterTransaction alloc] initWithCard:card user:user order:nil extra:nil];
+  NSDictionary *registerParameters = [transaction parametersWithConfig:_config];
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-
+    
     [[OMNMailRuAcquiring acquiring] POST:@"card/register" parameters:registerParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
+      
       fulfill(responseObject);
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -105,10 +105,14 @@ static OMNMailRuConfig *_config = nil;
   
 }
 
++ (PMKPromise *)registerCardWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user {
+  return [self registerCard:[OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv] user:user];
+}
 
-+ (PMKPromise *)verifyCard:(OMNMailRuTransaction *)transaction {
++ (PMKPromise *)verifyCardWithID:(NSString *)cardID user:(OMNMailRuUser *)user amount:(NSNumber *)amount {
   
-  NSDictionary *verifyParameters = [transaction verifyCardParametersWithConfig:_config];
+  OMNMailRuCardVerifyTransaction *transaction = [[OMNMailRuCardVerifyTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:[OMNMailRuOrder orderWithID:@"0" amount:amount] extra:nil];
+  NSDictionary *verifyParameters = [transaction parametersWithConfig:_config];
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
@@ -140,9 +144,45 @@ static OMNMailRuConfig *_config = nil;
   
 }
 
-+ (PMKPromise *)pay:(OMNMailRuTransaction *)paymentInfo {
++ (PMKPromise *)payAndRegisterWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user {
   
-  NSDictionary *payParameters = [paymentInfo payParametersWithConfig:_config];
+  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
+  card.add = YES;
+  OMNMailRuPaymentTransaction *transaction = [[OMNMailRuPaymentTransaction alloc] initWithCard:card user:user order:[OMNMailRuOrder orderWithID:@"0" amount:@(1)] extra:nil];
+  return [self pay:transaction];
+  
+}
+
++ (PMKPromise *)payWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount extra:(OMNMailRuExtra *)extra {
+  
+  OMNMailRuPaymentTransaction *transaction = [[OMNMailRuPaymentTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:[OMNMailRuOrder orderWithID:order_id amount:order_amount] extra:extra];
+  return [self pay:transaction];
+  
+}
+
++ (PMKPromise *)payWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount extra:(OMNMailRuExtra *)extra {
+  
+  OMNMailRuPaymentTransaction *transaction = [[OMNMailRuPaymentTransaction alloc] initWithCard:card user:user order:[OMNMailRuOrder orderWithID:order_id amount:order_amount] extra:extra];
+  return [self pay:transaction];
+
+}
+
++ (PMKPromise *)payWithWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount extra:(OMNMailRuExtra *)extra {
+  
+  OMNMailRuPaymentTransaction *transaction = [[OMNMailRuPaymentTransaction alloc] initWithCard:[OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv] user:user order:[OMNMailRuOrder orderWithID:order_id amount:order_amount] extra:extra];
+  return [self pay:transaction];
+  
+}
+
++ (PMKPromise *)pay:(OMNMailRuPaymentTransaction *)transaction {
+  
+  if (!transaction.card.valid) {
+    return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+      reject([NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:nil]);
+    }];
+  }
+  
+  NSDictionary *payParameters = [transaction parametersWithConfig:_config];
 
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
@@ -230,9 +270,10 @@ static OMNMailRuConfig *_config = nil;
   
 }
 
-+ (PMKPromise *)deleteCard:(OMNMailRuTransaction *)transaction {
++ (PMKPromise *)deleteCardWithID:(NSString *)cardID user:(OMNMailRuUser *)user {
   
-  NSDictionary *deleteParameters = [transaction deleteCardParameterWithConfig:_config];
+  OMNMailRuCardDeleteTransaction *transaction = [[OMNMailRuCardDeleteTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:nil extra:nil];
+  NSDictionary *deleteParameters = [transaction parametersWithConfig:_config];
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     

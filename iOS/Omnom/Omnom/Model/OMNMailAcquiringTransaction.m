@@ -104,10 +104,8 @@
 - (void)didCreateBill:(OMNBill *)bill completion:(OMNPaymentDidFinishBlock)completionBlock {
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
-  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payTransactionWithCard:[bankCardInfo omn_mailRuCardInfo] user:[[OMNAuthorization authorisation].user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount)];
-  transaction.extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
-
-  [OMNMailRuAcquiring pay:transaction].then(^(NSDictionary *response) {
+  OMNMailRuExtra *extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
+  [OMNMailRuAcquiring payWithCard:[bankCardInfo omn_mailRuCard] user:[[OMNAuthorization authorisation].user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount) extra:extra].then(^(NSDictionary *response) {
     
     [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
     completionBlock(bill, nil);

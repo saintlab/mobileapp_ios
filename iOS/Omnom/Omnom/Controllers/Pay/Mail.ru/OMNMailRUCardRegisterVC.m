@@ -10,6 +10,10 @@
 #import "OMNAnalitics.h"
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
+#import "OMNBankCardInfo+omn_mailRuBankCardInfo.h"
+#import "OMNUser+omn_mailRu.h"
+#import <OMNMailRuAcquiring.h>
+#import "OMNAuthorization.h"
 
 #define kRegisterLoadingDiration 20.0
 
@@ -19,21 +23,20 @@
 
 @implementation OMNMailRUCardRegisterVC {
   
-  OMNMailRuTransaction *_transaction;
+  OMNBankCardInfo *_bankCardInfo;
   
 }
 
-- (instancetype)initWithTransaction:(OMNMailRuTransaction *)transaction {
+- (instancetype)initWithBankCardInfo:(OMNBankCardInfo *)bankCardInfo {
   
   self = [super initWithParent:nil];
   if (self) {
     
-    _transaction = transaction;
+    _bankCardInfo = bankCardInfo;
     self.circleIcon = [UIImage imageNamed:@"flying_credit_card_icon"];
     self.estimateAnimationDuration = kRegisterLoadingDiration;
     UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"000000")];
     self.circleBackground = circleBackground;
-
     
   }
   return self;
@@ -51,7 +54,8 @@
   [super viewDidLoad];
 
   @weakify(self)
-  [OMNMailRuAcquiring pay:_transaction].then(^(NSDictionary *response) {
+  OMNMailRuUser *user = [[OMNAuthorization authorisation].user omn_mailRuUser];
+  [OMNMailRuAcquiring payAndRegisterWithPan:_bankCardInfo.pan exp_date:[OMNMailRuCard exp_dateFromMonth:_bankCardInfo.expiryMonth year:_bankCardInfo.expiryYear] cvv:_bankCardInfo.cvv user:user].then(^(NSDictionary *response) {
     
     @strongify(self)
     [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:response];

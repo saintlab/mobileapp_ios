@@ -105,8 +105,7 @@
 
 - (IBAction)payAndRegisterTap:(id)sender {
 
-  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payAndRegisterTransactionWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user];
-  [OMNMailRuAcquiring pay:transaction].then(^(NSDictionary *response) {
+  [OMNMailRuAcquiring payAndRegisterWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user].then(^(NSDictionary *response) {
     
     NSLog(@"payAndRegisterTap>%@", response);
     [self reloadCards];
@@ -140,8 +139,7 @@
 
 - (IBAction)registerTap:(id)sender {
   
-  OMNMailRuTransaction *transaction = [OMNMailRuTransaction registerTransactionWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user];
-  [OMNMailRuAcquiring registerCard:transaction].then(^(NSString *cardID) {
+  [OMNMailRuAcquiring registerCardWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user].then(^(NSString *cardID) {
     
     NSLog(@"registerTap>%@", cardID);
     [[NSUserDefaults standardUserDefaults] setObject:cardID forKey:@"cardID"];
@@ -169,9 +167,7 @@
 - (void)verify:(double)amount {
 
   NSString *cardID = [[NSUserDefaults standardUserDefaults] objectForKey:@"cardID"];
-  OMNMailRuTransaction *transaction = [OMNMailRuTransaction verifyTransactionWithCardID:cardID user:self.user amount:@(amount)];
-
-  [OMNMailRuAcquiring verifyCard:transaction].then(^(NSDictionary *response) {
+  [OMNMailRuAcquiring verifyCardWithID:cardID user:self.user amount:@(amount)].then(^(NSDictionary *response) {
     
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:@"cardID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -186,9 +182,7 @@
 
 - (IBAction)deleteCard:(id)sender {
   
-  OMNMailRuTransaction *transaction = [OMNMailRuTransaction deleteTransactionWithCardID:self.cardID user:self.user];
-
-  [OMNMailRuAcquiring deleteCard:transaction].then(^(NSDictionary *response) {
+  [OMNMailRuAcquiring deleteCardWithID:self.cardID user:self.user].then(^(NSDictionary *response) {
     
     NSString *path = [NSString stringWithFormat:@"/cards/%@", self.internalCardID];
     [_operationManager DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -209,9 +203,8 @@
 }
 
 - (IBAction)payWithCardID:(id)sender {
-  
-  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payTransactionWithCardID:self.cardID user:self.user order_id:@"1" order_amount:@(0.01)];
-  [OMNMailRuAcquiring pay:transaction].then(^(NSDictionary *response) {
+
+  [OMNMailRuAcquiring payWithCardID:self.cardID user:self.user order_id:@"1" order_amount:@(0.01) extra:nil].then(^(NSDictionary *response) {
     
     [self setLastOrderID:response[@"order_id"]];
     [self reloadCards];
@@ -227,8 +220,7 @@
 
 - (IBAction)payWithNewCard:(id)sender {
   
-  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payTransactionWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user order_id:@"1" order_amount:@(0.01)];
-  [OMNMailRuAcquiring pay:transaction].then(^(NSDictionary *response) {
+  [OMNMailRuAcquiring payWithWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user order_id:@"1" order_amount:@(0.01) extra:nil].then(^(NSDictionary *response) {
 
     NSString *order_id = response[@"order_id"];
     [self setLastOrderID:order_id];

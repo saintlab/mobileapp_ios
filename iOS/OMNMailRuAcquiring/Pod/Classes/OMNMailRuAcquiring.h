@@ -17,12 +17,18 @@
 + (OMNMailRuConfig *)config;
 + (void)setConfig:(NSDictionary *)config;
 
-+ (PMKPromise *)registerCard:(OMNMailRuTransaction *)transaction;
-+ (PMKPromise *)verifyCard:(OMNMailRuTransaction *)transaction;
-+ (PMKPromise *)deleteCard:(OMNMailRuTransaction *)transaction;
++ (PMKPromise *)registerCardWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user;
++ (PMKPromise *)registerCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user;
++ (PMKPromise *)verifyCardWithID:(NSString *)cardID user:(OMNMailRuUser *)user amount:(NSNumber *)amount;
++ (PMKPromise *)payAndRegisterWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user;
 
-+ (PMKPromise *)pay:(OMNMailRuTransaction *)transaction;
++ (PMKPromise *)payWithWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount extra:(OMNMailRuExtra *)extra;
++ (PMKPromise *)payWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount extra:(OMNMailRuExtra *)extra;
++ (PMKPromise *)payWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount extra:(OMNMailRuExtra *)extra;
+
 + (PMKPromise *)refundOrder:(NSString *)orderID;
+
++ (PMKPromise *)deleteCardWithID:(NSString *)cardID user:(OMNMailRuUser *)user;
 
 @end
 
