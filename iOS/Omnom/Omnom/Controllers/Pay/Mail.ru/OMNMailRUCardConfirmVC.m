@@ -257,9 +257,9 @@ TTTAttributedLabelDelegate>
   [self startLoader];
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
-  @weakify(self)
-  
   OMNMailRuTransaction *transaction = [OMNMailRuTransaction registerTransactionWithCard:[bankCardInfo omn_mailRuCardInfo] user:[[OMNAuthorization authorisation].user omn_mailRuUser]];
+  
+  @weakify(self)
   [OMNMailRuAcquiring registerCard:transaction].then(^(NSString *cardID) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:bankCardInfo.debugInfo];

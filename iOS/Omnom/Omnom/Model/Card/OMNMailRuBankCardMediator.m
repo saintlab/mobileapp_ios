@@ -16,6 +16,14 @@
 #import "OMNAuthorization.h"
 #import "OMNMailRuBankCardsModel.h"
 #import "OMNBankCard+omn_info.h"
+#import "OMNBankCardInfo+omn_mailRuBankCardInfo.h"
+#import "OMNUser+omn_mailRu.h"
+#import "OMNMailRUCardRegisterVC.h"
+
+@interface OMNMailRuBankCardMediator ()
+<OMNMailRUCardRegisterVCDelegate>
+
+@end
 
 @implementation OMNMailRuBankCardMediator
 
@@ -73,6 +81,15 @@
 
 - (void)confirmCard:(OMNBankCardInfo *)bankCardInfo {
 
+#if 1
+
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payAndRegisterTransactionWithCard:[bankCardInfo omn_mailRuCardInfo] user:[[OMNAuthorization authorisation].user omn_mailRuUser]];
+  OMNMailRUCardRegisterVC *mailRUCardRegisterVC = [[OMNMailRUCardRegisterVC alloc] initWithTransaction:transaction];
+  mailRUCardRegisterVC.delegate = self;
+  [self.rootVC.navigationController pushViewController:mailRUCardRegisterVC animated:YES];
+
+#else
+  
   OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
   @weakify(self)
   mailRUCardConfirmVC.didFinishBlock = ^{
@@ -108,6 +125,21 @@
   
   [self.rootVC.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
   
+#endif
+  
+  
+}
+#pragma mark - OMNMailRUCardRegisterVCDelegate
+- (void)mailRUCardRegisterVCDidFinish:(OMNMailRUCardRegisterVC *)mailRUCardRegisterVC {
+  [self.rootVC.navigationController popToViewController:self.rootVC animated:YES];
+}
+
+- (void)mailRUCardRegisterVC:(OMNMailRUCardRegisterVC *)mailRUCardRegisterVC didFinishWithError:(NSError *)error {
+  [mailRUCardRegisterVC.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)mailRUCardRegisterVCDidCancel:(OMNMailRUCardRegisterVC *)mailRUCardRegisterVC {
+  [mailRUCardRegisterVC.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {

@@ -7,42 +7,95 @@
 //
 
 #import "OMNMailRUCardRegisterVC.h"
+#import "OMNAnalitics.h"
+#import "UIImage+omn_helper.h"
+#import <OMNStyler.h>
+
+#define kRegisterLoadingDiration 20.0
 
 @interface OMNMailRUCardRegisterVC ()
 
 @end
 
-@implementation OMNMailRUCardRegisterVC
+@implementation OMNMailRUCardRegisterVC {
+  
+  OMNMailRuTransaction *_transaction;
+  
+}
 
-- (instancetype)init {
+- (instancetype)initWithTransaction:(OMNMailRuTransaction *)transaction {
   
   self = [super initWithParent:nil];
   if (self) {
-    self.circleIcon = [UIImage imageNamed:@"bill_icon_white_big"];
-    self.estimateAnimationDuration = 20.0f;
+    
+    _transaction = transaction;
+    self.circleIcon = [UIImage imageNamed:@"flying_credit_card_icon"];
+    self.estimateAnimationDuration = kRegisterLoadingDiration;
+    UIImage *circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:colorWithHexString(@"000000")];
+    self.circleBackground = circleBackground;
+
+    
   }
   return self;
   
 }
 
+- (void)startLoading {
+  
+  [self.loaderView setLoaderColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
+  [self.loaderView startAnimating:kRegisterLoadingDiration];
+  
+}
+
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
+  [super viewDidLoad];
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+  @weakify(self)
+  [OMNMailRuAcquiring pay:_transaction].then(^(NSDictionary *response) {
+    
+    @strongify(self)
+    [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:response];
+    
+    if (response[@"order_id"]) {
+      [OMNMailRuAcquiring refundOrder:response[@"order_id"]];
+    }
+    
+    [self.delegate mailRUCardRegisterVCDidFinish:self];
+    
+  }).catch(^(NSError *error) {
+    
+    NSLog(@"payAndRegisterTap>%@", error);
+    
+    @strongify(self)
+    if (kOMNMailRuErrorCodeCancel == error.code) {
+      [self.delegate mailRUCardRegisterVCDidCancel:self];
+    }
+    else {
+      
+      [self finishLoading:^{
+        
+        @strongify(self)
+        [self setText:error.localizedDescription];
+        self.buttonInfo =
+        @[
+          [OMNBarButtonInfo infoWithTitle:kOMN_OK_BUTTON_TITLE image:nil block:^{
+            
+            [self.delegate mailRUCardRegisterVC:self didFinishWithError:error];
+            
+          }]
+          ];
+        [self updateActionBoard];
+        [self.view layoutIfNeeded];
+        
+      }];
+      
+      
+    }
+    
+  });
+  
+  [self startLoading];
+  
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

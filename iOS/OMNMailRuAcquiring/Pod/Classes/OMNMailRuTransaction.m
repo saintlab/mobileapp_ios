@@ -25,7 +25,7 @@
     _extra = extra;
     _card = card;
     _order = order;
-    _extra = extra;
+    _user = user;
     
   }
   return self;
@@ -42,12 +42,18 @@
   
 }
 
-+ (instancetype)payAndRegisterTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user {
++ (instancetype)payAndRegisterTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user {
   
-  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
   card.add_card = YES;
   OMNMailRuOrder *order = [OMNMailRuOrder orderWithID:@"0" amount:@(1)];
   return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:order extra:nil];
+  
+}
+
++ (instancetype)payAndRegisterTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user {
+  
+  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
+  return [self payAndRegisterTransactionWithCard:card user:user];
   
 }
 
@@ -77,9 +83,7 @@
 
 - (NSDictionary *)payParametersWithConfig:(OMNMailRuConfig *)config {
   
-  NSString *extratext = self.extra.text;
-  if (0 == extratext.length ||
-      !config.isValid) {
+  if (!config.isValid) {
     return nil;
   }
 
@@ -90,7 +94,7 @@
     @"user_login" : self.user.login,
     @"order_id" : self.order.id,
     @"order_amount" : self.order.amount,
-    @"extra" : extratext,
+    @"extra" : (self.extra.text) ?: (@""),
     };
   
   NSString *signature = [reqiredSignatureParams omn_mailRuSignatureWithSecret:config.secret_key];

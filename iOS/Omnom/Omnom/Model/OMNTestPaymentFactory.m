@@ -20,15 +20,11 @@
 }
 
 - (OMNAcquiringTransaction *)transactionForOrder:(OMNOrder *)order {
-  
   return [[OMNMailAcquiringTransaction alloc] initWithOrder:order];
-  
 }
 
 - (OMNAcquiringTransaction *)transactionForWish:(OMNWish *)wish {
-  
   return [[OMNMailAcquiringTransaction alloc] initWithWish:wish];
-  
 }
 
 @end

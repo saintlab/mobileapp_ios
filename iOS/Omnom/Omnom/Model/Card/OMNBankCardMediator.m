@@ -76,9 +76,7 @@
 }
 
 - (OMNBankCardsModel *)bankCardsModel {
-  
   return nil;
-  
 }
 
 @end

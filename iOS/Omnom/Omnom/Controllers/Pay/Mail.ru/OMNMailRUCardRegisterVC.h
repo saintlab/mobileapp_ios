@@ -7,7 +7,22 @@
 //
 
 #import "OMNLoadingCircleVC.h"
+#import <OMNMailRuAcquiring.h>
+
+@protocol OMNMailRUCardRegisterVCDelegate;
 
 @interface OMNMailRUCardRegisterVC : OMNLoadingCircleVC
+
+@property (nonatomic, weak) id<OMNMailRUCardRegisterVCDelegate> delegate;
+
+- (instancetype)initWithTransaction:(OMNMailRuTransaction *)transaction;
+
+@end
+
+@protocol OMNMailRUCardRegisterVCDelegate <NSObject>
+
+- (void)mailRUCardRegisterVCDidFinish:(OMNMailRUCardRegisterVC *)mailRUCardRegisterVC;
+- (void)mailRUCardRegisterVCDidCancel:(OMNMailRUCardRegisterVC *)mailRUCardRegisterVC;
+- (void)mailRUCardRegisterVC:(OMNMailRUCardRegisterVC *)mailRUCardRegisterVC didFinishWithError:(NSError *)error;
 
 @end
