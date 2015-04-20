@@ -40,7 +40,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_CANCEL_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(cancelTap)];
   
   self.view.backgroundColor = [UIColor whiteColor];  
-  [self setup];
+  [self omn_setup];
   
   
   _cardActionButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap:)];
@@ -53,7 +53,7 @@ OMNCameraPermissionDescriptionVCDelegate>
   
 }
 
-- (void)setup {
+- (void)omn_setup {
   
   _cardEnterControl = [[OMNCardEnterControl alloc] init];
   _cardEnterControl.translatesAutoresizingMaskIntoConstraints = NO;
@@ -84,15 +84,11 @@ OMNCameraPermissionDescriptionVCDelegate>
 }
 
 - (void)bgTap {
-  
   [self.view endEditing:YES];
-  
 }
 
 - (void)setRightButtonEnabled:(BOOL)enabled {
-  
   _cardActionButton.enabled = enabled;
-  
 }
 
 - (void)updateSubmitButton {
@@ -115,15 +111,11 @@ OMNCameraPermissionDescriptionVCDelegate>
 }
 
 - (void)cardEnterControlDidEnterFailCardData:(OMNCardEnterControl *)control {
-  
   [self setRightButtonEnabled:NO];
-  
 }
 
 - (void)cardEnterControlSaveButtonStateDidChange:(OMNCardEnterControl *)control {
-  
   [self updateSubmitButton];
-  
 }
 
 - (void)cardEnterControlDidRequestScan:(OMNCardEnterControl *)control {
@@ -193,9 +185,7 @@ OMNCameraPermissionDescriptionVCDelegate>
 }
 
 - (void)userDidCancelPaymentViewController:(CardIOPaymentViewController *)paymentViewController {
-  
   [self dismissViewControllerAnimated:YES completion:nil];
-  
 }
 
 - (void)cancelTap {

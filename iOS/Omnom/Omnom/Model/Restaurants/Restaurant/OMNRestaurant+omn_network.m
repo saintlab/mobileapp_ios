@@ -174,6 +174,22 @@
   
 }
 
++ (void)restaurantWithID:(NSString *)restaurantID withCompletion:(OMNRestaurantBlock)restaurantBlock failure:(void(^)(OMNError *error))failureBlock {
+  NSString *path = [NSString stringWithFormat:@"/restaurants/%@", restaurantID];
+
+  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:responseObject];
+    restaurantBlock(restaurant);
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    failureBlock([error omn_internetError]);
+    
+  }];
+  
+}
+
 + (void)getRestaurantsForLocation:(CLLocationCoordinate2D)coordinate withCompletion:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock {
   
   NSDictionary *parameters = nil;

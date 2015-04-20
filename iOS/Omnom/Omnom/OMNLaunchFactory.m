@@ -12,6 +12,7 @@
 #import "OMNBackgroundLaunch.h"
 #import "OMNDefaultLaunch.h"
 #import "OMNRemotePushLunch.h"
+#import "OMNTravelersLaunch.h"
 
 @implementation OMNLaunchFactory
 
@@ -37,7 +38,7 @@
 #elif LUNCH_2GIS_SUNCITY
   return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis-sun-city" config:@"config_staging"];
 #elif OMN_TRAVELERS
-  return [[OMNQRLaunch alloc] initWithQR:@"http://omnom.menu/qr/33a88e1b118844686b062ff3172176b6" config:@"config_staging"];
+  return [[OMNTravelersLaunch alloc] init];
 #elif DEBUG
 
   NSString *customConfigName = @"config_prod";

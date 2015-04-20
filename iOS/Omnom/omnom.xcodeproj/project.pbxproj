@@ -1335,6 +1335,16 @@
 		937EF7F019DFB47300BD9090 /* OMNCardEnterErrorLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorLabel.m */; };
 		93833E6619EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
 		93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
+		9388442A1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */; };
+		9388442B1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */; };
+		9388442C1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */; };
+		9388442D1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */; };
+		9388442E1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */; };
+		938844311AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844301AE4C59D009E02A6 /* OMNTravelersLaunch.m */; };
+		938844321AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844301AE4C59D009E02A6 /* OMNTravelersLaunch.m */; };
+		938844331AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844301AE4C59D009E02A6 /* OMNTravelersLaunch.m */; };
+		938844341AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844301AE4C59D009E02A6 /* OMNTravelersLaunch.m */; };
+		938844351AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844301AE4C59D009E02A6 /* OMNTravelersLaunch.m */; };
 		9389455C19B0531C00C37C82 /* OMNUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389455B19B0531C00C37C82 /* OMNUtils.m */; };
 		9389455D19B0531C00C37C82 /* OMNUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389455B19B0531C00C37C82 /* OMNUtils.m */; };
 		9389456019B0620D00C37C82 /* OMNPushTexts.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389455F19B0620D00C37C82 /* OMNPushTexts.m */; };
@@ -2174,6 +2184,10 @@
 		937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardEnterErrorLabel.m; sourceTree = "<group>"; };
 		93833E6419EBADC500CBEBC0 /* OMNChangePhoneVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangePhoneVC.h; sourceTree = "<group>"; };
 		93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangePhoneVC.m; sourceTree = "<group>"; };
+		938844281AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMailRUCardRegisterVC.h; sourceTree = "<group>"; };
+		938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMailRUCardRegisterVC.m; sourceTree = "<group>"; };
+		9388442F1AE4C59D009E02A6 /* OMNTravelersLaunch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTravelersLaunch.h; sourceTree = "<group>"; };
+		938844301AE4C59D009E02A6 /* OMNTravelersLaunch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTravelersLaunch.m; sourceTree = "<group>"; };
 		9389455A19B0531C00C37C82 /* OMNUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNUtils.h; sourceTree = "<group>"; };
 		9389455B19B0531C00C37C82 /* OMNUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUtils.m; sourceTree = "<group>"; };
 		9389455E19B0620D00C37C82 /* OMNPushTexts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNPushTexts.h; path = ../OMNPushTexts.h; sourceTree = "<group>"; };
@@ -4009,6 +4023,8 @@
 				933E10E81AE3B95900AA4C67 /* OMNRemotePushLunch.m */,
 				933E10EE1AE3BED900AA4C67 /* OMNTestLaunch.h */,
 				933E10EF1AE3BED900AA4C67 /* OMNTestLaunch.m */,
+				9388442F1AE4C59D009E02A6 /* OMNTravelersLaunch.h */,
+				938844301AE4C59D009E02A6 /* OMNTravelersLaunch.m */,
 			);
 			name = Launch;
 			sourceTree = "<group>";
@@ -4221,6 +4237,8 @@
 				93EE3082198F57150024EAF4 /* OMNMailRUCardConfirmVC.m */,
 				9345AFB5199A2EC200328F73 /* OMNTransactionPaymentVC.h */,
 				9345AFB6199A2EC200328F73 /* OMNTransactionPaymentVC.m */,
+				938844281AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.h */,
+				938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */,
 			);
 			path = Mail.ru;
 			sourceTree = "<group>";
@@ -4936,6 +4954,7 @@
 				930C4D791AB15E1B006CA608 /* OMNMenuProductCellItem+edit.m in Sources */,
 				930C4D7A1AB15E1B006CA608 /* OMNMenuProductCell.m in Sources */,
 				930C4D7B1AB15E1B006CA608 /* OMNMenuModiferCategoryCell.m in Sources */,
+				938844331AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */,
 				930C4D7C1AB15E1B006CA608 /* OMNMenuModifer.m in Sources */,
 				930C4D7D1AB15E1B006CA608 /* OMNLoadingCircleVC.m in Sources */,
 				930C4D7E1AB15E1B006CA608 /* OMNMenuModiferCell.m in Sources */,
@@ -5058,6 +5077,7 @@
 				930C4DDB1AB15E1B006CA608 /* OMNUserMailFeedbackItem.m in Sources */,
 				930C4DDC1AB15E1B006CA608 /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				930C4DDD1AB15E1B006CA608 /* OMNTestBankCardsModel.m in Sources */,
+				9388442C1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */,
 				930C4DDE1AB15E1B006CA608 /* OMNBarWishMediator.m in Sources */,
 				930C4DDF1AB15E1B006CA608 /* OMNSlideDownTransition.m in Sources */,
 				930C4DE01AB15E1B006CA608 /* OMNSearchRestaurantVC.m in Sources */,
@@ -5265,6 +5285,7 @@
 				930C8B661ACA7D9F00CE4E5A /* OMNMenuProductCellItem+edit.m in Sources */,
 				930C8B671ACA7D9F00CE4E5A /* OMNMenuProductCell.m in Sources */,
 				930C8B681ACA7D9F00CE4E5A /* OMNMenuModiferCategoryCell.m in Sources */,
+				938844341AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */,
 				930C8B691ACA7D9F00CE4E5A /* OMNMenuModifer.m in Sources */,
 				930C8B6A1ACA7D9F00CE4E5A /* OMNLoadingCircleVC.m in Sources */,
 				930C8B6B1ACA7D9F00CE4E5A /* OMNMenuModiferCell.m in Sources */,
@@ -5387,6 +5408,7 @@
 				930C8BCC1ACA7D9F00CE4E5A /* OMNUserMailFeedbackItem.m in Sources */,
 				930C8BCD1ACA7D9F00CE4E5A /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				930C8BCE1ACA7D9F00CE4E5A /* OMNTestBankCardsModel.m in Sources */,
+				9388442D1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */,
 				930C8BCF1ACA7D9F00CE4E5A /* OMNBarWishMediator.m in Sources */,
 				930C8BD01ACA7D9F00CE4E5A /* OMNSlideDownTransition.m in Sources */,
 				930C8BD11ACA7D9F00CE4E5A /* OMNSearchRestaurantVC.m in Sources */,
@@ -5594,6 +5616,7 @@
 				93DB26BC1A9C8BE300DDB739 /* OMNMenuProductCellItem+edit.m in Sources */,
 				93F2AEEE1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */,
 				935A1E2A1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */,
+				938844311AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */,
 				9373254C1A7F9EBF00A73673 /* OMNMenuModifer.m in Sources */,
 				93E435AF19989ED600EDC488 /* OMNLoadingCircleVC.m in Sources */,
 				935A1E2E1A80CAEE00704086 /* OMNMenuModiferCell.m in Sources */,
@@ -5716,6 +5739,7 @@
 				93D117781A2F00DB000131C4 /* OMNUserMailFeedbackItem.m in Sources */,
 				93535F0E19836C9D0084C3E7 /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				93245DA81A1B9A2C0065D4EC /* OMNTestBankCardsModel.m in Sources */,
+				9388442A1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */,
 				93E26EEC1AA9EB470034A7A3 /* OMNBarWishMediator.m in Sources */,
 				93B368A019A4CF1100B6E6CB /* OMNSlideDownTransition.m in Sources */,
 				937A37821981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
@@ -6055,6 +6079,7 @@
 				931BD3881941C04100F77AA7 /* OMNCalcaulcationTests.m in Sources */,
 				936BAD9B19A797030029873B /* OMNBorderedButton.m in Sources */,
 				93B368A119A4CF1100B6E6CB /* OMNSlideDownTransition.m in Sources */,
+				938844321AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */,
 				9317C06D19DE85BB0071E42B /* OMNPaymentAlertVC.m in Sources */,
 				9389457019B5B01600C37C82 /* OMNDisclamerView.m in Sources */,
 				933AC65E1AC924540016AF17 /* OMNPreorderTotalCell.m in Sources */,
@@ -6087,6 +6112,7 @@
 				9342AD2B1A5ACD5500CDE7ED /* OMNRestaurant+omn_payment.m in Sources */,
 				93CE7CA51A62AAEF0032D96B /* OMNRestaurantMediatorTests.m in Sources */,
 				93DB26CE1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */,
+				9388442B1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */,
 				93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */,
 				933A9EBB1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
@@ -6236,6 +6262,7 @@
 				936AC1051AD8BDBC00A9D17F /* OMNMenuProductCellItem+edit.m in Sources */,
 				936AC1061AD8BDBC00A9D17F /* OMNMenuProductCell.m in Sources */,
 				936AC1071AD8BDBC00A9D17F /* OMNMenuModiferCategoryCell.m in Sources */,
+				938844351AE4C59D009E02A6 /* OMNTravelersLaunch.m in Sources */,
 				936AC1081AD8BDBC00A9D17F /* OMNMenuModifer.m in Sources */,
 				936AC1091AD8BDBC00A9D17F /* OMNLoadingCircleVC.m in Sources */,
 				936AC10A1AD8BDBC00A9D17F /* OMNMenuModiferCell.m in Sources */,
@@ -6358,6 +6385,7 @@
 				936AC1741AD8BDBC00A9D17F /* OMNUserMailFeedbackItem.m in Sources */,
 				936AC1751AD8BDBC00A9D17F /* OMNRestaurantToSearchBeaconTransition.m in Sources */,
 				936AC1761AD8BDBC00A9D17F /* OMNTestBankCardsModel.m in Sources */,
+				9388442E1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */,
 				936AC1771AD8BDBC00A9D17F /* OMNBarWishMediator.m in Sources */,
 				936AC1781AD8BDBC00A9D17F /* OMNSlideDownTransition.m in Sources */,
 				936AC1791AD8BDBC00A9D17F /* OMNSearchRestaurantVC.m in Sources */,

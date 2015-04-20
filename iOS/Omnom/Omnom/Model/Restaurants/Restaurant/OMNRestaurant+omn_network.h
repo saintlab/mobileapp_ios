@@ -10,12 +10,14 @@
 #import <CoreLocation/CoreLocation.h>
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
+typedef void(^OMNRestaurantBlock)(OMNRestaurant *restaurant);
 typedef void(^OMNProductItemsBlock)(NSArray *productItems);
 typedef void(^OMNAddressesBlock)(NSArray *addresses);
 typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 
 @interface OMNRestaurant (omn_network)
 
++ (void)restaurantWithID:(NSString *)restaurantID withCompletion:(OMNRestaurantBlock)restaurantBlock failure:(void(^)(OMNError *error))failureBlock;
 + (void)getRestaurantsForLocation:(CLLocationCoordinate2D)coordinate withCompletion:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock;
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
 - (void)getDeliveryAddressesWithCompletion:(OMNAddressesBlock)addressesBlock failure:(void(^)(OMNError *error))failureBlock;
