@@ -104,19 +104,17 @@
 - (void)didCreateBill:(OMNBill *)bill completion:(OMNPaymentDidFinishBlock)completionBlock {
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [bankCardInfo omn_mailRuCardInfo];
-  transaction.user = [[OMNAuthorization authorisation].user omn_mailRuUser];
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payTransactionWithCard:[bankCardInfo omn_mailRuCardInfo] user:[[OMNAuthorization authorisation].user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount)];
   transaction.extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
-  transaction.order = [OMNMailRuOrder orderWithID:bill.id amount:@(0.01*self.total_amount)];
 
-  [OMNMailRuAcquiring payWithInfo:transaction].then(^(id response, id pollResponse) {
+  [OMNMailRuAcquiring pay:transaction].then(^(NSDictionary *response) {
     
     [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
     completionBlock(bill, nil);
     
   }).catch(^(NSError *error) {
     
+#warning handle cancel
     OMNError *omnomError = [OMNError omnnomErrorFromError:error];
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:error];
     completionBlock(bill, omnomError);

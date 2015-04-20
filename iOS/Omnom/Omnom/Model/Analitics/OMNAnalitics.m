@@ -351,7 +351,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   [properties addEntriesFromDictionary:
    @{
      @"jsonRequest" : (jsonRequest) ?: (@""),
-     @"error" : (responseOperation.error.localizedDescription) ? (responseOperation.error.localizedDescription) : (@""),
+     @"error" : (responseOperation.error.userInfo) ?: (@""),
      @"errorCode" : @(responseOperation.error.code),
      @"requestID" : (requestID) ?: (@"unknown"),
      @"responseString" : (responseOperation.responseString) ?: (@""),

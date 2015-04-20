@@ -22,7 +22,7 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		938844271AE4A023009E02A6 /* OMNMailRuTransactionSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 933E10F51AE3FB8100AA4C67 /* OMNMailRuTransactionSpec.m */; };
 		9B288719D67528F1E87882AE /* libPods-OMNMailRuAcquiringTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BE6F14FE54BF89B7D92064 /* libPods-OMNMailRuAcquiringTests.a */; };
 /* End PBXBuildFile section */
 
@@ -59,13 +59,13 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		61DE5755DEEA8F017DDCA524 /* Pods-OMNMailRuAcquiringTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OMNMailRuAcquiringTests.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-OMNMailRuAcquiringTests/Pods-OMNMailRuAcquiringTests.release.xcconfig"; sourceTree = "<group>"; };
 		64EB91F0F57149D4AC955B6C /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		655A76BEFF922BA56EAF688F /* Pods-OMNMailRuAcquiring.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OMNMailRuAcquiring.debug.xcconfig"; path = "../../Pods/Target Support Files/Pods-OMNMailRuAcquiring/Pods-OMNMailRuAcquiring.debug.xcconfig"; sourceTree = "<group>"; };
 		6C018A07141142DD8BCC6EAD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		826AB07DEEEA4AC9801F9714 /* OMNMailRuAcquiring.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = OMNMailRuAcquiring.podspec; path = ../OMNMailRuAcquiring.podspec; sourceTree = "<group>"; };
+		933E10F51AE3FB8100AA4C67 /* OMNMailRuTransactionSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMailRuTransactionSpec.m; sourceTree = "<group>"; };
 		A43A7D0771A757EDBF6F940B /* Pods-OMNMailRuAcquiring.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OMNMailRuAcquiring.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-OMNMailRuAcquiring/Pods-OMNMailRuAcquiring.release.xcconfig"; sourceTree = "<group>"; };
 		EADBC47D282CC5C3C8A2DFDC /* Pods-OMNMailRuAcquiringTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OMNMailRuAcquiringTests.debug.xcconfig"; path = "../../Pods/Target Support Files/Pods-OMNMailRuAcquiringTests/Pods-OMNMailRuAcquiringTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,8 +171,8 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6003F5BB195388D20070C39A /* Tests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
+				933E10F51AE3FB8100AA4C67 /* OMNMailRuTransactionSpec.m */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -373,7 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F5BC195388D20070C39A /* Tests.m in Sources */,
+				938844271AE4A023009E02A6 /* OMNMailRuTransactionSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

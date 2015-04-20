@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNVisitor.h"
-#import "OMNLaunchOptions.h"
 
 @interface OMNSearchRestaurantMediator : NSObject
 

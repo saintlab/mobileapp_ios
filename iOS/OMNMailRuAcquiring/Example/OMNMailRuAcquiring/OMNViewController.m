@@ -11,6 +11,9 @@
 #import <AFHTTPRequestOperationManager.h>
 
 #define test_restaurant_id  @"701137"
+#define kTest_pan  @"5213243738433281"
+#define kTest_expire_date  ([OMNMailRuCard exp_dateFromMonth:1 year:16])
+#define kTest_cvv  @"954"
 
 @interface OMNViewController ()
 <UIAlertViewDelegate>
@@ -30,6 +33,8 @@
   NSNumber *_heldAmount;
   
 }
+
+
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -98,28 +103,14 @@
   _cardIDLabel.text = orderID;
 }
 
-- (OMNMailRuCard *)testCardInfoWithSaveCard:(BOOL)saveCard {
-  
-  NSString *exp_date = [OMNMailRuCard exp_dateFromMonth:1 year:16];
-  OMNMailRuCard *mailRuCardInfo = [OMNMailRuCard cardWithPan:@"5213243738433281" exp_date:exp_date cvv:@"954"];
-  mailRuCardInfo.add_card = saveCard;
-  return mailRuCardInfo;
-  
-}
-
 - (IBAction)payAndRegisterTap:(id)sender {
-  
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [self testCardInfoWithSaveCard:YES];
-  transaction.user = self.user;
-  transaction.order = [OMNMailRuOrder orderWithID:@"" amount:_heldAmount];
-  
-  [OMNMailRuAcquiring payWithInfo:transaction].then(^(id response, id pollResponse) {
-    
-    NSString *order_id = pollResponse[@"order_id"];
-    [self setLastOrderID:order_id];
-    [self reloadCards];
 
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payAndRegisterTransactionWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user];
+  [OMNMailRuAcquiring pay:transaction].then(^(NSDictionary *response) {
+    
+    NSLog(@"payAndRegisterTap>%@", response);
+    [self reloadCards];
+    
   }).catch(^(NSError *error) {
     
     NSLog(@"payAndRegisterTap>%@", error);
@@ -149,9 +140,7 @@
 
 - (IBAction)registerTap:(id)sender {
   
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [self testCardInfoWithSaveCard:NO];
-  transaction.user = self.user;
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction registerTransactionWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user];
   [OMNMailRuAcquiring registerCard:transaction].then(^(NSString *cardID) {
     
     NSLog(@"registerTap>%@", cardID);
@@ -180,10 +169,7 @@
 - (void)verify:(double)amount {
 
   NSString *cardID = [[NSUserDefaults standardUserDefaults] objectForKey:@"cardID"];
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [OMNMailRuCard cardWithID:cardID];
-  transaction.user = self.user;
-  transaction.order = [OMNMailRuOrder orderWithID:@"" amount:@(amount)];
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction verifyTransactionWithCardID:cardID user:self.user amount:@(amount)];
 
   [OMNMailRuAcquiring verifyCard:transaction].then(^(NSDictionary *response) {
     
@@ -200,9 +186,7 @@
 
 - (IBAction)deleteCard:(id)sender {
   
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [OMNMailRuCard cardWithID:self.cardID];
-  transaction.user = self.user;
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction deleteTransactionWithCardID:self.cardID user:self.user];
 
   [OMNMailRuAcquiring deleteCard:transaction].then(^(NSDictionary *response) {
     
@@ -226,17 +210,12 @@
 
 - (IBAction)payWithCardID:(id)sender {
   
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [OMNMailRuCard cardWithID:self.cardID];
-  transaction.user = self.user;
-  transaction.order = [OMNMailRuOrder orderWithID:@"1" amount:@(0.01)];
-  
-  [OMNMailRuAcquiring payWithInfo:transaction].then(^(id response, id pollResponse) {
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payTransactionWithCardID:self.cardID user:self.user order_id:@"1" order_amount:@(0.01)];
+  [OMNMailRuAcquiring pay:transaction].then(^(NSDictionary *response) {
     
-    NSString *order_id = pollResponse[@"order_id"];
-    [self setLastOrderID:order_id];
+    [self setLastOrderID:response[@"order_id"]];
     [self reloadCards];
-    NSLog(@"payWithCardID response>%@ %@", response, pollResponse);
+    NSLog(@"payWithCardID response>%@", response);
     
   }).catch(^(NSError *error) {
     
@@ -248,16 +227,12 @@
 
 - (IBAction)payWithNewCard:(id)sender {
   
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [self testCardInfoWithSaveCard:NO];
-  transaction.user = self.user;
-  transaction.order = [OMNMailRuOrder orderWithID:@"1" amount:@(0.01)];
-  
-  [OMNMailRuAcquiring payWithInfo:transaction].then(^(id response, id pollResponse) {
-    
-    NSString *order_id = pollResponse[@"order_id"];
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction payTransactionWithPan:kTest_pan exp_date:kTest_expire_date cvv:kTest_cvv user:self.user order_id:@"1" order_amount:@(0.01)];
+  [OMNMailRuAcquiring pay:transaction].then(^(NSDictionary *response) {
+
+    NSString *order_id = response[@"order_id"];
     [self setLastOrderID:order_id];
-    NSLog(@"payWithNewCard response>%@ %@", response, pollResponse);
+    NSLog(@"payWithNewCard response>%@", response);
     
   }).catch(^(NSError *error) {
     

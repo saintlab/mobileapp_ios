@@ -70,40 +70,6 @@
   
 }
 
-- (void)processHash:(NSString *)hash {
-  
-  @weakify(self)
-  [OMNRestaurantManager decodeHash:hash withCompletion:^(NSArray *restaurants) {
-    
-    @strongify(self)
-    [self didFindRestaurants:restaurants];
-    
-  } failureBlock:^(OMNError *error) {
-    
-    @strongify(self)
-    [self beaconsNotFound];
-    
-  }];
-  
-}
-
-- (void)processQrCode:(NSString *)code {
-  
-  @weakify(self)
-  [OMNRestaurantManager decodeQR:code withCompletion:^(NSArray *restaurants) {
-    
-    @strongify(self)
-    [self didFindRestaurants:restaurants];
-    
-  } failureBlock:^(OMNError *error) {
-    
-    @strongify(self)
-    [self beaconsNotFound];
-    
-  }];
-  
-}
-
 - (void)decodeBeacons:(NSArray *)beacons {
   
   @weakify(self)
@@ -121,6 +87,19 @@
   
 }
 
+- (void)didFindRestaurants:(NSArray *)restaurants {
+  
+  [self stopBeaconSearchManager];
+  @weakify(self)
+  [self finishLoading:^{
+  
+    @strongify(self)
+    [self.delegate searchRestaurantsVC:self didFindRestaurants:restaurants];
+    
+  }];
+  
+}
+
 - (void)didFailOmnom:(OMNError *)error {
   
   @weakify(self)
@@ -133,19 +112,6 @@
     
     @strongify(self)
     [self beaconsNotFound];
-    
-  }];
-  
-}
-
-- (void)didFindRestaurants:(NSArray *)restaurants {
-  
-  [self stopBeaconSearchManager];
-  @weakify(self)
-  [self finishLoading:^{
-  
-    @strongify(self)
-    [self.delegate searchRestaurantsVC:self didFindRestaurants:restaurants];
     
   }];
   
@@ -186,54 +152,44 @@
   
   [self resetAnimation];
   @weakify(self)
-  [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
+  [OMNAuthorization checkToken].then(^id(OMNUser *user) {
     
-    @strongify(self)
     if (user) {
       
-      [self checkLaunchOptions];
+      return [[OMNLaunchHandler sharedHandler].launchOptions decodeRestaurants];
       
     }
     else {
       
+      return [OMNError omnomErrorFromCode:kOMNErrorCancel];
+      
+    }
+    
+  }).then(^(NSArray *restaurants) {
+    
+    @strongify(self)
+    if (restaurants) {
+
+      [self didFindRestaurants:restaurants];
+
+    }
+    else {
+      
+      [self startBeaconSearchManager];
+      
+    }
+    
+  }).catch(^(OMNError *error) {
+
+    @strongify(self)
+    if (kOMNErrorCancel == error.code) {
+      
       [self cancelTap];
       
     }
+    else {
     
-  } failure:^(OMNError *error) {
-    
-    @strongify(self)
-    [self handleInternetError:error];
-    
-  }];
-  
-}
-
-- (void)checkLaunchOptions {
-  
-  @weakify(self)
-  OMNLaunchOptions *launchOptions = [OMNLaunchHandler sharedHandler].launchOptions;
-  dispatch_async(dispatch_get_main_queue(), ^{
-    
-    @strongify(self)
-    if (launchOptions.restaurants) {
-      
-      [self didFindRestaurants:launchOptions.restaurants];
-      
-    }
-    else if (launchOptions.hashString) {
-      
-      [self processHash:launchOptions.hashString];
-      
-    }
-    else if (launchOptions.qr) {
-      
-      [self processQrCode:launchOptions.qr];
-      
-    }
-    else  {
-      
-      [self startBeaconSearchManager];
+      [self didFailOmnom:error];
       
     }
     

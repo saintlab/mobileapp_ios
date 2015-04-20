@@ -40,9 +40,7 @@ TTTAttributedLabelDelegate>
 }
 
 - (void)dealloc {
-  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
 }
 
 - (instancetype)initWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
@@ -198,11 +196,7 @@ TTTAttributedLabelDelegate>
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   @weakify(self)
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [bankCardInfo omn_mailRuCardInfo];
-  transaction.user = [[OMNAuthorization authorisation].user omn_mailRuUser];
-  transaction.order = [OMNMailRuOrder orderWithID:@"" amount:@(amount)];
-  
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction verifyTransactionWithCardID:bankCardInfo.card_id user:[[OMNAuthorization authorisation].user omn_mailRuUser] amount:@(amount)];
   [OMNMailRuAcquiring verifyCard:transaction].then(^(NSDictionary *response) {
     
     @strongify(self)
@@ -238,7 +232,7 @@ TTTAttributedLabelDelegate>
   
   [UIView transitionWithView:_errorLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
-    if (OMNErrorWrongAmount == error.code) {
+    if (kOMNErrorWrongAmount == error.code) {
       
       [_errorLabel setWrongAmountError];
       
@@ -265,10 +259,7 @@ TTTAttributedLabelDelegate>
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   @weakify(self)
   
-  OMNMailRuTransaction *transaction = [[OMNMailRuTransaction alloc] init];
-  transaction.card = [bankCardInfo omn_mailRuCardInfo];
-  transaction.user = [[OMNAuthorization authorisation].user omn_mailRuUser];
-  
+  OMNMailRuTransaction *transaction = [OMNMailRuTransaction registerTransactionWithCard:[bankCardInfo omn_mailRuCardInfo] user:[[OMNAuthorization authorisation].user omn_mailRuUser]];
   [OMNMailRuAcquiring registerCard:transaction].then(^(NSString *cardID) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:bankCardInfo.debugInfo];

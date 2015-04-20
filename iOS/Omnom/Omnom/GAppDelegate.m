@@ -17,16 +17,16 @@
 #import "OMNLaunchHandler.h"
 #import "OMNRestaurantManager.h"
 #import "OMNNearestBeaconSearchManager.h"
+#import "OMNLaunchFactory.h"
 
 @implementation GAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
 #if OMN_TEST
-  return YES;
-#endif
-  
-  OMNLaunchOptions *lo = [[OMNLaunchOptions alloc] initWithLaunchOptions:launchOptions];
+#else
+
+  OMNLaunch *lo = [OMNLaunchFactory launchWithLaunchOptions:launchOptions];
   [OMNConstants setupWithLaunchOptions:lo completion:^{
     
     DDLogDebug(@"config loaded with options>%@", launchOptions);
@@ -40,12 +40,14 @@
       [[OMNNearestBeaconSearchManager sharedManager] findNearestBeaconsWithCompletion:nil];
       
     }];
-
+    
     [[OMNLaunchHandler sharedHandler] didFinishLaunchingWithOptions:lo];
     
   }];
   
   [self setupWindow];
+
+#endif
 
   return YES;
   
@@ -100,9 +102,7 @@
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-  
   [[OMNAuthorization authorisation] application:application didFailToRegisterForRemoteNotificationsWithError:error];
-  
 }
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
@@ -138,21 +138,15 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-  
   [[OMNLaunchHandler sharedHandler] didReceiveLocalNotification:notification];
-  
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-  
   [[OMNLaunchHandler sharedHandler] applicationDidEnterBackground];
-  
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-  
   [[OMNLaunchHandler sharedHandler] applicationWillEnterForeground];
-  
 }
 
 @end

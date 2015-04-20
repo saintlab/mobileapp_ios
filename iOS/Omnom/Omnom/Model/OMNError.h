@@ -17,10 +17,11 @@ typedef NS_ENUM(NSInteger, OMNErrorCode) {
   kOMNErrorCodeTimedOut,
   kOMNErrorCodeNotConnectedToInternet,
   
-  kOMNErrorOrderClosed = 300,
+  kOMNErrorOrderClosed = 3000,
   kOMNErrorRestaurantUnavailable,
   kOMNErrorCodeQrDecode,
-  OMNErrorWrongAmount,
+  kOMNErrorCancel,
+  kOMNErrorWrongAmount,
   
 };
 

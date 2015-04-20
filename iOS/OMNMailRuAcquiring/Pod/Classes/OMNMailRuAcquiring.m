@@ -7,24 +7,10 @@
 //
 
 #import "OMNMailRuAcquiring.h"
-
-NSString *const OMNMailRuErrorDomain = @"OMNMailRuErrorDomain";
+#import "OMNMailRu3DSConfirmVC.h"
+#import "OMNMailRuPoll.h"
 
 static OMNMailRuConfig *_config = nil;
-
-@interface AFHTTPRequestOperation (omn_mailRu)
-
-- (NSDictionary *)omn_errorResponse;
-
-@end
-
-@interface NSDictionary (omn_mailRuResponse)
-
-- (BOOL)omn_refundResponseSuccess;
-- (BOOL)omn_paidResponseSuccess;
-- (BOOL)omn_registerCardResponseSuccessWithcardID:(NSString *)cardID;
-
-@end
 
 @implementation OMNMailRuAcquiring
 
@@ -94,25 +80,24 @@ static OMNMailRuConfig *_config = nil;
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      reject([NSError omn_errorFromRequest:registerParameters response:[operation omn_errorResponse]]);
+      reject([OMNMailRuError omn_errorWithRequest:registerParameters responseOperation:operation]);
       
     }];
     
   }].then(^(NSDictionary *response) {
     
-    return [self pollResponse:response];
+    return [OMNMailRuPoll pollRequest:response];
     
-  }).then(^id(NSDictionary *response, NSDictionary *pollResponse) {
+  }).then(^id(OMNMailRuPoll *poll) {
     
-    NSString *cardID = response[@"card_id"];
-    if ([pollResponse omn_registerCardResponseSuccessWithcardID:cardID]) {
+    if (poll.registered) {
       
-      return cardID;
+      return poll.card_id;
       
     }
     else {
       
-      return [NSError omn_errorFromRequest:response response:pollResponse];
+      return poll.error;
       
     }
     
@@ -136,7 +121,7 @@ static OMNMailRuConfig *_config = nil;
       
       if (responseObject[@"error"]) {
         
-        reject([NSError omn_errorFromRequest:verifyParameters response:responseObject]);
+        reject([OMNMailRuError omn_errorFromRequest:verifyParameters response:responseObject]);
         
       }
       else {
@@ -147,7 +132,7 @@ static OMNMailRuConfig *_config = nil;
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      reject([NSError omn_errorFromRequest:verifyParameters response:[operation omn_errorResponse]]);
+      reject([OMNMailRuError omn_errorWithRequest:verifyParameters responseOperation:operation]);
       
     }];
     
@@ -155,60 +140,7 @@ static OMNMailRuConfig *_config = nil;
   
 }
 
-- (void)pollResponse:(NSDictionary *)response time:(NSInteger)time withCompletion:(void(^)(id response))completionBlock failure:(void(^)(NSError *error))failureBlock {
-  
-  NSString *url = response[@"url"];
-  if (![url isKindOfClass:[NSString class]]) {
-    failureBlock([NSError omn_errorFromRequest:response response:nil]);
-    return;
-  }
-  
-  __weak typeof(self)weakSelf = self;
-  [self GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    NSString *status = responseObject[@"status"];
-    if ([status isEqualToString:@"OK_CONTINUE"]) {
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        __strong __typeof(weakSelf)strongSelf = weakSelf;
-        [strongSelf pollResponse:response time:(time + 1) withCompletion:completionBlock failure:failureBlock];
-        
-      });
-    }
-    else if(time > 20) {
-      
-      failureBlock([NSError omn_errorFromRequest:url response:responseObject]);
-      
-    }
-    else {
-      
-      completionBlock(responseObject);
-      
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock([NSError omn_errorFromRequest:url response:[operation omn_errorResponse]]);
-    
-  }];
-  
-}
-
-+ (PMKPromise *)pollResponse:(NSDictionary *)response {
-  
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-
-    [[OMNMailRuAcquiring acquiring] pollResponse:response time:0 withCompletion:^(id pollResponse) {
-      
-      fulfill(PMKManifold(response, pollResponse));
-
-    } failure:reject];
-    
-  }];
-
-}
-
-+ (PMKPromise *)payWithInfo:(OMNMailRuTransaction *)paymentInfo {
++ (PMKPromise *)pay:(OMNMailRuTransaction *)paymentInfo {
   
   NSDictionary *payParameters = [paymentInfo payParametersWithConfig:_config];
 
@@ -226,25 +158,24 @@ static OMNMailRuConfig *_config = nil;
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      reject([NSError omn_errorFromRequest:payParameters response:[operation omn_errorResponse]]);
+      reject([OMNMailRuError omn_errorWithRequest:payParameters responseOperation:operation]);
       
     }];
     
   }].then(^(NSDictionary *response) {
     
-    return [self pollResponse:response];
+    return [OMNMailRuPoll pollRequest:response];
     
-  }).then(^id(NSDictionary *response, NSDictionary *pollResponse) {
+  }).then(^id(OMNMailRuPoll *poll) {
     
-    if ([pollResponse omn_paidResponseSuccess]) {
-      
-      return PMKManifold(response, pollResponse);
-      
+    if (poll.paid) {
+      return poll.response;
+    }
+    else if (poll.require3ds) {
+      return [self enter3DSWithPoll:poll];
     }
     else {
-      
-      return [NSError omn_errorFromRequest:response response:pollResponse];
-      
+      return poll.error;
     }
     
   });
@@ -277,25 +208,22 @@ static OMNMailRuConfig *_config = nil;
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      reject([NSError omn_errorFromRequest:refundParameters response:[operation omn_errorResponse]]);
+      reject([OMNMailRuError omn_errorWithRequest:refundParameters responseOperation:operation]);
       
     }];
     
   }].then(^(NSDictionary *response) {
     
-    return [self pollResponse:response];
+    return [OMNMailRuPoll pollRequest:response];
     
-  }).then(^id(NSDictionary *response, NSDictionary *pollResponse) {
+  }).then(^id(OMNMailRuPoll *poll) {
     
-    if ([pollResponse omn_refundResponseSuccess]) {
-      
+#warning TODO: check refund error
+    if (kMailRuPollStatusOK_REFUND_FINISH == poll.status) {
       return nil;
-      
     }
     else {
-      
-      return [NSError omn_errorFromRequest:response response:pollResponse];
-      
+      return poll.error;
     }
     
   });
@@ -317,13 +245,13 @@ static OMNMailRuConfig *_config = nil;
       }
       else {
         
-        reject([NSError omn_errorFromRequest:deleteParameters response:responseObject]);
+        reject([OMNMailRuError omn_errorFromRequest:deleteParameters response:responseObject]);
         
       }
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      reject([NSError omn_errorFromRequest:deleteParameters response:[operation omn_errorResponse]]);
+      reject([OMNMailRuError omn_errorWithRequest:deleteParameters responseOperation:operation]);
       
     }];
     
@@ -331,92 +259,36 @@ static OMNMailRuConfig *_config = nil;
   
 }
 
-@end
++ (PMKPromise *)enter3DSWithPoll:(OMNMailRuPoll *)pollResponse {
+  
+  UIViewController *topMostController = [self topMostController];
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
 
-@implementation NSError (mailRuError)
-
-+ (NSError *)omn_errorFromRequest:(id)request response:(id)response {
-  
-  NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithCapacity:3];
-  
-  if (request) {
-    userInfo[@"request"] = request;
-  }
-  if (response) {
-    userInfo[@"response"] = response;
-  }
-  
-  if (![response isKindOfClass:[NSDictionary class]] ||
-      ![request isKindOfClass:[NSDictionary class]]) {
-    return [NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:userInfo];
-  }
-  
-  NSError *error = nil;
-  if (response[@"error"]) {
-    
-    NSString *description = response[@"error"][@"descr"];
-    NSString *codeString = response[@"error"][@"code"];
-    NSInteger code = kOMNMailRuErrorCodeDefault;
-    
-    if (description) {
+    OMNMailRu3DSConfirmVC *mailRu3DSConfirmVC = [[OMNMailRu3DSConfirmVC alloc] initWithPollResponse:pollResponse];
+    [mailRu3DSConfirmVC setDidFinishBlock:^(NSDictionary *response, NSError *error) {
       
-      if ([codeString isEqualToString:@"ERR_CARD_AMOUNT"]) {
-        
-        code = kOMNMailRuErrorCodeCardAmount;
-        
+      [topMostController dismissViewControllerAnimated:YES completion:nil];
+      if (error) {
+        reject(error);
       }
-      userInfo[NSLocalizedDescriptionKey] = description;
+      else {
+        fulfill(response);
+      }
       
-    }
-    
-    error = [NSError errorWithDomain:OMNMailRuErrorDomain code:code userInfo:userInfo];
-    
+    }];
+    [topMostController presentViewController:[[UINavigationController alloc] initWithRootViewController:mailRu3DSConfirmVC] animated:YES completion:nil];
+
+  }];
+  
+}
+
++ (UIViewController*)topMostController {
+  
+  UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+  while (topController.presentedViewController) {
+    topController = topController.presentedViewController;
   }
-  else {
-    
-    error = [NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:userInfo];
-    
-  }
-  return error;
-  
-}
-
-@end
-
-@implementation AFHTTPRequestOperation (omn_mailRu)
-
-- (NSDictionary *)omn_errorResponse {
-  NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
-  parametrs[@"error"] = (self.error.userInfo) ? (self.error.userInfo) : (@"");
-  if (self.responseString) {
-    parametrs[@"response_string"] = self.responseString;
-  }
-  return parametrs;
-}
-
-@end
-
-@implementation NSDictionary (omn_mailRuResponse)
-
-- (BOOL)omn_refundResponseSuccess {
-  
-  NSString *status = self[@"status"];
-  return [status isEqualToString:@"OK_REFUND_FINISH"];
-  
-}
-
-- (BOOL)omn_paidResponseSuccess {
-  
-  NSString *status = self[@"status"];
-  NSString *order_status = self[@"order_status"];
-  return ([status isEqualToString:@"OK_FINISH"] && [order_status isEqualToString:@"PAID"]);
-  
-}
-
-- (BOOL)omn_registerCardResponseSuccessWithcardID:(NSString *)cardID {
-  
-  NSString *status = self[@"status"];
-  return ([status isEqualToString:@"OK_FINISH"] && cardID);
+  return topController;
   
 }
 

@@ -6,19 +6,10 @@
 //  Copyright (c) 2014 teanet. All rights reserved.
 //
 
-#import <AFNetworking.h>
-#import "OMNMailRuTransaction.h"
 #import <PromiseKit.h>
-
-extern NSString *const OMNMailRuErrorDomain;
-
-typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
-  
-  kOMNMailRuErrorCodeUnknown = -1,
-  kOMNMailRuErrorCodeDefault = 0,
-  kOMNMailRuErrorCodeCardAmount,
-  
-};
+#import <AFNetworking.h>
+#import "OMNMailRuError.h"
+#import "OMNMailRuTransaction.h"
 
 @interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
 
@@ -30,15 +21,8 @@ typedef NS_ENUM(NSInteger, OMNMailRuErrorCode) {
 + (PMKPromise *)verifyCard:(OMNMailRuTransaction *)transaction;
 + (PMKPromise *)deleteCard:(OMNMailRuTransaction *)transaction;
 
-+ (PMKPromise *)payWithInfo:(OMNMailRuTransaction *)paymentInfo;
++ (PMKPromise *)pay:(OMNMailRuTransaction *)transaction;
 + (PMKPromise *)refundOrder:(NSString *)orderID;
-
-
-@end
-
-@interface NSError (mailRuError)
-
-+ (NSError *)omn_errorFromRequest:(id)request response:(id)response;
 
 @end
 

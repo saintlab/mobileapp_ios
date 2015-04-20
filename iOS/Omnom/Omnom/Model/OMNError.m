@@ -37,17 +37,12 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
     
     if (kOMNMailRuErrorCodeCardAmount == error.code) {
       
-      omnomError = [self omnomErrorFromCode:OMNErrorWrongAmount];
-      
-    }
-    else if (kOMNMailRuErrorCodeDefault == error.code) {
-      
-      omnomError = [OMNError errorWithDomain:OMNErrorDomain code:error.code userInfo:error.userInfo];
+      omnomError = [self omnomErrorFromCode:kOMNErrorWrongAmount];
       
     }
     else {
-
-      omnomError = [OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun];
+      
+      omnomError = [OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorCodeUnknoun userInfo:error.userInfo];
       
     }
     
@@ -92,7 +87,7 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
     case kOMNErrorCodeQrDecode: {
       description = kOMN_ERROR_MESSAGE_QR_DECODE;
     } break;
-    case OMNErrorWrongAmount: {
+    case kOMNErrorWrongAmount: {
       description = kOMN_ERROR_MESSAGE_PAYMENT_ERROR;
     } break;
     case kOMNErrorRestaurantUnavailable: {

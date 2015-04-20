@@ -17,14 +17,23 @@
 @interface OMNMailRuTransaction : NSObject
 
 @property (nonatomic, strong) OMNMailRuExtra *extra;
-@property (nonatomic, strong) OMNMailRuCard *card;
-@property (nonatomic, strong) OMNMailRuUser *user;
-@property (nonatomic, strong) OMNMailRuOrder *order;
+@property (nonatomic, strong, readonly) OMNMailRuCard *card;
+@property (nonatomic, strong, readonly) OMNMailRuUser *user;
+@property (nonatomic, strong, readonly) OMNMailRuOrder *order;
 
 - (NSDictionary *)payParametersWithConfig:(OMNMailRuConfig *)config;
 - (NSDictionary *)registerCardParametersWithConfig:(OMNMailRuConfig *)config;
 - (NSDictionary *)verifyCardParametersWithConfig:(OMNMailRuConfig *)config;
 - (NSDictionary *)deleteCardParameterWithConfig:(OMNMailRuConfig *)config;
+
++ (instancetype)registerTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user;
++ (instancetype)registerTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user;
++ (instancetype)payAndRegisterTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user;
++ (instancetype)payTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount;
++ (instancetype)payTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount;
++ (instancetype)verifyTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user amount:(NSNumber *)amount;
++ (instancetype)deleteTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user;
++ (instancetype)payTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount;
 
 @end
 
@@ -33,7 +42,6 @@
 @property (nonatomic, copy, readonly) NSString *id;
 @property (nonatomic, strong, readonly) NSNumber *amount;
 
-- (instancetype)initWithID:(NSString *)id amount:(NSNumber *)amount;
 + (instancetype)orderWithID:(NSString *)id amount:(NSNumber *)amount;
 
 @end
@@ -44,9 +52,8 @@
 @property (nonatomic, copy, readonly) NSString *restaurant_id;
 @property (nonatomic, copy, readonly) NSString *type;
 
-- (instancetype)initWithRestaurantID:(NSString *)restaurantID tipAmount:(long long)tipAmount type:(NSString *)type;
 + (instancetype)extraWithRestaurantID:(NSString *)restaurantID tipAmount:(long long)tipAmount type:(NSString *)type;
-- (NSString *)extra_text;
+- (NSString *)text;
 
 @end
 
@@ -57,9 +64,6 @@
 @property (nonatomic, copy) NSString *cvv;
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, assign) BOOL add_card;
-
-@property (nonatomic, copy) NSString *user_login;
-@property (nonatomic, copy) NSString *user_phone;
 
 + (NSString *)exp_dateFromMonth:(NSInteger)month year:(NSInteger)year;
 

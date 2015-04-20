@@ -11,10 +11,9 @@
 #import <OMNMailRuAcquiring.h>
 #import "OMNAnalitics.h"
 #import <OMNBeacon.h>
-#import "OMNLaunchOptions.h"
 #import <SSKeychain.h>
 #import "OMNAuthorization.h"
-#import "OMNLaunchOptions.h"
+#import "OMNLaunch.h"
 #import "OMNLineNumberLogFormatter.h"
 
 NSString * const kPushSoundName = @"new_guest.caf";
@@ -37,7 +36,7 @@ const CGFloat kOrderTableFooterHeight = 56.0f;
 
 @implementation OMNConstants
 
-+ (void)setupWithLaunchOptions:(OMNLaunchOptions *)launchOptions completion:(dispatch_block_t)completionBlock {
++ (void)setupWithLaunchOptions:(OMNLaunch *)launchOptions completion:(dispatch_block_t)completionBlock {
   
   [DDLog addLogger:[DDASLLogger sharedInstance]];
   [DDLog addLogger:[DDTTYLogger sharedInstance]];

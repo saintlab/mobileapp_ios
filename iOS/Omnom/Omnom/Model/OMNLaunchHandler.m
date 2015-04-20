@@ -12,6 +12,7 @@
 #import "OMNModalWebVC.h"
 #import "OMNNearestBeaconSearchManager.h"
 #import "OMNNavigationControllerDelegate.h"
+#import "OMNLaunchFactory.h"
 
 @implementation OMNLaunchHandler {
   
@@ -28,10 +29,10 @@
   return manager;
 }
 
-- (void)didFinishLaunchingWithOptions:(OMNLaunchOptions *)lo {
+- (void)didFinishLaunchingWithOptions:(OMNLaunch *)lo {
   
   _launchOptions = lo;
-  if (!lo.applicationWasOpenedByBeacon) {
+  if (!lo.applicationStartedBackground) {
     
     [self startApplicationIfNeeded];
     
@@ -54,7 +55,7 @@
   
 }
 
-- (void)reloadWithOptions:(OMNLaunchOptions *)lo {
+- (void)reloadWithOptions:(OMNLaunch *)lo {
   
   self.launchOptions = lo;
   [_startVC reloadSearchingRestaurant];
@@ -63,7 +64,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   
-  [self reloadWithOptions:[[OMNLaunchOptions alloc] initWithURL:url sourceApplication:sourceApplication annotation:annotation]];
+  [self reloadWithOptions:[OMNLaunchFactory launchWithURL:url sourceApplication:sourceApplication annotation:annotation]];
   return YES;
   
 }
@@ -100,7 +101,7 @@
     
     if (UIApplicationStateActive != [UIApplication sharedApplication].applicationState) {
       
-      [self reloadWithOptions:[[OMNLaunchOptions alloc] initWithRemoteNotification:userInfo]];
+      [self reloadWithOptions:[OMNLaunchFactory launchWithRemoteNotification:userInfo]];
       
     }
     completionHandler(UIBackgroundFetchResultNoData);
@@ -121,7 +122,7 @@
   UIViewController *topMostController = [self topMostController];
   modalWebVC.didCloseBlock = ^{
     
-    [topMostController dismissViewControllerAnimated:YES completion:nil];
+    [topMostController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     
   };
   [topMostController presentViewController:[[UINavigationController alloc] initWithRootViewController:modalWebVC] animated:YES completion:nil];
@@ -139,9 +140,7 @@
 }
 
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification {
-  
-  [self reloadWithOptions:[[OMNLaunchOptions alloc] initWithLocanNotification:notification]];
-  
+  [self reloadWithOptions:[OMNLaunchFactory launchWithLocalNotification:notification]];
 }
 
 - (void)applicationWillEnterForeground {
@@ -152,9 +151,7 @@
 }
 
 - (void)applicationDidEnterBackground {
-  
   [Crashlytics setBoolValue:NO forKey:@"application_state_foreground"];
-  
 }
 
 @end

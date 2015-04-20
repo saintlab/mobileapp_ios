@@ -7,7 +7,6 @@
 //
 
 #import "OMNBackgroundVC.h"
-#import "OMNLaunchOptions.h"
 
 @interface OMNStartVC : OMNBackgroundVC
 

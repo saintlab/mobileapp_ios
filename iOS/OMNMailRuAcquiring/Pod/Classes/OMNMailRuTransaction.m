@@ -18,22 +18,66 @@
 
 @implementation OMNMailRuTransaction
 
-- (instancetype)init {
+- (instancetype)initWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user order:(OMNMailRuOrder *)order extra:(OMNMailRuExtra *)extra {
   self = [super init];
   if (self) {
     
-    self.extra = [[OMNMailRuExtra alloc] init];
-    self.card = [[OMNMailRuCard alloc] init];
-    self.order = [OMNMailRuOrder orderWithID:@"0" amount:@(0)];
-    self.extra = [OMNMailRuExtra extraWithRestaurantID:@"0" tipAmount:0 type:@"order"];
+    _extra = extra;
+    _card = card;
+    _order = order;
+    _extra = extra;
     
   }
   return self;
 }
 
++ (instancetype)registerTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user {
+  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:nil extra:nil];
+}
+
++ (instancetype)registerTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user {
+
+  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
+  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:nil extra:nil];
+  
+}
+
++ (instancetype)payAndRegisterTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user {
+  
+  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
+  card.add_card = YES;
+  OMNMailRuOrder *order = [OMNMailRuOrder orderWithID:@"0" amount:@(1)];
+  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:order extra:nil];
+  
+}
+
++ (instancetype)payTransactionWithCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount {
+  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:[OMNMailRuOrder orderWithID:order_id amount:order_amount] extra:nil];
+}
+
++ (instancetype)payTransactionWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount {
+  
+  OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
+  OMNMailRuOrder *order = [OMNMailRuOrder orderWithID:order_id amount:order_amount];
+  return [[OMNMailRuTransaction alloc] initWithCard:card user:user order:order extra:nil];
+
+}
+
++ (instancetype)verifyTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user amount:(NSNumber *)amount {
+  return [[OMNMailRuTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:[OMNMailRuOrder orderWithID:@"" amount:amount] extra:nil];
+}
+
++ (instancetype)deleteTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user {
+  return [[OMNMailRuTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:nil extra:nil];
+}
+
++ (instancetype)payTransactionWithCardID:(NSString *)cardID user:(OMNMailRuUser *)user order_id:(NSString *)order_id order_amount:(NSNumber *)order_amount {
+  return [[OMNMailRuTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:[OMNMailRuOrder orderWithID:order_id amount:order_amount] extra:nil];
+}
+
 - (NSDictionary *)payParametersWithConfig:(OMNMailRuConfig *)config {
   
-  NSString *extratext = self.extra.extra_text;
+  NSString *extratext = self.extra.text;
   if (0 == extratext.length ||
       !config.isValid) {
     return nil;
@@ -148,7 +192,7 @@
   return self;
 }
 
-- (NSString *)extra_text {
+- (NSString *)text {
   
   if (!self.restaurant_id) {
     return nil;
@@ -191,7 +235,7 @@
 + (NSString *)exp_dateFromMonth:(NSInteger)month year:(NSInteger)year {
   
   NSInteger shortYear = year%1000;
-  return [NSString stringWithFormat:@"%2ld.20%2ld", (long)month, (long)shortYear];
+  return [NSString stringWithFormat:@"%02ld.20%02ld", (long)month, (long)shortYear];
   
 }
 
@@ -206,7 +250,7 @@
 + (OMNMailRuCard *)cardWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv {
   
   OMNMailRuCard *cardInfo = [[OMNMailRuCard alloc] init];
-  cardInfo.pan = pan;
+  cardInfo.pan = [[pan componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
   cardInfo.exp_date = exp_date;
   cardInfo.cvv = cvv;
   return cardInfo;
@@ -218,24 +262,21 @@
   NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
   
   if (self.id.length) {
+    
     parameters[@"card_id"] = self.id;
+    
   }
   else {
 
-    if (self.pan.length) {
-      parameters[@"pan"] = self.pan;
-    }
-    if (self.exp_date.length) {
-      parameters[@"exp_date"] = self.exp_date;
-    }
+    parameters[@"pan"] = self.pan;
+    parameters[@"exp_date"] = (self.exp_date) ?: (@"");
     parameters[@"add_card"] = @(self.add_card);
-  }
-  
-  if (self.cvv.length) {
     parameters[@"cvv"] = self.cvv;
+
   }
-  
+
   return parameters;
+  
 }
 
 @end

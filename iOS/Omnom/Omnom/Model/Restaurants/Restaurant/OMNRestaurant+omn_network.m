@@ -171,14 +171,6 @@
     [[UIApplication sharedApplication] presentLocalNotificationNow:localNotification];
 
   }
-
-  
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-  //    if ([localNotification respondsToSelector:@selector(category)]) {
-  //      [localNotification performSelector:@selector(setCategory:) withObject:@"incomingCall"];
-  //    }
-#pragma clang diagnostic pop
   
 }
 

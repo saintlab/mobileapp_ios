@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-@class OMNLaunchOptions;
+@class OMNLaunch;
 
 extern NSString * const kPushSoundName;
 
@@ -42,7 +42,7 @@ extern NSString * const OMNFacebookAppUrlString;
 
 @interface OMNConstants : NSObject
 
-+ (void)setupWithLaunchOptions:(OMNLaunchOptions *)launchOptions completion:(dispatch_block_t)completionBlock;
++ (void)setupWithLaunchOptions:(OMNLaunch *)launchOptions completion:(dispatch_block_t)completionBlock;
 + (NSString *)stringForKey:(NSString *)key;
 + (BOOL)boolForKey:(NSString *)key;
 
