@@ -45,7 +45,7 @@
   if (_startVC) {
     return;
   }
-  
+
   [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
   
   _startVC = [[OMNStartVC alloc] init];
