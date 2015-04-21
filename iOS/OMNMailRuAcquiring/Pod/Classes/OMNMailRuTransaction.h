@@ -92,6 +92,7 @@
 @property (nonatomic, copy, readonly) NSString *secret_key;
 @property (nonatomic, copy, readonly) NSString *cardholder;
 @property (nonatomic, copy, readonly) NSString *baseURL;
+@property (nonatomic, assign, readonly) BOOL use_3ds;
 
 + (instancetype)configWithParametrs:(NSDictionary *)parametrs;
 - (BOOL)isValid;

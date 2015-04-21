@@ -324,6 +324,7 @@
     _secret_key = parametrs[@"OMNMailRu_secret_key"];
     _cardholder = parametrs[@"OMNMailRu_cardholder"];
     _baseURL = parametrs[@"OMNMailRuAcquiringBaseURL"];
+    _use_3ds = [parametrs[@"OMNMailRu_use_3ds"] boolValue];
     
   }
   return self;

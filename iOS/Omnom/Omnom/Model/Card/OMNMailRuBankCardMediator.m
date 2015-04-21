@@ -76,13 +76,22 @@
 
 - (void)confirmCard:(OMNBankCardInfo *)bankCardInfo {
 
-#if 1
+  if ([OMNMailRuAcquiring config].use_3ds) {
+    
+    OMNMailRUCardRegisterVC *mailRUCardRegisterVC = [[OMNMailRUCardRegisterVC alloc] initWithBankCardInfo:bankCardInfo];
+    mailRUCardRegisterVC.delegate = self;
+    [self.rootVC.navigationController pushViewController:mailRUCardRegisterVC animated:YES];
 
-  OMNMailRUCardRegisterVC *mailRUCardRegisterVC = [[OMNMailRUCardRegisterVC alloc] initWithBankCardInfo:bankCardInfo];
-  mailRUCardRegisterVC.delegate = self;
-  [self.rootVC.navigationController pushViewController:mailRUCardRegisterVC animated:YES];
+  }
+  else {
+   
+    [self confirmCardWithout3ds:bankCardInfo];
+    
+  }
+  
+}
 
-#else
+- (void)confirmCardWithout3ds:(OMNBankCardInfo *)bankCardInfo {
   
   OMNMailRUCardConfirmVC *mailRUCardConfirmVC = [[OMNMailRUCardConfirmVC alloc] initWithCardInfo:bankCardInfo];
   @weakify(self)
@@ -118,9 +127,7 @@
   };
   
   [self.rootVC.navigationController pushViewController:mailRUCardConfirmVC animated:YES];
-  
-#endif
-  
+
 }
 
 #pragma mark - OMNMailRUCardRegisterVCDelegate
