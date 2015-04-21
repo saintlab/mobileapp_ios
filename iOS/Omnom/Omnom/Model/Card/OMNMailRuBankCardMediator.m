@@ -121,8 +121,8 @@
   
 #endif
   
-  
 }
+
 #pragma mark - OMNMailRUCardRegisterVCDelegate
 - (void)mailRUCardRegisterVCDidFinish:(OMNMailRUCardRegisterVC *)mailRUCardRegisterVC {
   [self.rootVC.navigationController popToViewController:self.rootVC animated:YES];
@@ -138,21 +138,22 @@
 
 - (void)payWithCardInfo:(OMNBankCardInfo *)bankCardInfo {
 
-  if (nil == bankCardInfo ||
-      !bankCardInfo.readyForPayment) {
+  if (bankCardInfo.readyForPayment) {
     
-    [self addCardForPayment];
-    return;
+    @weakify(self)
+    [self showPaymentVCWithDidPresentBlock:^(OMNPaymentDidFinishBlock paymentDidFinishBlock) {
+      
+      @strongify(self)
+      [self.acquiringTransaction payWithCard:bankCardInfo completion:paymentDidFinishBlock];
+      
+    }];
     
   }
-  
-  @weakify(self)
-  [self showPaymentVCWithDidPresentBlock:^(OMNPaymentDidFinishBlock paymentDidFinishBlock) {
-  
-    @strongify(self)
-    [self.acquiringTransaction payWithCard:bankCardInfo completion:paymentDidFinishBlock];
+  else {
     
-  }];
+    [self addCardForPayment];
+    
+  }
   
 }
 

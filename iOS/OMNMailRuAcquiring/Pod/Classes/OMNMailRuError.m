@@ -36,7 +36,6 @@ NSString *const OMNMailRuErrorDomain = @"OMNMailRuErrorDomain";
     return [OMNMailRuError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:userInfo];
   }
   
-
   NSInteger code = kOMNMailRuErrorCodeUnknown;
   if (response[@"error"]) {
     

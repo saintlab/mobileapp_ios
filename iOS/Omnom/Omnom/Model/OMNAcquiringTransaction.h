@@ -12,6 +12,7 @@
 #import "OMNOrder.h"
 #import "OMNWish.h"
 #import "OMNBill.h"
+#import <PromiseKit.h>
 
 typedef void(^OMNPaymentDidFinishBlock)(OMNBill *bill, OMNError *error);
 

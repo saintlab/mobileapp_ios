@@ -56,7 +56,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_BEACON" jsonRequest:parameters responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -73,7 +73,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DEMO_BEACON" jsonRequest:path responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -96,7 +96,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_QR_V2" jsonRequest:parameters responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -119,7 +119,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_HASH_V2" jsonRequest:parameters responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   

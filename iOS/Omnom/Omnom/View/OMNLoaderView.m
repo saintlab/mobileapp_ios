@@ -124,14 +124,15 @@
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-  if (flag) {
-    _loaderLayer.hidden = YES;
-    if (_completionBlock) {
-      
-      _completionBlock();
-      
-    }
+
+  _loaderLayer.hidden = YES;
+  if (_completionBlock) {
+    
+    _completionBlock();
+    _completionBlock = nil;
+    
   }
+  
 }
 
 

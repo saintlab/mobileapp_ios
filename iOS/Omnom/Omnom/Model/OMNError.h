@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, OMNErrorCode) {
   kOMNErrorRestaurantUnavailable,
   kOMNErrorCodeQrDecode,
   kOMNErrorCancel,
-  kOMNErrorWrongAmount,
+  kOMNErrorWrongCardAmount,
   
 };
 
@@ -44,7 +44,7 @@ extern NSString * const OMNUserErrorDomain;
 + (OMNError *)omnomErrorFromCode:(NSInteger)code;
 + (OMNError *)omnomErrorFromRequest:(id)request response:(id)response;
 + (OMNError *)userErrorFromCode:(OMNUserErrorCode)code;
-
++ (NSString *)descriptionFromCode:(NSInteger)code;
 - (UIImage *)circleImage;
 
 @end
@@ -55,14 +55,9 @@ extern NSString * const OMNUserErrorDomain;
 
 @end
 
-@interface NSError (omn_internetError)
-
-- (OMNError *)omn_internetError;
-
-@end
-
 @interface AFHTTPRequestOperation (omn_error)
 
+- (OMNError *)omn_internetError;
 - (NSDictionary *)omn_error;
 
 @end

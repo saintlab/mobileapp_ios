@@ -59,7 +59,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
-    errorBlock([error omn_internetError]);
+    errorBlock([operation omn_internetError]);
     
   }];
   
@@ -79,7 +79,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    completionBlock([error omn_internetError]);
+    completionBlock([operation omn_internetError]);
     
   }];
   
@@ -95,7 +95,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
 

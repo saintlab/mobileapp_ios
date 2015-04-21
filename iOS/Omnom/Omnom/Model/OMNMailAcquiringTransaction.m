@@ -14,11 +14,7 @@
 #import "OMNBankCardInfo+omn_mailRuBankCardInfo.h"
 #import "OMNUser+omn_mailRu.h"
 
-@implementation OMNMailAcquiringTransaction {
-  
-  OMNBankCardInfo *_bankCardInfo;
-  
-}
+@implementation OMNMailAcquiringTransaction
 
 - (instancetype)initWithOrder:(OMNOrder *)order {
   self = [super initWithOrder:order];
@@ -55,17 +51,45 @@
 
 - (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(OMNPaymentDidFinishBlock)completionBlock {
   
-  _bankCardInfo = bankCardInfo;
+  @weakify(self)
+  [self createBillWithCard:bankCardInfo].then(^(OMNBill *bill) {
+    
+    @strongify(self)
+    OMNMailRuExtra *extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
+    [OMNMailRuAcquiring payWithCard:[bankCardInfo omn_mailRuCard] user:[[OMNAuthorization authorisation].user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount) extra:extra].then(^(NSDictionary *response) {
+      
+      [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
+      completionBlock(bill, nil);
+      
+    }).catch(^(NSError *error) {
+      
+      [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:error];
+      OMNError *omnomError = [OMNError omnnomErrorFromError:error];
+      completionBlock(bill, omnomError);
+      
+    });
+
+    
+  }).catch(^(OMNError *error) {
+    
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" parametrs:error.userInfo];
+    completionBlock(nil, error);
+    
+  });
+  
+}
+
+- (PMKPromise *)createBillWithCard:(OMNBankCardInfo *)bankCardInfo {
   
   NSMutableDictionary *parameters =
   [@{
-    @"amount": @(self.bill_amount),
-    @"tip_amount": @(self.tips_amount),
-    @"restaurant_id" : self.restaurant_id,
-    @"table_id" : self.table_id,
-    @"description" : @"",
-    } mutableCopy];
-
+     @"amount": @(self.bill_amount),
+     @"tip_amount": @(self.tips_amount),
+     @"restaurant_id" : self.restaurant_id,
+     @"table_id" : self.table_id,
+     @"type" : self.type,
+     } mutableCopy];
+  
   if (self.order_id.length) {
     parameters[@"restaurateur_order_id"] = self.order_id;
   }
@@ -74,50 +98,30 @@
     parameters[@"wish_id"] = self.wish_id;
   }
   
-  @weakify(self)
-  [[OMNOperationManager sharedManager] POST:@"/bill" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    OMNError *error = [OMNError billErrorFromResponse:responseObject];
-    if (error) {
+    [[OMNOperationManager sharedManager] POST:@"/bill" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" jsonRequest:parameters responseOperation:operation];
-      completionBlock(nil, error);
+      OMNError *error = nil;
+      OMNBill *bill = [OMNBill billWithJsonData:responseObject error:&error];
+      if (error) {
+        
+        reject(error);
+        
+      }
+      else {
+        
+        fulfill(bill);
+        
+      }
       
-    }
-    else {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      @strongify(self)
-      OMNBill *bill = [[OMNBill alloc] initWithJsonData:responseObject];
-      [self didCreateBill:bill completion:completionBlock];
+      fulfill([operation omn_internetError]);
       
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_BILL_CREATE" jsonRequest:parameters responseOperation:operation];
-    completionBlock(nil, [error omn_internetError]);
+    }];
     
   }];
-  
-}
-
-- (void)didCreateBill:(OMNBill *)bill completion:(OMNPaymentDidFinishBlock)completionBlock {
-  
-  OMNBankCardInfo *bankCardInfo = _bankCardInfo;
-  OMNMailRuExtra *extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
-  [OMNMailRuAcquiring payWithCard:[bankCardInfo omn_mailRuCard] user:[[OMNAuthorization authorisation].user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount) extra:extra].then(^(NSDictionary *response) {
-    
-    [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
-    completionBlock(bill, nil);
-    
-  }).catch(^(NSError *error) {
-    
-#warning handle cancel
-    OMNError *omnomError = [OMNError omnnomErrorFromError:error];
-    [[OMNAnalitics analitics] logMailEvent:@"ERROR_MAIL_CARD_PAY" cardInfo:bankCardInfo error:error];
-    completionBlock(bill, omnomError);
-    
-  });
   
 }
 

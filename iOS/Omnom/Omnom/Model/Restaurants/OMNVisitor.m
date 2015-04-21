@@ -72,7 +72,7 @@
     }
     else {
       
-      failureBlock([error omn_internetError]);
+      failureBlock([operation omn_internetError]);
       
     }
     

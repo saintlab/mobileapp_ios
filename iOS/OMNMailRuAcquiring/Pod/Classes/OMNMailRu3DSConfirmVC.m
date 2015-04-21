@@ -83,7 +83,6 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
   
-  NSLog(@"%@", request.URL);
   if ([request.URL.path isEqualToString:@"/api/page/result"]) {
     
     NSDictionary *parameters = [self paramsFromQueryString:request.URL.query];
@@ -114,7 +113,5 @@
   return params;
   
 }
-
-
 
 @end

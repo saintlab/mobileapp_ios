@@ -288,18 +288,14 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   
 }
 
-- (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo  error:(NSError *)error {
+- (void)logMailEvent:(NSString *)eventName cardInfo:(OMNBankCardInfo *)bankCardInfo error:(NSError *)error {
   
   NSMutableDictionary *debugInfo = [self superProperties];
-  if (error.userInfo) {
-    debugInfo[@"error"] = error.userInfo;
-  }
+  debugInfo[@"error"] = (error.userInfo) ?: (@"");
   debugInfo[@"errorCode"] = @(error.code);
-  
   if (bankCardInfo) {
     debugInfo[@"card_info"] = bankCardInfo.debugInfo;
   }
-
   [_mixpanel track:eventName properties:debugInfo];
 
 }

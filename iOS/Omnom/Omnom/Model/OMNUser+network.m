@@ -55,7 +55,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"USER_REGISTER_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -75,7 +75,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"USER_VERIFY_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -99,7 +99,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"CONFIRM_PHONE_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -121,7 +121,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -173,7 +173,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -188,7 +188,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"AUTHORIZATION_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -220,7 +220,7 @@
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -301,7 +301,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -332,7 +332,7 @@
       
     } failure:^(OMNError *error) {
       
-      failureBlock([error omn_internetError]);
+      failureBlock([OMNError omnnomErrorFromError:error]);
       
     }];
 
@@ -382,7 +382,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   
@@ -411,7 +411,7 @@
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
     
-    failureBlock([error omn_internetError]);
+    failureBlock([operation omn_internetError]);
     
   }];
   

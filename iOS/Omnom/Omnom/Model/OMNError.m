@@ -35,15 +35,16 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
   }
   else if ([error.domain isEqualToString:OMNMailRuErrorDomain]) {
     
-    if (kOMNMailRuErrorCodeCardAmount == error.code) {
-      
-      omnomError = [self omnomErrorFromCode:kOMNErrorWrongAmount];
-      
-    }
-    else {
-      
-      omnomError = [OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorCodeUnknoun userInfo:error.userInfo];
-      
+    switch ((OMNMailRuErrorCode)error.code) {
+      case kOMNMailRuErrorCodeCardAmount: {
+        omnomError = [self omnomErrorFromCode:kOMNErrorWrongCardAmount];
+      } break;
+      case kOMNMailRuErrorCodeCancel: {
+        omnomError = [self omnomErrorFromCode:kOMNErrorCancel];
+      } break;
+      default: {
+        omnomError = [OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorCodeUnknoun userInfo:error.userInfo];
+      } break;
     }
     
   }
@@ -66,12 +67,11 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
   if (response) {
     userInfo[@"response"] = response;
   }
-  
   return [OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorCodeUnknoun userInfo:userInfo];
   
 }
 
-+ (OMNError *)omnomErrorFromCode:(NSInteger)code {
++ (NSString *)descriptionFromCode:(NSInteger)code {
   
   NSString *description = nil;
   switch (code) {
@@ -87,7 +87,7 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
     case kOMNErrorCodeQrDecode: {
       description = kOMN_ERROR_MESSAGE_QR_DECODE;
     } break;
-    case kOMNErrorWrongAmount: {
+    case kOMNErrorWrongCardAmount: {
       description = kOMN_ERROR_MESSAGE_PAYMENT_ERROR;
     } break;
     case kOMNErrorRestaurantUnavailable: {
@@ -98,9 +98,12 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
       description = kOMN_ERROR_MESSAGE_UNKNOWN_ERROR;
     } break;
   }
+  return description;
   
-  return [OMNError errorWithDomain:OMNErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey : description}];
-  
+}
+
++ (OMNError *)omnomErrorFromCode:(NSInteger)code {
+  return [OMNError errorWithDomain:OMNErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey : [self descriptionFromCode:code]}];
 }
 
 + (OMNError *)userErrorFromCode:(OMNUserErrorCode)code {
@@ -207,24 +210,38 @@ NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
 
 @end
 
-@implementation NSError (omn_internetError)
+@implementation AFHTTPRequestOperation (omn_error)
 
 - (OMNError *)omn_internetError {
   
-  return [OMNError omnnomErrorFromError:self];
+  NSInteger code = kOMNErrorCodeUnknoun;
+  switch (self.error.code) {
+    case NSURLErrorTimedOut: {
+      code = kOMNErrorCodeTimedOut;
+    } break;
+    case NSURLErrorNotConnectedToInternet: {
+      code = kOMNErrorCodeNotConnectedToInternet;
+    } break;
+    default: {
+      code = kOMNErrorCodeUnknoun;
+    } break;
+  }
+  
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+  userInfo[@"response_string"] = (self.responseString) ?: (@"");
+  userInfo[@"headers"] = (self.response.allHeaderFields) ?: (@"");
+  userInfo[@"url"] = (self.request.URL.absoluteString) ?: (@"");
+  userInfo[@"status_code"] = @(self.response.statusCode);
+  userInfo[NSLocalizedDescriptionKey] = [OMNError descriptionFromCode:code];
+  return [OMNError errorWithDomain:OMNErrorDomain code:code userInfo:userInfo];
   
 }
-
-@end
-
-
-@implementation AFHTTPRequestOperation (omn_error)
 
 - (NSDictionary *)omn_error {
   
   NSMutableDictionary *parametrs = [NSMutableDictionary dictionary];
   if (self.response.allHeaderFields) {
-    parametrs[@"headers"] = self.response.allHeaderFields;
+    
   }
   if (self.responseString) {
     parametrs[@"response_string"] = self.responseString;

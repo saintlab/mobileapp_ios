@@ -23,4 +23,12 @@
   return self;
 }
 
++ (instancetype)billWithJsonData:(id)jsonData error:(OMNError **)error {
+  
+  OMNBill *bill = [[OMNBill alloc] initWithJsonData:jsonData];
+  *error = [OMNError billErrorFromResponse:jsonData];
+  return bill;
+  
+}
+
 @end

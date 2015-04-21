@@ -50,7 +50,12 @@
     paymentVCDidPresentBlock(^(OMNBill *bill, OMNError *error) {
       
       @strongify(self)
-      if (error) {
+      if (kOMNErrorCancel == error.code) {
+        
+        self.didPayBlock(bill, error);
+        
+      }
+      else if(error) {
         
         [paymentLoadingVC didFailWithError:error action:^{
           

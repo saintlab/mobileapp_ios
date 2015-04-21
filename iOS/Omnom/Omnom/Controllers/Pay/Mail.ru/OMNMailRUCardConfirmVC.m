@@ -231,20 +231,16 @@ TTTAttributedLabelDelegate>
   
   [UIView transitionWithView:_errorLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
-    if (kOMNErrorWrongAmount == error.code) {
-      
-      [_errorLabel setWrongAmountError];
-      
-    }
-    else if (kOMNErrorCodeUnknoun == error.code) {
-      
-      [_errorLabel setUnknownError];
-      
-    }
-    else {
-
-      [_errorLabel setErrorText:error.localizedDescription];
-      
+    switch (error.code) {
+      case kOMNErrorWrongCardAmount: {
+        [_errorLabel setWrongAmountError];
+      } break;
+      case kOMNErrorCodeUnknoun: {
+        [_errorLabel setUnknownError];
+      } break;
+      default: {
+        [_errorLabel setErrorText:error.localizedDescription];
+      } break;
     }
     
   } completion:nil];

@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OMNError.h"
 
 @class OMNBill;
+
 typedef void(^OMNBillBlock)(OMNBill *bill);
 
 @interface OMNBill : NSObject
@@ -19,5 +21,6 @@ typedef void(^OMNBillBlock)(OMNBill *bill);
 @property (nonatomic, assign) double revenue;
 
 - (instancetype)initWithJsonData:(id)jsonData;
++ (instancetype)billWithJsonData:(id)jsonData error:(OMNError **)error;
 
 @end

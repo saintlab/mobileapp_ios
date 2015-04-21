@@ -8,6 +8,12 @@
 
 #import "OMNAcquiringTransaction.h"
 
+@interface OMNAcquiringTransaction ()
+
+@property (nonatomic, copy) NSString *type;
+
+@end
+
 @implementation OMNAcquiringTransaction
 
 - (instancetype)init {
@@ -27,7 +33,7 @@
   self = [self init];
   if (self) {
     
-    _type = @"order";
+    self.type = @"order";
 
   }
   return self;
@@ -37,16 +43,14 @@
   self = [self init];
   if (self) {
     
-    _type = @"wish";
+    self.type = @"wish";
     
   }
   return self;
 }
 
 - (long long)total_amount {
-  
   return (self.bill_amount + self.tips_amount);
-  
 }
 
 - (double)tips_percent {

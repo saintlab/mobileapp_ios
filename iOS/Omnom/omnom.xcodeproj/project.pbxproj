@@ -2701,8 +2701,6 @@
 				930554F81935DA7C00E6F4EC /* OMNOrderDataSource.m */,
 				93EE3080198F56FD0024EAF4 /* Mail.ru */,
 				930554E91935DA7C00E6F4EC /* Calculator */,
-				93B9048A19654DE1007D21C4 /* OMNRatingVC.h */,
-				93B9048B19654DE1007D21C4 /* OMNRatingVC.m */,
 				9325BA471A1DA15A003557BD /* OMNPaymentLoadingVC.h */,
 				9325BA481A1DA15A003557BD /* OMNPaymentLoadingVC.m */,
 			);
@@ -4102,6 +4100,8 @@
 				93BCD74B1AAF159000725B12 /* OMNBarPaymentDoneVC.m */,
 				93D77A311ADBF06900C0470B /* OMNRestaurantInPaymentDoneVC.h */,
 				93D77A321ADBF06900C0470B /* OMNRestaurantInPaymentDoneVC.m */,
+				93B9048A19654DE1007D21C4 /* OMNRatingVC.h */,
+				93B9048B19654DE1007D21C4 /* OMNRatingVC.m */,
 			);
 			name = Done;
 			sourceTree = "<group>";

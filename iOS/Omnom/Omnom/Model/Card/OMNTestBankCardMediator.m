@@ -32,9 +32,7 @@
 }
 
 - (OMNBankCardsModel *)bankCardsModel {
-  
   return [[OMNTestBankCardsModel alloc] init];
-  
 }
 
 @end
