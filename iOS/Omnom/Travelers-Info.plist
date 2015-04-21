@@ -26,10 +26,10 @@
 			<key>CFBundleTypeRole</key>
 			<string>None</string>
 			<key>CFBundleURLName</key>
-			<string>menu.omnom.app</string>
+			<string>menu.omnom.travelers.app</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>omnom</string>
+				<string>travelers</string>
 			</array>
 		</dict>
 	</array>

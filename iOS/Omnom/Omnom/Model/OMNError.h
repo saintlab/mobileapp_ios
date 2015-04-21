@@ -22,6 +22,7 @@ typedef NS_ENUM(NSInteger, OMNErrorCode) {
   kOMNErrorCodeQrDecode,
   kOMNErrorCancel,
   kOMNErrorWrongCardAmount,
+  kOMNErrorNoUserToken,
   
 };
 

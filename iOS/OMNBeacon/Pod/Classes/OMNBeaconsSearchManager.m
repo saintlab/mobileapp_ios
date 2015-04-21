@@ -10,17 +10,12 @@
 #import "OMNBluetoothManager.h"
 #import "OMNBeaconRangingManager.h"
 
-@interface OMNBeaconsSearchManager ()
-
-@property (nonatomic, assign) CBCentralManagerState previousBluetoothState;
-
-@end
-
 @implementation OMNBeaconsSearchManager {
   
-  dispatch_semaphore_t _addBeaconLock;
   OMNBeaconRangingManager *_beaconRangingManager;
+  OMNFoundBeacons *_foundBeacons;
   NSTimer *_nearestBeaconsRangingTimer;
+  OMNDidFindBeaconsBlock _didFindBeaconsBlock;
   
 }
 
@@ -32,12 +27,14 @@
   self = [super init];
   if (self) {
     
-    _addBeaconLock = dispatch_semaphore_create(1);
     __weak typeof(self)weakSelf = self;
     _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
       
-      __strong __typeof(weakSelf)strongSelf = weakSelf;
-      [strongSelf processCoreLocationAuthorizationStatus:status];
+      if (kCLAuthorizationStatusAuthorizedAlways != status) {
+        
+        [weakSelf didFailSearchingBeacons];
+        
+      }
       
     }];
     
@@ -46,11 +43,11 @@
 }
 
 
-- (void)startSearching {
+- (void)startSearchingWithCompletion:(OMNDidFindBeaconsBlock)didFindBeaconsBlock {
   
-  [self stopRangingNearestBeaconsWithError:NO];
-  _startDate = [NSDate date];
-  _searching = YES;
+  _didFindBeaconsBlock = [didFindBeaconsBlock copy];
+  
+  [self stop];
   if (TARGET_IPHONE_SIMULATOR) {
     
     NSArray *beacons = @[[OMNBeacon demoBeacon]];
@@ -65,23 +62,16 @@
   
 }
 
-- (void)didRangeBeacons:(NSArray *)beacons {
-  
-  [_foundBeacons updateWithBeacons:beacons];
-  if (_foundBeacons.readyForProcessing) {
-    
-    [self processFoundBeacons:_foundBeacons.allBeacons];
-    
-  }
-  
-  
-}
-
 - (void)processFoundBeacons:(NSArray *)beacons {
   
   [self stop];
-  [self.delegate beaconSearchManager:self didFindBeacons:beacons];
+  _didFindBeaconsBlock(beacons);
+  _didFindBeaconsBlock = nil;
   
+}
+
+- (void)didFailSearchingBeacons {
+  [self processFoundBeacons:nil];
 }
 
 - (void)checkCLStatus {
@@ -92,18 +82,12 @@
     [self checkBluetoothState];
     
   }
-  else if (TARGET_OS_IPHONE &&
-           kCLAuthorizationStatusNotDetermined == authorizationStatus) {
-    
-    [self.delegate beaconSearchManager:self didDetermineCLState:kCLSearchManagerRequestPermission];
-    
-  }
   else {
     
-    [self processCoreLocationAuthorizationStatus:authorizationStatus];
+    [self didFailSearchingBeacons];
     
   }
-
+  
 }
 
 - (void)checkBluetoothState {
@@ -115,46 +99,15 @@
     switch (state) {
       case CBCentralManagerStatePoweredOn: {
         
-        if (CBCentralManagerStatePoweredOff == strongSelf.previousBluetoothState) {
-          
-          [strongSelf.delegate beaconSearchManager:strongSelf didChangeState:kSearchManagerRequestReload];
-          
-        }
-        else {
-          
-          [strongSelf.delegate beaconSearchManager:strongSelf didDetermineBLEState:kBLESearchManagerBLEDidOn];
-          [strongSelf startRangingBeacons];
-          
-        }
-        
-      } break;
-      case CBCentralManagerStateUnsupported: {
-        
         [strongSelf startRangingBeacons];
         
       } break;
-      case CBCentralManagerStatePoweredOff: {
+      default: {
         
-        [strongSelf stopRangingNearestBeaconsWithError:NO];
-        [strongSelf.delegate beaconSearchManager:strongSelf didDetermineBLEState:kBLESearchManagerRequestTurnBLEOn];
-        
-      } break;
-      case CBCentralManagerStateUnauthorized: {
-        
-        //do noithing
+        [strongSelf didFailSearchingBeacons];
         
       } break;
-      case CBCentralManagerStateResetting:
-      case CBCentralManagerStateUnknown: {
-        //do noithing
-      } break;
-    }
-    
-    strongSelf.previousBluetoothState = state;
-    if (state != CBCentralManagerStatePoweredOn) {
-      
-      [strongSelf.delegate beaconSearchManagerDidFail:strongSelf];
-      
+
     }
     
   }];
@@ -168,12 +121,12 @@
   }
   
   if (!_beaconRangingManager.isRangingAvaliable) {
-    [self.delegate beaconSearchManager:self didDetermineBLEState:kBLESearchManagerBLEUnsupported];
+    [self didFailSearchingBeacons];
     return;
   }
   
   _foundBeacons = [[OMNFoundBeacons alloc] init];
-  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconSearchTimeout) userInfo:nil repeats:NO];
+  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFailSearchingBeacons) userInfo:nil repeats:NO];
   
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
@@ -184,68 +137,18 @@
   } failure:^(NSError *error) {
     
     __strong __typeof(weakSelf)strongSelf = weakSelf;
-    [strongSelf beaconsSearchDidFailWithError:error];
+    [strongSelf didFailSearchingBeacons];
     
   }];
-
-  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerStartSearchingBeacons];
   
 }
 
-- (void)beaconsSearchDidFailWithError:(NSError *)error {
+- (void)didRangeBeacons:(NSArray *)beacons {
   
-  NSMutableDictionary *debugData = [NSMutableDictionary dictionary];
-  if (error.localizedDescription) {
+  [_foundBeacons updateWithBeacons:beacons];
+  if (_foundBeacons.readyForProcessing) {
     
-    debugData[@"error"] = error.localizedDescription;
-    debugData[@"code"] = @(error.code);
-    
-  }
-//  [[OMNAnalitics analitics] logTargetEvent:@"ble_did_stuck" parametrs:debugData];
-  [self stopRangingNearestBeaconsWithError:YES];
-  [self.delegate beaconSearchManager:self didChangeState:kSearchManagerNotFoundBeacons];
-  
-}
-
-- (void)processCoreLocationAuthorizationStatus:(CLAuthorizationStatus)status {
-  
-  switch (status) {
-    case kCLAuthorizationStatusDenied: {
-      
-      [self processCoreLocationDenySituation:kCLSearchManagerRequestDeniedPermission];
-      
-    } break;
-    case kCLAuthorizationStatusRestricted: {
-      
-      [self processCoreLocationDenySituation:kCLSearchManagerRequestRestrictedPermission];
-      
-    } break;
-    case kCLAuthorizationStatusAuthorizedAlways: {
-      
-      [self.delegate beaconSearchManager:self didChangeState:kSearchManagerRequestReload];
-      
-    } break;
-    default: {
-      //do nothing
-    } break;
-  }
-  
-}
-
-- (void)processCoreLocationDenySituation:(OMNCLSearchManagerState)state {
-  
-  [self stopRangingNearestBeaconsWithError:YES];
-  [self.delegate beaconSearchManager:self didDetermineCLState:state];
-  
-}
-
-- (void)stopRangingNearestBeaconsWithError:(BOOL)error {
-  
-  [_nearestBeaconsRangingTimer invalidate], _nearestBeaconsRangingTimer = nil;
-  [_beaconRangingManager stop];
-  if (error) {
-    
-    [self.delegate beaconSearchManagerDidFail:self];
+    [self processFoundBeacons:_foundBeacons.allBeacons];
     
   }
   
@@ -253,15 +156,8 @@
 
 - (void)stop {
   
-  [self stopRangingNearestBeaconsWithError:NO];
-  _searching = NO;
-  _beaconRangingManager = nil;
-  
-}
-
-- (void)beaconSearchTimeout {
-
-  [self beaconsSearchDidFailWithError:nil];
+  [_nearestBeaconsRangingTimer invalidate], _nearestBeaconsRangingTimer = nil;
+  [_beaconRangingManager stop];
 
 }
 

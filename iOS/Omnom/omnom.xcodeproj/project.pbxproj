@@ -253,7 +253,6 @@
 		930C4E1C1AB15E1B006CA608 /* OMNTransitionFromCalculatorToOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 930C481319CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m */; };
 		930C4E1D1AB15E1B006CA608 /* OMNRestaurantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9E8D1A49907A001C0909 /* OMNRestaurantCell.m */; };
 		930C4E1E1AB15E1B006CA608 /* OMNBottomLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF5319D4196D00D73FC4 /* OMNBottomLabelView.m */; };
-		930C4E1F1AB15E1B006CA608 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
 		930C4E201AB15E1B006CA608 /* OMNUserInfoSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D117731A2ED3C7000131C4 /* OMNUserInfoSection.m */; };
 		930C4E221AB15E1B006CA608 /* OMNSplashToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37361980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m */; };
 		930C4E231AB15E1B006CA608 /* OMNRestaurantInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B21998CA6400EDC488 /* OMNRestaurantInfoVC.m */; };
@@ -577,7 +576,6 @@
 		930C8C0D1ACA7D9F00CE4E5A /* OMNTransitionFromCalculatorToOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 930C481319CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m */; };
 		930C8C0E1ACA7D9F00CE4E5A /* OMNRestaurantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9E8D1A49907A001C0909 /* OMNRestaurantCell.m */; };
 		930C8C0F1ACA7D9F00CE4E5A /* OMNBottomLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF5319D4196D00D73FC4 /* OMNBottomLabelView.m */; };
-		930C8C101ACA7D9F00CE4E5A /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
 		930C8C111ACA7D9F00CE4E5A /* OMNUserInfoSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D117731A2ED3C7000131C4 /* OMNUserInfoSection.m */; };
 		930C8C131ACA7D9F00CE4E5A /* OMNSplashToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37361980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m */; };
 		930C8C141ACA7D9F00CE4E5A /* OMNRestaurantInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B21998CA6400EDC488 /* OMNRestaurantInfoVC.m */; };
@@ -1170,7 +1168,6 @@
 		936AC1BC1AD8BDBC00A9D17F /* OMNTransitionFromCalculatorToOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 930C481319CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m */; };
 		936AC1BD1AD8BDBC00A9D17F /* OMNRestaurantCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 933A9E8D1A49907A001C0909 /* OMNRestaurantCell.m */; };
 		936AC1BE1AD8BDBC00A9D17F /* OMNBottomLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF5319D4196D00D73FC4 /* OMNBottomLabelView.m */; };
-		936AC1BF1AD8BDBC00A9D17F /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
 		936AC1C01AD8BDBC00A9D17F /* OMNUserInfoSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D117731A2ED3C7000131C4 /* OMNUserInfoSection.m */; };
 		936AC1C11AD8BDBC00A9D17F /* OMNSplashToSearchBeaconTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37361980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m */; };
 		936AC1C21AD8BDBC00A9D17F /* OMNRestaurantInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B21998CA6400EDC488 /* OMNRestaurantInfoVC.m */; };
@@ -1294,8 +1291,6 @@
 		9373254D1A7F9EBF00A73673 /* OMNMenuModifer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9373254B1A7F9EBF00A73673 /* OMNMenuModifer.m */; };
 		937325501A7FAC5300A73673 /* OMNMenuProductModifersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9373254F1A7FAC5300A73673 /* OMNMenuProductModifersModel.m */; };
 		937325511A7FAC5300A73673 /* OMNMenuProductModifersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9373254F1A7FAC5300A73673 /* OMNMenuProductModifersModel.m */; };
-		93750B28196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
-		93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */; };
 		93750B2D196D51020031AD31 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93750B2C196D51020031AD31 /* AVFoundation.framework */; };
 		93750B2F196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 93750B2E196E4F220031AD31 /* OMNRestaurantMenuVC.json */; };
 		93750B30196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 93750B2E196E4F220031AD31 /* OMNRestaurantMenuVC.json */; };
@@ -2145,8 +2140,6 @@
 		9373254B1A7F9EBF00A73673 /* OMNMenuModifer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuModifer.m; sourceTree = "<group>"; };
 		9373254E1A7FAC5300A73673 /* OMNMenuProductModifersModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductModifersModel.h; sourceTree = "<group>"; };
 		9373254F1A7FAC5300A73673 /* OMNMenuProductModifersModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductModifersModel.m; sourceTree = "<group>"; };
-		93750B25196C14100031AD31 /* OMNTurnOnBluetoothVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTurnOnBluetoothVC.h; sourceTree = "<group>"; };
-		93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNTurnOnBluetoothVC.m; sourceTree = "<group>"; };
 		93750B2C196D51020031AD31 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		93750B2E196E4F220031AD31 /* OMNRestaurantMenuVC.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OMNRestaurantMenuVC.json; sourceTree = "<group>"; };
 		937822851963E21A00CE6661 /* OMNOrdersVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrdersVC.h; sourceTree = "<group>"; };
@@ -4197,8 +4190,6 @@
 		93E299AB197D13BF00051B04 /* deprecated */ = {
 			isa = PBXGroup;
 			children = (
-				93750B25196C14100031AD31 /* OMNTurnOnBluetoothVC.h */,
-				93750B26196C14100031AD31 /* OMNTurnOnBluetoothVC.m */,
 			);
 			name = deprecated;
 			sourceTree = "<group>";
@@ -4893,7 +4884,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n#if [[ \"${CONFIGURATION}\" = \"Ad-Hoc\" || \"${CONFIGURATION}\" = \"AppStore\" ]]; then\n${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run 1ea87b52b1d0946ed506dcc3bd5b586f422bf03a 24581047190989dd3b32483cd77da4a030cb7d2ed58171c008823f918c327652;\n#fi";
+			shellScript = "#!/bin/bash\nif [[ \"${CONFIGURATION}\" = \"Ad-Hoc\" || \"${CONFIGURATION}\" = \"AppStore\" ]]; then\n${PODS_ROOT}/CrashlyticsFramework/Crashlytics.framework/run 1ea87b52b1d0946ed506dcc3bd5b586f422bf03a 24581047190989dd3b32483cd77da4a030cb7d2ed58171c008823f918c327652;\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -5153,7 +5144,6 @@
 				930C4E1C1AB15E1B006CA608 /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				930C4E1D1AB15E1B006CA608 /* OMNRestaurantCell.m in Sources */,
 				930C4E1E1AB15E1B006CA608 /* OMNBottomLabelView.m in Sources */,
-				930C4E1F1AB15E1B006CA608 /* OMNTurnOnBluetoothVC.m in Sources */,
 				930C4E201AB15E1B006CA608 /* OMNUserInfoSection.m in Sources */,
 				930C4E221AB15E1B006CA608 /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				930C4E231AB15E1B006CA608 /* OMNRestaurantInfoVC.m in Sources */,
@@ -5484,7 +5474,6 @@
 				930C8C0D1ACA7D9F00CE4E5A /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				930C8C0E1ACA7D9F00CE4E5A /* OMNRestaurantCell.m in Sources */,
 				930C8C0F1ACA7D9F00CE4E5A /* OMNBottomLabelView.m in Sources */,
-				930C8C101ACA7D9F00CE4E5A /* OMNTurnOnBluetoothVC.m in Sources */,
 				930C8C111ACA7D9F00CE4E5A /* OMNUserInfoSection.m in Sources */,
 				930C8C131ACA7D9F00CE4E5A /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				930C8C141ACA7D9F00CE4E5A /* OMNRestaurantInfoVC.m in Sources */,
@@ -5815,7 +5804,6 @@
 				930C481419CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				933A9E8E1A49907A001C0909 /* OMNRestaurantCell.m in Sources */,
 				934CDF5419D4196D00D73FC4 /* OMNBottomLabelView.m in Sources */,
-				93750B28196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */,
 				93D117741A2ED3C7000131C4 /* OMNUserInfoSection.m in Sources */,
 				937A37371980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				93E435B31998CA6400EDC488 /* OMNRestaurantInfoVC.m in Sources */,
@@ -6058,7 +6046,6 @@
 				93D117791A2F00DB000131C4 /* OMNUserMailFeedbackItem.m in Sources */,
 				93CACD671ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */,
 				93F2AEEF1A6E31AA00CDF3D9 /* OMNMenuProductCell.m in Sources */,
-				93750B29196C14100031AD31 /* OMNTurnOnBluetoothVC.m in Sources */,
 				932AAA4E1AD6739C0049CACE /* OMNTableReloadData.m in Sources */,
 				938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */,
 				93F15DEB1ACEDECB000C8129 /* OMNDemoVisitor.m in Sources */,
@@ -6461,7 +6448,6 @@
 				936AC1BC1AD8BDBC00A9D17F /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				936AC1BD1AD8BDBC00A9D17F /* OMNRestaurantCell.m in Sources */,
 				936AC1BE1AD8BDBC00A9D17F /* OMNBottomLabelView.m in Sources */,
-				936AC1BF1AD8BDBC00A9D17F /* OMNTurnOnBluetoothVC.m in Sources */,
 				936AC1C01AD8BDBC00A9D17F /* OMNUserInfoSection.m in Sources */,
 				936AC1C11AD8BDBC00A9D17F /* OMNSplashToSearchBeaconTransition.m in Sources */,
 				936AC1C21AD8BDBC00A9D17F /* OMNRestaurantInfoVC.m in Sources */,

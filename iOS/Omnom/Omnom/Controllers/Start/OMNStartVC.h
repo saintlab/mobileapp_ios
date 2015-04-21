@@ -7,9 +7,10 @@
 //
 
 #import "OMNBackgroundVC.h"
+#import "OMNLaunch.h"
 
 @interface OMNStartVC : OMNBackgroundVC
 
-- (void)reloadSearchingRestaurant;
+- (void)reloadWithLunch:(OMNLaunch *)launch;
 
 @end

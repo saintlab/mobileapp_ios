@@ -84,7 +84,11 @@
       UIImage *circleImage = [_restaurant.decoration.logo omn_circleImageWithDiametr:175.0f];
       dispatch_async(dispatch_get_main_queue(), ^{
         
-        [logoIcon setImage:circleImage forState:UIControlStateNormal];
+        [UIView transitionWithView:logoIcon duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        
+          [logoIcon setImage:circleImage forState:UIControlStateNormal];
+          
+        } completion:nil];
         
       });
       

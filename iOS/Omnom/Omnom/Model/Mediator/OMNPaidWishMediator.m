@@ -9,7 +9,6 @@
 #import "OMNPaidWishMediator.h"
 #import "OMNRestaurant+omn_payment.h"
 #import "OMNNavigationController.h"
-#import "OMNNavigationControllerDelegate.h"
 #import "OMNPaymentDoneVC.h"
 
 @implementation OMNPaidWishMediator
@@ -25,9 +24,7 @@
   OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForWish:self.wish];
   OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:visitor transaction:transaction];
   transactionPaymentVC.delegate = self;
-  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:transactionPaymentVC];
-  navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
-  [self.rootVC presentViewController:navigationController animated:YES completion:nil];
+  [self.rootVC presentViewController:[OMNNavigationController controllerWithRootVC:transactionPaymentVC] animated:YES completion:nil];
   
 }
 

@@ -18,7 +18,6 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNOrderAlertManager.h"
 #import "UIView+omn_autolayout.h"
-#import "OMNNavigationControllerDelegate.h"
 #import "OMNSelectOrderButton.h"
 #import "OMNRestaurant+omn_payment.h"
 #import "OMNRatingVC.h"
@@ -398,9 +397,7 @@ OMNTransactionPaymentVCDelegate>
   OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForOrder:_table.selectedOrder];
   OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:_restaurantMediator.visitor transaction:transaction];
   transactionPaymentVC.delegate = self;
-  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:transactionPaymentVC];
-  navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
-  [self.navigationController presentViewController:navigationController animated:YES completion:nil];
+  [self.navigationController presentViewController:[OMNNavigationController controllerWithRootVC:transactionPaymentVC] animated:YES completion:nil];
   
 }
 

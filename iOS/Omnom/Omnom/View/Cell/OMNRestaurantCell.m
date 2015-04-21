@@ -34,9 +34,7 @@ const CGFloat kRestaurantCellIconSize = 150.0f;
 }
 
 - (void)awakeFromNib {
-  
   [self setup];
-  
 }
 
 - (void)setup {
@@ -72,9 +70,7 @@ const CGFloat kRestaurantCellIconSize = 150.0f;
 }
 
 - (void)dealloc {
-  
   [self removeRestaurantLogoObserver];
-  
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -136,7 +132,11 @@ const CGFloat kRestaurantCellIconSize = 150.0f;
       UIImage *circleImage = [_restaurant.decoration.logo omn_circleImageWithDiametr:kRestaurantCellIconSize];
       dispatch_async(dispatch_get_main_queue(), ^{
         
-        [restaurantIcon setImage:circleImage forState:UIControlStateNormal];
+        [UIView transitionWithView:restaurantIcon duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        
+          [restaurantIcon setImage:circleImage forState:UIControlStateNormal];
+          
+        } completion:nil];
         
       });
       

@@ -10,4 +10,6 @@
 
 @interface OMNNavigationController : UINavigationController
 
++ (instancetype)controllerWithRootVC:(UIViewController *)rootVC;
+
 @end

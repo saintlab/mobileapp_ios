@@ -213,7 +213,7 @@
     else {
       
       [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-      userBlock(nil);
+      failureBlock([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
       
     }
     

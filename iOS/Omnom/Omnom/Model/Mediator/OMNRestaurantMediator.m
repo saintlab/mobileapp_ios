@@ -133,21 +133,15 @@ OMNOrderCalculationVCDelegate>
 }
 
 - (long long)totalOrdersAmount {
-  
   return _table.ordersTotalAmount;
-  
 }
 
 - (void)popToRootViewControllerAnimated:(BOOL)animated {
-  
   [_restaurantActionsVC.navigationController popToViewController:_restaurantActionsVC animated:animated];
-  
 }
 
 - (void)pushViewController:(UIViewController *)vc {
-  
   [_restaurantActionsVC.navigationController pushViewController:vc animated:YES];
-  
 }
 
 - (void)showUserProfile {
@@ -198,7 +192,7 @@ OMNOrderCalculationVCDelegate>
     [self.restaurantActionsVC dismissViewControllerAnimated:YES completion:nil];
     
   };
-  [_restaurantActionsVC presentViewController:[[OMNNavigationController alloc] initWithRootViewController:preorderConfirmVC] animated:YES completion:nil];
+  [_restaurantActionsVC presentViewController:[OMNNavigationController controllerWithRootVC:preorderConfirmVC] animated:YES completion:nil];
   
 }
 
@@ -250,9 +244,15 @@ OMNOrderCalculationVCDelegate>
   
   _pushPermissionRequested = YES;
   OMNPushPermissionVC *pushPermissionVC = [[OMNPushPermissionVC alloc] initWithParent:_restaurantActionsVC.r1VC];
-  pushPermissionVC.completionBlock = completionBlock;
-  [self pushViewController:pushPermissionVC];
-  
+  @weakify(self)
+  pushPermissionVC.completionBlock = ^{
+    
+    @strongify(self)
+    [self.restaurantActionsVC dismissViewControllerAnimated:YES completion:completionBlock];
+    
+  };
+  [self.restaurantActionsVC presentViewController:pushPermissionVC animated:YES completion:nil];
+
 }
 
 - (void)showOrders {

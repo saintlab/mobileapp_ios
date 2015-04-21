@@ -8,33 +8,19 @@
 
 #import "OMNSearchRestaurantsVC.h"
 #import "OMNAskCLPermissionsVC.h"
-#import "OMNCLPermissionsHelpVC.h"
-#import "OMNTurnOnBluetoothVC.h"
 #import "UINavigationController+omn_replace.h"
-#import "OMNDenyCLPermissionVC.h"
 #import "OMNAnalitics.h"
 #import "OMNBeacon+omn_debug.h"
 #import "OMNAuthorization.h"
-#import "OMNRestaurantManager.h"
-#import <OMNBeaconsSearchManager.h>
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
 #import "OMNLaunchHandler.h"
-
-@interface OMNSearchRestaurantsVC ()
-<OMNBeaconsSearchManagerDelegate>
-
-@end
+#import "OMNNavigationController.h"
 
 @implementation OMNSearchRestaurantsVC {
   
-  OMNBeaconsSearchManager *_beaconsSearchManager;
   BOOL _searching;
   
-}
-
-- (void)dealloc {
-  [self stopBeaconSearchManager];
 }
 
 - (instancetype)init {
@@ -70,26 +56,96 @@
   
 }
 
-- (void)decodeBeacons:(NSArray *)beacons {
+- (void)startSearchingRestaurants {
+  
+  [self stopSearching];
+  [self.loaderView stop];
+  _searching = YES;
   
   @weakify(self)
-  [OMNRestaurantManager decodeBeacons:beacons withCompletion:^(NSArray *restaurants) {
+  [self.navigationController omn_popToViewController:self animated:YES completion:^{
     
     @strongify(self)
-    [self didFindRestaurants:restaurants];
-    
-  } failureBlock:^(OMNError *error) {
-    
-    @strongify(self)
-    [self didFailOmnom:error];
+    [self checkUserToken];
     
   }];
   
 }
 
+- (PMKPromise *)checkCLAuthorizationStatus {
+  
+  @weakify(self)
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    if (kCLAuthorizationStatusAuthorizedAlways == [CLLocationManager authorizationStatus]) {
+      fulfill(@(YES));
+    }
+    else {
+      
+      @strongify(self)
+      [self.loaderView stop];
+      OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:self];
+      askNavigationPermissionsVC.didReceivePermissionBlock = ^{
+        
+        [self dismissViewControllerAnimated:YES completion:^{
+        
+          [self resetAnimation];
+          fulfill(@(YES));
+          
+        }];
+        
+      };
+      [self presentViewController:[OMNNavigationController controllerWithRootVC:askNavigationPermissionsVC] animated:YES completion:nil];
+      
+    }
+    
+  }];
+  
+}
+
+- (void)checkUserToken {
+
+  [self resetAnimation];
+  @weakify(self)
+  [OMNAuthorization checkToken].then(^(OMNUser *user) {
+    
+    return [self checkCLAuthorizationStatus];
+    
+  }).then(^(NSNumber *stauts) {
+    
+    return [[OMNLaunchHandler sharedHandler].launchOptions decodeRestaurants];
+    
+  }).then(^(NSArray *restaurants) {
+    
+    @strongify(self)
+    [self didFindRestaurants:restaurants];
+    
+  }).catch(^(OMNError *error) {
+    
+    @strongify(self)
+    if (kOMNErrorNoUserToken == error.code) {
+      
+      [self cancelTap];
+      
+    }
+    else {
+      
+      [self didFailOmnom:error];
+      
+    }
+    
+  });
+  
+}
+
+
+- (void)stopSearching {
+  _searching = NO;
+}
+
 - (void)didFindRestaurants:(NSArray *)restaurants {
   
-  [self stopBeaconSearchManager];
+  [self stopSearching];
   @weakify(self)
   [self finishLoading:^{
   
@@ -117,26 +173,14 @@
   
 }
 
-- (void)cancelTap {
-  
-  [self stopBeaconSearchManager];
-  [self.delegate searchRestaurantsVCDidCancel:self];
-  
+- (void)beaconsNotFound {
+  [self didFindRestaurants:@[]];
 }
 
-- (void)startSearchingRestaurants {
+- (void)cancelTap {
   
-  [self stopBeaconSearchManager];
-  [self.loaderView stop];
-  _searching = YES;
-  
-  @weakify(self)
-  [self.navigationController omn_popToViewController:self animated:YES completion:^{
-    
-    @strongify(self)
-    [self checkUserToken];
-    
-  }];
+  [self stopSearching];
+  [self.delegate searchRestaurantsVCDidCancel:self];
   
 }
 
@@ -146,75 +190,6 @@
   self.label.text = @"";
   [self.circleButton setImage:self.circleIcon forState:UIControlStateNormal];
 
-}
-
-- (void)checkUserToken {
-  
-  [self resetAnimation];
-  @weakify(self)
-  [OMNAuthorization checkToken].then(^id(OMNUser *user) {
-    
-    if (user) {
-      
-      return [[OMNLaunchHandler sharedHandler].launchOptions decodeRestaurants];
-      
-    }
-    else {
-      
-      return [OMNError omnomErrorFromCode:kOMNErrorCancel];
-      
-    }
-    
-  }).then(^(NSArray *restaurants) {
-    
-    @strongify(self)
-    if (restaurants) {
-
-      [self didFindRestaurants:restaurants];
-
-    }
-    else {
-      
-      [self startBeaconSearchManager];
-      
-    }
-    
-  }).catch(^(OMNError *error) {
-
-    @strongify(self)
-    if (kOMNErrorCancel == error.code) {
-      
-      [self cancelTap];
-      
-    }
-    else {
-    
-      [self didFailOmnom:error];
-      
-    }
-    
-  });
-  
-}
-
-- (void)startBeaconSearchManager {
-  
-  [self.loaderView setProgress:0.1];
-  if (!_beaconsSearchManager) {
-    _beaconsSearchManager = [[OMNBeaconsSearchManager alloc] init];
-  }
-  _beaconsSearchManager.delegate = self;
-  [_beaconsSearchManager startSearching];
-  
-}
-
-- (void)stopBeaconSearchManager {
-  
-  _searching = NO;
-  _beaconsSearchManager.delegate = nil;
-  [_beaconsSearchManager stop];
-  _beaconsSearchManager = nil;
-  
 }
 
 - (void)handleInternetError:(OMNError *)error {
@@ -253,110 +228,6 @@
     ];
   
   [self.navigationController pushViewController:noInternetVC animated:YES];
-  
-}
-
-#pragma mark - OMNBeaconsSearchManagerDelegate
-
-- (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didFindBeacons:(NSArray *)beacons {
-  
-  NSDictionary *debugData = [OMNBeacon debugDataFromBeacons:beacons];
-  [[OMNAnalitics analitics] logDebugEvent:@"DID_FIND_BEACONS" parametrs:@{@"beacons" : debugData}];
-  [beaconsSearchManager stop];
-  [self decodeBeacons:beacons];
-  
-}
-
-- (void)beaconSearchManagerDidFail:(OMNBeaconsSearchManager *)beaconsSearchManager {
-  [self.loaderView stop];
-}
-
-- (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didChangeState:(OMNSearchManagerState)state {
-  
-  switch (state) {
-    case kSearchManagerStartSearchingBeacons: {
-      
-      [self.loaderView setProgress:0.3];
-      
-    } break;
-    case kSearchManagerNotFoundBeacons: {
-      
-      [self beaconsNotFound];
-      
-    } break;
-    case kSearchManagerRequestReload: {
-      
-      [self startSearchingRestaurants];
-      
-    } break;
-  }
-  
-}
-
-- (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didDetermineBLEState:(OMNBLESearchManagerState)bleState {
-  
-  switch (bleState) {
-    case kBLESearchManagerBLEDidOn: {
-      
-      [self.loaderView setProgress:0.25];
-      
-    } break;
-    default: {
-      
-      [self beaconsNotFound];
-      
-    } break;
-  }
-  
-}
-
-- (void)beaconSearchManager:(OMNBeaconsSearchManager *)beaconsSearchManager didDetermineCLState:(OMNCLSearchManagerState)clState {
-  
-  switch (clState) {
-    case kCLSearchManagerRequestRestrictedPermission:
-    case kCLSearchManagerRequestDeniedPermission: {
-      
-      [[OMNAnalitics analitics] logDebugEvent:@"no_geolocation_permission" parametrs:nil];
-      [self showDenyLocationPermissionDescription];
-      
-    } break;
-    case kCLSearchManagerRequestPermission: {
-      
-      @weakify(self)
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        @strongify(self)
-        OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:self];
-        [self.navigationController pushViewController:askNavigationPermissionsVC animated:YES];
-        
-      });
-      
-    } break;
-  }
-  
-}
-
-- (void)showDenyLocationPermissionDescription {
-  
-  OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
-  @weakify(self)
-  denyCLPermissionVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:kOMN_TURN_ON_BUTTON_TITLE image:nil block:^{
-      
-      @strongify(self)
-      OMNCLPermissionsHelpVC *navigationPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
-      [self.navigationController pushViewController:navigationPermissionsHelpVC animated:YES];
-      
-    }]
-    ];
-  [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
-  
-}
-
-- (void)beaconsNotFound {
-  
-  [self didFindRestaurants:@[]];
   
 }
 

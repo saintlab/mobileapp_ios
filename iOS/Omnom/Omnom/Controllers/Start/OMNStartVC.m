@@ -8,15 +8,13 @@
 
 #import "OMNStartVC.h"
 #import "UIImage+omn_helper.h"
-#import "OMNNavigationControllerDelegate.h"
 #import "OMNAuthorization.h"
 #import "OMNAuthorizationVC.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNNavigationController.h"
-#import "OMNAnalitics.h"
 #import "UINavigationController+omn_replace.h"
-#import "NSURL+omn_query.h"
 #import "OMNLaunchHandler.h"
+#import "OMNDefaultLaunch.h"
 
 @interface OMNStartVC ()
 <OMNAuthorizationVCDelegate,
@@ -37,7 +35,7 @@ OMNSearchRestaurantVCDelegate>
   [OMNAuthorization authorisation].logoutCallback = ^{
     
     @strongify(self)
-    [self reloadSearchingRestaurant];
+    [self reloadWithLunch:[OMNDefaultLaunch new]];
     
   };
   
@@ -50,9 +48,9 @@ OMNSearchRestaurantVCDelegate>
   
 }
 
-- (void)reloadSearchingRestaurant {
+- (void)reloadWithLunch:(OMNLaunch *)launch {
 
-  [OMNLaunchHandler sharedHandler].launchOptions = nil;
+  [OMNLaunchHandler sharedHandler].launchOptions = launch;
   [self dismissViewControllerAnimated:YES completion:nil];
 
 }
@@ -82,10 +80,8 @@ OMNSearchRestaurantVCDelegate>
   
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
   searchRestaurantVC.delegate = self;
-  
-  UINavigationController *navigationController = [[OMNNavigationController alloc] initWithRootViewController:searchRestaurantVC];
+  UINavigationController *navigationController = [OMNNavigationController controllerWithRootVC:searchRestaurantVC];
   navigationController.navigationBar.barStyle = UIBarStyleDefault;
-  navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
   [self presentViewController:navigationController animated:NO completion:nil];
   
 }
@@ -101,7 +97,7 @@ OMNSearchRestaurantVCDelegate>
 #pragma mark - OMNSearchRestaurantVCDelegate
 
 - (void)searchRestaurantVCDidFinish:(OMNSearchRestaurantVC *)searchRestaurantVC {
-  [self reloadSearchingRestaurant];
+  [self reloadWithLunch:[OMNDefaultLaunch new]];
 }
 
 #pragma mark - OMNStartVC1Delegate

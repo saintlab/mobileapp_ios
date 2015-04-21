@@ -215,27 +215,19 @@
 }
 
 - (void)paymentDidFinishWithBill:(OMNBill *)bill {
-
   [self.delegate transactionPaymentVCDidFinish:self withBill:bill];
-  
 }
 
 - (void)orderDidClosed {
-  
   [self.delegate transactionPaymentVCDidFail:self];
-  
 }
 
 - (void)cancelTap {
-  
   [self.delegate transactionPaymentVCDidCancel:self];
-  
 }
 
 - (void)addCardTap {
-  
   [_bankCardMediator registerCard];
-  
 }
 
 - (void)omn_setup {

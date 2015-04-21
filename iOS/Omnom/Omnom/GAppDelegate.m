@@ -23,6 +23,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+  [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+  
 #if OMN_TEST
 #else
 

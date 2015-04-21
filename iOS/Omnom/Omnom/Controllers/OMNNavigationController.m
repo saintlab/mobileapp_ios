@@ -7,12 +7,21 @@
 //
 
 #import "OMNNavigationController.h"
+#import "OMNNavigationControllerDelegate.h"
 
 @interface OMNNavigationController ()
 
 @end
 
 @implementation OMNNavigationController
+
++ (instancetype)controllerWithRootVC:(UIViewController *)rootVC {
+  
+  OMNNavigationController *navC = [[OMNNavigationController alloc] initWithRootViewController:rootVC];
+  navC.delegate = [OMNNavigationControllerDelegate sharedDelegate];
+  return navC;
+  
+}
 
 - (UIViewController *)childViewControllerForStatusBarHidden {
   UIViewController *visibleViewController = self.topViewController;

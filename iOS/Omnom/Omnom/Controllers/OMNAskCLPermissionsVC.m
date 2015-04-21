@@ -23,6 +23,14 @@
   
 }
 
+- (void)dealloc {
+  
+  [self stop];
+  _permissionLocationManager.delegate = nil;
+  _permissionLocationManager = nil;
+  
+}
+
 - (instancetype)initWithParent:(OMNCircleRootVC *)parent {
   self = [super initWithParent:parent];
   if (self) {
@@ -50,23 +58,18 @@
   return self;
 }
 
-- (void)dealloc {
-
-  [self stop];
-  
-}
-
 - (void)stop {
-  
-  _permissionLocationManager.delegate = nil;
   [_permissionLocationManager stopUpdatingLocation];
-  _permissionLocationManager = nil;
-  
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
 
+  _permissionLocationManager = [[CLLocationManager alloc] init];
+  _permissionLocationManager.pausesLocationUpdatesAutomatically = NO;
+  _permissionLocationManager.activityType = CLActivityTypeOtherNavigation;
+  _permissionLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+  
   [self.circleButton setImage:[UIImage imageNamed:@"allow_geolocation_icon_big"] forState:UIControlStateNormal];
 
 }
@@ -86,11 +89,42 @@
   
 }
 
+- (void)didReceivePermission {
+  
+  [self stop];
+  self.didReceivePermissionBlock();
+  
+}
+
 - (IBAction)askPermissionTap {
   
-  _permissionLocationManager = [[CLLocationManager alloc] init];
-  _permissionLocationManager.pausesLocationUpdatesAutomatically = NO;
+  _permissionLocationManager.delegate = self;
 
+  switch ([CLLocationManager authorizationStatus]) {
+    case kCLAuthorizationStatusAuthorizedAlways:
+    case kCLAuthorizationStatusAuthorizedWhenInUse: {
+      
+      [self didReceivePermission];
+      
+    } break;
+    case kCLAuthorizationStatusNotDetermined: {
+      
+      [self requestCLPermission];
+      
+    } break;
+    case kCLAuthorizationStatusDenied:
+    case kCLAuthorizationStatusRestricted:
+    default: {
+      
+      [self showDenyPermissonOffHelp];
+      
+    } break;
+  }
+  
+}
+
+- (void)requestCLPermission {
+  
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
   if ([_permissionLocationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
@@ -100,13 +134,11 @@
   }
   else {
     
-    _permissionLocationManager.delegate = self;
-    _permissionLocationManager.activityType = CLActivityTypeOtherNavigation;
-    _permissionLocationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
     [_permissionLocationManager startUpdatingLocation];
     
   }
 #pragma clang diagnostic pop
+  
 }
 
 - (void)denyPermissionTap {
@@ -134,16 +166,17 @@
 }
 
 #pragma mark - UINavigationControllerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+  [self askPermissionTap];  
+}
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-  
   [self stop];
-  
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-  
   [self stop];
-  
 }
 
 @end

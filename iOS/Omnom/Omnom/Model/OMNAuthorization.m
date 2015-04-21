@@ -317,7 +317,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)checkUserWithBlock:(void (^)(OMNUser *user))userBlock failure:(void (^)(OMNError *error))failureBlock {
   
   if (0 == self.token.length) {
-    userBlock(nil);
+    failureBlock([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
     return;
   }
   
@@ -326,12 +326,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     
     @strongify(self)
     [self updateUserInfoWithUser:user];
-    
-    if (!user) {
-      
-      self.token = nil;
-      
-    }
     userBlock(user);
     
   } failure:^(OMNError *error) {

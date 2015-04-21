@@ -16,7 +16,11 @@
   if (self) {
     self.circleIcon = [UIImage imageNamed:@"allow_push_icon_big"];
     self.faded = YES;
+#if OMN_TRAVELERS
+    self.text = kOMN_PUSH_PERMISSION_TRAVELERS_DESCRIPTION_TEXT;
+#else
     self.text = kOMN_PUSH_PERMISSION_DESCRIPTION_TEXT;
+#endif
     
     @weakify(self)
     self.buttonInfo =

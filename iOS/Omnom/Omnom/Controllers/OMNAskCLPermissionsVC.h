@@ -10,5 +10,7 @@
 
 @interface OMNAskCLPermissionsVC : OMNCircleRootVC
 
+@property (nonatomic, copy) dispatch_block_t didReceivePermissionBlock;
+
 @end
 

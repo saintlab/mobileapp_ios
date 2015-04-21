@@ -8,7 +8,6 @@
 
 #import "OMNRestaurantActionsVC.h"
 #import "OMNNavigationController.h"
-#import "OMNNavigationControllerDelegate.h"
 #import "OMNRestaurantActionsToolbar.h"
 #import <OMNStyler.h>
 #import "OMNVisitor.h"
@@ -80,8 +79,7 @@
   
   _r1VC = [[OMNR1VC alloc] initWithMediator:_restaurantMediator];
   
-  _internalNVC = [[OMNNavigationController alloc] initWithRootViewController:_r1VC];
-  _internalNVC.delegate = [OMNNavigationControllerDelegate sharedDelegate];
+  _internalNVC = [OMNNavigationController controllerWithRootVC:_r1VC];
   [_internalNVC willMoveToParentViewController:self];
   [self.view addSubview:_internalNVC.view];
   [self addChildViewController:_internalNVC];

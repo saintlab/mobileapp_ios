@@ -55,16 +55,13 @@
   
 }
 
-- (void)reloadWithOptions:(OMNLaunch *)lo {
-  
-  self.launchOptions = lo;
-  [_startVC reloadSearchingRestaurant];
-  
+- (void)reloadWithLaunch:(OMNLaunch *)launch {
+  [_startVC reloadWithLunch:launch];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   
-  [self reloadWithOptions:[OMNLaunchFactory launchWithURL:url sourceApplication:sourceApplication annotation:annotation]];
+  [self reloadWithLaunch:[OMNLaunchFactory launchWithURL:url sourceApplication:sourceApplication annotation:annotation]];
   return YES;
   
 }
@@ -101,7 +98,7 @@
     
     if (UIApplicationStateActive != [UIApplication sharedApplication].applicationState) {
       
-      [self reloadWithOptions:[OMNLaunchFactory launchWithRemoteNotification:userInfo]];
+      [self reloadWithLaunch:[OMNLaunchFactory launchWithRemoteNotification:userInfo]];
       
     }
     completionHandler(UIBackgroundFetchResultNoData);
@@ -140,7 +137,7 @@
 }
 
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification {
-  [self reloadWithOptions:[OMNLaunchFactory launchWithLocalNotification:notification]];
+  [self reloadWithLaunch:[OMNLaunchFactory launchWithLocalNotification:notification]];
 }
 
 - (void)applicationWillEnterForeground {

@@ -205,6 +205,7 @@
 //–––––––––
 #pragma mark - permissions
 #define kOMN_PUSH_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"PUSH_PERMISSION_DESCRIPTION_TEXT", @"Разрешить Omnom получить push-уведомления")
+#define kOMN_PUSH_PERMISSION_TRAVELERS_DESCRIPTION_TEXT NSLocalizedString(@"PUSH_PERMISSION_TRAVELERS_DESCRIPTION_TEXT", @"Разрешить Travelers получить push-уведомления")
 #define kOMN_CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"CAMERA_GET_PHOTO_PERMISSION_DESCRIPTION_TEXT", @"Для получения изображения\nнеобходимо разрешение\nна доступ к камере.")
 #define kOMN_CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"CAMERA_SCAN_CARD_PERMISSION_DESCRIPTION_TEXT", @"Для сканирования карты\nнеобходимо разрешение\nна доступ к камере.")
 #define kOMN_CL_PERMISSION_DESCRIPTION_TEXT NSLocalizedString(@"CL_PERMISSION_DESCRIPTION_TEXT", @"Необходимо разрешение на использование службы геолокации")
