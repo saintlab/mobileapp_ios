@@ -167,7 +167,7 @@
   } cancelBlock:^{
     
     @strongify(self)
-    [self beaconsNotFound];
+    [self cancelTap];
     
   }];
   
