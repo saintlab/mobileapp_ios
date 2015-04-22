@@ -325,7 +325,6 @@
     _cardholder = parametrs[@"OMNMailRu_cardholder"];
     _baseURL = parametrs[@"OMNMailRuAcquiringBaseURL"];
     _use_3ds = [parametrs[@"OMNMailRu_use_3ds"] boolValue];
-    _use_3ds = YES;
     
   }
   return self;
