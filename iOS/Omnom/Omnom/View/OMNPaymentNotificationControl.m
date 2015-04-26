@@ -93,6 +93,29 @@
   
 }
 
++ (void)showText:(NSString *)text delay:(NSTimeInterval)delay {
+ 
+  OMNPaymentNotificationControl *control = [[OMNPaymentNotificationControl alloc] init];
+  control.alpha = 0.0f;
+  [UIView animateWithDuration:0.3 animations:^{
+    
+    control.alpha = 1.0f;
+    
+  }];
+  
+  [control.closeButton setTitle:text forState:UIControlStateNormal];
+  
+  [self playPaySound];
+  
+  __weak typeof(control)weakControl = control;
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
+    [weakControl slideUp];
+    
+  });
+  
+}
+
 + (void)showWithPaymentDetails:(OMNPaymentDetails *)paymentDetails {
   
   if (![paymentDetails.userID isEqualToString:[OMNAuthorization authorisation].user.id] &&
@@ -101,17 +124,7 @@
     return;
   }
   
-  OMNPaymentNotificationControl *control = [[OMNPaymentNotificationControl alloc] init];
-  
-  control.alpha = 0.0f;
-  [UIView animateWithDuration:0.3 animations:^{
-    
-    control.alpha = 1.0f;
-    
-  }];
-  
   NSString *title = nil;
-  
   if ([paymentDetails.userID isEqualToString:[OMNAuthorization authorisation].user.id] &&
       paymentDetails.tipAmount > 0) {
 
@@ -132,16 +145,8 @@
     title = [NSString stringWithFormat:kOMN_PAYMENT_NOTIFICATION_AMOUNT_FORMAT, paymentDetails.userName, [OMNUtils moneyStringFromKop:paymentDetails.netAmount]];
     
   }
-  [control.closeButton setTitle:title forState:UIControlStateNormal];
-
-  [self playPaySound];
-
-  __weak typeof(control)weakControl = control;
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    
-    [weakControl slideUp];
-    
-  });
+  
+  [self showText:title delay:5.0f];
   
 }
 

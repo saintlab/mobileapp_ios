@@ -13,6 +13,7 @@
 #import "OMNNearestBeaconSearchManager.h"
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNLaunchFactory.h"
+#import "OMNPaymentNotificationControl.h"
 
 @implementation OMNLaunchHandler {
   
@@ -83,6 +84,20 @@
   }
   
   NSString *type = userInfo[@"type"];
+  
+
+//  {"aps": {"sound":"default","alert":{"body":"Ваш заказ №1003 готов. Пинкод — 2036","action-loc-key":"Открыть приложение"}}}
+  id alert = userInfo[@"aps"][@"alert"];
+  NSString *text = nil;
+  if ([alert isKindOfClass:[NSDictionary class]]) {
+    text = alert[@"body"];
+  }
+  else if ([alert isKindOfClass:[NSString class]]) {
+    text = alert;
+  }
+  if (text) {
+    [[[UIAlertView alloc] initWithTitle:kOMN_PUSH_MESSAGE_TITLE message:text delegate:nil cancelButtonTitle:kOMN_OK_BUTTON_TITLE otherButtonTitles:nil] show];
+  }
   
   if ([type isEqualToString:@"wake-up"]) {
     

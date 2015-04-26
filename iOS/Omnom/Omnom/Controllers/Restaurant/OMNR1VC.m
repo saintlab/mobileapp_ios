@@ -22,6 +22,7 @@
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
 #import "UIView+screenshot.h"
+#import <PromiseKit.h>
 
 @interface OMNR1VC ()
 <OMNRestaurantInfoVCDelegate>
@@ -150,8 +151,12 @@
   [super viewWillDisappear:animated];
   
   [_circleAnimation finishCircleAnimation];
-  [_tableButton removeFromSuperview] ,_tableButton = nil;
+  [self removeTableButton];
   
+}
+
+- (void)removeTableButton {
+  [_tableButton removeFromSuperview] ,_tableButton = nil;
 }
 
 - (void)updateNavigationButtons {
@@ -166,51 +171,50 @@
       _restaurantMediator.showTableButton) {
     
     _showTableButtonAnimation = YES;
-    _tableButton = [OMNTableButton buttonWithColor:visitor.restaurant.decoration.antagonist_color];
-    [_tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
-    [_tableButton setText:_restaurantMediator.table.name];
-    _tableButton.center = userButton.center;
-    [userButton.superview addSubview:_tableButton];
+    OMNTableButton *tableButton = [OMNTableButton buttonWithColor:visitor.restaurant.decoration.antagonist_color];
+    [tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
+    [tableButton setText:_restaurantMediator.table.name];
+    tableButton.center = userButton.center;
+    [userButton.superview addSubview:tableButton];
     CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;
-    _tableButton.transform = CGAffineTransformMakeTranslation(centerX - _tableButton.center.x, 0.0f);
-    _tableButton.alpha = 0.0f;
+    tableButton.transform = CGAffineTransformMakeTranslation(centerX - tableButton.center.x, 0.0f);
+    tableButton.alpha = 0.0f;
+    _tableButton = tableButton;
     
-    [UIView animateWithDuration:0.8 delay:1.0 options:kNilOptions animations:^{
+    [UIView promiseWithDuration:0.8 delay:1.0 options:0 animations:^{
       
-      _tableButton.alpha = 1.0f;
+      tableButton.alpha = 1.0f;
       
-    } completion:^(BOOL finished) {
+    }].then(^{
       
-      [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+      return [UIView promiseWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         
-        _tableButton.transform = CGAffineTransformIdentity;
+        tableButton.transform = CGAffineTransformIdentity;
         userButton.alpha = 0.0f;
+
+      }];
+      
+    }).then(^{
+      
+      return [UIView promiseWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
         
-      } completion:^(BOOL finished1) {
-        
-        [UIView animateWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-          
-          _tableButton.alpha = 0.0f;
-          userButton.alpha = 1.0f;
-          
-        } completion:^(BOOL finished2) {
-          
-          [_tableButton removeFromSuperview], _tableButton = nil;
-          
-        }];
+        tableButton.alpha = 0.0f;
+        userButton.alpha = 1.0f;
         
       }];
       
-    }];
+    }).then(^{
+      
+      [self removeTableButton];
+      
+    });
     
   }
   
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  
   return UIStatusBarStyleLightContent;
-  
 }
 
 - (void)pan:(UIPanGestureRecognizer *)panGR {
@@ -272,18 +276,7 @@
   [_restaurantMediator.restaurant.decoration loadLogo:^(UIImage *image) {
     
     @strongify(self)
-    if (image) {
-      
-      self.circleIcon = image;
-      
-    }
-    else {
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self loadIconIfNeeded];
-        
-      });
-    }
+    self.circleIcon = image;
     
   }];
   
@@ -309,18 +302,7 @@
   [decoration loadBackground:^(UIImage *image) {
     
     @strongify(self)
-    if (image) {
-      
-      [self setBackgroundImage:image animated:YES];
-      
-    }
-    else {
-      dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(60.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        [self loadBackgroundIfNeeded];
-        
-      });
-    }
+    [self setBackgroundImage:image animated:YES];
     
   }];
 

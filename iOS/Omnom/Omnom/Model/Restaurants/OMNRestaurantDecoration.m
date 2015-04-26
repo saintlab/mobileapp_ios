@@ -49,40 +49,34 @@
 }
 
 - (UIImage *)circleBackground {
-  
   return [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:self.background_color];
-  
 }
 
 - (UIImage *)woodBackgroundImage {
-
   return [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:self.background_color blendMode:kCGBlendModeMultiply alpha:0.85f];
-  
 }
 
 - (void)loadLogo:(OMNImageBlock)imageBlock {
   
   @weakify(self)
-  [[OMNImageManager manager] downloadImageWithURL:self.logoUrl completion:^(UIImage *image) {
+  [[OMNImageManager manager] downloadImageWithURL:self.logoUrl numberOfRetries:3 completion:^(UIImage *image) {
     
     @strongify(self)
     self.logo = image;
     imageBlock(image);
-    
+
   }];
   
 }
 
 - (BOOL)hasBackgroundImage {
-  
   return (self.background_imageUrl.length > 0);
-  
 }
 
 - (void)loadBackground:(OMNImageBlock)imageBlock {
   
   @weakify(self)
-  [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl completion:^(UIImage *image) {
+  [[OMNImageManager manager] downloadImageWithURL:self.background_imageUrl numberOfRetries:3 completion:^(UIImage *image) {
     
     @strongify(self)
     self.background_image = image;

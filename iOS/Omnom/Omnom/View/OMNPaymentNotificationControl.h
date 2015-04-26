@@ -24,6 +24,7 @@
 @interface OMNPaymentNotificationControl : UIView
 
 + (void)showWithPaymentDetails:(OMNPaymentDetails *)paymentDetails;
++ (void)showText:(NSString *)text delay:(NSTimeInterval)delay;
 + (void)playPaySound;
 
 @end

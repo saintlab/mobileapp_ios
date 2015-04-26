@@ -300,6 +300,7 @@
 #define kOMN_RATINGSCREEN_THANK_TITLE NSLocalizedString(@"RATINGSCREEN_THANK_TITLE", @"Счёт")
 #define kOMN_REGISTER_USER_TITLE NSLocalizedString(@"REGISTER_USER_TITLE", @"Создать аккаунт")
 #define kOMN_QR_SCREEN_TITLE NSLocalizedString(@"QR_SCREEN_TITLE", @"Сканирование")
+#define kOMN_PUSH_MESSAGE_TITLE NSLocalizedString(@"PUSH_MESSAGE_TITLE", @"Сообщение")
 
 
 //bank card

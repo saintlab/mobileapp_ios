@@ -183,7 +183,7 @@ static OMNMailRuConfig *_config = nil;
   }
   
   NSDictionary *payParameters = [transaction parametersWithConfig:_config];
-
+  
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     if (!payParameters) {

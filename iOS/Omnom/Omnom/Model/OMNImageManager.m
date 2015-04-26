@@ -84,14 +84,31 @@
   
 }
 
-- (void)getImageSizeWithURL:(NSURL *)url comletionBlock:(void (^)(long long size))comletionBlock {
+- (void)downloadImageWithURL:(NSString *)imageUrl numberOfRetries:(NSInteger)numberOfRetries completion:(void (^)(UIImage *image))completionBlock {
   
-  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-  [request setHTTPMethod:@"HEAD"];
-  request.timeoutInterval = 5.0;
-  [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue new] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+  if (numberOfRetries <= 0 ||
+      ![imageUrl isKindOfClass:[NSString class]]) {
+    completionBlock(nil);
+    return;
+  }
+  
+  @weakify(self)
+  [_imageManager downloadImageWithURL:[NSURL URLWithString:imageUrl] options:SDWebImageRetryFailed progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
     
-    comletionBlock([response expectedContentLength]);
+    if (image) {
+      
+      if (image.scale != 2.0f) {
+        image = [UIImage imageWithCGImage:image.CGImage scale:2.0f orientation:image.imageOrientation];
+      }
+      completionBlock(image);
+
+    }
+    else {
+    
+      @strongify(self)
+      [self downloadImageWithURL:imageUrl numberOfRetries:(numberOfRetries - 1) completion:completionBlock];
+      
+    }
     
   }];
   
