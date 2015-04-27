@@ -341,7 +341,6 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 - (void)logDebugEvent:(NSString *)eventName jsonRequest:(id)jsonRequest responseOperation:(AFHTTPRequestOperation *)responseOperation {
 
   NSString *requestID = responseOperation.response.allHeaderFields[@"X-Request-ID"];
-  
   NSMutableDictionary *properties = [self superProperties];
   [properties addEntriesFromDictionary:
    @{
@@ -350,6 +349,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"errorCode" : @(responseOperation.error.code),
      @"requestID" : (requestID) ?: (@"unknown"),
      @"responseString" : (responseOperation.responseString) ?: (@""),
+     @"request_headers" : responseOperation.request.allHTTPHeaderFields,
      }];
   
   [_mixpanelDebug track:eventName properties:properties];

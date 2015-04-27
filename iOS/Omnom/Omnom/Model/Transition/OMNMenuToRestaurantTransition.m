@@ -24,8 +24,7 @@
   UIView *containerView = [transitionContext containerView];
   NSTimeInterval duration = [self transitionDuration:transitionContext];
   
-  UITableView *menuTable = fromViewController.tableView;
-  menuTable.bounces = NO;
+  UITableView *fromMenuTable = fromViewController.tableView;
   
   [containerView addSubview:toViewController.view];
   [containerView addSubview:fromViewController.view];
@@ -38,10 +37,13 @@
   [fromViewController closeAllCategoriesWithCompletion:^{
   }];
 
+  fromMenuTable.bounces = NO;
+  
   [UIView animateWithDuration:duration animations:^{
     
     fromViewController.backgroundView.alpha = 0.0f;
-    menuTable.frame = toTableFrame;
+    fromMenuTable.frame = toTableFrame;
+    fromMenuTable.contentInset = toViewController.menuTable.contentInset;
     
   } completion:^(BOOL finished1) {
     

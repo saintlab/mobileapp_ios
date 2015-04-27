@@ -40,7 +40,7 @@
   OMNMenuModel *_menuModel;
   
   OMNTableButton *_tableButton;
-  BOOL _showTableButtonAnimation;
+  BOOL _tableButtonAnimationDidShow;
   
 }
 
@@ -112,7 +112,8 @@
 
   _menuModel.didEndDraggingBlock = ^(UITableView *tableView) {
     
-    if (tableView.contentOffset.y > -20.0f) {
+    CGFloat tableTopOffset = tableView.contentOffset.y + tableView.contentInset.top;
+    if (tableTopOffset > 50.0f) {
       
       @strongify(self)
       [self showMenuAtCategory:nil];
@@ -161,55 +162,55 @@
 
 - (void)updateNavigationButtons {
   
-  OMNVisitor *visitor = _restaurantMediator.visitor;
   self.navigationItem.leftBarButtonItem = [_restaurantMediator exitRestaurantButton];
   UIButton *userButton = [_restaurantMediator userProfileButton];
   self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:userButton];
   self.navigationItem.titleView = [_restaurantMediator titleView];
   
-  if (!_showTableButtonAnimation &&
-      _restaurantMediator.showTableButton) {
-    
-    _showTableButtonAnimation = YES;
-    OMNTableButton *tableButton = [OMNTableButton buttonWithColor:visitor.restaurant.decoration.antagonist_color];
-    [tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
-    [tableButton setText:_restaurantMediator.table.name];
-    tableButton.center = userButton.center;
-    [userButton.superview addSubview:tableButton];
-    CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;
-    tableButton.transform = CGAffineTransformMakeTranslation(centerX - tableButton.center.x, 0.0f);
-    tableButton.alpha = 0.0f;
-    _tableButton = tableButton;
-    
-    [UIView promiseWithDuration:0.8 delay:1.0 options:0 animations:^{
-      
-      tableButton.alpha = 1.0f;
-      
-    }].then(^{
-      
-      return [UIView promiseWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        
-        tableButton.transform = CGAffineTransformIdentity;
-        userButton.alpha = 0.0f;
-
-      }];
-      
-    }).then(^{
-      
-      return [UIView promiseWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-        
-        tableButton.alpha = 0.0f;
-        userButton.alpha = 1.0f;
-        
-      }];
-      
-    }).then(^{
-      
-      [self removeTableButton];
-      
-    });
-    
+  if (_tableButtonAnimationDidShow ||
+      !_restaurantMediator.showTableButton) {
+    return;
   }
+
+  _tableButtonAnimationDidShow = YES;
+  OMNVisitor *visitor = _restaurantMediator.visitor;
+  OMNTableButton *tableButton = [OMNTableButton buttonWithColor:visitor.restaurant.decoration.antagonist_color];
+  [tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
+  [tableButton setText:_restaurantMediator.table.name];
+  tableButton.center = userButton.center;
+  [userButton.superview addSubview:tableButton];
+  CGFloat centerX = CGRectGetWidth(userButton.superview.frame)/2.0f;
+  tableButton.transform = CGAffineTransformMakeTranslation(centerX - tableButton.center.x, 0.0f);
+  tableButton.alpha = 0.0f;
+  _tableButton = tableButton;
+  
+  [UIView promiseWithDuration:0.8 delay:1.0 options:0 animations:^{
+    
+    tableButton.alpha = 1.0f;
+    
+  }].then(^{
+    
+    return [UIView promiseWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+      
+      tableButton.transform = CGAffineTransformIdentity;
+      userButton.alpha = 0.0f;
+      
+    }];
+    
+  }).then(^{
+    
+    return [UIView promiseWithDuration:0.8 delay:2.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+      
+      tableButton.alpha = 0.0f;
+      userButton.alpha = 1.0f;
+      
+    }];
+    
+  }).then(^{
+    
+    [self removeTableButton];
+    
+  });
   
 }
 
@@ -313,8 +314,9 @@
   _menuModel.menu = menu;
   [_menuTable reloadData];
   
-  CGFloat bottomInset = _menuTable.frame.size.height - _menuTable.contentSize.height - kMenuTableTopOffset;
-  _menuTable.contentInset = UIEdgeInsetsMake(kMenuTableTopOffset, 0.0f, bottomInset, 0.0f);
+  CGFloat topOffset = CGRectGetMaxY(self.circleButton.frame) + 40.0f;
+  CGFloat bottomInset = _menuTable.frame.size.height - _menuTable.contentSize.height - topOffset;
+  _menuTable.contentInset = UIEdgeInsetsMake(topOffset, 0.0f, bottomInset, 0.0f);
 
   [UIView animateWithDuration:0.5 animations:^{
     
@@ -372,11 +374,8 @@
   
   _menuModel = [[OMNMenuModel alloc] init];
   _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-  _menuTable.alpha = 0.0f;
-  _menuTable.clipsToBounds = NO;
-  _menuTable.showsVerticalScrollIndicator = NO;
-  _menuTable.allowsSelection = YES;
   _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
+  _menuTable.alpha = 0.0f;
   [_menuModel configureTableView:_menuTable];
   [self.view insertSubview:_menuTable belowSubview:self.circleButton];
 
@@ -388,8 +387,7 @@
   NSDictionary *metrics = @{};
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
-  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTable attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuTable]|" options:kNilOptions metrics:metrics views:views]];
   
 }
 
@@ -452,23 +450,17 @@
 }
 
 - (void)callWaiterDidStart {
-  
   [self beginCircleAnimationIfNeeded];
-  
 }
 
 - (void)callWaiterDidStop {
-  
   [_circleAnimation finishCircleAnimation];
-
 }
 
 #pragma mark - OMNRestaurantInfoVCDelegate
 
 - (void)restaurantInfoVCDidFinish:(OMNRestaurantInfoVC *)restaurantInfoVC {
-  
   [self.navigationController popToViewController:self animated:YES];
-  
 }
 
 @end

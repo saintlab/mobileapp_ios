@@ -28,6 +28,9 @@ const CGFloat kMenuTableTopOffset = 64.0f;
   tableView.indicatorStyle = UIScrollViewIndicatorStyleWhite;
   tableView.delegate = self;
   tableView.dataSource = self;
+  tableView.clipsToBounds = NO;
+  tableView.showsVerticalScrollIndicator = NO;
+  tableView.allowsSelection = YES;
 
 }
 
@@ -57,10 +60,7 @@ const CGFloat kMenuTableTopOffset = 64.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  
-  CGFloat heightForRow = 44.0f;
-  return heightForRow;
-  
+  return 44.0f;
 }
 
 #pragma mark - UITableViewDelegate

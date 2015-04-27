@@ -41,7 +41,7 @@
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant_id, self.id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
-    
+
     OMNError *error = nil;
     NSArray *orders = [response omn_decodeOrdersWithError:&error];
     if (error) {

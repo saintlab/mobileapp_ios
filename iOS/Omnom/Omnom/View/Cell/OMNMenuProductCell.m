@@ -178,20 +178,17 @@
   
   [self removeMenuProductObservers];
   _item = item;
-  [self addMenuProductObservers];
-  
-  [_item.menuProduct loadImage];
-  
+
   OMNMenuProduct *menuProduct = item.menuProduct;
   _descriptionLabel.attributedText = menuProduct.shortDescription;
-  
   _productIV.image = menuProduct.photoImage;
   _priceButton.selected = menuProduct.preordered;
   _nameLabel.attributedText = menuProduct.nameAttributedString;
-  
   [_priceButton setTitle:[OMNUtils moneyStringFromKop:menuProduct.price] forState:UIControlStateNormal];
   _delimiterView.backgroundColor = (kBottomDelimiterTypeNone == item.delimiterType) ? ([UIColor clearColor]) : ([UIColor colorWithWhite:0.0f alpha:0.3f]);
   
+  [self addMenuProductObservers];
+  [_item.menuProduct loadImage];
   [self updateHeightConstraints];
   
 }
