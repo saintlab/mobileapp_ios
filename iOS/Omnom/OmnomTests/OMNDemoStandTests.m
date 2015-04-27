@@ -52,7 +52,6 @@ describe(@"demo stand test", ^{
       
     }];
     
-    [[expectFutureValue(_orders) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     _order = [_orders firstObject];
 
     [OMNUser stub:@selector(userWithToken:user:failure:) withBlock:^id(NSArray *params) {
