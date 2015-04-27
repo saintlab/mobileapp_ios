@@ -23,27 +23,30 @@
   if (self) {
     
     _menuCategory = menuCategory;
-
+    
   }
   return self;
 }
 
+- (OMNMenuProductsDelimiterCellItem *)firstDelimiter {
+  
+  OMNMenuProductsDelimiterCellItem *item = [[OMNMenuProductsDelimiterCellItem alloc] init];
+  item.type = kMenuProductsDelimiterTypeTransparent;
+  return item;
+
+}
 
 - (NSArray *)rowItems {
   
   if (!self.selected) {
-    return @[];
+    return @[self.firstDelimiter];
   }
   
   if (_rowItems) {
     return _rowItems;
   }
   
-  NSMutableArray *rowItems = [NSMutableArray array];
-  
-  OMNMenuProductsDelimiterCellItem *firstDelimiter = [[OMNMenuProductsDelimiterCellItem alloc] init];
-  firstDelimiter.type = kMenuProductsDelimiterTypeTransparent;
-  [rowItems addObject:firstDelimiter];
+  NSMutableArray *rowItems = [NSMutableArray arrayWithObject:self.firstDelimiter];
   
   NSInteger productsCount = _menuCategory.products.count;
   [_menuCategory.products enumerateObjectsUsingBlock:^(NSString *menuProductID, NSUInteger idx, BOOL *stop) {

@@ -14,7 +14,6 @@
 #import "OMNMenuHeaderLabel.h"
 #import "OMNMenuCategoriesModel.h"
 #import "OMNMenuProductCellItem+edit.h"
-#import "OMNMenuHeaderView.h"
 #import "OMNMenuCategorySectionItem.h"
 #import "UIView+screenshot.h"
 #import <BlocksKit.h>
@@ -57,11 +56,11 @@ OMNMenuCategoryHeaderViewDelegate>
   [super viewDidLoad];
   
   [self omn_setup];
-  _tableView.delegate = _model;
-  _tableView.dataSource = _model;
   
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor whiteColor] target:self action:@selector(backTap)];
   self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"ic_search_black"] color:[UIColor whiteColor] target:self action:@selector(searchTap)];
+  
+  [_model configureTableView:_tableView];
   
   @weakify(self)
   _model.didEndDraggingBlock = ^(UITableView *tableView) {
@@ -75,13 +74,13 @@ OMNMenuCategoryHeaderViewDelegate>
     
   };
   
-  [_model updateWithCompletion:^(OMNTableReloadData *tableReloadData) {
+  [_model updateWithInitialVisibleCategories:nil completion:^(OMNTableReloadData *tableReloadData) {
     
     @strongify(self)
     [self.tableView reloadData];
 
   }];
-  
+
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(menuDidReset) name:OMNMenuDidResetNotification object:nil];
   
 }
@@ -102,12 +101,7 @@ OMNMenuCategoryHeaderViewDelegate>
   }
   NSString *selectedCategoryId = _initiallySelectedCategory.id;
   _initiallySelectedCategory = nil;
-  OMNMenuCategorySectionItem *selectedItem = [_model.allCategories bk_match:^BOOL(OMNMenuCategorySectionItem *item) {
-    
-    return [item.menuCategory.id isEqualToString:selectedCategoryId];
-    
-  }];
-  
+  OMNMenuCategorySectionItem *selectedItem = [_model sectionItemForCategoryID:selectedCategoryId];
   if (selectedItem) {
     [self selectMenuCategorySectionItem:selectedItem];
   }
@@ -164,18 +158,11 @@ OMNMenuCategoryHeaderViewDelegate>
   
   _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
   _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
-  _tableView.tableHeaderView = [[OMNMenuHeaderView alloc] init];
-  _tableView.tableHeaderView.userInteractionEnabled = NO;
-  _tableView.backgroundColor = [UIColor clearColor];
-  _tableView.tableFooterView = [[UIView alloc] init];
-  _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   [self.view addSubview:_tableView];
   
   _navigationFadeView = [UIImageView omn_autolayoutView];
   _navigationFadeView.clipsToBounds = YES;
   [self.view addSubview:_navigationFadeView];
-  
-  [OMNMenuCategoriesModel registerCellsForTableView:_tableView];
 
   UIEdgeInsets insets = UIEdgeInsetsMake(64.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
   _tableView.contentInset = insets;
@@ -196,9 +183,6 @@ OMNMenuCategoryHeaderViewDelegate>
 
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
-  
-//  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
-//  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navigationFadeView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navigationFadeView(topOffset)]" options:kNilOptions metrics:metrics views:views]];

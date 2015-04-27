@@ -24,9 +24,9 @@ UITableViewDelegate>
 
 - (instancetype)initWithMenu:(OMNMenu *)menu cellDelegate:(id<OMNMenuProductWithRecommedtationsCellDelegate>)cellDelegate headerDelegate:(id<OMNMenuCategoryHeaderViewDelegate>)headerDelegate;
 
-+ (void)registerCellsForTableView:(UITableView *)tableView;
-
-- (void)updateWithCompletion:(OMNTableReloadDataBlock)block;
+- (void)configureTableView:(UITableView *)tableView;
+- (OMNMenuCategorySectionItem *)sectionItemForCategoryID:(NSString *)categoryID;
+- (void)updateWithInitialVisibleCategories:(NSArray *)initialVisibleCategories completion:(OMNTableReloadDataBlock)block;
 - (void)selectMenuCategoryItem:(OMNMenuCategorySectionItem *)selectedItem withCompletion:(OMNTableReloadDataBlock)block;
 - (void)closeAllCategoriesWithCompletion:(OMNTableReloadDataBlock)block;
 
