@@ -10,6 +10,7 @@
 #import <AFNetworking.h>
 #import "OMNMailRuError.h"
 #import "OMNMailRuTransaction.h"
+#import "OMNMailRuPoll.h"
 
 @interface OMNMailRuAcquiring : AFHTTPRequestOperationManager
 

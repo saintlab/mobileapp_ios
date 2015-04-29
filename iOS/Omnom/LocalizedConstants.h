@@ -10,7 +10,7 @@
 #define kOMN_ERROR_MESSAGE_ENTER_PHONE_EMAIL NSLocalizedString(@"ERROR_MESSAGE_ENTER_PHONE_EMAIL", @"Введите почту и телефон")
 
 #define kOMN_WISH_CREATE_ERROR_TITLE NSLocalizedString(@"WISH_CREATE_ERROR_TITLE", @"Нет в продаже")
-#define kOMN_WISH_CREATE_ERROR_SUBTITLE NSLocalizedString(@"WISH_CREATE_ERROR_SUBTITLE %@", @"В вашем заказе есть блюда, которые больше не продают:\n{product_list}\n\nУбрать из заказа и продолжить?")
+#define kOMN_WISH_CREATE_ERROR_SUBTITLE NSLocalizedString(@"WISH_CREATE_ERROR_SUBTITLE %@", @"В вашем заказе есть блюда, которые больше не продают:\n\n{product_list}\n\nУбрать из заказа и продолжить?")
 #define kOMN_NO_OMNOM_CONNECTION_ERROR_TEXT NSLocalizedString(@"NO_OMNOM_CONNECTION_ERROR_TEXT", @"Нет связи с заведением.\nОфициант в помощь.")
 #define kOMN_REGISTER_USER_ERROR_NO_EMAIL NSLocalizedString(@"REGISTER_USER_ERROR_NO_EMAIL", @"Вы забыли ввести e-mail")
 #define kOMN_REGISTER_USER_ERROR_EMAIL NSLocalizedString(@"REGISTER_USER_ERROR_EMAIL", @"Некорректный e-mail")

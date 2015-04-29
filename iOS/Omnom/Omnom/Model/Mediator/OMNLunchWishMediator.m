@@ -15,16 +15,18 @@
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
-- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
 
-  @weakify(self)
-  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 didCloseBlock:^{
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    @strongify(self)
-    [self didFinishWish];
-    
+    OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_2GIS_LABEL_TEXT_2 didCloseBlock:^{
+      
+      fulfill(nil);
+      
+    }];
+    [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
+
   }];
-  [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
   
 }
 

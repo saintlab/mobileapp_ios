@@ -8,7 +8,6 @@
 
 #import "OMNPaidWishMediator.h"
 #import "OMNRestaurant+omn_payment.h"
-#import "OMNNavigationController.h"
 #import "OMNPaymentDoneVC.h"
 
 @implementation OMNPaidWishMediator
@@ -17,43 +16,42 @@
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
-- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
-  
-  self.wish = visitor.wish;
-  OMNRestaurant *restaurant = self.restaurantMediator.restaurant;
-  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForWish:self.wish];
-  OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:visitor transaction:transaction];
-  transactionPaymentVC.delegate = self;
-  [self.rootVC presentViewController:[OMNNavigationController controllerWithRootVC:transactionPaymentVC] animated:YES completion:nil];
+- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+
+  return [self payForVisitor:visitor].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+    
+    return [self paymentDone];
+    
+  });
   
 }
 
-#pragma mark - OMNTransactionPaymentVCDelegate
+- (PMKPromise *)payForVisitor:(OMNVisitor *)visitor {
+  
+  OMNRestaurant *restaurant = self.restaurantMediator.restaurant;
+  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForWish:visitor.wish];
+  OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:visitor transaction:transaction];
+  return [transactionPaymentVC pay:self.rootVC];
+  
+}
 
-- (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
-  
-  [transactionPaymentVC.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  
-  OMNPaymentDoneVC *wishSuccessVC = [[OMNPaymentDoneVC alloc] init];
+- (PMKPromise *)paymentDone {
+
   @weakify(self)
-  wishSuccessVC.didFinishBlock = ^{
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    [self didFinishWish];
+    OMNPaymentDoneVC *wishSuccessVC = [[OMNPaymentDoneVC alloc] init];
+    wishSuccessVC.didFinishBlock = ^{
+      
+      fulfill(nil);
+      
+    };
+    wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
+    [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
     
-  };
+  }];
   
-  wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
-  [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
-  
-}
-
-- (void)transactionPaymentVCDidCancel:(OMNTransactionPaymentVC *)transactionPaymentVC {
-  [self.rootVC dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)transactionPaymentVCDidFail:(OMNTransactionPaymentVC *)transactionPaymentVC {
-  [self closeTap];
 }
 
 @end

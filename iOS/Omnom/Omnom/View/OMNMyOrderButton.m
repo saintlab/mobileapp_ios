@@ -62,22 +62,9 @@
 
 - (void)updateTitle {
   
-  __block long long sum = 0ll;
-  __block BOOL selected = NO;
-  [_restaurantMediator.menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
-    
-    if (menuProduct.quantity) {
-      
-      selected = YES;
-      sum += menuProduct.total;
-      
-    }
-    
-  }];
-  
-  self.selected = selected;
-  
-  NSString *title = [OMNUtils moneyStringFromKop:sum];
+  OMNMenu *menu = _restaurantMediator.menu;
+  self.selected = menu.hasPreorderedItems;
+  NSString *title = [OMNUtils moneyStringFromKop:menu.preorderedItemsTotal];
   [self setTitle:title forState:UIControlStateSelected];
   [self setTitle:title forState:UIControlStateSelected|UIControlStateHighlighted];
   [self sizeToFit];

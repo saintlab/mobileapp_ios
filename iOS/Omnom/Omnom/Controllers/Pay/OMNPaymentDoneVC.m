@@ -17,12 +17,11 @@
 
 }
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor wish:(OMNWish *)wish {
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
   self = [super init];
   if (self) {
     
     _visitor = visitor;
-    _wish = wish;
     
   }
   return self;
@@ -94,9 +93,7 @@
     @"scroll" : _scroll,
     };
   
-  NSDictionary *metrics =
-  @{
-    };
+  NSDictionary *metrics = @{};
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:kNilOptions metrics:metrics views:views]];

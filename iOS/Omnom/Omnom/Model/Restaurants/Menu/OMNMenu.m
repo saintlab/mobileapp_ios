@@ -64,7 +64,7 @@ NSString * const OMNMenuDidResetNotification = @"OMNMenuDidResetNotification";
     }
     
   }];
-  
+
 }
 
 - (BOOL)hasPreorderedItems {
@@ -77,15 +77,13 @@ NSString * const OMNMenuDidResetNotification = @"OMNMenuDidResetNotification";
   
 }
 
-- (long long)total {
+- (long long)preorderedItemsTotal {
   
   __block long long total = 0ll;
   [self.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *menuProduct, BOOL *stop) {
     
-    if (menuProduct.quantity) {
-      
+    if (menuProduct.preordered) {
       total += menuProduct.total;
-      
     }
     
   }];

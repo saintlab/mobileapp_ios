@@ -103,7 +103,7 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
 }
 
 - (BOOL)preordered {
-  return (_quantity > 0.0);
+  return (self.quantity > 0.0);
 }
 
 - (BOOL)showRecommendations {

@@ -34,7 +34,15 @@
   [super viewDidLoad];
   
   [self omn_setup];
-  [_webView loadRequest:[NSURLRequest requestWithURL:_pollResponse.request3dsURL]];
+  [self reloadPage];
+  
+}
+
+- (void)reloadPage {
+  
+  NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:_pollResponse.request3dsURL];
+  request.timeoutInterval = 10.0;
+  [_webView loadRequest:request];
   
 }
 
@@ -74,7 +82,9 @@
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidStartLoad:(UIWebView *)webView {
-  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
+  UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+  [spinner startAnimating];
+  [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:spinner] animated:YES];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -90,12 +100,29 @@
       self.didFinishBlock(parameters, nil);
     }
     else {
-      self.didFinishBlock(nil, [OMNMailRuError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:nil]);
+      self.didFinishBlock(nil, [OMNMailRuError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:[self userInfoFromParameters:parameters]]);
     }
     return NO;
     
   }
   return YES;
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+  
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadPage)];
+  self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
+  
+}
+
+- (NSDictionary *)userInfoFromParameters:(NSDictionary *)parameters {
+  
+  NSMutableDictionary *userInfo = [parameters mutableCopy];
+  if (parameters[@"descr"]) {
+    userInfo[NSLocalizedDescriptionKey] = [parameters[@"descr"] stringByReplacingOccurrencesOfString:@"+" withString:@" "];
+  }
+  return userInfo;
+  
 }
 
 - (NSDictionary *)paramsFromQueryString:(NSString *)queryString {
@@ -106,7 +133,7 @@
     
     NSArray *keyValue = [component componentsSeparatedByString:@"="];
     if (2 == keyValue.count) {
-      params[keyValue[0]] = keyValue[1];
+      params[keyValue[0]] = [keyValue[1] stringByRemovingPercentEncoding];
     }
     
   }];

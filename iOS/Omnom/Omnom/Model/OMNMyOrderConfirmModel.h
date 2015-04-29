@@ -18,12 +18,12 @@ typedef void(^OMNReloadSectionsBlock)(NSIndexSet *indexes, BOOL animated);
 UITableViewDataSource>
 
 @property (nonatomic, copy) OMNReloadSectionsBlock reloadSectionsBlock;
-@property (nonatomic, assign, readonly) BOOL loading;
+@property (nonatomic, assign) BOOL loading;
 
 - (instancetype)initWithWishMediator:(OMNWishMediator *)wishMediator actionDelegate:(id<OMNPreorderActionCellDelegate>)actionDelegate preorderDelegate:(id<OMNPreorderConfirmCellDelegate>)preorderDelegate;
 - (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock;
-- (void)preorderItemsWithCompletion:(OMNVisitorWishBlock)completionBlock;
 - (void)updatePreorderedProductsAnimated:(BOOL)animated;
+- (void)removeForbiddenProducts:(OMNForbiddenWishProducts *)forbiddenWishProducts;
 - (void)configureTableView:(UITableView *)tableView;
 
 @end

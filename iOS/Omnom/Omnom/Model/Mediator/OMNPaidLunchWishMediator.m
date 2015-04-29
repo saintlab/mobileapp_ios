@@ -12,20 +12,32 @@
 
 @implementation OMNPaidLunchWishMediator
 
-- (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
+- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
   
-  [transactionPaymentVC.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+  return [self payForVisitor:visitor].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+    
+    return [self paymentDoneForVisitor:visitor];
+    
+  });
   
-  OMNLunchPaymentDoneVC *wishSuccessVC = [[OMNLunchPaymentDoneVC alloc] initWithVisitor:transactionPaymentVC.visitor wish:self.wish];
+}
+
+- (PMKPromise *)paymentDoneForVisitor:(OMNVisitor *)visitor {
+  
   @weakify(self)
-  wishSuccessVC.didFinishBlock = ^{
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    [self didFinishWish];
+    OMNLunchPaymentDoneVC *wishSuccessVC = [[OMNLunchPaymentDoneVC alloc] initWithVisitor:visitor];
+    wishSuccessVC.didFinishBlock = ^{
+      
+      fulfill(nil);
+      
+    };
+    wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
+    [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
     
-  };
-  wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
-  [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
+  }];
   
 }
 

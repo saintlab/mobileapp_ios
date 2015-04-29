@@ -13,54 +13,82 @@
 
 @implementation OMNPreorderWishMediator
 
-#pragma mark - OMNTransactionPaymentVCDelegate
+- (PMKPromise *)getVisitor {
+  
+  OMNRestaurant *restaurant = self.restaurantMediator.visitor.restaurant;
+  @weakify(self)
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    @strongify(self)
+    [self selectMinutesWithCompletion:^(NSInteger minutes) {
+      
+      OMNPreorderVisitor *visitorWithDelay = [OMNPreorderVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery deliveryWithMinutes:minutes]];
+      fulfill(visitorWithDelay);
+      
+    } cancel:^{
+      
+      reject(nil);
+      
+    }];
+    
+  }];
+  
+}
 
-- (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+- (void)selectMinutesWithCompletion:(OMNSelectMinutesBlock)selectMinutesBlock cancel:(dispatch_block_t)cancelBlock {
   
   OMNSelectMinutesAlertVC *selectMinutesAlertVC = [[OMNSelectMinutesAlertVC alloc] init];
   @weakify(self)
   selectMinutesAlertVC.didCloseBlock = ^{
     
     @strongify(self)
-    [self.rootVC dismissViewControllerAnimated:YES completion:nil];
+    [self.rootVC dismissViewControllerAnimated:YES completion:cancelBlock];
     
   };
   
-  OMNRestaurant *restaurant = self.restaurantMediator.visitor.restaurant;
   selectMinutesAlertVC.didSelectMinutesBlock = ^(NSInteger minutes) {
-    
-    [[OMNPreorderVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery deliveryWithMinutes:minutes]] createWish:wishItems completionBlock:^(OMNVisitor *visitor) {
-      
-      @strongify(self)
-      [self.rootVC dismissViewControllerAnimated:YES completion:nil];
-      completionBlock(visitor);
-      
-    } wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
+
+    @strongify(self)
+    [self.rootVC dismissViewControllerAnimated:YES completion:^{
+      selectMinutesBlock(minutes);
+    }];
     
   };
   [self.rootVC presentViewController:selectMinutesAlertVC animated:YES completion:nil];
   
 }
 
-- (NSString *)refreshOrdersTitle {
-  return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
+- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+  
+  return [self payForVisitor:visitor].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+  
+    return [self paymentDoneForVisitor:paymentVC.visitor];
+    
+  });
+  
 }
 
-- (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
+- (PMKPromise *)paymentDoneForVisitor:(OMNVisitor *)visitor {
   
-  [transactionPaymentVC.presentingViewController dismissViewControllerAnimated:YES completion:nil];
-  
-  OMNPreorderPaymentDoneVC *wishSuccessVC = [[OMNPreorderPaymentDoneVC alloc] initWithVisitor:transactionPaymentVC.visitor wish:self.wish];
   @weakify(self)
-  wishSuccessVC.didFinishBlock = ^{
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    [self didFinishWish];
+    OMNPreorderPaymentDoneVC *wishSuccessVC = [[OMNPreorderPaymentDoneVC alloc] initWithVisitor:visitor];
+    wishSuccessVC.didFinishBlock = ^{
+      
+      fulfill(nil);
+      
+    };
+    wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
+    [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
     
-  };
-  wishSuccessVC.backgroundImage = self.restaurantMediator.restaurant.decoration.woodBackgroundImage;
-  [self.rootVC.navigationController pushViewController:wishSuccessVC animated:YES];
+  }];
   
+}
+
+- (NSString *)refreshOrdersTitle {
+  return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
 - (UIButton *)bottomButton {

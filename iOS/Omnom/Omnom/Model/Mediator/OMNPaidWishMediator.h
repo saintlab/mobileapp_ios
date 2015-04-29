@@ -11,6 +11,7 @@
 #import "OMNTransactionPaymentVC.h"
 
 @interface OMNPaidWishMediator : OMNWishMediator
-<OMNTransactionPaymentVCDelegate>
+
+- (PMKPromise *)payForVisitor:(OMNVisitor *)visitor;
 
 @end

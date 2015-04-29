@@ -45,7 +45,7 @@
   NSString *qr = @"";
   
 //  staging
-//  customConfigName = @"config_staging";
+  customConfigName = @"config_staging";
 //  qr = @"http://omnom.menu/zr9b"; //saintlab-iiko-dev
 //  qr =  @"qr-code-for-2-saintlab-iiko-dev"; //staging
 //  

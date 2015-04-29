@@ -55,20 +55,23 @@
 
   @weakify(self)
   OMNMailRuUser *user = [[OMNAuthorization authorisation].user omn_mailRuUser];
-  [OMNMailRuAcquiring payAndRegisterWithPan:_bankCardInfo.pan exp_date:[OMNMailRuCard exp_dateFromMonth:_bankCardInfo.expiryMonth year:_bankCardInfo.expiryYear] cvv:_bankCardInfo.cvv user:user].then(^(NSDictionary *response) {
+  [OMNMailRuAcquiring payAndRegisterWithPan:_bankCardInfo.pan exp_date:[OMNMailRuCard exp_dateFromMonth:_bankCardInfo.expiryMonth year:_bankCardInfo.expiryYear] cvv:_bankCardInfo.cvv user:user].then(^(OMNMailRuPoll *poll) {
     
     @strongify(self)
-    [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:response];
-    
-    if (response[@"order_id"]) {
-      [OMNMailRuAcquiring refundOrder:response[@"order_id"]];
-    }
+    [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:poll.response];
+
+#warning TODO:order_id
+//    if (response[@"order_id"]) {
+//      [OMNMailRuAcquiring refundOrder:response[@"order_id"]];
+//    }
     
     [self.delegate mailRUCardRegisterVCDidFinish:self];
     
   }).catch(^(NSError *error) {
     
     NSLog(@"payAndRegisterTap>%@", error);
+    
+    [[OMNAnalitics analitics] logMailEvent:@"ERROR_CARD_REGISTER" cardInfo:_bankCardInfo error:error];
     
     @strongify(self)
     if (kOMNMailRuErrorCodeCancel == error.code) {

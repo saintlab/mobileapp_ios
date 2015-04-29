@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger, OMNMailRuPollStatus) {
 @property (nonatomic, assign, readonly) BOOL registered;
 @property (nonatomic, strong, readonly) NSURL *request3dsURL;
 @property (nonatomic, strong, readonly) NSError *error;
+@property (nonatomic, strong, readonly) NSDictionary *request;
 @property (nonatomic, strong, readonly) NSDictionary *response;
 
 - (instancetype)initWithRequest:(NSDictionary *)request response:(NSDictionary *)response;

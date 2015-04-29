@@ -11,6 +11,7 @@
 
 NSString * const OMNErrorDomain = @"OMNErrorDomain";
 NSString * const OMNUserErrorDomain = @"OMNUserErrorDomain";
+NSString * const OMNForbiddenWishProductsKey = @"forbidden";
 
 @implementation OMNError
 

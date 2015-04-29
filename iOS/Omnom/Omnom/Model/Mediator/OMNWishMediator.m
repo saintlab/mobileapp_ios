@@ -9,6 +9,7 @@
 #import "OMNWishMediator.h"
 #import "OMNPreorderDoneVC.h"
 #import "OMNOrderToolbarButton.h"
+#import "OMNMenu+wish.h"
 
 @implementation OMNWishMediator
 
@@ -23,25 +24,55 @@
   return self;
 }
 
-- (void)dealloc
-{
-  
+- (BOOL)canCreateWish {
+  return self.restaurantMediator.menu.hasPreorderedItems;
 }
 
-- (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
-  [self.restaurantMediator.visitor createWish:wishItems completionBlock:completionBlock wrongIDsBlock:wrongIDsBlock failureBlock:failureBlock];
+- (NSArray *)selectedWishItems {
+  return self.restaurantMediator.menu.selectedWishItems;
 }
 
-- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)createWish {
   
-  @weakify(self)
-  OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:^{
+  return [self getVisitor].then(^(OMNVisitor *vistor) {
     
-    @strongify(self)
+    return [self createWishForVisitor:vistor];
+    
+  }).then(^(OMNVisitor *wishVisitor) {
+    
+    return [self processCreatedWishForVisitor:wishVisitor];
+    
+  }).then(^{
+    
     [self didFinishWish];
     
+  });
+  
+}
+
+- (PMKPromise *)getVisitor {
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    fulfill(self.restaurantMediator.visitor);
   }];
-  [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
+  
+}
+
+- (PMKPromise *)createWishForVisitor:(OMNVisitor *)visitor {
+  return [visitor createWish:self.selectedWishItems];
+}
+
+- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    OMNPreorderDoneVC *preorderDoneVC = [[OMNPreorderDoneVC alloc] initTitle:kOMN_PREORDER_DONE_LABEL_TEXT_1 subTitle:kOMN_PREORDER_DONE_LABEL_TEXT_2 didCloseBlock:^{
+      
+      fulfill(nil);
+      
+    }];
+    [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
+  }];
   
 }
 

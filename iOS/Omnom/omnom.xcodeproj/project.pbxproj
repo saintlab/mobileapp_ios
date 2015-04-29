@@ -1492,6 +1492,11 @@
 		939FD05F1989D7EB008F3B62 /* NSString+omn_color.m in Sources */ = {isa = PBXBuildFile; fileRef = 939FD05D1989D7EB008F3B62 /* NSString+omn_color.m */; };
 		93A8C1A719D918A300CB4F09 /* OMNCircleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */; };
 		93A8C1A819D918A300CB4F09 /* OMNCircleAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */; };
+		93ABFD481AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ABFD471AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m */; };
+		93ABFD491AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ABFD471AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m */; };
+		93ABFD4A1AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ABFD471AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m */; };
+		93ABFD4B1AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ABFD471AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m */; };
+		93ABFD4C1AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */ = {isa = PBXBuildFile; fileRef = 93ABFD471AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m */; };
 		93B25FAF19B6BF9D00F3AE88 /* OMNCongifTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B25FAE19B6BF9D00F3AE88 /* OMNCongifTests.m */; };
 		93B3688E19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */; };
 		93B3688F19A22BB300B6E6CB /* OMNDemoRestaurantVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */; };
@@ -1559,6 +1564,11 @@
 		93C8C78E1AEDFF52000D7AB9 /* NSIndexPath+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C78B1AEDFF52000D7AB9 /* NSIndexPath+omn_helper.m */; };
 		93C8C78F1AEDFF52000D7AB9 /* NSIndexPath+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C78B1AEDFF52000D7AB9 /* NSIndexPath+omn_helper.m */; };
 		93C8C7901AEDFF52000D7AB9 /* NSIndexPath+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C78B1AEDFF52000D7AB9 /* NSIndexPath+omn_helper.m */; };
+		93C8C7941AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
+		93C8C7951AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
+		93C8C7961AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
+		93C8C7971AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
+		93C8C7981AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
 		93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93C99116193EF6F20028F76C /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99115193EF6F20028F76C /* OMNOrder.m */; };
@@ -2315,6 +2325,8 @@
 		939FD05D1989D7EB008F3B62 /* NSString+omn_color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+omn_color.m"; sourceTree = "<group>"; };
 		93A8C1A519D918A300CB4F09 /* OMNCircleAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCircleAnimation.h; sourceTree = "<group>"; };
 		93A8C1A619D918A300CB4F09 /* OMNCircleAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCircleAnimation.m; sourceTree = "<group>"; };
+		93ABFD461AF07E9D00A06CC5 /* OMNForbiddenWishProducts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNForbiddenWishProducts.h; sourceTree = "<group>"; };
+		93ABFD471AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNForbiddenWishProducts.m; sourceTree = "<group>"; };
 		93B25FAE19B6BF9D00F3AE88 /* OMNCongifTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCongifTests.m; sourceTree = "<group>"; };
 		93B3688C19A22BB300B6E6CB /* OMNDemoRestaurantVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoRestaurantVC.h; sourceTree = "<group>"; };
 		93B3688D19A22BB300B6E6CB /* OMNDemoRestaurantVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDemoRestaurantVC.m; sourceTree = "<group>"; };
@@ -2376,6 +2388,8 @@
 		93C8C7841AEDEAE1000D7AB9 /* NSIndexSet+omn_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+omn_helper.m"; sourceTree = "<group>"; };
 		93C8C78A1AEDFF52000D7AB9 /* NSIndexPath+omn_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexPath+omn_helper.h"; sourceTree = "<group>"; };
 		93C8C78B1AEDFF52000D7AB9 /* NSIndexPath+omn_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexPath+omn_helper.m"; sourceTree = "<group>"; };
+		93C8C7921AEE70F1000D7AB9 /* OMNWishInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWishInfoVC.h; sourceTree = "<group>"; };
+		93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWishInfoVC.m; sourceTree = "<group>"; };
 		93C99096193DE5990028F76C /* OMNAuthorizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorizationManager.h; sourceTree = "<group>"; };
 		93C99097193DE5990028F76C /* OMNAuthorizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationManager.m; sourceTree = "<group>"; };
 		93C99114193EF6F20028F76C /* OMNOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrder.h; sourceTree = "<group>"; };
@@ -2849,6 +2863,7 @@
 		9319FD96192F362F0053F3A4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				93C8C7911AEE709C000D7AB9 /* Notifications */,
 				93BCD7491AAF156C00725B12 /* Bar */,
 				93F2AEDB1A6D54F200CDF3D9 /* Menu */,
 				935FF1521A6D1046004B69A6 /* Preorder */,
@@ -3893,6 +3908,15 @@
 			name = Bar;
 			sourceTree = "<group>";
 		};
+		93C8C7911AEE709C000D7AB9 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				93C8C7921AEE70F1000D7AB9 /* OMNWishInfoVC.h */,
+				93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */,
+			);
+			name = Notifications;
+			sourceTree = "<group>";
+		};
 		93CE47931A775961002D293B /* MenuProduct */ = {
 			isa = PBXGroup;
 			children = (
@@ -3952,6 +3976,8 @@
 			children = (
 				93CE47CD1A790409002D293B /* OMNWish.h */,
 				93CE47CE1A790409002D293B /* OMNWish.m */,
+				93ABFD461AF07E9D00A06CC5 /* OMNForbiddenWishProducts.h */,
+				93ABFD471AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m */,
 			);
 			name = Wish;
 			sourceTree = "<group>";
@@ -4920,6 +4946,7 @@
 				930C4D571AB15E1B006CA608 /* OMNMenuProductRecommendationsDelimiterCell.m in Sources */,
 				930C4D581AB15E1B006CA608 /* OMNAcquiringTransaction.m in Sources */,
 				9394CBEF1ACBEA1B008FB6CC /* OMNSuncityPreorderDoneVC.m in Sources */,
+				93C8C7961AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */,
 				930C4D591AB15E1B006CA608 /* OMNTransitionFromProductToList.m in Sources */,
 				930C4D5A1AB15E1B006CA608 /* OMNAnalitics.m in Sources */,
 				930C4D5B1AB15E1B006CA608 /* OMNEditPercentControl.m in Sources */,
@@ -5176,6 +5203,7 @@
 				930C4E2E1AB15E1B006CA608 /* OMNLaunch.m in Sources */,
 				930C4E2F1AB15E1B006CA608 /* OMNMenuToProductTransition.m in Sources */,
 				930C4E301AB15E1B006CA608 /* OMNRestaurantOfflineVC.m in Sources */,
+				93ABFD4A1AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */,
 				930C4E311AB15E1B006CA608 /* NSString+omn_color.m in Sources */,
 				930C4E321AB15E1B006CA608 /* OMNTableButton.m in Sources */,
 				930C4E331AB15E1B006CA608 /* OMNBarRestaurantMediator.m in Sources */,
@@ -5252,6 +5280,7 @@
 				930C8B431ACA7D9F00CE4E5A /* OMNMenuProductRecommendationsDelimiterCell.m in Sources */,
 				930C8B441ACA7D9F00CE4E5A /* OMNAcquiringTransaction.m in Sources */,
 				9394CBF01ACBEA1B008FB6CC /* OMNSuncityPreorderDoneVC.m in Sources */,
+				93C8C7971AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */,
 				930C8B451ACA7D9F00CE4E5A /* OMNTransitionFromProductToList.m in Sources */,
 				930C8B461ACA7D9F00CE4E5A /* OMNAnalitics.m in Sources */,
 				930C8B471ACA7D9F00CE4E5A /* OMNEditPercentControl.m in Sources */,
@@ -5508,6 +5537,7 @@
 				930C8C1F1ACA7D9F00CE4E5A /* OMNLaunch.m in Sources */,
 				930C8C201ACA7D9F00CE4E5A /* OMNMenuToProductTransition.m in Sources */,
 				930C8C211ACA7D9F00CE4E5A /* OMNRestaurantOfflineVC.m in Sources */,
+				93ABFD4B1AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */,
 				930C8C221ACA7D9F00CE4E5A /* NSString+omn_color.m in Sources */,
 				930C8C231ACA7D9F00CE4E5A /* OMNTableButton.m in Sources */,
 				930C8C241ACA7D9F00CE4E5A /* OMNBarRestaurantMediator.m in Sources */,
@@ -5584,6 +5614,7 @@
 				93C126A01A7235440019655A /* OMNMenuProductRecommendationsDelimiterCell.m in Sources */,
 				937CDC961AA6F76B000856AB /* OMNAcquiringTransaction.m in Sources */,
 				9394CBED1ACBEA1B008FB6CC /* OMNSuncityPreorderDoneVC.m in Sources */,
+				93C8C7941AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */,
 				932118361962E88000183729 /* OMNTransitionFromProductToList.m in Sources */,
 				939DA1761958226B0063AB23 /* OMNAnalitics.m in Sources */,
 				93FEEB311A43E166002ED717 /* OMNEditPercentControl.m in Sources */,
@@ -5840,6 +5871,7 @@
 				93CB66D31A35FD8100C5B10E /* OMNLaunch.m in Sources */,
 				936203241AA308F400247A4B /* OMNMenuToProductTransition.m in Sources */,
 				93438C6F1AA4BA2700C75FD4 /* OMNRestaurantOfflineVC.m in Sources */,
+				93ABFD481AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */,
 				939FD05E1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
 				93E6ED971A84838100FB890C /* OMNTableButton.m in Sources */,
 				93E26EE31AA9E4370034A7A3 /* OMNBarRestaurantMediator.m in Sources */,
@@ -5922,6 +5954,7 @@
 				935FF1651A6D3ED0004B69A6 /* OMNMenuModel.m in Sources */,
 				932B185C19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
 				93E26EED1AA9EB470034A7A3 /* OMNBarWishMediator.m in Sources */,
+				93C8C7951AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */,
 				93E58CB61A246AA1008064F9 /* OMNHelpPage.m in Sources */,
 				9391F66B1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */,
 				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
@@ -5992,6 +6025,7 @@
 				9345AFCE199B81D700328F73 /* OMNRestaurantFeedItemCell.m in Sources */,
 				93B3689D19A4CD2D00B6E6CB /* OMNSlideUpTransition.m in Sources */,
 				935A1E2B1A80CADB00704086 /* OMNMenuModiferCategoryCell.m in Sources */,
+				93ABFD491AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */,
 				93005C741AD3771100635521 /* OMNDeliverySpec.m in Sources */,
 				93E58CAD1A245604008064F9 /* OMNCameraPermission.m in Sources */,
 				9394CC131ACD3B87008FB6CC /* OMNSelectMinutesAlertVC.m in Sources */,
@@ -6233,6 +6267,7 @@
 				936AC0DF1AD8BDBC00A9D17F /* OMNMenuProductRecommendationsDelimiterCell.m in Sources */,
 				936AC0E01AD8BDBC00A9D17F /* OMNAcquiringTransaction.m in Sources */,
 				936AC0E11AD8BDBC00A9D17F /* OMNSuncityPreorderDoneVC.m in Sources */,
+				93C8C7981AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */,
 				936AC0E21AD8BDBC00A9D17F /* OMNTransitionFromProductToList.m in Sources */,
 				936AC0E31AD8BDBC00A9D17F /* OMNAnalitics.m in Sources */,
 				936AC0E41AD8BDBC00A9D17F /* OMNEditPercentControl.m in Sources */,
@@ -6489,6 +6524,7 @@
 				936AC1CE1AD8BDBC00A9D17F /* OMNLaunch.m in Sources */,
 				936AC1CF1AD8BDBC00A9D17F /* OMNMenuToProductTransition.m in Sources */,
 				936AC1D01AD8BDBC00A9D17F /* OMNRestaurantOfflineVC.m in Sources */,
+				93ABFD4C1AF07E9D00A06CC5 /* OMNForbiddenWishProducts.m in Sources */,
 				936AC1D11AD8BDBC00A9D17F /* NSString+omn_color.m in Sources */,
 				936AC1D21AD8BDBC00A9D17F /* OMNTableButton.m in Sources */,
 				936AC1D31AD8BDBC00A9D17F /* OMNBarRestaurantMediator.m in Sources */,

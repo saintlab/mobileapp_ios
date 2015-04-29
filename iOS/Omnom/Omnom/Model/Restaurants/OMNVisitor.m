@@ -48,33 +48,42 @@
   return [[OMNRestaurantMediator alloc] initWithVisitor:self rootViewController:rootVC];
 }
 
-- (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
-
-  NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-  if (wishItems) {
-    parameters[@"items"] = wishItems;
-  }
-  [parameters addEntriesFromDictionary:_delivery.parameters];
-
-  NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.restaurant.id];
-  [[OMNOperationManager sharedManager] POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+- (PMKPromise *)createWish:(NSArray *)wishItems {
+  
+  @weakify(self)
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    OMNWish *wish = [[OMNWish alloc] initWithJsonData:responseObject];
-    completionBlock([self visitorWithWish:wish]);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    //    Формат - статус код 409, массив {"forbidden":[{"id":"-1"}]}
-    if (409 == operation.response.statusCode) {
-      
-      wrongIDsBlock(operation.responseObject[@"forbidden"]);
-      
+    @strongify(self)
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    if (wishItems) {
+      parameters[@"items"] = wishItems;
     }
-    else {
+    [parameters addEntriesFromDictionary:self.delivery.parameters];
+    
+    NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.restaurant.id];
+    [[OMNOperationManager sharedManager] POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
-      failureBlock([operation omn_internetError]);
+      OMNWish *wish = [[OMNWish alloc] initWithJsonData:responseObject];
+      OMNVisitor *wishVisitor = [self visitorWithWish:wish];
+      fulfill(wishVisitor);
       
-    }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      //    Формат - статус код 409, массив {"forbidden":[{"id":"-1"}]}
+      if (409 == operation.response.statusCode) {
+        
+        id forbiddenWishProductsData = operation.responseObject[OMNForbiddenWishProductsKey];
+        OMNForbiddenWishProducts *forbiddenWishProducts = [[OMNForbiddenWishProducts alloc] initWithJsonData:forbiddenWishProductsData];
+        reject([OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorForbiddenWishProducts userInfo:@{OMNForbiddenWishProductsKey : forbiddenWishProducts}]);
+        
+      }
+      else {
+        
+        reject([operation omn_internetError]);
+        
+      }
+      
+    }];
     
   }];
   

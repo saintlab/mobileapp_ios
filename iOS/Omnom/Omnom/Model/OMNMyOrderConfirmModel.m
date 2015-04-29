@@ -22,7 +22,6 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
 
 @interface OMNMyOrderConfirmModel ()
 
-@property (nonatomic, assign) BOOL loading;
 @property (nonatomic, weak, readonly) id<OMNPreorderConfirmCellDelegate> preorderDelegate;
 @property (nonatomic, strong, readonly) OMNMenu *menu;
 
@@ -39,8 +38,12 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   OMNWishMediator *_wishMediator;
   
   OMNVisitor *_visitor;
+  NSString *_enabledObserverID;
   
-  
+}
+
+- (void)dealloc{
+  [self bk_removeAllBlockObservers];
 }
 
 - (instancetype)initWithWishMediator:(OMNWishMediator *)wishMediator actionDelegate:(id<OMNPreorderActionCellDelegate>)actionDelegate preorderDelegate:(id<OMNPreorderConfirmCellDelegate>)preorderDelegate {
@@ -58,7 +61,15 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
     _preorderActionCellItem.actionText = [_wishMediator refreshOrdersTitle];
     _preorderActionCellItem.hintText = _wishMediator.wishHintText;
     _preorderActionCellItem.delegate = actionDelegate;
-
+    
+    @weakify(self)
+    [self bk_addObserverForKeyPath:NSStringFromSelector(@selector(loading)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+      
+      @strongify(self)
+      [self updatePreorderActionCellItem];
+      
+    }];
+    
   }
   return self;
 }
@@ -73,15 +84,6 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   [OMNPreorderTotalCellItem registerCellForTableView:tableView];
   [OMNPreorderActionCellItem registerCellForTableView:tableView];
 
-}
-
-- (void)setLoading:(BOOL)loading {
-  
-  [self willChangeValueForKey:NSStringFromSelector(@selector(loading))];
-  _loading = loading;
-  _preorderActionCellItem.enabled = !loading;
-  [self didChangeValueForKey:NSStringFromSelector(@selector(loading))];
-  
 }
 
 - (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock {
@@ -128,16 +130,20 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   
 }
 
+- (void)removeForbiddenProducts:(OMNForbiddenWishProducts *)forbiddenWishProducts {
+  
+  [self.menu deselectItemsWithIDs:forbiddenWishProducts.ids];
+  [self updatePreorderedProductsAnimated:NO];
+  
+}
+
 - (void)updatePreorderedProductsAnimated:(BOOL)animated {
   
   NSMutableArray *preorderedProducts = [NSMutableArray array];
-  
-  __block long long total = 0ll;
   [_menu.products enumerateKeysAndObjectsUsingBlock:^(id key, OMNMenuProduct *product, BOOL *stop) {
     
     if (product.preordered) {
       
-      total += product.total;
       OMNPreorderConfirmCellItem *orderedItem = [[OMNPreorderConfirmCellItem alloc] initWithMenuProduct:product];
       orderedItem.delegate = self.preorderDelegate;
       [preorderedProducts addObject:orderedItem];
@@ -147,90 +153,15 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   }];
   
   _preorderedProducts = preorderedProducts;
-  _preorderActionCellItem.enabled = (preorderedProducts.count > 0);
-  _totalCellItem.total = total;
+  [self updatePreorderActionCellItem];
+  _totalCellItem.total = self.menu.preorderedItemsTotal;
   
   self.reloadSectionsBlock([NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)], animated);
 
 }
 
-- (void)preorderItemsWithCompletion:(OMNVisitorWishBlock)completionBlock {
-  
-  if (!_menu.hasPreorderedItems) {
-    completionBlock(nil);
-    self.loading = NO;
-    return;
-  }
-  
-  self.loading = YES;
-  NSArray *wishItems = [_menu selectedWishItems];
-  
-  @weakify(self)
-  [_wishMediator createWish:wishItems completionBlock:^(OMNVisitor *visitor) {
-    
-    completionBlock(visitor);
-    @strongify(self)
-    self.loading = NO;
-    
-  } wrongIDsBlock:^(NSArray *wrongIDs) {
-    
-    @strongify(self)
-    [self didFailCreateWithWithProductIDs:wrongIDs withCompletion:completionBlock];
-    
-  } failureBlock:^(OMNError *error) {
-    
-    completionBlock(nil);
-    @strongify(self)
-    self.loading = NO;
-    
-  }];
-  
-}
-
-- (void)didFailCreateWithWithProductIDs:(NSArray *)products withCompletion:(OMNVisitorWishBlock)completionBlock {
-  
-  NSMutableArray *forbiddenProductNames = [NSMutableArray arrayWithCapacity:products.count];
-  NSMutableArray *forbiddenProductIDs = [NSMutableArray arrayWithCapacity:products.count];
-  
-  [products enumerateObjectsUsingBlock:^(id product, NSUInteger idx, BOOL *stop) {
-    
-    id productID = product[@"id"];
-    [forbiddenProductIDs addObject:productID];
-    OMNMenuProduct *menuProduct = self.menu.products[productID];
-    if (menuProduct.name.length) {
-      [forbiddenProductNames addObject:menuProduct.name];
-    }
-    
-  }];
-  
-  NSString *subtitle = [NSString stringWithFormat:kOMN_WISH_CREATE_ERROR_SUBTITLE, [forbiddenProductNames componentsJoinedByString:@"\n"]];
-  @weakify(self)
-  [UIAlertView bk_showAlertViewWithTitle:kOMN_WISH_CREATE_ERROR_TITLE message:subtitle cancelButtonTitle:kOMN_CANCEL_BUTTON_TITLE otherButtonTitles:@[kOMN_OK_BUTTON_TITLE] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-    
-    if (alertView.cancelButtonIndex == buttonIndex) {
-      
-      completionBlock(nil);
-      @strongify(self)
-      self.loading = NO;
-
-    }
-    else {
-      
-      @strongify(self)
-      [self deselectProductsAndReload:forbiddenProductIDs withCompletion:completionBlock];
-      
-    }
-    
-  }];
-  
-}
-
-- (void)deselectProductsAndReload:(NSArray *)forbiddenProductIDs withCompletion:(OMNVisitorWishBlock)completionBlock {
-
-  [_menu deselectItemsWithIDs:forbiddenProductIDs];
-  [self updatePreorderedProductsAnimated:NO];
-  [self preorderItemsWithCompletion:completionBlock];
-  
+- (void)updatePreorderActionCellItem {
+  _preorderActionCellItem.enabled = !((0 == _preorderedProducts.count) || self.loading);
 }
 
 #pragma mark - Table view data source

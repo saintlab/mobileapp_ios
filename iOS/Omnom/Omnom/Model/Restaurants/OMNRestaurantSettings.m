@@ -31,11 +31,11 @@
     
 #if DEBUG
 #warning demo RestaurantSettings
-//    _has_bar = YES;
-//    _has_lunch = YES;
-//    _has_pre_order = YES;
-//    _has_table_order = YES;
-//    _has_restaurant_order = YES;
+    _has_bar = YES;
+    _has_lunch = YES;
+    _has_pre_order = YES;
+    _has_table_order = YES;
+    _has_restaurant_order = YES;
 #endif
     
   }

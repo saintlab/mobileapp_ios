@@ -38,6 +38,7 @@ OMNMailRuPollStatus statusFromString(NSString *string) {
   if (self) {
 
     _response = response;
+    _request = request;
     _status = statusFromString(response[@"status"]);
     _card_id = request[@"card_id"];
     _order_id = response[@"order_id"];
@@ -82,9 +83,14 @@ OMNMailRuPollStatus statusFromString(NSString *string) {
 
 + (void)pollRequest:(NSDictionary *)request time:(NSInteger)time withCompletion:(void(^)(OMNMailRuPoll *poll))completionBlock failure:(void(^)(NSError *error))failureBlock {
   
+  NSDictionary *error = request[@"error"];
+  if (error) {
+    failureBlock([OMNMailRuError omn_errorFromRequest:nil response:request]);
+    return;
+  }
+  
   NSString *url = request[@"url"];
   if (![url isKindOfClass:[NSString class]]) {
-    failureBlock([OMNMailRuError omn_errorFromRequest:request response:nil]);
     return;
   }
   

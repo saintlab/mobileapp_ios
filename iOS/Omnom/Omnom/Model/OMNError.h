@@ -23,6 +23,7 @@ typedef NS_ENUM(NSInteger, OMNErrorCode) {
   kOMNErrorCancel,
   kOMNErrorWrongCardAmount,
   kOMNErrorNoUserToken,
+  kOMNErrorForbiddenWishProducts,
   
 };
 
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSInteger, OMNUserErrorCode) {
 
 extern NSString * const OMNErrorDomain;
 extern NSString * const OMNUserErrorDomain;
+extern NSString * const OMNForbiddenWishProductsKey;
 
 @interface OMNError : NSError
 

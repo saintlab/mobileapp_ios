@@ -9,7 +9,6 @@
 #import "OMNAnalitics.h"
 #import "OMNCalculatorVC.h"
 #import "OMNTransactionPaymentVC.h"
-#import "OMNNavigationController.h"
 #import "OMNOrderDataSource.h"
 #import "OMNOrderTableView.h"
 #import "OMNOrderCalculationVC.h"
@@ -26,8 +25,9 @@
 <OMNCalculatorVCDelegate,
 UITableViewDelegate,
 OMNOrderTotalViewDelegate,
-OMNPaymentFooterViewDelegate,
-OMNTransactionPaymentVCDelegate>
+OMNPaymentFooterViewDelegate>
+
+@property (nonatomic, strong, readonly) OMNRestaurantMediator *restaurantMediator;
 
 @end
 
@@ -44,7 +44,6 @@ OMNTransactionPaymentVCDelegate>
   BOOL _keyboardShown;
 
   UIView *_tableFadeView;
-  OMNRestaurantMediator *_restaurantMediator;
   OMNTable *_table;
   
 }
@@ -396,37 +395,32 @@ OMNTransactionPaymentVCDelegate>
   OMNRestaurant *restaurant = _restaurantMediator.restaurant;
   OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForOrder:_table.selectedOrder];
   OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:_restaurantMediator.visitor transaction:transaction];
-  transactionPaymentVC.delegate = self;
-  [self.navigationController presentViewController:[OMNNavigationController controllerWithRootVC:transactionPaymentVC] animated:YES completion:nil];
+  @weakify(self)
+  [transactionPaymentVC pay:self.navigationController].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+    
+    @strongify(self)
+    [self transactionPaymentDidFinish:paymentVC.acquiringTransaction withBill:bill];
+    
+  }).catch(^(OMNError *error) {
+    
+    if (kOMNErrorOrderClosed == error.code) {
+      @strongify(self)
+      [self.restaurantMediator didFinishPayment];
+    }
+    
+  });
   
 }
 
-#pragma mark - OMNTransactionPaymentVCDelegate
-
-- (void)transactionPaymentVCDidFinish:(OMNTransactionPaymentVC *)transactionPaymentVC withBill:(OMNBill *)bill {
+- (void)transactionPaymentDidFinish:(OMNAcquiringTransaction *)acquiringTransaction withBill:(OMNBill *)bill {
   
-  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithTransaction:transactionPaymentVC.acquiringTransaction bill:bill];
+  OMNRatingVC *ratingVC = [[OMNRatingVC alloc] initWithTransaction:acquiringTransaction bill:bill];
   ratingVC.backgroundImage = _restaurantMediator.restaurant.decoration.woodBackgroundImage;
   OMNRestaurantMediator *restaurantMediator = _restaurantMediator;
   ratingVC.didFinishBlock = ^{
     [restaurantMediator didFinishPayment];
   };
   [self.navigationController pushViewController:ratingVC animated:YES];
-
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-  
-}
-
-- (void)transactionPaymentVCDidCancel:(OMNTransactionPaymentVC *)transactionPaymentVC {
-  [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)transactionPaymentVCDidFail:(OMNTransactionPaymentVC *)transactionPaymentVC {
-  
-  OMNRestaurantMediator *restaurantMediator = _restaurantMediator;
-  [self.navigationController dismissViewControllerAnimated:YES completion:^{
-    [restaurantMediator didFinishPayment];
-  }];
   
 }
 

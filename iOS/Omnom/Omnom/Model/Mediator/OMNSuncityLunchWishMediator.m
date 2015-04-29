@@ -14,43 +14,50 @@
 
 @implementation OMNSuncityLunchWishMediator
 
-- (void)createWish:(NSArray *)wishItems completionBlock:(OMNVisitorWishBlock)completionBlock wrongIDsBlock:(OMNWrongIDsBlock)wrongIDsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
 
+- (PMKPromise *)getVisitor {
+  
+  @weakify(self)
+  OMNRestaurant *restaurant = self.restaurantMediator.visitor.restaurant;
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    @strongify(self)
+    [self selectAddressWithCompletion:^(OMNRestaurantAddress *restaurantAddress) {
+      
+      OMNLunchVisitor *lunchVisitor = [OMNLunchVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery deliveryWithAddress:restaurantAddress date:nil]];
+      fulfill(lunchVisitor);
+      
+    } cancel:^{
+      
+      reject(nil);
+      
+    }];    
+
+  }];
+  
+}
+
+- (void)selectAddressWithCompletion:(OMNRestaurantAddressBlock)restaurantAddressBlock cancel:(dispatch_block_t)cancelBlock {
+  
   OMNRestaurantAddressSelectionVC *restaurantAddressSelectionVC = [[OMNRestaurantAddressSelectionVC alloc] initWithRestaurant:self.restaurantMediator.restaurant];
   @weakify(self)
   restaurantAddressSelectionVC.didCloseBlock = ^{
     
     @strongify(self)
-    [self.rootVC dismissViewControllerAnimated:YES completion:nil];
+    [self.rootVC dismissViewControllerAnimated:YES completion:cancelBlock];
     
   };
-
-  OMNRestaurant *restaurant = self.restaurantMediator.visitor.restaurant;
+  
   @weakify(restaurantAddressSelectionVC)
   UIBarButtonItem *nextItem = [UIBarButtonItem omn_barButtonWithTitle:kOMN_NEXT_BUTTON_TITLE color:[UIColor blackColor] actionBlock:^{
     
-    @strongify(restaurantAddressSelectionVC)
     [restaurantAddressSelectionVC.navigationItem setRightBarButtonItem:[UIBarButtonItem omn_loadingItem] animated:YES];
-    
-    OMNLunchVisitor *lunchVisitor = [OMNLunchVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery deliveryWithAddress:restaurantAddressSelectionVC.selectedAddress date:nil]];
-    [lunchVisitor createWish:wishItems completionBlock:^(OMNVisitor *visitor) {
+    @strongify(restaurantAddressSelectionVC)
+    @strongify(self)
+    [self.rootVC dismissViewControllerAnimated:YES completion:^{
       
-      @strongify(self)
-      [self.rootVC dismissViewControllerAnimated:YES completion:nil];
-      completionBlock(visitor);
-
-    } wrongIDsBlock:^(NSArray *wrongIDs) {
+      restaurantAddressBlock(restaurantAddressSelectionVC.selectedAddress);
       
-      @strongify(self)
-      [self.rootVC dismissViewControllerAnimated:YES completion:nil];
-      wrongIDsBlock(wrongIDs);
-      
-    } failureBlock:^(OMNError *error) {
-      
-      @strongify(self)
-      [self.rootVC dismissViewControllerAnimated:YES completion:nil];
-      failureBlock(error);
-
     }];
     
   }];
@@ -67,16 +74,18 @@
   
 }
 
-- (void)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
   
-  @weakify(self)
-  OMNSuncityPreorderDoneVC *preorderDoneVC = [[OMNSuncityPreorderDoneVC alloc] initWithWish:visitor.wish didCloseBlock:^{
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    @strongify(self)
-    [self didFinishWish];
+    OMNSuncityPreorderDoneVC *preorderDoneVC = [[OMNSuncityPreorderDoneVC alloc] initWithWish:visitor.wish didCloseBlock:^{
+      
+      fulfill(nil);
+      
+    }];
+    [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
     
   }];
-  [self.rootVC presentViewController:preorderDoneVC animated:YES completion:nil];
   
 }
 

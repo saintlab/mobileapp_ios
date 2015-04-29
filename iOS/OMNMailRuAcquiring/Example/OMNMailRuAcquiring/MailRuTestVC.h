@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OMNViewController : UIViewController
+@interface MailRuTestVC : UIViewController
 
 @end

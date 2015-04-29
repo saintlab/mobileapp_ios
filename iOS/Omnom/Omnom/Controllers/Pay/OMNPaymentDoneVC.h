@@ -16,8 +16,7 @@
 @property (nonatomic, copy) dispatch_block_t didFinishBlock;
 @property (nonatomic, strong, readonly) UIView *contentView;
 @property (nonatomic, strong, readonly) OMNVisitor *visitor;
-@property (nonatomic, strong, readonly) OMNWish *wish;
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor wish:(OMNWish *)wish;
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
 @end

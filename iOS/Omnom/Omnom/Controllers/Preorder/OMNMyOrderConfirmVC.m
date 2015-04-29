@@ -17,7 +17,7 @@
 #import <BlocksKit+UIKit.h>
 #import "OMNWishMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
-
+#import "OMNAuthorization.h"
 #import "OMNMyOrderConfirmModel.h"
 
 @interface OMNMyOrderConfirmVC ()
@@ -132,23 +132,62 @@ OMNPreorderConfirmCellDelegate>
   return UIStatusBarStyleLightContent;
 }
 
-
-#pragma mark - OMNPreorderActionCellDelegate
-
-- (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell {
+#warning TODO: check user token
+- (void)createWish {
   
-  @weakify(self)
-  [_model preorderItemsWithCompletion:^(OMNVisitor *wishVisitor) {
+  if (!self.wishMediator.canCreateWish) {
+    return;
+  }
+  self.model.loading = YES;
+  
+  [self.wishMediator createWish].catch(^(OMNError *error) {
     
-    if (wishVisitor) {
+    if (kOMNErrorForbiddenWishProducts == error.code) {
+     
+      [self processForbiddenProducts:error.userInfo[OMNForbiddenWishProductsKey]];
+      
+    }
+    else if (kOMNErrorCancel == error.code) {
+      
+    }
+    NSLog(@"%@", error);
+    
+  }).finally(^{
+    
+    self.model.loading = NO;
+    NSLog(@"did finish wish");
+    
+  });
+  
+//  [OMNAuthorization checkToken].then(^(OMNUser *user) {
+//    
+//    return <#expression#>
+//    
+//  }).catch(^(OMNError *error) {
+
+}
+
+- (void)processForbiddenProducts:(OMNForbiddenWishProducts *)forbiddenWishProducts {
+  
+  NSString *subtitle = [NSString stringWithFormat:kOMN_WISH_CREATE_ERROR_SUBTITLE, [forbiddenWishProducts.names componentsJoinedByString:@"\n"]];
+  @weakify(self)
+  [UIAlertView bk_showAlertViewWithTitle:kOMN_WISH_CREATE_ERROR_TITLE message:subtitle cancelButtonTitle:kOMN_CANCEL_BUTTON_TITLE otherButtonTitles:@[kOMN_OK_BUTTON_TITLE] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+    
+    if (alertView.cancelButtonIndex != buttonIndex) {
 
       @strongify(self)
-      [self.wishMediator processCreatedWishForVisitor:wishVisitor];
+      [self.model removeForbiddenProducts:forbiddenWishProducts];
       
     }
     
   }];
   
+}
+
+#pragma mark - OMNPreorderActionCellDelegate
+
+- (void)preorderActionCellDidOrder:(OMNPreorderActionCell *)preorderActionCell {
+  [self createWish];
 }
 
 - (void)preorderActionCellDidRefresh:(OMNPreorderActionCell *)preorderActionCell {

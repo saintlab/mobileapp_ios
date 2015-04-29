@@ -209,7 +209,7 @@ static OMNMailRuConfig *_config = nil;
   }).then(^id(OMNMailRuPoll *poll) {
     
     if (poll.paid) {
-      return poll.response;
+      return poll;
     }
     else if (poll.require3ds) {
       return [self enter3DSWithPoll:poll];
@@ -260,7 +260,7 @@ static OMNMailRuConfig *_config = nil;
     
 #warning TODO: check refund error
     if (kMailRuPollStatusOK_REFUND_FINISH == poll.status) {
-      return nil;
+      return poll;
     }
     else {
       return poll.error;
@@ -271,6 +271,12 @@ static OMNMailRuConfig *_config = nil;
 }
 
 + (PMKPromise *)deleteCardWithID:(NSString *)cardID user:(OMNMailRuUser *)user {
+  
+  if (!cardID) {
+    return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+      reject([NSError errorWithDomain:OMNMailRuErrorDomain code:kOMNMailRuErrorCodeUnknown userInfo:nil]);
+    }];
+  }
   
   OMNMailRuCardDeleteTransaction *transaction = [[OMNMailRuCardDeleteTransaction alloc] initWithCard:[OMNMailRuCard cardWithID:cardID] user:user order:nil extra:nil];
   NSDictionary *deleteParameters = [transaction parametersWithConfig:_config];
@@ -313,7 +319,7 @@ static OMNMailRuConfig *_config = nil;
         reject(error);
       }
       else {
-        fulfill(response);
+        fulfill(pollResponse);
       }
       
     }];

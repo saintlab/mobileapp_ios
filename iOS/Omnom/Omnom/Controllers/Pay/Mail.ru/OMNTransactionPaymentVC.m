@@ -17,11 +17,14 @@
 #import "OMNBankCardMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNRestaurant+omn_payment.h"
+#import "OMNNavigationController.h"
 
 @interface OMNTransactionPaymentVC()
 
 @property (nonatomic, strong, readonly) UITableView *tableView;
 @property (nonatomic, strong) OMNBankCardMediator *bankCardMediator;
+@property (nonatomic, copy) PMKFulfiller fulfill;
+@property (nonatomic, copy) PMKRejecter reject;
 
 @end
 
@@ -138,6 +141,20 @@
   
 }
 
+- (PMKPromise *)pay:(UIViewController *)presentingVC {
+  
+  [presentingVC presentViewController:[OMNNavigationController controllerWithRootVC:self] animated:YES completion:nil];
+  @weakify(self)
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    @strongify(self)
+    self.fulfill = fulfill;
+    self.reject = reject;
+    
+  }];
+  
+}
+
 - (UIBarButtonItem *)addCardButton {
   return [[UIBarButtonItem alloc] initWithTitle:kOMN_ADD_CARD_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(addCardTap)];
 }
@@ -215,15 +232,27 @@
 }
 
 - (void)paymentDidFinishWithBill:(OMNBill *)bill {
-  [self.delegate transactionPaymentVCDidFinish:self withBill:bill];
+
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+    
+    self.fulfill(PMKManifold(self, bill));
+    
+  }];
+  
 }
 
 - (void)orderDidClosed {
-  [self.delegate transactionPaymentVCDidFail:self];
+  [self didFinishWithError:[OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorOrderClosed userInfo:nil]];
 }
 
 - (void)cancelTap {
-  [self.delegate transactionPaymentVCDidCancel:self];
+  [self didFinishWithError:[OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorCancel userInfo:nil]];
+}
+
+- (void)didFinishWithError:(OMNError *)error {
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+    self.reject(error);
+  }];
 }
 
 - (void)addCardTap {
