@@ -6,10 +6,14 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNPaymentDoneVC.h"
+#import "OMNScrollContentVC.h"
+#import "OMNVisitor.h"
 
-@interface OMNPaymentLabeledDoneVC : OMNPaymentDoneVC
+@interface OMNPaymentLabeledDoneVC : OMNScrollContentVC
 
 @property (nonatomic, strong, readonly) UILabel *textLabel;
+@property (nonatomic, strong, readonly) OMNVisitor *visitor;
+
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
 @end

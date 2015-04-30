@@ -9,7 +9,6 @@
 #import "OMNMenuProductRecommendationsDelimiterCell.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import <BlocksKit.h>
 
 @implementation OMNMenuProductRecommendationsDelimiterCell {

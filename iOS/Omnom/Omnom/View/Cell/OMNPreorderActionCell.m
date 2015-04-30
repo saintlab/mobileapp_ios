@@ -9,7 +9,6 @@
 #import "OMNPreorderActionCell.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "UIButton+omn_helper.h"
 #import "UIImage+omn_helper.h"
 #import <BlocksKit.h>
@@ -115,7 +114,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [refreshView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[refreshLabel]|" options:kNilOptions metrics:metrics views:views]];
@@ -138,7 +137,7 @@
 
 - (void)layoutSubviews {
   
-  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*OMNStyler.leftOffset;
   _hintLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
   

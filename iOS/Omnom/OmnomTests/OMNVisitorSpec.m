@@ -27,6 +27,10 @@
 #import "OMNDemoVisitor.h"
 #import "OMNDemoRestaurantMediator.h"
 
+#import "OMNRestaurantInVisitor.h"
+#import "OMNRestaurantInMediator.h"
+#import "OMNRestaurantInWishMediator.h"
+
 SPEC_BEGIN(OMNVisitorSpec)
 
 describe(@"OMNVisitor", ^{
@@ -117,7 +121,6 @@ describe(@"OMNVisitor", ^{
     
   });
   
-  
   it(@"should check demo visitor", ^{
     
     OMNVisitor *demoVisitor = [OMNDemoVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithAddress:nil date:nil]];
@@ -129,6 +132,27 @@ describe(@"OMNVisitor", ^{
     [[demoRestaurantMediator.titleView should] beNil];
     
   });
+  
+  
+  it(@"should check restaurant in visitor", ^{
+    
+    OMNVisitor *restaurantInVisitor = [OMNRestaurantInVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]];
+    OMNRestaurantMediator *restaurantInVisitorMediator = [restaurantInVisitor mediatorWithRootVC:nil];
+    [[restaurantInVisitorMediator should] beKindOfClass:[OMNRestaurantInMediator class]];
+    
+    [[@(restaurantInVisitorMediator.showTableButton) should] equal:@(NO)];
+    [[@(restaurantInVisitorMediator.showPreorderButton) should] equal:@(YES)];
+    [[restaurantInVisitorMediator.titleView should] beNil];
+    
+    OMNWishMediator *restaurantInWishMediator = [restaurantInVisitorMediator wishMediatorWithRootVC:nil];
+    [[restaurantInWishMediator should] beKindOfClass:[OMNRestaurantInWishMediator class]];
+    [[restaurantInWishMediator.restaurantMediator should] equal:restaurantInVisitorMediator];
+    
+    [[restaurantInWishMediator.refreshOrdersTitle should] equal:kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT];
+    [[restaurantInWishMediator.bottomButton should] beNil];
+    
+  });
+  
 });
 
 SPEC_END

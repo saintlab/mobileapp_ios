@@ -11,6 +11,7 @@
 #import "OMNAnalitics.h"
 #import "OMNTable+omn_network.h"
 #import <BlocksKit.h>
+#import "OMNConstants.h"
 
 @implementation OMNRestaurant (omn_network)
 

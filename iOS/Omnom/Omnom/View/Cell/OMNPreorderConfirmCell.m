@@ -9,7 +9,6 @@
 #import "OMNPreorderConfirmCell.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "OMNUtils.h"
 #import "UIImage+omn_helper.h"
 
@@ -102,7 +101,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
@@ -119,7 +118,7 @@
 
 - (void)layoutSubviews {
   
-  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue - CGRectGetWidth(_priceButton.frame);
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*OMNStyler.leftOffset - CGRectGetWidth(_priceButton.frame);
   _nameLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
   

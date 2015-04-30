@@ -11,7 +11,7 @@
 #import "OMNQRLaunch.h"
 #import "OMNBackgroundLaunch.h"
 #import "OMNDefaultLaunch.h"
-#import "OMNRemotePushLunch.h"
+#import "OMNRemotePushLaunch.h"
 #import "OMNTravelersLaunch.h"
 
 @implementation OMNLaunchFactory
@@ -20,16 +20,26 @@
 
   NSDictionary *urlQuery = [url omn_query];
   NSString *customConfigName = urlQuery[@"omnom_config"];
+  
+  OMNLaunch *launch = nil;
   if (urlQuery[@"qr"]) {
-    return [[OMNQRLaunch alloc] initWithQR:urlQuery[@"qr"] config:customConfigName];
+    launch = [[OMNQRLaunch alloc] initWithQR:urlQuery[@"qr"] config:customConfigName];
   }
   else {
-    return [[OMNDefaultLaunch alloc] init];
+    launch = [OMNDefaultLaunch new];
   }
-
+  
+  if ([url.host isEqualToString:@"wish"]) {
+    launch.wishID = urlQuery[@"id"];
+  }
+  
+  return launch;
+  
 }
 
 + (OMNLaunch *)launchWithLaunchOptions:(NSDictionary *)launchOptions {
+  
+  NSLog(@"launchWithLaunchOptions>%@", launchOptions);
   
 #if OMN_TEST
   return [[OMNLaunch alloc] init];
@@ -71,13 +81,12 @@
   
 #else
   
-  if (launchOptions[UIApplicationLaunchOptionsURLKey]) {
-    return [self launchWithURL:launchOptions[UIApplicationLaunchOptionsURLKey] sourceApplication:nil annotation:nil];
-  }
-  else if (launchOptions[UIApplicationLaunchOptionsLocationKey]) {
+  if (launchOptions[UIApplicationLaunchOptionsLocationKey]) {
     return [[OMNBackgroundLaunch alloc] init];
   }
   else {
+#warning 123
+//    return [[OMNQRLaunch alloc] initWithQR:nil config:@"config_staging"];
     return [[OMNDefaultLaunch alloc] init];
   }
   
@@ -90,7 +99,7 @@
 }
 
 + (OMNLaunch *)launchWithRemoteNotification:(NSDictionary *)notification {
-  return [[OMNRemotePushLunch alloc] initWithRemoteNotification:notification];
+  return [[OMNRemotePushLaunch alloc] initWithRemoteNotification:notification];
 }
 
 @end

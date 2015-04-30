@@ -8,7 +8,7 @@
 
 #import "OMNPaidWishMediator.h"
 #import "OMNRestaurant+omn_payment.h"
-#import "OMNPaymentDoneVC.h"
+#import "OMNScrollContentVC.h"
 
 @implementation OMNPaidWishMediator
 
@@ -41,7 +41,7 @@
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    OMNPaymentDoneVC *wishSuccessVC = [[OMNPaymentDoneVC alloc] init];
+    OMNScrollContentVC *wishSuccessVC = [[OMNScrollContentVC alloc] init];
     wishSuccessVC.didFinishBlock = ^{
       
       fulfill(nil);

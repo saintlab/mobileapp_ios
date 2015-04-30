@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UITableViewCell+omn_height.h"
 
 @protocol OMNCellItemProtocol <NSObject>
 

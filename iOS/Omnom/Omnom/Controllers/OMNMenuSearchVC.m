@@ -13,7 +13,6 @@
 #import <OMNStyler.h>
 #import "UINavigationBar+omn_custom.h"
 #import "UIView+omn_autolayout.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 @interface OMNMenuSearchVC ()
@@ -114,7 +113,7 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)setKeyboardHeight:(CGFloat)height duration:(NSTimeInterval)duration {
   
-  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, MAX(height, [OMNStyler styler].bottomToolbarHeight.floatValue), 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, MAX(height, OMNStyler.bottomToolbarHeight), 0.0f);
   [UIView animateWithDuration:duration animations:^{
     
     _tableView.contentInset = insets;
@@ -152,7 +151,7 @@ OMNPreorderConfirmCellDelegate>
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
 
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

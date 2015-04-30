@@ -56,7 +56,7 @@
   NSDictionary *metrics =
   @{
     @"labelHeight" : @(24.0f),
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bgView]|" options:kNilOptions metrics:metrics views:views]];

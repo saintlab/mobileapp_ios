@@ -8,7 +8,7 @@
 
 #import "OMNBankCardsVC.h"
 #import "OMNBankCardsModel.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 #import "OMNMailRuBankCardsModel.h"
 #import <BlocksKit.h>
 #import "OMNMailRuPaymentFactory.h"

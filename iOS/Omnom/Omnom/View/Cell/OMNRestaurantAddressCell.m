@@ -8,7 +8,6 @@
 
 #import "OMNRestaurantAddressCell.h"
 #import "UIView+omn_autolayout.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 
@@ -52,13 +51,13 @@
     
     NSDictionary *metrics =
     @{
-      @"leftOffset" : [[OMNStyler styler] leftOffset],
+      @"leftOffset" : @(OMNStyler.leftOffset),
       };
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[detailLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[label]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(5)-[label]-[detailLabel]-(5)-|" options:kNilOptions metrics:nil views:views]];
-    self.separatorInset = UIEdgeInsetsMake(0.0f, [[[OMNStyler styler] leftOffset] floatValue], 0.0f, 0.0f);
+    self.separatorInset = UIEdgeInsetsMake(0.0f, OMNStyler.leftOffset, 0.0f, 0.0f);
     
   }
   return self;
@@ -66,7 +65,7 @@
 
 - (void)layoutSubviews {
   
-  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue - CGRectGetWidth(self.accessoryView.frame);
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*OMNStyler.leftOffset - CGRectGetWidth(self.accessoryView.frame);
   _label.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   _detailLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];

@@ -9,7 +9,6 @@
 #import "OMNRestaurantInfoCell.h"
 #import "OMNRestaurantInfoItem.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 
 @implementation OMNRestaurantInfoCell {
 
@@ -48,14 +47,14 @@
     
     NSDictionary *metrics =
     @{
-      @"leftOffset" : [[OMNStyler styler] leftOffset],
+      @"leftOffset" :@(OMNStyler.leftOffset),
       };
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[iconView(20)]-[label]|" options:kNilOptions metrics:metrics views:views]];
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_iconView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:kNilOptions metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[iconView]|" options:kNilOptions metrics:nil views:views]];
-    self.separatorInset = UIEdgeInsetsMake(0.0f, [[[OMNStyler styler] leftOffset] floatValue], 0.0f, 0.0f);
+    self.separatorInset = UIEdgeInsetsMake(0.0f, OMNStyler.leftOffset, 0.0f, 0.0f);
   }
   return self;
 }

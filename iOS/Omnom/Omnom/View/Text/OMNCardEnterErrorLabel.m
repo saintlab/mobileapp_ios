@@ -8,7 +8,6 @@
 
 #import "OMNCardEnterErrorLabel.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "OMNUtils.h"
 
 @implementation OMNCardEnterErrorLabel

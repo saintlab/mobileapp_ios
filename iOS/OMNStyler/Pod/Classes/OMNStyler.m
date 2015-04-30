@@ -29,12 +29,16 @@
   return self;
 }
 
-- (NSNumber *)leftOffset {
-  return @(15.0f);
++ (CGFloat)leftOffset {
+  return 15.0f;
 }
 
-- (NSNumber *)bottomToolbarHeight {
-  return @(50.0f);
++ (CGFloat)bottomToolbarHeight {
+  return 50.0f;
+}
+
++ (CGFloat)orderTableFooterHeight {
+  return 56.0f;
 }
 
 + (UIEdgeInsets)buttonEdgeInsets {

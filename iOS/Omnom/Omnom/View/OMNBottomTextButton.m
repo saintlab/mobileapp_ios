@@ -8,12 +8,10 @@
 
 #import "OMNBottomTextButton.h"
 #import "UIImage+omn_helper.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
 
-@implementation OMNBottomTextButton {
-  
-}
+@implementation OMNBottomTextButton 
 
 - (instancetype)init {
   self = [super init];

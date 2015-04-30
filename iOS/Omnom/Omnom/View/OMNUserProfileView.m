@@ -8,7 +8,6 @@
 
 #import "OMNUserProfileView.h"
 #import "OMNAuthorization.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import <BlocksKit.h>
 #import "UIView+omn_autolayout.h"
@@ -97,7 +96,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     @"iconViewSize" : @(120.0f),
     };
   
@@ -129,7 +128,7 @@
 
 - (void)layoutSubviews {
   
-  _userNameLabel.preferredMaxLayoutWidth = MAX(0.0f, CGRectGetWidth(self.frame) - [OMNStyler styler].leftOffset.floatValue);
+  _userNameLabel.preferredMaxLayoutWidth = MAX(0.0f, CGRectGetWidth(self.frame) - 2*OMNStyler.leftOffset);
   [super layoutSubviews];
 
 }

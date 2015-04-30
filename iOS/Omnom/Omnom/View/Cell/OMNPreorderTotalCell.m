@@ -9,7 +9,6 @@
 #import "OMNPreorderTotalCell.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "OMNUtils.h"
 
 @implementation OMNPreorderTotalCell {
@@ -17,7 +16,6 @@
   UILabel *_nameLabel;
   
 }
-
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -46,7 +44,7 @@
   
   NSDictionary *metrics =
   @{
-    @"rightOffset" : @([OMNStyler styler].leftOffset.floatValue + [OMNStyler buttonEdgeInsets].right),
+    @"rightOffset" : @(OMNStyler.leftOffset + [OMNStyler buttonEdgeInsets].right),
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[nameLabel]-(rightOffset)-|" options:kNilOptions metrics:metrics views:views]];

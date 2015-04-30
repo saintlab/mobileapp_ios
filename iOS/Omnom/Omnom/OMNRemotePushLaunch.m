@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNRemotePushLunch.h"
+#import "OMNRemotePushLaunch.h"
 #import "OMNRestaurantManager.h"
 
-@implementation OMNRemotePushLunch {
+@implementation OMNRemotePushLaunch {
   
   NSString *_qr;
   
@@ -23,9 +23,22 @@
     self.showTableOrders = [info[@"show_table_orders"] boolValue];
     self.showRecommendations = [info[@"show_recommendations"] boolValue];
     _qr = info[@"qr"];
+    self.wishID = info[@"wish"][@"id"];
+    
+    NSString *open_url = info[@"open_url"];
+    if ([open_url isKindOfClass:[NSString class]]) {
+      self.openURL = [NSURL URLWithString:open_url];
+    }
     
   }
   return self;
+  
+}
+
+- (BOOL)shouldReload {
+  
+  BOOL isAppInactive = UIApplicationStateActive != [UIApplication sharedApplication].applicationState;
+  return ([super shouldReload] && isAppInactive);
   
 }
 

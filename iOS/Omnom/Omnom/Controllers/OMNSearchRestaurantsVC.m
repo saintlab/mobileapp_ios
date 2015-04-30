@@ -113,7 +113,7 @@
     
   }).then(^(NSNumber *stauts) {
     
-    return [[OMNLaunchHandler sharedHandler].launchOptions decodeRestaurants];
+    return [[OMNLaunchHandler sharedHandler].launch decodeRestaurants];
     
   }).then(^(NSArray *restaurants) {
     

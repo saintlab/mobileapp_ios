@@ -8,7 +8,6 @@
 
 #import "OMNLunchOrderAlertVC.h"
 #import "OMNUtils.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
 #import "OMNRestaurantAddressSelectionVC.h"
@@ -210,16 +209,16 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_dateButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_dateButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.contentView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:-2*[OMNStyler styler].leftOffset.floatValue]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_dateButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.contentView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:-2*OMNStyler.leftOffset]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_dateLine attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_dateButton attribute:NSLayoutAttributeWidth multiplier:1.0f constant:10.0f]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_dateLine attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_addressButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
-  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_addressButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.contentView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:-2*[OMNStyler styler].leftOffset.floatValue]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_addressButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:self.contentView attribute:NSLayoutAttributeWidth multiplier:1.0f constant:-2*OMNStyler.leftOffset]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_addressLine attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:_addressButton attribute:NSLayoutAttributeWidth multiplier:1.0f constant:10.0f]];
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_addressLine attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   

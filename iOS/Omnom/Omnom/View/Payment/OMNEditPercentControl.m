@@ -7,7 +7,6 @@
 //
 
 #import "OMNEditPercentControl.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 @interface OMNEditPercentControl ()

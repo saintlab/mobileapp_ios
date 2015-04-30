@@ -8,7 +8,6 @@
 
 #import "OMNUserInfoView.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "UIBarButtonItem+omn_custom.h"
 
 @interface OMNUserInfoView ()
@@ -152,7 +151,7 @@
 
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[tf1]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

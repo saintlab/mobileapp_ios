@@ -12,7 +12,6 @@
 #import "OMNEditAmountControl.h"
 #import "OMNEditPercentControl.h"
 #import "UIView+frame.h"
-#import "OMNConstants.h"
 #import "OMNUtils.h"
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"

@@ -7,9 +7,9 @@
 //
 
 #import "OMNMenuModiferCategoryCell.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
+
 @implementation OMNMenuModiferCategoryCell {
   
   UILabel *_label;

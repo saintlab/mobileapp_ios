@@ -9,7 +9,6 @@
 #import "OMNEnterHashAlertVC.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "OMNRestaurantManager.h"
 
 @interface OMNEnterHashAlertVC ()
@@ -200,7 +199,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:urlContentView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];

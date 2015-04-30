@@ -95,7 +95,7 @@ OMNPreorderConfirmCellDelegate>
     return;
   }
   
-  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, OMNStyler.bottomToolbarHeight, 0.0f);
   _tableView.contentInset = insets;
   _tableView.scrollIndicatorInsets = insets;
   

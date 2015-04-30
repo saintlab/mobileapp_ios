@@ -18,6 +18,8 @@
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNRestaurantOfflineVC.h"
 #import "OMNVisitorFactory.h"
+#import "OMNLaunchHandler.h"
+#import "OMNDefaultLaunch.h"
 
 @interface OMNSearchRestaurantMediator ()
 <OMNSearchRestaurantsVCDelegate,
@@ -52,15 +54,11 @@ OMNScanTableQRCodeVCDelegate>
 #pragma mark - OMNSearchRestaurantsVCDelegate
 
 - (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants {
-  
   [self showRestaurants:restaurants];
-  
 }
 
 - (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {
-  
-  [self didFinish];
-  
+  [[OMNLaunchHandler sharedHandler] reload];
 }
 
 - (void)showUserProfile {
@@ -111,12 +109,6 @@ OMNScanTableQRCodeVCDelegate>
     
     @strongify(self)
     [self showRestaurantListAnimated:YES];
-    
-  };
-  restaurantActionsVC.rescanTableBlock = ^{
-    
-    @strongify(self)
-    [self didFinish];
     
   };
   return restaurantActionsVC;
@@ -179,16 +171,6 @@ OMNScanTableQRCodeVCDelegate>
   }
   
   [_rootVC.navigationController setViewControllers:controllers animated:YES];
-  
-}
-
-- (void)didFinish {
-  
-  if (self.didFinishBlock) {
-    
-    self.didFinishBlock();
-    
-  }
   
 }
 

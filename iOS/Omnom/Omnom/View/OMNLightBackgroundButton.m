@@ -7,7 +7,7 @@
 //
 
 #import "OMNLightBackgroundButton.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 
 @implementation OMNLightBackgroundButton
 

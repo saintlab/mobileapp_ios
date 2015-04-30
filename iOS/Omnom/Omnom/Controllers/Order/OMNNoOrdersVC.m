@@ -11,7 +11,6 @@
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
 #import "OMNUtils.h"
-#import "OMNConstants.h"
 #import "OMNNoOrdersAlertVC.h"
 
 @interface OMNNoOrdersVC ()
@@ -65,7 +64,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_textLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0.0f]];

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OMNPaymentDoneVC.h"
+#import "OMNScrollContentVC.h"
 #import "OMNWish.h"
 
-@interface OMNBarPaymentDoneVC : OMNPaymentDoneVC
+@interface OMNBarPaymentDoneVC : OMNScrollContentVC
 
 - (instancetype)initWithWish:(OMNWish *)wish paymentOrdersURL:(NSURL *)paymentOrdersURL;
 

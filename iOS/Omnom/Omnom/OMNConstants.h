@@ -10,12 +10,6 @@
 
 extern NSString * const kPushSoundName;
 
-#define FuturaOSFOmnomMedium(__FONTSIZE__) ([UIFont fontWithName:@"Futura-OSF-Omnom-Medium" size:__FONTSIZE__])
-#define FuturaOSFOmnomRegular(__FONTSIZE__) ([UIFont fontWithName:@"Futura-OSF-Omnom-Regular" size:__FONTSIZE__])
-#define FuturaLSFOmnomLERegular(__FONTSIZE__) ([UIFont fontWithName:@"Futura-LSF-Omnom-LE-Regular" size:__FONTSIZE__])
-
-#define PRICE_BUTTON_FONT (FuturaLSFOmnomLERegular(20.0f))
-
 #define OMN_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 #define CURRENT_VERSION ([[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"])
@@ -35,14 +29,13 @@ extern NSString * const kPushSoundName;
 #define IS_IPHONE_6 (IS_IPHONE && SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (IS_IPHONE && SCREEN_MAX_LENGTH == 736.0)
 
-extern const CGFloat kOrderTableFooterHeight;
 
 extern NSString * const OMNFacebookPageUrlString;
 extern NSString * const OMNFacebookAppUrlString;
 
 @interface OMNConstants : NSObject
 
-+ (void)setupWithLaunchOptions:(OMNLaunch *)launchOptions completion:(dispatch_block_t)completionBlock;
++ (void)setupWithLaunch:(OMNLaunch *)launchOptions completion:(dispatch_block_t)completionBlock;
 + (NSString *)stringForKey:(NSString *)key;
 + (BOOL)boolForKey:(NSString *)key;
 

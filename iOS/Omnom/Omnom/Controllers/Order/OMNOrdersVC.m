@@ -12,6 +12,7 @@
 #import "UIImage+omn_helper.h"
 #import "OMNToolbarButton.h"
 #import "OMNRestaurantManager.h"
+#import <OMNStyler.h>
 
 @interface OMNOrdersVC ()
 <UICollectionViewDataSource,

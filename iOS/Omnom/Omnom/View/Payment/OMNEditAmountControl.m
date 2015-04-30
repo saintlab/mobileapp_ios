@@ -7,10 +7,10 @@
 //
 
 #import "OMNEditAmountControl.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import "OMNLabeledTextField.h"
+#import "OMNConstants.h"
 
 const long long kMaxEnteredValue = 999999ll;
 

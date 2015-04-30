@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNConstants.h"
-
 @class OMNUser;
 
 typedef void(^OMNUserBlock)(OMNUser *user);

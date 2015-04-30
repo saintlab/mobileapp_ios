@@ -9,7 +9,6 @@
 #import "OMNChangePhoneVC.h"
 #import "OMNErrorTextField.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "OMNUser.h"
 #import "OMNUser+network.h"
 #import "UIBarButtonItem+omn_custom.h"
@@ -126,7 +125,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" :@(OMNStyler.leftOffset),
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintLabel]-|" options:kNilOptions metrics:metrics views:views]];

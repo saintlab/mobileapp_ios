@@ -8,6 +8,8 @@
 
 #import "OMNWish.h"
 #import <BlocksKit.h>
+#import "OMNUtils.h"
+#import <OMNStyler.h>
 
 @implementation OMNWish
 
@@ -56,5 +58,13 @@
   
   return total;
 }
+#warning TODO: update wish texts
+- (NSAttributedString *)statusText {
+  return [[NSAttributedString alloc] initWithString:@"Ваш заказ готов" attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(30.0f) textColor:[OMNStyler greenColor] textAlignment:NSTextAlignmentCenter]];
+}
+- (NSString *)descriptionText {
+  return @"Чтобы получить свой заказ, покажите бармену этот экран, или назовите ему номер и пин-код заказа.";
+}
+
 
 @end

@@ -18,6 +18,7 @@
 #import "OMNBankCardInfo.h"
 #import "OMNBankCard.h"
 #import "OMNAcquiringTransaction.h"
+#import "OMNConstants.h"
 
 NSString * const OMNAnaliticsUserKey = @"omn_user";
 
@@ -147,14 +148,6 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   if (restaurant.id) {
     properties[@"restaurant_id"] = restaurant.id;
   }
-#warning logEnterRestaurant
-//  if (visitor.beacon) {
-//    properties[@"method_used"] = @"Bluetooth";
-//    properties[@"id"] = [visitor.beacon key];
-//  }
-//  else {
-//    properties[@"method_used"] = @"QR";
-//  }
   
   if (1 == restaurant.tables.count) {
     OMNTable *table = restaurant.tables[0];

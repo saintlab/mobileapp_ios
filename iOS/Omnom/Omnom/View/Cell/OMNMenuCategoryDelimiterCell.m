@@ -9,7 +9,6 @@
 #import "OMNMenuCategoryDelimiterCell.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 
 @implementation OMNMenuCategoryDelimiterCell {
   
@@ -132,7 +131,7 @@
 
 - (void)layoutSubviews {
   
-  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*OMNStyler.leftOffset;
   _label.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
   

@@ -7,7 +7,7 @@
 //
 
 #import "OMNTableButton.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 #import "UIButton+omn_helper.h"
 #import "UIImage+omn_helper.h"
 

@@ -14,9 +14,12 @@
 
 @property (nonatomic, assign) BOOL showTableOrders;
 @property (nonatomic, assign) BOOL showRecommendations;
+@property (nonatomic, copy) NSString *wishID;
+@property (nonatomic, strong) NSURL *openURL;
 
 - (NSString *)customConfigName;
 - (BOOL)applicationStartedBackground;
+- (BOOL)shouldReload;
 - (PMKPromise *)decodeRestaurants;
 
 @end

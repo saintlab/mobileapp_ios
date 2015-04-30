@@ -8,7 +8,6 @@
 
 #import "OMNChangeTableAlertVC.h"
 #import <TTTAttributedLabel.h>
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import "UIView+omn_autolayout.h"
@@ -90,7 +89,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[titleLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

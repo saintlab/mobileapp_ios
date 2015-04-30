@@ -8,12 +8,7 @@
 
 #import "OMNErrorTextField.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "OMNClearButton.h"
-
-@interface OMNErrorTextField ()
-
-@end
 
 @implementation OMNErrorTextField {
   UIView *_colorView;

@@ -6,25 +6,15 @@
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
-#import "OMNPaymentDoneVC.h"
+#import "OMNScrollContentVC.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
 
-@implementation OMNPaymentDoneVC {
+@implementation OMNScrollContentVC {
   
   UIScrollView *_scroll;
   UIView *_scrollContentView;
 
-}
-
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
-  self = [super init];
-  if (self) {
-    
-    _visitor = visitor;
-    
-  }
-  return self;
 }
 
 - (void)viewDidLoad {
@@ -32,7 +22,6 @@
   
   [self omn_setup_internal];
   
-  self.view.backgroundColor = [UIColor redColor];
   self.automaticallyAdjustsScrollViewInsets = NO;
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithTitle:kOMN_DONE_BUTTON_TITLE color:[UIColor blackColor] target:self action:@selector(closeTap)];
   

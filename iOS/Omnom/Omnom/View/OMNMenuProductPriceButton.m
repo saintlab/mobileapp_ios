@@ -8,7 +8,6 @@
 
 #import "OMNMenuProductPriceButton.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "UIImage+omn_helper.h"
 
 #define kUIControlStateCustomState (1 << 16)

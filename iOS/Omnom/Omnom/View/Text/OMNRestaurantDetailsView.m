@@ -64,7 +64,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[cityLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
@@ -76,7 +76,7 @@
 
 - (void)layoutSubviews {
   
-  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*OMNStyler.leftOffset;
   _restaurantInfoLabelAddress.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
   

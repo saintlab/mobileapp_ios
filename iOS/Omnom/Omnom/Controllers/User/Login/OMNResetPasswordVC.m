@@ -8,7 +8,6 @@
 
 #import "OMNResetPasswordVC.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
 

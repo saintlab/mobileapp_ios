@@ -107,9 +107,9 @@ OMNOrderCalculationVCDelegate>
     [self showOrders];
     
   }
-  else if ([OMNLaunchHandler sharedHandler].launchOptions.showTableOrders) {
+  else if ([OMNLaunchHandler sharedHandler].launch.showTableOrders) {
     
-    [OMNLaunchHandler sharedHandler].launchOptions.showTableOrders = NO;
+    [OMNLaunchHandler sharedHandler].launch.showTableOrders = NO;
     [self showTableOrders];
     
   }
@@ -169,13 +169,7 @@ OMNOrderCalculationVCDelegate>
 }
 
 - (void)rescanTable {
-  
-  if (_restaurantActionsVC.rescanTableBlock) {
-    
-    _restaurantActionsVC.rescanTableBlock();
-    
-  }
-  
+  [[OMNLaunchHandler sharedHandler] reload];
 }
 
 - (void)didFinishPayment {

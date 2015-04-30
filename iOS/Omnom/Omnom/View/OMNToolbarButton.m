@@ -9,7 +9,7 @@
 #import "OMNToolbarButton.h"
 #import "UIImage+omn_helper.h"
 #import "UIButton+omn_helper.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 
 #define kBarButtonNormalColor ([UIColor blackColor])
 

@@ -17,8 +17,7 @@
 #import "OMNDefaultLaunch.h"
 
 @interface OMNStartVC ()
-<OMNAuthorizationVCDelegate,
-OMNSearchRestaurantVCDelegate>
+<OMNAuthorizationVCDelegate>
 
 @end
 
@@ -31,11 +30,9 @@ OMNSearchRestaurantVCDelegate>
   
   self.backgroundView.image = [UIImage omn_imageNamed:@"LaunchImage-700"];
   
-  @weakify(self)
   [OMNAuthorization authorisation].logoutCallback = ^{
     
-    @strongify(self)
-    [self reloadWithLunch:[OMNDefaultLaunch new]];
+    [[OMNLaunchHandler sharedHandler] reload];
     
   };
   
@@ -48,11 +45,8 @@ OMNSearchRestaurantVCDelegate>
   
 }
 
-- (void)reloadWithLunch:(OMNLaunch *)launch {
-
-  [OMNLaunchHandler sharedHandler].launchOptions = launch;
+- (void)reload {
   [self dismissViewControllerAnimated:YES completion:nil];
-
 }
 
 - (void)checkUserToken {
@@ -79,7 +73,6 @@ OMNSearchRestaurantVCDelegate>
 - (void)startSearchingRestaurant {
   
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
-  searchRestaurantVC.delegate = self;
   UINavigationController *navigationController = [OMNNavigationController controllerWithRootVC:searchRestaurantVC];
   navigationController.navigationBar.barStyle = UIBarStyleDefault;
   [self presentViewController:navigationController animated:NO completion:nil];
@@ -92,12 +85,6 @@ OMNSearchRestaurantVCDelegate>
   authorizationVC.delegate = self;
   [self.navigationController pushViewController:authorizationVC animated:YES];
   
-}
-
-#pragma mark - OMNSearchRestaurantVCDelegate
-
-- (void)searchRestaurantVCDidFinish:(OMNSearchRestaurantVC *)searchRestaurantVC {
-  [self reloadWithLunch:[OMNDefaultLaunch new]];
 }
 
 #pragma mark - OMNStartVC1Delegate

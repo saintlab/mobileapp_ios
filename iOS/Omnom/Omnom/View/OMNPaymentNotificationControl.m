@@ -52,7 +52,7 @@
     
     NSDictionary *metrics =
     @{
-      @"leftOffset" : [[OMNStyler styler] leftOffset],
+      @"leftOffset" : @(OMNStyler.leftOffset),
       };
     
     [self addConstraint:[NSLayoutConstraint constraintWithItem:_closeButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];

@@ -8,7 +8,6 @@
 
 #import "OMNBankCardCell.h"
 #import "OMNBankCard.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import <BlocksKit.h>
 
@@ -82,7 +81,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" :@(OMNStyler.leftOffset),
     @"borderOffset" : @(6.0f),
     };
   

@@ -8,7 +8,6 @@
 
 #import "OMNPaymentAlertVC.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "UIButton+omn_helper.h"
 #import "OMNUtils.h"
 #import "UIView+omn_autolayout.h"
@@ -89,7 +88,7 @@
   CGFloat buttonSize = 44.0f;
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" : @(OMNStyler.leftOffset),
     @"buttonSize" : @(buttonSize),
     };
 

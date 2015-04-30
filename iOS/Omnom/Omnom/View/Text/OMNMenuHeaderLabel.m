@@ -7,7 +7,6 @@
 //
 
 #import "OMNMenuHeaderLabel.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 @implementation OMNMenuHeaderLabel

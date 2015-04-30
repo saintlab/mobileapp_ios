@@ -14,6 +14,15 @@
   return @"config_prod";
 }
 
+- (BOOL)shouldReload {
+  if (self.wishID || self.openURL) {
+    return NO;
+  }
+  else {
+    return YES;
+  }
+}
+
 - (BOOL)applicationStartedBackground {
   return NO;
 }

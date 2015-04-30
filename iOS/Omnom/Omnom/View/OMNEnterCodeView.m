@@ -7,7 +7,6 @@
 //
 
 #import "OMNEnterCodeView.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 @interface OMNEnterCodeTextField : UITextField

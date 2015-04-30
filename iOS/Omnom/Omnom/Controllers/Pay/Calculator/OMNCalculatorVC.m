@@ -13,6 +13,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNProductSelectionVC.h"
+#import <OMNStyler.h>
 
 static const NSTimeInterval kSlideAnimationDuration = 0.25;
 const CGFloat kCalculatorTopOffset = 40.0f;

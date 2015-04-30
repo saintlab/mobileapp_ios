@@ -9,8 +9,8 @@
 #import "OMNFBUserInfoItem.h"
 #import <OMNStyler.h>
 #import "UIButton+omn_helper.h"
-#import "OMNConstants.h"
 #import "OMNUserInfoCell.h"
+#import "OMNConstants.h"
 
 @implementation OMNFBUserInfoItem
 

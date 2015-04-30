@@ -10,7 +10,6 @@
 #import <TTTAttributedLabel.h>
 #import <OMNStyler.h>
 #import "OMNUtils.h"
-#import "OMNConstants.h"
 #import "UIView+omn_autolayout.h"
 
 @interface OMNNoOrdersAlertVC ()
@@ -79,7 +78,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

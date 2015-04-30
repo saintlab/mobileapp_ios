@@ -7,7 +7,6 @@
 //
 
 #import "OMNProductModiferAlertVC.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
 #import "OMNMenuProductModifersModel.h"
@@ -162,7 +161,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [qtControlView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[minusButton]-(5)-[quantityLabel(50)]-(5)-[plusButton]|" options:kNilOptions metrics:metrics views:views]];

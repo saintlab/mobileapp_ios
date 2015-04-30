@@ -9,6 +9,8 @@
 #import "OMNSearchRestaurantVC.h"
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
+#import "OMNConstants.h"
+#import "OMNLaunchHandler.h"
 
 @interface OMNSearchRestaurantVC ()
 
@@ -31,14 +33,6 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  @weakify(self)
-  _searchRestaurantMediator.didFinishBlock = ^{
-    
-    @strongify(self)
-    [self didFinish];
-    
-  };
-  
   self.bgIV.image = [[UIImage imageNamed:@"wood_bg"] omn_blendWithColor:colorWithHexString(@"CE1200")];
   [self.navigationController setNavigationBarHidden:YES animated:NO];
   
@@ -68,10 +62,6 @@
 
   });
   
-}
-
-- (void)didFinish {
-  [self.delegate searchRestaurantVCDidFinish:self];
 }
 
 @end

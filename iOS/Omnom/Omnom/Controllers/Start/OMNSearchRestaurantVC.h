@@ -8,20 +8,12 @@
 
 #import "OMNSearchRestaurantsVC.h"
 
-@protocol OMNSearchRestaurantVCDelegate;
-
 @interface OMNSearchRestaurantVC : UIViewController
 
 @property (nonatomic, strong) UIImageView *logoIV;
 @property (weak, nonatomic) IBOutlet UIImageView *logoIconsIV;
 @property (weak, nonatomic) IBOutlet UIImageView *bgIV;
 @property (weak, nonatomic) IBOutlet UIView *fgView;
-@property (nonatomic, weak) id<OMNSearchRestaurantVCDelegate> delegate;
 
 @end
 
-@protocol OMNSearchRestaurantVCDelegate <NSObject>
-
-- (void)searchRestaurantVCDidFinish:(OMNSearchRestaurantVC *)searchRestaurantVC;
-
-@end

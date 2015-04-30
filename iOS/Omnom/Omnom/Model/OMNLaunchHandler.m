@@ -11,9 +11,13 @@
 #import "OMNStartVC.h"
 #import "OMNModalWebVC.h"
 #import "OMNNearestBeaconSearchManager.h"
-#import "OMNNavigationControllerDelegate.h"
+#import "OMNNavigationController.h"
 #import "OMNLaunchFactory.h"
 #import "OMNPaymentNotificationControl.h"
+#import "OMNWishInfoVC.h"
+#import "OMNConstants.h"
+#import "NSURL+omn_query.h"
+#import "OMNDefaultLaunch.h"
 
 @implementation OMNLaunchHandler {
   
@@ -30,34 +34,54 @@
   return manager;
 }
 
-- (void)didFinishLaunchingWithOptions:(OMNLaunch *)lo {
-  
-  _launchOptions = lo;
-  if (!lo.applicationStartedBackground) {
-    
-    [self startApplicationIfNeeded];
-    
-  }
-  
-}
-
 - (void)startApplicationIfNeeded {
-  
+
   if (_startVC) {
     return;
   }
-
+  
   [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
-  
   _startVC = [[OMNStartVC alloc] init];
-  UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:_startVC];
-  navVC.delegate = [OMNNavigationControllerDelegate sharedDelegate];
-  [[UIApplication sharedApplication].delegate window].rootViewController = navVC;
-  
+  UIWindow *window = [[UIApplication sharedApplication].delegate window];
+  window.rootViewController = [OMNNavigationController controllerWithRootVC:_startVC];
+  [window makeKeyAndVisible];
+
+}
+
+- (void)reload {
+  [self reloadWithLaunch:[OMNDefaultLaunch new]];
 }
 
 - (void)reloadWithLaunch:(OMNLaunch *)launch {
-  [_startVC reloadWithLunch:launch];
+  
+  _launch = launch;
+  
+  if (launch.applicationStartedBackground) {
+    return;
+  }
+
+  if (_startVC &&
+      launch.shouldReload) {
+    
+    [_startVC reload];
+    
+  }
+
+  [self startApplicationIfNeeded];
+
+  if (launch.wishID) {
+    [self showWishWithID:launch.wishID];
+  }
+  
+  if (launch.openURL) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      
+      [self showModalControllerWithURL:launch.openURL];
+      
+    });
+
+  }
+  
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
@@ -67,27 +91,25 @@
   
 }
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+- (void)showWishWithID:(NSString *)wishID {
   
-  DDLogDebug(@"didReceiveRemoteNotification>%@", userInfo);
-  NSString *open_url = userInfo[@"open_url"];
-  if (open_url) {
-    
-    @weakify(self)
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      
-      @strongify(self)
-      [self openURL:[NSURL URLWithString:open_url]];
-      
-    });
-    
+  if (![wishID isKindOfClass:[NSString class]]) {
+    return;
   }
   
-  NSString *type = userInfo[@"type"];
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    
+    OMNWishInfoVC *wishInfoVC = [[OMNWishInfoVC alloc] initWithWishID:wishID];
+    [wishInfoVC show:[self topMostController]];
+    
+  });
   
+}
 
-//  {"aps": {"sound":"default","alert":{"body":"Ваш заказ №1003 готов. Пинкод — 2036","action-loc-key":"Открыть приложение"}}}
-  id alert = userInfo[@"aps"][@"alert"];
+- (void)showAlertWithInfoIfNeeded:(NSDictionary *)info {
+  
+  //  {"aps": {"sound":"default","alert":{"body":"Ваш заказ №1003 готов. Пинкод — 2036","action-loc-key":"Открыть приложение"}}}
+  id alert = info[@"aps"][@"alert"];
   NSString *text = nil;
   if ([alert isKindOfClass:[NSDictionary class]]) {
     text = alert[@"body"];
@@ -95,10 +117,17 @@
   else if ([alert isKindOfClass:[NSString class]]) {
     text = alert;
   }
+  
   if (text) {
     [[[UIAlertView alloc] initWithTitle:kOMN_PUSH_MESSAGE_TITLE message:text delegate:nil cancelButtonTitle:kOMN_OK_BUTTON_TITLE otherButtonTitles:nil] show];
   }
   
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+  
+  DDLogDebug(@"didReceiveRemoteNotification>%@", userInfo);
+  NSString *type = userInfo[@"type"];
   if ([type isEqualToString:@"wake-up"]) {
     
     [[OMNNearestBeaconSearchManager sharedManager] findNearestBeaconsWithCompletion:^{
@@ -108,26 +137,16 @@
     }];
     
   }
-  else if ([type isEqualToString:@"show_orders"] ||
-           [type isEqualToString:@"lunch2gis"]) {
-    
-    if (UIApplicationStateActive != [UIApplication sharedApplication].applicationState) {
-      
-      [self reloadWithLaunch:[OMNLaunchFactory launchWithRemoteNotification:userInfo]];
-      
-    }
-    completionHandler(UIBackgroundFetchResultNoData);
-    
-  }
   else {
     
+    [self reloadWithLaunch:[OMNLaunchFactory launchWithRemoteNotification:userInfo]];
     completionHandler(UIBackgroundFetchResultNoData);
     
   }
   
 }
 
-- (void)openURL:(NSURL *)url {
+- (void)showModalControllerWithURL:(NSURL *)url {
   
   OMNModalWebVC *modalWebVC = [[OMNModalWebVC alloc] init];
   modalWebVC.url = url;

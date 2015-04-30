@@ -15,7 +15,6 @@
 
 @property (nonatomic, strong, readonly) OMNR1VC *r1VC;
 @property (nonatomic, copy) dispatch_block_t didCloseBlock;
-@property (nonatomic, copy) dispatch_block_t rescanTableBlock;
 
 - (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 - (void)showRestaurantAnimated:(BOOL)animated;

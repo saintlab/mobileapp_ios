@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNConstants.h"
 #import "OMNOrderItem.h"
 #import "OMNTip.h"
 #import "OMNOrderPaid.h"

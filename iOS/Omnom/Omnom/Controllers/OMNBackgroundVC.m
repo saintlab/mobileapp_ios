@@ -147,7 +147,7 @@
   
   NSDictionary *metrics =
   @{
-    @"bottomToolbarHeight" : [[OMNStyler styler] bottomToolbarHeight],
+    @"bottomToolbarHeight" : @(OMNStyler.bottomToolbarHeight),
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bottomToolbar]|" options:kNilOptions metrics:nil views:views]];

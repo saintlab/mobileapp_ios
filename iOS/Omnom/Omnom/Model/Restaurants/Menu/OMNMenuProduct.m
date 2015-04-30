@@ -10,7 +10,6 @@
 #import "OMNImageManager.h"
 #import <BlocksKit.h>
 #import "OMNUtils.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChangeNotification";

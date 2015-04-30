@@ -15,6 +15,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import <SSKeychain.h>
 #import "NSData+omn_deviceToken.h"
+#import "OMNConstants.h"
 
 static NSString * const kAuthorisationAccountName = @"test_account6";
 static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";
@@ -201,8 +202,10 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)registerForRemoteNotificationsIfPossible {
   
   if (self.pushNotificationsRequested) {
-    
+
+
     UIApplication *application = [UIApplication sharedApplication];
+    application.applicationIconBadgeNumber = 0;
     
     if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
       

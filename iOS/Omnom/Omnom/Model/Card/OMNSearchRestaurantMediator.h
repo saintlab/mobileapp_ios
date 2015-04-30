@@ -13,8 +13,6 @@
 
 @property (nonatomic, weak, readonly) UIViewController *rootVC;
 
-@property (nonatomic, copy) dispatch_block_t didFinishBlock;
-
 - (instancetype)initWithRootVC:(__weak UIViewController *)vc;
 
 - (void)searchRestarants;

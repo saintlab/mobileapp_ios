@@ -8,15 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "OMNBackgroundVC.h"
-#import "OMNVisitor.h"
-#import "OMNWish.h"
 
-@interface OMNPaymentDoneVC : OMNBackgroundVC
+@interface OMNScrollContentVC : OMNBackgroundVC
 
 @property (nonatomic, copy) dispatch_block_t didFinishBlock;
 @property (nonatomic, strong, readonly) UIView *contentView;
-@property (nonatomic, strong, readonly) OMNVisitor *visitor;
-
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
 
 @end

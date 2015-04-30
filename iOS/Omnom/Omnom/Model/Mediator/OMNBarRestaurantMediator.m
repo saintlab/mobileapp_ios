@@ -27,9 +27,9 @@
 
 - (void)checkStartConditions {
   
-  if ([OMNLaunchHandler sharedHandler].launchOptions.showRecommendations) {
+  if ([OMNLaunchHandler sharedHandler].launch.showRecommendations) {
     
-    [OMNLaunchHandler sharedHandler].launchOptions.showRecommendations = NO;
+    [OMNLaunchHandler sharedHandler].launch.showRecommendations = NO;
     [self showPreorders];
     
   }

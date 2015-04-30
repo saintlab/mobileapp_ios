@@ -18,18 +18,17 @@
 #import "OMNRestaurantManager.h"
 #import "OMNNearestBeaconSearchManager.h"
 #import "OMNLaunchFactory.h"
+#import "OMNConstants.h"
 
 @implementation GAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-  [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-  
 #if OMN_TEST
 #else
 
-  OMNLaunch *lo = [OMNLaunchFactory launchWithLaunchOptions:launchOptions];
-  [OMNConstants setupWithLaunchOptions:lo completion:^{
+  OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:launchOptions];
+  [OMNConstants setupWithLaunch:launch completion:^{
     
     DDLogDebug(@"config loaded with options>%@", launchOptions);
     
@@ -43,7 +42,7 @@
       
     }];
     
-    [[OMNLaunchHandler sharedHandler] didFinishLaunchingWithOptions:lo];
+    [[OMNLaunchHandler sharedHandler] reloadWithLaunch:launch];
     
   }];
   
@@ -115,7 +114,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-  
+
   [[OMNLaunchHandler sharedHandler] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
   return YES;
   

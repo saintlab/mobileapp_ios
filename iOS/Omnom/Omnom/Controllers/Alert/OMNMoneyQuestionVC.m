@@ -9,7 +9,6 @@
 #import "OMNMoneyQuestionVC.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 
 @implementation OMNMoneyQuestionVC {
   
@@ -60,7 +59,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[textLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

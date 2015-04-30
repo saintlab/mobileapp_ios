@@ -7,7 +7,6 @@
 //
 
 #import "OMNOrderItemCell.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import <BlocksKit.h>
@@ -109,7 +108,7 @@
   @{
     @"labelsOffset" : @(12.0f),
     @"lowPriority" : @(UILayoutPriorityDefaultLow),
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_nameLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:1.0f]];

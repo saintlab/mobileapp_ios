@@ -7,7 +7,6 @@
 //
 
 #import "OMNUserInfoCell.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 @implementation OMNUserInfoCell
@@ -50,7 +49,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" :@(OMNStyler.leftOffset),
     @"borderOffset" : @(6.0f),
     };
   

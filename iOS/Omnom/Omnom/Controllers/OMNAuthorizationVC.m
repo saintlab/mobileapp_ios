@@ -11,7 +11,6 @@
 #import "OMNRegisterUserVC.h"
 #import "OMNAuthorization.h"
 #import "OMNWizardPageVC.h"
-#import "OMNConstants.h"
 #import "OMNToolbarButton.h"
 #import "UIImage+omn_helper.h"
 #import "OMNAnalitics.h"

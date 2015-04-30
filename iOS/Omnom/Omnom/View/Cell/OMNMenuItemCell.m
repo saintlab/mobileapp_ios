@@ -9,13 +9,10 @@
 #import "OMNMenuItemCell.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "UIImage+omn_helper.h"
 #import "OMNMenuHeaderLabel.h"
 
-@implementation OMNMenuItemCell {
-  
-}
+@implementation OMNMenuItemCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
   self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

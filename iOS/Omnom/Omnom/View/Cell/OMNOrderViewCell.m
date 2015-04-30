@@ -10,6 +10,7 @@
 #import "OMNOrderDataSource.h"
 #import "OMNOrderTableView.h"
 #import "OMNOrderTotalView.h"
+#import <OMNStyler.h>
 
 @implementation OMNOrderViewCell {
   OMNOrderDataSource *_orderDataSource;
@@ -45,7 +46,7 @@
     _tableView.allowsSelection = NO;
     [self addSubview:_tableView];
     
-    _orderTotalView = [[OMNOrderTotalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_tableView.frame), kOrderTableFooterHeight)];
+    _orderTotalView = [[OMNOrderTotalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_tableView.frame), OMNStyler.bottomToolbarHeight)];
     _tableView.tableFooterView = _orderTotalView;
     _tableView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
     _tableView.transform = CGAffineTransformMakeScale(scale, scale);

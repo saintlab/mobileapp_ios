@@ -8,7 +8,6 @@
 
 #import "OMNTipButton.h"
 #import "OMNTip.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import <BlocksKit.h>
 

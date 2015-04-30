@@ -8,7 +8,7 @@
 
 #import "UIBarButtonItem+omn_custom.h"
 #import "UIImage+omn_helper.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 #import "UIButton+omn_helper.h"
 #import <BlocksKit+UIKit.h>
 
@@ -62,9 +62,25 @@
   
 }
 
++ (UIBarButtonItem *)omn_barButtonWithImage:(UIImage *)image color:(UIColor *)color actionBlock:(dispatch_block_t)actionBlock {
+  return [[UIBarButtonItem alloc] initWithCustomView:[UIButton omn_barButtonWithImage:image color:color actionBlock:actionBlock]];
+}
+
 @end
 
 @implementation UIButton (omn_bar_button)
+
++ (instancetype)omn_barButtonWithImage:(UIImage *)image color:(UIColor *)color actionBlock:(dispatch_block_t)actionBlock {
+  
+  UIButton *button = [UIButton omn_barButtonWithImage:image color:color target:nil action:nil];
+  [button bk_addEventHandler:^(id sender) {
+    
+    actionBlock();
+    
+  } forControlEvents:UIControlEventTouchUpInside];
+  return button;
+  
+}
 
 + (instancetype)omn_barButtonWithImage:(UIImage *)image color:(UIColor *)color target:(id)target action:(SEL)action {
   

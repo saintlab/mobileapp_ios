@@ -7,7 +7,6 @@
 //
 
 #import "OMNBottomLabelView.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 @implementation OMNBottomLabelView
@@ -41,7 +40,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" :@(OMNStyler.leftOffset),
     };
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label(50)]|" options:kNilOptions metrics:nil views:views]];

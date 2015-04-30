@@ -81,6 +81,11 @@
 
 + (void)decodeQR:(NSString *)qrCode withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void (^)(OMNError *))failureBlock {
   
+  if (![qrCode isKindOfClass:[NSString class]]) {
+    completionBlock(nil);
+    return;
+  }
+  
   NSDictionary *parameters =
   @{
     @"qr": qrCode

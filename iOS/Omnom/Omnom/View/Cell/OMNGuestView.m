@@ -7,7 +7,6 @@
 //
 
 #import "OMNGuestView.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 NSString * const OMNGuestViewIdentifier = @"OMNGuestViewIdentifier";
@@ -47,7 +46,7 @@ NSString * const OMNGuestViewIdentifier = @"OMNGuestViewIdentifier";
     
     NSDictionary *metrics =
     @{
-      @"leftOffset" : [OMNStyler styler].leftOffset,
+      @"leftOffset" : @(OMNStyler.leftOffset),
       };
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[button]|" options:kNilOptions metrics:metrics views:views]];

@@ -164,7 +164,7 @@ OMNMenuCategoryHeaderViewDelegate>
   _navigationFadeView.clipsToBounds = YES;
   [self.view addSubview:_navigationFadeView];
 
-  UIEdgeInsets insets = UIEdgeInsetsMake(64.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(64.0f, 0.0f, @(OMNStyler.bottomToolbarHeight).floatValue, 0.0f);
   _tableView.contentInset = insets;
   _tableView.scrollIndicatorInsets = insets;
   

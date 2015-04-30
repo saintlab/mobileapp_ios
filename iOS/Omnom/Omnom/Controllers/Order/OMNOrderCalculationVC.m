@@ -20,6 +20,7 @@
 #import "OMNSelectOrderButton.h"
 #import "OMNRestaurant+omn_payment.h"
 #import "OMNRatingVC.h"
+#import <OMNStyler.h>
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -241,7 +242,7 @@ OMNPaymentFooterViewDelegate>
   tableView.allowsSelection = NO;
   tableView.clipsToBounds = NO;
   tableView.scrollEnabled = NO;
-  OMNOrderActionView *orderActionView = [[OMNOrderActionView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), kOrderTableFooterHeight)];
+  OMNOrderActionView *orderActionView = [[OMNOrderActionView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.frame), OMNStyler.orderTableFooterHeight)];
   orderActionView.delegate = self;
   orderActionView.order = dataSource.order;
   tableView.orderActionView = orderActionView;

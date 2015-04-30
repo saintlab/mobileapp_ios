@@ -312,7 +312,7 @@
     @"height" : @(50.0f),
     @"offset" : @(8.0f),
     @"bottomOffset" : @(10.0f),
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [_bottomView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[offerLabel]-|" options:kNilOptions metrics:metrics views:views]];

@@ -55,7 +55,7 @@
 }
 
 - (void)completeOrdresCall {
-  [[OMNLaunchHandler sharedHandler] openURL:self.restaurantMediator.restaurant.orders_paid_url];
+  [[OMNLaunchHandler sharedHandler] showModalControllerWithURL:self.restaurantMediator.restaurant.orders_paid_url];
 }
 
 @end

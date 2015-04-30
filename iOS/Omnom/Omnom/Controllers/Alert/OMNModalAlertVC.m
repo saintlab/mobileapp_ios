@@ -88,7 +88,7 @@
   CGFloat buttonSize = 44.0f;
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" :@(OMNStyler.leftOffset),
     @"buttonSize" : @(buttonSize),
     };
   

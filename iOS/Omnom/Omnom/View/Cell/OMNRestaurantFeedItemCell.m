@@ -11,9 +11,9 @@
 #import "OMNImageManager.h"
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
-#import "OMNConstants.h"
 
 @implementation OMNRestaurantFeedItemCell {
+  
   OMNFeedItem *_feedItem;
   UILabel *_textLabel;
   UILabel *_priceLabel;
@@ -75,7 +75,7 @@
     
     NSDictionary *metrics =
     @{
-      @"leftOffset" : [[OMNStyler styler] leftOffset],
+      @"leftOffset" : @(OMNStyler.leftOffset),
       };
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[imageView]|" options:kNilOptions metrics:nil views:views]];

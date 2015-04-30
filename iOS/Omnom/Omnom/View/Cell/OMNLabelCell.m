@@ -7,7 +7,6 @@
 //
 
 #import "OMNLabelCell.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 @implementation OMNLabelCell
@@ -47,7 +46,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" :@(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|" options:kNilOptions metrics:metrics views:views]];

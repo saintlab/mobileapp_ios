@@ -48,7 +48,7 @@
   self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
   self.tableView.delegate = _menuProductFullWithRecommendations;
   self.tableView.dataSource = _menuProductFullWithRecommendations;
-  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, OMNStyler.bottomToolbarHeight, 0.0f);
   self.tableView.contentInset = insets;
   self.tableView.scrollIndicatorInsets = insets;
 

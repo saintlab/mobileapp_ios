@@ -8,7 +8,6 @@
 
 #import "OMNDisclamerView.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 
 @interface OMNDisclamerView ()
 <TTTAttributedLabelDelegate>

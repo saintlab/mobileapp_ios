@@ -8,7 +8,6 @@
 
 #import "OMNCircleRootVC.h"
 #import "UILabel+numberOfLines.h"
-#import "OMNConstants.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "UINavigationBar+omn_custom.h"
 #import "UIView+omn_autolayout.h"
@@ -96,7 +95,7 @@
   NSDictionary *metrics =
   @{
     @"circleSize" : @(200.0f),
-    @"bottomOffset" : [OMNStyler styler].bottomToolbarHeight,
+    @"bottomOffset" : @(OMNStyler.bottomToolbarHeight),
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[circleButton(circleSize)]-[label]-(bottomOffset)-|" options:kNilOptions metrics:metrics views:views]];

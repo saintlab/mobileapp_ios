@@ -20,7 +20,10 @@
 }
 
 - (void)dealloc {
+  
+  _didFindBeaconsBlock = nil;
   [self stop];
+  
 }
 
 - (instancetype)init {
@@ -45,9 +48,10 @@
 
 - (void)startSearchingWithCompletion:(OMNDidFindBeaconsBlock)didFindBeaconsBlock {
   
-  _didFindBeaconsBlock = [didFindBeaconsBlock copy];
-  
   [self stop];
+  
+  _didFindBeaconsBlock = [didFindBeaconsBlock copy];
+
   if (TARGET_IPHONE_SIMULATOR) {
     
     NSArray *beacons = @[[OMNBeacon demoBeacon]];
@@ -65,8 +69,11 @@
 - (void)processFoundBeacons:(NSArray *)beacons {
   
   [self stop];
-  _didFindBeaconsBlock(beacons);
-  _didFindBeaconsBlock = nil;
+
+  if (_didFindBeaconsBlock) {
+    _didFindBeaconsBlock(beacons);
+    _didFindBeaconsBlock = nil;
+  }
   
 }
 
@@ -155,7 +162,7 @@
 }
 
 - (void)stop {
-  
+
   [_nearestBeaconsRangingTimer invalidate], _nearestBeaconsRangingTimer = nil;
   [_beaconRangingManager stop];
 

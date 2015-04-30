@@ -8,7 +8,7 @@
 
 #import "OMNLaunch.h"
 
-@interface OMNRemotePushLunch : OMNLaunch
+@interface OMNRemotePushLaunch : OMNLaunch
 
 - (instancetype)initWithRemoteNotification:(NSDictionary *)info;
 

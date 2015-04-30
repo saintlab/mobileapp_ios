@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "OMNPaymentDoneVC.h"
 
-@interface OMNWishInfoVC : OMNPaymentDoneVC
+@interface OMNWishInfoVC : UITableViewController
+
+- (instancetype)initWithWishID:(NSString *)wishID;
+- (void)show:(UIViewController *)presentingVC;
 
 @end

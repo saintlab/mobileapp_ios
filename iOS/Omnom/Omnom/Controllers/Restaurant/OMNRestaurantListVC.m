@@ -262,13 +262,13 @@
 
 - (void)omn_setup {
   
-  _bottomToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.width, [OMNStyler styler].bottomToolbarHeight.floatValue)];
+  _bottomToolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.width, OMNStyler.bottomToolbarHeight)];
   [_bottomToolbar setShadowImage:[UIImage new] forToolbarPosition:UIBarPositionAny];
   [_bottomToolbar setBackgroundImage:[UIImage new] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
   _bottomToolbar.backgroundColor = [OMNStyler toolbarColor];
   [self.tableView addSubview:_bottomToolbar];
   
-  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [OMNStyler styler].bottomToolbarHeight.floatValue, 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, OMNStyler.bottomToolbarHeight, 0.0f);
   self.tableView.contentInset = insets;
   self.tableView.scrollIndicatorInsets = insets;
   

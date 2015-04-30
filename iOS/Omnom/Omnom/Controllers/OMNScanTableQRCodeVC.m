@@ -252,8 +252,8 @@ OMNCameraPermissionDescriptionVCDelegate>
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
-    @"bottomToolbarHeight" : [OMNStyler styler].bottomToolbarHeight,
+    @"leftOffset" : @(OMNStyler.leftOffset),
+    @"bottomToolbarHeight" : @(OMNStyler.bottomToolbarHeight),
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[contentView]|" options:kNilOptions metrics:metrics views:views]];

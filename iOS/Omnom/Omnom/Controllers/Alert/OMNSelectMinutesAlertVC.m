@@ -8,7 +8,6 @@
 
 #import "OMNSelectMinutesAlertVC.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "UIView+omn_autolayout.h"
 #import "OMNUtils.h"
 #import "NSString+omn_date.h"
@@ -102,7 +101,7 @@ UIPickerViewDelegate>
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[label][minutesPicker][doneButton]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

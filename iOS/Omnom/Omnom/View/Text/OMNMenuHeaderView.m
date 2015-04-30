@@ -8,7 +8,6 @@
 
 #import "OMNMenuHeaderView.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "UIButton+omn_helper.h"
 #import "UIView+omn_autolayout.h"
 #import "UIImage+omn_helper.h"

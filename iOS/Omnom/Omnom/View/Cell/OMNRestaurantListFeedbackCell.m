@@ -7,7 +7,6 @@
 //
 
 #import "OMNRestaurantListFeedbackCell.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 #import "OMNUtils.h"
@@ -107,7 +106,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[notFoundLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];

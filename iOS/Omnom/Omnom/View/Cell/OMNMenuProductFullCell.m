@@ -8,7 +8,6 @@
 
 #import "OMNMenuProductFullCell.h"
 #import "UIView+omn_autolayout.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 
@@ -96,7 +95,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
@@ -156,7 +155,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     @"imageHeight" : @(imageHeight),
     @"infoLabelOffset" : (menuProduct.details.displayFullText.length) ? (@(2.0f)) : (@(0.0f)),
     @"compositionLabelOffset" : (menuProduct.details.compositionText.length) ? (@(10.0f)) : (@(0.0f)),
@@ -172,7 +171,7 @@
 
 - (void)layoutSubviews {
   
-  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*OMNStyler.leftOffset;
   _nameLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   _infoLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   _compositionLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;

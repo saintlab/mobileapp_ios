@@ -8,7 +8,6 @@
 
 #import "OMNDateSelectionVC.h"
 #import "UIBarButtonItem+omn_custom.h"
-#import "OMNConstants.h"
 #import "NSString+omn_date.h"
 #import <OMNStyler.h>
 
@@ -83,7 +82,7 @@ UITableViewDataSource>
   headerLabel.textColor = [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f];
   headerLabel.font = FuturaOSFOmnomRegular(20.0f);
   headerLabel.text = kOMN_RESTAURANT_DATE_HEADER_TEXT;
-  CGFloat offset = [OMNStyler styler].leftOffset.floatValue;
+  CGFloat offset = OMNStyler.leftOffset;
   CGFloat headerLabelHeight = [headerLabel sizeThatFits:CGSizeMake(CGRectGetWidth(_tableView.frame) - 2*offset, 9999.0f)].height;
   headerLabel.frame = CGRectMake(offset, offset, CGRectGetWidth(_tableView.frame) - 2*offset, headerLabelHeight);
   

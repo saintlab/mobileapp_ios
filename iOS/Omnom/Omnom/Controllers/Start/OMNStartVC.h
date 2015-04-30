@@ -11,6 +11,6 @@
 
 @interface OMNStartVC : OMNBackgroundVC
 
-- (void)reloadWithLunch:(OMNLaunch *)launch;
+- (void)reload;
 
 @end

@@ -9,7 +9,6 @@
 #import "OMNMenuProductCell.h"
 #import <BlocksKit.h>
 #import "UIView+omn_autolayout.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 #import "OMNUtils.h"
 #import "UIImage+omn_helper.h"
@@ -115,7 +114,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_priceButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
@@ -129,7 +128,7 @@
 
 - (void)layoutSubviews {
   
-  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*[OMNStyler styler].leftOffset.floatValue;
+  CGFloat preferredMaxLayoutWidth = CGRectGetWidth(self.frame) - 2*OMNStyler.leftOffset;
   _nameLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   _descriptionLabel.preferredMaxLayoutWidth = preferredMaxLayoutWidth;
   [super layoutSubviews];
@@ -215,7 +214,7 @@
   OMNMenuProduct *menuProduct = _item.menuProduct;
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     @"imageOffset" : (hasPhoto) ? @(8.0f) : @(0.0f),
     @"imageHeight" : (hasPhoto) ? @(110.0f) : @(0.0f),
     @"descriptionLabelOffset" : (menuProduct.shortDescription.length) ? @(10.0f) : @(0.0f),

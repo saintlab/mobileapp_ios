@@ -32,11 +32,9 @@ static NSDictionary *_defaultConfig = nil;
 static NSDictionary *_customConfig = nil;
 static NSDictionary *_tokens = nil;
 
-const CGFloat kOrderTableFooterHeight = 56.0f;
-
 @implementation OMNConstants
 
-+ (void)setupWithLaunchOptions:(OMNLaunch *)launchOptions completion:(dispatch_block_t)completionBlock {
++ (void)setupWithLaunch:(OMNLaunch *)launchOptions completion:(dispatch_block_t)completionBlock {
   
   [DDLog addLogger:[DDASLLogger sharedInstance]];
   [DDLog addLogger:[DDTTYLogger sharedInstance]];

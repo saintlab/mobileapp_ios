@@ -7,7 +7,7 @@
 //
 
 #import "OMNSelectOrderButton.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 
 @implementation OMNSelectOrderButton
 

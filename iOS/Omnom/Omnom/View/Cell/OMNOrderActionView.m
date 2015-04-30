@@ -8,7 +8,6 @@
 
 #import "OMNOrderActionView.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 #import "OMNUtils.h"
 #import "OMNToolbarButton.h"
 #import <BlocksKit+UIKit.h>
@@ -107,7 +106,7 @@
   @{
     @"labelHeight" : @(24.0f),
     @"viewHeight" : @(50.0f),
-    @"leftOffset" : [[OMNStyler styler] leftOffset],
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[bgView]|" options:kNilOptions metrics:metrics views:views]];
@@ -125,9 +124,7 @@
 }
 
 - (void)cancelTap {
-  
   [self.delegate orderTotalViewDidCancel:self];
-  
 }
 
 - (void)setOrder:(OMNOrder *)order {

@@ -10,13 +10,8 @@
 #import <OMNStyler.h>
 #import "UIImage+omn_helper.h"
 #import "OMNUtils.h"
-#import "OMNConstants.h"
 #import "UIView+omn_autolayout.h"
 #import "NSString+omn_date.h"
-
-@interface OMNPaymentLabeledDoneVC ()
-
-@end
 
 @implementation OMNPaymentLabeledDoneVC {
   
@@ -25,6 +20,14 @@
   UILabel *_orderMailLabel;
   UIImageView *_logoView;
   
+}
+
+- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
+  self = [super init];
+  if (self) {
+    _visitor = visitor;
+  }
+  return self;
 }
 
 - (void)viewDidLoad {
@@ -95,7 +98,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     @"labelOffset" : @(10.0f),
     };
   

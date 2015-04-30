@@ -26,4 +26,7 @@
 - (instancetype)initWithJsonData:(id)jsonData;
 - (long long)totalAmount;
 
+- (NSAttributedString *)statusText;
+- (NSString *)descriptionText;
+
 @end

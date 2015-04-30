@@ -8,7 +8,7 @@
 
 #import "OMNPermissionHelpVC.h"
 #import "OMNScrollExtendView.h"
-#import "OMNConstants.h"
+#import <OMNStyler.h>
 #import "OMNUtils.h"
 #import "UIBarButtonItem+omn_custom.h"
 

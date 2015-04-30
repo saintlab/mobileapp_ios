@@ -11,7 +11,6 @@
 #import "OMNFeedItem.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 
 @interface OMNProductDetailsVC ()
 <UINavigationControllerDelegate>
@@ -65,7 +64,7 @@
   popRecognizer.edges = UIRectEdgeLeft;
   [self.view addGestureRecognizer:popRecognizer];
   
-  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, [[OMNStyler styler] bottomToolbarHeight].floatValue, 0.0f);
+  UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, OMNStyler.bottomToolbarHeight, 0.0f);
   _scroll.contentInset = insets;
   _scroll.scrollIndicatorInsets = insets;
 

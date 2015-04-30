@@ -10,11 +10,6 @@
 #import "UIView+omn_autolayout.h"
 #import "UIButton+omn_helper.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
-
-@interface OMNPreorderDoneVC ()
-
-@end
 
 @implementation OMNPreorderDoneVC {
   
@@ -92,7 +87,7 @@
   
   NSDictionary *metrics =
   @{
-    @"leftOffset" : [OMNStyler styler].leftOffset,
+    @"leftOffset" : @(OMNStyler.leftOffset),
     };
   
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];

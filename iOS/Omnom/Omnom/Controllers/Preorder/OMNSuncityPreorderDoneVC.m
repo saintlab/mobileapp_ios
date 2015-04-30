@@ -8,7 +8,6 @@
 
 #import "OMNSuncityPreorderDoneVC.h"
 #import "OMNUtils.h"
-#import "OMNConstants.h"
 #import <OMNStyler.h>
 
 @interface OMNSuncityPreorderDoneVC ()
