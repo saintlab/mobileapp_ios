@@ -52,8 +52,8 @@ describe(@"check initial state", ^{
     [[[OMNAuthorization authorisation].token should] beNonNil];
     
     __block NSNumber *isConfigLoaded = nil;
-    OMNLaunch *lo = [[OMNLaunch alloc] init];
-    [OMNConstants setupWithLaunchOptions:lo completion:^{
+    OMNLaunch *launch = [[OMNLaunch alloc] init];
+    [OMNConstants setupWithLaunch:launch completion:^{
       
       isConfigLoaded = @(YES);
       

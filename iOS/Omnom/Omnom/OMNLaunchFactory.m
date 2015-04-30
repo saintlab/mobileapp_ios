@@ -40,8 +40,6 @@
 
 + (OMNLaunch *)launchWithLaunchOptions:(NSDictionary *)launchOptions {
   
-  NSLog(@"launchWithLaunchOptions>%@", launchOptions);
-#warning @"config_staging"
 #if OMN_TEST
   return [[OMNLaunch alloc] init];
 #elif LUNCH_2GIS

@@ -849,6 +849,7 @@
 		9345AFD6199C6F8B00328F73 /* OMNToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */; };
 		9345AFDA199E0ED200328F73 /* OMNCardBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */; };
 		9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */; };
+		934913281AF27F42007C2905 /* OMNLaunchFactorySpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 934913271AF27F42007C2905 /* OMNLaunchFactorySpec.m */; };
 		934CDF5019D4078900D73FC4 /* OMNLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF4F19D4078900D73FC4 /* OMNLabelCell.m */; };
 		934CDF5119D4078900D73FC4 /* OMNLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF4F19D4078900D73FC4 /* OMNLabelCell.m */; };
 		934CDF5419D4196D00D73FC4 /* OMNBottomLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF5319D4196D00D73FC4 /* OMNBottomLabelView.m */; };
@@ -2093,6 +2094,7 @@
 		9345AFD4199C6F8B00328F73 /* OMNToolbarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNToolbarButton.m; sourceTree = "<group>"; };
 		9345AFD8199E0ED200328F73 /* OMNCardBrandView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardBrandView.h; sourceTree = "<group>"; };
 		9345AFD9199E0ED200328F73 /* OMNCardBrandView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardBrandView.m; sourceTree = "<group>"; };
+		934913271AF27F42007C2905 /* OMNLaunchFactorySpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLaunchFactorySpec.m; sourceTree = "<group>"; };
 		934CDF4E19D4078900D73FC4 /* OMNLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLabelCell.h; sourceTree = "<group>"; };
 		934CDF4F19D4078900D73FC4 /* OMNLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLabelCell.m; sourceTree = "<group>"; };
 		934CDF5219D4196D00D73FC4 /* OMNBottomLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBottomLabelView.h; sourceTree = "<group>"; };
@@ -3466,6 +3468,7 @@
 				93005C721AD3771100635521 /* OMNDeliverySpec.m */,
 				93005CB61AD3C59A00635521 /* NSArray+omn_tableHelperSpec.m */,
 				93C8C77A1AEDD3C8000D7AB9 /* OMNMenuCategoriesModelSpec.m */,
+				934913271AF27F42007C2905 /* OMNLaunchFactorySpec.m */,
 			);
 			path = OmnomTests;
 			sourceTree = "<group>";
@@ -6323,6 +6326,7 @@
 				937CDC971AA6F76B000856AB /* OMNAcquiringTransaction.m in Sources */,
 				939F994A197544820051822E /* OMNUserInfoItem.m in Sources */,
 				9369C9871AE0CBCE00333C31 /* OMNBankCard+omn_network.m in Sources */,
+				934913281AF27F42007C2905 /* OMNLaunchFactorySpec.m in Sources */,
 				939FD05F1989D7EB008F3B62 /* NSString+omn_color.m in Sources */,
 				932F5DDB1A726E9E00AF86AD /* OMNMenuCategoryHeaderView.m in Sources */,
 				93D117821A2F0766000131C4 /* OMNTableUserInfoItem.m in Sources */,
