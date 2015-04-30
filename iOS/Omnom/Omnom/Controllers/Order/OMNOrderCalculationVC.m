@@ -138,9 +138,7 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-  
   return UIStatusBarStyleDefault;
-  
 }
 
 - (void)viewDidLayoutSubviews {
@@ -163,15 +161,11 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (void)tableOrdersDidChange {
-  
   [self updateTitle];
-  
 }
 
 - (void)selectedOrderTap {
-  
   [self.delegate orderCalculationVCRequestOrders:self];
-  
 }
 
 - (void)calculatorTap {
@@ -188,9 +182,7 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (void)cancelTap {
-  
   [self.delegate orderCalculationVCDidCancel:self];
-  
 }
 
 - (void)updateOrder {

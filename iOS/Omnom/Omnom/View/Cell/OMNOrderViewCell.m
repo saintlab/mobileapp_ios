@@ -46,7 +46,7 @@
     _tableView.allowsSelection = NO;
     [self addSubview:_tableView];
     
-    _orderTotalView = [[OMNOrderTotalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_tableView.frame), OMNStyler.bottomToolbarHeight)];
+    _orderTotalView = [[OMNOrderTotalView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(_tableView.frame), OMNStyler.orderTableFooterHeight)];
     _tableView.tableFooterView = _orderTotalView;
     _tableView.layer.anchorPoint = CGPointMake(0.0f, 0.0f);
     _tableView.transform = CGAffineTransformMakeScale(scale, scale);
@@ -69,11 +69,9 @@
 }
 
 - (void)setHighlighted:(BOOL)highlighted {
-  
 }
 
 - (void)setSelected:(BOOL)selected {
-  
 }
 
 - (void)setOrder:(OMNOrder *)order {

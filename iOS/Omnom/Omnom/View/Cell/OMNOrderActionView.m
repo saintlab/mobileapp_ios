@@ -25,15 +25,12 @@
   
   if (_setOrderIdentifier) {
     [_order bk_removeObserversWithIdentifier:_setOrderIdentifier];
-    _setOrderIdentifier = nil;
   }
   
 }
 
 - (void)dealloc {
-  
   [self removeSetOrderObserver];
-  
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {

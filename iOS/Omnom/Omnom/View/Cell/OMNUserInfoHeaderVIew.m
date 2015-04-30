@@ -8,7 +8,6 @@
 
 #import "OMNUserInfoHeaderView.h"
 #import <OMNStyler.h>
-#import "OMNConstants.h"
 
 @implementation OMNUserInfoHeaderView
 
@@ -33,7 +32,7 @@
     
     NSDictionary *metrics =
     @{
-      @"leftOffset" : [OMNStyler styler].leftOffset,
+      @"leftOffset" : @(OMNStyler.leftOffset),
       @"bottomOffset" : @(10.0f),
       };
     

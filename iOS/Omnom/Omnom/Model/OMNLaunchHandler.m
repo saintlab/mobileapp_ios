@@ -40,7 +40,9 @@
     return;
   }
   
+
   [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
+
   _startVC = [[OMNStartVC alloc] init];
   UIWindow *window = [[UIApplication sharedApplication].delegate window];
   window.rootViewController = [OMNNavigationController controllerWithRootVC:_startVC];
