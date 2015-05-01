@@ -9,48 +9,61 @@
 #import "OMNBeaconsSearchManager.h"
 #import "CBCentralManager+omn_promise.h"
 #import "OMNBeaconRangingManager.h"
+#import "OMNFoundBeacons.h"
+
+@interface OMNBeaconsSearchManager ()
+
+- (void)startSearching;
+- (void)stop;
+
+@end
 
 @implementation OMNBeaconsSearchManager {
   
   OMNBeaconRangingManager *_beaconRangingManager;
   OMNFoundBeacons *_foundBeacons;
   NSTimer *_nearestBeaconsRangingTimer;
-  OMNDidFindBeaconsBlock _didFindBeaconsBlock;
+  
+  PMKFulfiller fulfiller;
+  PMKRejecter rejecter;
   
 }
 
 - (void)dealloc {
-  
-  _didFindBeaconsBlock = nil;
   [self stop];
+}
+
++ (PMKPromise *)searchBeacons {
+  
+  OMNBeaconsSearchManager *manager = [[OMNBeaconsSearchManager alloc] init];
+  PMKPromise *promise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+
+    manager->fulfiller = fulfill;
+    manager->rejecter = reject;
+    
+  }];
+  promise.finally(^{
+    
+    [manager stop];
+    
+  });
+  [manager startSearching];
+  return promise;
   
 }
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    
-    __weak typeof(self)weakSelf = self;
-    _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
-      
-      if (kCLAuthorizationStatusAuthorizedAlways != status) {
-        
-        [weakSelf didFailSearchingBeacons];
-        
-      }
-      
-    }];
-    
+    _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
   }
   return self;
 }
 
 
-- (void)startSearchingWithCompletion:(OMNDidFindBeaconsBlock)didFindBeaconsBlock {
+- (void)startSearching {
   
   [self stop];
-  
-  _didFindBeaconsBlock = [didFindBeaconsBlock copy];
 
   if (TARGET_IPHONE_SIMULATOR) {
     
@@ -69,16 +82,10 @@
 - (void)processFoundBeacons:(NSArray *)beacons {
   
   [self stop];
-
-  if (_didFindBeaconsBlock) {
-    _didFindBeaconsBlock(beacons);
-    _didFindBeaconsBlock = nil;
+  if (fulfiller) {
+    fulfiller(beacons);
   }
   
-}
-
-- (void)didFailSearchingBeacons {
-  [self processFoundBeacons:nil];
 }
 
 - (void)checkCLStatus {
@@ -91,7 +98,7 @@
   }
   else {
     
-    [self didFailSearchingBeacons];
+    [self beaconsNotFound];
     
   }
   
@@ -99,13 +106,13 @@
 
 - (void)checkBluetoothState {
   
-  [CBCentralManager omn_getBluetoothState].then(^(CBCentralManager *manager, NSNumber *state) {
+  [CBCentralManager omn_getBluetoothState].then(^(NSNumber *state) {
     
     if (CBCentralManagerStatePoweredOn == [state integerValue]) {
       [self startRangingBeacons];
     }
     else {
-      [self didFailSearchingBeacons];
+      [self beaconsNotFound];
     }
     
   });
@@ -119,7 +126,7 @@
   }
   
   if (!_beaconRangingManager.isRangingAvaliable) {
-    [self didFailSearchingBeacons];
+    [self beaconsNotFound];
     return;
   }
   
@@ -135,7 +142,7 @@
   } failure:^(NSError *error) {
     
     __strong __typeof(weakSelf)strongSelf = weakSelf;
-    [strongSelf didFailSearchingBeacons];
+    [strongSelf beaconsNotFound];
     
   }];
   
@@ -150,6 +157,10 @@
     
   }
   
+}
+
+- (void)beaconsNotFound {
+  [self processFoundBeacons:@[]];
 }
 
 - (void)stop {

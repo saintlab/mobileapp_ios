@@ -6,14 +6,10 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNBeaconRangingManager.h"
-#import "OMNFoundBeacons.h"
-
-typedef void(^OMNDidFindBeaconsBlock)(NSArray *beacons);
+#import <PromiseKit.h>
 
 @interface OMNBeaconsSearchManager : NSObject
 
-- (void)startSearchingWithCompletion:(OMNDidFindBeaconsBlock)didFindBeaconsBlock;
-- (void)stop;
++ (PMKPromise *)searchBeacons;
 
 @end

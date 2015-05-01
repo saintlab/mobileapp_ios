@@ -24,16 +24,17 @@
 @end
 
 @implementation OMNCentralManager {
-  PMKPromiseFulfiller fulfiller;   // void (^)(id)
-  PMKPromiseRejecter rejecter;     // void (^)(NSError *)
+  PMKFulfiller fulfiller;   // void (^)(id)
+  PMKRejecter rejecter;     // void (^)(NSError *)
 }
 
 + (PMKPromise *)promise {
   OMNCentralManager *manager = [[OMNCentralManager alloc] initWithDelegate:nil queue:dispatch_get_main_queue() options:@{CBCentralManagerOptionShowPowerAlertKey:@(NO)}];
   manager.delegate = manager;
-  PMKPromise *promise = [Promise new:^(PromiseFulfiller fulfiller, PromiseRejecter rejecter){
-    manager->fulfiller = fulfiller;
-    manager->rejecter = rejecter;
+
+  PMKPromise *promise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    manager->fulfiller = fulfill;
+    manager->rejecter = reject;
   }];
   promise.finally(^{
     manager.delegate = nil;

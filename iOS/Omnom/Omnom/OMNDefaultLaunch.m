@@ -21,14 +21,12 @@
 @implementation OMNDefaultLaunch
 
 - (void)dealloc {
-  [self.beaconsSearchManager stop];
+
 }
 
 - (instancetype)init {
   self = [super init];
   if (self) {
-    
-    _beaconsSearchManager = [[OMNBeaconsSearchManager alloc] init];
     
   }
   return self;
@@ -36,7 +34,7 @@
 
 - (PMKPromise *)decodeRestaurants {
   
-  return [self searchBeacons].then(^(NSArray *beacons) {
+  return [OMNBeaconsSearchManager searchBeacons].then(^(NSArray *beacons) {
     
     return [self decodeBeacons:beacons];
     
@@ -44,25 +42,11 @@
   
 }
 
-- (PMKPromise *)searchBeacons {
-  
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-    
-    [self.beaconsSearchManager startSearchingWithCompletion:^(NSArray *beacons) {
-      
-      fulfill(beacons);
-      
-    }];
-    
-  }];
-  
-}
-
 - (PMKPromise *)decodeBeacons:(NSArray *)beacons {
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    if (!beacons) {
+    if (0 == beacons.count) {
       fulfill(@[]);
       return;
     }
