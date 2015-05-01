@@ -39,6 +39,7 @@
   
   OMNMenuModel *_menuModel;
   
+  UIActivityIndicatorView *_menuTableLoader;
   OMNTableButton *_tableButton;
   BOOL _tableButtonAnimationDidShow;
   
@@ -68,15 +69,11 @@
 }
 
 - (id<UIViewControllerInteractiveTransitioning>)interactiveTransitioning {
-  
   return _interactiveTransition;
-  
 }
 
 - (BOOL)isViewVisible {
-  
   return [self.navigationController.topViewController isEqual:self];
-  
 }
 
 - (void)viewDidLoad {
@@ -103,13 +100,6 @@
     
   }];
   
-  _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
-    
-    @strongify(self)
-    [self menuDidChange:obj.menu];
-    
-  }];
-
   _menuModel.didEndDraggingBlock = ^(UITableView *tableView) {
     
     CGFloat tableTopOffset = tableView.contentOffset.y + tableView.contentInset.top;
@@ -310,14 +300,14 @@
 }
 
 - (void)menuDidChange:(OMNMenu *)menu {
-  
+
   _menuModel.menu = menu;
   [_menuTable reloadData];
   
   CGFloat topOffset = CGRectGetMaxY(self.circleButton.frame) + 40.0f;
   CGFloat bottomInset = _menuTable.frame.size.height - _menuTable.contentSize.height - topOffset;
   _menuTable.contentInset = UIEdgeInsetsMake(topOffset, 0.0f, bottomInset, 0.0f);
-
+  [_menuTableLoader stopAnimating];
   [UIView animateWithDuration:0.5 animations:^{
     
     _menuTable.alpha = (menu.products.count > 0) ? (1.0f) : (0.0f);
@@ -372,6 +362,8 @@
 
 - (void)addMenu {
   
+  [self addMenuObserver];
+  
   _menuModel = [[OMNMenuModel alloc] init];
   _menuTable = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
   _menuTable.translatesAutoresizingMaskIntoConstraints = NO;
@@ -379,16 +371,36 @@
   [_menuModel configureTableView:_menuTable];
   [self.view insertSubview:_menuTable belowSubview:self.circleButton];
 
+  _menuTableLoader = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+  _menuTableLoader.translatesAutoresizingMaskIntoConstraints = NO;
+  _menuTableLoader.hidesWhenStopped = YES;
+  [_menuTableLoader startAnimating];
+  [self.view addSubview:_menuTableLoader];
+  
   NSDictionary *views =
   @{
+    @"menuTableLoader" : _menuTableLoader,
     @"menuTable" : _menuTable
     };
   
   NSDictionary *metrics = @{};
   
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTableLoader attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
+  [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_menuTableLoader attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.circleButton attribute:NSLayoutAttributeBottom multiplier:1.0f constant:70.0f]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[menuTable]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[menuTable]|" options:kNilOptions metrics:metrics views:views]];
   
+}
+
+- (void)addMenuObserver {
+  
+  @weakify(self)
+  _restaurantMenuOserverID = [_restaurantMediator bk_addObserverForKeyPath:NSStringFromSelector(@selector(menu)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantMediator *obj, NSDictionary *change) {
+    
+    @strongify(self)
+    [self menuDidChange:obj.menu];
+    
+  }];
 }
 
 - (void)addPromo {
