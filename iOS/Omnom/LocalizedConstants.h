@@ -180,9 +180,11 @@
 #define kOMN_ERROR_NO_INTERNET_CONNECTION NSLocalizedString(@"ERROR_NO_INTERNET_CONNECTION", @"Вы видите интернет? Мы нет.");
 #define kOMN_SPLIT_NUMBER_OF_GUESTS_HINT NSLocalizedString(@"SPLIT_NUMBER_OF_GUESTS_HINT", @"На скольких гостей делить?")
 
+#define kOMN_WISH_DONE_TEXT NSLocalizedString(@"WISH_DONE_TEXT", @"Ваш заказ готов")
+#define kOMN_WISH_DONE_DESCRIPTION NSLocalizedString(@"WISH_DONE_DESCRIPTION", @"Чтобы получить свой заказ, покажите бармену этот экран, или назовите ему номер и пин-код заказа.")
 
-    
-
+#define kOMN_WISH_CANCELLED_TEXT NSLocalizedString(@"WISH_CANCELLED_TEXT", @"Ваш заказ отменён")
+#define kOMN_WISH_CANCELLED_DESCRIPTION NSLocalizedString(@"WISH_CANCELLED_DESCRIPTION", @"Заказ не может быть выполнен заведением, и поэтому был отменён.\nОплата вернётся к вам на карту в ближайшие несколько дней.")
 
 //info
 #define kOMN_PREORDER_DONE_LABEL_TEXT_1 NSLocalizedString(@"PREORDER_DONE_LABEL_TEXT_1", @"Заказ принят\nи обрабатывается")

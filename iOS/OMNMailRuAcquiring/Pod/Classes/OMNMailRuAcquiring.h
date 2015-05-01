@@ -29,7 +29,7 @@
 
 + (PMKPromise *)refundOrder:(NSString *)orderID;
 
-+ (PMKPromise *)deleteCardWithID:(NSString *)cardID user:(OMNMailRuUser *)user;
+//+ (PMKPromise *)deleteCardWithID:(NSString *)cardID user:(OMNMailRuUser *)user;
 
 @end
 

@@ -16,16 +16,6 @@
 
 - (PMKPromise *)omn_delete {
   
-  return [OMNMailRuAcquiring deleteCardWithID:self.external_card_id user:[OMNMailRuUser userWithLogin:self.user_id phone:@""]].then(^(NSDictionary *response) {
-
-    return [self internalCardDelete];
-    
-  });
-  
-}
-
-- (PMKPromise *)internalCardDelete {
- 
   NSString *path = [NSString stringWithFormat:@"/cards/%@", self.id];
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
@@ -49,6 +39,7 @@
     }];
     
   }];
+
   
 }
 

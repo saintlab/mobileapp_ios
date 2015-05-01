@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "OMNOrderItem.h"
 
+typedef NS_ENUM(NSInteger, OMNWishStatus) {
+  kWishStatusUnknown = 0,
+  kWishStatusReady,
+  kWishStatusCanceled,
+};
+
 @interface OMNWish : NSObject
 
 @property (nonatomic, copy, readonly) NSString *id;
@@ -22,6 +28,7 @@
 @property (nonatomic, copy, readonly) NSString *orderNumber;
 @property (nonatomic, copy, readonly) NSString *pin;
 @property (nonatomic, strong, readonly) NSArray *items;
+@property (nonatomic, assign, readonly) OMNWishStatus status;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 - (long long)totalAmount;

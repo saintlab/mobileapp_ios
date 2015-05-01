@@ -1,13 +1,13 @@
 //
-//  OMNTestLaunch.h
+//  OMNDebugLaunch.h
 //  omnom
 //
-//  Created by tea on 19.04.15.
+//  Created by tea on 01.05.15.
 //  Copyright (c) 2015 tea. All rights reserved.
 //
 
 #import "OMNQRLaunch.h"
 
-@interface OMNTestLaunch : OMNLaunch
+@interface OMNDebugLaunch : OMNQRLaunch
 
 @end

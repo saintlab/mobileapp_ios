@@ -858,6 +858,11 @@
 		934913321AF3087B007C2905 /* NSObject+omn_safe_creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */; };
 		934913331AF3087B007C2905 /* NSObject+omn_safe_creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */; };
 		934913351AF30B32007C2905 /* OMNRestaurantDetailsViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 934913341AF30B32007C2905 /* OMNRestaurantDetailsViewSpec.m */; };
+		934913381AF36F26007C2905 /* OMNDebugLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 934913371AF36F26007C2905 /* OMNDebugLaunch.m */; };
+		934913391AF36F27007C2905 /* OMNDebugLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 934913371AF36F26007C2905 /* OMNDebugLaunch.m */; };
+		9349133A1AF36F27007C2905 /* OMNDebugLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 934913371AF36F26007C2905 /* OMNDebugLaunch.m */; };
+		9349133B1AF36F27007C2905 /* OMNDebugLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 934913371AF36F26007C2905 /* OMNDebugLaunch.m */; };
+		9349133C1AF36F27007C2905 /* OMNDebugLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 934913371AF36F26007C2905 /* OMNDebugLaunch.m */; };
 		934CDF5019D4078900D73FC4 /* OMNLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF4F19D4078900D73FC4 /* OMNLabelCell.m */; };
 		934CDF5119D4078900D73FC4 /* OMNLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF4F19D4078900D73FC4 /* OMNLabelCell.m */; };
 		934CDF5419D4196D00D73FC4 /* OMNBottomLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 934CDF5319D4196D00D73FC4 /* OMNBottomLabelView.m */; };
@@ -2108,6 +2113,8 @@
 		9349132D1AF3087B007C2905 /* NSObject+omn_safe_creation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+omn_safe_creation.h"; sourceTree = "<group>"; };
 		9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+omn_safe_creation.m"; sourceTree = "<group>"; };
 		934913341AF30B32007C2905 /* OMNRestaurantDetailsViewSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRestaurantDetailsViewSpec.m; sourceTree = "<group>"; };
+		934913361AF36F26007C2905 /* OMNDebugLaunch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDebugLaunch.h; sourceTree = "<group>"; };
+		934913371AF36F26007C2905 /* OMNDebugLaunch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDebugLaunch.m; sourceTree = "<group>"; };
 		934CDF4E19D4078900D73FC4 /* OMNLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLabelCell.h; sourceTree = "<group>"; };
 		934CDF4F19D4078900D73FC4 /* OMNLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLabelCell.m; sourceTree = "<group>"; };
 		934CDF5219D4196D00D73FC4 /* OMNBottomLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBottomLabelView.h; sourceTree = "<group>"; };
@@ -4177,6 +4184,8 @@
 				933E10EF1AE3BED900AA4C67 /* OMNTestLaunch.m */,
 				9388442F1AE4C59D009E02A6 /* OMNTravelersLaunch.h */,
 				938844301AE4C59D009E02A6 /* OMNTravelersLaunch.m */,
+				934913361AF36F26007C2905 /* OMNDebugLaunch.h */,
+				934913371AF36F26007C2905 /* OMNDebugLaunch.m */,
 			);
 			name = Launch;
 			sourceTree = "<group>";
@@ -5223,6 +5232,7 @@
 				930C4DDF1AB15E1B006CA608 /* OMNSlideDownTransition.m in Sources */,
 				930C4DE01AB15E1B006CA608 /* OMNSearchRestaurantVC.m in Sources */,
 				930C4DE11AB15E1B006CA608 /* OMNScrollExtendView.m in Sources */,
+				9349133A1AF36F27007C2905 /* OMNDebugLaunch.m in Sources */,
 				930C4DE21AB15E1B006CA608 /* OMNRestaurantCardVC.m in Sources */,
 				930C4DE31AB15E1B006CA608 /* OMNOrderTableView.m in Sources */,
 				930C4DE41AB15E1B006CA608 /* OMNCameraPermissionDescriptionVC.m in Sources */,
@@ -5565,6 +5575,7 @@
 				930C8BD01ACA7D9F00CE4E5A /* OMNSlideDownTransition.m in Sources */,
 				930C8BD11ACA7D9F00CE4E5A /* OMNSearchRestaurantVC.m in Sources */,
 				930C8BD21ACA7D9F00CE4E5A /* OMNScrollExtendView.m in Sources */,
+				9349133B1AF36F27007C2905 /* OMNDebugLaunch.m in Sources */,
 				930C8BD31ACA7D9F00CE4E5A /* OMNRestaurantCardVC.m in Sources */,
 				930C8BD41ACA7D9F00CE4E5A /* OMNOrderTableView.m in Sources */,
 				930C8BD51ACA7D9F00CE4E5A /* OMNCameraPermissionDescriptionVC.m in Sources */,
@@ -5907,6 +5918,7 @@
 				93B368A019A4CF1100B6E6CB /* OMNSlideDownTransition.m in Sources */,
 				937A37821981152300EF5C31 /* OMNSearchRestaurantVC.m in Sources */,
 				93998C1519ACB6BD00FEE940 /* OMNScrollExtendView.m in Sources */,
+				934913381AF36F26007C2905 /* OMNDebugLaunch.m in Sources */,
 				933A9EAA1A4C0851001C0909 /* OMNRestaurantCardVC.m in Sources */,
 				932B186019ADEE91009E440E /* OMNOrderTableView.m in Sources */,
 				935D8C8E1A381CE400877C02 /* OMNCameraPermissionDescriptionVC.m in Sources */,
@@ -6148,6 +6160,7 @@
 				934CDF5119D4078900D73FC4 /* OMNLabelCell.m in Sources */,
 				93B90495196550F4007D21C4 /* OMNRatingModel.m in Sources */,
 				93005C691AD27A0D00635521 /* OMNPaidLunchWishMediator.m in Sources */,
+				934913391AF36F27007C2905 /* OMNDebugLaunch.m in Sources */,
 				93ABFD621AF1246C00A06CC5 /* UITableViewCell+omn_height.m in Sources */,
 				935A1E3A1A8238B700704086 /* NSData+omn_deviceToken.m in Sources */,
 				933A9EA31A4BC61D001C0909 /* OMNRestaurantSchedule.m in Sources */,
@@ -6580,6 +6593,7 @@
 				936AC1781AD8BDBC00A9D17F /* OMNSlideDownTransition.m in Sources */,
 				936AC1791AD8BDBC00A9D17F /* OMNSearchRestaurantVC.m in Sources */,
 				936AC17A1AD8BDBC00A9D17F /* OMNScrollExtendView.m in Sources */,
+				9349133C1AF36F27007C2905 /* OMNDebugLaunch.m in Sources */,
 				936AC17B1AD8BDBC00A9D17F /* OMNRestaurantCardVC.m in Sources */,
 				936AC17C1AD8BDBC00A9D17F /* OMNOrderTableView.m in Sources */,
 				936AC17D1AD8BDBC00A9D17F /* OMNCameraPermissionDescriptionVC.m in Sources */,

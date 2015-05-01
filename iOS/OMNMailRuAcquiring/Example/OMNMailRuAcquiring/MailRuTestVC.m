@@ -245,27 +245,22 @@
 
 - (PMKPromise *)deleteCardWithInfo:(id)cardInfo {
   
-  return [OMNMailRuAcquiring deleteCardWithID:cardInfo[@"external_card_id"] user:self.user].then(^(NSDictionary *response) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    NSLog(@"deleteCardWithID>%@", response);
-    
-    return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    NSString *path = [NSString stringWithFormat:@"/cards/%@", cardInfo[@"id"]];
+    [_operationManager DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
-      NSString *path = [NSString stringWithFormat:@"/cards/%@", cardInfo[@"id"]];
-      [_operationManager DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"deleteCard>%@", responseObject);
-        fulfill(nil);
-        
-      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-        reject(error);
-        NSLog(@"deleteCard>%@", error);
-        
-      }];
-
+      NSLog(@"deleteCard>%@", responseObject);
+      fulfill(nil);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      reject(error);
+      NSLog(@"deleteCard>%@", error);
+      
     }];
-  });
+    
+  }];
   
 }
 
@@ -324,8 +319,7 @@
   }).then(^(OMNMailRuPoll *poll) {
     
     NSLog(@"pay order>%@ \n\n%@", poll.request, poll.response);
-    return [OMNMailRuAcquiring deleteCardWithID:tempCardID user:self.user];
-    
+    return nil;//[OMNMailRuAcquiring deleteCardWithID:tempCardID user:self.user];
     
   }).then(^(NSDictionary *response) {
     

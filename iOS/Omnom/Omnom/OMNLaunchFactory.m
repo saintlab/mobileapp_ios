@@ -14,6 +14,7 @@
 #import "OMNRemotePushLaunch.h"
 #import "OMNTravelersLaunch.h"
 #import "OMNTestLaunch.h"
+#import "OMNDebugLaunch.h"
 
 @implementation OMNLaunchFactory
 
@@ -41,15 +42,15 @@
 + (OMNLaunch *)launchWithLaunchOptions:(NSDictionary *)launchOptions {
   
 #if OMN_TEST
-  return [[OMNLaunch alloc] init];
+  return [[OMNTestLaunch alloc] init];
+#elif TARGET_IPHONE_SIMULATOR
+  return [OMNDebugLaunch new];
 #elif LUNCH_2GIS
   return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis" config:nil];
 #elif LUNCH_2GIS_SUNCITY
   return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis-sun-city" config:@"config_staging"];
 #elif OMN_TRAVELERS
   return [[OMNTravelersLaunch alloc] init];
-#elif TARGET_IPHONE_SIMULATOR
-  return [OMNTestLaunch new];
 #else
   
   if (launchOptions[UIApplicationLaunchOptionsLocationKey]) {
