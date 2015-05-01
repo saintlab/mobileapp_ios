@@ -133,15 +133,14 @@
   _iconView.image = orderItem.icon;
   
   NSString *priceQuantityString = nil;
-  NSString *priceString = [OMNUtils commaStringFromKop:orderItem.price_per_item];
   if (orderItem.quantity != 1.0) {
     
-    priceQuantityString = [NSString stringWithFormat:@"%@ x %@", [OMNUtils unitStringFromDouble:orderItem.quantity], priceString];
+    priceQuantityString = [NSString stringWithFormat:@"%@ x %@", [OMNUtils unitStringFromDouble:orderItem.quantity], [OMNUtils commaStringFromKop:orderItem.price_per_item]];
     
   }
   else {
     
-    priceQuantityString = priceString;
+    priceQuantityString = [OMNUtils commaStringFromKop:orderItem.price_total];
     
   }
 
