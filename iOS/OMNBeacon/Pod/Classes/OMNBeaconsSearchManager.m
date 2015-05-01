@@ -131,7 +131,7 @@
   }
   
   _foundBeacons = [[OMNFoundBeacons alloc] init];
-  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFailSearchingBeacons) userInfo:nil repeats:NO];
+  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconsNotFound) userInfo:nil repeats:NO];
   
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {

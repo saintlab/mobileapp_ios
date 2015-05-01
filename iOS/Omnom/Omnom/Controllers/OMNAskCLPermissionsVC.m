@@ -8,9 +8,7 @@
 
 #import "OMNAskCLPermissionsVC.h"
 #import <CoreLocation/CoreLocation.h>
-#import "OMNDenyCLPermissionVC.h"
-#import "OMNCLPermissionsHelpVC.h"
-#import <OMNBeacon.h>
+#import "OMNNavigationController.h"
 
 @interface OMNAskCLPermissionsVC ()
 <CLLocationManagerDelegate>
@@ -20,6 +18,7 @@
 @implementation OMNAskCLPermissionsVC {
   
   CLLocationManager *_permissionLocationManager;
+  PMKFulfiller _fulfiller;
   
 }
 
@@ -40,22 +39,37 @@
     @weakify(self)
     self.buttonInfo =
     @[
-      [OMNBarButtonInfo infoWithTitle:kOMN_FORBID_BUTTON_TITLE image:[UIImage imageNamed:@"cancel_later_icon_small"] block:^{
+      [OMNBarButtonInfo infoWithTitle:kOMN_LATER_BUTTON_TITLE image:[UIImage imageNamed:@"cancel_later_icon_small"] block:^{
         
         @strongify(self)
-        [self denyPermissionTap];
+        [self didReceivePermission:NO];
         
       }],
       [OMNBarButtonInfo infoWithTitle:kOMN_ALLOW_BUTTON_TITLE image:[UIImage imageNamed:@"allow_icon_small"] block:^{
         
         @strongify(self)
-        [self askPermissionTap];
+        [self checkPermissionStatus];
         
       }]
       ];
 
   }
   return self;
+}
+
++ (PMKPromise *)askPermission:(OMNCircleRootVC *)rootVC {
+  
+  OMNAskCLPermissionsVC *askCLPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:rootVC];
+  askCLPermissionsVC.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+  PMKPromise *promise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    askCLPermissionsVC->_fulfiller = fulfill;
+  }];
+  promise.finally(^{
+    [askCLPermissionsVC stop];
+  });
+  [rootVC presentViewController:[OMNNavigationController controllerWithRootVC:askCLPermissionsVC] animated:YES completion:nil];
+  return promise;
+  
 }
 
 - (void)stop {
@@ -89,36 +103,32 @@
   
 }
 
-- (void)didReceivePermission {
+- (void)didReceivePermission:(BOOL)status {
   
   [self stop];
-  self.didReceivePermissionBlock();
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+  
+    _fulfiller(@(status));
+    
+  }];
   
 }
 
-- (IBAction)askPermissionTap {
+- (void)checkPermissionStatus {
   
   _permissionLocationManager.delegate = self;
 
-  switch ([CLLocationManager authorizationStatus]) {
-    case kCLAuthorizationStatusAuthorizedAlways:
-    case kCLAuthorizationStatusAuthorizedWhenInUse: {
-      
-      [self didReceivePermission];
-      
-    } break;
-    case kCLAuthorizationStatusNotDetermined: {
-      
-      [self requestCLPermission];
-      
-    } break;
-    case kCLAuthorizationStatusDenied:
-    case kCLAuthorizationStatusRestricted:
-    default: {
-      
-      [self showDenyPermissonOffHelp];
-      
-    } break;
+  CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+  if (kCLAuthorizationStatusNotDetermined == status) {
+    
+    [self requestCLPermission];
+    
+  }
+  else {
+    
+    BOOL permissionDidReceived = (kCLAuthorizationStatusAuthorizedAlways == status);
+    [self didReceivePermission:permissionDidReceived];
+    
   }
   
 }
@@ -141,34 +151,10 @@
   
 }
 
-- (void)denyPermissionTap {
-  
-  OMNDenyCLPermissionVC *denyCLPermissionVC = [[OMNDenyCLPermissionVC alloc] initWithParent:self];
-  @weakify(self)
-  denyCLPermissionVC.buttonInfo =
-  @[
-    [OMNBarButtonInfo infoWithTitle:kOMN_REPEAT_BUTTON_TITLE image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
-      
-      @strongify(self)
-      [self.navigationController popToViewController:self animated:YES];
-      
-    }]
-    ];
-  [self.navigationController pushViewController:denyCLPermissionVC animated:YES];
-  
-}
-
-- (void)showDenyPermissonOffHelp {
-  
-  OMNCLPermissionsHelpVC *clPermissionsHelpVC = [[OMNCLPermissionsHelpVC alloc] init];
-  [self.navigationController pushViewController:clPermissionsHelpVC animated:YES];
-  
-}
-
 #pragma mark - UINavigationControllerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-  [self askPermissionTap];  
+  [self checkPermissionStatus];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {

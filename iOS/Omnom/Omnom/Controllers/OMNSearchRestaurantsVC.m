@@ -74,38 +74,20 @@
 
 - (PMKPromise *)checkCLAuthorizationStatus {
   
-  @weakify(self)
+  CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+  if (kCLAuthorizationStatusNotDetermined == status) {
+    [self.loaderView stop];
+    return [OMNAskCLPermissionsVC askPermission:self];
+  }
+
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-    
-    if (kCLAuthorizationStatusAuthorizedAlways == [CLLocationManager authorizationStatus]) {
-      fulfill(@(YES));
-    }
-    else {
-      
-      @strongify(self)
-      [self.loaderView stop];
-      OMNAskCLPermissionsVC *askNavigationPermissionsVC = [[OMNAskCLPermissionsVC alloc] initWithParent:self];
-      askNavigationPermissionsVC.didReceivePermissionBlock = ^{
-        
-        [self dismissViewControllerAnimated:YES completion:^{
-        
-          [self resetAnimation];
-          fulfill(@(YES));
-          
-        }];
-        
-      };
-      [self presentViewController:[OMNNavigationController controllerWithRootVC:askNavigationPermissionsVC] animated:YES completion:nil];
-      
-    }
-    
+    fulfill(@(kCLAuthorizationStatusAuthorizedAlways == status));
   }];
   
 }
 
 - (void)checkUserToken {
 
-  [self resetAnimation];
   @weakify(self)
   [OMNAuthorization checkToken].then(^(OMNUser *user) {
     
@@ -113,6 +95,7 @@
     
   }).then(^(NSNumber *stauts) {
     
+    [self resetAnimation];
     return [[OMNLaunchHandler sharedHandler].launch decodeRestaurants];
     
   }).then(^(NSArray *restaurants) {

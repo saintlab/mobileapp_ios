@@ -7,10 +7,11 @@
 //
 
 #import "OMNCircleRootVC.h"
+#import <PromiseKit.h>
 
 @interface OMNAskCLPermissionsVC : OMNCircleRootVC
 
-@property (nonatomic, copy) dispatch_block_t didReceivePermissionBlock;
++ (PMKPromise *)askPermission:(OMNCircleRootVC *)rootV;
 
 @end
 
