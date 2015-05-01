@@ -7,17 +7,12 @@
 //
 
 #import <CoreBluetooth/CoreBluetooth.h>
+#import <PromiseKit.h>
 
 typedef void(^CBCentralManagerStateBlock)(CBCentralManagerState state);
 
-@interface OMNBluetoothManager : NSObject
+@interface CBCentralManager (omn_promise)
 
-@property (nonatomic, assign, readonly) CBCentralManagerState state;
-
-+ (instancetype)manager;
-
-- (void)getBluetoothState:(CBCentralManagerStateBlock)block;
-
-- (void)stop;
++ (PMKPromise *)omn_getBluetoothState;
 
 @end

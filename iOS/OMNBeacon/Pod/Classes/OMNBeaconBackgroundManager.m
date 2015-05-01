@@ -9,7 +9,7 @@
 #import "OMNBeaconBackgroundManager.h"
 #import <CoreLocation/CoreLocation.h>
 #import "OMNBeacon.h"
-#import "OMNBluetoothManager.h"
+#import "CBCentralManager+omn_promise.h"
 
 @interface OMNBeaconBackgroundManager()
 <CLLocationManagerDelegate> {
@@ -104,15 +104,13 @@
     return;
   }
 
-  __weak typeof(self)weakSelf = self;
-  [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
+  [CBCentralManager omn_getBluetoothState].then(^(NSNumber *state) {
     
-    __strong __typeof(weakSelf)strongSelf = weakSelf;
-    if (CBCentralManagerStatePoweredOn == state) {
-      [strongSelf startBeaconRegionMonitoring];
+    if (CBCentralManagerStatePoweredOn == [state integerValue]) {
+      [self startBeaconRegionMonitoring];
     }
-    
-  }];
+
+  });
   
 }
 

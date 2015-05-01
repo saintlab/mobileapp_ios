@@ -31,6 +31,6 @@ Pod::Spec.new do |s|
   s.resources = 'Pod/Assets/*.png', 'Pod/Assets/*.plist'
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'PromiseKit'
   s.frameworks = 'UIKit', 'CoreMotion', 'CoreBluetooth', 'CoreLocation'
 end

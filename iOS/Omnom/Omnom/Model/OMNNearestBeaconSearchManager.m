@@ -11,13 +11,14 @@
 #import "CLBeacon+GBeaconAdditions.h"
 #import "OMNBeaconRangingManager.h"
 #import "OMNFoundBeacons.h"
-#import "OMNBluetoothManager.h"
+#import <CBCentralManager+omn_promise.h>
 #import "OMNRestaurantManager.h"
 
 @interface OMNNearestBeaconSearchManager ()
 
 
 @property (nonatomic, strong) CLBeaconRegion *rangingBeaconRegion;
+@property (nonatomic, strong) OMNFoundBeacons *foundBeacons;
 @property (nonatomic, assign) UIBackgroundTaskIdentifier rangingBackgroundTaskIdentifier;
 
 @end
@@ -28,7 +29,6 @@
   dispatch_block_t _didFindNearestBeaconBlock;
   UIBackgroundTaskIdentifier _searchBeaconTask;
   NSTimer *_beaconRangingTimeoutTimer;
-  OMNFoundBeacons *_foundBeacons;
   
 }
 
@@ -113,34 +113,32 @@
     return;
   }
   
-  [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
-
-    @strongify(self)
-    if (state == CBCentralManagerStatePoweredOn) {
-      
+  [CBCentralManager omn_getBluetoothState].then(^(NSNumber *state) {
+    
+    if (CBCentralManagerStatePoweredOn == [state integerValue]) {
       [self startRangingBeacons];
-      
     }
     else {
-      
       [self didFinish];
-      
     }
     
-  }];
+  });
   
 }
 
 - (void)startRangingBeacons {
   
-  _foundBeacons = [[OMNFoundBeacons alloc] init];
+  self.foundBeacons = [[OMNFoundBeacons alloc] init];
   
   @weakify(self)
   _beaconRangingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(didFinish) userInfo:nil repeats:NO];
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
     @strongify(self)
-    [self didRangeBeacons:beacons];
+    [self.foundBeacons updateWithBeacons:beacons];
+    if (self.foundBeacons.readyForProcessing) {
+      [self didFoundBeacons];
+    }
     
   } failure:^(NSError *error) {
     
@@ -151,23 +149,10 @@
   
 }
 
-- (void)didRangeBeacons:(NSArray *)beacons {
-
-
-  [_foundBeacons updateWithBeacons:beacons];
-  
-  if (_foundBeacons.readyForProcessing) {
-    
-    [self didFoundBeacons];
-    
-  }
-  
-}
-
 - (void)didFoundBeacons {
   
   [self stopRangingBeacons];
-  NSArray *nearestBeacons = _foundBeacons.allBeacons;
+  NSArray *nearestBeacons = self.foundBeacons.allBeacons;
   @weakify(self)
   [[OMNRestaurantManager sharedManager] handleBackgroundBeacons:nearestBeacons withCompletion:^{
     

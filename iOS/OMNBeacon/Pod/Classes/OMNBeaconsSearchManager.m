@@ -7,7 +7,7 @@
 //
 
 #import "OMNBeaconsSearchManager.h"
-#import "OMNBluetoothManager.h"
+#import "CBCentralManager+omn_promise.h"
 #import "OMNBeaconRangingManager.h"
 
 @implementation OMNBeaconsSearchManager {
@@ -99,25 +99,16 @@
 
 - (void)checkBluetoothState {
   
-  __weak typeof(self)weakSelf = self;
-  [[OMNBluetoothManager manager] getBluetoothState:^(CBCentralManagerState state) {
+  [CBCentralManager omn_getBluetoothState].then(^(CBCentralManager *manager, NSNumber *state) {
     
-    __strong __typeof(weakSelf)strongSelf = weakSelf;
-    switch (state) {
-      case CBCentralManagerStatePoweredOn: {
-        
-        [strongSelf startRangingBeacons];
-        
-      } break;
-      default: {
-        
-        [strongSelf didFailSearchingBeacons];
-        
-      } break;
-
+    if (CBCentralManagerStatePoweredOn == [state integerValue]) {
+      [self startRangingBeacons];
+    }
+    else {
+      [self didFailSearchingBeacons];
     }
     
-  }];
+  });
   
 }
 
