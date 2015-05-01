@@ -7,6 +7,7 @@
 //
 
 #import "OMNMenuProductDetails.h"
+#import "NSObject+omn_safe_creation.h"
 
 @implementation OMNMenuProductDetails
 
@@ -14,19 +15,19 @@
   self = [super init];
   if (self) {
  
-    self.weight_gr = jsonData[@"weight"];
-    self.volume_ml = jsonData[@"volume"];
-    self.persons = [jsonData[@"persons"] integerValue];
-    self.cooking_time_minutes = [jsonData[@"cooking_time"] integerValue];
-    self.energy_100 = jsonData[@"energy_100"];
-    self.energy_total = jsonData[@"energy_total"];
-    self.protein_100 = jsonData[@"protein_100"];
-    self.protein_total = jsonData[@"protein_total"];
-    self.fat_100 = jsonData[@"fat_100"];
-    self.fat_total = jsonData[@"fat_total"];
-    self.carbohydrate_100 = jsonData[@"carbohydrate_100"];
-    self.carbohydrate_total = jsonData[@"carbohydrate_total"];
-    self.ingredients = jsonData[@"ingredients"];
+    self.weight_gr = [jsonData[@"weight"] omn_stringValueSafe];
+    self.volume_ml = [jsonData[@"volume"] omn_stringValueSafe];
+    self.persons = [jsonData[@"persons"] omn_integerValueSafe];
+    self.cooking_time_minutes = [jsonData[@"cooking_time"] omn_integerValueSafe];
+    self.energy_100 = [jsonData[@"energy_100"] omn_stringValueSafe];
+    self.energy_total = [jsonData[@"energy_total"] omn_stringValueSafe];
+    self.protein_100 = [jsonData[@"protein_100"] omn_stringValueSafe];
+    self.protein_total = [jsonData[@"protein_total"] omn_stringValueSafe];
+    self.fat_100 = [jsonData[@"fat_100"] omn_stringValueSafe];
+    self.fat_total = [jsonData[@"fat_total"] omn_stringValueSafe];
+    self.carbohydrate_100 = [jsonData[@"carbohydrate_100"] omn_stringValueSafe];
+    self.carbohydrate_total = [jsonData[@"carbohydrate_total"] omn_stringValueSafe];
+    self.ingredients = [jsonData[@"ingredients"] omn_stringValueSafe];
     
   }
   return self;

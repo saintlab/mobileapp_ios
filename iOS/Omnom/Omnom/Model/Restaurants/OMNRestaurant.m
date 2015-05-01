@@ -47,34 +47,34 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
 
 - (instancetype)initWithJsonData:(id)jsonData {
   
-  if (![jsonData isKindOfClass:[NSDictionary class]]) {
-    return nil;
-  }
-  
   self = [super init];
+  
+  if (![jsonData isKindOfClass:[NSDictionary class]]) {
+    return self;
+  }
+
   if (self) {
     
     _jsonData = jsonData;
-    _id = [jsonData[@"id"] description];
-    _is_demo = [jsonData[@"is_demo"] boolValue];
+    _id = [jsonData[@"id"] omn_stringValueSafe];
+    _is_demo = [jsonData[@"is_demo"] omn_boolValueSafe];
     _available = (jsonData[@"available"]) ? ([jsonData[@"available"] boolValue]) : (YES);
-    _entrance_mode = entranceModeFromString(jsonData[@"entrance_mode"]);
-    _title = jsonData[@"title"];
-    _Description = jsonData[@"description"];
-    _distance = [jsonData[@"distance"] doubleValue];
+    _entrance_mode = entranceModeFromString([jsonData[@"entrance_mode"] omn_stringValueSafe]);
+    _title = [jsonData[@"title"] omn_stringValueSafe];
+    _Description = [jsonData[@"description"] omn_stringValueSafe];
+    _distance = [jsonData[@"distance"] omn_doubleValueSafe];
     _decoration = [[OMNRestaurantDecoration alloc] initWithJsonData:jsonData[@"decoration"]];
     _mobile_texts = [[OMNPushTexts alloc] initWithJsonData:jsonData[@"mobile_texts"]];
     _settings = [[OMNRestaurantSettings alloc] initWithJsonData:jsonData[@"settings"]];
-    _phone = jsonData[@"phone"];
+    _phone = [jsonData[@"phone"] omn_stringValueSafe];
     _address = [[OMNRestaurantAddress alloc] initWithJsonData:jsonData[@"address"]];
     _schedules = [[OMNRestaurantSchedules alloc] initWithJsonData:jsonData[@"schedules"]];
     
     _tables = [jsonData[@"tables"] omn_tables];
     _orders = [jsonData[@"orders"] omn_orders];;
     
-    NSString *orders_paid_url = jsonData[@"orders_paid_url"];
-    if (orders_paid_url &&
-        [orders_paid_url isKindOfClass:[NSString class]]) {
+    NSString *orders_paid_url = [jsonData[@"orders_paid_url"] omn_stringValueSafe];
+    if (orders_paid_url.length) {
       _orders_paid_url = [NSURL URLWithString:orders_paid_url];
     }
     

@@ -17,13 +17,20 @@
 
 - (instancetype)initWithRemoteNotification:(NSDictionary *)info {
   
-  self = [self init];
+  self = [super init];
+  if (![info isKindOfClass:[NSDictionary class]]) {
+    return self;
+  }
+
   if (self) {
     
-    self.showTableOrders = [info[@"show_table_orders"] boolValue];
-    self.showRecommendations = [info[@"show_recommendations"] boolValue];
-    _qr = info[@"qr"];
-    self.wishID = info[@"wish"][@"id"];
+    self.showTableOrders = [info[@"show_table_orders"] omn_boolValueSafe];
+    self.showRecommendations = [info[@"show_recommendations"] omn_boolValueSafe];
+    _qr = [info[@"qr"] omn_stringValueSafe];
+    
+    if ([info[@"wish"] isKindOfClass:[NSDictionary class]]) {
+      self.wishID = info[@"wish"][@"id"];
+    }
     
     NSString *open_url = info[@"open_url"];
     if ([open_url isKindOfClass:[NSString class]]) {
@@ -44,7 +51,7 @@
 
 - (PMKPromise *)decodeRestaurants {
   
-  if (!_qr) {
+  if (0 == _qr.length) {
     return [super decodeRestaurants];
   }
   

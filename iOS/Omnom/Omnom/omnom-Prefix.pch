@@ -17,6 +17,7 @@
   #import <CocoaLumberjack/CocoaLumberjack.h>
   #import <EXTScope.h>
   #import "LocalizedConstants.h"
+  #import "NSObject+omn_safe_creation.h"
 #endif
 
 #define NSLog(__FORMAT__, ...) NSLog((@"%s [Line %d] " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
