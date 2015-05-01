@@ -30,8 +30,7 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
 - (void)dealloc {
   
   [self stop];
-  _rangingLocationManager.delegate = nil, _rangingLocationManager = nil;
-  _statusBlock = nil;
+  _rangingLocationManager = nil;
 
 }
 
@@ -55,17 +54,6 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
     NSString *identifier = [OMNBeaconRangingManager generateIdentifier];
     _rangingBeaconRegions = [[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:identifier];
     _authorizationStatus = [CLLocationManager authorizationStatus];
-    
-  }
-  return self;
-}
-
-- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock {
-  self = [self init];
-  if (self) {
-
-    _statusBlock = [statusBlock copy];
-    _rangingLocationManager.delegate = self;
     
   }
   return self;
@@ -108,6 +96,7 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
   
   _didRangeBeaconsBlock = nil;
   _didFailRangeBeaconsBlock = nil;
+  _rangingLocationManager.delegate = nil;
   [_rangingBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
     
     [_rangingLocationManager stopRangingBeaconsInRegion:beaconRegion];
@@ -120,15 +109,7 @@ NSTimeInterval const kBeaconSearchTimeout = 7.0;
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-  
-  if (_statusBlock &&
-      status != _authorizationStatus) {
-    
-    _statusBlock(status);
-    
-  }
   _authorizationStatus = status;
-  
 }
 
 - (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {

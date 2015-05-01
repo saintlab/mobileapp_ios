@@ -32,9 +32,7 @@
   
   id jsonData = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"config.json" ofType:nil]] options:0 error:nil];
   [OMNBeacon setBaeconUUID:[[OMNBeaconUUID alloc] initWithJsonData:jsonData[@"uuid"]]];
-  _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:^(CLAuthorizationStatus status) {
-    
-  }];
+  _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
   
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     

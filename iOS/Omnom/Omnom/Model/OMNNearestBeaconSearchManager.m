@@ -45,7 +45,7 @@
   self = [super init];
   if (self) {
     
-    _beaconRangingManager = [[OMNBeaconRangingManager alloc] initWithStatusBlock:nil];
+    _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
     
   }
   return self;

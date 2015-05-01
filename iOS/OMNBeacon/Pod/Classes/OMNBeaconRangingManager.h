@@ -17,10 +17,7 @@ extern NSTimeInterval const kBeaconSearchTimeout;
 
 @property (nonatomic, assign, readonly) BOOL ranging;
 @property (nonatomic, assign, readonly) BOOL isRangingAvaliable;
-@property (nonatomic, copy, readonly) CLAuthorizationStatusBlock statusBlock;
 @property (nonatomic, assign, readonly) CLAuthorizationStatus authorizationStatus;
-
-- (instancetype)initWithStatusBlock:(CLAuthorizationStatusBlock)statusBlock;
 
 /**
  Start searching nearest beacons

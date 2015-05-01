@@ -52,15 +52,6 @@
   
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
-  }
-  return self;
-}
-
-
 - (void)startSearching {
   
   [self stop];
@@ -84,6 +75,7 @@
   [self stop];
   if (fulfiller) {
     fulfiller(beacons);
+    fulfiller = nil;
   }
   
 }
@@ -125,14 +117,14 @@
     return;
   }
   
+  _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
+  
   if (!_beaconRangingManager.isRangingAvaliable) {
     [self beaconsNotFound];
     return;
   }
   
   _foundBeacons = [[OMNFoundBeacons alloc] init];
-  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconsNotFound) userInfo:nil repeats:NO];
-  
   __weak typeof(self)weakSelf = self;
   [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
     
@@ -145,6 +137,8 @@
     [strongSelf beaconsNotFound];
     
   }];
+
+  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconsNotFound) userInfo:nil repeats:NO];
   
 }
 
