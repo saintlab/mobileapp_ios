@@ -56,6 +56,9 @@
   if (launchOptions[UIApplicationLaunchOptionsLocationKey]) {
     return [[OMNBackgroundLaunch alloc] init];
   }
+  else if (launchOptions[UIApplicationLaunchOptionsURLKey]) {
+    return [self launchWithURL:launchOptions[UIApplicationLaunchOptionsURLKey] sourceApplication:nil annotation:nil];
+  }
   else {
     return [[OMNDefaultLaunch alloc] init];
   }

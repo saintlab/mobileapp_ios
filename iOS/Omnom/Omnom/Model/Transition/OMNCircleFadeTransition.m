@@ -21,6 +21,7 @@
 #import "OMNNoOrdersVC.h"
 #import "OMNOrdersVC.h"
 #import "OMNOrdersLoadingVC.h"
+#import "OMNWishInfoVC.h"
 
 @implementation OMNCircleFadeTransition
 
@@ -112,6 +113,10 @@
     [self keyFromClass:[OMNOrdersVC class] toClass:[OMNNoOrdersVC class]],
     [self keyFromClass:[OMNNoOrdersVC class] toClass:[OMNOrdersVC class]],
 
+    [self keyFromClass:[OMNWishInfoVC class] toClass:[OMNCircleRootVC class]],
+    [self keyFromClass:[OMNCircleRootVC class] toClass:[OMNWishInfoVC class]],
+    
+    
     ];
 }
 

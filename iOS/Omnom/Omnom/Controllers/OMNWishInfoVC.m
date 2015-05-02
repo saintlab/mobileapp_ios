@@ -15,10 +15,11 @@
 #import "OMNWish+omn_network.h"
 #import "OMNNavigationController.h"
 #import "UIBarButtonItem+omn_custom.h"
-
-@interface OMNWishInfoVC ()
-
-@end
+#import "OMNError.h"
+#import "OMNCircleRootVC.h"
+#import "UINavigationController+omn_replace.h"
+#import "UIImage+omn_helper.h"
+#import <OMNStyler.h>
 
 @implementation OMNWishInfoVC {
   NSArray *_items;
@@ -37,14 +38,55 @@
   [super viewDidLoad];
  
   [self omn_setup];
+  [self loadWish];
+  
+}
+
+- (void)loadWish {
   
   [OMNWish wishWithID:_wishID].then(^(OMNWish *wish) {
-  
+    
     [self didLoadWish:wish];
-
+    
+    
+  }).catch(^(OMNError *error) {
+    
+    [self didFailWithError:error];
     
   });
+
+}
+
+- (void)didFailWithError:(OMNError *)error {
   
+  OMNCircleRootVC *repeatVC = [[OMNCircleRootVC alloc] initWithParent:nil];
+  repeatVC.backgroundImage = [UIImage imageNamed:@"wood_bg"];
+  repeatVC.text = error.localizedDescription;
+  repeatVC.circleIcon = error.circleImage;
+  repeatVC.circleBackground = [[UIImage imageNamed:@"circle_bg"] omn_tintWithColor:[OMNStyler redColor]];
+  repeatVC.faded = YES;
+  @weakify(self)
+  repeatVC.didCloseBlock = ^{
+    
+    @strongify(self)
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    
+  };
+  repeatVC.buttonInfo =
+  @[
+    [OMNBarButtonInfo infoWithTitle:kOMN_TRY_AGAIN_BUTTON_TITLE image:[UIImage imageNamed:@"repeat_icon_small"] block:^{
+      
+      @strongify(self)
+      [self.navigationController omn_popToViewController:self animated:YES completion:^{
+        
+        [self loadWish];
+        
+      }];
+      
+    }]
+    ];
+  [self.navigationController pushViewController:repeatVC animated:YES];
+
 }
 
 - (void)show:(UIViewController *)presentingVC {

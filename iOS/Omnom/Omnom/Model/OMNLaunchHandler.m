@@ -88,7 +88,9 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   
-  [self reloadWithLaunch:[OMNLaunchFactory launchWithURL:url sourceApplication:sourceApplication annotation:annotation]];
+  if (_startVC) {
+    [self reloadWithLaunch:[OMNLaunchFactory launchWithURL:url sourceApplication:sourceApplication annotation:annotation]];
+  }
   return YES;
   
 }
