@@ -15,5 +15,6 @@
 - (NSInteger)omn_integerValueSafe;
 - (BOOL)omn_boolValueSafe;
 - (double)omn_doubleValueSafe;
+- (long long)omn_longLongValueSafe;
 
 @end

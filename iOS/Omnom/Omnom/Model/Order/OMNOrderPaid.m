@@ -14,12 +14,13 @@
   self = [super init];
   if (self) {
  
-    if ([jsonData[@"paid_amount"] respondsToSelector:@selector(longLongValue)]) {
-      _total_amount = [jsonData[@"paid_amount"] longLongValue];
+    if (jsonData[@"paid"]) {
+      _total_amount = [jsonData[@"paid"][@"amount"] omn_longLongValueSafe];
+      _tip_amount = [jsonData[@"paid"][@"tip"] omn_longLongValueSafe];
     }
-
-    if ([jsonData[@"paid_tip"] respondsToSelector:@selector(longLongValue)]) {
-      _tip_amount = [jsonData[@"paid_tip"] longLongValue];
+    else {
+      _total_amount = [jsonData[@"paid_amount"] omn_longLongValueSafe];
+      _tip_amount = [jsonData[@"paid_tip"] omn_longLongValueSafe];
     }
     
   }

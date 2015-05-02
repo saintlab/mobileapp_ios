@@ -47,4 +47,13 @@
   }
 }
 
+- (long long)omn_longLongValueSafe {
+  if ([self respondsToSelector:@selector(doubleValue)]) {
+    return [(id)self longLongValue];
+  }
+  else {
+    return 0ll;
+  }
+}
+
 @end
