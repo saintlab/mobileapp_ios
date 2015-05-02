@@ -6837,9 +6837,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"OMN_TEST=1",
 					"$(inherited)",
 					"COCOAPODS=1",
-					"OMN_TEST=1",
 					"LUNCH_2GIS=1",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -7662,7 +7662,7 @@
 				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					OMN_TEST,
+					"OMN_TEST=1",
 					"COCOAPODS=1",
 				);
 				HEADER_SEARCH_PATHS = (
@@ -7695,8 +7695,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "omnom/omnom-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
 					"$(inherited)",
+					"OMN_TEST=1",
 				);
 				INFOPLIST_FILE = "omnomTests/omnomTests-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";

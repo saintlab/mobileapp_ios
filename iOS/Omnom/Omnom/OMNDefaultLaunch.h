@@ -10,4 +10,6 @@
 
 @interface OMNDefaultLaunch : OMNLaunch
 
+- (instancetype)initWithConfigName:(NSString *)configName;
+
 @end

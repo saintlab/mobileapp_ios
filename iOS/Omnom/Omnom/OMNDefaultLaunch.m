@@ -18,18 +18,20 @@
 
 @end
 
-@implementation OMNDefaultLaunch
-
-- (void)dealloc {
-
+@implementation OMNDefaultLaunch {
+  NSString *_configName;
 }
 
-- (instancetype)init {
+- (instancetype)initWithConfigName:(NSString *)configName {
   self = [super init];
   if (self) {
-    
+    _configName = configName;
   }
   return self;
+}
+
+- (NSString *)customConfigName {
+  return (_configName) ?: ([super customConfigName]);
 }
 
 - (PMKPromise *)decodeRestaurants {

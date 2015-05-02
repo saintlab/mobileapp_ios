@@ -28,7 +28,7 @@
     launch = [[OMNQRLaunch alloc] initWithQR:urlQuery[@"qr"] config:customConfigName];
   }
   else {
-    launch = [OMNDefaultLaunch new];
+    launch = [[OMNDefaultLaunch alloc] initWithConfigName:customConfigName];
   }
   
   if ([url.host isEqualToString:@"wish"]) {
@@ -39,20 +39,7 @@
   
 }
 
-+ (OMNLaunch *)launchWithLaunchOptions:(NSDictionary *)launchOptions {
-  
-#if OMN_TEST
-  return [[OMNTestLaunch alloc] init];
-#elif TARGET_IPHONE_SIMULATOR
-  return [OMNDebugLaunch new];
-#elif LUNCH_2GIS
-  return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis" config:nil];
-#elif LUNCH_2GIS_SUNCITY
-  return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis-sun-city" config:@"config_staging"];
-#elif OMN_TRAVELERS
-  return [[OMNTravelersLaunch alloc] init];
-#else
-  
++ (OMNLaunch *)decodeLaunchOptions:(NSDictionary *)launchOptions {
   if (launchOptions[UIApplicationLaunchOptionsLocationKey]) {
     return [[OMNBackgroundLaunch alloc] init];
   }
@@ -62,7 +49,22 @@
   else {
     return [[OMNDefaultLaunch alloc] init];
   }
+}
+
++ (OMNLaunch *)launchWithLaunchOptions:(NSDictionary *)launchOptions {
   
+#if OMN_TEST
+  return [self decodeLaunchOptions:launchOptions];
+#elif LUNCH_2GIS
+  return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis" config:nil];
+#elif LUNCH_2GIS_SUNCITY
+  return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis-sun-city" config:@"config_staging"];
+#elif OMN_TRAVELERS
+  return [[OMNTravelersLaunch alloc] init];
+#elif DEBUG
+  return [OMNDebugLaunch new];
+#else
+  return [self decodeLaunchOptions:launchOptions];
 #endif
   
 }
