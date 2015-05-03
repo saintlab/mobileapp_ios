@@ -10,17 +10,17 @@
 #import "OMNBeacon.h"
 #import "OMNError.h"
 #import "OMNRestaurant.h"
-
+#import <PromiseKit.h>
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 
 @interface OMNRestaurantManager : NSString
 
-+ (void)decodeBeacons:(NSArray *)beacons withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 + (void)demoRestaurantWithCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock;
 + (void)decodeQR:(NSString *)qrCode withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void (^)(OMNError *))failureBlock;
 + (void)decodeHash:(NSString *)hash withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void (^)(OMNError *))failureBlock;
 
-- (void)handleBackgroundBeacons:(NSArray *)beacons withCompletion:(dispatch_block_t)completionBlock;
++ (PMKPromise *)decodeBeacons:(NSArray *)beacons;
++ (PMKPromise *)processBackgroundBeacons:(NSArray *)beacons;
 
 + (instancetype)sharedManager;
 

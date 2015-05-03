@@ -134,11 +134,11 @@
   NSString *type = userInfo[@"type"];
   if ([type isEqualToString:@"wake-up"]) {
     
-    [[OMNNearestBeaconSearchManager sharedManager] findNearestBeaconsWithCompletion:^{
+    [OMNNearestBeaconSearchManager findAndProcessNearestBeacons].finally(^{
       
       completionHandler(UIBackgroundFetchResultNoData);
       
-    }];
+    });
     
   }
   else {

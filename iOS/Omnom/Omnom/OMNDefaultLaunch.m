@@ -37,36 +37,12 @@
 - (PMKPromise *)decodeRestaurants {
   
   return [OMNBeaconsSearchManager searchBeacons].then(^(NSArray *beacons) {
-    
-    return [self decodeBeacons:beacons];
-    
-  });
-  
-}
 
-- (PMKPromise *)decodeBeacons:(NSArray *)beacons {
-  
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-    
-    if (0 == beacons.count) {
-      fulfill(@[]);
-      return;
-    }
-    
     NSDictionary *debugData = [OMNBeacon debugDataFromBeacons:beacons];
     [[OMNAnalitics analitics] logDebugEvent:@"DID_FIND_BEACONS" parametrs:@{@"beacons" : debugData}];
+    return [OMNRestaurantManager decodeBeacons:beacons];
     
-    [OMNRestaurantManager decodeBeacons:beacons withCompletion:^(NSArray *restaurants) {
-      
-      fulfill(restaurants);
-      
-    } failureBlock:^(OMNError *error) {
-      
-      fulfill(@[]);
-      
-    }];
-    
-  }];
+  });
   
 }
 

@@ -38,7 +38,7 @@
     
     [[OMNBeaconBackgroundManager manager] setDidEnterBeaconsRegionBlock:^{
       
-      [[OMNNearestBeaconSearchManager sharedManager] findNearestBeaconsWithCompletion:nil];
+      [OMNNearestBeaconSearchManager findAndProcessNearestBeacons];
       
     }];
     

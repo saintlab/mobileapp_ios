@@ -1360,7 +1360,6 @@
 		938A4F851A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938A4F861A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938B92D81929EF2900476AA0 /* OMNBeaconTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B92D71929EF2900476AA0 /* OMNBeaconTests.m */; };
-		938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */; };
 		938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
 		938E8F53192F3A200088EF38 /* OMNOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F31192F3A200088EF38 /* OMNOperationManager.m */; };
 		938E8F55192F3A200088EF38 /* OMNOrderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F36192F3A200088EF38 /* OMNOrderItem.m */; };
@@ -2263,7 +2262,6 @@
 		938A4F831A97173E00BC2C2E /* OMNMenuProductCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductCellItem.h; sourceTree = "<group>"; };
 		938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductCellItem.m; sourceTree = "<group>"; };
 		938B92D71929EF2900476AA0 /* OMNBeaconTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNBeaconTests.m; sourceTree = "<group>"; };
-		938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDevicePositionManagerTests.m; sourceTree = "<group>"; };
 		938E54981980CCB200B38B45 /* OMNR1VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNR1VC.h; sourceTree = "<group>"; };
 		938E54991980CCB200B38B45 /* OMNR1VC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNR1VC.m; sourceTree = "<group>"; };
 		938E8F30192F3A200088EF38 /* OMNOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOperationManager.h; sourceTree = "<group>"; };
@@ -3476,7 +3474,6 @@
 				93676E1A18D1E4FC00FC55F1 /* mockTests.m */,
 				93676E1518D1E4FC00FC55F1 /* Supporting Files */,
 				938B92D71929EF2900476AA0 /* OMNBeaconTests.m */,
-				938B92D91929EFA000476AA0 /* OMNDevicePositionManagerTests.m */,
 				9367CE8C193CC67600116AC2 /* homeScreenTest.m */,
 				931BD3871941C04100F77AA7 /* OMNCalcaulcationTests.m */,
 				93B368A619A5BB0E00B6E6CB /* OMNDemoStandTests.m */,
@@ -6395,7 +6392,6 @@
 				939689B3195BD76E00AAAF9C /* OMNWizardVC.m in Sources */,
 				93E485701A49136700DCDB0F /* OMNUserInfoCell.m in Sources */,
 				93D9C9F61AE13DBB00AD46FA /* OMNDefaultLaunch.m in Sources */,
-				938B92DA1929EFA000476AA0 /* OMNDevicePositionManagerTests.m in Sources */,
 				939DA1771958226B0063AB23 /* OMNAnalitics.m in Sources */,
 				9391F6631A5E477B00594CD5 /* OMNModalAlertVC.m in Sources */,
 				93535F13198382960084C3E7 /* OMNSearchBeaconToPayOrderTransition.m in Sources */,

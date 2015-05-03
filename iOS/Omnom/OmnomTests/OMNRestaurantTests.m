@@ -25,16 +25,13 @@ describe(@"visitor test", ^{
     
     _demoBeacon = [OMNBeacon demoBeacon];
 
-    
-    [OMNRestaurantManager stub:@selector(decodeBeacons:withCompletion:failureBlock:) withBlock:^id(NSArray *params) {
+    [OMNRestaurantManager stub:@selector(decodeBeacons:) andReturn:[PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
       
-      OMNRestaurantsBlock restaurantsBlock = params[1];
       id response = [@"decodeBeacons.json" omn_jsonObjectNamedForClass:self.class];
       NSArray *restaurants = [response omn_restaurants];
-      restaurantsBlock(restaurants);
-      return nil;
+      fulfill(restaurants);
       
-    }];
+    }]];
     
   });
 
@@ -49,7 +46,7 @@ describe(@"visitor test", ^{
   
   it(@"should check restaurants", ^{
     
-    [OMNRestaurantManager decodeBeacons:@[_demoBeacon] withCompletion:^(NSArray *restaurants) {
+    [OMNRestaurantManager decodeBeacons:@[_demoBeacon]].then(^(NSArray *restaurants) {
       
       [[@(restaurants.count) should] equal:@(1)];
       OMNRestaurant *restaurant = [restaurants firstObject];
@@ -69,29 +66,25 @@ describe(@"visitor test", ^{
       [[restaurant.schedules should] beNonNil];
       [[restaurant.info should] beNil];
       
-    } failureBlock:^(OMNError *error) {
-      
-    }];
+    });
     
   });
 
   it(@"should get restaurant info", ^{
     
-    [OMNRestaurantManager decodeBeacons:@[_demoBeacon] withCompletion:^(NSArray *restaurants) {
+    [OMNRestaurantManager decodeBeacons:@[_demoBeacon]].then(^(NSArray *restaurants) {
       
       OMNRestaurant *restaurant = [restaurants firstObject];
       [restaurant advertisement:^(OMNRestaurantInfo *restaurantInfo) {
-
+        
         [[restaurant.info should] beNonNil];
         [[restaurantInfo should] beNonNil];
         
       } error:^(NSError *error) {
         
       }];
-      
-    } failureBlock:^(OMNError *error) {
-      
-    }];
+
+    });
     
   });
   

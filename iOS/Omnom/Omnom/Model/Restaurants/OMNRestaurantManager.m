@@ -31,7 +31,7 @@
   return self;
 }
 
-+ (void)decodeBeacons:(NSArray *)beacons withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock {
++ (PMKPromise *)decodeBeacons:(NSArray *)beacons {
   
   NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];
   [beacons enumerateObjectsUsingBlock:^(OMNBeacon *beacon, NSUInteger idx, BOOL *stop) {
@@ -40,24 +40,28 @@
     
   }];
   
-  if (![NSJSONSerialization isValidJSONObject:jsonBeacons]) {
-    failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
-    return;
-  }
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    if (![NSJSONSerialization isValidJSONObject:jsonBeacons]) {
+      reject([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+      return;
+    }
+    
+    NSDictionary *parameters = @{@"beacons" : jsonBeacons};
+    
+    [[OMNOperationManager sharedManager] POST:@"/v2/decode/ibeacons/omnom" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"BEACON_DECODE_RESPONSE" jsonRequest:parameters jsonResponse:responseObject];
+      NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
+      fulfill(restaurants);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_BEACON" jsonRequest:parameters responseOperation:operation];
+      reject([operation omn_internetError]);
+      
+    }];
 
-  NSDictionary *parameters = @{@"beacons" : jsonBeacons};
-  
-  [[OMNOperationManager sharedManager] POST:@"/v2/decode/ibeacons/omnom" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-  
-    [[OMNAnalitics analitics] logDebugEvent:@"BEACON_DECODE_RESPONSE" jsonRequest:parameters jsonResponse:responseObject];
-    NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
-    completionBlock(restaurants);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_BEACON" jsonRequest:parameters responseOperation:operation];
-    failureBlock([operation omn_internetError]);
-    
   }];
   
 }
@@ -130,63 +134,29 @@
   
 }
 
-- (void)handleBackgroundDecodedRestaurant:(OMNRestaurant *)restaurant withCompletion:(dispatch_block_t)completionBlock {
-  
-  if (restaurant.hasTable) {
-    
-    [[OMNDevicePositionManager sharedManager] getDevicePosition:^(BOOL onTable) {
-      
-      if (onTable) {
-        
-        [restaurant handleAtTheTableEventWithCompletion:completionBlock];
-        
-      }
-      else {
-        
-        [restaurant handleEnterEventWithCompletion:completionBlock];
-        
-      }
-      
-    }];
-    
-  }
-  else {
-    
-    [restaurant handleEnterEventWithCompletion:completionBlock];
-    
-  }
-  
-}
-
-- (void)handleBackgroundBeacons:(NSArray *)beacons withCompletion:(dispatch_block_t)completionBlock {
++ (PMKPromise *)processBackgroundBeacons:(NSArray *)beacons {
 
   if (!beacons.count) {
-    completionBlock();
-    return;
+    return nil;
   }
-  
-  @weakify(self)
-  [OMNRestaurantManager decodeBeacons:beacons withCompletion:^(NSArray *restaurants) {
+
+  return [OMNRestaurantManager decodeBeacons:beacons].then(^id(NSArray *restaurants) {
     
     if (1 == restaurants.count) {
       
-      @strongify(self)
       OMNRestaurant *restaurant = [restaurants firstObject];
-      [self handleBackgroundDecodedRestaurant:restaurant withCompletion:completionBlock];
+      return [restaurant foundInBackground];
       
     }
     else {
       
-      completionBlock();
+      return nil;
       
     }
     
-  } failureBlock:^(OMNError *error) {
-
-    completionBlock();
-    
-  }];
+  });
   
 }
+
 
 @end

@@ -30,13 +30,11 @@ describe(@"demo stand test", ^{
     
     [[[OMNAuthorization authorisation].token should] beNonNil];
     
-    [OMNRestaurantManager decodeBeacons:@[demoBeacon] withCompletion:^(NSArray *restaurants) {
+    [OMNRestaurantManager decodeBeacons:@[demoBeacon]].then(^(NSArray *restaurants) {
       
-      _restaurant = [restaurants firstObject];
+      _restaurant = [restaurants firstObject];;
       
-    } failureBlock:^(OMNError *error) {
-      
-    }];
+    });
     
     [[expectFutureValue(_restaurant) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
 

@@ -12,44 +12,84 @@
 #import "OMNTable+omn_network.h"
 #import <BlocksKit.h>
 #import "OMNConstants.h"
+#import <OMNDevicePositionManager.h>
 
 @implementation OMNRestaurant (omn_network)
 
-- (void)handleEnterEventWithCompletion:(dispatch_block_t)completionBlock {
+- (PMKPromise *)foundInBackground {
   
-  if ([self readyForEnter]) {
-  
-    [self setLastEntarDate:[NSDate date]];
-    [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackground];
-    [self nearbyWithCompletion:completionBlock];
+  if (self.hasTable) {
+    
+    return [OMNDevicePositionManager onTable].then(^{
+      
+      return [self handleAtTheTableEvent];
+      
+    }).catch(^(OMNError *error) {
+      
+      return [self handleEnterEvent];
+      
+    });
     
   }
   else {
     
-    completionBlock();
+    return [self handleEnterEvent];
     
   }
   
 }
 
-- (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock {
+- (PMKPromise *)handleEnterEvent {
   
-  if (self.hasTable) {
-    
-    [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackgroundTable];
-    [self showGreetingPushIfPossible];
-    OMNTable *table = [self.tables firstObject];
-    [self entranceWithCompletion:^{
-    
-      [table newGuestWithCompletion:completionBlock];
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+  
+    if ([self readyForEnter]) {
       
-    }];
-  }
-  else {
+      [self setLastEntarDate:[NSDate date]];
+      [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackground];
+      [self nearbyWithCompletion:^{
+        
+        fulfill(nil);
+        
+      }];
+      
+    }
+    else {
+      
+      fulfill(nil);
+      
+    }
     
-    completionBlock();
+  }];
+  
+}
+
+- (PMKPromise *)handleAtTheTableEvent {
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-  }
+    if (self.hasTable) {
+      
+      [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackgroundTable];
+      [self showGreetingPushIfPossible];
+      OMNTable *table = [self.tables firstObject];
+      [self entranceWithCompletion:^{
+        
+        [table newGuestWithCompletion:^{
+          
+          fulfill(nil);
+          
+        }];
+        
+      }];
+    }
+    else {
+      
+      fulfill(nil);
+      
+    }
+
+  }];
   
 }
 

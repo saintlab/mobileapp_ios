@@ -8,6 +8,7 @@
 
 #import "OMNRestaurant.h"
 #import <CoreLocation/CoreLocation.h>
+#import <PromiseKit.h>
 
 typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 typedef void(^OMNRestaurantBlock)(OMNRestaurant *restaurant);
@@ -22,8 +23,9 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
 - (void)getDeliveryAddressesWithCompletion:(OMNAddressesBlock)addressesBlock failure:(void(^)(OMNError *error))failureBlock;
 
-- (void)handleEnterEventWithCompletion:(dispatch_block_t)completionBlock;
-- (void)handleAtTheTableEventWithCompletion:(dispatch_block_t)completionBlock;
+- (PMKPromise *)foundInBackground;
+- (PMKPromise *)handleEnterEvent;
+- (PMKPromise *)handleAtTheTableEvent;
 
 - (void)leaveWithCompletion:(dispatch_block_t)completionBlock;;
 - (void)entranceWithCompletion:(dispatch_block_t)completionBlock;;

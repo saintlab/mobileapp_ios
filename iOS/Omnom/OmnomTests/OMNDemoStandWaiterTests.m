@@ -26,15 +26,12 @@ describe(@"waiter call tests", ^{
     
     OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
     
-    [OMNRestaurantManager decodeBeacons:@[demoBeacon] withCompletion:^(NSArray *restaurants) {
+    [OMNRestaurantManager decodeBeacons:@[demoBeacon]].then(^(NSArray *restaurants) {
       
       OMNRestaurant *restaurant = [restaurants firstObject];
       _visitor = [OMNVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery delivery]];
-      
-    } failureBlock:^(OMNError *error) {
-      
-    }];
-    
+
+    });
     [[expectFutureValue(_visitor) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
 
     _restaurantMediator = [_visitor mediatorWithRootVC:nil];
