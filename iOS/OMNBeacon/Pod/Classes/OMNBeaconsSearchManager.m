@@ -7,7 +7,6 @@
 //
 
 #import "OMNBeaconsSearchManager.h"
-#import "CBCentralManager+omn_promise.h"
 #import "OMNBeaconRangingManager.h"
 #import "OMNFoundBeacons.h"
 
@@ -18,28 +17,32 @@
 
 @end
 
-@implementation OMNBeaconsSearchManager {
-  
-  OMNBeaconRangingManager *_beaconRangingManager;
-  OMNFoundBeacons *_foundBeacons;
-  NSTimer *_nearestBeaconsRangingTimer;
-  
-  PMKFulfiller fulfiller;
-  PMKRejecter rejecter;
+NSString *generateRangingIdentifier() {
+
+  CFUUIDRef uuidRef = CFUUIDCreate(NULL);
+  CFStringRef uuidStringRef = CFUUIDCreateString(NULL, uuidRef);
+  CFRelease(uuidRef);
+  NSString *uuid = (__bridge_transfer NSString *)uuidStringRef;
+  return [NSString stringWithFormat:@"%@-%@.rangingTask", [[NSBundle mainBundle] bundleIdentifier], uuid];
   
 }
 
-- (void)dealloc {
-  [self stop];
+@implementation OMNBeaconsSearchManager {
+  
+  CLLocationManager *_rangingManager;
+  OMNFoundBeacons *_foundBeacons;
+  NSTimer *_nearestBeaconsRangingTimer;
+  NSArray *_rangingBeaconRegions;
+  PMKFulfiller fulfiller;
+  
 }
 
 + (PMKPromise *)searchBeacons {
   
   OMNBeaconsSearchManager *manager = [[OMNBeaconsSearchManager alloc] init];
   PMKPromise *promise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-
+    
     manager->fulfiller = fulfill;
-    manager->rejecter = reject;
     
   }];
   promise.finally(^{
@@ -52,21 +55,23 @@
   
 }
 
+- (void)dealloc {
+  [self stop];
+}
+
 - (void)startSearching {
   
   [self stop];
-
-  if (TARGET_IPHONE_SIMULATOR) {
-    
-    NSArray *beacons = @[[OMNBeacon demoBeacon]];
-    [self processFoundBeacons:beacons];
-    
-  }
-  else {
-    
-    [self checkCLStatus];
-    
-  }
+#if TARGET_IPHONE_SIMULATOR
+  
+  NSArray *beacons = @[[OMNBeacon demoBeacon]];
+  [self processFoundBeacons:beacons];
+  
+#else
+  
+  [self rangeBeacons];
+  
+#endif
   
 }
 
@@ -80,70 +85,56 @@
   
 }
 
-- (void)checkCLStatus {
-  
-  CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
-  if (kCLAuthorizationStatusAuthorizedAlways == authorizationStatus) {
-    
-    [self checkBluetoothState];
-    
-  }
-  else {
-    
-    [self beaconsNotFound];
-    
-  }
-  
+- (void)beaconsNotFound {
+  [self processFoundBeacons:@[]];
 }
 
-- (void)checkBluetoothState {
+- (void)rangeBeacons {
   
-  [CBCentralManager omn_getBluetoothState].then(^(NSNumber *state) {
-    
-    if (CBCentralManagerStatePoweredOn == [state integerValue]) {
-      [self startRangingBeacons];
-    }
-    else {
-      [self beaconsNotFound];
-    }
-    
-  });
+  NSAssert([NSThread isMainThread], @"Should be run on main thread");
   
-}
-
-- (void)startRangingBeacons {
-  
-  if (_beaconRangingManager.ranging) {
-    return;
-  }
-  
-  _beaconRangingManager = [[OMNBeaconRangingManager alloc] init];
-  
-  if (!_beaconRangingManager.isRangingAvaliable) {
+  if (![CLLocationManager isRangingAvailable] ||
+      kCLAuthorizationStatusAuthorizedAlways != [CLLocationManager authorizationStatus]) {
     [self beaconsNotFound];
     return;
   }
   
+  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconsNotFound) userInfo:nil repeats:NO];
   _foundBeacons = [[OMNFoundBeacons alloc] init];
-  __weak typeof(self)weakSelf = self;
-  [_beaconRangingManager rangeBeacons:^(NSArray *beacons) {
+  
+  _rangingManager = [[CLLocationManager alloc] init];
+  _rangingManager.pausesLocationUpdatesAutomatically = NO;
+  _rangingManager.delegate = self;
+
+  _rangingBeaconRegions = [[OMNBeacon beaconUUID] aciveBeaconsRegionsWithIdentifier:generateRangingIdentifier()];
+  [_rangingBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
     
-    __strong __typeof(weakSelf)strongSelf = weakSelf;
-    [strongSelf didRangeBeacons:beacons];
-    
-  } failure:^(NSError *error) {
-    
-    __strong __typeof(weakSelf)strongSelf = weakSelf;
-    [strongSelf beaconsNotFound];
+    [_rangingManager startRangingBeaconsInRegion:beaconRegion];
     
   }];
-
-  _nearestBeaconsRangingTimer = [NSTimer scheduledTimerWithTimeInterval:kBeaconSearchTimeout target:self selector:@selector(beaconsNotFound) userInfo:nil repeats:NO];
   
 }
 
-- (void)didRangeBeacons:(NSArray *)beacons {
+- (void)stop {
   
+  [_nearestBeaconsRangingTimer invalidate], _nearestBeaconsRangingTimer = nil;
+  _rangingManager.delegate = nil;
+  [_rangingBeaconRegions enumerateObjectsUsingBlock:^(CLBeaconRegion *beaconRegion, NSUInteger idx, BOOL *stop) {
+    
+    [_rangingManager stopRangingBeaconsInRegion:beaconRegion];
+    
+  }];
+  
+}
+
+#pragma mark - CLLocationManagerDelegate
+
+- (void)locationManager:(CLLocationManager *)manager didRangeBeacons:(NSArray *)beacons inRegion:(CLBeaconRegion *)region {
+  
+  if (![_rangingBeaconRegions containsObject:region]) {
+    return;
+  }
+
   [_foundBeacons updateWithBeacons:beacons];
   if (_foundBeacons.readyForProcessing) {
     
@@ -153,15 +144,8 @@
   
 }
 
-- (void)beaconsNotFound {
-  [self processFoundBeacons:@[]];
-}
-
-- (void)stop {
-
-  [_nearestBeaconsRangingTimer invalidate], _nearestBeaconsRangingTimer = nil;
-  [_beaconRangingManager stop];
-
+- (void)locationManager:(CLLocationManager *)manager rangingBeaconsDidFailForRegion:(CLBeaconRegion *)region withError:(NSError *)error {
+  [self beaconsNotFound];
 }
 
 @end

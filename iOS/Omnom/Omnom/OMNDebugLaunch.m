@@ -31,7 +31,7 @@
     //    _qr = @"http://omnom.menu/qr-hash-for-table-5-at-saintlab-rkeeper-v6";
     //    _qr = @"qr-code-for-1-riba-ris-nsk-at-aura";
 //        self.qr = @"qr-code-for-2-saintlab-iiko";
-    self.qr = @"qr-code-for-2-saintlab-iiko-dev";
+//    self.qr = @"qr-code-for-2-saintlab-iiko-dev";
 //        _qr = @"http://omnom.menu/qr/d5495734ed5491655234e528d50972e9"; //бирман
     //    _qr = @"http://omnom.menu/qr/8eab9af3006a4fb0cd0bd92836e90130"; //мехико
     //    _qr = @"qr-code-for-1-ruby-bar-nsk-at-lenina-9"; //руби
@@ -39,7 +39,7 @@
     //    _qr = @"http://omnom.menu/qr/special-and-vip"; //b-cafe
     
     
-        self.config = @"config_staging";
+//        self.config = @"config_staging";
     //    self.qr = @"http://omnom.menu/zr9b"; //saintlab-iiko-dev
     //    self.qr =  @"qr-code-for-2-saintlab-iiko-dev"; //staging
     
