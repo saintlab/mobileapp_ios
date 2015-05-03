@@ -13,6 +13,6 @@ typedef void(^CBCentralManagerStateBlock)(CBCentralManagerState state);
 
 @interface CBCentralManager (omn_promise)
 
-+ (PMKPromise *)omn_getBluetoothState;
++ (PMKPromise *)omn_bluetoothEnabled;
 
 @end

@@ -113,14 +113,13 @@
     return;
   }
   
-  [CBCentralManager omn_getBluetoothState].then(^(NSNumber *state) {
+  [CBCentralManager omn_bluetoothEnabled].then(^{
     
-    if (CBCentralManagerStatePoweredOn == [state integerValue]) {
-      [self startRangingBeacons];
-    }
-    else {
-      [self didFinish];
-    }
+    [self startRangingBeacons];
+    
+  }).catch(^{
+    
+    [self didFinish];
     
   });
   

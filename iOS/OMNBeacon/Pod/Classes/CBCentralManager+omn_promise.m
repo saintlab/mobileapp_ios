@@ -17,7 +17,7 @@
 
 @implementation CBCentralManager (omn_promise)
 
-+ (PMKPromise *)omn_getBluetoothState {
++ (PMKPromise *)omn_bluetoothEnabled {
   return [OMNCentralManager promise];
 }
 
@@ -45,7 +45,14 @@
 }
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central {
-  fulfiller(@(central.state));
+  
+  if (CBCentralManagerStatePoweredOn == central.state) {
+    fulfiller(nil);
+  }
+  else {
+    rejecter(nil);
+  }
+  
 }
 
 @end
