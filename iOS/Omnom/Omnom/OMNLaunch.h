@@ -20,6 +20,6 @@
 - (NSString *)customConfigName;
 - (BOOL)applicationStartedBackground;
 - (BOOL)shouldReload;
-- (PMKPromise *)decodeRestaurants;
+- (PMKPromise *)getRestaurants;
 
 @end

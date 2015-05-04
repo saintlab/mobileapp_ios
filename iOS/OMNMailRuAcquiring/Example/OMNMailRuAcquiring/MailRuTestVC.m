@@ -77,16 +77,21 @@
   
 }
 
-- (void)reloadCards {
+- (PMKPromise *)reloadCards {
   
-  [_operationManager GET:@"/cards" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    id card = [responseObject[@"cards"] firstObject];
-    self.card = card;
-    NSLog(@"%@", responseObject);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
+    [_operationManager GET:@"/cards" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  
+      fulfill(responseObject[@"cards"]);
+      id card = [responseObject[@"cards"] firstObject];
+      self.card = card;
+      NSLog(@"%@", responseObject);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+    }];
+
   }];
   
 }
@@ -251,7 +256,7 @@
     [_operationManager DELETE:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
       NSLog(@"deleteCard>%@", responseObject);
-      fulfill(nil);
+      fulfill(responseObject);
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
@@ -269,62 +274,32 @@
   NSString *pan = @"4154812004292276";
   NSString *cvv = @"410";
   NSString *expire = [OMNMailRuCard exp_dateFromMonth:9 year:16];
-  
-  PMKPromise *pay = [OMNMailRuAcquiring payWithWithPan:pan exp_date:expire cvv:cvv user:self.user order_id:@"1" order_amount:@(0.01) extra:nil].then(^id(OMNMailRuPoll *poll) {
 
-    NSLog(@"payWithWithPan>%@ %@", poll.request, poll.response);
-//    NSString *order_id = response[@"order_id"];
-    return nil;
-//    if (order_id) {
-//      return [OMNMailRuAcquiring refundOrder:order_id];
-//    }
-//    else {
-//      return nil;
-//    }
+  __block NSDictionary *tempCard = nil;
+  [OMNMailRuAcquiring payAndRegisterWithPan:pan exp_date:expire cvv:cvv user:self.user].then(^(OMNMailRuPoll *poll) {
     
-  }).then(^(OMNMailRuPoll *poll) {
+    NSLog(@"pay and register>%@ \n\n%@", poll.request, poll.response);
+    return [PMKPromise pause:5.0f];
     
-    NSLog(@"refundOrder>%@ \n\n%@", poll.request, poll.response);
+  }).then(^(id object) {
     
-  }).catch(^(NSError *error) {
+    NSLog(@"%@", object);
+    return [self reloadCards];
     
-    NSLog(@"payWithWithPan error>%@", error);
+  }).then(^(NSArray *cards) {
     
-  }).finally(^{
-    
-    NSLog(@"payWithWithPan finish");
-    
-  });
-
-  __block NSString *tempCardID = @"";
-#warning 123
-  [PMKPromise when:nil].then(^(id response) {
-  
-    NSLog(@"did pay>%@", response);
-    return  [OMNMailRuAcquiring payAndRegisterWithPan:pan exp_date:expire cvv:cvv user:self.user];
-    
-  }).then(^(OMNMailRuPoll *poll) {
-    
-    tempCardID = poll.card_id;
-    NSLog(@"payAndRegisterWithPan>%@ %@", poll.request, poll.response);
-    return [OMNMailRuAcquiring payWithCardID:tempCardID user:self.user order_id:@"1" order_amount:@(0.01) extra:nil];
-    
-  }).then(^(OMNMailRuPoll *poll) {
-    
-    NSLog(@"did pay>%@ %@", poll.request, poll.response);
-#warning TODO:refund
-//    return [OMNMailRuAcquiring refundOrder:order_id];
-    return nil;
+    tempCard = [cards firstObject];
+    NSLog(@"cards>%@", cards);
+    return [OMNMailRuAcquiring payWithCardID:tempCard[@"external_card_id"] user:self.user order_id:@"1" order_amount:@(0.01) extra:nil];
     
   }).then(^(OMNMailRuPoll *poll) {
     
     NSLog(@"pay order>%@ \n\n%@", poll.request, poll.response);
-    return nil;//[OMNMailRuAcquiring deleteCardWithID:tempCardID user:self.user];
+    [self deleteCardWithInfo:tempCard];
     
   }).then(^(NSDictionary *response) {
     
-    NSLog(@"delete card>%@ \n\n%@", tempCardID, response);
-    
+    NSLog(@"delete card>%@ \n\n%@", tempCard, response);
     
   }).catch(^(NSError *error) {
     
@@ -332,6 +307,7 @@
     
   }).finally(^{
 
+    [self reloadCards];
     NSLog(@"magic finish");
     
   });

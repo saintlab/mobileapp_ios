@@ -49,27 +49,19 @@
   
 }
 
-- (PMKPromise *)decodeRestaurants {
+- (PMKPromise *)getRestaurants {
   
-  if (0 == _qr.length) {
-    return [super decodeRestaurants];
+  if ([_qr isKindOfClass:[NSString class]]) {
+    
+    return [OMNRestaurantManager decodeQR:_qr];
+    
   }
-  
-  NSString *qr = _qr;
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+  else {
     
-    [OMNRestaurantManager decodeQR:qr withCompletion:^(NSArray *restaurants) {
-      
-      fulfill(restaurants);
-      
-    } failureBlock:^(OMNError *error) {
-      
-      fulfill(nil);
-      
-    }];
+    return [super getRestaurants];
     
-  }];
-  
+  }
+    
 }
 
 @end

@@ -83,30 +83,32 @@
   
 }
 
-+ (void)decodeQR:(NSString *)qrCode withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void (^)(OMNError *))failureBlock {
++ (PMKPromise *)decodeQR:(NSString *)qr {
   
-  if (![qrCode isKindOfClass:[NSString class]]) {
-    completionBlock(nil);
-    return;
+  if (![qr isKindOfClass:[NSString class]]) {
+    return nil;
   }
   
   NSDictionary *parameters =
   @{
-    @"qr": qrCode
+    @"qr": qr
     };
   
-  [[OMNOperationManager sharedManager] POST:@"/v2/decode/qr" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    [[OMNAnalitics analitics] logDebugEvent:@"DECODE_QR_V2_RESPONSE" jsonRequest:parameters responseOperation:operation];
+    [[OMNOperationManager sharedManager] POST:@"/v2/decode/qr" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"DECODE_QR_V2_RESPONSE" jsonRequest:parameters responseOperation:operation];
+      NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
+      fulfill(restaurants);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_QR_V2" jsonRequest:parameters responseOperation:operation];
+      reject([operation omn_internetError]);
+      
+    }];
 
-    NSArray *restaurants = [responseObject[@"restaurants"] omn_restaurants];
-    completionBlock(restaurants);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_DECODE_QR_V2" jsonRequest:parameters responseOperation:operation];
-    failureBlock([operation omn_internetError]);
-    
   }];
   
 }

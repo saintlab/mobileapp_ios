@@ -15,7 +15,7 @@
   return @"config_staging";
 }
 
-- (PMKPromise *)decodeRestaurants {
+- (PMKPromise *)getRestaurants {
 
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     

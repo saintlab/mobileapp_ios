@@ -34,7 +34,7 @@
   return (_configName) ?: ([super customConfigName]);
 }
 
-- (PMKPromise *)decodeRestaurants {
+- (PMKPromise *)getRestaurants {
   
   return [OMNBeaconsSearchManager searchBeacons].then(^(NSArray *beacons) {
 

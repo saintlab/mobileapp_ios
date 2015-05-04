@@ -27,7 +27,7 @@
   return NO;
 }
 
-- (PMKPromise *)decodeRestaurants {
+- (PMKPromise *)getRestaurants {
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     fulfill(nil);

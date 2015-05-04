@@ -332,18 +332,15 @@ OMNCameraPermissionDescriptionVCDelegate>
 
 - (void)decodeQR:(NSString *)qr {
   
-  @weakify(self)
-  [OMNRestaurantManager decodeQR:qr withCompletion:^(NSArray *restaurants) {
+  [OMNRestaurantManager decodeQR:qr].then(^(NSArray *restaurants) {
     
-    @strongify(self)
     [self didFindRestaurants:restaurants];
     
-  } failureBlock:^(OMNError *error) {
+  }).catch(^(OMNError *error) {
     
-    @strongify(self)
     [self processError:error];
     
-  }];
+  });
   
 }
 

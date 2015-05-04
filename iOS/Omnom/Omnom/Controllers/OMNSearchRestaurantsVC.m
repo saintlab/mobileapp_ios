@@ -96,7 +96,7 @@
   }).then(^(NSNumber *stauts) {
     
     [self resetAnimation];
-    return [[OMNLaunchHandler sharedHandler].launch decodeRestaurants];
+    return [[OMNLaunchHandler sharedHandler].launch getRestaurants];
     
   }).then(^(NSArray *restaurants) {
     

@@ -26,24 +26,8 @@
   return (self.config) ?: ([super customConfigName]);
 }
 
-- (PMKPromise *)decodeRestaurants {
-  
-  @weakify(self)
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-
-    @strongify(self)
-    [OMNRestaurantManager decodeQR:self.qr withCompletion:^(NSArray *restaurants) {
-      
-      fulfill(restaurants);
-      
-    } failureBlock:^(OMNError *error) {
-      
-      fulfill(nil);
-      
-    }];
-    
-  }];
-  
+- (PMKPromise *)getRestaurants {
+  return [OMNRestaurantManager decodeQR:self.qr];
 }
 
 @end

@@ -16,10 +16,7 @@
 #import "OMNAuthorization.h"
 
 #define kRegisterLoadingDiration 20.0
-
-@interface OMNMailRUCardRegisterVC ()
-
-@end
+#define kMailRuCardRegisterDelay 7.0
 
 @implementation OMNMailRUCardRegisterVC {
   
@@ -57,19 +54,15 @@
   OMNMailRuUser *user = [[OMNAuthorization authorisation].user omn_mailRuUser];
   [OMNMailRuAcquiring payAndRegisterWithPan:_bankCardInfo.pan exp_date:[OMNMailRuCard exp_dateFromMonth:_bankCardInfo.expiryMonth year:_bankCardInfo.expiryYear] cvv:_bankCardInfo.cvv user:user].then(^(OMNMailRuPoll *poll) {
     
-    @strongify(self)
     [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:poll.response];
-
-#warning TODO:order_id
-//    if (response[@"order_id"]) {
-//      [OMNMailRuAcquiring refundOrder:response[@"order_id"]];
-//    }
+    //mail.ru не сразу выдает карту, поэтому нужно подождать секунд 5 пока он отдаст ее на наш сервак
+    return [PMKPromise pause:kMailRuCardRegisterDelay];
+    
+  }).then(^(id interval) {
     
     [self.delegate mailRUCardRegisterVCDidFinish:self];
     
   }).catch(^(NSError *error) {
-    
-    NSLog(@"payAndRegisterTap>%@", error);
     
     [[OMNAnalitics analitics] logMailEvent:@"ERROR_CARD_REGISTER" cardInfo:_bankCardInfo error:error];
     
@@ -95,7 +88,6 @@
         [self.view layoutIfNeeded];
         
       }];
-      
       
     }
     

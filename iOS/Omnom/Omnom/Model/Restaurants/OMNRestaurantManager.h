@@ -16,9 +16,9 @@ typedef void(^OMNRestaurantsBlock)(NSArray *restaurants);
 @interface OMNRestaurantManager : NSString
 
 + (void)demoRestaurantWithCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void(^)(OMNError *error))failureBlock;
-+ (void)decodeQR:(NSString *)qrCode withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void (^)(OMNError *))failureBlock;
 + (void)decodeHash:(NSString *)hash withCompletion:(OMNRestaurantsBlock)completionBlock failureBlock:(void (^)(OMNError *))failureBlock;
 
++ (PMKPromise *)decodeQR:(NSString *)qr;
 + (PMKPromise *)decodeBeacons:(NSArray *)beacons;
 + (PMKPromise *)processBackgroundBeacons:(NSArray *)beacons;
 
