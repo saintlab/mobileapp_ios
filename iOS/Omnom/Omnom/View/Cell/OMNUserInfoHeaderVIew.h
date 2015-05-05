@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+#define OMNUserInfoHeaderViewIdentifier @"OMNUserInfoHeaderViewIdentifier"
+
 @interface OMNUserInfoHeaderView : UITableViewHeaderFooterView
 
 @property (nonatomic, strong, readonly) UILabel *label;
+
++ (void)registerForTableView:(UITableView *)tableView;
 
 @end

@@ -9,8 +9,6 @@
 #import "OMNUserInfoHeaderView.h"
 #import <OMNStyler.h>
 
-NSString * const OMNUserInfoHeaderViewIdentifier = @"OMNUserInfoHeaderViewIdentifier";
-
 @implementation OMNUserInfoHeaderView
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
