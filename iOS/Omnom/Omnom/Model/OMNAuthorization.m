@@ -1,5 +1,5 @@
 //
-//  OMNAuthorisation.m
+//  OMNAuthorization.m
 //  restaurants
 //
 //  Created by tea on 27.05.14.
@@ -17,11 +17,13 @@
 #import "NSData+omn_deviceToken.h"
 #import "OMNConstants.h"
 
-static NSString * const kAuthorisationAccountName = @"test_account6";
+static NSString * const kAuthorizationAccountName = @"test_account6";
 static NSString * const kIOS7PushNotificationsRequestedKey = @"pushNotificationsRequested";
 static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotificationsRequestedKey";
 
 @interface OMNAuthorization ()
+
+@property (nonatomic, copy) NSString *supportPhone;
 
 @end
 
@@ -30,7 +32,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   void(^_remoteNotificationRegisterCompletionBlock)(BOOL completion);
 }
 
-+ (instancetype)authorisation {
++ (instancetype)authorization {
   static id manager = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
@@ -56,7 +58,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 #if OMN_TEST
     _token = @"yeshackvofPigCob";
 #else
-    _token = [SSKeychain passwordForService:[self tokenServiceName] account:kAuthorisationAccountName];
+    _token = [SSKeychain passwordForService:[self tokenServiceName] account:kAuthorizationAccountName];
 #endif
     [self updateAuthenticationToken];
     
@@ -79,9 +81,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 }
 
 - (BOOL)isAuthorized {
-#warning isAuthorized
-  return (self.token.length > 0);
-  return NO;
+  return (self.token.length > 0 && self.user.id);
 }
 
 - (NSString *)savedUserPath {
@@ -108,6 +108,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     }
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
   }];
   
 }
@@ -134,14 +135,8 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)logout {
   
   [self unregisterDevice];
-  
   [self updateUserInfoWithUser:nil];
-  self.token = nil;
-  if (self.logoutCallback) {
-    
-    self.logoutCallback();
-    
-  }
+  [self setAuthenticationToken:nil];
   
 }
 
@@ -150,12 +145,12 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   BOOL pushNotificationsRequested = NO;
   if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
     
-    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS8PushNotificationsRequestedKey account:kAuthorisationAccountName] boolValue];
+    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS8PushNotificationsRequestedKey account:kAuthorizationAccountName] boolValue];
     
   }
   else {
     
-    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS7PushNotificationsRequestedKey account:kAuthorisationAccountName] boolValue];
+    pushNotificationsRequested = [[SSKeychain passwordForService:kIOS7PushNotificationsRequestedKey account:kAuthorizationAccountName] boolValue];
     
   }
 
@@ -183,13 +178,13 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
   if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
     
-    [SSKeychain setPassword:@"YES" forService:kIOS8PushNotificationsRequestedKey account:kAuthorisationAccountName];
+    [SSKeychain setPassword:@"YES" forService:kIOS8PushNotificationsRequestedKey account:kAuthorizationAccountName];
     _userNotificationRegisterCompletionBlock = [completion copy];
     
   }
   else {
     
-    [SSKeychain setPassword:@"YES" forService:kIOS7PushNotificationsRequestedKey account:kAuthorisationAccountName];
+    [SSKeychain setPassword:@"YES" forService:kIOS7PushNotificationsRequestedKey account:kAuthorizationAccountName];
     _remoteNotificationRegisterCompletionBlock = [completion copy];
     
   }
@@ -254,9 +249,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)unregisterDevice {
   
   [[OMNOperationManager sharedManager] POST:@"/notifier/unregister" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
   }];
   
 }
@@ -293,20 +286,17 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
 }
 
-- (void)setToken:(NSString *)token {
+- (PMKPromise *)setAuthenticationToken:(NSString *)token {
   
   _token = token;
   if (token) {
-    
-    [SSKeychain setPassword:token forService:[self tokenServiceName] account:kAuthorisationAccountName];
-    
+    [SSKeychain setPassword:token forService:[self tokenServiceName] account:kAuthorizationAccountName];
   }
   else {
-    
-    [SSKeychain deletePasswordForService:[self tokenServiceName] account:kAuthorisationAccountName];
-    
+    [SSKeychain deletePasswordForService:[self tokenServiceName] account:kAuthorizationAccountName];
   }
-  [self updateAuthenticationToken];
+  [self updateAuthenticationToken];  
+  return [self checkAuthenticationToken];
   
 }
 
@@ -317,24 +307,28 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
 }
 
-- (void)checkUserWithBlock:(void (^)(OMNUser *user))userBlock failure:(void (^)(OMNError *error))failureBlock {
+- (PMKPromise *)checkAuthenticationToken {
   
-  if (0 == self.token.length) {
-    failureBlock([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
-    return;
-  }
-  
-  @weakify(self)
-  [OMNUser userWithToken:self.token user:^(OMNUser *user) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    @strongify(self)
-    [self updateUserInfoWithUser:user];
-    userBlock(user);
+    if (0 == self.token.length) {
+      reject([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
+      return;
+    }
     
-  } failure:^(OMNError *error) {
-    
-    failureBlock(error);
-    
+    @weakify(self)
+    [OMNUser userWithToken:self.token user:^(OMNUser *user) {
+      
+      @strongify(self)
+      [self updateUserInfoWithUser:user];
+      fulfill(user);
+      
+    } failure:^(OMNError *error) {
+      
+      reject(error);
+      
+    }];
+
   }];
   
 }
@@ -343,7 +337,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   
   NSString *appName = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
   //Check if we have UUID already
-  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAuthorisationAccountName];
+  NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAuthorizationAccountName];
   DDLogDebug(@"installId>%@", retrieveuuid);
   if (nil == retrieveuuid) {
     
@@ -353,28 +347,10 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
     CFRelease(newUniqueId);
     
     //Save key to Keychain
-    [SSKeychain setPassword:retrieveuuid forService:appName account:kAuthorisationAccountName];
+    [SSKeychain setPassword:retrieveuuid forService:appName account:kAuthorizationAccountName];
   }
   
   return retrieveuuid;
-}
-
-+ (PMKPromise *)checkToken {
-  
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-    
-    [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
-      
-      fulfill(user);
-      
-    } failure:^(OMNError *error) {
-      
-      reject(error);
-      
-    }];
-    
-  }];
-  
 }
 
 @end

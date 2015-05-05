@@ -151,8 +151,9 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
     }
     
   }];
-  
   _preorderedProducts = preorderedProducts;
+  
+  
   [self updatePreorderActionCellItem];
   _totalCellItem.total = self.menu.preorderedItemsTotal;
   

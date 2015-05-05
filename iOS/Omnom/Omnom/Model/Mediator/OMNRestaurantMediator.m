@@ -28,6 +28,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNTransactionPaymentVC.h"
 
+
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
 OMNOrderCalculationVCDelegate>
@@ -63,7 +64,7 @@ OMNOrderCalculationVCDelegate>
     
     if (!_restaurant.is_demo) {
       
-      [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorisation].token completion:^{
+      [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorization].token completion:^{
       }];
       
     }
@@ -144,7 +145,17 @@ OMNOrderCalculationVCDelegate>
   [_restaurantActionsVC.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)showUserProfile {
+#pragma mark - OMNAuthorizationDelegate
+
+- (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token fromRegstration:(BOOL)fromRegstration {
+  [_restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)authorizationVCDidCancel:(UIViewController *)authorizationVC {
+  [_restaurantActionsVC.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)showSettings {
 
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:self];
   @weakify(self)
@@ -209,7 +220,7 @@ OMNOrderCalculationVCDelegate>
 }
 
 - (BOOL)skipRequestPushNotificationPermission {
-  return (_restaurant.is_demo || [OMNAuthorization authorisation].pushNotificationsRequested || _pushPermissionRequested);
+  return (_restaurant.is_demo || [OMNAuthorization authorization].pushNotificationsRequested || _pushPermissionRequested);
 }
 
 - (void)checkPushNotificationAndProcessOrders:(NSArray *)orders {
@@ -359,7 +370,7 @@ OMNOrderCalculationVCDelegate>
 - (UIButton *)userProfileButton {
   
   UIColor *color = self.restaurant.decoration.antagonist_color;
-  return [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:self action:@selector(showUserProfile)];
+  return [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:color target:self action:@selector(showSettings)];
   
 }
 

@@ -76,7 +76,6 @@
   
   CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
   if (kCLAuthorizationStatusNotDetermined == status) {
-    [self.loaderView stop];
     return [OMNAskCLPermissionsVC askPermission:self];
   }
 
@@ -89,11 +88,7 @@
 - (void)checkUserToken {
 
   @weakify(self)
-  [OMNAuthorization checkToken].then(^(OMNUser *user) {
-    
-    return [self checkCLAuthorizationStatus];
-    
-  }).then(^(NSNumber *stauts) {
+  [self checkCLAuthorizationStatus].then(^(NSNumber *stauts) {
     
     [self resetAnimation];
     return [[OMNLaunchHandler sharedHandler].launch getRestaurants];

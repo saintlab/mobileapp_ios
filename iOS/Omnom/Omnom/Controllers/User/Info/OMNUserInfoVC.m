@@ -18,16 +18,20 @@
   OMNUserInfoModel *_userInfoModel;
   OMNRestaurantMediator *_restaurantMediator;
   
-  NSString *_supportPhoneObserverIDs;
+  NSString *_supportPhoneObserverID;
+  NSString *_userObserverID;
   
 }
 
 - (void)dealloc {
   
-  if (_supportPhoneObserverIDs) {
-    [[OMNAuthorization authorisation] bk_removeObserversWithIdentifier:_supportPhoneObserverIDs];
+  if (_supportPhoneObserverID) {
+    [[OMNAuthorization authorization] bk_removeObserversWithIdentifier:_supportPhoneObserverID];
   }
-
+  if (_userObserverID) {
+    [[OMNAuthorization authorization] bk_removeObserversWithIdentifier:_userObserverID];
+  }
+  
 }
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator {
@@ -60,33 +64,31 @@
   [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
-  [self updateUserView];
+  [[OMNAuthorization authorization] loadSupport];
   
-  [[OMNAuthorization authorisation] loadSupport];
-  
-  _supportPhoneObserverIDs = [[OMNAuthorization authorisation] bk_addObserverForKeyPath:NSStringFromSelector(@selector(supportPhone)) options:(NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+  _supportPhoneObserverID = [[OMNAuthorization authorization] bk_addObserverForKeyPath:NSStringFromSelector(@selector(supportPhone)) options:(NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
     @strongify(self)
-    [self.tableView reloadData];
+    [self update];
     
+  }];
+  _userObserverID = [[OMNAuthorization authorization] bk_addObserverForKeyPath:NSStringFromSelector(@selector(user)) options:(NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
+    
+    @strongify(self)
+    [self update];
+
   }];
   
 }
 
-- (void)updateUserView {
+- (UIBarButtonItem *)editUserButton {
+  return [UIBarButtonItem omn_barButtonWithTitle:kOMN_USER_INFO_CHANGE_BUTTON_TITLE color:[UIColor blackColor] target:self action:@selector(editUserTap)];
+}
 
-  if ([OMNAuthorization authorisation].isAuthorized) {
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_USER_INFO_CHANGE_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(editUserTap)];
-    
-  }
-  else {
-  
-    self.tableView.tableHeaderView = nil;
-    self.navigationItem.rightBarButtonItem = nil;
-    
-  }
-  
+- (void)update {
+
+  self.navigationItem.rightBarButtonItem = ([OMNAuthorization authorization].isAuthorized) ? ([self editUserButton]) : (nil);
+  [_userInfoModel update];
   [self.tableView reloadData];
   
 }
@@ -116,7 +118,7 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  [_userInfoModel reloadUserInfo];
+  [[OMNAuthorization authorization] checkAuthenticationToken];
   
 }
 

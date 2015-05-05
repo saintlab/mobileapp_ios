@@ -16,11 +16,6 @@
 #import "OMNAnalitics.h"
 #import <OMNStyler.h>
 
-@interface OMNAuthorizationVC ()
-<OMNAuthorizationDelegate>
-
-@end
-
 @implementation OMNAuthorizationVC
 
 - (instancetype)init {
@@ -100,7 +95,6 @@
 - (IBAction)loginTap:(id)sender {
   
   OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
-  loginVC.delegate = self;
   [self presentViewController:[[UINavigationController alloc] initWithRootViewController:loginVC] animated:YES completion:nil];
   
 }
@@ -108,7 +102,6 @@
 - (IBAction)registerTap:(id)sender {
   
   OMNRegisterUserVC *registerUserVC = [[OMNRegisterUserVC alloc] init];
-  registerUserVC.delegate = self;
   [self presentViewController:[[UINavigationController alloc] initWithRootViewController:registerUserVC] animated:YES completion:nil];
   
 }
@@ -116,39 +109,22 @@
 #pragma mark - OMNAuthorizationDelegate
 
 - (void)authorizationVCDidCancel:(UIViewController *)authorizationVC {
-  
   [self dismissViewControllerAnimated:YES completion:nil];
-  
 }
 
 - (void)authorizationVC:(UIViewController *)authorizationVC didReceiveToken:(NSString *)token fromRegstration:(BOOL)fromRegstration {
   
-  [OMNAuthorization authorisation].token = token;
-
-  @weakify(self)
-  [[OMNAuthorization authorisation] checkUserWithBlock:^(OMNUser *user) {
+  [[OMNAuthorization authorization] setAuthenticationToken:token].finally(^{
     
     [[OMNAnalitics analitics] logUserLoginWithRegistration:fromRegstration];
-    @strongify(self)
-    [self processAuthorisation];
-    
-  } failure:^(OMNError *error) {
-    
-    @strongify(self)
-    [self processAuthorisation];
-    
-  }];
-  
+    [self processAuthorization];
+
+  });
+
 }
 
-- (void)processAuthorisation {
-  
-  [self dismissViewControllerAnimated:NO completion:^{
-    
-    [self.delegate authorizationVCDidReceiveToken:self];
-    
-  }];
-  
+- (void)processAuthorization {
+  [self dismissViewControllerAnimated:NO completion:self.didFinishBlock];
 }
 
 @end

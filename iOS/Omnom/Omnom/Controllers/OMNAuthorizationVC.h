@@ -12,12 +12,6 @@
 
 @interface OMNAuthorizationVC : OMNWizardVC
 
-@property (nonatomic, weak) id<OMNAuthorizationVCDelegate> delegate;
-
-@end
-
-@protocol OMNAuthorizationVCDelegate <NSObject>
-
-- (void)authorizationVCDidReceiveToken:(OMNAuthorizationVC *)startVC;
+@property (nonatomic, copy) dispatch_block_t didFinishBlock;
 
 @end

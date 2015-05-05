@@ -26,7 +26,7 @@
 
 - (long long)totalOrdersAmount;
 - (void)checkStartConditions;
-- (void)showUserProfile;
+- (void)showSettings;
 - (void)showPreorders;
 - (void)showTableOrders;
 - (void)showPushPermissionVCWithCompletion:(dispatch_block_t)completionBlock;

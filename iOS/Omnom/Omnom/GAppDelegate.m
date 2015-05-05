@@ -34,7 +34,7 @@
     
     [[OMNAnalitics analitics] setup];
     
-    [[OMNAuthorization authorisation] registerForRemoteNotificationsIfPossible];
+    [[OMNAuthorization authorization] registerForRemoteNotificationsIfPossible];
     
     [[OMNBeaconBackgroundManager manager] setDidEnterBeaconsRegionBlock:^{
       
@@ -97,18 +97,18 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
   
-  [[OMNAuthorization authorisation] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+  [[OMNAuthorization authorization] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
   [OMNAnalitics analitics].deviceToken = deviceToken;
   
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-  [[OMNAuthorization authorisation] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+  [[OMNAuthorization authorization] application:application didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
 
-  [[OMNAuthorization authorisation] application:application didRegisterUserNotificationSettings:notificationSettings];
+  [[OMNAuthorization authorization] application:application didRegisterUserNotificationSettings:notificationSettings];
   [OMNAnalitics analitics].notificationSettings = notificationSettings;
   
 }

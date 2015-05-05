@@ -343,6 +343,11 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/recommendations", self.id];
   [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *response) {
     
+    if (![response isKindOfClass:[NSArray class]]) {
+      productItemsBlock(@[]);
+      return;
+    }
+    
     NSMutableArray *items = [NSMutableArray arrayWithCapacity:[response count]];
     [response enumerateObjectsUsingBlock:^(NSDictionary *item, NSUInteger idx, BOOL *stop) {
       

@@ -75,7 +75,7 @@
   [self.navigationController setNavigationBarHidden:NO animated:YES];
   [self.navigationController.navigationBar omn_setDefaultBackground];
   
-  [self.navigationItem setRightBarButtonItem:[UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:_searchRestaurantMediator action:@selector(showUserProfile)] animated:YES];
+  [self.navigationItem setRightBarButtonItem:[UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"user_settings_icon"] color:[UIColor blackColor] target:_searchRestaurantMediator action:@selector(showSettings)] animated:YES];
   OMNToolbarButton *qrButton = [[OMNToolbarButton alloc] initWithImage:[UIImage imageNamed:@"qr-icon-small"] title:kOMN_SCAN_QR_BUTTON_TITLE];
   [qrButton addTarget:_searchRestaurantMediator action:@selector(scanTableQrTap) forControlEvents:UIControlEventTouchUpInside];
   [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:qrButton] animated:YES];

@@ -196,7 +196,7 @@ TTTAttributedLabelDelegate>
   
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   @weakify(self)
-  [OMNMailRuAcquiring verifyCardWithID:bankCardInfo.card_id user:[[OMNAuthorization authorisation].user omn_mailRuUser] amount:@(amount)].then(^(NSDictionary *response) {
+  [OMNMailRuAcquiring verifyCardWithID:bankCardInfo.card_id user:[[OMNAuthorization authorization].user omn_mailRuUser] amount:@(amount)].then(^(NSDictionary *response) {
     
     @strongify(self)
     [self cardDidVerify];
@@ -254,7 +254,7 @@ TTTAttributedLabelDelegate>
   OMNBankCardInfo *bankCardInfo = _bankCardInfo;
   
   @weakify(self)
-  [OMNMailRuAcquiring registerCard:[bankCardInfo omn_mailRuCard] user:[[OMNAuthorization authorisation].user omn_mailRuUser]].then(^(NSString *cardID) {
+  [OMNMailRuAcquiring registerCard:[bankCardInfo omn_mailRuCard] user:[[OMNAuthorization authorization].user omn_mailRuUser]].then(^(NSString *cardID) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:bankCardInfo.debugInfo];
     @strongify(self)

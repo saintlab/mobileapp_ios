@@ -9,17 +9,10 @@
 #import "OMNStartVC.h"
 #import "UIImage+omn_helper.h"
 #import "OMNAuthorization.h"
-#import "OMNAuthorizationVC.h"
 #import "OMNSearchRestaurantVC.h"
 #import "OMNNavigationController.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNLaunchHandler.h"
-#import "OMNDefaultLaunch.h"
-
-@interface OMNStartVC ()
-<OMNAuthorizationVCDelegate>
-
-@end
 
 @implementation OMNStartVC
 
@@ -27,14 +20,7 @@
   [super viewDidLoad];
   
   [self.navigationController setNavigationBarHidden:YES animated:NO];
-  
   self.backgroundView.image = [UIImage omn_imageNamed:@"LaunchImage-700"];
-  
-  [OMNAuthorization authorisation].logoutCallback = ^{
-    
-    [[OMNLaunchHandler sharedHandler] reload];
-    
-  };
   
 }
 
@@ -55,16 +41,7 @@
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
 
     @strongify(self)
-    if ([OMNAuthorization authorisation].token) {
-      
-      [self startSearchingRestaurant];
-      
-    }
-    else {
-      
-      [self requestAuthorization];
-      
-    }
+    [self startSearchingRestaurant];
     
   }];
   
@@ -77,20 +54,6 @@
   navigationController.navigationBar.barStyle = UIBarStyleDefault;
   [self presentViewController:navigationController animated:NO completion:nil];
   
-}
-
-- (void)requestAuthorization {
-  
-  OMNAuthorizationVC *authorizationVC = [[OMNAuthorizationVC alloc] init];
-  authorizationVC.delegate = self;
-  [self.navigationController pushViewController:authorizationVC animated:YES];
-  
-}
-
-#pragma mark - OMNStartVC1Delegate
-
-- (void)authorizationVCDidReceiveToken:(OMNAuthorizationVC *)startVC {
-  [self.navigationController popToViewController:self animated:NO];
 }
 
 @end

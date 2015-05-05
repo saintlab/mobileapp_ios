@@ -28,7 +28,7 @@
   
   NSMutableDictionary *parameters =
   [@{
-     @"installId" : [OMNAuthorization authorisation].installId,
+     @"installId" : [OMNAuthorization authorization].installId,
      @"email" : self.email,
      @"phone" : self.phone,
      } mutableCopy];
@@ -232,7 +232,7 @@
   @{
     @"longitude" : @(coordinates.longitude),
     @"latitude" : @(coordinates.latitude),
-    @"token" : [OMNAuthorization authorisation].token,
+    @"token" : [OMNAuthorization authorization].token,
     };
   
   [[OMNAuthorizationManager sharedManager] POST:@"/user/geo" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -280,7 +280,7 @@
 
 - (void)uploadImage:(UIImage *)image withCompletion:(void (^)(OMNUser *user))completion progress:(void (^)(CGFloat percent))progressBlock failure:(void (^)(OMNError *error))failureBlock {
   
-  NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorization authorisation].token];
+  NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorization authorization].token];
   AFHTTPRequestOperation *op = [[OMNAuthorizationManager sharedManager] POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     
     [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.9f) name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
@@ -352,7 +352,7 @@
     return;
   }
   
-  NSString *token = [OMNAuthorization authorisation].token;
+  NSString *token = [OMNAuthorization authorization].token;
   NSMutableDictionary *parameters =
   [@{
     @"token" : token,
@@ -370,7 +370,7 @@
     if ([responseObject omn_isSuccessResponse]) {
     
       OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-      [[OMNAuthorization authorisation] updateUserInfoWithUser:newUser];
+      [[OMNAuthorization authorization] updateUserInfoWithUser:newUser];
       completion();
       
     }
@@ -393,7 +393,7 @@
   
   NSDictionary *parameters =
   @{
-    @"token" : [OMNAuthorization authorisation].token,
+    @"token" : [OMNAuthorization authorization].token,
     };
   [[OMNAuthorizationManager sharedManager] GET:@"/recover" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
     

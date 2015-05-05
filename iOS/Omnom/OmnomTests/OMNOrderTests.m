@@ -20,7 +20,7 @@ describe(@"order test", ^{
   __block OMNTable *_table = nil;
   beforeAll(^{
     
-    [OMNAuthorization authorisation];
+    [OMNAuthorization authorization];
 
     id orderData = [@"orders_stub.json" omn_jsonObjectNamedForClass:self.class];
     NSArray *orders = [orderData omn_decodeOrdersWithError:nil];

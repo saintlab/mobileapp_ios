@@ -9,6 +9,8 @@
 #import "OMNUserInfoHeaderView.h"
 #import <OMNStyler.h>
 
+NSString * const OMNUserInfoHeaderViewIdentifier = @"OMNUserInfoHeaderViewIdentifier";
+
 @implementation OMNUserInfoHeaderView
 
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier {
@@ -46,6 +48,10 @@
 
   }
   return self;
+}
+
++ (void)registerForTableView:(UITableView *)tableView {
+  [tableView registerClass:[OMNUserInfoHeaderView class] forHeaderFooterViewReuseIdentifier:OMNUserInfoHeaderViewIdentifier];
 }
 
 @end

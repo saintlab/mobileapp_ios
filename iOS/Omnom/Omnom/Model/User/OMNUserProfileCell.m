@@ -29,12 +29,12 @@
 
 - (void)omn_removeObservers {
   
-  OMNAuthorization *authorisation = [OMNAuthorization authorisation];
+  OMNAuthorization *authorization = [OMNAuthorization authorization];
   if (_userObserverIdentifier) {
-    [authorisation bk_removeObserversWithIdentifier:_userObserverIdentifier];
+    [authorization bk_removeObserversWithIdentifier:_userObserverIdentifier];
   }
   if (_userImageObserverIdentifier) {
-    [authorisation.user bk_removeObserversWithIdentifier:_userImageObserverIdentifier];
+    [authorization.user bk_removeObserversWithIdentifier:_userImageObserverIdentifier];
   }
   
 }
@@ -96,15 +96,15 @@
 
 - (void)omn_addObservers {
   
-  OMNAuthorization *authorisation = [OMNAuthorization authorisation];
+  OMNAuthorization *authorization = [OMNAuthorization authorization];
   @weakify(self)
-  _userObserverIdentifier = [authorisation bk_addObserverForKeyPath:NSStringFromSelector(@selector(user)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
+  _userObserverIdentifier = [authorization bk_addObserverForKeyPath:NSStringFromSelector(@selector(user)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
     
     @strongify(self)
     [self updateUserInfo];
     
   }];
-  _userImageObserverIdentifier = [authorisation.user bk_addObserverForKeyPath:NSStringFromSelector(@selector(image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNUser *user, NSDictionary *change) {
+  _userImageObserverIdentifier = [authorization.user bk_addObserverForKeyPath:NSStringFromSelector(@selector(image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNUser *user, NSDictionary *change) {
     
     @strongify(self)
     [self.iconView updateWithImage:user.image];
@@ -115,7 +115,7 @@
 
 - (void)updateUserInfo {
   
-  OMNUser *user = [OMNAuthorization authorisation].user;
+  OMNUser *user = [OMNAuthorization authorization].user;
   NSString *name = (user.name.length) ? (user.name) : (@"no name");
   NSString *emailPhone = [NSString stringWithFormat:@"%@\n%@", user.email, user.phone];
   NSString *text = [NSString stringWithFormat:@"%@\n%@", name, emailPhone];

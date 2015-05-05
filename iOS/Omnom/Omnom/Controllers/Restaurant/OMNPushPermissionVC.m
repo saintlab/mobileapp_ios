@@ -58,7 +58,7 @@
 - (void)requestPermissionTap {
   
   @weakify(self)
-  [[OMNAuthorization authorisation] requestPushNotifications:^(BOOL success) {
+  [[OMNAuthorization authorization] requestPushNotifications:^(BOOL success) {
     
     @strongify(self)
     [self didFinish];

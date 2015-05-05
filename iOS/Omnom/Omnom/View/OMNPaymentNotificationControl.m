@@ -118,14 +118,14 @@
 
 + (void)showWithPaymentDetails:(OMNPaymentDetails *)paymentDetails {
   
-  if (![paymentDetails.userID isEqualToString:[OMNAuthorization authorisation].user.id] &&
+  if (![paymentDetails.userID isEqualToString:[OMNAuthorization authorization].user.id] &&
       0ll == paymentDetails.netAmount) {
     //don't show notificationControl for tips only payment 
     return;
   }
   
   NSString *title = nil;
-  if ([paymentDetails.userID isEqualToString:[OMNAuthorization authorisation].user.id] &&
+  if ([paymentDetails.userID isEqualToString:[OMNAuthorization authorization].user.id] &&
       paymentDetails.tipAmount > 0) {
 
     if (paymentDetails.netAmount) {

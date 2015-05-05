@@ -25,7 +25,7 @@
         
         if (alertView.cancelButtonIndex != buttonIndex) {
 
-          NSString *phoneNumber = [@"tel://" stringByAppendingString:[OMNAuthorization authorisation].supportPhone];
+          NSString *phoneNumber = [@"tel://" stringByAppendingString:[OMNAuthorization authorization].supportPhone];
           [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 
         }
@@ -39,7 +39,7 @@
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
-  return ([OMNAuthorization authorisation].supportPhone) ? (50.0f) :(0.0f);
+  return ([OMNAuthorization authorization].supportPhone) ? (50.0f) :(0.0f);
 }
 
 @end

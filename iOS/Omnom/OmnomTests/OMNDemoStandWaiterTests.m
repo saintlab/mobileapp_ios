@@ -22,7 +22,7 @@ describe(@"waiter call tests", ^{
   
   beforeAll(^{
     
-    [[[OMNAuthorization authorisation].token should] beNonNil];
+    [[[OMNAuthorization authorization].token should] beNonNil];
     
     OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
     

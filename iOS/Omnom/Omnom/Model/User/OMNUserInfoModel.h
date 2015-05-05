@@ -19,7 +19,7 @@ UITableViewDelegate>
 @property (nonatomic, copy) OMNUserInfoDidSelectBlock didSelectBlock;
 
 - (instancetype)initWithMediator:(OMNRestaurantMediator *)restaurantMediator;
-- (void)reloadUserInfo;
 - (void)configureTableView:(UITableView *)tableView;
+- (void)update;
 
 @end

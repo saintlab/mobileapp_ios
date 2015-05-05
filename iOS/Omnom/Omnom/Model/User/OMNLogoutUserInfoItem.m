@@ -23,7 +23,7 @@
       UIActionSheet *logoutSheet = [UIActionSheet bk_actionSheetWithTitle:nil];
       [logoutSheet bk_setDestructiveButtonWithTitle:kOMN_EXIT_BUTTON_TITLE handler:^{
         
-        [[OMNAuthorization authorisation] logout];
+        [[OMNAuthorization authorization] logout];
         
       }];
       

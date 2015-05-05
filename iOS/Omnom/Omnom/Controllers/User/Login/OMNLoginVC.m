@@ -6,25 +6,23 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNChangePhoneVC.h"
 #import "OMNConfirmCodeVC.h"
 #import "OMNErrorTextField.h"
 #import "OMNLoginVC.h"
 #import "OMNNavigationBarProgressView.h"
 #import "OMNPhoneNumberTextFieldDelegate.h"
-#import "OMNRegisterUserVC.h"
 #import "OMNUser.h"
 #import "OMNUser+network.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
 #import <TTTAttributedLabel.h>
 #import "UIView+omn_autolayout.h"
+#import "OMNNavigationControllerDelegate.h"
+#import "OMNAuthorization.h"
+#import "OMNAnalitics.h"
 
 @interface OMNLoginVC ()
-<OMNConfirmCodeVCDelegate,
-OMNChangePhoneVCDelegate,
-TTTAttributedLabelDelegate> {
-}
+<OMNConfirmCodeVCDelegate>
 
 @end
 
@@ -32,9 +30,9 @@ TTTAttributedLabelDelegate> {
   
   OMNErrorTextField *_loginTF;
   TTTAttributedLabel *_hintLabel;
-
-  NSURL *_createUserUrl;
-  NSURL *_resetPhoneUrl;
+  
+  PMKFulfiller fulfiller;
+  PMKRejecter rejecter;
   
 }
 
@@ -44,9 +42,6 @@ TTTAttributedLabelDelegate> {
   self.view.backgroundColor = [UIColor whiteColor];
   self.navigationItem.title = @"";
   self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
-  
-  _createUserUrl = [NSURL URLWithString:@"createUserUrl"];
-  _resetPhoneUrl = [NSURL URLWithString:@"resetPhoneUrl"];
   
   [self setup];
   
@@ -72,6 +67,21 @@ TTTAttributedLabelDelegate> {
   if (0 == _loginTF.textField.text.length) {
     _loginTF.textField.text = @"+7";
   }
+  
+}
+
+- (PMKPromise *)requestLogin:(UIViewController *)rootVC {
+  
+  UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:self];
+  navigationController.delegate = [OMNNavigationControllerDelegate sharedDelegate];
+  [rootVC presentViewController:navigationController animated:YES completion:nil];
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    fulfiller = fulfill;
+    rejecter = reject;
+    
+  }];
   
 }
 
@@ -102,7 +112,6 @@ TTTAttributedLabelDelegate> {
   _hintLabel.font = FuturaOSFOmnomRegular(18.0f);
   _hintLabel.textColor = [OMNStyler redColor];
   _hintLabel.numberOfLines = 0;
-  _hintLabel.delegate = self;
   _hintLabel.linkAttributes =
   @{
     (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
@@ -136,42 +145,11 @@ TTTAttributedLabelDelegate> {
   
   _loginTF.textField.placeholder = kOMN_PHONE_NUMBER_PLACEHOLDER;
   _loginTF.textField.keyboardType = UIKeyboardTypePhonePad;
-
-  [self setResetPhoneHint];
-  
-}
-
-- (void)setCreateUserHint {
-  
-  NSString *buttonText = kOMN_LOGIN_CREATE_USER_ACTION_TEXT;
-  NSString *text = [NSString stringWithFormat:kOMN_LOGIN_CREATE_USER_HINT_FORMAT, buttonText];
-  
-  NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
-  [attributedString setAttributes:
-   @{
-     NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
-     NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
-     } range:NSMakeRange(0, text.length)];
-  
-  [_hintLabel setText:attributedString];
-  [_hintLabel addLinkToURL:_createUserUrl withRange:[text rangeOfString:buttonText]];
-  _hintLabel.hidden = NO;
-  
-}
-
-- (void)setResetPhoneHint {
-  
-  NSString *text = kOMN_LOGIN_RESET_PHONE_HINT;
-  [_hintLabel setText:text];
-  [_hintLabel addLinkToURL:_resetPhoneUrl withRange:NSMakeRange(0, text.length)];
-  _hintLabel.hidden = NO;
   
 }
 
 - (void)closeTap {
-  
-  [self.delegate authorizationVCDidCancel:self];
-  
+  rejecter([OMNError omnomErrorFromCode:kOMNErrorCancel]);
 }
 
 - (void)loginTap {
@@ -179,7 +157,7 @@ TTTAttributedLabelDelegate> {
   [self setNextButtonLoading:YES];
   
   @weakify(self)
-  [self requestAuthorisationCodeCompletion:^{
+  [self requestAuthorizationCodeCompletion:^{
     
     @strongify(self)
     [self requestAuthorizationCode];
@@ -188,7 +166,7 @@ TTTAttributedLabelDelegate> {
   
 }
 
-- (void)requestAuthorisationCodeCompletion:(dispatch_block_t)completionBlock {
+- (void)requestAuthorizationCodeCompletion:(dispatch_block_t)completionBlock {
   
   @weakify(self)
   [OMNUser loginUsingData:_loginTF.textField.text code:nil completion:^(NSString *token) {
@@ -210,11 +188,6 @@ TTTAttributedLabelDelegate> {
 
   if (error) {
 
-    if (kOMNUserErrorCodeNoSuchUser == error.code) {
-      
-      [self setCreateUserHint];
-      
-    }
     [_loginTF setErrorText:error.localizedDescription];
     
   }
@@ -229,33 +202,6 @@ TTTAttributedLabelDelegate> {
     [self.view layoutIfNeeded];
     
   }];
-  
-}
-
-- (void)createUser {
-  
-  OMNRegisterUserVC *registerUserVC = [[OMNRegisterUserVC alloc] init];
-  registerUserVC.delegate = self.delegate;
-  
-  if ([_loginTF.textField.text omn_isValidPhone]) {
-    
-    registerUserVC.phone = _loginTF.textField.text;
-    
-  }
-  else if ([_loginTF.textField.text omn_isValidEmail]) {
-    
-    registerUserVC.email = _loginTF.textField.text;
-    
-  }
-  [self.navigationController pushViewController:registerUserVC animated:YES];
-  
-}
-
-- (void)resetPhone {
-  
-  OMNChangePhoneVC *changePhoneVC = [[OMNChangePhoneVC alloc] init];
-  changePhoneVC.delegate = self;
-  [self.navigationController pushViewController:changePhoneVC animated:YES];
   
 }
 
@@ -287,53 +233,29 @@ TTTAttributedLabelDelegate> {
   
 }
 
+- (void)tokenDidReceived:(NSString *)token {
+  
+  [[OMNAuthorization authorization] setAuthenticationToken:token].finally(^{
+    
+    [[OMNAnalitics analitics] logUserLoginWithRegistration:NO];
+    fulfiller(token);
+    
+  });
+  
+}
+
 - (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC {
-  
-  [self requestAuthorisationCodeCompletion:nil];
-  
+  [self requestAuthorizationCodeCompletion:nil];
 }
 
 - (void)confirmCodeVCDidResetPhone:(OMNConfirmCodeVC *)confirmCodeVC {
-  
-  [self.delegate authorizationVCDidCancel:self];
-  
-}
-
-#pragma mark - OMNChangePhoneVCDelegate
-
-- (void)changePhoneVCDidFinish:(OMNChangePhoneVC *)changePhoneVC {
-  
-  [self.navigationController popToViewController:self animated:YES];
-  
+  [self closeTap];
 }
 
 - (NSString *)decimalPhoneNumber {
   NSArray *components = [_loginTF.textField.text componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]];
   NSString *decimalString = [components componentsJoinedByString:@""];
   return decimalString;
-}
-
-- (void)tokenDidReceived:(NSString *)token {
-  
-  [self.delegate authorizationVC:self didReceiveToken:token fromRegstration:NO];
-  
-}
-
-#pragma mark - TTTAttributedLabelDelegate
-
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
-  
-  if ([url isEqual:_createUserUrl]) {
-    
-    [self createUser];
-    
-  }
-  else if ([url isEqual:_resetPhoneUrl]) {
-    
-    [self resetPhone];
-    
-  }
-  
 }
 
 @end

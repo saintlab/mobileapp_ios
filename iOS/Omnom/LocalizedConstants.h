@@ -43,6 +43,7 @@
 #define kOMN_USER_INFO_CHANGE_BUTTON_TITLE NSLocalizedString(@"USER_INFO_CHANGE_BUTTON_TITLE", @"Изменить")
 #define kOMN_USER_INFO_FACEBOOK_TITLE NSLocalizedString(@"USER_INFO_FACEBOOK_TITLE", @"facebook/Omnom")
 #define kOMN_USER_INFO_CALL_SUPPORT_TITLE NSLocalizedString(@"USER_INFO_CALL_SUPPORT_TITLE", @"Звонок в тех. поддержку")
+#define kOMN_USER_INFO_LOGIN_TITLE NSLocalizedString(@"USER_INFO_LOGIN_TITLE", @"Войти")
 #define kOMN_USER_PHOTO_DELETE_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_DELETE_BUTTON_TITLE", @"Удалить текущий снимок")
 #define kOMN_USER_PHOTO_SHOOT_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_SHOOT_BUTTON_TITLE", @"Сделать снимок")
 #define kOMN_USER_PHOTO_CHOOSE_BUTTON_TITLE NSLocalizedString(@"USER_PHOTO_CHOOSE_BUTTON_TITLE", @"Выбрать из библиотеки")

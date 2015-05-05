@@ -56,7 +56,7 @@
     
     @strongify(self)
     OMNMailRuExtra *extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
-    [OMNMailRuAcquiring payWithCard:[bankCardInfo omn_mailRuCard] user:[[OMNAuthorization authorisation].user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount) extra:extra].then(^(OMNMailRuPoll *poll) {
+    [OMNMailRuAcquiring payWithCard:[bankCardInfo omn_mailRuCard] user:[[OMNAuthorization authorization].user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount) extra:extra].then(^(OMNMailRuPoll *poll) {
       
       [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
       completionBlock(bill, nil);

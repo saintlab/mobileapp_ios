@@ -49,7 +49,7 @@ describe(@"check initial state", ^{
   
   it(@"should check mail.ru config", ^{
     
-    [[[OMNAuthorization authorisation].token should] beNonNil];
+    [[[OMNAuthorization authorization].token should] beNonNil];
     
     __block NSNumber *isConfigLoaded = nil;
     OMNLaunch *launch = [[OMNLaunch alloc] init];

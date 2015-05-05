@@ -46,7 +46,7 @@ static NSDictionary *_tokens = nil;
   [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];
   
   //initialize saved token
-  [[OMNAuthorization authorisation] setup];
+  [[OMNAuthorization authorization] setup];
   
   [self loadRemoteConfigWithCompletion:^{
     

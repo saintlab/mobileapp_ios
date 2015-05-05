@@ -6,12 +6,13 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNAuthorizationDelegate.h"
+#import <PromiseKit.h>
 
 @interface OMNLoginVC : UIViewController
 
-@property (nonatomic, weak) id<OMNAuthorizationDelegate> delegate;
 @property (nonatomic, copy) NSString *phone;
+
+- (PMKPromise *)requestLogin:(UIViewController *)rootVC;
 
 @end
 

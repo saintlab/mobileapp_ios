@@ -51,7 +51,7 @@
   [super viewDidLoad];
 
   @weakify(self)
-  OMNMailRuUser *user = [[OMNAuthorization authorisation].user omn_mailRuUser];
+  OMNMailRuUser *user = [[OMNAuthorization authorization].user omn_mailRuUser];
   [OMNMailRuAcquiring payAndRegisterWithPan:_bankCardInfo.pan exp_date:[OMNMailRuCard exp_dateFromMonth:_bankCardInfo.expiryMonth year:_bankCardInfo.expiryYear] cvv:_bankCardInfo.cvv user:user].then(^(OMNMailRuPoll *poll) {
     
     [[OMNAnalitics analitics] logDebugEvent:@"MAIL_CARD_REGISTER" parametrs:poll.response];

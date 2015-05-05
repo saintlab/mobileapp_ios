@@ -28,7 +28,7 @@ describe(@"demo stand test", ^{
   
   beforeAll(^{
     
-    [[[OMNAuthorization authorisation].token should] beNonNil];
+    [[[OMNAuthorization authorization].token should] beNonNil];
     
     [OMNRestaurantManager decodeBeacons:@[demoBeacon]].then(^(NSArray *restaurants) {
       
@@ -68,7 +68,7 @@ describe(@"demo stand test", ^{
     
     [[_restaurant should] beNonNil];
 
-    [OMNUser userWithToken:[OMNAuthorization authorisation].token user:^(OMNUser *user) {
+    [OMNUser userWithToken:[OMNAuthorization authorization].token user:^(OMNUser *user) {
       
       [[user should] beNonNil];
       [[user.id should] equal:@"12"];

@@ -61,7 +61,7 @@ OMNScanTableQRCodeVCDelegate>
   [[OMNLaunchHandler sharedHandler] reload];
 }
 
-- (void)showUserProfile {
+- (void)showSettings {
   
   OMNUserInfoVC *userInfoVC = [[OMNUserInfoVC alloc] initWithMediator:nil];
   @weakify(self)

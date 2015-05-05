@@ -80,9 +80,9 @@ TTTAttributedLabelDelegate>
 
 
 - (void)closeTap {
-  
-  [self.delegate authorizationVCDidCancel:self];
-  
+  if (self.cancelBlock) {
+    self.cancelBlock();
+  }
 }
 
 - (IBAction)resendTap:(id)sender {
@@ -199,7 +199,7 @@ TTTAttributedLabelDelegate>
   
   if (token) {
 
-    [self.delegate authorizationVC:self didReceiveToken:token fromRegstration:YES];
+    self.authorizationBlock(token, YES);
     
   }
   else {
@@ -319,10 +319,9 @@ TTTAttributedLabelDelegate>
 #pragma mark - TTTAttributedLabelDelegate
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
-  
+
   OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
   loginVC.phone = _userInfoView.phoneTF.textField.text;
-  loginVC.delegate = self.delegate;
   [self.navigationController pushViewController:loginVC animated:YES];
   
 }

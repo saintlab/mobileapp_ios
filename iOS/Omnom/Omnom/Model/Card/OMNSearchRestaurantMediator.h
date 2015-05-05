@@ -16,7 +16,7 @@
 - (instancetype)initWithRootVC:(__weak UIViewController *)vc;
 
 - (void)searchRestarants;
-- (void)showUserProfile;
+- (void)showSettings;
 - (void)scanTableQrTap;
 - (void)demoModeTap;
 - (void)showVisitor:(OMNVisitor *)visitor;

@@ -165,7 +165,7 @@
   _tableButtonAnimationDidShow = YES;
   OMNVisitor *visitor = _restaurantMediator.visitor;
   OMNTableButton *tableButton = [OMNTableButton buttonWithColor:visitor.restaurant.decoration.antagonist_color];
-  [tableButton addTarget:_restaurantMediator action:@selector(showUserProfile) forControlEvents:UIControlEventTouchUpInside];
+  [tableButton addTarget:_restaurantMediator action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
   [tableButton setText:_restaurantMediator.table.name];
   tableButton.center = userButton.center;
   [userButton.superview addSubview:tableButton];

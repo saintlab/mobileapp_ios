@@ -46,7 +46,7 @@ OMNChangePhoneWebVCDelegate>
   
   [super viewDidLoad];
   
-  _user = [[OMNAuthorization authorisation].user copy];
+  _user = [[OMNAuthorization authorization].user copy];
   
   self.automaticallyAdjustsScrollViewInsets = NO;
   self.view.backgroundColor = [UIColor whiteColor];

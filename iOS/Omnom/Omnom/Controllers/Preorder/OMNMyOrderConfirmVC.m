@@ -19,6 +19,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNAuthorization.h"
 #import "OMNMyOrderConfirmModel.h"
+#import "OMNLoginVC.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,
@@ -132,7 +133,6 @@ OMNPreorderConfirmCellDelegate>
   return UIStatusBarStyleLightContent;
 }
 
-#warning TODO: check user token
 - (void)createWish {
   
   if (!self.wishMediator.canCreateWish) {
@@ -140,16 +140,26 @@ OMNPreorderConfirmCellDelegate>
   }
   self.model.loading = YES;
   
-  [self.wishMediator createWish].catch(^(OMNError *error) {
+  [[OMNAuthorization authorization] checkAuthenticationToken].then(^(OMNUser *user) {
     
-    if (kOMNErrorForbiddenWishProducts == error.code) {
-     
+    return [self.wishMediator createWish];
+    
+  }).catch(^(OMNError *error) {
+    
+    if (kOMNErrorNoUserToken == error.code) {
+      
+      [self requestAuthorization];
+      
+    }
+    else if (kOMNErrorForbiddenWishProducts == error.code) {
+      
       [self processForbiddenProducts:error.userInfo[OMNForbiddenWishProductsKey]];
       
     }
     else if (kOMNErrorCancel == error.code) {
       
     }
+      
     NSLog(@"%@", error);
     
   }).finally(^{
@@ -158,12 +168,21 @@ OMNPreorderConfirmCellDelegate>
     NSLog(@"did finish wish");
     
   });
+
+}
+
+- (void)requestAuthorization {
   
-//  [OMNAuthorization checkToken].then(^(OMNUser *user) {
-//    
-//    return <#expression#>
-//    
-//  }).catch(^(OMNError *error) {
+  OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
+  [loginVC requestLogin:self].then(^(NSString *token) {
+    
+    NSLog(@"requestAuthorization>%@", token);
+    
+  }).finally(^{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+  });
 
 }
 
