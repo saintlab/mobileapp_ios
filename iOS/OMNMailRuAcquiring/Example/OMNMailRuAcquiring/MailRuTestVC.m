@@ -207,7 +207,7 @@
 
 - (IBAction)payWithCardID:(id)sender {
 
-  [OMNMailRuAcquiring payWithCardID:self.card[@"external_card_id"] user:self.user order_id:@"1" order_amount:@(0.01) extra:nil].then(^(OMNMailRuPoll *poll) {
+  [OMNMailRuAcquiring payWithCardID:self.card[@"external_card_id"] user:self.user order_id:@"1" order_amount:@(0.01) extra:[OMNMailRuExtra extraWithRestaurantID:@"1" tipAmount:0 type:@"order"]].then(^(OMNMailRuPoll *poll) {
     
     [self setLastOrderID:@""];
     [self reloadCards];

@@ -37,6 +37,7 @@
 
 - (void)checkUserToken {
   
+  [[OMNAuthorization authorization] checkAuthenticationToken];
   @weakify(self)
   [self.navigationController omn_popToViewController:self animated:YES completion:^{
 
