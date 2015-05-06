@@ -11,7 +11,6 @@
 
 @interface OMNDelivery : NSObject
 
-@property (nonatomic, strong, readonly) NSString *type;
 @property (nonatomic, strong) OMNRestaurantAddress *address;
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, assign) NSInteger minutes;

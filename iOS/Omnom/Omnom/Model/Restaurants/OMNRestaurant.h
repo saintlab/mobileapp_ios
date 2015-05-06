@@ -19,17 +19,15 @@
 #import "OMNOrder.h"
 #import "OMNDelivery.h"
 
-typedef NS_ENUM(NSInteger, OMNRestaurantMode) {
-  
-  kRestaurantModeNone = 0,
-  kRestaurantModePreorder,
-  kRestaurantModeBar,
-  kRestaurantModeLunch,
-  kRestaurantModeIn,
-  
-};
+#define kEntranceModeOnTable @"on-table"
+#define kEntranceModeIn @"for-here"
+#define kEntranceModeLunch @"lunch"
+#define kEntranceModeBar @"bar"
+#define kEntranceModeTakeAway @"take-away"
+#define kEntranceModeDemo @"demo"
 
 extern NSString * const OMNRestaurantNotificationLaunchKey;
+
 
 @interface OMNRestaurant : NSObject
 <NSCoding>
@@ -39,7 +37,8 @@ extern NSString * const OMNRestaurantNotificationLaunchKey;
 @property (nonatomic, assign, readonly) BOOL available;
 @property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, copy, readonly) NSString *Description;
-@property (nonatomic, assign, readonly) OMNRestaurantMode entrance_mode;
+@property (nonatomic, assign, readonly) NSString *entrance_mode;
+@property (nonatomic, strong, readonly) NSArray *entrance_modes;
 @property (nonatomic, assign, readonly) double distance;
 @property (nonatomic, copy, readonly) NSString *phone;
 @property (nonatomic, strong, readonly) NSURL *orders_paid_url;

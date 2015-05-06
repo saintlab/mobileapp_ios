@@ -15,4 +15,14 @@
   return [[OMNBarRestaurantMediator alloc] initWithVisitor:self rootViewController:rootVC];
 }
 
+- (NSString *)tags {
+  return kEntranceModeBar;
+}
+- (NSString *)restarantCardButtonTitle {
+  return kOMN_RESTAURANT_MODE_BAR_TITLE;
+}
+- (NSString *)restarantCardButtonIcon {
+  return @"card_ic_bar";
+}
+
 @end

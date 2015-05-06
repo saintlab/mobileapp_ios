@@ -7,18 +7,23 @@
 //
 
 #import "OMNRestaurant.h"
+#import "OMNVisitor.h"
 #import "OMNBottomTextButton.h"
+
+@protocol OMNRestaurantCardButtonsViewDelegate;
 
 @interface OMNRestaurantCardButtonsView : UIView
 
 @property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
 
-@property (nonatomic, strong, readonly) OMNBottomTextButton *barButton;
-@property (nonatomic, strong, readonly) OMNBottomTextButton *onTableButton;
-@property (nonatomic, strong, readonly) OMNBottomTextButton *inRestaurantButton;
-@property (nonatomic, strong, readonly) OMNBottomTextButton *lunchButton;
-@property (nonatomic, strong, readonly) OMNBottomTextButton *preorderButton;
+@property (nonatomic, weak) id<OMNRestaurantCardButtonsViewDelegate> delegate;
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant;
+
+@end
+
+@protocol OMNRestaurantCardButtonsViewDelegate <NSObject>
+
+- (void)cardButtonsView:(OMNRestaurantCardButtonsView *)view didSelectVisitor:(OMNVisitor *)visitor;
 
 @end

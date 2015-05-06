@@ -15,4 +15,8 @@
   return [[OMNDemoRestaurantMediator alloc] initWithVisitor:self rootViewController:rootVC];
 }
 
+- (NSString *)tags {
+  return kEntranceModeDemo;
+}
+
 @end

@@ -27,7 +27,7 @@
       
     } cancel:^{
       
-      reject(nil);
+      reject([OMNError omnomErrorFromCode:kOMNErrorCancel]);
       
     }];
     

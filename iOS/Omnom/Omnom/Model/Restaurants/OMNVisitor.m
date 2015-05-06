@@ -50,15 +50,16 @@
 
 - (PMKPromise *)createWish:(NSArray *)wishItems {
   
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+  if (wishItems) {
+    parameters[@"items"] = wishItems;
+  }
+  parameters[@"tags"] = self.tags;
+  [parameters addEntriesFromDictionary:self.delivery.parameters];
   @weakify(self)
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    if (wishItems) {
-      parameters[@"items"] = wishItems;
-    }
-    [parameters addEntriesFromDictionary:self.delivery.parameters];
     
     NSString *path = [NSString stringWithFormat:@"/restaurants/%@/wishes", self.restaurant.id];
     [[OMNOperationManager sharedManager] POST:path parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -89,18 +90,11 @@
   
 }
 
-- (NSDictionary *)menuParameters {
-  return
-  @{
-    @"tags" : @"in",
-    };
-}
-
 - (void)getMenuWithCompletion:(OMNMenuBlock)completion {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/menu", self.restaurant.id];
   @weakify(self)
-  [[OMNOperationManager sharedManager] GET:path parameters:self.menuParameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  [[OMNOperationManager sharedManager] GET:path parameters:@{@"tags" : self.tags} success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
     if ([responseObject omn_isSuccessResponse]) {
       
@@ -125,6 +119,25 @@
     
   }];
   
+}
+
+- (PMKPromise *)enter:(UIViewController *)rootVC {
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    fulfill(self);
+    
+  }];
+}
+
+- (NSString *)tags {
+  return @"";
+}
+- (NSString *)restarantCardButtonTitle {
+  return @"";
+}
+- (NSString *)restarantCardButtonIcon {
+  return @"";
 }
 
 @end

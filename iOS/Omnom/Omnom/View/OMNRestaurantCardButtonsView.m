@@ -9,14 +9,20 @@
 #import "OMNRestaurantCardButtonsView.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
+#import "OMNVisitorFactory.h"
 
-@implementation OMNRestaurantCardButtonsView
+@implementation OMNRestaurantCardButtonsView {
+  
+  NSArray *_visitors;
+  
+}
 
 - (instancetype)initWithRestaurant:(OMNRestaurant *)restaurant {
   self = [super init];
   if (self) {
     
     _restaurant = restaurant;
+    _visitors = [OMNVisitorFactory visitorsForRestaurant:_restaurant];
     self.translatesAutoresizingMaskIntoConstraints = NO;
     [self omn_setup];
     
@@ -24,53 +30,28 @@
   return self;
 }
 
+- (void)buttonTap:(UIControl *)control {
+  
+  OMNVisitor *selectedVisitor = _visitors[control.tag];
+  [self.delegate cardButtonsView:self didSelectVisitor:selectedVisitor];
+  
+}
+
 - (void)omn_setup {
   
   NSMutableArray *buttons = [NSMutableArray array];
-  UIColor *defaultColor = [OMNStyler blueColor];
-  UIColor *disabledColor = colorWithHexString(@"A1A1A1");
-  
-  
-  OMNRestaurantSettings *settings = _restaurant.settings;
-  if (settings.has_bar) {
+  [_visitors enumerateObjectsUsingBlock:^(OMNVisitor *visitor, NSUInteger idx, BOOL *stop) {
     
-    _barButton = [OMNBottomTextButton omn_autolayoutView];
-    [_barButton setTitle:kOMN_RESTAURANT_MODE_BAR_TITLE image:[UIImage imageNamed:@"card_ic_bar"] highlightedImage:[UIImage imageNamed:@"card_ic_bar_selected"] color:defaultColor disabledColor:disabledColor];
-    [buttons addObject:_barButton];
-  }
-  
-  if (settings.has_table_order) {
-    
-    _onTableButton = [OMNBottomTextButton omn_autolayoutView];
-    [_onTableButton setTitle:kOMN_RESTAURANT_MODE_TABLE_TITLE image:[UIImage imageNamed:@"card_ic_table"] highlightedImage:[UIImage imageNamed:@"card_ic_table_selected"] color:defaultColor disabledColor:disabledColor];
-    [buttons addObject:_onTableButton];
-    
-  }
-  
-  if (settings.has_restaurant_order) {
-    
-    _inRestaurantButton = [OMNBottomTextButton omn_autolayoutView];
-    [_inRestaurantButton setTitle:kOMN_RESTAURANT_MODE_RESTAURANT_TITLE image:[UIImage imageNamed:@"card_ic_table"] highlightedImage:[UIImage imageNamed:@"card_ic_table_selected"] color:defaultColor disabledColor:disabledColor];
-    [buttons addObject:_inRestaurantButton];
-    
-  }
-  
-  if (settings.has_lunch) {
-    
-    _lunchButton = [OMNBottomTextButton omn_autolayoutView];
-    [_lunchButton setTitle:kOMN_RESTAURANT_MODE_LUNCH_TITLE image:[UIImage imageNamed:@"card_ic_order"] highlightedImage:[UIImage imageNamed:@"card_ic_order_selected"] color:defaultColor disabledColor:disabledColor];
-    [buttons addObject:_lunchButton];
-    
-  }
-  
-  if (settings.has_pre_order) {
-    
-    _preorderButton = [OMNBottomTextButton omn_autolayoutView];
-    [_preorderButton setTitle:kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE image:[UIImage imageNamed:@"card_ic_takeaway"] highlightedImage:[UIImage imageNamed:@"card_ic_takeaway_selected"] color:defaultColor disabledColor:disabledColor];
-    [buttons addObject:_preorderButton];
-    
-  }
-  
+    OMNBottomTextButton *button = [OMNBottomTextButton omn_autolayoutView];
+    NSString *imageName = visitor.restarantCardButtonIcon;
+    NSString *selectedImageName = [visitor.restarantCardButtonIcon stringByAppendingString:@"_selected"];
+    [button setTitle:visitor.restarantCardButtonTitle image:[UIImage imageNamed:imageName] highlightedImage:[UIImage imageNamed:selectedImageName] color:[OMNStyler blueColor] disabledColor:colorWithHexString(@"A1A1A1")];
+    button.tag = idx;
+    [button addTarget:self action:@selector(buttonTap:) forControlEvents:UIControlEventTouchUpInside];
+    [buttons addObject:button];
+
+  }];
+   
   NSMutableDictionary *buttonViews = [NSMutableDictionary dictionary];
   UIView *fillView = [UIView omn_autolayoutView];
   [self addSubview:fillView];

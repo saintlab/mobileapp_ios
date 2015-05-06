@@ -192,15 +192,11 @@ OMNScanTableQRCodeVCDelegate>
 #pragma mark - OMNScanTableQRCodeVCDelegate
 
 - (void)scanTableQRCodeVC:(OMNScanTableQRCodeVC *)scanTableQRCodeVC didFindRestaurant:(OMNRestaurant *)restaurant {
-  
   [self showRestaurants:@[restaurant]];
-  
 }
 
 - (void)scanTableQRCodeVCRequestDemoMode:(OMNScanTableQRCodeVC *)scanTableQRCodeVC {
-  
   [self demoModeTap];
-  
 }
 
 @end

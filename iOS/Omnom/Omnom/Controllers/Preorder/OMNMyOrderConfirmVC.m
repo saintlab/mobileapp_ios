@@ -176,7 +176,7 @@ OMNPreorderConfirmCellDelegate>
   OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
   [loginVC requestLogin:self].then(^(NSString *token) {
     
-    NSLog(@"requestAuthorization>%@", token);
+    [self createWish];
     
   }).finally(^{
     

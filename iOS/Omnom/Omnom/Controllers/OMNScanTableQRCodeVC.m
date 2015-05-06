@@ -325,9 +325,7 @@ OMNCameraPermissionDescriptionVCDelegate>
 }
 
 - (void)requestDemoMode {
-  
   [self.delegate scanTableQRCodeVCRequestDemoMode:self];
-  
 }
 
 - (void)decodeQR:(NSString *)qr {

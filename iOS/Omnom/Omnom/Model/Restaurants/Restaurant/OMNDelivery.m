@@ -8,21 +8,7 @@
 
 #import "OMNDelivery.h"
 
-@interface OMNDelivery ()
-
-@property (nonatomic, strong) NSString *type;
-
-@end
-
 @implementation OMNDelivery
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    _type = @"restaurant";
-  }
-  return self;
-}
 
 + (instancetype)delivery {
   return [[OMNDelivery alloc] init];
@@ -33,7 +19,6 @@
   OMNDelivery *delivery = [[OMNDelivery alloc] init];
   delivery.date = date;
   delivery.address = address;
-  delivery.type = @"lunch";
   return delivery;
   
 }
@@ -42,7 +27,6 @@
   
   OMNDelivery *delivery = [[OMNDelivery alloc] init];
   delivery.minutes = minutes;
-  delivery.type = @"pre_order";
   return delivery;
 
 }
@@ -50,7 +34,6 @@
 - (NSDictionary *)parameters {
   
   NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-  parameters[@"type"] = self.type;
   if (self.address) {
     parameters[@"delivery_address"] = self.addressData;
   }

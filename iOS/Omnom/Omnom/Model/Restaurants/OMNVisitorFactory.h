@@ -11,5 +11,6 @@
 @interface OMNVisitorFactory : NSObject
 
 + (OMNVisitor *)visitorForRestaurant:(OMNRestaurant *)restaurant;
++ (NSArray *)visitorsForRestaurant:(OMNRestaurant *)restaurant;
 
 @end

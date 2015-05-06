@@ -16,11 +16,14 @@
   return [[OMNPreorderRestaurantMediator alloc] initWithVisitor:self rootViewController:rootVC];
 }
 
-- (NSDictionary *)menuParameters {
-  return
-  @{
-    @"tags" : @"take_away",
-    };
+- (NSString *)tags {
+  return kEntranceModeTakeAway;
+}
+- (NSString *)restarantCardButtonTitle {
+  return kOMN_RESTAURANT_MODE_TAKE_AWAY_TITLE;
+}
+- (NSString *)restarantCardButtonIcon {
+  return @"card_ic_takeaway";
 }
 
 @end

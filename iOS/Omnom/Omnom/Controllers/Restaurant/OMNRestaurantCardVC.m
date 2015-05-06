@@ -16,12 +16,12 @@
 #import "UIImage+omn_helper.h"
 #import "UINavigationBar+omn_custom.h"
 #import <BlocksKit.h>
-#import "OMNLunchOrderAlertVC.h"
 #import "OMNRestaurantCardButtonsView.h"
 
-#import "OMNBarVisitor.h"
-#import "OMNPreorderVisitor.h"
-#import "OMNRestaurantInVisitor.h"
+@interface OMNRestaurantCardVC ()
+<OMNRestaurantCardButtonsViewDelegate>
+
+@end
 
 @implementation OMNRestaurantCardVC {
   
@@ -68,29 +68,26 @@
   
   [self omn_setup];
 
-  [_buttonsView.barButton addTarget:self action:@selector(barTap) forControlEvents:UIControlEventTouchUpInside];
-  [_buttonsView.onTableButton addTarget:self action:@selector(onTableTap) forControlEvents:UIControlEventTouchUpInside];
-  [_buttonsView.inRestaurantButton addTarget:self action:@selector(inRestaurantTap) forControlEvents:UIControlEventTouchUpInside];
-  [_buttonsView.lunchButton addTarget:self action:@selector(lunchTap) forControlEvents:UIControlEventTouchUpInside];
-  [_buttonsView.preorderButton addTarget:self action:@selector(preorderTap) forControlEvents:UIControlEventTouchUpInside];
+  _buttonsView.delegate = self;
+  
+  [_logoIcon setBackgroundImage:[[UIImage imageNamed:@"restaurant_card_circle_bg"] omn_tintWithColor:_restaurant.decoration.background_color] forState:UIControlStateNormal];
   
   self.navigationItem.titleView = [UIButton omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_black"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
   
   __weak UIButton *logoIcon = _logoIcon;
   _restaurantDecorationObserverID = [_restaurant.decoration bk_addObserverForKeyPath:NSStringFromSelector(@selector(logo)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNRestaurantDecoration *obj, NSDictionary *change) {
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_promise(^id{
       
-      UIImage *circleImage = [_restaurant.decoration.logo omn_circleImageWithDiametr:175.0f];
-      dispatch_async(dispatch_get_main_queue(), ^{
+      return [_restaurant.decoration.logo omn_circleImageWithDiametr:175.0f];
+      
+    }).then(^(UIImage *image) {
+      
+      [UIView transitionWithView:logoIcon duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
         
-        [UIView transitionWithView:logoIcon duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+        [logoIcon setImage:image forState:UIControlStateNormal];
         
-          [logoIcon setImage:circleImage forState:UIControlStateNormal];
-          
-        } completion:nil];
-        
-      });
+      } completion:nil];
       
     });
     
@@ -139,6 +136,22 @@
   
 }
 
+#pragma mark - OMNRestaurantCardButtonsViewDelegate
+
+- (void)cardButtonsView:(OMNRestaurantCardButtonsView *)view didSelectVisitor:(OMNVisitor *)visitor {
+  
+  [visitor enter:self].then(^(OMNVisitor *enteredVisitor) {
+    
+    [_searchRestaurantMediator showVisitor:enteredVisitor];
+    
+  }).catch(^(OMNError *error) {
+    
+    NSLog(@"%@", error);
+    
+  });
+  
+}
+
 - (void)onTableTap {
   
   self.showQRScan = NO;
@@ -153,40 +166,6 @@
     
   }
   
-}
-
-- (void)barTap {
-  [_searchRestaurantMediator showVisitor:[OMNBarVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]]];
-}
-
-- (void)lunchTap {
-  
-  OMNLunchOrderAlertVC *lunchOrderAlertVC = [[OMNLunchOrderAlertVC alloc] initWithRestaurant:_restaurant];
-  @weakify(self)
-  lunchOrderAlertVC.didCloseBlock = ^{
-    
-    @strongify(self)
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  OMNSearchRestaurantMediator *searchRestaurantMediator = _searchRestaurantMediator;
-  lunchOrderAlertVC.didSelectVisitorBlock = ^(OMNVisitor *visitor) {
-
-    @strongify(self)
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-    [searchRestaurantMediator showVisitor:visitor];
-    
-  };
-  [self.navigationController presentViewController:lunchOrderAlertVC animated:YES completion:nil];
-  
-}
-
-- (void)preorderTap {
-  [_searchRestaurantMediator showVisitor:[OMNPreorderVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]]];
-}
-
-- (void)inRestaurantTap {
-  [_searchRestaurantMediator showVisitor:[OMNRestaurantInVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]]];
 }
 
 - (void)closeTap {
@@ -215,7 +194,6 @@
   
   _logoIcon = [UIButton omn_autolayoutView];
   _logoIcon.userInteractionEnabled = NO;
-  [_logoIcon setBackgroundImage:[UIImage imageNamed:@"restaurant_card_circle_bg"] forState:UIControlStateNormal];
   [_contentView addSubview:_logoIcon];
   
   _phoneButton = [OMNBorderedButton omn_autolayoutView];

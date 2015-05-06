@@ -10,22 +10,16 @@
 
 NSString * const OMNRestaurantNotificationLaunchKey = @"OMNRestaurantNotificationLaunchKey";
 
-@interface OMNRestaurant ()
-
-@property (nonatomic, assign) OMNRestaurantMode entrance_mode;
-
-@end
-
 @implementation OMNRestaurant {
   
   id _jsonData;
 
 }
 
-OMNRestaurantMode entranceModeFromString(NSString *string) {
+NSString *entranceModeFromString(NSString *string) {
 
-  if (0 == string.length) {
-    return kRestaurantModeNone;
+  if (![string isKindOfClass:[NSString class]]) {
+    return @"";
   }
 
   static dispatch_once_t onceToken;
@@ -33,15 +27,18 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
   dispatch_once(&onceToken, ^{
     modes =
     @{
-      @"none" : @(kRestaurantModeNone),
-      @"bar" : @(kRestaurantModeBar),
-      @"lunch" : @(kRestaurantModeLunch),
-      @"restaurant" : @(kRestaurantModeIn),
+      @"bar" : kEntranceModeBar,
+      @"lunch" : kEntranceModeLunch,
+      @"restaurant" : kEntranceModeIn,
       };
   });
   
-  OMNRestaurantMode enteranceMode = (OMNRestaurantMode)[modes[string] integerValue];
-  return enteranceMode;
+  if (modes[string]) {
+    return modes[string];
+  }
+  else {
+    return string;
+  }
   
 }
 
@@ -69,9 +66,15 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     _phone = [jsonData[@"phone"] omn_stringValueSafe];
     _address = [[OMNRestaurantAddress alloc] initWithJsonData:jsonData[@"address"]];
     _schedules = [[OMNRestaurantSchedules alloc] initWithJsonData:jsonData[@"schedules"]];
-    
     _tables = [jsonData[@"tables"] omn_tables];
     _orders = [jsonData[@"orders"] omn_orders];;
+
+    if ([jsonData[@"entrance_modes"] isKindOfClass:[NSString class]]) {
+      _entrance_modes = [jsonData[@"entrance_modes"] componentsSeparatedByString:@","];
+    }
+    else {
+      _entrance_modes = [self entrance_modesFromSettings];
+    }
     
     NSString *orders_paid_url = [jsonData[@"orders_paid_url"] omn_stringValueSafe];
     if (orders_paid_url.length) {
@@ -119,23 +122,11 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
     return NO;
   }
   
-  if (self.hasOrders ||
-      self.hasTable) {
-    
+  if (self.hasOrders || self.hasTable) {
     return YES;
-    
   }
   
-  if (kRestaurantModeBar == self.entrance_mode ||
-      kRestaurantModeLunch == self.entrance_mode ||
-      kRestaurantModePreorder == self.entrance_mode ||
-      kRestaurantModeIn == self.entrance_mode) {
-    
-    return YES;
-    
-  }
-
-  return NO;
+  return [@[kEntranceModeBar, kEntranceModeLunch, kEntranceModeTakeAway, kEntranceModeIn] containsObject:self.entrance_mode];
   
 }
 
@@ -143,8 +134,24 @@ OMNRestaurantMode entranceModeFromString(NSString *string) {
   return [NSString stringWithFormat:@"%@, %@", _title, _id];
 }
 
+- (NSArray *)entrance_modesFromSettings {
+  NSMutableArray *entrance_modes = [NSMutableArray array];
+  if (self.settings.has_bar) {
+    [entrance_modes addObject:kEntranceModeBar];
+  }
+  if (self.settings.has_lunch) {
+    [entrance_modes addObject:kEntranceModeLunch];
+  }
+  if (self.settings.has_restaurant_order) {
+    [entrance_modes addObject:kEntranceModeIn];
+  }
+  if (self.settings.has_table_order) {
+    [entrance_modes addObject:kEntranceModeOnTable];
+  }
+  if (self.settings.has_pre_order) {
+    [entrance_modes addObject:kEntranceModeTakeAway];
+  }
+  return [entrance_modes copy];
+}
+
 @end
-
-
-
-
