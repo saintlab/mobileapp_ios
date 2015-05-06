@@ -18,7 +18,6 @@ describe(@"OMNDelivery", ^{
   it(@"should check empty delivery", ^{
     
     OMNDelivery *delivery = [OMNDelivery delivery];
-    [[delivery.type should] equal:@"restaurant"];
     [[delivery.address should] beNil];
     [[@(delivery.readyForLunch) should] equal:@(NO)];
     [[@(delivery.minutes) should] equal:@(0)];
@@ -29,7 +28,6 @@ describe(@"OMNDelivery", ^{
   it(@"should check preorder delivery", ^{
     
     OMNDelivery *delivery = [OMNDelivery deliveryWithMinutes:15];
-    [[delivery.type should] equal:@"pre_order"];
     [[delivery.address should] beNil];
     [[@(delivery.readyForLunch) should] equal:@(NO)];
     [[@(delivery.minutes) should] equal:@(15)];
@@ -43,7 +41,6 @@ describe(@"OMNDelivery", ^{
     NSArray *restaurants = [response[@"restaurants"] omn_restaurants];
     OMNRestaurant *restaurant = [restaurants firstObject];
     OMNDelivery *delivery = [OMNDelivery deliveryWithAddress:restaurant.address date:@"1/1/2015"];
-    [[delivery.type should] equal:@"lunch"];
     [[delivery.address should] beNonNil];
     [[@(delivery.readyForLunch) should] equal:@(YES)];
     [[@(delivery.minutes) should] equal:@(0)];

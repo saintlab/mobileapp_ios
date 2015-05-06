@@ -61,6 +61,7 @@ describe(@"OMNVisitor", ^{
   it(@"should check bar visitor", ^{
     
     OMNVisitor *barVisitor = [OMNBarVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]];
+    [[barVisitor.tags should] equal:kEntranceModeBar];
     OMNRestaurantMediator *barRestaurantMediator = [barVisitor mediatorWithRootVC:nil];
     [[barRestaurantMediator should] beKindOfClass:[OMNBarRestaurantMediator class]];
     
@@ -86,6 +87,7 @@ describe(@"OMNVisitor", ^{
   it(@"should check preorder visitor", ^{
     
     OMNVisitor *preorderVisitor = [OMNPreorderVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithMinutes:0]];
+    [[preorderVisitor.tags should] equal:kEntranceModeTakeAway];
     OMNRestaurantMediator *preorderRestaurantMediator = [preorderVisitor mediatorWithRootVC:nil];
     [[preorderRestaurantMediator should] beKindOfClass:[OMNPreorderRestaurantMediator class]];
     
@@ -105,6 +107,7 @@ describe(@"OMNVisitor", ^{
   it(@"should check lunch visitor", ^{
     
     OMNVisitor *lunchVisitor = [OMNLunchVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithAddress:nil date:nil]];
+    [[lunchVisitor.tags should] equal:kEntranceModeLunch];
     OMNRestaurantMediator *lunchRestaurantMediator = [lunchVisitor mediatorWithRootVC:nil];
     [[lunchRestaurantMediator should] beKindOfClass:[OMNLunchRestaurantMediator class]];
     
@@ -124,6 +127,7 @@ describe(@"OMNVisitor", ^{
   it(@"should check demo visitor", ^{
     
     OMNVisitor *demoVisitor = [OMNDemoVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithAddress:nil date:nil]];
+    [[demoVisitor.tags should] equal:kEntranceModeDemo];
     OMNRestaurantMediator *demoRestaurantMediator = [demoVisitor mediatorWithRootVC:nil];
     [[demoRestaurantMediator should] beKindOfClass:[OMNDemoRestaurantMediator class]];
     
@@ -137,6 +141,7 @@ describe(@"OMNVisitor", ^{
   it(@"should check restaurant in visitor", ^{
     
     OMNVisitor *restaurantInVisitor = [OMNRestaurantInVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery delivery]];
+    [[restaurantInVisitor.tags should] equal:kEntranceModeIn];
     OMNRestaurantMediator *restaurantInVisitorMediator = [restaurantInVisitor mediatorWithRootVC:nil];
     [[restaurantInVisitorMediator should] beKindOfClass:[OMNRestaurantInMediator class]];
     
