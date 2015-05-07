@@ -27,7 +27,7 @@ def import_all
   pod 'uidevice-extension'
   pod 'UIDevice-Hardware'
   pod 'libextobjc'
-  pod 'CocoaLumberjack', '~> 2.0.0-rc'
+  pod 'CocoaLumberjack'
   pod 'PromiseKit'
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
@@ -38,7 +38,8 @@ end
 
 target 'omnom', :exclusive => true do
   import_all
-  pod 'CrashlyticsFramework'
+  pod 'Fabric'
+  pod 'Fabric/Crashlytics'
   pod 'SDWebImage'
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
