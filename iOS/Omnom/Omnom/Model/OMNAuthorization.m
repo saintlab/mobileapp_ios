@@ -122,10 +122,10 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   [_user updateWithUser:user];
   
   [[OMNAnalitics analitics] setUser:user];
-  
-  [Crashlytics setUserEmail:user.email];
-  [Crashlytics setUserName:user.id];
-  [Crashlytics setUserIdentifier:[OMNConstants baseUrlString]];
+
+  [[Crashlytics sharedInstance] setUserEmail:user.email];
+  [[Crashlytics sharedInstance] setUserName:user.phone];
+  [[Crashlytics sharedInstance] setUserIdentifier:user.id];
   
   [self didChangeValueForKey:@"user"];
   

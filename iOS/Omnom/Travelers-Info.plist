@@ -75,5 +75,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>1ea87b52b1d0946ed506dcc3bd5b586f422bf03a</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 </dict>
 </plist>

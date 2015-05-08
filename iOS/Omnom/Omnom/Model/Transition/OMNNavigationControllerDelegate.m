@@ -95,7 +95,7 @@
   NSString *key = [OMNCustomTransition keyFromClass:[fromVC class] toClass:[toVC class]];
   NSString *transition = _transitions[key];
   
-  [Crashlytics setObjectValue:key forKey:@"last_transition"];
+  [[Crashlytics sharedInstance] setObjectValue:key forKey:@"last_transition"];
   
   if (transition &&
       fromVC &&

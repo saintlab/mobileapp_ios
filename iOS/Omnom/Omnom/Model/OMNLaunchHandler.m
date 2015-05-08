@@ -42,13 +42,18 @@
   }
   
   [Fabric with:@[CrashlyticsKit]];
-  [Crashlytics startWithAPIKey:[OMNConstants crashlyticsAPIKey]];
+  [Fabric sharedSDK].debug = YES;
+  
   
   _startVC = [[OMNStartVC alloc] init];
   UIWindow *window = [[UIApplication sharedApplication].delegate window];
   window.rootViewController = [OMNNavigationController controllerWithRootVC:_startVC];
   [window makeKeyAndVisible];
 
+  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:[Crashlytics sharedInstance] action:@selector(crash)];
+  tapGR.numberOfTapsRequired = 5;
+  [window addGestureRecognizer:tapGR];
+  
 }
 
 - (void)reload {
@@ -181,13 +186,13 @@
 
 - (void)applicationWillEnterForeground {
   
-  [Crashlytics setBoolValue:YES forKey:@"application_state_foreground"];
+  [[Crashlytics sharedInstance] setBoolValue:YES forKey:@"application_state_foreground"];
   [self startApplicationIfNeeded];
   
 }
 
 - (void)applicationDidEnterBackground {
-  [Crashlytics setBoolValue:NO forKey:@"application_state_foreground"];
+  [[Crashlytics sharedInstance] setBoolValue:NO forKey:@"application_state_foreground"];
 }
 
 @end
