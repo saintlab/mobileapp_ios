@@ -50,10 +50,6 @@
   window.rootViewController = [OMNNavigationController controllerWithRootVC:_startVC];
   [window makeKeyAndVisible];
 
-  UITapGestureRecognizer *tapGR = [[UITapGestureRecognizer alloc] initWithTarget:[Crashlytics sharedInstance] action:@selector(crash)];
-  tapGR.numberOfTapsRequired = 5;
-  [window addGestureRecognizer:tapGR];
-  
 }
 
 - (void)reload {
