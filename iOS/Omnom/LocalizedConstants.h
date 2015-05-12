@@ -273,6 +273,7 @@
 #define kOMN_TOTAL_TEXT NSLocalizedString(@"TOTAL_TEXT %@", @"Итого {total_string}")
 #define kOMN_PREORDER_TITLE_BUTTON_TEXT NSLocalizedString(@"PREORDER_TITLE_BUTTON_TEXT", @"Предзаказ")
 #define kOMN_PREORDER_MINUTES_TEXT NSLocalizedString(@"PREORDER_MINUTES_TEXT", @"Когда вас ждать?")
+#define kOMN_PREORDER_TIPS_FORMAT NSLocalizedString(@"PREORDER_TIPS_FORMAT %@", @"+ Чай бармену {tips_erpcent_amount}")
 #define kOMN_PREORDER_IN_MINUTES_FORMAT NSLocalizedString(@"PREORDER_IN_MINUTES_FORMAT %d", @"Через {minutes} минут")
 #define kOMN_PREORDER_IN_HOUR_TEXT NSLocalizedString(@"PREORDER_IN_HOUR_TEXT", @"Через час")
 #define kOMN_PREORDER_IN_HOURS_FORMAT NSLocalizedString(@"PREORDER_IN_HOURS_FORMAT %.f", @"Через {hours} часа")

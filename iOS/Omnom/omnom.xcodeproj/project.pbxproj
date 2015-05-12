@@ -748,6 +748,11 @@
 		932B186D19AF3C80009E440E /* new_guest.caf in Resources */ = {isa = PBXBuildFile; fileRef = 932B186A19AF3C80009E440E /* new_guest.caf */; };
 		932B186E19AF3C80009E440E /* pay_done.caf in Resources */ = {isa = PBXBuildFile; fileRef = 932B186B19AF3C80009E440E /* pay_done.caf */; };
 		932B186F19AF3C80009E440E /* pay_done.caf in Resources */ = {isa = PBXBuildFile; fileRef = 932B186B19AF3C80009E440E /* pay_done.caf */; };
+		932E0AC21B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932E0AC11B019AD6002F490A /* OMNSelectTipsAlertVC.m */; };
+		932E0AC31B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932E0AC11B019AD6002F490A /* OMNSelectTipsAlertVC.m */; };
+		932E0AC41B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932E0AC11B019AD6002F490A /* OMNSelectTipsAlertVC.m */; };
+		932E0AC51B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932E0AC11B019AD6002F490A /* OMNSelectTipsAlertVC.m */; };
+		932E0AC61B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 932E0AC11B019AD6002F490A /* OMNSelectTipsAlertVC.m */; };
 		932F5DCB1A7253E800AF86AD /* menu_stub1.json in Resources */ = {isa = PBXBuildFile; fileRef = 932F5DC91A7253E800AF86AD /* menu_stub1.json */; };
 		932F5DCE1A7256D400AF86AD /* OMNMenuProductDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DCD1A7256D400AF86AD /* OMNMenuProductDetails.m */; };
 		932F5DCF1A7256D400AF86AD /* OMNMenuProductDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 932F5DCD1A7256D400AF86AD /* OMNMenuProductDetails.m */; };
@@ -2023,6 +2028,8 @@
 		932B185F19ADEE91009E440E /* OMNOrderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrderTableView.m; sourceTree = "<group>"; };
 		932B186A19AF3C80009E440E /* new_guest.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = new_guest.caf; sourceTree = "<group>"; };
 		932B186B19AF3C80009E440E /* pay_done.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pay_done.caf; sourceTree = "<group>"; };
+		932E0AC01B019AD6002F490A /* OMNSelectTipsAlertVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNSelectTipsAlertVC.h; sourceTree = "<group>"; };
+		932E0AC11B019AD6002F490A /* OMNSelectTipsAlertVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNSelectTipsAlertVC.m; sourceTree = "<group>"; };
 		932F5DC91A7253E800AF86AD /* menu_stub1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = menu_stub1.json; sourceTree = "<group>"; };
 		932F5DCC1A7256D400AF86AD /* OMNMenuProductDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductDetails.h; sourceTree = "<group>"; };
 		932F5DCD1A7256D400AF86AD /* OMNMenuProductDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductDetails.m; sourceTree = "<group>"; };
@@ -2853,6 +2860,8 @@
 				9394CC111ACD3B87008FB6CC /* OMNSelectMinutesAlertVC.m */,
 				93DB92231AD799950084887B /* OMNMoneyQuestionVC.h */,
 				93DB92241AD799950084887B /* OMNMoneyQuestionVC.m */,
+				932E0AC01B019AD6002F490A /* OMNSelectTipsAlertVC.h */,
+				932E0AC11B019AD6002F490A /* OMNSelectTipsAlertVC.m */,
 			);
 			path = Alert;
 			sourceTree = "<group>";
@@ -5378,6 +5387,7 @@
 				930C4E4E1AB15E1B006CA608 /* OMNDisclamerView.m in Sources */,
 				930C4E4F1AB15E1B006CA608 /* OMNPreorderConfirmCellItem.m in Sources */,
 				93F15DEC1ACEDECB000C8129 /* OMNDemoVisitor.m in Sources */,
+				932E0AC41B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
 				930C4E501AB15E1B006CA608 /* OMNAuthorizationManager.m in Sources */,
 				930C4E511AB15E1B006CA608 /* OMNMenuProductModifersModel.m in Sources */,
 				930C4E521AB15E1B006CA608 /* OMNSocketManager.m in Sources */,
@@ -5723,6 +5733,7 @@
 				930C8C3F1ACA7D9F00CE4E5A /* OMNDisclamerView.m in Sources */,
 				930C8C401ACA7D9F00CE4E5A /* OMNPreorderConfirmCellItem.m in Sources */,
 				93F15DED1ACEDECB000C8129 /* OMNDemoVisitor.m in Sources */,
+				932E0AC51B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
 				930C8C411ACA7D9F00CE4E5A /* OMNAuthorizationManager.m in Sources */,
 				930C8C421ACA7D9F00CE4E5A /* OMNMenuProductModifersModel.m in Sources */,
 				930C8C431ACA7D9F00CE4E5A /* OMNSocketManager.m in Sources */,
@@ -6068,6 +6079,7 @@
 				9389456F19B5B01600C37C82 /* OMNDisclamerView.m in Sources */,
 				93DB26C81A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m in Sources */,
 				93F15DEA1ACEDECB000C8129 /* OMNDemoVisitor.m in Sources */,
+				932E0AC21B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
 				93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				937325501A7FAC5300A73673 /* OMNMenuProductModifersModel.m in Sources */,
 				9328F3981988C6360065DC58 /* OMNSocketManager.m in Sources */,
@@ -6209,6 +6221,7 @@
 				933A9EB31A4C33DA001C0909 /* OMNBottomTextButton.m in Sources */,
 				93B368B519A708C600B6E6CB /* OMNDemoStandWaiterTests.m in Sources */,
 				93E435B81998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */,
+				932E0AC31B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
 				939F992719752BE90051822E /* OMNRegisterUserVC.m in Sources */,
 				93DB92261AD799950084887B /* OMNMoneyQuestionVC.m in Sources */,
 				93535F00198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
@@ -6746,6 +6759,7 @@
 				936AC1F01AD8BDBC00A9D17F /* OMNDisclamerView.m in Sources */,
 				936AC1F11AD8BDBC00A9D17F /* OMNPreorderConfirmCellItem.m in Sources */,
 				936AC1F21AD8BDBC00A9D17F /* OMNDemoVisitor.m in Sources */,
+				932E0AC61B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
 				936AC1F31AD8BDBC00A9D17F /* OMNAuthorizationManager.m in Sources */,
 				936AC1F41AD8BDBC00A9D17F /* OMNMenuProductModifersModel.m in Sources */,
 				936AC1F51AD8BDBC00A9D17F /* OMNSocketManager.m in Sources */,

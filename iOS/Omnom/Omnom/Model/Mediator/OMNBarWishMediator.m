@@ -10,8 +10,55 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNBarPaymentDoneVC.h"
 #import "OMNLaunchHandler.h"
+#import "OMNBarVisitor.h"
+#import "OMNSelectTipsAlertVC.h"
 
 @implementation OMNBarWishMediator
+
+- (PMKPromise *)getVisitor {
+  
+  OMNRestaurant *restaurant = self.restaurantMediator.visitor.restaurant;
+  @weakify(self)
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    @strongify(self)
+    [self selectTipsWithCompletion:^(NSInteger amount) {
+      
+      OMNBarVisitor *barVisitor = [OMNBarVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery delivery]];
+      fulfill(barVisitor);
+      
+    } cancel:^{
+      
+      reject([OMNError omnomErrorFromCode:kOMNErrorCancel]);
+      
+    }];
+    
+  }];
+  
+}
+
+- (void)selectTipsWithCompletion:(OMNSelectTipsBlock)selectTipsBlock cancel:(dispatch_block_t)cancelBlock {
+  
+  OMNSelectTipsAlertVC *selectMinutesAlertVC = [[OMNSelectTipsAlertVC alloc] initWithTotalAmount:self.restaurantMediator.menu.preorderedItemsTotal];
+  @weakify(self)
+  selectMinutesAlertVC.didCloseBlock = ^{
+    
+    @strongify(self)
+    [self.rootVC dismissViewControllerAnimated:YES completion:cancelBlock];
+    
+  };
+  
+  selectMinutesAlertVC.didSelectTipsBlock = ^(NSInteger amount) {
+    
+    @strongify(self)
+    [self.rootVC dismissViewControllerAnimated:YES completion:^{
+      selectTipsBlock(amount);
+    }];
+    
+  };
+  [self.rootVC presentViewController:selectMinutesAlertVC animated:YES completion:nil];
+  
+}
 
 - (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
   

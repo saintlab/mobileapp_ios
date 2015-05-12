@@ -42,8 +42,6 @@
   }
   
   [Fabric with:@[CrashlyticsKit]];
-  [Fabric sharedSDK].debug = YES;
-  
   
   _startVC = [[OMNStartVC alloc] init];
   UIWindow *window = [[UIApplication sharedApplication].delegate window];
