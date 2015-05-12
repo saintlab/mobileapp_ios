@@ -15,48 +15,58 @@
 
 @implementation OMNBarWishMediator
 
-- (PMKPromise *)getVisitor {
+- (PMKPromise *)createWishForVisitor:(OMNVisitor *)visitor {
   
-  OMNRestaurant *restaurant = self.restaurantMediator.visitor.restaurant;
-  @weakify(self)
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+  if (!visitor.restaurant.settings.has_bar_tips) {
+    return [visitor createWish:self.selectedWishItems];
+  }
+  
+  NSMutableArray *selectedWishItems = [self.selectedWishItems mutableCopy];
+  return [self selectTips].then(^(NSNumber *tipsAmount) {
+  
+    NSInteger amount = round(tipsAmount.doubleValue/100.0);
+    if (amount > 0) {
+
+      [selectedWishItems addObject:
+       @{
+         @"id" : @"omnom-tips",
+         @"quantity" : @(amount),
+         }];
+
+    }
+    return [visitor createWish:selectedWishItems];
     
-    @strongify(self)
-    [self selectTipsWithCompletion:^(NSInteger amount) {
-      
-      OMNBarVisitor *barVisitor = [OMNBarVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery delivery]];
-      fulfill(barVisitor);
-      
-    } cancel:^{
-      
-      reject([OMNError omnomErrorFromCode:kOMNErrorCancel]);
-      
-    }];
-    
-  }];
+  });
   
 }
 
-- (void)selectTipsWithCompletion:(OMNSelectTipsBlock)selectTipsBlock cancel:(dispatch_block_t)cancelBlock {
+- (PMKPromise *)selectTips {
   
   OMNSelectTipsAlertVC *selectMinutesAlertVC = [[OMNSelectTipsAlertVC alloc] initWithTotalAmount:self.restaurantMediator.menu.preorderedItemsTotal];
   @weakify(self)
-  selectMinutesAlertVC.didCloseBlock = ^{
+  PMKPromise *promise = [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    @strongify(self)
-    [self.rootVC dismissViewControllerAnimated:YES completion:cancelBlock];
+    selectMinutesAlertVC.didCloseBlock = ^{
+      
+      @strongify(self)
+      [self.rootVC dismissViewControllerAnimated:YES completion:^{
+        reject([OMNError omnomErrorFromCode:kOMNErrorCancel]);
+      }];
+      
+    };
+
+    selectMinutesAlertVC.didSelectTipsBlock = ^(NSInteger amount) {
+      
+      @strongify(self)
+      [self.rootVC dismissViewControllerAnimated:YES completion:^{
+        fulfill(@(amount));
+      }];
+      
+    };
     
-  };
-  
-  selectMinutesAlertVC.didSelectTipsBlock = ^(NSInteger amount) {
-    
-    @strongify(self)
-    [self.rootVC dismissViewControllerAnimated:YES completion:^{
-      selectTipsBlock(amount);
-    }];
-    
-  };
+  }];
   [self.rootVC presentViewController:selectMinutesAlertVC animated:YES completion:nil];
+  return promise;
   
 }
 

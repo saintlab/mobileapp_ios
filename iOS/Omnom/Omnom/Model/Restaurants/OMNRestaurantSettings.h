@@ -13,6 +13,8 @@
 @property (nonatomic, assign, readonly) BOOL has_menu;
 @property (nonatomic, assign, readonly) BOOL has_promo;
 @property (nonatomic, assign, readonly) BOOL has_waiter_call;
+@property (nonatomic, assign, readonly) BOOL has_bar_tips;
+
 @property (nonatomic, assign, readonly) BOOL has_bar;
 @property (nonatomic, assign, readonly) BOOL has_pre_order;
 @property (nonatomic, assign, readonly) BOOL has_lunch;

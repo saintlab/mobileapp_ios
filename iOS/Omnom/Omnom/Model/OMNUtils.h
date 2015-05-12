@@ -20,6 +20,7 @@ extern NSString *omnCommaString();
 + (NSString *)formattedMoneyStringFromKop:(long long)kop;
 + (NSString *)moneyStringFromKop:(long long)kop;
 + (NSString *)commaStringFromKop:(long long)kop;
++ (NSString *)evenMoneyStringFromKop:(long long)kop;
 + (NSString *)formatedStringFromRub:(long long)rub;
 + (NSString *)unitStringFromDouble:(double)value;
 

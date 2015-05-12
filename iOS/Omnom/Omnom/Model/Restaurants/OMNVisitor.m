@@ -95,7 +95,7 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/menu", self.restaurant.id];
   @weakify(self)
   [[OMNOperationManager sharedManager] GET:path parameters:@{@"tags" : self.tags} success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
+
     if ([responseObject omn_isSuccessResponse]) {
       
       OMNMenu *menu = [[OMNMenu alloc] initWithJsonData:responseObject[@"menu"]];

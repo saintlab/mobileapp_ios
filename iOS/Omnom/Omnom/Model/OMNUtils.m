@@ -88,6 +88,10 @@ NSString *omnCommaString() {
   return [currencyNumberFormatter stringFromNumber:@(round(kop/100.))];
 }
 
++ (NSString *)evenMoneyStringFromKop:(long long)kop {
+  return [[self evenCommaStringFromKop:kop] stringByAppendingFormat:@"\u2008%@", kRubleSign];
+}
+
 + (NSString *)commaStringFromKop:(long long)kop {
   
   static NSNumberFormatter *currencyNumberFormatter = nil;

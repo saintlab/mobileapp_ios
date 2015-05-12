@@ -45,8 +45,7 @@ UIPickerViewDelegate>
 - (void)doneTap {
   
   if (self.didSelectTipsBlock) {
-    NSInteger tipPercentAmount = [_tipsPicker selectedRowInComponent:0];
-    self.didSelectTipsBlock(tipPercentAmount);
+    self.didSelectTipsBlock(self.selectedTipsAmount);
   }
   
 }
@@ -88,16 +87,23 @@ UIPickerViewDelegate>
   return smile;
 }
 
-- (void)updateControls {
+- (long long)selectedTipsAmount {
   
   NSInteger tipsPercentAmount = [_tipsPicker selectedRowInComponent:0];
   long long tipsAmount = _totalAmount*tipsPercentAmount/100.0;
+  return tipsAmount;
+  
+}
+
+- (void)updateControls {
+  
   [UIView transitionWithView:_doneButton duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
-    [_doneButton setTitle:[NSString stringWithFormat:@"+ %@", [OMNUtils formattedMoneyStringFromKop:tipsAmount]] forState:UIControlStateNormal];
+    [_doneButton setTitle:[NSString stringWithFormat:@"+ %@", [OMNUtils evenMoneyStringFromKop:self.selectedTipsAmount]] forState:UIControlStateNormal];
     
   } completion:nil];
   
+  NSInteger tipsPercentAmount = [_tipsPicker selectedRowInComponent:0];
   [UIView transitionWithView:_label duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
     _label.text = [NSString stringWithFormat:kOMN_PREORDER_TIPS_FORMAT, [self smileFromPercent:tipsPercentAmount]];

@@ -157,7 +157,7 @@
   UIViewController *topMostController = [self topMostController];
   modalWebVC.didCloseBlock = ^{
     
-    [topMostController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    [topMostController dismissViewControllerAnimated:YES completion:nil];
     
   };
   [topMostController presentViewController:[[UINavigationController alloc] initWithRootViewController:modalWebVC] animated:YES completion:nil];

@@ -82,6 +82,7 @@
 }
 
 + (OMNLaunch *)launchWithRemoteNotification:(NSDictionary *)notification {
+  NSLog(@"launchWithRemoteNotification>%@", notification);
   return [[OMNRemotePushLaunch alloc] initWithRemoteNotification:notification];
 }
 

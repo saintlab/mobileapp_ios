@@ -20,14 +20,16 @@
   self = [super init];
   if (self) {
     
-    _has_menu = [jsonData[@"has_menu"] boolValue];
-    _has_promo = [jsonData[@"has_promo"] boolValue];
-    _has_waiter_call = [jsonData[@"has_waiter_call"] boolValue];
-    _has_bar = [jsonData[@"has_bar"] boolValue];
-    _has_pre_order = [jsonData[@"has_pre_order"] boolValue];
-    _has_table_order = [jsonData[@"has_table_order"] boolValue];
-    _has_lunch = [jsonData[@"has_lunch"] boolValue];
-    _has_restaurant_order = [jsonData[@"has_restaurant_order"] boolValue];
+    _has_menu = [jsonData[@"has_menu"] omn_boolValueSafe];
+    _has_promo = [jsonData[@"has_promo"] omn_boolValueSafe];
+    _has_waiter_call = [jsonData[@"has_waiter_call"] omn_boolValueSafe];
+    _has_bar_tips = [jsonData[@"has_bar_tips"] omn_boolValueSafe];
+    
+    _has_bar = [jsonData[@"has_bar"] omn_boolValueSafe];
+    _has_pre_order = [jsonData[@"has_pre_order"] omn_boolValueSafe];
+    _has_table_order = [jsonData[@"has_table_order"] omn_boolValueSafe];
+    _has_lunch = [jsonData[@"has_lunch"] omn_boolValueSafe];
+    _has_restaurant_order = [jsonData[@"has_restaurant_order"] omn_boolValueSafe];
     
 #if DEBUG
 #warning demo RestaurantSettings
