@@ -72,6 +72,7 @@
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     
   };
+  repeatVC.navigationItem.hidesBackButton = YES;
   repeatVC.buttonInfo =
   @[
     [OMNBarButtonInfo infoWithTitle:kOMN_TRY_AGAIN_BUTTON_TITLE image:[UIImage imageNamed:@"repeat_icon_small"] block:^{

@@ -159,13 +159,10 @@ OMNPreorderConfirmCellDelegate>
     else if (kOMNErrorCancel == error.code) {
       
     }
-      
-    NSLog(@"%@", error);
     
   }).finally(^{
     
     self.model.loading = NO;
-    NSLog(@"did finish wish");
     
   });
 
