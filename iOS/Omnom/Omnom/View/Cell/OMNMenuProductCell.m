@@ -187,12 +187,17 @@
   _productImageProgressObserverID = [self.item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(imageProgress)) options:NSKeyValueObservingOptionNew task:^(OMNMenuProduct *mp, NSDictionary *change) {
     
     _progressViewWidth.constant = CGRectGetWidth(_productIV.frame)*mp.imageProgress;
-    [UIView animateWithDuration:0.3 animations:^{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
       
-      [_progressView layoutIfNeeded];
-      _progressView.alpha = (mp.imageProgress < 1.0f) ? (1.0f) : (0.0f);
+      [UIView animateWithDuration:0.3 animations:^{
+        
+        [_progressView layoutIfNeeded];
+        _progressView.alpha = (mp.imageProgress < 1.0f) ? (1.0f) : (0.0f);
+        
+      }];
 
-    }];
+    });
     
   }];
   
