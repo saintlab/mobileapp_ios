@@ -118,7 +118,8 @@
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   
-  [[OMNAuthorization authorization] checkAuthenticationToken];
+  [[OMNAuthorization authorization] checkAuthenticationToken].catch(^(id error) {
+  });
   
 }
 
