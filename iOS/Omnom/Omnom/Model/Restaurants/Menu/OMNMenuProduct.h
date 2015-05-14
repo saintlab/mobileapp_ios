@@ -29,6 +29,7 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 @property (nonatomic, strong, readonly) NSMutableSet *selectedModifers;
 
 @property (nonatomic, assign, readonly) long long total;
+@property (nonatomic, assign) CGFloat imageProgress;
 
 - (instancetype)initWithJsonData:(id)data allModifers:(NSDictionary *)allModifers;
 - (BOOL)hasRecommendations;
@@ -36,6 +37,7 @@ extern NSString * const OMNMenuProductDidChangeNotification;
 - (BOOL)hasPhoto;
 - (BOOL)preordered;
 - (void)loadImage;
+- (void)cancelLoadImage;
 - (void)resetSelection;
 
 - (NSString *)preorderedText;

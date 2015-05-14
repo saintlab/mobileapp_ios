@@ -7,7 +7,6 @@
 //
 
 #import "OMNImageManager.h"
-#import <SDWebImageManager.h>
 #import "UIImage+ImageEffects.h"
 
 @interface OMNImageManager ()
@@ -55,15 +54,22 @@
 - (void)downloadImageWithURL:(NSString *)urlString completion:(void (^)(UIImage *image))completionBlock {
   
   NSURL *imageUrl = [NSURL URLWithString:urlString];
-  [self startDownloadImageWithURL:imageUrl options:0 completion:completionBlock];
+  [self startDownloadImageWithURL:imageUrl options:0  progress:nil completion:completionBlock];
 
+}
+
+- (id<SDWebImageOperation>)downloadImageWithURL:(NSString *)urlString progress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(UIImage *image))completionBlock {
+  
+  NSURL *imageUrl = [NSURL URLWithString:urlString];
+  return [self startDownloadImageWithURL:imageUrl options:0 progress:progressBlock completion:completionBlock];
+  
 }
 
 - (void)downloadBlurredImageWithURL:(NSString *)urlString expectedSize:(CGSize)expectedSize completion:(void (^)(UIImage *image))completionBlock {
   
   NSURL *smallImageUrl = [NSURL URLWithString:[urlString stringByAppendingString:@"?w=50"]];
   
-  [self startDownloadImageWithURL:smallImageUrl options:SDWebImageRetryFailed completion:^(UIImage *image) {
+  [self startDownloadImageWithURL:smallImageUrl options:SDWebImageRetryFailed progress:nil completion:^(UIImage *image) {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       
@@ -114,9 +120,15 @@
   
 }
 
-- (void)startDownloadImageWithURL:(NSURL *)imageUrl options:(SDWebImageOptions)options completion:(void (^)(UIImage *image))completionBlock {
+- (id<SDWebImageOperation>)startDownloadImageWithURL:(NSURL *)imageUrl options:(SDWebImageOptions)options progress:(void (^)(CGFloat progress))progressBlock completion:(void (^)(UIImage *image))completionBlock {
   
-  [_imageManager downloadImageWithURL:imageUrl options:options progress:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+  return [_imageManager downloadImageWithURL:imageUrl options:options progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+   
+    if (progressBlock) {
+      progressBlock((CGFloat)receivedSize/expectedSize);
+    }
+    
+  } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
     
     if (image.scale != 2.0f) {
       image = [UIImage imageWithCGImage:image.CGImage scale:2.0f orientation:image.imageOrientation];

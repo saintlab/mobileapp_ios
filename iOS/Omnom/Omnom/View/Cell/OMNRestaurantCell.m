@@ -125,7 +125,9 @@ const CGFloat kRestaurantCellIconSize = 150.0f;
   _restaurant = restaurant;
   
   __weak UIButton *restaurantIcon = _restaurantIcon;
-  _restaurantLogoObserverIdentifier = [_restaurant.decoration bk_addObserverForKeyPath:NSStringFromSelector(@selector(logo)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {
+  [_restaurantIcon setBackgroundImage:[[UIImage imageNamed:@"circle_restaurant_page"] omn_tintWithColor:_restaurant.decoration.background_color] forState:UIControlStateNormal];
+
+  _restaurantLogoObserverIdentifier = [_restaurant.decoration bk_addObserverForKeyPath:NSStringFromSelector(@selector(logo)) options:(NSKeyValueObservingOptionNew) task:^(id obj, NSDictionary *change) {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
       
@@ -144,10 +146,10 @@ const CGFloat kRestaurantCellIconSize = 150.0f;
     
   }];
   
-  [_restaurant.decoration loadLogo:^(UIImage *image) {}];
-  
+  if (self.superview) {
+    [_restaurant.decoration loadLogo:^(UIImage *image) {}];
+  }  
   _restaurantDetailsView.restaurant = restaurant;
-  [_restaurantIcon setBackgroundImage:[[UIImage imageNamed:@"circle_restaurant_page"] omn_tintWithColor:_restaurant.decoration.background_color] forState:UIControlStateNormal];
   
 }
 

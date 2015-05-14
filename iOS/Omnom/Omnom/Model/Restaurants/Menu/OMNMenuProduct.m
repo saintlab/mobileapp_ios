@@ -14,7 +14,9 @@
 
 NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChangeNotification";
 
-@implementation OMNMenuProduct
+@implementation OMNMenuProduct {
+  __weak id <SDWebImageOperation> _imageDownloadOperation;
+}
 
 - (instancetype)initWithJsonData:(id)data allModifers:(NSDictionary *)allModifers {
   self = [super init];
@@ -92,13 +94,22 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
   }
   
   @weakify(self)
-  [[OMNImageManager manager] downloadImageWithURL:self.photo completion:^(UIImage *image) {
+  _imageDownloadOperation = [[OMNImageManager manager] downloadImageWithURL:self.photo progress:^(CGFloat progress) {
+    
+    @strongify(self)
+    self.imageProgress = progress;
+
+  } completion:^(UIImage *image) {
     
     @strongify(self)
     self.photoImage = image;
-    
+
   }];
   
+}
+
+- (void)cancelLoadImage {
+  [_imageDownloadOperation cancel];
 }
 
 - (BOOL)preordered {

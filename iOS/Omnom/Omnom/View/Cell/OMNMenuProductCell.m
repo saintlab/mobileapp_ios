@@ -17,11 +17,14 @@
   
   NSString *_productSelectionObserverID;
   NSString *_productImageObserverID;
+  NSString *_productImageProgressObserverID;
   NSString *_productEditingObserverID;
   
   UILabel *_descriptionLabel;
   NSArray *_heightConstraints;
   UIView *_delimiterView;
+  UIView *_progressView;
+  NSLayoutConstraint *_progressViewWidth;
   
 }
 
@@ -42,7 +45,9 @@
   if (_productEditingObserverID) {
     [self.item.menuProduct bk_removeObserversWithIdentifier:_productEditingObserverID];
   }
-  
+  if (_productImageProgressObserverID) {
+    [self.item.menuProduct bk_removeObserversWithIdentifier:_productImageProgressObserverID];
+  }
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -103,6 +108,10 @@
   _delimiterView = [UIView omn_autolayoutView];
   [self.contentView addSubview:_delimiterView];
   
+  _progressView = [UIView omn_autolayoutView];
+  _progressView.backgroundColor = [OMNStyler blueColor];
+  [self.contentView addSubview:_progressView];
+  
   NSDictionary *views =
   @{
     @"descriptionLabel" : _descriptionLabel,
@@ -123,6 +132,10 @@
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[descriptionLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[productIV]|" options:kNilOptions metrics:metrics views:views]];
   [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[delimiterView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:_productIV attribute:NSLayoutAttributeTop multiplier:1.0f constant:0.0f]];
+  [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:1.0f]];
+  _progressViewWidth = [NSLayoutConstraint constraintWithItem:_progressView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:0.0f constant:0.0f];
+  [self.contentView addConstraint:_progressViewWidth];
   
 }
 
@@ -171,11 +184,24 @@
     
   }];
   
+  _productImageProgressObserverID = [self.item.menuProduct bk_addObserverForKeyPath:NSStringFromSelector(@selector(imageProgress)) options:NSKeyValueObservingOptionNew task:^(OMNMenuProduct *mp, NSDictionary *change) {
+    
+    _progressViewWidth.constant = CGRectGetWidth(_productIV.frame)*mp.imageProgress;
+    [UIView animateWithDuration:0.3 animations:^{
+      
+      [_progressView layoutIfNeeded];
+      _progressView.alpha = (mp.imageProgress < 1.0f) ? (1.0f) : (0.0f);
+
+    }];
+    
+  }];
+  
 }
 
 - (void)setItem:(OMNMenuProductCellItem *)item {
   
   [self removeMenuProductObservers];
+  [_item.menuProduct cancelLoadImage];
   _item = item;
 
   OMNMenuProduct *menuProduct = item.menuProduct;
@@ -187,7 +213,13 @@
   _delimiterView.backgroundColor = (kBottomDelimiterTypeNone == item.delimiterType) ? ([UIColor clearColor]) : ([UIColor colorWithWhite:0.0f alpha:0.3f]);
   
   [self addMenuProductObservers];
-  [_item.menuProduct loadImage];
+  if (self.reuseIdentifier) {
+    
+    _progressViewWidth.constant = 0.0f;
+    [_progressView layoutIfNeeded];
+    [_item.menuProduct loadImage];
+    
+  }
   [self updateHeightConstraints];
   
 }
