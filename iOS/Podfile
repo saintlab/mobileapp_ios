@@ -28,7 +28,7 @@ def import_all
   pod 'UIDevice-Hardware'
   pod 'libextobjc'
   pod 'CocoaLumberjack'
-  pod 'PromiseKit'
+  pod 'PromiseKit', '~> 1.5.3'
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"
