@@ -58,7 +58,7 @@ NSString * const OMNTableOrdersDidChangeNotification = @"OMNTableOrdersDidChange
 
   [[OMNSocketManager manager] join:self.id];
   [self tableIn];
-  [self newGuestWithCompletion:^{}];
+  [self newGuest];
   
 }
 

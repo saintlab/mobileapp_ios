@@ -66,30 +66,17 @@
 
 - (PMKPromise *)handleAtTheTableEvent {
   
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+  if (self.hasTable) {
+   
+    [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackgroundTable];
+    [self showGreetingPushIfPossible];
+    OMNTable *table = [self.tables firstObject];
+    return [PMKPromise all:@[[self entrance], [table newGuest]]];
     
-    if (self.hasTable) {
-      
-      [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackgroundTable];
-      [self showGreetingPushIfPossible];
-      OMNTable *table = [self.tables firstObject];
-      [self entranceWithCompletion:^{
-        
-        [table newGuestWithCompletion:^{
-          
-          fulfill(nil);
-          
-        }];
-        
-      }];
-    }
-    else {
-      
-      fulfill(nil);
-      
-    }
-
-  }];
+  }
+  else {
+    return nil;
+  }
   
 }
 
@@ -306,18 +293,21 @@
   
 }
 
-- (void)entranceWithCompletion:(dispatch_block_t)completionBlock {
+- (PMKPromise *)entrance {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/entrance", self.id];
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    DDLogInfo(@"path>%@", responseObject);
-    completionBlock();
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    completionBlock();
-    
+    [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      fulfill(nil);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      fulfill(nil);
+      
+    }];
+
   }];
   
 }
@@ -327,7 +317,6 @@
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/leave", self.id];
   [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
     
-    DDLogInfo(@"path>%@", responseObject);
     completionBlock();
     
   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

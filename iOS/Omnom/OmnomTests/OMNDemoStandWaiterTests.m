@@ -49,11 +49,11 @@ describe(@"waiter call tests", ^{
   it(@"should new guest", ^{
     
     __block NSNumber *is_new_guest = nil;
-    [_restaurantMediator.table newGuestWithCompletion:^{
+    [_restaurantMediator.table newGuest].finally(^{
       
       is_new_guest = @(YES);
       
-    }];
+    });
     [[expectFutureValue(is_new_guest) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
     
   });

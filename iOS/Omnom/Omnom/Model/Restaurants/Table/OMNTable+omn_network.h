@@ -9,6 +9,7 @@
 #import "OMNTable.h"
 #import "OMNOrder.h"
 #import "OMNError.h"
+#import <PromiseKit.h>
 
 @interface OMNTable (omn_network)
 
@@ -16,6 +17,6 @@
 - (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(OMNError *error))errorBlock;
 - (void)waiterCallWithCompletion:(void(^)(OMNError *error))completionBlock;
 - (void)waiterCallStopWithFailure:(void(^)(OMNError *error))failureBlock;
-- (void)newGuestWithCompletion:(dispatch_block_t)completionBlock;
+- (PMKPromise *)newGuest;
 
 @end

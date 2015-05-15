@@ -28,7 +28,7 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 - (PMKPromise *)handleAtTheTableEvent;
 
 - (void)leaveWithCompletion:(dispatch_block_t)completionBlock;;
-- (void)entranceWithCompletion:(dispatch_block_t)completionBlock;;
+- (PMKPromise *)entrance;
 - (void)nearbyWithCompletion:(dispatch_block_t)completionBlock;;
 
 - (void)getRecommendationItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock;

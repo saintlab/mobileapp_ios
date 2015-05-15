@@ -181,7 +181,7 @@
   if (NO == [self.backgroundBeaconRegions containsObject:region]) {
     return;
   }
-  
+
   CLBeaconRegion *beaconRegion = (CLBeaconRegion *)region;
   NSLog(@"didDetermineState>%ld for region>%@", (long)state, beaconRegion.proximityUUID.UUIDString);
   
@@ -190,39 +190,24 @@
     NSLog(@"doesn't handle foreground region monitoring");
     return;
   }
-  
-  switch (state) {
-      
-    case CLRegionStateInside: {
-      
-      [self handleDidEnterShopBeaconRegion];
-      
-    } break;
-    case CLRegionStateOutside: {
-      
-      [self handleDidExitShopBeaconRegion];
-      
-    } break;
-    case CLRegionStateUnknown: {
-    } break;
-      
+
+  UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+  }];
+
+  if (CLRegionStateInside == state) {
+    [self handleDidEnterShopBeaconRegion];
   }
+  
+  [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskIdentifier];
+  backgroundTaskIdentifier = UIBackgroundTaskInvalid;
   
 }
 
 - (void)handleDidEnterShopBeaconRegion {
 
-  UIBackgroundTaskIdentifier backgroundTaskIdentifier = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-    
-  }];
   if (self.didEnterBeaconsRegionBlock) {
-    
     self.didEnterBeaconsRegionBlock();
-    
   }
-  
-  [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskIdentifier];
-  backgroundTaskIdentifier = UIBackgroundTaskInvalid;
   
 }
 
