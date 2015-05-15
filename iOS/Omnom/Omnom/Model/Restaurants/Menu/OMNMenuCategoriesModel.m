@@ -151,6 +151,14 @@
   
 }
 
+- (void)scrollViewDidScroll:(UITableView *)scrollView {
+  
+  CGFloat alpha = 1.0f - 2*(scrollView.contentOffset.y + scrollView.contentInset.top)/CGRectGetHeight(scrollView.tableHeaderView.frame);
+  alpha = MIN(MAX(alpha, 0.0f), 1.0f);
+  scrollView.tableHeaderView.alpha = alpha;
+  
+}
+
 - (void)closeAllCategoriesWithCompletion:(OMNTableReloadDataBlock)block {
   
   NSArray *initialCategories = [self.visibleCategories copy];
