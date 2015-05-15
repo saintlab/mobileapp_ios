@@ -55,7 +55,10 @@
     parameters[@"items"] = wishItems;
   }
   parameters[@"tags"] = self.tags;
-  [parameters addEntriesFromDictionary:self.delivery.parameters];
+  if (self.delivery) {
+    parameters[@"comments"] = self.delivery.parameters;
+  }
+
   @weakify(self)
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
