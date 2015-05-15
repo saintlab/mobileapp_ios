@@ -45,7 +45,6 @@
     
     menuTable.frame = toTableFrame;
     menuTable.contentInset = toViewController.tableView.contentInset;
-//    [menuTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 
     fadeView.alpha = 1.0f;
     fromViewController.circleButton.alpha = 0.0f;

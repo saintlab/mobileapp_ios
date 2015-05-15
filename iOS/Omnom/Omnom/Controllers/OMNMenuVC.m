@@ -151,13 +151,13 @@ OMNMenuCategoryHeaderViewDelegate>
 - (void)omn_setup {
   
   self.view.backgroundColor = [UIColor clearColor];
-  
+  self.automaticallyAdjustsScrollViewInsets = NO;
   _fadeView = [UIView omn_autolayoutView];
   _fadeView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
   [self.backgroundView addSubview:_fadeView];
   
   _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-  _tableView.autoresizingMask = (UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight);
+  _tableView.translatesAutoresizingMaskIntoConstraints = NO;
   [self.view addSubview:_tableView];
   
   _navigationFadeView = [UIImageView omn_autolayoutView];
@@ -184,6 +184,9 @@ OMNMenuCategoryHeaderViewDelegate>
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
   [self.backgroundView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[fadeView]|" options:kNilOptions metrics:metrics views:views]];
   
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView]|" options:kNilOptions metrics:metrics views:views]];
+
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[navigationFadeView]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[navigationFadeView(topOffset)]" options:kNilOptions metrics:metrics views:views]];
   
@@ -255,15 +258,39 @@ OMNMenuCategoryHeaderViewDelegate>
     @strongify(self)
     [tableReloadData updateTableView:self.tableView];
     
-    NSInteger selectedIndex = [self.model.visibleCategories indexOfObject:selectedSectionItem];
-    if (NSNotFound != selectedIndex &&
-        selectedSectionItem.rowItems.count) {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       
-      [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:selectedIndex] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+      [self moveSectionItemToTop:selectedSectionItem];
       
-    }
+    });
 
   }];
+  
+}
+
+- (void)moveSectionItemToTop:(OMNMenuCategorySectionItem *)selectedSectionItem {
+  
+  NSInteger selectedIndex = NSNotFound;
+  if (selectedSectionItem.entered) {
+    
+    selectedIndex = [self.model.visibleCategories indexOfObject:selectedSectionItem];
+    
+  }
+  else if (selectedSectionItem.parent) {
+    
+    selectedIndex = [self.model.visibleCategories indexOfObject:selectedSectionItem.parent];
+    
+  }
+
+  if (NSNotFound == selectedIndex) {
+    return;
+  }
+  
+  CGFloat offset = [self.tableView rectForHeaderInSection:selectedIndex].origin.y;
+  CGFloat tableHeight = CGRectGetHeight(self.tableView.frame) - self.tableView.contentInset.bottom - self.tableView.contentInset.top;
+  offset = MIN(offset, self.tableView.contentSize.height -  tableHeight);
+  offset -= self.tableView.contentInset.top;
+  [self.tableView setContentOffset:CGPointMake(0.0f, offset) animated:YES];
   
 }
 
