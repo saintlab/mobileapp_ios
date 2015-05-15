@@ -41,40 +41,42 @@
   [fromViewController.view insertSubview:fadeView belowSubview:menuTable];
   [fromViewController.view layoutIfNeeded];
   
-  [UIView animateWithDuration:duration animations:^{
+  NSTimeInterval fadeDuration = 0.1;
+  [UIView promiseWithDuration:(duration - fadeDuration) animations:^{
     
     menuTable.frame = toTableFrame;
     menuTable.contentInset = toViewController.tableView.contentInset;
+    [menuTable setContentOffset:toViewController.tableView.contentOffset animated:YES];
 
     fadeView.alpha = 1.0f;
     fromViewController.circleButton.alpha = 0.0f;
     fromViewController.topGradientView.alpha = 0.0f;
+
+  }].then(^{
     
-  } completion:^(BOOL finished) {
-    
-    [UIView animateWithDuration:0.2 animations:^{
+    return [UIView promiseWithDuration:fadeDuration animations:^{
       
       fromViewController.view.alpha = 0.0f;
-
-    } completion:^(BOOL finished1) {
-      
-      fromViewController.view.alpha = 1.0f;
-      fromViewController.topGradientView.alpha = 1.0f;
-      fromViewController.circleButton.alpha = 1.0f;
-      [fadeView removeFromSuperview];
-      menuTable.frame = fromTableFrame;
-      menuTable.bounces = YES;
-      menuTable.contentInset = initialContentInset;
-      [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
       
     }];
     
-  }];
+  }).finally(^{
+    
+    fromViewController.view.alpha = 1.0f;
+    fromViewController.topGradientView.alpha = 1.0f;
+    fromViewController.circleButton.alpha = 1.0f;
+    [fadeView removeFromSuperview];
+    menuTable.frame = fromTableFrame;
+    menuTable.bounces = YES;
+    menuTable.contentInset = initialContentInset;
+    [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
 
+  });
+  
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-  return 0.3;
+  return 0.4;
 }
 
 @end
