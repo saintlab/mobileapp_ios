@@ -12,13 +12,14 @@
 #import "OMNLaunchHandler.h"
 #import "OMNBarVisitor.h"
 #import "OMNSelectTipsAlertVC.h"
+#import "OMNVisitor+omn_network.h"
 
 @implementation OMNBarWishMediator
 
 - (PMKPromise *)createWishForVisitor:(OMNVisitor *)visitor {
   
   if (!visitor.restaurant.settings.has_bar_tips) {
-    return [visitor createWish:self.selectedWishItems];
+    return [super createWishForVisitor:visitor];
   }
   
   NSMutableArray *selectedWishItems = [self.selectedWishItems mutableCopy];
@@ -70,23 +71,23 @@
   
 }
 
-- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)processCreatedWish:(OMNWish *)wish {
   
-  return [self payForVisitor:visitor].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+  return [self payForWish:wish].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
     
-    return [self paymentDoneForVisitor:visitor];
+    return [self paymentDoneForWish:wish];
     
   });
   
 }
 
-- (PMKPromise *)paymentDoneForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)paymentDoneForWish:(OMNWish *)wish {
   
   @weakify(self)
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    OMNBarPaymentDoneVC *wishSuccessVC = [[OMNBarPaymentDoneVC alloc] initWithWish:visitor.wish paymentOrdersURL:self.restaurantMediator.restaurant.orders_paid_url];
+    OMNBarPaymentDoneVC *wishSuccessVC = [[OMNBarPaymentDoneVC alloc] initWithWish:wish paymentOrdersURL:self.restaurantMediator.restaurant.orders_paid_url];
     wishSuccessVC.didFinishBlock = ^{
       
       fulfill(nil);

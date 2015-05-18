@@ -27,7 +27,7 @@
  *  @return promise with visitor+wish
  */
 - (PMKPromise *)createWishForVisitor:(OMNVisitor *)visitor;
-- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor;
+- (PMKPromise *)processCreatedWish:(OMNWish *)wish;
 - (void)didFinishWish;
 - (void)closeTap;
 

@@ -22,10 +22,10 @@
   
 }
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor {
+- (instancetype)initWithWish:(OMNWish *)wish {
   self = [super init];
   if (self) {
-    _visitor = visitor;
+    _wish = wish;
   }
   return self;
 }
@@ -45,7 +45,7 @@
   
   NSDateFormatter *df = [[NSDateFormatter alloc] init];
   [df setDateFormat:kOMN_PAYMENT_SUCCESS_DATE_FORMAT];
-  _orderDoneLabel1.text = [df stringFromDate:self.visitor.wish.createdDate];
+  _orderDoneLabel1.text = [df stringFromDate:_wish.createdDate];
   _orderDoneLabel1.font = FuturaLSFOmnomLERegular(20.0f);
   _orderDoneLabel1.textColor = titleColor;
   

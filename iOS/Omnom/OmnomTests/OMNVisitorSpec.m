@@ -86,7 +86,7 @@ describe(@"OMNVisitor", ^{
   
   it(@"should check preorder visitor", ^{
     
-    OMNVisitor *preorderVisitor = [OMNPreorderVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithMinutes:0]];
+    OMNVisitor *preorderVisitor = [OMNPreorderVisitor visitorWithRestaurant:_restaurant delivery:[OMNDelivery deliveryWithAddress:_restaurant.address minutes:0]];
     [[preorderVisitor.tags should] equal:kEntranceModeTakeAway];
     OMNRestaurantMediator *preorderRestaurantMediator = [preorderVisitor mediatorWithRootVC:nil];
     [[preorderRestaurantMediator should] beKindOfClass:[OMNPreorderRestaurantMediator class]];

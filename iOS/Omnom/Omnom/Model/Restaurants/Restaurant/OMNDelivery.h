@@ -15,9 +15,11 @@
 @property (nonatomic, copy) NSString *date;
 @property (nonatomic, assign) NSInteger minutes;
 
++ (instancetype)deliveryWithJsonData:(id)jsonData;
+
 + (instancetype)delivery;
 + (instancetype)deliveryWithAddress:(OMNRestaurantAddress *)address date:(NSString *)date;
-+ (instancetype)deliveryWithMinutes:(NSInteger)minutes;
++ (instancetype)deliveryWithAddress:(OMNRestaurantAddress *)address minutes:(NSInteger)minutes;
 - (BOOL)readyForLunch;
 - (NSDictionary *)parameters;
 - (NSDictionary *)addressData;

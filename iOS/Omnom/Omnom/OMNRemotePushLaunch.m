@@ -26,7 +26,12 @@
     
     self.showTableOrders = [info[@"show_table_orders"] omn_boolValueSafe];
     self.showRecommendations = [info[@"show_recommendations"] omn_boolValueSafe];
-    _qr = [info[@"qr"] omn_stringValueSafe];
+    if (info[@"qr"]) {
+      _qr = [info[@"qr"] omn_stringValueSafe];
+    }
+    else {
+      _qr = [info[@"hash"] omn_stringValueSafe];
+    }
     
     if ([info[@"wish"] isKindOfClass:[NSDictionary class]]) {
       self.wishID = info[@"wish"][@"id"];

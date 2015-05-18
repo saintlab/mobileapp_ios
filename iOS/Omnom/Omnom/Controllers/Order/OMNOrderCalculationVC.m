@@ -390,7 +390,7 @@ OMNPaymentFooterViewDelegate>
   [[OMNAuthorization authorization] checkAuthenticationToken].then(^(OMNUser *user) {
     
     OMNRestaurant *restaurant = _restaurantMediator.restaurant;
-    OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForOrder:_table.selectedOrder];
+    OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForUser:user order:_table.selectedOrder];
     OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:_restaurantMediator.visitor transaction:transaction];
     return [transactionPaymentVC pay:self.navigationController];
     

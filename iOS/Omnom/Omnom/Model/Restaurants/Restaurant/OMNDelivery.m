@@ -10,6 +10,16 @@
 
 @implementation OMNDelivery
 
++ (instancetype)deliveryWithJsonData:(id)jsonData {
+  
+  OMNDelivery *delivery = [[OMNDelivery alloc] init];
+  delivery.date = jsonData[@"delivery_date"];
+  delivery.address = [[OMNRestaurantAddress alloc] initWithJsonData:jsonData[@"delivery_address"]];
+  delivery.minutes = [jsonData[@"take_away_interval_minutes"] integerValue];
+  return delivery;
+
+}
+
 + (instancetype)delivery {
   return [[OMNDelivery alloc] init];
 }
@@ -23,10 +33,11 @@
   
 }
 
-+ (instancetype)deliveryWithMinutes:(NSInteger)minutes {
++ (instancetype)deliveryWithAddress:(OMNRestaurantAddress *)address minutes:(NSInteger)minutes {
   
   OMNDelivery *delivery = [[OMNDelivery alloc] init];
   delivery.minutes = minutes;
+  delivery.address = address;
   return delivery;
 
 }
@@ -40,7 +51,7 @@
   if (self.date) {
     parameters[@"delivery_date"] = self.date;
   }
-  parameters[@"take_away_interval"] = @(self.minutes);
+  parameters[@"take_away_interval_minutes"] = @(self.minutes);
   return parameters;
   
 }

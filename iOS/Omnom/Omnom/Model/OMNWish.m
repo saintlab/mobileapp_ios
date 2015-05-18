@@ -29,7 +29,7 @@ OMNWishStatus wishStatusFromString(NSString *string) {
 
 @implementation OMNWish
 
-- (instancetype)initWithJsonData:(id)jsonData {
+- (instancetype)initWithJsonData:(id)jsonData; {
   self = [super init];
   if (self) {
     
@@ -57,6 +57,8 @@ OMNWishStatus wishStatusFromString(NSString *string) {
       }];
       
     }
+    
+    _delivery = [OMNDelivery deliveryWithJsonData:jsonData[@"comments"]];
     
   }
   return self;

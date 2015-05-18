@@ -9,14 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <PromiseKit.h>
 #import "OMNRestaurant.h"
-#import "OMNRestaurantMediator.h"
-#import "OMNWish.h"
+//#import "OMNWish.h"
 #import "OMNDelivery.h"
 #import "OMNForbiddenWishProducts.h"
 
-@class OMNVisitor;
+@class OMNRestaurantMediator;
+@class OMNRestaurantActionsVC;
 
-typedef void(^OMNVisitorWishBlock)(OMNVisitor *visitor);
 typedef void(^OMNWrongIDsBlock)(NSArray *wrongIDs);
 typedef void(^OMNMenuBlock)(OMNMenu *menu);
 
@@ -24,24 +23,10 @@ typedef void(^OMNMenuBlock)(OMNMenu *menu);
 
 @property (nonatomic, strong, readonly) OMNRestaurant *restaurant;
 @property (nonatomic, strong, readonly) OMNDelivery *delivery;
-@property (nonatomic, strong, readonly) OMNWish *wish;
 
 + (instancetype)visitorWithRestaurant:(OMNRestaurant *)restaurant delivery:(OMNDelivery *)delivery;
-- (instancetype)visitorWithWish:(OMNWish *)wish;
 - (OMNRestaurantMediator *)mediatorWithRootVC:(OMNRestaurantActionsVC *)rootVC;
 - (NSString *)tags;
-
-/**
- @code
- *  curl -X POST  -H 'X-Authentication-Token: Ga7Rc1lBabcEIOoqd8MsSejzsroI01En' -H "Content-Type: application/json" -d '{ "internal_table_id":"2", "items":[{"id":"15ecf053-feea-46ae-ac94-9a4087a724a8-in-saintlab-iiko","quantity":"1", "modifiers": [{"id":"69c53de0-be11-4843-9628-fb1e01c9437e-in-saintlab-iiko","quantity":"1"}  ] }]}' http://omnom.laaaab.com/restaurants/saintlab-iiko/wishes
- @endcode
- *  @see https://github.com/saintlab/backend/issues/1402
- *  @param wishItems     list of {"id":"", "quantity":"1", "modifiers":[{"id":"", "quantity":"1"}]} objects
- *  @returns [OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorForbittenWishProducts userInfo:@{OMNForbiddenWishProductsKey : forbiddenWishProducts}] in case of forbidden products in list
- */
-- (PMKPromise *)createWish:(NSArray *)wishItems;
-
-- (void)getMenuWithCompletion:(OMNMenuBlock)completion;
 
 - (PMKPromise *)enter:(UIViewController *)rootVC;
 

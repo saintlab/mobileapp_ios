@@ -45,13 +45,6 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   return manager;
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-  }
-  return self;
-}
-
 - (void)setup {
   
   [_mixpanel flush];

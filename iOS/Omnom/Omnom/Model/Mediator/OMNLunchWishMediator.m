@@ -15,7 +15,7 @@
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
-- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)processCreatedWish:(OMNWish *)wish {
 
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     

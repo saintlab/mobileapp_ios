@@ -11,16 +11,18 @@
 @interface OMNAcquiringTransaction ()
 
 @property (nonatomic, copy) NSString *type;
+@property (nonatomic, strong) OMNUser *user;
 
 @end
 
 @implementation OMNAcquiringTransaction
 
-- (instancetype)init {
+- (instancetype)initWithUser:(OMNUser *)user {
   self = [super init];
   if (self) {
     
     _type = @"none";
+    self.user = user;
     self.order_id = @"";
     self.wish_id = @"";
     self.table_id = @"";
@@ -29,8 +31,8 @@
   return self;
 }
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
-  self = [self init];
+- (instancetype)initWithOrder:(OMNOrder *)order user:(OMNUser *)user {
+  self = [self initWithUser:user];
   if (self) {
     
     self.type = @"order";
@@ -39,8 +41,8 @@
   return self;
 }
 
-- (instancetype)initWithWish:(OMNWish *)wish {
-  self = [self init];
+- (instancetype)initWithWish:(OMNWish *)wish user:(OMNUser *)user {
+  self = [self initWithUser:user];
   if (self) {
     
     self.type = @"wish";

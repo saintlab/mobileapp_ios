@@ -10,6 +10,7 @@
 #import "OMNPreorderDoneVC.h"
 #import "OMNOrderToolbarButton.h"
 #import "OMNMenu+wish.h"
+#import "OMNVisitor+omn_network.h"
 
 @implementation OMNWishMediator
 
@@ -38,9 +39,9 @@
     
     return [self createWishForVisitor:vistor];
     
-  }).then(^(OMNVisitor *wishVisitor) {
+  }).then(^(OMNWish *wish) {
     
-    return [self processCreatedWishForVisitor:wishVisitor];
+    return [self processCreatedWish:wish];
     
   }).then(^{
     
@@ -62,7 +63,7 @@
   return [visitor createWish:self.selectedWishItems];
 }
 
-- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)processCreatedWish:(OMNWish *)wish {
 
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     

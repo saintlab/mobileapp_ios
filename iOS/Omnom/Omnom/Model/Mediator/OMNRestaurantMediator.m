@@ -27,7 +27,7 @@
 #import "OMNWishMediator.h"
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNTransactionPaymentVC.h"
-
+#import "OMNVisitor+omn_network.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,

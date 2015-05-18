@@ -11,23 +11,23 @@
 
 @implementation OMNRestaurantInWishMediator
 
-- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)processCreatedWish:(OMNWish *)wish {
   
-  return [self payForVisitor:visitor].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+  return [self payForWish:wish].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
     
-    return [self paymentDoneForVisitor:visitor];
+    return [self paymentDoneForWish:wish];
     
   });
   
 }
 
-- (PMKPromise *)paymentDoneForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)paymentDoneForWish:(OMNWish *)wish {
   
   @weakify(self)
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    OMNRestaurantInPaymentDoneVC *wishSuccessVC = [[OMNRestaurantInPaymentDoneVC alloc] initWithVisitor:visitor];
+    OMNRestaurantInPaymentDoneVC *wishSuccessVC = [[OMNRestaurantInPaymentDoneVC alloc] initWithWish:wish];
     wishSuccessVC.didFinishBlock = ^{
       
       fulfill(nil);

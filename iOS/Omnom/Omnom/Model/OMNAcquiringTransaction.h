@@ -12,6 +12,7 @@
 #import "OMNOrder.h"
 #import "OMNWish.h"
 #import "OMNBill.h"
+#import "OMNUser.h"
 #import <PromiseKit.h>
 
 typedef void(^OMNPaymentDidFinishBlock)(OMNBill *bill, OMNError *error);
@@ -27,11 +28,12 @@ typedef void(^OMNPaymentDidFinishBlock)(OMNBill *bill, OMNError *error);
 @property (nonatomic, assign) long long tips_amount;
 @property (nonatomic, copy) NSString *tips_way;
 @property (nonatomic, copy) NSString *split_way;
+@property (nonatomic, strong, readonly) OMNUser *user;
 
 @property (nonatomic, strong) NSDictionary *info;
 
-- (instancetype)initWithOrder:(OMNOrder *)order;
-- (instancetype)initWithWish:(OMNWish *)wish;
+- (instancetype)initWithOrder:(OMNOrder *)order user:(OMNUser *)user;
+- (instancetype)initWithWish:(OMNWish *)wish user:(OMNUser *)user;
 - (long long)total_amount;
 - (double)tips_percent;
 - (void)payWithCard:(OMNBankCardInfo *)bankCardInfo completion:(OMNPaymentDidFinishBlock)completionBlock;

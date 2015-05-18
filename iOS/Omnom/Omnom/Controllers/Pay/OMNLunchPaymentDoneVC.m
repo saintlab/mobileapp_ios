@@ -14,8 +14,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  NSString *date = [NSString stringWithFormat:@"%@ %@", [self.visitor.delivery.date omn_localizedInWeekday], [self.visitor.delivery.date omn_localizedDate]];
-  self.textLabel.text = [NSString stringWithFormat:kOMN_LUNCH_DONE_FORMAT, self.visitor.restaurant.address.text, date];
+  NSString *date = [NSString stringWithFormat:@"%@ %@", [self.wish.delivery.date omn_localizedInWeekday], [self.wish.delivery.date omn_localizedDate]];
+  self.textLabel.text = [NSString stringWithFormat:kOMN_LUNCH_DONE_FORMAT, self.wish.delivery.address.text, date];
   
 }
 

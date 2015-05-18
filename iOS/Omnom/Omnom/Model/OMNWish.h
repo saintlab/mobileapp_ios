@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "OMNOrderItem.h"
+#import "OMNDelivery.h"
 
 typedef NS_ENUM(NSInteger, OMNWishStatus) {
   kWishStatusUnknown = 0,
@@ -29,6 +30,7 @@ typedef NS_ENUM(NSInteger, OMNWishStatus) {
 @property (nonatomic, copy, readonly) NSString *pin;
 @property (nonatomic, strong, readonly) NSArray *items;
 @property (nonatomic, assign, readonly) OMNWishStatus status;
+@property (nonatomic, strong, readonly) OMNDelivery *delivery;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 - (long long)totalAmount;

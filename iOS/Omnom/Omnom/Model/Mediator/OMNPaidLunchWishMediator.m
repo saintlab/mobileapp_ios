@@ -12,23 +12,28 @@
 
 @implementation OMNPaidLunchWishMediator
 
-- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (void)dealloc
+{
   
-  return [self payForVisitor:visitor].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+}
+
+- (PMKPromise *)processCreatedWish:(OMNWish *)wish {
+  
+  return [self payForWish:wish].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
     
-    return [self paymentDoneForVisitor:visitor];
+    return [self paymentDoneForWish:wish];
     
   });
   
 }
 
-- (PMKPromise *)paymentDoneForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)paymentDoneForWish:(OMNWish *)wish {
   
   @weakify(self)
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    OMNLunchPaymentDoneVC *wishSuccessVC = [[OMNLunchPaymentDoneVC alloc] initWithVisitor:visitor];
+    OMNLunchPaymentDoneVC *wishSuccessVC = [[OMNLunchPaymentDoneVC alloc] initWithWish:wish];
     wishSuccessVC.didFinishBlock = ^{
       
       fulfill(nil);

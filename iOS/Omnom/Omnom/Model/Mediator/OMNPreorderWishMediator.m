@@ -22,7 +22,7 @@
     @strongify(self)
     [self selectMinutesWithCompletion:^(NSInteger minutes) {
       
-      OMNPreorderVisitor *visitorWithDelay = [OMNPreorderVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery deliveryWithMinutes:minutes]];
+      OMNPreorderVisitor *visitorWithDelay = [OMNPreorderVisitor visitorWithRestaurant:restaurant delivery:[OMNDelivery deliveryWithAddress:restaurant.address minutes:minutes]];
       fulfill(visitorWithDelay);
       
     } cancel:^{
@@ -58,23 +58,23 @@
   
 }
 
-- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)processCreatedWish:(OMNWish *)wish {
   
-  return [self payForVisitor:visitor].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+  return [self payForWish:wish].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
   
-    return [self paymentDoneForVisitor:paymentVC.visitor];
+    return [self paymentDoneForWish:wish];
     
   });
   
 }
 
-- (PMKPromise *)paymentDoneForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)paymentDoneForWish:(OMNWish *)wish {
   
   @weakify(self)
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     @strongify(self)
-    OMNPreorderPaymentDoneVC *wishSuccessVC = [[OMNPreorderPaymentDoneVC alloc] initWithVisitor:visitor];
+    OMNPreorderPaymentDoneVC *wishSuccessVC = [[OMNPreorderPaymentDoneVC alloc] initWithWish:wish];
     wishSuccessVC.didFinishBlock = ^{
       
       fulfill(nil);

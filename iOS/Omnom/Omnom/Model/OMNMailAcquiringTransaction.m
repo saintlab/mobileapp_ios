@@ -9,15 +9,14 @@
 #import "OMNMailAcquiringTransaction.h"
 #import "OMNOperationManager.h"
 #import "OMNBill.h"
-#import "OMNAuthorization.h"
 #import "OMNAnalitics.h"
 #import "OMNBankCardInfo+omn_mailRuBankCardInfo.h"
 #import "OMNUser+omn_mailRu.h"
 
 @implementation OMNMailAcquiringTransaction
 
-- (instancetype)initWithOrder:(OMNOrder *)order {
-  self = [super initWithOrder:order];
+- (instancetype)initWithOrder:(OMNOrder *)order user:(OMNUser *)user {
+  self = [super initWithOrder:order user:user];
   if (self) {
     
     self.bill_amount = order.enteredAmount;
@@ -33,8 +32,8 @@
   return self;
 }
 
-- (instancetype)initWithWish:(OMNWish *)wish {
-  self = [super initWithWish:wish];
+- (instancetype)initWithWish:(OMNWish *)wish user:(OMNUser *)user {
+  self = [super initWithWish:wish user:user];
   if (self) {
     
     self.bill_amount = wish.totalAmount;
@@ -56,7 +55,7 @@
     
     @strongify(self)
     OMNMailRuExtra *extra = [OMNMailRuExtra extraWithRestaurantID:bill.mail_restaurant_id tipAmount:self.tips_amount type:self.type];
-    [OMNMailRuAcquiring payWithCard:[bankCardInfo omn_mailRuCard] user:[[OMNAuthorization authorization].user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount) extra:extra].then(^(OMNMailRuPoll *poll) {
+    [OMNMailRuAcquiring payWithCard:[bankCardInfo omn_mailRuCard] user:[self.user omn_mailRuUser] order_id:bill.id order_amount:@(0.01*self.total_amount) extra:extra].then(^(OMNMailRuPoll *poll) {
       
       [[OMNAnalitics analitics] logPayment:self cardInfo:bankCardInfo bill:bill];
       completionBlock(bill, nil);
@@ -68,7 +67,6 @@
       completionBlock(bill, omnomError);
       
     });
-
     
   }).catch(^(OMNError *error) {
     
@@ -117,7 +115,7 @@
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      fulfill([operation omn_internetError]);
+      reject([operation omn_internetError]);
       
     }];
     

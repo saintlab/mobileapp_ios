@@ -9,6 +9,7 @@
 #import "OMNPaidWishMediator.h"
 #import "OMNRestaurant+omn_payment.h"
 #import "OMNScrollContentVC.h"
+#import "OMNAuthorization.h"
 
 @implementation OMNPaidWishMediator
 
@@ -16,9 +17,9 @@
   return kOMN_WISH_RECOMMENDATIONS_LABEL_TEXT;
 }
 
-- (PMKPromise *)processCreatedWishForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)processCreatedWish:(OMNWish *)wish {
 
-  return [self payForVisitor:visitor].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+  return [self payForWish:wish].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
     
     return [self paymentDone];
     
@@ -26,10 +27,10 @@
   
 }
 
-- (PMKPromise *)payForVisitor:(OMNVisitor *)visitor {
+- (PMKPromise *)payForWish:(OMNWish *)wish {
   
-  OMNRestaurant *restaurant = self.restaurantMediator.restaurant;
-  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForWish:visitor.wish];
+  OMNVisitor *visitor = self.restaurantMediator.visitor;
+  OMNAcquiringTransaction *transaction = [[visitor.restaurant paymentFactory] transactionForUser:[OMNAuthorization authorization].user wish:wish];
   OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:visitor transaction:transaction];
   return [transactionPaymentVC pay:self.rootVC];
   

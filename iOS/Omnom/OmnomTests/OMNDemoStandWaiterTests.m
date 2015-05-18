@@ -22,8 +22,6 @@ describe(@"waiter call tests", ^{
   
   beforeAll(^{
     
-    [[[OMNAuthorization authorization].token should] beNonNil];
-    
     OMNBeacon *demoBeacon = [OMNBeacon demoBeacon];
     
     [OMNRestaurantManager decodeBeacons:@[demoBeacon]].then(^(NSArray *restaurants) {

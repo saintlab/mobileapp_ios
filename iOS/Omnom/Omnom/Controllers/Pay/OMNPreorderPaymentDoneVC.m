@@ -14,7 +14,7 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  self.textLabel.text = [NSString stringWithFormat:kOMN_PREORDER_DONE_FORMAT, [[NSString omn_takeAfterIntervalString:self.visitor.delivery.minutes] lowercaseString], self.visitor.restaurant.address.text];
+  self.textLabel.text = [NSString stringWithFormat:kOMN_PREORDER_DONE_FORMAT, [[NSString omn_takeAfterIntervalString:self.wish.delivery.minutes] lowercaseString], self.wish.delivery.address.text];
   
 }
 

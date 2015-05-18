@@ -7,13 +7,13 @@
 //
 
 #import "OMNScrollContentVC.h"
-#import "OMNVisitor.h"
+#import "OMNWish.h"
 
 @interface OMNPaymentLabeledDoneVC : OMNScrollContentVC
 
 @property (nonatomic, strong, readonly) UILabel *textLabel;
-@property (nonatomic, strong, readonly) OMNVisitor *visitor;
+@property (nonatomic, strong, readonly) OMNWish *wish;
 
-- (instancetype)initWithVisitor:(OMNVisitor *)visitor;
+- (instancetype)initWithWish:(OMNWish *)wish;
 
 @end

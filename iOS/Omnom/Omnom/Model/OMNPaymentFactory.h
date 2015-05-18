@@ -15,7 +15,7 @@
 @protocol OMNPaymentFactory <NSObject>
 
 - (OMNBankCardMediator *)bankCardMediatorWithRootVC:(UIViewController *)rootVC transaction:(OMNAcquiringTransaction *)transaction;
-- (OMNAcquiringTransaction *)transactionForOrder:(OMNOrder *)order;
-- (OMNAcquiringTransaction *)transactionForWish:(OMNWish *)wish;
+- (OMNAcquiringTransaction *)transactionForUser:(OMNUser *)user order:(OMNOrder *)order;
+- (OMNAcquiringTransaction *)transactionForUser:(OMNUser *)user wish:(OMNWish *)wish;
 
 @end

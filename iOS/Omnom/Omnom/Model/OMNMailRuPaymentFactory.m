@@ -19,12 +19,12 @@
   
 }
 
-- (OMNAcquiringTransaction *)transactionForOrder:(OMNOrder *)order {
-  return [[OMNMailAcquiringTransaction alloc] initWithOrder:order];
+- (OMNAcquiringTransaction *)transactionForUser:(OMNUser *)user order:(OMNOrder *)order {
+  return [[OMNMailAcquiringTransaction alloc] initWithOrder:order user:user];
 }
 
-- (OMNAcquiringTransaction *)transactionForWish:(OMNWish *)wish {
-  return [[OMNMailAcquiringTransaction alloc] initWithWish:wish];
+- (OMNAcquiringTransaction *)transactionForUser:(OMNUser *)user wish:(OMNWish *)wish {
+  return [[OMNMailAcquiringTransaction alloc] initWithWish:wish user:user];
 }
 
 @end

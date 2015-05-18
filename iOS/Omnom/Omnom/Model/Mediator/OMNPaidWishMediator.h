@@ -12,6 +12,6 @@
 
 @interface OMNPaidWishMediator : OMNWishMediator
 
-- (PMKPromise *)payForVisitor:(OMNVisitor *)visitor;
+- (PMKPromise *)payForWish:(OMNWish *)wish;
 
 @end
