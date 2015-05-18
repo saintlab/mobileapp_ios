@@ -17,6 +17,6 @@
 
 - (void)setLogo:(UIImage *)logo withColor:(UIColor *)color completion:(dispatch_block_t)completionBlock;
 - (void)finishLoading:(dispatch_block_t)completionBlock;
-- (void)showRetryMessageWithError:(OMNError *)error retryBlock:(dispatch_block_t)retryBlock cancelBlock:(dispatch_block_t)cancelBlock;
+- (void)finishLoadingWithError:(OMNError *)error retryBlock:(dispatch_block_t)retryBlock cancelBlock:(dispatch_block_t)cancelBlock;
 
 @end

@@ -42,14 +42,11 @@ describe(@"demo stand test", ^{
     [[@(_restaurant.tables.count) should] equal:@(1)];
     OMNTable *table = [_restaurant.tables firstObject];
     
-    [table getOrders:^(NSArray *orders) {
+    [table getOrders].then(^(NSArray *orders) {
       
       _orders = orders;
       
-    } error:^(OMNError *error) {
-      
-    }];
-    
+    });
     _order = [_orders firstObject];
 
     [OMNUser stub:@selector(userWithToken:user:failure:) withBlock:^id(NSArray *params) {

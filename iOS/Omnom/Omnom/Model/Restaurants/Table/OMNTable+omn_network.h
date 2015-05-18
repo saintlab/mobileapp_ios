@@ -14,7 +14,7 @@
 @interface OMNTable (omn_network)
 
 - (void)tableIn;
-- (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(OMNError *error))errorBlock;
+- (PMKPromise *)getOrders;
 - (void)waiterCallWithCompletion:(void(^)(OMNError *error))completionBlock;
 - (void)waiterCallStopWithFailure:(void(^)(OMNError *error))failureBlock;
 - (PMKPromise *)newGuest;

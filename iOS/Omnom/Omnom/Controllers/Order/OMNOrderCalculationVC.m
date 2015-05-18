@@ -21,6 +21,8 @@
 #import "OMNRestaurant+omn_payment.h"
 #import "OMNRatingVC.h"
 #import <OMNStyler.h>
+#import "OMNLoginVC.h"
+#import "OMNAuthorization.h"
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -204,26 +206,26 @@ OMNPaymentFooterViewDelegate>
 - (void)updateTitle {
 
   self.navigationItem.titleView = nil;
-  if (_table.orders.count > 1) {
-    
-    NSUInteger index = _table.selectedOrderIndex;
-    if (NSNotFound != index) {
-      
-      UIButton *button = [[OMNSelectOrderButton alloc] init];
-      NSString *title = [NSString stringWithFormat:kOMN_ORDER_NUMBER_HEADER_FORMAT, (long)index + 1];
-      [button setTitle:title forState:UIControlStateNormal];
-      [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
-      
-      [UIView performWithoutAnimation:^{
-        
-        [button sizeToFit];
-        self.navigationItem.titleView = button;
-
-      }];
-      
-    }
-    
+  if (_table.orders.count <= 1) {
+    return;
   }
+
+  NSUInteger index = _table.selectedOrderIndex;
+  if (NSNotFound == index) {
+    return;
+  }
+
+  UIButton *button = [[OMNSelectOrderButton alloc] init];
+  NSString *title = [NSString stringWithFormat:kOMN_ORDER_NUMBER_HEADER_FORMAT, (long)index + 1];
+  [button setTitle:title forState:UIControlStateNormal];
+  [button addTarget:self action:@selector(selectedOrderTap) forControlEvents:UIControlEventTouchUpInside];
+  
+  [UIView performWithoutAnimation:^{
+    
+    [button sizeToFit];
+    self.navigationItem.titleView = button;
+    
+  }];
   
 }
 
@@ -384,22 +386,45 @@ OMNPaymentFooterViewDelegate>
 
   [OMNOrderAlertManager sharedManager].didCloseBlock = nil;
   [OMNOrderAlertManager sharedManager].didUpdateBlock = nil;
-  
-  OMNRestaurant *restaurant = _restaurantMediator.restaurant;
-  OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForOrder:_table.selectedOrder];
-  OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:_restaurantMediator.visitor transaction:transaction];
-  @weakify(self)
-  [transactionPaymentVC pay:self.navigationController].then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+
+  [[OMNAuthorization authorization] checkAuthenticationToken].then(^(OMNUser *user) {
     
-    @strongify(self)
+    OMNRestaurant *restaurant = _restaurantMediator.restaurant;
+    OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForOrder:_table.selectedOrder];
+    OMNTransactionPaymentVC *transactionPaymentVC = [[OMNTransactionPaymentVC alloc] initWithVisitor:_restaurantMediator.visitor transaction:transaction];
+    return [transactionPaymentVC pay:self.navigationController];
+    
+  }).then(^(OMNTransactionPaymentVC *paymentVC, OMNBill *bill) {
+    
     [self transactionPaymentDidFinish:paymentVC.acquiringTransaction withBill:bill];
     
   }).catch(^(OMNError *error) {
     
-    if (kOMNErrorOrderClosed == error.code) {
-      @strongify(self)
-      [self.restaurantMediator didFinishPayment];
+    if (kOMNErrorNoUserToken == error.code) {
+      
+      [self requestAuthorization];
+      
     }
+    else if (kOMNErrorOrderClosed == error.code) {
+
+      [self.restaurantMediator didFinishPayment];
+      
+    }
+    
+  });
+  
+}
+
+- (void)requestAuthorization {
+  
+  OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
+  [loginVC requestLogin:self].then(^(NSString *token) {
+    
+    [self processCardPayment];
+    
+  }).finally(^{
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
     
   });
   

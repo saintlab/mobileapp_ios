@@ -124,14 +124,11 @@ NSString * const OMNTableOrdersDidChangeNotification = @"OMNTableOrdersDidChange
 
 - (void)updateOrders {
   
-  @weakify(self)
-  [self getOrders:^(NSArray *orders) {
+  [self getOrders].then(^(NSArray *orders) {
     
-    @strongify(self)
     [self updateOrdersWithOrders:orders];
     
-  } error:^(OMNError *error) {
-  }];
+  });
   
 }
 

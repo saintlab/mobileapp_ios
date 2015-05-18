@@ -49,6 +49,7 @@ target 'omnomTests', :exclusive => true do
   pod 'OCMock'
   pod 'KIF', '~> 3.0.4'
   pod 'Kiwi'
+  pod 'OHHTTPStubs'
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
 

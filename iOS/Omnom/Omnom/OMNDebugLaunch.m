@@ -36,11 +36,11 @@
     //    _qr = @"http://omnom.menu/qr/8eab9af3006a4fb0cd0bd92836e90130"; //мехико
     //    _qr = @"qr-code-for-1-ruby-bar-nsk-at-lenina-9"; //руби
     //    _qr = @"qr-code-for-3-travelerscoffee-nsk-at-karla-marksa-7"; //тревелерз
-    //    _qr = @"http://omnom.menu/qr/special-and-vip"; //b-cafe
+        self.qr = @"http://omnom.menu/qr/special-and-vip"; //b-cafe
     
 #pragma mark - staging
-//    self.config = @"config_staging";
-//    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
+    self.config = @"config_staging";
+    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
     
 #endif
   }

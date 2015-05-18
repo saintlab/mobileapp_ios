@@ -23,14 +23,6 @@
   return manager;
 }
 
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    
-  }
-  return self;
-}
-
 + (PMKPromise *)decodeBeacons:(NSArray *)beacons {
   
   NSMutableArray *jsonBeacons = [NSMutableArray arrayWithCapacity:beacons.count];

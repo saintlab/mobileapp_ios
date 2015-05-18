@@ -11,35 +11,24 @@
 #import "OMNTable+omn_network.h"
 #import "NSString+omn_json.h"
 #import "NSObject+omn_order.h"
+#import <OHHTTPStubs.h>
 
 SPEC_BEGIN(OMNOrderTests)
 
 describe(@"order test", ^{
   
   __block OMNOrder *_order = nil;
-  __block OMNTable *_table = nil;
   beforeAll(^{
     
     [OMNAuthorization authorization];
-
     id orderData = [@"orders_stub.json" omn_jsonObjectNamedForClass:self.class];
     NSArray *orders = [orderData omn_decodeOrdersWithError:nil];
     _order = [orders firstObject];
-    _table = [OMNTable mock];
-
-    [_table stub:@selector(getOrders:error:) withBlock:^id(NSArray *params) {
-      
-      OMNOrdersBlock ordersBlock = params[1];
-      ordersBlock(orders);
-      return nil;
-      
-    }];
     
   });
   
   it(@"should check initial conditions", ^{
     
-    [[_table should] beNonNil];
     [[_order should] beNonNil];
     
   });
@@ -85,14 +74,24 @@ describe(@"order test", ^{
   
   it(@"should get orders", ^{
     
-    [_table getOrders:^(NSArray *orders) {
+    OMNTable *table = [OMNTable mock];
+    [table stub:@selector(getOrders) withBlock:^id(NSArray *params) {
+      
+      return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+        id orderData = [@"orders_stub.json" omn_jsonObjectNamedForClass:self.class];
+        NSArray *orders = [orderData omn_decodeOrdersWithError:nil];
+        fulfill(orders);
+      }];
+      
+    }];
+
+    
+    [table getOrders].then(^(NSArray *orders) {
       
       [[orders should] beNonNil];
       [[@(orders.count) should] beGreaterThan:@(0)];
       
-    } error:^(OMNError *error) {
-      
-    }];
+    });
     
   });
   

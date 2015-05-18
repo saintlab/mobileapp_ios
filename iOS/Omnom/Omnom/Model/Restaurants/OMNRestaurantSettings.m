@@ -31,7 +31,7 @@
     _has_lunch = [jsonData[@"has_lunch"] omn_boolValueSafe];
     _has_restaurant_order = [jsonData[@"has_restaurant_order"] omn_boolValueSafe];
     
-#if DEBUG
+#if DEBUG && !OMN_TEST
 #warning demo RestaurantSettings
     _has_bar = YES;
     _has_lunch = YES;

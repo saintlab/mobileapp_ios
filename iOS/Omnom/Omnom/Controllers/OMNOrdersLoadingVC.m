@@ -48,8 +48,7 @@
     
     @strongify(self)
     [self.loaderView startAnimating:10.0];
-    
-    [table getOrders:^(NSArray *orders) {
+    [table getOrders].then(^(NSArray *orders) {
       
       [self finishLoading:^{
         
@@ -61,20 +60,16 @@
         
       }];
       
-    } error:^(OMNError *error) {
+    }).catch(^(OMNError *error) {
       
-      [self finishLoading:^{
+      [self finishLoadingWithError:error retryBlock:^{
         
-        [self showRetryMessageWithError:error retryBlock:^{
-          
-          [self startLoadingOrders];
-          
-        } cancelBlock:self.didCloseBlock];
+        [self startLoadingOrders];
         
-      }];
+      } cancelBlock:self.didCloseBlock];
       
-    }];
-    
+    });
+        
   }];
   
 }

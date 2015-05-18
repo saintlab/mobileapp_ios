@@ -137,7 +137,7 @@
 - (void)didFailOmnom:(OMNError *)error {
   
   @weakify(self)
-  [self showRetryMessageWithError:error retryBlock:^{
+  [self finishLoadingWithError:error retryBlock:^{
     
     @strongify(self)
     [self startSearchingRestaurants];

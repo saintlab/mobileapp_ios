@@ -37,30 +37,34 @@
 
 }
 
-- (void)getOrders:(OMNOrdersBlock)ordersBlock error:(void(^)(OMNError *error))errorBlock {
+- (PMKPromise *)getOrders {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/tables/%@/orders", self.restaurant_id, self.id];
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
-
-    OMNError *error = nil;
-    NSArray *orders = [response omn_decodeOrdersWithError:&error];
-    if (error) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id response) {
+      
+      OMNError *error = nil;
+      NSArray *orders = [response omn_decodeOrdersWithError:&error];
+      if (error) {
+        
+        [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
+        reject(error);
+        
+      }
+      else {
+        
+        fulfill(orders);
+        
+      }
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
       [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
-      errorBlock(error);
+      reject([operation omn_internetError]);
       
-    }
-    else {
-      
-      ordersBlock(orders);
-      
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_ORDERS" jsonRequest:path responseOperation:operation];
-    errorBlock([operation omn_internetError]);
-    
+    }];
+  
   }];
   
 }

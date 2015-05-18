@@ -95,8 +95,20 @@
   
 }
 
-- (void)showRetryMessageWithError:(OMNError *)error retryBlock:(dispatch_block_t)retryBlock cancelBlock:(dispatch_block_t)cancelBlock {
+- (void)finishLoadingWithError:(OMNError *)error retryBlock:(dispatch_block_t)retryBlock cancelBlock:(dispatch_block_t)cancelBlock {
+  
+  @weakify(self)
+  [self finishLoading:^{
+    
+    @strongify(self)
+    [self showRetryMessageWithError:error retryBlock:retryBlock cancelBlock:cancelBlock];
+    
+  }];
+  
+}
 
+- (void)showRetryMessageWithError:(OMNError *)error retryBlock:(dispatch_block_t)retryBlock cancelBlock:(dispatch_block_t)cancelBlock {
+  
   OMNCircleRootVC *repeatVC = [[OMNCircleRootVC alloc] initWithParent:self];
   repeatVC.faded = YES;
   if (error) {
