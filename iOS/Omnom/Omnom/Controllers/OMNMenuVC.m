@@ -288,7 +288,7 @@ OMNMenuCategoryHeaderViewDelegate>
   
   CGFloat offset = [self.tableView rectForHeaderInSection:selectedIndex].origin.y;
   CGFloat tableHeight = CGRectGetHeight(self.tableView.frame) - self.tableView.contentInset.bottom - self.tableView.contentInset.top;
-  offset = MIN(offset, self.tableView.contentSize.height -  tableHeight);
+  offset = MIN(offset, MAX(0.0f, self.tableView.contentSize.height -  tableHeight));
   offset -= self.tableView.contentInset.top;
   [self.tableView setContentOffset:CGPointMake(0.0f, offset) animated:YES];
   

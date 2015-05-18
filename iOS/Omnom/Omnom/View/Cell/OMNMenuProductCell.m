@@ -43,7 +43,7 @@
     [self.item.menuProduct bk_removeObserversWithIdentifier:_productImageObserverID];
   }
   if (_productEditingObserverID) {
-    [self.item.menuProduct bk_removeObserversWithIdentifier:_productEditingObserverID];
+    [self.item bk_removeObserversWithIdentifier:_productEditingObserverID];
   }
   if (_productImageProgressObserverID) {
     [self.item.menuProduct bk_removeObserversWithIdentifier:_productImageProgressObserverID];
