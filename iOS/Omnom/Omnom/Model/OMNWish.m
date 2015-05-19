@@ -79,13 +79,17 @@ OMNWishStatus wishStatusFromString(NSString *string) {
 
 - (NSAttributedString *)statusText {
   
-  NSDictionary *statusTexts =
-  @{
-    @(kWishStatusReady) : kOMN_WISH_DONE_TEXT,
-    @(kWishStatusCanceled) : kOMN_WISH_CANCELLED_TEXT,
-    @(kWishStatusUnknown) : @""
-    };
-  return [[NSAttributedString alloc] initWithString:statusTexts[@(self.status)] attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(30.0f) textColor:[OMNStyler greenColor] textAlignment:NSTextAlignmentCenter]];
+  NSString *text = @"";
+  UIColor *color = [UIColor blackColor];
+  if (kWishStatusReady == self.status) {
+    text = kOMN_WISH_DONE_TEXT;
+    color = [UIColor greenColor];
+  }
+  else if (kWishStatusCanceled) {
+    text = kOMN_WISH_CANCELLED_TEXT;
+    color = [UIColor redColor];
+  }
+  return [[NSAttributedString alloc] initWithString:text attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(30.0f) textColor:color textAlignment:NSTextAlignmentCenter]];
   
 }
 
