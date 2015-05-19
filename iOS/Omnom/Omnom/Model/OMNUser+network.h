@@ -9,6 +9,7 @@
 #import "OMNUser.h"
 #import <CoreLocation/CoreLocation.h>
 #import "OMNError.h"
+#import <PromiseKit.h>
 
 @interface OMNUser (network)
 
@@ -16,7 +17,7 @@
 
 + (void)recoverUsingData:(NSString *)data completion:(dispatch_block_t)completionBlock failure:(void (^)(OMNError *error))failureBlock;
 
-+ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(void (^)(OMNError *error))failureBlock;
++ (PMKPromise *)userWithToken:(NSString *)token;
 
 
 - (void)confirmPhone:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(OMNError *error))failureBlock;

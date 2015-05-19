@@ -194,33 +194,42 @@
   
 }
 
-+ (void)userWithToken:(NSString *)token user:(OMNUserBlock)userBlock failure:(void (^)(OMNError *error))failureBlock {
++ (PMKPromise *)userWithToken:(NSString *)token {
   
-  NSDictionary *parameters =
-  @{
-    @"token" : token,
-    };
-  
-  [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    if ([responseObject omn_isSuccessResponse]) {
-      
-      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-      [[OMNAnalitics analitics] setServerTimeStamp:[responseObject omn_timeStamp]];
-      userBlock(user);
-      
+    if (0 == token.length) {
+      reject([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
+      return;
     }
-    else {
+
+    NSDictionary *parameters =
+    @{
+      @"token" : token,
+      };
+
+    [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      if ([responseObject omn_isSuccessResponse]) {
+        
+        OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+        [[OMNAnalitics analitics] setServerTimeStamp:[responseObject omn_timeStamp]];
+        fulfill(user);
+        
+      }
+      else {
+        
+        [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
+        reject([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
+        
+      }
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
       [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-      failureBlock([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
+      reject([operation omn_internetError]);
       
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-    failureBlock([operation omn_internetError]);
+    }];
     
   }];
   

@@ -99,12 +99,14 @@
                                   base_url:[OMNConstants baseUrlString]];
   
   [[OMNAuthorization authorization] registerForRemoteNotificationsIfPossible];
+  [[OMNAuthorization authorization] checkAuthenticationToken];
   
   [[OMNBeaconBackgroundManager manager] setDidEnterBeaconsRegionBlock:^{
     
     [OMNNearestBeaconSearchManager findAndProcessNearestBeacons];
     
   }];
+ 
   
 }
 

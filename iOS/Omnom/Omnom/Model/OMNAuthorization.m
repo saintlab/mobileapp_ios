@@ -309,28 +309,13 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (PMKPromise *)checkAuthenticationToken {
   
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+  return [OMNUser userWithToken:self.token].then(^(OMNUser *user) {
     
-    if (0 == self.token.length) {
-      reject([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
-      return;
-    }
+    [self updateUserInfoWithUser:user];
+    return user;
     
-    @weakify(self)
-    [OMNUser userWithToken:self.token user:^(OMNUser *user) {
-      
-      @strongify(self)
-      [self updateUserInfoWithUser:user];
-      fulfill(user);
-      
-    } failure:^(OMNError *error) {
-      
-      reject(error);
-      
-    }];
-
-  }];
-  
+  });
+    
 }
 
 - (NSString *)installId {
