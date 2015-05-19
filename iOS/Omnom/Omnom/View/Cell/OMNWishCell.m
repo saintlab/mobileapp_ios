@@ -9,7 +9,6 @@
 #import "OMNWishCell.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
-#import "OMNUtils.h"
 
 @implementation OMNWishCell {
   
@@ -95,7 +94,7 @@
   _item = item;
   OMNOrderItem *orderItem = item.orderItem;
   _nameLabel.text = orderItem.name;
-  _priceLabel.text = [OMNUtils moneyStringFromKop:orderItem.price_total];
+  _priceLabel.text = orderItem.priceQuantityString;
   
 }
 

@@ -21,5 +21,6 @@
 @property (nonatomic, strong) UIImage *icon;
 
 - (instancetype)initWithJsonData:(id)data;
+- (NSString *)priceQuantityString;
 
 @end

@@ -23,7 +23,7 @@
 
 - (void)reload;
 - (void)reloadWithLaunch:(OMNLaunch *)launch;
-
+- (void)handleContextLaunch;
 - (void)showModalControllerWithURL:(NSURL *)url;
 
 @end

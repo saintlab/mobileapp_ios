@@ -296,13 +296,16 @@ static OMNMailRuAcquiring *_mailRuAcquiring = nil;
     OMNMailRu3DSConfirmVC *mailRu3DSConfirmVC = [[OMNMailRu3DSConfirmVC alloc] initWithPollResponse:pollResponse];
     [mailRu3DSConfirmVC setDidFinishBlock:^(NSDictionary *response, NSError *error) {
       
-      [topMostController dismissViewControllerAnimated:YES completion:nil];
-      if (error) {
-        reject(error);
-      }
-      else {
-        fulfill(pollResponse);
-      }
+      [topMostController dismissViewControllerAnimated:YES completion:^{
+        
+        if (error) {
+          reject(error);
+        }
+        else {
+          fulfill(pollResponse);
+        }
+
+      }];
       
     }];
     [topMostController presentViewController:[[UINavigationController alloc] initWithRootViewController:mailRu3DSConfirmVC] animated:YES completion:nil];

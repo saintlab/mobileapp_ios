@@ -7,6 +7,7 @@
 //
 
 #import "OMNOrderItem.h"
+#import "OMNUtils.h"
 
 @interface OMNOrderItem ()
 
@@ -46,9 +47,22 @@
 }
 
 - (UIImage *)icon {
-  
   return [UIImage imageNamed:@"test_icon"];
-  
+}
+
+- (NSString *)priceQuantityString {
+  NSString *priceQuantityString = nil;
+  if (self.quantity != 1.0) {
+    
+    priceQuantityString = [NSString stringWithFormat:@"%@ x %@", [OMNUtils unitStringFromDouble:self.quantity], [OMNUtils commaStringFromKop:self.price_per_item]];
+    
+  }
+  else {
+    
+    priceQuantityString = [OMNUtils commaStringFromKop:self.price_total];
+    
+  }
+  return priceQuantityString;
 }
 
 @end

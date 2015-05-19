@@ -131,21 +131,8 @@
   [self removeOrderObserver];
   _orderItem = orderItem;
   _iconView.image = orderItem.icon;
-  
-  NSString *priceQuantityString = nil;
-  if (orderItem.quantity != 1.0) {
-    
-    priceQuantityString = [NSString stringWithFormat:@"%@ x %@", [OMNUtils unitStringFromDouble:orderItem.quantity], [OMNUtils commaStringFromKop:orderItem.price_per_item]];
-    
-  }
-  else {
-    
-    priceQuantityString = [OMNUtils commaStringFromKop:orderItem.price_total];
-    
-  }
-
   _nameLabel.text = orderItem.name;
-  _priceLabel.text = priceQuantityString;
+  _priceLabel.text = orderItem.priceQuantityString;
 
   @weakify(self)
   _cellOrderItemIdentifier = [_orderItem bk_addObserverForKeyPath:NSStringFromSelector(@selector(selected)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(id obj, NSDictionary *change) {

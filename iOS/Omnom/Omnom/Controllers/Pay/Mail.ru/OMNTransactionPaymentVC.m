@@ -41,6 +41,7 @@
   BOOL _addBankCardRequested;
   
   NSString *_bankCardsModelLoadingIdentifier;
+  __weak UIViewController *_presentingVC;
   
 }
 
@@ -143,6 +144,7 @@
 
 - (PMKPromise *)pay:(UIViewController *)presentingVC {
   
+  _presentingVC = presentingVC;
   [presentingVC presentViewController:[OMNNavigationController controllerWithRootVC:self] animated:YES completion:nil];
   @weakify(self)
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
@@ -232,8 +234,8 @@
 }
 
 - (void)paymentDidFinishWithBill:(OMNBill *)bill {
-
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+NSLog(@"%@", _presentingVC);
+  [_presentingVC dismissViewControllerAnimated:YES completion:^{
     
     self.fulfill(PMKManifold(self, bill));
     
@@ -242,15 +244,15 @@
 }
 
 - (void)orderDidClosed {
-  [self didFinishWithError:[OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorOrderClosed userInfo:nil]];
+  [self didFinishWithError:[OMNError omnomErrorFromCode:kOMNErrorOrderClosed]];
 }
 
 - (void)cancelTap {
-  [self didFinishWithError:[OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorCancel userInfo:nil]];
+  [self didFinishWithError:[OMNError omnomErrorFromCode:kOMNErrorCancel]];
 }
 
 - (void)didFinishWithError:(OMNError *)error {
-  [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+  [_presentingVC dismissViewControllerAnimated:YES completion:^{
     self.reject(error);
   }];
 }

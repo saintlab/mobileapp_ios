@@ -10,6 +10,7 @@
 #import "OMNLaunchFactory.h"
 #import "OMNDefaultLaunch.h"
 #import "OMNQRLaunch.h"
+#import "OMNRemotePushLaunch.h"
 
 SPEC_BEGIN(OMNLaunchFactorySpec)
 
@@ -48,6 +49,65 @@ describe(@"OMNLaunchFactory", ^{
       
     });
 
+    it(@"should create launch for wish from sms at staging", ^{
+      
+      NSDictionary *info =
+      @{
+        UIApplicationLaunchOptionsURLKey : [NSURL URLWithString:@"omnom://wish?config=config_staging&id=123"],
+        };
+      
+      OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:info];
+      [[launch should] beKindOfClass:[OMNDefaultLaunch class]];
+      [[launch.customConfigName should] equal:@"config_staging"];
+      [[launch.wishID should] equal:@"123"];
+      [[@(launch.shouldReload) should] beNo];
+
+    });
+    
+    it(@"should create launch for wish from sms at stand", ^{
+      
+      NSDictionary *info =
+      @{
+        UIApplicationLaunchOptionsURLKey : [NSURL URLWithString:@"omnom://wish?id=123"],
+        };
+      
+      OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:info];
+      [[launch should] beKindOfClass:[OMNDefaultLaunch class]];
+      [[launch.customConfigName should] equal:@"config_prod"];
+      [[launch.wishID should] equal:@"123"];
+      [[@(launch.shouldReload) should] beNo];
+      
+    });
+    
+    it(@"should create launch for wish from push at stand", ^{
+      
+      NSDictionary *push =
+      @{
+        @"wish" : @{@"id" : @"123"},
+        };
+      OMNLaunch *launch = [OMNLaunchFactory launchWithRemoteNotification:push];
+      [[launch should] beKindOfClass:[OMNRemotePushLaunch class]];
+      [[launch.customConfigName should] equal:@"config_prod"];
+      [[launch.wishID should] equal:@"123"];
+      [[@(launch.shouldReload) should] beNo];
+      
+    });
+    
+    it(@"should create launch for wish from push at staging", ^{
+      
+      NSDictionary *push =
+      @{
+        @"wish" : @{@"id" : @"123"},
+        @"config" : @"config_staging"
+        };
+      OMNLaunch *launch = [OMNLaunchFactory launchWithRemoteNotification:push];
+      [[launch should] beKindOfClass:[OMNRemotePushLaunch class]];
+      [[launch.customConfigName should] equal:@"config_staging"];
+      [[launch.wishID should] equal:@"123"];
+      [[@(launch.shouldReload) should] beNo];
+      
+    });
+    
   });
   
 });

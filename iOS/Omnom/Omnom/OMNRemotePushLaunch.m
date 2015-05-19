@@ -12,7 +12,7 @@
 @implementation OMNRemotePushLaunch {
   
   NSString *_qr;
-  
+  NSString *_config;
 }
 
 - (instancetype)initWithRemoteNotification:(NSDictionary *)info {
@@ -32,7 +32,7 @@
     else {
       _qr = [info[@"hash"] omn_stringValueSafe];
     }
-    
+    _config = info[@"config"];
     if ([info[@"wish"] isKindOfClass:[NSDictionary class]]) {
       self.wishID = info[@"wish"][@"id"];
     }
@@ -52,6 +52,10 @@
   BOOL isAppInactive = UIApplicationStateActive != [UIApplication sharedApplication].applicationState;
   return ([super shouldReload] && isAppInactive);
   
+}
+
+- (NSString *)customConfigName {
+  return (_config) ?: ([super customConfigName]);
 }
 
 - (PMKPromise *)getRestaurants {

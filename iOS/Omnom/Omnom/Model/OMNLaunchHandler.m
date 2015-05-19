@@ -53,7 +53,6 @@
   [window makeKeyAndVisible];
   [[UIApplication sharedApplication].delegate setWindow:window];
   
-  
   [Fabric with:@[CrashlyticsKit]];
 
 }
@@ -90,39 +89,56 @@
 
 - (void)reloadWithLaunch:(OMNLaunch *)launch {
   
+  NSLog(@"reloadWithLaunch:%@", launch.wishID);
+  NSLog(@"reloadWithLaunch:%@", launch.customConfigName);
   _launch = launch;
   
   if (launch.applicationStartedBackground) {
     return;
   }
 
-  if (_startVC &&
-      launch.shouldReload) {
+  if (_startVC) {
     
-    [_startVC reload];
+    if (launch.shouldReload) {
+      
+      [_startVC reload];
+      
+    }
+    else {
+      
+      [self handleContextLaunch];
+      
+    }
     
   }
-
-  [self startApplicationIfNeeded];
-
-  if (launch.wishID) {
-    [self showWishWithID:launch.wishID];
+  else {
+    
+    [self startApplicationIfNeeded];
+    
   }
   
-  if (launch.openURL) {
+}
+
+- (void)handleContextLaunch {
+  
+  if (_launch.wishID) {
+    [self showWishWithID:_launch.wishID];
+  }
+  
+  if (_launch.openURL) {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
       
-      [self showModalControllerWithURL:launch.openURL];
+      [self showModalControllerWithURL:_launch.openURL];
       
     });
-
+    
   }
   
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
   
-  if (_startVC) {
+  if (_startVC.readyForReload) {
     [self reloadWithLaunch:[OMNLaunchFactory launchWithURL:url sourceApplication:sourceApplication annotation:annotation]];
   }
   return YES;

@@ -54,7 +54,10 @@ OMNScanTableQRCodeVCDelegate>
 #pragma mark - OMNSearchRestaurantsVCDelegate
 
 - (void)searchRestaurantsVC:(OMNSearchRestaurantsVC *)searchRestaurantsVC didFindRestaurants:(NSArray *)restaurants {
+  
   [self showRestaurants:restaurants];
+  [[OMNLaunchHandler sharedHandler] handleContextLaunch];
+  
 }
 
 - (void)searchRestaurantsVCDidCancel:(OMNSearchRestaurantsVC *)searchRestaurantsVC {

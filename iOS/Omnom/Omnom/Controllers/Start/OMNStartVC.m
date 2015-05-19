@@ -14,7 +14,9 @@
 #import "UINavigationController+omn_replace.h"
 #import "OMNLaunchHandler.h"
 
-@implementation OMNStartVC
+@implementation OMNStartVC {
+  BOOL _readyForReload;
+}
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -22,6 +24,10 @@
   [self.navigationController setNavigationBarHidden:YES animated:NO];
   self.backgroundView.image = [UIImage omn_imageNamed:@"LaunchImage-700"];
   
+}
+
+- (BOOL)readyForReload {
+  return _readyForReload;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -38,7 +44,10 @@
 }
 
 - (void)reload {
+  
+  _readyForReload = NO;
   [self dismissViewControllerAnimated:YES completion:nil];
+  
 }
 
 - (void)startSearchingRestaurant {
@@ -46,7 +55,11 @@
   OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
   UINavigationController *navigationController = [OMNNavigationController controllerWithRootVC:searchRestaurantVC];
   navigationController.navigationBar.barStyle = UIBarStyleDefault;
-  [self presentViewController:navigationController animated:NO completion:nil];
+  [self presentViewController:navigationController animated:NO completion:^{
+    
+    _readyForReload = YES;
+    
+  }];
   
 }
 

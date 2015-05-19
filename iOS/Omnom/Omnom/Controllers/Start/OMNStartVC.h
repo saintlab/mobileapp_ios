@@ -11,6 +11,7 @@
 
 @interface OMNStartVC : OMNBackgroundVC
 
+- (BOOL)readyForReload;
 - (void)reload;
 
 @end
