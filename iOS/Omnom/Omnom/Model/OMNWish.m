@@ -83,11 +83,11 @@ OMNWishStatus wishStatusFromString(NSString *string) {
   UIColor *color = [UIColor blackColor];
   if (kWishStatusReady == self.status) {
     text = kOMN_WISH_DONE_TEXT;
-    color = [UIColor greenColor];
+    color = [OMNStyler greenColor];
   }
   else if (kWishStatusCanceled) {
     text = kOMN_WISH_CANCELLED_TEXT;
-    color = [UIColor redColor];
+    color = [OMNStyler redColor];
   }
   return [[NSAttributedString alloc] initWithString:text attributes:[OMNUtils textAttributesWithFont:FuturaOSFOmnomRegular(30.0f) textColor:color textAlignment:NSTextAlignmentCenter]];
   
