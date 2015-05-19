@@ -18,7 +18,6 @@
 #import "OMNBankCardInfo.h"
 #import "OMNBankCard.h"
 #import "OMNAcquiringTransaction.h"
-#import "OMNConstants.h"
 
 NSString * const OMNAnaliticsUserKey = @"omn_user";
 
@@ -45,24 +44,37 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   return manager;
 }
 
-- (void)setup {
+- (void)setupWithToken:(NSString *)token debugToken:(NSString *)debugToken configuration:(NSString *)configuration base_url:(NSString *)base_url {
   
-  [_mixpanel flush];
-  _mixpanel = [[Mixpanel alloc] initWithToken:[OMNConstants mixpanelToken] andFlushInterval:60];
-  _mixpanel.flushInterval = 60;
+  [_mixpanel flush], _mixpanel = nil;
+  if (token) {
+    _mixpanel = [[Mixpanel alloc] initWithToken:token andFlushInterval:60];
+    _mixpanel.flushInterval = 60;
+  }
 
-  [_mixpanelDebug flush];
-  _mixpanelDebug = nil;
+  [_mixpanelDebug flush], _mixpanelDebug = nil;
   
-  NSString *mixpanelDebugToken = [OMNConstants mixpanelDebugToken];
-  if (mixpanelDebugToken.length) {
+  if (debugToken) {
     
-    _mixpanelDebug = [[Mixpanel alloc] initWithToken:mixpanelDebugToken andFlushInterval:60];
+    _mixpanelDebug = [[Mixpanel alloc] initWithToken:debugToken andFlushInterval:60];
     _mixpanelDebug.flushInterval = 60;
     
   }
+  
+  NSDictionary *properties =
+  @{
+    @"mobile_configuration" : configuration,
+    @"base_url" : base_url,
+    };
+  [_mixpanel registerSuperProperties:properties];
+  [_mixpanelDebug registerSuperProperties:properties];
+  
   [self updateUserInfo];
   
+}
+
+- (BOOL)ready {
+  return (_mixpanel != nil);
 }
 
 - (void)setServerTimeStamp:(NSTimeInterval)serverTimeStamp {
@@ -74,12 +86,10 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 
 - (void)updateUserInfo {
   
-  if (nil == _user) {
-    [_mixpanel flush];
+  if (!_user) {
     [_mixpanel.people deleteUser];
     [_mixpanel unregisterSuperProperty:OMNAnaliticsUserKey];
     
-    [_mixpanelDebug flush];
     [_mixpanelDebug.people deleteUser];
     [_mixpanelDebug unregisterSuperProperty:OMNAnaliticsUserKey];
     return;
@@ -110,17 +120,15 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
     userInfo[@"created"] = _user.created_at;
   }
   
-  userInfo[@"mobile_configuration"] = [OMNConstants mobileConfiguration];
-  userInfo[@"base_url"] = [OMNConstants baseUrlString];
-  
   [_mixpanel.people set:@"push_notification_requested" to:@([OMNAuthorization authorization].pushNotificationsRequested)];
   [_mixpanel.people set:userInfo];
-  [_mixpanel registerSuperProperties:@{OMNAnaliticsUserKey : userInfo}];
   [self updateUserDeviceTokenIfNeeded];
-  [_mixpanel flush];
-  
   [_mixpanelDebug.people set:userInfo];
+
+  [_mixpanel registerSuperProperties:@{OMNAnaliticsUserKey : userInfo}];
   [_mixpanelDebug registerSuperProperties:@{OMNAnaliticsUserKey : userInfo}];
+  
+  [_mixpanel flush];
   [_mixpanelDebug flush];
   
 }

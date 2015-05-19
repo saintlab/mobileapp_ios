@@ -52,20 +52,11 @@ static NSUInteger const kBeaconDesiredTimesAccuracy = 5;
 }
 
 + (void)setBaeconUUID:(OMNBeaconUUID *)beaconUUID {
-  
   _beaconUUID = beaconUUID;
-  
 }
 
 + (OMNBeaconUUID *)beaconUUID {
-  
-  if (nil == _beaconUUID) {
-    NSDictionary *beaconInfo = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:@"OMNBeaconUUID" ofType:@"plist"]];
-    _beaconUUID = [[OMNBeaconUUID alloc] initWithJsonData:beaconInfo];
-  }
-  
   return _beaconUUID;
-  
 }
 
 - (void)updateWithBeacon:(CLBeacon *)beacon {

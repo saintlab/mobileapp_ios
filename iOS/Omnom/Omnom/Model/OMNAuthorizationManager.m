@@ -7,24 +7,24 @@
 //
 
 #import "OMNAuthorizationManager.h"
-#import "OMNConstants.h"
 #import "AFHTTPResponseSerializer+omn_headers.h"
+
+static OMNAuthorizationManager *_authorizationManager = nil;
 
 @implementation OMNAuthorizationManager
 
++ (void)setupWithURL:(NSString *)url {
+  _authorizationManager = [[OMNAuthorizationManager alloc] initWithBaseURL:[NSURL URLWithString:url]];
+}
+
 + (instancetype)sharedManager {
-  static id manager = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    manager = [[self alloc] initWithBaseURL:[NSURL URLWithString:[OMNConstants authorizationUrlString]]];
-  });
-  return manager;
+  return _authorizationManager;
 }
 
 - (instancetype)initWithBaseURL:(NSURL *)url {
   self = [super initWithBaseURL:url];
   if (self) {
-
+    
     self.responseSerializer = [AFJSONResponseSerializer serializer];
     self.requestSerializer = [AFJSONRequestSerializer serializer];
     [self.requestSerializer omn_addCustomHeaders];

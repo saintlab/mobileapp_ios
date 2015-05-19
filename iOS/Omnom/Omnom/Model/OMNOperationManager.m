@@ -7,19 +7,18 @@
 //
 
 #import "OMNOperationManager.h"
-#import "OMNConstants.h"
 #import "AFHTTPResponseSerializer+omn_headers.h"
 
-@implementation OMNOperationManager {
+static OMNOperationManager *_operationManager = nil;
+
+@implementation OMNOperationManager
+
++ (void)setupWithURL:(NSString *)url {
+  _operationManager = [[OMNOperationManager alloc] initWithBaseURL:[NSURL URLWithString:url]];
 }
 
 + (instancetype)sharedManager {
-  static id manager = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    manager = [[self alloc] initWithBaseURL:[NSURL URLWithString:[OMNConstants baseUrlString]]];
-  });
-  return manager;
+  return _operationManager;
 }
 
 - (instancetype)initWithBaseURL:(NSURL *)url {

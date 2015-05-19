@@ -8,8 +8,7 @@
 
 #import "OMNConstants.h"
 #import "OMNOperationManager.h"
-#import <OMNMailRuAcquiring.h>
-#import "OMNAnalitics.h"
+#import "OMNAuthorizationManager.h"
 #import <OMNBeacon.h>
 #import <SSKeychain.h>
 #import "OMNAuthorization.h"
@@ -30,31 +29,31 @@ NSString * const kOMNStaticTokenString = @"uv5zoaRsh9uff1yiSh8Dub4oc0hum3";
 
 static NSDictionary *_defaultConfig = nil;
 static NSDictionary *_customConfig = nil;
-static NSDictionary *_tokens = nil;
+static OMNConfig *_config = nil;
 
 @implementation OMNConstants
 
-+ (void)setupWithLaunch:(OMNLaunch *)launchOptions completion:(dispatch_block_t)completionBlock {
++ (PMKPromise *)setupWithLaunch:(OMNLaunch *)launchOptions {
   
-  [DDLog addLogger:[DDASLLogger sharedInstance]];
-  [DDLog addLogger:[DDTTYLogger sharedInstance]];
-  [[DDTTYLogger sharedInstance] setLogFormatter:[OMNLineNumberLogFormatter new]];
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
 
-  _customConfig = [self configWithName:launchOptions.customConfigName];
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [[DDTTYLogger sharedInstance] setLogFormatter:[OMNLineNumberLogFormatter new]];
+
+    [SSKeychain setAccessibilityType:kSecAttrAccessibleAlwaysThisDeviceOnly];
+
+  });
   
-  //setup keychain for background usage
-  [SSKeychain setAccessibilityType:kSecAttrAccessibleAlways];
+  _customConfig = [self configWithName:launchOptions.customConfigName];
+  [OMNOperationManager setupWithURL:[self baseUrlString]];
+  [OMNAuthorizationManager setupWithURL:[self authorizationUrlString]];
   
   //initialize saved token
   [[OMNAuthorization authorization] setup];
-  
-  [self loadRemoteConfigWithCompletion:^{
-    
-    if (completionBlock) {
-      completionBlock();
-    }
-    
-  }];
+
+  return [self loadRemoteConfig];
   
 }
 
@@ -78,92 +77,52 @@ static NSDictionary *_tokens = nil;
   
 }
 
-+ (void)loadRemoteConfigWithCompletion:(dispatch_block_t)completionBlock {
++ (PMKPromise *)loadRemoteConfig {
   
   NSString *path = @"/mobile/config";
-  AFHTTPRequestOperation *op = [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    if (responseObject[@"tokens"]) {
-
-      [self cacheAndUpdateConfig:responseObject];
-      
-      if (completionBlock) {
-        completionBlock();
-      }
-
-    }
-    else {
-    
-      [self loadCachedConfigWithCompletion:completionBlock];
-      NSDictionary *parametrs = nil;
-      if (responseObject) {
-        parametrs = @{@"responseObject" : responseObject};
-      }
-      [[OMNAnalitics analitics] logTargetEvent:@"ERROR_CONFIG" parametrs:parametrs];
-      
+    if (![OMNOperationManager sharedManager]) {
+      reject([OMNError omnomErrorFromRequest:path response:nil]);
+      return;
     }
     
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    AFHTTPRequestOperation *op = [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      if (responseObject[@"tokens"]) {
+        
+        OMNConfig *config = [[OMNConfig alloc] initWithJsonData:responseObject];
+        [self setConfig:config];
+        fulfill(config);
+        
+      }
+      else {
 
-    [self loadCachedConfigWithCompletion:completionBlock];
-    [[OMNAnalitics analitics] logTargetEvent:@"ERROR_CONFIG" parametrs:nil];
+        reject([OMNError omnomErrorFromRequest:path response:responseObject]);
+        
+      }
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+
+      reject([operation omn_internetError]);
+      
+    }];
+    
+    NSMutableURLRequest *mRequest = (NSMutableURLRequest *)op.request;
+    if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
+      
+      //https://github.com/saintlab/mobileapp_ios/issues/548
+      [mRequest setValue:kOMNStaticTokenString forHTTPHeaderField:@"x-authentication-token"];
+      
+    }
     
   }];
   
-  NSMutableURLRequest *mRequest = (NSMutableURLRequest *)op.request;
-  if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
-
-    //https://github.com/saintlab/mobileapp_ios/issues/548
-    [mRequest setValue:kOMNStaticTokenString forHTTPHeaderField:@"x-authentication-token"];
-
-  }
-  
 }
 
-+ (void)loadCachedConfigWithCompletion:(dispatch_block_t)completionBlock {
++ (void)setConfig:(OMNConfig *)config {
   
-  NSDictionary *cachedConfig = [NSDictionary dictionaryWithContentsOfFile:[self configPath]];
-  [self updateConfig:cachedConfig];
-  
-  if (completionBlock) {
-    completionBlock();
-  }
-  
-}
-
-+ (NSString *)configPath {
-#if OMN_TEST
-  return [@"~/Documents/config-test.dat" stringByExpandingTildeInPath];
-#else
-  return [@"~/Documents/config.dat" stringByExpandingTildeInPath];
-#endif
-}
-
-+ (void)cacheAndUpdateConfig:(NSDictionary *)config {
-  
-  [config writeToFile:[self configPath] atomically:YES];
-  [self updateConfig:config];
-  
-}
-
-+ (void)updateConfig:(NSDictionary *)config {
-  
-  if (nil == config) {
-    return;
-  }
-  
-  NSDictionary *mailRuConfig = config[@"mail_ru"];
-  [OMNMailRuAcquiring setConfig:mailRuConfig];
-  
-  NSDictionary *beaconUUID = config[@"uuid"];
-  if (beaconUUID) {
-
-    [OMNBeacon setBaeconUUID:[[OMNBeaconUUID alloc] initWithJsonData:beaconUUID]];
-    
-  }
-  
-  _tokens = config[@"tokens"];
-  [OMNAnalitics analitics];
+  _config = config;
+  [OMNBeacon setBaeconUUID:[[OMNBeaconUUID alloc] initWithJsonData:config.beaconUUID]];
   
 }
 
@@ -187,10 +146,6 @@ static NSDictionary *_tokens = nil;
   }
 }
 
-+ (BOOL)boolForKey:(NSString *)key {
-  return [[self stringForKey:key] boolValue];
-}
-
 + (NSString *)baseUrlString {
   return [self stringForKey:@"baseUrlString"];
 }
@@ -198,32 +153,14 @@ static NSDictionary *_tokens = nil;
   return [self stringForKey:@"authorizationUrlString"];
 }
 
-+ (NSString *)tokenForKey:(NSString *)key {
- 
-  if (![key isKindOfClass:[NSString class]]) {
-    return @"";
-  }
-  
-  if (_tokens[key]) {
-    return _tokens[key];
-  }
-  else {
-    return [self stringForKey:key];
-  }
-
-}
-
 + (NSString *)mixpanelToken {
-  return [self tokenForKey:@"MixpanelToken"];
+  return _config.mixpanelToken;
 }
 + (NSString *)mixpanelDebugToken {
-  return [self tokenForKey:@"MixpanelTokenDebug"];
-}
-+ (NSString *)crashlyticsAPIKey {
-  return [self stringForKey:@"CrashlyticsAPIKey"];
+  return _config.mixpanelDebugToken;
 }
 + (BOOL)disableOnEntrancePush {
-  return [[self tokenForKey:@"disableOnEntrancePush"] boolValue];
+  return _config.disableOnEntrancePush;
 }
 + (NSString *)mobileConfiguration {
   NSString *mobileConfiguration = @"debug";
@@ -239,9 +176,6 @@ static NSDictionary *_tokens = nil;
   mobileConfiguration = @"debug";
 #endif
   return mobileConfiguration;
-}
-+ (NSString *)pushSoundName {
-  return nil;
 }
 
 @end

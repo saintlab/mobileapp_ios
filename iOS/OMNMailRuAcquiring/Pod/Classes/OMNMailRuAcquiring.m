@@ -12,6 +12,8 @@
 
 static OMNMailRuConfig *_config = nil;
 
+static OMNMailRuAcquiring *_mailRuAcquiring = nil;
+
 @implementation OMNMailRuAcquiring
 
 + (OMNMailRuConfig *)config {
@@ -19,40 +21,20 @@ static OMNMailRuConfig *_config = nil;
 }
 
 + (instancetype)acquiring {
-  
-  if (!_config) {
-    [self setConfig:
-     @{
-       @"OMNMailRu_merch_id" : @"DGIS",
-       @"OMNMailRu_vterm_id" : @"DGISMobile",
-       @"OMNMailRu_cardholder" : @"Omnom",
-       @"OMNMailRu_secret_key" : @"5FEgXKDjuaegndwVJugNVUTMov8AXR7kY6CFLdivveDpxn5XmF",
-       @"OMNMailRuAcquiringBaseURL" : @"https://cpg.money.mail.ru/api/",
-       @"OMNMailRuTestCVV" : @"",
-       }];
-  }
-  
-  static id manager = nil;
-  static dispatch_once_t onceToken;
-  dispatch_once(&onceToken, ^{
-    manager = [[[self class] alloc] initWithBaseURL:[NSURL URLWithString:_config.baseURL]];
-  });
-  return manager;
+  return _mailRuAcquiring;
 }
 
-+ (void)setConfig:(NSDictionary *)parametrs {
++ (void)setupWithParametrs:(NSDictionary *)parametrs {
   
   OMNMailRuConfig *config = [OMNMailRuConfig configWithParametrs:parametrs];
+  _config = config;
   if (config.isValid) {
-    _config = config;
+    _mailRuAcquiring = [[OMNMailRuAcquiring alloc] initWithBaseURL:[NSURL URLWithString:config.baseURL]];
   }
-
-}
-
-+ (NSDictionary *)configWithName:(NSString *)name {
-  NSData *data = [NSData dataWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:name ofType:@"json"]];
-  NSDictionary *config = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-  return config;
+  else {
+    _mailRuAcquiring = nil;
+  }
+  
 }
 
 - (instancetype)initWithBaseURL:(NSURL *)url {

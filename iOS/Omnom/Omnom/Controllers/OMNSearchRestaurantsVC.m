@@ -16,6 +16,10 @@
 #import <OMNStyler.h>
 #import "OMNLaunchHandler.h"
 #import "OMNNavigationController.h"
+#import "OMNConstants.h"
+#import <OMNMailRuAcquiring.h>
+#import <OMNBeaconBackgroundManager.h>
+#import "OMNNearestBeaconSearchManager.h"
 
 @implementation OMNSearchRestaurantsVC {
   
@@ -85,37 +89,50 @@
   
 }
 
+- (void)updateSettingsWithConfig:(OMNConfig *)config {
+  
+  [OMNMailRuAcquiring setupWithParametrs:config.mailRuConfig];
+  
+  [[OMNAnalitics analitics] setupWithToken:config.mixpanelToken
+                                debugToken:config.mixpanelDebugToken
+                             configuration:[OMNConstants mobileConfiguration]
+                                  base_url:[OMNConstants baseUrlString]];
+  
+  [[OMNAuthorization authorization] registerForRemoteNotificationsIfPossible];
+  
+  [[OMNBeaconBackgroundManager manager] setDidEnterBeaconsRegionBlock:^{
+    
+    [OMNNearestBeaconSearchManager findAndProcessNearestBeacons];
+    
+  }];
+  
+}
+
 - (void)checkUserToken {
 
-  @weakify(self)
-  [self checkCLAuthorizationStatus].then(^(NSNumber *stauts) {
+  [self resetAnimation];
+
+  OMNLaunch *launch = [OMNLaunchHandler sharedHandler].launch;
+  [OMNConstants setupWithLaunch:launch].then(^(OMNConfig *config) {
     
-    [self resetAnimation];
-    return [[OMNLaunchHandler sharedHandler].launch getRestaurants];
+    [self updateSettingsWithConfig:config];
+    return [self checkCLAuthorizationStatus];
+    
+  }).then(^(NSNumber *stauts) {
+    
+    return [launch getRestaurants];
     
   }).then(^(NSArray *restaurants) {
     
-    @strongify(self)
     [self didFindRestaurants:restaurants];
     
   }).catch(^(OMNError *error) {
     
-    @strongify(self)
-    if (kOMNErrorNoUserToken == error.code) {
-      
-      [self cancelTap];
-      
-    }
-    else {
-      
-      [self didFailOmnom:error];
-      
-    }
+    [self didFailOmnom:error];
     
   });
   
 }
-
 
 - (void)stopSearching {
   _searching = NO;

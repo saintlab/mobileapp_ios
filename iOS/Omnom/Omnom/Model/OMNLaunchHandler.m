@@ -19,6 +19,7 @@
 #import "OMNConstants.h"
 #import "NSURL+omn_query.h"
 #import "OMNDefaultLaunch.h"
+#import <OMNStyler.h>
 
 @implementation OMNLaunchHandler {
   
@@ -40,14 +41,47 @@
   if (_startVC) {
     return;
   }
+
+  [self setupAppearance];
+
+  _startVC = [[OMNStartVC alloc] init];
+
+  UIWindow *window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  window.backgroundColor = [UIColor whiteColor];
+  window.tintColor = [UIColor blackColor];
+  window.rootViewController = [OMNNavigationController controllerWithRootVC:_startVC];;
+  [window makeKeyAndVisible];
+  [[UIApplication sharedApplication].delegate setWindow:window];
+  
   
   [Fabric with:@[CrashlyticsKit]];
-  
-  _startVC = [[OMNStartVC alloc] init];
-  UIWindow *window = [[UIApplication sharedApplication].delegate window];
-  window.rootViewController = [OMNNavigationController controllerWithRootVC:_startVC];
-  [window makeKeyAndVisible];
 
+}
+
+- (void)setupAppearance {
+  
+  [[UITextField appearance] setTintColor:[OMNStyler blueColor]];
+  
+  [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
+  UIFont *buttonFont = FuturaOSFOmnomRegular(20.0f);
+  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
+   @{
+     NSForegroundColorAttributeName : [UIColor blackColor],
+     NSFontAttributeName : buttonFont
+     } forState:UIControlStateNormal];
+  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
+   @{
+     NSForegroundColorAttributeName : [UIColor lightGrayColor],
+     NSFontAttributeName : buttonFont
+     } forState:UIControlStateDisabled];
+  
+  UIFont *titleFont = FuturaOSFOmnomMedium(20.0f);
+  [[UINavigationBar appearance] setTitleTextAttributes:
+   @{
+     NSForegroundColorAttributeName : [UIColor blackColor],
+     NSFontAttributeName : titleFont,
+     }];
+  
 }
 
 - (void)reload {

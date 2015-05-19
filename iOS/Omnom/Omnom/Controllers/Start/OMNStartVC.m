@@ -27,26 +27,18 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  [self checkUserToken];
+  @weakify(self)
+  dispatch_async(dispatch_get_main_queue(), ^{
+    
+    @strongify(self)
+    [self startSearchingRestaurant];
+    
+  });
   
 }
 
 - (void)reload {
   [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)checkUserToken {
-  
-  [[OMNAuthorization authorization] checkAuthenticationToken].catch(^(id error) {
-  });
-  @weakify(self)
-  [self.navigationController omn_popToViewController:self animated:YES completion:^{
-
-    @strongify(self)
-    [self startSearchingRestaurant];
-    
-  }];
-  
 }
 
 - (void)startSearchingRestaurant {

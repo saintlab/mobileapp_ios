@@ -12,5 +12,6 @@
 @interface OMNOperationManager : AFHTTPRequestOperationManager
 
 + (instancetype)sharedManager;
++ (void)setupWithURL:(NSString *)url;
 
 @end

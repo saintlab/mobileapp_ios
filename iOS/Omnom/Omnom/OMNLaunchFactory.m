@@ -69,7 +69,7 @@
   return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis-sun-city" config:@"config_staging"];
 #elif OMN_TRAVELERS
   return [[OMNTravelersLaunch alloc] init];
-#elif TARGET_IPHONE_SIMULATOR
+#elif DEBUG
   return [OMNDebugLaunch new];
 #else
   return [self decodeLaunchOptions:launchOptions];

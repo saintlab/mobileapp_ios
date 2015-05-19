@@ -16,7 +16,7 @@
 
 + (instancetype)acquiring;
 + (OMNMailRuConfig *)config;
-+ (void)setConfig:(NSDictionary *)config;
++ (void)setupWithParametrs:(NSDictionary *)parametrs;
 
 + (PMKPromise *)registerCardWithPan:(NSString *)pan exp_date:(NSString *)exp_date cvv:(NSString *)cvv user:(OMNMailRuUser *)user;
 + (PMKPromise *)registerCard:(OMNMailRuCard *)card user:(OMNMailRuUser *)user;

@@ -10,6 +10,7 @@
 
 @interface OMNAuthorizationManager : AFHTTPRequestOperationManager
 
++ (void)setupWithURL:(NSString *)url;
 + (instancetype)sharedManager;
 
 @end

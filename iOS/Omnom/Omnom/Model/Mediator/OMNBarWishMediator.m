@@ -56,7 +56,7 @@
       
     };
 
-    selectMinutesAlertVC.didSelectTipsBlock = ^(NSInteger amount) {
+    selectMinutesAlertVC.didSelectTipsBlock = ^(long long amount) {
       
       @strongify(self)
       [self.rootVC dismissViewControllerAnimated:YES completion:^{

@@ -7,6 +7,8 @@
 //
 
 @class OMNLaunch;
+#import <PromiseKit.h>
+#import "OMNConfig.h"
 
 extern NSString * const kPushSoundName;
 
@@ -35,18 +37,15 @@ extern NSString * const OMNFacebookAppUrlString;
 
 @interface OMNConstants : NSObject
 
-+ (void)setupWithLaunch:(OMNLaunch *)launchOptions completion:(dispatch_block_t)completionBlock;
-+ (NSString *)stringForKey:(NSString *)key;
-+ (BOOL)boolForKey:(NSString *)key;
++ (PMKPromise *)setupWithLaunch:(OMNLaunch *)launchOptions;
 
 + (NSString *)baseUrlString;
 + (NSString *)authorizationUrlString;
 + (NSString *)installID;
+
 + (NSString *)mixpanelToken;
 + (NSString *)mixpanelDebugToken;
-+ (NSString *)crashlyticsAPIKey;
 + (NSString *)mobileConfiguration;
-+ (NSString *)pushSoundName;
 + (BOOL)disableOnEntrancePush;
 
 @end

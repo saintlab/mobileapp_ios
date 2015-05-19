@@ -19,6 +19,7 @@
 #import "OMNNearestBeaconSearchManager.h"
 #import "OMNLaunchFactory.h"
 #import "OMNConstants.h"
+#import <OMNMailRuAcquiring.h>
 
 @implementation GAppDelegate
 
@@ -28,70 +29,11 @@
 #else
 
   OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:launchOptions];
-  [OMNConstants setupWithLaunch:launch completion:^{
-    
-    DDLogDebug(@"config loaded with options>%@", launchOptions);
-    
-    [[OMNAnalitics analitics] setup];
-    
-    [[OMNAuthorization authorization] registerForRemoteNotificationsIfPossible];
-    
-    [[OMNBeaconBackgroundManager manager] setDidEnterBeaconsRegionBlock:^{
-      
-      [OMNNearestBeaconSearchManager findAndProcessNearestBeacons];
-      
-    }];
-    
-    [[OMNLaunchHandler sharedHandler] reloadWithLaunch:launch];
-    
-  }];
+  [[OMNLaunchHandler sharedHandler] reloadWithLaunch:launch];
   
-  [self setupWindow];
-
 #endif
 
   return YES;
-  
-}
-
-- (void)setupWindow {
-  
-  [self setupAppearance];
-  
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  self.window.backgroundColor = [UIColor whiteColor];
-  self.window.tintColor = [UIColor blackColor];
-  
-  OMNBackgroundVC *backgroundVC = [[OMNBackgroundVC alloc] init];
-  backgroundVC.backgroundImage = [UIImage omn_imageNamed:@"LaunchImage-700"];
-  self.window.rootViewController = backgroundVC;
-  [self.window makeKeyAndVisible];
-  
-}
-
-- (void)setupAppearance {
-  
-  [[UITextField appearance] setTintColor:[OMNStyler blueColor]];
-  
-  [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
-  UIFont *buttonFont = FuturaOSFOmnomRegular(20.0f);
-  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
-   @{
-     NSForegroundColorAttributeName : [UIColor blackColor],
-     NSFontAttributeName : buttonFont
-     } forState:UIControlStateNormal];
-  [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:
-   @{
-     NSForegroundColorAttributeName : [UIColor lightGrayColor],
-     NSFontAttributeName : buttonFont
-     } forState:UIControlStateDisabled];
-  
-  UIFont *titleFont = FuturaOSFOmnomMedium(20.0f);
-  [[UINavigationBar appearance] setTitleTextAttributes:
-   @{
-     NSForegroundColorAttributeName : [UIColor blackColor],
-     NSFontAttributeName : titleFont,
-     }];
   
 }
 

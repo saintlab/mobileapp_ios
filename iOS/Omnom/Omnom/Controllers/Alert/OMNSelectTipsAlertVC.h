@@ -8,7 +8,7 @@
 
 #import "OMNModalAlertVC.h"
 
-typedef void(^OMNSelectTipsBlock)(NSInteger amount);
+typedef void(^OMNSelectTipsBlock)(long long amount);
 
 @interface OMNSelectTipsAlertVC : OMNModalAlertVC
 
