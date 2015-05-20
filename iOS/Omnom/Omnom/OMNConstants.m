@@ -14,6 +14,7 @@
 #import "OMNAuthorization.h"
 #import "OMNLaunch.h"
 #import "OMNLineNumberLogFormatter.h"
+#import <UIDevice-Hardware.h>
 
 NSString * const kPushSoundName = @"new_guest.caf";
 NSString * const OMNFacebookPageUrlString = @"https://www.facebook.com/omnom.menu/";
@@ -47,13 +48,37 @@ static OMNConfig *_config = nil;
   });
   
   _customConfig = [self configWithName:launchOptions.customConfigName];
-  [OMNOperationManager setupWithURL:[self baseUrlString]];
-  [OMNAuthorizationManager setupWithURL:[self authorizationUrlString]];
   
   //initialize saved token
   [[OMNAuthorization authorization] setup];
 
+  [self setupNetworkManagers];
+  
   return [self loadRemoteConfig];
+  
+}
+
++ (void)setupNetworkManagers {
+  
+  [OMNOperationManager setupWithURL:[self baseUrlString] headers:[self httpHeadersFields]];
+  [OMNAuthorizationManager setupWithURL:[self authorizationUrlString] headers:[self httpHeadersFields]];
+
+}
+
++ (NSDictionary *)httpHeadersFields {
+  
+  NSDictionary *httpHeadersFields =
+  @{
+    @"x-mobile-configuration" : [OMNConstants mobileConfiguration],
+    @"x-mobile-device-id" : [OMNConstants installID],
+    @"x-current-app-build" : CURRENT_BUILD,
+    @"x-current-app-version" : CURRENT_VERSION,
+    @"x-mobile-vendor" : @"Apple",
+    @"x-mobile-platform" : @"iOS",
+    @"x-mobile-os-version" : [[UIDevice currentDevice] systemVersion],
+    @"x-mobile-model": [[UIDevice currentDevice] modelName],
+    };
+  return httpHeadersFields;
   
 }
 
@@ -111,7 +136,7 @@ static OMNConfig *_config = nil;
     if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
       
       //https://github.com/saintlab/mobileapp_ios/issues/548
-      [mRequest setValue:kOMNStaticTokenString forHTTPHeaderField:@"x-authentication-token"];
+      [mRequest setValue:kOMNStaticTokenString forHTTPHeaderField:kAuthenticationTokenKey];
       
     }
     

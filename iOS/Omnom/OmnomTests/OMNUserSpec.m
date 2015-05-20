@@ -18,13 +18,13 @@ describe(@"OMNUser", ^{
   
   beforeAll(^{
     
-    [OMNAuthorizationManager setupWithURL:@"https://wicket.omnom.menu"];
+    [OMNAuthorizationManager setupWithURL:@"https://wicket.omnom.menu" headers:nil];
     
   });
   
   afterAll(^{
     
-    [OMNAuthorizationManager setupWithURL:nil];
+    [OMNAuthorizationManager setupWithURL:nil headers:nil];
     
   });
   

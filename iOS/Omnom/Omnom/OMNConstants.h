@@ -38,6 +38,7 @@ extern NSString * const OMNFacebookAppUrlString;
 @interface OMNConstants : NSObject
 
 + (PMKPromise *)setupWithLaunch:(OMNLaunch *)launchOptions;
++ (void)setupNetworkManagers;
 
 + (NSString *)baseUrlString;
 + (NSString *)authorizationUrlString;

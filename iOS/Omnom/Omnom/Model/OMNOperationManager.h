@@ -9,9 +9,12 @@
 #import <AFNetworking/AFNetworking.h>
 #import "OMNUtils.h"
 
+extern NSString * const kAuthenticationTokenKey;
+
 @interface OMNOperationManager : AFHTTPRequestOperationManager
 
++ (void)setupWithURL:(NSString *)url headers:(NSDictionary *)headers;
 + (instancetype)sharedManager;
-+ (void)setupWithURL:(NSString *)url;
++ (void)setAuthenticationToken:(NSString *)token;
 
 @end
