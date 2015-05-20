@@ -20,6 +20,7 @@
 #import "OMNNavigationControllerDelegate.h"
 #import "OMNAuthorization.h"
 #import "OMNAnalitics.h"
+#import "OMNDisclamerView.h"
 
 @interface OMNLoginVC ()
 <OMNConfirmCodeVCDelegate>
@@ -29,6 +30,7 @@
 @implementation OMNLoginVC {
   
   OMNErrorTextField *_loginTF;
+  UILabel *_descriptionLabel;
   TTTAttributedLabel *_hintLabel;
   
   PMKFulfiller fulfiller;
@@ -45,6 +47,7 @@
   
   [self setup];
   
+  _descriptionLabel.text = kOMN_USER_LOGIN_HINT;
   _loginTF.textField.text = self.phone;
   
 }
@@ -105,6 +108,12 @@
 
 - (void)setup {
   
+  _descriptionLabel = [UILabel omn_autolayoutView];
+  _descriptionLabel.font = FuturaOSFOmnomRegular(18.0f);
+  _descriptionLabel.textColor = [OMNStyler greyColor];
+  _descriptionLabel.textAlignment = NSTextAlignmentCenter;
+  [self.view addSubview:_descriptionLabel];
+
   _loginTF = [[OMNErrorTextField alloc] init];
   [self.view addSubview:_loginTF];
   
@@ -124,13 +133,17 @@
     NSForegroundColorAttributeName : [OMNStyler activeLinkColor],
     NSFontAttributeName : FuturaOSFOmnomRegular(15.0f),
     };
-  
   [self.view addSubview:_hintLabel];
+
+  OMNDisclamerView *disclamerView = [[OMNDisclamerView alloc] init];
+  [self.view addSubview:disclamerView];
   
   NSDictionary *views =
   @{
+    @"descriptionLabel" : _descriptionLabel,
     @"loginTF" : _loginTF,
     @"hintLabel" : _hintLabel,
+    @"disclamerView" : disclamerView,
     @"topLayoutGuide" : self.topLayoutGuide,
     };
   
@@ -139,9 +152,11 @@
     @"leftOffset" :@(OMNStyler.leftOffset),
     };
   
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[descriptionLabel]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[loginTF]-|" options:kNilOptions metrics:metrics views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[disclamerView]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[hintLabel]-|" options:kNilOptions metrics:metrics views:views]];
-  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-[loginTF]-[hintLabel]" options:kNilOptions metrics:nil views:views]];
+  [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide]-(leftOffset)-[descriptionLabel]-(leftOffset)-[loginTF]-[hintLabel]-(leftOffset)-[disclamerView]" options:kNilOptions metrics:metrics views:views]];
   
   _loginTF.textField.placeholder = kOMN_PHONE_NUMBER_PLACEHOLDER;
   _loginTF.textField.keyboardType = UIKeyboardTypePhonePad;

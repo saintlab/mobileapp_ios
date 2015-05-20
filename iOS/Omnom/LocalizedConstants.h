@@ -110,8 +110,8 @@
 #define kOMN_RESCAN_TABLE_HOWTO_FORMAT_2 NSLocalizedString(@"RESCAN_TABLE_HOWTO_FORMAT_2 %@", @"Важно, чтобы стол был определён правильно.\nЭто нужно, чтобы увидеть выставленные вам\nсчета или сделать заказ.\n\nЕсли есть сомнения, уточните у официанта,\nкакой стол использовался при создании вашего\nзаказа, и определите {RESCAN_TABLE_HOWTO_ACTION_TEXT} в Omnom\nповторно.")
 #define kOMN_RESCAN_TABLE_HOWTO_ACTION_TEXT NSLocalizedString(@"RESCAN_TABLE_HOWTO_ACTION_TEXT", @"свой стол")
 #define kOMN_CONFIRM_CODE_HINT_FORMAT NSLocalizedString(@"CONFIRM_CODE_HINT_FORMAT %@", @"Введите код из SMS, присланного на номер\n%@")
-#define kOMN_USER_DISCLAMER_FORMAT NSLocalizedString(@"USER_DISCLAMER_FORMAT %@", @"Нажимая «Далее», вы принимаете %@")
-#define kOMN_USER_DISCLAMER_ACTION_TEXT NSLocalizedString(@"USER_DISCLAMER_ACTION_TEXT", @"Пользовательское соглашение")
+#define kOMN_USER_DISCLAMER_FORMAT NSLocalizedString(@"USER_DISCLAMER_FORMAT %@", @"Нажимая «Далее», вы выражаете согласие с условиями %@")
+#define kOMN_USER_DISCLAMER_ACTION_TEXT NSLocalizedString(@"USER_DISCLAMER_ACTION_TEXT", @"Пользовательского соглашения")
 #define kOMN_HASH_DECODE_ERROR_TEXT NSLocalizedString(@"HASH_DECODE_ERROR_TEXT", @"Указан неверный код");
 #define kOMN_HASH_DECODE_HELP_TEXT NSLocalizedString(@"HASH_DECODE_HELP_TEXT", @"Введите код с Omnom-наклейки,\nфлажка или чека")
 #define kOMN_GUEST_NUMBER_FORMAT NSLocalizedString(@"GUEST_NUMBER_FORMAT %d", @"Гость {номер гостя}")
@@ -204,6 +204,9 @@
 #define kOMN_WIZZARD_TEXT_1 NSLocalizedString(@"WIZZARD_TEXT_1", @"Оплатить счёт через телефон")
 #define kOMN_WIZZARD_TEXT_2 NSLocalizedString(@"WIZZARD_TEXT_2", @"Вызвать официанта\nв любой момент")
 #define kOMN_WIZZARD_TEXT_3 NSLocalizedString(@"WIZZARD_TEXT_3", @"Разделить счёт между друзьями")
+
+#define kOMN_USER_LOGIN_HINT NSLocalizedString(@"USER_LOGIN_HINT", @"Укажите ваш номер телефона")
+
 
 //–––––––––
 #pragma mark - permissions

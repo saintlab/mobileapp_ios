@@ -8,6 +8,7 @@
 
 #import "OMNDisclamerView.h"
 #import <OMNStyler.h>
+#import "OMNLaunchHandler.h"
 
 @interface OMNDisclamerView ()
 <TTTAttributedLabelDelegate>
@@ -37,11 +38,13 @@
   NSString *buttonText = kOMN_USER_DISCLAMER_ACTION_TEXT;
   NSString *text = [NSString stringWithFormat:kOMN_USER_DISCLAMER_FORMAT, buttonText];
   
+  UIFont *font = FuturaOSFOmnomRegular(15.0f);
+  
   NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
   [attributedString setAttributes:
   @{
-    NSForegroundColorAttributeName : [colorWithHexString(@"000000") colorWithAlphaComponent:0.5f],
-    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
+    NSForegroundColorAttributeName : [OMNStyler greyColor],
+    NSFontAttributeName : font,
     } range:NSMakeRange(0, text.length)];
   self.text = attributedString;
 
@@ -49,13 +52,13 @@
   @{
     (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
     NSForegroundColorAttributeName : [OMNStyler linkColor],
-    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
+    NSFontAttributeName : font,
     };
   self.activeLinkAttributes =
   @{
     (__bridge NSString *)kCTUnderlineStyleAttributeName : @(YES),
     NSForegroundColorAttributeName : [OMNStyler activeLinkColor],
-    NSFontAttributeName : FuturaOSFOmnomRegular(18.0f),
+    NSFontAttributeName : font,
     };
 
   [self addLinkToURL:[NSURL URLWithString:@"http://legal.saintlab.com/omnom/user-agreement/"] withRange:[text rangeOfString:buttonText]];
@@ -65,7 +68,7 @@
 #pragma mark - TTTAttributedLabelDelegate
 
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
-  [[UIApplication sharedApplication] openURL:url];
+  [[OMNLaunchHandler sharedHandler] showModalControllerWithURL:url];
 }
 
 @end
