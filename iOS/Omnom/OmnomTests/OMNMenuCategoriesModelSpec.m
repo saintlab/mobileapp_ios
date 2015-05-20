@@ -76,15 +76,15 @@ describe(@"OMNMenuCategoriesModel", ^{
     
     it(@"should select and deselect first item", ^{
       
-      
       OMNMenuCategorySectionItem *firstItem = [_model.allCategories firstObject];
       
       [_model selectMenuCategoryItem:firstItem withCompletion:^(OMNTableReloadData *tableReloadData) {
         
         [[tableReloadData.insertedIndexes should] equal:[NSIndexSet omn_setWithString:@"1"]];
         [[tableReloadData.deletedIndexes should] equal:[NSIndexSet indexSet]];
-        [[tableReloadData.deletedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet omn_setWithString:@"0"] inSection:0]];
-        [[tableReloadData.insertedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 7)] inSection:0]];
+
+        [[tableReloadData.deletedIndexPaths should] equal:@[]];
+        [[tableReloadData.insertedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 6)] inSection:0]];
         
         [[_model.allCategories should] haveCountOf:13];
         [[_model.visibleCategories should] haveCountOf:5];
@@ -95,8 +95,8 @@ describe(@"OMNMenuCategoriesModel", ^{
         
         [[tableReloadData.insertedIndexes should] equal:[NSIndexSet indexSet]];
         [[tableReloadData.deletedIndexes should] equal:[NSIndexSet omn_setWithString:@"1"]];
-        [[tableReloadData.insertedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet omn_setWithString:@"0"] inSection:0]];
-        [[tableReloadData.deletedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 7)] inSection:0]];
+        [[tableReloadData.insertedIndexPaths should] equal:@[]];
+        [[tableReloadData.deletedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 6)] inSection:0]];
 
         [[_model.allCategories should] haveCountOf:13];
         [[_model.visibleCategories should] haveCountOf:4];
@@ -112,8 +112,8 @@ describe(@"OMNMenuCategoriesModel", ^{
         
         [[tableReloadData.insertedIndexes should] equal:[NSIndexSet omn_setWithString:@"4"]];
         [[tableReloadData.deletedIndexes should] equal:[NSIndexSet indexSet]];
-        [[tableReloadData.deletedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet omn_setWithString:@"0"] inSection:3]];
-        [[tableReloadData.insertedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 5)] inSection:3]];
+        [[tableReloadData.deletedIndexPaths should] equal:@[]];
+        [[tableReloadData.insertedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 4)] inSection:3]];
         
         [[_model.allCategories should] haveCountOf:13];
         [[_model.visibleCategories should] haveCountOf:5];
@@ -124,8 +124,8 @@ describe(@"OMNMenuCategoriesModel", ^{
         
         [[tableReloadData.insertedIndexes should] equal:[NSIndexSet indexSet]];
         [[tableReloadData.deletedIndexes should] equal:[NSIndexSet omn_setWithString:@"4"]];
-        [[tableReloadData.insertedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet omn_setWithString:@"0"] inSection:3]];
-        [[tableReloadData.deletedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 5)] inSection:3]];
+        [[tableReloadData.insertedIndexPaths should] equal:@[]];
+        [[tableReloadData.deletedIndexPaths should] equal:[NSIndexPath omn_indexPathsWithRows:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 4)] inSection:3]];
         
         [[_model.allCategories should] haveCountOf:13];
         [[_model.visibleCategories should] haveCountOf:4];

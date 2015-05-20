@@ -1632,6 +1632,7 @@
 		93C99116193EF6F20028F76C /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99115193EF6F20028F76C /* OMNOrder.m */; };
 		93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
 		93CA085D19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
+		93CA7D2C1B0C418200117026 /* OMNMenuProductWithRecommendationsCellItemSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA7D2B1B0C418200117026 /* OMNMenuProductWithRecommendationsCellItemSpec.m */; };
 		93CACD661ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
 		93CACD671ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
 		93CACD681ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
@@ -2487,6 +2488,7 @@
 		93C99115193EF6F20028F76C /* OMNOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrder.m; sourceTree = "<group>"; };
 		93CA085A19AA34FA00615F43 /* UIView+screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+screenshot.h"; sourceTree = "<group>"; };
 		93CA085B19AA34FA00615F43 /* UIView+screenshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+screenshot.m"; sourceTree = "<group>"; };
+		93CA7D2B1B0C418200117026 /* OMNMenuProductWithRecommendationsCellItemSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductWithRecommendationsCellItemSpec.m; sourceTree = "<group>"; };
 		93CACD641ADFDB0B00826F7B /* OMNUser+omn_mailRu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNUser+omn_mailRu.h"; sourceTree = "<group>"; };
 		93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNUser+omn_mailRu.m"; sourceTree = "<group>"; };
 		93CB66CD1A35A63D00C5B10E /* OMNChangePhoneWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangePhoneWebVC.h; sourceTree = "<group>"; };
@@ -3523,6 +3525,7 @@
 				93590E4B1B0B067F00B85EF9 /* OMNMailRuAcquiringSpec.m */,
 				93590E4D1B0B0F1B00B85EF9 /* OMNUserSpec.m */,
 				93760EE61B0C1CF4009E3A51 /* OMNOperationManagerSpec.m */,
+				93CA7D2B1B0C418200117026 /* OMNMenuProductWithRecommendationsCellItemSpec.m */,
 			);
 			path = OmnomTests;
 			sourceTree = "<group>";
@@ -6397,6 +6400,7 @@
 				935D8C831A3807F400877C02 /* OMNCameraRollPermissionDescriptionVC.m in Sources */,
 				93C126881A7109010019655A /* OMNMenuCategory.m in Sources */,
 				93E26EDC1AA9E40A0034A7A3 /* OMNDemoRestaurantMediator.m in Sources */,
+				93CA7D2C1B0C418200117026 /* OMNMenuProductWithRecommendationsCellItemSpec.m in Sources */,
 				9336BA451A960586002C2955 /* OMNMenuCategoryDelimiterCellItem.m in Sources */,
 				939F994019752D680051822E /* OMNBankCard.m in Sources */,
 				93E29970197CCBFC00051B04 /* UIImage+omn_helper.m in Sources */,

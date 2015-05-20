@@ -23,6 +23,7 @@ UITableViewDelegate,
 OMNMenuProductCellDelegate>
 
 @property (nonatomic, strong, readonly) OMNMenuProduct *menuProduct;
+@property (nonatomic, strong, readonly) NSMutableArray *recommendationItems;
 @property (nonatomic, weak) id<OMNMenuProductWithRecommedtationsCellDelegate> recommedtationItemDelegate;
 @property (nonatomic, weak) id<OMNMenuProductCellDelegate> productItemDelegate;
 @property (nonatomic, strong) OMNMenuProductCellItem *menuProductCellItem;

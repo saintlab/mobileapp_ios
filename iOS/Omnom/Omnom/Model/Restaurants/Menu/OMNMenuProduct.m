@@ -55,7 +55,7 @@ NSString * const OMNMenuProductDidChangeNotification = @"OMNMenuProductDidChange
 }
 
 - (NSString *)description {
-  return [NSString stringWithFormat:@"%@, name = %@, id = %@", NSStringFromClass(self.class), self.name, self.id];
+  return [NSString stringWithFormat:@"%@, name = %@, id = %@, recommendations>%@", NSStringFromClass(self.class), self.name, self.id, self.recommendations];
 }
 
 - (NSAttributedString *)shortDescription {

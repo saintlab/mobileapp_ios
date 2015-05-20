@@ -11,11 +11,7 @@
 #import "OMNMenuProductRecommendationsDelimiterCellItem.h"
 #import "OMNMenuProductCell.h"
 
-@implementation OMNMenuProductWithRecommendationsCellItem {
-  
-  NSMutableArray *_recommendations;
-  
-}
+@implementation OMNMenuProductWithRecommendationsCellItem
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct products:(NSDictionary *)products {
   self = [super init];
@@ -42,7 +38,7 @@
       
     }
       
-    _recommendations = recommendations;
+    _recommendationItems = recommendations;
     
   }
   return self;
@@ -58,7 +54,7 @@
   
   if ([self showRecommendations]) {
     
-    [_recommendations enumerateObjectsUsingBlock:^(id<OMNCellItemProtocol> obj, NSUInteger idx, BOOL *stop) {
+    [_recommendationItems enumerateObjectsUsingBlock:^(id<OMNCellItemProtocol> obj, NSUInteger idx, BOOL *stop) {
       
       if ([obj conformsToProtocol:@protocol(OMNCellItemProtocol)]) {
         height += [obj heightForTableView:tableView];
@@ -113,7 +109,7 @@
       numberOfRows = 1;
     } break;
     case 1: {
-      numberOfRows = _recommendations.count;
+      numberOfRows = _recommendationItems.count;
     } break;
   }
   
@@ -129,7 +125,7 @@
       item = _menuProductCellItem;
     } break;
     case 1: {
-      item = _recommendations[indexPath.row];
+      item = _recommendationItems[indexPath.row];
     } break;
   }
   return item;
