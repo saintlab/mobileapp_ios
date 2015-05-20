@@ -39,8 +39,8 @@
 //    self.qr = @"http://omnom.menu/qr/special-and-vip"; //b-cafe
     
 #pragma mark - staging
-    self.config = @"config_staging";
-    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
+//    self.config = @"config_staging";
+//    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
     
 #endif
   }

@@ -112,7 +112,12 @@ static OMNConfig *_config = nil;
       return;
     }
     
-    AFHTTPRequestOperation *op = [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSMutableURLRequest *request = [[OMNOperationManager sharedManager].requestSerializer requestWithMethod:@"GET" URLString:[[NSURL URLWithString:path relativeToURL:[OMNOperationManager sharedManager].baseURL] absoluteString] parameters:nil error:nil];
+    //https://github.com/saintlab/mobileapp_ios/issues/548
+    [request setValue:kOMNStaticTokenString forHTTPHeaderField:kAuthenticationTokenKey];
+    
+    id operation = [[OMNOperationManager sharedManager] HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
       if (responseObject[@"tokens"]) {
         
         OMNConfig *config = [[OMNConfig alloc] initWithJsonData:responseObject];
@@ -121,24 +126,17 @@ static OMNConfig *_config = nil;
         
       }
       else {
-
+        
         reject([OMNError omnomErrorFromRequest:path response:responseObject]);
         
       }
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-
+      
       reject([operation omn_internetError]);
       
     }];
-    
-    NSMutableURLRequest *mRequest = (NSMutableURLRequest *)op.request;
-    if ([mRequest respondsToSelector:@selector(setValue:forHTTPHeaderField:)]) {
-      
-      //https://github.com/saintlab/mobileapp_ios/issues/548
-      [mRequest setValue:kOMNStaticTokenString forHTTPHeaderField:kAuthenticationTokenKey];
-      
-    }
+    [[OMNOperationManager sharedManager].operationQueue addOperation:operation];
     
   }];
   
