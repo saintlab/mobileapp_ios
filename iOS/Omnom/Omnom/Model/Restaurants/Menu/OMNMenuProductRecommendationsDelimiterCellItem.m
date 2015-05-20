@@ -14,9 +14,7 @@
 }
 
 - (CGFloat)heightForTableView:(UITableView *)tableView {
-  
   return 40.0f;
-  
 }
 
 - (UITableViewCell *)cellForTableView:(UITableView *)tableView {
@@ -27,9 +25,7 @@
 }
 
 + (void)registerCellForTableView:(UITableView *)tableView {
-  
   [tableView registerClass:[OMNMenuProductRecommendationsDelimiterCell class] forCellReuseIdentifier:NSStringFromClass([OMNMenuProductRecommendationsDelimiterCell class])];
-  
 }
 
 @end

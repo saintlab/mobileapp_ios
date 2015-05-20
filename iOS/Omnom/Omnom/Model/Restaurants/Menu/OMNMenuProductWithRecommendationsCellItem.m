@@ -28,7 +28,7 @@
     NSMutableArray *recommendations = [NSMutableArray array];
     if (recommendationsCount > 0) {
       
-      [_recommendations addObject:[[OMNMenuProductRecommendationsDelimiterCellItem alloc] init]];
+      [recommendations addObject:[[OMNMenuProductRecommendationsDelimiterCellItem alloc] init]];
       
       __weak typeof(self)weakSelf = self;
       [_menuProduct.recommendations enumerateObjectsUsingBlock:^(id productID, NSUInteger idx, BOOL *stop) {
@@ -42,7 +42,8 @@
       
     }
       
-      _recommendations = recommendations;
+    _recommendations = recommendations;
+    
   }
   return self;
 }

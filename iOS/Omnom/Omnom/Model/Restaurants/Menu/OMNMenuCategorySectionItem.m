@@ -28,25 +28,17 @@
   return self;
 }
 
-- (OMNMenuProductsDelimiterCellItem *)firstDelimiter {
-  
-  OMNMenuProductsDelimiterCellItem *item = [[OMNMenuProductsDelimiterCellItem alloc] init];
-  item.type = kMenuProductsDelimiterTypeTransparent;
-  return item;
-
-}
-
 - (NSArray *)rowItems {
   
   if (!self.selected) {
-    return @[self.firstDelimiter];
+    return @[];
   }
   
   if (_rowItems) {
     return _rowItems;
   }
   
-  NSMutableArray *rowItems = [NSMutableArray arrayWithObject:self.firstDelimiter];
+  NSMutableArray *rowItems = [NSMutableArray array];
   
   NSInteger productsCount = _menuCategory.products.count;
   [_menuCategory.products enumerateObjectsUsingBlock:^(NSString *menuProductID, NSUInteger idx, BOOL *stop) {
