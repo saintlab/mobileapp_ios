@@ -148,7 +148,7 @@ OMNPreorderConfirmCellDelegate>
     
     if (kOMNErrorNoUserToken == error.code) {
       
-      [self requestAuthorization];
+      [self requestAuthorizationForCreateWish];
       
     }
     else if (kOMNErrorForbiddenWishProducts == error.code) {
@@ -168,14 +168,18 @@ OMNPreorderConfirmCellDelegate>
 
 }
 
-- (void)requestAuthorization {
+- (void)requestAuthorizationForCreateWish {
   
   OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
   [loginVC requestLogin:self].then(^(NSString *token) {
     
-    [self createWish];
+    [self dismissViewControllerAnimated:YES completion:^{
+      
+      [self createWish];
+      
+    }];
     
-  }).finally(^{
+  }).catch(^{
     
     [self dismissViewControllerAnimated:YES completion:nil];
     

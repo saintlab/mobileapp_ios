@@ -25,13 +25,13 @@
   NSMutableArray *selectedWishItems = [self.selectedWishItems mutableCopy];
   return [self selectTips].then(^(NSNumber *tipsAmount) {
   
-    NSInteger amount = round(tipsAmount.doubleValue/100.0);
-    if (amount > 0) {
+    NSInteger rublAmount = round(tipsAmount.doubleValue/100.0);
+    if (rublAmount > 0) {
 
       [selectedWishItems addObject:
        @{
          @"id" : @"omnom-tips",
-         @"quantity" : @(amount),
+         @"quantity" : @(rublAmount),
          }];
 
     }

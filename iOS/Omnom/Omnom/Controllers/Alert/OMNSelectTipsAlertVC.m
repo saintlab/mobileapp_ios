@@ -70,7 +70,13 @@ UIPickerViewDelegate>
   
 }
 
-- (NSString *)smileFromPercent:(NSInteger)tipsPercentAmount {
+- (NSString *)smileFromEnteredAmount {
+  
+  if ([self selectedTipsAmount] < 50) {
+    return @"😞";
+  }
+  
+  NSInteger tipsPercentAmount = [_tipsPicker selectedRowInComponent:0];
   NSString *smile = @"😃";
   if (0 == tipsPercentAmount) {
     smile = @"😞";
@@ -103,10 +109,9 @@ UIPickerViewDelegate>
     
   } completion:nil];
   
-  NSInteger tipsPercentAmount = [_tipsPicker selectedRowInComponent:0];
   [UIView transitionWithView:_label duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
     
-    _label.text = [NSString stringWithFormat:kOMN_PREORDER_TIPS_FORMAT, [self smileFromPercent:tipsPercentAmount]];
+    _label.text = [NSString stringWithFormat:kOMN_PREORDER_TIPS_FORMAT, [self smileFromEnteredAmount]];
     
   } completion:nil];
   
