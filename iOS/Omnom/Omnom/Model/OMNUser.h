@@ -25,6 +25,7 @@ NSCoding>
 @property (nonatomic, copy) NSString *avatar;
 
 @property (nonatomic, strong) UIImage *image;
+@property (nonatomic, assign) BOOL imageDidChanged;
 
 @property (nonatomic, assign) BOOL phone_validated;
 @property (nonatomic, assign) BOOL email_validated;

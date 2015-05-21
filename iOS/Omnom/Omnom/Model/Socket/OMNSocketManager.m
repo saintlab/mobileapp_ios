@@ -103,7 +103,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     });
     
   }];
-  
+
   [_socket on:@"order_create" listener:^(id data) {
     
     DDLogDebug(@"order_create %@, %@", data, [data class]);
@@ -118,7 +118,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     });
     
   }];
-  
+
   [_socket on:@"order_update" listener:^(id data) {
     
     DDLogDebug(@"order_update %@, %@", data, [data class]);
@@ -190,7 +190,7 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 - (void)leave:(NSString *)roomId {
   
   if (roomId) {
-    
+    DDLogDebug(@"leave:%@", roomId);
     [_rooms removeObject:roomId];
     [_socket emit:@"leave", roomId, nil];
     
@@ -228,8 +228,12 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 
   if (leave) {
     
-    _token = nil;
+    NSSet *rooms = [_rooms copy];
+    [rooms enumerateObjectsUsingBlock:^(id roomID, BOOL *stop) {
+      [self leave:roomID];
+    }];
     [_rooms removeAllObjects];
+    _token = nil;
     
   }
   

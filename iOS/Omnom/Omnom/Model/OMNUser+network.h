@@ -30,9 +30,7 @@
 
 - (void)logCoordinates:(CLLocationCoordinate2D)coordinates;
 
-- (void)updateUserInfoWithUserAndImage:(OMNUser *)user withCompletion:(dispatch_block_t)completion failure:(void(^)(OMNError *))failureBlock;
-
-- (void)uploadImage:(UIImage *)image withCompletion:(void (^)(OMNUser *user))completion progress:(void (^)(CGFloat percent))progressBlock failure:(void (^)(OMNError *error))failureBlock;
+- (PMKPromise *)updateUserInfoWithUserAndImage:(OMNUser *)user;
 
 - (void)verifyPhoneCode:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(OMNError *error))failureBlock;
 

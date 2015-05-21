@@ -25,9 +25,6 @@
 - (OMNUser *)getUser;
 - (void)beginEditing;
 
-//- (void)showError:(NSError *)error;
-//- (void)resetError;
-
 @end
 
 @protocol OMNUserInfoViewDelegate <NSObject>

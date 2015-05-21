@@ -287,114 +287,104 @@
   
 }
 
-- (void)uploadImage:(UIImage *)image withCompletion:(void (^)(OMNUser *user))completion progress:(void (^)(CGFloat percent))progressBlock failure:(void (^)(OMNError *error))failureBlock {
+- (PMKPromise *)uploadAvatar:(UIImage *)image {
   
-  NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorization authorization].token];
-  AFHTTPRequestOperation *op = [[OMNAuthorizationManager sharedManager] POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.9f) name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
-    
-  } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    if ([responseObject omn_isSuccessResponse]) {
+    NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorization authorization].token];
+    [[OMNAuthorizationManager sharedManager] POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
       
-      OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-      completion(user);
+      [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.9f) name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
       
-    }
-    else {
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
-      failureBlock([responseObject omn_userError]);
+      if ([responseObject omn_isSuccessResponse]) {
+        
+        OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+        fulfill(user);
+        
+      }
+      else {
+        
+        reject([responseObject omn_userError]);
+        
+      }
       
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock([operation omn_internetError]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      reject([operation omn_internetError]);
+      
+    }];
     
   }];
   
-  if (progressBlock) {
-    
-    [op setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-
-      CGFloat progress = (CGFloat)totalBytesWritten/totalBytesExpectedToWrite;
-      progressBlock(progress);
-      
-    }];
-    
-  }
-  
 }
 
-- (void)updateUserInfoWithUserAndImage:(OMNUser *)user withCompletion:(dispatch_block_t)completion failure:(void(^)(OMNError *))failureBlock {
+- (PMKPromise *)updateUserInfoWithUserAndImage:(OMNUser *)user {
   
-  if (user.image) {
+  if (user.image &&
+      user.imageDidChanged) {
     
-    @weakify(self)
-    [self uploadImage:user.image withCompletion:^(OMNUser *editUser) {
+    return [self uploadAvatar:user.image].then(^(OMNUser *userWithAvatar) {
       
-      @strongify(self)
-      [self updateUserInfoWithUser:editUser withCompletion:completion failure:failureBlock];
+      user.avatar = userWithAvatar.avatar;
+      return [self updateUserInfoWithUser:user];
       
-    } progress:^(CGFloat percent) {
-      
-    } failure:^(OMNError *error) {
-      
-      failureBlock([OMNError omnnomErrorFromError:error]);
-      
-    }];
+    });
 
   }
   else {
     
-    [self updateUserInfoWithUser:user withCompletion:completion failure:failureBlock];
+    return [self updateUserInfoWithUser:user];
     
   }
   
 }
 
-- (void)updateUserInfoWithUser:(OMNUser *)user withCompletion:(dispatch_block_t)completion failure:(void(^)(OMNError *))failureBlock {
+- (PMKPromise *)updateUserInfoWithUser:(OMNUser *)user {
   
-  if (nil == user) {
-    failureBlock(nil);
-    return;
-  }
-  
-  NSString *token = [OMNAuthorization authorization].token;
-  NSMutableDictionary *parameters =
-  [@{
-    @"token" : token,
-    @"name" : user.name,
-    @"email" : user.email,
-    @"birth_date" : user.birthDateString,
-    } mutableCopy];
-  
-  if (user.avatar) {
-    parameters[@"avatar"] = user.avatar;
-  }
-  
-  [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
-    if ([responseObject omn_isSuccessResponse]) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-      OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-      [[OMNAuthorization authorization] updateUserInfoWithUser:newUser];
-      completion();
-      
-    }
-    else {
-      
-      failureBlock([responseObject omn_userError]);
-      
+    if (!user) {
+      reject([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+      return;
     }
     
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    NSMutableDictionary *parameters =
+    [@{
+       @"token" : [OMNAuthorization authorization].token,
+       @"name" : user.name,
+       @"email" : user.email,
+       @"birth_date" : user.birthDateString,
+       } mutableCopy];
     
-    failureBlock([operation omn_internetError]);
+    if (user.avatar) {
+      parameters[@"avatar"] = user.avatar;
+    }
+    
+    
+    [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      if ([responseObject omn_isSuccessResponse]) {
+        
+        OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+        [[OMNAuthorization authorization] updateUserInfoWithUser:newUser];
+        fulfill(newUser);
+        
+      }
+      else {
+        
+        reject([responseObject omn_userError]);
+        
+      }
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      reject([operation omn_internetError]);
+      
+    }];
     
   }];
-  
   
 }
 

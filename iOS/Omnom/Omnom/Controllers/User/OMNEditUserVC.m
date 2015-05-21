@@ -19,16 +19,15 @@
 #import "OMNCameraRollPermissionDescriptionVC.h"
 #import "OMNUser+network.h"
 #import "OMNUserIconView.h"
-#import "OMNChangePhoneWebVC.h"
+#import "UIView+omn_autolayout.h"
 
 @interface OMNEditUserVC ()
 <OMNUserInfoViewDelegate,
-UIActionSheetDelegate,
+UIScrollViewDelegate,
 UIImagePickerControllerDelegate,
 UINavigationControllerDelegate,
 OMNCameraPermissionDescriptionVCDelegate,
-OMNCameraRollPermissionDescriptionVCDelegate,
-OMNChangePhoneWebVCDelegate>
+OMNCameraRollPermissionDescriptionVCDelegate>
 
 @end
 
@@ -37,9 +36,10 @@ OMNChangePhoneWebVCDelegate>
   UIScrollView *_scroll;
   OMNUserInfoView *_userInfoView;
   OMNUserIconView *_iconButton;
+  UILabel *_errorLabel;
+
   UIImage *_userImage;
   OMNUser *_user;
-
 }
 
 - (void)viewDidLoad {
@@ -101,14 +101,6 @@ OMNChangePhoneWebVCDelegate>
   
 }
 
-- (void)changePhoneTap:(__weak UIButton *)b {
-  
-  OMNChangePhoneWebVC *webVC = [[OMNChangePhoneWebVC alloc] initWithUser:_user];
-  webVC.delegate = self;
-  [self.navigationController pushViewController:webVC animated:YES];
-  
-}
-
 - (void)editPhotoTap {
   
   self.editPhoto = NO;
@@ -120,8 +112,26 @@ OMNChangePhoneWebVCDelegate>
                           kOMN_USER_PHOTO_SHOOT_BUTTON_TITLE,
                           kOMN_USER_PHOTO_CHOOSE_BUTTON_TITLE,
                           nil];
-  sheet.delegate = self;
-  [sheet showInView:self.view.window];
+  [sheet promiseInView:self.view.window].then(^(NSNumber *index, UIActionSheet *actionSheet) {
+
+    NSInteger buttonIndex = [index integerValue];
+    if (actionSheet.destructiveButtonIndex == buttonIndex) {
+      
+      [self changeUserImage:nil];
+      
+    }
+    else if (actionSheet.firstOtherButtonIndex == buttonIndex) {
+      
+      [self cameraTap];
+      
+    }
+    else if ((actionSheet.firstOtherButtonIndex + 1) == buttonIndex) {
+      
+      [self libraryTap];
+      
+    }
+    
+  });
   
 }
 
@@ -159,13 +169,14 @@ OMNChangePhoneWebVCDelegate>
   
 }
 
-- (void)setUserImage:(UIImage *)image {
+- (void)changeUserImage:(UIImage *)image {
   
   _userImage = image;
   _user.image = image;
   if (!image) {
     _user.avatar = @"";
   }
+  _user.imageDidChanged = YES;
   [self updateUserImage];
 
 }
@@ -229,6 +240,7 @@ OMNChangePhoneWebVCDelegate>
 
 - (void)doneTap {
   
+  [self showError:nil];
   OMNUser *editUser = [_userInfoView getUser];
   
   if (nil == editUser) {
@@ -236,33 +248,48 @@ OMNChangePhoneWebVCDelegate>
   }
   editUser.avatar = _user.avatar;
   editUser.image = _userImage;
-
+  editUser.imageDidChanged = _user.imageDidChanged;
   [self setLoading:YES];
   @weakify(self)
-  [_user updateUserInfoWithUserAndImage:editUser withCompletion:^{
+  [_user updateUserInfoWithUserAndImage:editUser].then(^(OMNUser *user) {
     
-    @strongify(self)
     [self closeTap];
     
-  } failure:^(NSError *error) {
+  }).catch(^(OMNError *error) {
+    
+    [self showError:error];
+    
+  }).finally(^{
     
     @strongify(self)
     [self setLoading:NO];
     
-  }];
+  });
+  
+}
+
+- (void)showError:(OMNError *)error {
+  
+  [UIView transitionWithView:_errorLabel duration:0.3 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+  
+    [_errorLabel setText:error.localizedDescription];
+    
+  } completion:nil];
   
 }
 
 - (void)setLoading:(BOOL)loading {
   
   if (loading) {
-    
+  
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
     self.navigationItem.leftBarButtonItem = nil;
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem omn_loadingItem];
     
   }
   else {
     
+    [[UIApplication sharedApplication] endIgnoringInteractionEvents];
     self.navigationItem.leftBarButtonItem = [UIBarButtonItem omn_barButtonWithImage:[UIImage imageNamed:@"cross_icon_white"] color:[UIColor blackColor] target:self action:@selector(closeTap)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:kOMN_SAVE_BUTTON_TITLE style:UIBarButtonItemStylePlain target:self action:@selector(doneTap)];
     
@@ -282,13 +309,18 @@ OMNChangePhoneWebVCDelegate>
 
 - (void)omn_setup {
   
-  _scroll = [[UIScrollView alloc] init];
-  _scroll.translatesAutoresizingMaskIntoConstraints = NO;
+  _scroll = [UIScrollView omn_autolayoutView];
+  _scroll.delegate = self;
   [self.view addSubview:_scroll];
 
-  UIView *contentView = [[UIView alloc] init];
-  contentView.translatesAutoresizingMaskIntoConstraints = NO;
+  UIView *contentView = [UIView omn_autolayoutView];
   [_scroll addSubview:contentView];
+  
+  _errorLabel = [UILabel omn_autolayoutView];
+  _errorLabel.font = FuturaLSFOmnomLERegular(18.0f);
+  _errorLabel.textColor = [OMNStyler redColor];
+  _errorLabel.textAlignment = NSTextAlignmentCenter;
+  [contentView addSubview:_errorLabel];
   
   _iconButton = [[OMNUserIconView alloc] init];
   _iconButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -298,24 +330,14 @@ OMNChangePhoneWebVCDelegate>
   _userInfoView.delegate = self;
   [contentView addSubview:_userInfoView];
 
-  UIButton *userEditButton = [[UIButton alloc] init];
-  userEditButton.translatesAutoresizingMaskIntoConstraints = NO;
-  userEditButton.titleLabel.font = FuturaOSFOmnomRegular(20.0f);
-  [userEditButton setTitleColor:[OMNStyler blueColor] forState:UIControlStateNormal];
-  [userEditButton setTitleColor:[[OMNStyler blueColor] colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
-  [userEditButton setTitle:kOMN_CHANGE_PHONE_BUTTON_TITLE forState:UIControlStateNormal];
-  [userEditButton addTarget:self action:@selector(changePhoneTap:) forControlEvents:UIControlEventTouchUpInside];
-  [_userInfoView addSubview:userEditButton];
-
-  
   NSDictionary *views =
   @{
     @"scroll" : _scroll,
     @"userInfoView" : _userInfoView,
     @"iconButton" : _iconButton,
     @"contentView" : contentView,
+    @"errorLabel" : _errorLabel,
     @"topLayoutGuide" : self.topLayoutGuide,
-    @"userEditButton" : userEditButton,
     };
   
   NSDictionary *metrics =
@@ -327,14 +349,12 @@ OMNChangePhoneWebVCDelegate>
   [self.view addConstraint:[NSLayoutConstraint constraintWithItem:contentView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[scroll]|" options:kNilOptions metrics:metrics views:views]];
   [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[topLayoutGuide][scroll]|" options:kNilOptions metrics:metrics views:views]];
-  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(20)-[iconButton]-(30)-[userInfoView]|" options:kNilOptions metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-(10)-[errorLabel]-(10)-[iconButton]-(30)-[userInfoView]|" options:kNilOptions metrics:metrics views:views]];
   [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[userInfoView]|" options:kNilOptions metrics:metrics views:views]];
   [contentView addConstraint:[NSLayoutConstraint constraintWithItem:_iconButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0f]];
   [_scroll addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[contentView]|" options:kNilOptions metrics:metrics views:views]];
+  [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-(leftOffset)-[errorLabel]-(leftOffset)-|" options:kNilOptions metrics:metrics views:views]];
 
-  [_userInfoView addConstraint:[NSLayoutConstraint constraintWithItem:userEditButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:_userInfoView.phoneTF.textField attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
-  [_userInfoView addConstraint:[NSLayoutConstraint constraintWithItem:userEditButton attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:_userInfoView.phoneTF.textField attribute:NSLayoutAttributeRight multiplier:1.0f constant:0.0f]];
-  
 }
 
 #pragma mark - OMNUserInfoViewDelegate
@@ -376,32 +396,6 @@ OMNChangePhoneWebVCDelegate>
   
 }
 
-#pragma mark - UIActionSheetDelegate
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-  
-  if (actionSheet.cancelButtonIndex == buttonIndex) {
-    return;
-  }
-  
-  if (actionSheet.destructiveButtonIndex == buttonIndex) {
-  
-    [self setUserImage:nil];
-  
-  }
-  else if (actionSheet.firstOtherButtonIndex == buttonIndex) {
-    
-    [self cameraTap];
-    
-  }
-  else if ((actionSheet.firstOtherButtonIndex + 1) == buttonIndex) {
-    
-    [self libraryTap];
-    
-  }
-  
-}
-
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -410,7 +404,7 @@ OMNChangePhoneWebVCDelegate>
   [self dismissViewControllerAnimated:YES completion:^{
   
     @strongify(self)
-    [self setUserImage:info[UIImagePickerControllerEditedImage]];
+    [self changeUserImage:info[UIImagePickerControllerEditedImage]];
     
   }];
   
@@ -448,10 +442,10 @@ OMNChangePhoneWebVCDelegate>
   
 }
 
-#pragma mark - OMNChangePhoneWebVCDelegate
+#pragma mark - UIScrollViewDelegate
 
-- (void)changePhoneWebVCDidChangePhone:(OMNChangePhoneWebVC *)changePhoneWebVC {
-  [self closeTap];
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+  [self.view endEditing:YES];
 }
 
 @end

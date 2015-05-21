@@ -28,9 +28,7 @@
 }
 
 - (void)dealloc {
-  
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  
 }
 
 - (instancetype)initWithUser:(OMNUser *)user {
@@ -231,9 +229,7 @@
 }
 
 - (void)cancelTap {
-  
   [self endEditing:YES];
-  
 }
 
 - (OMNUser *)getUser {
@@ -244,11 +240,8 @@
   [_birthdayTF setErrorText:nil];
   
   BOOL hasErrors = NO;
-  if (0 == _emailTF.textField.text.length) {
-    [_emailTF setErrorText:kOMN_REGISTER_USER_ERROR_NO_EMAIL];
-    hasErrors = YES;
-  }
-  else if (![_emailTF.textField.text omn_isValidEmail]) {
+  if (_emailTF.textField.text.length &&
+      ![_emailTF.textField.text omn_isValidEmail]) {
     [_emailTF setErrorText:kOMN_REGISTER_USER_ERROR_EMAIL];
     hasErrors = YES;
   }
@@ -259,11 +252,6 @@
   }
   else if (![_phoneTF.textField.text omn_isValidPhone]) {
     [_phoneTF setErrorText:kOMN_REGISTER_USER_ERROR_PHONE_NUMBER];
-    hasErrors = YES;
-  }
-  
-  if (0 == _nameTF.textField.text.length) {
-    [_nameTF setErrorText:kOMN_REGISTER_USER_ERROR_NO_NAME];
     hasErrors = YES;
   }
   

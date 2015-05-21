@@ -225,24 +225,24 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)registerDeviceIfPossible {
   
-  if (self.deviceToken &&
-      self.token) {
-    
-    NSDictionary *parameters =
-    @{
-      @"push_token" : [self.deviceToken omn_deviceTokenString],
-      };
-    [[OMNOperationManager sharedManager] POST:@"/notifier/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-      
-      [[OMNAnalitics analitics] logDebugEvent:@"NOTIFIER_REGISTER" jsonRequest:parameters jsonResponse:responseObject];
-      
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-      
-      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_NOTIFIER" jsonRequest:parameters responseOperation:operation];
-      
-    }];
-    
+  if (!(self.deviceToken && self.token)) {
+    return;
   }
+  
+  NSDictionary *parameters =
+  @{
+    @"push_token" : [self.deviceToken omn_deviceTokenString],
+    };
+  [[OMNOperationManager sharedManager] POST:@"/notifier/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    DDLogDebug(@"notifier/register>%@", parameters[@"push_token"]);
+    [[OMNAnalitics analitics] logDebugEvent:@"NOTIFIER_REGISTER" jsonRequest:parameters jsonResponse:responseObject];
+    
+  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    
+    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_REGISTER_NOTIFIER" jsonRequest:parameters responseOperation:operation];
+    
+  }];
   
 }
 

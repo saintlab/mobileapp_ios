@@ -81,8 +81,11 @@ NSString *entranceModeFromString(NSString *string) {
       _orders_paid_url = [NSURL URLWithString:orders_paid_url];
     }
     
+#if DEBUG
 #warning TODO delivery_dates
-//    _entrance_mode = kRestaurantModeNone;
+    _entrance_mode = kEntranceModeOnTable;
+#endif
+    
     _delivery_dates =
     @[
       @"1/04/2015",

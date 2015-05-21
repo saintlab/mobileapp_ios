@@ -46,10 +46,7 @@ OMNOrderCalculationVCDelegate>
 - (void)dealloc {
   
   if (!_restaurant.is_demo) {
-  
-    [[OMNSocketManager manager] leave:_table.id];
     [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
-    
   }
   
 }
