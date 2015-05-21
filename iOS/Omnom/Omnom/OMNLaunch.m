@@ -11,7 +11,7 @@
 @implementation OMNLaunch
 
 - (NSString *)customConfigName {
-#if APP_STORE || OMN_TEST
+#if (APP_STORE || OMN_TEST)
   return @"config_prod";
 #else
 #warning customConfigName
