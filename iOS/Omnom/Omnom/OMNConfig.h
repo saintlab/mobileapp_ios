@@ -15,6 +15,7 @@
 @property (nonatomic, strong, readonly) NSDictionary *beaconUUID;
 @property (nonatomic, copy, readonly) NSString *mixpanelToken;
 @property (nonatomic, copy, readonly) NSString *mixpanelDebugToken;
+@property (nonatomic, assign) NSTimeInterval serverTimestamp;
 
 - (instancetype)initWithJsonData:(id)jsonData;
 

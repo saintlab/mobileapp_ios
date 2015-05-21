@@ -96,7 +96,8 @@
   [[OMNAnalitics analitics] setupWithToken:config.mixpanelToken
                                 debugToken:config.mixpanelDebugToken
                              configuration:[OMNConstants mobileConfiguration]
-                                  base_url:[OMNConstants baseUrlString]];
+                                  base_url:[OMNConstants baseUrlString]
+                           serverTimestamp:config.serverTimestamp];
   
   [[OMNAuthorization authorization] registerForRemoteNotificationsIfPossible];
   [[OMNAuthorization authorization] checkAuthenticationToken];

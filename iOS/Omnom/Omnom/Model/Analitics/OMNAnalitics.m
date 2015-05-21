@@ -44,7 +44,9 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
   return manager;
 }
 
-- (void)setupWithToken:(NSString *)token debugToken:(NSString *)debugToken configuration:(NSString *)configuration base_url:(NSString *)base_url {
+- (void)setupWithToken:(NSString *)token debugToken:(NSString *)debugToken configuration:(NSString *)configuration base_url:(NSString *)base_url serverTimestamp:(NSTimeInterval)serverTimestamp {
+  
+  [self setServerTimeStamp:serverTimestamp];
   
   [_mixpanel flush], _mixpanel = nil;
   if (token) {

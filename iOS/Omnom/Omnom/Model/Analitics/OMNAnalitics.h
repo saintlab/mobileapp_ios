@@ -29,8 +29,7 @@ typedef NS_ENUM(NSInteger, RestaurantEnterMode) {
 @property (nonatomic, strong) UIUserNotificationSettings *notificationSettings;
 
 - (void)setUser:(OMNUser *)user;
-- (void)setServerTimeStamp:(NSTimeInterval)serverTimeStamp;
-- (void)setupWithToken:(NSString *)token debugToken:(NSString *)debugToken configuration:(NSString *)configuration base_url:(NSString *)base_url;
+- (void)setupWithToken:(NSString *)token debugToken:(NSString *)debugToken configuration:(NSString *)configuration base_url:(NSString *)base_url serverTimestamp:(NSTimeInterval)serverTimestamp;
 - (BOOL)ready;
 - (void)logUserLoginWithRegistration:(BOOL)withRegistration;
 - (void)logEnterRestaurant:(OMNRestaurant *)restaurant mode:(RestaurantEnterMode)mode;

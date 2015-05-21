@@ -213,7 +213,6 @@
       if ([responseObject omn_isSuccessResponse]) {
         
         OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-        [[OMNAnalitics analitics] setServerTimeStamp:[responseObject omn_timeStamp]];
         fulfill(user);
         
       }

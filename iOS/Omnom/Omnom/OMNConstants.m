@@ -121,6 +121,7 @@ static OMNConfig *_config = nil;
       if (responseObject[@"tokens"]) {
         
         OMNConfig *config = [[OMNConfig alloc] initWithJsonData:responseObject];
+        config.serverTimestamp = [operation.response.allHeaderFields[@"X-Server-Time"] doubleValue];
         [self setConfig:config];
         fulfill(config);
         
