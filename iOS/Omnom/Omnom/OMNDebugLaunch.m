@@ -24,7 +24,7 @@
 #elif DEBUG
 
 #pragma mark - production
-    self.config = @"config_prod";
+//    self.config = @"config_prod";
 //    self.qr =  @"http://m.2gis.ru/os/";
 //    _qr = @"qr-code-for-4-ruby-bar-nsk-at-lenina-9"; //rubi
 //    _qr = @"qr-code-for-0-harats-tomsk";
@@ -39,8 +39,8 @@
 //    self.qr = @"http://omnom.menu/qr/special-and-vip"; //b-cafe
     
 #pragma mark - staging
-    self.config = @"config_staging";
-    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
+//    self.config = @"config_staging";
+//    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
     
 #endif
   }

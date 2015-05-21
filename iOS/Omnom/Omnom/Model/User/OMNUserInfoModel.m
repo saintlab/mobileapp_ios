@@ -71,6 +71,7 @@
     _sectionItems =
     @[
       self.loginSection,
+      self.moneyItems,
       self.feedbackItems,
       ];
     
@@ -82,7 +83,9 @@
   
   OMNUserInfoSection *section = [[OMNUserInfoSection alloc] init];
   NSMutableArray *moneyItems = [NSMutableArray array];
-  [moneyItems addObject:[[OMNBankCardUserInfoItem alloc] init]];
+  if ([OMNAuthorization authorization].isAuthorized) {
+    [moneyItems addObject:[[OMNBankCardUserInfoItem alloc] init]];
+  }
   if (_restaurantMediator.showTableButton) {
   
     [moneyItems addObject:[[OMNTableUserInfoItem alloc] initWithMediator:_restaurantMediator]];

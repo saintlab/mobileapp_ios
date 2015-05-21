@@ -11,7 +11,12 @@
 @implementation OMNLaunch
 
 - (NSString *)customConfigName {
+#warning customConfigName
+#if APP_STORE
   return @"config_prod";
+#else
+  return @"config_staging";
+#endif
 }
 
 - (BOOL)shouldReload {
