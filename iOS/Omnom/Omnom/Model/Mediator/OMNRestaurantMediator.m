@@ -61,7 +61,7 @@ OMNOrderCalculationVCDelegate>
     
     if (!_restaurant.is_demo) {
       
-      [[OMNSocketManager manager] connectWithToken:[OMNAuthorization authorization].token completion:^{
+      [[OMNSocketManager manager] connectWithCompletion:^{
       }];
       
     }

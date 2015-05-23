@@ -38,7 +38,7 @@
     selectedTitle = [self titleForPercent:tip.percent];
     
   }
-  else if (self.enteredAmount > self.percentTipsThreshold) {
+  else if (self.enteredAmount >= self.percentTipsThreshold) {
 
     normalTitle = [self titleForPercent:tip.percent];
     selectedTitle = normalTitle;
