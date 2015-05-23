@@ -234,7 +234,7 @@
 }
 
 - (void)paymentDidFinishWithBill:(OMNBill *)bill {
-NSLog(@"%@", _presentingVC);
+
   [_presentingVC dismissViewControllerAnimated:YES completion:^{
     
     self.fulfill(PMKManifold(self, bill));

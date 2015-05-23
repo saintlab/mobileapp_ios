@@ -122,7 +122,7 @@
   
   if (self.showQRScan) {
     
-    [self onTableTap];
+    [self processQRScan];
     
   }
   
@@ -152,7 +152,7 @@
   
 }
 
-- (void)onTableTap {
+- (void)processQRScan {
   
   self.showQRScan = NO;
   if (_restaurant.canProcess) {

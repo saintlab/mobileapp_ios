@@ -225,7 +225,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)registerDeviceIfPossible {
   
-  if (!(self.deviceToken && self.token)) {
+  if (!self.deviceToken) {
     return;
   }
   
