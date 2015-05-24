@@ -86,23 +86,18 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
 
 }
 
-- (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock {
+- (PMKPromise *)loadTableProductItems {
   
   self.loading = YES;
-  @weakify(self)
-  [_visitor.restaurant getRecommendationItems:^(NSArray *productItems) {
+  return [_visitor.restaurant getRecommendationItems].then(^(NSArray *productItems) {
     
-    @strongify(self)
     [self didLoadTableProductItems:productItems];
-    completionBlock();
     
-  } error:^(OMNError *error) {
+  }).finally(^{
     
-    completionBlock();
-    @strongify(self)
     self.loading = NO;
     
-  }];
+  });
   
 }
 
@@ -126,7 +121,6 @@ typedef NS_ENUM(NSInteger, OMNMyOrderSection) {
   
   _recommendationProducts = [tableProducts copy];
   self.reloadSectionsBlock([NSIndexSet indexSetWithIndex:kMyOrderSectionRecommendations], YES);
-  self.loading = NO;
   
 }
 

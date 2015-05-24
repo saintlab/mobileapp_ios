@@ -116,7 +116,7 @@ OMNPreorderConfirmCellDelegate>
   [super viewWillAppear:animated];
 
   [_model updatePreorderedProductsAnimated:NO];
-  [_model loadTableProductItemsWithCompletion:^{}];
+  [_model loadTableProductItems];
   [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"upper_bar_wish"] forBarMetrics:UIBarMetricsDefault];
 
 }
@@ -213,11 +213,11 @@ OMNPreorderConfirmCellDelegate>
 - (void)preorderActionCellDidRefresh:(OMNPreorderActionCell *)preorderActionCell {
   
   preorderActionCell.refreshButton.enabled = NO;
-  [_model loadTableProductItemsWithCompletion:^{
+  [_model loadTableProductItems].finally(^{
     
     preorderActionCell.refreshButton.enabled = YES;
     
-  }];
+  });
   
 }
 

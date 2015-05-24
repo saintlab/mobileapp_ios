@@ -30,7 +30,7 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 - (PMKPromise *)leave;
 - (PMKPromise *)entrance;
 
-- (void)getRecommendationItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock;
+- (PMKPromise *)getRecommendationItems;
 
 @end
 

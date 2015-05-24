@@ -21,7 +21,7 @@ UITableViewDataSource>
 @property (nonatomic, assign) BOOL loading;
 
 - (instancetype)initWithWishMediator:(OMNWishMediator *)wishMediator actionDelegate:(id<OMNPreorderActionCellDelegate>)actionDelegate preorderDelegate:(id<OMNPreorderConfirmCellDelegate>)preorderDelegate;
-- (void)loadTableProductItemsWithCompletion:(dispatch_block_t)completionBlock;
+- (PMKPromise *)loadTableProductItems;
 - (void)updatePreorderedProductsAnimated:(BOOL)animated;
 - (void)removeForbiddenProducts:(OMNForbiddenWishProducts *)forbiddenWishProducts;
 - (void)configureTableView:(UITableView *)tableView;

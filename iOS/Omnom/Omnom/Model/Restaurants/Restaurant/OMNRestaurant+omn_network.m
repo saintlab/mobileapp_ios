@@ -337,31 +337,36 @@
   
 }
 
-- (void)getRecommendationItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock {
+- (PMKPromise *)getRecommendationItems {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/recommendations", self.id];
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *response) {
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    if (![response isKindOfClass:[NSArray class]]) {
-      productItemsBlock(@[]);
-      return;
-    }
-    
-    NSMutableArray *items = [NSMutableArray arrayWithCapacity:[response count]];
-    [response enumerateObjectsUsingBlock:^(NSDictionary *item, NSUInteger idx, BOOL *stop) {
+    [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, NSArray *response) {
       
-      if (item[@"id"]) {
-        [items addObject:item[@"id"]];
+      if (![response isKindOfClass:[NSArray class]]) {
+        fulfill(@[]);
+        return;
       }
       
+      NSMutableArray *items = [NSMutableArray arrayWithCapacity:[response count]];
+      [response enumerateObjectsUsingBlock:^(NSDictionary *item, NSUInteger idx, BOOL *stop) {
+        
+        if (item[@"id"]) {
+          [items addObject:item[@"id"]];
+        }
+        
+      }];
+      
+      fulfill(items);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_PRODUCT_ITEMS" jsonRequest:path responseOperation:operation];
+      reject([operation omn_internetError]);
+      
     }];
-    
-    productItemsBlock(items);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"ERROR_GET_PRODUCT_ITEMS" jsonRequest:path responseOperation:operation];
-    errorBlock([operation omn_internetError]);
     
   }];
   
