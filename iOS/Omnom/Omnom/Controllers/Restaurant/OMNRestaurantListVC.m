@@ -127,28 +127,24 @@
 
 - (void)refreshRestaurants {
   
-  @weakify(self)
-  [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
+  [[OMNLocationManager sharedManager] getLocation].then(^(NSNumber *latitude, NSNumber *longitude) {
     
-    [OMNRestaurant getRestaurantsForLocation:coordinate withCompletion:^(NSArray *restaurants) {
-
-      @strongify(self)
-      [self finishLoadingRestaurants:restaurants];
-      
-    } failure:^(OMNError *error) {
-      
-      @strongify(self)
-      [self.refreshControl endRefreshing];
-      
-    }];
+    return [OMNRestaurant restaurantsForLocation:CLLocationCoordinate2DMake(latitude.doubleValue, longitude.doubleValue)];
     
-  }];
+  }).then(^(NSArray *restaurants) {
+    
+    [self finishLoadingRestaurants:restaurants];
+    
+  }).finally(^{
+    
+    [self.refreshControl endRefreshing];
+    
+  });
   
 }
 
 - (void)finishLoadingRestaurants:(NSArray *)restaurants {
   
-  [self.refreshControl endRefreshing];
   self.restaurants = [restaurants bk_map:^id(OMNRestaurant *obj) {
     
     return [[OMNRestaurantCellItem alloc] initWithRestaurant:obj];
@@ -161,9 +157,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  
   return 2;
-  
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -249,15 +243,11 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  
   [self updateBottomToolbar];
-
 }
 
 - (void)updateBottomToolbar {
-  
   _bottomToolbar.transform = CGAffineTransformMakeTranslation(0.0f, self.tableView.contentOffset.y + CGRectGetHeight(self.tableView.frame) - CGRectGetHeight(_bottomToolbar.frame));
-  
 }
 
 - (void)omn_setup {

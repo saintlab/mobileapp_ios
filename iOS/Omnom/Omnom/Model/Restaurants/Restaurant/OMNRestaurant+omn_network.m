@@ -41,26 +41,20 @@
 
 - (PMKPromise *)handleEnterEvent {
   
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-  
-    if ([self readyForEnter]) {
-      
-      [self setLastEntarDate:[NSDate date]];
-      [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackground];
-      [self nearbyWithCompletion:^{
-        
-        fulfill(nil);
-        
-      }];
-      
-    }
-    else {
-      
-      fulfill(nil);
-      
-    }
+  if ([self readyForEnter]) {
     
-  }];
+    [self setLastEntarDate:[NSDate date]];
+    [[OMNAnalitics analitics] logEnterRestaurant:self mode:kRestaurantEnterModeBackground];
+    return [self nearby];
+    
+  }
+  else {
+    
+    return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+      fulfill(nil);
+    }];
+    
+  }
   
 }
 
@@ -202,23 +196,27 @@
   
 }
 
-+ (void)restaurantWithID:(NSString *)restaurantID withCompletion:(OMNRestaurantBlock)restaurantBlock failure:(void(^)(OMNError *error))failureBlock {
++ (PMKPromise *)restaurantWithID:(NSString *)restaurantID {
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@", restaurantID];
 
-  [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:responseObject];
-    restaurantBlock(restaurant);
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock([operation omn_internetError]);
-    
+    [[OMNOperationManager sharedManager] GET:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      OMNRestaurant *restaurant = [[OMNRestaurant alloc] initWithJsonData:responseObject];
+      fulfill(restaurant);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      reject([operation omn_internetError]);
+      
+    }];
+
   }];
   
 }
 
-+ (void)getRestaurantsForLocation:(CLLocationCoordinate2D)coordinate withCompletion:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock {
++ (PMKPromise *)restaurantsForLocation:(CLLocationCoordinate2D)coordinate {
   
   NSDictionary *parameters = nil;
   
@@ -234,14 +232,18 @@
     
   }
   
-  [[OMNOperationManager sharedManager] GET:@"/restaurants/all" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    [responseObject omn_decodeWithRestaurantsBlock:restaurantsBlock failureBlock:failureBlock];
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    failureBlock([operation omn_internetError]);
-    
+    [[OMNOperationManager sharedManager] GET:@"/restaurants/all" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      fulfill([responseObject omn_decodeRestaurants]);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      reject([operation omn_internetError]);
+      
+    }];
+
   }];
   
 }
@@ -276,19 +278,23 @@
   }];
 }
 
-- (void)nearbyWithCompletion:(dispatch_block_t)completionBlock {
+- (PMKPromise *)nearby {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/nearby", self.id];
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    DDLogDebug(@"nearby>%@", responseObject);
-    completionBlock();
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    DDLogError(@"nearby>%@", error);
-    completionBlock();
-    
+    [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      DDLogDebug(@"nearby>%@", responseObject);
+      fulfill(nil);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      DDLogError(@"nearby>%@", error);
+      fulfill(nil);
+      
+    }];
+
   }];
   
 }
@@ -312,17 +318,21 @@
   
 }
 
-- (void)leaveWithCompletion:(dispatch_block_t)completionBlock {
+- (PMKPromise *)leave {
   
   NSString *path = [NSString stringWithFormat:@"/restaurants/%@/leave", self.id];
-  [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    completionBlock();
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    completionBlock();
-    
+    [[OMNOperationManager sharedManager] POST:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      fulfill(nil);
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      fulfill(nil);
+      
+    }];
+
   }];
   
 }
@@ -362,11 +372,10 @@
 
 @implementation NSObject (omn_restaurants)
 
-- (void)omn_decodeWithRestaurantsBlock:(OMNRestaurantsBlock)restaurantsBlock failureBlock:(void(^)(OMNError *error))failureBlock {
+- (NSArray *)omn_decodeRestaurants {
   
   if (![self isKindOfClass:[NSDictionary class]]) {
-    failureBlock([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
-    return;
+    return @[];
   }
   
   NSDictionary *dictionary = (NSDictionary *)self;
@@ -382,7 +391,7 @@
     
   }
   
-  restaurantsBlock([restaurants copy]);
+  return [restaurants copy];
   
 }
 

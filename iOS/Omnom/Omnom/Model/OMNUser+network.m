@@ -234,31 +234,6 @@
   
 }
 
-- (void)logCoordinates:(CLLocationCoordinate2D)coordinates {
-  
-  NSDictionary *parameters =
-  @{
-    @"longitude" : @(coordinates.longitude),
-    @"latitude" : @(coordinates.latitude),
-    @"token" : [OMNAuthorization authorization].token,
-    };
-  
-  [[OMNAuthorizationManager sharedManager] POST:@"/user/geo" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-    
-    if (![responseObject omn_isSuccessResponse]) {
-      
-      [[OMNAnalitics analitics] logDebugEvent:@"USER_COORDINATES_ERROR" jsonRequest:parameters jsonResponse:responseObject];
-      
-    }
-    
-  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    
-    [[OMNAnalitics analitics] logDebugEvent:@"USER_COORDINATES_ERROR" jsonRequest:parameters responseOperation:operation];
-    
-  }];
-  
-}
-
 - (void)loadImageWithCompletion:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock {
   
   if (0 == self.avatar.length) {

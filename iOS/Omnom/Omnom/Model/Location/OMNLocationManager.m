@@ -16,7 +16,7 @@
 @implementation OMNLocationManager {
 
   CLLocationManager *_locationManager;
-  OMNLocationBlock _locationBlock;
+  PMKFulfiller _fulfiller;
   
 }
 
@@ -43,10 +43,14 @@
   return self;
 }
 
-- (void)getLocation:(OMNLocationBlock)block {
+- (PMKPromise *)getLocation {
 
-  _locationBlock = [block copy];
-  [self startUpdatingLocationIfNeeded];
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    self->_fulfiller = fulfill;
+    [self startUpdatingLocationIfNeeded];
+    
+  }];
   
 }
 
@@ -55,8 +59,7 @@
   CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
   BOOL permissionGranted = (kCLAuthorizationStatusAuthorizedAlways == authorizationStatus || kCLAuthorizationStatusAuthorizedWhenInUse == authorizationStatus);
   
-  if (_locationBlock &&
-      permissionGranted) {
+  if (permissionGranted) {
     
     [_locationManager startUpdatingLocation];
     
@@ -70,18 +73,17 @@
 }
 
 - (void)notFoundCoordinate {
-  
   [self didFindCoordinate:CLLocationCoordinate2DMake(0.0, 0.0)];
-  
 }
 
 - (void)didFindCoordinate:(CLLocationCoordinate2D)coordinate {
   
   [_locationManager stopUpdatingLocation];
-  if (_locationBlock) {
-    
-    _locationBlock(coordinate);
-    _locationBlock = nil;
+  
+  if (_fulfiller) {
+
+    _fulfiller(PMKManifold(@(coordinate.latitude), @(coordinate.longitude)));
+    _fulfiller = nil;
 
   }
   
@@ -101,15 +103,11 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-  
   [self startUpdatingLocationIfNeeded];
-  
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-  
   [self notFoundCoordinate];
-  
 }
 
 @end

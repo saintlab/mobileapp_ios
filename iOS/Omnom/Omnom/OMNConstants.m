@@ -151,7 +151,15 @@ static OMNConfig *_config = nil;
 }
 
 + (NSDictionary *)configWithName:(NSString *)name {
-  return [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:name ofType:@"json"]] options:NSJSONReadingMutableContainers error:nil];
+  
+  NSString *path = [[NSBundle bundleForClass:[self class]] pathForResource:[NSString stringWithFormat:@"%@.json", name] ofType:nil];
+  if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+    return [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:path] options:NSJSONReadingMutableContainers error:nil];
+  }
+  else {
+    return nil;
+  }
+
 }
 
 + (NSDictionary *)defaultConfig {

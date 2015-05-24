@@ -76,6 +76,23 @@ describe(@"OMNConstants", ^{
     
   });
   
+  context(@"config", ^{
+    
+    it(@"should return empty config", ^{
+      
+      [[[OMNConstants configWithName:nil] should] beNil];
+      [[[OMNConstants configWithName:@"хрень"] should] beNil];
+      
+    });
+    
+    it(@"should return valid config", ^{
+      
+      [[[OMNConstants configWithName:@"config_stand"] should] beNonNil];
+      
+    });
+    
+  });
+  
 });
 
 SPEC_END

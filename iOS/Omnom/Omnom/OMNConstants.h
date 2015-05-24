@@ -49,4 +49,6 @@ extern NSString * const OMNFacebookAppUrlString;
 + (NSString *)mobileConfiguration;
 + (BOOL)disableOnEntrancePush;
 
++ (NSDictionary *)configWithName:(NSString *)name;
+
 @end

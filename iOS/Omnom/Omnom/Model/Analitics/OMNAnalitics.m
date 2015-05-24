@@ -14,7 +14,6 @@
 #import <AFNetworking.h>
 #import <Mixpanel.h>
 #import "OMNAuthorization.h"
-#import "OMNLocationManager.h"
 #import "OMNBankCardInfo.h"
 #import "OMNBankCard.h"
 #import "OMNAcquiringTransaction.h"
@@ -200,15 +199,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
 }
 
 - (void)logUserLoginWithRegistration:(BOOL)withRegistration {
-  
   [_mixpanel track:(withRegistration) ? (@"user_registered") : (@"user_login") properties:nil];
-
-  [[OMNLocationManager sharedManager] getLocation:^(CLLocationCoordinate2D coordinate) {
-    
-    [self.user logCoordinates:coordinate];
-    
-  }];
-  
 }
 
 - (void)logPayment:(OMNAcquiringTransaction *)acquiringTransaction cardInfo:(OMNBankCardInfo *)bankCardInfo bill:(OMNBill *)bill {

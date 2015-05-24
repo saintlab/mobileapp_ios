@@ -8,12 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-
-typedef void(^OMNLocationBlock)(CLLocationCoordinate2D coordinate);
+#import <PromiseKit.h>
 
 @interface OMNLocationManager : NSObject
 
 + (instancetype)sharedManager;
-- (void)getLocation:(OMNLocationBlock)block;
+- (PMKPromise *)getLocation;
 
 @end

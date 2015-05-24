@@ -18,8 +18,8 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 
 @interface OMNRestaurant (omn_network)
 
-+ (void)restaurantWithID:(NSString *)restaurantID withCompletion:(OMNRestaurantBlock)restaurantBlock failure:(void(^)(OMNError *error))failureBlock;
-+ (void)getRestaurantsForLocation:(CLLocationCoordinate2D)coordinate withCompletion:(OMNRestaurantsBlock)restaurantsBlock failure:(void(^)(OMNError *error))failureBlock;
++ (PMKPromise *)restaurantWithID:(NSString *)restaurantID;
++ (PMKPromise *)restaurantsForLocation:(CLLocationCoordinate2D)coordinate;
 - (void)advertisement:(OMNRestaurantInfoBlock)completionBlock error:(void(^)(NSError *error))failureBlock;
 - (void)getDeliveryAddressesWithCompletion:(OMNAddressesBlock)addressesBlock failure:(void(^)(OMNError *error))failureBlock;
 
@@ -27,9 +27,8 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 - (PMKPromise *)handleEnterEvent;
 - (PMKPromise *)handleAtTheTableEvent;
 
-- (void)leaveWithCompletion:(dispatch_block_t)completionBlock;;
+- (PMKPromise *)leave;
 - (PMKPromise *)entrance;
-- (void)nearbyWithCompletion:(dispatch_block_t)completionBlock;;
 
 - (void)getRecommendationItems:(OMNProductItemsBlock)productItemsBlock error:(void(^)(OMNError *error))errorBlock;
 
@@ -38,6 +37,6 @@ typedef void(^OMNRestaurantInfoBlock)(OMNRestaurantInfo *restaurantInfo);
 @interface NSObject (omn_restaurants)
 
 - (NSArray *)omn_restaurants;
-- (void)omn_decodeWithRestaurantsBlock:(OMNRestaurantsBlock)restaurantsBlock failureBlock:(void(^)(OMNError *error))failureBlock;
+- (NSArray *)omn_decodeRestaurants;
 
 @end

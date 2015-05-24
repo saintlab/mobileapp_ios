@@ -16,21 +16,7 @@
 }
 
 - (PMKPromise *)getRestaurants {
-
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-    
-    [OMNRestaurant restaurantWithID:@"travelerscoffee-nsk-at-karla-marksa-7" withCompletion:^(OMNRestaurant *restaurant) {
-      
-      fulfill(@[restaurant]);
-      
-    } failure:^(OMNError *error) {
-      
-      fulfill(nil);
-      
-    }];
-    
-  }];
-  
+  return [OMNRestaurant restaurantWithID:@"travelerscoffee-nsk-at-karla-marksa-7"];
 }
 
 @end

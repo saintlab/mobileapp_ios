@@ -34,6 +34,7 @@
       
     }).finally(^{
       
+      fulfill(nil);
       [[UIApplication sharedApplication] endBackgroundTask:searchBeaconTask];
       
     });

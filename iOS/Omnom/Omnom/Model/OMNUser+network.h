@@ -28,8 +28,6 @@
 
 - (void)registerWithCompletion:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock;
 
-- (void)logCoordinates:(CLLocationCoordinate2D)coordinates;
-
 - (PMKPromise *)updateUserInfoWithUserAndImage:(OMNUser *)user;
 
 - (void)verifyPhoneCode:(NSString *)code completion:(void (^)(NSString *token))completion failure:(void (^)(OMNError *error))failureBlock;
