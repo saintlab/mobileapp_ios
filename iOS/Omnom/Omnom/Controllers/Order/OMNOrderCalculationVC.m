@@ -23,6 +23,7 @@
 #import <OMNStyler.h>
 #import "OMNLoginVC.h"
 #import "OMNAuthorization.h"
+#import "OMNOrder+omn_helper.h"
 
 @interface OMNOrderCalculationVC ()
 <OMNCalculatorVCDelegate,
@@ -363,31 +364,16 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (IBAction)payTap:(id)sender {
-  
-  if (_table.selectedOrder.paymentValueIsTooHigh) {
-    
-    @weakify(self)
-    [UIAlertView bk_showAlertViewWithTitle:kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_TITLE message:nil cancelButtonTitle:kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_CANCEL_BUTTON_TITLE otherButtonTitles:@[kOMN_ORDER_AMOUNT_TOO_LARGE_ALERT_PAY_BUTTON_TITLE] handler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-
-      @strongify(self)
-      if (buttonIndex != alertView.cancelButtonIndex) {
-        [self processCardPayment];
-      }
-      
-    }];
-    
-  }
-  else {
-
-    [self processCardPayment];
-    
-  }
-  
+  [self processCardPayment];
 }
 
 - (void)processCardPayment {
 
-  [[OMNAuthorization authorization] checkAuthenticationToken].then(^(OMNUser *user) {
+  [_table.selectedOrder checkPaymentValue].then(^{
+    
+    return [[OMNAuthorization authorization] checkAuthenticationToken];
+    
+  }).then(^(OMNUser *user) {
     
     OMNRestaurant *restaurant = _restaurantMediator.restaurant;
     OMNAcquiringTransaction *transaction = [[restaurant paymentFactory] transactionForUser:user order:_table.selectedOrder];

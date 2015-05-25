@@ -1795,6 +1795,11 @@
 		93DEF4871ACE48F500F8FE4D /* OMNPreorderWishMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEF4851ACE48F500F8FE4D /* OMNPreorderWishMediator.m */; };
 		93DEF4881ACE48F500F8FE4D /* OMNPreorderWishMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEF4851ACE48F500F8FE4D /* OMNPreorderWishMediator.m */; };
 		93DEF4891ACE48F500F8FE4D /* OMNPreorderWishMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEF4851ACE48F500F8FE4D /* OMNPreorderWishMediator.m */; };
+		93E01E561B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */; };
+		93E01E571B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */; };
+		93E01E581B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */; };
+		93E01E591B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */; };
+		93E01E5A1B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */; };
 		93E26EC11AA973230034A7A3 /* OMNWishMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E26EC01AA973230034A7A3 /* OMNWishMediator.m */; };
 		93E26EC21AA973230034A7A3 /* OMNWishMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E26EC01AA973230034A7A3 /* OMNWishMediator.m */; };
 		93E26EDB1AA9E40A0034A7A3 /* OMNDemoRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E26EDA1AA9E40A0034A7A3 /* OMNDemoRestaurantMediator.m */; };
@@ -2598,6 +2603,8 @@
 		93DEF47F1ACE389400F8FE4D /* OMNPreorderPaymentDoneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderPaymentDoneVC.m; sourceTree = "<group>"; };
 		93DEF4841ACE48F500F8FE4D /* OMNPreorderWishMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPreorderWishMediator.h; sourceTree = "<group>"; };
 		93DEF4851ACE48F500F8FE4D /* OMNPreorderWishMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderWishMediator.m; sourceTree = "<group>"; };
+		93E01E541B12EE7B00C2AA1A /* OMNOrder+omn_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+omn_helper.h"; sourceTree = "<group>"; };
+		93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+omn_helper.m"; sourceTree = "<group>"; };
 		93E26EBF1AA973230034A7A3 /* OMNWishMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWishMediator.h; sourceTree = "<group>"; };
 		93E26EC01AA973230034A7A3 /* OMNWishMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWishMediator.m; sourceTree = "<group>"; };
 		93E26ED91AA9E40A0034A7A3 /* OMNDemoRestaurantMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoRestaurantMediator.h; sourceTree = "<group>"; };
@@ -3710,6 +3717,8 @@
 				933D48EC19E7A09E004E591C /* OMNGuest.m */,
 				933C93C81AAF0715000BA7D6 /* NSObject+omn_order.h */,
 				933C93C91AAF0715000BA7D6 /* NSObject+omn_order.m */,
+				93E01E541B12EE7B00C2AA1A /* OMNOrder+omn_helper.h */,
+				93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -5312,6 +5321,7 @@
 				9394CC1A1ACD3F81008FB6CC /* OMNPreorderRestaurantMediator.m in Sources */,
 				930C4DFC1AB15E1B006CA608 /* OMNOrderItemsFlowLayout.m in Sources */,
 				930C4DFD1AB15E1B006CA608 /* OMNUserInfoModel.m in Sources */,
+				93E01E581B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */,
 				930C4DFE1AB15E1B006CA608 /* OMNLocationManager.m in Sources */,
 				930C4DFF1AB15E1B006CA608 /* OMNFBUserInfoItem.m in Sources */,
 				930C4E001AB15E1B006CA608 /* OMNBackgroundVC.m in Sources */,
@@ -5658,6 +5668,7 @@
 				9394CC1B1ACD3F81008FB6CC /* OMNPreorderRestaurantMediator.m in Sources */,
 				930C8BED1ACA7D9F00CE4E5A /* OMNOrderItemsFlowLayout.m in Sources */,
 				930C8BEE1ACA7D9F00CE4E5A /* OMNUserInfoModel.m in Sources */,
+				93E01E591B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */,
 				930C8BEF1ACA7D9F00CE4E5A /* OMNLocationManager.m in Sources */,
 				930C8BF01ACA7D9F00CE4E5A /* OMNFBUserInfoItem.m in Sources */,
 				930C8BF11ACA7D9F00CE4E5A /* OMNBackgroundVC.m in Sources */,
@@ -6004,6 +6015,7 @@
 				9394CC181ACD3F81008FB6CC /* OMNPreorderRestaurantMediator.m in Sources */,
 				932B185B19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
 				939F994B197544820051822E /* OMNUserInfoModel.m in Sources */,
+				93E01E561B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */,
 				937C3E711A2824E9006525A9 /* OMNLocationManager.m in Sources */,
 				93E4856B1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */,
 				93535EFF198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
@@ -6150,6 +6162,7 @@
 				933A9E9F1A4BC5E5001C0909 /* OMNRestaurantSchedules.m in Sources */,
 				936203251AA308F400247A4B /* OMNMenuToProductTransition.m in Sources */,
 				93B743B01ABA76950001AE6F /* OMNMenuSearchVC.m in Sources */,
+				93E01E571B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */,
 				936BAD9719A77F5E0029873B /* OMNNavigationController.m in Sources */,
 				935FF1651A6D3ED0004B69A6 /* OMNMenuModel.m in Sources */,
 				932B185C19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
@@ -6689,6 +6702,7 @@
 				936AC1951AD8BDBC00A9D17F /* OMNPreorderRestaurantMediator.m in Sources */,
 				936AC1961AD8BDBC00A9D17F /* OMNOrderItemsFlowLayout.m in Sources */,
 				936AC1971AD8BDBC00A9D17F /* OMNUserInfoModel.m in Sources */,
+				93E01E5A1B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */,
 				936AC1981AD8BDBC00A9D17F /* OMNLocationManager.m in Sources */,
 				936AC1991AD8BDBC00A9D17F /* OMNFBUserInfoItem.m in Sources */,
 				936AC19A1AD8BDBC00A9D17F /* OMNBackgroundVC.m in Sources */,
