@@ -76,7 +76,7 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
     _modifiedTime = jsonData[@"modified_time"];
     _restaurant_id = jsonData[@"restaurant_id"];
     _table_id = jsonData[@"table_id"];
-    _paid = [[OMNOrderPaid alloc] initWithJsonData:jsonData];
+    _paid = [[OMNOrderPaid alloc] initWithJsonData:jsonData[@"paid"]];
     
     NSArray *itemsData = jsonData[@"items"];
     NSMutableDictionary *orderItemIDs = [NSMutableDictionary dictionary];

@@ -7,7 +7,7 @@
 //
 
 #import "OMNSocketManager.h"
-#import <SIOSocket.h>
+#import "SIOSocket.h"
 
 NSString * const OMNSocketIOWaiterCallDoneNotification = @"OMNSocketIOWaiterCallDoneNotification";
 NSString * const OMNSocketIOOrderDidChangeNotification = @"OMNSocketIOOrderDidChangeNotification";

@@ -21,8 +21,8 @@
   self = [super init];
   if (self) {
     
-    self.id = ([data[@"id"] isKindOfClass:[NSString class]]) ? (data[@"id"]) : (@"");
-    self.name = data[@"title"];
+    self.id = [data[@"id"] omn_stringValueSafe];
+    self.name = [data[@"title"] omn_stringValueSafe];
     self.price_per_item = [data[@"price_per_item"] doubleValue]*100ll;
     self.price_total = [data[@"price_total"] doubleValue]*100ll;
     self.quantity = [data[@"quantity"] doubleValue];

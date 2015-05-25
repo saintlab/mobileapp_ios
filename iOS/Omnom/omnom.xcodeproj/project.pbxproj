@@ -1800,6 +1800,16 @@
 		93E01E581B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */; };
 		93E01E591B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */; };
 		93E01E5A1B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */; };
+		93E01E921B136E2400C2AA1A /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E901B136E2400C2AA1A /* SIOSocket.m */; };
+		93E01E931B136E2400C2AA1A /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E901B136E2400C2AA1A /* SIOSocket.m */; };
+		93E01E941B136E2400C2AA1A /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E901B136E2400C2AA1A /* SIOSocket.m */; };
+		93E01E951B136E2400C2AA1A /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E901B136E2400C2AA1A /* SIOSocket.m */; };
+		93E01E961B136E2400C2AA1A /* SIOSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E01E901B136E2400C2AA1A /* SIOSocket.m */; };
+		93E01E981B136E3200C2AA1A /* socket.io.js in Resources */ = {isa = PBXBuildFile; fileRef = 93E01E971B136E3200C2AA1A /* socket.io.js */; };
+		93E01E991B136E3200C2AA1A /* socket.io.js in Resources */ = {isa = PBXBuildFile; fileRef = 93E01E971B136E3200C2AA1A /* socket.io.js */; };
+		93E01E9A1B136E3200C2AA1A /* socket.io.js in Resources */ = {isa = PBXBuildFile; fileRef = 93E01E971B136E3200C2AA1A /* socket.io.js */; };
+		93E01E9B1B136E3200C2AA1A /* socket.io.js in Resources */ = {isa = PBXBuildFile; fileRef = 93E01E971B136E3200C2AA1A /* socket.io.js */; };
+		93E01E9C1B136E3200C2AA1A /* socket.io.js in Resources */ = {isa = PBXBuildFile; fileRef = 93E01E971B136E3200C2AA1A /* socket.io.js */; };
 		93E26EC11AA973230034A7A3 /* OMNWishMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E26EC01AA973230034A7A3 /* OMNWishMediator.m */; };
 		93E26EC21AA973230034A7A3 /* OMNWishMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E26EC01AA973230034A7A3 /* OMNWishMediator.m */; };
 		93E26EDB1AA9E40A0034A7A3 /* OMNDemoRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E26EDA1AA9E40A0034A7A3 /* OMNDemoRestaurantMediator.m */; };
@@ -2605,6 +2615,10 @@
 		93DEF4851ACE48F500F8FE4D /* OMNPreorderWishMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPreorderWishMediator.m; sourceTree = "<group>"; };
 		93E01E541B12EE7B00C2AA1A /* OMNOrder+omn_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNOrder+omn_helper.h"; sourceTree = "<group>"; };
 		93E01E551B12EE7B00C2AA1A /* OMNOrder+omn_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNOrder+omn_helper.m"; sourceTree = "<group>"; };
+		93E01E8F1B136E2400C2AA1A /* SIOSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIOSocket.h; sourceTree = "<group>"; };
+		93E01E901B136E2400C2AA1A /* SIOSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIOSocket.m; sourceTree = "<group>"; };
+		93E01E911B136E2400C2AA1A /* socket.io.js.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = socket.io.js.h; sourceTree = "<group>"; };
+		93E01E971B136E3200C2AA1A /* socket.io.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = socket.io.js; sourceTree = "<group>"; };
 		93E26EBF1AA973230034A7A3 /* OMNWishMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWishMediator.h; sourceTree = "<group>"; };
 		93E26EC01AA973230034A7A3 /* OMNWishMediator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWishMediator.m; sourceTree = "<group>"; };
 		93E26ED91AA9E40A0034A7A3 /* OMNDemoRestaurantMediator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDemoRestaurantMediator.h; sourceTree = "<group>"; };
@@ -3126,8 +3140,12 @@
 		9328F3951988C6190065DC58 /* Socket */ = {
 			isa = PBXGroup;
 			children = (
+				93E01E8F1B136E2400C2AA1A /* SIOSocket.h */,
+				93E01E901B136E2400C2AA1A /* SIOSocket.m */,
+				93E01E911B136E2400C2AA1A /* socket.io.js.h */,
 				9328F3961988C6360065DC58 /* OMNSocketManager.h */,
 				9328F3971988C6360065DC58 /* OMNSocketManager.m */,
+				93E01E971B136E3200C2AA1A /* socket.io.js */,
 			);
 			path = Socket;
 			sourceTree = "<group>";
@@ -4700,6 +4718,7 @@
 				930C4E7C1AB15E1B006CA608 /* OMNWizardVC.xib in Resources */,
 				930C4E7E1AB15E1B006CA608 /* pay_done.caf in Resources */,
 				930C4E7F1AB15E1B006CA608 /* new_guest_loud.caf in Resources */,
+				93E01E9A1B136E3200C2AA1A /* socket.io.js in Resources */,
 				9394CBDD1ACAA5A5008FB6CC /* suncity_addresses.json in Resources */,
 				930C4E801AB15E1B006CA608 /* config.json in Resources */,
 				930C4E811AB15E1B006CA608 /* OMNBankCardsVC.xib in Resources */,
@@ -4742,6 +4761,7 @@
 				930C8C6D1ACA7D9F00CE4E5A /* OMNWizardVC.xib in Resources */,
 				930C8C6F1ACA7D9F00CE4E5A /* pay_done.caf in Resources */,
 				930C8C701ACA7D9F00CE4E5A /* new_guest_loud.caf in Resources */,
+				93E01E9B1B136E3200C2AA1A /* socket.io.js in Resources */,
 				9394CBDE1ACAA5A5008FB6CC /* suncity_addresses.json in Resources */,
 				930C8C711ACA7D9F00CE4E5A /* config.json in Resources */,
 				930C8C721ACA7D9F00CE4E5A /* OMNBankCardsVC.xib in Resources */,
@@ -4784,6 +4804,7 @@
 				939689B9195BE3AE00AAAF9C /* OMNWizardVC.xib in Resources */,
 				932B186E19AF3C80009E440E /* pay_done.caf in Resources */,
 				935C35571A188BF0006C8550 /* new_guest_loud.caf in Resources */,
+				93E01E981B136E3200C2AA1A /* socket.io.js in Resources */,
 				9394CBDB1ACAA5A5008FB6CC /* suncity_addresses.json in Resources */,
 				9389456B19B5957100C37C82 /* config.json in Resources */,
 				939F991619752BE90051822E /* OMNBankCardsVC.xib in Resources */,
@@ -4805,6 +4826,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				938F3A56198BF25300AB288E /* OMNAuthorizationVC.json in Resources */,
+				93E01E991B136E3200C2AA1A /* socket.io.js in Resources */,
 				932B186D19AF3C80009E440E /* new_guest.caf in Resources */,
 				93D59A8A1A41F7C600C3491F /* Futura-LSF-Omnom-LE-Regular.otf in Resources */,
 				93676E1918D1E4FC00FC55F1 /* InfoPlist.strings in Resources */,
@@ -4871,6 +4893,7 @@
 				936AC2221AD8BDBC00A9D17F /* pay_done.caf in Resources */,
 				936AC2231AD8BDBC00A9D17F /* new_guest_loud.caf in Resources */,
 				936AC2241AD8BDBC00A9D17F /* suncity_addresses.json in Resources */,
+				93E01E9C1B136E3200C2AA1A /* socket.io.js in Resources */,
 				936AC2251AD8BDBC00A9D17F /* config.json in Resources */,
 				936AC2261AD8BDBC00A9D17F /* OMNBankCardsVC.xib in Resources */,
 				936AC2271AD8BDBC00A9D17F /* Images.xcassets in Resources */,
@@ -5149,6 +5172,7 @@
 				930C4D711AB15E1B006CA608 /* NSString+jquery.m in Sources */,
 				930C4D721AB15E1B006CA608 /* OMNMenuCategory.m in Sources */,
 				930C4D731AB15E1B006CA608 /* OMNCircleRootVC.m in Sources */,
+				93E01E941B136E2400C2AA1A /* SIOSocket.m in Sources */,
 				930C4D741AB15E1B006CA608 /* OMNGuest.m in Sources */,
 				930C4D751AB15E1B006CA608 /* OMNCameraPermission.m in Sources */,
 				930C4D761AB15E1B006CA608 /* OMNTip.m in Sources */,
@@ -5496,6 +5520,7 @@
 				930C8B5E1ACA7D9F00CE4E5A /* NSString+jquery.m in Sources */,
 				930C8B5F1ACA7D9F00CE4E5A /* OMNMenuCategory.m in Sources */,
 				930C8B601ACA7D9F00CE4E5A /* OMNCircleRootVC.m in Sources */,
+				93E01E951B136E2400C2AA1A /* SIOSocket.m in Sources */,
 				930C8B611ACA7D9F00CE4E5A /* OMNGuest.m in Sources */,
 				930C8B621ACA7D9F00CE4E5A /* OMNCameraPermission.m in Sources */,
 				930C8B631ACA7D9F00CE4E5A /* OMNTip.m in Sources */,
@@ -5843,6 +5868,7 @@
 				9319FDE4192F365B0053F3A4 /* NSString+jquery.m in Sources */,
 				93C126871A7109010019655A /* OMNMenuCategory.m in Sources */,
 				93E299A7197D0C9700051B04 /* OMNCircleRootVC.m in Sources */,
+				93E01E921B136E2400C2AA1A /* SIOSocket.m in Sources */,
 				933D48ED19E7A09E004E591C /* OMNGuest.m in Sources */,
 				93E58CAC1A245604008064F9 /* OMNCameraPermission.m in Sources */,
 				938E8F5E192F3A200088EF38 /* OMNTip.m in Sources */,
@@ -6292,6 +6318,7 @@
 				935FF16E1A6D4290004B69A6 /* OMNMenuItemCell.m in Sources */,
 				935D8C9D1A38693B00877C02 /* OMNError.m in Sources */,
 				934CDF5519D4196D00D73FC4 /* OMNBottomLabelView.m in Sources */,
+				93E01E931B136E2400C2AA1A /* SIOSocket.m in Sources */,
 				937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */,
 				937822891963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
 				93D77A341ADBF06900C0470B /* OMNRestaurantInPaymentDoneVC.m in Sources */,
@@ -6530,6 +6557,7 @@
 				936AC0FD1AD8BDBC00A9D17F /* NSString+jquery.m in Sources */,
 				936AC0FE1AD8BDBC00A9D17F /* OMNMenuCategory.m in Sources */,
 				936AC0FF1AD8BDBC00A9D17F /* OMNCircleRootVC.m in Sources */,
+				93E01E961B136E2400C2AA1A /* SIOSocket.m in Sources */,
 				936AC1001AD8BDBC00A9D17F /* OMNGuest.m in Sources */,
 				936AC1011AD8BDBC00A9D17F /* OMNCameraPermission.m in Sources */,
 				936AC1021AD8BDBC00A9D17F /* OMNTip.m in Sources */,

@@ -14,14 +14,8 @@
   self = [super init];
   if (self) {
  
-    if (jsonData[@"paid"]) {
-      _total_amount = [jsonData[@"paid"][@"amount"] omn_longLongValueSafe];
-      _tip_amount = [jsonData[@"paid"][@"tip"] omn_longLongValueSafe];
-    }
-    else {
-      _total_amount = [jsonData[@"paid_amount"] omn_longLongValueSafe];
-      _tip_amount = [jsonData[@"paid_tip"] omn_longLongValueSafe];
-    }
+    _total_amount = [jsonData[@"amount"] omn_longLongValueSafe];
+    _tip_amount = [jsonData[@"tip"] omn_longLongValueSafe];
     
   }
   return self;

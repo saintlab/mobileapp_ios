@@ -19,7 +19,6 @@ def import_all
   pod 'AFNetworking'
   pod 'SSKeychain'
   pod 'CardIO'
-  pod 'SIOSocket'
   pod 'BlocksKit'
   pod 'Mixpanel'
   pod 'TTTAttributedLabel'
