@@ -28,6 +28,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import "OMNTransactionPaymentVC.h"
 #import "OMNVisitor+omn_network.h"
+#import "OMNConstants.h"
 
 @interface OMNRestaurantMediator ()
 <OMNOrdersVCDelegate,
@@ -61,7 +62,7 @@ OMNOrderCalculationVCDelegate>
     
     if (!_restaurant.is_demo) {
       
-      [[OMNSocketManager manager] connectWithCompletion:^{
+      [[OMNSocketManager manager] connect:[OMNConstants baseUrlString] withCompletion:^{
       }];
       
     }

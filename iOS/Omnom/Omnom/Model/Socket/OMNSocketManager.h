@@ -23,7 +23,7 @@ extern NSString * const OMNPaymentDataKey;
 
 + (instancetype)manager;
 
-- (void)connectWithCompletion:(dispatch_block_t)completionBlock;
+- (void)connect:(NSString *)url withCompletion:(dispatch_block_t)completionBlock;
 - (void)disconnectAndLeaveAllRooms:(BOOL)leave;
 - (void)leave:(NSString *)roomId;
 - (void)join:(NSString *)roomId;

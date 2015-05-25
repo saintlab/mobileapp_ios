@@ -10,6 +10,8 @@
 #import "OMNSocketManager.h"
 #import <Kiwi.h>
 
+#define TEST_SOCKET_URL @"http://localhost:3000"
+
 SPEC_BEGIN(OMNSocketTests)
 
 describe(@"check initial state", ^{
@@ -18,7 +20,7 @@ describe(@"check initial state", ^{
 
     __block NSNumber *_didConnect = nil;
     [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
-    [[OMNSocketManager manager] connectWithCompletion:^{
+    [[OMNSocketManager manager] connect:TEST_SOCKET_URL withCompletion:^{
       _didConnect = @(YES);
     }];
     [[expectFutureValue(_didConnect) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(YES)];
@@ -74,7 +76,7 @@ describe(@"check initial state", ^{
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
 
     __block NSNumber *_didConnect = nil;
-    [[OMNSocketManager manager] connectWithCompletion:^{
+    [[OMNSocketManager manager] connect:TEST_SOCKET_URL withCompletion:^{
       _didConnect = @(YES);
     }];
     [[expectFutureValue(_didConnect) shouldEventuallyBeforeTimingOutAfter(10)] equal:@(YES)];

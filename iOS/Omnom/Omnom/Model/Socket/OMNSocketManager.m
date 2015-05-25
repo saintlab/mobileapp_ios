@@ -7,8 +7,7 @@
 //
 
 #import "OMNSocketManager.h"
-#import <OMNSocketIO.h>
-#import "OMNConstants.h"
+#import <SIOSocket.h>
 
 NSString * const OMNSocketIOWaiterCallDoneNotification = @"OMNSocketIOWaiterCallDoneNotification";
 NSString * const OMNSocketIOOrderDidChangeNotification = @"OMNSocketIOOrderDidChangeNotification";
@@ -21,9 +20,9 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 
 @implementation OMNSocketManager {
 
-  OMNSocketIO *_io;
-  Socket *_socket;
-
+  SIOSocket *_socket;
+  NSString *_url;
+  
 }
 
 + (instancetype)manager {
@@ -48,29 +47,27 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 }
 
 - (void)willResignActive {
-  
   [self disconnectAndLeaveAllRooms:NO];
-  
 }
 
 - (void)resumeConnection {
   
-  if (_io) {
+  if (!_url) {
     return;
   }
   
-  [self connectWithCompletion:^{
-    DDLogDebug(@"socket did resume connection");
+  [self connect:_url withCompletion:^{
+   DDLogDebug(@"socket did resume connection");
   }];
   
 }
 
-- (void)establishConnecttionWithCompletion:(dispatch_block_t)completionBlock {
-
-  NSString *query = [NSString stringWithFormat:@"token=%@", @"123"];
-  _socket = [_io of:[OMNConstants baseUrlString] and:@{@"query" : query}];
-  [_socket on:@"order_close" listener:^(id data) {
+- (void)socketDidConnect:(SIOSocket *)socket {
+  
+  _socket = socket;
+  [_socket on:@"order_close" callback:^(NSArray *args) {
     
+    id data = [args firstObject];
     DDLogDebug(@"order_close %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
@@ -83,9 +80,10 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     });
     
   }];
-
-  [_socket on:@"order_create" listener:^(id data) {
+  
+  [_socket on:@"order_create" callback:^(NSArray *args) {
     
+    id data = [args firstObject];
     DDLogDebug(@"order_create %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
@@ -98,9 +96,10 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     });
     
   }];
-
-  [_socket on:@"order_update" listener:^(id data) {
+  
+  [_socket on:@"order_update" callback:^(NSArray *args) {
     
+    id data = [args firstObject];
     DDLogDebug(@"order_update %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
@@ -114,8 +113,9 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     
   }];
   
-  [_socket on:@"payment" listener:^(id data) {
-
+  [_socket on:@"payment" callback:^(NSArray *args) {
+    
+    id data = [args firstObject];
     DDLogDebug(@"payment response %@, %@", data, [data class]);
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -132,8 +132,9 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     
   }];
   
-  [_socket on:@"waiter_call_done" listener:^(id data) {
+  [_socket on:@"waiter_call_done" callback:^(NSArray *args) {
     
+    id data = [args firstObject];
     DDLogDebug(@"waiter_call_done response %@, %@", data, [data class]);
     dispatch_async(dispatch_get_main_queue(), ^{
       
@@ -145,13 +146,6 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     
   }];
   
-  [self socketDidAuthenticate];
-  completionBlock();
-  
-}
-
-- (void)socketDidAuthenticate {
-  
   [_rooms enumerateObjectsUsingBlock:^(id roomId, BOOL *stop) {
     
     [self join:roomId];
@@ -160,46 +154,41 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
   
 }
 
+- (void)connect:(NSString *)url withCompletion:(dispatch_block_t)completionBlock {
+
+  _url = url;
+  [SIOSocket socketWithHost:url response:^(SIOSocket *socket) {
+    
+    [self socketDidConnect:socket];
+    completionBlock();
+    
+  }];
+  
+  
+}
+
 - (void)join:(NSString *)roomId {
   
-  if (roomId.length) {
-    [_rooms addObject:roomId];
-    [_socket emit:@"join", roomId, nil];
-    DDLogDebug(@"join:%@", roomId);
+  if (0 == roomId.length) {
+    return;
   }
+  
+  [_rooms addObject:roomId];
+  [_socket emit:@"join" args:@[roomId]];
+  DDLogDebug(@"join:%@", roomId);
   
 }
 
 - (void)leave:(NSString *)roomId {
   
-  if (roomId) {
-    DDLogDebug(@"leave:%@", roomId);
-    [_rooms removeObject:roomId];
-    [_socket emit:@"leave", roomId, nil];
-    
+  if (0 == roomId.length) {
+    return;
   }
-  
-}
 
-- (void)connectWithCompletion:(dispatch_block_t)completionBlock {
-  
-  if (_io) {
-    
-    [self establishConnecttionWithCompletion:completionBlock];
-    
-  }
-  else {
-    
-    _io = [[OMNSocketIO alloc] init];
-    @weakify(self)
-    [_io once:@"ready" listener:^{
-      
-      @strongify(self)
-      [self establishConnecttionWithCompletion:completionBlock];
-      
-    }];
-  }
-  
+  DDLogDebug(@"leave:%@", roomId);
+  [_rooms removeObject:roomId];
+  [_socket emit:@"leave" args:@[roomId]];
+
 }
 
 - (void)disconnectAndLeaveAllRooms:(BOOL)leave {
@@ -214,9 +203,8 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
     
   }
   
-  [_socket emit:@"disconnect", nil];
+  [_socket close];
   _socket = nil;
-  _io = nil;
   
 }
 

@@ -10,8 +10,6 @@ xcodeproj 'OMNSocial/Example/OMNSocial.xcodeproj'
 xcodeproj 'OMNStyler/Example/OMNStyler.xcodeproj'
 xcodeproj 'OMNCardEnterControl/Example/OMNCardEnterControl.xcodeproj'
 xcodeproj 'OMNBeacon/Example/OMNBeacon.xcodeproj'
-xcodeproj 'OMNSocketIO/Example/OMNSocketIO.xcodeproj'
-
 
 def import_pods
 end
@@ -21,6 +19,7 @@ def import_all
   pod 'AFNetworking'
   pod 'SSKeychain'
   pod 'CardIO'
+  pod 'SIOSocket'
   pod 'BlocksKit'
   pod 'Mixpanel'
   pod 'TTTAttributedLabel'
@@ -32,7 +31,6 @@ def import_all
   pod "OMNStyler", :path => "OMNStyler/"
   pod "OMNCardEnterControl", :path => "OMNCardEnterControl/"
   pod "OMNBeacon", :path => "OMNBeacon/"
-  pod "OMNSocketIO", :path => "OMNSocketIO/"
   pod "OMNMailRuAcquiring", :path => "OMNMailRuAcquiring/"
 end
 
@@ -83,7 +81,3 @@ target 'OMNMailRuAcquiringTests', :exclusive => true do
   xcodeproj 'OMNMailRuAcquiring/Example/OMNMailRuAcquiring.xcodeproj'
 end
 
-target 'OMNSocketIO', :exclusive => true do
-  pod "OMNSocketIO", :path => "OMNSocketIO/"
-  xcodeproj 'OMNSocketIO/Example/OMNSocketIO.xcodeproj'
-end
