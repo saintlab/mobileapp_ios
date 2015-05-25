@@ -134,6 +134,9 @@ OMNPaymentFooterViewDelegate>
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
   
+  [OMNOrderAlertManager sharedManager].didCloseBlock = nil;
+  [OMNOrderAlertManager sharedManager].didUpdateBlock = nil;
+  
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
   
@@ -383,9 +386,6 @@ OMNPaymentFooterViewDelegate>
 }
 
 - (void)processCardPayment {
-
-  [OMNOrderAlertManager sharedManager].didCloseBlock = nil;
-  [OMNOrderAlertManager sharedManager].didUpdateBlock = nil;
 
   [[OMNAuthorization authorization] checkAuthenticationToken].then(^(OMNUser *user) {
     
