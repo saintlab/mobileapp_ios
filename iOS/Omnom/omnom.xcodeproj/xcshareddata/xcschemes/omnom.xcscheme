@@ -36,6 +36,11 @@
                BlueprintName = "omnomTests"
                ReferencedContainer = "container:omnom.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "OMNSocketTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
       <MacroExpansion>

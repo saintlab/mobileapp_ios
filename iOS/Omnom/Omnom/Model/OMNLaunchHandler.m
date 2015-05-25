@@ -89,8 +89,6 @@
 
 - (void)reloadWithLaunch:(OMNLaunch *)launch {
   
-  NSLog(@"reloadWithLaunch:%@", launch.wishID);
-  NSLog(@"reloadWithLaunch:%@", launch.customConfigName);
   _launch = launch;
   
   if (launch.applicationStartedBackground) {
