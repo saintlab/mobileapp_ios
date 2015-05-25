@@ -28,6 +28,7 @@ describe(@"check initial state", ^{
   afterEach(^{
     
     [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
+    [[expectFutureValue(@1) shouldAfterWaitOf(0.5)] equal:@(1)];
     
   });
   
