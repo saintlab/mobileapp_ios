@@ -42,11 +42,6 @@ NSString * const OMNTableOrdersDidChangeNotification = @"OMNTableOrdersDidChange
   return self.internal_id;
 }
 
-- (void)asd {
-  
-  
-}
-
 - (void)join {
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
