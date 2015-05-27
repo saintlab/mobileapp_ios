@@ -14,7 +14,6 @@
 @property (nonatomic, assign) BOOL allowChangePhoneNumber;
 
 - (instancetype)initWithPhone:(NSString *)phone;
-
 - (void)resetAnimated:(BOOL)animated;
 
 @end
@@ -24,8 +23,5 @@
 
 - (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code;
 - (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC;
-
-@optional
-- (void)confirmCodeVCDidResetPhone:(OMNConfirmCodeVC *)confirmCodeVC;
 
 @end

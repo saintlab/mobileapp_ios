@@ -44,6 +44,6 @@ typedef void(^OMNAuthorizationBlock)(NSString *token, BOOL register);
 
 @interface NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(void (^)(NSString *token))completion failure:(void(^)(OMNError *))failureBlock;
+- (PMKPromise *)decodeToken;
 
 @end

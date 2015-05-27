@@ -171,7 +171,7 @@ OMNPreorderConfirmCellDelegate>
 - (void)requestAuthorizationForCreateWish {
   
   OMNLoginVC *loginVC = [[OMNLoginVC alloc] init];
-  [loginVC requestLogin:self].then(^(NSString *token) {
+  [loginVC requestLogin:self].then(^(OMNUser *user) {
     
     [self dismissViewControllerAnimated:YES completion:^{
       

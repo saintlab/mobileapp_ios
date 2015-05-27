@@ -342,34 +342,38 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 @implementation NSDictionary (omn_tokenResponse)
 
-- (void)decodeToken:(void (^)(NSString *token))completion failure:(void(^)(OMNError *))failureBlock {
+- (PMKPromise *)decodeToken {
   
-  if ([self[@"status"] isEqualToString:@"success"]) {
-    
-    completion(self[@"token"]);
-    
-  }
-  else {
-    
-    OMNError *error = nil;
-    NSString *message = self[@"error"][@"message"];
-    if (message) {
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+  
+    if ([self[@"status"] isEqualToString:@"success"]) {
       
-      error = [OMNError errorWithDomain:OMNUserErrorDomain
-                                   code:[self[@"error"][@"code"] integerValue]
-                               userInfo:@{NSLocalizedDescriptionKey : message}];
-      
+      fulfill(self[@"token"]);
       
     }
     else {
       
-      error = [OMNError userErrorFromCode:kOMNUserErrorCodeUnknoun];
+      OMNError *error = nil;
+      NSString *message = self[@"error"][@"message"];
+      if (message) {
+        
+        error = [OMNError errorWithDomain:OMNUserErrorDomain
+                                     code:[self[@"error"][@"code"] integerValue]
+                                 userInfo:@{NSLocalizedDescriptionKey : message}];
+        
+        
+      }
+      else {
+        
+        error = [OMNError userErrorFromCode:kOMNUserErrorCodeUnknoun];
+        
+      }
+      
+      reject(error);
       
     }
     
-    failureBlock(error);
-    
-  }
+  }];
   
 }
 

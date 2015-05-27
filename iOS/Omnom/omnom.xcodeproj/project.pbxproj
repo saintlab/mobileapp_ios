@@ -106,7 +106,6 @@
 		930C4D881AB15E1B006CA608 /* OMNRestaurantSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */; };
 		930C4D891AB15E1B006CA608 /* OMNModalAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */; };
 		930C4D8A1AB15E1B006CA608 /* OMNNearestBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */; };
-		930C4D8B1AB15E1B006CA608 /* OMNRegisterUserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F990A19752BE90051822E /* OMNRegisterUserVC.m */; };
 		930C4D8C1AB15E1B006CA608 /* OMNRestaurantInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */; };
 		930C4D8D1AB15E1B006CA608 /* OMNOrderCalculationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9378228B1963E29900CE6661 /* OMNOrderCalculationVC.m */; };
 		930C4D8E1AB15E1B006CA608 /* OMNRestaurantCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D11A9E1B4B00DDB739 /* OMNRestaurantCellItem.m */; };
@@ -275,14 +274,12 @@
 		930C4E361AB15E1B006CA608 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93676DF818D1E4FC00FC55F1 /* main.m */; };
 		930C4E371AB15E1B006CA608 /* OMNRestaurant+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9305C6AB1A52E4BD00394292 /* OMNRestaurant+omn_network.m */; };
 		930C4E381AB15E1B006CA608 /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
-		930C4E391AB15E1B006CA608 /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
 		930C4E3A1AB15E1B006CA608 /* OMNChangeTableAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */; };
 		930C4E3B1AB15E1B006CA608 /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		930C4E3C1AB15E1B006CA608 /* OMNMenuProductWithRecommedtationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47871A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m */; };
 		930C4E3D1AB15E1B006CA608 /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937822861963E21A00CE6661 /* OMNOrdersVC.m */; };
 		930C4E3E1AB15E1B006CA608 /* OMNRestaurantInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFC4199B7DCC00328F73 /* OMNRestaurantInfo.m */; };
 		930C4E3F1AB15E1B006CA608 /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
-		930C4E401AB15E1B006CA608 /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
 		930C4E411AB15E1B006CA608 /* OMNBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F993E19752D680051822E /* OMNBankCardsModel.m */; };
 		930C4E421AB15E1B006CA608 /* OMNMailRuBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3689119A3233A00B6E6CB /* OMNMailRuBankCardsModel.m */; };
 		930C4E431AB15E1B006CA608 /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
@@ -421,7 +418,6 @@
 		930C8B751ACA7D9F00CE4E5A /* OMNRestaurantSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D9EB221A39C9BE0000D9B5 /* OMNRestaurantSettings.m */; };
 		930C8B761ACA7D9F00CE4E5A /* OMNModalAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */; };
 		930C8B771ACA7D9F00CE4E5A /* OMNNearestBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */; };
-		930C8B781ACA7D9F00CE4E5A /* OMNRegisterUserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F990A19752BE90051822E /* OMNRegisterUserVC.m */; };
 		930C8B791ACA7D9F00CE4E5A /* OMNRestaurantInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */; };
 		930C8B7A1ACA7D9F00CE4E5A /* OMNOrderCalculationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9378228B1963E29900CE6661 /* OMNOrderCalculationVC.m */; };
 		930C8B7B1ACA7D9F00CE4E5A /* OMNRestaurantCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D11A9E1B4B00DDB739 /* OMNRestaurantCellItem.m */; };
@@ -594,14 +590,12 @@
 		930C8C271ACA7D9F00CE4E5A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93676DF818D1E4FC00FC55F1 /* main.m */; };
 		930C8C281ACA7D9F00CE4E5A /* OMNRestaurant+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9305C6AB1A52E4BD00394292 /* OMNRestaurant+omn_network.m */; };
 		930C8C291ACA7D9F00CE4E5A /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
-		930C8C2A1ACA7D9F00CE4E5A /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
 		930C8C2B1ACA7D9F00CE4E5A /* OMNChangeTableAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */; };
 		930C8C2C1ACA7D9F00CE4E5A /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		930C8C2D1ACA7D9F00CE4E5A /* OMNMenuProductWithRecommedtationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47871A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m */; };
 		930C8C2E1ACA7D9F00CE4E5A /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937822861963E21A00CE6661 /* OMNOrdersVC.m */; };
 		930C8C2F1ACA7D9F00CE4E5A /* OMNRestaurantInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFC4199B7DCC00328F73 /* OMNRestaurantInfo.m */; };
 		930C8C301ACA7D9F00CE4E5A /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
-		930C8C311ACA7D9F00CE4E5A /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
 		930C8C321ACA7D9F00CE4E5A /* OMNBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F993E19752D680051822E /* OMNBankCardsModel.m */; };
 		930C8C331ACA7D9F00CE4E5A /* OMNMailRuBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3689119A3233A00B6E6CB /* OMNMailRuBankCardsModel.m */; };
 		930C8C341ACA7D9F00CE4E5A /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
@@ -1033,7 +1027,6 @@
 		936AC1151AD8BDBC00A9D17F /* OMNModalAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6611A5E477B00594CD5 /* OMNModalAlertVC.m */; };
 		936AC1161AD8BDBC00A9D17F /* OMNTableReloadData.m in Sources */ = {isa = PBXBuildFile; fileRef = 932AAA4C1AD6739C0049CACE /* OMNTableReloadData.m */; };
 		936AC1171AD8BDBC00A9D17F /* OMNNearestBeaconSearchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F2AEFE1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m */; };
-		936AC1181AD8BDBC00A9D17F /* OMNRegisterUserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F990A19752BE90051822E /* OMNRegisterUserVC.m */; };
 		936AC1191AD8BDBC00A9D17F /* OMNRestaurantInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E435B61998CF4900EDC488 /* OMNRestaurantInfoCell.m */; };
 		936AC11A1AD8BDBC00A9D17F /* OMNOrderCalculationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9378228B1963E29900CE6661 /* OMNOrderCalculationVC.m */; };
 		936AC11B1AD8BDBC00A9D17F /* OMNRestaurantCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26D11A9E1B4B00DDB739 /* OMNRestaurantCellItem.m */; };
@@ -1222,14 +1215,12 @@
 		936AC1D61AD8BDBC00A9D17F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 93676DF818D1E4FC00FC55F1 /* main.m */; };
 		936AC1D71AD8BDBC00A9D17F /* OMNRestaurant+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 9305C6AB1A52E4BD00394292 /* OMNRestaurant+omn_network.m */; };
 		936AC1D81AD8BDBC00A9D17F /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
-		936AC1D91AD8BDBC00A9D17F /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
 		936AC1DA1AD8BDBC00A9D17F /* OMNChangeTableAlertVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B65E601A6941510061F1B1 /* OMNChangeTableAlertVC.m */; };
 		936AC1DB1AD8BDBC00A9D17F /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		936AC1DC1AD8BDBC00A9D17F /* OMNMenuProductWithRecommedtationsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CE47871A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m */; };
 		936AC1DD1AD8BDBC00A9D17F /* OMNOrdersVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 937822861963E21A00CE6661 /* OMNOrdersVC.m */; };
 		936AC1DE1AD8BDBC00A9D17F /* OMNRestaurantInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 9345AFC4199B7DCC00328F73 /* OMNRestaurantInfo.m */; };
 		936AC1DF1AD8BDBC00A9D17F /* UIView+frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 9319FDE7192F36910053F3A4 /* UIView+frame.m */; };
-		936AC1E01AD8BDBC00A9D17F /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
 		936AC1E11AD8BDBC00A9D17F /* OMNBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F993E19752D680051822E /* OMNBankCardsModel.m */; };
 		936AC1E21AD8BDBC00A9D17F /* OMNMailRuBankCardsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B3689119A3233A00B6E6CB /* OMNMailRuBankCardsModel.m */; };
 		936AC1E31AD8BDBC00A9D17F /* OMNNavigationBarProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 936E71F819925563008FF864 /* OMNNavigationBarProgressView.m */; };
@@ -1356,8 +1347,6 @@
 		937E0B6018F04EC20058A249 /* OMNConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 937E0B5E18F04EC20058A249 /* OMNConstants.m */; };
 		937EF7EF19DFB47300BD9090 /* OMNCardEnterErrorLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorLabel.m */; };
 		937EF7F019DFB47300BD9090 /* OMNCardEnterErrorLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorLabel.m */; };
-		93833E6619EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
-		93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */; };
 		9388442A1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */; };
 		9388442B1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */; };
 		9388442C1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */; };
@@ -1512,8 +1501,6 @@
 		939F992119752BE90051822E /* OMNLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F990319752BE90051822E /* OMNLoginVC.m */; };
 		939F992419752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F990619752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m */; };
 		939F992519752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F990619752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m */; };
-		939F992619752BE90051822E /* OMNRegisterUserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F990A19752BE90051822E /* OMNRegisterUserVC.m */; };
-		939F992719752BE90051822E /* OMNRegisterUserVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F990A19752BE90051822E /* OMNRegisterUserVC.m */; };
 		939F992E19752CFC0051822E /* OMNEnterCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F992B19752CFC0051822E /* OMNEnterCodeView.m */; };
 		939F992F19752CFC0051822E /* OMNEnterCodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F992B19752CFC0051822E /* OMNEnterCodeView.m */; };
 		939F993F19752D680051822E /* OMNBankCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 939F993C19752D680051822E /* OMNBankCard.m */; };
@@ -1648,8 +1635,6 @@
 		93CACD681ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
 		93CACD691ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
 		93CACD6A1ADFDB0B00826F7B /* OMNUser+omn_mailRu.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */; };
-		93CB66CF1A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
-		93CB66D01A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */; };
 		93CB66D31A35FD8100C5B10E /* OMNLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66D21A35FD8100C5B10E /* OMNLaunch.m */; };
 		93CB66D41A35FD8100C5B10E /* OMNLaunch.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB66D21A35FD8100C5B10E /* OMNLaunch.m */; };
 		93CB9E7B1A67EE220062112A /* OMNPushUpTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB9E7A1A67EE210062112A /* OMNPushUpTransition.m */; };
@@ -2305,8 +2290,6 @@
 		937E0B5E18F04EC20058A249 /* OMNConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNConstants.m; sourceTree = "<group>"; };
 		937EF7ED19DFB47300BD9090 /* OMNCardEnterErrorLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNCardEnterErrorLabel.h; sourceTree = "<group>"; };
 		937EF7EE19DFB47300BD9090 /* OMNCardEnterErrorLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNCardEnterErrorLabel.m; sourceTree = "<group>"; };
-		93833E6419EBADC500CBEBC0 /* OMNChangePhoneVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangePhoneVC.h; sourceTree = "<group>"; };
-		93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangePhoneVC.m; sourceTree = "<group>"; };
 		938844281AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMailRUCardRegisterVC.h; sourceTree = "<group>"; };
 		938844291AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMailRUCardRegisterVC.m; sourceTree = "<group>"; };
 		9388442F1AE4C59D009E02A6 /* OMNTravelersLaunch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTravelersLaunch.h; sourceTree = "<group>"; };
@@ -2424,8 +2407,6 @@
 		939F990319752BE90051822E /* OMNLoginVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLoginVC.m; sourceTree = "<group>"; };
 		939F990519752BE90051822E /* OMNPhoneNumberTextFieldDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPhoneNumberTextFieldDelegate.h; sourceTree = "<group>"; };
 		939F990619752BE90051822E /* OMNPhoneNumberTextFieldDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNPhoneNumberTextFieldDelegate.m; sourceTree = "<group>"; };
-		939F990919752BE90051822E /* OMNRegisterUserVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNRegisterUserVC.h; sourceTree = "<group>"; };
-		939F990A19752BE90051822E /* OMNRegisterUserVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNRegisterUserVC.m; sourceTree = "<group>"; };
 		939F992A19752CFC0051822E /* OMNEnterCodeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OMNEnterCodeView.h; path = ../OMNEnterCodeView.h; sourceTree = "<group>"; };
 		939F992B19752CFC0051822E /* OMNEnterCodeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNEnterCodeView.m; path = ../OMNEnterCodeView.m; sourceTree = "<group>"; };
 		939F993B19752D680051822E /* OMNBankCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNBankCard.h; sourceTree = "<group>"; };
@@ -2525,8 +2506,6 @@
 		93CA7D2B1B0C418200117026 /* OMNMenuProductWithRecommendationsCellItemSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductWithRecommendationsCellItemSpec.m; sourceTree = "<group>"; };
 		93CACD641ADFDB0B00826F7B /* OMNUser+omn_mailRu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OMNUser+omn_mailRu.h"; sourceTree = "<group>"; };
 		93CACD651ADFDB0B00826F7B /* OMNUser+omn_mailRu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OMNUser+omn_mailRu.m"; sourceTree = "<group>"; };
-		93CB66CD1A35A63D00C5B10E /* OMNChangePhoneWebVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNChangePhoneWebVC.h; sourceTree = "<group>"; };
-		93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNChangePhoneWebVC.m; sourceTree = "<group>"; };
 		93CB66D11A35FD8100C5B10E /* OMNLaunch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNLaunch.h; sourceTree = "<group>"; };
 		93CB66D21A35FD8100C5B10E /* OMNLaunch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNLaunch.m; sourceTree = "<group>"; };
 		93CB9E791A67EE210062112A /* OMNPushUpTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNPushUpTransition.h; sourceTree = "<group>"; };
@@ -3019,8 +2998,6 @@
 				936BAD9419A77F5E0029873B /* OMNNavigationController.h */,
 				936BAD9519A77F5E0029873B /* OMNNavigationController.m */,
 				933D48E619E6445C004E591C /* OMNInteractiveTransitioningProtocol.h */,
-				93CB66CD1A35A63D00C5B10E /* OMNChangePhoneWebVC.h */,
-				93CB66CE1A35A63D00C5B10E /* OMNChangePhoneWebVC.m */,
 				93B65E631A6956C90061F1B1 /* OMNModalWebVC.h */,
 				93B65E641A6956C90061F1B1 /* OMNModalWebVC.m */,
 			);
@@ -3692,15 +3669,6 @@
 			path = Text;
 			sourceTree = "<group>";
 		};
-		93833E6319EBADB100CBEBC0 /* ChangePhone */ = {
-			isa = PBXGroup;
-			children = (
-				93833E6419EBADC500CBEBC0 /* OMNChangePhoneVC.h */,
-				93833E6519EBADC500CBEBC0 /* OMNChangePhoneVC.m */,
-			);
-			path = ChangePhone;
-			sourceTree = "<group>";
-		};
 		938E8F28192F3A200088EF38 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -3901,11 +3869,9 @@
 		939F98EC19752BE90051822E /* User */ = {
 			isa = PBXGroup;
 			children = (
-				93833E6319EBADB100CBEBC0 /* ChangePhone */,
 				939F98ED19752BE90051822E /* ConfirmCode */,
 				939F98F119752BE90051822E /* Info */,
 				939F990119752BE90051822E /* Login */,
-				939F990819752BE90051822E /* Register */,
 				93D1178B1A2F2C56000131C4 /* OMNEditUserVC.h */,
 				93D1178C1A2F2C56000131C4 /* OMNEditUserVC.m */,
 			);
@@ -3962,15 +3928,6 @@
 				93B3689519A3376100B6E6CB /* OMNResetPasswordVC.m */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		939F990819752BE90051822E /* Register */ = {
-			isa = PBXGroup;
-			children = (
-				939F990919752BE90051822E /* OMNRegisterUserVC.h */,
-				939F990A19752BE90051822E /* OMNRegisterUserVC.m */,
-			);
-			path = Register;
 			sourceTree = "<group>";
 		};
 		939F993A19752D680051822E /* Card */ = {
@@ -5225,7 +5182,6 @@
 				932AAA4F1AD6739C0049CACE /* OMNTableReloadData.m in Sources */,
 				930C4D8A1AB15E1B006CA608 /* OMNNearestBeaconSearchManager.m in Sources */,
 				93D77A601ADD394E00C0470B /* OMNUserProfileCellItem.m in Sources */,
-				930C4D8B1AB15E1B006CA608 /* OMNRegisterUserVC.m in Sources */,
 				930C4D8C1AB15E1B006CA608 /* OMNRestaurantInfoCell.m in Sources */,
 				93ABFD6B1AF13DB700A06CC5 /* OMNWishPinView.m in Sources */,
 				930C4D8D1AB15E1B006CA608 /* OMNOrderCalculationVC.m in Sources */,
@@ -5443,7 +5399,6 @@
 				930C4E361AB15E1B006CA608 /* main.m in Sources */,
 				930C4E371AB15E1B006CA608 /* OMNRestaurant+omn_network.m in Sources */,
 				930C4E381AB15E1B006CA608 /* OMNR1VC.m in Sources */,
-				930C4E391AB15E1B006CA608 /* OMNChangePhoneWebVC.m in Sources */,
 				930C4E3A1AB15E1B006CA608 /* OMNChangeTableAlertVC.m in Sources */,
 				930C4E3B1AB15E1B006CA608 /* OMNMenuProductCellItem.m in Sources */,
 				930C4E3C1AB15E1B006CA608 /* OMNMenuProductWithRecommedtationsCell.m in Sources */,
@@ -5451,7 +5406,6 @@
 				930C4E3D1AB15E1B006CA608 /* OMNOrdersVC.m in Sources */,
 				930C4E3E1AB15E1B006CA608 /* OMNRestaurantInfo.m in Sources */,
 				930C4E3F1AB15E1B006CA608 /* UIView+frame.m in Sources */,
-				930C4E401AB15E1B006CA608 /* OMNChangePhoneVC.m in Sources */,
 				930C4E411AB15E1B006CA608 /* OMNBankCardsModel.m in Sources */,
 				930C4E421AB15E1B006CA608 /* OMNMailRuBankCardsModel.m in Sources */,
 				930C4E431AB15E1B006CA608 /* OMNNavigationBarProgressView.m in Sources */,
@@ -5574,7 +5528,6 @@
 				932AAA501AD6739C0049CACE /* OMNTableReloadData.m in Sources */,
 				930C8B771ACA7D9F00CE4E5A /* OMNNearestBeaconSearchManager.m in Sources */,
 				93D77A611ADD394E00C0470B /* OMNUserProfileCellItem.m in Sources */,
-				930C8B781ACA7D9F00CE4E5A /* OMNRegisterUserVC.m in Sources */,
 				930C8B791ACA7D9F00CE4E5A /* OMNRestaurantInfoCell.m in Sources */,
 				93ABFD6C1AF13DB700A06CC5 /* OMNWishPinView.m in Sources */,
 				930C8B7A1ACA7D9F00CE4E5A /* OMNOrderCalculationVC.m in Sources */,
@@ -5792,7 +5745,6 @@
 				930C8C271ACA7D9F00CE4E5A /* main.m in Sources */,
 				930C8C281ACA7D9F00CE4E5A /* OMNRestaurant+omn_network.m in Sources */,
 				930C8C291ACA7D9F00CE4E5A /* OMNR1VC.m in Sources */,
-				930C8C2A1ACA7D9F00CE4E5A /* OMNChangePhoneWebVC.m in Sources */,
 				930C8C2B1ACA7D9F00CE4E5A /* OMNChangeTableAlertVC.m in Sources */,
 				930C8C2C1ACA7D9F00CE4E5A /* OMNMenuProductCellItem.m in Sources */,
 				930C8C2D1ACA7D9F00CE4E5A /* OMNMenuProductWithRecommedtationsCell.m in Sources */,
@@ -5800,7 +5752,6 @@
 				930C8C2E1ACA7D9F00CE4E5A /* OMNOrdersVC.m in Sources */,
 				930C8C2F1ACA7D9F00CE4E5A /* OMNRestaurantInfo.m in Sources */,
 				930C8C301ACA7D9F00CE4E5A /* UIView+frame.m in Sources */,
-				930C8C311ACA7D9F00CE4E5A /* OMNChangePhoneVC.m in Sources */,
 				930C8C321ACA7D9F00CE4E5A /* OMNBankCardsModel.m in Sources */,
 				930C8C331ACA7D9F00CE4E5A /* OMNMailRuBankCardsModel.m in Sources */,
 				930C8C341ACA7D9F00CE4E5A /* OMNNavigationBarProgressView.m in Sources */,
@@ -5923,7 +5874,6 @@
 				932AAA4D1AD6739C0049CACE /* OMNTableReloadData.m in Sources */,
 				93F2AEFF1A70000E00CDF3D9 /* OMNNearestBeaconSearchManager.m in Sources */,
 				93D77A5E1ADD394E00C0470B /* OMNUserProfileCellItem.m in Sources */,
-				939F992619752BE90051822E /* OMNRegisterUserVC.m in Sources */,
 				93E435B71998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */,
 				93ABFD691AF13DB700A06CC5 /* OMNWishPinView.m in Sources */,
 				9378228D1963E29900CE6661 /* OMNOrderCalculationVC.m in Sources */,
@@ -6141,7 +6091,6 @@
 				93676DF918D1E4FC00FC55F1 /* main.m in Sources */,
 				9305C6AC1A52E4BD00394292 /* OMNRestaurant+omn_network.m in Sources */,
 				938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */,
-				93CB66CF1A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */,
 				93B65E611A6941510061F1B1 /* OMNChangeTableAlertVC.m in Sources */,
 				938A4F851A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */,
 				93CE47881A774E5D002D293B /* OMNMenuProductWithRecommedtationsCell.m in Sources */,
@@ -6149,7 +6098,6 @@
 				937822881963E21A00CE6661 /* OMNOrdersVC.m in Sources */,
 				9345AFC5199B7DCC00328F73 /* OMNRestaurantInfo.m in Sources */,
 				9319FDE8192F36910053F3A4 /* UIView+frame.m in Sources */,
-				93833E6619EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */,
 				939F994119752D680051822E /* OMNBankCardsModel.m in Sources */,
 				93B3689219A3233A00B6E6CB /* OMNMailRuBankCardsModel.m in Sources */,
 				936E71F919925563008FF864 /* OMNNavigationBarProgressView.m in Sources */,
@@ -6246,7 +6194,6 @@
 				938A4F861A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */,
 				93676E1B18D1E4FC00FC55F1 /* mockTests.m in Sources */,
 				935FF16A1A6D4092004B69A6 /* OMNMenuHeaderItemCell.m in Sources */,
-				93CB66D01A35A63D00C5B10E /* OMNChangePhoneWebVC.m in Sources */,
 				93760EE71B0C1CF4009E3A51 /* OMNOperationManagerSpec.m in Sources */,
 				936203291AA3175C00247A4B /* OMNProductToMenuTransition.m in Sources */,
 				9345AFDB199E0ED200328F73 /* OMNCardBrandView.m in Sources */,
@@ -6312,7 +6259,6 @@
 				933A9EB31A4C33DA001C0909 /* OMNBottomTextButton.m in Sources */,
 				93E435B81998CF4900EDC488 /* OMNRestaurantInfoCell.m in Sources */,
 				932E0AC31B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
-				939F992719752BE90051822E /* OMNRegisterUserVC.m in Sources */,
 				93D591441B102FCE005520A7 /* OMNTipSpec.m in Sources */,
 				93DB92261AD799950084887B /* OMNMoneyQuestionVC.m in Sources */,
 				93535F00198246F50084C3E7 /* OMNBackgroundVC.m in Sources */,
@@ -6436,7 +6382,6 @@
 				93CE7CA51A62AAEF0032D96B /* OMNRestaurantMediatorTests.m in Sources */,
 				93DB26CE1A9DBC5300DDB739 /* OMNPreorderActionCellItem.m in Sources */,
 				9388442B1AE4BB8E009E02A6 /* OMNMailRUCardRegisterVC.m in Sources */,
-				93833E6719EBADC500CBEBC0 /* OMNChangePhoneVC.m in Sources */,
 				933A9EBB1A4DB9FF001C0909 /* NSString+omn_uuid.m in Sources */,
 				939F990D19752BE90051822E /* OMNConfirmCodeVC.m in Sources */,
 				93CE47A01A778C81002D293B /* OMNMenuProductVC.m in Sources */,
@@ -6616,7 +6561,6 @@
 				936AC1161AD8BDBC00A9D17F /* OMNTableReloadData.m in Sources */,
 				936AC1171AD8BDBC00A9D17F /* OMNNearestBeaconSearchManager.m in Sources */,
 				93D77A621ADD394E00C0470B /* OMNUserProfileCellItem.m in Sources */,
-				936AC1181AD8BDBC00A9D17F /* OMNRegisterUserVC.m in Sources */,
 				936AC1191AD8BDBC00A9D17F /* OMNRestaurantInfoCell.m in Sources */,
 				93ABFD6D1AF13DB700A06CC5 /* OMNWishPinView.m in Sources */,
 				936AC11A1AD8BDBC00A9D17F /* OMNOrderCalculationVC.m in Sources */,
@@ -6834,7 +6778,6 @@
 				936AC1D61AD8BDBC00A9D17F /* main.m in Sources */,
 				936AC1D71AD8BDBC00A9D17F /* OMNRestaurant+omn_network.m in Sources */,
 				936AC1D81AD8BDBC00A9D17F /* OMNR1VC.m in Sources */,
-				936AC1D91AD8BDBC00A9D17F /* OMNChangePhoneWebVC.m in Sources */,
 				936AC1DA1AD8BDBC00A9D17F /* OMNChangeTableAlertVC.m in Sources */,
 				936AC1DB1AD8BDBC00A9D17F /* OMNMenuProductCellItem.m in Sources */,
 				936AC1DC1AD8BDBC00A9D17F /* OMNMenuProductWithRecommedtationsCell.m in Sources */,
@@ -6842,7 +6785,6 @@
 				936AC1DD1AD8BDBC00A9D17F /* OMNOrdersVC.m in Sources */,
 				936AC1DE1AD8BDBC00A9D17F /* OMNRestaurantInfo.m in Sources */,
 				936AC1DF1AD8BDBC00A9D17F /* UIView+frame.m in Sources */,
-				936AC1E01AD8BDBC00A9D17F /* OMNChangePhoneVC.m in Sources */,
 				936AC1E11AD8BDBC00A9D17F /* OMNBankCardsModel.m in Sources */,
 				936AC1E21AD8BDBC00A9D17F /* OMNMailRuBankCardsModel.m in Sources */,
 				936AC1E31AD8BDBC00A9D17F /* OMNNavigationBarProgressView.m in Sources */,

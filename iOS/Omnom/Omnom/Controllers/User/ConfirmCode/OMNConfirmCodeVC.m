@@ -118,16 +118,6 @@
   
 }
 
-- (void)didFinishReset {
-
-  if ([self.delegate respondsToSelector:@selector(confirmCodeVCDidResetPhone:)]) {
-    
-    [self.delegate confirmCodeVCDidResetPhone:self];
-    
-  }
-  
-}
-
 - (void)didEnterCode {
   
   _codeView.enabled = NO;

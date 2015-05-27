@@ -170,36 +170,27 @@
 - (void)loginTap {
 
   [self setNextButtonLoading:YES];
+  [self requestAuthorizationCode].then(^{
+    
+    [self showConfirmCode];
+    
+  }).catch(^(OMNError *error) {
+    
+    [self processLoginError:error];
+    
+  }).finally(^{
   
-  @weakify(self)
-  [self requestAuthorizationCodeCompletion:^{
+    [self setNextButtonLoading:NO];
     
-    @strongify(self)
-    [self requestAuthorizationCode];
-    
-  }];
+  });
   
 }
 
-- (void)requestAuthorizationCodeCompletion:(dispatch_block_t)completionBlock {
-  
-  @weakify(self)
-  [OMNUser loginUsingData:_loginTF.textField.text code:nil completion:^(NSString *token) {
-    
-    if (completionBlock) {
-      completionBlock();
-    }
-    
-  } failure:^(NSError *error) {
-
-    @strongify(self)
-    [self processLoginError:error];
-    
-  }];
+- (PMKPromise *)requestAuthorizationCode {
+  return [OMNUser loginUsingPhone:_loginTF.textField.text code:nil];
 }
 
 - (void)processLoginError:(NSError *)error {
-  [self setNextButtonLoading:NO];
 
   if (error) {
 
@@ -220,13 +211,12 @@
   
 }
 
-- (void)requestAuthorizationCode {
+- (void)showConfirmCode {
   
   OMNConfirmCodeVC *confirmCodeVC = [[OMNConfirmCodeVC alloc] initWithPhone:self.decimalPhoneNumber];
   confirmCodeVC.allowChangePhoneNumber = YES;
   confirmCodeVC.delegate = self;
   [self.navigationController pushViewController:confirmCodeVC animated:YES];
-  [self setNextButtonLoading:NO];
   
 }
 
@@ -234,17 +224,19 @@
 
 - (void)confirmCodeVC:(OMNConfirmCodeVC *)confirmCodeVC didEnterCode:(NSString *)code {
   
-  @weakify(self)
-  [OMNUser loginUsingData:_loginTF.textField.text code:code completion:^(NSString *token) {
-
-    @strongify(self)
-    [self tokenDidReceived:token];
+  [OMNUser loginUsingPhone:_loginTF.textField.text code:code].then(^(NSString *token) {
     
-  } failure:^(NSError *error) {
+    return [[OMNAuthorization authorization] setAuthenticationToken:token];
+    
+  }).then(^(OMNUser *user) {
+    
+    fulfiller(user);
+    
+  }).catch(^(OMNError *error) {
     
     [confirmCodeVC resetAnimated:YES];
     
-  }];
+  });
   
 }
 
@@ -260,11 +252,7 @@
 }
 
 - (void)confirmCodeVCRequestResendCode:(OMNConfirmCodeVC *)confirmCodeVC {
-  [self requestAuthorizationCodeCompletion:nil];
-}
-
-- (void)confirmCodeVCDidResetPhone:(OMNConfirmCodeVC *)confirmCodeVC {
-  [self closeTap];
+  [self requestAuthorizationCode];
 }
 
 - (NSString *)decimalPhoneNumber {
