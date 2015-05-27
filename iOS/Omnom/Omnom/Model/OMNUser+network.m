@@ -12,6 +12,7 @@
 #import "OMNAnalitics.h"
 #import "OMNUtils.h"
 #import "OMNImageManager.h"
+#import "UIImage+omn_network.h"
 
 @implementation OMNUser (network)
 
@@ -234,84 +235,65 @@
   
 }
 
-- (void)loadImageWithCompletion:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock {
-  
-  if (0 == self.avatar.length) {
-    failureBlock(nil);
-    return;
-  }
-  
-  @weakify(self)
-  [[OMNImageManager manager] downloadImageWithURL:self.avatar completion:^(UIImage *image) {
-    
-    if (image) {
-      
-      @strongify(self)
-      self.image = image;
-      completion();
-      
-    }
-    else {
-      
-      failureBlock(nil);
-      
-    }
-    
-  }];
-  
-}
-
-- (PMKPromise *)uploadAvatar:(UIImage *)image {
+- (PMKPromise *)loadAvatar {
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    NSString *path = [NSString stringWithFormat:@"/user/avatar?token=%@", [OMNAuthorization authorization].token];
-    [[OMNAuthorizationManager sharedManager] POST:path parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    if (0 == self.avatar.length) {
+      reject([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
+      return;
+    }
+    
+    @weakify(self)
+    [[OMNImageManager manager] downloadImageWithURL:self.avatar completion:^(UIImage *image) {
       
-      [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.9f) name:@"image" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
-      
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-      
-      if ([responseObject omn_isSuccessResponse]) {
+      if (image) {
         
-        OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-        fulfill(user);
+        @strongify(self)
+        self.image = image;
+        fulfill(image);
         
       }
       else {
         
-        reject([responseObject omn_userError]);
+        reject([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
         
       }
       
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+    }];
+
+  }];
+  
+}
+
+- (PMKPromise *)uploadUserImageIfNeeded:(OMNUser *)user {
+  
+  if (user.image &&
+      user.imageDidChanged) {
+    
+    return [user.image omn_upload];
+    
+  }
+  else {
+    
+    return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
       
-      reject([operation omn_internetError]);
+      fulfill(user.avatar);
       
     }];
     
-  }];
+  }
   
 }
 
 - (PMKPromise *)updateUserInfoWithUserAndImage:(OMNUser *)user {
   
-  if (user.image &&
-      user.imageDidChanged) {
+  return [self uploadUserImageIfNeeded:user].then(^(NSString *avatar) {
     
-    return [self uploadAvatar:user.image].then(^(OMNUser *userWithAvatar) {
-      
-      user.avatar = userWithAvatar.avatar;
-      return [self updateUserInfoWithUser:user];
-      
-    });
-
-  }
-  else {
-    
+    user.avatar = avatar;
     return [self updateUserInfoWithUser:user];
     
-  }
+  });
   
 }
 
@@ -335,7 +317,6 @@
     if (user.avatar) {
       parameters[@"avatar"] = user.avatar;
     }
-    
     
     [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
@@ -406,7 +387,7 @@
     
     if (![oldAvatar isEqualToString:self.avatar]) {
       
-      [self loadImageWithCompletion:^{} failure:^(NSError *error) {}];
+      [self loadAvatar];
       
     }
     

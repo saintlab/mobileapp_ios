@@ -1378,6 +1378,15 @@
 		9389456C19B5957100C37C82 /* config.json in Resources */ = {isa = PBXBuildFile; fileRef = 9389456A19B5957100C37C82 /* config.json */; };
 		9389456F19B5B01600C37C82 /* OMNDisclamerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456E19B5B01600C37C82 /* OMNDisclamerView.m */; };
 		9389457019B5B01600C37C82 /* OMNDisclamerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456E19B5B01600C37C82 /* OMNDisclamerView.m */; };
+		93897DD81B1596DF0058378E /* UIImage+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897DD71B1596DF0058378E /* UIImage+omn_network.m */; };
+		93897DD91B1596DF0058378E /* UIImage+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897DD71B1596DF0058378E /* UIImage+omn_network.m */; };
+		93897DDA1B1596DF0058378E /* UIImage+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897DD71B1596DF0058378E /* UIImage+omn_network.m */; };
+		93897DDB1B1596DF0058378E /* UIImage+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897DD71B1596DF0058378E /* UIImage+omn_network.m */; };
+		93897DDC1B1596DF0058378E /* UIImage+omn_network.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897DD71B1596DF0058378E /* UIImage+omn_network.m */; };
+		93897DDE1B15B3110058378E /* user_with_null_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897DDD1B15B3110058378E /* user_with_null_stub.json */; };
+		93897DE11B15F7440058378E /* OHHTTPStubs+omn_helpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897DE01B15F7440058378E /* OHHTTPStubs+omn_helpers.m */; };
+		93897DE31B15F8B60058378E /* UIImage+omn_networkSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897DE21B15F8B60058378E /* UIImage+omn_networkSpec.m */; };
+		93897DE51B15FA260058378E /* images_upload_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897DE41B15FA260058378E /* images_upload_stub.json */; };
 		938A4F851A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938A4F861A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
@@ -2311,6 +2320,13 @@
 		9389456A19B5957100C37C82 /* config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config.json; sourceTree = "<group>"; };
 		9389456D19B5B01600C37C82 /* OMNDisclamerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDisclamerView.h; sourceTree = "<group>"; };
 		9389456E19B5B01600C37C82 /* OMNDisclamerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNDisclamerView.m; sourceTree = "<group>"; };
+		93897DD61B1596DF0058378E /* UIImage+omn_network.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+omn_network.h"; sourceTree = "<group>"; };
+		93897DD71B1596DF0058378E /* UIImage+omn_network.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+omn_network.m"; sourceTree = "<group>"; };
+		93897DDD1B15B3110058378E /* user_with_null_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = user_with_null_stub.json; sourceTree = "<group>"; };
+		93897DDF1B15F7440058378E /* OHHTTPStubs+omn_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OHHTTPStubs+omn_helpers.h"; sourceTree = "<group>"; };
+		93897DE01B15F7440058378E /* OHHTTPStubs+omn_helpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OHHTTPStubs+omn_helpers.m"; sourceTree = "<group>"; };
+		93897DE21B15F8B60058378E /* UIImage+omn_networkSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+omn_networkSpec.m"; sourceTree = "<group>"; };
+		93897DE41B15FA260058378E /* images_upload_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = images_upload_stub.json; sourceTree = "<group>"; };
 		938A4F831A97173E00BC2C2E /* OMNMenuProductCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductCellItem.h; sourceTree = "<group>"; };
 		938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductCellItem.m; sourceTree = "<group>"; };
 		938E54981980CCB200B38B45 /* OMNR1VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNR1VC.h; sourceTree = "<group>"; };
@@ -3064,6 +3080,8 @@
 				93ABFD601AF1246C00A06CC5 /* UITableViewCell+omn_height.m */,
 				9349132D1AF3087B007C2905 /* NSObject+omn_safe_creation.h */,
 				9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */,
+				93897DD61B1596DF0058378E /* UIImage+omn_network.h */,
+				93897DD71B1596DF0058378E /* UIImage+omn_network.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -3557,6 +3575,9 @@
 				93CA7D2B1B0C418200117026 /* OMNMenuProductWithRecommendationsCellItemSpec.m */,
 				935048B81B101C5D00709A6E /* OMNTipButtonSpec.m */,
 				93D591431B102FCE005520A7 /* OMNTipSpec.m */,
+				93897DDF1B15F7440058378E /* OHHTTPStubs+omn_helpers.h */,
+				93897DE01B15F7440058378E /* OHHTTPStubs+omn_helpers.m */,
+				93897DE21B15F8B60058378E /* UIImage+omn_networkSpec.m */,
 			);
 			path = OmnomTests;
 			sourceTree = "<group>";
@@ -3564,9 +3585,11 @@
 		93676E1518D1E4FC00FC55F1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				93897DE41B15FA260058378E /* images_upload_stub.json */,
 				930EE3E51B0ACCE100BB4B79 /* config_stub.json */,
 				930EE3DA1B0A153200BB4B79 /* wish_stub.json */,
 				93D59A361A3D6A4300C3491F /* orders_stub.json */,
+				93897DDD1B15B3110058378E /* user_with_null_stub.json */,
 				93040A4B1A2C36B700D87CBD /* user_stub.json */,
 				93676E1618D1E4FC00FC55F1 /* omnomTests-Info.plist */,
 				93676E1718D1E4FC00FC55F1 /* InfoPlist.strings */,
@@ -4856,6 +4879,7 @@
 				9394CBDC1ACAA5A5008FB6CC /* suncity_addresses.json in Resources */,
 				9389456C19B5957100C37C82 /* config.json in Resources */,
 				938F3A44198B859100AB288E /* timings.json in Resources */,
+				93897DDE1B15B3110058378E /* user_with_null_stub.json in Resources */,
 				93F21BEE19B6284B00D5F78A /* config_stand.json in Resources */,
 				937822901963E29900CE6661 /* OMNOrderCalculationVC.xib in Resources */,
 				932B186F19AF3C80009E440E /* pay_done.caf in Resources */,
@@ -4864,6 +4888,7 @@
 				938F3A4D198BECD100AB288E /* OMNWizardVC.json in Resources */,
 				939F991719752BE90051822E /* OMNBankCardsVC.xib in Resources */,
 				93CE7CA31A62A8320032D96B /* decodeBeacons.json in Resources */,
+				93897DE51B15FA260058378E /* images_upload_stub.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5387,6 +5412,7 @@
 				930C4E1A1AB15E1B006CA608 /* OMNMailRUCardConfirmVC.m in Sources */,
 				930C4E1B1AB15E1B006CA608 /* OMNUserIconView.m in Sources */,
 				93ABFD801AF1C12F00A06CC5 /* OMNWish+omn_network.m in Sources */,
+				93897DDA1B1596DF0058378E /* UIImage+omn_network.m in Sources */,
 				930C4E1C1AB15E1B006CA608 /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				930C4E1D1AB15E1B006CA608 /* OMNRestaurantCell.m in Sources */,
 				930C4E1E1AB15E1B006CA608 /* OMNBottomLabelView.m in Sources */,
@@ -5735,6 +5761,7 @@
 				930C8C0B1ACA7D9F00CE4E5A /* OMNMailRUCardConfirmVC.m in Sources */,
 				930C8C0C1ACA7D9F00CE4E5A /* OMNUserIconView.m in Sources */,
 				93ABFD811AF1C12F00A06CC5 /* OMNWish+omn_network.m in Sources */,
+				93897DDB1B1596DF0058378E /* UIImage+omn_network.m in Sources */,
 				930C8C0D1ACA7D9F00CE4E5A /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				930C8C0E1ACA7D9F00CE4E5A /* OMNRestaurantCell.m in Sources */,
 				930C8C0F1ACA7D9F00CE4E5A /* OMNBottomLabelView.m in Sources */,
@@ -6083,6 +6110,7 @@
 				93EE3084198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
 				938EE0DE1A31A75100508039 /* OMNUserIconView.m in Sources */,
 				93ABFD7E1AF1C12F00A06CC5 /* OMNWish+omn_network.m in Sources */,
+				93897DD81B1596DF0058378E /* UIImage+omn_network.m in Sources */,
 				930C481419CFF8E200B90010 /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				933A9E8E1A49907A001C0909 /* OMNRestaurantCell.m in Sources */,
 				934CDF5419D4196D00D73FC4 /* OMNBottomLabelView.m in Sources */,
@@ -6189,6 +6217,7 @@
 				936203251AA308F400247A4B /* OMNMenuToProductTransition.m in Sources */,
 				93B743B01ABA76950001AE6F /* OMNMenuSearchVC.m in Sources */,
 				93E01E571B12EE7B00C2AA1A /* OMNOrder+omn_helper.m in Sources */,
+				93897DE11B15F7440058378E /* OHHTTPStubs+omn_helpers.m in Sources */,
 				936BAD9719A77F5E0029873B /* OMNNavigationController.m in Sources */,
 				935FF1651A6D3ED0004B69A6 /* OMNMenuModel.m in Sources */,
 				932B185C19ADE674009E440E /* OMNOrderItemsFlowLayout.m in Sources */,
@@ -6400,6 +6429,7 @@
 				93005C7B1AD37A0B00635521 /* OMNMyOrderConfirmModel.m in Sources */,
 				93BCD74D1AAF159000725B12 /* OMNBarPaymentDoneVC.m in Sources */,
 				93EE3085198F57150024EAF4 /* OMNMailRUCardConfirmVC.m in Sources */,
+				93897DE31B15F8B60058378E /* UIImage+omn_networkSpec.m in Sources */,
 				933A9EAF1A4C0915001C0909 /* OMNRestaurantDetailsView.m in Sources */,
 				935A1E361A81D5D100704086 /* OMNClearButton.m in Sources */,
 				9342AD2B1A5ACD5500CDE7ED /* OMNRestaurant+omn_payment.m in Sources */,
@@ -6431,6 +6461,7 @@
 				932A67C21A63D0E70052F0E4 /* OMNNoOrdersAlertVC.m in Sources */,
 				935FF1601A6D2BA3004B69A6 /* OMNPreorderDoneVC.m in Sources */,
 				9389456119B0620D00C37C82 /* OMNPushTexts.m in Sources */,
+				93897DD91B1596DF0058378E /* UIImage+omn_network.m in Sources */,
 				932872C319AC5E1A00FF8B0E /* OMNRestaurantTests.m in Sources */,
 				9394CC191ACD3F81008FB6CC /* OMNPreorderRestaurantMediator.m in Sources */,
 				93D34DB119D2689800B7BDBE /* NSString+omnScanner.m in Sources */,
@@ -6772,6 +6803,7 @@
 				936AC1BA1AD8BDBC00A9D17F /* OMNMailRUCardConfirmVC.m in Sources */,
 				936AC1BB1AD8BDBC00A9D17F /* OMNUserIconView.m in Sources */,
 				93ABFD821AF1C12F00A06CC5 /* OMNWish+omn_network.m in Sources */,
+				93897DDC1B1596DF0058378E /* UIImage+omn_network.m in Sources */,
 				936AC1BC1AD8BDBC00A9D17F /* OMNTransitionFromCalculatorToOrder.m in Sources */,
 				936AC1BD1AD8BDBC00A9D17F /* OMNRestaurantCell.m in Sources */,
 				936AC1BE1AD8BDBC00A9D17F /* OMNBottomLabelView.m in Sources */,

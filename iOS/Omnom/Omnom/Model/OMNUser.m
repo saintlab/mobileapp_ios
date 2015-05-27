@@ -8,29 +8,26 @@
 
 #import "OMNUser.h"
 
-@implementation OMNUser {
-  
-}
+@implementation OMNUser
 
 - (instancetype)initWithJsonData:(id)data {
   self = [super init];
   if (self) {
-    self.id = [data[@"id"] description];
-    self.name = [data[@"name"] description];
-    self.email = [data[@"email"] description];
-    self.phone = [data[@"phone"] description];
-    self.status = [data[@"status"] description];
-    self.created_at = [data[@"created_at"] description];
-    self.avatar = data[@"avatar"];
+    self.id = [data[@"id"] omn_stringValueSafe];
+    self.name = [data[@"name"] omn_stringValueSafe];
+    self.email = [data[@"email"] omn_stringValueSafe];
+    self.phone = [data[@"phone"] omn_stringValueSafe];
+    self.status = [data[@"status"] omn_stringValueSafe];
+    self.created_at = [data[@"created_at"] omn_stringValueSafe];
+    self.avatar = [data[@"avatar"] omn_stringValueSafe];
     
-    NSString *birth_date = data[@"birth_date"];
+    NSString *birth_date = [data[@"birth_date"] omn_stringValueSafe];
     if (birth_date.length) {
       
       self.birthDate = [[self birthDateFormatter] dateFromString:birth_date];
       
     }
-    self.phone_validated = [data[@"phone_validated"] boolValue];
-    self.email_validated = [data[@"email_validated"] boolValue];
+
   }
   return self;
 }

@@ -83,7 +83,7 @@ NSString *entranceModeFromString(NSString *string) {
     
 #if DEBUG
 #warning TODO delivery_dates
-    _entrance_mode = kEntranceModeOnTable;
+//    _entrance_mode = kEntranceModeOnTable;
 #endif
     
     _delivery_dates =

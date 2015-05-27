@@ -24,8 +24,6 @@
 
 - (void)confirmPhoneResend:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock;
 
-- (void)loadImageWithCompletion:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock;
-
 - (void)registerWithCompletion:(dispatch_block_t)completion failure:(void (^)(OMNError *error))failureBlock;
 
 - (PMKPromise *)updateUserInfoWithUserAndImage:(OMNUser *)user;
