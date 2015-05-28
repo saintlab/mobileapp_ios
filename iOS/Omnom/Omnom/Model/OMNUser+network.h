@@ -21,4 +21,12 @@
 
 - (PMKPromise *)loadAvatar;
 
+- (PMKPromise *)registerNewUser;
+
+@end
+
+@interface NSObject (omn_tokenResponse)
+
+- (PMKPromise *)omn_decodeToken;
+
 @end

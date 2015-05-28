@@ -11,4 +11,6 @@
 @property (nonatomic, copy) dispatch_block_t didFinishBlock;
 @property (nonatomic, assign) BOOL editPhoto;
 
+@property (nonatomic, strong, readonly) UILabel *errorLabel;
+
 @end

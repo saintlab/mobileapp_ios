@@ -95,7 +95,7 @@ describe(@"OMNUser", ^{
     }).catch(^(OMNError *error) {
       
       [[error should] beNonNil];
-      [[@(error.code) should] equal:@(kOMNErrorNoUserToken)];
+      [[@(error.code) should] equal:@(kOMNErrorInvalidUserToken)];
       
     });
     

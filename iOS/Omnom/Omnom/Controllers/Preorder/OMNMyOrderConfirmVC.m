@@ -146,7 +146,7 @@ OMNPreorderConfirmCellDelegate>
     
   }).catch(^(OMNError *error) {
     
-    if (kOMNErrorNoUserToken == error.code) {
+    if (kOMNErrorInvalidUserToken == error.code) {
       
       [self requestAuthorizationForCreateWish];
       

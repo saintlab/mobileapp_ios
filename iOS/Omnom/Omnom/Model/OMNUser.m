@@ -26,7 +26,7 @@
     self.status = [data[@"status"] omn_stringValueSafe];
     self.created_at = [data[@"created_at"] omn_stringValueSafe];
     self.avatar = [data[@"avatar"] omn_stringValueSafe];
-    
+    self.token = @"";
     NSString *birth_date = [data[@"birth_date"] omn_stringValueSafe];
     if (birth_date.length) {
       
@@ -50,6 +50,7 @@
   user.birthDate = [self.birthDate copyWithZone:zone];
   user.avatar = [self.avatar copyWithZone:zone];
   user.image = self.image;
+  user.token = self.token;
   return user;
 }
 
@@ -63,6 +64,7 @@
     self.status = [aDecoder decodeObjectForKey:@"status"];
     self.birthDate = [aDecoder decodeObjectForKey:@"birthDate"];
     self.avatar = [aDecoder decodeObjectForKey:@"avatar"];
+    self.token = [aDecoder decodeObjectForKey:@"token"];
   }
   return self;
 }
@@ -76,7 +78,7 @@
   [aCoder encodeObject:self.status forKey:@"status"];
   [aCoder encodeObject:self.birthDate forKey:@"birthDate"];
   [aCoder encodeObject:self.avatar forKey:@"avatar"];
-  
+  [aCoder encodeObject:self.token forKey:@"token"];
 }
 
 - (NSDateFormatter *)birthDateFormatter {

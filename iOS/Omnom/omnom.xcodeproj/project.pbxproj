@@ -1730,6 +1730,7 @@
 		93897F771B16DDBE0058378E /* OMNUser+networkSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F761B16DDBE0058378E /* OMNUser+networkSpec.m */; };
 		93897F781B16DF9C0058378E /* OMNVisitorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F15DF61ACEEEEC000C8129 /* OMNVisitorSpec.m */; };
 		93897F7B1B16ECE80058378E /* OMNSocketManagerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F7A1B16ECE80058378E /* OMNSocketManagerSpec.m */; };
+		93897F7D1B16FE2C0058378E /* OMNEditUserVCSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F7C1B16FE2C0058378E /* OMNEditUserVCSpec.m */; };
 		938A4F851A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938A4F861A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
@@ -2670,6 +2671,7 @@
 		93897F6F1B16DC970058378E /* omnomTests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "omnomTests copy-Info.plist"; path = "/Users/tea/Documents/Projects/saintlab/mobileapp/iOS/Omnom/omnomTests copy-Info.plist"; sourceTree = "<absolute>"; };
 		93897F761B16DDBE0058378E /* OMNUser+networkSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OMNUser+networkSpec.m"; path = "OmnomTests/Integration/OMNUser+networkSpec.m"; sourceTree = SOURCE_ROOT; };
 		93897F7A1B16ECE80058378E /* OMNSocketManagerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNSocketManagerSpec.m; path = OmnomTests/Integration/OMNSocketManagerSpec.m; sourceTree = SOURCE_ROOT; };
+		93897F7C1B16FE2C0058378E /* OMNEditUserVCSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditUserVCSpec.m; sourceTree = "<group>"; };
 		938A4F831A97173E00BC2C2E /* OMNMenuProductCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductCellItem.h; sourceTree = "<group>"; };
 		938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductCellItem.m; sourceTree = "<group>"; };
 		938E54981980CCB200B38B45 /* OMNR1VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNR1VC.h; sourceTree = "<group>"; };
@@ -4050,6 +4052,7 @@
 				935048B81B101C5D00709A6E /* OMNTipButtonSpec.m */,
 				93D591431B102FCE005520A7 /* OMNTipSpec.m */,
 				93897DE21B15F8B60058378E /* UIImage+omn_networkSpec.m */,
+				93897F7C1B16FE2C0058378E /* OMNEditUserVCSpec.m */,
 			);
 			name = Unit;
 			sourceTree = "<group>";
@@ -6630,6 +6633,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93897F7D1B16FE2C0058378E /* OMNEditUserVCSpec.m in Sources */,
 				93C8C7861AEDEAE1000D7AB9 /* NSIndexSet+omn_helper.m in Sources */,
 				9307A6E019D53F7E00101B81 /* OMNLabeledTextField.m in Sources */,
 				93D77AA01ADF92BB00C0470B /* OMNSupportUserInfoItem.m in Sources */,

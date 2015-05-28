@@ -23,6 +23,7 @@ NSCoding>
 @property (nonatomic, copy) NSDate *birthDate;
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic, copy) NSString *avatar;
+@property (nonatomic, copy) NSString *token;
 
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL imageDidChanged;

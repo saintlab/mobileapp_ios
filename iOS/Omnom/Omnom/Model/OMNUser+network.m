@@ -8,7 +8,6 @@
 
 #import "OMNUser+network.h"
 #import "OMNAuthorizationManager.h"
-#import "OMNAuthorization.h"
 #import "OMNAnalitics.h"
 #import "OMNUtils.h"
 #import "OMNImageManager.h"
@@ -38,7 +37,7 @@
   
   return [self loginWithParameters:parameters].then(^(NSDictionary *resposne) {
     
-    return [resposne decodeToken];
+    return [resposne omn_decodeToken];
     
   });
   
@@ -68,7 +67,7 @@
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
     if (0 == token.length) {
-      reject([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
+      reject([OMNError omnomErrorFromCode:kOMNErrorInvalidUserToken]);
       return;
     }
 
@@ -82,13 +81,14 @@
       if ([responseObject omn_isSuccessResponse]) {
         
         OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+        user.token = token;
         fulfill(user);
         
       }
       else {
         
         [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
-        reject([OMNError omnomErrorFromCode:kOMNErrorNoUserToken]);
+        reject([OMNError omnomErrorFromCode:kOMNErrorInvalidUserToken]);
         
       }
       
@@ -171,7 +171,7 @@
     
     NSMutableDictionary *parameters =
     [@{
-       @"token" : [OMNAuthorization authorization].token,
+       @"token" : self.token,
        @"name" : self.name,
        @"email" : self.email,
        @"birth_date" : self.birthDateString,
@@ -186,7 +186,6 @@
       if ([responseObject omn_isSuccessResponse]) {
         
         OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-        [[OMNAuthorization authorization] updateUserInfoWithUser:newUser];
         fulfill(newUser);
         
       }
@@ -201,6 +200,92 @@
       reject([operation omn_internetError]);
       
     }];
+    
+  }];
+  
+}
+
+- (PMKPromise *)registerNewUser {
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    NSMutableDictionary *parameters =
+    [@{
+       @"token" : self.token,
+       @"name" : self.name,
+       @"email" : self.email,
+       @"birth_date" : self.birthDateString,
+       } mutableCopy];
+    
+    if (self.avatar) {
+      parameters[@"avatar"] = self.avatar;
+    }
+    
+    [[OMNAuthorizationManager sharedManager] POST:@"/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      
+      if ([responseObject omn_isSuccessResponse]) {
+        
+        OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+        fulfill(newUser);
+        
+      }
+      else {
+        
+        reject([responseObject omn_userError]);
+        
+      }
+      
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+      
+      reject([operation omn_internetError]);
+      
+    }];
+    
+  }];
+  
+}
+
+@end
+
+@implementation NSObject (omn_tokenResponse)
+
+- (PMKPromise *)omn_decodeToken {
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+
+    if (![self isKindOfClass:[NSDictionary class]]) {
+      reject([OMNError userErrorFromCode:kOMNUserErrorCodeUnknoun]);
+      return;
+    }
+    
+    NSDictionary *response = (NSDictionary *)self;
+    
+    if ([response[@"status"] isEqualToString:@"success"]) {
+      
+      fulfill(response[@"token"]);
+      
+    }
+    else {
+      
+      OMNError *error = nil;
+      NSString *message = response[@"error"][@"message"];
+      if (message) {
+        
+        error = [OMNError errorWithDomain:OMNUserErrorDomain
+                                     code:[response[@"error"][@"code"] integerValue]
+                                 userInfo:@{NSLocalizedDescriptionKey : message}];
+        
+        
+      }
+      else {
+        
+        error = [OMNError userErrorFromCode:kOMNUserErrorCodeUnknoun];
+        
+      }
+      
+      reject(error);
+      
+    }
     
   }];
   

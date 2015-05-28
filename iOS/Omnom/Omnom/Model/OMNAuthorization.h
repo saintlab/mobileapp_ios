@@ -24,7 +24,7 @@ typedef void(^OMNAuthorizationBlock)(NSString *token, BOOL register);
 + (instancetype)authorization;
 
 - (BOOL)isAuthorized;
-- (void)setup;
+- (void)loadCachedUser;
 - (void)updateUserInfoWithUser:(OMNUser *)user;
 - (void)logout;
 - (void)loadSupport;
@@ -39,11 +39,5 @@ typedef void(^OMNAuthorizationBlock)(NSString *token, BOOL register);
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error;
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings;
-
-@end
-
-@interface NSDictionary (omn_tokenResponse)
-
-- (PMKPromise *)decodeToken;
 
 @end

@@ -50,7 +50,7 @@ static OMNConfig *_config = nil;
   _customConfig = [self configWithName:launchOptions.customConfigName];
   
   //initialize saved token
-  [[OMNAuthorization authorization] setup];
+  [[OMNAuthorization authorization] loadCachedUser];
 
   [self setupNetworkManagers];
   

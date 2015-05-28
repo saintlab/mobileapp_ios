@@ -36,10 +36,10 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   UIScrollView *_scroll;
   OMNUserInfoView *_userInfoView;
   OMNUserIconView *_iconButton;
-  UILabel *_errorLabel;
 
   UIImage *_userImage;
   OMNUser *_user;
+  
 }
 
 - (void)viewDidLoad {
@@ -253,6 +253,7 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   @weakify(self)
   [editUser updateUserInfoAndImage].then(^(OMNUser *user) {
     
+    [[OMNAuthorization authorization] updateUserInfoWithUser:user];
     [self closeTap];
     
   }).catch(^(OMNError *error) {
@@ -319,6 +320,7 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   _errorLabel = [UILabel omn_autolayoutView];
   _errorLabel.font = FuturaLSFOmnomLERegular(18.0f);
   _errorLabel.textColor = [OMNStyler redColor];
+  _errorLabel.numberOfLines = 0;
   _errorLabel.textAlignment = NSTextAlignmentCenter;
   [contentView addSubview:_errorLabel];
   

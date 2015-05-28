@@ -67,7 +67,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   return self;
 }
 
-- (void)setup {
+- (void)loadCachedUser {
   
   @try {
     
@@ -197,7 +197,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)registerForRemoteNotificationsIfPossible {
   
   if (self.pushNotificationsRequested) {
-
 
     UIApplication *application = [UIApplication sharedApplication];
     application.applicationIconBadgeNumber = 0;
@@ -336,45 +335,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   }
   
   return retrieveuuid;
-}
-
-@end
-
-@implementation NSDictionary (omn_tokenResponse)
-
-- (PMKPromise *)decodeToken {
-  
-  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-  
-    if ([self[@"status"] isEqualToString:@"success"]) {
-      
-      fulfill(self[@"token"]);
-      
-    }
-    else {
-      
-      OMNError *error = nil;
-      NSString *message = self[@"error"][@"message"];
-      if (message) {
-        
-        error = [OMNError errorWithDomain:OMNUserErrorDomain
-                                     code:[self[@"error"][@"code"] integerValue]
-                                 userInfo:@{NSLocalizedDescriptionKey : message}];
-        
-        
-      }
-      else {
-        
-        error = [OMNError userErrorFromCode:kOMNUserErrorCodeUnknoun];
-        
-      }
-      
-      reject(error);
-      
-    }
-    
-  }];
-  
 }
 
 @end
