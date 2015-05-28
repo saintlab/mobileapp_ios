@@ -19,6 +19,8 @@ SPEC_BEGIN(OMNUser_networkSpec)
 
 describe(@"OMNUser+network", ^{
 
+  pending(@"should test at live", nil);
+  
   beforeAll(^{
     [OMNAuthorizationManager setupWithURL:@"http://cerberus.staging.saintlab.com" headers:@{}];
   });

@@ -1731,6 +1731,13 @@
 		93897F781B16DF9C0058378E /* OMNVisitorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F15DF61ACEEEEC000C8129 /* OMNVisitorSpec.m */; };
 		93897F7B1B16ECE80058378E /* OMNSocketManagerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F7A1B16ECE80058378E /* OMNSocketManagerSpec.m */; };
 		93897F7D1B16FE2C0058378E /* OMNEditUserVCSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F7C1B16FE2C0058378E /* OMNEditUserVCSpec.m */; };
+		93897F7F1B1715E30058378E /* UIImage+omn_networkSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F7E1B1715E30058378E /* UIImage+omn_networkSpec.m */; };
+		93897F811B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
+		93897F821B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
+		93897F831B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
+		93897F841B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
+		93897F851B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
+		93897F861B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
 		938A4F851A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938A4F861A97173E00BC2C2E /* OMNMenuProductCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */; };
 		938E549B1980CCB200B38B45 /* OMNR1VC.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E54991980CCB200B38B45 /* OMNR1VC.m */; };
@@ -2672,6 +2679,8 @@
 		93897F761B16DDBE0058378E /* OMNUser+networkSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OMNUser+networkSpec.m"; path = "OmnomTests/Integration/OMNUser+networkSpec.m"; sourceTree = SOURCE_ROOT; };
 		93897F7A1B16ECE80058378E /* OMNSocketManagerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNSocketManagerSpec.m; path = OmnomTests/Integration/OMNSocketManagerSpec.m; sourceTree = SOURCE_ROOT; };
 		93897F7C1B16FE2C0058378E /* OMNEditUserVCSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNEditUserVCSpec.m; sourceTree = "<group>"; };
+		93897F7E1B1715E30058378E /* UIImage+omn_networkSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+omn_networkSpec.m"; path = "OmnomTests/Integration/UIImage+omn_networkSpec.m"; sourceTree = SOURCE_ROOT; };
+		93897F801B1719020058378E /* config_cerberus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_cerberus.json; sourceTree = "<group>"; };
 		938A4F831A97173E00BC2C2E /* OMNMenuProductCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNMenuProductCellItem.h; sourceTree = "<group>"; };
 		938A4F841A97173E00BC2C2E /* OMNMenuProductCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNMenuProductCellItem.m; sourceTree = "<group>"; };
 		938E54981980CCB200B38B45 /* OMNR1VC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNR1VC.h; sourceTree = "<group>"; };
@@ -3858,12 +3867,8 @@
 				937E0B5E18F04EC20058A249 /* OMNConstants.m */,
 				930EE3DE1B0A563200BB4B79 /* OMNConfig.h */,
 				930EE3DF1B0A563200BB4B79 /* OMNConfig.m */,
+				93897F871B17190E0058378E /* Configs */,
 				93D9C9DD1AE136E400AD46FA /* Launch */,
-				9389456A19B5957100C37C82 /* config.json */,
-				935A1E301A80DF0300704086 /* config_staging.json */,
-				93F21BE919B6283300D5F78A /* config_laaaab.json */,
-				93F21BEC19B6284B00D5F78A /* config_stand.json */,
-				93EDD46C19B86D9F0017B6ED /* config_prod.json */,
 				937CDC911AA6F5DB000856AB /* Protocol */,
 				938E8F65192F5C030088EF38 /* app_data */,
 				938E8F28192F3A200088EF38 /* Model */,
@@ -4023,6 +4028,7 @@
 			children = (
 				93897F761B16DDBE0058378E /* OMNUser+networkSpec.m */,
 				93897F7A1B16ECE80058378E /* OMNSocketManagerSpec.m */,
+				93897F7E1B1715E30058378E /* UIImage+omn_networkSpec.m */,
 			);
 			name = Integration;
 			path = omnomTests/Integration;
@@ -4055,6 +4061,19 @@
 				93897F7C1B16FE2C0058378E /* OMNEditUserVCSpec.m */,
 			);
 			name = Unit;
+			sourceTree = "<group>";
+		};
+		93897F871B17190E0058378E /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				9389456A19B5957100C37C82 /* config.json */,
+				935A1E301A80DF0300704086 /* config_staging.json */,
+				93F21BE919B6283300D5F78A /* config_laaaab.json */,
+				93F21BEC19B6284B00D5F78A /* config_stand.json */,
+				93EDD46C19B86D9F0017B6ED /* config_prod.json */,
+				93897F801B1719020058378E /* config_cerberus.json */,
+			);
+			name = Configs;
 			sourceTree = "<group>";
 		};
 		938E8F28192F3A200088EF38 /* Model */ = {
@@ -5121,6 +5140,7 @@
 				930C4E891AB15E1B006CA608 /* config_staging.json in Resources */,
 				930C4E8A1AB15E1B006CA608 /* OMNWizardPageVC.xib in Resources */,
 				930C4E8B1AB15E1B006CA608 /* OMNNavigationBarSelector.json in Resources */,
+				93897F821B1719020058378E /* config_cerberus.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5164,6 +5184,7 @@
 				930C8C7A1ACA7D9F00CE4E5A /* config_staging.json in Resources */,
 				930C8C7B1ACA7D9F00CE4E5A /* OMNWizardPageVC.xib in Resources */,
 				930C8C7C1ACA7D9F00CE4E5A /* OMNNavigationBarSelector.json in Resources */,
+				93897F831B1719020058378E /* config_cerberus.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5207,6 +5228,7 @@
 				935A1E311A80DF0300704086 /* config_staging.json in Resources */,
 				939689C0195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
 				9390D2671966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
+				93897F811B1719020058378E /* config_cerberus.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5253,6 +5275,7 @@
 				93750B30196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
 				938F3A4D198BECD100AB288E /* OMNWizardVC.json in Resources */,
 				939F991719752BE90051822E /* OMNBankCardsVC.xib in Resources */,
+				93897F851B1719020058378E /* config_cerberus.json in Resources */,
 				93CE7CA31A62A8320032D96B /* decodeBeacons.json in Resources */,
 				93897DE51B15FA260058378E /* images_upload_stub.json in Resources */,
 			);
@@ -5298,6 +5321,7 @@
 				936AC22F1AD8BDBC00A9D17F /* OMNWizardPageVC.xib in Resources */,
 				936AC23C1AD8BE7800A9D17F /* Travelers.xcassets in Resources */,
 				936AC2301AD8BDBC00A9D17F /* OMNNavigationBarSelector.json in Resources */,
+				93897F841B1719020058378E /* config_cerberus.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5344,6 +5368,7 @@
 				93897F621B16DC960058378E /* OMNRestaurantMenuVC.json in Resources */,
 				93897F631B16DC960058378E /* OMNWizardVC.json in Resources */,
 				93897F641B16DC960058378E /* OMNBankCardsVC.xib in Resources */,
+				93897F861B1719020058378E /* config_cerberus.json in Resources */,
 				93897F651B16DC960058378E /* decodeBeacons.json in Resources */,
 				93897F661B16DC960058378E /* images_upload_stub.json in Resources */,
 			);
@@ -7403,6 +7428,7 @@
 				93897E431B16DC960058378E /* OMNMyOrderButton.m in Sources */,
 				93897E441B16DC960058378E /* OMNLightBackgroundButton.m in Sources */,
 				93897E451B16DC960058378E /* OMNPreorderTotalCellItem.m in Sources */,
+				93897F7F1B1715E30058378E /* UIImage+omn_networkSpec.m in Sources */,
 				93897E461B16DC960058378E /* OMNMyOrderConfirmVC.m in Sources */,
 				93897E471B16DC960058378E /* OMNLoadingCircleVC.m in Sources */,
 				93897E481B16DC960058378E /* OMNWish+omn_network.m in Sources */,
