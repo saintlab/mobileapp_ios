@@ -134,19 +134,19 @@
   
 }
 
-- (PMKPromise *)uploadUserImageIfNeeded:(OMNUser *)user {
+- (PMKPromise *)uploadUserImageIfNeeded {
   
-  if (user.image &&
-      user.imageDidChanged) {
+  if (self.image &&
+      self.imageDidChanged) {
     
-    return [user.image omn_upload];
+    return [self.image omn_upload];
     
   }
   else {
     
     return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
       
-      fulfill(user.avatar);
+      fulfill(self.avatar);
       
     }];
     
@@ -154,36 +154,31 @@
   
 }
 
-- (PMKPromise *)updateUserInfoWithUserAndImage:(OMNUser *)user {
+- (PMKPromise *)updateUserInfoAndImage {
   
-  return [self uploadUserImageIfNeeded:user].then(^(NSString *avatar) {
+  return [self uploadUserImageIfNeeded].then(^(NSString *avatar) {
     
-    user.avatar = avatar;
-    return [self updateUserInfoWithUser:user];
+    self.avatar = avatar;
+    return [self updateUserInfo];
     
   });
   
 }
 
-- (PMKPromise *)updateUserInfoWithUser:(OMNUser *)user {
+- (PMKPromise *)updateUserInfo {
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
-    
-    if (!user) {
-      reject([OMNError omnomErrorFromCode:kOMNErrorCodeUnknoun]);
-      return;
-    }
     
     NSMutableDictionary *parameters =
     [@{
        @"token" : [OMNAuthorization authorization].token,
-       @"name" : user.name,
-       @"email" : user.email,
-       @"birth_date" : user.birthDateString,
+       @"name" : self.name,
+       @"email" : self.email,
+       @"birth_date" : self.birthDateString,
        } mutableCopy];
     
-    if (user.avatar) {
-      parameters[@"avatar"] = user.avatar;
+    if (self.avatar) {
+      parameters[@"avatar"] = self.avatar;
     }
     
     [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -208,35 +203,6 @@
     }];
     
   }];
-  
-}
-
-- (void)updateWithUser:(OMNUser *)user {
-  
-  self.id = user.id;
-  self.name = user.name;
-  self.email = user.email;
-  self.phone = user.phone;
-  self.status = user.status;
-  self.created_at = user.created_at;
-  self.birthDate = user.birthDate;
-  NSString *oldAvatar = self.avatar;
-  self.avatar = user.avatar;
-
-  if (self.avatar.length) {
-    
-    if (![oldAvatar isEqualToString:self.avatar]) {
-      
-      [self loadAvatar];
-      
-    }
-    
-  }
-  else {
-    
-    self.image = nil;
-    
-  }
   
 }
 

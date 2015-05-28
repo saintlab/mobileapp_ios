@@ -17,7 +17,7 @@ NSCoding>
 @property (nonatomic, copy) NSString *id;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *email;
-@property (nonatomic, copy) NSString *phone;
+@property (nonatomic, copy, readonly) NSString *phone;
 @property (nonatomic, copy) NSString *created_at;
 @property (nonatomic, copy, readonly) NSString *birthDateString;
 @property (nonatomic, copy) NSDate *birthDate;
@@ -30,6 +30,7 @@ NSCoding>
 + (instancetype)userWithPhone:(NSString *)phone;
 
 - (instancetype)initWithJsonData:(id)data;
+- (void)updateWithUser:(OMNUser *)user;
 
 @end
 

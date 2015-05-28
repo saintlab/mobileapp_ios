@@ -16,8 +16,9 @@
 + (PMKPromise *)loginUsingPhone:(NSString *)phone code:(NSString *)code;
 + (PMKPromise *)userWithToken:(NSString *)token;
 
-- (PMKPromise *)updateUserInfoWithUserAndImage:(OMNUser *)user;
+- (PMKPromise *)updateUserInfoAndImage;
+- (PMKPromise *)updateUserInfo;
 
-- (void)updateWithUser:(OMNUser *)user;
+- (PMKPromise *)loadAvatar;
 
 @end

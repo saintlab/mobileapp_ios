@@ -65,14 +65,6 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 - (void)socketDidCreate:(SIOSocket *)socket {
   
   _socket = socket;
-  @weakify(self)
-  _socket.onConnect = ^{
-    
-    NSLog(@"onConnect");
-    @strongify(self)
-    [self socketDidConnect];
-  };
-  
   [_socket on:@"order_close" callback:^(NSArray *args) {
     
     id data = [args firstObject];
@@ -169,13 +161,20 @@ NSString * const OMNPaymentDataKey = @"OMNPaymentDataKey";
 - (void)connect:(NSString *)url withCompletion:(dispatch_block_t)completionBlock {
 
   _url = url;
+  @weakify(self)
   [SIOSocket socketWithHost:url response:^(SIOSocket *socket) {
     
     [self socketDidCreate:socket];
-    completionBlock();
+    socket.onConnect = ^{
+      
+      NSLog(@"onConnect");
+      @strongify(self)
+      [self socketDidConnect];
+      completionBlock();
+      
+    };
     
   }];
-  
   
 }
 

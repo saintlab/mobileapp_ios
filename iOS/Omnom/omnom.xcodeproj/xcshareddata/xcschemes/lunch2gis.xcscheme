@@ -20,6 +20,20 @@
                ReferencedContainer = "container:omnom.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "93897DE61B16DC960058378E"
+               BuildableName = "omnomTests copy.xctest"
+               BlueprintName = "omnomIntegrationTests"
+               ReferencedContainer = "container:omnom.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -35,6 +49,16 @@
                BlueprintIdentifier = "93676E0C18D1E4FC00FC55F1"
                BuildableName = "omnomTests.xctest"
                BlueprintName = "omnomTests"
+               ReferencedContainer = "container:omnom.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "93897DE61B16DC960058378E"
+               BuildableName = "omnomTests copy.xctest"
+               BlueprintName = "omnomIntegrationTests"
                ReferencedContainer = "container:omnom.xcodeproj">
             </BuildableReference>
          </TestableReference>

@@ -10,7 +10,6 @@
 #import "OMNAuthorization.h"
 #import "OMNAuthorizationManager.h"
 #import "OMNOperationManager.h"
-#import "OMNUser.h"
 #import "OMNUser+network.h"
 #import <Crashlytics/Crashlytics.h>
 #import <SSKeychain.h>
@@ -120,6 +119,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
   [self willChangeValueForKey:@"user"];
   
   [_user updateWithUser:user];
+  [_user loadAvatar];
   
   [[OMNAnalitics analitics] setUser:user];
 

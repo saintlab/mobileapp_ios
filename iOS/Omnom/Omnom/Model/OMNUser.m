@@ -8,6 +8,12 @@
 
 #import "OMNUser.h"
 
+@interface OMNUser ()
+
+@property (nonatomic, copy) NSString *phone;
+
+@end
+
 @implementation OMNUser
 
 - (instancetype)initWithJsonData:(id)data {
@@ -113,6 +119,19 @@
   
 }
 
+- (void)updateWithUser:(OMNUser *)user {
+  
+  self.id = user.id;
+  self.name = user.name;
+  self.email = user.email;
+  self.phone = user.phone;
+  self.status = user.status;
+  self.created_at = user.created_at;
+  self.birthDate = user.birthDate;
+  self.avatar = user.avatar;
+  
+}
+
 @end
 
 @implementation NSString (omn_validPhone)
@@ -160,9 +179,6 @@
   
   return [emailTest evaluateWithObject:self];
 }
-
-
-
 
 @end
 

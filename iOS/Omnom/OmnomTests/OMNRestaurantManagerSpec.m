@@ -10,7 +10,7 @@
 #import "OMNRestaurantManager.h"
 #import <OHHTTPStubs.h>
 #import <OMNBeacon.h>
-#import "NSString+omn_json.h"
+#import "OHHTTPStubs+omn_helpers.h"
 
 SPEC_BEGIN(OMNRestaurantManagerSpec)
 
@@ -20,15 +20,7 @@ describe(@"OMNRestaurantManager", ^{
     
     it(@"should decode from beacon", ^{
       
-      id stub = [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-
-        return [request.URL.lastPathComponent isEqualToString:@"omnom"];
-        
-      } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
-        
-        return [OHHTTPStubsResponse responseWithJSONObject:[@"decodeBeacons.json" omn_jsonObjectNamedForClass:self.class] statusCode:200 headers:@{}];
-        
-      }];
+      id stub = [OHHTTPStubs omn_stubPath:@"omnom" jsonFile:@"decodeBeacons.json"];
       
       [OMNRestaurantManager decodeBeacons:@[OMNBeacon.demoBeacon]].then(^(NSArray *restaurants) {
         
@@ -46,15 +38,7 @@ describe(@"OMNRestaurantManager", ^{
     
     it(@"should decode qr", ^{
       
-      id stub = [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
-        
-        return [request.URL.lastPathComponent isEqualToString:@"qr"];
-        
-      } withStubResponse:^OHHTTPStubsResponse *(NSURLRequest *request) {
-        
-        return [OHHTTPStubsResponse responseWithJSONObject:[@"decodeBeacons.json" omn_jsonObjectNamedForClass:self.class] statusCode:200 headers:@{}];
-        
-      }];
+      id stub = [OHHTTPStubs omn_stubPath:@"qr" jsonFile:@"decodeBeacons.json"];
       
       [OMNRestaurantManager decodeQR:@""].then(^(NSArray *restaurants) {
         

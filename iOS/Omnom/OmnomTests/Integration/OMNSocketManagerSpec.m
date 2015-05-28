@@ -1,23 +1,23 @@
 //
-//  OMNSocketTest.m
+//  OMNSocketManagerSpec.m
 //  omnom
 //
-//  Created by tea on 12.09.14.
-//  Copyright (c) 2014 tea. All rights reserved.
+//  Created by tea on 28.05.15.
+//  Copyright 2015 tea. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
+#import <Kiwi/Kiwi.h>
 #import "OMNSocketManager.h"
-#import <Kiwi.h>
 
-#define TEST_SOCKET_URL @"http://localhost:3000"
+//#define TEST_SOCKET_URL @"https://omnom.omnom.menu"
+#define TEST_SOCKET_URL @"https://omnom.staging.saintlab.com"
 
-SPEC_BEGIN(OMNSocketTests)
+SPEC_BEGIN(OMNSocketManagerSpec)
 
-describe(@"check initial state", ^{
-  
+describe(@"OMNSocketManager", ^{
+
   beforeEach(^{
-
+    
     __block NSNumber *_didConnect = nil;
     [[OMNSocketManager manager] disconnectAndLeaveAllRooms:YES];
     [[OMNSocketManager manager] connect:TEST_SOCKET_URL withCompletion:^{
@@ -35,7 +35,7 @@ describe(@"check initial state", ^{
   });
   
   it(@"should check socket room connection", ^{
-
+    
     [[OMNSocketManager manager] join:nil];
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(0)];
     
@@ -44,16 +44,16 @@ describe(@"check initial state", ^{
     
     [[OMNSocketManager manager] join:roomID1];
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
-
+    
     [[OMNSocketManager manager] join:roomID1];
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
     
     [[OMNSocketManager manager] leave:roomID2];
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
-
+    
     [[OMNSocketManager manager] join:roomID2];
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(2)];
-
+    
     [[OMNSocketManager manager] leave:roomID2];
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
     
@@ -62,7 +62,7 @@ describe(@"check initial state", ^{
     
     [[OMNSocketManager manager] join:roomID2];
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
-
+    
   });
   
   it(@"shold check disconnection", ^{
@@ -74,7 +74,7 @@ describe(@"check initial state", ^{
     
     [[OMNSocketManager manager] disconnectAndLeaveAllRooms:NO];
     [[@([OMNSocketManager manager].rooms.count) should] equal:@(1)];
-
+    
     __block NSNumber *_didConnect = nil;
     [[OMNSocketManager manager] connect:TEST_SOCKET_URL withCompletion:^{
       _didConnect = @(YES);

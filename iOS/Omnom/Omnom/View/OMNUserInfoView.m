@@ -263,9 +263,8 @@
     return nil;
   }
   
-  OMNUser *user = [[OMNUser alloc] init];
+  OMNUser *user = [OMNUser userWithPhone:_phoneTF.textField.text];
   user.email = _emailTF.textField.text;
-  user.phone = _phoneTF.textField.text;
   user.name = _nameTF.textField.text;
   if (_birthdayTF.textField.text) {
     

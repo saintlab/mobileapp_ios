@@ -243,7 +243,7 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   [self showError:nil];
   OMNUser *editUser = [_userInfoView getUser];
   
-  if (nil == editUser) {
+  if (!editUser) {
     return;
   }
   editUser.avatar = _user.avatar;
@@ -251,7 +251,7 @@ OMNCameraRollPermissionDescriptionVCDelegate>
   editUser.imageDidChanged = _user.imageDidChanged;
   [self setLoading:YES];
   @weakify(self)
-  [_user updateUserInfoWithUserAndImage:editUser].then(^(OMNUser *user) {
+  [editUser updateUserInfoAndImage].then(^(OMNUser *user) {
     
     [self closeTap];
     
