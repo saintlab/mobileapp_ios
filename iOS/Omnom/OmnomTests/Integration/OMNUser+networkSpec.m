@@ -12,7 +12,7 @@
 #import "OMNAuthorization.h"
 #import "NSString+omn_json.h"
 
-#define kOMNAuthorizationManagerValidToken @"a3Ra4OIpWR7yfZdb5iptP6DBggNRj2GB"
+#define kOMNAuthorizationManagerValidToken @"szJNu4MyKRrqPb0WyD7CE2q3j2llIePo"
 #define kOMNAuthorizationManagerInvalidToken @"invalid token"
 
 SPEC_BEGIN(OMNUser_networkSpec)
@@ -28,6 +28,14 @@ describe(@"OMNUser+network", ^{
   afterAll(^{
     [OMNAuthorizationManager setupWithURL:nil headers:@{}];
   });
+  
+  OMNUser *(^stubUserWithToken)(NSString *token) = ^OMNUser *(NSString *token) {
+    
+    id userData = [@"user_with_null_stub.json" omn_jsonObjectNamedForClass:self.class];
+    OMNUser *user = [[OMNUser alloc] initWithJsonData:userData[@"user"] token:token];
+    return user;
+    
+  };
   
 //  https://github.com/saintlab/backend/blob/omnom/refactoring/README.md#cerberus
   context(@"get user", ^{
@@ -69,7 +77,7 @@ describe(@"OMNUser+network", ^{
         
       });
       
-      [[expectFutureValue(_user) shouldEventuallyBeforeTimingOutAfter(3.0)] beNonNil];
+      [[expectFutureValue(_user) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
       [[_user.id should] beNonNil];
       [[_user.phone should] beNonNil];
       [[_user.token should] equal:kOMNAuthorizationManagerValidToken];
@@ -80,25 +88,15 @@ describe(@"OMNUser+network", ^{
   
   context(@"user update", ^{
     
-    OMNUser *(^stubUser)() = ^OMNUser *(void) {
-      
-      id userData = [@"user_with_null_stub.json" omn_jsonObjectNamedForClass:self.class];
-      OMNUser *user = [[OMNUser alloc] initWithJsonData:userData[@"user"]];
-      return user;
-      
-    };
-    
-    PENDING(@"should update user with valid token");
-    /*
     it(@"should update user with valid token", ^{
       
       NSString * const kUserName = @"test";
       NSString * const kUserEmail = @"test@test.com";
       
-      OMNUser *user = stubUser();
-      //      user.token = kOMNAuthorizationManagerToken;
+      OMNUser *user = stubUserWithToken(kOMNAuthorizationManagerValidToken);
       user.name = kUserName;
       user.email = kUserEmail;
+      user.birthDate = [NSDate date];
       
       __block OMNUser *_newUser = nil;
       [user updateUserInfo].then(^(OMNUser *newUser) {
@@ -111,31 +109,57 @@ describe(@"OMNUser+network", ^{
         
       });
       
-      [[expectFutureValue(_newUser) shouldEventuallyBeforeTimingOutAfter(3.0)] beNonNil];
+      [[expectFutureValue(_newUser) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
       [[_newUser.name should] equal:kUserName];
       [[_newUser.email should] equal:kUserEmail];
+      [[_newUser.birthDateString shouldNot] beEmpty];
       
     });
-    */
+
+    pending(@"should update birth date and receive it", ^{
+      
+      OMNUser *user = stubUserWithToken(kOMNAuthorizationManagerValidToken);
+      user.birthDate = [NSDate dateWithTimeIntervalSince1970:1000000];
+      NSString *birthDateSting = user.birthDateString;
+      
+      __block OMNUser *_newUser = nil;
+      [user updateUserInfo].then(^(OMNUser *newUser) {
+        
+        _newUser = newUser;
+        
+      });
+      [[expectFutureValue(_newUser) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
+      [[_newUser.birthDateString should] equal:birthDateSting];
+      
+      _newUser = nil;
+      [OMNUser userWithToken:kOMNAuthorizationManagerValidToken].then(^(OMNUser *newUser) {
+        
+        _newUser = newUser;
+        
+      });
+      [[expectFutureValue(_newUser) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
+      [[_newUser.birthDateString should] equal:birthDateSting];
+      
+    });
+    
     it(@"should not update user with invalid token", ^{
       
       __block OMNError *_error = nil;
 
-      OMNUser *user = stubUser();
-      user.token = kOMNAuthorizationManagerInvalidToken;
+      OMNUser *user = stubUserWithToken(kOMNAuthorizationManagerInvalidToken);
       [user updateUserInfo].catch(^(OMNError *error) {
         
         _error = error;
         
       });
       
-      [[expectFutureValue(_error) shouldEventuallyBeforeTimingOutAfter(3.0)] beNonNil];
+      [[expectFutureValue(_error) shouldEventuallyBeforeTimingOutAfter(10.0)] beNonNil];
       [[theValue(_error.code) should] equal:theValue(kOMNErrorCodeUnknoun)];
       
     });
     
   });
-  
+    
 });
 
 SPEC_END

@@ -12,6 +12,7 @@
 
 + (void)setupWithURL:(NSString *)url headers:(NSDictionary *)headers;
 + (instancetype)sharedManager;
++ (void)setAuthenticationToken:(NSString *)token;
 
 @end
 

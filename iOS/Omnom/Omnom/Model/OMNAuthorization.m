@@ -134,9 +134,16 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)logout {
   
+  [self logoutUser];
   [self unregisterDevice];
   [self updateUserInfoWithUser:nil];
   [self setAuthenticationToken:nil];
+  
+}
+
+- (void)logoutUser {
+  
+  [[OMNAuthorizationManager sharedManager] POST:@"/logout" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {} failure:^(AFHTTPRequestOperation *operation, NSError *error) {}];
   
 }
 
@@ -302,6 +309,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)updateAuthenticationToken {
   
   [OMNOperationManager setAuthenticationToken:self.token];
+  [OMNAuthorizationManager setAuthenticationToken:self.token];
   [self registerDeviceIfPossible];
   
 }

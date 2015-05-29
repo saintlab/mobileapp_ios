@@ -90,11 +90,16 @@
 }
 
 - (void)setItem:(OMNUserProfileCellItem *)item {
+  [self omn_removeObservers];
   _item = item;
   [self omn_addObservers];
 }
 
 - (void)omn_addObservers {
+  
+  if (!self.reuseIdentifier) {
+    return;
+  }
   
   OMNAuthorization *authorization = [OMNAuthorization authorization];
   @weakify(self)
@@ -104,6 +109,7 @@
     [self updateUserInfo];
     
   }];
+  
   _userImageObserverIdentifier = [authorization.user bk_addObserverForKeyPath:NSStringFromSelector(@selector(image)) options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionInitial) task:^(OMNUser *user, NSDictionary *change) {
     
     @strongify(self)

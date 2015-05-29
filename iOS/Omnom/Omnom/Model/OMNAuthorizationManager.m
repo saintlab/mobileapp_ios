@@ -7,8 +7,10 @@
 //
 
 #import "OMNAuthorizationManager.h"
+#import "AFHTTPRequestOperationManager+omn_token.h"
 
 static OMNAuthorizationManager *_authorizationManager = nil;
+static NSString *_authorizationManagerAuthenticationToken = nil;
 
 @implementation OMNAuthorizationManager
 
@@ -31,13 +33,24 @@ static OMNAuthorizationManager *_authorizationManager = nil;
       [self.requestSerializer setValue:obj forHTTPHeaderField:key];
       
     }];
-    
+    [self updateAuthenticationToken];
     [self.requestSerializer willChangeValueForKey:NSStringFromSelector(@selector(timeoutInterval))];
     self.requestSerializer.timeoutInterval = 10.0;
     [self.requestSerializer didChangeValueForKey:NSStringFromSelector(@selector(timeoutInterval))];
     
   }
   return self;
+}
+
++ (void)setAuthenticationToken:(NSString *)token {
+  
+  _authorizationManagerAuthenticationToken = token;
+  [_authorizationManager updateAuthenticationToken];
+  
+}
+
+- (void)updateAuthenticationToken {
+  [_authorizationManager omn_setAuthenticationToken:_authorizationManagerAuthenticationToken];
 }
 
 @end

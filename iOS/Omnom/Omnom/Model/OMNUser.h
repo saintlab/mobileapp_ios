@@ -23,14 +23,14 @@ NSCoding>
 @property (nonatomic, copy) NSDate *birthDate;
 @property (nonatomic, copy) NSString *status;
 @property (nonatomic, copy) NSString *avatar;
-@property (nonatomic, copy) NSString *token;
+@property (nonatomic, copy, readonly) NSString *token;
 
 @property (nonatomic, strong) UIImage *image;
 @property (nonatomic, assign) BOOL imageDidChanged;
 
-+ (instancetype)userWithPhone:(NSString *)phone;
++ (instancetype)userWithPhone:(NSString *)phone token:(NSString *)token;
 
-- (instancetype)initWithJsonData:(id)data;
+- (instancetype)initWithJsonData:(id)data token:(NSString *)token;
 - (void)updateWithUser:(OMNUser *)user;
 
 @end

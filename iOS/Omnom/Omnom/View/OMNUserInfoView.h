@@ -22,7 +22,7 @@
 
 - (instancetype)initWithUser:(OMNUser *)user;
 
-- (OMNUser *)getUser;
+- (OMNUser *)userWithToken:(NSString *)token;
 - (void)beginEditing;
 
 @end

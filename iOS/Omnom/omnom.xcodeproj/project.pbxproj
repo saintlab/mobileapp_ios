@@ -1261,6 +1261,13 @@
 		93466AC71B17FB0F003C3434 /* OMNUserSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466AB41B17FB0F003C3434 /* OMNUserSpec.m */; };
 		93466AC81B17FB0F003C3434 /* OMNVisitorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466AB51B17FB0F003C3434 /* OMNVisitorSpec.m */; };
 		93466AC91B17FB0F003C3434 /* UIImage+omn_networkSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466AB61B17FB0F003C3434 /* UIImage+omn_networkSpec.m */; };
+		93466ACC1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */; };
+		93466ACD1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */; };
+		93466ACE1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */; };
+		93466ACF1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */; };
+		93466AD01B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */; };
+		93466AD11B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */; };
+		93466AD21B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */; };
 		9349132F1AF3087B007C2905 /* NSObject+omn_safe_creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */; };
 		934913301AF3087B007C2905 /* NSObject+omn_safe_creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */; };
 		934913311AF3087B007C2905 /* NSObject+omn_safe_creation.m in Sources */ = {isa = PBXBuildFile; fileRef = 9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */; };
@@ -3003,6 +3010,8 @@
 		93466AB41B17FB0F003C3434 /* OMNUserSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNUserSpec.m; sourceTree = "<group>"; };
 		93466AB51B17FB0F003C3434 /* OMNVisitorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNVisitorSpec.m; sourceTree = "<group>"; };
 		93466AB61B17FB0F003C3434 /* UIImage+omn_networkSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+omn_networkSpec.m"; sourceTree = "<group>"; };
+		93466ACA1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+omn_token.h"; sourceTree = "<group>"; };
+		93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+omn_token.m"; sourceTree = "<group>"; };
 		9349132D1AF3087B007C2905 /* NSObject+omn_safe_creation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+omn_safe_creation.h"; sourceTree = "<group>"; };
 		9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+omn_safe_creation.m"; sourceTree = "<group>"; };
 		934913361AF36F26007C2905 /* OMNDebugLaunch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNDebugLaunch.h; sourceTree = "<group>"; };
@@ -3948,6 +3957,8 @@
 				9349132E1AF3087B007C2905 /* NSObject+omn_safe_creation.m */,
 				93897DD61B1596DF0058378E /* UIImage+omn_network.h */,
 				93897DD71B1596DF0058378E /* UIImage+omn_network.m */,
+				93466ACA1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.h */,
+				93466ACB1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -6408,6 +6419,7 @@
 				930C4DCB1AB15E1B006CA608 /* OMNEnterCodeView.m in Sources */,
 				930C4DCC1AB15E1B006CA608 /* OMNCLPermissionsHelpVC.m in Sources */,
 				930C4DCD1AB15E1B006CA608 /* OMNMenuItemCell.m in Sources */,
+				93466ACD1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */,
 				930C4DCE1AB15E1B006CA608 /* OMNBill.m in Sources */,
 				930C4DCF1AB15E1B006CA608 /* OMNMenuVC.m in Sources */,
 				930C4DD01AB15E1B006CA608 /* OMNMenuProductsDelimiterCell.m in Sources */,
@@ -6755,6 +6767,7 @@
 				930C8BBC1ACA7D9F00CE4E5A /* OMNEnterCodeView.m in Sources */,
 				930C8BBD1ACA7D9F00CE4E5A /* OMNCLPermissionsHelpVC.m in Sources */,
 				930C8BBE1ACA7D9F00CE4E5A /* OMNMenuItemCell.m in Sources */,
+				93466ACE1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */,
 				930C8BBF1ACA7D9F00CE4E5A /* OMNBill.m in Sources */,
 				930C8BC01ACA7D9F00CE4E5A /* OMNMenuVC.m in Sources */,
 				930C8BC11ACA7D9F00CE4E5A /* OMNMenuProductsDelimiterCell.m in Sources */,
@@ -7254,6 +7267,7 @@
 				93466A3A1B17F9DD003C3434 /* OMNMenu+wish.m in Sources */,
 				93466A3B1B17F9DD003C3434 /* TQStarRatingView.m in Sources */,
 				93466A3C1B17F9DD003C3434 /* OMNUserProfileCellItem.m in Sources */,
+				93466AD11B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */,
 				93466A3E1B17F9DD003C3434 /* OMNModalWebVC.m in Sources */,
 				93466A3F1B17F9DD003C3434 /* OMNWish.m in Sources */,
 				93466A401B17F9DD003C3434 /* OMNCircleRootVC.m in Sources */,
@@ -7454,6 +7468,7 @@
 				939F992E19752CFC0051822E /* OMNEnterCodeView.m in Sources */,
 				93E29997197CEC5C00051B04 /* OMNCLPermissionsHelpVC.m in Sources */,
 				935FF16D1A6D4290004B69A6 /* OMNMenuItemCell.m in Sources */,
+				93466ACC1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */,
 				93958B5D198747E1009BB2ED /* OMNBill.m in Sources */,
 				93F2AEDE1A6D551800CDF3D9 /* OMNMenuVC.m in Sources */,
 				932F5DD61A725DF500AF86AD /* OMNMenuProductsDelimiterCell.m in Sources */,
@@ -7789,6 +7804,7 @@
 				939F991119752BE90051822E /* OMNAddBankCardVC.m in Sources */,
 				93466AC01B17FB0F003C3434 /* OMNOperationManagerSpec.m in Sources */,
 				934FC72B19D03CED008AC4B0 /* OMNRestaurantDecoration.m in Sources */,
+				93466AD01B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */,
 				93DEF4871ACE48F500F8FE4D /* OMNPreorderWishMediator.m in Sources */,
 				93E4856C1A49104900DCDB0F /* OMNFBUserInfoItem.m in Sources */,
 				937A37381980FCC600EF5C31 /* OMNSplashToSearchBeaconTransition.m in Sources */,
@@ -8168,6 +8184,7 @@
 				936AC1631AD8BDBC00A9D17F /* OMNEnterCodeView.m in Sources */,
 				936AC1641AD8BDBC00A9D17F /* OMNCLPermissionsHelpVC.m in Sources */,
 				936AC1651AD8BDBC00A9D17F /* OMNMenuItemCell.m in Sources */,
+				93466ACF1B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */,
 				936AC1661AD8BDBC00A9D17F /* OMNBill.m in Sources */,
 				936AC1671AD8BDBC00A9D17F /* OMNMenuVC.m in Sources */,
 				936AC1681AD8BDBC00A9D17F /* OMNMenuProductsDelimiterCell.m in Sources */,
@@ -8667,6 +8684,7 @@
 				93897F181B16DC960058378E /* TQStarRatingView.m in Sources */,
 				93897F191B16DC960058378E /* OMNUserProfileCellItem.m in Sources */,
 				93897F7B1B16ECE80058378E /* OMNSocketManagerSpec.m in Sources */,
+				93466AD21B187BBA003C3434 /* AFHTTPRequestOperationManager+omn_token.m in Sources */,
 				93897F1B1B16DC960058378E /* OMNModalWebVC.m in Sources */,
 				93897F1C1B16DC960058378E /* OMNWish.m in Sources */,
 				93897F1D1B16DC960058378E /* OMNCircleRootVC.m in Sources */,

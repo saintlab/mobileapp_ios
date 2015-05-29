@@ -80,8 +80,7 @@
       
       if ([responseObject omn_isSuccessResponse]) {
         
-        OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
-        user.token = token;
+        OMNUser *user = [[OMNUser alloc] initWithJsonData:responseObject[@"user"] token:token];
         fulfill(user);
         
       }
@@ -185,7 +184,7 @@
       
       if ([responseObject omn_isSuccessResponse]) {
         
-        OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+        OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"] token:self.token];
         fulfill(newUser);
         
       }
@@ -225,7 +224,7 @@
       
       if ([responseObject omn_isSuccessResponse]) {
         
-        OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"]];
+        OMNUser *newUser = [[OMNUser alloc] initWithJsonData:responseObject[@"user"] token:self.token];
         fulfill(newUser);
         
       }

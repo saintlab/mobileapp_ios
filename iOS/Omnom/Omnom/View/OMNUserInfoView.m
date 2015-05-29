@@ -232,7 +232,7 @@
   [self endEditing:YES];
 }
 
-- (OMNUser *)getUser {
+- (OMNUser *)userWithToken:(NSString *)token {
   
   [_emailTF setErrorText:nil];
   [_phoneTF setErrorText:nil];
@@ -263,7 +263,7 @@
     return nil;
   }
   
-  OMNUser *user = [OMNUser userWithPhone:_phoneTF.textField.text];
+  OMNUser *user = [OMNUser userWithPhone:_phoneTF.textField.text token:token];
   user.email = _emailTF.textField.text;
   user.name = _nameTF.textField.text;
   if (_birthdayTF.textField.text) {
@@ -271,7 +271,6 @@
     user.birthDate = _datePicker.date;
     
   }
-  
   [self endEditing:YES];
   
   return user;

@@ -8,10 +8,9 @@
 
 #import "OMNOperationManager.h"
 
-NSString * const kAuthenticationTokenKey = @"x-authentication-token";
-
 static OMNOperationManager *_operationManager = nil;
 static NSString *_operationManagerAuthenticationToken = nil;
+#import "AFHTTPRequestOperationManager+omn_token.h"
 
 @implementation OMNOperationManager
 
@@ -23,13 +22,6 @@ static NSString *_operationManagerAuthenticationToken = nil;
   else {
     _operationManager = nil;
   }
-  
-}
-
-+ (void)setAuthenticationToken:(NSString *)token {
-  
-  _operationManagerAuthenticationToken = token;
-  [_operationManager updateAuthenticationToken];
   
 }
 
@@ -58,8 +50,15 @@ static NSString *_operationManagerAuthenticationToken = nil;
   return self;
 }
 
++ (void)setAuthenticationToken:(NSString *)token {
+  
+  _operationManagerAuthenticationToken = token;
+  [_operationManager updateAuthenticationToken];
+  
+}
+
 - (void)updateAuthenticationToken {
-  [self.requestSerializer setValue:_operationManagerAuthenticationToken forHTTPHeaderField:kAuthenticationTokenKey];
+  [_operationManager omn_setAuthenticationToken:_operationManagerAuthenticationToken];
 }
 
 @end

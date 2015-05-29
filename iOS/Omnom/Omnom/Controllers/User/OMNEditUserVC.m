@@ -241,19 +241,19 @@ OMNCameraRollPermissionDescriptionVCDelegate>
 - (void)doneTap {
   
   [self showError:nil];
-  OMNUser *editUser = [_userInfoView getUser];
+  OMNUser *editUser = [_userInfoView userWithToken:_user.token];
   
   if (!editUser) {
     return;
   }
   editUser.avatar = _user.avatar;
-  editUser.image = _userImage;
   editUser.imageDidChanged = _user.imageDidChanged;
+  editUser.image = _userImage;
+  
   [self setLoading:YES];
   @weakify(self)
   [editUser updateUserInfoAndImage].then(^(OMNUser *user) {
     
-    [[OMNAuthorization authorization] updateUserInfoWithUser:user];
     [self closeTap];
     
   }).catch(^(OMNError *error) {

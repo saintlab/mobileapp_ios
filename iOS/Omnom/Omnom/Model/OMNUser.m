@@ -11,12 +11,13 @@
 @interface OMNUser ()
 
 @property (nonatomic, copy) NSString *phone;
+@property (nonatomic, copy) NSString *token;
 
 @end
 
 @implementation OMNUser
 
-- (instancetype)initWithJsonData:(id)data {
+- (instancetype)initWithJsonData:(id)data token:(NSString *)token {
   self = [super init];
   if (self) {
     self.id = [data[@"id"] omn_stringValueSafe];
@@ -26,7 +27,7 @@
     self.status = [data[@"status"] omn_stringValueSafe];
     self.created_at = [data[@"created_at"] omn_stringValueSafe];
     self.avatar = [data[@"avatar"] omn_stringValueSafe];
-    self.token = @"";
+    self.token = token;
     NSString *birth_date = [data[@"birth_date"] omn_stringValueSafe];
     if (birth_date.length) {
       
@@ -50,7 +51,7 @@
   user.birthDate = [self.birthDate copyWithZone:zone];
   user.avatar = [self.avatar copyWithZone:zone];
   user.image = self.image;
-  user.token = self.token;
+  user.token = [self.token copyWithZone:zone];
   return user;
 }
 
@@ -113,10 +114,11 @@
   
 }
 
-+ (instancetype)userWithPhone:(NSString *)phone {
++ (instancetype)userWithPhone:(NSString *)phone token:(NSString *)token {
   
   OMNUser *user = [[OMNUser alloc] init];
   user.phone = phone;
+  user.token = token;
   return user;
   
 }
@@ -131,6 +133,7 @@
   self.created_at = user.created_at;
   self.birthDate = user.birthDate;
   self.avatar = user.avatar;
+  self.token = [user.token copy];
   
 }
 

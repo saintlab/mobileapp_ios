@@ -13,6 +13,9 @@
 #import "OMNAuthorizationManager.h"
 #import "OHHTTPStubs+omn_helpers.h"
 
+NSString * const kTestUserToken = @"kUserToken";
+
+
 SPEC_BEGIN(OMNUserSpec)
 
 describe(@"OMNUser", ^{
@@ -26,6 +29,34 @@ describe(@"OMNUser", ^{
   afterAll(^{
     
     [OMNAuthorizationManager setupWithURL:nil headers:nil];
+    
+  });
+  
+  OMNUser *(^userWithToken)() = ^OMNUser *() {
+    OMNUser *userWithToken = [OMNUser userWithPhone:@"" token:kTestUserToken];
+    return userWithToken;
+  };
+  
+  context(@"update", ^{
+    
+    it(@"should update token", ^{
+      
+      OMNUser *user = [OMNUser new];
+      [user updateWithUser:userWithToken()];
+      [[user.token should] equal:kTestUserToken];
+      
+    });
+    
+  });
+  
+  context(@"copy", ^{
+    
+    it(@"should copy token", ^{
+      
+      OMNUser *copyUser = [userWithToken() copy];
+      [[copyUser.token should] equal:kTestUserToken];
+      
+    });
     
   });
   
@@ -100,6 +131,8 @@ describe(@"OMNUser", ^{
     });
     
   });
+  
+  
   
 });
 
