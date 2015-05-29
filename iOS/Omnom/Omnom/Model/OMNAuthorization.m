@@ -319,7 +319,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (NSString *)installId {
   
-  NSString *appName = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
+  NSString *appName = [NSBundle bundleForClass:self.class].infoDictionary[@"CFBundleName"];
   //Check if we have UUID already
   NSString *retrieveuuid = [SSKeychain passwordForService:appName account:kAuthorizationAccountName];
   DDLogDebug(@"installId>%@", retrieveuuid);

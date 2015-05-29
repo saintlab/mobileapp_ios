@@ -12,7 +12,7 @@
 
 + (NSString *)loadScriptWithName:(NSString *)scriptFileName {
   
-  NSString *path = [[NSBundle mainBundle] pathForResource:scriptFileName ofType:nil];
+  NSString *path = [[NSBundle bundleForClass:self.class] pathForResource:scriptFileName ofType:nil];
   return [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
 }
 

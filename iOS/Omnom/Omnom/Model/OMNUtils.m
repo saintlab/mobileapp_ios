@@ -110,10 +110,13 @@ NSString *omnCommaString() {
   
   NSMutableDictionary *textAttributes =
   [@{
-     NSFontAttributeName : font,
      NSParagraphStyleAttributeName : attributeStyle,
      } mutableCopy];
 
+  if (font) {
+    textAttributes[NSFontAttributeName] = font;
+  }
+  
   if (textColor) {
     textAttributes[NSForegroundColorAttributeName] = textColor;
   }

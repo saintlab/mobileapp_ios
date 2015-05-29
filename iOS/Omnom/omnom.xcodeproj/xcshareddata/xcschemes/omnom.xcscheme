@@ -28,7 +28,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "93897DE61B16DC960058378E"
-               BuildableName = "omnomTests copy.xctest"
+               BuildableName = "omnomIntegrationTests.xctest"
                BlueprintName = "omnomIntegrationTests"
                ReferencedContainer = "container:omnom.xcodeproj">
             </BuildableReference>
@@ -38,7 +38,7 @@
    <TestAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldUseLaunchSchemeArgsEnv = "NO"
       buildConfiguration = "Test">
       <Testables>
          <TestableReference
@@ -56,8 +56,18 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "93897DE61B16DC960058378E"
-               BuildableName = "omnomTests copy.xctest"
+               BuildableName = "omnomIntegrationTests.xctest"
                BlueprintName = "omnomIntegrationTests"
+               ReferencedContainer = "container:omnom.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "934668ED1B17F9DD003C3434"
+               BuildableName = "omnomApplicationTests.xctest"
+               BlueprintName = "omnomApplicationTests"
                ReferencedContainer = "container:omnom.xcodeproj">
             </BuildableReference>
          </TestableReference>

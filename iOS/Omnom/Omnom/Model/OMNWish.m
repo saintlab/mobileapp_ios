@@ -22,6 +22,7 @@ OMNWishStatus wishStatusFromString(NSString *string) {
     @{
       @"ready" : @(kWishStatusReady),
       @"canceled" : @(kWishStatusCanceled),
+      @"pending" : @(kWishStatusPending),
       };
   });
   return [statuses[string] integerValue];

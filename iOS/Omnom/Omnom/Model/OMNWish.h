@@ -12,6 +12,7 @@
 
 typedef NS_ENUM(NSInteger, OMNWishStatus) {
   kWishStatusUnknown = 0,
+  kWishStatusPending,
   kWishStatusReady,
   kWishStatusCanceled,
 };

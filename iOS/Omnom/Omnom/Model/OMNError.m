@@ -216,16 +216,14 @@ NSString * const OMNForbiddenWishProductsKey = @"forbidden";
 - (OMNError *)omn_internetError {
   
   NSInteger code = kOMNErrorCodeUnknoun;
-  switch (self.error.code) {
-    case NSURLErrorTimedOut: {
-      code = kOMNErrorCodeTimedOut;
-    } break;
-    case NSURLErrorNotConnectedToInternet: {
-      code = kOMNErrorCodeNotConnectedToInternet;
-    } break;
-    default: {
-      code = kOMNErrorCodeUnknoun;
-    } break;
+  if (NSURLErrorTimedOut == self.error.code) {
+    code = kOMNErrorCodeTimedOut;
+  }
+  else if (NSURLErrorNotConnectedToInternet == self.error.code) {
+    code = kOMNErrorCodeNotConnectedToInternet;
+  }
+  else if (501 == self.response.statusCode) {
+    code = kOMNErrorInvalidUserToken;
   }
   
   NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];

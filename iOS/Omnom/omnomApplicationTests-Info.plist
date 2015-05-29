@@ -18,5 +18,11 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Futura-OSF-Omnom-Regular.otf</string>
+		<string>Futura-OSF-Omnom-Medium.otf</string>
+		<string>Futura-LSF-Omnom-LE-Regular.otf</string>
+	</array>
 </dict>
 </plist>

@@ -38,7 +38,7 @@
       
       //    Формат - статус код 409, массив {"forbidden":[{"id":"-1"}]}
       if (409 == operation.response.statusCode) {
-        
+
         id forbiddenWishProductsData = operation.responseObject[OMNForbiddenWishProductsKey];
         OMNForbiddenWishProducts *forbiddenWishProducts = [[OMNForbiddenWishProducts alloc] initWithJsonData:forbiddenWishProductsData];
         reject([OMNError errorWithDomain:OMNErrorDomain code:kOMNErrorForbiddenWishProducts userInfo:@{OMNForbiddenWishProductsKey : forbiddenWishProducts}]);

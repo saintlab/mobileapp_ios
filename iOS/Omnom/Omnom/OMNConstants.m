@@ -84,7 +84,7 @@ static OMNConfig *_config = nil;
 
 + (NSString *)installID {
   
-  NSString *appName = [NSBundle mainBundle].infoDictionary[@"CFBundleName"];
+  NSString *appName = [NSBundle bundleForClass:self.class].infoDictionary[@"CFBundleName"];
   //Check if we have UUID already
   NSString *retrieveuuid = [SSKeychain passwordForService:appName account:@"constants"];
   if (nil == retrieveuuid) {

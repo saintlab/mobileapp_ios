@@ -24,7 +24,7 @@ describe(@"OMNUser+network", ^{
   beforeAll(^{
     [OMNAuthorizationManager setupWithURL:@"http://cerberus.staging.saintlab.com" headers:@{}];
   });
-  
+
   afterAll(^{
     [OMNAuthorizationManager setupWithURL:nil headers:@{}];
   });
@@ -88,6 +88,8 @@ describe(@"OMNUser+network", ^{
       
     };
     
+    PENDING(@"should update user with valid token");
+    /*
     it(@"should update user with valid token", ^{
       
       NSString * const kUserName = @"test";
@@ -114,7 +116,7 @@ describe(@"OMNUser+network", ^{
       [[_newUser.email should] equal:kUserEmail];
       
     });
-    
+    */
     it(@"should not update user with invalid token", ^{
       
       __block OMNError *_error = nil;

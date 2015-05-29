@@ -155,7 +155,7 @@
   static dispatch_once_t onceToken;
   static SystemSoundID paySoundID = 0;
   dispatch_once(&onceToken, ^{
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"pay_done" ofType:@"caf"];
+    NSString *path = [[NSBundle bundleForClass:self.class] pathForResource:@"pay_done" ofType:@"caf"];
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &paySoundID);
   });
   

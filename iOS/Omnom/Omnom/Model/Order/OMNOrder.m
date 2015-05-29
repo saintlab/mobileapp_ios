@@ -115,7 +115,7 @@ NSString * const OMNOrderKey = @"OMNOrderKey";
 
     if (!tipsData) {
       
-      NSString *path = [[NSBundle mainBundle] pathForResource:@"tips" ofType:@"json"];
+      NSString *path = [[NSBundle bundleForClass:self.class] pathForResource:@"tips" ofType:@"json"];
       tipsData = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:path] options:kNilOptions error:nil];
       
     }

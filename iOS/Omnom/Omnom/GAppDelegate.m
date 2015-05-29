@@ -25,14 +25,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-#if OMN_TEST
-#else
-
   OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:launchOptions];
   [[OMNLaunchHandler sharedHandler] reloadWithLaunch:launch];
-  
-#endif
-
   return YES;
   
 }

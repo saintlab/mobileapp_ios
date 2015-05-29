@@ -33,19 +33,39 @@ def import_all
   pod "OMNMailRuAcquiring", :path => "OMNMailRuAcquiring/"
 end
 
-target 'omnom', :exclusive => true do
+def import_omnom
   import_all
   pod 'Fabric'
   pod 'Fabric/Crashlytics'
   pod 'SDWebImage'
+end
+
+def import_tests
+  pod 'OCMock'
+  pod 'Kiwi'
+  pod 'OHHTTPStubs'
+end
+
+target 'omnom', :exclusive => true do
+  import_omnom
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
 
 target 'omnomTests', :exclusive => true do
-  import_all
-  pod 'OCMock'
-  pod 'Kiwi'
-  pod 'OHHTTPStubs'
+  import_omnom
+  import_tests
+  xcodeproj 'Omnom/omnom.xcodeproj'
+end
+
+target 'omnomApplicationTests', :exclusive => true do
+  import_omnom
+  import_tests
+  xcodeproj 'Omnom/omnom.xcodeproj'
+end
+
+target 'omnomIntegrationTests', :exclusive => true do
+  import_omnom
+  import_tests
   xcodeproj 'Omnom/omnom.xcodeproj'
 end
 
