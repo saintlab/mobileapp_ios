@@ -6,15 +6,16 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchRestaurantVC.h"
+#import "OMNLogoVC.h"
 #import <OMNStyler.h>
 #import "OMNSplashToSearchBeaconTransition.h"
+#import "OMNSearchRestaurantsVC.h"
 
 @implementation OMNSplashToSearchBeaconTransition
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
   
-  OMNSearchRestaurantVC *fromViewController = (OMNSearchRestaurantVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+  OMNLogoVC *fromViewController = (OMNLogoVC *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
   OMNSearchRestaurantsVC *toViewController = (OMNSearchRestaurantsVC *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
   
   UIView *containerView = [transitionContext containerView];
@@ -133,8 +134,8 @@
 + (NSArray *)keys {
   return
   @[
-    [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNSearchRestaurantsVC class]],
-    [self keyFromClass:[OMNSearchRestaurantVC class] toClass:[OMNLoadingCircleVC class]]
+    [self keyFromClass:[OMNLogoVC class] toClass:[OMNSearchRestaurantsVC class]],
+    [self keyFromClass:[OMNLogoVC class] toClass:[OMNLoadingCircleVC class]]
     ];
 }
 

@@ -19,12 +19,12 @@
 #elif LUNCH_2GIS
     self.qr = @"qr-code-for-0-lunch2gis";
 #elif LUNCH_2GIS_SUNCITY
-    self.config = @"config_staging";
+    self.config = kOMNConfigNameStaging;
     self.qr = @"qr-code-for-0-lunch2gis-sun-city";
 #elif DEBUG
 
 #pragma mark - production
-//    self.config = @"config_prod";
+//    self.config = kOMNConfigNameProd;
 //    self.qr =  @"qr-code-for-2-saintlab-iiko";
 //    self.qr =  @"http://m.2gis.ru/os/";
 //    _qr = @"qr-code-for-4-ruby-bar-nsk-at-lenina-9"; //rubi
@@ -40,8 +40,8 @@
 //    self.qr = @"http://omnom.menu/qr/special-and-vip"; //b-cafe
     
 #pragma mark - staging
-    self.config = @"config_staging";
-    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
+//    self.config = kOMNConfigNameStaging;
+//    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
     
 #endif
   }

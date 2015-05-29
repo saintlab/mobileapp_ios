@@ -6,14 +6,18 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchRestaurantsVC.h"
+#import <PromiseKit.h>
+#import "OMNSearchRestaurantMediator.h"
 
-@interface OMNSearchRestaurantVC : UIViewController
+@interface OMNLogoVC : UIViewController
 
 @property (nonatomic, strong) UIImageView *logoIV;
 @property (weak, nonatomic) IBOutlet UIImageView *logoIconsIV;
 @property (weak, nonatomic) IBOutlet UIImageView *bgIV;
 @property (weak, nonatomic) IBOutlet UIView *fgView;
+@property (nonatomic, strong, readonly) OMNSearchRestaurantMediator *searchRestaurantMediator;
+
+- (PMKPromise *)present:(UIViewController *)rootVC;
 
 @end
 

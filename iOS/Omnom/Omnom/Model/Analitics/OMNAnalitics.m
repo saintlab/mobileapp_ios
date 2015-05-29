@@ -334,6 +334,7 @@ NSString * const OMNAnaliticsUserKey = @"omn_user";
      @"jsonRequest" : (jsonRequest) ?: (@""),
      @"error" : (responseOperation.error.userInfo) ?: (@""),
      @"errorCode" : @(responseOperation.error.code),
+     @"statusCode" : @(responseOperation.response.statusCode),
      @"requestID" : (requestID) ?: (@"unknown"),
      @"responseString" : (responseOperation.responseString) ?: (@""),
      @"request_headers" : responseOperation.request.allHTTPHeaderFields,

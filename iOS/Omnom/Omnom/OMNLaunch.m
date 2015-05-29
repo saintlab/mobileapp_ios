@@ -11,11 +11,17 @@
 @implementation OMNLaunch
 
 - (NSString *)customConfigName {
+
 #if (APP_STORE || OMN_TEST)
-  return @"config_prod";
+  
+  return kOMNConfigNameProd;
+  
 #else
 #warning customConfigName
-  return @"config_staging";
+  
+  return kOMNConfigNameCerberus;
+  return kOMNConfigNameStaging;
+  
 #endif
 }
 

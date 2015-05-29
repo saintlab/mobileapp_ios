@@ -87,7 +87,7 @@ describe(@"OMNConstants", ^{
     
     it(@"should return valid config", ^{
       
-      [[[OMNConstants configWithName:@"config_stand"] should] beNonNil];
+      [[[OMNConstants configWithName:kOMNConfigNameStand] should] beNonNil];
       
     });
     

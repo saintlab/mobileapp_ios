@@ -9,7 +9,7 @@
 #import "OMNStartVC.h"
 #import "UIImage+omn_helper.h"
 #import "OMNAuthorization.h"
-#import "OMNSearchRestaurantVC.h"
+#import "OMNLogoVC.h"
 #import "OMNNavigationController.h"
 #import "UINavigationController+omn_replace.h"
 #import "OMNLaunchHandler.h"
@@ -52,14 +52,13 @@
 
 - (void)startSearchingRestaurant {
   
-  OMNSearchRestaurantVC *searchRestaurantVC = [[OMNSearchRestaurantVC alloc] init];
-  UINavigationController *navigationController = [OMNNavigationController controllerWithRootVC:searchRestaurantVC];
-  navigationController.navigationBar.barStyle = UIBarStyleDefault;
-  [self presentViewController:navigationController animated:NO completion:^{
+  OMNLogoVC *logoVC = [[OMNLogoVC alloc] init];
+  [logoVC present:self].then(^{
     
     _readyForReload = YES;
+    [logoVC.searchRestaurantMediator searchRestarants];
     
-  }];
+  });
   
 }
 

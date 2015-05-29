@@ -12,7 +12,7 @@
 #import "OMNAuthorization.h"
 #import "NSString+omn_json.h"
 
-#define kOMNAuthorizationManagerValidToken @"pp1bYBnLolNskiI9lnPcDMe5klb01jAX"
+#define kOMNAuthorizationManagerValidToken @"a3Ra4OIpWR7yfZdb5iptP6DBggNRj2GB"
 #define kOMNAuthorizationManagerInvalidToken @"invalid token"
 
 SPEC_BEGIN(OMNUser_networkSpec)

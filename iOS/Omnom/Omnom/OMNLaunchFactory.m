@@ -15,6 +15,7 @@
 #import "OMNTravelersLaunch.h"
 #import "OMNTestLaunch.h"
 #import "OMNDebugLaunch.h"
+#import "OMNConstants.h"
 
 @implementation OMNLaunchFactory
 
@@ -73,7 +74,7 @@
 #elif LUNCH_2GIS
   return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis" config:nil];
 #elif LUNCH_2GIS_SUNCITY
-  return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis-sun-city" config:@"config_staging"];
+  return [[OMNQRLaunch alloc] initWithQR:@"qr-code-for-0-lunch2gis-sun-city" config:kOMNConfigNameStaging];
 #elif OMN_TRAVELERS
   return [[OMNTravelersLaunch alloc] init];
 #elif TARGET_IPHONE_SIMULATOR

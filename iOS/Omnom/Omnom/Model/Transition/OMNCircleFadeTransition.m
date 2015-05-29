@@ -14,7 +14,7 @@
 #import "OMNCLPermissionsHelpVC.h"
 #import "OMNDemoRestaurantVC.h"
 #import "OMNTransactionPaymentVC.h"
-#import "OMNSearchRestaurantVC.h"
+#import "OMNLogoVC.h"
 #import "OMNRestaurantActionsVC.h"
 #import "OMNRestaurantListVC.h"
 #import "OMNRestaurantCardVC.h"
@@ -91,7 +91,7 @@
     [self keyFromClass:[OMNRestaurantActionsVC class] toClass:[OMNOrdersLoadingVC class]],
     
     [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNDenyCLPermissionVC class]],
-    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNSearchRestaurantVC class]],
+    [self keyFromClass:[OMNSearchRestaurantsVC class] toClass:[OMNLogoVC class]],
     
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNSearchRestaurantsVC class]],
     [self keyFromClass:[OMNDemoRestaurantVC class] toClass:[OMNCircleRootVC class]],

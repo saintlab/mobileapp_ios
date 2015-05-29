@@ -33,7 +33,7 @@ describe(@"OMNLaunchFactory", ^{
         };
       OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:info];
       [[launch should] beKindOfClass:[OMNQRLaunch class]];
-      [[launch.customConfigName should] equal:@"config_staging"];
+      [[launch.customConfigName should] equal:kOMNConfigNameStaging];
       
     });
 
@@ -45,7 +45,7 @@ describe(@"OMNLaunchFactory", ^{
         };
       OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:info];
       [[launch should] beKindOfClass:[OMNDefaultLaunch class]];
-      [[launch.customConfigName should] equal:@"config_staging"];
+      [[launch.customConfigName should] equal:kOMNConfigNameStaging];
       
     });
 
@@ -58,7 +58,7 @@ describe(@"OMNLaunchFactory", ^{
       
       OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:info];
       [[launch should] beKindOfClass:[OMNDefaultLaunch class]];
-      [[launch.customConfigName should] equal:@"config_staging"];
+      [[launch.customConfigName should] equal:kOMNConfigNameStaging];
       [[launch.wishID should] equal:@"123"];
       [[@(launch.shouldReload) should] beNo];
 
@@ -73,7 +73,7 @@ describe(@"OMNLaunchFactory", ^{
       
       OMNLaunch *launch = [OMNLaunchFactory launchWithLaunchOptions:info];
       [[launch should] beKindOfClass:[OMNDefaultLaunch class]];
-      [[launch.customConfigName should] equal:@"config_prod"];
+      [[launch.customConfigName should] equal:kOMNConfigNameProd];
       [[launch.wishID should] equal:@"123"];
       [[@(launch.shouldReload) should] beNo];
       
@@ -87,7 +87,7 @@ describe(@"OMNLaunchFactory", ^{
         };
       OMNLaunch *launch = [OMNLaunchFactory launchWithRemoteNotification:push];
       [[launch should] beKindOfClass:[OMNRemotePushLaunch class]];
-      [[launch.customConfigName should] equal:@"config_prod"];
+      [[launch.customConfigName should] equal:kOMNConfigNameProd];
       [[launch.wishID should] equal:@"123"];
       [[@(launch.shouldReload) should] beNo];
       
@@ -98,11 +98,11 @@ describe(@"OMNLaunchFactory", ^{
       NSDictionary *push =
       @{
         @"wish" : @{@"id" : @"123"},
-        @"config" : @"config_staging"
+        @"config" : kOMNConfigNameStaging
         };
       OMNLaunch *launch = [OMNLaunchFactory launchWithRemoteNotification:push];
       [[launch should] beKindOfClass:[OMNRemotePushLaunch class]];
-      [[launch.customConfigName should] equal:@"config_staging"];
+      [[launch.customConfigName should] equal:kOMNConfigNameStaging];
       [[launch.wishID should] equal:@"123"];
       [[@(launch.shouldReload) should] beNo];
       

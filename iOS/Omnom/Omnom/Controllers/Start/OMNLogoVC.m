@@ -6,22 +6,17 @@
 //  Copyright (c) 2014 tea. All rights reserved.
 //
 
-#import "OMNSearchRestaurantVC.h"
+#import "OMNLogoVC.h"
 #import "UIImage+omn_helper.h"
 #import <OMNStyler.h>
 #import "OMNConstants.h"
 #import "OMNLaunchHandler.h"
+#import "OMNNavigationController.h"
 
-@interface OMNSearchRestaurantVC ()
-
-@property (nonatomic, strong) OMNSearchRestaurantMediator *searchRestaurantMediator;
-
-@end
-
-@implementation OMNSearchRestaurantVC
+@implementation OMNLogoVC
 
 - (instancetype)init {
-  self = [super initWithNibName:@"OMNSearchRestaurantVC" bundle:nil];
+  self = [super initWithNibName:@"OMNLogoVC" bundle:nil];
   if (self) {
     
     _searchRestaurantMediator = [[OMNSearchRestaurantMediator alloc] initWithRootVC:self];
@@ -51,17 +46,20 @@
 
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
+- (PMKPromise *)present:(UIViewController *)rootVC {
   
-  @weakify(self)
-  dispatch_async(dispatch_get_main_queue(), ^{
+  UINavigationController *navigationController = [OMNNavigationController controllerWithRootVC:self];
+  navigationController.navigationBar.barStyle = UIBarStyleDefault;
+  navigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   
-    @strongify(self)
-    [self.searchRestaurantMediator searchRestarants];
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    [rootVC presentViewController:navigationController animated:YES completion:^{
+      fulfill(nil);
+    }];
+    
+  }];
 
-  });
-  
 }
 
 @end

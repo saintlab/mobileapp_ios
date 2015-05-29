@@ -23,7 +23,7 @@ describe(@"OMNRemotePushLaunch", ^{
       [[launch should] beNonNil];
       [[launch.openURL should] beNil];
       [[launch.wishID should] beNil];
-      [[launch.customConfigName should] equal:@"config_prod"];
+      [[launch.customConfigName should] equal:kOMNConfigNameProd];
       [[@(launch.showTableOrders) should] equal:@NO];
       [[@(launch.showRecommendations) should] equal:@NO];
       [[@(launch.applicationStartedBackground) should] equal:@NO];
@@ -44,7 +44,7 @@ describe(@"OMNRemotePushLaunch", ^{
       [[launch should] beNonNil];
       [[launch.openURL should] beNonNil];
       [[launch.wishID should] beNonNil];
-      [[launch.customConfigName should] equal:@"config_prod"];
+      [[launch.customConfigName should] equal:kOMNConfigNameProd];
       [[@(launch.showTableOrders) should] equal:@YES];
       [[@(launch.showRecommendations) should] equal:@YES];
       [[@(launch.applicationStartedBackground) should] equal:@NO];
@@ -65,7 +65,7 @@ describe(@"OMNRemotePushLaunch", ^{
       [[launch should] beNonNil];
       [[launch.openURL should] beNil];
       [[launch.wishID should] beNil];
-      [[launch.customConfigName should] equal:@"config_prod"];
+      [[launch.customConfigName should] equal:kOMNConfigNameProd];
       [[@(launch.showTableOrders) should] equal:@NO];
       [[@(launch.showRecommendations) should] equal:@NO];
       [[@(launch.applicationStartedBackground) should] equal:@NO];

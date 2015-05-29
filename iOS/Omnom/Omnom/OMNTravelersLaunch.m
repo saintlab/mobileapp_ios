@@ -12,7 +12,7 @@
 @implementation OMNTravelersLaunch
 
 - (NSString *)customConfigName {
-  return @"config_staging";
+  return kOMNConfigNameStaging;
 }
 
 - (PMKPromise *)getRestaurants {

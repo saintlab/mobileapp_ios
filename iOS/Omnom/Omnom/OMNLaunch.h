@@ -10,6 +10,11 @@
 #import "OMNRestaurant.h"
 #import <PromiseKit.h>
 
+#define kOMNConfigNameStaging @"config_staging"
+#define kOMNConfigNameStand @"config_stand"
+#define kOMNConfigNameProd @"config_prod"
+#define kOMNConfigNameCerberus @"config_cerberus"
+
 @interface OMNLaunch : NSObject
 
 @property (nonatomic, assign) BOOL showTableOrders;
