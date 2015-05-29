@@ -8,6 +8,8 @@
 
 #import "AFHTTPRequestOperationManager.h"
 
+extern NSString * const kAuthenticationTokenKey;
+
 @interface AFHTTPRequestOperationManager (omn_token)
 
 - (void)omn_setAuthenticationToken:(NSString *)token;

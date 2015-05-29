@@ -8,6 +8,7 @@
 
 #import <Kiwi/Kiwi.h>
 #import "OMNOperationManager.h"
+#import "AFHTTPRequestOperationManager+omn_token.h"
 
 #define kOMNOperationManagerTestToken @"token"
 #define kOMNOperationManagerTestURL @"https://omnom.omnom.menu"

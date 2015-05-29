@@ -50,7 +50,7 @@ static NSString *_authorizationManagerAuthenticationToken = nil;
 }
 
 - (void)updateAuthenticationToken {
-  [_authorizationManager omn_setAuthenticationToken:_authorizationManagerAuthenticationToken];
+  [self omn_setAuthenticationToken:_authorizationManagerAuthenticationToken];
 }
 
 @end

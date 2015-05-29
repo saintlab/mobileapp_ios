@@ -15,6 +15,7 @@
 #import "OMNLaunch.h"
 #import "OMNLineNumberLogFormatter.h"
 #import <UIDevice-Hardware.h>
+#import "AFHTTPRequestOperationManager+omn_token.h"
 
 NSString * const kPushSoundName = @"new_guest.caf";
 NSString * const OMNFacebookPageUrlString = @"https://www.facebook.com/omnom.menu/";

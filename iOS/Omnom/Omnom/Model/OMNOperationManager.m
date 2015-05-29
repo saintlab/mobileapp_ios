@@ -58,7 +58,7 @@ static NSString *_operationManagerAuthenticationToken = nil;
 }
 
 - (void)updateAuthenticationToken {
-  [_operationManager omn_setAuthenticationToken:_operationManagerAuthenticationToken];
+  [self omn_setAuthenticationToken:_operationManagerAuthenticationToken];
 }
 
 @end
