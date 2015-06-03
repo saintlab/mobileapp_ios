@@ -12,6 +12,12 @@
 #import <OMNStyler.h>
 #import "OMNVisitor.h"
 
+@interface OMNRestaurantActionsVC ()
+
+@property (nonatomic, strong, readonly) OMNRestaurantActionsToolbar *restaurantActionsToolbar;
+
+@end
+
 @implementation OMNRestaurantActionsVC {
   
   OMNRestaurantMediator *_restaurantMediator;
@@ -85,14 +91,14 @@
   [self addChildViewController:_internalNVC];
   _internalNVC.view.translatesAutoresizingMaskIntoConstraints = NO;
   
-  OMNRestaurantActionsToolbar *toolbar = [[OMNRestaurantActionsToolbar alloc] init];
-  toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-  toolbar.restaurantMediator = _restaurantMediator;
-  [self.view addSubview:toolbar];
+  _restaurantActionsToolbar = [[OMNRestaurantActionsToolbar alloc] init];
+  _restaurantActionsToolbar.translatesAutoresizingMaskIntoConstraints = NO;
+  _restaurantActionsToolbar.restaurantMediator = _restaurantMediator;
+  [self.view addSubview:_restaurantActionsToolbar];
   
   NSDictionary *views =
   @{
-    @"bottomToolbar" : toolbar,
+    @"bottomToolbar" : _restaurantActionsToolbar,
     @"navigationController" : _internalNVC.view,
     };
   

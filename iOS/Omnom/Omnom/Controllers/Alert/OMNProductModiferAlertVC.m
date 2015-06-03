@@ -10,8 +10,12 @@
 #import <OMNStyler.h>
 #import "UIView+omn_autolayout.h"
 #import "OMNMenuProductModifersModel.h"
+#import "OMNError.h"
 
 @interface OMNProductModiferAlertVC ()
+
+@property (nonatomic, strong) PMKFulfiller fulfiller;
+@property (nonatomic, strong) PMKRejecter rejecter;
 
 @end
 
@@ -58,6 +62,28 @@
   
 }
 
++ (PMKPromise *)editProduct:(OMNMenuProduct *)menuProduct fromRootVC:(UIViewController *)rootVC {
+  
+  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:menuProduct];
+  
+  return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
+    
+    productModiferAlertVC.fulfiller = fulfill;
+    productModiferAlertVC.rejecter = reject;
+    productModiferAlertVC.didCloseBlock = ^{
+      
+      [rootVC dismissViewControllerAnimated:YES completion:^{
+        reject(nil);
+      }];
+      
+    };
+    
+    [rootVC presentViewController:productModiferAlertVC animated:YES completion:nil];
+    
+  }];
+  
+}
+
 - (void)updateTableViewHeight {
   
   _tableViewHeightConstraint.constant = _model.tableViewHeight;
@@ -72,11 +98,14 @@
 - (void)orderTap {
   
   _menuProduct.quantity = _quantity;
-  if (self.didSelectOrderBlock) {
+  
+  [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
     
-    self.didSelectOrderBlock();
-    
-  }
+    if (self.fulfiller) {
+      self.fulfiller(nil);
+    }
+
+  }];
   
 }
 

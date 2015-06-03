@@ -19,7 +19,7 @@
 #else
 #warning customConfigName
   
-  return kOMNConfigNameCerberus;
+//  return kOMNConfigNameCerberus;
   return kOMNConfigNameStaging;
   
 #endif

@@ -13,12 +13,12 @@
 #import "UIView+omn_autolayout.h"
 #import "OMNMenuHeaderLabel.h"
 #import "OMNMenuCategoriesModel.h"
-#import "OMNMenuProductCellItem+edit.h"
 #import "OMNMenuCategorySectionItem.h"
 #import "UIView+screenshot.h"
 #import <BlocksKit.h>
 #import "OMNMenuSearchVC.h"
 #import "UINavigationBar+omn_custom.h"
+#import "OMNProductModiferAlertVC.h"
 
 @interface OMNMenuVC ()
 <OMNMenuProductWithRecommedtationsCellDelegate,
@@ -217,17 +217,15 @@ OMNMenuCategoryHeaderViewDelegate>
   if (indexPath) {
     [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
   }
-  
-  @weakify(self)
-  [cell.item editMenuProductFromController:self withCompletion:^{
+
+  [OMNProductModiferAlertVC editProduct:cell.item.menuProduct fromRootVC:self].then(^{
     
-    @strongify(self)
     if ([menuProductWithRecommedtationsCell.item.menuProduct isEqual:cell.item.menuProduct]) {
       [self updateTableViewWithSelectedItem:menuProductWithRecommedtationsCell.item andScrollToCell:menuProductWithRecommedtationsCell];
     }
     
-  }];
-  
+  });
+
 }
 
 - (void)updateTableViewWithSelectedItem:(OMNMenuProductWithRecommendationsCellItem *)item andScrollToCell:(UITableViewCell *)cell {

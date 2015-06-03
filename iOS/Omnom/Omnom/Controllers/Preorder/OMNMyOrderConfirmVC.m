@@ -20,6 +20,7 @@
 #import "OMNAuthorization.h"
 #import "OMNMyOrderConfirmModel.h"
 #import "OMNLoginVC.h"
+#import "OMNProductModiferAlertVC.h"
 
 @interface OMNMyOrderConfirmVC ()
 <OMNPreorderActionCellDelegate,
@@ -253,13 +254,11 @@ OMNPreorderConfirmCellDelegate>
 
 - (void)preorderConfirmCellDidEdit:(OMNPreorderConfirmCell *)preorderConfirmCell {
   
-  @weakify(self)
-  [preorderConfirmCell.item editMenuProductFromController:self withCompletion:^{
+  [OMNProductModiferAlertVC editProduct:preorderConfirmCell.item.menuProduct fromRootVC:self].then(^{
     
-    @strongify(self)
     [self.model updatePreorderedProductsAnimated:YES];
     
-  }];
+  });
   
 }
 

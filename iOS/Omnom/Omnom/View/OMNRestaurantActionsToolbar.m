@@ -83,6 +83,8 @@
 
 - (void)updateRestaurantActionButtons {
   
+  _myOrderButton = nil;
+  
   OMNRestaurantSettings *settings = _restaurantMediator.restaurant.settings;
   OMNOrderToolbarButton *callBillButton = [[OMNOrderToolbarButton alloc] initWithTotalAmount:_restaurantMediator.totalOrdersAmount target:_restaurantMediator action:@selector(showTableOrders)];
   callBillButton.hidden = !settings.has_table_order;
@@ -123,13 +125,13 @@
   }
   else if (_restaurantMediator.showPreorderButton) {
     
-    OMNMyOrderButton *myOrderButton = [[OMNMyOrderButton alloc] initWithRestaurantMediator:_restaurantMediator];
+    _myOrderButton = [[OMNMyOrderButton alloc] initWithRestaurantMediator:_restaurantMediator];
     
     bottomToolbarItems =
     @[
       [[UIBarButtonItem alloc] initWithCustomView:callWaiterButton],
       [UIBarButtonItem omn_flexibleItem],
-      [[UIBarButtonItem alloc] initWithCustomView:myOrderButton],
+      [[UIBarButtonItem alloc] initWithCustomView:_myOrderButton],
       [UIBarButtonItem omn_flexibleItem],
       ];
     

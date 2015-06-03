@@ -119,6 +119,7 @@
   [super viewWillAppear:animated];
   
   [[OMNAuthorization authorization] checkAuthenticationToken].catch(^(id error) {
+    
   });
   
 }

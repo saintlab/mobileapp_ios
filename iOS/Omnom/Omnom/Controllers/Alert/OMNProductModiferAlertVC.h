@@ -8,11 +8,11 @@
 
 #import "OMNModalAlertVC.h"
 #import "OMNMenuProduct.h"
+#import <PromiseKit.h>
 
 @interface OMNProductModiferAlertVC : OMNModalAlertVC
 
-@property (nonatomic, copy) dispatch_block_t didSelectOrderBlock;
-
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct;
++ (PMKPromise *)editProduct:(OMNMenuProduct *)menuProduct fromRootVC:(UIViewController *)rootVC;
 
 @end

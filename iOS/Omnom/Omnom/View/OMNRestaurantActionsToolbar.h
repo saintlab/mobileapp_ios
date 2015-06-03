@@ -12,5 +12,6 @@
 @interface OMNRestaurantActionsToolbar : UIToolbar
 
 @property (nonatomic, strong) OMNRestaurantMediator *restaurantMediator;
+@property (nonatomic, strong, readonly) UIButton *myOrderButton;
 
 @end

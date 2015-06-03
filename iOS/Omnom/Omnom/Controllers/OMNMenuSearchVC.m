@@ -14,6 +14,7 @@
 #import "UINavigationBar+omn_custom.h"
 #import "UIView+omn_autolayout.h"
 #import <OMNStyler.h>
+#import "OMNProductModiferAlertVC.h"
 
 @interface OMNMenuSearchVC ()
 <UITableViewDataSource,
@@ -243,17 +244,15 @@ OMNPreorderConfirmCellDelegate>
 #pragma mark - OMNPreorderConfirmCellDelegate
 
 - (void)preorderConfirmCellDidEdit:(OMNPreorderConfirmCell *)preorderConfirmCell {
-  
-  @weakify(self)
-  [preorderConfirmCell.item editMenuProductFromController:self withCompletion:^{
+
+  [OMNProductModiferAlertVC editProduct:preorderConfirmCell.item.menuProduct fromRootVC:self].then(^{
     
-    @strongify(self)
     NSIndexPath *indexPath = [self.tableView indexPathForCell:preorderConfirmCell];
     if (indexPath) {
       [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
-    
-  }];
+
+  });
   
 }
 

@@ -64,27 +64,7 @@
 }
 
 + (void)registerCellForTableView:(UITableView *)tableView {
-  
   [tableView registerClass:[OMNPreorderConfirmCell class] forCellReuseIdentifier:NSStringFromClass([OMNPreorderConfirmCell class])];
-  
-}
-
-- (void)editMenuProductFromController:(UIViewController *)viewController withCompletion:(dispatch_block_t)completionBlock {
-  
-  OMNProductModiferAlertVC *productModiferAlertVC = [[OMNProductModiferAlertVC alloc] initWithMenuProduct:self.menuProduct];
-  productModiferAlertVC.didCloseBlock = ^{
-    
-    [viewController dismissViewControllerAnimated:YES completion:nil];
-    
-  };
-  
-  productModiferAlertVC.didSelectOrderBlock = ^{
-    
-    [viewController dismissViewControllerAnimated:YES completion:completionBlock];
-    
-  };
-  [viewController presentViewController:productModiferAlertVC animated:YES completion:nil];
-  
 }
 
 @end

@@ -10,7 +10,7 @@
 #import "UIBarButtonItem+omn_custom.h"
 #import <OMNStyler.h>
 #import "OMNMenuProductFullWithRecommendationsCellItem.h"
-#import "OMNMenuProductCellItem+edit.h"
+#import "OMNProductModiferAlertVC.h"
 
 @interface OMNMenuProductVC ()
 <OMNMenuProductCellDelegate>
@@ -78,7 +78,7 @@
 #pragma mark - OMNMenuProductCellDelegate
 
 - (void)menuProductCellDidEdit:(OMNMenuProductCell *)menuProductCell {
-  [menuProductCell.item editMenuProductFromController:self withCompletion:^{}];
+  [OMNProductModiferAlertVC editProduct:menuProductCell.item.menuProduct fromRootVC:self];
 }
 
 - (void)menuProductCellDidSelect:(OMNMenuProductCell *)menuProductCell {

@@ -21,7 +21,6 @@
 @property (nonatomic, assign) BOOL hidePrice;
 
 - (instancetype)initWithMenuProduct:(OMNMenuProduct *)menuProduct;
-- (void)editMenuProductFromController:(UIViewController *)viewController withCompletion:(dispatch_block_t)completionBlock;
 
 @end
 
