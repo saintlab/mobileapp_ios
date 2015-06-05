@@ -50,11 +50,10 @@
   
   UINavigationController *navigationController = [OMNNavigationController controllerWithRootVC:self];
   navigationController.navigationBar.barStyle = UIBarStyleDefault;
-  navigationController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    [rootVC presentViewController:navigationController animated:YES completion:^{
+    [rootVC presentViewController:navigationController animated:NO completion:^{
       fulfill(nil);
     }];
     
