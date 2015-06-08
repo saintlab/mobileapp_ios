@@ -130,7 +130,7 @@ static OMNMailRuAcquiring *_mailRuAcquiring = nil;
   
   OMNMailRuCard *card = [OMNMailRuCard cardWithPan:pan exp_date:exp_date cvv:cvv];
   card.add = YES;
-  OMNMailRuPaymentTransaction *transaction = [[OMNMailRuPaymentTransaction alloc] initWithCard:card user:user order:[OMNMailRuOrder orderWithID:@"0" amount:@(1)] extra:nil];
+  OMNMailRuPaymentTransaction *transaction = [[OMNMailRuPaymentTransaction alloc] initWithCard:card user:user order:[OMNMailRuOrder orderWithID:@"0" amount:@(1)] extra:[OMNMailRuExtra extraWithRestaurantID:@"" tipAmount:0 type:@"card"]];
   return [self pay:transaction];
   
 }
