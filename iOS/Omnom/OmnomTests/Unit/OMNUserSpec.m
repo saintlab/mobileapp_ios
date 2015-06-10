@@ -10,7 +10,7 @@
 #import "OMNUser.h"
 #import "OMNUser+network.h"
 #import "NSString+omn_json.h"
-#import "OMNAuthorizationManager.h"
+#import "OMNOperationManager.h"
 #import "OHHTTPStubs+omn_helpers.h"
 
 NSString * const kTestUserToken = @"kUserToken";
@@ -22,13 +22,13 @@ describe(@"OMNUser", ^{
   
   beforeAll(^{
     
-    [OMNAuthorizationManager setupWithURL:@"https://wicket.omnom.menu" headers:nil];
+    [OMNOperationManager setupWithURL:@"https://wicket.omnom.menu" headers:nil];
     
   });
   
   afterAll(^{
     
-    [OMNAuthorizationManager setupWithURL:nil headers:nil];
+    [OMNOperationManager setupWithURL:nil headers:nil];
     
   });
   

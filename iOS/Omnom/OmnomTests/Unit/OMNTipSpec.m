@@ -99,7 +99,7 @@ describe(@"OMNTip", ^{
     
     
     it(@"should check tips for 599 rub", ^{
-      
+
       long long amount = 59900ll;
       [[theValue([_tip1 amountForValue:amount]) should] equal:@(5000)];
       [[theValue([_tip2 amountForValue:amount]) should] equal:@(7500)];

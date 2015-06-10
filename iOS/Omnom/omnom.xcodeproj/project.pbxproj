@@ -294,7 +294,6 @@
 		930C4E4D1AB15E1B006CA608 /* OMNRestaurantToMenuTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BA9BC41A8C5AA400717FF9 /* OMNRestaurantToMenuTransition.m */; };
 		930C4E4E1AB15E1B006CA608 /* OMNDisclamerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456E19B5B01600C37C82 /* OMNDisclamerView.m */; };
 		930C4E4F1AB15E1B006CA608 /* OMNPreorderConfirmCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26C71A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m */; };
-		930C4E501AB15E1B006CA608 /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		930C4E511AB15E1B006CA608 /* OMNMenuProductModifersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9373254F1A7FAC5300A73673 /* OMNMenuProductModifersModel.m */; };
 		930C4E521AB15E1B006CA608 /* OMNSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9328F3971988C6360065DC58 /* OMNSocketManager.m */; };
 		930C4E531AB15E1B006CA608 /* OMNUserInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1177C1A2F0401000131C4 /* OMNUserInfoHeaderView.m */; };
@@ -608,7 +607,6 @@
 		930C8C3E1ACA7D9F00CE4E5A /* OMNRestaurantToMenuTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BA9BC41A8C5AA400717FF9 /* OMNRestaurantToMenuTransition.m */; };
 		930C8C3F1ACA7D9F00CE4E5A /* OMNDisclamerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456E19B5B01600C37C82 /* OMNDisclamerView.m */; };
 		930C8C401ACA7D9F00CE4E5A /* OMNPreorderConfirmCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26C71A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m */; };
-		930C8C411ACA7D9F00CE4E5A /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		930C8C421ACA7D9F00CE4E5A /* OMNMenuProductModifersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9373254F1A7FAC5300A73673 /* OMNMenuProductModifersModel.m */; };
 		930C8C431ACA7D9F00CE4E5A /* OMNSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9328F3971988C6360065DC58 /* OMNSocketManager.m */; };
 		930C8C441ACA7D9F00CE4E5A /* OMNUserInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1177C1A2F0401000131C4 /* OMNUserInfoHeaderView.m */; };
@@ -879,7 +877,6 @@
 		934669111B17F9DD003C3434 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
 		934669121B17F9DD003C3434 /* OMNHelpPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CB41A246AA1008064F9 /* OMNHelpPage.m */; };
 		934669131B17F9DD003C3434 /* OMNSearchRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */; };
-		934669141B17F9DD003C3434 /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		934669151B17F9DD003C3434 /* OMNLoaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37321980F68200EF5C31 /* OMNLoaderView.m */; };
 		934669161B17F9DD003C3434 /* OMNBarRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E26EE21AA9E4370034A7A3 /* OMNBarRestaurantMediator.m */; };
 		934669171B17F9DD003C3434 /* OMNOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 938E8F31192F3A200088EF38 /* OMNOperationManager.m */; };
@@ -1232,7 +1229,6 @@
 		93466A8B1B17F9DD003C3434 /* OMNRestaurantMenuVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 93750B2E196E4F220031AD31 /* OMNRestaurantMenuVC.json */; };
 		93466A8C1B17F9DD003C3434 /* OMNWizardVC.json in Resources */ = {isa = PBXBuildFile; fileRef = 938F3A4B198BECD100AB288E /* OMNWizardVC.json */; };
 		93466A8D1B17F9DD003C3434 /* OMNBankCardsVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 939F98F919752BE90051822E /* OMNBankCardsVC.xib */; };
-		93466A8E1B17F9DD003C3434 /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
 		93466A8F1B17F9DD003C3434 /* decodeBeacons.json in Resources */ = {isa = PBXBuildFile; fileRef = 93CE7CA21A62A8320032D96B /* decodeBeacons.json */; };
 		93466A901B17F9DD003C3434 /* images_upload_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897DE41B15FA260058378E /* images_upload_stub.json */; };
 		93466A9C1B17FA88003C3434 /* OMNRestaurantDetailsViewSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93466A9B1B17FA88003C3434 /* OMNRestaurantDetailsViewSpec.m */; };
@@ -1637,7 +1633,6 @@
 		936AC1F01AD8BDBC00A9D17F /* OMNDisclamerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9389456E19B5B01600C37C82 /* OMNDisclamerView.m */; };
 		936AC1F11AD8BDBC00A9D17F /* OMNPreorderConfirmCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DB26C71A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m */; };
 		936AC1F21AD8BDBC00A9D17F /* OMNDemoVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F15DE91ACEDECB000C8129 /* OMNDemoVisitor.m */; };
-		936AC1F31AD8BDBC00A9D17F /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		936AC1F41AD8BDBC00A9D17F /* OMNMenuProductModifersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9373254F1A7FAC5300A73673 /* OMNMenuProductModifersModel.m */; };
 		936AC1F51AD8BDBC00A9D17F /* OMNSocketManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9328F3971988C6360065DC58 /* OMNSocketManager.m */; };
 		936AC1F61AD8BDBC00A9D17F /* OMNUserInfoHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D1177C1A2F0401000131C4 /* OMNUserInfoHeaderView.m */; };
@@ -1797,7 +1792,6 @@
 		93897E031B16DC960058378E /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
 		93897E041B16DC960058378E /* OMNHelpPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E58CB41A246AA1008064F9 /* OMNHelpPage.m */; };
 		93897E051B16DC960058378E /* OMNSearchRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9391F6691A60EBC500594CD5 /* OMNSearchRestaurantMediator.m */; };
-		93897E061B16DC960058378E /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93897E071B16DC960058378E /* OMNLoaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 937A37321980F68200EF5C31 /* OMNLoaderView.m */; };
 		93897E081B16DC960058378E /* OMNBarRestaurantMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E26EE21AA9E4370034A7A3 /* OMNBarRestaurantMediator.m */; };
 		93897E091B16DC960058378E /* OMNLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 937C3E701A2824E9006525A9 /* OMNLocationManager.m */; };
@@ -2124,12 +2118,6 @@
 		93897F771B16DDBE0058378E /* OMNUser+networkSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F761B16DDBE0058378E /* OMNUser+networkSpec.m */; };
 		93897F7B1B16ECE80058378E /* OMNSocketManagerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F7A1B16ECE80058378E /* OMNSocketManagerSpec.m */; };
 		93897F7F1B1715E30058378E /* UIImage+omn_networkSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F7E1B1715E30058378E /* UIImage+omn_networkSpec.m */; };
-		93897F811B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
-		93897F821B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
-		93897F831B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
-		93897F841B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
-		93897F851B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
-		93897F861B1719020058378E /* config_cerberus.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F801B1719020058378E /* config_cerberus.json */; };
 		93897F891B172BB30058378E /* OMNWish+omn_networkSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93897F881B172BB30058378E /* OMNWish+omn_networkSpec.m */; };
 		93897F8B1B1731BE0058378E /* staging_restaurants_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F8A1B1731BE0058378E /* staging_restaurants_stub.json */; };
 		93897F8C1B1731BE0058378E /* staging_restaurants_stub.json in Resources */ = {isa = PBXBuildFile; fileRef = 93897F8A1B1731BE0058378E /* staging_restaurants_stub.json */; };
@@ -2452,8 +2440,6 @@
 		93C8C7961AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
 		93C8C7971AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
 		93C8C7981AEE70F1000D7AB9 /* OMNWishInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */; };
-		93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
-		93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99097193DE5990028F76C /* OMNAuthorizationManager.m */; };
 		93C99116193EF6F20028F76C /* OMNOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C99115193EF6F20028F76C /* OMNOrder.m */; };
 		93CA085C19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
 		93CA085D19AA34FA00615F43 /* UIView+screenshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA085B19AA34FA00615F43 /* UIView+screenshot.m */; };
@@ -3163,7 +3149,6 @@
 		93897F761B16DDBE0058378E /* OMNUser+networkSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OMNUser+networkSpec.m"; path = "OmnomTests/Integration/OMNUser+networkSpec.m"; sourceTree = SOURCE_ROOT; };
 		93897F7A1B16ECE80058378E /* OMNSocketManagerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OMNSocketManagerSpec.m; path = OmnomTests/Integration/OMNSocketManagerSpec.m; sourceTree = SOURCE_ROOT; };
 		93897F7E1B1715E30058378E /* UIImage+omn_networkSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+omn_networkSpec.m"; path = "OmnomTests/Integration/UIImage+omn_networkSpec.m"; sourceTree = SOURCE_ROOT; };
-		93897F801B1719020058378E /* config_cerberus.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = config_cerberus.json; sourceTree = "<group>"; };
 		93897F881B172BB30058378E /* OMNWish+omn_networkSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "OMNWish+omn_networkSpec.m"; path = "OmnomTests/Integration/OMNWish+omn_networkSpec.m"; sourceTree = SOURCE_ROOT; };
 		93897F8A1B1731BE0058378E /* staging_restaurants_stub.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = staging_restaurants_stub.json; sourceTree = "<group>"; };
 		93897F8D1B17541E0058378E /* OMNTestAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNTestAppDelegate.h; sourceTree = "<group>"; };
@@ -3354,8 +3339,6 @@
 		93C8C78B1AEDFF52000D7AB9 /* NSIndexPath+omn_helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexPath+omn_helper.m"; sourceTree = "<group>"; };
 		93C8C7921AEE70F1000D7AB9 /* OMNWishInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNWishInfoVC.h; sourceTree = "<group>"; };
 		93C8C7931AEE70F1000D7AB9 /* OMNWishInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNWishInfoVC.m; sourceTree = "<group>"; };
-		93C99096193DE5990028F76C /* OMNAuthorizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNAuthorizationManager.h; sourceTree = "<group>"; };
-		93C99097193DE5990028F76C /* OMNAuthorizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNAuthorizationManager.m; sourceTree = "<group>"; };
 		93C99114193EF6F20028F76C /* OMNOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMNOrder.h; sourceTree = "<group>"; };
 		93C99115193EF6F20028F76C /* OMNOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMNOrder.m; sourceTree = "<group>"; };
 		93CA085A19AA34FA00615F43 /* UIView+screenshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+screenshot.h"; sourceTree = "<group>"; };
@@ -4599,7 +4582,6 @@
 				935A1E301A80DF0300704086 /* config_staging.json */,
 				93F21BEC19B6284B00D5F78A /* config_stand.json */,
 				93EDD46C19B86D9F0017B6ED /* config_prod.json */,
-				93897F801B1719020058378E /* config_cerberus.json */,
 			);
 			name = Configs;
 			sourceTree = "<group>";
@@ -4628,8 +4610,6 @@
 				938E8F61192F57E00088EF38 /* Transition */,
 				938E8F30192F3A200088EF38 /* OMNOperationManager.h */,
 				938E8F31192F3A200088EF38 /* OMNOperationManager.m */,
-				93C99096193DE5990028F76C /* OMNAuthorizationManager.h */,
-				93C99097193DE5990028F76C /* OMNAuthorizationManager.m */,
 				938E8F32192F3A200088EF38 /* Order */,
 				938E8F37192F3A200088EF38 /* Restaurants */,
 				938E8F49192F3A200088EF38 /* Tip */,
@@ -5688,7 +5668,6 @@
 				930C4E891AB15E1B006CA608 /* config_staging.json in Resources */,
 				930C4E8A1AB15E1B006CA608 /* OMNWizardPageVC.xib in Resources */,
 				930C4E8B1AB15E1B006CA608 /* OMNNavigationBarSelector.json in Resources */,
-				93897F821B1719020058378E /* config_cerberus.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5731,7 +5710,6 @@
 				930C8C7A1ACA7D9F00CE4E5A /* config_staging.json in Resources */,
 				930C8C7B1ACA7D9F00CE4E5A /* OMNWizardPageVC.xib in Resources */,
 				930C8C7C1ACA7D9F00CE4E5A /* OMNNavigationBarSelector.json in Resources */,
-				93897F831B1719020058378E /* config_cerberus.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5779,7 +5757,6 @@
 				93466A8B1B17F9DD003C3434 /* OMNRestaurantMenuVC.json in Resources */,
 				93466A8C1B17F9DD003C3434 /* OMNWizardVC.json in Resources */,
 				93466A8D1B17F9DD003C3434 /* OMNBankCardsVC.xib in Resources */,
-				93466A8E1B17F9DD003C3434 /* config_cerberus.json in Resources */,
 				93466A8F1B17F9DD003C3434 /* decodeBeacons.json in Resources */,
 				93466A901B17F9DD003C3434 /* images_upload_stub.json in Resources */,
 			);
@@ -5824,7 +5801,6 @@
 				935A1E311A80DF0300704086 /* config_staging.json in Resources */,
 				939689C0195C010900AAAF9C /* OMNWizardPageVC.xib in Resources */,
 				9390D2671966EAF7007E13AB /* OMNNavigationBarSelector.json in Resources */,
-				93897F811B1719020058378E /* config_cerberus.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5872,7 +5848,6 @@
 				93750B30196E4F220031AD31 /* OMNRestaurantMenuVC.json in Resources */,
 				938F3A4D198BECD100AB288E /* OMNWizardVC.json in Resources */,
 				939F991719752BE90051822E /* OMNBankCardsVC.xib in Resources */,
-				93897F851B1719020058378E /* config_cerberus.json in Resources */,
 				93CE7CA31A62A8320032D96B /* decodeBeacons.json in Resources */,
 				93897DE51B15FA260058378E /* images_upload_stub.json in Resources */,
 			);
@@ -5917,7 +5892,6 @@
 				936AC22F1AD8BDBC00A9D17F /* OMNWizardPageVC.xib in Resources */,
 				936AC23C1AD8BE7800A9D17F /* Travelers.xcassets in Resources */,
 				936AC2301AD8BDBC00A9D17F /* OMNNavigationBarSelector.json in Resources */,
-				93897F841B1719020058378E /* config_cerberus.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5965,7 +5939,6 @@
 				93897F621B16DC960058378E /* OMNRestaurantMenuVC.json in Resources */,
 				93897F631B16DC960058378E /* OMNWizardVC.json in Resources */,
 				93897F641B16DC960058378E /* OMNBankCardsVC.xib in Resources */,
-				93897F861B1719020058378E /* config_cerberus.json in Resources */,
 				93897F651B16DC960058378E /* decodeBeacons.json in Resources */,
 				93897F661B16DC960058378E /* images_upload_stub.json in Resources */,
 			);
@@ -6565,7 +6538,6 @@
 				930C4E4F1AB15E1B006CA608 /* OMNPreorderConfirmCellItem.m in Sources */,
 				93F15DEC1ACEDECB000C8129 /* OMNDemoVisitor.m in Sources */,
 				932E0AC41B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
-				930C4E501AB15E1B006CA608 /* OMNAuthorizationManager.m in Sources */,
 				930C4E511AB15E1B006CA608 /* OMNMenuProductModifersModel.m in Sources */,
 				930C4E521AB15E1B006CA608 /* OMNSocketManager.m in Sources */,
 				930C4E531AB15E1B006CA608 /* OMNUserInfoHeaderView.m in Sources */,
@@ -6912,7 +6884,6 @@
 				930C8C401ACA7D9F00CE4E5A /* OMNPreorderConfirmCellItem.m in Sources */,
 				93F15DED1ACEDECB000C8129 /* OMNDemoVisitor.m in Sources */,
 				932E0AC51B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
-				930C8C411ACA7D9F00CE4E5A /* OMNAuthorizationManager.m in Sources */,
 				930C8C421ACA7D9F00CE4E5A /* OMNMenuProductModifersModel.m in Sources */,
 				930C8C431ACA7D9F00CE4E5A /* OMNSocketManager.m in Sources */,
 				930C8C441ACA7D9F00CE4E5A /* OMNUserInfoHeaderView.m in Sources */,
@@ -6973,7 +6944,6 @@
 				934669111B17F9DD003C3434 /* OMNWishInfoVC.m in Sources */,
 				934669121B17F9DD003C3434 /* OMNHelpPage.m in Sources */,
 				934669131B17F9DD003C3434 /* OMNSearchRestaurantMediator.m in Sources */,
-				934669141B17F9DD003C3434 /* OMNAuthorizationManager.m in Sources */,
 				934669151B17F9DD003C3434 /* OMNLoaderView.m in Sources */,
 				934669161B17F9DD003C3434 /* OMNBarRestaurantMediator.m in Sources */,
 				934669171B17F9DD003C3434 /* OMNOperationManager.m in Sources */,
@@ -7611,7 +7581,6 @@
 				93DB26C81A9DBA0F00DDB739 /* OMNPreorderConfirmCellItem.m in Sources */,
 				93F15DEA1ACEDECB000C8129 /* OMNDemoVisitor.m in Sources */,
 				932E0AC21B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
-				93C99098193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				937325501A7FAC5300A73673 /* OMNMenuProductModifersModel.m in Sources */,
 				9328F3981988C6360065DC58 /* OMNSocketManager.m in Sources */,
 				93D1177D1A2F0401000131C4 /* OMNUserInfoHeaderView.m in Sources */,
@@ -7674,7 +7643,6 @@
 				93466ABB1B17FB0F003C3434 /* OMNLaunchFactorySpec.m in Sources */,
 				93E58CB61A246AA1008064F9 /* OMNHelpPage.m in Sources */,
 				9391F66B1A60EBC500594CD5 /* OMNSearchRestaurantMediator.m in Sources */,
-				93C99099193DE5990028F76C /* OMNAuthorizationManager.m in Sources */,
 				937A37341980F68200EF5C31 /* OMNLoaderView.m in Sources */,
 				93E26EE41AA9E4370034A7A3 /* OMNBarRestaurantMediator.m in Sources */,
 				93466ABE1B17FB0F003C3434 /* OMNMenuProductDetailsSpec.m in Sources */,
@@ -8325,7 +8293,6 @@
 				936AC1F11AD8BDBC00A9D17F /* OMNPreorderConfirmCellItem.m in Sources */,
 				936AC1F21AD8BDBC00A9D17F /* OMNDemoVisitor.m in Sources */,
 				932E0AC61B019AD6002F490A /* OMNSelectTipsAlertVC.m in Sources */,
-				936AC1F31AD8BDBC00A9D17F /* OMNAuthorizationManager.m in Sources */,
 				936AC1F41AD8BDBC00A9D17F /* OMNMenuProductModifersModel.m in Sources */,
 				936AC1F51AD8BDBC00A9D17F /* OMNSocketManager.m in Sources */,
 				936AC1F61AD8BDBC00A9D17F /* OMNUserInfoHeaderView.m in Sources */,
@@ -8386,7 +8353,6 @@
 				93897E031B16DC960058378E /* OMNWishInfoVC.m in Sources */,
 				93897E041B16DC960058378E /* OMNHelpPage.m in Sources */,
 				93897E051B16DC960058378E /* OMNSearchRestaurantMediator.m in Sources */,
-				93897E061B16DC960058378E /* OMNAuthorizationManager.m in Sources */,
 				93897E071B16DC960058378E /* OMNLoaderView.m in Sources */,
 				93897E081B16DC960058378E /* OMNBarRestaurantMediator.m in Sources */,
 				93897E091B16DC960058378E /* OMNLocationManager.m in Sources */,

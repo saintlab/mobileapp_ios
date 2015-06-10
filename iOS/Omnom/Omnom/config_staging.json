@@ -1,4 +1,3 @@
 {
-  "baseUrlString" : "https://omnom.staging.saintlab.com",
-  "authorizationUrlString" : "https://wicket.staging.saintlab.com"
+  "baseUrlString" : "https://omnom.staging.saintlab.com"
 }

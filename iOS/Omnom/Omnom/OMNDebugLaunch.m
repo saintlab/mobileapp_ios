@@ -40,10 +40,8 @@
 //    self.qr = @"http://omnom.menu/qr/special-and-vip"; //b-cafe
     
 #pragma mark - staging
-    self.config = kOMNConfigNameStaging;
-    self.config = kOMNConfigNameCerberus;
-    
-    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
+//    self.config = kOMNConfigNameStaging;
+//    self.qr =  @"qr-code-for-2-saintlab-iiko-dev";
     
 #endif
   }

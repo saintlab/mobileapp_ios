@@ -8,9 +8,9 @@
 
 #import <Kiwi/Kiwi.h>
 #import "OMNUser+network.h"
-#import "OMNAuthorizationManager.h"
 #import "OMNAuthorization.h"
 #import "NSString+omn_json.h"
+#import "OMNOperationManager.h"
 
 #define kOMNAuthorizationManagerValidToken @"szJNu4MyKRrqPb0WyD7CE2q3j2llIePo"
 #define kOMNAuthorizationManagerInvalidToken @"invalid token"
@@ -22,11 +22,11 @@ describe(@"OMNUser+network", ^{
   pending(@"should test at live", nil);
   
   beforeAll(^{
-    [OMNAuthorizationManager setupWithURL:@"http://cerberus.staging.saintlab.com" headers:@{}];
+    [OMNOperationManager setupWithURL:@"http://cerberus.staging.saintlab.com" headers:@{}];
   });
 
   afterAll(^{
-    [OMNAuthorizationManager setupWithURL:nil headers:@{}];
+    [OMNOperationManager setupWithURL:nil headers:@{}];
   });
   
   OMNUser *(^stubUserWithToken)(NSString *token) = ^OMNUser *(NSString *token) {

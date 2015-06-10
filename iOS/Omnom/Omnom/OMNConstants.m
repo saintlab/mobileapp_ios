@@ -8,7 +8,6 @@
 
 #import "OMNConstants.h"
 #import "OMNOperationManager.h"
-#import "OMNAuthorizationManager.h"
 #import <OMNBeacon.h>
 #import <SSKeychain.h>
 #import "OMNAuthorization.h"
@@ -60,10 +59,7 @@ static OMNConfig *_config = nil;
 }
 
 + (void)setupNetworkManagers {
-  
   [OMNOperationManager setupWithURL:[self baseUrlString] headers:[self httpHeadersFields]];
-  [OMNAuthorizationManager setupWithURL:[self authorizationUrlString] headers:[self httpHeadersFields]];
-
 }
 
 + (NSDictionary *)httpHeadersFields {
@@ -181,9 +177,6 @@ static OMNConfig *_config = nil;
 
 + (NSString *)baseUrlString {
   return [self stringForKey:@"baseUrlString"];
-}
-+ (NSString *)authorizationUrlString {
-  return [self stringForKey:@"authorizationUrlString"];
 }
 
 + (NSString *)mixpanelToken {

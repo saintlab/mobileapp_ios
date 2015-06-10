@@ -15,7 +15,6 @@
 #import "OMNAnalitics.h"
 #import <SSKeychain.h>
 #import "OMNOperationManager.h"
-#import "OMNAuthorizationManager.h"
 
 SPEC_BEGIN(OMNConstantsSpec)
 
@@ -28,7 +27,6 @@ describe(@"OMNConstants", ^{
       [[OMNBeacon.beaconUUID should] beNil];
       [[@([OMNAnalitics analitics].ready) should] equal:@(NO)];
       [[[OMNOperationManager sharedManager] should] beNil];
-      [[[OMNAuthorizationManager sharedManager] should] beNil];
       [[OMNConstants.mixpanelToken should] beNil];
       [[OMNConstants.mixpanelDebugToken should] beNil];
       
@@ -61,9 +59,6 @@ describe(@"OMNConstants", ^{
         
         [[[OMNOperationManager sharedManager] should] beNonNil];
         [[[OMNOperationManager sharedManager].baseURL.absoluteString should] equal:[OMNConstants baseUrlString]];
-        
-        [[[OMNAuthorizationManager sharedManager] should] beNonNil];
-        [[[OMNAuthorizationManager sharedManager].baseURL.absoluteString should] equal:[OMNConstants authorizationUrlString]];
         
         [OHHTTPStubs removeStub:stub];
         stub = nil;

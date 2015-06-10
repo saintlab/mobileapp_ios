@@ -8,7 +8,6 @@
 
 #import "OMNAnalitics.h"
 #import "OMNAuthorization.h"
-#import "OMNAuthorizationManager.h"
 #import "OMNOperationManager.h"
 #import "OMNUser+network.h"
 #import <Crashlytics/Crashlytics.h>
@@ -143,7 +142,7 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 
 - (void)logoutUser {
   
-  [[OMNAuthorizationManager sharedManager] POST:@"/logout" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {} failure:^(AFHTTPRequestOperation *operation, NSError *error) {}];
+  [[OMNOperationManager sharedManager] POST:@"/logout" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {} failure:^(AFHTTPRequestOperation *operation, NSError *error) {}];
   
 }
 
@@ -309,7 +308,6 @@ static NSString * const kIOS8PushNotificationsRequestedKey = @"kIOS8PushNotifica
 - (void)updateAuthenticationToken {
   
   [OMNOperationManager setAuthenticationToken:self.token];
-  [OMNAuthorizationManager setAuthenticationToken:self.token];
   [self registerDeviceIfPossible];
   
 }

@@ -7,7 +7,7 @@
 //
 
 #import "OMNUser+network.h"
-#import "OMNAuthorizationManager.h"
+#import "OMNOperationManager.h"
 #import "OMNAnalitics.h"
 #import "OMNUtils.h"
 #import "OMNImageManager.h"
@@ -47,7 +47,7 @@
   
   return [PMKPromise new:^(PMKFulfiller fulfill, PMKRejecter reject) {
     
-    [[OMNAuthorizationManager sharedManager] POST:@"/authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OMNOperationManager sharedManager] POST:@"/authorization" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
       fulfill(responseObject);
       
@@ -71,12 +71,10 @@
       return;
     }
 
-    NSDictionary *parameters =
-    @{
-      @"token" : token,
-      };
+    [[OMNOperationManager sharedManager] POST:@"/user" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
-    [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+      NSLog(@"%@", operation.request.allHTTPHeaderFields);
+      NSLog(@"%@", [[NSString alloc] initWithData:operation.request.HTTPBody encoding:NSUTF8StringEncoding]);
       
       if ([responseObject omn_isSuccessResponse]) {
         
@@ -86,14 +84,14 @@
       }
       else {
         
-        [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
+        [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:nil responseOperation:operation];
         reject([OMNError omnomErrorFromCode:kOMNErrorInvalidUserToken]);
         
       }
       
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
       
-      [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:parameters responseOperation:operation];
+      [[OMNAnalitics analitics] logDebugEvent:@"GET_USER_ERROR" jsonRequest:nil responseOperation:operation];
       reject([operation omn_internetError]);
       
     }];
@@ -180,7 +178,7 @@
       parameters[@"avatar"] = self.avatar;
     }
     
-    [[OMNAuthorizationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OMNOperationManager sharedManager] POST:@"/user" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
       if ([responseObject omn_isSuccessResponse]) {
         
@@ -220,7 +218,7 @@
       parameters[@"avatar"] = self.avatar;
     }
     
-    [[OMNAuthorizationManager sharedManager] POST:@"/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[OMNOperationManager sharedManager] POST:@"/register" parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
       if ([responseObject omn_isSuccessResponse]) {
         

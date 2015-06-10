@@ -17,10 +17,8 @@
   return kOMNConfigNameProd;
   
 #else
-#warning customConfigName
-  
-//  return kOMNConfigNameCerberus;
-  return kOMNConfigNameStaging;
+
+  return kOMNConfigNameProd;
   
 #endif
 }

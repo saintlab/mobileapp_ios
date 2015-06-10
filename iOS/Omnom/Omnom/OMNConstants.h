@@ -40,7 +40,6 @@ extern NSString * const OMNFacebookAppUrlString;
 + (void)setupNetworkManagers;
 
 + (NSString *)baseUrlString;
-+ (NSString *)authorizationUrlString;
 + (NSString *)installID;
 
 + (NSString *)mixpanelToken;
